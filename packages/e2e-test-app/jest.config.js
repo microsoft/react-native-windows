@@ -56,6 +56,6 @@ module.exports = {
 
   testEnvironmentOptions: {
     app: 'ReactUWPTestApp',
-    enableRpc: true,
+    enableAutomationChannel: true,
   },
 };

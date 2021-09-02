@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import "Handler.idl";
+import "CommandHandler.idl";
 
-namespace NodeRpc {
+namespace AutomationChannel {
 
     [webhosthidden]
     [default_interface]
     runtimeclass Server
     {
       // Construct the server. Does not start listening/polling.
-      Server(NodeRpc.Handler handler);
+      Server(AutomationChannel.CommandHandler handler);
 
       // Poll, waiting for a client to connect to the application. Process all
       // of the single clients request, then complete the AsyncAction

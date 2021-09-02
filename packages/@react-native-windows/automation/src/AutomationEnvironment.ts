@@ -14,7 +14,10 @@ import NodeEnvironment = require('jest-environment-node');
 import * as webdriverio from 'webdriverio';
 import {BrowserObject, RemoteOptions} from 'webdriverio';
 import {Config} from '@jest/types';
-import {waitForConnection, RpcClient} from 'node-rnw-rpc';
+import {
+  waitForConnection,
+  AutomationClient,
+} from '@react-native-windows/automation-channel';
 
 export type EnvironmentOptions = {
   /**
@@ -22,24 +25,24 @@ export type EnvironmentOptions = {
    * name (e.g. Microsoft.WindowsAlarms)
    */
   app?: string;
-  enableRpc?: boolean;
-  rpcPort?: number;
+  enableAutomationChannel?: boolean;
+  automationChannelPort?: number;
   winAppDriverBin?: string;
   webdriverOptions?: RemoteOptions;
 };
 
-type RpcOptions = {
+type AutomationChannelOptions = {
   enable: boolean;
   port: number;
 };
 
 export default class AutomationEnvironment extends NodeEnvironment {
   private readonly webDriverOptions: RemoteOptions;
-  private readonly rpcOptions: RpcOptions;
+  private readonly channelOptions: AutomationChannelOptions;
   private readonly winappdriverBin: string;
   private winAppDriverProcess: ChildProcess | undefined;
   private browser: BrowserObject | undefined;
-  private rpcClient: RpcClient | undefined;
+  private automationClient: AutomationClient | undefined;
 
   constructor(config: Config.ProjectConfig) {
     super(config);
@@ -93,9 +96,9 @@ export default class AutomationEnvironment extends NodeEnvironment {
       passedOptions.webdriverOptions?.capabilities,
     );
 
-    this.rpcOptions = {
-      enable: passedOptions.enableRpc === true,
-      port: passedOptions.rpcPort || 8603,
+    this.channelOptions = {
+      enable: passedOptions.enableAutomationChannel === true,
+      port: passedOptions.automationChannelPort || 8603,
     };
   }
 
@@ -108,9 +111,11 @@ export default class AutomationEnvironment extends NodeEnvironment {
     );
     this.browser = await webdriverio.remote(this.webDriverOptions);
 
-    if (this.rpcOptions.enable) {
-      this.rpcClient = await waitForConnection({port: this.rpcOptions.port});
-      this.global.rpcClient = this.rpcClient;
+    if (this.channelOptions.enable) {
+      this.automationClient = await waitForConnection({
+        port: this.channelOptions.port,
+      });
+      this.global.automationClient = this.automationClient;
     }
 
     this.global.remote = webdriverio.remote;
@@ -124,8 +129,8 @@ export default class AutomationEnvironment extends NodeEnvironment {
       await this.browser.deleteSession();
     }
 
-    if (this.rpcClient) {
-      this.rpcClient.close();
+    if (this.automationClient) {
+      this.automationClient.close();
     }
 
     this.winAppDriverProcess?.kill('SIGINT');

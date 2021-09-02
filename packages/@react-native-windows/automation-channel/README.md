@@ -1,12 +1,12 @@
-# node-rnw-rpc
+# @react-native-windows/automation-channel
 
-node-rnw-rpc adds support for remote procedure calls from a node client to react-native-windows server on the same machine.
+@react-native-windows/automation-channel adds support for remote procedure calls from a node client to react-native-windows server on the same machine.
 
 ## Example
 
 _node app_
 ```ts
-import {waitForConnection} from 'node-rnw-rpc'
+import {waitForConnection} from '@react-native-windows/automation-channel'
 
 const rpcConnection = await waitForConnection({port: 8305});
 const result = await rpcConnection.invoke("add", [2, 2])
@@ -14,10 +14,10 @@ const result = await rpcConnection.invoke("add", [2, 2])
 
 _react-native-windows app_
 ```c++
-#include "winrt/NodeRpc.Server.h"
+#include "winrt/AutomationChannel.Server.h"
 
-// NodeRPC::Handler allows registering methods
-winrt::NodeRPC::Handler handler();
+// AutomationChannel::CommandHandler allows registering methods
+winrt::AutomationChannel::CommandHandler handler();
 
 // Binding to a simple method
 handler.BindOperation("add", [](const JSonValue& params) noexcept {
@@ -37,12 +37,12 @@ handler.BindAsyncAction("performAsyncOperation", [](const JSonValue& params) noe
 });
 
 // Start server
-winrt::NodeRPC::Server rpcServer(handler);
+winrt::AutomationChannel::Server rpcServer(handler);
 co_await rpcServer.ProcessAllClientRequests(8305, 50ms);
 ```
 
 ## Installing
-node-rnw-rpc supports [auto-linking](https://microsoft.github.io/react-native-windows/docs/native-modules-autolinking) to allow installation into react-native-windows applications.
+@react-native-windows/automation-channel supports [auto-linking](https://microsoft.github.io/react-native-windows/docs/native-modules-autolinking) to allow installation into react-native-windows applications.
 
 
 ## Architecture
@@ -53,4 +53,4 @@ node-rnw-rpc supports [auto-linking](https://microsoft.github.io/react-native-wi
 - **Proxy to full-trust process** The RNW application could create a full-trust process which proxies from TCP to named-pipe internal to the AppContainer. This bypasses inbound loopback restrictions, but adds complexity of deploying a separate process, requires two IPC channels.
 
 ### Protocol
-node-rnw-rpc uses a TCP channel, sending JSON messages across the wire prefixed with length. Messages themselves are conformant to the [JSON-RPC](https://en.wikipedia.org/wiki/JSON-RPC) version 2.0 protocol.
+@react-native-windows/automation-channel uses a TCP channel, sending JSON messages across the wire prefixed with length. Messages themselves are conformant to the [JSON-RPC](https://en.wikipedia.org/wiki/JSON-RPC) version 2.0 protocol.

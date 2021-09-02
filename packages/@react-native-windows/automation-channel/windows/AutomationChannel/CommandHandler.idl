@@ -1,0 +1,25 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace AutomationChannel {
+
+    delegate void SyncAction(Windows.Data.Json.JsonValue args);
+    delegate Windows.Data.Json.IJsonValue SyncOperation(Windows.Data.Json.JsonValue args);
+    delegate Windows.Foundation.IAsyncAction AsyncAction(Windows.Data.Json.JsonValue args);
+    delegate Windows.Foundation.IAsyncOperation<Windows.Data.Json.IJsonValue> AsyncOperation(Windows.Data.Json.JsonValue args);
+
+    [webhosthidden]
+    [default_interface]
+    runtimeclass CommandHandler
+    {
+        CommandHandler();
+
+        CommandHandler BindAction(String methodName, SyncAction action);
+        CommandHandler BindAsyncAction(String methodName, AsyncAction action);
+        CommandHandler BindOperation(String methodName, SyncOperation operation);
+        CommandHandler BindAsyncOperation(String methodName, AsyncOperation operation);
+
+        // May throw on delegate error
+        Windows.Foundation.IAsyncOperation<Windows.Data.Json.IJsonValue> Invoke(String methodName, Windows.Data.Json.JsonValue params);
+    };
+}

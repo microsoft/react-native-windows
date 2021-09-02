@@ -2,65 +2,67 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "Handler.h"
-#include "Handler.g.cpp"
+#include "CommandHandler.h"
+#include "CommandHandler.g.cpp"
 
 #include <Crash.h>
 
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Data::Json;
 
-namespace winrt::NodeRpc::implementation {
-winrt::NodeRpc::Handler Handler::BindAction(const winrt::hstring &methodName, const RpcAction &action) noexcept {
+namespace winrt::AutomationChannel::implementation {
+winrt::AutomationChannel::CommandHandler CommandHandler::BindAction(
+    const winrt::hstring &methodName,
+    const SyncAction &action) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_actionHandlers[methodName] = action;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::CommandHandler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindAsyncAction(
+winrt::AutomationChannel::CommandHandler CommandHandler::BindAsyncAction(
     const winrt::hstring &methodName,
-    const AsyncRpcAction &action) noexcept {
+    const AsyncAction &action) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_asyncActionHandlers[methodName] = action;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::CommandHandler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindOperation(
+winrt::AutomationChannel::CommandHandler CommandHandler::BindOperation(
     const winrt::hstring &methodName,
-    const RpcOperation &operation) noexcept {
+    const SyncOperation &operation) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_operationHandlers[methodName] = operation;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::CommandHandler(*this);
 }
 
-winrt::NodeRpc::Handler Handler::BindAsyncOperation(
+winrt::AutomationChannel::CommandHandler CommandHandler::BindAsyncOperation(
     const winrt::hstring &methodName,
-    const AsyncRpcOperation &operation) noexcept {
+    const AsyncOperation &operation) noexcept {
   VerifyElseCrash(!IsMethodRegistered(methodName));
   VerifyElseCrash(!IsReservedMethodName(methodName));
 
   m_asyncOperationHandlers[methodName] = operation;
-  return NodeRpc::Handler(*this);
+  return AutomationChannel::CommandHandler(*this);
 }
 
-bool Handler::IsMethodRegistered(const winrt::hstring &methodName) noexcept {
+bool CommandHandler::IsMethodRegistered(const winrt::hstring &methodName) noexcept {
   return m_actionHandlers.count(methodName) != 0 || m_operationHandlers.count(methodName) != 0 ||
       m_asyncActionHandlers.count(methodName) != 0 || m_asyncOperationHandlers.count(methodName) != 0;
 }
 
-bool Handler::IsReservedMethodName(const winrt::hstring &methodName) noexcept {
+bool CommandHandler::IsReservedMethodName(const winrt::hstring &methodName) noexcept {
   constexpr std::wstring_view reservedPrefix = L"rpc.";
 
   return std::wstring_view(methodName).compare(0, reservedPrefix.size(), reservedPrefix, 0, reservedPrefix.size()) == 0;
 }
 
-IAsyncOperation<IJsonValue> Handler::Invoke(const winrt::hstring &methodName, const JsonValue &params) {
+IAsyncOperation<IJsonValue> CommandHandler::Invoke(const winrt::hstring &methodName, const JsonValue &params) {
   auto action = m_actionHandlers.find(methodName);
   if (action != m_actionHandlers.end()) {
     action->second(params);
@@ -86,4 +88,4 @@ IAsyncOperation<IJsonValue> Handler::Invoke(const winrt::hstring &methodName, co
   }
 }
 
-} // namespace winrt::NodeRpc::implementation
+} // namespace winrt::AutomationChannel::implementation
