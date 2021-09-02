@@ -13,26 +13,27 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  struct DialogOptions {
-      REACT_FIELD(title)
-      std::optional<std::string> title;
-      REACT_FIELD(message)
-      std::optional<std::string> message;
-      REACT_FIELD(buttonPositive)
-      std::optional<std::string> buttonPositive;
-      REACT_FIELD(buttonNegative)
-      std::optional<std::string> buttonNegative;
-      REACT_FIELD(buttonNeutral)
-      std::optional<std::string> buttonNeutral;
-      REACT_FIELD(items)
-      std::optional<React::JSValueArray> items;
-      REACT_FIELD(cancelable)
-      std::optional<bool> cancelable;
-  };
+REACT_STRUCT(Spec_DialogOptions)
+struct Spec_DialogOptions {
+    REACT_FIELD(title)
+    std::optional<std::string> title;
+    REACT_FIELD(message)
+    std::optional<std::string> message;
+    REACT_FIELD(buttonPositive)
+    std::optional<std::string> buttonPositive;
+    REACT_FIELD(buttonNegative)
+    std::optional<std::string> buttonNegative;
+    REACT_FIELD(buttonNeutral)
+    std::optional<std::string> buttonNeutral;
+    REACT_FIELD(items)
+    std::optional<React::JSValueArray> items;
+    REACT_FIELD(cancelable)
+    std::optional<bool> cancelable;
+};
 
+struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(DialogOptions, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"showAlert"},
+      Method<void(Spec_DialogOptions, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"showAlert"},
   };
 
   template <class TModule>
@@ -42,11 +43,9 @@ struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showAlert",
-          "    REACT_METHOD(showAlert) void showAlert(DialogOptions && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showAlert) static void showAlert(DialogOptions && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showAlert) void showAlert(Spec_DialogOptions && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showAlert) static void showAlert(Spec_DialogOptions && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n");
   }
 };
-
-  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(DialogManagerAndroidSpec::DialogOptions)
 
 } // namespace Microsoft::ReactNativeSpecs

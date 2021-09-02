@@ -13,37 +13,39 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(Spec_Permissions)
+struct Spec_Permissions {
+    REACT_FIELD(alert)
+    bool alert;
+    REACT_FIELD(badge)
+    bool badge;
+    REACT_FIELD(sound)
+    bool sound;
+};
+
+REACT_STRUCT(Spec_Notification)
+struct Spec_Notification {
+    REACT_FIELD(alertTitle)
+    std::optional<std::string> alertTitle;
+    REACT_FIELD(fireDate)
+    std::optional<double> fireDate;
+    REACT_FIELD(alertBody)
+    std::optional<std::string> alertBody;
+    REACT_FIELD(alertAction)
+    std::optional<std::string> alertAction;
+    REACT_FIELD(userInfo)
+    std::optional<React::JSValueObject> userInfo;
+    REACT_FIELD(category)
+    std::optional<std::string> category;
+    REACT_FIELD(repeatInterval)
+    std::optional<std::string> repeatInterval;
+    REACT_FIELD(applicationIconBadgeNumber)
+    std::optional<double> applicationIconBadgeNumber;
+    REACT_FIELD(isSilent)
+    std::optional<bool> isSilent;
+};
+
 struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  struct Permissions {
-      REACT_FIELD(alert)
-      bool alert;
-      REACT_FIELD(badge)
-      bool badge;
-      REACT_FIELD(sound)
-      bool sound;
-  };
-
-  struct Notification {
-      REACT_FIELD(alertTitle)
-      std::optional<std::string> alertTitle;
-      REACT_FIELD(fireDate)
-      std::optional<double> fireDate;
-      REACT_FIELD(alertBody)
-      std::optional<std::string> alertBody;
-      REACT_FIELD(alertAction)
-      std::optional<std::string> alertAction;
-      REACT_FIELD(userInfo)
-      std::optional<React::JSValueObject> userInfo;
-      REACT_FIELD(category)
-      std::optional<std::string> category;
-      REACT_FIELD(repeatInterval)
-      std::optional<std::string> repeatInterval;
-      REACT_FIELD(applicationIconBadgeNumber)
-      std::optional<double> applicationIconBadgeNumber;
-      REACT_FIELD(isSilent)
-      std::optional<bool> isSilent;
-  };
-
   static constexpr auto methods = std::tuple{
       Method<void(std::string, std::string) noexcept>{0, L"onFinishRemoteNotification"},
       Method<void(double) noexcept>{1, L"setApplicationIconBadgeNumber"},
@@ -51,8 +53,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
       Method<void(React::JSValueObject, Promise<React::JSValue>) noexcept>{3, L"requestPermissions"},
       Method<void() noexcept>{4, L"abandonPermissions"},
       Method<void(Callback<React::JSValue>) noexcept>{5, L"checkPermissions"},
-      Method<void(Notification) noexcept>{6, L"presentLocalNotification"},
-      Method<void(Notification) noexcept>{7, L"scheduleLocalNotification"},
+      Method<void(Spec_Notification) noexcept>{6, L"presentLocalNotification"},
+      Method<void(Spec_Notification) noexcept>{7, L"scheduleLocalNotification"},
       Method<void() noexcept>{8, L"cancelAllLocalNotifications"},
       Method<void(React::JSValueObject) noexcept>{9, L"cancelLocalNotifications"},
       Method<void(Promise<React::JSValue>) noexcept>{10, L"getInitialNotification"},
@@ -102,13 +104,13 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "presentLocalNotification",
-          "    REACT_METHOD(presentLocalNotification) void presentLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(presentLocalNotification) static void presentLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(presentLocalNotification) void presentLocalNotification(Spec_Notification && notification) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(presentLocalNotification) static void presentLocalNotification(Spec_Notification && notification) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
           "scheduleLocalNotification",
-          "    REACT_METHOD(scheduleLocalNotification) void scheduleLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(scheduleLocalNotification) static void scheduleLocalNotification(Notification && notification) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(scheduleLocalNotification) void scheduleLocalNotification(Spec_Notification && notification) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(scheduleLocalNotification) static void scheduleLocalNotification(Spec_Notification && notification) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
           "cancelAllLocalNotifications",
@@ -161,8 +163,5 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
           "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
   }
 };
-
-  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(PushNotificationManagerIOSSpec::Permissions)
-  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(PushNotificationManagerIOSSpec::Notification)
 
 } // namespace Microsoft::ReactNativeSpecs

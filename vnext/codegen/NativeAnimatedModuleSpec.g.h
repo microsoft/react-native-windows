@@ -13,19 +13,21 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(Spec_EndResult)
+struct Spec_EndResult {
+    REACT_FIELD(finished)
+    bool finished;
+};
+
+REACT_STRUCT(Spec_EventMapping)
+struct Spec_EventMapping {
+    REACT_FIELD(nativeEventPath)
+    React::JSValueArray nativeEventPath;
+    REACT_FIELD(animatedValueTag)
+    std::optional<double> animatedValueTag;
+};
+
 struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  struct EndResult {
-      REACT_FIELD(finished)
-      bool finished;
-  };
-
-  struct EventMapping {
-      REACT_FIELD(nativeEventPath)
-      React::JSValueArray nativeEventPath;
-      REACT_FIELD(animatedValueTag)
-      std::optional<double> animatedValueTag;
-  };
-
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"startOperationBatch"},
       Method<void() noexcept>{1, L"finishOperationBatch"},
@@ -45,7 +47,7 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(double, double) noexcept>{15, L"disconnectAnimatedNodeFromView"},
       Method<void(double) noexcept>{16, L"restoreDefaultValues"},
       Method<void(double) noexcept>{17, L"dropAnimatedNode"},
-      Method<void(double, std::string, EventMapping) noexcept>{18, L"addAnimatedEventToView"},
+      Method<void(double, std::string, Spec_EventMapping) noexcept>{18, L"addAnimatedEventToView"},
       Method<void(double, std::string, double) noexcept>{19, L"removeAnimatedEventFromView"},
       Method<void(std::string) noexcept>{20, L"addListener"},
       Method<void(double) noexcept>{21, L"removeListeners"},
@@ -148,8 +150,8 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           18,
           "addAnimatedEventToView",
-          "    REACT_METHOD(addAnimatedEventToView) void addAnimatedEventToView(double viewTag, std::string eventName, EventMapping && eventMapping) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(addAnimatedEventToView) static void addAnimatedEventToView(double viewTag, std::string eventName, EventMapping && eventMapping) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(addAnimatedEventToView) void addAnimatedEventToView(double viewTag, std::string eventName, Spec_EventMapping && eventMapping) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addAnimatedEventToView) static void addAnimatedEventToView(double viewTag, std::string eventName, Spec_EventMapping && eventMapping) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           19,
           "removeAnimatedEventFromView",
@@ -167,8 +169,5 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
   }
 };
-
-  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(AnimatedModuleSpec::EndResult)
-  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(AnimatedModuleSpec::EventMapping)
 
 } // namespace Microsoft::ReactNativeSpecs

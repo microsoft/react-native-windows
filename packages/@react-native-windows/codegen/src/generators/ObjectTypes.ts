@@ -13,6 +13,16 @@ import {
   Nullable,
 } from 'react-native-tscodegen';
 
+let preferredModuleName: string = '';
+
+export function setPreferredModuleName(moduleName: string): void {
+  preferredModuleName = moduleName;
+}
+
+export function getAliasCppName(typeName: string): string {
+  return `${preferredModuleName}Spec_${typeName}`;
+}
+
 function translateField(
   type: Nullable<NativeModuleBaseTypeAnnotation>,
 ): string {
@@ -49,7 +59,7 @@ function translateField(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      return type.name;
+      return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
       return `std::optional<${translateField(type.typeAnnotation)}>`;
     default:

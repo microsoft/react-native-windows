@@ -10,6 +10,7 @@ import {
   NativeModuleReturnTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
+import {getAliasCppName} from './ObjectTypes';
 
 function translateReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
@@ -50,7 +51,7 @@ function translateReturnType(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      return type.name;
+      return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
       // TODO: should be `std::optional<${translateReturnType(type.typeAnnotation)}>`;
       return translateReturnType(type.typeAnnotation);

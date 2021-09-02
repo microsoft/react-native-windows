@@ -11,6 +11,7 @@ import {
   NativeModuleParamTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
+import {getAliasCppName} from './ObjectTypes';
 
 type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>
@@ -63,7 +64,7 @@ function translateParam(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      return decorateType(param.name, forSpec);
+      return decorateType(getAliasCppName(param.name), forSpec);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }

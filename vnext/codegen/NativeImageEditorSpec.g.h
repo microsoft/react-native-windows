@@ -13,22 +13,23 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  struct Options {
-      REACT_FIELD(offset)
-      React::JSValueObject offset;
-      REACT_FIELD(size)
-      React::JSValueObject size;
-      REACT_FIELD(displaySize)
-      std::optional<React::JSValueObject> displaySize;
-      REACT_FIELD(resizeMode)
-      std::optional<std::string> resizeMode;
-      REACT_FIELD(allowExternalStorage)
-      std::optional<bool> allowExternalStorage;
-  };
+REACT_STRUCT(Spec_Options)
+struct Spec_Options {
+    REACT_FIELD(offset)
+    React::JSValueObject offset;
+    REACT_FIELD(size)
+    React::JSValueObject size;
+    REACT_FIELD(displaySize)
+    std::optional<React::JSValueObject> displaySize;
+    REACT_FIELD(resizeMode)
+    std::optional<std::string> resizeMode;
+    REACT_FIELD(allowExternalStorage)
+    std::optional<bool> allowExternalStorage;
+};
 
+struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, Options, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"cropImage"},
+      Method<void(std::string, Spec_Options, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"cropImage"},
   };
 
   template <class TModule>
@@ -38,11 +39,9 @@ struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "cropImage",
-          "    REACT_METHOD(cropImage) void cropImage(std::string uri, Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(cropImage) static void cropImage(std::string uri, Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(cropImage) void cropImage(std::string uri, Spec_Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(cropImage) static void cropImage(std::string uri, Spec_Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
   }
 };
-
-  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(ImageEditorSpec::Options)
 
 } // namespace Microsoft::ReactNativeSpecs

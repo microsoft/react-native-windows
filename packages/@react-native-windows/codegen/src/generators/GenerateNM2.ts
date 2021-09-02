@@ -11,7 +11,7 @@ import {
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
-import {translateObjectBody} from './ObjectTypes';
+import {getAliasCppName, translateObjectBody} from './ObjectTypes';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
@@ -31,8 +31,8 @@ const moduleTemplate = `
 #include <tuple>
 
 namespace ::_NAMESPACE_:: {
-
-struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {::_MODULE_ALIASED_STRUCTS_::
+::_MODULE_ALIASED_STRUCTS_::
+struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
 ::_MODULE_PROPERTIES_TUPLE_::
   };
@@ -43,7 +43,7 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {:
 
 ::_MODULE_PROPERTIES_SPEC_ERRORS_::
   }
-};::_MODULE_ALIASED_STRUCT_DEFS_::
+};
 
 } // namespace ::_NAMESPACE_::
 `;
@@ -160,19 +160,11 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         for (const aliasName of Object.keys(nativeModule.aliases)) {
           const aliasType = nativeModule.aliases[aliasName];
           traversedAliasedStructs = `${traversedAliasedStructs}
-  struct ${aliasName} {
-${translateObjectBody(aliasType, '      ')}
-  };
+REACT_STRUCT(${getAliasCppName(aliasName)})
+struct ${getAliasCppName(aliasName)} {
+${translateObjectBody(aliasType, '    ')}
+};
 `;
-        }
-
-        let traversedAliasedStructDefs = '';
-        for (const aliasName of Object.keys(nativeModule.aliases)) {
-          traversedAliasedStructDefs = `${traversedAliasedStructDefs}
-  INTERNAL_REACT_STRUCT_GETSTRUCTINFO(${preferredModuleName}Spec::${aliasName})`;
-        }
-        if (traversedAliasedStructDefs !== '') {
-          traversedAliasedStructDefs = `\n${traversedAliasedStructDefs}`;
         }
 
         const properties = nativeModule.spec.properties;
@@ -183,10 +175,6 @@ ${translateObjectBody(aliasType, '      ')}
           `Native${preferredModuleName}Spec.g.h`,
           moduleTemplate
             .replace(/::_MODULE_ALIASED_STRUCTS_::/g, traversedAliasedStructs)
-            .replace(
-              /::_MODULE_ALIASED_STRUCT_DEFS_::/g,
-              traversedAliasedStructDefs,
-            )
             .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
             .replace(
               /::_MODULE_PROPERTIES_SPEC_ERRORS_::/g,
