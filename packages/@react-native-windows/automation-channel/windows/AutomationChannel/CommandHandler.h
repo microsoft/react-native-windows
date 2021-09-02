@@ -6,7 +6,7 @@
 
 namespace winrt::AutomationChannel::implementation {
 
-struct CommandHandler : HandlerT<CommandHandler> {
+struct CommandHandler : CommandHandlerT<CommandHandler> {
   CommandHandler() = default;
 
   AutomationChannel::CommandHandler BindAction(const winrt::hstring &methodName, const SyncAction &action) noexcept;
@@ -37,6 +37,6 @@ struct CommandHandler : HandlerT<CommandHandler> {
 
 namespace winrt::AutomationChannel::factory_implementation {
 
-struct CommandHandler : HandlerT<CommandHandler, implementation::CommandHandler> {};
+struct CommandHandler : CommandHandlerT<CommandHandler, implementation::CommandHandler> {};
 
 } // namespace winrt::AutomationChannel::factory_implementation

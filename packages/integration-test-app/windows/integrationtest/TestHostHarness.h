@@ -54,7 +54,7 @@ class TestHostHarness : public winrt::implements<TestHostHarness, winrt::Windows
   void ShowJSError(std::string_view err) noexcept;
   void OnInstanceLoaded(const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) noexcept;
   winrt::Windows::Foundation::IAsyncAction StartListening() noexcept;
-  winrt::AutomationChannel::Handler CreateRpcHander() noexcept;
+  winrt::AutomationChannel::CommandHandler CreateAutomationCommandHandler() noexcept;
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Data::Json::IJsonValue> OnTestCommand(
       TestCommandId command,
       winrt::Windows::Data::Json::JsonValue payload) noexcept;

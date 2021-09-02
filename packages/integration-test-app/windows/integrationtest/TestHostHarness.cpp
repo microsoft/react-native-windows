@@ -19,7 +19,7 @@ using namespace winrt::Windows::System;
 namespace IntegrationTest {
 
 TestHostHarness::TestHostHarness(const ReactNativeHost &reactHost) noexcept
-    : m_dispatcher{ReactDispatcherHelper::UIThreadDispatcher()}, m_rpcServer(CreateRpcHander()) {
+    : m_dispatcher{ReactDispatcherHelper::UIThreadDispatcher()}, m_rpcServer(CreateAutomationCommandHandler()) {
   VerifyElseCrash(m_dispatcher);
   VerifyElseCrash(m_dispatcher.HasThreadAccess());
 
@@ -96,8 +96,8 @@ IAsyncAction TestHostHarness::StartListening() noexcept {
   }
 }
 
-winrt::AutomationChannel::Handler TestHostHarness::CreateRpcHander() noexcept {
-  winrt::AutomationChannel::Handler handler;
+winrt::AutomationChannel::CommandHandler TestHostHarness::CreateAutomationCommandHandler() noexcept {
+  winrt::AutomationChannel::CommandHandler handler;
 
   handler.BindAsyncOperation(
       L"RunTestComponent", [weakThis{get_weak()}](const JsonValue &payload) noexcept -> IAsyncOperation<IJsonValue> {

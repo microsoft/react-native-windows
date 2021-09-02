@@ -25,7 +25,7 @@ namespace ReactUWPTestApp
             myRootView.ComponentName = "RNTesterApp";
 
 
-            var handler = new Handler();
+            var handler = new CommandHandler();
             handler.BindOperation("DumpVisualTree", DumpVisualTree);
 
             var server = new Server(handler);
