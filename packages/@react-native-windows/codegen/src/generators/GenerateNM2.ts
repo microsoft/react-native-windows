@@ -11,7 +11,11 @@ import {
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
-import {getAliasCppName, translateObjectBody} from './ObjectTypes';
+import {
+  getAliasCppName,
+  setPreferredModuleName,
+  translateObjectBody,
+} from './ObjectTypes';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
@@ -152,6 +156,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
       const preferredModuleName = moduleName.startsWith('Native')
         ? moduleName.substr(6)
         : moduleName;
+      setPreferredModuleName(preferredModuleName);
 
       if (nativeModule.type === 'NativeModule') {
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);

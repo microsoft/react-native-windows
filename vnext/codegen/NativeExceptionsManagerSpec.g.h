@@ -13,8 +13,8 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(Spec_StackFrame)
-struct Spec_StackFrame {
+REACT_STRUCT(ExceptionsManagerSpec_StackFrame)
+struct ExceptionsManagerSpec_StackFrame {
     REACT_FIELD(column)
     std::optional<double> column;
     REACT_FIELD(file)
@@ -27,8 +27,8 @@ struct Spec_StackFrame {
     std::optional<bool> collapse;
 };
 
-REACT_STRUCT(Spec_ExceptionData)
-struct Spec_ExceptionData {
+REACT_STRUCT(ExceptionsManagerSpec_ExceptionData)
+struct ExceptionsManagerSpec_ExceptionData {
     REACT_FIELD(message)
     std::string message;
     REACT_FIELD(originalMessage)
@@ -51,7 +51,7 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, React::JSValueArray, double) noexcept>{0, L"reportFatalException"},
       Method<void(std::string, React::JSValueArray, double) noexcept>{1, L"reportSoftException"},
-      Method<void(Spec_ExceptionData) noexcept>{2, L"reportException"},
+      Method<void(ExceptionsManagerSpec_ExceptionData) noexcept>{2, L"reportException"},
       Method<void(std::string, React::JSValueArray, double) noexcept>{3, L"updateExceptionMessage"},
       Method<void() noexcept>{4, L"dismissRedbox"},
   };
@@ -73,8 +73,8 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "reportException",
-          "    REACT_METHOD(reportException) void reportException(Spec_ExceptionData && data) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(reportException) static void reportException(Spec_ExceptionData && data) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(reportException) void reportException(ExceptionsManagerSpec_ExceptionData && data) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportException) static void reportException(ExceptionsManagerSpec_ExceptionData && data) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "updateExceptionMessage",

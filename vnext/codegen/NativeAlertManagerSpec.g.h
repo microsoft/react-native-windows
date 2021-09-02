@@ -13,8 +13,8 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(Spec_Args)
-struct Spec_Args {
+REACT_STRUCT(AlertManagerSpec_Args)
+struct AlertManagerSpec_Args {
     REACT_FIELD(title)
     std::optional<std::string> title;
     REACT_FIELD(message)
@@ -35,7 +35,7 @@ struct Spec_Args {
 
 struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Spec_Args, Callback<React::JSValue>) noexcept>{0, L"alertWithArgs"},
+      Method<void(AlertManagerSpec_Args, Callback<React::JSValue>) noexcept>{0, L"alertWithArgs"},
   };
 
   template <class TModule>
@@ -45,8 +45,8 @@ struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "alertWithArgs",
-          "    REACT_METHOD(alertWithArgs) void alertWithArgs(Spec_Args && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(alertWithArgs) static void alertWithArgs(Spec_Args && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(alertWithArgs) void alertWithArgs(AlertManagerSpec_Args && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(alertWithArgs) static void alertWithArgs(AlertManagerSpec_Args && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
 

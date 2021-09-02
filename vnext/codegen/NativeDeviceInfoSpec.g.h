@@ -13,8 +13,8 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(Spec_DisplayMetrics)
-struct Spec_DisplayMetrics {
+REACT_STRUCT(DeviceInfoSpec_DisplayMetrics)
+struct DeviceInfoSpec_DisplayMetrics {
     REACT_FIELD(width)
     double width;
     REACT_FIELD(height)
@@ -25,8 +25,8 @@ struct Spec_DisplayMetrics {
     double fontScale;
 };
 
-REACT_STRUCT(Spec_DisplayMetricsAndroid)
-struct Spec_DisplayMetricsAndroid {
+REACT_STRUCT(DeviceInfoSpec_DisplayMetricsAndroid)
+struct DeviceInfoSpec_DisplayMetricsAndroid {
     REACT_FIELD(width)
     double width;
     REACT_FIELD(height)
@@ -39,16 +39,16 @@ struct Spec_DisplayMetricsAndroid {
     double densityDpi;
 };
 
-REACT_STRUCT(Spec_DimensionsPayload)
-struct Spec_DimensionsPayload {
+REACT_STRUCT(DeviceInfoSpec_DimensionsPayload)
+struct DeviceInfoSpec_DimensionsPayload {
     REACT_FIELD(window)
-    std::optional<Spec_DisplayMetrics> window;
+    std::optional<DeviceInfoSpec_DisplayMetrics> window;
     REACT_FIELD(screen)
-    std::optional<Spec_DisplayMetrics> screen;
+    std::optional<DeviceInfoSpec_DisplayMetrics> screen;
     REACT_FIELD(windowPhysicalPixels)
-    std::optional<Spec_DisplayMetricsAndroid> windowPhysicalPixels;
+    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> windowPhysicalPixels;
     REACT_FIELD(screenPhysicalPixels)
-    std::optional<Spec_DisplayMetricsAndroid> screenPhysicalPixels;
+    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> screenPhysicalPixels;
 };
 
 struct DeviceInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {

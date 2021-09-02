@@ -13,8 +13,8 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(Spec_Options)
-struct Spec_Options {
+REACT_STRUCT(ImageEditorSpec_Options)
+struct ImageEditorSpec_Options {
     REACT_FIELD(offset)
     React::JSValueObject offset;
     REACT_FIELD(size)
@@ -29,7 +29,7 @@ struct Spec_Options {
 
 struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, Spec_Options, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"cropImage"},
+      Method<void(std::string, ImageEditorSpec_Options, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"cropImage"},
   };
 
   template <class TModule>
@@ -39,8 +39,8 @@ struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "cropImage",
-          "    REACT_METHOD(cropImage) void cropImage(std::string uri, Spec_Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(cropImage) static void cropImage(std::string uri, Spec_Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(cropImage) void cropImage(std::string uri, ImageEditorSpec_Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(cropImage) static void cropImage(std::string uri, ImageEditorSpec_Options && cropData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
   }
 };
 
