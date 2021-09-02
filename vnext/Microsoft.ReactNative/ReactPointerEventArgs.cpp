@@ -31,10 +31,6 @@ void ReactPointerEventArgs::ReleaseCapture() {
   m_captureReleased = true;
 }
 
-void ReactPointerEventArgs::StopPropagation() {
-  m_propagationStopped = true;
-}
-
 ReactPointerEventArgs::ReactPointerEventArgs(
     PointerEventKind kind,
     xaml::Input::PointerRoutedEventArgs const &args) noexcept
@@ -46,10 +42,6 @@ bool ReactPointerEventArgs::CaptureReleased() const noexcept {
 
 bool ReactPointerEventArgs::DefaultPrevented() const noexcept {
   return m_defaultPrevented;
-}
-
-bool ReactPointerEventArgs::PropagationStopped() const noexcept {
-  return m_propagationStopped;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
