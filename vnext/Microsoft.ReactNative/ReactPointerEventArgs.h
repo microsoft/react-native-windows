@@ -16,14 +16,12 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
 
   void PreventDefault();
   void ReleaseCapture();
-  void StopPropagation();
 
   // Internal use
   ReactPointerEventArgs(PointerEventKind kind, xaml::Input::PointerRoutedEventArgs const &args) noexcept;
 
   bool CaptureReleased() const noexcept;
   bool DefaultPrevented() const noexcept;
-  bool PropagationStopped() const noexcept;
 
  private:
   PointerEventKind m_kind;
@@ -32,7 +30,6 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
 
   bool m_captureReleased{false};
   bool m_defaultPrevented{false};
-  bool m_propagationStopped{false};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
