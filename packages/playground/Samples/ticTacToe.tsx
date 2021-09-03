@@ -41,7 +41,7 @@ export default class Bootstrap extends React.Component<
     const newSquares = this.state.squares.slice();
     const turn = this.whoseTurn();
     if (this.state.squares[i] || winner(this.state.squares)) {
-      return null;
+      return;
     }
     newSquares[i] = turn;
     this.setState({
