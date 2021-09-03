@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Wed, 01 Sep 2021 05:07:18 GMT",
+      "tag": "@rnw-scripts/doxysaurus_v0.1.7",
+      "version": "0.1.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add doxysaurus README",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fe89d4ab0b4fb96508d0095c3aaf375b9a401e66",
+            "package": "@rnw-scripts/doxysaurus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@rnw-scripts/doxysaurus_v0.1.6",
       "version": "0.1.6",

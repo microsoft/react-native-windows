@@ -1,8 +1,47 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Wed, 25 Aug 2021 05:07:15 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Sep 2021 05:08:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Thu, 02 Sep 2021 05:08:16 GMT
+
+### Patches
+
+- Bump jest-environment-winappdriver to v3.0.0 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0
+
+Wed, 01 Sep 2021 05:07:18 GMT
+
+### Patches
+
+- Bump node-rnw-rpc to v1.0.15 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.6 (ngerlem@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.368 (ngerlem@microsoft.com)
+- Bump jest-environment-winappdriver to v2.0.4 (ngerlem@microsoft.com)
+- Bump @react-native-windows/tester to v0.0.1 (ngerlem@microsoft.com)
+
+## 0.0.0
+
+Tue, 31 Aug 2021 05:07:15 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.367 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0
+
+Sat, 28 Aug 2021 05:06:32 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.366 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0
 

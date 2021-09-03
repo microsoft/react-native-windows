@@ -119,6 +119,17 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   if (m_instanceSettings.RedBoxHandler()) {
     reactOptions.RedBoxHandler = Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler());
   }
+  if (m_instanceSettings.NativeLogger()) {
+    reactOptions.OnLogging = [handler = m_instanceSettings.NativeLogger()](
+                                 Mso::React::LogLevel logLevel, const char *message) {
+      static_assert(LogLevel::Error == static_cast<LogLevel>(Mso::React::LogLevel::Error));
+      static_assert(LogLevel::Fatal == static_cast<LogLevel>(Mso::React::LogLevel::Fatal));
+      static_assert(LogLevel::Info == static_cast<LogLevel>(Mso::React::LogLevel::Info));
+      static_assert(LogLevel::Trace == static_cast<LogLevel>(Mso::React::LogLevel::Trace));
+      static_assert(LogLevel::Warning == static_cast<LogLevel>(Mso::React::LogLevel::Warning));
+      handler(static_cast<LogLevel>(logLevel), winrt::to_hstring(message));
+    };
+  }
   reactOptions.DeveloperSettings.SourceBundleHost = to_string(m_instanceSettings.SourceBundleHost());
   reactOptions.DeveloperSettings.SourceBundlePort = m_instanceSettings.SourceBundlePort();
 

@@ -52,8 +52,6 @@ ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
 
   runtimeArgs.enableJITCompilation = devSettings->useJITCompilation;
 
-  runtimeArgs.memoryTracker = devSettings->memoryTracker;
-
   return runtimeArgs;
 }
 

@@ -5,7 +5,9 @@
  * @format
  */
 
-import {goToComponentExample, dumpVisualTree} from './framework';
+import {app} from '@react-native-windows/automation';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {goToComponentExample} from './RNTesterNavigation';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyImageTest');
@@ -40,11 +42,13 @@ describe('LegacyImageTest', () => {
 });
 
 async function toggleImageBorder() {
-  const imageBorderToggle = await $('~toggle-border-button');
+  const imageBorderToggle = await app.findElementByTestID(
+    'toggle-border-button',
+  );
   await imageBorderToggle.click();
 }
 
 async function toggleRTLMode() {
-  const rtlToggleButton = await $('~set-rtl-button');
+  const rtlToggleButton = await app.findElementByTestID('set-rtl-button');
   await rtlToggleButton.click();
 }

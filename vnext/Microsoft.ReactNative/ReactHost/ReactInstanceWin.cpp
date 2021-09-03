@@ -383,7 +383,6 @@ void ReactInstanceWin::Initialize() noexcept {
       devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
       devSettings->useWebDebugger = m_useWebDebugger;
       devSettings->useFastRefresh = m_isFastReloadEnabled;
-      // devSettings->memoryTracker = GetMemoryTracker();
       devSettings->bundleRootPath = BundleRootPath();
 
       devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();

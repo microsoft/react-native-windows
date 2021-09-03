@@ -19,8 +19,11 @@ import {NativeText, NativeVirtualText} from './TextNativeComponent';
 import {type TextProps} from './TextProps';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
+import invariant from 'invariant';
+
 const View = require('../Components/View/View');
 import {type TextStyleProp, type ViewStyleProp} from '../StyleSheet/StyleSheet'; // [Windows]
+
 /**
  * Text is the fundamental component for displaying text.
  *
@@ -150,6 +153,14 @@ const Text: React.AbstractComponent<
     }
   }
 
+  let numberOfLines = restProps.numberOfLines;
+  if (numberOfLines != null && !(numberOfLines >= 0)) {
+    console.error(
+      `'numberOfLines' in <Text> must be a non-negative number, received: ${numberOfLines}. The value will be set to 0.`,
+    );
+    numberOfLines = 0;
+  }
+
   const hasTextAncestor = useContext(TextAncestor);
 
   //let styleProps: ViewStyleProp = (props.style: any);
@@ -159,6 +170,7 @@ const Text: React.AbstractComponent<
         {...restProps}
         {...eventHandlersForText}
         isHighlighted={isHighlighted}
+        numberOfLines={numberOfLines}
         selectionColor={selectionColor}
         style={style}
         ref={forwardedRef}

@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-f592ad050",
+  "baseVersion": "0.0.0-ad9030ca9",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "66fa79a21dc9b1eb380869311df826df55235ace"
+      "baseHash": "a715deecb01066f69db3959e0d270f5a2a88e598"
     },
     {
       "type": "patch",
@@ -27,7 +27,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "a77dfb26acdaeaf0b7cd1df893843cd176364b17",
+      "baseHash": "802d6b354a54bb5ae26196e767017b403b1842ed",
       "issue": 7821
     },
     {
@@ -48,7 +48,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "cd5c3d228bdcb63a750ba83fb3406ec18245760d",
+      "baseHash": "14193edf519ba573e7ba10a43a3af7a024241082",
       "issue": 4054
     },
     {
@@ -62,7 +62,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "08c12222a63e1f9332bb0c3f327c58609a3cf13f",
+      "baseHash": "a1440e2030ee018bb8f0b54703e3b1848db6ffb4",
       "issue": 5430
     },
     {
@@ -76,7 +76,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "1bef57931e96344fa3b9b2e67ea70f6d6647cd31"
+      "baseHash": "3f55b3104a728f68008ba473bb64bbe8fc7ad8c9"
     },
     {
       "type": "platform",
@@ -143,12 +143,6 @@
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
       "baseHash": "a9a4a6c92de922a11f8b81642b1bf1270d0b7b96"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
-      "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
-      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
       "type": "derived",
@@ -234,7 +228,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "88931b189b9a91bbdbbcff7c7728ed4763b77041"
+      "baseHash": "d88f479a06105b51ff32122ae898b04ee66c0d33"
     },
     {
       "type": "patch",
@@ -286,7 +280,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "2f0914e8109babafd4694f3f13fb29d1eeb227fe"
+      "baseHash": "b6c5dab8543275d60d0d0efd4be435c372376f3d"
     },
     {
       "type": "patch",
@@ -318,7 +312,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
+      "baseHash": "c8d495e707fc61bbfb929b9a343f5460c3b60c28",
       "issue": 4590
     },
     {
@@ -355,7 +349,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ee8c3fce6e137ad7d7dbcb7435cd3396bfe48440"
+      "baseHash": "2d3b7dae890a42fc0b94c9700a72e6606f32625f"
     },
     {
       "type": "copy",
@@ -422,7 +416,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "4437d86c40009c937c279b9ce9e924ebfa46ddd6"
+      "baseHash": "8b90eb090dcfed88a40a38bbb51cbbd1e0d9ca9e"
     },
     {
       "type": "patch",

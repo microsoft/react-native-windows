@@ -53,7 +53,6 @@
     <file src="$nugetroot$\inc\Shared\LayoutAnimation.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Logging.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\MemoryMappedBuffer.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\MemoryTracker.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Modules\I18nModule.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\RuntimeOptions.h" target="inc"/>

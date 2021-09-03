@@ -3,7 +3,6 @@
 
 #pragma once
 #include "Logging.h"
-#include "MemoryTracker.h"
 
 #include <IRedBoxHandler.h>
 #include <functional>
@@ -78,8 +77,8 @@ struct DevSettings {
 
   bool useFastRefresh{false};
 
-  /// Dispatcher for notifications about JS engine memory consumption.
-  std::shared_ptr<MemoryTracker> memoryTracker;
+  // Enables ChakraCore console redirection to debugger
+  bool debuggerConsoleRedirection{false};
 
   /// A factory and holder of jsi::Runtime instance to be used for this react
   /// instance. This object should in general be used only from the JS engine
