@@ -130,6 +130,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -377,6 +380,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h">
+      <Filter>Header Files\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
