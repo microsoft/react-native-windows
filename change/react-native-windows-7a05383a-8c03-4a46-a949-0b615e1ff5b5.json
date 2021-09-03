@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "announce changes to accessibilityState",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
