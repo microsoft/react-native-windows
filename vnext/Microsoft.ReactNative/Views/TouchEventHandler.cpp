@@ -234,7 +234,7 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
 
     // Updates the enter/leave state when pointer was previously captured
     if (wasCaptured) {
-      UpdatePointersInViews(args, tag, sourceElement);
+      UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
     }
   }
 }
@@ -338,8 +338,8 @@ void TouchEventHandler::UpdatePointersInViews(
       pointer = m_pointers[*optPointerIndex];
       UpdateReactPointer(pointer, args, sourceElement);
     } else {
-      // tagsForBranch is empty when called from OnPointerExited, in this case
-      // use -1 for the JS event pointer target
+      // newViews is empty when UpdatePointersInViews is called from outside
+      // the root view, in this case use -1 for the JS event pointer target
       const auto tag = !newViews.empty() ? newViews.front() : -1;
       pointer = CreateReactPointer(args, tag, sourceElement);
     }
@@ -630,24 +630,28 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
     // Walk to root to find refined React target view
     const auto argsImpl = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
     while (node) {
-      const auto previousTarget = args.Target();
       if (args.Target() == nullptr) {
         args.Target(node->GetView());
       }
+
+      const auto previousTarget = args.Target();
 
       node->GetViewManager()->OnPointerEvent(node, args);
 
       if (args.Target() != previousTarget) {
         tagsForBranch.clear();
+        if (const auto target = args.Target().try_as<XamlView>()) {
+          // We assume that if a ViewManager is going to change the target, it
+          // can only update the target to one of its descendants.
+          const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(target), node->m_tag);
+          for (auto tag : tagsToCurrentTarget) {
+            tagsForBranch.push_back(tag);
+          }
+        }
       }
 
-      if (const auto target = args.Target().try_as<XamlView>()) {
-        // We assume that if a ViewManager is going to change the target, it
-        // can only update the target to one of its descendants.
-        const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(target), node->m_tag);
-        for (auto tag : tagsToCurrentTarget) {
-          tagsForBranch.push_back(tag);
-        }
+      if (args.Target() != nullptr) {
+        tagsForBranch.push_back(node->m_tag);
       }
 
       node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
@@ -666,7 +670,7 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
         sourceElement = node->GetView().try_as<xaml::UIElement>();
       }
 
-      if (sourceElement && node) {
+      if (sourceElement) {
         // If a TextBlock was the UIElement event source, perform a more accurate hit test,
         // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
         // This is to support nested <Text> elements in React.
@@ -680,19 +684,17 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
             bool isHit = false;
             const auto finerTag = TestHit(inlines, pointerPos, isHit);
             if (finerTag) {
-              const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(finerTag), node->m_tag);
-              // Remove the front element from the vector as it will be added again after getting the Text tree tags
-              tagsForBranch.erase(tagsForBranch.begin());
+              const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(finerTag), GetTag(tag));
               for (auto tag : tagsToCurrentTarget) {
                 tagsForBranch.insert(tagsForBranch.begin(), tag);
               }
             }
           }
-
-          *pTagsForBranch = std::move(tagsForBranch);
-          *pSourceElement = sourceElement;
-          return true;
         }
+
+        *pTagsForBranch = std::move(tagsForBranch);
+        *pSourceElement = sourceElement;
+        return true;
       }
     }
   }
@@ -756,11 +758,11 @@ std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, i
 
   auto *shadowNode = host->FindShadowNodeForTag(tag);
   while (shadowNode != nullptr && tag != -1) {
-    tags.push_back(tag);
     if (tag == rootTag) {
       break;
     }
 
+    tags.push_back(tag);
     tag = shadowNode->m_parent;
     shadowNode = host->FindShadowNodeForTag(tag);
   }
