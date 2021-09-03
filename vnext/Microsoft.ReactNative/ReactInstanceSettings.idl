@@ -181,6 +181,11 @@ namespace Microsoft.ReactNative
     UInt16 DebuggerPort { get; set; };
 
     DOC_STRING(
+      "Name to associate with the JavaScript runtime when debugging. \n"
+      "This name will show up in the list of JavaScript runtimes to attach to in edge://inspect or other debuggers")
+    String DebuggerRuntimeName { get; set; };
+
+    DOC_STRING(
       "Provides an extension point to allow custom error handling within the react instance. "
       "See @IRedBoxHandler for more information.")
     IRedBoxHandler RedBoxHandler { get; set; };

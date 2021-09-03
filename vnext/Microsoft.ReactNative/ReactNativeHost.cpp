@@ -115,6 +115,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
   reactOptions.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
   reactOptions.DeveloperSettings.DebuggerPort = m_instanceSettings.DebuggerPort();
+  reactOptions.DeveloperSettings.DebuggerRuntimeName = to_string(m_instanceSettings.DebuggerRuntimeName());
   if (m_instanceSettings.RedBoxHandler()) {
     reactOptions.RedBoxHandler = Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler());
   }

@@ -77,9 +77,6 @@ struct DevSettings {
 
   bool useFastRefresh{false};
 
-  // Enables ChakraCore console redirection to debugger
-  bool debuggerConsoleRedirection{false};
-
   /// A factory and holder of jsi::Runtime instance to be used for this react
   /// instance. This object should in general be used only from the JS engine
   /// thread, unless the specific runtime implementation explicitly guarantees
