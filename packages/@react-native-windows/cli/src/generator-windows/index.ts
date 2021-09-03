@@ -231,7 +231,7 @@ export async function copyProjectTemplateAndReplace(
     ...cppNugetPackages,
     {
       id: options.useWinUI3
-        ? 'Microsoft.ProjectReunion.WinUI'
+        ? 'Microsoft.WindowsAppSDK.WinUI'
         : 'Microsoft.UI.Xaml',
       version: options.useWinUI3 ? winui3Version : winui2xVersion,
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
@@ -629,15 +629,16 @@ export async function installScriptsAndDependencies(options: {
 function getReunionPackages(nugetVersion: string): NugetPackage[] {
   const reunionPackages: NugetPackage[] = [];
   reunionPackages.push({
-    id: 'Microsoft.ReactNative.ProjectReunion',
+    id: 'Microsoft.ReactNative.WindowsAppSDK',
     version: nugetVersion,
   });
 
-  const reunionVersion = '0.8.0';
+  const reunionVersion = '1.0.0-experimental1';
   for (const pkg of [
-    'Microsoft.ProjectReunion',
-    'Microsoft.ProjectReunion.Foundation',
-    'Microsoft.ProjectReunion.WinUI',
+    'Microsoft.WindowsAppSDK',
+    'Microsoft.WindowsAppSDK.Foundation',
+    'Microsoft.WindowsAppSDK.WinUI',
+    'Microsoft.WindowsAppSDK.InteractiveExperiences',
   ]) {
     reunionPackages.push({
       id: pkg,

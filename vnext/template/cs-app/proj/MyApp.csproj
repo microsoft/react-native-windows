@@ -149,7 +149,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="Microsoft.ProjectReunion.WinUI">
+        <PackageReference Include="Microsoft.WindowsAppSDK.WinUI">
           <Version>$(WinUI3Version)</Version>
         </PackageReference>
       </ItemGroup>

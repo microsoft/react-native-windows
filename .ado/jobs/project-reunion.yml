@@ -1,14 +1,14 @@
 parameters:
   - name: buildEnvironment
     type: string
-    default : PullRequest
+    default: PullRequest
     values:
       - PullRequest
       - Continuous
 
 jobs:
   - job: Reunion
-    displayName: Project Reunion
+    displayName: Windows App SDK
     variables:
       - template: ../variables/vs2019.yml
     strategy:
@@ -57,7 +57,7 @@ jobs:
             Microsoft.ReactNative.ProjectReunion\**
 
       - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: Project Reunion"
+        displayName: "Publish Artifact: Windows App SDK"
         inputs:
           artifactName: ReactWindows
           pathToPublish: $(Build.StagingDirectory)
@@ -78,11 +78,10 @@ jobs:
           slices: '("x64.Release")'
 
       - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: Project Reunion NuGet"
+        displayName: "Publish Artifact: Windows App SDK NuGet"
         inputs:
           artifactName: ReunionNuGet
           pathToPublish: $(Build.SourcesDirectory)/NugetRootFinal/Microsoft.ReactNative.ProjectReunion.0.0.1-pr.nupkg
           parallel: true
-
 
       - template: ../templates/component-governance.yml

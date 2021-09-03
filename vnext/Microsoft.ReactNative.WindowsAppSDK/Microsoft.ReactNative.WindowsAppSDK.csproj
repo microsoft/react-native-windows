@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Ideally we target 17763, but we can't do that 
+      until https://github.com/microsoft/WindowsAppSDK/issues/921 is fixed -->
+    <!-- <TargetFramework>net5.0-windows10.0.22000.168</TargetFramework> -->
+    <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CsWinRTIncludes>Microsoft.ReactNative</CsWinRTIncludes>
+    <CsWinRTGeneratedFilesDir>$(OutDir)</CsWinRTGeneratedFilesDir>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="nuget\Microsoft.ReactNative.WindowsAppSDK.nuspec" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.3.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />-->
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-experimental1" />
+
+    <!-- 
+      See comment in ExperimentalFeatures.props - we can't use 22000 _yet_
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.22000.168-preview" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22000.168-preview" /> 
+    -->
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.18362.18" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.18362.18" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)\..\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <!-- we don't generate the nuget package from within MSBuild since we have to codesign it.
+    Instead we pack it with nuget.exe, unpack it, sign the binaries, re-pack it and sign the package -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <Target Name="CopyOutputDll" AfterTargets="CopyFilesToOutputDirectory">
+    <Copy SourceFiles="..\build\$(Platform)\$(Configuration)\Microsoft.ReactNative.WindowsAppSDK\Microsoft.ReactNative.WindowsAppSDK\bin\Microsoft.ReactNative.WindowsAppSDK.dll" DestinationFolder="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.WindowsAppSDK" SkipUnchangedFiles="true" />
+    <ItemGroup>
+      <FilesWritten Include="..\target\$(Platform)\$(Configuration)\Microsoft.ReactNative.WindowsAppSDK\Microsoft.ReactNative.WindowsAppSDK.dll" />
+    </ItemGroup>
+  </Target>
+</Project>

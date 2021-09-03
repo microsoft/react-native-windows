@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="WinUI3 versioning">
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">0.8.1</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.0.0-experimental1</WinUI3Version>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(UseWinUI3)'=='true'">
-    <WinUIPackageName>Microsoft.ProjectReunion.WinUI</WinUIPackageName>
+    <WinUIPackageName>Microsoft.WindowsAppSDK.WinUI</WinUIPackageName>
     <WinUIPackageVersion>$(WinUI3Version)</WinUIPackageVersion>
     <WinUIPackageProps>$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).props</WinUIPackageProps>
 
@@ -21,6 +21,14 @@
     <IsWinUIAlpha Condition="'$(IsWinUIAlpha)' == ''">true</IsWinUIAlpha>
     <WindowsKitsPath Condition="'$(IsWinUIAlpha)' == 'true'">WinUI-Alpha-Projects-Don-t-Use-SDK-Xaml-Tools</WindowsKitsPath>
   </PropertyGroup>
+
+  <Import Condition="'$(UseWinUI3)'=='true'" Project="$(SolutionDir)\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.props" />
+  <Import Condition="'$(UseWinUI3)'=='true'" Project="$(SolutionDir)\packages\Microsoft.WindowsAppSDK.InteractiveExperiences.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.InteractiveExperiences.props" />
+
+  <!-- There is no WinAppSDK.targets
+    <Import Condition="'$(UseWinUI3)'=='true'" Project="$(SolutionDir)\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.targets" /> 
+  -->
+  <Import Condition="'$(UseWinUI3)'=='true'" Project="$(SolutionDir)\packages\Microsoft.WindowsAppSDK.InteractiveExperiences.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.InteractiveExperiences.targets" />
 
   <PropertyGroup Condition="'$(UseWinUI3)'!='true'">
     <WinUIPackageName>Microsoft.UI.Xaml</WinUIPackageName>
