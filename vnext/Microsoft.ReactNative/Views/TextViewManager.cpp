@@ -219,6 +219,19 @@ bool TextViewManager::UpdateProperty(
     if (react::uwp::IsValidColorValue(propertyValue)) {
       static_cast<TextShadowNode *>(nodeToUpdate)->m_backgroundColor = react::uwp::ColorFrom(propertyValue);
     }
+  } else if (propertyName == "accessibilityRole") {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &role = propertyValue.AsString();
+
+      if (role == "header") {
+        xaml::Automation::AutomationProperties::SetHeadingLevel(
+            textBlock, winrt::Peers::AutomationHeadingLevel::Level2);
+      } else {
+        textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
+      }
+    } else if (propertyValue.IsNull()) {
+      textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
+    }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
