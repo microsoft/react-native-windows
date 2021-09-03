@@ -3,7 +3,7 @@
 
 using Microsoft.ReactNative;
 
-namespace ReactUWPTestApp
+namespace RNTesterApp
 {
     public partial class ReactPackageProvider : IReactPackageProvider
     {
