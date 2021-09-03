@@ -1,6 +1,17 @@
 <Project>
-  <PropertyGroup Condition="'$(SolutionName)'=='Microsoft.ReactNative.ProjectReunion'">
+  <PropertyGroup Condition="'$(SolutionName)'=='Microsoft.ReactNative.WindowsAppSDK'">
     <UseWinUI3>true</UseWinUI3>
+    <!-- <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion> -->
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <!-- 
+      ******** TODO *********
+      Temporary workaround until the 22000 SDK is shipped 
+      We use WinAppSDK 1.0-experimental - this means certain types like xaml's Application are marked experimental
+      There is a bug in older versions of MIDL where it doesn't understand [experimental] correctly
+      This was fixed in the 22000 SDK.
+
+      However, we can't use the 22000 because we don't have a TargetFramework for it, like net5.0-windows10.0.22000.168
+    -->
+    <MIDLToolPath>C:\Program Files (x86)\Windows Kits\10\bin\10.0.22000.0\x64</MIDLToolPath>
   </PropertyGroup>
 </Project>

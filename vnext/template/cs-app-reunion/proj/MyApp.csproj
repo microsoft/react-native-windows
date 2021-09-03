@@ -10,6 +10,7 @@
     <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
     <ProjectGuid>{{ projectGuidUpper }}</ProjectGuid>
     <ReactNativeProjectType>App-Reunion</ReactNativeProjectType>
+    <UseWinUI>true</UseWinUI>
   </PropertyGroup>
 
   <PropertyGroup Label="ReactNativeWindowsProps">
@@ -26,8 +27,6 @@
     </PackageReference>
     {{/csNugetPackages}}
 
-    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.18362.16" />
-    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.18362.16" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 </Project>
