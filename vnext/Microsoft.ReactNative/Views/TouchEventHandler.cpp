@@ -96,7 +96,7 @@ void TouchEventHandler::OnPointerPressed(
   xaml::UIElement sourceElement(nullptr);
   const auto eventType = TouchEventType::Start;
   const auto kind = GetPointerEventKind(eventType);
-  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
+  const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
   if (!PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
@@ -167,7 +167,7 @@ void TouchEventHandler::OnPointerMoved(
   xaml::UIElement sourceElement(nullptr);
   const auto eventType = TouchEventType::Move;
   const auto kind = GetPointerEventKind(eventType);
-  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
+  const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
   if (!PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
@@ -201,7 +201,7 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   std::vector<int64_t> tagsForBranch;
   xaml::UIElement sourceElement(nullptr);
   const auto kind = GetPointerEventKind(eventType);
-  auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
+  const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
   const auto argsImpl =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
   if (PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
@@ -305,7 +305,7 @@ std::optional<size_t> TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId
 void TouchEventHandler::UpdatePointersInViews(
     const winrt::PointerRoutedEventArgs &args,
     xaml::UIElement sourceElement,
-    std::vector<int64_t> &&tagsForBranch) {
+    std::vector<int64_t> &&newViews) {
   if (auto nativeUiManager = GetNativeUIManager(*m_context).lock()) {
     auto puiManagerHost = nativeUiManager->getHost();
     int32_t pointerId = args.Pointer().PointerId();
@@ -325,12 +325,12 @@ void TouchEventHandler::UpdatePointersInViews(
     }
 
     // Short-circuit if the hierarchy hasn't changed
-    if ((existingViews == nullptr && tagsForBranch.size() == 0) ||
-        (existingViews != nullptr && existingViews->orderedTags == tagsForBranch))
+    if ((existingViews == nullptr && newViews.size() == 0) ||
+        (existingViews != nullptr && existingViews->orderedTags == newViews))
       return;
 
     // Prep to fire pointer events
-    std::unordered_set<int64_t> newViewsSet(tagsForBranch.begin(), tagsForBranch.end());
+    std::unordered_set<int64_t> newViewsSet(newViews.begin(), newViews.end());
     ReactPointer pointer;
 
     auto optPointerIndex = IndexOfPointerWithId(pointerId);
@@ -340,7 +340,7 @@ void TouchEventHandler::UpdatePointersInViews(
     } else {
       // tagsForBranch is empty when called from OnPointerExited, in this case
       // use -1 for the JS event pointer target
-      const auto tag = !tagsForBranch.empty() ? tagsForBranch.front() : -1;
+      const auto tag = !newViews.empty() ? newViews.front() : -1;
       pointer = CreateReactPointer(args, tag, sourceElement);
     }
 
@@ -361,7 +361,7 @@ void TouchEventHandler::UpdatePointersInViews(
     }
 
     // Walk through newViews from outermost to inner, firing mouseEnter events if they are not in existingViews
-    for (auto iter = tagsForBranch.rbegin(); iter != tagsForBranch.rend(); ++iter) {
+    for (auto iter = newViews.rbegin(); iter != newViews.rend(); ++iter) {
       int64_t newTag = *iter;
       if (existingViews && existingViews->tags.count(newTag)) {
         continue;
@@ -375,7 +375,7 @@ void TouchEventHandler::UpdatePointersInViews(
             winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, newTag)));
     }
 
-    m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(tagsForBranch)};
+    m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
   }
 }
 
@@ -605,7 +605,7 @@ const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType
 }
 
 bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
-    winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
+    const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
     std::vector<int64_t> *pTagsForBranch,
     xaml::UIElement *pSourceElement) {
   assert(pTagsForBranch != nullptr);
@@ -666,7 +666,7 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
         sourceElement = node->GetView().try_as<xaml::UIElement>();
       }
 
-      if (sourceElement) {
+      if (sourceElement && node) {
         // If a TextBlock was the UIElement event source, perform a more accurate hit test,
         // searching for the tag of the nested Run/Span XAML elements that the user actually clicked.
         // This is to support nested <Text> elements in React.
