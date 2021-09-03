@@ -62,7 +62,7 @@ namespace {{ namespace }}
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             m_window = new MainWindow();
-            m_window.Title = "React Native for Windows - Project Reunion";
+            m_window.Title = "React Native for Windows - Windows App SDK";
 
             m_window.Activate();
         }
