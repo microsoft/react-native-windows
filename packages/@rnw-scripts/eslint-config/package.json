@@ -13,5 +13,6 @@
   },
   "peerDependencies": {
     "eslint": ">=6.7.0"
-  }
+  },
+  "private": true
 }
