@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Rename node-rnw-rpc to @react-native-windows/automation-channel",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

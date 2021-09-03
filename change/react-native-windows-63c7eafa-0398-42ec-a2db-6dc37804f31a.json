@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fire onMouseEnter/Leave events on pointer conclude",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

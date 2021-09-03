@@ -1,0 +1,28 @@
+{
+  "name": "@react-native-windows/automation-channel",
+  "entries": [
+    {
+      "date": "Fri, 03 Sep 2021 05:06:04 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rename node-rnw-rpc to @react-native-windows/automation-channel",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4299613c621622415b6d5ffab83d37984f444707",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.369",
+            "author": "erozell@outlook.com",
+            "commit": "439b8a54b62807068bfa17e130f8ab0378eaaf36",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    }
+  ]
+}
