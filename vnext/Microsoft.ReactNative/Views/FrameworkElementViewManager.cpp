@@ -17,8 +17,8 @@
 #include <WindowsNumerics.h>
 #include <winrt/Windows.Foundation.h>
 
-#include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Automation.Peers.h>
+#include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include "Utils/PropertyHandlerUtils.h"
 
