@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix race condition when building customer projects",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
