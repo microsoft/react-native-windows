@@ -2,8 +2,9 @@
   <PropertyGroup>
     <!-- Ideally we target 17763, but we can't do that 
       until https://github.com/microsoft/WindowsAppSDK/issues/921 is fixed -->
-    <!-- <TargetFramework>net5.0-windows10.0.22000.168</TargetFramework> -->
-    <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
+    <TargetFramework>net5.0-windows10.0.22000.0</TargetFramework>
+    <UseWindowsSdkPreview>true</UseWindowsSdkPreview>
+    <WindowsSdkPackageVersion>10.0.22000.168-preview</WindowsSdkPackageVersion>
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
