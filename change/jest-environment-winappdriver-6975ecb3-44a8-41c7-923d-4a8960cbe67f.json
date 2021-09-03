@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Rename node-rnw-rpc to @react-native-windows/automation-channel",
+  "packageName": "jest-environment-winappdriver",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-cbec66ef9",
+  "baseVersion": "0.0.0-ad9030ca9",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a592b13f7939851f6dc726745b919c0e51bbb258"
+      "baseHash": "a715deecb01066f69db3959e0d270f5a2a88e598"
     },
     {
       "type": "patch",
@@ -62,7 +62,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "08c12222a63e1f9332bb0c3f327c58609a3cf13f",
+      "baseHash": "a1440e2030ee018bb8f0b54703e3b1848db6ffb4",
       "issue": 5430
     },
     {
@@ -76,7 +76,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "96a5214433005766d7d57ceea5a1dd0a30d4e88f"
+      "baseHash": "3f55b3104a728f68008ba473bb64bbe8fc7ad8c9"
     },
     {
       "type": "platform",
@@ -143,12 +143,6 @@
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
       "baseHash": "a9a4a6c92de922a11f8b81642b1bf1270d0b7b96"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
-      "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
-      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
       "type": "derived",
@@ -234,7 +228,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "88931b189b9a91bbdbbcff7c7728ed4763b77041"
+      "baseHash": "d88f479a06105b51ff32122ae898b04ee66c0d33"
     },
     {
       "type": "patch",
@@ -286,7 +280,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "2f0914e8109babafd4694f3f13fb29d1eeb227fe"
+      "baseHash": "b6c5dab8543275d60d0d0efd4be435c372376f3d"
     },
     {
       "type": "patch",
@@ -318,7 +312,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
+      "baseHash": "c8d495e707fc61bbfb929b9a343f5460c3b60c28",
       "issue": 4590
     },
     {

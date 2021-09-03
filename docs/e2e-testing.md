@@ -88,7 +88,7 @@ test application.
 ### Jest
 
 Jest is the test runner used for end-to-end testing, including assertsion libraries, test selection, etc. WebDriverIO setup is
-provided by a custom environment [`jest-environment-winappdriver`](../packages/jest-environment-winappdriver).
+provided by a custom environment [`@react-native-windows/automation`](../packages/@react-native-windows/automation).
 
 ## Authoring Tests
 
@@ -151,7 +151,7 @@ of testing againt the react tree, e2e-test-app compares the fully rendered XAML 
 correctness of ViewManagers.
 
 ```ts
-import {dumpVisualTree} from './framework';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 
 test('Example test', async () => {
   const dump = await dumpVisualTree('test-id-here');

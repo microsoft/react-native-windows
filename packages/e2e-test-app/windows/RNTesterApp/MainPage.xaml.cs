@@ -1,4 +1,4 @@
-using NodeRpc;
+using AutomationChannel;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace RNTesterApp
             myRootView.ComponentName = "RNTesterApp";
 
 
-            var handler = new Handler();
+            var handler = new CommandHandler();
             handler.BindOperation("DumpVisualTree", DumpVisualTree);
 
             var server = new Server(handler);
