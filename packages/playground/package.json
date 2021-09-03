@@ -33,5 +33,8 @@
     "metro-resolver": "^0.66.0",
     "prettier": "1.19.1",
     "react-test-renderer": "17.0.2"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
   }
 }

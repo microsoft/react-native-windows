@@ -45,5 +45,8 @@
     "react-test-renderer": "17.0.2",
     "sanitize-filename": "^1.6.3",
     "typescript": "^3.8.3"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
   }
 }

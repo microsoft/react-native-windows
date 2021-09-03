@@ -18,5 +18,8 @@
   "peerDependencies": {
     "babel-jest": "^26.3.0",
     "jest": "^26.4.0"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
   }
 }
