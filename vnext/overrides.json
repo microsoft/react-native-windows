@@ -146,7 +146,7 @@
     },
     {
       "type": "copy",
-      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.win32.js",
+      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
       "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
       "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc",
       "issue": 4378
