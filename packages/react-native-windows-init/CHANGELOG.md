@@ -1,8 +1,17 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Sep 2021 18:48:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.62
+
+Fri, 03 Sep 2021 18:48:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.66.0-preview.1 (ngerlem@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.66.0-preview.1 (ngerlem@microsoft.com)
 
 ## 1.1.62
 

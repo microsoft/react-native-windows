@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/find-repo-root
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Sep 2021 18:48:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.0-preview.1
+
+Fri, 03 Sep 2021 18:48:19 GMT
+
+### Changes
+
+- Promote 0.66 to preview (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.23
 

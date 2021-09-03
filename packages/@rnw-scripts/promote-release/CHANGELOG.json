@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Fri, 03 Sep 2021 18:48:19 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.24",
+      "version": "1.2.24",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.66.0-preview.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf1dcfbe108028869e326bb2bdab370949f7dac8",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@rnw-scripts/promote-release_v1.2.24",
       "version": "1.2.24",

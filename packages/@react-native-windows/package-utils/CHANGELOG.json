@@ -2,6 +2,21 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Fri, 03 Sep 2021 18:48:19 GMT",
+      "tag": "@react-native-windows/package-utils_v0.66.0-preview.1",
+      "version": "0.66.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Promote 0.66 to preview",
+            "author": "ngerlem@microsoft.com",
+            "commit": "cf1dcfbe108028869e326bb2bdab370949f7dac8",
+            "package": "@react-native-windows/package-utils"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.20",
       "version": "0.0.0-canary.20",
