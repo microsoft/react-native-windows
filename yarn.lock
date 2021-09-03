@@ -5453,6 +5453,11 @@ flow-parser@0.*:
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.113.0.tgz#5b5913c54833918d0c3136ba69f6cf0cdd85fc20"
   integrity sha512-+hRyEB1sVLNMTMniDdM1JIS8BJ3HUL7IFIJaxX+t/JUy0GNYdI0Tg1QLx8DJmOF8HeoCrUDcREpnDAc/pPta3w==
 
+flow-parser@^0.121.0:
+  version "0.121.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.121.0.tgz#9f9898eaec91a9f7c323e9e992d81ab5c58e618f"
+  integrity sha512-1gIBiWJNR0tKUNv8gZuk7l9rVX06OuLzY9AoGio7y/JT4V1IZErEMEq2TJS+PFcw/y0RshZ1J/27VfK1UQzYVg==
+
 follow-redirects@^1.10.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
@@ -9319,6 +9324,15 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+react-native-codegen@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.7.tgz#86651c5c5fec67a8077ef7f4e36f7ed459043e14"
+  integrity sha512-dwNgR8zJ3ALr480QnAmpTiqvFo+rDtq6V5oCggKhYFlRjzOmVSFn3YD41u8ltvKS5G2nQ8gCs2vReFFnRGLYng==
+  dependencies:
+    flow-parser "^0.121.0"
+    jscodeshift "^0.11.0"
+    nullthrows "^1.1.1"
+
 react-native-tscodegen@0.68.3:
   version "0.68.3"
   resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.3.tgz#41bec2b3716b36b218a9ace467010628f89b67ba"
@@ -9328,10 +9342,10 @@ react-native-tscodegen@0.68.3:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
-react-native@0.0.0-ad9030ca9:
-  version "0.0.0-ad9030ca9"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-ad9030ca9.tgz#59ba620fd53995b6de9b2bd8d1efdd34363ef01c"
-  integrity sha512-By0R45rmA00RlhxeKI09GDAWpdPTDdC9Nf3tFcf16nvbWt9ACYudQ6iiQ78GsKNDr3PdWiDn3/w4+QHz8iIjrA==
+react-native@0.66.0-rc.1:
+  version "0.66.0-rc.1"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.66.0-rc.1.tgz#0df38ca2b4409d500615d97271042354ea20e475"
+  integrity sha512-FaXhSzFL7Re1RZAL9RLRVbrc1BXVe9qlPezUwzJBCTtkMnSInWiC2yIAoovhJeA+aRQg3IQbZ145sF5imWg0+w==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
@@ -9356,6 +9370,7 @@ react-native@0.0.0-ad9030ca9:
     promise "^8.0.3"
     prop-types "^15.7.2"
     react-devtools-core "^4.13.0"
+    react-native-codegen "^0.0.7"
     react-refresh "^0.4.0"
     regenerator-runtime "^0.13.2"
     scheduler "^0.20.2"

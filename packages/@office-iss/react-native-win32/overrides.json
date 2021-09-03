@@ -6,7 +6,7 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-ad9030ca9",
+  "baseVersion": "0.66.0-rc.1",
   "overrides": [
     {
       "type": "derived",
@@ -18,7 +18,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "3f55b3104a728f68008ba473bb64bbe8fc7ad8c9"
+      "baseHash": "96a5214433005766d7d57ceea5a1dd0a30d4e88f"
     },
     {
       "type": "patch",
@@ -53,6 +53,13 @@
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.win32.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
       "baseHash": "a9a4a6c92de922a11f8b81642b1bf1270d0b7b96",
+      "issue": 4378
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.win32.js",
+      "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
+      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc",
       "issue": 4378
     },
     {
@@ -209,7 +216,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "c8d495e707fc61bbfb929b9a343f5460c3b60c28",
+      "baseHash": "e259481373eaf9acad79087e1fdd3c0e27e25ee5",
       "issue": 4320
     },
     {
@@ -383,7 +390,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "1a47d1e4a1026573cabdda0fa6374ca64bd41b81"
+      "baseHash": "9940bfdf0c803eb1d6905563803fa9deac1c7770"
     },
     {
       "type": "derived",
