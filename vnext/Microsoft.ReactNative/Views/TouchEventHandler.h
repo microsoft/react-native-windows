@@ -79,7 +79,7 @@ class TouchEventHandler {
   void UpdatePointersInViews(
       const winrt::PointerRoutedEventArgs &args,
       xaml::UIElement sourceElement,
-      std::vector<int64_t> &&tagsForBranch);
+      std::vector<int64_t> &&newViews);
 
 #ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
@@ -105,7 +105,7 @@ class TouchEventHandler {
   int64_t m_touchId = 0;
 
   bool PropagatePointerEventAndFindReactTarget(
-      winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
+      const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
       std::vector<int64_t> *pTagsForBranch,
       xaml::UIElement *pSourceElement);
   winrt::IPropertyValue TestHit(
