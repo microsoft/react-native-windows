@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Sep 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.370",
+      "version": "0.0.0-canary.370",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix race condition when building customer projects",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d0c3465f27bd0de739b23b46e957cbdab6bdf014",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 05:06:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.369",
       "version": "0.0.0-canary.369",

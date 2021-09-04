@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Sep 2021 05:06:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.370
+
+Sat, 04 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Fix race condition when building customer projects (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.369
 
