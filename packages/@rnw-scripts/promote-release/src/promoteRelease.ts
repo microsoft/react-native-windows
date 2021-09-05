@@ -66,9 +66,17 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
   console.log('Generating change files...');
   if (argv.release === 'preview') {
-    await createChangeFiles('prerelease', commitMessage);
+    await createChangeFiles({
+      changeType: 'prerelease',
+      message: commitMessage,
+      branch: 'main',
+    });
   } else {
-    await createChangeFiles('patch', commitMessage);
+    await createChangeFiles({
+      changeType: 'patch',
+      message: commitMessage,
+      branch: branchName,
+    });
   }
 
   console.log(chalk.green('All done! Please check locally commited changes.'));
@@ -232,13 +240,14 @@ async function markMainBranchPackagesPrivate() {
  * @param changeType prerelease or patch
  * @param message changelog message
  */
-async function createChangeFiles(
-  changeType: 'prerelease' | 'patch',
-  message: string,
-) {
+async function createChangeFiles(opts: {
+  changeType: 'prerelease' | 'patch';
+  message: string;
+  branch: string;
+}) {
   const repoRoot = await findRepoRoot();
   child_process.execSync(
-    `npx beachball change --type ${changeType} --message "${message}"`,
+    `npx beachball change --type ${opts.changeType} --message "${opts.message}" --branch ${opts.branch}`,
     {cwd: repoRoot, stdio: 'ignore'},
   );
 }
