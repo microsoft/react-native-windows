@@ -10,6 +10,16 @@ const execa = require(execaPath);
 import type {HealthCheckCategory} from '@react-native-community/cli-types';
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
+  // #8471: There are known cases where the dependencies script will error out.
+  // Fail gracefully if that happens in the meantime.
+  try {
+    return getHealthChecksUnsafe();
+  } catch {
+    return undefined;
+  }
+}
+
+function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
 // All our health checks are windows only...
     if (process.platform !== 'win32') {
         return undefined;
