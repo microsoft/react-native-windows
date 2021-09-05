@@ -25,7 +25,7 @@ export default class Bootstrap extends React.Component<
     this.state = {displayText: 'Starting text. (THIRD ITEM)'};
   }
 
-  myElement = React.createRef();
+  myElement = React.createRef<TextInput>();
 
   render() {
     return (
