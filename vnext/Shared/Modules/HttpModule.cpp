@@ -5,6 +5,14 @@
 
 #include "HttpModule.h"
 
+#include <Utils/CppWinrtLessExceptions.h>
+
+// Windows API
+#include <winrt/Windows.Web.Http.Headers.h>
+#include <winrt/Windows.Web.Http.h>
+
+using namespace winrt::Windows::Web::Http;
+
 using folly::dynamic;
 using std::shared_ptr;
 using std::string;
@@ -55,5 +63,4 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 // clang-format on
 
 #pragma endregion CxxModule
-
 }
