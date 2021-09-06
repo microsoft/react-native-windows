@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Create change files against main branch during preview",
-  "packageName": "@rnw-scripts/promote-release",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
