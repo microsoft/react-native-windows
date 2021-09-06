@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Sep 2021 15:06:57 GMT",
+      "tag": "react-native-windows_v0.65.2",
+      "version": "0.65.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix race condition when building customer projects",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b376766f3a64bcdaef810c8d065ddead2e361840",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow override of global.nativeLoggingHook",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e9d1fd2961708f3b6d301a1c6dea853c8fa58c70",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "UIA Heading support",
+            "author": "agnel@microsoft.com",
+            "commit": "daa66f1b0a402b5e0610678fabc72b642ed039b4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Cherry Pick e64bc29",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "668a30a0b97a3f3cc8d04f57931e1891bca50e37",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "79e083a77b0e8d2f1b363563160dc959448560e1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Aug 2021 15:06:56 GMT",
       "tag": "react-native-windows_v0.65.1",
       "version": "0.65.1",
