@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Stop Tagging 0.63 Builds",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}
