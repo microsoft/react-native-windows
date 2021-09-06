@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Sep 2021 15:06:38 GMT",
+      "tag": "react-native-windows_v0.64.17",
+      "version": "0.64.17",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow override of global.nativeLoggingHook",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "881bf585ca6683a38f2582ebfe5a43e5061ad131",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "[0.64] UIA Heading support",
+            "author": "agnel@microsoft.com",
+            "commit": "76ab83b0e3ce12d9360b0aa1b1dcb503b96d9183",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "dc87c68c7eafcb30219e2cc3051cf07b4a7b7f4e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Aug 2021 15:07:10 GMT",
       "tag": "react-native-windows_v0.64.16",
       "version": "0.64.16",

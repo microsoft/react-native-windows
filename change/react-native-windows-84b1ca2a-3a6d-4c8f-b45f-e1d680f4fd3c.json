@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.64] UIA Heading support",
-  "packageName": "react-native-windows",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}
