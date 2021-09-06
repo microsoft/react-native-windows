@@ -2170,7 +2170,7 @@
   resolved "https://registry.yarnpkg.com/@types/mustache/-/mustache-4.1.2.tgz#d0e158013c81674a5b6d8780bc3fe234e1804eaf"
   integrity sha512-c4OVMMcyodKQ9dpwBwh3ofK9P6U9ZktKU9S+p33UqwMNN1vlv2P0zJZUScTshnx7OEoIIRcCFNQ904sYxZz8kg==
 
-"@types/node-fetch@*", "@types/node-fetch@^2.5.0", "@types/node-fetch@^2.5.8":
+"@types/node-fetch@^2.5.0", "@types/node-fetch@^2.5.12", "@types/node-fetch@^2.5.8":
   version "2.5.12"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.5.12.tgz#8a6f779b1d4e60b7a57fb6fd48d84fb545b9cc66"
   integrity sha512-MKgC4dlq4kKNa/mYrwpKfzQMB5X3ee5U6fSprkKpToBqBmX4nFZL9cW5jl6sWn+xpRJ7ypWh2yyqqr8UUCstSw==
@@ -2204,12 +2204,12 @@
   integrity sha512-vbt5fb0y1svMhu++1lwtKmZL76d0uPChFlw7kEzyUmTwfmpHRcFb8i0R8ElT69q/L+QLgK2hgECivIAvaEDwag==
 
 "@types/npm-registry-fetch@^8.0.0":
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.1.tgz#2a4b20ddabbba2ec96a423af1c0d479b3f4db4c0"
-  integrity sha512-gXna+QVu8DoccVk2dYLEPdLqNPvAOz8tK8GKywbuGVqhd6jDV/dffwzkAaCBtHCVQw1QrMYOfaUTo5vPJ7u21g==
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.2.tgz#afbc42f2c45785e723cb550e935ec7f82265821d"
+  integrity sha512-ps8VPCldQJhWXKrM4FYv+X5e2CGTKciHcCFAS+QTjEuP5JX9K6BZ2q/YF/vv7wy+krfJmHbDj0l6AwDcjRIeHA==
   dependencies:
     "@types/node" "*"
-    "@types/node-fetch" "*"
+    "@types/node-fetch" "^2.5.12"
     "@types/npm-package-arg" "*"
     "@types/npmlog" "*"
     "@types/ssri" "*"
