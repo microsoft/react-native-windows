@@ -10,8 +10,7 @@
 
 import type {TurboModule} from '../../TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../../TurboModule/TurboModuleRegistry';
-
-type Int32 = number;
+import type {Int32} from '../../Types/CodegenTypes';
 
 export type DialogOptions = {|
   title?: string,

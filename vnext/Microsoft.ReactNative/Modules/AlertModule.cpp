@@ -38,8 +38,9 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive.value_or(std::string{})));
   dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative.value_or(std::string{})));
   dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral.value_or(std::string{})));
-  if (args.defaultButton >= 0 && args.defaultButton <= 3) {
-    dialog.DefaultButton(static_cast<xaml::Controls::ContentDialogButton>(args.defaultButton));
+  int defaultButton = args.defaultButton.value_or(0);
+  if (defaultButton >= 0 && defaultButton <= 3) {
+    dialog.DefaultButton(static_cast<xaml::Controls::ContentDialogButton>(defaultButton));
   }
 
   if (Is19H1OrHigher()) {

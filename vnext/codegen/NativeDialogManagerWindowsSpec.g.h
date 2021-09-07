@@ -28,7 +28,7 @@ struct DialogManagerWindowsSpec_DialogOptions {
     REACT_FIELD(cancelable)
     std::optional<bool> cancelable;
     REACT_FIELD(defaultButton)
-    std::optional<double> defaultButton;
+    std::optional<int> defaultButton;
 };
 
 struct DialogManagerWindowsSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
