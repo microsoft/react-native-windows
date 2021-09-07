@@ -8,9 +8,9 @@
  * @format
  */
 
-import type {TurboModule} from '../../TurboModule/RCTExport';
-import * as TurboModuleRegistry from '../../TurboModule/TurboModuleRegistry';
-import type {Int32} from '../../Types/CodegenTypes';
+import type {TurboModule} from '../TurboModule/RCTExport';
+import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
+import type {Int32} from '../Types/CodegenTypes';
 
 export type DialogOptions = {|
   title?: string,
