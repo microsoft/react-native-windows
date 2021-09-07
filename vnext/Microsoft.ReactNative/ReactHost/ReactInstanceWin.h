@@ -180,7 +180,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::shared_ptr<react::uwp::AppTheme> m_appTheme;
   Mso::CntPtr<react::uwp::AppearanceChangeListener> m_appearanceListener;
 #endif
-  Mso::CntPtr<Mso::React::ISimpleDispatch> m_uiQueue;
+  Mso::CntPtr<Mso::React::IDispatchQueue2> m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;
 
   std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_jsiRuntimeHolder;

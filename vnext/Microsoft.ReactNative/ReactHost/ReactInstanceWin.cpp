@@ -641,9 +641,9 @@ void ReactInstanceWin::InitNativeMessageThread() noexcept {
 void ReactInstanceWin::InitUIMessageThread() noexcept {
   // Native queue was already given us in constructor.
 
-  m_uiQueue = winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUISimpleDispatch(m_options.Properties);
+  m_uiQueue = winrt::Microsoft::ReactNative::implementation::ReactDispatcher::GetUIDispatchQueue2(m_options.Properties);
   VerifyElseCrashSz(m_uiQueue, "No UI Dispatcher provided");
-  m_uiMessageThread.Exchange(std::make_shared<MessageSimpleDispatchQueue>(
+  m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
       *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
   auto batchingUIThread = react::uwp::MakeBatchingQueueThread(m_uiMessageThread.Load());

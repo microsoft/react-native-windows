@@ -13,5 +13,5 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
 
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
-    const Mso::React::ISimpleDispatch &uiQueue) noexcept;
+    const Mso::React::IDispatchQueue2 &uiQueue) noexcept;
 } // namespace Mso::React

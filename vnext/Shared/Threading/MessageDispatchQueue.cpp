@@ -89,11 +89,11 @@ void MessageDispatchQueue::quitSynchronous() {
 }
 
 //=============================================================================================
-// MessageSimpleDispatchQueue implementation.
+// MessageDispatchQueue2 implementation.
 //=============================================================================================
 
-MessageSimpleDispatchQueue::MessageSimpleDispatchQueue(
-    Mso::React::ISimpleDispatch &dispatchQueue,
+MessageDispatchQueue2::MessageDispatchQueue2(
+    Mso::React::IDispatchQueue2 &dispatchQueue,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept
     : m_stopped{false},
@@ -101,9 +101,9 @@ MessageSimpleDispatchQueue::MessageSimpleDispatchQueue(
       m_whenQuit{std::move(whenQuit)},
       m_dispatchQueue{&dispatchQueue} {}
 
-MessageSimpleDispatchQueue::~MessageSimpleDispatchQueue() noexcept {}
+MessageDispatchQueue2::~MessageDispatchQueue2() noexcept {}
 
-void MessageSimpleDispatchQueue::runOnQueue(std::function<void()> &&func) {
+void MessageDispatchQueue2::runOnQueue(std::function<void()> &&func) {
   if (m_stopped) {
     return;
   }
@@ -115,7 +115,7 @@ void MessageSimpleDispatchQueue::runOnQueue(std::function<void()> &&func) {
   });
 }
 
-void MessageSimpleDispatchQueue::tryFunc(const std::function<void()> &func) noexcept {
+void MessageDispatchQueue2::tryFunc(const std::function<void()> &func) noexcept {
   try {
     func();
   } catch (const std::exception & /*ex*/) {
@@ -125,7 +125,7 @@ void MessageSimpleDispatchQueue::tryFunc(const std::function<void()> &func) noex
   }
 }
 
-void MessageSimpleDispatchQueue::runSync(const Mso::VoidFunctorRef &func) noexcept {
+void MessageDispatchQueue2::runSync(const Mso::VoidFunctorRef &func) noexcept {
   Mso::ManualResetEvent callbackFinished{};
 
   m_dispatchQueue->InvokeElsePost(Mso::MakeDispatchTask(
@@ -141,7 +141,7 @@ void MessageSimpleDispatchQueue::runSync(const Mso::VoidFunctorRef &func) noexce
 
 // runOnQueueSync and quitSynchronous are dangerous.  They should only be
 // used for initialization and cleanup.
-void MessageSimpleDispatchQueue::runOnQueueSync(std::function<void()> &&func) {
+void MessageDispatchQueue2::runOnQueueSync(std::function<void()> &&func) {
   if (m_stopped) {
     return;
   }
@@ -154,7 +154,7 @@ void MessageSimpleDispatchQueue::runOnQueueSync(std::function<void()> &&func) {
 }
 
 // Once quitSynchronous() returns, no further work should run on the queue.
-void MessageSimpleDispatchQueue::quitSynchronous() {
+void MessageDispatchQueue2::quitSynchronous() {
   m_stopped = true;
   runSync([]() noexcept {});
 

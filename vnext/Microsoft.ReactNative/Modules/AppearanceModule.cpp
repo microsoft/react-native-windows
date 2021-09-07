@@ -16,7 +16,7 @@ namespace react::uwp {
 
 AppearanceChangeListener::AppearanceChangeListener(
     const Mso::React::IReactContext &context,
-    const Mso::React::ISimpleDispatch &uiQueue) noexcept
+    const Mso::React::IDispatchQueue2 &uiQueue) noexcept
     : m_queue(&uiQueue), m_context(&context) {
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
     m_currentTheme = currentApp.RequestedTheme();

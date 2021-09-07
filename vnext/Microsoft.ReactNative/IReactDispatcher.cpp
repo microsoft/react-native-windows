@@ -10,8 +10,8 @@ using namespace Windows::Foundation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-// Implements ISimpleDispatch on top of a custom IReactDispatcher provided by the application
-struct WrappedReactDispatcher : public Mso::UnknownObject<Mso::React::ISimpleDispatch> {
+// Implements IDispatchQueue2 on top of a custom IReactDispatcher provided by the application
+struct WrappedReactDispatcher : public Mso::UnknownObject<Mso::React::IDispatchQueue2> {
   WrappedReactDispatcher(const winrt::Microsoft::ReactNative::IReactDispatcher &dispatcher) noexcept
       : m_dispatcher(dispatcher) {}
 
@@ -53,14 +53,14 @@ void ReactDispatcher::InvokeElsePost(Mso::DispatchTask &&task) const noexcept {
   return make<ReactDispatcher>(Mso::DispatchQueue{});
 }
 
-/*static*/ Mso::CntPtr<Mso::React::ISimpleDispatch> ReactDispatcher::GetUISimpleDispatch(
+/*static*/ Mso::CntPtr<Mso::React::IDispatchQueue2> ReactDispatcher::GetUIDispatchQueue2(
     IReactPropertyBag const &properties) noexcept {
   auto iReactDispatcher = GetUIDispatcher(properties);
 
   if (!iReactDispatcher)
     return nullptr;
 
-  if (auto simpleDispatcher = iReactDispatcher.try_as<ISimpleDispatch>())
+  if (auto simpleDispatcher = iReactDispatcher.try_as<IDispatchQueue2>())
     return simpleDispatcher.get();
 
   return Mso::Make<WrappedReactDispatcher>(iReactDispatcher);

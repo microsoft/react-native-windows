@@ -403,7 +403,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
   DefaultRedBoxHandler(
       Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost,
-      const Mso::React::ISimpleDispatch &uiQueue) noexcept
+      const Mso::React::IDispatchQueue2 &uiQueue) noexcept
       : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{&uiQueue} {}
 
   ~DefaultRedBoxHandler() {
@@ -522,7 +522,7 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
   }
 
  private:
-  Mso::CntPtr<const Mso::React::ISimpleDispatch> m_uiQueue;
+  Mso::CntPtr<const Mso::React::IDispatchQueue2> m_uiQueue;
   bool m_showingRedBox{false}; // Access from UI Thread only
   std::mutex m_lockRedBox;
   std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
@@ -570,7 +570,7 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
 
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
-    const Mso::React::ISimpleDispatch &uiQueue) noexcept {
+    const Mso::React::IDispatchQueue2 &uiQueue) noexcept {
 #ifndef CORE_ABI
   return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), uiQueue);
 #else

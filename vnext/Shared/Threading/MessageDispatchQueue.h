@@ -44,14 +44,14 @@ struct MessageDispatchQueue : facebook::react::MessageQueueThread, std::enable_s
   const Mso::Promise<void> m_whenQuit;
 };
 
-struct MessageSimpleDispatchQueue : facebook::react::MessageQueueThread,
-                                    std::enable_shared_from_this<MessageSimpleDispatchQueue> {
-  MessageSimpleDispatchQueue(
-      Mso::React::ISimpleDispatch &dispatchQueue,
+struct MessageDispatchQueue2 : facebook::react::MessageQueueThread,
+                                    std::enable_shared_from_this<MessageDispatchQueue2> {
+  MessageDispatchQueue2(
+      Mso::React::IDispatchQueue2 &dispatchQueue,
       Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
       Mso::Promise<void> &&whenQuit = nullptr) noexcept;
 
-  ~MessageSimpleDispatchQueue() noexcept override;
+  ~MessageDispatchQueue2() noexcept override;
 
  public: // FastMessageQueueThread implementation
   void runOnQueue(std::function<void()> &&func) override;
@@ -69,7 +69,7 @@ struct MessageSimpleDispatchQueue : facebook::react::MessageQueueThread,
 
  private:
   std::atomic<bool> m_stopped;
-  Mso::CntPtr<Mso::React::ISimpleDispatch> m_dispatchQueue;
+  Mso::CntPtr<Mso::React::IDispatchQueue2> m_dispatchQueue;
   Mso::Functor<void(const Mso::ErrorCode &)> m_errorHandler;
   const Mso::Promise<void> m_whenQuit;
 };

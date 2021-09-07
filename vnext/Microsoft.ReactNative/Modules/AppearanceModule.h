@@ -23,14 +23,14 @@ class AppearanceChangeListener final : public Mso::RefCountedObject<Mso::RefCoun
  public:
   AppearanceChangeListener(
       const Mso::React::IReactContext &context,
-      const Mso::React::ISimpleDispatch &uiQueue) noexcept;
+      const Mso::React::IDispatchQueue2 &uiQueue) noexcept;
   const char *GetColorScheme() const noexcept;
 
  private:
   static const char *ToString(ApplicationTheme theme) noexcept;
   void OnColorValuesChanged() noexcept;
 
-  Mso::CntPtr<const Mso::React::ISimpleDispatch> m_queue;
+  Mso::CntPtr<const Mso::React::IDispatchQueue2> m_queue;
   UISettings m_uiSettings;
   UISettings::ColorValuesChanged_revoker m_revoker;
   std::atomic<ApplicationTheme> m_currentTheme;
