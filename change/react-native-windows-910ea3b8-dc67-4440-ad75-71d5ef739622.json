@@ -1,7 +1,7 @@
 {
-  "type": "none",
+  "type": "prerelease",
   "comment": "Match Alert module with NativeDialogManagerAndroidSpec.h",
   "packageName": "react-native-windows",
   "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
