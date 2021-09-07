@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix autolinking to respect WinUI2xVersion or WinUI3Version set in ExperimentalFeatures.props",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
