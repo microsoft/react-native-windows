@@ -112,6 +112,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Alert/NativeDialogManagerWindows.js"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/AppTheme/AppTheme.ts"
     },
     {
