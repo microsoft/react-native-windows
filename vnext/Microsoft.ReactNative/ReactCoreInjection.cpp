@@ -5,6 +5,7 @@
 #include "ReactCoreInjection.h"
 #include "ReactCoreInjection.g.cpp"
 #include "ReactViewOptions.g.cpp"
+#include <future/futureWinRT.h>
 #include "IReactContext.h"
 #include "ReactContext.h"
 #include "ReactInstanceWin.h"
@@ -86,16 +87,18 @@ ReactViewHost::ReactViewHost(
 
 // ReactViewOptions ReactViewHost::Options() noexcept;
 // ReactNative::ReactNativeHost ReactViewHost::ReactHost() noexcept {}
-void ReactViewHost::ReloadViewInstance() noexcept {
-  m_viewHost->ReloadViewInstance();
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::ReloadViewInstance() noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(m_viewHost->ReloadViewInstance());
 }
 
-void ReactViewHost::ReloadViewInstanceWithOptions(ReactNative::ReactViewOptions options) noexcept {
-  m_viewHost->ReloadViewInstanceWithOptions(options.as<ReactViewOptions>()->CreateViewOptions());
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::ReloadViewInstanceWithOptions(
+    ReactNative::ReactViewOptions options) noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(
+      m_viewHost->ReloadViewInstanceWithOptions(options.as<ReactViewOptions>()->CreateViewOptions()));
 }
 
-void ReactViewHost::UnloadViewInstance() noexcept {
-  m_viewHost->UnloadViewInstance();
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::UnloadViewInstance() noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(m_viewHost->UnloadViewInstance());
 }
 
 //! This class ensures that we access ReactRootView from UI thread.
@@ -151,10 +154,16 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
   }
 };
 
-void ReactViewHost::AttachViewInstance(ReactNative::IReactViewInstance viewInstance) noexcept {
-  m_viewHost->AttachViewInstance(*Mso::Make<ReactViewInstance>(viewInstance, m_uiDispatcher));
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::AttachViewInstance(
+    ReactNative::IReactViewInstance viewInstance) noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(
+      m_viewHost->AttachViewInstance(*Mso::Make<ReactViewInstance>(viewInstance, m_uiDispatcher)));
 }
 
-void ReactViewHost::DetachViewInstance() noexcept {}
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::DetachViewInstance() noexcept {
+  Mso::Promise<void> promise;
+  promise.SetValue();
+  return make<Mso::AsyncActionFutureAdapter>(promise.AsFuture());
+}
 
 } // namespace winrt::Microsoft::ReactNative::implementation
