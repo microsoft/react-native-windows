@@ -5,6 +5,7 @@ parameters:
   buildProperties: ''
   codesignBinaries: false
   codesignNuget: false
+  createSymbolPackages: false
 
 steps:
 
@@ -62,6 +63,7 @@ steps:
       verbosityPack: 'Detailed'
       packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.packageId }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
+      includeSymbols: ${{ parameters.createSymbolPackages }}
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.packageId }};${{ parameters.buildProperties }}
 
   - ${{ if eq(parameters.codesignNuget, true) }}:
@@ -72,6 +74,7 @@ steps:
         FolderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
         Pattern: |
           **/${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg
+          **/${{ parameters.packageId }}.${{ parameters.packageVersion }}.symbols.nupkg
         UseMinimatch: true
         signConfigType: inlineSignParams
         inlineOperation: |
