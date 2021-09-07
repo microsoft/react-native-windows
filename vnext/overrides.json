@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-ad9030ca9",
+  "baseVersion": "0.0.0-a8ac5ea32",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a715deecb01066f69db3959e0d270f5a2a88e598"
+      "baseHash": "87b17404811d82484497bb8f73b63e57b90b5006"
     },
     {
       "type": "patch",
@@ -397,14 +397,14 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "f0ff8ce99b09be692f6beb9231c7dec3140da02d",
+      "baseHash": "696351a1f296e1bd595d7a22253f5b31b62ed5f8",
       "issue": 4379
     },
     {
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "1a47d1e4a1026573cabdda0fa6374ca64bd41b81"
+      "baseHash": "9940bfdf0c803eb1d6905563803fa9deac1c7770"
     },
     {
       "type": "derived",
