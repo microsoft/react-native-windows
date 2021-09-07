@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use PackageReference in C++ projects",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
