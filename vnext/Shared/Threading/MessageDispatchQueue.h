@@ -45,7 +45,7 @@ struct MessageDispatchQueue : facebook::react::MessageQueueThread, std::enable_s
 };
 
 struct MessageDispatchQueue2 : facebook::react::MessageQueueThread,
-                                    std::enable_shared_from_this<MessageDispatchQueue2> {
+                               std::enable_shared_from_this<MessageDispatchQueue2> {
   MessageDispatchQueue2(
       Mso::React::IDispatchQueue2 &dispatchQueue,
       Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
