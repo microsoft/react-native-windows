@@ -654,6 +654,11 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
         tagsForBranch.push_back(node->m_tag);
       }
 
+      // Stop traversing when we get to the root target
+      if (node->GetView() == m_xamlView) {
+        break;
+      }
+
       node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
     }
 
@@ -684,9 +689,12 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
             bool isHit = false;
             const auto finerTag = TestHit(inlines, pointerPos, isHit);
             if (finerTag) {
+              // Insert nested text tags in reverse order
               const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(finerTag), GetTag(tag));
-              for (auto tag : tagsToCurrentTarget) {
-                tagsForBranch.insert(tagsForBranch.begin(), tag);
+              auto iter = tagsToCurrentTarget.rbegin();
+              while (iter != tagsToCurrentTarget.rend()) {
+                tagsForBranch.insert(tagsForBranch.begin(), *iter);
+                iter++;
               }
             }
           }
