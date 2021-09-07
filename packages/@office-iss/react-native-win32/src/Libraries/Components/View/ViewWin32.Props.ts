@@ -177,7 +177,6 @@ export type BasePropsWin32 = {
   */
   accessibilityControls?: React.RefObject<any>;
 
-
   /**
   * Identifies the ItemType property, which is a text string describing the type of the automation element.
   * ItemType is used to obtain information about items in a list, tree view, or data grid. For example, an item in a file directory view might be a "Document File" or a "Folder".
