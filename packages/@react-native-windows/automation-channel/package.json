@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-channel",
-  "version": "0.0.2-0",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,9 +18,6 @@
   "main": "lib-commonjs/automationChannel.js",
   "dependencies": {
     "jsonrpc-lite": "^2.2.0"
-  },
-  "peerDependencies": {
-    "react-native-windows": ">=0.0.0-canary.370 <0.0.0"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.7",
