@@ -2,16 +2,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="WinUI3 versioning">
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">3.0.0-preview4.210210.4</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">0.8.1</WinUI3Version>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">
-		<!--This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
+    <!--This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
     <WinUI2xVersion Condition="'$(WinUI2xVersion)'==''">2.6.0</WinUI2xVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(UseWinUI3)'=='true'">
-    <WinUIPackageName>Microsoft.WinUI</WinUIPackageName>
+    <WinUIPackageName>Microsoft.ProjectReunion.WinUI</WinUIPackageName>
     <WinUIPackageVersion>$(WinUI3Version)</WinUIPackageVersion>
     <WinUIPackageProps>$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).props</WinUIPackageProps>
 
