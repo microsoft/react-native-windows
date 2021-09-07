@@ -17,13 +17,15 @@ type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>
 >;
 
-function decorateType(type: string, forSpec: boolean): string {
-  return forSpec ? type : `${type} &&`;
+type ParamTarget = 'spec' | 'template' | 'comment';
+
+function decorateType(type: string, target: ParamTarget): string {
+  return target === 'comment' ? `${type} &&` : type;
 }
 
 function translateParam(
   param: NativeModuleParamTypeAnnotation,
-  forSpec: boolean,
+  target: ParamTarget,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const paramType = param.type;
@@ -39,21 +41,30 @@ function translateParam(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'FunctionTypeAnnotation': {
-      // TODO: type.params && type.returnTypeAnnotation
-      if (forSpec) {
-        return 'Callback<React::JSValue>';
-      } else {
-        return 'std::function<void(React::JSValue const &)> const &';
+      // TODO: type.returnTypeAnnotation
+      switch (target) {
+        case 'spec':
+          return `Callback<${param.params
+            .map(translateSpecFunctionParam)
+            .join(', ')}>`;
+        case 'template':
+          return `std::function<void(${param.params
+            .map(translateFunctionParam)
+            .join(', ')})>`;
+        default:
+          return `std::function<void(${param.params
+            .map(translateFunctionParam)
+            .join(', ')})> const &`;
       }
     }
     case 'ArrayTypeAnnotation':
       // TODO: type.elementType
-      return decorateType('React::JSValueArray', forSpec);
+      return decorateType('React::JSValueArray', target);
     case 'GenericObjectTypeAnnotation':
-      return decorateType('React::JSValueObject', forSpec);
+      return decorateType('React::JSValueObject', target);
     case 'ObjectTypeAnnotation':
       // TODO: we have more information here, and could create a more specific type
-      return decorateType('React::JSValueObject', forSpec);
+      return decorateType('React::JSValueObject', target);
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = param.name;
@@ -64,7 +75,7 @@ function translateParam(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      return decorateType(getAliasCppName(param.name), forSpec);
+      return decorateType(getAliasCppName(param.name), target);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
@@ -76,11 +87,11 @@ function translateSpecFunctionParam(param: NativeModuleParamShape): string {
       // TODO: should be
       // return `std::optional<${translateParam(
       //   param.typeAnnotation.typeAnnotation,
-      //   true,
+      //   'spec',
       // )}>`;
-      return translateParam(param.typeAnnotation.typeAnnotation, true);
+      return translateParam(param.typeAnnotation.typeAnnotation, 'spec');
     default:
-      return translateParam(param.typeAnnotation, true);
+      return translateParam(param.typeAnnotation, 'spec');
   }
 }
 
@@ -90,11 +101,11 @@ function translateFunctionParam(param: NativeModuleParamShape): string {
       // TODO: should be
       // return `std::optional<${translateParam(
       //   param.typeAnnotation.typeAnnotation,
-      //   false,
+      //   'template',
       // )}>`;
-      return translateParam(param.typeAnnotation.typeAnnotation, false);
+      return translateParam(param.typeAnnotation.typeAnnotation, 'comment');
     default:
-      return translateParam(param.typeAnnotation, false);
+      return translateParam(param.typeAnnotation, 'comment');
   }
 }
 
