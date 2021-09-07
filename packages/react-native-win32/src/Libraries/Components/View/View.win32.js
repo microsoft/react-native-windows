@@ -33,7 +33,7 @@ const View: React.AbstractComponent<
   // [Win32
   invariant(
     // $FlowFixMe Wanting to catch untyped usages
-    props.acceptsKeyboardFocus === undefined,
+    props && props.acceptsKeyboardFocus === undefined,
     'Support for the "acceptsKeyboardFocus" property has been removed in favor of "focusable"',
   );
   // Win32]
