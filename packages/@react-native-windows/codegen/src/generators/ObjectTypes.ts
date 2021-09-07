@@ -43,7 +43,7 @@ function translateField(
       // TODO: type.elementType
       return 'React::JSValueArray';
     case 'GenericObjectTypeAnnotation':
-      return 'React::JSValueObject';
+      return 'React::JSValue';
     case 'ObjectTypeAnnotation':
       // TODO: we have more information here, and could create a more specific type
       return 'React::JSValueObject';

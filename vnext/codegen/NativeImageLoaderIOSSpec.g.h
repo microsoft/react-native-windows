@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct ImageLoaderIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, Promise<React::JSValue>) noexcept>{0, L"getSize"},
-      Method<void(std::string, React::JSValueObject, Promise<React::JSValue>) noexcept>{1, L"getSizeWithHeaders"},
+      Method<void(std::string, React::JSValue, Promise<React::JSValue>) noexcept>{1, L"getSizeWithHeaders"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"prefetchImage"},
       Method<void(std::string, std::string, double, Promise<React::JSValue>) noexcept>{3, L"prefetchImageWithMetadata"},
       Method<void(React::JSValueArray, Promise<React::JSValue>) noexcept>{4, L"queryCache"},
@@ -34,8 +34,8 @@ struct ImageLoaderIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "getSizeWithHeaders",
-          "    REACT_METHOD(getSizeWithHeaders) void getSizeWithHeaders(std::string uri, React::JSValueObject && headers, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getSizeWithHeaders) static void getSizeWithHeaders(std::string uri, React::JSValueObject && headers, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getSizeWithHeaders) void getSizeWithHeaders(std::string uri, React::JSValue && headers, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getSizeWithHeaders) static void getSizeWithHeaders(std::string uri, React::JSValue && headers, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "prefetchImage",

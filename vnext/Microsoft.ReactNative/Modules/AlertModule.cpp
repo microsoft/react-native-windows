@@ -15,10 +15,10 @@
 
 namespace Microsoft::ReactNative {
 
-void Alert::showAlert(ShowAlertArgs const &args, std::function<void(std::string)> result) noexcept {
-  m_context.UIDispatcher().Post([weakThis = weak_from_this(), args, result] {
+void Alert::showAlert(DialogOptions &&args, std::function<void(std::string)> result) noexcept {
+  m_context.UIDispatcher().Post([weakThis = weak_from_this(), args = std::move(args), result]() mutable {
     if (auto strongThis = weakThis.lock()) {
-      strongThis->pendingAlerts.push({args, result});
+      strongThis->pendingAlerts.emplace(std::move(args), result);
       if (strongThis->pendingAlerts.size() == 1) {
         strongThis->ProcessPendingAlertRequests();
       }
@@ -33,13 +33,14 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   auto jsDispatcher = m_context.JSDispatcher();
 
   xaml::Controls::ContentDialog dialog{};
-  dialog.Title(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.title)));
-  dialog.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.message)));
-  dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive));
-  dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative));
-  dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral));
-  if (args.defaultButton >= 0 && args.defaultButton <= 3) {
-    dialog.DefaultButton(static_cast<xaml::Controls::ContentDialogButton>(args.defaultButton));
+  dialog.Title(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.title.value_or(std::string{}))));
+  dialog.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.message.value_or(std::string{}))));
+  dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive.value_or(std::string{})));
+  dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative.value_or(std::string{})));
+  dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral.value_or(std::string{})));
+  int defaultButton = args.defaultButton.value_or(0);
+  if (defaultButton >= 0 && defaultButton <= 3) {
+    dialog.DefaultButton(static_cast<xaml::Controls::ContentDialogButton>(defaultButton));
   }
 
   if (Is19H1OrHigher()) {
