@@ -22,7 +22,7 @@
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
-#include "../../codegen/NativeDialogManagerAndroidSpec.g.h"
+#include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
 #include "../../codegen/NativeLogBoxSpec.g.h"
 #include "../../codegen/NativeUIManagerSpec.g.h"
@@ -301,7 +301,7 @@ void ReactInstanceWin::LoadModules(
       L"Alert",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
           ::Microsoft::ReactNative::Alert,
-          ::Microsoft::ReactNativeSpecs::DialogManagerAndroidSpec>());
+          ::Microsoft::ReactNativeSpecs::DialogManagerWindowsSpec>());
 
   registerTurboModule(
       L"AppState",
