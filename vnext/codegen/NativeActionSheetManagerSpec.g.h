@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(React::JSValueObject, Callback<React::JSValue>) noexcept>{0, L"showActionSheetWithOptions"},
-      Method<void(React::JSValueObject, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{1, L"showShareActionSheetWithOptions"},
+      Method<void(React::JSValueObject, Callback<double>) noexcept>{0, L"showActionSheetWithOptions"},
+      Method<void(React::JSValueObject, Callback<React::JSValueObject>, Callback<bool, std::string>) noexcept>{1, L"showShareActionSheetWithOptions"},
   };
 
   template <class TModule>
@@ -26,13 +26,13 @@ struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showActionSheetWithOptions",
-          "    REACT_METHOD(showActionSheetWithOptions) void showActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showActionSheetWithOptions) static void showActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showActionSheetWithOptions) void showActionSheetWithOptions(React::JSValueObject && options, std::function<void(double)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showActionSheetWithOptions) static void showActionSheetWithOptions(React::JSValueObject && options, std::function<void(double)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "showShareActionSheetWithOptions",
-          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & failureCallback, std::function<void(React::JSValue const &)> const & successCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValue const &)> const & failureCallback, std::function<void(React::JSValue const &)> const & successCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValueObject &&)> const & failureCallback, std::function<void(bool, std::string)> const & successCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValueObject &&)> const & failureCallback, std::function<void(bool, std::string)> const & successCallback) noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -15,10 +15,10 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ImageStoreIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"getBase64ForTag"},
-      Method<void(std::string, Callback<React::JSValue>) noexcept>{1, L"hasImageForTag"},
+      Method<void(std::string, Callback<std::string>, Callback<React::JSValueObject>) noexcept>{0, L"getBase64ForTag"},
+      Method<void(std::string, Callback<bool>) noexcept>{1, L"hasImageForTag"},
       Method<void(std::string) noexcept>{2, L"removeImageForTag"},
-      Method<void(std::string, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{3, L"addImageFromBase64"},
+      Method<void(std::string, Callback<std::string>, Callback<React::JSValueObject>) noexcept>{3, L"addImageFromBase64"},
   };
 
   template <class TModule>
@@ -28,13 +28,13 @@ struct ImageStoreIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getBase64ForTag",
-          "    REACT_METHOD(getBase64ForTag) void getBase64ForTag(std::string uri, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getBase64ForTag) static void getBase64ForTag(std::string uri, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getBase64ForTag) void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(React::JSValueObject &&)> const & errorCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getBase64ForTag) static void getBase64ForTag(std::string uri, std::function<void(std::string)> const & successCallback, std::function<void(React::JSValueObject &&)> const & errorCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "hasImageForTag",
-          "    REACT_METHOD(hasImageForTag) void hasImageForTag(std::string uri, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(hasImageForTag) static void hasImageForTag(std::string uri, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(hasImageForTag) void hasImageForTag(std::string uri, std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(hasImageForTag) static void hasImageForTag(std::string uri, std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "removeImageForTag",
@@ -43,8 +43,8 @@ struct ImageStoreIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "addImageFromBase64",
-          "    REACT_METHOD(addImageFromBase64) void addImageFromBase64(std::string base64ImageData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(addImageFromBase64) static void addImageFromBase64(std::string base64ImageData, std::function<void(React::JSValue const &)> const & successCallback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(addImageFromBase64) void addImageFromBase64(std::string base64ImageData, std::function<void(std::string)> const & successCallback, std::function<void(React::JSValueObject &&)> const & errorCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addImageFromBase64) static void addImageFromBase64(std::string base64ImageData, std::function<void(std::string)> const & successCallback, std::function<void(React::JSValueObject &&)> const & errorCallback) noexcept { /* implementation */ }}\n");
   }
 };
 

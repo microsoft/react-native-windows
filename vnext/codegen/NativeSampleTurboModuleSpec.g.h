@@ -24,7 +24,7 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<React::JSValueObject(React::JSValueObject) noexcept>{6, L"getUnsafeObject"},
       SyncMethod<double(double) noexcept>{7, L"getRootTag"},
       SyncMethod<React::JSValueObject(double, std::string, React::JSValueObject) noexcept>{8, L"getValue"},
-      Method<void(Callback<React::JSValue>) noexcept>{9, L"getValueWithCallback"},
+      Method<void(Callback<std::string>) noexcept>{9, L"getValueWithCallback"},
       Method<void(bool, Promise<React::JSValue>) noexcept>{10, L"getValueWithPromise"},
   };
 
@@ -80,8 +80,8 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "getValueWithCallback",
-          "    REACT_METHOD(getValueWithCallback) void getValueWithCallback(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getValueWithCallback) static void getValueWithCallback(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getValueWithCallback) void getValueWithCallback(std::function<void(std::string)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getValueWithCallback) static void getValueWithCallback(std::function<void(std::string)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           10,
           "getValueWithPromise",
