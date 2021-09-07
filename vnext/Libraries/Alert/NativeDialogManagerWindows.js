@@ -11,7 +11,7 @@
 import type {TurboModule} from '../../TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../../TurboModule/TurboModuleRegistry';
 
-type Int32 = Number;
+type Int32 = number;
 
 export type DialogOptions = {|
   title?: string,
