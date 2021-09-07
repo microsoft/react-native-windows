@@ -29,14 +29,6 @@
     return fieldMap;                                                                       \
   }
 
-#define INTERNAL_REACT_STRUCT_INHERITED(structType, baseType)                              \
-  struct structType;                                                                       \
-  inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(structType *) noexcept {    \
-    auto fieldMap = GetStructInfo(static_cast<baseType *>(nullptr));                       \
-    winrt::Microsoft::ReactNative::CollectStructFields<structType, __COUNTER__>(fieldMap); \
-    return fieldMap;                                                                       \
-  }
-
 #define INTERNAL_REACT_FIELD_2_ARGS(field, fieldName)                      \
   template <class TClass>                                                  \
   static void RegisterField(                                               \
@@ -57,17 +49,6 @@
 // IJSValueWriter. With the help of REACT_FIELD it generates FieldMap associated with the struct which then used by
 // ReactValue and ReactWrite methods. Cannot be nested inside REACT_MODULE.
 #define REACT_STRUCT(structType) INTERNAL_REACT_STRUCT(structType)
-
-// REACT_STRUCT_INHERITED(structType)
-// Arguments:
-// - structType (required) - the struct name the macro is attached to.
-// - baseType (required) - the base struct name
-//
-// REACT_STRUCT_INHERITED annotates a serializable/deserializable struct,
-// extending members from another struct.
-// Module implementation could use the extended struct to match the base struct in the spec
-// to access extra members that do not exist in the module declaration.
-#define REACT_STRUCT_INHERITED(structType, baseType) INTERNAL_REACT_STRUCT_INHERITED(structType, baseType)
 
 // REACT_FIELD(field, [opt] fieldName)
 // Arguments:

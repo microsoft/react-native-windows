@@ -61,24 +61,6 @@ struct R2D2Extra {
   std::string MovieSeries;
 };
 
-REACT_STRUCT(BaseStruct)
-struct BaseStruct {
-  REACT_FIELD(x)
-  int x;
-};
-
-REACT_STRUCT_INHERITED(Derived1, BaseStruct)
-struct Derived1 : BaseStruct {
-  REACT_FIELD(y)
-  int y;
-};
-
-REACT_STRUCT_INHERITED(Derived2, Derived1)
-struct Derived2 : Derived1 {
-  REACT_FIELD(z)
-  int z;
-};
-
 struct RobotInfo {
   RobotModel Model;
   std::string Name;
@@ -541,37 +523,6 @@ TEST_CLASS (JSValueReaderTest) {
         TestCheck(uri.RawUri() == L"https://bing.com");
       }
     }
-  }
-
-  TEST_METHOD(TestReadInheritedTypes) {
-    const wchar_t *json =
-        LR"JSON({
-      "x": 1,
-      "y": 2,
-      "z": 3,
-    })JSON";
-
-    IJSValueReader reader = make<JsonJSValueReader>(json);
-    Derived2 xyz;
-    ReadValue(reader, xyz);
-    TestCheck(xyz.x == 1);
-    TestCheck(xyz.y == 2);
-    TestCheck(xyz.z == 3);
-  }
-
-  TEST_METHOD(TestWriteInheritedTypes) {
-    Derived2 xyz;
-    xyz.x = 1;
-    xyz.y = 2;
-    xyz.z = 3;
-
-    auto writer = MakeJSValueTreeWriter();
-    WriteValue(writer, xyz);
-
-    auto jsValue = TakeJSValue(writer);
-    TestCheck(jsValue["x"] == 1);
-    TestCheck(jsValue["y"] == 2);
-    TestCheck(jsValue["z"] == 3);
   }
 };
 
