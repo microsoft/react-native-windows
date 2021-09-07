@@ -119,10 +119,7 @@ export function addProjectToSolution(
 
   const isCRLF = originalSlnContents.includes('\r\n');
 
-  const slnLines = fs
-    .readFileSync(slnFile)
-    .toString()
-    .split(isCRLF ? '\r\n' : '\n');
+  const slnLines = originalSlnContents.split(isCRLF ? '\r\n' : '\n');
 
   let contentsChanged = false;
 
