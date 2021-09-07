@@ -48,5 +48,8 @@
     "bin.js",
     "lib-commonjs",
     "templates"
-  ]
+  ],
+  "engines": {
+    "node": ">= 12.0.0"
+  }
 }

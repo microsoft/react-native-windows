@@ -29,5 +29,8 @@
     "react-native": "0.0.0-ad9030ca9",
     "react-native-platform-override": "^1.4.17",
     "typescript": "^3.8.3"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
   }
 }

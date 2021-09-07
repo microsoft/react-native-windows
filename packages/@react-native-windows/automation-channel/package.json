@@ -39,5 +39,8 @@
   "files": [
     "lib-commonjs",
     "windows"
-  ]
+  ],
+  "engines": {
+    "node": ">= 12.0.0"
+  }
 }

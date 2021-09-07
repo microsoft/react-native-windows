@@ -135,5 +135,8 @@
     "/typings-index.js.map",
     "/rn-get-polyfills.js"
   ],
-  "promoteRelease": true
+  "promoteRelease": true,
+  "engines": {
+    "node": ">= 12.0.0"
+  }
 }
