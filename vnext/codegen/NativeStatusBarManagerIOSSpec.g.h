@@ -30,8 +30,8 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getHeight",
-          "    REACT_METHOD(getHeight) void getHeight(std::function<void(React::JSValueObject &&)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getHeight) static void getHeight(std::function<void(React::JSValueObject &&)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getHeight) void getHeight(std::function<void(React::JSValueObject const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getHeight) static void getHeight(std::function<void(React::JSValueObject const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setNetworkActivityIndicatorVisible",

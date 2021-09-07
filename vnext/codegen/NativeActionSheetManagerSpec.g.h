@@ -31,8 +31,8 @@ struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "showShareActionSheetWithOptions",
-          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValueObject &&)> const & failureCallback, std::function<void(bool, std::string)> const & successCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValueObject &&)> const & failureCallback, std::function<void(bool, std::string)> const & successCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValueObject const &)> const & failureCallback, std::function<void(bool, std::string)> const & successCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(React::JSValueObject && options, std::function<void(React::JSValueObject const &)> const & failureCallback, std::function<void(bool, std::string)> const & successCallback) noexcept { /* implementation */ }}\n");
   }
 };
 

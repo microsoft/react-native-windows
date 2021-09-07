@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct SegmentFetcherSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(double, React::JSValueObject, Callback<React::JSValueObject>) noexcept>{0, L"fetchSegment"},
-      Method<void(double, React::JSValueObject, Callback<React::JSValueObject, std::string>) noexcept>{1, L"getSegment"},
+      Method<void(double, React::JSValue, Callback<React::JSValue>) noexcept>{0, L"fetchSegment"},
+      Method<void(double, React::JSValue, Callback<React::JSValue, std::string>) noexcept>{1, L"getSegment"},
   };
 
   template <class TModule>
@@ -26,13 +26,13 @@ struct SegmentFetcherSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "fetchSegment",
-          "    REACT_METHOD(fetchSegment) void fetchSegment(double segmentId, React::JSValueObject && options, std::function<void(React::JSValueObject &&)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(fetchSegment) static void fetchSegment(double segmentId, React::JSValueObject && options, std::function<void(React::JSValueObject &&)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(fetchSegment) void fetchSegment(double segmentId, React::JSValue && options, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(fetchSegment) static void fetchSegment(double segmentId, React::JSValue && options, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "getSegment",
-          "    REACT_METHOD(getSegment) void getSegment(double segmentId, React::JSValueObject && options, std::function<void(React::JSValueObject &&, std::string)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getSegment) static void getSegment(double segmentId, React::JSValueObject && options, std::function<void(React::JSValueObject &&, std::string)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getSegment) void getSegment(double segmentId, React::JSValue && options, std::function<void(React::JSValue const &, std::string)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getSegment) static void getSegment(double segmentId, React::JSValue && options, std::function<void(React::JSValue const &, std::string)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
 

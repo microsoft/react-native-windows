@@ -34,7 +34,7 @@ struct PushNotificationManagerIOSSpec_Notification {
     REACT_FIELD(alertAction)
     std::optional<std::string> alertAction;
     REACT_FIELD(userInfo)
-    std::optional<React::JSValueObject> userInfo;
+    std::optional<React::JSValue> userInfo;
     REACT_FIELD(category)
     std::optional<std::string> category;
     REACT_FIELD(repeatInterval)
@@ -56,7 +56,7 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
       Method<void(PushNotificationManagerIOSSpec_Notification) noexcept>{6, L"presentLocalNotification"},
       Method<void(PushNotificationManagerIOSSpec_Notification) noexcept>{7, L"scheduleLocalNotification"},
       Method<void() noexcept>{8, L"cancelAllLocalNotifications"},
-      Method<void(React::JSValueObject) noexcept>{9, L"cancelLocalNotifications"},
+      Method<void(React::JSValue) noexcept>{9, L"cancelLocalNotifications"},
       Method<void(Promise<React::JSValue>) noexcept>{10, L"getInitialNotification"},
       Method<void(Callback<PushNotificationManagerIOSSpec_Notification>) noexcept>{11, L"getScheduledLocalNotifications"},
       Method<void() noexcept>{12, L"removeAllDeliveredNotifications"},
@@ -99,8 +99,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "checkPermissions",
-          "    REACT_METHOD(checkPermissions) void checkPermissions(std::function<void(PushNotificationManagerIOSSpec_Permissions &&)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(checkPermissions) static void checkPermissions(std::function<void(PushNotificationManagerIOSSpec_Permissions &&)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(checkPermissions) void checkPermissions(std::function<void(PushNotificationManagerIOSSpec_Permissions const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(checkPermissions) static void checkPermissions(std::function<void(PushNotificationManagerIOSSpec_Permissions const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "presentLocalNotification",
@@ -119,8 +119,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "cancelLocalNotifications",
-          "    REACT_METHOD(cancelLocalNotifications) void cancelLocalNotifications(React::JSValueObject && userInfo) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(cancelLocalNotifications) static void cancelLocalNotifications(React::JSValueObject && userInfo) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(cancelLocalNotifications) void cancelLocalNotifications(React::JSValue && userInfo) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(cancelLocalNotifications) static void cancelLocalNotifications(React::JSValue && userInfo) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           10,
           "getInitialNotification",
@@ -129,8 +129,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
           "getScheduledLocalNotifications",
-          "    REACT_METHOD(getScheduledLocalNotifications) void getScheduledLocalNotifications(std::function<void(PushNotificationManagerIOSSpec_Notification &&)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getScheduledLocalNotifications) static void getScheduledLocalNotifications(std::function<void(PushNotificationManagerIOSSpec_Notification &&)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getScheduledLocalNotifications) void getScheduledLocalNotifications(std::function<void(PushNotificationManagerIOSSpec_Notification const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getScheduledLocalNotifications) static void getScheduledLocalNotifications(std::function<void(PushNotificationManagerIOSSpec_Notification const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           12,
           "removeAllDeliveredNotifications",
@@ -144,8 +144,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
           "getDeliveredNotifications",
-          "    REACT_METHOD(getDeliveredNotifications) void getDeliveredNotifications(std::function<void(React::JSValueArray &&)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getDeliveredNotifications) static void getDeliveredNotifications(std::function<void(React::JSValueArray &&)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getDeliveredNotifications) void getDeliveredNotifications(std::function<void(React::JSValueArray const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getDeliveredNotifications) static void getDeliveredNotifications(std::function<void(React::JSValueArray const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           15,
           "getAuthorizationStatus",

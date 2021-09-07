@@ -17,10 +17,17 @@ type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>
 >;
 
-type ParamTarget = 'spec' | 'template' | 'comment';
+type ParamTarget = 'spec' | 'template' | 'callback-arg' | 'method-arg';
 
 function decorateType(type: string, target: ParamTarget): string {
-  return target === 'comment' ? `${type} &&` : type;
+  switch (target) {
+    case 'method-arg':
+      return `${type} &&`;
+    case 'callback-arg':
+      return `${type} const &`;
+    default:
+      return type;
+  }
 }
 
 function translateParam(
@@ -49,11 +56,11 @@ function translateParam(
             .join(', ')}>`;
         case 'template':
           return `std::function<void(${param.params
-            .map(translateFunctionParam)
+            .map(translateCallbackParam)
             .join(', ')})>`;
         default:
           return `std::function<void(${param.params
-            .map(translateFunctionParam)
+            .map(translateCallbackParam)
             .join(', ')})> const &`;
       }
     }
@@ -61,7 +68,7 @@ function translateParam(
       // TODO: type.elementType
       return decorateType('React::JSValueArray', target);
     case 'GenericObjectTypeAnnotation':
-      return decorateType('React::JSValueObject', target);
+      return decorateType('React::JSValue', target);
     case 'ObjectTypeAnnotation':
       // TODO: we have more information here, and could create a more specific type
       return decorateType('React::JSValueObject', target);
@@ -95,6 +102,23 @@ function translateSpecFunctionParam(param: NativeModuleParamShape): string {
   }
 }
 
+function translateCallbackParam(param: NativeModuleParamShape): string {
+  switch (param.typeAnnotation.type) {
+    case 'NullableTypeAnnotation':
+      // TODO: should be
+      // return `std::optional<${translateParam(
+      //   param.typeAnnotation.typeAnnotation,
+      //   'template',
+      // )}>`;
+      return translateParam(
+        param.typeAnnotation.typeAnnotation,
+        'callback-arg',
+      );
+    default:
+      return translateParam(param.typeAnnotation, 'callback-arg');
+  }
+}
+
 function translateFunctionParam(param: NativeModuleParamShape): string {
   switch (param.typeAnnotation.type) {
     case 'NullableTypeAnnotation':
@@ -103,9 +127,9 @@ function translateFunctionParam(param: NativeModuleParamShape): string {
       //   param.typeAnnotation.typeAnnotation,
       //   'template',
       // )}>`;
-      return translateParam(param.typeAnnotation.typeAnnotation, 'comment');
+      return translateParam(param.typeAnnotation.typeAnnotation, 'method-arg');
     default:
-      return translateParam(param.typeAnnotation, 'comment');
+      return translateParam(param.typeAnnotation, 'method-arg');
   }
 }
 

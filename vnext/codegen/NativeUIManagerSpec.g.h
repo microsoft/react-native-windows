@@ -15,11 +15,11 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      SyncMethod<React::JSValueObject(std::string) noexcept>{0, L"getConstantsForViewManager"},
+      SyncMethod<React::JSValue(std::string) noexcept>{0, L"getConstantsForViewManager"},
       SyncMethod<React::JSValueArray() noexcept>{1, L"getDefaultEventTypes"},
-      SyncMethod<React::JSValueObject(std::string) noexcept>{2, L"lazilyLoadView"},
-      Method<void(double, std::string, double, React::JSValueObject) noexcept>{3, L"createView"},
-      Method<void(double, std::string, React::JSValueObject) noexcept>{4, L"updateView"},
+      SyncMethod<React::JSValue(std::string) noexcept>{2, L"lazilyLoadView"},
+      Method<void(double, std::string, double, React::JSValue) noexcept>{3, L"createView"},
+      Method<void(double, std::string, React::JSValue) noexcept>{4, L"updateView"},
       Method<void(double) noexcept>{5, L"focus"},
       Method<void(double) noexcept>{6, L"blur"},
       Method<void(double, React::JSValueArray, Callback<double, double, double, double, double>) noexcept>{7, L"findSubviewIn"},
@@ -27,18 +27,18 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(double, Callback<double, double, double, double, double, double>) noexcept>{9, L"measure"},
       Method<void(double, Callback<double, double, double, double>) noexcept>{10, L"measureInWindow"},
       Method<void(double, double, Callback<React::JSValueArray>) noexcept>{11, L"viewIsDescendantOf"},
-      Method<void(double, double, Callback<React::JSValueObject>, Callback<double, double, double, double>) noexcept>{12, L"measureLayout"},
-      Method<void(double, Callback<React::JSValueObject>, Callback<double, double, double, double>) noexcept>{13, L"measureLayoutRelativeToParent"},
+      Method<void(double, double, Callback<React::JSValue>, Callback<double, double, double, double>) noexcept>{12, L"measureLayout"},
+      Method<void(double, Callback<React::JSValue>, Callback<double, double, double, double>) noexcept>{13, L"measureLayoutRelativeToParent"},
       Method<void(double, bool) noexcept>{14, L"setJSResponder"},
       Method<void() noexcept>{15, L"clearJSResponder"},
-      Method<void(React::JSValueObject, Callback<>, Callback<React::JSValueObject>) noexcept>{16, L"configureNextLayoutAnimation"},
+      Method<void(React::JSValue, Callback<>, Callback<React::JSValue>) noexcept>{16, L"configureNextLayoutAnimation"},
       Method<void(double) noexcept>{17, L"removeSubviewsFromContainerWithID"},
       Method<void(double, double) noexcept>{18, L"replaceExistingNonRootView"},
       Method<void(double, React::JSValueArray) noexcept>{19, L"setChildren"},
       Method<void(double, React::JSValueArray, React::JSValueArray, React::JSValueArray, React::JSValueArray, React::JSValueArray) noexcept>{20, L"manageChildren"},
       Method<void(bool) noexcept>{21, L"setLayoutAnimationEnabledExperimental"},
       Method<void(double, double) noexcept>{22, L"sendAccessibilityEvent"},
-      Method<void(double, React::JSValueArray, Callback<React::JSValueObject>, Callback<std::string, double>) noexcept>{23, L"showPopupMenu"},
+      Method<void(double, React::JSValueArray, Callback<React::JSValue>, Callback<std::string, double>) noexcept>{23, L"showPopupMenu"},
       Method<void() noexcept>{24, L"dismissPopupMenu"},
   };
 
@@ -49,8 +49,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getConstantsForViewManager",
-          "    REACT_SYNC_METHOD(getConstantsForViewManager) React::JSValueObject getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }}\n"
-          "    REACT_SYNC_METHOD(getConstantsForViewManager) static React::JSValueObject getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }}\n");
+          "    REACT_SYNC_METHOD(getConstantsForViewManager) React::JSValue getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }}\n"
+          "    REACT_SYNC_METHOD(getConstantsForViewManager) static React::JSValue getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "getDefaultEventTypes",
@@ -59,18 +59,18 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "lazilyLoadView",
-          "    REACT_SYNC_METHOD(lazilyLoadView) React::JSValueObject lazilyLoadView(std::string name) noexcept { /* implementation */ }}\n"
-          "    REACT_SYNC_METHOD(lazilyLoadView) static React::JSValueObject lazilyLoadView(std::string name) noexcept { /* implementation */ }}\n");
+          "    REACT_SYNC_METHOD(lazilyLoadView) React::JSValue lazilyLoadView(std::string name) noexcept { /* implementation */ }}\n"
+          "    REACT_SYNC_METHOD(lazilyLoadView) static React::JSValue lazilyLoadView(std::string name) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "createView",
-          "    REACT_METHOD(createView) void createView(double reactTag, std::string viewName, double rootTag, React::JSValueObject && props) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(createView) static void createView(double reactTag, std::string viewName, double rootTag, React::JSValueObject && props) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(createView) void createView(double reactTag, std::string viewName, double rootTag, React::JSValue && props) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(createView) static void createView(double reactTag, std::string viewName, double rootTag, React::JSValue && props) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "updateView",
-          "    REACT_METHOD(updateView) void updateView(double reactTag, std::string viewName, React::JSValueObject && props) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(updateView) static void updateView(double reactTag, std::string viewName, React::JSValueObject && props) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(updateView) void updateView(double reactTag, std::string viewName, React::JSValue && props) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(updateView) static void updateView(double reactTag, std::string viewName, React::JSValue && props) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "focus",
@@ -104,18 +104,18 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
           "viewIsDescendantOf",
-          "    REACT_METHOD(viewIsDescendantOf) void viewIsDescendantOf(double reactTag, double ancestorReactTag, std::function<void(React::JSValueArray &&)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(viewIsDescendantOf) static void viewIsDescendantOf(double reactTag, double ancestorReactTag, std::function<void(React::JSValueArray &&)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(viewIsDescendantOf) void viewIsDescendantOf(double reactTag, double ancestorReactTag, std::function<void(React::JSValueArray const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(viewIsDescendantOf) static void viewIsDescendantOf(double reactTag, double ancestorReactTag, std::function<void(React::JSValueArray const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           12,
           "measureLayout",
-          "    REACT_METHOD(measureLayout) void measureLayout(double reactTag, double ancestorReactTag, std::function<void(React::JSValueObject &&)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(measureLayout) static void measureLayout(double reactTag, double ancestorReactTag, std::function<void(React::JSValueObject &&)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(measureLayout) void measureLayout(double reactTag, double ancestorReactTag, std::function<void(React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(measureLayout) static void measureLayout(double reactTag, double ancestorReactTag, std::function<void(React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           13,
           "measureLayoutRelativeToParent",
-          "    REACT_METHOD(measureLayoutRelativeToParent) void measureLayoutRelativeToParent(double reactTag, std::function<void(React::JSValueObject &&)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(measureLayoutRelativeToParent) static void measureLayoutRelativeToParent(double reactTag, std::function<void(React::JSValueObject &&)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(measureLayoutRelativeToParent) void measureLayoutRelativeToParent(double reactTag, std::function<void(React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(measureLayoutRelativeToParent) static void measureLayoutRelativeToParent(double reactTag, std::function<void(React::JSValue const &)> const & errorCallback, std::function<void(double, double, double, double)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
           "setJSResponder",
@@ -129,8 +129,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           16,
           "configureNextLayoutAnimation",
-          "    REACT_METHOD(configureNextLayoutAnimation) void configureNextLayoutAnimation(React::JSValueObject && config, std::function<void()> const & callback, std::function<void(React::JSValueObject &&)> const & errorCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(configureNextLayoutAnimation) static void configureNextLayoutAnimation(React::JSValueObject && config, std::function<void()> const & callback, std::function<void(React::JSValueObject &&)> const & errorCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(configureNextLayoutAnimation) void configureNextLayoutAnimation(React::JSValue && config, std::function<void()> const & callback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(configureNextLayoutAnimation) static void configureNextLayoutAnimation(React::JSValue && config, std::function<void()> const & callback, std::function<void(React::JSValue const &)> const & errorCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           17,
           "removeSubviewsFromContainerWithID",
@@ -164,8 +164,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           23,
           "showPopupMenu",
-          "    REACT_METHOD(showPopupMenu) void showPopupMenu(double reactTag, React::JSValueArray && items, std::function<void(React::JSValueObject &&)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showPopupMenu) static void showPopupMenu(double reactTag, React::JSValueArray && items, std::function<void(React::JSValueObject &&)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showPopupMenu) void showPopupMenu(double reactTag, React::JSValueArray && items, std::function<void(React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showPopupMenu) static void showPopupMenu(double reactTag, React::JSValueArray && items, std::function<void(React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           24,
           "dismissPopupMenu",
