@@ -193,7 +193,20 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (m_pointers.size() == 0)
     m_touchId = 0;
 
-  m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
+  const auto frameworkElement = m_xamlView.as<xaml::FrameworkElement>();
+  auto wasCaptured = false;
+  if (frameworkElement.PointerCaptures()) {
+    for (auto pointer : frameworkElement.PointerCaptures()) {
+      wasCaptured |= pointer.PointerId() == args.Pointer().PointerId();
+    }
+  }
+
+  frameworkElement.ReleasePointerCapture(args.Pointer());
+
+  // Updates the enter/leave state when pointer was previously captured
+  if (wasCaptured) {
+    UpdatePointersInViews(args, tag, sourceElement);
+  }
 }
 
 size_t TouchEventHandler::AddReactPointer(

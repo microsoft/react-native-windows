@@ -43,11 +43,6 @@ struct ChakraInstanceArgs {
   bool EnableNativePerformanceNow{true};
 
   /**
-   * @brief Whether to enable ChakraCore console redirection to debugger.
-   */
-  bool DebuggerConsoleRedirection{false};
-
-  /**
    * @brief Port number to use when debugging.
    */
   uint16_t DebuggerPort{9229};

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 17 Aug 2021 05:09:46 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.84
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Fix logic to avoid launching packager (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.83
 

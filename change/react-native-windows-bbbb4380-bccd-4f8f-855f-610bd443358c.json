@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable building on Visual Studio 2022",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

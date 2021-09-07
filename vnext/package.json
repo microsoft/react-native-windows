@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.368",
+  "version": "0.0.0-canary.370",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
     "@react-native-community/cli": "^6.0.0",
     "@react-native-community/cli-platform-android": "^6.0.0",
     "@react-native-community/cli-platform-ios": "^6.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.83",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.6",
+    "@react-native-windows/cli": "0.0.0-canary.84",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.7",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "1.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -57,7 +57,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.10",
+    "@react-native-windows/codegen": "0.0.0-canary.11",
     "@rnw-scripts/eslint-config": "1.1.7",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.1",
     "@rnx-kit/jest-preset": "^0.1.0",
@@ -135,5 +135,8 @@
     "/typings-index.js.map",
     "/rn-get-polyfills.js"
   ],
-  "promoteRelease": true
+  "promoteRelease": true,
+  "engines": {
+    "node": ">= 12.0.0"
+  }
 }

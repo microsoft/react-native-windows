@@ -112,6 +112,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t DebuggerPort() noexcept;
   void DebuggerPort(uint16_t value) noexcept;
 
+  hstring DebuggerRuntimeName() noexcept;
+  void DebuggerRuntimeName(hstring const &value) noexcept;
+
   IRedBoxHandler RedBoxHandler() noexcept;
   void RedBoxHandler(IRedBoxHandler const &value) noexcept;
 
@@ -169,6 +172,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t m_debuggerPort{9229};
   IRedBoxHandler m_redBoxHandler{nullptr};
   hstring m_sourceBundleHost{};
+  hstring m_debuggerRuntimeName{};
   uint16_t m_sourceBundlePort{0};
   LogHandler m_nativeLogger{nullptr};
 
@@ -262,6 +266,14 @@ inline uint16_t ReactInstanceSettings::DebuggerPort() noexcept {
 
 inline void ReactInstanceSettings::DebuggerPort(uint16_t value) noexcept {
   m_debuggerPort = value;
+}
+
+inline hstring ReactInstanceSettings::DebuggerRuntimeName() noexcept {
+  return m_debuggerRuntimeName;
+}
+
+inline void ReactInstanceSettings::DebuggerRuntimeName(hstring const &value) noexcept {
+  m_debuggerRuntimeName = value;
 }
 
 inline IRedBoxHandler ReactInstanceSettings::RedBoxHandler() noexcept {

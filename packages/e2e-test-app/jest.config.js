@@ -9,6 +9,13 @@
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
+const assetTransform = 'react-native-windows/jest/assetFileTransformer.js';
+const reactNativeTransform = 'react-native-windows/jest/preprocessor.js';
+const defaultTransform = [
+  'babel-jest',
+  require('@rnw-scripts/babel-node-config'),
+];
+
 module.exports = {
   preset: '@rnx-kit/jest-preset',
 
@@ -16,7 +23,7 @@ module.exports = {
   roots: ['<rootDir>/test/'],
 
   // The test environment that will be used for testing
-  testEnvironment: 'jest-environment-winappdriver',
+  testEnvironment: '@react-native-windows/automation',
 
   // The pattern or patterns Jest uses to detect test files
   testRegex: '.*\\.test\\.ts$',
@@ -26,9 +33,11 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$':
-      'react-native-windows/jest/assetFileTransformer.js',
-    '.*': 'react-native-windows/jest/preprocessor.js',
+    '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
+    'node_modules\\\\@?react-native\\\\.*': reactNativeTransform,
+    '@react-native-windows\\\\tester\\\\.*': reactNativeTransform,
+    'vnext\\\\.*': reactNativeTransform,
+    '^.+\\.[jt]sx?$': defaultTransform,
   },
 
   // An array of regexp pattern strings that are matched against all source file paths before transformation.
@@ -46,20 +55,7 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: 'ReactUWPTestApp',
+    app: 'RNTesterApp',
     enableAutomationChannel: true,
-    webdriverOptions: {
-      // Level of logging verbosity: trace | debug | info | warn | error
-      logLevel: 'error',
-
-      // Default timeout for all waitFor* commands.
-      waitforTimeout: 60000,
-
-      // Default timeout in milliseconds for request
-      connectionRetryTimeout: 90000,
-
-      // Default request retries count
-      connectionRetryCount: 10,
-    },
   },
 };

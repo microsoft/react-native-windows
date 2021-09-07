@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 05 Aug 2021 05:07:20 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.11
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Generate aliased struct for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.10
 

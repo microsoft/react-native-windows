@@ -103,7 +103,9 @@ void HermesRuntimeHolder::initRuntime() noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
   if (m_devSettings->useDirectDebugger) {
     auto adapter = std::make_unique<HermesExecutorRuntimeAdapter>(m_runtime, hermesRuntimeRef, m_jsQueue);
-    facebook::hermes::inspector::chrome::enableDebugging(std::move(adapter), "Hermes React Native");
+    facebook::hermes::inspector::chrome::enableDebugging(
+        std::move(adapter),
+        m_devSettings->debuggerRuntimeName.empty() ? "Hermes React Native" : m_devSettings->debuggerRuntimeName);
   }
 #endif
 

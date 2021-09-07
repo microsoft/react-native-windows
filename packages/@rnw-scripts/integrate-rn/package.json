@@ -50,5 +50,8 @@
     "bin.js",
     "lib-commonjs"
   ],
-  "windowsOnly": true
+  "windowsOnly": true,
+  "engines": {
+    "node": ">= 12.0.0"
+  }
 }

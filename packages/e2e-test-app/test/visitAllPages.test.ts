@@ -5,7 +5,7 @@
  * @format
  */
 
-import {goToComponentExample, goToApiExample} from './framework';
+import {goToApiExample, goToComponentExample} from './RNTesterNavigation';
 
 type RNTesterExampleModule = {
   title: string;

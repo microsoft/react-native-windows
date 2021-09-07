@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 03 Sep 2021 05:06:04 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.84",
+      "version": "0.0.0-canary.84",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix logic to avoid launching packager",
+            "author": "ngerlem@microsoft.com",
+            "commit": "0f733d52fe4f4e6810b10933ba3e7b9b06900168",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 Aug 2021 05:09:46 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.83",
       "version": "0.0.0-canary.83",

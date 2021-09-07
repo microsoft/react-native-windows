@@ -14,12 +14,12 @@
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
     "react-native": "0.0.0-ad9030ca9",
-    "react-native-windows": "0.0.0-canary.368"
+    "react-native-windows": "0.0.0-canary.370"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.6",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.7",
     "@rnw-scripts/eslint-config": "1.1.7",
     "@rnw-scripts/just-task": "2.2.0",
     "@rnw-scripts/ts-config": "2.0.0",
@@ -33,5 +33,8 @@
     "metro-resolver": "^0.66.0",
     "prettier": "1.19.1",
     "react-test-renderer": "17.0.2"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
   }
 }

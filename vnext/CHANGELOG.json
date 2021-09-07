@@ -2,6 +2,60 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Sep 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.370",
+      "version": "0.0.0-canary.370",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix race condition when building customer projects",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d0c3465f27bd0de739b23b46e957cbdab6bdf014",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Sep 2021 05:06:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.369",
+      "version": "0.0.0-canary.369",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fire onMouseEnter/Leave events on pointer conclude",
+            "author": "erozell@outlook.com",
+            "commit": "439b8a54b62807068bfa17e130f8ab0378eaaf36",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Generate aliased struct for turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "b23b6bd01813b9d4ab843f397b7611e3e22d8508",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Provide ability to specify name for the runtime instance when debugging",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1895d6d7d30efea71cfe9f1a8eacb7b237535fb6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable building on Visual Studio 2022",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a232460225b8a0ce312c3033490e55ee35941a05",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/25 Nightly RN Build (Base of 0.66)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "996ed985784ed75a06deb1e85f0e8fc99f9af8e6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Sep 2021 05:08:16 GMT",
       "tag": "react-native-windows_v0.0.0-canary.368",
       "version": "0.0.0-canary.368",

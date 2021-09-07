@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 03 Sep 2021 05:06:04 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.11",
+      "version": "0.0.0-canary.11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Generate aliased struct for turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "b23b6bd01813b9d4ab843f397b7611e3e22d8508",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Sep 2021 05:08:16 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.10",
       "version": "0.0.0-canary.10",

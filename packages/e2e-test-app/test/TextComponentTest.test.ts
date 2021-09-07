@@ -5,7 +5,8 @@
  * @format
  */
 
-import {goToComponentExample, dumpVisualTree} from './framework';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {goToComponentExample} from './RNTesterNavigation';
 
 beforeAll(async () => {
   await goToComponentExample('Text');

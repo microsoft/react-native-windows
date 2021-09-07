@@ -397,12 +397,6 @@ void ReactInstanceWin::Initialize() noexcept {
       };
 #endif
 
-      // Now that ReactNativeWindows is building outside devmain, it is missing
-      // fix given by PR https://github.com/microsoft/react-native-windows/pull/2624 causing
-      // regression. We're turning off console redirection till the fix is available in devmain.
-      // Bug https://office.visualstudio.com/DefaultCollection/OC/_workitems/edit/3441551 is tracking this
-      devSettings->debuggerConsoleRedirection = false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
-
 #ifdef CORE_ABI
       std::vector<facebook::react::NativeModuleDescription> cxxModules;
 #else

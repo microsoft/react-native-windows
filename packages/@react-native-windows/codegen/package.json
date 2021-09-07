@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.0.0-canary.10",
+  "version": "0.0.0-canary.11",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -50,5 +50,8 @@
       "patch"
     ]
   },
-  "promoteRelease": true
+  "promoteRelease": true,
+  "engines": {
+    "node": ">= 12.0.0"
+  }
 }

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Sep 2021 05:06:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.25
+
+Mon, 06 Sep 2021 05:06:22 GMT
+
+### Patches
+
+- Create change files against main branch during preview (ngerlem@microsoft.com)
 
 ## 1.2.24
 
