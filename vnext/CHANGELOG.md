@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Aug 2021 15:06:56 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Sep 2021 15:06:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.2
+
+Mon, 06 Sep 2021 15:06:57 GMT
+
+### Patches
+
+- Fix race condition when building customer projects (dannyvv@microsoft.com)
+- Allow override of global.nativeLoggingHook (30809111+acoates-ms@users.noreply.github.com)
+- UIA Heading support (agnel@microsoft.com)
+- Cherry Pick e64bc29 (34109996+chiaramooney@users.noreply.github.com)
+- Pass JSValueArgWriter around instead of immediately converting to dynamic (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.65.1
 

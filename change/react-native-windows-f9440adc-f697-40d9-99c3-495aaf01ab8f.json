@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
