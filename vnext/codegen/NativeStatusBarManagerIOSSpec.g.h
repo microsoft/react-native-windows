@@ -19,7 +19,7 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
       Method<void(bool) noexcept>{1, L"setNetworkActivityIndicatorVisible"},
       Method<void(std::string) noexcept>{2, L"addListener"},
       Method<void(double) noexcept>{3, L"removeListeners"},
-      Method<void(std::string, bool) noexcept>{4, L"setStyle"},
+      Method<void(std::optional<std::string>, bool) noexcept>{4, L"setStyle"},
       Method<void(bool, std::string) noexcept>{5, L"setHidden"},
   };
 
@@ -50,8 +50,8 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "setStyle",
-          "    REACT_METHOD(setStyle) void setStyle(std::string statusBarStyle, bool animated) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setStyle) static void setStyle(std::string statusBarStyle, bool animated) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setStyle) void setStyle(std::optional<std::string> statusBarStyle, bool animated) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setStyle) static void setStyle(std::optional<std::string> statusBarStyle, bool animated) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "setHidden",
