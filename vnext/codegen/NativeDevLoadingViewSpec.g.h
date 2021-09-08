@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct DevLoadingViewSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, double, double) noexcept>{0, L"showMessage"},
+      Method<void(std::string, std::optional<double>, std::optional<double>) noexcept>{0, L"showMessage"},
       Method<void() noexcept>{1, L"hide"},
   };
 
@@ -26,8 +26,8 @@ struct DevLoadingViewSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showMessage",
-          "    REACT_METHOD(showMessage) void showMessage(std::string message, double withColor, double withBackgroundColor) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showMessage) static void showMessage(std::string message, double withColor, double withBackgroundColor) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showMessage) void showMessage(std::string message, std::optional<double> withColor, std::optional<double> withBackgroundColor) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showMessage) static void showMessage(std::string message, std::optional<double> withColor, std::optional<double> withBackgroundColor) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "hide",

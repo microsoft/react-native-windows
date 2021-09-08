@@ -69,7 +69,7 @@ function getPossibleMethodSignatures(
 ): string[] {
   const args = translateArgs(funcType.params);
   if (isMethodReturnPromise(funcType)) {
-    // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
+    // TODO: type of the promise could be provided in the future
     args.push('React::ReactPromise<React::JSValue> &&result');
   }
 
@@ -102,7 +102,7 @@ function renderProperties(
   properties: ReadonlyArray<NativeModulePropertyShape>,
   tuple: boolean,
 ): string {
-  // We skip the constants for now, since we dont have Spec file validation of them.
+  // TODO: generate code for constants
   return properties
     .filter(prop => prop.name !== 'getConstants')
     .map((prop, index) => {
@@ -120,7 +120,7 @@ function renderProperties(
       );
 
       if (isMethodReturnPromise(funcType)) {
-        // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
+        // TODO: type of the promise could be provided in the future
         traversedArgs.push('Promise<React::JSValue>');
       }
 

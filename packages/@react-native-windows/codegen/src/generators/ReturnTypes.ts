@@ -53,8 +53,7 @@ function translateReturnType(
     case 'TypeAliasTypeAnnotation':
       return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
-      // TODO: should be `std::optional<${translateReturnType(type.typeAnnotation)}>`;
-      return translateReturnType(type.typeAnnotation);
+      return `std::optional<${translateReturnType(type.typeAnnotation)}>`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
