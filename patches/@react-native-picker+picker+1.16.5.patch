@@ -31,7 +31,7 @@ index c88a28b..040bee2 100644
  ##### Add the `ReactNativePicker` project to your solution.
  
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
-index 28a8132..ca1cd63 100644
+index 28a8132..8e119fb 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
 @@ -1,5 +1,6 @@
@@ -90,7 +90,7 @@ index 28a8132..ca1cd63 100644
    </Target>
  </Project>
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
-index c5eda6c..659c446 100644
+index c5eda6c..bb20c1b 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
 +++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
 @@ -6,21 +6,26 @@
@@ -223,6 +223,18 @@ index 55e1f9e..41ee279 100644
              winrt::Microsoft::ReactNative::IJSValueReader const& propertyMapReader) noexcept;
  
          // IViewManagerWithExportedEventTypeConstants
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
+index 790637c..4059727 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/packages.config
+@@ -1,4 +1,6 @@
+ ﻿<?xml version="1.0" encoding="utf-8"?>
+ <packages>
+   <package id="Microsoft.Windows.CppWinRT" version="2.0.190730.2" targetFramework="native" />
++  <package id="Microsoft.WinUI" version="3.0.0-preview4.210210.4" targetFramework="native" />
++  <package id="Microsoft.UI.Xaml" version="2.6.0" targetFramework="native" />
+ </packages>
+\ No newline at end of file
 diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
 index 62c1bf9..0b262fe 100644
 --- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h

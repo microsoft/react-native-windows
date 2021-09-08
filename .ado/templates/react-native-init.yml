@@ -77,11 +77,6 @@ steps:
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
-  - task: NuGetToolInstaller@0
-    inputs:
-      versionSpec: ">=5.8.0"
-
   - ${{ if eq(parameters.useNuGet, true) }}:
     - template: prep-and-pack-nuget.yml
       parameters:
@@ -92,6 +87,7 @@ steps:
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
+    displayName: Set project type
 
   # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
   # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies
@@ -188,6 +184,7 @@ steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
       Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
+    displayName: Set crash dumps location
 
   # Useful info to have in the log, but also a necessary workaround to make sure the cli is cached by npx
   - task: CmdLine@2
