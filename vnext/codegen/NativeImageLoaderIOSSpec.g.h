@@ -19,7 +19,7 @@ struct ImageLoaderIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(std::string, React::JSValue, Promise<React::JSValue>) noexcept>{1, L"getSizeWithHeaders"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"prefetchImage"},
       Method<void(std::string, std::string, double, Promise<React::JSValue>) noexcept>{3, L"prefetchImageWithMetadata"},
-      Method<void(React::JSValueArray, Promise<React::JSValue>) noexcept>{4, L"queryCache"},
+      Method<void(std::vector<std::string>, Promise<React::JSValue>) noexcept>{4, L"queryCache"},
   };
 
   template <class TModule>
@@ -49,8 +49,8 @@ struct ImageLoaderIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "queryCache",
-          "    REACT_METHOD(queryCache) void queryCache(React::JSValueArray && uris, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(queryCache) static void queryCache(React::JSValueArray && uris, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(queryCache) void queryCache(std::vector<std::string> const & uris, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(queryCache) static void queryCache(std::vector<std::string> const & uris, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
   }
 };
 

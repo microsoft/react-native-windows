@@ -15,12 +15,12 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AsyncLocalStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(React::JSValueArray, Callback<std::optional<React::JSValueArray>, std::optional<React::JSValueArray>>) noexcept>{0, L"multiGet"},
-      Method<void(React::JSValueArray, Callback<std::optional<React::JSValueArray>>) noexcept>{1, L"multiSet"},
-      Method<void(React::JSValueArray, Callback<std::optional<React::JSValueArray>>) noexcept>{2, L"multiMerge"},
-      Method<void(React::JSValueArray, Callback<std::optional<React::JSValueArray>>) noexcept>{3, L"multiRemove"},
+      Method<void(std::vector<std::string>, Callback<std::optional<std::vector<React::JSValueObject>>, std::optional<std::vector<std::vector<std::string>>>>) noexcept>{0, L"multiGet"},
+      Method<void(std::vector<std::vector<std::string>>, Callback<std::optional<std::vector<React::JSValueObject>>>) noexcept>{1, L"multiSet"},
+      Method<void(std::vector<std::vector<std::string>>, Callback<std::optional<std::vector<React::JSValueObject>>>) noexcept>{2, L"multiMerge"},
+      Method<void(std::vector<std::string>, Callback<std::optional<std::vector<React::JSValueObject>>>) noexcept>{3, L"multiRemove"},
       Method<void(Callback<React::JSValueObject>) noexcept>{4, L"clear"},
-      Method<void(Callback<std::optional<React::JSValueObject>, std::optional<React::JSValueArray>>) noexcept>{5, L"getAllKeys"},
+      Method<void(Callback<std::optional<React::JSValueObject>, std::optional<std::vector<std::string>>>) noexcept>{5, L"getAllKeys"},
   };
 
   template <class TModule>
@@ -30,23 +30,23 @@ struct AsyncLocalStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "multiGet",
-          "    REACT_METHOD(multiGet) void multiGet(React::JSValueArray && keys, std::function<void(std::optional<React::JSValueArray>, std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiGet) static void multiGet(React::JSValueArray && keys, std::function<void(std::optional<React::JSValueArray>, std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiGet) void multiGet(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<React::JSValueObject>>, std::optional<std::vector<std::vector<std::string>>>)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiGet) static void multiGet(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<React::JSValueObject>>, std::optional<std::vector<std::vector<std::string>>>)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "multiSet",
-          "    REACT_METHOD(multiSet) void multiSet(React::JSValueArray && kvPairs, std::function<void(std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiSet) static void multiSet(React::JSValueArray && kvPairs, std::function<void(std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiSet) void multiSet(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<React::JSValueObject>>)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiSet) static void multiSet(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<React::JSValueObject>>)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "multiMerge",
-          "    REACT_METHOD(multiMerge) void multiMerge(React::JSValueArray && kvPairs, std::function<void(std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiMerge) static void multiMerge(React::JSValueArray && kvPairs, std::function<void(std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiMerge) void multiMerge(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<React::JSValueObject>>)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiMerge) static void multiMerge(std::vector<std::vector<std::string>> const & kvPairs, std::function<void(std::optional<std::vector<React::JSValueObject>>)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "multiRemove",
-          "    REACT_METHOD(multiRemove) void multiRemove(React::JSValueArray && keys, std::function<void(std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(multiRemove) static void multiRemove(React::JSValueArray && keys, std::function<void(std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(multiRemove) void multiRemove(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<React::JSValueObject>>)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(multiRemove) static void multiRemove(std::vector<std::string> const & keys, std::function<void(std::optional<std::vector<React::JSValueObject>>)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "clear",
@@ -55,8 +55,8 @@ struct AsyncLocalStorageSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "getAllKeys",
-          "    REACT_METHOD(getAllKeys) void getAllKeys(std::function<void(std::optional<React::JSValueObject>, std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getAllKeys) static void getAllKeys(std::function<void(std::optional<React::JSValueObject>, std::optional<React::JSValueArray>)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getAllKeys) void getAllKeys(std::function<void(std::optional<React::JSValueObject>, std::optional<std::vector<std::string>>)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getAllKeys) static void getAllKeys(std::function<void(std::optional<React::JSValueObject>, std::optional<std::vector<std::string>>)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
 
