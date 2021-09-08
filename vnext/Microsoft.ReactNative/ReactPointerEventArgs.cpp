@@ -23,12 +23,12 @@ void ReactPointerEventArgs::Target(winrt::IInspectable const &target) noexcept {
   m_target = target;
 }
 
-void ReactPointerEventArgs::PreventDefault() {
-  m_defaultPrevented = true;
+void ReactPointerEventArgs::AllowUncaptured() {
+  m_uncapturedAllowed = true;
 }
 
-void ReactPointerEventArgs::ReleaseCapture() {
-  m_captureReleased = true;
+void ReactPointerEventArgs::PreventDefault() {
+  m_defaultPrevented = true;
 }
 
 ReactPointerEventArgs::ReactPointerEventArgs(
@@ -36,12 +36,12 @@ ReactPointerEventArgs::ReactPointerEventArgs(
     xaml::Input::PointerRoutedEventArgs const &args) noexcept
     : m_kind{kind}, m_args{args} {}
 
-bool ReactPointerEventArgs::CaptureReleased() const noexcept {
-  return m_captureReleased;
-}
-
 bool ReactPointerEventArgs::DefaultPrevented() const noexcept {
   return m_defaultPrevented;
+}
+
+bool ReactPointerEventArgs::UncapturedAllowed() const noexcept {
+  return m_uncapturedAllowed;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

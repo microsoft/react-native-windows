@@ -34,7 +34,7 @@ namespace Microsoft.ReactNative {
     };
     DOC_STRING("Prevent event from being emitted to React JS component.")
     void PreventDefault();
-    DOC_STRING("Prevent or release pointer capture in React Native pointer event handler.")
-    void ReleaseCapture();
+    DOC_STRING("Allow events to be emitted to React JS even if pointer is not captured.")
+    void AllowUncaptured();
   }
 } // namespace Microsoft.ReactNative

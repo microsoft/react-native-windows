@@ -109,8 +109,8 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  if (!argsImpl->CaptureReleased() && !argsImpl->DefaultPrevented() &&
-      m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
+  if (!argsImpl->DefaultPrevented() &&
+      (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer()) || argsImpl->UncapturedAllowed())) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 
@@ -173,12 +173,13 @@ void TouchEventHandler::OnPointerMoved(
   if (!PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
     return;
 
-  auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
+  const auto pointerId = args.Pointer().PointerId();
+  const auto optPointerIndex = IndexOfPointerWithId(pointerId);
   if (optPointerIndex) {
-    if (argsImpl->CaptureReleased()) {
-      m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
+    UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
+    if (!IsPointerCaptured(pointerId) && !argsImpl->UncapturedAllowed()) {
+      OnPointerConcluded(TouchEventType::Cancel, args);
     } else if (!argsImpl->DefaultPrevented()) {
-      UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
       DispatchTouchEvent(eventType, *optPointerIndex);
     }
   } else if (!argsImpl->DefaultPrevented()) {
@@ -207,30 +208,24 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
+  auto preventCleanup = false;
   if (m_pointers[*optPointerIndex].isLeftButton) {
-    if (argsImpl->CaptureReleased()) {
-      // Force cancellation if ReleaseCapture is called ReactPointerEventArgs
-      DispatchTouchEvent(TouchEventType::Cancel, *optPointerIndex);
-    } else if (!argsImpl->DefaultPrevented()) {
-      DispatchTouchEvent(eventType, *optPointerIndex);
+    if (eventType == TouchEventType::CaptureLost && argsImpl->UncapturedAllowed()) {
+      preventCleanup = true;
+    } else {
+      const auto modifiedEventType = argsImpl->DefaultPrevented() ? TouchEventType::Cancel : eventType;
+      DispatchTouchEvent(modifiedEventType, *optPointerIndex);
     }
   }
 
-  // If PreventDefault is called when CaptureLost occurs, do not clean up
-  if (eventType != TouchEventType::CaptureLost || !argsImpl->DefaultPrevented()) {
+  if (!preventCleanup) {
     m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
     if (m_pointers.size() == 0)
       m_touchId = 0;
 
-    const auto frameworkElement = m_xamlView.as<xaml::FrameworkElement>();
-    auto wasCaptured = false;
-    if (frameworkElement.PointerCaptures()) {
-      for (auto pointer : frameworkElement.PointerCaptures()) {
-        wasCaptured |= pointer.PointerId() == args.Pointer().PointerId();
-      }
-    }
+    const auto wasCaptured = IsPointerCaptured(args.Pointer().PointerId());
 
-    frameworkElement.ReleasePointerCapture(args.Pointer());
+    m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
 
     // Updates the enter/leave state when pointer was previously captured
     if (wasCaptured) {
@@ -755,6 +750,19 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
   }
 
   return tag;
+}
+
+bool TouchEventHandler::IsPointerCaptured(uint32_t pointerId) {
+  const auto frameworkElement = m_xamlView.as<xaml::FrameworkElement>();
+  if (frameworkElement.PointerCaptures()) {
+    for (auto pointer : frameworkElement.PointerCaptures()) {
+      if (pointer.PointerId() == pointerId) {
+        return true;
+      }
+    }
+  }
+
+  return false;
 }
 
 //
