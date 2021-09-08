@@ -2,6 +2,29 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@react-native-windows/automation-commands_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/automation-commands"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/automation-commands"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Sep 2021 05:06:39 GMT",
       "tag": "@react-native-windows/automation-commands_v0.0.2-0",
       "version": "0.0.2-0",

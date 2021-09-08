@@ -1,8 +1,21 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Sat, 04 Sep 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.371 (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.4.18 (ngerlem@microsoft.com)
 
 ## 0.0.1
 

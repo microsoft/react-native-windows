@@ -2,6 +2,53 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.371",
+      "version": "0.0.0-canary.371",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 9/2",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "8b91737bde65fc50b454be74f64bc50b5d2cfda2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "announce changes to accessibilityState",
+            "author": "agnel@microsoft.com",
+            "commit": "59c91a470a13a85cb27bc76e57e05884cc023961",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Match Alert module with NativeDialogManagerAndroidSpec.h",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "d085526651bb421f97b536a753365c7375b74828",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Sep 2021 05:06:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.370",
       "version": "0.0.0-canary.370",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Set consistent node requirements on our packages",
-  "packageName": "@rnw-scripts/format-files",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

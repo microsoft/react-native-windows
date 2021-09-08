@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Sat, 04 Sep 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.2
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.2 (ngerlem@microsoft.com)
 
 ## 0.0.2-0
 

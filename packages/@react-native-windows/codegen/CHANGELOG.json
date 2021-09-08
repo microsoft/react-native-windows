@@ -2,6 +2,53 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.12",
+      "version": "0.0.0-canary.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Match Alert module with NativeDialogManagerWindowsSpec.h",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "d085526651bb421f97b536a753365c7375b74828",
+            "package": "@react-native-windows/codegen"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 05:06:04 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.11",
       "version": "0.0.0-canary.11",

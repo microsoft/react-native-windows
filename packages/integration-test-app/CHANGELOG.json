@@ -2,6 +2,41 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.371",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "integration-test-app"
+          },
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "integration-test-app"
+          },
+          {
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "integration-test-app"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Sep 2021 05:06:39 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
