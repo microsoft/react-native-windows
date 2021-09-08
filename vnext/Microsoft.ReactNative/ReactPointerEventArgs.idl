@@ -19,13 +19,18 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   DOC_STRING("Event arguments wrapper for IViewManagerWithPointerEvents.")
   runtimeclass ReactPointerEventArgs {
-    DOC_STRING("Gets the pointer event kind.")
-    PointerEventKind Kind {
-      get;
-    };
     DOC_STRING("Gets the wrapped routed pointer event.")
     XAML_NAMESPACE.Input.PointerRoutedEventArgs Args {
       get;
+    };
+    DOC_STRING(
+      "Gets or sets the pointer event kind. The setter should only be used to "
+      "change CaptureLost events to End (treat capture loss as pointer end). "
+      "All other changes will be ignored."
+    )
+    PointerEventKind Kind {
+      get;
+      set;
     };
     DOC_STRING("Gets or sets the React target for the pointer event.")
     Object Target {
@@ -34,7 +39,9 @@ namespace Microsoft.ReactNative {
     };
     DOC_STRING("Prevent event from being emitted to React JS component.")
     void PreventDefault();
-    DOC_STRING("Allow events to be emitted to React JS even if pointer is not captured.")
+    DOC_STRING(
+      "Allow events to be emitted to React JS even if pointer is not captured."
+    )
     void AllowUncaptured();
   }
 } // namespace Microsoft.ReactNative
