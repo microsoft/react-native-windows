@@ -9418,10 +9418,10 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-tscodegen@0.68.3:
-  version "0.68.3"
-  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.3.tgz#41bec2b3716b36b218a9ace467010628f89b67ba"
-  integrity sha512-4tCC5c3A7u2UvbG52RN5FYoeTkhUhbsDiA1QwhrIcaWIBjbw2uWk/rwy4+xpiLLcfXarZWYtAYLfCbBrkYeJ6Q==
+react-native-tscodegen@0.68.4:
+  version "0.68.4"
+  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.4.tgz#d8cbf523f8e20b9f0806fca8a24254a31df1f383"
+  integrity sha512-N0AEJkFyUuOkt+nA128a0MfraPETvVmW9FW0lS6iSiWCwLkUZXhZH8YuKWVOSkmREspCBg2tSqYohvGdApv63A==
   dependencies:
     jscodeshift "0.6.4"
     nullthrows "1.1.1"
@@ -11719,7 +11719,6 @@ xmldoc@^1.1.2:
 
 xmldom@^0.5.0, xmldom@^0.6.0, "xmldom@github:xmldom/xmldom#0.7.0":
   version "0.7.0"
-  uid c568938641cc1f121cef5b4df80fcfda1e489b6e
   resolved "https://codeload.github.com/xmldom/xmldom/tar.gz/c568938641cc1f121cef5b4df80fcfda1e489b6e"
 
 xpath@^0.0.27:
