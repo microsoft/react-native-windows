@@ -110,7 +110,7 @@ void TouchEventHandler::OnPointerPressed(
   }
 
   if (!argsImpl->DefaultPrevented() &&
-      (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer()) || argsImpl->UncapturedAllowed())) {
+      (argsImpl->UncapturedAllowed() || m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer()))) {
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 
@@ -208,31 +208,31 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
-  auto preventCleanup = false;
   if (m_pointers[*optPointerIndex].isLeftButton) {
     if (eventType == TouchEventType::CaptureLost && argsImpl->UncapturedAllowed()) {
-      preventCleanup = true;
+      // If we allow the pointer to continue uncaptured, we can ignore the event
+      return;
     } else {
-      const auto modifiedEventType = argsImpl->DefaultPrevented() ? TouchEventType::Cancel : eventType;
+      const auto modifiedEventType = argsImpl->DefaultPrevented()
+          ? TouchEventType::Cancel
+          : reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End ? TouchEventType::End : eventType;
       DispatchTouchEvent(modifiedEventType, *optPointerIndex);
     }
   }
 
-  if (!preventCleanup) {
-    m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
-    if (m_pointers.size() == 0)
-      m_touchId = 0;
+  m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
+  if (m_pointers.size() == 0)
+    m_touchId = 0;
 
-    const auto wasCaptured = IsPointerCaptured(args.Pointer().PointerId());
+  const auto wasCaptured = IsPointerCaptured(args.Pointer().PointerId());
 
-    m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
+  m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
 
-    // Updates the enter/leave state when pointer was previously captured
-    if (wasCaptured) {
-      UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
-    }
-  }
+  // Updates the enter/leave state when pointer was previously captured
+  if (wasCaptured)
+    UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 }
+
 size_t TouchEventHandler::AddReactPointer(
     const winrt::PointerRoutedEventArgs &args,
     int64_t tag,
