@@ -1,0 +1,73 @@
+# Evaluate an MSBuild property name
+param(
+    [Parameter(Mandatory=$true)]
+    [String]$SolutionFile,
+    [Parameter(Mandatory=$true)]
+    [String]$ProjectFile,
+    [Parameter(Mandatory=$true)]
+    [String]$PropertyName
+)
+
+function Get-MSBuildPath {
+    $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+    if (!(Test-Path $vsWhere)) {
+        throw "Unable to find vswhere.exe."
+    }
+    $vsPath = & $vsWhere -version 16.5 -property installationPath;
+    return "$vsPath\MSBuild\Current\Bin\";
+}
+
+function Get-MSBuildProperty {
+    param (
+        [Parameter(Mandatory=$true)]
+        [String]$SolutionPath,
+        [Parameter(Mandatory=$true)]
+        [String]$ProjectPath,
+        [Parameter(Mandatory=$true)]
+        [String]$PropertyName
+    )
+
+    # Identify location of MSBuild
+    $MsBuildPath = Get-MSBuildPath
+
+    # Load Microsoft.Build.dll into script
+    Add-Type -Path "$MsBuildPath\Microsoft.Build.dll" | Out-Null
+
+    # Build a temporary "metaproj" of the solution file so it can be processed
+    ${env:MSBUILDEMITSOLUTION} = 1
+    & $MsBuildPath\MSBuild.exe $SolutionPath | Out-Null
+
+    # Build a local project collection
+    $projectCollection =[Microsoft.Build.Evaluation.ProjectCollection]::new()
+
+    # Process solution
+    $solution = [Microsoft.Build.Evaluation.Project]::new("$SolutionPath.metaproj", $null, "Current", $projectCollection)
+
+    # Clean up "metaproj" files
+    Remove-Item "$SolutionPath.metaproj" | Out-Null
+    Remove-Item "$SolutionPath.metaproj.tmp" | Out-Null
+
+    # Evaluate all of the Solution* properties and save into a collection
+    $globalProps = New-Object 'System.Collections.Generic.Dictionary[String,String]'
+    $solution.Properties | ForEach-Object -Process {
+        if ($_.Name.StartsWith("Solution")) {
+            $globalProps.Add($_.Name, $_.EvaluatedValue)
+        }
+    }
+
+    # Process the project file (with the Solution* properties we calculated before)
+    $project = [Microsoft.Build.Evaluation.Project]::new("$ProjectPath", $globalProps, "Current", $projectCollection)
+
+    # Look for the specified PropertyName and evaluate it
+    $project.Properties | ForEach-Object -Process {
+        if ($_.Name -eq $PropertyName) {
+            Write-Host $_.EvaluatedValue
+            break
+        }
+    }
+}
+
+$SolutionPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $SolutionFile))
+$ProjectPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $ProjectFile))
+
+Get-MSBuildProperty -SolutionPath $SolutionPath -ProjectPath $ProjectPath -PropertyName $PropertyName
