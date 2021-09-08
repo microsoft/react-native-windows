@@ -8,8 +8,10 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
-  PointerEventKind Kind() const noexcept;
   xaml::Input::PointerRoutedEventArgs Args() const noexcept;
+
+  PointerEventKind Kind() const noexcept;
+  void Kind(PointerEventKind const &kind) noexcept;
 
   winrt::IInspectable Target() const noexcept;
   void Target(winrt::IInspectable const &target) noexcept;
@@ -24,7 +26,8 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
   bool DefaultPrevented() const noexcept;
 
  private:
-  PointerEventKind m_kind;
+  PointerEventKind m_originalKind;
+  std::optional<PointerEventKind> m_kind{std::nullopt};
   xaml::Input::PointerRoutedEventArgs const &m_args;
   winrt::IInspectable m_target{nullptr};
 
