@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "ReactUwpTestApp -> RNTesterApp",
+  "packageName": "jest-environment-winappdriver",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}

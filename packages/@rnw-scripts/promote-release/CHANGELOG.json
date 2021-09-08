@@ -2,6 +2,50 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.26",
+      "version": "1.2.26",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.24",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/promote-release"
+          },
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.21",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Sep 2021 05:06:22 GMT",
+      "tag": "@rnw-scripts/promote-release_v1.2.25",
+      "version": "1.2.25",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Create change files against main branch during preview",
+            "author": "ngerlem@microsoft.com",
+            "commit": "013a17b4512a91b07a9b38d01290254691badd4d",
+            "package": "@rnw-scripts/promote-release"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@rnw-scripts/promote-release_v1.2.24",
       "version": "1.2.24",

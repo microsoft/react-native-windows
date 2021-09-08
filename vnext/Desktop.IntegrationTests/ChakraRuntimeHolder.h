@@ -1,11 +1,11 @@
 #pragma once
 
 #include <DevSettings.h>
-
 #include <JSI/ChakraRuntimeArgs.h>
 #include <JSI/RuntimeHolder.h>
-
 #include <Logging.h>
+#include <mutex>
+#include <thread>
 
 namespace Microsoft::React::Test {
 

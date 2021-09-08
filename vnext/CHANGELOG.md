@@ -1,8 +1,62 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 28 Aug 2021 05:06:32 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.371
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate 9/2 (34109996+chiaramooney@users.noreply.github.com)
+- announce changes to accessibilityState (agnel@microsoft.com)
+- Match Alert module with NativeDialogManagerAndroidSpec.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+## 0.0.0-canary.370
+
+Sat, 04 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Fix race condition when building customer projects (dannyvv@microsoft.com)
+
+## 0.0.0-canary.369
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Fire onMouseEnter/Leave events on pointer conclude (erozell@outlook.com)
+- Generate aliased struct for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Provide ability to specify name for the runtime instance when debugging (30809111+acoates-ms@users.noreply.github.com)
+- Enable building on Visual Studio 2022 (julio.rocha@microsoft.com)
+- Integrate 8/25 Nightly RN Build (Base of 0.66) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.368
+
+Wed, 01 Sep 2021 05:07:18 GMT
+
+### Changes
+
+- Integrate 8/11 Nightly RN Build (ngerlem@microsoft.com)
+- add accessibility UIA headings (agnel@microsoft.com)
+
+## 0.0.0-canary.367
+
+Tue, 31 Aug 2021 05:07:15 GMT
+
+### Changes
+
+- Allow override of global.nativeLoggingHook (30809111+acoates-ms@users.noreply.github.com)
+- Remove unused code (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.366
 

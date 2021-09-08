@@ -69,9 +69,6 @@
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="ABI\MemoryTracker.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="ABI\MessageQueue.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -105,9 +102,6 @@
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactContext.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp" />
-    <ClCompile Include="ABI\MemoryTracker.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -170,9 +164,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABI\MemoryTracker.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
     <ClInclude Include="ABI\MessageQueueShim.h">
       <Filter>ABI</Filter>
     </ClInclude>

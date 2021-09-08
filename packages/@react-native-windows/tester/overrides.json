@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-f592ad050",
+  "baseVersion": "0.0.0-a8ac5ea32",
   "overrides": [
     {
       "type": "patch",
@@ -13,6 +13,13 @@
       "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
       "baseHash": "c211a725a3f935a4425f7af92bc7a4cba4f0655a",
       "issue": 6341
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/Border/BorderExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Border/BorderExample.js",
+      "baseHash": "88069b6d56cc0902624073a81faed20cbc5fbb0d",
+      "issue": 8511
     },
     {
       "type": "patch",

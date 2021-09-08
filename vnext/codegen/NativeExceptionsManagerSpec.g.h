@@ -13,11 +13,45 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(ExceptionsManagerSpec_StackFrame)
+struct ExceptionsManagerSpec_StackFrame {
+    REACT_FIELD(column)
+    std::optional<double> column;
+    REACT_FIELD(file)
+    std::optional<std::string> file;
+    REACT_FIELD(lineNumber)
+    std::optional<double> lineNumber;
+    REACT_FIELD(methodName)
+    std::string methodName;
+    REACT_FIELD(collapse)
+    std::optional<bool> collapse;
+};
+
+REACT_STRUCT(ExceptionsManagerSpec_ExceptionData)
+struct ExceptionsManagerSpec_ExceptionData {
+    REACT_FIELD(message)
+    std::string message;
+    REACT_FIELD(originalMessage)
+    std::optional<std::string> originalMessage;
+    REACT_FIELD(name)
+    std::optional<std::string> name;
+    REACT_FIELD(componentStack)
+    std::optional<std::string> componentStack;
+    REACT_FIELD(stack)
+    React::JSValueArray stack;
+    REACT_FIELD(id)
+    double id;
+    REACT_FIELD(isFatal)
+    bool isFatal;
+    REACT_FIELD(extraData)
+    std::optional<React::JSValue> extraData;
+};
+
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, React::JSValueArray, double) noexcept>{0, L"reportFatalException"},
       Method<void(std::string, React::JSValueArray, double) noexcept>{1, L"reportSoftException"},
-      Method<void(React::JSValueObject) noexcept>{2, L"reportException"},
+      Method<void(ExceptionsManagerSpec_ExceptionData) noexcept>{2, L"reportException"},
       Method<void(std::string, React::JSValueArray, double) noexcept>{3, L"updateExceptionMessage"},
       Method<void() noexcept>{4, L"dismissRedbox"},
   };
@@ -39,8 +73,8 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "reportException",
-          "    REACT_METHOD(reportException) void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(reportException) static void reportException(React::JSValueObject && data) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(reportException) void reportException(ExceptionsManagerSpec_ExceptionData && data) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportException) static void reportException(ExceptionsManagerSpec_ExceptionData && data) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "updateExceptionMessage",

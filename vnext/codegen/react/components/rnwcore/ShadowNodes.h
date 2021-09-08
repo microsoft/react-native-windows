@@ -10,9 +10,9 @@
 
 #pragma once
 
-#include <react/components/rnwcore/EventEmitters.h>
-#include <react/components/rnwcore/Props.h>
-#include <react/components/view/ConcreteViewShadowNode.h>
+#include <react/renderer/components/rnwcore/EventEmitters.h>
+#include <react/renderer/components/rnwcore/Props.h>
+#include <react/renderer/components/view/ConcreteViewShadowNode.h>
 
 namespace facebook {
 namespace react {

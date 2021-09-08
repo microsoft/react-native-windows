@@ -1,8 +1,37 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Wed, 25 Aug 2021 05:07:15 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.8
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate 9/2 (34109996+chiaramooney@users.noreply.github.com)
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+## 0.0.0-canary.7
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Integrate 8/25 Nightly RN Build (Base of 0.66) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.6
+
+Wed, 01 Sep 2021 05:07:18 GMT
+
+### Changes
+
+- Integrate 8/11 Nightly RN Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.5
 

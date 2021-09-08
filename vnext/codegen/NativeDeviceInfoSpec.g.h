@@ -13,6 +13,44 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(DeviceInfoSpec_DisplayMetrics)
+struct DeviceInfoSpec_DisplayMetrics {
+    REACT_FIELD(width)
+    double width;
+    REACT_FIELD(height)
+    double height;
+    REACT_FIELD(scale)
+    double scale;
+    REACT_FIELD(fontScale)
+    double fontScale;
+};
+
+REACT_STRUCT(DeviceInfoSpec_DisplayMetricsAndroid)
+struct DeviceInfoSpec_DisplayMetricsAndroid {
+    REACT_FIELD(width)
+    double width;
+    REACT_FIELD(height)
+    double height;
+    REACT_FIELD(scale)
+    double scale;
+    REACT_FIELD(fontScale)
+    double fontScale;
+    REACT_FIELD(densityDpi)
+    double densityDpi;
+};
+
+REACT_STRUCT(DeviceInfoSpec_DimensionsPayload)
+struct DeviceInfoSpec_DimensionsPayload {
+    REACT_FIELD(window)
+    std::optional<DeviceInfoSpec_DisplayMetrics> window;
+    REACT_FIELD(screen)
+    std::optional<DeviceInfoSpec_DisplayMetrics> screen;
+    REACT_FIELD(windowPhysicalPixels)
+    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> windowPhysicalPixels;
+    REACT_FIELD(screenPhysicalPixels)
+    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> screenPhysicalPixels;
+};
+
 struct DeviceInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
 

@@ -2,6 +2,71 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.109",
+      "version": "0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 9/2",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "8b91737bde65fc50b454be74f64bc50b5d2cfda2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Sep 2021 05:06:04 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.108",
+      "version": "0.0.0-canary.108",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/25 Nightly RN Build (Base of 0.66)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "996ed985784ed75a06deb1e85f0e8fc99f9af8e6",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Sep 2021 05:07:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.107",
+      "version": "0.0.0-canary.107",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/11 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "612eaf91f96d21450032f6e6667bdca0999ae104",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 Aug 2021 05:07:15 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.106",
       "version": "0.0.0-canary.106",

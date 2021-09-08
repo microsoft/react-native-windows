@@ -300,10 +300,7 @@ async function runWindowsInternal(
 }
 
 function shouldLaunchPackager(options: RunWindowsOptions): boolean {
-  return (
-    options.packager === true ||
-    (options.packager === undefined && options.release !== true)
-  );
+  return options.packager && options.launch && options.release !== true;
 }
 
 /*

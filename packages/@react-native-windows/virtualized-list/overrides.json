@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-f592ad050",
+  "baseVersion": "0.0.0-a8ac5ea32",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "66fa79a21dc9b1eb380869311df826df55235ace"
+      "baseHash": "87b17404811d82484497bb8f73b63e57b90b5006"
     },
     {
       "type": "copy",

@@ -1,0 +1,72 @@
+{
+  "name": "@react-native-windows/automation-channel",
+  "entries": [
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.2",
+      "version": "0.0.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Integrate 9/2",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "8b91737bde65fc50b454be74f64bc50b5d2cfda2",
+            "package": "@react-native-windows/automation-channel"
+          },
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.371",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Sep 2021 05:06:39 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.2-0",
+      "version": "0.0.2-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.370",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d0c3465f27bd0de739b23b46e957cbdab6bdf014",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Sep 2021 05:06:04 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Rename node-rnw-rpc to @react-native-windows/automation-channel",
+            "author": "ngerlem@microsoft.com",
+            "commit": "4299613c621622415b6d5ffab83d37984f444707",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.369",
+            "author": "erozell@outlook.com",
+            "commit": "439b8a54b62807068bfa17e130f8ab0378eaaf36",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    }
+  ]
+}

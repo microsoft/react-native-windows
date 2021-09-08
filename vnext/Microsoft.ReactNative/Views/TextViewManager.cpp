@@ -288,6 +288,23 @@ bool TextViewManager::UpdateProperty(
       node->m_backgroundColor = OptionalColorFrom(propertyValue);
       node->RecalculateTextHighlighters();
     }
+  } else if (propertyName == "accessibilityRole") {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &role = propertyValue.AsString();
+      auto value = asHstring(propertyValue);
+      auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
+
+      textBlock.SetValue(winrt::AutomationProperties::LocalizedControlTypeProperty(), boxedValue);
+      if (role == "header") {
+        xaml::Automation::AutomationProperties::SetHeadingLevel(
+            textBlock, winrt::Peers::AutomationHeadingLevel::Level2);
+      } else {
+        textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
+      }
+    } else if (propertyValue.IsNull()) {
+      textBlock.ClearValue(winrt::AutomationProperties::LocalizedControlTypeProperty());
+      textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
+    }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }

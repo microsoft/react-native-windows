@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.0-canary.23",
+  "version": "0.0.0-canary.24",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -14,9 +14,9 @@
     "find-up": "^4.1.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.7",
-    "@rnw-scripts/just-task": "2.2.0",
-    "@rnw-scripts/ts-config": "2.0.0",
+    "@rnw-scripts/eslint-config": "1.1.8",
+    "@rnw-scripts/just-task": "2.2.1",
+    "@rnw-scripts/ts-config": "2.0.1",
     "@types/find-up": "^4.0.0",
     "@types/node": "^14.14.22",
     "eslint": "7.12.0",
@@ -35,5 +35,8 @@
   "promoteRelease": true,
   "files": [
     "lib-commonjs"
-  ]
+  ],
+  "engines": {
+    "node": ">= 12.0.0"
+  }
 }

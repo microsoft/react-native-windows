@@ -6,7 +6,6 @@
 #include <jsi/jsi.h>
 
 namespace facebook::react {
-class MemoryTracker;
 class MessageQueueThread;
 } // namespace facebook::react
 
@@ -34,10 +33,6 @@ struct ChakraRuntimeArgs {
   bool enableNativePromiseSupport{false};
   uint16_t debuggerPort{9229};
   std::string debuggerRuntimeName;
-
-  // Memory governance.
-  size_t runtimeMemoryLimit{0};
-  std::shared_ptr<facebook::react::MemoryTracker> memoryTracker;
 
   std::shared_ptr<facebook::react::MessageQueueThread> jsQueue;
 

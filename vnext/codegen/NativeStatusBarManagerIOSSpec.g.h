@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<React::JSValue>) noexcept>{0, L"getHeight"},
+      Method<void(Callback<React::JSValueObject>) noexcept>{0, L"getHeight"},
       Method<void(bool) noexcept>{1, L"setNetworkActivityIndicatorVisible"},
       Method<void(std::string) noexcept>{2, L"addListener"},
       Method<void(double) noexcept>{3, L"removeListeners"},
@@ -30,8 +30,8 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getHeight",
-          "    REACT_METHOD(getHeight) void getHeight(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getHeight) static void getHeight(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getHeight) void getHeight(std::function<void(React::JSValueObject const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getHeight) static void getHeight(std::function<void(React::JSValueObject const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setNetworkActivityIndicatorVisible",

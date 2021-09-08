@@ -13,9 +13,29 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(AlertManagerSpec_Args)
+struct AlertManagerSpec_Args {
+    REACT_FIELD(title)
+    std::optional<std::string> title;
+    REACT_FIELD(message)
+    std::optional<std::string> message;
+    REACT_FIELD(buttons)
+    std::optional<React::JSValueArray> buttons;
+    REACT_FIELD(type)
+    std::optional<std::string> type;
+    REACT_FIELD(defaultValue)
+    std::optional<std::string> defaultValue;
+    REACT_FIELD(cancelButtonKey)
+    std::optional<std::string> cancelButtonKey;
+    REACT_FIELD(destructiveButtonKey)
+    std::optional<std::string> destructiveButtonKey;
+    REACT_FIELD(keyboardType)
+    std::optional<std::string> keyboardType;
+};
+
 struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(React::JSValueObject, Callback<React::JSValue>) noexcept>{0, L"alertWithArgs"},
+      Method<void(AlertManagerSpec_Args, Callback<double, std::string>) noexcept>{0, L"alertWithArgs"},
   };
 
   template <class TModule>
@@ -25,8 +45,8 @@ struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "alertWithArgs",
-          "    REACT_METHOD(alertWithArgs) void alertWithArgs(React::JSValueObject && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(alertWithArgs) static void alertWithArgs(React::JSValueObject && args, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(alertWithArgs) void alertWithArgs(AlertManagerSpec_Args && args, std::function<void(double, std::string)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(alertWithArgs) static void alertWithArgs(AlertManagerSpec_Args && args, std::function<void(double, std::string)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
 

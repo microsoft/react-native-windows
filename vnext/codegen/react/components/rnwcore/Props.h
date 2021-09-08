@@ -10,9 +10,10 @@
 #pragma once
 
 #include <cinttypes>
-#include <react/components/view/ViewProps.h>
-#include <react/graphics/Color.h>
-#include <react/imagemanager/primitives.h>
+#include <react/renderer/components/view/ViewProps.h>
+#include <react/renderer/core/PropsParserContext.h>
+#include <react/renderer/graphics/Color.h>
+#include <react/renderer/imagemanager/primitives.h>
 #include <vector>
 
 namespace facebook {
@@ -20,7 +21,7 @@ namespace react {
 
 enum class ModalHostViewAnimationType { None, Slide, Fade };
 
-static inline void fromRawValue(const RawValue &value, ModalHostViewAnimationType &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewAnimationType &result) {
   auto string = (std::string)value;
   if (string == "none") { result = ModalHostViewAnimationType::None; return; }
   if (string == "slide") { result = ModalHostViewAnimationType::Slide; return; }
@@ -37,7 +38,7 @@ static inline std::string toString(const ModalHostViewAnimationType &value) {
 }
 enum class ModalHostViewPresentationStyle { FullScreen, PageSheet, FormSheet, OverFullScreen };
 
-static inline void fromRawValue(const RawValue &value, ModalHostViewPresentationStyle &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewPresentationStyle &result) {
   auto string = (std::string)value;
   if (string == "fullScreen") { result = ModalHostViewPresentationStyle::FullScreen; return; }
   if (string == "pageSheet") { result = ModalHostViewPresentationStyle::PageSheet; return; }
@@ -82,7 +83,7 @@ constexpr void operator|=(
   lhs = lhs | static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
 }
 
-static inline void fromRawValue(const RawValue &value, ModalHostViewSupportedOrientationsMask &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewSupportedOrientationsMask &result) {
   auto items = std::vector<std::string>{value};
   for (const auto &item : items) {
     if (item == "portrait") {
@@ -137,7 +138,7 @@ static inline std::string toString(const ModalHostViewSupportedOrientationsMask 
 class ModalHostViewProps final : public ViewProps {
  public:
   ModalHostViewProps() = default;
-  ModalHostViewProps(const ModalHostViewProps &sourceProps, const RawProps &rawProps);
+  ModalHostViewProps(const PropsParserContext& context, const ModalHostViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -154,7 +155,7 @@ class ModalHostViewProps final : public ViewProps {
 
 enum class ActivityIndicatorViewSize { Small, Large };
 
-static inline void fromRawValue(const RawValue &value, ActivityIndicatorViewSize &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ActivityIndicatorViewSize &result) {
   auto string = (std::string)value;
   if (string == "small") { result = ActivityIndicatorViewSize::Small; return; }
   if (string == "large") { result = ActivityIndicatorViewSize::Large; return; }
@@ -171,7 +172,7 @@ static inline std::string toString(const ActivityIndicatorViewSize &value) {
 class ActivityIndicatorViewProps final : public ViewProps {
  public:
   ActivityIndicatorViewProps() = default;
-  ActivityIndicatorViewProps(const ActivityIndicatorViewProps &sourceProps, const RawProps &rawProps);
+  ActivityIndicatorViewProps(const PropsParserContext& context, const ActivityIndicatorViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -183,7 +184,7 @@ class ActivityIndicatorViewProps final : public ViewProps {
 
 enum class DatePickerMinuteInterval { MinuteInterval1 = 1, MinuteInterval2 = 2, MinuteInterval3 = 3, MinuteInterval4 = 4, MinuteInterval5 = 5, MinuteInterval6 = 6, MinuteInterval10 = 10, MinuteInterval12 = 12, MinuteInterval15 = 15, MinuteInterval20 = 20, MinuteInterval30 = 30 };
 
-static inline void fromRawValue(const RawValue &value, DatePickerMinuteInterval &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerMinuteInterval &result) {
   assert(value.hasType<int>());
   auto integerValue = (int)value;
   switch (integerValue) {
@@ -241,7 +242,7 @@ static inline std::string toString(const DatePickerMinuteInterval &value) {
 }
 enum class DatePickerMode { Date, Time, Datetime };
 
-static inline void fromRawValue(const RawValue &value, DatePickerMode &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerMode &result) {
   auto string = (std::string)value;
   if (string == "date") { result = DatePickerMode::Date; return; }
   if (string == "time") { result = DatePickerMode::Time; return; }
@@ -258,7 +259,7 @@ static inline std::string toString(const DatePickerMode &value) {
 }
 enum class DatePickerPickerStyle { Compact, Spinner, Inline };
 
-static inline void fromRawValue(const RawValue &value, DatePickerPickerStyle &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, DatePickerPickerStyle &result) {
   auto string = (std::string)value;
   if (string == "compact") { result = DatePickerPickerStyle::Compact; return; }
   if (string == "spinner") { result = DatePickerPickerStyle::Spinner; return; }
@@ -277,7 +278,7 @@ static inline std::string toString(const DatePickerPickerStyle &value) {
 class DatePickerProps final : public ViewProps {
  public:
   DatePickerProps() = default;
-  DatePickerProps(const DatePickerProps &sourceProps, const RawProps &rawProps);
+  DatePickerProps(const PropsParserContext& context, const DatePickerProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -294,7 +295,7 @@ class DatePickerProps final : public ViewProps {
 
 enum class AndroidDrawerLayoutKeyboardDismissMode { None, OnDrag };
 
-static inline void fromRawValue(const RawValue &value, AndroidDrawerLayoutKeyboardDismissMode &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutKeyboardDismissMode &result) {
   auto string = (std::string)value;
   if (string == "none") { result = AndroidDrawerLayoutKeyboardDismissMode::None; return; }
   if (string == "on-drag") { result = AndroidDrawerLayoutKeyboardDismissMode::OnDrag; return; }
@@ -309,7 +310,7 @@ static inline std::string toString(const AndroidDrawerLayoutKeyboardDismissMode 
 }
 enum class AndroidDrawerLayoutDrawerPosition { Left, Right };
 
-static inline void fromRawValue(const RawValue &value, AndroidDrawerLayoutDrawerPosition &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerPosition &result) {
   auto string = (std::string)value;
   if (string == "left") { result = AndroidDrawerLayoutDrawerPosition::Left; return; }
   if (string == "right") { result = AndroidDrawerLayoutDrawerPosition::Right; return; }
@@ -324,7 +325,7 @@ static inline std::string toString(const AndroidDrawerLayoutDrawerPosition &valu
 }
 enum class AndroidDrawerLayoutDrawerLockMode { Unlocked, LockedClosed, LockedOpen };
 
-static inline void fromRawValue(const RawValue &value, AndroidDrawerLayoutDrawerLockMode &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerLockMode &result) {
   auto string = (std::string)value;
   if (string == "unlocked") { result = AndroidDrawerLayoutDrawerLockMode::Unlocked; return; }
   if (string == "locked-closed") { result = AndroidDrawerLayoutDrawerLockMode::LockedClosed; return; }
@@ -343,7 +344,7 @@ static inline std::string toString(const AndroidDrawerLayoutDrawerLockMode &valu
 class AndroidDrawerLayoutProps final : public ViewProps {
  public:
   AndroidDrawerLayoutProps() = default;
-  AndroidDrawerLayoutProps(const AndroidDrawerLayoutProps &sourceProps, const RawProps &rawProps);
+  AndroidDrawerLayoutProps(const PropsParserContext& context, const AndroidDrawerLayoutProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -358,7 +359,7 @@ class AndroidDrawerLayoutProps final : public ViewProps {
 class RCTMaskedViewProps final : public ViewProps {
  public:
   RCTMaskedViewProps() = default;
-  RCTMaskedViewProps(const RCTMaskedViewProps &sourceProps, const RawProps &rawProps);
+  RCTMaskedViewProps(const PropsParserContext& context, const RCTMaskedViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -368,7 +369,7 @@ class RCTMaskedViewProps final : public ViewProps {
 class AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;
-  AndroidProgressBarProps(const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
+  AndroidProgressBarProps(const PropsParserContext& context, const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -383,7 +384,7 @@ class AndroidProgressBarProps final : public ViewProps {
 
 enum class RCTProgressViewProgressViewStyle { Default, Bar };
 
-static inline void fromRawValue(const RawValue &value, RCTProgressViewProgressViewStyle &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, RCTProgressViewProgressViewStyle &result) {
   auto string = (std::string)value;
   if (string == "default") { result = RCTProgressViewProgressViewStyle::Default; return; }
   if (string == "bar") { result = RCTProgressViewProgressViewStyle::Bar; return; }
@@ -400,7 +401,7 @@ static inline std::string toString(const RCTProgressViewProgressViewStyle &value
 class RCTProgressViewProps final : public ViewProps {
  public:
   RCTProgressViewProps() = default;
-  RCTProgressViewProps(const RCTProgressViewProps &sourceProps, const RawProps &rawProps);
+  RCTProgressViewProps(const PropsParserContext& context, const RCTProgressViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -414,7 +415,7 @@ class RCTProgressViewProps final : public ViewProps {
 
 enum class AndroidSwipeRefreshLayoutSize { Default, Large };
 
-static inline void fromRawValue(const RawValue &value, AndroidSwipeRefreshLayoutSize &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidSwipeRefreshLayoutSize &result) {
   auto string = (std::string)value;
   if (string == "default") { result = AndroidSwipeRefreshLayoutSize::Default; return; }
   if (string == "large") { result = AndroidSwipeRefreshLayoutSize::Large; return; }
@@ -431,7 +432,7 @@ static inline std::string toString(const AndroidSwipeRefreshLayoutSize &value) {
 class AndroidSwipeRefreshLayoutProps final : public ViewProps {
  public:
   AndroidSwipeRefreshLayoutProps() = default;
-  AndroidSwipeRefreshLayoutProps(const AndroidSwipeRefreshLayoutProps &sourceProps, const RawProps &rawProps);
+  AndroidSwipeRefreshLayoutProps(const PropsParserContext& context, const AndroidSwipeRefreshLayoutProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -446,7 +447,7 @@ class AndroidSwipeRefreshLayoutProps final : public ViewProps {
 class PullToRefreshViewProps final : public ViewProps {
  public:
   PullToRefreshViewProps() = default;
-  PullToRefreshViewProps(const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
+  PullToRefreshViewProps(const PropsParserContext& context, const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -460,7 +461,7 @@ class PullToRefreshViewProps final : public ViewProps {
 class SafeAreaViewProps final : public ViewProps {
  public:
   SafeAreaViewProps() = default;
-  SafeAreaViewProps(const SafeAreaViewProps &sourceProps, const RawProps &rawProps);
+  SafeAreaViewProps(const PropsParserContext& context, const SafeAreaViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -470,7 +471,7 @@ class SafeAreaViewProps final : public ViewProps {
 class AndroidHorizontalScrollContentViewProps final : public ViewProps {
  public:
   AndroidHorizontalScrollContentViewProps() = default;
-  AndroidHorizontalScrollContentViewProps(const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
+  AndroidHorizontalScrollContentViewProps(const PropsParserContext& context, const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -480,7 +481,7 @@ class AndroidHorizontalScrollContentViewProps final : public ViewProps {
 class RCTSegmentedControlProps final : public ViewProps {
  public:
   RCTSegmentedControlProps() = default;
-  RCTSegmentedControlProps(const RCTSegmentedControlProps &sourceProps, const RawProps &rawProps);
+  RCTSegmentedControlProps(const PropsParserContext& context, const RCTSegmentedControlProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -496,7 +497,7 @@ class RCTSegmentedControlProps final : public ViewProps {
 class SliderProps final : public ViewProps {
  public:
   SliderProps() = default;
-  SliderProps(const SliderProps &sourceProps, const RawProps &rawProps);
+  SliderProps(const PropsParserContext& context, const SliderProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -519,7 +520,7 @@ class SliderProps final : public ViewProps {
 class AndroidSwitchProps final : public ViewProps {
  public:
   AndroidSwitchProps() = default;
-  AndroidSwitchProps(const AndroidSwitchProps &sourceProps, const RawProps &rawProps);
+  AndroidSwitchProps(const PropsParserContext& context, const AndroidSwitchProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -537,7 +538,7 @@ class AndroidSwitchProps final : public ViewProps {
 class SwitchProps final : public ViewProps {
  public:
   SwitchProps() = default;
-  SwitchProps(const SwitchProps &sourceProps, const RawProps &rawProps);
+  SwitchProps(const PropsParserContext& context, const SwitchProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -554,7 +555,7 @@ class SwitchProps final : public ViewProps {
 class InputAccessoryProps final : public ViewProps {
  public:
   InputAccessoryProps() = default;
-  InputAccessoryProps(const InputAccessoryProps &sourceProps, const RawProps &rawProps);
+  InputAccessoryProps(const PropsParserContext& context, const InputAccessoryProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
@@ -564,7 +565,7 @@ class InputAccessoryProps final : public ViewProps {
 class UnimplementedNativeViewProps final : public ViewProps {
  public:
   UnimplementedNativeViewProps() = default;
-  UnimplementedNativeViewProps(const UnimplementedNativeViewProps &sourceProps, const RawProps &rawProps);
+  UnimplementedNativeViewProps(const PropsParserContext& context, const UnimplementedNativeViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 

@@ -41,7 +41,7 @@ export interface RunWindowsOptions {
   target?: string;
   remoteDebugging?: string;
   logging: boolean;
-  packager?: boolean;
+  packager: boolean;
   bundle: boolean;
   launch: boolean;
   autolink: boolean;

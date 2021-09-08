@@ -21,7 +21,7 @@ struct AppState : public std::enable_shared_from_this<AppState> {
 
   REACT_METHOD(GetCurrentAppState, L"getCurrentAppState")
   void GetCurrentAppState(
-      std::function<void(React::JSValue const &)> const &success,
+      std::function<void(React::JSValueObject const &)> const &success,
       std::function<void(React::JSValue const &)> const &error) noexcept;
 
   REACT_METHOD(AddListener, L"addListener")

@@ -22,6 +22,7 @@
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
+#include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
 #include "../../codegen/NativeLogBoxSpec.g.h"
 #include "../../codegen/NativeUIManagerSpec.g.h"
@@ -296,7 +297,11 @@ void ReactInstanceWin::LoadModules(
           ::Microsoft::ReactNative::AccessibilityInfo,
           ::Microsoft::ReactNativeSpecs::AccessibilityInfoSpec>());
 
-  registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
+  registerTurboModule(
+      L"Alert",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::Alert,
+          ::Microsoft::ReactNativeSpecs::DialogManagerWindowsSpec>());
 
   registerTurboModule(
       L"AppState",
@@ -383,7 +388,6 @@ void ReactInstanceWin::Initialize() noexcept {
       devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
       devSettings->useWebDebugger = m_useWebDebugger;
       devSettings->useFastRefresh = m_isFastReloadEnabled;
-      // devSettings->memoryTracker = GetMemoryTracker();
       devSettings->bundleRootPath = BundleRootPath();
 
       devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
@@ -397,12 +401,6 @@ void ReactInstanceWin::Initialize() noexcept {
         }
       };
 #endif
-
-      // Now that ReactNativeWindows is building outside devmain, it is missing
-      // fix given by PR https://github.com/microsoft/react-native-windows/pull/2624 causing
-      // regression. We're turning off console redirection till the fix is available in devmain.
-      // Bug https://office.visualstudio.com/DefaultCollection/OC/_workitems/edit/3441551 is tracking this
-      devSettings->debuggerConsoleRedirection = false; // JSHost::ChangeGate::ChakraCoreDebuggerConsoleRedirection();
 
 #ifdef CORE_ABI
       std::vector<facebook::react::NativeModuleDescription> cxxModules;

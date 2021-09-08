@@ -2,6 +2,164 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.371",
+      "version": "0.0.0-canary.371",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 9/2",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "8b91737bde65fc50b454be74f64bc50b5d2cfda2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "announce changes to accessibilityState",
+            "author": "agnel@microsoft.com",
+            "commit": "59c91a470a13a85cb27bc76e57e05884cc023961",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Match Alert module with NativeDialogManagerAndroidSpec.h",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "d085526651bb421f97b536a753365c7375b74828",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Sep 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.370",
+      "version": "0.0.0-canary.370",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix race condition when building customer projects",
+            "author": "dannyvv@microsoft.com",
+            "commit": "d0c3465f27bd0de739b23b46e957cbdab6bdf014",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Sep 2021 05:06:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.369",
+      "version": "0.0.0-canary.369",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fire onMouseEnter/Leave events on pointer conclude",
+            "author": "erozell@outlook.com",
+            "commit": "439b8a54b62807068bfa17e130f8ab0378eaaf36",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Generate aliased struct for turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "b23b6bd01813b9d4ab843f397b7611e3e22d8508",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Provide ability to specify name for the runtime instance when debugging",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "1895d6d7d30efea71cfe9f1a8eacb7b237535fb6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Enable building on Visual Studio 2022",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a232460225b8a0ce312c3033490e55ee35941a05",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate 8/25 Nightly RN Build (Base of 0.66)",
+            "author": "ngerlem@microsoft.com",
+            "commit": "996ed985784ed75a06deb1e85f0e8fc99f9af8e6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Sep 2021 05:08:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.368",
+      "version": "0.0.0-canary.368",
+      "comments": {
+        "none": [
+          {
+            "comment": "Remove path patch in rnw-codegen",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "6cd806bb2486db76195edd47e949f6a9424fc6cb",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Sep 2021 05:07:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.368",
+      "version": "0.0.0-canary.368",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 8/11 Nightly RN Build",
+            "author": "ngerlem@microsoft.com",
+            "commit": "612eaf91f96d21450032f6e6667bdca0999ae104",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "add accessibility UIA headings",
+            "author": "agnel@microsoft.com",
+            "commit": "98d0bcb313ff13fc79daae007d6cdf594fc8cfe4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Aug 2021 05:07:15 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.367",
+      "version": "0.0.0-canary.367",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Allow override of global.nativeLoggingHook",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "6addef9dcb286f3ec6718cddd45cec706e853551",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Remove unused code",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "36a6cf37234e51b3518500c66d93f1254bd58035",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 28 Aug 2021 05:06:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.366",
       "version": "0.0.0-canary.366",

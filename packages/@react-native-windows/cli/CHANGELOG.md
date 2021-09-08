@@ -1,8 +1,32 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 17 Aug 2021 05:09:46 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.85
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-unittest-config to v1.2.4 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+- Fix autolinking to support solution files using LF instead of CRLF (jthysell@microsoft.com)
+
+## 0.0.0-canary.84
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Fix logic to avoid launching packager (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.83
 
