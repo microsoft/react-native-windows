@@ -14,13 +14,13 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
   winrt::IInspectable Target() const noexcept;
   void Target(winrt::IInspectable const &target) noexcept;
 
+  void AllowUncaptured();
   void PreventDefault();
-  void ReleaseCapture();
 
   // Internal use
   ReactPointerEventArgs(PointerEventKind kind, xaml::Input::PointerRoutedEventArgs const &args) noexcept;
 
-  bool CaptureReleased() const noexcept;
+  bool UncapturedAllowed() const noexcept;
   bool DefaultPrevented() const noexcept;
 
  private:
@@ -28,7 +28,7 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
   xaml::Input::PointerRoutedEventArgs const &m_args;
   winrt::IInspectable m_target{nullptr};
 
-  bool m_captureReleased{false};
+  bool m_uncapturedAllowed{false};
   bool m_defaultPrevented{false};
 };
 

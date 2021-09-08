@@ -112,6 +112,7 @@ class TouchEventHandler {
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
       bool &isHit);
+  bool IsPointerCaptured(uint32_t pointerId);
 
   XamlView m_xamlView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
