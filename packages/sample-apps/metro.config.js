@@ -30,12 +30,14 @@ module.exports = {
       '@react-native-windows/virtualized-list': virtualizedListPath,
     },
     blockList: exclusionList([
-      // Avoid error EBUSY: resource busy or locked, open 'D:\a\1\s\packages\E2ETest\msbuild.ProjectImports.zip' in pipeline
-      /.*\.ProjectImports\.zip/,
       // This stops "react-native run-windows" from causing the metro server to crash if its already running
       new RegExp(
         `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
       ),
+      // This prevents "react-native run-windows" from hitting: EBUSY: resource busy or locked, open msbuild.ProjectImports.zip or other files produced by msbuild
+      new RegExp(`${rnwPath}/build/.*`),
+      new RegExp(`${rnwPath}/target/.*`),
+      /.*\.ProjectImports\.zip/,
     ]),
   },
 
