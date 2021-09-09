@@ -40,8 +40,11 @@ function translateField(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return 'React::JSValueArray';
+      if (type.elementType) {
+        return `std::vector<${translateField(type.elementType)}>`;
+      } else {
+        return `React::JSValueArray`;
+      }
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValue';
     case 'ObjectTypeAnnotation':

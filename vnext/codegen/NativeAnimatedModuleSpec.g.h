@@ -22,7 +22,7 @@ struct AnimatedModuleSpec_EndResult {
 REACT_STRUCT(AnimatedModuleSpec_EventMapping)
 struct AnimatedModuleSpec_EventMapping {
     REACT_FIELD(nativeEventPath)
-    React::JSValueArray nativeEventPath;
+    std::vector<std::string> nativeEventPath;
     REACT_FIELD(animatedValueTag)
     std::optional<double> animatedValueTag;
 };

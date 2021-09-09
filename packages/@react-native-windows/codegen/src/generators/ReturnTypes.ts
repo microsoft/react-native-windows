@@ -32,8 +32,11 @@ function translateReturnType(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return 'React::JSValueArray';
+      if (type.elementType) {
+        return `std::vector<${translateReturnType(type.elementType)}>`;
+      } else {
+        return 'React::JSValueArray';
+      }
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValue';
     case 'ObjectTypeAnnotation':
