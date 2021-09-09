@@ -49,6 +49,7 @@ export const NpmPackagesWeTrack: string[] = [
 export const NuGetPackagesWeTrack: string[] = [
   'Microsoft.UI.Xaml',
   'Microsoft.Windows.CppWinRT',
+  'Microsoft.WinUI',
 ];
 
 /**
