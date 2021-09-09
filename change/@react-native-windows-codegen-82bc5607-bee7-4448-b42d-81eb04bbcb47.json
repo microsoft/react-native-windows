@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump to 0.66-based react-native-tscodegen",
-  "packageName": "@react-native-windows/codegen",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
