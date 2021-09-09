@@ -359,12 +359,12 @@ void ReactInstanceWin::Initialize() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
 #ifndef CORE_ABI
-      strongThis->m_appTheme = std::make_shared<react::uwp::AppTheme>(
+      strongThis->m_appTheme = std::make_shared<Microsoft::ReactNative::AppTheme>(
           strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
-      strongThis->m_appearanceListener =
-          Mso::Make<react::uwp::AppearanceChangeListener>(strongThis->GetReactContext(), *(strongThis->m_uiQueue));
+      strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
+          strongThis->GetReactContext(), *(strongThis->m_uiQueue));
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
 #endif
 
