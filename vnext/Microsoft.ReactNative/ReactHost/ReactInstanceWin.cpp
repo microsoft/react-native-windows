@@ -360,8 +360,7 @@ void ReactInstanceWin::Initialize() noexcept {
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
       strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
           strongThis->GetReactContext(), *(strongThis->m_uiQueue));
-      Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(
-          winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
+      Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
 #endif
 
       strongThis->Queue().Post([this, weakThis]() noexcept {
