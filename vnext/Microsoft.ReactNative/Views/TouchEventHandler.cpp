@@ -111,11 +111,12 @@ void TouchEventHandler::OnPointerPressed(
 
   if (!argsImpl->DefaultPrevented() &&
       (argsImpl->UncapturedAllowed() || m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer()))) {
+    assert(!tagsForBranch.empty());
+    const auto tag = tagsForBranch.front();
+
     // Pointer pressing updates the enter/leave state
     UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 
-    assert(!tagsForBranch.empty());
-    const auto tag = tagsForBranch.front();
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
     // For now, when using the mouse we only want to send click events for the left button.
