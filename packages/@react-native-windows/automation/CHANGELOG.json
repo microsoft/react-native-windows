@@ -2,6 +2,29 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Fri, 10 Sep 2021 05:07:31 GMT",
+      "tag": "@react-native-windows/automation_v0.0.3",
+      "version": "0.0.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Expose launch args as high level automation option",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3fcb05148391e035583a9164064a5e0cf7ee033c",
+            "package": "@react-native-windows/automation"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.3-1",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "42d0853c684f0e9f9c9f1f7fa34cbf4ca3810edc",
+            "package": "@react-native-windows/automation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Sep 2021 05:07:46 GMT",
       "tag": "@react-native-windows/automation_v0.0.3-0",
       "version": "0.0.3-0",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Expose launch args as high level automation option",
-  "packageName": "@react-native-windows/automation",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
