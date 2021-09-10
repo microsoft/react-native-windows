@@ -19,4 +19,6 @@ struct Url {
   std::string Target();
 };
 
+std::future<std::string> getApplicationDataPath(const wchar_t *childfolder);
+
 } // namespace Microsoft::React

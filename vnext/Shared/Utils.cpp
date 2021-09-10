@@ -4,9 +4,48 @@
 #include "Utils.h"
 #include <regex>
 
+#include <winrt/Windows.Storage.h>
+#include <appmodel.h>
+#include <ShlObj.h>
+#include <Shlwapi.h>
+#include <DesktopWindowBridge.h>
+
 using std::string;
 
 namespace Microsoft::React {
+
+std::future<std::string> getApplicationDataPath(const wchar_t *childFolder) {
+  uint32_t length{0};
+  bool isPackagedApp = GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE;
+  std::string appDataPath;
+  if (isPackagedApp) {
+    if (!childFolder) {
+      co_return winrt::to_string(winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path());
+    } else {
+      auto subfolder = co_await winrt::Windows::Storage::ApplicationData::Current().LocalFolder().CreateFolderAsync(
+          childFolder, winrt::Windows::Storage::CreationCollisionOption::OpenIfExists);
+      co_return winrt::to_string(subfolder.Path());
+    }
+  } else {
+    wchar_t wzAppData[MAX_PATH]{};
+    if (CALL_INDIRECT(
+            L"shell32.dll", SHGetFolderPathW, nullptr, CSIDL_LOCAL_APPDATA, nullptr, SHGFP_TYPE_CURRENT, wzAppData) !=
+        S_OK) {
+      std::abort(); // We don't expect this to happen ever ..
+    }
+    appDataPath = winrt::to_string(wzAppData);
+    if (!childFolder) {
+      co_return appDataPath;
+    } else {
+      std::ostringstream os;
+      os << appDataPath << "\\" << winrt::to_string(childFolder);
+      auto childFolderPath = os.str();
+      if (!CreateDirectoryA(childFolderPath.c_str(), NULL))
+        std::abort();
+      co_return childFolderPath;
+    }
+  }
+}
 
 Url::Url(string &&source) {
   //                           ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
