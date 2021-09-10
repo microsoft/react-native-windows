@@ -4,11 +4,11 @@
 #include "Utils.h"
 #include <regex>
 
-#include <winrt/Windows.Storage.h>
-#include <appmodel.h>
+#include <DesktopWindowBridge.h>
 #include <ShlObj.h>
 #include <Shlwapi.h>
-#include <DesktopWindowBridge.h>
+#include <appmodel.h>
+#include <winrt/Windows.Storage.h>
 
 using std::string;
 

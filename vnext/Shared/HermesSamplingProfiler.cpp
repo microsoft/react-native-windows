@@ -7,8 +7,8 @@
 #include <chrono>
 #include <future>
 
-#include "Utils.h"
 #include "HermesSamplingProfiler.h"
+#include "Utils.h"
 
 namespace Microsoft::ReactNative {
 
