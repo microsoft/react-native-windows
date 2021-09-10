@@ -16,11 +16,8 @@ namespace react::uwp {
 
 AppearanceChangeListener::AppearanceChangeListener(
     const Mso::React::IReactContext &context,
-    Mso::DispatchQueue const &uiQueue) noexcept
-    : Mso::ActiveObject<>(uiQueue), m_context(&context) {
-  // Ensure we're constructed on the UI thread
-  VerifyElseCrash(uiQueue.HasThreadAccess());
-
+    const Mso::React::IDispatchQueue2 &uiQueue) noexcept
+    : m_queue(&uiQueue), m_context(&context) {
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
     m_currentTheme = currentApp.RequestedTheme();
 
@@ -29,7 +26,11 @@ AppearanceChangeListener::AppearanceChangeListener(
     m_revoker = m_uiSettings.ColorValuesChanged(
         winrt::auto_revoke, [weakThis{Mso::WeakPtr(this)}](const auto & /*sender*/, const auto & /*args*/) noexcept {
           if (auto strongThis = weakThis.GetStrongPtr()) {
-            strongThis->InvokeInQueueStrong([strongThis]() noexcept { strongThis->OnColorValuesChanged(); });
+            strongThis->m_queue->Post([weakThis]() noexcept {
+              if (auto strongThis = weakThis.GetStrongPtr()) {
+                strongThis->OnColorValuesChanged();
+              }
+            });
           }
         });
   }
