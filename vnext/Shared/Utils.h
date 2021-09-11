@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <future>
 #include <string>
 
 namespace Microsoft::React {
