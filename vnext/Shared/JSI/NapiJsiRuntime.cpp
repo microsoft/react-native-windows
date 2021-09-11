@@ -1167,22 +1167,20 @@ void NapiJsiRuntime::SetElement(napi_value array, uint32_t index, napi_value val
 
 // Creates an external function.
 napi_value NapiJsiRuntime::CreateExternalFunction(
-  napi_value name,
-  int32_t paramCount,
-  napi_callback callback,
-  void* callbackData)
-{
+    napi_value name,
+    int32_t paramCount,
+    napi_callback callback,
+    void *callbackData) {
   string funcName = StringToStdString(name);
   napi_value function{};
   CHECK_NAPI(napi_create_function(m_env, funcName.data(), funcName.length(), callback, callbackData, &function));
-      SetProperty(function, m_propertyId.length, CreateInt32(paramCount), napi_property_attributes::napi_default);
+  SetProperty(function, m_propertyId.length, CreateInt32(paramCount), napi_property_attributes::napi_default);
 
   return function;
 }
 
 // Creates an object that wraps up external data.
-napi_value NapiJsiRuntime::CreateExternalObject(void* data, napi_finalize finalizeCallback) const
-{
+napi_value NapiJsiRuntime::CreateExternalObject(void *data, napi_finalize finalizeCallback) const {
   napi_value result{};
   CHECK_NAPI(napi_create_external(m_env, data, finalizeCallback, nullptr, &result));
 
@@ -1191,11 +1189,10 @@ napi_value NapiJsiRuntime::CreateExternalObject(void* data, napi_finalize finali
 
 // Wraps up std::unique_ptr as an external object.
 template <typename T>
-napi_value NapiJsiRuntime::CreateExternalObject(unique_ptr<T>&& data) const
-{
+napi_value NapiJsiRuntime::CreateExternalObject(unique_ptr<T> &&data) const {
   napi_value object =
       CreateExternalObject(data.get(), [](napi_env /*env*/, void *dataToDestroy, void * /*finalizerHint*/) {
-    // We wrap dataToDestroy in a unique_ptr to avoid calling delete explicitly.
+        // We wrap dataToDestroy in a unique_ptr to avoid calling delete explicitly.
         delete static_cast<T *>(dataToDestroy);
       });
 
@@ -1208,8 +1205,7 @@ napi_value NapiJsiRuntime::CreateExternalObject(unique_ptr<T>&& data) const
 }
 
 // Gets JSI host object wrapped into a napi_value object.
-const shared_ptr<HostObject>& NapiJsiRuntime::GetJsiHostObject(napi_value obj)
-{
+const shared_ptr<HostObject> &NapiJsiRuntime::GetJsiHostObject(napi_value obj) {
   const napi_value hostObjectHolder = GetProperty(obj, m_propertyId.hostObjectSymbol);
 
   if (TypeOf(hostObjectHolder) == napi_valuetype::napi_external) {
@@ -1222,8 +1218,7 @@ const shared_ptr<HostObject>& NapiJsiRuntime::GetJsiHostObject(napi_value obj)
 }
 
 // Gets cached or creates Proxy handler to implement the JSI host object.
-napi_value NapiJsiRuntime::GetHostObjectProxyHandler()
-{
+napi_value NapiJsiRuntime::GetHostObjectProxyHandler() {
   if (!m_value.HostObjectProxyHandler) {
     const napi_value handler = CreateObject();
     SetProxyTrap<&NapiJsiRuntime::HostObjectGetTrap, 3>(handler, m_propertyId.get);
@@ -1239,8 +1234,7 @@ napi_value NapiJsiRuntime::GetHostObjectProxyHandler()
 
 // Sets Proxy trap method as a pointer to NapiJsiRuntime instance method.
 template <napi_value (NapiJsiRuntime::*trapMethod)(span<napi_value>), size_t argCount>
-void NapiJsiRuntime::SetProxyTrap(napi_value handler, napi_value propertyName)
-{
+void NapiJsiRuntime::SetProxyTrap(napi_value handler, napi_value propertyName) {
   auto proxyTrap = [](napi_env env, napi_callback_info info) noexcept {
     NapiJsiRuntime *runtime{};
     napi_value args[argCount]{};
@@ -1257,8 +1251,7 @@ void NapiJsiRuntime::SetProxyTrap(napi_value handler, napi_value propertyName)
 }
 
 // The host object Proxy 'get' trap implementation.
-napi_value NapiJsiRuntime::HostObjectGetTrap(span<napi_value> args)
-{
+napi_value NapiJsiRuntime::HostObjectGetTrap(span<napi_value> args) {
   // args[0] - the Proxy target object.
   // args[1] - the name of the property to set.
   // args[2] - the Proxy object (unused).
@@ -1271,13 +1264,11 @@ napi_value NapiJsiRuntime::HostObjectGetTrap(span<napi_value> args)
   PropNameIDView propertyId{this, propertyName};
 
   return RunInMethodContext(
-      "HostObject::get", [&/*TODO: explicit captures*/]() { return GetNapiValue(hostObject->get(*this, propertyId));
-  });
+      "HostObject::get", [&/*TODO: explicit captures*/]() { return GetNapiValue(hostObject->get(*this, propertyId)); });
 }
 
 // The host object Proxy 'set' trap implementation.
-napi_value NapiJsiRuntime::HostObjectSetTrap(span<napi_value> args)
-{
+napi_value NapiJsiRuntime::HostObjectSetTrap(span<napi_value> args) {
   // args[0] - the Proxy target object.
   // args[1] - the name of the property to set.
   // args[2] - the new value of the property to set.
@@ -1285,21 +1276,19 @@ napi_value NapiJsiRuntime::HostObjectSetTrap(span<napi_value> args)
   const auto &hostObject = GetJsiHostObject(args[0]);
   PropNameIDView propertyId{this, args[1]};
   JsiValueView value{this, args[2]};
-  RunInMethodContext("HostObject::set", [&/*TODO: explicit captures*/]() {
-    hostObject->set(*this, propertyId, value);
-  });
+  RunInMethodContext(
+      "HostObject::set", [&/*TODO: explicit captures*/]() { hostObject->set(*this, propertyId, value); });
 
   return static_cast<napi_value>(m_value.Undefined);
 }
 
 // The host object Proxy 'ownKeys' trap implementation.
-napi_value NapiJsiRuntime::HostObjectOwnKeysTrap(span<napi_value> args)
-{
+napi_value NapiJsiRuntime::HostObjectOwnKeysTrap(span<napi_value> args) {
   // args[0] - the Proxy target object.
   const auto &hostObject = GetJsiHostObject(args[0]);
 
-  vector<PropNameID> ownKeys = RunInMethodContext("HostObject::getPropertyNames", [&/*TODO: explicit captures*/]() { return hostObject->getPropertyNames(*this);
-  });
+  vector<PropNameID> ownKeys = RunInMethodContext(
+      "HostObject::getPropertyNames", [&/*TODO: explicit captures*/]() { return hostObject->getPropertyNames(*this); });
 
   std::unordered_set<napi_ext_ref> dedupedOwnKeys{};
   dedupedOwnKeys.reserve(ownKeys.size());
@@ -1318,8 +1307,7 @@ napi_value NapiJsiRuntime::HostObjectOwnKeysTrap(span<napi_value> args)
 }
 
 // The host object Proxy 'getOwnPropertyDescriptor' trap implementation.
-napi_value NapiJsiRuntime::HostObjectGetOwnPropertyDescriptorTrap(span<napi_value> args)
-{
+napi_value NapiJsiRuntime::HostObjectGetOwnPropertyDescriptorTrap(span<napi_value> args) {
   // args[0] - the Proxy target object.
   // args[1] - the property
   const auto &hostObject = GetJsiHostObject(args[0]);
@@ -1330,10 +1318,11 @@ napi_value NapiJsiRuntime::HostObjectGetOwnPropertyDescriptorTrap(span<napi_valu
       return napi_property_descriptor{
           nullptr, name, nullptr, nullptr, nullptr, value, napi_default_jsproperty, nullptr};
     };
-    napi_property_descriptor properties[]{getPropDescriptor(m_propertyId.value, GetNapiValue(hostObject->get(*this, propertyId))), getPropDescriptor(m_propertyId.writable, m_value.True),
+    napi_property_descriptor properties[]{
+        getPropDescriptor(m_propertyId.value, GetNapiValue(hostObject->get(*this, propertyId))),
+        getPropDescriptor(m_propertyId.writable, m_value.True),
         getPropDescriptor(m_propertyId.enumerable, m_value.True),
-        getPropDescriptor(m_propertyId.configurable, m_value.True)
-    };
+        getPropDescriptor(m_propertyId.configurable, m_value.True)};
     napi_value descriptor = CreateObject();
     CHECK_NAPI(napi_define_properties(m_env, descriptor, std::size(properties), properties));
 
@@ -1346,16 +1335,14 @@ napi_value NapiJsiRuntime::HostObjectGetOwnPropertyDescriptorTrap(span<napi_valu
 #pragma region Miscellaneous utility methods
 
 // Converts facebook::jsi::Bufer to span.
-span<const uint8_t> NapiJsiRuntime::ToSpan(const Buffer& buffer)
-{
+span<const uint8_t> NapiJsiRuntime::ToSpan(const Buffer &buffer) {
   return span<const uint8_t>(buffer.data(), buffer.size());
 }
 
 // Creates facebook::jsi::Value from napi_value.
-Value NapiJsiRuntime::ToJsiValue(napi_value value) const
-{
-  switch (TypeOf(value))
-  { case napi_valuetype::napi_undefined:
+Value NapiJsiRuntime::ToJsiValue(napi_value value) const {
+  switch (TypeOf(value)) {
+    case napi_valuetype::napi_undefined:
       return Value::undefined();
     case napi_valuetype::napi_null:
       return Value::null();
@@ -1378,8 +1365,7 @@ Value NapiJsiRuntime::ToJsiValue(napi_value value) const
 }
 
 // Gets napi_value from facebook::jsi::Value.
-napi_value NapiJsiRuntime::GetNapiValue(const Value& value) const
-{
+napi_value NapiJsiRuntime::GetNapiValue(const Value &value) const {
   if (value.isUndefined()) {
     return m_value.Undefined;
   } else if (value.isNull()) {
@@ -1400,22 +1386,19 @@ napi_value NapiJsiRuntime::GetNapiValue(const Value& value) const
 }
 
 // Clones NapiPointerValue.
-/*static*/ NapiJsiRuntime::NapiPointerValue* NapiJsiRuntime::CloneNapiPointerValue(const PointerValue* pointerValue)
-{
+/*static*/ NapiJsiRuntime::NapiPointerValue *NapiJsiRuntime::CloneNapiPointerValue(const PointerValue *pointerValue) {
   auto napiPointerValue = static_cast<const NapiPointerValue *>(pointerValue);
 
   return new NapiPointerValue(napiPointerValue->GetRuntime(), napiPointerValue->GetValue());
 }
 
 // Gets napi_value from facebook::jsi::Pointer.
-/*static*/ napi_value NapiJsiRuntime::GetNapiValue(const Pointer& p)
-{
+/*static*/ napi_value NapiJsiRuntime::GetNapiValue(const Pointer &p) {
   return static_cast<const NapiPointerValueView *>(getPointerValue(p))->GetValue();
 }
 
 // Gets napi_ext_ref from facebook::jsi::Pointer.
-/*static*/ napi_ext_ref NapiJsiRuntime::GetNapiRef(const Pointer& p)
-{
+/*static*/ napi_ext_ref NapiJsiRuntime::GetNapiRef(const Pointer &p) {
   return static_cast<const NapiPointerValueView *>(getPointerValue(p))->GetRef();
 }
 
