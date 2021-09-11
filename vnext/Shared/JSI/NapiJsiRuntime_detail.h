@@ -1,10 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#pragma once
+
 // JSI
-#include <jsi/jsi.h>
-#include <compat.h>
 #include <js_native_ext_api.h>
+#include <jsi/jsi.h>
+
+// Standard Library
+#include <string_view>
+
+#ifdef __cpp_lib_span
+#include std::span;
+#endif // __cpp_lib_span
 
 // We use macros to report errors.
 // Macros provide more flexibility to show assert and provide failure context.
@@ -47,18 +55,62 @@
 namespace Microsoft::JSI {
 
 namespace {
+
+#ifdef __cpp_lib_span
+using std::span;
+#else
+/**
+ * @brief A span of values that can be used to pass arguments to a function.
+ *
+ * This should be replaced with std::span once C++ 2020 is supported.
+ */
+template <typename T>
+struct span {
+  constexpr span(std::initializer_list<T> il) noexcept : m_data{const_cast<T *>(il.begin())}, m_size{il.size()} {}
+  constexpr span(T *data, size_t size) noexcept : m_data{data}, m_size{size} {}
+
+  [[nodiscard]] constexpr T *data() const noexcept {
+    return m_data;
+  }
+
+  [[nodiscard]] constexpr size_t size() const noexcept {
+    return m_size;
+  }
+
+  [[nodiscard]] constexpr T *begin() const noexcept {
+    return m_data;
+  }
+
+  [[nodiscard]] constexpr T *end() const noexcept {
+    return *(m_data + m_size);
+  }
+
+  const T &operator[](size_t index) const noexcept {
+    return *(m_data + index);
+  }
+
+ private:
+  T *m_data;
+  size_t m_size;
+};
+#endif // __cpp_lib_span
+
 // Implementation of N-API JSI Runtime
 struct NapiJsiRuntime : facebook::jsi::Runtime {
   NapiJsiRuntime(napi_env env) noexcept;
 
 #pragma region facebook::jsi::Runtime
 
-  facebook::jsi::Value evaluateJavaScript(const std::shared_ptr<const facebook::jsi::Buffer> &buffer, const std::string &sourceURL) override;
+  facebook::jsi::Value evaluateJavaScript(
+      const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
+      const std::string &sourceURL) override;
 
-  std::shared_ptr<const facebook::jsi::PreparedJavaScript> prepareJavaScript(const std::shared_ptr<const facebook::jsi::Buffer> &buffer, std::string sourceURL)
-      override;
+  std::shared_ptr<const facebook::jsi::PreparedJavaScript> prepareJavaScript(
+      const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
+      std::string sourceURL) override;
 
-  facebook::jsi::Value evaluatePreparedJavaScript(const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
+  facebook::jsi::Value evaluatePreparedJavaScript(
+      const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
 
   bool drainMicrotasks(int maxMicrotasksHint = -1) override;
 
@@ -98,8 +150,14 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Value getProperty(const facebook::jsi::Object &obj, const facebook::jsi::String &name) override;
   bool hasProperty(const facebook::jsi::Object &obj, const facebook::jsi::PropNameID &name) override;
   bool hasProperty(const facebook::jsi::Object &obj, const facebook::jsi::String &name) override;
-  void setPropertyValue(facebook::jsi::Object &obj, const facebook::jsi::PropNameID &name, const facebook::jsi::Value &value) override;
-  void setPropertyValue(facebook::jsi::Object &obj, const facebook::jsi::String &name, const facebook::jsi::Value &value) override;
+  void setPropertyValue(
+      facebook::jsi::Object &obj,
+      const facebook::jsi::PropNameID &name,
+      const facebook::jsi::Value &value) override;
+  void setPropertyValue(
+      facebook::jsi::Object &obj,
+      const facebook::jsi::String &name,
+      const facebook::jsi::Value &value) override;
 
   bool isArray(const facebook::jsi::Object &obj) const override;
   bool isArrayBuffer(const facebook::jsi::Object &obj) const override;
@@ -124,10 +182,17 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Value getValueAtIndex(const facebook::jsi::Array &arr, size_t index) override;
   void setValueAtIndexImpl(facebook::jsi::Array &arr, size_t index, const facebook::jsi::Value &value) override;
 
-  facebook::jsi::Function createFunctionFromHostFunction(const facebook::jsi::PropNameID &name, unsigned int paramCount, facebook::jsi::HostFunctionType type)
-      override;
-  facebook::jsi::Value call(const facebook::jsi::Function &func, const facebook::jsi::Value &jsThis, const facebook::jsi::Value *args, size_t count) override;
-  facebook::jsi::Value callAsConstructor(const facebook::jsi::Function &func, const facebook::jsi::Value *args, size_t count) override;
+  facebook::jsi::Function createFunctionFromHostFunction(
+      const facebook::jsi::PropNameID &name,
+      unsigned int paramCount,
+      facebook::jsi::HostFunctionType type) override;
+  facebook::jsi::Value call(
+      const facebook::jsi::Function &func,
+      const facebook::jsi::Value &jsThis,
+      const facebook::jsi::Value *args,
+      size_t count) override;
+  facebook::jsi::Value
+  callAsConstructor(const facebook::jsi::Function &func, const facebook::jsi::Value *args, size_t count) override;
 
   // Corresponds to napi_open_handle_scope and napi_close_handle_scope.
   ScopeState *pushScope() override;
@@ -267,8 +332,8 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   // If number of arguments is below or equal to MaxStackArgCount, they are kept on the call stack,
   // otherwise arguments are allocated on the heap.
   struct NapiValueArgs {
-    NapiValueArgs(NapiJsiRuntime &runtime, napijsi::span<const facebook::jsi::Value> args);
-    operator napijsi::span<napi_value>();
+    NapiValueArgs(NapiJsiRuntime &runtime, span<const facebook::jsi::Value> args);
+    operator span<napi_value>();
 
    private:
     SmallBuffer<napi_value, MaxStackArgCount> m_args;
@@ -292,7 +357,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   // from napi_value to facebook::jsi::value.
   // It helps to avoid conversion to a relatively expensive napi_ext_ref.
   struct JsiValueViewArgs {
-    JsiValueViewArgs(NapiJsiRuntime *runtime, napijsi::span<napi_value> args) noexcept;
+    JsiValueViewArgs(NapiJsiRuntime *runtime, span<napi_value> args) noexcept;
     const facebook::jsi::Value *Data() noexcept;
     size_t Size() const noexcept;
 
@@ -358,7 +423,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   };
 
  private: // Error-handling utility methods
-  [[noreturn]] void ThrowsJsException(napi_status errorCode) const;
+  [[noreturn]] void ThrowJsException(napi_status errorCode) const;
   [[noreturn]] void ThrowNativeException(char const *errorMessage) const;
   void RewriteErrorMessage(napi_value jsError) const;
   template <typename TLambda>
@@ -366,12 +431,12 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   template <typename TLambda>
   napi_value HandleCallbackExceptions(TLambda lambda) const noexcept;
   bool SetException(napi_value error) const noexcept;
-  bool SetException(napijsi::string_view message) const noexcept;
+  bool SetException(std::string_view message) const noexcept;
 
-  private: //Shared NAPI call helpers
+ private: // Shared NAPI call helpers
   napi_value RunScript(napi_value script, const char *sourceUrl);
   std::vector<uint8_t> SerializeScript(napi_value script, const char *sourceUrl);
-  napi_value RunSerializedScript(napijsi::span<const uint8_t> serialized, napi_value source, const char *sourceUrl);
+  napi_value RunSerializedScript(span<const uint8_t> serialized, napi_value source, const char *sourceUrl);
   napi_ext_ref CreateReference(napi_value value) const;
   void ReleaseReference(napi_ext_ref ref) const;
   napi_value GetReferenceValue(napi_ext_ref ref) const;
@@ -385,18 +450,18 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   napi_value CreateInt32(int32_t value) const;
   napi_value CreateDouble(double value) const;
   double GetValueDouble(napi_value value) const;
-  napi_value CreateStringLatin1(napijsi::string_view value) const;
-  napi_value CreateStringUtf8(napijsi::string_view value) const;
+  napi_value CreateStringLatin1(std::string_view value) const;
+  napi_value CreateStringUtf8(std::string_view value) const;
   napi_value CreateStringUtf8(const uint8_t *data, size_t length) const;
   std::string StringToStdString(napi_value stringValue) const;
-  napi_ext_ref GetPropertyIdFromName(napijsi::string_view value) const;
+  napi_ext_ref GetPropertyIdFromName(std::string_view value) const;
   napi_ext_ref GetPropertyIdFromName(const uint8_t *data, size_t length) const;
   napi_ext_ref GetPropertyIdFromName(napi_value str) const;
   std::string PropertyIdToStdString(napi_value propertyId);
-  napi_value CreateSymbol(napijsi::string_view symbolDescription) const;
+  napi_value CreateSymbol(std::string_view symbolDescription) const;
   std::string SymbolToStdString(napi_value symbolValue);
-  napi_value CallFunction(napi_value thisArg, napi_value function, napijsi::span<napi_value> args = {}) const;
-  napi_value ConstructObject(napi_value constructor, napijsi::span<napi_value> args = {}) const;
+  napi_value CallFunction(napi_value thisArg, napi_value function, span<napi_value> args = {}) const;
+  napi_value ConstructObject(napi_value constructor, span<napi_value> args = {}) const;
   bool InstanceOf(napi_value object, napi_value constructor) const;
   napi_value CreateObject() const;
   bool HasProperty(napi_value object, napi_value propertId) const;
@@ -408,72 +473,70 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   static napi_value JsiHostFunctionCallback(napi_env env, napi_callback_info info) noexcept;
   napi_value CreateExternalFunction(napi_value name, int32_t paramCount, napi_callback callback, void *callbackData);
   napi_value CreateExternalObject(void *data, napi_finalize finalizeCallback) const;
-  template<typename T>
+  template <typename T>
   napi_value CreateExternalObject(std::unique_ptr<T> &&data) const;
   void *GetExternalData(napi_value object) const;
   const std::shared_ptr<facebook::jsi::HostObject> &GetJsiHostObject(napi_value obj);
   napi_value GetHostObjectProxyHandler();
-  template <napi_value (NapiJsiRuntime::*trapMethod)(napijsi::span<napi_value>), size_t argCount>
+  template <napi_value (NapiJsiRuntime::*trapMethod)(span<napi_value>), size_t argCount>
   void SetProxyTrap(napi_value handler, napi_value propertyName);
-  napi_value HostObjectGetTrap(napijsi::span<napi_value> args);
-  napi_value HostObjectSetTrap(napijsi::span<napi_value> args);
-  napi_value HostObjectOwnKeysTrap(napijsi::span<napi_value> args);
-  napi_value HostObjectGetOwnPropertyDescriptorTrap(napijsi::span<napi_value> args);
+  napi_value HostObjectGetTrap(span<napi_value> args);
+  napi_value HostObjectSetTrap(span<napi_value> args);
+  napi_value HostObjectOwnKeysTrap(span<napi_value> args);
+  napi_value HostObjectGetOwnPropertyDescriptorTrap(span<napi_value> args);
 
-  private: // Miscellaneous utility methods
-  napijsi::span<const uint8_t> ToSpan(const facebook::jsi::Buffer &buffer);
-   facebook::jsi::Value ToJsiValue(napi_value value) const;
+ private: // Miscellaneous utility methods
+  span<const uint8_t> ToSpan(const facebook::jsi::Buffer &buffer);
+  facebook::jsi::Value ToJsiValue(napi_value value) const;
   napi_value GetNapiValue(const facebook::jsi::Value &value) const;
-   static NapiPointerValue *CloneNapiPointerValue(const PointerValue *pointerValue);
+  static NapiPointerValue *CloneNapiPointerValue(const PointerValue *pointerValue);
   static napi_value GetNapiValue(const facebook::jsi::Pointer &p);
-   static napi_ext_ref GetNapiRef(const facebook::jsi::Pointer &p);
+  static napi_ext_ref GetNapiRef(const facebook::jsi::Pointer &p);
 
-   template <typename T, typename TValue, std::enable_if_t<std::is_base_of_v<facebook::jsi::Pointer, T>, int> = 0>
-   T MakePointer(TValue value) const;
+  template <typename T, typename TValue, std::enable_if_t<std::is_base_of_v<facebook::jsi::Pointer, T>, int> = 0>
+  T MakePointer(TValue value) const;
 
-   private: // Fields
-   EnvHolder m_env;
+ private: // Fields
+  EnvHolder m_env;
 
-   // Property ID cache to improve execution speed.
-   struct PropertyId
-   {
-     NapiRefHolder Error;
-     NapiRefHolder Object;
-     NapiRefHolder Proxy;
-     NapiRefHolder Symbol;
-     NapiRefHolder byteLength;
-     NapiRefHolder configurable;
-     NapiRefHolder enumerable;
-     NapiRefHolder get;
-     NapiRefHolder getOwnPropertyDescriptor;
-     NapiRefHolder hostFunctionSymbol;
-     NapiRefHolder hostObjectSymbol;
-     NapiRefHolder length;
-     NapiRefHolder message;
-     NapiRefHolder ownKeys;
-     NapiRefHolder propertyIsEnumerable;
-     NapiRefHolder prototype;
-     NapiRefHolder set;
-     NapiRefHolder toString;
-     NapiRefHolder value;
-     NapiRefHolder writable;
-   } m_propertyId;
+  // Property ID cache to improve execution speed.
+  struct PropertyId {
+    NapiRefHolder Error;
+    NapiRefHolder Object;
+    NapiRefHolder Proxy;
+    NapiRefHolder Symbol;
+    NapiRefHolder byteLength;
+    NapiRefHolder configurable;
+    NapiRefHolder enumerable;
+    NapiRefHolder get;
+    NapiRefHolder getOwnPropertyDescriptor;
+    NapiRefHolder hostFunctionSymbol;
+    NapiRefHolder hostObjectSymbol;
+    NapiRefHolder length;
+    NapiRefHolder message;
+    NapiRefHolder ownKeys;
+    NapiRefHolder propertyIsEnumerable;
+    NapiRefHolder prototype;
+    NapiRefHolder set;
+    NapiRefHolder toString;
+    NapiRefHolder value;
+    NapiRefHolder writable;
+  } m_propertyId;
 
-   // Cache of commonly used values.
-   struct CachedValue final
-   {
-     NapiRefHolder Error;
-     NapiRefHolder Global;
-     NapiRefHolder False;
-     NapiRefHolder HostObjectProxyHandler;
-     NapiRefHolder Null;
-     NapiRefHolder ProxyConstructor;
-     NapiRefHolder SymbolToString;
-     NapiRefHolder True;
-     NapiRefHolder Undefined;
-   } m_value;
+  // Cache of commonly used values.
+  struct CachedValue final {
+    NapiRefHolder Error;
+    NapiRefHolder Global;
+    NapiRefHolder False;
+    NapiRefHolder HostObjectProxyHandler;
+    NapiRefHolder Null;
+    NapiRefHolder ProxyConstructor;
+    NapiRefHolder SymbolToString;
+    NapiRefHolder True;
+    NapiRefHolder Undefined;
+  } m_value;
 
-   bool m_pendingJSError{false};
+  bool m_pendingJSError{false};
 };
 } // namespace
 

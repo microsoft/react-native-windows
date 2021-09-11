@@ -4,8 +4,8 @@
 #pragma once
 
 // JSI
+#include <js_native_api.h>
 #include <jsi/jsi.h>
-#include <js_native_api_types.h>
 
 // Standard Library
 #include <memory>
@@ -17,4 +17,4 @@ namespace Microsoft::JSI {
 ///
 std::unique_ptr<facebook::jsi::Runtime> __cdecl MakeNapiJsiRuntime2(napi_env env) noexcept;
 
-}
+} // namespace Microsoft::JSI
