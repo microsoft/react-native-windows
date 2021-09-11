@@ -15,11 +15,10 @@ using std::string_view;
 using std::unique_ptr;
 using std::vector;
 
+namespace Microsoft::JSI {
+
 namespace {
 constexpr char s_description[] = "NapiJsiRuntime";
-} // namespace
-
-namespace Microsoft::JSI {
 
 #pragma region NapiJsiRuntime
 
@@ -180,7 +179,7 @@ String NapiJsiRuntime::createStringFromAscii(const char *str, size_t length) {
 String NapiJsiRuntime::createStringFromUtf8(const uint8_t *str, size_t length) {
   EnvScope scope{m_env};
 
-  return MakePointer<String>(createStringFromUtf8(str, length));
+  return MakePointer<String>(CreateStringUtf8(str, length));
 }
 
 string NapiJsiRuntime::utf8(const String &str) {
@@ -1304,13 +1303,93 @@ napi_value NapiJsiRuntime::HostObjectGetOwnPropertyDescriptorTrap(span<napi_valu
 
 #pragma region Miscellaneous utility methods
 
+// Converts facebook::jsi::Bufer to span.
+span<const uint8_t> NapiJsiRuntime::ToSpan(const Buffer& buffer)
+{
+  return span<const uint8_t>(buffer.data(), buffer.size());
+}
 
+// Creates facebook::jsi::Value from napi_value.
+Value NapiJsiRuntime::ToJsiValue(napi_value value) const
+{
+  switch (TypeOf(value))
+  { case napi_valuetype::napi_undefined:
+      return Value::undefined();
+    case napi_valuetype::napi_null:
+      return Value::null();
+    case napi_valuetype::napi_boolean:
+      return Value{GetValueBool(value)};
+    case napi_valuetype::napi_number:
+      return Value{GetValueDouble(value)};
+    case napi_valuetype::napi_string:
+      return Value{MakePointer<String>(value)};
+    case napi_valuetype::napi_symbol:
+      return Value{MakePointer<Symbol>(value)};
+    case napi_valuetype::napi_object:
+    case napi_valuetype::napi_function:
+    case napi_valuetype::napi_external:
+    case napi_valuetype::napi_bigint:
+      return Value{MakePointer<Object>(value)};
+    default:
+      throw JSINativeException("Unexpected value type");
+  }
+}
+
+// Gets napi_value from facebook::jsi::Value.
+napi_value NapiJsiRuntime::GetNapiValue(const Value& value) const
+{
+  if (value.isUndefined()) {
+    return m_value.Undefined;
+  } else if (value.isNull()) {
+    return m_value.Null;
+  } else if (value.isBool()) {
+    return value.getBool() ? m_value.True : m_value.False;
+  } else if (value.isNumber()) {
+    return CreateDouble(value.getNumber());
+  } else if (value.isSymbol()) {
+    return GetNapiValue(value.getSymbol(*const_cast<NapiJsiRuntime *>(this)));
+  } else if (value.isString()) {
+    return GetNapiValue(value.getString(*const_cast<NapiJsiRuntime *>(this)));
+  } else if (value.isObject()) {
+    return GetNapiValue(value.getObject(*const_cast<NapiJsiRuntime *>(this)));
+  } else {
+    throw JSINativeException("Unexpected jsi::Value type");
+  }
+}
+
+// Clones NapiPointerValue.
+/*static*/ NapiJsiRuntime::NapiPointerValue* NapiJsiRuntime::CloneNapiPointerValue(const PointerValue* pointerValue)
+{
+  auto napiPointerValue = static_cast<const NapiPointerValue *>(pointerValue);
+
+  return new NapiPointerValue(napiPointerValue->GetRuntime(), napiPointerValue->GetValue());
+}
+
+// Gets napi_value from facebook::jsi::Pointer.
+/*static*/ napi_value NapiJsiRuntime::GetNapiValue(const Pointer& p)
+{
+  return static_cast<const NapiPointerValueView *>(getPointerValue(p))->GetValue();
+}
+
+// Gets napi_ext_ref from facebook::jsi::Pointer.
+/*static*/ napi_ext_ref NapiJsiRuntime::GetNapiRef(const Pointer& p)
+{
+  return static_cast<const NapiPointerValueView *>(getPointerValue(p))->GetRef();
+}
+
+// Makes new value derived from the facebook::jsi::Pointer type.
+template <typename T, typename TValue, std::enable_if_t<std::is_base_of_v<facebook::jsi::Pointer, T>, int>>
+T NapiJsiRuntime::MakePointer(TValue value) const {
+  return make<T>(new NapiPointerValue(this, value));
+}
 
 #pragma endregion Miscellaneous utility methods
 
 #pragma endregion NapiJsiRuntime
+} // namespace
 
 unique_ptr<Runtime> __cdecl MakeNapiJsiRuntime2(napi_env env) noexcept {
   return nullptr;
 }
+
 } // namespace Microsoft::JSI
