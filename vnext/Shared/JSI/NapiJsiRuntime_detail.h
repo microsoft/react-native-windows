@@ -14,44 +14,6 @@
 #include std::span;
 #endif // __cpp_lib_span
 
-// We use macros to report errors.
-// Macros provide more flexibility to show assert and provide failure context.
-
-// Check condition and crash process if it fails.
-#define CHECK_ELSE_CRASH(condition, message)               \
-  do {                                                     \
-    if (!(condition)) {                                    \
-      assert(false && "Failed: " #condition && (message)); \
-      *((int *)0) = 1;                                     \
-    }                                                      \
-  } while (false)
-
-// Check condition and throw native exception if it fails.
-#define CHECK_ELSE_THROW(condition, message) \
-  do {                                       \
-    if (!(condition)) {                      \
-      ThrowNativeException(message);         \
-    }                                        \
-  } while (false)
-
-// Check NAPI result and and throw JS exception if it is not napi_ok.
-#define CHECK_NAPI(expression)                      \
-  do {                                              \
-    napi_status temp_error_code_ = (expression);    \
-    if (temp_error_code_ != napi_status::napi_ok) { \
-      ThrowJsException(temp_error_code_);           \
-    }                                               \
-  } while (false)
-
-// Check NAPI result and and crash if it is not napi_ok.
-#define CHECK_NAPI_ELSE_CRASH(expression)              \
-  do {                                                 \
-    napi_status temp_error_code_ = (expression);       \
-    if (temp_error_code_ != napi_status::napi_ok) {    \
-      CHECK_ELSE_CRASH(false, "Failed: " #expression); \
-    }                                                  \
-  } while (false)
-
 namespace Microsoft::JSI {
 
 namespace {
