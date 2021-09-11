@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump hermes to v0.9",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "dependentChangeType": "patch"
-}

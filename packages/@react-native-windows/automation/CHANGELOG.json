@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Sat, 11 Sep 2021 05:06:55 GMT",
+      "tag": "@react-native-windows/automation_v0.0.4-0",
+      "version": "0.0.4-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.3-2",
+            "author": "anandrag@microsoft.com",
+            "commit": "09bc9974c8721bf5559680dc7a8aa00514c1c7f3",
+            "package": "@react-native-windows/automation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Sep 2021 05:07:31 GMT",
       "tag": "@react-native-windows/automation_v0.0.3",
       "version": "0.0.3",
