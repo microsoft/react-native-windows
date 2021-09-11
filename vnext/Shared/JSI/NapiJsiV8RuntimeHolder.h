@@ -4,7 +4,7 @@
 #pragma once
 
 #include <DevSettings.h>
-#include <NapiJsiRuntime.h>
+#include "NapiJsiRuntime.h"
 #include "RuntimeHolder.h"
 #include "ScriptStore.h"
 

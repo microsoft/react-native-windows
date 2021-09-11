@@ -4,7 +4,7 @@
 #pragma once
 
 // JSI
-#include <js_native_api.h>
+#include <js_native_ext_api.h>
 #include <jsi/jsi.h>
 
 // Standard Library
