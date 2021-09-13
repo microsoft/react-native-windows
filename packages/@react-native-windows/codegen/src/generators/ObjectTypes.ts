@@ -23,8 +23,14 @@ export function getAliasCppName(typeName: string): string {
   return `${preferredModuleName}Spec_${typeName}`;
 }
 
+export interface AliasMap {
+  [name: string]: NativeModuleObjectTypeAnnotation;
+}
+
 function translateField(
   type: Nullable<NativeModuleBaseTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
@@ -41,7 +47,11 @@ function translateField(
       return 'bool';
     case 'ArrayTypeAnnotation':
       if (type.elementType) {
-        return `std::vector<${translateField(type.elementType)}>`;
+        return `std::vector<${translateField(
+          type.elementType,
+          aliases,
+          `${baseAliasName}_element`,
+        )}>`;
       } else {
         return `React::JSValueArray`;
       }
@@ -64,7 +74,11 @@ function translateField(
     case 'TypeAliasTypeAnnotation':
       return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateField(type.typeAnnotation)}>`;
+      return `std::optional<${translateField(
+        type.typeAnnotation,
+        aliases,
+        baseAliasName,
+      )}>`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
@@ -72,6 +86,8 @@ function translateField(
 
 export function translateObjectBody(
   type: NativeModuleObjectTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
   prefix: string,
 ) {
   return type.properties
@@ -81,7 +97,11 @@ export function translateObjectBody(
         propType = {type: 'NullableTypeAnnotation', typeAnnotation: propType};
       }
       const first = `${prefix}REACT_FIELD(${prop.name})`;
-      const second = `${prefix}${translateField(propType)} ${prop.name};`;
+      const second = `${prefix}${translateField(
+        propType,
+        aliases,
+        `${baseAliasName}_${prop.name}`,
+      )} ${prop.name};`;
       return `${first}\n${second}`;
     })
     .join('\n');

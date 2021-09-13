@@ -8,11 +8,11 @@
 
 import {
   NativeModuleFunctionTypeAnnotation,
-  NativeModuleObjectTypeAnnotation,
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
 import {
+  AliasMap,
   getAliasCppName,
   setPreferredModuleName,
   translateObjectBody,
@@ -67,8 +67,10 @@ function isMethodReturnPromise(funcType: NativeModuleFunctionTypeAnnotation) {
 function getPossibleMethodSignatures(
   prop: NativeModulePropertyShape,
   funcType: NativeModuleFunctionTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string[] {
-  const args = translateArgs(funcType.params);
+  const args = translateArgs(funcType.params, aliases, baseAliasName);
   if (isMethodReturnPromise(funcType)) {
     // TODO: type of the promise could be provided in the future
     args.push('React::ReactPromise<React::JSValue> &&result');
@@ -77,15 +79,19 @@ function getPossibleMethodSignatures(
   // TODO: be much more exhastive on the possible method signatures that can be used..
   const sig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
-  }) ${translateImplReturnType(funcType.returnTypeAnnotation)} ${
-    prop.name
-  }(${args.join(', ')}) noexcept { /* implementation */ }}`;
+  }) ${translateImplReturnType(
+    funcType.returnTypeAnnotation,
+    aliases,
+    baseAliasName,
+  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
   const staticsig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
-  }) static ${translateImplReturnType(funcType.returnTypeAnnotation)} ${
-    prop.name
-  }(${args.join(', ')}) noexcept { /* implementation */ }}`;
+  }) static ${translateImplReturnType(
+    funcType.returnTypeAnnotation,
+    aliases,
+    baseAliasName,
+  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
   return [sig, staticsig];
 }
@@ -93,14 +99,17 @@ function getPossibleMethodSignatures(
 function translatePossibleMethodSignatures(
   prop: NativeModulePropertyShape,
   funcType: NativeModuleFunctionTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string {
-  return getPossibleMethodSignatures(prop, funcType)
+  return getPossibleMethodSignatures(prop, funcType, aliases, baseAliasName)
     .map(sig => `"    ${sig}\\n"`)
     .join('\n          ');
 }
 
 function renderProperties(
   properties: ReadonlyArray<NativeModulePropertyShape>,
+  aliases: AliasMap,
   tuple: boolean,
 ): string {
   // TODO: generate code for constants
@@ -109,15 +118,22 @@ function renderProperties(
     .map((prop, index) => {
       // TODO: prop.optional === true
       // TODO: prop.typeAnnotation.type === 'NullableTypeAnnotation'
+      const propAliasName = prop.name;
       const funcType =
         prop.typeAnnotation.type === 'NullableTypeAnnotation'
           ? prop.typeAnnotation.typeAnnotation
           : prop.typeAnnotation;
 
-      const traversedArgs = translateSpecArgs(funcType.params);
+      const traversedArgs = translateSpecArgs(
+        funcType.params,
+        aliases,
+        propAliasName,
+      );
 
       const translatedReturnParam = translateSpecReturnType(
         funcType.returnTypeAnnotation,
+        aliases,
+        propAliasName,
       );
 
       if (isMethodReturnPromise(funcType)) {
@@ -135,7 +151,12 @@ function renderProperties(
         return `    REACT_SHOW_METHOD_SPEC_ERRORS(
           ${index},
           "${prop.name}",
-          ${translatePossibleMethodSignatures(prop, funcType)});`;
+          ${translatePossibleMethodSignatures(
+            prop,
+            funcType,
+            aliases,
+            propAliasName,
+          )});`;
       }
     })
     .join('\n');
@@ -163,7 +184,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);
 
         // copy all explicit to a map
-        const aliases: {[name: string]: NativeModuleObjectTypeAnnotation} = {};
+        const aliases: AliasMap = {};
         const aliasOrder: string[] = [];
         const aliasCode: {[name: string]: string} = {};
         for (const aliasName of Object.keys(nativeModule.aliases)) {
@@ -172,8 +193,16 @@ export function createNM2Generator({namespace}: {namespace: string}) {
 
         // prepare members for turbo modules
         const properties = nativeModule.spec.properties;
-        const traversedProperties = renderProperties(properties, false);
-        const traversedPropertyTuples = renderProperties(properties, true);
+        const traversedProperties = renderProperties(
+          properties,
+          aliases,
+          false,
+        );
+        const traversedPropertyTuples = renderProperties(
+          properties,
+          aliases,
+          true,
+        );
 
         // generate code for structs
         const aliasJobs: string[] = Object.keys(nativeModule.aliases);
@@ -183,7 +212,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
           aliasCode[aliasName] = `
 REACT_STRUCT(${getAliasCppName(aliasName)})
 struct ${getAliasCppName(aliasName)} {
-${translateObjectBody(aliasType, '    ')}
+${translateObjectBody(aliasType, aliases, getAliasCppName(aliasName), '    ')}
 };
 `;
           aliasOrder.push(aliasName);

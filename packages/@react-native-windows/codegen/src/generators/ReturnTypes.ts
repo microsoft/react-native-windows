@@ -10,10 +10,12 @@ import {
   NativeModuleReturnTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
-import {getAliasCppName} from './ObjectTypes';
+import {AliasMap, getAliasCppName} from './ObjectTypes';
 
 function translateReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
@@ -33,7 +35,11 @@ function translateReturnType(
       return 'bool';
     case 'ArrayTypeAnnotation':
       if (type.elementType) {
-        return `std::vector<${translateReturnType(type.elementType)}>`;
+        return `std::vector<${translateReturnType(
+          type.elementType,
+          aliases,
+          `${baseAliasName}_element`,
+        )}>`;
       } else {
         return 'React::JSValueArray';
       }
@@ -56,7 +62,11 @@ function translateReturnType(
     case 'TypeAliasTypeAnnotation':
       return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateReturnType(type.typeAnnotation)}>`;
+      return `std::optional<${translateReturnType(
+        type.typeAnnotation,
+        aliases,
+        baseAliasName,
+      )}>`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
@@ -64,12 +74,16 @@ function translateReturnType(
 
 export function translateSpecReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ) {
-  return translateReturnType(type);
+  return translateReturnType(type, aliases, `${baseAliasName}_returnType`);
 }
 
 export function translateImplReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ) {
-  return translateReturnType(type);
+  return translateReturnType(type, aliases, `${baseAliasName}_returnType`);
 }
