@@ -15,7 +15,7 @@ import {
   AliasMap,
   getAliasCppName,
   getAnonymousAliasCppName,
-} from './ObjectTypes';
+} from './AliasManaging';
 
 type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>

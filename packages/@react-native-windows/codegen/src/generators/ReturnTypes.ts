@@ -14,7 +14,7 @@ import {
   AliasMap,
   getAliasCppName,
   getAnonymousAliasCppName,
-} from './ObjectTypes';
+} from './AliasManaging';
 
 function translateReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,

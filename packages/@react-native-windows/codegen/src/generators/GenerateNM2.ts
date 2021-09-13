@@ -16,8 +16,8 @@ import {
   AliasMap,
   getAliasCppName,
   setPreferredModuleName,
-  translateObjectBody,
-} from './ObjectTypes';
+} from './AliasManaging';
+import {translateObjectBody} from './ObjectTypes';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
