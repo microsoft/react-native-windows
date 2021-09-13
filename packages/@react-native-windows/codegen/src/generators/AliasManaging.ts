@@ -19,7 +19,8 @@ export function getAliasCppName(typeName: string): string {
 }
 
 export interface AliasMap {
-  [name: string]: NativeModuleObjectTypeAnnotation | undefined;
+  types: {[name: string]: NativeModuleObjectTypeAnnotation | undefined};
+  jobs?: string[];
 }
 
 const ExtendedObjectKey = '$RNW-TURBOMODULE-ALIAS';
@@ -33,7 +34,10 @@ function recordAnonymouseAlias(
   extended: ExtendedObject,
 ): string {
   extended[ExtendedObjectKey] = baseAliasName;
-  aliases[baseAliasName] = extended;
+  aliases.types[baseAliasName] = extended;
+  if (aliases.jobs) {
+    aliases.jobs.push(baseAliasName);
+  }
   return baseAliasName;
 }
 
@@ -48,14 +52,14 @@ export function getAnonymousAliasCppName(
     return getAliasCppName(key);
   }
 
-  if (aliases[baseAliasName] === undefined) {
+  if (aliases.types[baseAliasName] === undefined) {
     return getAliasCppName(
       recordAnonymouseAlias(aliases, baseAliasName, extended),
     );
   }
 
   let index = 2;
-  while (aliases[`${baseAliasName}${index}`] !== undefined) {
+  while (aliases.types[`${baseAliasName}${index}`] !== undefined) {
     index++;
   }
 

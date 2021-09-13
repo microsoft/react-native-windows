@@ -41,9 +41,9 @@ function translateObjectBody(
 export function createAliasMap(nativeModuleAliases: {
   [name: string]: NativeModuleObjectTypeAnnotation;
 }): AliasMap {
-  const aliases: AliasMap = {};
+  const aliases: AliasMap = {types: {}};
   for (const aliasName of Object.keys(nativeModuleAliases)) {
-    aliases[aliasName] = nativeModuleAliases[aliasName];
+    aliases.types[aliasName] = nativeModuleAliases[aliasName];
   }
   return aliases;
 }
@@ -51,11 +51,13 @@ export function createAliasMap(nativeModuleAliases: {
 export function generateAliases(aliases: AliasMap): string {
   const aliasOrder: string[] = [];
   const aliasCode: {[name: string]: string} = {};
-  const aliasJobs: string[] = Object.keys(aliases);
+  aliases.jobs = Object.keys(aliases.types);
 
-  while (aliasJobs.length > 0) {
-    const aliasName = <string>aliasJobs.shift();
-    const aliasType = <NativeModuleObjectTypeAnnotation>aliases[aliasName];
+  while (aliases.jobs.length > 0) {
+    const aliasName = <string>aliases.jobs.shift();
+    const aliasType = <NativeModuleObjectTypeAnnotation>(
+      aliases.types[aliasName]
+    );
     aliasCode[aliasName] = `
 REACT_STRUCT(${getAliasCppName(aliasName)})
 struct ${getAliasCppName(aliasName)} {
