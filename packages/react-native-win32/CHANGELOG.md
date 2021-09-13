@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 15:06:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.6
+
+Mon, 13 Sep 2021 15:06:21 GMT
+
+### Patches
+
+- Fix exception in View when props are undefined (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.5
 

@@ -2,6 +2,21 @@
   "name": "react-native-win32-tester",
   "entries": [
     {
+      "date": "Mon, 13 Sep 2021 15:06:21 GMT",
+      "tag": "react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @office-iss/react-native-win32 to v0.64.6",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c8341b49112104ccef25f543181a8a8d78834e93",
+            "package": "react-native-win32-tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 15:10:07 GMT",
       "tag": "react-native-win32-tester_v0.0.1",
       "version": "0.0.1",
