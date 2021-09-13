@@ -13,20 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(ImageEditorSpec_Options)
-struct ImageEditorSpec_Options {
-    REACT_FIELD(offset)
-    ImageEditorSpec_Options_offset offset;
-    REACT_FIELD(size)
-    ImageEditorSpec_Options_size size;
-    REACT_FIELD(displaySize)
-    std::optional<ImageEditorSpec_Options_displaySize> displaySize;
-    REACT_FIELD(resizeMode)
-    std::optional<std::string> resizeMode;
-    REACT_FIELD(allowExternalStorage)
-    std::optional<bool> allowExternalStorage;
-};
-
 REACT_STRUCT(ImageEditorSpec_Options_offset)
 struct ImageEditorSpec_Options_offset {
     REACT_FIELD(x)
@@ -49,6 +35,20 @@ struct ImageEditorSpec_Options_displaySize {
     double width;
     REACT_FIELD(height)
     double height;
+};
+
+REACT_STRUCT(ImageEditorSpec_Options)
+struct ImageEditorSpec_Options {
+    REACT_FIELD(offset)
+    ImageEditorSpec_Options_offset offset;
+    REACT_FIELD(size)
+    ImageEditorSpec_Options_size size;
+    REACT_FIELD(displaySize)
+    std::optional<ImageEditorSpec_Options_displaySize> displaySize;
+    REACT_FIELD(resizeMode)
+    std::optional<std::string> resizeMode;
+    REACT_FIELD(allowExternalStorage)
+    std::optional<bool> allowExternalStorage;
 };
 
 struct ImageEditorSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {

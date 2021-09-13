@@ -20,7 +20,7 @@ export function getAliasCppName(typeName: string): string {
 
 export interface AliasMap {
   types: {[name: string]: NativeModuleObjectTypeAnnotation | undefined};
-  jobs?: string[];
+  jobs: string[];
 }
 
 const ExtendedObjectKey = '$RNW-TURBOMODULE-ALIAS';
@@ -35,9 +35,7 @@ function recordAnonymouseAlias(
 ): string {
   extended[ExtendedObjectKey] = baseAliasName;
   aliases.types[baseAliasName] = extended;
-  if (aliases.jobs) {
-    aliases.jobs.push(baseAliasName);
-  }
+  aliases.jobs.push(baseAliasName);
   return baseAliasName;
 }
 

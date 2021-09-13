@@ -41,31 +41,49 @@ function translateObjectBody(
 export function createAliasMap(nativeModuleAliases: {
   [name: string]: NativeModuleObjectTypeAnnotation;
 }): AliasMap {
-  const aliases: AliasMap = {types: {}};
-  for (const aliasName of Object.keys(nativeModuleAliases)) {
+  const aliases: AliasMap = {types: {}, jobs: Object.keys(nativeModuleAliases)};
+  for (const aliasName of aliases.jobs) {
     aliases.types[aliasName] = nativeModuleAliases[aliasName];
   }
   return aliases;
 }
 
-export function generateAliases(aliases: AliasMap): string {
-  const aliasOrder: string[] = [];
-  const aliasCode: {[name: string]: string} = {};
-  aliases.jobs = Object.keys(aliases.types);
+interface AliasCodeMap {
+  [name: string]: string;
+}
 
-  while (aliases.jobs.length > 0) {
-    const aliasName = <string>aliases.jobs.shift();
-    const aliasType = <NativeModuleObjectTypeAnnotation>(
-      aliases.types[aliasName]
-    );
-    aliasCode[aliasName] = `
+function generateSingleAlias(
+  aliases: AliasMap,
+  aliasName: string,
+  aliasCode: AliasCodeMap,
+): void {
+  const aliasType = <NativeModuleObjectTypeAnnotation>aliases.types[aliasName];
+  aliasCode[aliasName] = `
 REACT_STRUCT(${getAliasCppName(aliasName)})
 struct ${getAliasCppName(aliasName)} {
 ${translateObjectBody(aliasType, aliases, aliasName, '    ')}
 };
 `;
+}
+
+function generateNestedAliasesInCorrectOrder(
+  aliases: AliasMap,
+  aliasCode: AliasCodeMap,
+  aliasOrder: string[],
+): void {
+  const jobs = aliases.jobs;
+  aliases.jobs = [];
+  for (const aliasName of jobs) {
+    generateSingleAlias(aliases, aliasName, aliasCode);
+    generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder);
     aliasOrder.push(aliasName);
   }
+}
+
+export function generateAliases(aliases: AliasMap): string {
+  const aliasCode: AliasCodeMap = {};
+  const aliasOrder: string[] = [];
+  generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder);
 
   let traversedAliasedStructs = '';
   for (const aliasName of aliasOrder) {
