@@ -44,18 +44,26 @@ export function getAnonymousAliasCppName(
   baseAliasName: string,
   objectType: NativeModuleObjectTypeAnnotation,
 ): string {
+  // someone found an anonymous object literal type
+  // if the ExtendedObjectKey flag has been set
+  // then it is a known one
+  // this happens because method signatures are generate twice in spec and error messages
   const extended = <ExtendedObject>objectType;
   const key = extended[ExtendedObjectKey];
   if (key !== undefined) {
     return getAliasCppName(key);
   }
 
+  // if the ExtendedObjectKey flag has not been set
+  // it means it is a unknown one
+  // associate the name with this object literal type and return
   if (aliases.types[baseAliasName] === undefined) {
     return getAliasCppName(
       recordAnonymouseAlias(aliases, baseAliasName, extended),
     );
   }
 
+  // sometimes names could be anonymous
   let index = 2;
   while (aliases.types[`${baseAliasName}${index}`] !== undefined) {
     index++;

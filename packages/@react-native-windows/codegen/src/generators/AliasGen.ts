@@ -71,11 +71,22 @@ function generateNestedAliasesInCorrectOrder(
   aliasCode: AliasCodeMap,
   aliasOrder: string[],
 ): void {
+  // retrieve and clean all ungenerated aliases
   const jobs = aliases.jobs;
   aliases.jobs = [];
+
+  // generate each one in its found order
   for (const aliasName of jobs) {
+    // generate a new struct and all fields will be examined
+    // new anonymous objects could be found
+    // they will be stored in aliases.jobs
     generateSingleAlias(aliases, aliasName, aliasCode);
+    // nested C++ structs must be put before the current C++ struct
+    // as they will be used in the current C++ struct
+    // the order will be perfectly and easily ensured by doing this recursively
     generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder);
+    // all referenced C++ structs are generated
+    // put the current one following them
     aliasOrder.push(aliasName);
   }
 }
@@ -85,6 +96,7 @@ export function generateAliases(aliases: AliasMap): string {
   const aliasOrder: string[] = [];
   generateNestedAliasesInCorrectOrder(aliases, aliasCode, aliasOrder);
 
+  // aliasOrder now has the correct order of C++ struct code
   let traversedAliasedStructs = '';
   for (const aliasName of aliasOrder) {
     traversedAliasedStructs = `${traversedAliasedStructs}${aliasCode[aliasName]}`;
