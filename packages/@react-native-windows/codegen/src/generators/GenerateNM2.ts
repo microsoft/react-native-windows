@@ -8,6 +8,7 @@
 
 import {
   NativeModuleFunctionTypeAnnotation,
+  NativeModuleObjectTypeAnnotation,
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
@@ -161,20 +162,38 @@ export function createNM2Generator({namespace}: {namespace: string}) {
       if (nativeModule.type === 'NativeModule') {
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);
 
-        let traversedAliasedStructs = '';
+        // copy all explicit to a map
+        const aliases: {[name: string]: NativeModuleObjectTypeAnnotation} = {};
+        const aliasOrder: string[] = [];
+        const aliasCode: {[name: string]: string} = {};
         for (const aliasName of Object.keys(nativeModule.aliases)) {
+          aliases[aliasName] = nativeModule.aliases[aliasName];
+        }
+
+        // prepare members for turbo modules
+        const properties = nativeModule.spec.properties;
+        const traversedProperties = renderProperties(properties, false);
+        const traversedPropertyTuples = renderProperties(properties, true);
+
+        // generate code for structs
+        const aliasJobs: string[] = Object.keys(nativeModule.aliases);
+        while (aliasJobs.length > 0) {
+          const aliasName = <string>aliasJobs.shift();
           const aliasType = nativeModule.aliases[aliasName];
-          traversedAliasedStructs = `${traversedAliasedStructs}
+          aliasCode[aliasName] = `
 REACT_STRUCT(${getAliasCppName(aliasName)})
 struct ${getAliasCppName(aliasName)} {
 ${translateObjectBody(aliasType, '    ')}
 };
 `;
+          aliasOrder.push(aliasName);
         }
 
-        const properties = nativeModule.spec.properties;
-        const traversedProperties = renderProperties(properties, false);
-        const traversedPropertyTuples = renderProperties(properties, true);
+        // paste all struct code together, including anonymous structs
+        let traversedAliasedStructs = '';
+        for (const aliasName of aliasOrder) {
+          traversedAliasedStructs = `${traversedAliasedStructs}${aliasCode[aliasName]}`;
+        }
 
         files.set(
           `Native${preferredModuleName}Spec.g.h`,
