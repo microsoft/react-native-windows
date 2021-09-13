@@ -8,16 +8,11 @@
 
 import {
   NativeModuleFunctionTypeAnnotation,
-  NativeModuleObjectTypeAnnotation,
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
-import {
-  AliasMap,
-  getAliasCppName,
-  setPreferredModuleName,
-} from './AliasManaging';
-import {translateObjectBody} from './ObjectTypes';
+import {AliasMap, setPreferredModuleName} from './AliasManaging';
+import {createAliasMap, generateAliases} from './AliasGen';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
@@ -185,12 +180,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);
 
         // copy all explicit to a map
-        const aliases: AliasMap = {};
-        const aliasOrder: string[] = [];
-        const aliasCode: {[name: string]: string} = {};
-        for (const aliasName of Object.keys(nativeModule.aliases)) {
-          aliases[aliasName] = nativeModule.aliases[aliasName];
-        }
+        const aliases: AliasMap = createAliasMap(nativeModule.aliases);
 
         // prepare members for turbo modules
         const properties = nativeModule.spec.properties;
@@ -206,26 +196,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         );
 
         // generate code for structs
-        const aliasJobs: string[] = Object.keys(aliases);
-        while (aliasJobs.length > 0) {
-          const aliasName = <string>aliasJobs.shift();
-          const aliasType = <NativeModuleObjectTypeAnnotation>(
-            aliases[aliasName]
-          );
-          aliasCode[aliasName] = `
-REACT_STRUCT(${getAliasCppName(aliasName)})
-struct ${getAliasCppName(aliasName)} {
-${translateObjectBody(aliasType, aliases, aliasName, '    ')}
-};
-`;
-          aliasOrder.push(aliasName);
-        }
-
-        // paste all struct code together, including anonymous structs
-        let traversedAliasedStructs = '';
-        for (const aliasName of aliasOrder) {
-          traversedAliasedStructs = `${traversedAliasedStructs}${aliasCode[aliasName]}`;
-        }
+        const traversedAliasedStructs = generateAliases(aliases);
 
         files.set(
           `Native${preferredModuleName}Spec.g.h`,

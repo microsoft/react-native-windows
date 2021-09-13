@@ -6,19 +6,14 @@
 
 'use strict';
 
-import {
-  NativeModuleBaseTypeAnnotation,
-  NativeModuleObjectTypeAnnotation,
-  NamedShape,
-  Nullable,
-} from 'react-native-tscodegen';
+import {NativeModuleBaseTypeAnnotation, Nullable} from 'react-native-tscodegen';
 import {
   AliasMap,
   getAliasCppName,
   getAnonymousAliasCppName,
 } from './AliasManaging';
 
-function translateField(
+export function translateField(
   type: Nullable<NativeModuleBaseTypeAnnotation>,
   aliases: AliasMap,
   baseAliasName: string,
@@ -72,27 +67,4 @@ function translateField(
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
-}
-
-export function translateObjectBody(
-  type: NativeModuleObjectTypeAnnotation,
-  aliases: AliasMap,
-  baseAliasName: string,
-  prefix: string,
-) {
-  return type.properties
-    .map((prop: NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>) => {
-      let propType = prop.typeAnnotation;
-      if (prop.optional && propType.type !== 'NullableTypeAnnotation') {
-        propType = {type: 'NullableTypeAnnotation', typeAnnotation: propType};
-      }
-      const first = `${prefix}REACT_FIELD(${prop.name})`;
-      const second = `${prefix}${translateField(
-        propType,
-        aliases,
-        `${baseAliasName}_${prop.name}`,
-      )} ${prop.name};`;
-      return `${first}\n${second}`;
-    })
-    .join('\n');
 }
