@@ -16,7 +16,7 @@
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
     "react-native": "0.66.0-rc.1",
-    "react-native-windows": "0.66.0-preview.2"
+    "react-native-windows": "0.66.0-preview.3"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

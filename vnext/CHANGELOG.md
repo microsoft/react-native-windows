@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 06 Sep 2021 15:06:48 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 15:06:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.0-preview.3
+
+Mon, 13 Sep 2021 15:06:37 GMT
+
+### Changes
+
+- Bump hermes to v0.9 (anandrag@microsoft.com)
 
 ## 0.66.0-preview.2
 
