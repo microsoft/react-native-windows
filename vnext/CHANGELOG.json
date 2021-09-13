@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 Sep 2021 15:06:37 GMT",
+      "tag": "react-native-windows_v0.66.0-preview.3",
+      "version": "0.66.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump hermes to v0.9",
+            "author": "anandrag@microsoft.com",
+            "commit": "2afad93679990d06cec763bd6c12ce44efef0c4a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Sep 2021 15:06:48 GMT",
       "tag": "react-native-windows_v0.66.0-preview.2",
       "version": "0.66.0-preview.2",
