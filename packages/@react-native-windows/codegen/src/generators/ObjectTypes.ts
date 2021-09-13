@@ -24,7 +24,49 @@ export function getAliasCppName(typeName: string): string {
 }
 
 export interface AliasMap {
-  [name: string]: NativeModuleObjectTypeAnnotation;
+  [name: string]: NativeModuleObjectTypeAnnotation | undefined;
+}
+
+const ExtendedObjectKey = '$RNW-TURBOMODULE-ALIAS';
+interface ExtendedObject extends NativeModuleObjectTypeAnnotation {
+  '$RNW-TURBOMODULE-ALIAS'?: string;
+}
+
+function recordAnonymouseAlias(
+  aliases: AliasMap,
+  baseAliasName: string,
+  extended: ExtendedObject,
+): string {
+  extended[ExtendedObjectKey] = baseAliasName;
+  aliases[baseAliasName] = extended;
+  return baseAliasName;
+}
+
+export function getAnonymousAliasCppName(
+  aliases: AliasMap,
+  baseAliasName: string,
+  objectType: NativeModuleObjectTypeAnnotation,
+): string {
+  const extended = <ExtendedObject>objectType;
+  const key = extended[ExtendedObjectKey];
+  if (key !== undefined) {
+    return getAliasCppName(key);
+  }
+
+  if (aliases[baseAliasName] === undefined) {
+    return getAliasCppName(
+      recordAnonymouseAlias(aliases, baseAliasName, extended),
+    );
+  }
+
+  let index = 2;
+  while (aliases[`${baseAliasName}${index}`] !== undefined) {
+    index++;
+  }
+
+  return getAliasCppName(
+    recordAnonymouseAlias(aliases, `${baseAliasName}${index}`, extended),
+  );
 }
 
 function translateField(
@@ -58,8 +100,7 @@ function translateField(
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValue';
     case 'ObjectTypeAnnotation':
-      // TODO: we have more information here, and could create a more specific type
-      return 'React::JSValueObject';
+      return getAnonymousAliasCppName(aliases, baseAliasName, type);
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = type.name;

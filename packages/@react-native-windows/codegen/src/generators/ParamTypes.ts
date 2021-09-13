@@ -11,7 +11,11 @@ import {
   NativeModuleParamTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
-import {AliasMap, getAliasCppName} from './ObjectTypes';
+import {
+  AliasMap,
+  getAliasCppName,
+  getAnonymousAliasCppName,
+} from './ObjectTypes';
 
 type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>
@@ -103,8 +107,10 @@ function translateParam(
     case 'GenericObjectTypeAnnotation':
       return decorateType('React::JSValue', target);
     case 'ObjectTypeAnnotation':
-      // TODO: we have more information here, and could create a more specific type
-      return decorateType('React::JSValueObject', target);
+      return decorateType(
+        getAnonymousAliasCppName(aliases, baseAliasName, param),
+        target,
+      );
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = param.name;

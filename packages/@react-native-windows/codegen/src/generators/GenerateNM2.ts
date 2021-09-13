@@ -212,7 +212,7 @@ export function createNM2Generator({namespace}: {namespace: string}) {
           aliasCode[aliasName] = `
 REACT_STRUCT(${getAliasCppName(aliasName)})
 struct ${getAliasCppName(aliasName)} {
-${translateObjectBody(aliasType, aliases, getAliasCppName(aliasName), '    ')}
+${translateObjectBody(aliasType, aliases, aliasName, '    ')}
 };
 `;
           aliasOrder.push(aliasName);

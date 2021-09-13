@@ -10,7 +10,11 @@ import {
   NativeModuleReturnTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
-import {AliasMap, getAliasCppName} from './ObjectTypes';
+import {
+  AliasMap,
+  getAliasCppName,
+  getAnonymousAliasCppName,
+} from './ObjectTypes';
 
 function translateReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
@@ -46,8 +50,7 @@ function translateReturnType(
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValue';
     case 'ObjectTypeAnnotation':
-      // TODO: we have more information here, and could create a more specific type
-      return 'React::JSValueObject';
+      return getAnonymousAliasCppName(aliases, baseAliasName, type);
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = type.name;
