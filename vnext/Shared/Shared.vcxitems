@@ -40,7 +40,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraJsiRuntime_edgemode.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
