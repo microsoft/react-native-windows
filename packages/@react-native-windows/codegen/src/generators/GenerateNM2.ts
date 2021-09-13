@@ -8,6 +8,7 @@
 
 import {
   NativeModuleFunctionTypeAnnotation,
+  NativeModuleObjectTypeAnnotation,
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
@@ -205,10 +206,12 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         );
 
         // generate code for structs
-        const aliasJobs: string[] = Object.keys(nativeModule.aliases);
+        const aliasJobs: string[] = Object.keys(aliases);
         while (aliasJobs.length > 0) {
           const aliasName = <string>aliasJobs.shift();
-          const aliasType = nativeModule.aliases[aliasName];
+          const aliasType = <NativeModuleObjectTypeAnnotation>(
+            aliases[aliasName]
+          );
           aliasCode[aliasName] = `
 REACT_STRUCT(${getAliasCppName(aliasName)})
 struct ${getAliasCppName(aliasName)} {
