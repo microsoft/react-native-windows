@@ -3,30 +3,34 @@
 
 #pragma once
 
-#include <activeObject/activeObject.h>
 #include <cxxreact/CxxModule.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 
 #include <winrt/Windows.UI.ViewManagement.h>
 
+#include <IReactDispatcher.h>
 #include <React.h>
+#include <object/refCountedObject.h>
 #include "IReactInstance.h"
 
 namespace Microsoft::ReactNative {
 
 // Listens for the current theme on the UI thread, storing the most recent. Will emit JS events on Appearance change.
-class AppearanceChangeListener final : public Mso::ActiveObject<> {
+class AppearanceChangeListener final : public Mso::RefCountedObject<Mso::RefCountStrategy::WeakRef, Mso::IRefCounted> {
   using ApplicationTheme = xaml::ApplicationTheme;
   using UISettings = winrt::Windows::UI::ViewManagement::UISettings;
 
  public:
-  AppearanceChangeListener(const Mso::React::IReactContext &context, Mso::DispatchQueue const &uiQueue) noexcept;
+  AppearanceChangeListener(
+      const Mso::React::IReactContext &context,
+      const Mso::React::IDispatchQueue2 &uiQueue) noexcept;
   const char *GetColorScheme() const noexcept;
 
  private:
   static const char *ToString(ApplicationTheme theme) noexcept;
   void OnColorValuesChanged() noexcept;
 
+  Mso::CntPtr<const Mso::React::IDispatchQueue2> m_queue;
   UISettings m_uiSettings;
   UISettings::ColorValuesChanged_revoker m_revoker;
   std::atomic<ApplicationTheme> m_currentTheme;

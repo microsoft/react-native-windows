@@ -31,11 +31,13 @@ export const ViewWin32 = React.forwardRef(
      * Check for raw text in the DOM.
      */
     if (__DEV__) {
-      React.Children.toArray(props.children).forEach(item => {
-        if (typeof item === 'string') {
-          console.error(`Unexpected text node: ${item}. A text node cannot be a child of a <View>.`);
-        }
-      });
+      if (props) {
+        React.Children.toArray(props.children).forEach(item => {
+          if (typeof item === 'string') {
+            console.error(`Unexpected text node: ${item}. A text node cannot be a child of a <View>.`);
+          }
+        });
+      }
     }
 
     /**
