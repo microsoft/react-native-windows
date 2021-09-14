@@ -8,15 +8,6 @@
 // Standard Library
 #include <string_view>
 
-using namespace facebook::jsi;
-using namespace std::string_view_literals;
-
-using std::shared_ptr;
-using std::string;
-using std::string_view;
-using std::unique_ptr;
-using std::vector;
-
 #pragma region Macros
 
 // We use macros to report errors.
@@ -556,6 +547,15 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
 } // namespace Microsoft::JSI
 
 #pragma endregion Declarations
+
+using namespace facebook::jsi;
+using namespace std::string_view_literals;
+
+using std::shared_ptr;
+using std::string;
+using std::string_view;
+using std::unique_ptr;
+using std::vector;
 
 namespace Microsoft::JSI {
 
@@ -1687,7 +1687,7 @@ void NapiJsiRuntime::SetElement(napi_value array, uint32_t index, napi_value val
   CHECK_ELSE_CRASH(hostFuncWrapper, "Cannot find the host function");
   NapiJsiRuntime &runtime = hostFuncWrapper->GetRuntime();
 
-  return runtime.HandleCallbackExceptions([&/*TODO: explicit captures*/]() {
+  return runtime.HandleCallbackExceptions([&env, &info, &argc, &runtime, &hostFuncWrapper]() {
     SmallBuffer<napi_value, MaxStackArgCount> napiArgs(argc);
     napi_value thisArg{};
     CHECK_NAPI_ELSE_CRASH(napi_get_cb_info(env, info, &argc, napiArgs.Data(), &thisArg, nullptr));
@@ -1696,7 +1696,7 @@ void NapiJsiRuntime::SetElement(napi_value array, uint32_t index, napi_value val
     JsiValueViewArgs jsiArgs(&runtime, span<napi_value>(napiArgs.Data(), napiArgs.Size()));
 
     const HostFunctionType &hostFunc = hostFuncWrapper->GetHostFunction();
-    return runtime.RunInMethodContext("HostFunction", [&/*TODO: explicit captures*/]() {
+    return runtime.RunInMethodContext("HostFunction", [&hostFunc, &runtime, &jsiThisArg, &jsiArgs]() {
       return runtime.GetNapiValue(hostFunc(runtime, jsiThisArg, jsiArgs.Data(), jsiArgs.Size()));
     });
   });
@@ -1789,7 +1789,7 @@ void NapiJsiRuntime::SetProxyTrap(napi_value handler, napi_value propertyName) {
     CHECK_ELSE_CRASH(actualArgCount == argCount, "proxy trap requires argCount arguments.");
 
     return runtime->HandleCallbackExceptions(
-        [&/*TODO: explicit captures*/]() { return (runtime->*trapMethod)(span<napi_value>(args, argCount)); });
+        [&runtime, &args]() { return (runtime->*trapMethod)(span<napi_value>(args, argCount)); });
   };
 
   SetProperty(handler, propertyName, CreateExternalFunction(propertyName, argCount, proxyTrap, this));
@@ -1809,7 +1809,7 @@ napi_value NapiJsiRuntime::HostObjectGetTrap(span<napi_value> args) {
   PropNameIDView propertyId{this, propertyName};
 
   return RunInMethodContext(
-      "HostObject::get", [&/*TODO: explicit captures*/]() { return GetNapiValue(hostObject->get(*this, propertyId)); });
+      "HostObject::get", [&hostObject, &propertyId, this]() { return GetNapiValue(hostObject->get(*this, propertyId)); });
 }
 
 // The host object Proxy 'set' trap implementation.
@@ -1822,7 +1822,7 @@ napi_value NapiJsiRuntime::HostObjectSetTrap(span<napi_value> args) {
   PropNameIDView propertyId{this, args[1]};
   JsiValueView value{this, args[2]};
   RunInMethodContext(
-      "HostObject::set", [&/*TODO: explicit captures*/]() { hostObject->set(*this, propertyId, value); });
+      "HostObject::set", [&hostObject, &propertyId, &value, this]() { hostObject->set(*this, propertyId, value); });
 
   return static_cast<napi_value>(m_value.Undefined);
 }
@@ -1833,7 +1833,7 @@ napi_value NapiJsiRuntime::HostObjectOwnKeysTrap(span<napi_value> args) {
   const auto &hostObject = GetJsiHostObject(args[0]);
 
   vector<PropNameID> ownKeys = RunInMethodContext(
-      "HostObject::getPropertyNames", [&/*TODO: explicit captures*/]() { return hostObject->getPropertyNames(*this); });
+      "HostObject::getPropertyNames", [&hostObject, this]() { return hostObject->getPropertyNames(*this); });
 
   std::unordered_set<napi_ext_ref> dedupedOwnKeys{};
   dedupedOwnKeys.reserve(ownKeys.size());
@@ -1858,7 +1858,7 @@ napi_value NapiJsiRuntime::HostObjectGetOwnPropertyDescriptorTrap(span<napi_valu
   const auto &hostObject = GetJsiHostObject(args[0]);
   PropNameIDView propertyId{this, args[1]};
 
-  return RunInMethodContext("HostObject::getOwnPropertyDescriptor", [&/*TODO: explicit captures*/]() {
+  return RunInMethodContext("HostObject::getOwnPropertyDescriptor", [&hostObject, &propertyId, this]() {
     auto getPropDescriptor = [](napi_value name, napi_value value) {
       return napi_property_descriptor{
           nullptr, name, nullptr, nullptr, nullptr, value, napi_default_jsproperty, nullptr};
