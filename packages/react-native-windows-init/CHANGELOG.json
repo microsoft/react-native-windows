@@ -2,6 +2,35 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "react-native-windows-init_v1.1.63",
+      "version": "1.1.63",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows-init"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.85",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows-init"
+          },
+          {
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.23",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 05:06:04 GMT",
       "tag": "react-native-windows-init_v1.1.62",
       "version": "1.1.62",

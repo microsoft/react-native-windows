@@ -22,6 +22,7 @@
 #include "../../codegen/NativeClipboardSpec.g.h"
 #include "../../codegen/NativeDevSettingsSpec.g.h"
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
+#include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
 #include "../../codegen/NativeLogBoxSpec.g.h"
 #include "../../codegen/NativeUIManagerSpec.g.h"
@@ -296,7 +297,11 @@ void ReactInstanceWin::LoadModules(
           ::Microsoft::ReactNative::AccessibilityInfo,
           ::Microsoft::ReactNativeSpecs::AccessibilityInfoSpec>());
 
-  registerTurboModule(L"Alert", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Alert>());
+  registerTurboModule(
+      L"Alert",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::Alert,
+          ::Microsoft::ReactNativeSpecs::DialogManagerWindowsSpec>());
 
   registerTurboModule(
       L"AppState",

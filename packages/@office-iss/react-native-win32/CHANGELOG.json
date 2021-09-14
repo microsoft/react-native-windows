@@ -2,6 +2,56 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 09 Sep 2021 05:07:46 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.110",
+      "version": "0.0.0-canary.110",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding accessibilityItemType property to ViewWin32",
+            "author": "safreibe@microsoft.com",
+            "commit": "465dae11d372626fcb90d966e9e97f2d3d531f43",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.109",
+      "version": "0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 9/2",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "8b91737bde65fc50b454be74f64bc50b5d2cfda2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 05:06:04 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.108",
       "version": "0.0.0-canary.108",

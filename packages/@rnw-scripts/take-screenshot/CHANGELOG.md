@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.16
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
 
 ## 1.0.15
 

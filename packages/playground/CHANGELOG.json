@@ -2,6 +2,86 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Sat, 11 Sep 2021 05:06:55 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.374",
+            "author": "anandrag@microsoft.com",
+            "commit": "09bc9974c8721bf5559680dc7a8aa00514c1c7f3",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Sep 2021 05:07:31 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.373",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "42d0853c684f0e9f9c9f1f7fa34cbf4ca3810edc",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Sep 2021 05:07:46 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.372",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "66a9f86f24f862c9e9e611ad435f68daddb4e04e",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.371",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "playground"
+          },
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "playground"
+          },
+          {
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "playground"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Sep 2021 05:06:39 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

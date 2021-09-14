@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Sep 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Sep 2021 05:06:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.374
+
+Sat, 11 Sep 2021 05:06:55 GMT
+
+### Changes
+
+- Bump hermes to v0.9 (anandrag@microsoft.com)
+
+## 0.0.0-canary.373
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Generate `std::vector<T>` for array types in turbo modules (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Fix EBUSY race conditions between metro bundler and msbuild (dannyvv@microsoft.com)
+
+## 0.0.0-canary.372
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Generate nullable type for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.371
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate 9/2 (34109996+chiaramooney@users.noreply.github.com)
+- announce changes to accessibilityState (agnel@microsoft.com)
+- Match Alert module with NativeDialogManagerAndroidSpec.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.370
 

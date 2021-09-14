@@ -32,10 +32,13 @@ function translateReturnType(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return 'React::JSValueArray';
+      if (type.elementType) {
+        return `std::vector<${translateReturnType(type.elementType)}>`;
+      } else {
+        return 'React::JSValueArray';
+      }
     case 'GenericObjectTypeAnnotation':
-      return 'React::JSValueObject';
+      return 'React::JSValue';
     case 'ObjectTypeAnnotation':
       // TODO: we have more information here, and could create a more specific type
       return 'React::JSValueObject';
@@ -53,8 +56,7 @@ function translateReturnType(
     case 'TypeAliasTypeAnnotation':
       return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
-      // TODO: should be `std::optional<${translateReturnType(type.typeAnnotation)}>`;
-      return translateReturnType(type.typeAnnotation);
+      return `std::optional<${translateReturnType(type.typeAnnotation)}>`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }

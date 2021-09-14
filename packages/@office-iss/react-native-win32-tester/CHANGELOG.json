@@ -2,6 +2,50 @@
   "name": "@office-iss/react-native-win32-tester",
   "entries": [
     {
+      "date": "Thu, 09 Sep 2021 05:07:46 GMT",
+      "tag": "@office-iss/react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @office-iss/react-native-win32 to v0.0.0-canary.110",
+            "author": "safreibe@microsoft.com",
+            "commit": "465dae11d372626fcb90d966e9e97f2d3d531f43",
+            "package": "@office-iss/react-native-win32-tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@office-iss/react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @office-iss/react-native-win32 to v0.0.0-canary.109",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32-tester"
+          },
+          {
+            "comment": "Bump react-native-platform-override to v1.4.18",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32-tester"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32-tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 05:06:04 GMT",
       "tag": "@office-iss/react-native-win32-tester_v0.0.1",
       "version": "0.0.1",

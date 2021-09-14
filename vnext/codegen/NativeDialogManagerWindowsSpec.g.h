@@ -13,8 +13,8 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-REACT_STRUCT(DialogManagerAndroidSpec_DialogOptions)
-struct DialogManagerAndroidSpec_DialogOptions {
+REACT_STRUCT(DialogManagerWindowsSpec_DialogOptions)
+struct DialogManagerWindowsSpec_DialogOptions {
     REACT_FIELD(title)
     std::optional<std::string> title;
     REACT_FIELD(message)
@@ -25,26 +25,26 @@ struct DialogManagerAndroidSpec_DialogOptions {
     std::optional<std::string> buttonNegative;
     REACT_FIELD(buttonNeutral)
     std::optional<std::string> buttonNeutral;
-    REACT_FIELD(items)
-    std::optional<std::vector<std::string>> items;
     REACT_FIELD(cancelable)
     std::optional<bool> cancelable;
+    REACT_FIELD(defaultButton)
+    std::optional<int> defaultButton;
 };
 
-struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+struct DialogManagerWindowsSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(DialogManagerAndroidSpec_DialogOptions, Callback<std::string>, Callback<std::string, double>) noexcept>{0, L"showAlert"},
+      Method<void(DialogManagerWindowsSpec_DialogOptions, Callback<std::string>) noexcept>{0, L"showAlert"},
   };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto methodCheckResults = CheckMethods<TModule, DialogManagerAndroidSpec>();
+    constexpr auto methodCheckResults = CheckMethods<TModule, DialogManagerWindowsSpec>();
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showAlert",
-          "    REACT_METHOD(showAlert) void showAlert(DialogManagerAndroidSpec_DialogOptions && config, std::function<void(std::string)> const & onError, std::function<void(std::string, double)> const & onAction) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showAlert) static void showAlert(DialogManagerAndroidSpec_DialogOptions && config, std::function<void(std::string)> const & onError, std::function<void(std::string, double)> const & onAction) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showAlert) void showAlert(DialogManagerWindowsSpec_DialogOptions && config, std::function<void(std::string)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showAlert) static void showAlert(DialogManagerWindowsSpec_DialogOptions && config, std::function<void(std::string)> const & callback) noexcept { /* implementation */ }}\n");
   }
 };
 

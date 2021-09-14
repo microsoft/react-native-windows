@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Set consistent node requirements on our packages",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

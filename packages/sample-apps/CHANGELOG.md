@@ -1,8 +1,46 @@
 # Change Log - sample-apps
 
-This log was last generated on Sat, 04 Sep 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Sat, 11 Sep 2021 05:06:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Sat, 11 Sep 2021 05:06:55 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.374 (anandrag@microsoft.com)
+
+## 0.0.0
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.14 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.13 (ngerlem@microsoft.com)
+
+## 0.0.0
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.371 (ngerlem@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.12 (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.8 (ngerlem@microsoft.com)
 
 ## 0.0.0
 

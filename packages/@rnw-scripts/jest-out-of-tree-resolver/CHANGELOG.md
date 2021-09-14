@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-out-of-tree-resolver
 
-This log was last generated on Fri, 02 Jul 2021 05:06:31 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.3
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
 
 ## 1.0.2
 

@@ -1,8 +1,21 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Mon, 06 Sep 2021 05:06:22 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.26
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.24 (ngerlem@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.21 (ngerlem@microsoft.com)
 
 ## 1.2.25
 

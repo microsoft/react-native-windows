@@ -15,9 +15,9 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct NetworkingIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(React::JSValueObject, Callback<React::JSValue>) noexcept>{0, L"sendRequest"},
+      Method<void(React::JSValueObject, Callback<double>) noexcept>{0, L"sendRequest"},
       Method<void(double) noexcept>{1, L"abortRequest"},
-      Method<void(Callback<React::JSValue>) noexcept>{2, L"clearCookies"},
+      Method<void(Callback<bool>) noexcept>{2, L"clearCookies"},
       Method<void(std::string) noexcept>{3, L"addListener"},
       Method<void(double) noexcept>{4, L"removeListeners"},
   };
@@ -29,8 +29,8 @@ struct NetworkingIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "sendRequest",
-          "    REACT_METHOD(sendRequest) void sendRequest(React::JSValueObject && query, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(sendRequest) static void sendRequest(React::JSValueObject && query, std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(sendRequest) void sendRequest(React::JSValueObject && query, std::function<void(double)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(sendRequest) static void sendRequest(React::JSValueObject && query, std::function<void(double)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "abortRequest",
@@ -39,8 +39,8 @@ struct NetworkingIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "clearCookies",
-          "    REACT_METHOD(clearCookies) void clearCookies(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(clearCookies) static void clearCookies(std::function<void(React::JSValue const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(clearCookies) void clearCookies(std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(clearCookies) static void clearCookies(std::function<void(bool)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "addListener",
