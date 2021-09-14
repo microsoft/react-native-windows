@@ -40,19 +40,19 @@ export interface RunWindowsOptions {
   device?: boolean;
   target?: string;
   remoteDebugging?: string;
-  logging: boolean;
-  packager: boolean;
-  bundle: boolean;
-  launch: boolean;
-  autolink: boolean;
-  build: boolean;
-  deploy: boolean;
+  logging?: boolean;
+  packager?: boolean;
+  bundle?: boolean;
+  launch?: boolean;
+  autolink?: boolean;
+  build?: boolean;
+  deploy?: boolean;
   deployFromLayout?: boolean;
   sln?: string;
   proj?: string;
   msbuildprops?: string;
   buildLogDirectory?: string;
-  info: boolean;
+  info?: boolean;
   directDebugging?: number;
   telemetry?: boolean;
 }

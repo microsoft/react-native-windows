@@ -168,7 +168,7 @@ async function runWindowsInternal(
   config: Config,
   options: RunWindowsOptions,
 ) {
-  const verbose = options.logging;
+  const verbose = options.logging === true;
 
   if (verbose) {
     newInfo('Verbose: ON');
@@ -300,7 +300,11 @@ async function runWindowsInternal(
 }
 
 function shouldLaunchPackager(options: RunWindowsOptions): boolean {
-  return options.packager && options.launch && options.release !== true;
+  return (
+    options.packager === true &&
+    options.launch === true &&
+    options.release !== true
+  );
 }
 
 /*
