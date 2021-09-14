@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Sep 2021 05:07:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.86
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Fix autolinking to respect WinUI2xVersion or WinUI3Version set in ExperimentalFeatures.props (jthysell@microsoft.com)
 
 ## 0.0.0-canary.85
 
