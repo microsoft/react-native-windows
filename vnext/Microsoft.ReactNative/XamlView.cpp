@@ -11,6 +11,18 @@
 
 namespace Microsoft::ReactNative {
 
+bool TryGetClosestTag(XamlView view, int64_t &value) {
+  while (view) {
+    if (TryGetTag(view, value)) {
+      return true;
+    }
+    else {
+      view = xaml::Media::VisualTreeHelper::GetParent(view);
+    }
+  }
+  return false;
+}
+
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view) {
   xaml::XamlRoot root{nullptr};
   if (auto uielement = view.try_as<xaml::UIElement>()) {

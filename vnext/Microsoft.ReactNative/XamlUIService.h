@@ -13,15 +13,21 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct XamlUIService : XamlUIServiceT<XamlUIService> {
  public:
   XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
-  static ReactPropertyId<XamlUIService> XamlUIServiceProperty() noexcept;
 
   xaml::DependencyObject ElementFromReactTag(int64_t reactTag) noexcept;
-  static winrt::Microsoft::ReactNative::XamlUIService FromContext(IReactContext context);
-  void DispatchEvent(
-      xaml::FrameworkElement const &view,
-      hstring const &eventName,
-      JSValueArgWriter const &eventDataArgWriter) noexcept;
 
+  void DispatchEvent(
+    xaml::DependencyObject const &view,
+    hstring const &eventName,
+    JSValueArgWriter const &eventDataArgWriter) noexcept;
+
+  static ReactPropertyId<XamlUIService> XamlUIServiceProperty() noexcept;
+
+  static xaml::DependencyProperty ReactTagProperty() noexcept { return m_ReactTagProperty; }
+  static int64_t GetReactTag(xaml::DependencyObject const& target) { return winrt::unbox_value<int64_t>(target.GetValue(m_ReactTagProperty)); }
+  static void SetReactTag(xaml::DependencyObject const& target, int64_t value) { target.SetValue(m_ReactTagProperty, winrt::box_value(value)); }
+
+  static winrt::Microsoft::ReactNative::XamlUIService FromContext(IReactContext context);
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;
   static void SetAccessibleRoot(
       IReactPropertyBag const &properties,
@@ -33,6 +39,8 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   static uint64_t GetIslandWindowHandle(IReactPropertyBag const &properties) noexcept;
 
  private:
+  static Windows::UI::Xaml::DependencyProperty m_ReactTagProperty;
+
   std::weak_ptr<::Microsoft::ReactNative::INativeUIManagerHost> m_wkUIManager;
   Mso::CntPtr<Mso::React::IReactContext> m_context;
 };

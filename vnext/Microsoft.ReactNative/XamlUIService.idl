@@ -18,6 +18,10 @@ namespace Microsoft.ReactNative
     DOC_STRING("Use this method to get access to the @XamlUIService associated with the @IReactContext.")
     static XamlUIService FromContext(IReactContext context);
 
+    static XAML_NAMESPACE.DependencyProperty ReactTagProperty { get; };
+    static Int64 GetReactTag(XAML_NAMESPACE.DependencyObject target);
+    static void SetReactTag(XAML_NAMESPACE.DependencyObject target, Int64 value);
+
     DOC_STRING("Gets the backing XAML element from a react tag.")
     XAML_NAMESPACE.DependencyObject ElementFromReactTag(Int64 reactTag);
 

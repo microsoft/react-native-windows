@@ -6,11 +6,18 @@
 #include "XamlUIService.g.cpp"
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
 #include "DynamicWriter.h"
 #include "ShadowNodeBase.h"
 #include "Views/ShadowNodeBase.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
+
+xaml::DependencyProperty XamlUIService::m_ReactTagProperty = xaml::DependencyProperty::RegisterAttached(
+    L"ReactTag",
+    winrt::xaml_typename<int64_t>(),
+    winrt::xaml_typename<winrt::Microsoft::ReactNative::XamlUIService>(),
+    xaml::PropertyMetadata{winrt::box_value(-1)});
 
 XamlUIService::XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context(context) {}
 
@@ -32,12 +39,12 @@ xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noex
 }
 
 void XamlUIService::DispatchEvent(
-    xaml::FrameworkElement const &view,
+    xaml::DependencyObject const &view,
     hstring const &eventName,
     JSValueArgWriter const &eventDataArgWriter) noexcept {
   auto paramsWriter = winrt::make_self<DynamicWriter>();
   paramsWriter->WriteArrayBegin();
-  paramsWriter->WriteInt64(unbox_value<int64_t>(view.Tag()));
+  paramsWriter->WriteInt64(GetReactTag(view));
   paramsWriter->WriteString(eventName);
   if (eventDataArgWriter) {
     eventDataArgWriter(*paramsWriter);

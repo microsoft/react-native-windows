@@ -61,7 +61,7 @@ std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(winrt::Microsoft::React
 
 static folly::dynamic ToEventData(ReactKeyboardEvent event, double timestamp) {
   return folly::dynamic::object(TARGET, event.target)(ALT_KEY, event.altKey)(CTRL_KEY, event.ctrlKey)(KEY, event.key)(
-      META_KEY, event.metaKey)(SHIFT_KEY, event.shiftKey)(CODE, event.code)(TIMESTAMP, timestamp);
+    META_KEY, event.metaKey)(SHIFT_KEY, event.shiftKey)(CODE, event.code)(TIMESTAMP, timestamp);
 }
 
 KeyboardEventBaseHandler::KeyboardEventBaseHandler(KeyboardEventCallback &&keyDown, KeyboardEventCallback &&keyUp)
@@ -217,10 +217,10 @@ void PreviewKeyboardEventHandlerOnRoot::DispatchEventToJs(
   const auto timestamp =
       std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count();
   if (auto source = args.OriginalSource().try_as<xaml::FrameworkElement>()) {
-    auto reactId = getViewId(*m_context, source);
-    if (reactId.isValid) {
+    int64_t tag;
+    if (TryGetClosestTag(source, tag)) {
       ReactKeyboardEvent event;
-      event.target = reactId.tag;
+      event.target = tag;
       UpdateModifiedKeyStatusTo(event);
       event.key = KeyboardHelper::FromVirtualKey(args.Key(), event.shiftKey, event.capLocked);
       event.code = KeyboardHelper::CodeFromVirtualKey(args.OriginalKey());

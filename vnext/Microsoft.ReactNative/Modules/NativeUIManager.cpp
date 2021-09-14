@@ -9,6 +9,7 @@
 #include <Views/ShadowNodeBase.h>
 #include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
+#include "XamlUIService.h"
 
 #include "CppWinRTIncludes.h"
 #include "IXamlRootView.h"
@@ -115,25 +116,6 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot(int64_t rootTag) {
       if (auto uiElement10 = shadowNode->GetView().try_as<xaml::IUIElement10>()) {
         return uiElement10.XamlRoot();
       }
-    }
-  }
-  return nullptr;
-}
-
-XamlView NativeUIManager::reactPeerOrContainerFrom(xaml::FrameworkElement fe) {
-  if (m_host) {
-    while (fe) {
-      if (auto value = GetTagAsPropertyValue(fe)) {
-        auto tag = GetTag(value);
-        if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag))) {
-          if (auto xamlView = shadowNode->GetView()) {
-            if (xamlView == fe) {
-              return xamlView;
-            }
-          }
-        }
-      }
-      fe = fe.Parent().try_as<xaml::FrameworkElement>();
     }
   }
   return nullptr;
@@ -937,9 +919,7 @@ void NativeUIManager::DoLayout() {
   }
 }
 
-winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
-    xaml::FrameworkElement element,
-    xaml::UIElement parent) {
+winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(xaml::UIElement element, xaml::UIElement parent) {
   if (parent == nullptr) {
     assert(false);
     return winrt::Windows::Foundation::Rect();
@@ -950,11 +930,12 @@ winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(
 
   winrt::GeneralTransform transform = element.TransformToVisual(parent);
   winrt::Point anchorTopLeftConverted = transform.TransformPoint(anchorTopLeft);
+  auto size = element.ActualSize();
 
   anchorRect.X = anchorTopLeftConverted.X;
   anchorRect.Y = anchorTopLeftConverted.Y;
-  anchorRect.Width = (float)element.ActualWidth();
-  anchorRect.Height = (float)element.ActualHeight();
+  anchorRect.Width = size.x;
+  anchorRect.Height = size.y;
 
   return anchorRect;
 }
@@ -963,7 +944,6 @@ void NativeUIManager::measure(
     ShadowNode &shadowNode,
     ShadowNode &shadowRoot,
     std::function<void(double left, double top, double width, double height, double pageX, double pageY)> &&callback) {
-  std::vector<folly::dynamic> args;
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
@@ -1017,8 +997,6 @@ void NativeUIManager::measure(
 void NativeUIManager::measureInWindow(
     ShadowNode &shadowNode,
     std::function<void(double x, double y, double width, double height)> &&callback) {
-  std::vector<folly::dynamic> args;
-
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
 
   if (auto view = node.GetView().try_as<xaml::FrameworkElement>()) {
@@ -1040,7 +1018,6 @@ void NativeUIManager::measureLayout(
     ShadowNode &ancestorNode,
     std::function<void(React::JSValue const &)> &&errorCallback,
     std::function<void(double left, double top, double width, double height)> &&callback) {
-  std::vector<folly::dynamic> args;
   try {
     const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
     const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
@@ -1072,7 +1049,7 @@ void NativeUIManager::findSubviewIn(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
-  auto rootUIView = view.as<xaml::UIElement>();
+  auto rootUIView = view.try_as<xaml::UIElement>();
   if (rootUIView == nullptr) {
     m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;
@@ -1090,15 +1067,14 @@ void NativeUIManager::findSubviewIn(
   auto hitTestElements = winrt::VisualTreeHelper::FindElementsInHostCoordinates(pointInAppWindow, rootUIView);
 
   int64_t foundTag{};
-  xaml::FrameworkElement foundElement = nullptr;
+  xaml::UIElement foundElement = nullptr;
 
   for (const auto &elem : hitTestElements) {
-    if (foundElement = elem.try_as<xaml::FrameworkElement>()) {
-      auto tag = foundElement.Tag();
-      if (tag != nullptr) {
-        foundTag = tag.as<winrt::IPropertyValue>().GetInt64();
-        break;
-      }
+    auto tag = winrt::Microsoft::ReactNative::implementation::XamlUIService::GetReactTag(elem);
+    if (IsValidTag(tag)) {
+      foundTag = tag;
+      foundElement = elem;
+      break;
     }
   }
 

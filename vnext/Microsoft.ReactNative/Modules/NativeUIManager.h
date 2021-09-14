@@ -93,10 +93,6 @@ class NativeUIManager final : public INativeUIManager {
   // specific root tag.
   xaml::XamlRoot tryGetXamlRoot(int64_t rootTag);
 
-  // Searches itself and its parent to get a valid XamlView.
-  // Like Mouse/Keyboard, the event source may not have matched XamlView.
-  XamlView reactPeerOrContainerFrom(xaml::FrameworkElement fe);
-
   int64_t AddMeasuredRootView(facebook::react::IReactRootView *rootView);
 
  private:

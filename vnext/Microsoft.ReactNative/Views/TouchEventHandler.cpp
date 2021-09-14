@@ -150,7 +150,7 @@ void TouchEventHandler::OnPointerExited(
     return;
 
   std::vector<int64_t> tagsForBranch;
-  UpdatePointersInViews(args, nullptr, std::move(tagsForBranch));
+  UpdatePointersInViews(args, INVALID_TAG, nullptr);
 }
 
 void TouchEventHandler::OnPointerMoved(
@@ -313,7 +313,7 @@ void TouchEventHandler::UpdatePointersInViews(
     } else {
       // newViews is empty when UpdatePointersInViews is called from outside
       // the root view, in this case use -1 for the JS event pointer target
-      const auto tag = !newViews.empty() ? newViews.front() : -1;
+      const auto tag = !newViews.empty() ? newViews.front() : INVALID_TAG;
       pointer = CreateReactPointer(args, tag, sourceElement);
     }
 
@@ -686,11 +686,11 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
   return false;
 }
 
-winrt::IPropertyValue TouchEventHandler::TestHit(
+int64_t TouchEventHandler::TestHit(
     const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
     const winrt::Point &pointerPos,
     bool &isHit) {
-  winrt::IPropertyValue tag(nullptr);
+  int64_t tag = INVALID_TAG;
 
   for (const auto &el : inlines) {
     if (const auto span = el.try_as<xaml::Documents::Span>()) {
@@ -700,8 +700,7 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
         return resTag;
 
       if (isHit) {
-        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-        if (tag) {
+        if (TryGetTag(el, tag)) {
           return tag;
         }
       }
@@ -723,7 +722,7 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
       if ((startRect.X <= pointerPos.X) && (endRect.X + endRect.Width >= pointerPos.X) &&
           (startRect.Y <= pointerPos.Y) && (endRect.Y + endRect.Height >= pointerPos.Y)) {
         isHit = true;
-        return nullptr;
+        return INVALID_TAG;
       }
     }
   }
@@ -739,7 +738,7 @@ std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, i
   std::vector<int64_t> tags;
 
   auto *shadowNode = host->FindShadowNodeForTag(tag);
-  while (shadowNode != nullptr && tag != -1) {
+  while (shadowNode != nullptr && IsValidTag(tag)) {
     if (tag == rootTag) {
       break;
     }

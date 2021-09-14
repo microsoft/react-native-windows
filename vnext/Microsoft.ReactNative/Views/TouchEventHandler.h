@@ -108,7 +108,7 @@ class TouchEventHandler {
       const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
       std::vector<int64_t> *pTagsForBranch,
       xaml::UIElement *pSourceElement);
-  winrt::IPropertyValue TestHit(
+  int64_t TestHit(
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
       bool &isHit);
