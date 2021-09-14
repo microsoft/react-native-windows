@@ -97,9 +97,7 @@ void TouchEventHandler::OnPointerPressed(
   const auto eventType = TouchEventType::Start;
   const auto kind = GetPointerEventKind(eventType);
   const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
-  const auto argsImpl =
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (!PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
+  if (!PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     return;
 
   // If this was caused by the user pressing the "back" hardware button, fire that event instead
@@ -109,8 +107,7 @@ void TouchEventHandler::OnPointerPressed(
     return;
   }
 
-  if (!argsImpl->DefaultPrevented() &&
-      (argsImpl->UncapturedAllowed() || m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer()))) {
+  if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
     assert(!tagsForBranch.empty());
     const auto tag = tagsForBranch.front();
 
@@ -169,21 +166,14 @@ void TouchEventHandler::OnPointerMoved(
   const auto eventType = TouchEventType::Move;
   const auto kind = GetPointerEventKind(eventType);
   const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
-  const auto argsImpl =
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (!PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
+  if (!PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     return;
 
-  const auto pointerId = args.Pointer().PointerId();
-  const auto optPointerIndex = IndexOfPointerWithId(pointerId);
+  const auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
   if (optPointerIndex) {
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
-    if (!IsPointerCaptured(pointerId) && !argsImpl->UncapturedAllowed()) {
-      OnPointerConcluded(TouchEventType::Cancel, args);
-    } else if (!argsImpl->DefaultPrevented()) {
-      DispatchTouchEvent(eventType, *optPointerIndex);
-    }
-  } else if (!argsImpl->DefaultPrevented()) {
+    DispatchTouchEvent(eventType, *optPointerIndex);
+  } else {
     // Move with no buttons pressed
     UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
   }
@@ -204,34 +194,21 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   xaml::UIElement sourceElement(nullptr);
   const auto kind = GetPointerEventKind(eventType);
   const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
-  const auto argsImpl =
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(reactArgs);
-  if (PropagatePointerEventAndFindReactTarget(reactArgs, &tagsForBranch, &sourceElement))
+  if (PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
   if (m_pointers[*optPointerIndex].isLeftButton) {
-    if (eventType == TouchEventType::CaptureLost && argsImpl->UncapturedAllowed()) {
-      // If we allow the pointer to continue uncaptured, we can ignore the event
-      return;
-    } else {
-      const auto modifiedEventType = argsImpl->DefaultPrevented()
-          ? TouchEventType::Cancel
-          : reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End ? TouchEventType::End : eventType;
-      DispatchTouchEvent(modifiedEventType, *optPointerIndex);
-    }
+    DispatchTouchEvent(eventType, *optPointerIndex);
   }
 
   m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
   if (m_pointers.size() == 0)
     m_touchId = 0;
 
-  const auto wasCaptured = IsPointerCaptured(args.Pointer().PointerId());
-
   m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
 
-  // Updates the enter/leave state when pointer was previously captured
-  if (wasCaptured)
-    UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
+  // Updates the enter/leave state when pointer was being tracked
+  UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 }
 
 size_t TouchEventHandler::AddReactPointer(
@@ -600,7 +577,7 @@ const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType
   return eventName;
 }
 
-bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
+bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
     const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
     std::vector<int64_t> *pTagsForBranch,
     xaml::UIElement *pSourceElement) {
@@ -634,9 +611,10 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
 
       node->GetViewManager()->OnPointerEvent(node, args);
 
-      if (args.Target() != previousTarget) {
+      const auto target = args.Target().try_as<XamlView>();
+      if (target != previousTarget) {
         tagsForBranch.clear();
-        if (const auto target = args.Target().try_as<XamlView>()) {
+        if (target) {
           // We assume that if a ViewManager is going to change the target, it
           // can only update the target to one of its descendants.
           const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(target), node->m_tag);
@@ -646,7 +624,7 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactTarget(
         }
       }
 
-      if (args.Target() != nullptr) {
+      if (target) {
         tagsForBranch.push_back(node->m_tag);
       }
 
@@ -751,19 +729,6 @@ winrt::IPropertyValue TouchEventHandler::TestHit(
   }
 
   return tag;
-}
-
-bool TouchEventHandler::IsPointerCaptured(uint32_t pointerId) {
-  const auto frameworkElement = m_xamlView.as<xaml::FrameworkElement>();
-  if (frameworkElement.PointerCaptures()) {
-    for (auto pointer : frameworkElement.PointerCaptures()) {
-      if (pointer.PointerId() == pointerId) {
-        return true;
-      }
-    }
-  }
-
-  return false;
 }
 
 //

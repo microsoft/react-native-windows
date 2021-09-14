@@ -104,7 +104,7 @@ class TouchEventHandler {
   std::unordered_map<uint32_t /*pointerId*/, TagSet /*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;
 
-  bool PropagatePointerEventAndFindReactTarget(
+  bool PropagatePointerEventAndFindReactSourceBranch(
       const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
       std::vector<int64_t> *pTagsForBranch,
       xaml::UIElement *pSourceElement);
@@ -112,7 +112,6 @@ class TouchEventHandler {
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
       bool &isHit);
-  bool IsPointerCaptured(uint32_t pointerId);
 
   XamlView m_xamlView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
