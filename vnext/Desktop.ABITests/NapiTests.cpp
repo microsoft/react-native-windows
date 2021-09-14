@@ -16,11 +16,8 @@ using facebook::jsi::RuntimeFactory;
 
 namespace Microsoft::Test {
 
-std::vector<RuntimeFactory> runtimeGenerators()
-{
-  return {
-    []() -> std::unique_ptr<Runtime>
-  {
+std::vector<RuntimeFactory> runtimeGenerators() {
+  return {[]() -> std::unique_ptr<Runtime> {
     napi_ext_env_settings settings{};
 
     settings.this_size = sizeof(settings);
@@ -32,4 +29,4 @@ std::vector<RuntimeFactory> runtimeGenerators()
   }};
 }
 
-}
+} // namespace Microsoft::Test
