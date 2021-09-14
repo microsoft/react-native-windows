@@ -89,7 +89,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime_detail.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />

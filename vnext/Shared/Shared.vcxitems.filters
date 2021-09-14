@@ -384,9 +384,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime_detail.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
