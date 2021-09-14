@@ -5,6 +5,7 @@
 #include "NamespaceRedirect.h"
 
 namespace Microsoft.ReactNative {
+  [experimental]
   [webhosthidden]
   DOC_STRING("Pointer event type enum.")
   enum PointerEventKind {
@@ -16,6 +17,7 @@ namespace Microsoft.ReactNative {
     CaptureLost,
   };
 
+  [experimental]
   [webhosthidden]
   DOC_STRING("Event arguments wrapper for IViewManagerWithPointerEvents.")
   runtimeclass ReactPointerEventArgs {
@@ -23,25 +25,14 @@ namespace Microsoft.ReactNative {
     XAML_NAMESPACE.Input.PointerRoutedEventArgs Args {
       get;
     };
-    DOC_STRING(
-      "Gets or sets the pointer event kind. The setter should only be used to "
-      "change CaptureLost events to End (treat capture loss as pointer end). "
-      "All other changes will be ignored."
-    )
+    DOC_STRING("Gets the pointer event kind.")
     PointerEventKind Kind {
       get;
-      set;
     };
     DOC_STRING("Gets or sets the React target for the pointer event.")
     Object Target {
       get;
       set;
     };
-    DOC_STRING("Prevent event from being emitted to React JS component.")
-    void PreventDefault();
-    DOC_STRING(
-      "Allow events to be emitted to React JS even if pointer is not captured."
-    )
-    void AllowUncaptured();
   }
 } // namespace Microsoft.ReactNative
