@@ -152,7 +152,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
 
   facebook::jsi::String createStringFromAscii(const char *str, size_t length) override;
   facebook::jsi::String createStringFromUtf8(const uint8_t *utf8, size_t length) override;
-  std::string utf8(const facebook::jsi::String &string) override;
+  std::string utf8(const facebook::jsi::String &str) override;
 
   facebook::jsi::Object createObject() override;
   facebook::jsi::Object createObject(std::shared_ptr<facebook::jsi::HostObject> ho) override;
@@ -297,7 +297,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
     const NapiJsiRuntime *GetRuntime() const noexcept;
 
    private:
-    const NapiJsiRuntime *m_runtime; // TODO: Initialize here?
+    const NapiJsiRuntime *m_runtime;
     void *m_valueOrRef; // napi_value or napi_ext_ref
   };
 
@@ -400,7 +400,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
     HostFunctionWrapper(const HostFunctionWrapper &) = delete;
     HostFunctionWrapper &operator=(const HostFunctionWrapper &) = delete;
 
-    facebook::jsi::HostFunctionType &GetHosFunction() noexcept;
+    facebook::jsi::HostFunctionType &GetHostFunction() noexcept;
     NapiJsiRuntime &GetRuntime() noexcept;
 
    private:
@@ -477,7 +477,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   napi_value ConstructObject(napi_value constructor, span<napi_value> args = {}) const;
   bool InstanceOf(napi_value object, napi_value constructor) const;
   napi_value CreateObject() const;
-  bool HasProperty(napi_value object, napi_value propertId) const;
+  bool HasProperty(napi_value object, napi_value propertyId) const;
   napi_value GetProperty(napi_value object, napi_value propertyId) const;
   void SetProperty(napi_value object, napi_value propertyId, napi_value value) const;
   void SetProperty(napi_value object, napi_value propertyId, napi_value value, napi_property_attributes attrs) const;
@@ -596,7 +596,7 @@ NapiJsiRuntime::NapiJsiRuntime(napi_env env) noexcept : m_env{env} {
 }
 
 Value NapiJsiRuntime::evaluateJavaScript(const shared_ptr<const Buffer> &buffer, const string &sourceUrl) {
-  EnvScope envoScope{m_env};
+  EnvScope envScope{m_env};
   napi_value script = CreateStringUtf8(buffer->data(), buffer->size());
   napi_value result = RunScript(script, sourceUrl.c_str());
 
@@ -624,7 +624,7 @@ Value NapiJsiRuntime::evaluatePreparedJavaScript(const shared_ptr<const Prepared
   return ToJsiValue(result);
 }
 
-bool NapiJsiRuntime::drainMicrotasks(int /*maxMicroTasksHint*/) {
+bool NapiJsiRuntime::drainMicrotasks(int /*maxMicrotasksHint*/) {
   return true;
 }
 
@@ -763,7 +763,7 @@ HostFunctionType &NapiJsiRuntime::getHostFunction(const Function &func) {
   EnvScope scope{m_env};
   napi_value hostFunctionHolder = GetProperty(GetNapiValue(func), m_propertyId.hostFunctionSymbol);
   if (TypeOf(hostFunctionHolder) == napi_valuetype::napi_external) {
-    return static_cast<HostFunctionWrapper *>(GetExternalData(hostFunctionHolder))->GetHosFunction();
+    return static_cast<HostFunctionWrapper *>(GetExternalData(hostFunctionHolder))->GetHostFunction();
   } else {
     throw JSINativeException("getHostFunction() can only be called with HostFunction.");
   }
@@ -788,7 +788,7 @@ bool NapiJsiRuntime::hasProperty(const Object &obj, const PropNameID &name) {
 }
 
 bool NapiJsiRuntime::hasProperty(const Object &obj, const String &name) {
-  EnvScope scoope{m_env};
+  EnvScope scope{m_env};
 
   return HasProperty(GetNapiValue(obj), GetNapiValue(name));
 }
@@ -840,10 +840,10 @@ bool NapiJsiRuntime::isHostObject(const Object &obj) const {
 
 bool NapiJsiRuntime::isHostFunction(const Function &func) const {
   EnvScope scope{m_env};
-  napi_value hostObjectHolder = GetProperty(GetNapiValue(func), m_propertyId.hostObjectSymbol);
+  napi_value hostFunctionHolder = GetProperty(GetNapiValue(func), m_propertyId.hostFunctionSymbol);
 
-  if (TypeOf(hostObjectHolder) == napi_valuetype::napi_external) {
-    return GetExternalData(hostObjectHolder) != nullptr;
+  if (TypeOf(hostFunctionHolder) == napi_valuetype::napi_external) {
+    return GetExternalData(hostFunctionHolder) != nullptr;
   } else {
     return false;
   }
@@ -1002,6 +1002,10 @@ NapiJsiRuntime::EnvHolder::~EnvHolder() noexcept {
   }
 }
 
+NapiJsiRuntime::EnvHolder::operator napi_env() const noexcept {
+  return m_env;
+}
+
 #pragma endregion EnvHolder
 
 #pragma region EnvScope
@@ -1098,6 +1102,34 @@ const NapiJsiRuntime *NapiJsiRuntime::NapiPointerValueView::GetRuntime() const n
 
 #pragma endregion NapiPointerValueView
 
+#pragma region NapiPointerValue
+
+NapiJsiRuntime::NapiPointerValue::NapiPointerValue(const NapiJsiRuntime *runtime, napi_ext_ref ref)
+    : NapiPointerValueView(runtime, ref) {}
+
+NapiJsiRuntime::NapiPointerValue::NapiPointerValue(const NapiJsiRuntime *runtime, napi_value value)
+    : NapiPointerValueView(runtime, runtime->CreateReference(value)) {}
+
+NapiJsiRuntime::NapiPointerValue::~NapiPointerValue() noexcept {
+  if (napi_ext_ref ref = GetRef()) {
+    GetRuntime()->ReleaseReference(ref);
+  }
+}
+
+void NapiJsiRuntime::NapiPointerValue::invalidate() noexcept {
+  delete this;
+}
+
+napi_value NapiJsiRuntime::NapiPointerValue::GetValue() const {
+  return GetRuntime()->GetReferenceValue(GetRef());
+}
+
+napi_ext_ref NapiJsiRuntime::NapiPointerValue::GetRef() const {
+  return reinterpret_cast<napi_ext_ref>(NapiPointerValueView::GetValue());
+}
+
+#pragma endregion NapiPointerValue
+
 #pragma region SmallBuffer
 
 template <typename T, size_t InplaceSize>
@@ -1107,6 +1139,11 @@ NapiJsiRuntime::SmallBuffer<T, InplaceSize>::SmallBuffer(size_t size) noexcept
 template <typename T, size_t InplaceSize>
 T *NapiJsiRuntime::SmallBuffer<T, InplaceSize>::Data() noexcept {
   return m_heapData ? m_heapData.get() : m_stackData.data();
+}
+
+template <typename T, size_t InplaceSize>
+size_t NapiJsiRuntime::SmallBuffer<T, InplaceSize>::Size() const noexcept {
+  return m_size;
 }
 
 #pragma endregion SmallBuffer
@@ -1198,7 +1235,7 @@ NapiJsiRuntime::PropNameIDView::operator PropNameID const &() const noexcept {
 NapiJsiRuntime::HostFunctionWrapper::HostFunctionWrapper(HostFunctionType &&type, NapiJsiRuntime &runtime)
     : m_hostFunction{std::move(type)}, m_runtime{runtime} {}
 
-HostFunctionType &NapiJsiRuntime::HostFunctionWrapper::GetHosFunction() noexcept {
+HostFunctionType &NapiJsiRuntime::HostFunctionWrapper::GetHostFunction() noexcept {
   return m_hostFunction;
 }
 
@@ -1316,7 +1353,7 @@ napi_value NapiJsiRuntime::HandleCallbackExceptions(TLambda lambda) const noexce
   } catch (std::exception const &ex) {
     SetException(ex.what());
   } catch (...) {
-    SetException("Unexcpected error");
+    SetException("Unexpected error");
   }
 
   return m_value.Undefined;
@@ -1346,7 +1383,7 @@ napi_value NapiJsiRuntime::RunScript(napi_value script, const char *sourceUrl) {
   return result;
 }
 
-// Serializes script with the sourceUrl orign.
+// Serializes script with the sourceUrl origin.
 vector<uint8_t> NapiJsiRuntime::SerializeScript(napi_value script, const char *sourceUrl) {
   vector<uint8_t> result;
   auto getBuffer = [](napi_env /*env*/, uint8_t const *buffer, size_t bufferLength, void *bufferHint) {
@@ -1398,7 +1435,7 @@ napi_valuetype NapiJsiRuntime::TypeOf(napi_value value) const {
   return result;
 }
 
-// Returns true if tow napi_values are strict equeal per JavaScript rules.
+// Returns true if two napi_values are strict equal per JavaScript rules.
 bool NapiJsiRuntime::StrictEquals(napi_value left, napi_value right) const {
   bool result{false};
   CHECK_NAPI(napi_strict_equals(m_env, left, right, &result));
@@ -1430,7 +1467,7 @@ napi_value NapiJsiRuntime::GetGlobal() const {
   return result;
 }
 
-// Gets the napi_value for the JavaScrit's true and false values.
+// Gets the napi_value for the JavaScript's true and false values.
 napi_value NapiJsiRuntime::GetBoolean(bool value) const {
   napi_value result{nullptr};
   CHECK_NAPI(napi_get_boolean(m_env, value, &result));
@@ -1489,7 +1526,7 @@ napi_value NapiJsiRuntime::CreateStringUtf8(string_view value) const {
   return result;
 }
 
-// Creates a napi_value string form a UTF-8 string. Use data and length instead of string_view.
+// Creates a napi_value string from a UTF-8 string. Use data and length instead of string_view.
 napi_value NapiJsiRuntime::CreateStringUtf8(const uint8_t *data, size_t length) const {
   return CreateStringUtf8({reinterpret_cast<const char *>(data), length});
 }
@@ -1518,7 +1555,7 @@ napi_ext_ref NapiJsiRuntime::GetPropertyIdFromName(string_view value) const {
   return ref;
 }
 
-// Gets of creates a unique string value from an UTF-8 data/length range.
+// Gets or creates a unique string value from an UTF-8 data/length range.
 napi_ext_ref NapiJsiRuntime::GetPropertyIdFromName(const uint8_t *data, size_t length) const {
   return GetPropertyIdFromName({reinterpret_cast<const char *>(data), length});
 }
@@ -1531,7 +1568,7 @@ napi_ext_ref NapiJsiRuntime::GetPropertyIdFromName(napi_value str) const {
   return ref;
 }
 
-// Converts porperty id value to std::string.
+// Converts property id value to std::string.
 string NapiJsiRuntime::PropertyIdToStdString(napi_value propertyId) {
   if (TypeOf(propertyId) == napi_symbol) {
     return SymbolToStdString(propertyId);
@@ -1578,7 +1615,7 @@ napi_value NapiJsiRuntime::ConstructObject(napi_value constructor, span<napi_val
   return result;
 }
 
-// Returns true if object was constructer using the provided constructor.
+// Returns true if object was constructed using the provided constructor.
 bool NapiJsiRuntime::InstanceOf(napi_value object, napi_value constructor) const {
   bool result{false};
   CHECK_NAPI(napi_instanceof(m_env, object, constructor, &result));
@@ -1658,7 +1695,7 @@ void NapiJsiRuntime::SetElement(napi_value array, uint32_t index, napi_value val
     const JsiValueView jsiThisArg{&runtime, thisArg};
     JsiValueViewArgs jsiArgs(&runtime, span<napi_value>(napiArgs.Data(), napiArgs.Size()));
 
-    const HostFunctionType &hostFunc = hostFuncWrapper->GetHosFunction();
+    const HostFunctionType &hostFunc = hostFuncWrapper->GetHostFunction();
     return runtime.RunInMethodContext("HostFunction", [&/*TODO: explicit captures*/]() {
       return runtime.GetNapiValue(hostFunc(runtime, jsiThisArg, jsiArgs.Data(), jsiArgs.Size()));
     });
@@ -1702,6 +1739,14 @@ napi_value NapiJsiRuntime::CreateExternalObject(unique_ptr<T> &&data) const {
   data.release();
 
   return object;
+}
+
+// Gets external data wrapped by an external object.
+void *NapiJsiRuntime::GetExternalData(napi_value object) const {
+  void *result{};
+  CHECK_NAPI(napi_get_value_external(m_env, object, &result));
+
+  return result;
 }
 
 // Gets JSI host object wrapped into a napi_value object.
@@ -1887,7 +1932,7 @@ napi_value NapiJsiRuntime::GetNapiValue(const Value &value) const {
 
 // Clones NapiPointerValue.
 /*static*/ NapiJsiRuntime::NapiPointerValue *NapiJsiRuntime::CloneNapiPointerValue(const PointerValue *pointerValue) {
-  auto napiPointerValue = static_cast<const NapiPointerValue *>(pointerValue);
+  auto napiPointerValue = static_cast<const NapiPointerValueView *>(pointerValue);
 
   return new NapiPointerValue(napiPointerValue->GetRuntime(), napiPointerValue->GetValue());
 }
@@ -1914,7 +1959,7 @@ T NapiJsiRuntime::MakePointer(TValue value) const {
 } // namespace
 
 unique_ptr<Runtime> __cdecl MakeNapiJsiRuntime2(napi_env env) noexcept {
-  return nullptr;
+  return std::make_unique<NapiJsiRuntime>(env);
 }
 
 } // namespace Microsoft::JSI
