@@ -10,10 +10,16 @@ import {
   NativeModuleReturnTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
-import {getAliasCppName} from './ObjectTypes';
+import {
+  AliasMap,
+  getAliasCppName,
+  getAnonymousAliasCppName,
+} from './AliasManaging';
 
 function translateReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
@@ -32,13 +38,19 @@ function translateReturnType(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return 'React::JSValueArray';
+      if (type.elementType) {
+        return `std::vector<${translateReturnType(
+          type.elementType,
+          aliases,
+          `${baseAliasName}_element`,
+        )}>`;
+      } else {
+        return 'React::JSValueArray';
+      }
     case 'GenericObjectTypeAnnotation':
       return 'React::JSValue';
     case 'ObjectTypeAnnotation':
-      // TODO: we have more information here, and could create a more specific type
-      return 'React::JSValueObject';
+      return getAnonymousAliasCppName(aliases, baseAliasName, type);
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = type.name;
@@ -53,8 +65,11 @@ function translateReturnType(
     case 'TypeAliasTypeAnnotation':
       return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
-      // TODO: should be `std::optional<${translateReturnType(type.typeAnnotation)}>`;
-      return translateReturnType(type.typeAnnotation);
+      return `std::optional<${translateReturnType(
+        type.typeAnnotation,
+        aliases,
+        baseAliasName,
+      )}>`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
@@ -62,12 +77,16 @@ function translateReturnType(
 
 export function translateSpecReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ) {
-  return translateReturnType(type);
+  return translateReturnType(type, aliases, `${baseAliasName}_returnType`);
 }
 
 export function translateImplReturnType(
   type: Nullable<NativeModuleReturnTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ) {
-  return translateReturnType(type);
+  return translateReturnType(type, aliases, `${baseAliasName}_returnType`);
 }

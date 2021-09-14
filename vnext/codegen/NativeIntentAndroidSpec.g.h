@@ -19,7 +19,7 @@ struct IntentAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(std::string, Promise<React::JSValue>) noexcept>{1, L"canOpenURL"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"openURL"},
       Method<void(Promise<React::JSValue>) noexcept>{3, L"openSettings"},
-      Method<void(std::string, React::JSValueArray, Promise<React::JSValue>) noexcept>{4, L"sendIntent"},
+      Method<void(std::string, std::optional<React::JSValueArray>, Promise<React::JSValue>) noexcept>{4, L"sendIntent"},
   };
 
   template <class TModule>
@@ -49,8 +49,8 @@ struct IntentAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "sendIntent",
-          "    REACT_METHOD(sendIntent) void sendIntent(std::string action, React::JSValueArray && extras, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(sendIntent) static void sendIntent(std::string action, React::JSValueArray && extras, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(sendIntent) void sendIntent(std::string action, std::optional<React::JSValueArray> extras, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(sendIntent) static void sendIntent(std::string action, std::optional<React::JSValueArray> extras, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
   }
 };
 

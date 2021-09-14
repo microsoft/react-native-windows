@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Sep 2021 05:07:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.110
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Adding accessibilityItemType property to ViewWin32 (safreibe@microsoft.com)
 
 ## 0.0.0-canary.109
 

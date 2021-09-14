@@ -26,7 +26,7 @@ struct DialogManagerAndroidSpec_DialogOptions {
     REACT_FIELD(buttonNeutral)
     std::optional<std::string> buttonNeutral;
     REACT_FIELD(items)
-    std::optional<React::JSValueArray> items;
+    std::optional<std::vector<std::string>> items;
     REACT_FIELD(cancelable)
     std::optional<bool> cancelable;
 };

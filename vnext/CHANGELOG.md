@@ -1,8 +1,41 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Sep 2021 05:07:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.375
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.86 (jthysell@microsoft.com)
+
+## 0.0.0-canary.374
+
+Sat, 11 Sep 2021 05:06:55 GMT
+
+### Changes
+
+- Bump hermes to v0.9 (anandrag@microsoft.com)
+
+## 0.0.0-canary.373
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Generate `std::vector<T>` for array types in turbo modules (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Fix EBUSY race conditions between metro bundler and msbuild (dannyvv@microsoft.com)
+
+## 0.0.0-canary.372
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Generate nullable type for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.371
 

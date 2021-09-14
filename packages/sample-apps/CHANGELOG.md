@@ -1,8 +1,40 @@
 # Change Log - sample-apps
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Sep 2021 05:07:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.375 (jthysell@microsoft.com)
+
+## 0.0.0
+
+Sat, 11 Sep 2021 05:06:55 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.374 (anandrag@microsoft.com)
+
+## 0.0.0
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.14 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.13 (ngerlem@microsoft.com)
 
 ## 0.0.0
 

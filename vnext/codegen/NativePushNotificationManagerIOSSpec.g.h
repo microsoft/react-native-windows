@@ -45,12 +45,22 @@ struct PushNotificationManagerIOSSpec_Notification {
     std::optional<bool> isSilent;
 };
 
+REACT_STRUCT(PushNotificationManagerIOSSpec_requestPermissions_permission)
+struct PushNotificationManagerIOSSpec_requestPermissions_permission {
+    REACT_FIELD(alert)
+    bool alert;
+    REACT_FIELD(badge)
+    bool badge;
+    REACT_FIELD(sound)
+    bool sound;
+};
+
 struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, std::string) noexcept>{0, L"onFinishRemoteNotification"},
       Method<void(double) noexcept>{1, L"setApplicationIconBadgeNumber"},
       Method<void(Callback<double>) noexcept>{2, L"getApplicationIconBadgeNumber"},
-      Method<void(React::JSValueObject, Promise<React::JSValue>) noexcept>{3, L"requestPermissions"},
+      Method<void(PushNotificationManagerIOSSpec_requestPermissions_permission, Promise<React::JSValue>) noexcept>{3, L"requestPermissions"},
       Method<void() noexcept>{4, L"abandonPermissions"},
       Method<void(Callback<PushNotificationManagerIOSSpec_Permissions>) noexcept>{5, L"checkPermissions"},
       Method<void(PushNotificationManagerIOSSpec_Notification) noexcept>{6, L"presentLocalNotification"},
@@ -60,8 +70,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
       Method<void(Promise<React::JSValue>) noexcept>{10, L"getInitialNotification"},
       Method<void(Callback<PushNotificationManagerIOSSpec_Notification>) noexcept>{11, L"getScheduledLocalNotifications"},
       Method<void() noexcept>{12, L"removeAllDeliveredNotifications"},
-      Method<void(React::JSValueArray) noexcept>{13, L"removeDeliveredNotifications"},
-      Method<void(Callback<React::JSValueArray>) noexcept>{14, L"getDeliveredNotifications"},
+      Method<void(std::vector<std::string>) noexcept>{13, L"removeDeliveredNotifications"},
+      Method<void(Callback<std::vector<PushNotificationManagerIOSSpec_Notification>>) noexcept>{14, L"getDeliveredNotifications"},
       Method<void(Callback<double>) noexcept>{15, L"getAuthorizationStatus"},
       Method<void(std::string) noexcept>{16, L"addListener"},
       Method<void(double) noexcept>{17, L"removeListeners"},
@@ -89,8 +99,8 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "requestPermissions",
-          "    REACT_METHOD(requestPermissions) void requestPermissions(React::JSValueObject && permission, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(requestPermissions) static void requestPermissions(React::JSValueObject && permission, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(requestPermissions) void requestPermissions(PushNotificationManagerIOSSpec_requestPermissions_permission && permission, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(requestPermissions) static void requestPermissions(PushNotificationManagerIOSSpec_requestPermissions_permission && permission, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "abandonPermissions",
@@ -139,13 +149,13 @@ struct PushNotificationManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModu
     REACT_SHOW_METHOD_SPEC_ERRORS(
           13,
           "removeDeliveredNotifications",
-          "    REACT_METHOD(removeDeliveredNotifications) void removeDeliveredNotifications(React::JSValueArray && identifiers) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(removeDeliveredNotifications) static void removeDeliveredNotifications(React::JSValueArray && identifiers) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(removeDeliveredNotifications) void removeDeliveredNotifications(std::vector<std::string> const & identifiers) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(removeDeliveredNotifications) static void removeDeliveredNotifications(std::vector<std::string> const & identifiers) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
           "getDeliveredNotifications",
-          "    REACT_METHOD(getDeliveredNotifications) void getDeliveredNotifications(std::function<void(React::JSValueArray const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getDeliveredNotifications) static void getDeliveredNotifications(std::function<void(React::JSValueArray const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getDeliveredNotifications) void getDeliveredNotifications(std::function<void(std::vector<PushNotificationManagerIOSSpec_Notification> const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getDeliveredNotifications) static void getDeliveredNotifications(std::function<void(std::vector<PushNotificationManagerIOSSpec_Notification> const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           15,
           "getAuthorizationStatus",

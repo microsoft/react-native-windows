@@ -2,6 +2,66 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 14 Sep 2021 05:07:02 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.3-3",
+      "version": "0.0.3-3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.375",
+            "author": "jthysell@microsoft.com",
+            "commit": "d3de4a2b04415ff9004b7ba08ee21787b924d0d4",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Sep 2021 05:06:55 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.3-2",
+      "version": "0.0.3-2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.374",
+            "author": "anandrag@microsoft.com",
+            "commit": "09bc9974c8721bf5559680dc7a8aa00514c1c7f3",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Sep 2021 05:07:31 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.3-1",
+      "version": "0.0.3-1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.373",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "42d0853c684f0e9f9c9f1f7fa34cbf4ca3810edc",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Sep 2021 05:07:46 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.3-0",
+      "version": "0.0.3-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.372",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "66a9f86f24f862c9e9e611ad435f68daddb4e04e",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "@react-native-windows/automation-channel_v0.0.2",
       "version": "0.0.2",

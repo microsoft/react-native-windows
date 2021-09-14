@@ -17,7 +17,7 @@ struct StatusBarManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleS
   static constexpr auto methods = std::tuple{
       Method<void(double, bool) noexcept>{0, L"setColor"},
       Method<void(bool) noexcept>{1, L"setTranslucent"},
-      Method<void(std::string) noexcept>{2, L"setStyle"},
+      Method<void(std::optional<std::string>) noexcept>{2, L"setStyle"},
       Method<void(bool) noexcept>{3, L"setHidden"},
   };
 
@@ -38,8 +38,8 @@ struct StatusBarManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleS
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "setStyle",
-          "    REACT_METHOD(setStyle) void setStyle(std::string statusBarStyle) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setStyle) static void setStyle(std::string statusBarStyle) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setStyle) void setStyle(std::optional<std::string> statusBarStyle) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setStyle) static void setStyle(std::optional<std::string> statusBarStyle) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "setHidden",

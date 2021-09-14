@@ -1255,9 +1255,9 @@
     globals "^11.1.0"
 
 "@babel/types@^7.0.0", "@babel/types@^7.11.5", "@babel/types@^7.12.0", "@babel/types@^7.13.0", "@babel/types@^7.14.5", "@babel/types@^7.15.4", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4", "@babel/types@^7.7.0":
-  version "7.15.4"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.15.4.tgz#74eeb86dbd6748d2741396557b9860e57fce0a0d"
-  integrity sha512-0f1HJFuGmmbrKTCZtbm3cU+b/AqdEYk5toj5iQur58xkVMlS0JWaKxTBSmCXd47uiN7vbcozAupm6Mvs80GNhw==
+  version "7.15.6"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.15.6.tgz#99abdc48218b2881c058dd0a7ab05b99c9be758f"
+  integrity sha512-BPU+7QhqNjmWyDO0/vitH/CuhpV8ZmK1wpKva8nuyNF5MJfuRNWMc+hc14+u9xT93kvykMdncrJT19h74uB1Ig==
   dependencies:
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
@@ -1366,11 +1366,11 @@
     strip-ansi "^6.0.0"
 
 "@jest/create-cache-key-function@^27.0.1":
-  version "27.1.0"
-  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.1.0.tgz#14ac6391089bab36a9b1cc2992b5ac202e5038bb"
-  integrity sha512-5e0W3f03q8qupqRYxcRW94di/2BtkW5I6BxSl8HJWf+NtdnVWBkl8zh0F/Xe0pcJayF+BiMr3LZ1OfYV447R3w==
+  version "27.1.1"
+  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.1.1.tgz#cf83ac2e397f9d85511aea00053bcf9116a7304c"
+  integrity sha512-s+J5PBBODyyGs6m9vD5V4iG6W4U9g8lxB4wLmGBRNpLhwfY7JWAt3z3hjJbYUJAhm4iNf6MGnkUSF6e6KcCK7Q==
   dependencies:
-    "@jest/types" "^27.1.0"
+    "@jest/types" "^27.1.1"
 
 "@jest/environment@^26.6.2":
   version "26.6.2"
@@ -1506,10 +1506,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^27.1.0":
-  version "27.1.0"
-  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.1.0.tgz#674a40325eab23c857ebc0689e7e191a3c5b10cc"
-  integrity sha512-pRP5cLIzN7I7Vp6mHKRSaZD7YpBTK7hawx5si8trMKqk4+WOdK8NEKOTO2G8PKWD1HbKMVckVB6/XHh/olhf2g==
+"@jest/types@^27.1.1":
+  version "27.1.1"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.1.1.tgz#77a3fc014f906c65752d12123a0134359707c0ad"
+  integrity sha512-yqJPDDseb0mXgKqmNqypCsb85C22K1aY5+LUxh7syIM9n/b0AsaltxNy+o6tt29VcfGDpYEve175bm3uOhcehA==
   dependencies:
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^3.0.0"
@@ -2341,9 +2341,9 @@
     "@types/node" "*"
 
 "@types/react-native@^0.64.4":
-  version "0.64.14"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.14.tgz#6a72d7585c7075da51d45c1c825d04d09cb240b5"
-  integrity sha512-RBBc55sV2AS/ibdiyuju+Ju0HXZH6AP//ZlcK4lWatOWgeFYqBZlYWl+nKa4efYwlotg+1gWkyd2vYEKVF1a/w==
+  version "0.64.15"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.64.15.tgz#2755e42f95af7179b79dbf7b7088b7e6d4ce7086"
+  integrity sha512-8mq27O7nXGKLIvnBvChUWVr/kHDOnH/IsjRkt2IqgSwRjlY5scnYeTbjOFnu2JSCYoGmgRI+MlVLqJIVjPuY2g==
   dependencies:
     "@types/react" "*"
 
@@ -3152,11 +3152,11 @@ aws4@^1.8.0:
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
 
 axios@^0.21.1:
-  version "0.21.1"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
-  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  version "0.21.4"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.4.tgz#c67b90dc0568e5c1cf2b0b858c43ba28e2eda575"
+  integrity sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==
   dependencies:
-    follow-redirects "^1.10.0"
+    follow-redirects "^1.14.0"
 
 axobject-query@^2.0.2:
   version "2.2.0"
@@ -5639,10 +5639,10 @@ flow-parser@0.*:
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.113.0.tgz#5b5913c54833918d0c3136ba69f6cf0cdd85fc20"
   integrity sha512-+hRyEB1sVLNMTMniDdM1JIS8BJ3HUL7IFIJaxX+t/JUy0GNYdI0Tg1QLx8DJmOF8HeoCrUDcREpnDAc/pPta3w==
 
-follow-redirects@^1.10.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
-  integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
+follow-redirects@^1.14.0:
+  version "1.14.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.3.tgz#6ada78118d8d24caee595595accdc0ac6abd022e"
+  integrity sha512-3MkHxknWMUtb23apkgz/83fDoe+y+qr0TdgacGIA7bew+QLBo3vdgEN2xEsuXNivpFy4CyDhBBZnNZOtalmenw==
 
 for-in@^1.0.1, for-in@^1.0.2:
   version "1.0.2"
@@ -9545,10 +9545,10 @@ react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-tscodegen@0.68.3:
-  version "0.68.3"
-  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.3.tgz#41bec2b3716b36b218a9ace467010628f89b67ba"
-  integrity sha512-4tCC5c3A7u2UvbG52RN5FYoeTkhUhbsDiA1QwhrIcaWIBjbw2uWk/rwy4+xpiLLcfXarZWYtAYLfCbBrkYeJ6Q==
+react-native-tscodegen@0.68.4:
+  version "0.68.4"
+  resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.4.tgz#d8cbf523f8e20b9f0806fca8a24254a31df1f383"
+  integrity sha512-N0AEJkFyUuOkt+nA128a0MfraPETvVmW9FW0lS6iSiWCwLkUZXhZH8YuKWVOSkmREspCBg2tSqYohvGdApv63A==
   dependencies:
     jscodeshift "0.6.4"
     nullthrows "1.1.1"
@@ -10465,9 +10465,9 @@ source-map-resolve@^0.5.0:
     urix "^0.1.0"
 
 source-map-support@^0.5.19, source-map-support@^0.5.6, source-map-support@^0.5.9:
-  version "0.5.19"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
-  integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
+  version "0.5.20"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.20.tgz#12166089f8f5e5e8c56926b377633392dd2cb6c9"
+  integrity sha512-n1lZZ8Ve4ksRqizaBQgxXDgKwttHDhyfQjA6YZZn8+AroHbsIz+JjwxQDxbp+7y5OYCI8t1Yk7etjD9CRd2hIw==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"

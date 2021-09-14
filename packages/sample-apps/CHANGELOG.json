@@ -2,6 +2,66 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Tue, 14 Sep 2021 05:07:02 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.375",
+            "author": "jthysell@microsoft.com",
+            "commit": "d3de4a2b04415ff9004b7ba08ee21787b924d0d4",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Sep 2021 05:06:55 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.374",
+            "author": "anandrag@microsoft.com",
+            "commit": "09bc9974c8721bf5559680dc7a8aa00514c1c7f3",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Sep 2021 05:07:31 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.14",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "42d0853c684f0e9f9c9f1f7fa34cbf4ca3810edc",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Sep 2021 05:07:46 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.13",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6e2dd6a4334285633e4f939be8184d911d34707a",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",

@@ -13,13 +13,19 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(StatusBarManagerIOSSpec_getHeight_callback_result)
+struct StatusBarManagerIOSSpec_getHeight_callback_result {
+    REACT_FIELD(height)
+    double height;
+};
+
 struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<React::JSValueObject>) noexcept>{0, L"getHeight"},
+      Method<void(Callback<StatusBarManagerIOSSpec_getHeight_callback_result>) noexcept>{0, L"getHeight"},
       Method<void(bool) noexcept>{1, L"setNetworkActivityIndicatorVisible"},
       Method<void(std::string) noexcept>{2, L"addListener"},
       Method<void(double) noexcept>{3, L"removeListeners"},
-      Method<void(std::string, bool) noexcept>{4, L"setStyle"},
+      Method<void(std::optional<std::string>, bool) noexcept>{4, L"setStyle"},
       Method<void(bool, std::string) noexcept>{5, L"setHidden"},
   };
 
@@ -30,8 +36,8 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getHeight",
-          "    REACT_METHOD(getHeight) void getHeight(std::function<void(React::JSValueObject const &)> const & callback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getHeight) static void getHeight(std::function<void(React::JSValueObject const &)> const & callback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getHeight) void getHeight(std::function<void(StatusBarManagerIOSSpec_getHeight_callback_result const &)> const & callback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getHeight) static void getHeight(std::function<void(StatusBarManagerIOSSpec_getHeight_callback_result const &)> const & callback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setNetworkActivityIndicatorVisible",
@@ -50,8 +56,8 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "setStyle",
-          "    REACT_METHOD(setStyle) void setStyle(std::string statusBarStyle, bool animated) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setStyle) static void setStyle(std::string statusBarStyle, bool animated) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setStyle) void setStyle(std::optional<std::string> statusBarStyle, bool animated) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setStyle) static void setStyle(std::optional<std::string> statusBarStyle, bool animated) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "setHidden",

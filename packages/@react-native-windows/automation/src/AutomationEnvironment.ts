@@ -25,6 +25,12 @@ export type EnvironmentOptions = {
    * name (e.g. Microsoft.WindowsAlarms)
    */
   app?: string;
+
+  /**
+   * Arguments to be passed to your application when launched
+   */
+  appArguments?: string;
+
   enableAutomationChannel?: boolean;
   automationChannelPort?: number;
   winAppDriverBin?: string;
@@ -69,6 +75,11 @@ export default class AutomationEnvironment extends NodeEnvironment {
       port: 4723,
       capabilities: {
         app: resolveAppName(passedOptions.app),
+
+        ...(passedOptions.appArguments && {
+          appArguments: passedOptions.appArguments,
+        }),
+
         // @ts-ignore
         'ms:experimental-webdriver': true,
       },

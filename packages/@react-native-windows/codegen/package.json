@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.0.0-canary.12",
+  "version": "0.0.0-canary.14",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -21,7 +21,7 @@
     "chalk": "^4.1.0",
     "globby": "^9.2.0",
     "mustache": "^4.0.1",
-    "react-native-tscodegen": "0.68.3",
+    "react-native-tscodegen": "0.68.4",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
   },
