@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed CLI options defaults",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
