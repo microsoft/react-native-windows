@@ -11,7 +11,7 @@ export type OptionSanitizer = (key: string, value: any) => any;
 export type YargsOptionsType = Record<string, any>;
 
 export interface CommanderOptionsType extends Record<string, any> {
-  logging: boolean;
+  logging?: boolean;
   telemetry?: boolean;
 }
 

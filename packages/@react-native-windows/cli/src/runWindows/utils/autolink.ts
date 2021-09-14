@@ -883,7 +883,7 @@ function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
  * @param message The message to log.
  * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message: any, verbose: boolean) {
+function verboseMessage(message: any, verbose?: boolean) {
   if (verbose) {
     console.log(message);
   }
@@ -1014,8 +1014,8 @@ export async function autolinkWindowsInternal(
 }
 
 export interface AutoLinkOptions {
-  logging: boolean;
-  check: boolean;
+  logging?: boolean;
+  check?: boolean;
   sln?: string;
   proj?: string;
   telemetry?: boolean;

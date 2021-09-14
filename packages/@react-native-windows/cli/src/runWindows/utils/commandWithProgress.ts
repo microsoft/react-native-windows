@@ -164,7 +164,7 @@ export function newInfo(text: string) {
  * @param error The error caught during the process, if any.
  */
 export function setExitProcessWithError(
-  loggingIsEnabled: boolean,
+  loggingIsEnabled?: boolean,
   error?: Error,
 ): void {
   if (error) {
