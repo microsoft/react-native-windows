@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-//#define NAPI_EXPERIMENTAL //TODO: Check if needed.
+#define NAPI_EXPERIMENTAL
 
 #include "NapiJsiRuntime.h"
-//#include "NapiJsiRuntime_detail.h"
 
 // Standard Library
 #include <string_view>
