@@ -115,6 +115,7 @@
     "/Shared",
     "/stubs",
     "/template",
+    "/rntypes",
     "/.flowconfig",
     "/Directory.Build.props",
     "/Directory.Build.targets",
