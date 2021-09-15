@@ -140,7 +140,7 @@
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.cpp" />
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NapiTests.cpp" />
+    <ClCompile Include="JsiTests.cpp" />
     <ClCompile Include="ReactContextTests.cpp" />
     <ClCompile Include="ReactDispatcherTests.cpp" />
     <ClCompile Include="ReactModuleBuilderTests.cpp" />

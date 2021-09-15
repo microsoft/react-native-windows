@@ -39,7 +39,7 @@
     <ClCompile Include="SimpleMessageQueue.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="NapiTests.cpp" />
+    <ClCompile Include="JsiTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
