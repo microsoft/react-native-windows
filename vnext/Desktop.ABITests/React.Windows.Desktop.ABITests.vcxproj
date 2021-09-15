@@ -30,8 +30,7 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ReactWindowsDesktopABITests</RootNamespace>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
-    <!-- TODO: remove -->
-    <UseV8>true</UseV8>
+    <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
     <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,7 +139,9 @@
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.cpp" />
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="JsiTests.cpp" />
+    <ClCompile Include="JsiTests.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="ReactContextTests.cpp" />
     <ClCompile Include="ReactDispatcherTests.cpp" />
     <ClCompile Include="ReactModuleBuilderTests.cpp" />
