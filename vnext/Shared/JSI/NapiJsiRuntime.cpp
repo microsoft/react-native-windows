@@ -562,30 +562,51 @@ namespace Microsoft::JSI {
 namespace {
 constexpr char s_description[] = "NapiJsiRuntime";
 
+constexpr char s_refHolderError[] = "Error";
+constexpr char s_refHolderObject[] = "Object";
+constexpr char s_refHolderProxy[] = "Proxy";
+constexpr char s_refHolderSymbol[] = "Symbol";
+constexpr char s_refHolderByteLength[] = "byteLength";
+constexpr char s_refHolderConfigurable[] = "configurable";
+constexpr char s_refHolderEnumerable[] = "enumerable";
+constexpr char s_refHolderGet[] = "get";
+constexpr char s_refHolderGetOwnPropertyDescriptor[] = "getOwnPropertyDescriptor";
+constexpr char s_refHolderHostFunctionSymbol[] = "hostFunctionSymbol";
+constexpr char s_refHolderHostObjectSymbol[] = "hostObjectSymbol";
+constexpr char s_refHolderLength[] = "length";
+constexpr char s_refHolderMessage[] = "message";
+constexpr char s_refHolderOwnKeys[] = "ownKeys";
+constexpr char s_refHolderPropertyIsEnumerable[] = "propertyIsEnumerable";
+constexpr char s_refHolderPrototype[] = "prototype";
+constexpr char s_refHolderSet[] = "set";
+constexpr char s_refHolderToString[] = "toString";
+constexpr char s_refHolderValue[] = "value";
+constexpr char s_refHolderWritable[] = "writable";
+
 #pragma region NapiJsiRuntime
 
 NapiJsiRuntime::NapiJsiRuntime(napi_env env) noexcept : m_env{env} {
   EnvScope scope{m_env};
-  m_propertyId.Error = NapiRefHolder{this, GetPropertyIdFromName("Error"sv)};
-  m_propertyId.Object = NapiRefHolder{this, GetPropertyIdFromName("Object"sv)};
-  m_propertyId.Proxy = NapiRefHolder{this, GetPropertyIdFromName("Proxy"sv)};
-  m_propertyId.Symbol = NapiRefHolder{this, GetPropertyIdFromName("Symbol"sv)};
-  m_propertyId.byteLength = NapiRefHolder{this, GetPropertyIdFromName("byteLength"sv)};
-  m_propertyId.configurable = NapiRefHolder{this, GetPropertyIdFromName("configurable"sv)};
-  m_propertyId.enumerable = NapiRefHolder{this, GetPropertyIdFromName("enumerable"sv)};
-  m_propertyId.get = NapiRefHolder{this, GetPropertyIdFromName("get"sv)};
-  m_propertyId.getOwnPropertyDescriptor = NapiRefHolder{this, GetPropertyIdFromName("getOwnPropertyDescriptor"sv)};
-  m_propertyId.hostFunctionSymbol = NapiRefHolder{this, CreateSymbol("hostFunctionSymbol"sv)};
-  m_propertyId.hostObjectSymbol = NapiRefHolder{this, CreateSymbol("hostObjectSymbol"sv)};
-  m_propertyId.length = NapiRefHolder{this, GetPropertyIdFromName("length"sv)};
-  m_propertyId.message = NapiRefHolder{this, GetPropertyIdFromName("message"sv)};
-  m_propertyId.ownKeys = NapiRefHolder{this, GetPropertyIdFromName("ownKeys"sv)};
-  m_propertyId.propertyIsEnumerable = NapiRefHolder{this, GetPropertyIdFromName("propertyIsEnumerable"sv)};
-  m_propertyId.prototype = NapiRefHolder{this, GetPropertyIdFromName("prototype"sv)};
-  m_propertyId.set = NapiRefHolder{this, GetPropertyIdFromName("set"sv)};
-  m_propertyId.toString = NapiRefHolder{this, GetPropertyIdFromName("toString"sv)};
-  m_propertyId.value = NapiRefHolder{this, GetPropertyIdFromName("value"sv)};
-  m_propertyId.writable = NapiRefHolder{this, GetPropertyIdFromName("writable"sv)};
+  m_propertyId.Error = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderError)};
+  m_propertyId.Object = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderObject)};
+  m_propertyId.Proxy = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderProxy)};
+  m_propertyId.Symbol = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderSymbol)};
+  m_propertyId.byteLength = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderByteLength)};
+  m_propertyId.configurable = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderConfigurable)};
+  m_propertyId.enumerable = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderEnumerable)};
+  m_propertyId.get = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderGet)};
+  m_propertyId.getOwnPropertyDescriptor = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderGetOwnPropertyDescriptor)};
+  m_propertyId.hostFunctionSymbol = NapiRefHolder{this, CreateSymbol(s_refHolderHostFunctionSymbol)};
+  m_propertyId.hostObjectSymbol = NapiRefHolder{this, CreateSymbol(s_refHolderHostObjectSymbol)};
+  m_propertyId.length = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderLength)};
+  m_propertyId.message = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderMessage)};
+  m_propertyId.ownKeys = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderOwnKeys)};
+  m_propertyId.propertyIsEnumerable = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderPropertyIsEnumerable)};
+  m_propertyId.prototype = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderPrototype)};
+  m_propertyId.set = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderSet)};
+  m_propertyId.toString = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderToString)};
+  m_propertyId.value = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderValue)};
+  m_propertyId.writable = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderWritable)};
 
   m_value.Undefined = NapiRefHolder{this, GetUndefined()};
   m_value.Null = NapiRefHolder{this, GetNull()};
