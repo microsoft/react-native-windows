@@ -6,7 +6,8 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [
-    "**/__snapshots__/**"
+    "**/__snapshots__/**",
+    "src/rntypes/**"
   ],
   "baseVersion": "0.0.0-a8ac5ea32",
   "overrides": [
