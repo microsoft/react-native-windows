@@ -595,7 +595,8 @@ NapiJsiRuntime::NapiJsiRuntime(napi_env env) noexcept : m_env{env} {
   m_propertyId.configurable = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderConfigurable)};
   m_propertyId.enumerable = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderEnumerable)};
   m_propertyId.get = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderGet)};
-  m_propertyId.getOwnPropertyDescriptor = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderGetOwnPropertyDescriptor)};
+  m_propertyId.getOwnPropertyDescriptor =
+      NapiRefHolder{this, GetPropertyIdFromName(s_refHolderGetOwnPropertyDescriptor)};
   m_propertyId.hostFunctionSymbol = NapiRefHolder{this, CreateSymbol(s_refHolderHostFunctionSymbol)};
   m_propertyId.hostObjectSymbol = NapiRefHolder{this, CreateSymbol(s_refHolderHostObjectSymbol)};
   m_propertyId.length = NapiRefHolder{this, GetPropertyIdFromName(s_refHolderLength)};
@@ -1833,8 +1834,9 @@ napi_value NapiJsiRuntime::HostObjectGetTrap(span<napi_value> args) {
   const auto &hostObject = GetJsiHostObject(args[0]);
   PropNameIDView propertyId{this, propertyName};
 
-  return RunInMethodContext(
-      "HostObject::get", [&hostObject, &propertyId, this]() { return GetNapiValue(hostObject->get(*this, propertyId)); });
+  return RunInMethodContext("HostObject::get", [&hostObject, &propertyId, this]() {
+    return GetNapiValue(hostObject->get(*this, propertyId));
+  });
 }
 
 // The host object Proxy 'set' trap implementation.
