@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 14 Sep 2021 05:07:02 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Sep 2021 05:07:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.87
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Better handle spaces in project path (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.86
 

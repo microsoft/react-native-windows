@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 10 Sep 2021 05:07:31 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Sep 2021 05:07:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.15
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Generate anonymous objects in correct order for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.14
 
