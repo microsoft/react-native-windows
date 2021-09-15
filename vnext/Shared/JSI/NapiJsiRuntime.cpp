@@ -1730,7 +1730,11 @@ napi_value NapiJsiRuntime::CreateExternalObject(unique_ptr<T> &&data) const {
   napi_value object =
       CreateExternalObject(data.get(), [](napi_env /*env*/, void *dataToDestroy, void * /*finalizerHint*/) {
         // We wrap dataToDestroy in a unique_ptr to avoid calling delete explicitly.
-        delete static_cast<T *>(dataToDestroy);
+        if (std::is_array<T>::value) {
+          delete[] static_cast<T *>(dataToDestroy);
+        } else {
+          delete static_cast<T *>(dataToDestroy);
+        }
       });
 
   // We only call data.release() after the CreateExternalObject succeeds.
