@@ -216,12 +216,15 @@ export function projectConfigWindows(
     result.project.projectFile = path.relative(sourceDir, projectFile);
 
     // Add missing (auto) items
-    result.project.projectName = configUtils.getProjectName(
-      projectFile,
-      projectContents,
-    );
-    result.project.projectLang = configUtils.getProjectLanguage(projectFile);
-    result.project.projectGuid = configUtils.getProjectGuid(projectContents);
+    result.project.projectName =
+      userConfig?.project?.projectName ??
+      configUtils.getProjectName(projectFile, projectContents);
+    result.project.projectLang =
+      userConfig?.project?.projectLang ??
+      configUtils.getProjectLanguage(projectFile);
+    result.project.projectGuid =
+      userConfig?.project?.projectGuid ??
+      configUtils.getProjectGuid(projectContents);
 
     // Since we moved the UseExperimentalNuget property from the project to the
     // ExperimentalFeatures.props file, we should should double-check the project file
