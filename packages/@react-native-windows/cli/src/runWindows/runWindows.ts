@@ -332,7 +332,7 @@ async function runWindowsInternal(
     try {
       runWindowsPhase = 'Deploy';
       if (options.device || options.emulator || options.target) {
-        await deploy.deployToDevice(options, verbose);
+        await deploy.deployToDevice(options, verbose, config);
       } else {
         await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
