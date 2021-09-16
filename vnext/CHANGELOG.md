@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Sep 2021 05:07:04 GMT and should not be manually modified.
+This log was last generated on Thu, 16 Sep 2021 05:06:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.377
+
+Thu, 16 Sep 2021 05:06:44 GMT
+
+### Changes
+
+- Adds showMode prop to FlyoutViewManager (erozell@outlook.com)
 
 ## 0.0.0-canary.376
 
