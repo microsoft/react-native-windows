@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds showMode prop to FlyoutViewManager",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
