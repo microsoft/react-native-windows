@@ -4,6 +4,7 @@
 #pragma once
 #include <IReactInstance.h>
 #include <JSValue.h>
+#include <ReactPointerEventArgs.h>
 #include <UI.Xaml.Documents.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
@@ -75,16 +76,20 @@ class TouchEventHandler {
   CreateReactPointer(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
   void
   UpdateReactPointer(ReactPointer &pointer, const winrt::PointerRoutedEventArgs &args, xaml::UIElement sourceElement);
-  void UpdatePointersInViews(const winrt::PointerRoutedEventArgs &args, int64_t tag, xaml::UIElement sourceElement);
+  void UpdatePointersInViews(
+      const winrt::PointerRoutedEventArgs &args,
+      xaml::UIElement sourceElement,
+      std::vector<int64_t> &&newViews);
 
 #ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
 #endif
-  enum class TouchEventType { Start = 0, End, Move, Cancel, PointerEntered, PointerExited, PointerMove };
+  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
   bool DispatchBackEvent();
   const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
+  winrt::Microsoft::ReactNative::PointerEventKind GetPointerEventKind(TouchEventType eventType) noexcept;
   const wchar_t *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
   std::optional<size_t> IndexOfPointerWithId(uint32_t pointerId);
@@ -99,7 +104,10 @@ class TouchEventHandler {
   std::unordered_map<uint32_t /*pointerId*/, TagSet /*tags*/> m_pointersInViews;
   int64_t m_touchId = 0;
 
-  bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement);
+  bool PropagatePointerEventAndFindReactSourceBranch(
+      const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
+      std::vector<int64_t> *pTagsForBranch,
+      xaml::UIElement *pSourceElement);
   winrt::IPropertyValue TestHit(
       const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
       const winrt::Point &pointerPos,
