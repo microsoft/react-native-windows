@@ -70,7 +70,6 @@ function AccessibilityInfoExample(props): React.Node {
 }
 
 function TouchableExample(props): React.Node {
-
   let myElement = React.createRef();
 
   return (
@@ -82,12 +81,12 @@ function TouchableExample(props): React.Node {
             AccessibilityInfo.setAccessibilityFocus(reactTag);
           }
         }}
-        accessibilityLabel="TEST Set Accessibility Focus"
+        accessibilityLabel="Test Setting Accessibility Focus"
         {...{
           focusable: true,
         }}>
         <View>
-          <Text>TEST setAccessibilityFocus</Text>
+          <Text>Test setAccessibilityFocus</Text>
         </View>
       </TouchableWithoutFeedback>
       <TouchableWithoutFeedback
@@ -101,7 +100,7 @@ function TouchableExample(props): React.Node {
         }}>
         <View>
           {/* When using Text, must wrap it within a View to receive keyboard focus*/}
-          <Text>TEST touchablewithoutfeedback focusability</Text>
+          <Text>Testing touchablewithoutfeedback focusability</Text>
         </View>
       </TouchableWithoutFeedback>
     </View>
