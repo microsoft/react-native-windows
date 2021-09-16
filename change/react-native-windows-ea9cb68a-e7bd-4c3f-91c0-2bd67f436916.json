@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Generate anonymous objects in correct order for turbo module",
-  "packageName": "react-native-windows",
-  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
