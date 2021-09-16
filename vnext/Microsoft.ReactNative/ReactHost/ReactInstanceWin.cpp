@@ -500,7 +500,8 @@ void ReactInstanceWin::Initialize() noexcept {
                   DebugBundlePath(),
                   SourceBundleHost(),
                   SourceBundlePort(),
-                  m_isFastReloadEnabled);
+                  m_isFastReloadEnabled,
+                  "ws");
               m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
             }
 
