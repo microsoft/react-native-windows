@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "feat(deploy): allow overriding build output dir",
+  "packageName": "@react-native-windows/cli",
+  "email": "ali-hk@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
