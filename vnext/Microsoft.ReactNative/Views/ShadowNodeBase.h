@@ -128,6 +128,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   bool m_onMouseEnterRegistered = false;
   bool m_onMouseLeaveRegistered = false;
 
+  // Pointer events
+  std::string m_pointerEvents = "";
+
   // Support Keyboard
  public:
   void UpdateHandledKeyboardEvents(

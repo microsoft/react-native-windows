@@ -262,6 +262,20 @@ bool ViewManagerBase::UpdateProperty(
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
   } else if (propertyName == "keyUpEvents") {
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+  } else if (propertyName == "pointerEvents") {
+    if (propertyValue.Type() == React::JSValueType::String) {
+      nodeToUpdate->m_pointerEvents = propertyValue.AsString();
+      if (nodeToUpdate->m_pointerEvents == "none") {
+        if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+          uiElement.IsHitTestVisible(false);
+        }
+      }
+    } else if (propertyValue.IsNull()) {
+      nodeToUpdate->m_pointerEvents = "";
+      if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+        uiElement.ClearValue(xaml::UIElement::IsHitTestVisibleProperty());
+      }
+    }
   } else {
     return false;
   }
@@ -366,6 +380,16 @@ bool ViewManagerBase::RequiresYogaNode() const {
 
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
+}
+
+void ViewManagerBase::OnPointerEvent(
+    ShadowNodeBase *node,
+    const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args) {
+  if ((args.Target() == node->GetView() && node->m_pointerEvents == "box-none") || node->m_pointerEvents == "none") {
+    args.Target(nullptr);
+  } else if (node->m_pointerEvents == "box-only") {
+    args.Target(node->GetView());
+  }
 }
 
 void ViewManagerBase::DispatchEvent(
