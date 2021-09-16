@@ -92,7 +92,7 @@ function TouchableExample(props): React.Node {
       <TouchableWithoutFeedback
         ref={myElement}
         onPress={() => {
-          //onPress, even if empty, is required for TouchableWithoutFocus to be focusable
+          //onPress, even if empty, is required for TouchableWithoutFeedback to be focusable
         }}
         accessibilityLabel="focus received"
         {...{
