@@ -51,6 +51,7 @@ function shouldLaunchApp(options: RunWindowsOptions): boolean {
 function getAppPackage(
   options: RunWindowsOptions,
   projectName?: string,
+  projectOutputDir?: string,
 ): string {
   const configuration = getBuildConfiguration(options);
   const packageFolder =
@@ -58,7 +59,15 @@ function getAppPackage(
       ? `{*_x86_${configuration}_*,*_Win32_${configuration}_*}`
       : `*_${options.arch}_${configuration}_*`;
 
-  const appPackageGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}/${packageFolder}`;
+  let rootGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}`;
+
+  // If the config contains an explicit output directory, use that instead
+  // of the project root and default paths
+  if (projectOutputDir) {
+    rootGlob = `${projectOutputDir}/{**/AppPackages,AppPackages/*}`;
+  }
+  const appPackageGlob = `${rootGlob}/${packageFolder}`;
+
   const appPackageCandidates = glob.sync(appPackageGlob);
   let appPackage;
   if (appPackageCandidates.length === 1 || !projectName) {
@@ -78,7 +87,6 @@ function getAppPackage(
       'No package found in *_Release_* folder, removing the _Release_ prefix and checking again',
     );
 
-    const rootGlob = `${options.root}/windows/{*/AppPackages,AppPackages/*}`;
     const newGlob = `${rootGlob}/*_${
       options.arch === 'x86' ? '{Win32,x86}' : options.arch
     }_Test`;
@@ -123,6 +131,7 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
 function getAppxManifestPath(
   options: RunWindowsOptions,
   projectName?: string,
+  projectOutputDir?: string,
 ): string {
   const configuration = getBuildConfiguration(options);
   // C++ x86 manifest would go under windows/Debug whereas x64 goes under windows/x64/Debug
@@ -134,8 +143,19 @@ function getAppxManifestPath(
     archFolder = `${configuration}`;
   }
 
-  const appxManifestGlob = `windows/{*/bin/${options.arch}/${configuration},${archFolder}/*,target/${options.arch}/${configuration}}/AppxManifest.xml`;
-  const globs = glob.sync(path.join(options.root, appxManifestGlob));
+  const appxManifestGlob = `{*/bin/${options.arch}/${configuration},${archFolder}/*,target/${options.arch}/${configuration}}/AppxManifest.xml`;
+  let rootedAppxManifestGlob = path.join(
+    options.root,
+    `windows/${appxManifestGlob}`,
+  );
+
+  // If the config contains an explicit output directory, use that instead
+  // of the project root and default paths
+  if (projectOutputDir) {
+    rootedAppxManifestGlob = `${projectOutputDir}/${appxManifestGlob}`;
+  }
+
+  const globs = glob.sync(rootedAppxManifestGlob);
   let appxPath: string;
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
@@ -168,8 +188,11 @@ function parseAppxManifest(appxManifestPath: string): parse.Document {
 function getAppxManifest(
   options: RunWindowsOptions,
   projectName?: string,
+  projectOutputDir?: string,
 ): parse.Document {
-  return parseAppxManifest(getAppxManifestPath(options, projectName));
+  return parseAppxManifest(
+    getAppxManifestPath(options, projectName, projectOutputDir),
+  );
 }
 
 function handleResponseError(e: Error): never {
@@ -198,7 +221,11 @@ export async function deployToDevice(
     windowsConfig && windowsConfig.project && windowsConfig.project.projectName
       ? windowsConfig.project.projectName
       : path.parse(options.proj!).name;
-  const appPackageFolder = getAppPackage(options);
+  const appPackageFolder = getAppPackage(
+    options,
+    projectName,
+    windowsConfig?.project?.projectOutputDir,
+  );
 
   const deployTarget = options.target
     ? options.target
@@ -206,7 +233,11 @@ export async function deployToDevice(
     ? 'emulator'
     : 'device';
   const deployTool = new WinAppDeployTool();
-  const appxManifest = getAppxManifest(options, projectName);
+  const appxManifest = getAppxManifest(
+    options,
+    projectName,
+    windowsConfig?.project?.projectOutputDir,
+  );
   const shouldLaunch = shouldLaunchApp(options);
   const identity = appxManifest.root.children.filter(x => {
     return x.name === 'mp:PhoneIdentity';
@@ -262,7 +293,11 @@ export async function deployToDesktop(
       ? windowsConfig.project.projectName
       : path.parse(options.proj!).name;
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
-  const appxManifestPath = getAppxManifestPath(options, projectName);
+  const appxManifestPath = getAppxManifestPath(
+    options,
+    projectName,
+    windowsConfig?.project?.projectOutputDir,
+  );
   const appxManifest = parseAppxManifest(appxManifestPath);
   const identity = appxManifest.root.children.filter(x => {
     return x.name === 'Identity';
@@ -288,7 +323,11 @@ export async function deployToDesktop(
     'EnableDevModeFailure',
   );
 
-  const appPackageFolder = getAppPackage(options, projectName);
+  const appPackageFolder = getAppPackage(
+    options,
+    projectName,
+    windowsConfig?.project?.projectOutputDir,
+  );
 
   if (options.release && !options.deployFromLayout) {
     await runPowerShellScriptFunction(

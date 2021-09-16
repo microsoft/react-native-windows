@@ -38,6 +38,7 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
     projectName: string, // (auto) Name of the project, determined from projectFile, ex: 'MyApp'
     projectLang: string, // (auto) Language of the project, cpp or cs, determined from projectFile
     projectGuid: string, // (auto) Project identifier, determined from projectFile
+    projectOutputDir: string, // (auto) Project build output directory ex: 'c:\path\to\my-app\build'
   },
   experimentalFeatures: Record<String, string> // (auto) Properties extracted from ExperimentalFeatures.props
 }
@@ -64,6 +65,7 @@ export interface Project {
   projectLang: 'cpp' | 'cs' | null;
   projectGuid: string | null;
   projectTypeGuid?: string;
+  projectOutputDir?: string;
 }
 
 export interface WindowsProjectConfig {
@@ -222,6 +224,7 @@ export function projectConfigWindows(
     );
     result.project.projectLang = configUtils.getProjectLanguage(projectFile);
     result.project.projectGuid = configUtils.getProjectGuid(projectContents);
+    result.project.projectOutputDir = userConfig?.project?.projectOutputDir;
 
     // Since we moved the UseExperimentalNuget property from the project to the
     // ExperimentalFeatures.props file, we should should double-check the project file
