@@ -3,6 +3,10 @@ description: File a bug report
 title: Describe the problem
 labels: [bug]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
 #  - type: markdown
 #    attributes:
 #      value: |
@@ -13,8 +17,7 @@ body:
     attributes:
       label: CLI version
       description: |
-        Run the command in your terminal and copy the results here
-        `npx react-native --version`
+        Run the command `npx react-native --version` in your terminal and copy the results here
       value: "npx react-native --version"
       render: markdown
   - type: textarea
@@ -23,8 +26,7 @@ body:
     attributes:
       label: Environment
       description: |
-        Run the command in your terminal and copy the results here
-        `npx react-native info`
+        Run the command `npx react-native info` in your terminal and copy the results here
       value: "npx react-native info"
       render: markdown
   - type: dropdown
