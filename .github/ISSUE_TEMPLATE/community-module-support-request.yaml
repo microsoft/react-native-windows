@@ -31,12 +31,6 @@ body:
       label: Existing issue on module repo
       description: If the community module repo already has an issue tracking adding React Native Support, please check this box and link to it. 
       placeholder: https://github.com/react-native-foo/react-native-foo/issues/1234
-  - type: checkboxes
-    attributes:
-      label: Module has a Legacy/C# implementation
-      description: If the community module has an existing RNW Legacy/C# implementation, please check this box and provide a link to the implementation. 
-      options:
-        - Legacy/C# implementation
   - type: input
     attributes:
       label: Which app/customer is requesting this module?
