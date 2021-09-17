@@ -1,4 +1,4 @@
-name: Community Module support request 2
+name: Community Module support request
 description: Suggest that Windows support be added to a community module
 title: Support react-native-foo
 labels: [Extensions, enhancement]
@@ -26,14 +26,15 @@ body:
   - type: input
     attributes:
       label: Target Version
+      placeholder: 0.65
   - type: input
     attributes:
-      label: Existing issue on module repo
-      description: If the community module repo already has an issue tracking adding React Native Support, please check this box and link to it. 
+      label: Existing issue url
+      description: If the community module repo already has an issue tracking adding React Native for Windows support, please check this box and link to it. 
       placeholder: https://github.com/react-native-foo/react-native-foo/issues/1234
   - type: checkboxes
     attributes:
-      label: Module has a Legacy/C# implementation
+      label: Existing windows implementation?
       description: If the community module has an existing RNW Legacy/C# implementation, please check this box and provide a link to the implementation. 
       options:
         - label: Legacy/C# implementation
@@ -48,4 +49,4 @@ body:
   - type: textarea
     attributes:
       label: Essential Features
-      description: Please enumerate which features of the module are required. For example, you may be using a map module and you only need the 'pinning' functionality and NOT the turn-by-turn direction functionality.
+      description: Please enumerate which features of the module are required. For example, you may be using a map module and you only need the 'pinning' functionality and _not_ the turn-by-turn direction functionality.
