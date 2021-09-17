@@ -491,7 +491,12 @@ void ReactInstanceWin::Initialize() noexcept {
 
         if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
           folly::dynamic params = folly::dynamic::array(
-              STRING(RN_PLATFORM), DebugBundlePath(), SourceBundleHost(), SourceBundlePort(), m_isFastReloadEnabled);
+              STRING(RN_PLATFORM),
+              DebugBundlePath(),
+              SourceBundleHost(),
+              SourceBundlePort(),
+              m_isFastReloadEnabled,
+              "ws");
           m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
         }
 
