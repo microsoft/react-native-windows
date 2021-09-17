@@ -1,4 +1,4 @@
-name: Fake bug report
+name: Bug report
 description: File a bug report
 title: Describe the problem
 labels: [bug]
