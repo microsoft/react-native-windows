@@ -26,7 +26,7 @@ body:
   - type: input
     attributes:
       label: Target Version
-      placeholder: 0.65
+      placeholder: "0.65"
   - type: input
     attributes:
       label: Existing issue url
