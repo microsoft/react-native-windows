@@ -3,10 +3,10 @@ description: File a bug report
 title: Describe the problem
 labels: [bug]
 body:
-#  - type: markdown
-#    attributes:
-#      value: |
-#        Your issue will be triaged by the RNW team according to this process: https://github.com/microsoft/react-native-windows/wiki/Triage-Process
+  - type: markdown
+    attributes:
+      value: |
+        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process)
   - type: textarea
     validations:
       required: true
