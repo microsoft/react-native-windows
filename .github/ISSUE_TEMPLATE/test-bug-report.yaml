@@ -1,7 +1,7 @@
-name: Fake Bug Report
-description: Create a bug report for problems rendering Adaptive Cards in an Application
-title: "[Rendering] Bug Title Here"
-labels: [Area-Renderers, Bug, Triage-Needed]
+name: Fake bug report
+description: File a bug report
+title: Describe the problem
+labels: [bug]
 body:
   - type: dropdown
     validations:
@@ -17,3 +17,36 @@ body:
         - WPF
         - UWP
         - Other
+  - type: dropdown
+    attributes:
+      label: Target Platform Version
+      description: What SDK version are you building for?
+      options:
+        - "10.0.15063"
+        - "10.0.16299"
+        - "10.0.19041"
+  - type: dropdown
+    attributes:
+      label: Target Device(s)
+      description: What device(s) are you targeting?
+      multiple: true
+      options:
+        - "Desktop"
+        - "Xbox"
+        - "HoloLens"
+  - type: dropdown
+    attributes:
+      label: Visual Studio Version
+      description: Which version of Visual Studio are you using?
+      options:
+        - "Visual Studio 2017"
+        - "Visual Studio 2019"
+  - type: dropdown
+    attributes:
+      label: Build Configuration
+      description: Which build configuration are you running?
+      options:
+        - "Debug"
+        - "DebugBundle"
+        - "Release"
+        - "ReleaseBundle"
