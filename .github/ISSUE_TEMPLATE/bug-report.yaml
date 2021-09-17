@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process)
-  - type: textarea
+  - type: input
     validations:
       required: true
     attributes:
@@ -15,7 +15,6 @@ body:
       description: |
         Run the command `npx react-native --version` in your terminal and copy the results here
       value: "npx react-native --version"
-      render: markdown
   - type: textarea
     validations:
       required: true
