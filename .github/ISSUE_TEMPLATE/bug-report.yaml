@@ -11,26 +11,29 @@ body:
     validations:
       required: true
     attributes:
-      label: "CLI version"
+      label: CLI version
       description: "`npx react-native --version`"
-      placeholder: "Run the command in your terminal and copy the results here"
+      placeholder: Run the command in your terminal and copy the results here
+      value: "`npx react-native --version`"
+      render: markdown
   - type: textarea
     validations:
       required: true
     attributes:
-      label: "Environment"
+      label: Environment
       description: "`npx react-native info`"
-      placeholder: "Run the command in your terminal and copy the results here"
+      placeholder: Run the command in your terminal and copy the results here
+      value: "`npx react-native info`"
+      render: markdown
   - type: dropdown
     attributes:
       label: Target Platform Version
       description: What SDK version are you building for?
-      multiple: true
       options:
         - "10.0.15063"
         - "10.0.16299"
         - "10.0.19041"
-  - type: checkboxes
+  - type: dropdown
     attributes:
       label: Target Device(s)
       description: What device(s) are you targeting?
@@ -43,7 +46,6 @@ body:
     attributes:
       label: Visual Studio Version
       description: Which version of Visual Studio are you using?
-      multiple: true
       options:
         - "Visual Studio 2017"
         - "Visual Studio 2019"
@@ -51,7 +53,6 @@ body:
     attributes:
       label: Build Configuration
       description: Which build configuration are you running?
-      multiple: true
       options:
         - "Debug"
         - "DebugBundle"
@@ -63,6 +64,9 @@ body:
     attributes:
       label: Steps To Reproduce
       description: Provide a detailed list of steps that reproduce the issue.
+      placeholder: |
+        1.
+        2.
   - type: textarea
     validations:
       required: true
@@ -79,6 +83,6 @@ body:
     attributes:
       label: Snack, code example, screenshot, or link to a repository
       description: |
-        Please provide a Snack (https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem. |
-        You may provide a screenshot of the application if you think it is relevant to your bug report. |
+        Please provide a Snack (https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem.
+        You may provide a screenshot of the application if you think it is relevant to your bug report.
         Here are some tips for providing a minimal example: https://stackoverflow.com/help/mcve
