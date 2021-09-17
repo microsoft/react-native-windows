@@ -130,9 +130,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -380,9 +378,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.h">
-      <Filter>Header Files\JSI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

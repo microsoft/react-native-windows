@@ -3,7 +3,7 @@
 
 #define NAPI_EXPERIMENTAL
 
-#include "NapiJsiRuntime.h"
+#include "NodeApiJsiRuntime.h"
 
 // Standard Library
 #include <string_view>
@@ -1985,7 +1985,7 @@ T NapiJsiRuntime::MakePointer(TValue value) const {
 #pragma endregion NapiJsiRuntime
 } // namespace
 
-unique_ptr<Runtime> __cdecl MakeNapiJsiRuntime2(napi_env env) noexcept {
+unique_ptr<Runtime> __cdecl MakeNodeApiJsiRuntime(napi_env env) noexcept {
   return std::make_unique<NapiJsiRuntime>(env);
 }
 
