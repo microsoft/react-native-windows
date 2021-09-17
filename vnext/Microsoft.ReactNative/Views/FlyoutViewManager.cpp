@@ -352,6 +352,10 @@ void FlyoutShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
       if (m_isFlyoutShowOptionsSupported) {
         m_showOptions.ShowMode(showMode);
       }
+    } else if (propertyName == "shouldConstrainToRootBounds") {
+      if (propertyValue.Type() == React::JSValueType::Boolean) {
+        m_flyout.ShouldConstrainToRootBounds(propertyValue.AsBoolean());
+      }
     }
   }
 
@@ -478,6 +482,7 @@ void FlyoutViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSV
   React::WriteProperty(writer, L"verticalOffset", L"number");
   React::WriteProperty(writer, L"isOverlayEnabled", L"boolean");
   React::WriteProperty(writer, L"showMode", L"string");
+  React::WriteProperty(writer, L"shouldConstrainToRootBounds", L"boolean");
 }
 
 void FlyoutViewManager::GetExportedCustomDirectEventTypeConstants(
