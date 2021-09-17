@@ -39,7 +39,6 @@
     <ClCompile Include="SimpleMessageQueue.cpp">
       <Filter>Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="JsiTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

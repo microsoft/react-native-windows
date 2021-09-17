@@ -130,7 +130,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NapiJsiRuntime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

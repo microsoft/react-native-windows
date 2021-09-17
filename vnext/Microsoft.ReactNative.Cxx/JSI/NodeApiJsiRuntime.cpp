@@ -7,6 +7,7 @@
 
 // Standard Library
 #include <string_view>
+#include <unordered_set>
 
 #pragma region Macros
 

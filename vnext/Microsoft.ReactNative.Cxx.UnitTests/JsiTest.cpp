@@ -9,7 +9,7 @@
 #include <jsi/test/testlib.h>
 
 // NAPI
-#include <Shared/JSI/NapiJsiRuntime.h>
+#include <JSI/NodeApiJsiRuntime.h>
 
 using facebook::jsi::Runtime;
 using facebook::jsi::RuntimeFactory;
@@ -18,7 +18,6 @@ namespace Microsoft::Test {
 
 std::vector<RuntimeFactory> runtimeGenerators() {
   return {
-#ifdef USE_V8
       []() -> std::unique_ptr<Runtime> {
         napi_ext_env_settings settings{};
 
@@ -27,9 +26,8 @@ std::vector<RuntimeFactory> runtimeGenerators() {
         napi_env env{};
         napi_ext_create_env(&settings, &env);
 
-        return Microsoft::JSI::MakeNapiJsiRuntime2(env);
+        return Microsoft::JSI::MakeNodeApiJsiRuntime(env);
       }
-#endif // USE_V8
   };
 }
 

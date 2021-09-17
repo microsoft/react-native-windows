@@ -139,9 +139,6 @@
     <ClCompile Include="..\Microsoft.ReactNative.IntegrationTests\TestReactNativeHostHolder.cpp" />
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="JsiTests.cpp">
-      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="ReactContextTests.cpp" />
     <ClCompile Include="ReactDispatcherTests.cpp" />
     <ClCompile Include="ReactModuleBuilderTests.cpp" />
