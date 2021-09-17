@@ -73,10 +73,11 @@ body:
     attributes:
       label: Expected Results
       description: Describe what you expected to happen.
-#  - type: markdown
-#    attributes:
-#      label: Troubleshooting
-#      description: If you see build failure on `react-native run-windows`, please try again with 'react-native run-windows --logging' and provide the output.
+  - type: markdown
+    attributes:
+      value: |
+        **Troubleshooting**
+        If you see build failure on `react-native run-windows`, please try again with 'react-native run-windows --logging' and provide the output.
   - type: textarea
     attributes:
       label: Snack, code example, screenshot, or link to a repository
