@@ -6020,10 +6020,10 @@ hash-sum@^2.0.0:
   resolved "https://registry.yarnpkg.com/hash-sum/-/hash-sum-2.0.0.tgz#81d01bb5de8ea4a214ad5d6ead1b523460b0b45a"
   integrity sha512-WdZTbAByD+pHfl/g9QSsBIIwy8IT+EsPiKDs0KNX+zSHhdDLFKdZu0BQHljvO+0QI/BasbMSUa8wYNCZTvhslg==
 
-hermes-engine@~0.8.0:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.8.1.tgz#b6d0d70508ac5add2d198304502fb968cdecb8b2"
-  integrity sha512-as9Iccj/qrqqtDmfYUHbOIjt5xsQbUB6pjNIW3i1+RVr+pCAdz5S8/Jry778mz3rJWplYzHWdR1u1xQSYfBRYw==
+hermes-engine@~0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/hermes-engine/-/hermes-engine-0.9.0.tgz#84d9cfe84e8f6b1b2020d6e71b350cec84ed982f"
+  integrity sha512-r7U+Y4P2Qg/igFVZN+DpT7JFfXUn1MM4dFne8aW+cCrF6RRymof+VqrUHs1kl07j8h8V2CNesU19RKgWbr3qPw==
 
 hermes-parser@0.4.7:
   version "0.4.7"
@@ -9371,10 +9371,10 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
-react-native@0.0.0-a8ac5ea32:
-  version "0.0.0-a8ac5ea32"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-a8ac5ea32.tgz#938ea77c408c14189417019bbb2520de84e70de8"
-  integrity sha512-qV4U/3DTcz7B3T5X61lhaLjqwHPdgBu8ANaStsh4wkGtFvjRCdKRrnfss5GS5Eu5UcdZGpO974rswdb1kWvyAg==
+react-native@0.0.0-d40cb0e1b:
+  version "0.0.0-d40cb0e1b"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-d40cb0e1b.tgz#f4d02d37a09d8a16c4a0464c92f07c6ca5c6130e"
+  integrity sha512-xa4+S7y6QfWLhzwFInzxy0OK/F4m9mr4VLlJUCSe6UIXum+8vntkV7GPm0EtoHUHHc2vYsX8T6RpeNaIVQSTsA==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
@@ -9387,7 +9387,7 @@ react-native@0.0.0-a8ac5ea32:
     anser "^1.4.9"
     base64-js "^1.1.2"
     event-target-shim "^5.0.1"
-    hermes-engine "~0.8.0"
+    hermes-engine "~0.9.0"
     invariant "^2.2.4"
     jsc-android "^250230.2.1"
     metro-babel-register "0.66.2"
@@ -11654,7 +11654,6 @@ xmldoc@^1.1.2:
 
 xmldom@^0.5.0, xmldom@^0.6.0, "xmldom@github:xmldom/xmldom#0.7.0":
   version "0.7.0"
-  uid c568938641cc1f121cef5b4df80fcfda1e489b6e
   resolved "https://codeload.github.com/xmldom/xmldom/tar.gz/c568938641cc1f121cef5b4df80fcfda1e489b6e"
 
 xpath@^0.0.27:
