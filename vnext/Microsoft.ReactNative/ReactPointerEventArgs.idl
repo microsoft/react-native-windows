@@ -1,0 +1,38 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative {
+  [experimental]
+  [webhosthidden]
+  DOC_STRING("Pointer event type enum.")
+  enum PointerEventKind {
+    None,
+    Start,
+    End,
+    Move,
+    Cancel,
+    CaptureLost,
+  };
+
+  [experimental]
+  [webhosthidden]
+  DOC_STRING("Event arguments wrapper for IViewManagerWithPointerEvents.")
+  runtimeclass ReactPointerEventArgs {
+    DOC_STRING("Gets the wrapped routed pointer event.")
+    XAML_NAMESPACE.Input.PointerRoutedEventArgs Args {
+      get;
+    };
+    DOC_STRING("Gets the pointer event kind.")
+    PointerEventKind Kind {
+      get;
+    };
+    DOC_STRING("Gets or sets the React target for the pointer event.")
+    Object Target {
+      get;
+      set;
+    };
+  }
+} // namespace Microsoft.ReactNative
