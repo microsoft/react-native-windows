@@ -6,40 +6,79 @@ body:
   - type: markdown
     attributes:
       value: |
-        <!--
         Your issue will be triaged by the RNW team according to this process: https://github.com/microsoft/react-native-windows/wiki/Triage-Process
-        -->
-        ## Environment
-        Run the following in your terminal and copy the results here.
-        1. `npx react-native --version`:
-        2. `npx react-native info`:
-
-        <!-- Consider including this information as well:
-        What SDK version are you building for? Choose from 10.0.15063, 10.0.16299, 10.0.19041, etc.
-        - Target Platform Version(s):
-        What device(s) are you targeting? Choose any from Desktop, Xbox, Hololens)
-        - Target Device(s):
-        Which version of Visual Studio are you using? Specify Visual Studio 2017 or Visual Studio 2019
-        - Visual Studio Version:
-        Which build configuration are you running? Choose from Debug, DebugBundle, Release, ReleaseBundle 
-        - Build Configuration:
-        -->
-
-        ## Steps To Reproduce
-        Provide a detailed list of steps that reproduce the issue.
-
-        1.
-        2.
-
-        ## Expected Results
-        Describe what you expected to happen.
-
-        <!--
-        Troubleshooting
-          If you see build failure on `react-native run-windows`, please try again with 'react-native run-windows --logging' and provide the output.
-        -->
-
-        ## Snack, code example, screenshot, or link to a repository:
-        Please provide a Snack (https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem.
-        You may provide a screenshot of the application if you think it is relevant to your bug report.
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: "CLI version"
+      description: "`npx react-native --version`"
+      placeholder: "Run the command in your terminal and copy the results here"
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: "Environment"
+      description: "`npx react-native info`"
+      placeholder: "Run the command in your terminal and copy the results here"
+  - type: dropdown
+    attributes:
+      label: Target Platform Version
+      description: What SDK version are you building for?
+      multiple: true
+      options:
+        - "10.0.15063"
+        - "10.0.16299"
+        - "10.0.19041"
+  - type: checkboxes
+    attributes:
+      label: Target Device(s)
+      description: What device(s) are you targeting?
+      multiple: true
+      options:
+        - "Desktop"
+        - "Xbox"
+        - "HoloLens"
+  - type: dropdown
+    attributes:
+      label: Visual Studio Version
+      description: Which version of Visual Studio are you using?
+      multiple: true
+      options:
+        - "Visual Studio 2017"
+        - "Visual Studio 2019"
+  - type: dropdown
+    attributes:
+      label: Build Configuration
+      description: Which build configuration are you running?
+      multiple: true
+      options:
+        - "Debug"
+        - "DebugBundle"
+        - "Release"
+        - "ReleaseBundle"
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Steps To Reproduce
+      description: Provide a detailed list of steps that reproduce the issue.
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Expected Results
+      description: Describe what you expected to happen.
+  - type: markdown
+    attributes:
+      label: Troubleshooting
+      description: If you see build failure on `react-native run-windows`, please try again with 'react-native run-windows --logging' and provide the output.
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Snack, code example, screenshot, or link to a repository
+      description: |
+        Please provide a Snack (https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem. |
+        You may provide a screenshot of the application if you think it is relevant to your bug report. |
         Here are some tips for providing a minimal example: https://stackoverflow.com/help/mcve
