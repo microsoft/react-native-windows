@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensures IsHitTestVisible is set on correct view",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 17 Sep 2021 05:06:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.378",
+      "version": "0.0.0-canary.378",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable publishing NuGet symbol packages",
+            "author": "jthysell@microsoft.com",
+            "commit": "95fecc02d3dcc9f03d0fc7d47d30cb45e128bca6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Break in Fast Refresh Behavior",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "4e8f1ac111ce991748dcff1e88c936102899d7e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensures IsHitTestVisible is set on correct view",
+            "author": "erozell@outlook.com",
+            "commit": "6d40868bc10bb8dbba6197866c6639623fee2084",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow injection of custom UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "77ebdd47cd2feead7885933ac351a045041bee2e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Sep 2021 05:06:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.377",
       "version": "0.0.0-canary.377",

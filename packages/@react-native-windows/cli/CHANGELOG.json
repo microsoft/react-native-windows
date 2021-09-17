@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 17 Sep 2021 05:06:53 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.88",
+      "version": "0.0.0-canary.88",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fixed CLI options defaults",
+            "author": "jthysell@microsoft.com",
+            "commit": "5bdad2322e65162a67b8ffd85a514da733a07033",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Sep 2021 05:07:04 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.87",
       "version": "0.0.0-canary.87",

@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 16 Sep 2021 05:06:44 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Sep 2021 05:06:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.378
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Enable publishing NuGet symbol packages (jthysell@microsoft.com)
+- Fix Break in Fast Refresh Behavior (34109996+chiaramooney@users.noreply.github.com)
+- Ensures IsHitTestVisible is set on correct view (erozell@outlook.com)
+- Allow injection of custom UI thread (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.377
 
