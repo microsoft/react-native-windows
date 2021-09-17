@@ -72,7 +72,11 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       facebook::react::MountingCoordinator::Shared const &mountingCoordinator) override;
   virtual void schedulerDidRequestPreliminaryViewAllocation(
       facebook::react::SurfaceId surfaceId,
-      const facebook::react::ShadowView &shadowView) override;
+      const facebook::react::ShadowNode &shadowView) override;
+  virtual void schedulerDidCloneShadowNode(
+      facebook::react::SurfaceId surfaceId,
+      const facebook::react::ShadowNode &oldShadowNode,
+      const facebook::react::ShadowNode &newShadowNode) override;
   virtual void schedulerDidDispatchCommand(
       const facebook::react::ShadowView &shadowView,
       std::string const &commandName,

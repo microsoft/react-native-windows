@@ -1,0 +1,249 @@
+diff --git a/node_modules/@react-native-picker/picker/README.md b/node_modules/@react-native-picker/picker/README.md
+index c88a28b..040bee2 100644
+--- a/node_modules/@react-native-picker/picker/README.md
++++ b/node_modules/@react-native-picker/picker/README.md
+@@ -12,11 +12,12 @@
+ 
+ ## Supported Versions
+ 
+-| @react-native-picker/picker | react-native |
+-| --- | --- |
+-| >= 1.16.0 | 0.61+ |
+-| >= 1.2.0 | 0.60+ or 0.59+ with [Jetifier](https://www.npmjs.com/package/jetifier) |
+-| >= 1.0.0 | 0.57 |
++| @react-native-picker/picker | react-native | react-native-windows |
++| --- | --- | --- |
++| >= 1.17.0 | 0.61+ | 0.64+ |
++| >= 1.16.0 | 0.61+ | 0.61+ |
++| >= 1.2.0 | 0.60+ or 0.59+ with [Jetifier](https://www.npmjs.com/package/jetifier) | N/A |
++| >= 1.0.0 | 0.57 | N/A |
+ 
+ ## For Managed Workflow users using Expo 37
+ This component is not supported in the managed workflow for expo sdk 37. Please import the `Picker` from `react-native`.
+@@ -49,7 +50,8 @@ No additional step is required.
+ <summary>Windows (expand for details)</summary>
+ 
+ #### Windows
+-Usage in Windows requires the following extra steps:
++
++To use without autolinking the below steps may be followed.
+ 
+ ##### Add the `ReactNativePicker` project to your solution.
+ 
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
+index 28a8132..ca1cd63 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactNativePicker.vcxproj
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
+   <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" />
+   <PropertyGroup Label="Globals">
+     <CppWinRTOptimized>true</CppWinRTOptimized>
+@@ -66,15 +67,16 @@
+   <PropertyGroup>
+     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
+   </PropertyGroup>
+-  <ImportGroup Label="Shared">
+-    <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
+-  </ImportGroup>
+   <ImportGroup Label="PropertySheets">
+     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+   </ImportGroup>
+   <ImportGroup Label="PropertySheets">
+     <Import Project="PropertySheet.props" />
+   </ImportGroup>
++  <ImportGroup Label="ReactNativeWindowsPropertySheets">
++    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\external\Microsoft.ReactNative.Uwp.CppLib.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.props')" />
++    <Import Project="$(SolutionDir)\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('$(SolutionDir)\packages\$(WinUIPackageProps)')" />
++  </ImportGroup>
+   <PropertyGroup Label="UserMacros" />
+   <PropertyGroup />
+   <ItemDefinitionGroup>
+@@ -140,22 +142,20 @@
+   <ItemGroup>
+     <None Include="PropertySheet.props" />
+   </ItemGroup>
+-  <ItemGroup>
+-    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
+-      <Project>{f7d32bd0-2749-483e-9a0d-1635ef7e3136}</Project>
+-      <Private>false</Private>
+-    </ProjectReference>
+-  </ItemGroup>
+   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++    <ImportGroup Label="ReactNativeWindowsTargets">
++    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.targets')" />
++  </ImportGroup>
+   <ImportGroup Label="ExtensionTargets">
+     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" />
++    <Import Project="$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
+   </ImportGroup>
+-  <Target Name="Deploy"/>
+   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+     <PropertyGroup>
+       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+     </PropertyGroup>
+     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.props'))" />
+     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.190730.2\build\native\Microsoft.Windows.CppWinRT.targets'))" />
++    <Error Condition="!Exists('$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />
+   </Target>
+ </Project>
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
+index c5eda6c..659c446 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.cpp
+@@ -6,21 +6,26 @@
+ #include "ReactPickerView.h"
+ #include "ReactPickerView.g.cpp"
+ 
++#include <UI.Xaml.Input.h>
++
+ namespace winrt {
+     using namespace Microsoft::ReactNative;
+     using namespace Windows::Foundation;
+     using namespace Windows::Foundation::Metadata;
+-    using namespace Windows::UI;
+-    using namespace Windows::UI::Xaml;
+-    using namespace Windows::UI::Xaml::Controls;
+-    using namespace Windows::UI::Xaml::Input;
+-    using namespace Windows::UI::Xaml::Media;
++    using namespace xaml;
++    using namespace xaml::Controls;
++    using namespace xaml::Input;
++    using namespace xaml::Media;
+ } // namespace winrt
+ 
+ namespace winrt::ReactNativePicker::implementation {
+ 
++#ifdef USE_WINUI3
++    const bool ReactPickerView::s_isEditableComboboxSupported = true;
++#else
+     const bool ReactPickerView::s_isEditableComboboxSupported = winrt::ApiInformation::IsPropertyPresent(
+         L"Windows.UI.Xaml.Controls.ComboBox", L"IsEditableProperty");
++#endif
+ 
+     ReactPickerView::ReactPickerView(winrt::IReactContext const& reactContext) : m_reactContext(reactContext) {
+         this->AllowFocusOnInteraction(true);
+@@ -61,9 +66,13 @@ namespace winrt::ReactNativePicker::implementation {
+                         this->ClearValue(winrt::ComboBox::IsEditableProperty());
+                     }
+                     else {
++#ifdef USE_WINUI3
++                        this->IsEditable(propertyValue.AsBoolean());
++#else
+                         if (auto iComboBox6 = this->try_as<winrt::Controls::IComboBox6>()) {
+                             iComboBox6.IsEditable(propertyValue.AsBoolean());
+                         }
++#endif
+                     }
+                 }
+             }
+@@ -188,7 +197,7 @@ namespace winrt::ReactNativePicker::implementation {
+         }
+     }
+ 
+-    void ReactPickerView::UpdateComboBoxItemForegroundResource(winrt::FrameworkElement const& item, winrt::Windows::UI::Xaml::Media::Brush const& color) {
++    void ReactPickerView::UpdateComboBoxItemForegroundResource(winrt::FrameworkElement const& item, xaml::Media::Brush const& color) {
+         if (auto comboBoxItem = item.try_as<winrt::ComboBoxItem>()) {
+             comboBoxItem.Foreground(color);
+         }
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h
+index 327763e..c39e9a5 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.h
+@@ -22,15 +22,15 @@ namespace winrt::ReactNativePicker::implementation {
+         // FUTURE: remove when we can require RS5+
+         int32_t m_selectedIndex{ 0 };
+         std::vector<winrt::hstring> m_itemValues;
+-        winrt::Windows::UI::Xaml::Media::Brush m_comboBoxColor{ nullptr };
+-        winrt::Windows::UI::Xaml::Controls::ComboBox::SelectionChanged_revoker m_selectionChangedRevoker{};
+-        winrt::Windows::UI::Xaml::Controls::ComboBox::DropDownClosed_revoker m_dropDownClosedRevoker{};
++        xaml::Media::Brush m_comboBoxColor{ nullptr };
++        xaml::Controls::ComboBox::SelectionChanged_revoker m_selectionChangedRevoker{};
++        xaml::Controls::ComboBox::DropDownClosed_revoker m_dropDownClosedRevoker{};
+ 
+         void RegisterEvents();
+         void RepopulateItems(winrt::Microsoft::ReactNative::JSValueArray const& items);
+         void SetSelectedIndex(int index);
+-        void OnSelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, winrt::Windows::UI::Xaml::Controls::SelectionChangedEventArgs const& args);
+-        void UpdateComboBoxItemForegroundResource(winrt::Windows::UI::Xaml::FrameworkElement const& item, winrt::Windows::UI::Xaml::Media::Brush const& color);
++        void OnSelectionChanged(winrt::Windows::Foundation::IInspectable const& sender, xaml::Controls::SelectionChangedEventArgs const& args);
++        void UpdateComboBoxItemForegroundResource(xaml::FrameworkElement const& item, xaml::Media::Brush const& color);
+     };
+ } // namespace winrt::ReactNativePicker::implementation
+ 
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
+index 39f1a06..9a5063e 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerView.idl
+@@ -1,7 +1,9 @@
++#include <NamespaceRedirect.h>
++
+ namespace ReactNativePicker{
+ 
+     [default_interface]
+-    runtimeclass ReactPickerView : Windows.UI.Xaml.Controls.ComboBox {
++    runtimeclass ReactPickerView : XAML_NAMESPACE.Controls.ComboBox {
+         ReactPickerView(Microsoft.ReactNative.IReactContext context);
+         void UpdateProperties(Microsoft.ReactNative.IJSValueReader reader);
+     };
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp
+index 173f0e8..eaefe6f 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.cpp
+@@ -9,7 +9,7 @@
+ namespace winrt {
+     using namespace Microsoft::ReactNative;
+     using namespace Windows::Foundation::Collections;
+-    using namespace Windows::UI::Xaml;
++    using namespace xaml;
+ }
+ 
+ namespace winrt::ReactNativePicker::implementation {
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
+index 55e1f9e..41ee279 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/ReactPickerViewManager.h
+@@ -18,7 +18,7 @@ namespace winrt::ReactNativePicker::implementation {
+ 
+         // IViewManager
+         winrt::hstring Name() noexcept;
+-        winrt::Windows::UI::Xaml::FrameworkElement CreateView() noexcept;
++        xaml::FrameworkElement CreateView() noexcept;
+ 
+         // IViewManagerWithReactContext
+         winrt::Microsoft::ReactNative::IReactContext ReactContext() noexcept;
+@@ -30,7 +30,7 @@ namespace winrt::ReactNativePicker::implementation {
+             NativeProps() noexcept;
+ 
+         void UpdateProperties(
+-            winrt::Windows::UI::Xaml::FrameworkElement const& view,
++            xaml::FrameworkElement const& view,
+             winrt::Microsoft::ReactNative::IJSValueReader const& propertyMapReader) noexcept;
+ 
+         // IViewManagerWithExportedEventTypeConstants
+diff --git a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
+index 62c1bf9..0b262fe 100644
+--- a/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
++++ b/node_modules/@react-native-picker/picker/windows/ReactNativePicker/pch.h
+@@ -3,13 +3,11 @@
+ #define NOMINMAX
+ 
+ #include <unknwn.h>
+-#include <winrt/Windows.Foundation.h>
+-#include <winrt/Windows.Foundation.Collections.h>
++#include <CppWinRTIncludes.h>
++
+ #include <winrt/Windows.Foundation.Metadata.h>
+-#include <winrt/Windows.UI.Xaml.h>
+-#include <winrt/Windows.UI.Xaml.Controls.h>
+-#include <winrt/Windows.UI.Xaml.Controls.Primitives.h>
+-#include <winrt/Windows.UI.Xaml.Input.h>
+-#include <winrt/Windows.UI.Xaml.Media.h>
+-#include <winrt/Windows.UI.Xaml.Navigation.h>
++
+ #include <winrt/Microsoft.ReactNative.h>
++
++#include <winrt/Microsoft.UI.Xaml.Controls.h>
++#include <winrt/Microsoft.UI.Xaml.Controls.Primitives.h>

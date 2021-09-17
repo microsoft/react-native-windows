@@ -158,6 +158,17 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   return success;
 }
 
+function parseFlowFile(filename: string): SchemaType {
+  try {
+    return parseFile(filename);
+  } catch (e) {
+    if (e instanceof Error) {
+      e.message = `(${filename}): ${e.message}`;
+    }
+    throw e;
+  }
+}
+
 function combineSchemas(files: string[]): SchemaType {
   return files.reduce(
     (merged, filename) => {
@@ -167,11 +178,8 @@ function combineSchemas(files: string[]): SchemaType {
         (/export\s+default\s+\(?codegenNativeComponent</.test(contents) ||
           contents.includes('extends TurboModule'))
       ) {
-        const schema = parseFile(filename);
-
-        if (schema && schema.modules) {
-          merged.modules = {...merged.modules, ...schema.modules};
-        }
+        const schema = parseFlowFile(filename);
+        merged.modules = {...merged.modules, ...schema.modules};
       }
       return merged;
     },
@@ -228,11 +236,12 @@ function generate(
   ];
 
   componentGenerators.forEach(generator => {
-    normalizeFileMap(
-      generator(libraryName, schema, moduleSpecName),
-      componentOutputdir,
-      generatedFiles,
+    const generated: Map<string, string> = generator(
+      libraryName,
+      schema,
+      moduleSpecName,
     );
+    normalizeFileMap(generated, componentOutputdir, generatedFiles);
   });
 
   if (test === true) {
@@ -249,7 +258,7 @@ if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
 
 let schema: SchemaType;
 if (argv.file) {
-  schema = parseFile(argv.file);
+  schema = parseFlowFile(argv.file);
 } else {
   schema = combineSchemas(globby.sync(argv.files as string[]));
 }

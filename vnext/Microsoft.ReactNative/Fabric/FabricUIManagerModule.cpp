@@ -429,7 +429,7 @@ void FabricUIManager::schedulerDidFinishTransaction(
 
 void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
     facebook::react::SurfaceId surfaceId,
-    const facebook::react::ShadowView &shadowView) {
+    const facebook::react::ShadowNode &shadowView) {
   /*
     if (m_context.UIDispatcher().HasThreadAccess()) {
     m_registry.dequeueComponentViewWithComponentHandle(shadowView.componentHandle, surfaceId);
@@ -463,6 +463,13 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
   assert(false);
 
   */
+}
+
+void FabricUIManager::schedulerDidCloneShadowNode(
+    facebook::react::SurfaceId /*surfaceId*/,
+    const facebook::react::ShadowNode & /*oldShadowNode*/,
+    const facebook::react::ShadowNode & /*newShadowNode*/) {
+  // currently unused
 }
 
 void FabricUIManager::schedulerDidDispatchCommand(

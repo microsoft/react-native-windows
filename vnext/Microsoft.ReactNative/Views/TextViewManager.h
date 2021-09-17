@@ -8,6 +8,14 @@
 
 namespace Microsoft::ReactNative {
 
+enum class PropertyChangeType : std::uint_fast8_t {
+  None = 0,
+  Text = 1 << 0,
+  AddBackgroundColor = 1 << 1,
+};
+
+DEFINE_ENUM_FLAG_OPERATORS(PropertyChangeType);
+
 class TextViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
@@ -24,7 +32,9 @@ class TextViewManager : public FrameworkElementViewManager {
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
-  void OnDescendantTextPropertyChanged(ShadowNodeBase *node);
+  void OnDescendantTextPropertyChanged(
+      ShadowNodeBase *node,
+      PropertyChangeType propertyChangeType = PropertyChangeType::Text);
 
   TextTransform GetTextTransformValue(ShadowNodeBase *node);
 

@@ -8,13 +8,13 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-386dbd943",
+  "baseVersion": "0.0.0-a8ac5ea32",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a5b0a0d2669d5d35a548c3990577a2e9c5d861b4"
+      "baseHash": "87b17404811d82484497bb8f73b63e57b90b5006"
     },
     {
       "type": "patch",
@@ -27,7 +27,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "a77dfb26acdaeaf0b7cd1df893843cd176364b17",
+      "baseHash": "802d6b354a54bb5ae26196e767017b403b1842ed",
       "issue": 7821
     },
     {
@@ -36,13 +36,6 @@
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
       "baseHash": "6951c3418c9aed3ab5f0378a168289968c02aef0",
       "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.h",
-      "baseFile": "ReactCommon/react/renderer/uimanager/UIManagerBinding.h",
-      "baseHash": "db707f2820a60006ef33c93fa8655baa5f99e975",
-      "issue": 1
     },
     {
       "type": "patch",
@@ -55,7 +48,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "73733ea2ee0afadd1d153c05030374f2bc492624",
+      "baseHash": "14193edf519ba573e7ba10a43a3af7a024241082",
       "issue": 4054
     },
     {
@@ -69,7 +62,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "08c12222a63e1f9332bb0c3f327c58609a3cf13f",
+      "baseHash": "a1440e2030ee018bb8f0b54703e3b1848db6ffb4",
       "issue": 5430
     },
     {
@@ -83,7 +76,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "c7e80678448dd6d518b6ed47594775207b285610"
+      "baseHash": "3f55b3104a728f68008ba473bb64bbe8fc7ad8c9"
     },
     {
       "type": "platform",
@@ -119,6 +112,10 @@
     },
     {
       "type": "platform",
+      "file": "src/Libraries/Alert/NativeDialogManagerWindows.js"
+    },
+    {
+      "type": "platform",
       "file": "src/Libraries/AppTheme/AppTheme.ts"
     },
     {
@@ -143,19 +140,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "48a11d8a7d56c3c33d8e72d735e6f1bf92c6ff3e"
+      "baseHash": "36af83fdc0ec38699dc14f0e6695d6844bdb5860"
     },
     {
       "type": "copy",
       "file": "src/Libraries/Components/DatePicker/DatePickerIOS.windows.js",
       "baseFile": "Libraries/Components/DatePicker/DatePickerIOS.android.js",
       "baseHash": "a9a4a6c92de922a11f8b81642b1bf1270d0b7b96"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/DatePickerAndroid/DatePickerAndroid.windows.js",
-      "baseFile": "Libraries/Components/DatePickerAndroid/DatePickerAndroid.ios.js",
-      "baseHash": "09d82215c57ca5873a53523a63006daebf07ffbc"
     },
     {
       "type": "derived",
@@ -192,36 +183,6 @@
       "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.windows.js",
       "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
       "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b"
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Components/Picker/Picker.windows.js",
-      "baseFile": "Libraries/Components/Picker/Picker.js",
-      "baseHash": "900e5f4d60baba03691b5c8601e4d960f9cb34d9",
-      "issue": 4611
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerAndroid.windows.js",
-      "baseFile": "Libraries/Components/Picker/PickerAndroid.ios.js",
-      "baseHash": "e5bb18f4dc9ddbf96ab9b83cfc21b1c0495ac59a"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerIOS.windows.js",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
-      "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6"
-    },
-    {
-      "type": "platform",
-      "file": "src/Libraries/Components/Picker/PickerProps.ts"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Components/Picker/PickerWindows.tsx",
-      "baseFile": "Libraries/Components/Picker/PickerIOS.ios.js",
-      "baseHash": "b4d55736a8e395c5418c2de2dcded7bb77799997",
-      "issue": 4611
     },
     {
       "type": "platform",
@@ -271,13 +232,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "5eb78ac95aeaa6ea8c5128050a2e908759af6aff"
+      "baseHash": "d88f479a06105b51ff32122ae898b04ee66c0d33"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "9b941d27fadc82ac74153cd52c08080b0b1c7c8f"
+      "baseHash": "c2797c00e77fa75b029851de14ce94c00bef7683"
     },
     {
       "type": "platform",
@@ -299,7 +260,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "f46b26885fc37d6f8c5aa9d298ffd6828efc0921"
+      "baseHash": "229951b3db97dff217d0ad3ff7066b23ae0354e3"
     },
     {
       "type": "patch",
@@ -323,7 +284,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "094dff18be0d1ae4af56cb826c193cf113c2902e"
+      "baseHash": "b6c5dab8543275d60d0d0efd4be435c372376f3d"
     },
     {
       "type": "patch",
@@ -340,17 +301,29 @@
       "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
     },
     {
+      "type": "copy",
+      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedImagePropType.windows.js",
+      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedImagePropType.ios.js",
+      "baseHash": "ae3ac9add2e9ac83b7b538f82b57fb3f8fdd9526"
+    },
+    {
       "type": "patch",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
-      "baseHash": "4feb9470b41bf6bc9b492c5f6f3ff75f872e4668"
+      "baseHash": "ee2ba1c2a5bbf814c174e041c95d47c77b1fbde1"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "c20b0134e74a8e8d69d0b2694b4296fe2bf69d3f",
+      "baseHash": "c8d495e707fc61bbfb929b9a343f5460c3b60c28",
       "issue": 4590
+    },
+    {
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseFile": "Libraries/Lists/__tests__/CellRenderMask-test.js",
+      "baseHash": "9b194f61db28366f5fb490b033d940636a9c7bb2"
     },
     {
       "type": "copy",
@@ -377,10 +350,10 @@
       "baseHash": "f23a66cfc475ee1e2eda1065e56e05e547b7030e"
     },
     {
-      "type": "derived",
+      "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "fd25fc611f8da21b93e7f8750d8f2fc8273a4a52"
+      "baseHash": "2d3b7dae890a42fc0b94c9700a72e6606f32625f"
     },
     {
       "type": "copy",
@@ -424,14 +397,14 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "f0ff8ce99b09be692f6beb9231c7dec3140da02d",
+      "baseHash": "696351a1f296e1bd595d7a22253f5b31b62ed5f8",
       "issue": 4379
     },
     {
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "1a47d1e4a1026573cabdda0fa6374ca64bd41b81"
+      "baseHash": "9940bfdf0c803eb1d6905563803fa9deac1c7770"
     },
     {
       "type": "derived",
@@ -447,7 +420,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "4437d86c40009c937c279b9ce9e924ebfa46ddd6"
+      "baseHash": "8b90eb090dcfed88a40a38bbb51cbbd1e0d9ca9e"
     },
     {
       "type": "patch",

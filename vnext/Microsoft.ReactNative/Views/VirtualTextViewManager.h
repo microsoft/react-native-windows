@@ -8,6 +8,7 @@
 #include <Utils/TextTransform.h>
 #include <Views/FrameworkElementViewManager.h>
 #include <Views/ShadowNodeBase.h>
+#include <Views/TextViewManager.h>
 
 namespace Microsoft::ReactNative {
 
@@ -16,17 +17,16 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   TextTransform textTransform{TextTransform::Undefined};
 
   void AddView(ShadowNode &child, int64_t index) override;
+  void RemoveChildAt(int64_t indexToRemove) override;
+  void removeAllChildren() override;
+
+  void NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType);
 
   static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
 
-  struct HighlightData {
-    std::vector<HighlightData> data;
-    size_t spanIdx = 0;
-    std::optional<winrt::Windows::UI::Color> backgroundColor;
-    std::optional<winrt::Windows::UI::Color> foregroundColor;
-  };
-
-  HighlightData m_highlightData;
+  std::optional<winrt::Windows::UI::Color> m_backgroundColor;
+  std::optional<winrt::Windows::UI::Color> m_foregroundColor;
+  bool m_hasDescendantBackgroundColor{false};
 };
 
 class VirtualTextViewManager : public ViewManagerBase {

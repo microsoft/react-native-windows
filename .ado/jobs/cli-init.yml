@@ -2,13 +2,13 @@ parameters:
   - name: buildEnvironment
     type: string
     default: PullRequest
-    values: 
-     - PullRequest
-     - Continuous
+    values:
+      - PullRequest
+      - Continuous
   - name: buildNuGetOnly
     type: boolean
     default: false
-  
+
 jobs:
   - ${{ if not(parameters.buildNuGetOnly) }}:
     - job: CliInit
@@ -176,7 +176,7 @@ jobs:
             language: $(language)
             configuration: $(configuration)
             platform: $(platform)
-            projectType: $(projectType)    
+            projectType: $(projectType)
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
             buildEnvironment: ${{ parameters.buildEnvironment }}
@@ -215,7 +215,7 @@ jobs:
             language: $(language)
             configuration: $(configuration)
             platform: $(platform)
-            projectType: $(projectType)    
+            projectType: $(projectType)
             additionalInitArguments: $(additionalInitArguments)
             additionalRunArguments: $(additionalRunArguments)
             useNuGet: true

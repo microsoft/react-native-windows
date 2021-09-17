@@ -23,7 +23,7 @@ global.jasmine.getEnv().addReporter({
       );
 
       const filename = path.join(screenshotDir, friendlySpecName);
-      await browser.saveScreenshot(filename);
+      await global.browser.saveScreenshot(filename);
     }
   },
 });

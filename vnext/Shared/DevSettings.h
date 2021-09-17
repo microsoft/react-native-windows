@@ -3,7 +3,6 @@
 
 #pragma once
 #include "Logging.h"
-#include "MemoryTracker.h"
 
 #include <IRedBoxHandler.h>
 #include <functional>
@@ -31,8 +30,9 @@ enum class JSIEngineOverride : int32_t {
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
   V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
+  V8NodeApi = 6, // Use the JSIExecutorFactory with V8 via ABI-safe NAPI
 
-  Last = V8Lite
+  Last = V8NodeApi
 };
 
 struct DevSettings {
@@ -76,12 +76,6 @@ struct DevSettings {
   bool useWebDebugger{false};
 
   bool useFastRefresh{false};
-
-  // Enables ChakraCore console redirection to debugger
-  bool debuggerConsoleRedirection{false};
-
-  /// Dispatcher for notifications about JS engine memory consumption.
-  std::shared_ptr<MemoryTracker> memoryTracker;
 
   /// A factory and holder of jsi::Runtime instance to be used for this react
   /// instance. This object should in general be used only from the JS engine

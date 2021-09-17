@@ -71,7 +71,7 @@ describe('VirtualizedList', () => {
     // Silence the React error boundary warning; we expect an uncaught error.
     const consoleError = console.error;
     jest.spyOn(console, 'error').mockImplementation(message => {
-      if (message.startsWith('The above error occured in the ')) {
+      if (message.startsWith('The above error occurred in the ')) {
         return;
       }
       consoleError(message);
@@ -415,7 +415,7 @@ describe('VirtualizedList', () => {
     const errors = [];
     jest.spyOn(console, 'error').mockImplementation((...args) => {
       // Silence the DEV-only React error boundary warning.
-      if ((args[0] || '').startsWith('The above error occured in the ')) {
+      if ((args[0] || '').startsWith('The above error occurred in the ')) {
         return;
       }
       errors.push(args);
@@ -643,10 +643,11 @@ describe('VirtualizedList', () => {
     });
 
     // Scroll to the bottom 50 dip (last five items) of the content. Expect the
-    // last five items to be rendered, along with every sticky header above,
-    // even though they are out of the viewport window in layout coordinates.
-    // This is because they will remain rendered even once scrolled-past in
-    // layout space.
+    // last five items to be rendered (possibly more if realization window is
+    // larger), along with the most recent sticky header above the realization
+    // region, even though they are out of the viewport window in layout
+    // coordinates. This is because they will remain rendered even once
+    // scrolled-past in layout space.
     expect(component).toMatchSnapshot();
   });
 });

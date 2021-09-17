@@ -13,6 +13,22 @@ import "RedBoxHandler.idl";
 namespace Microsoft.ReactNative
 {
   DOC_STRING(
+    "Used in @LogHandler to represent different LogLevels")
+  enum LogLevel
+  {
+    Trace = 0,
+    Info = 1,
+    Warning = 2,
+    Error = 3,
+    Fatal = 4
+  };
+
+  DOC_STRING(
+    "delegate to represent a logging function.")
+  delegate void LogHandler(LogLevel level, String message);
+
+
+  DOC_STRING(
     "A JavaScript engine type that can be set for a React instance in @ReactInstanceSettings.JSIEngineOverride")
   // Keep in sync with enum in IReactInstance.h
   enum JSIEngine
@@ -165,9 +181,20 @@ namespace Microsoft.ReactNative
     UInt16 DebuggerPort { get; set; };
 
     DOC_STRING(
+      "Name to associate with the JavaScript runtime when debugging. \n"
+      "This name will show up in the list of JavaScript runtimes to attach to in edge://inspect or other debuggers")
+    String DebuggerRuntimeName { get; set; };
+
+    DOC_STRING(
       "Provides an extension point to allow custom error handling within the react instance. "
       "See @IRedBoxHandler for more information.")
     IRedBoxHandler RedBoxHandler { get; set; };
+
+    DOC_STRING(
+      "Function that will be hooked into the JavaScript instance as global.nativeLoggingHook. "
+      "This allows native hooks for JavaScript's console implementation. "
+      "If this is not set then logs will print output to the native debug output in debug builds, and no-op in release builds.")
+      LogHandler NativeLogger { get; set; };
 
     DOC_STRING(
       "Control the main UI dispatcher to be used by the React instance. "

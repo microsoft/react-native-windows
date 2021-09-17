@@ -65,8 +65,8 @@ module.exports = {
     'tab',
     'tablist',
     'timer',
+    'list',
     'toolbar',
-    'list', // RNW-only
     'listitem', // RNW-only
   ],
 };

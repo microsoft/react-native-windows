@@ -112,8 +112,14 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t DebuggerPort() noexcept;
   void DebuggerPort(uint16_t value) noexcept;
 
+  hstring DebuggerRuntimeName() noexcept;
+  void DebuggerRuntimeName(hstring const &value) noexcept;
+
   IRedBoxHandler RedBoxHandler() noexcept;
   void RedBoxHandler(IRedBoxHandler const &value) noexcept;
+
+  LogHandler NativeLogger() noexcept;
+  void NativeLogger(LogHandler const &value) noexcept;
 
   IReactDispatcher UIDispatcher() noexcept;
   void UIDispatcher(IReactDispatcher const &value) noexcept;
@@ -166,7 +172,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t m_debuggerPort{9229};
   IRedBoxHandler m_redBoxHandler{nullptr};
   hstring m_sourceBundleHost{};
+  hstring m_debuggerRuntimeName{};
   uint16_t m_sourceBundlePort{0};
+  LogHandler m_nativeLogger{nullptr};
 
 #if USE_HERMES
   JSIEngine m_jSIEngineOverride{JSIEngine::Hermes};
@@ -260,12 +268,28 @@ inline void ReactInstanceSettings::DebuggerPort(uint16_t value) noexcept {
   m_debuggerPort = value;
 }
 
+inline hstring ReactInstanceSettings::DebuggerRuntimeName() noexcept {
+  return m_debuggerRuntimeName;
+}
+
+inline void ReactInstanceSettings::DebuggerRuntimeName(hstring const &value) noexcept {
+  m_debuggerRuntimeName = value;
+}
+
 inline IRedBoxHandler ReactInstanceSettings::RedBoxHandler() noexcept {
   return m_redBoxHandler;
 }
 
 inline void ReactInstanceSettings::RedBoxHandler(IRedBoxHandler const &value) noexcept {
   m_redBoxHandler = value;
+}
+
+inline LogHandler ReactInstanceSettings::NativeLogger() noexcept {
+  return m_nativeLogger;
+}
+
+inline void ReactInstanceSettings::NativeLogger(LogHandler const &value) noexcept {
+  m_nativeLogger = value;
 }
 
 inline hstring ReactInstanceSettings::SourceBundleHost() noexcept {

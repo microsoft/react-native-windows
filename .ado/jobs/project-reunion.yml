@@ -3,8 +3,8 @@ parameters:
     type: string
     default : PullRequest
     values:
-     - PullRequest
-     - Continuous
+      - PullRequest
+      - Continuous
 
 jobs:
   - job: Reunion

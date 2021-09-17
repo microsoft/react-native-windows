@@ -13,9 +13,15 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(WebSocketModuleSpec_connect_options)
+struct WebSocketModuleSpec_connect_options {
+    REACT_FIELD(headers)
+    std::optional<React::JSValue> headers;
+};
+
 struct WebSocketModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, React::JSValueArray, React::JSValueObject, double) noexcept>{0, L"connect"},
+      Method<void(std::string, std::optional<std::vector<std::string>>, WebSocketModuleSpec_connect_options, double) noexcept>{0, L"connect"},
       Method<void(std::string, double) noexcept>{1, L"send"},
       Method<void(std::string, double) noexcept>{2, L"sendBinary"},
       Method<void(double) noexcept>{3, L"ping"},
@@ -31,8 +37,8 @@ struct WebSocketModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "connect",
-          "    REACT_METHOD(connect) void connect(std::string url, React::JSValueArray && protocols, React::JSValueObject && options, double socketID) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(connect) static void connect(std::string url, React::JSValueArray && protocols, React::JSValueObject && options, double socketID) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(connect) void connect(std::string url, std::optional<std::vector<std::string>> protocols, WebSocketModuleSpec_connect_options && options, double socketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(connect) static void connect(std::string url, std::optional<std::vector<std::string>> protocols, WebSocketModuleSpec_connect_options && options, double socketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "send",

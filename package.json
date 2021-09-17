@@ -11,6 +11,7 @@
     "doc": "doxysaurus --config vnext/doxysaurus.json",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -verify",
+    "postinstall": "patch-package",
     "test": "lage test --verbose -- --color",
     "validate-overrides": "react-native-platform-override validate --color"
   },
@@ -34,15 +35,16 @@
     "beachball": "2.4.0",
     "husky": "^4.2.5",
     "unbroken": "1.0.27",
-    "lage": "^0.29.3"
+    "lage": "^0.29.3",
+    "patch-package": "^6.4.7",
+    "postinstall-postinstall": "^2.1.0"
   },
   "resolutions": {
-    "eslint-plugin-react-hooks": "4.0.7",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
     "node-fetch": "2.6.1",
     "node-notifier": "^9.0.0",
-    "xmldom": "^0.5.0",
+    "xmldom": "github:xmldom/xmldom#0.7.0",
     "**/parse-url/normalize-url": "^4.5.1",
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
@@ -51,8 +53,5 @@
   "beachball": {
     "branch": "main",
     "gitTags": false
-  },
-  "engines": {
-    "node": ">12.0.0"
   }
 }

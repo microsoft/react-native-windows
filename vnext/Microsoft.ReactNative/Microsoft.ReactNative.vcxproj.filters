@@ -206,9 +206,6 @@
     <ClCompile Include="Views\KeyboardEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\PickerViewManager.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\PopupViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -541,9 +538,6 @@
     <ClInclude Include="Views\KeyboardEventHandler.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\PickerViewManager.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\PopupViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -673,6 +667,9 @@
       <Filter>Views</Filter>
     </ClInclude>
     <ClInclude Include="Utils\TextTransform.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

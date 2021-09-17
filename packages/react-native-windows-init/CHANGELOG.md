@@ -1,8 +1,69 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 22 Jul 2021 05:05:25 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Sep 2021 05:06:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.63
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.88 (jthysell@microsoft.com)
+
+## 1.1.63
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.87 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.1.63
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.86 (jthysell@microsoft.com)
+
+## 1.1.63
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.85 (ngerlem@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.23 (ngerlem@microsoft.com)
+
+## 1.1.62
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.84 (ngerlem@microsoft.com)
+
+## 1.1.62
+
+Fri, 27 Aug 2021 05:06:34 GMT
+
+### Patches
+
+- Fixes react-native-windows-init to put the version into package.json (jthysell@microsoft.com)
+
+## 1.1.61
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.83 (jthysell@microsoft.com)
 
 ## 1.1.61
 

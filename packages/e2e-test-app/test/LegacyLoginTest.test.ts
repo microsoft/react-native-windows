@@ -5,7 +5,8 @@
  * @format
  */
 
-import {goToComponentExample} from './framework';
+import {app} from '@react-native-windows/automation';
+import {goToComponentExample} from './RNTesterNavigation';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyLoginTest');
@@ -67,32 +68,34 @@ describe('LegacyLoginTest', () => {
 });
 
 async function setUsername(username: string) {
-  const usernameField = await $('~username-field');
+  const usernameField = await app.findElementByTestID('username-field');
   await usernameField.setValue(username);
 }
 
 async function setPassword(password: string) {
-  const passwordField = await $('~password-field');
+  const passwordField = await app.findElementByTestID('password-field');
   await passwordField.setValue(password);
 }
 
 async function appendPassword(password: string) {
-  const passwordField = await $('~password-field');
+  const passwordField = await app.findElementByTestID('password-field');
   await passwordField.addValue('End');
   await passwordField.addValue(password);
 }
 
 async function toggleShowPassword() {
-  const showPasswordToggle = await $('~show-password-toggle');
+  const showPasswordToggle = await app.findElementByTestID(
+    'show-password-toggle',
+  );
   await showPasswordToggle.click();
 }
 
 async function submitForm() {
-  const submitButton = await $('~submit-button');
+  const submitButton = await app.findElementByTestID('submit-button');
   await submitButton.click();
 }
 
 async function getLoginResult(): Promise<string> {
-  const loginResult = await $('~result-text');
+  const loginResult = await app.findElementByTestID('result-text');
   return await loginResult.getText();
 }

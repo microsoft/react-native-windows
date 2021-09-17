@@ -1,8 +1,203 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Aug 2021 05:11:09 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Sep 2021 05:06:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.378
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Enable publishing NuGet symbol packages (jthysell@microsoft.com)
+- Fix Break in Fast Refresh Behavior (34109996+chiaramooney@users.noreply.github.com)
+- Ensures IsHitTestVisible is set on correct view (erozell@outlook.com)
+- Allow injection of custom UI thread (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.377
+
+Thu, 16 Sep 2021 05:06:44 GMT
+
+### Changes
+
+- Adds showMode prop to FlyoutViewManager (erozell@outlook.com)
+
+## 0.0.0-canary.376
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Provide more TS type information for ViewWindows (30809111+acoates-ms@users.noreply.github.com)
+- Generate anonymous objects in correct order for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.375
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.86 (jthysell@microsoft.com)
+
+## 0.0.0-canary.374
+
+Sat, 11 Sep 2021 05:06:55 GMT
+
+### Changes
+
+- Bump hermes to v0.9 (anandrag@microsoft.com)
+
+## 0.0.0-canary.373
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Generate `std::vector<T>` for array types in turbo modules (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Fix EBUSY race conditions between metro bundler and msbuild (dannyvv@microsoft.com)
+
+## 0.0.0-canary.372
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Generate nullable type for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.371
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate 9/2 (34109996+chiaramooney@users.noreply.github.com)
+- announce changes to accessibilityState (agnel@microsoft.com)
+- Match Alert module with NativeDialogManagerAndroidSpec.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+## 0.0.0-canary.370
+
+Sat, 04 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Fix race condition when building customer projects (dannyvv@microsoft.com)
+
+## 0.0.0-canary.369
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Fire onMouseEnter/Leave events on pointer conclude (erozell@outlook.com)
+- Generate aliased struct for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Provide ability to specify name for the runtime instance when debugging (30809111+acoates-ms@users.noreply.github.com)
+- Enable building on Visual Studio 2022 (julio.rocha@microsoft.com)
+- Integrate 8/25 Nightly RN Build (Base of 0.66) (ngerlem@microsoft.com)
+
+## 0.0.0-canary.368
+
+Wed, 01 Sep 2021 05:07:18 GMT
+
+### Changes
+
+- Integrate 8/11 Nightly RN Build (ngerlem@microsoft.com)
+- add accessibility UIA headings (agnel@microsoft.com)
+
+## 0.0.0-canary.367
+
+Tue, 31 Aug 2021 05:07:15 GMT
+
+### Changes
+
+- Allow override of global.nativeLoggingHook (30809111+acoates-ms@users.noreply.github.com)
+- Remove unused code (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.366
+
+Sat, 28 Aug 2021 05:06:32 GMT
+
+### Changes
+
+- Pass JSValueArgWriter around instead of immediately converting to dynamic (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.365
+
+Wed, 25 Aug 2021 05:07:15 GMT
+
+### Changes
+
+- Integrate 7/28 Nightly RN Build (ngerlem@microsoft.com)
+- Set Shared WindowsTargetPlatformVersion in External Property Sheets (ngerlem@microsoft.com)
+- Consume NAPI V8 JSI Runtime (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.364
+
+Mon, 23 Aug 2021 05:10:28 GMT
+
+### Changes
+
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.363
+
+Sat, 21 Aug 2021 05:09:03 GMT
+
+### Changes
+
+- Fix crash in NativeUIManager when handling "extra layout" nodes (aschultz@microsoft.com)
+- Fix crash in KeyboardHelper when provided undefined keyDownEvents prop. (aschultz@microsoft.com)
+- Enable use of 'focusable' prop on ControlViewManager-derived controls (aschultz@microsoft.com)
+
+## 0.0.0-canary.362
+
+Fri, 20 Aug 2021 05:05:48 GMT
+
+### Changes
+
+- Integrate 6/30 Nightly RN Build (ngerlem@microsoft.com)
+- Exclude WinMD AttributeNameAttribute (ngerlem@microsoft.com)
+- Integrate 6/23 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 7/7 Nightly RN Build (ngerlem@microsoft.com)
+- Fixes issues with Text backgroundColor (erozell@outlook.com)
+
+## 0.0.0-canary.361
+
+Wed, 18 Aug 2021 05:06:18 GMT
+
+### Changes
+
+- Enable inlineRequires for all projects (ngerlem@microsoft.com)
+
+## 0.0.0-canary.360
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Add experimentalFeatures to projectConfig result (jthysell@microsoft.com)
+
+## 0.0.0-canary.359
+
+Sat, 14 Aug 2021 05:08:23 GMT
+
+### Changes
+
+- Prevent crash in AnimationDriver when RN instance destroyed (erozell@outlook.com)
+
+## 0.0.0-canary.358
+
+Wed, 11 Aug 2021 05:09:13 GMT
+
+### Changes
+
+- Skip user agent HTTP header validation. (erozell@outlook.com)
 
 ## 0.0.0-canary.357
 

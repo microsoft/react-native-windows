@@ -10,7 +10,6 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
-<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
@@ -70,6 +69,7 @@ flow/
 emoji=true
 
 exact_by_default=true
+indexed_access=false
 
 format.bracket_spacing=false
 
@@ -98,7 +98,7 @@ sketchy-null-mixed=warn
 sketchy-number=warn
 untyped-type-import=warn
 nonstrict-import=warn
-deprecated-type=warn
+deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
 signature-verification-failure=warn
@@ -113,4 +113,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.152.0
+^0.159.0

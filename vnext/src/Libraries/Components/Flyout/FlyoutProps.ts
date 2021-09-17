@@ -21,10 +21,17 @@ export type Placement =
   | 'left-edge-aligned-bottom'
   | 'right-edge-aligned-bottom';
 
+export type ShowMode =
+  | 'auto'
+  | 'standard'
+  | 'transient'
+  | 'transient-with-dismiss-on-pointer-move-away';
+
 export interface IFlyoutProps extends ViewProps {
   horizontalOffset?: number;
   isLightDismissEnabled?: boolean;
   autoFocus?: boolean;
+  shouldConstrainToRootBounds?: boolean;
 
   /**
    * Specifies whether the area outside the flyout is darkened
@@ -34,6 +41,7 @@ export interface IFlyoutProps extends ViewProps {
   isOpen?: boolean;
   onDismiss?: (isOpen: boolean) => void;
   placement?: Placement;
+  showMode?: ShowMode;
   target?: React.ReactNode;
   verticalOffset?: number;
 }

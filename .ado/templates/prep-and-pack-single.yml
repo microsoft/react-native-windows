@@ -5,11 +5,12 @@ parameters:
   buildProperties: ''
   codesignBinaries: false
   codesignNuget: false
+  createSymbolPackages: false
 
 steps:
 
   # Strip down the binaries from NuGet because we may not have built all the flavours.
-  - task: PowerShell@2 
+  - task: PowerShell@2
     displayName: '${{ parameters.packageId }} - Strip slices from nuspec'
     inputs:
       targetType: filePath
@@ -30,28 +31,28 @@ steps:
           **/${{ parameters.packageId }}.exe
         UseMinimatch: true
         signConfigType: inlineSignParams
-        inlineOperation: | 
+        inlineOperation: |
           [
-             {
-                "KeyCode" : "CP-230012",
-                "OperationCode" : "SigntoolSign",
-                "Parameters" : {
-                  "OpusName" : "Microsoft",
-                  "OpusInfo" : "http://www.microsoft.com",
-                  "FileDigest" : "/fd \"SHA256\"",
-                  "PageHash" : "/PH",
-                  "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                },
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
+            {
+              "KeyCode" : "CP-230012",
+              "OperationCode" : "SigntoolSign",
+              "Parameters" : {
+                "OpusName" : "Microsoft",
+                "OpusInfo" : "http://www.microsoft.com",
+                "FileDigest" : "/fd \"SHA256\"",
+                "PageHash" : "/PH",
+                "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
               },
-              {
-                "KeyCode" : "CP-230012",
-                "OperationCode" : "SigntoolVerify",
-                "Parameters" : {},
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
-              }
+              "ToolName" : "sign",
+              "ToolVersion" : "1.0"
+            },
+            {
+              "KeyCode" : "CP-230012",
+              "OperationCode" : "SigntoolVerify",
+              "Parameters" : {},
+              "ToolName" : "sign",
+              "ToolVersion" : "1.0"
+            }
           ]
 
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
@@ -62,8 +63,9 @@ steps:
       verbosityPack: 'Detailed'
       packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.packageId }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
+      includeSymbols: ${{ parameters.createSymbolPackages }}
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.packageId }};${{ parameters.buildProperties }}
-  
+
   - ${{ if eq(parameters.codesignNuget, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
       displayName: '${{ parameters.packageId }} CodeSign NuGet'
@@ -72,9 +74,10 @@ steps:
         FolderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
         Pattern: |
           **/${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg
+          **/${{ parameters.packageId }}.${{ parameters.packageVersion }}.symbols.nupkg
         UseMinimatch: true
         signConfigType: inlineSignParams
-        inlineOperation: | 
+        inlineOperation: |
           [
             {
                 "KeyCode" : "CP-401405",

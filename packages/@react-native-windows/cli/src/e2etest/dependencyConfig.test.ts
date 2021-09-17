@@ -175,9 +175,8 @@ test.each(projects)(
     }
 
     const userConfig = null;
-    const expectedConfig: WindowsDependencyConfig | null = null;
 
-    expect(dependencyConfigWindows(folder, userConfig)).toBe(expectedConfig);
+    expect(dependencyConfigWindows(folder, userConfig)).toBeNull();
   },
 );
 

@@ -128,7 +128,6 @@
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
-    <Midl Include="ABI\MemoryTracker.idl" />
     <Midl Include="ABI\MessageQueue.idl" />
     <Midl Include="ABI\NativeLogging.idl" />
     <Midl Include="ABI\NativeTracing.idl" />
@@ -157,10 +156,6 @@
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp">
       <DependentUpon>..\Microsoft.ReactNative\ReactInstanceSettings.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="ABI\MemoryTracker.cpp">
-      <DependentUpon>ABI\MemoryTracker.idl</DependentUpon>
-      <ObjectFileName>$(IntDir)\ABI\</ObjectFileName>
     </ClCompile>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
       <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
@@ -253,9 +248,6 @@
     <ClCompile Include="WebSocketResourceFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABI\MemoryTracker.h">
-      <DependentUpon>ABI\MemoryTracker.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="ABI\MessageQueueShim.h">
       <DependentUpon>ABI\MessageQueue.idl</DependentUpon>
     </ClInclude>

@@ -3,9 +3,9 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
+    values:
+      - PullRequest
+      - Continuous
   - name: buildMatrix
     type: object
     default:
@@ -65,15 +65,8 @@ jobs:
             - task: CmdLine@2
               displayName: Set LocalDumps
               inputs:
-                script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd ReactUWPTestApp
+                script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd RNTesterApp
                 workingDirectory: $(Build.SourcesDirectory)
-
-            - task: CmdLine@2
-              displayName: Set up AppVerifer on ReactUWPTestApp
-              inputs:
-                script: regedit /S $(Build.SourcesDirectory)\.ado\scripts\ReactUWPTestApp.reg
-                workingDirectory: $(Build.SourcesDirectory)
-              condition: false # Must be manually enabled, since it causes a 5x perf reduction that causes test instability
 
             - template: ../templates/set-experimental-feature.yml
               parameters:
@@ -84,7 +77,7 @@ jobs:
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
-                encodedKey: reactUWPTestAppEncodedKey
+                encodedKey: RNTesterAppEncodedKey
                 buildConfiguration: Release
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 deployOption: ${{ matrix.DeployOption }}
@@ -113,18 +106,18 @@ jobs:
               condition: failed()
 
             - task: CopyFiles@2
-              displayName: Copy ReactUWPTestApp artifacts
+              displayName: Copy RNTesterApp artifacts
               inputs:
-                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/ReactUWPTestApp
-                targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
+                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/RNTesterApp
+                targetFolder: $(Build.StagingDirectory)/RNTesterApp
                 contents: AppPackages\**
               condition: failed()
 
             - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact:ReactUWPTestApp"
+              displayName: "Publish Artifact:RNTesterApp"
               inputs:
-                artifactName: ReactUWPTestApp-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
+                artifactName: RNTesterApp-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                targetPath: $(Build.StagingDirectory)/RNTesterApp
               condition: failed()
 
             - task: PublishPipelineArtifact@1

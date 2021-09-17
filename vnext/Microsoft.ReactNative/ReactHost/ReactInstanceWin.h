@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "IReactDispatcher.h"
 #include "IReactInstanceInternal.h"
 #include "ReactContext.h"
 #include "ReactNativeHeaders.h"
@@ -54,7 +55,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   Mso::React::IReactContext &GetReactContext() const noexcept override;
   void AttachMeasuredRootView(
       facebook::react::IReactRootView *rootView,
-      folly::dynamic &&initialProps,
+      const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
       bool useFabric) noexcept override;
   void DetachRootView(facebook::react::IReactRootView *rootView, bool useFabric) noexcept override;
 
@@ -180,7 +181,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::shared_ptr<Microsoft::ReactNative::AppTheme> m_appTheme;
   Mso::CntPtr<Microsoft::ReactNative::AppearanceChangeListener> m_appearanceListener;
 #endif
-  Mso::DispatchQueue m_uiQueue;
+  Mso::CntPtr<Mso::React::IDispatchQueue2> m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;
 
   std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_jsiRuntimeHolder;

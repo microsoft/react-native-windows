@@ -102,6 +102,9 @@ const projects: TargetProject[] = [
     await ensureWinUI3Project(folder);
   }),
   project('WithIndirectDependency'),
+  project('WithExperimentalFeaturesProps'),
+  project('WithUseExperimentalNuget'),
+  project('WithUseExperimentalNugetSetInProject'),
 ];
 
 // Tests that given userConfig is null, the result will always be null

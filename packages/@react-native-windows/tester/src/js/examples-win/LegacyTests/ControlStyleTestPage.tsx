@@ -9,7 +9,6 @@ import {
   View,
   StyleSheet,
   Button,
-  Picker,
 } from 'react-native';
 import * as React from 'react'
 import { useState } from 'react';
@@ -75,9 +74,6 @@ export function ControlStyleTestPage() {
           placeholderTextColor="rgba(225,225,225,0.7)"
           secureTextEntry={true}
           editable={false}
-        />
-        <Picker
-          style={showRoundBorder ? styles.roundBorder : styles.regularBorder}
         />
       </View>
 

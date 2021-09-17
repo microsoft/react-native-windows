@@ -2,9 +2,9 @@ parameters:
   - name: buildEnvironment
     type: string
     default: PullRequest
-    values: 
-     - PullRequest 
-     - Continuous
+    values:
+      - PullRequest
+      - Continuous
   - name: encodedKey
     type: string
 
@@ -12,10 +12,10 @@ steps:
   - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(sampleAppCPPEncodedKey)"
     displayName: Specify Certificate
     condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'sampleAppCPPEncodedKey'))
-  
+
   - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(reactUWPTestAppEncodedKey)"
     displayName: Specify Certificate
-    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'reactUWPTestAppEncodedKey'))
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'RNTesterAppEncodedKey'))
 
   - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(playgroundEncodedKey)"
     displayName: Specify Certificate

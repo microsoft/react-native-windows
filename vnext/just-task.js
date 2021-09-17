@@ -7,7 +7,6 @@
 
 const path = require('path');
 const {
-  cleanTask,
   task,
   series,
   condition,
@@ -28,7 +27,7 @@ option('clean');
 
 task('codegen', () => {
   execSync(
-    'npx --no-install @react-native-windows/codegen --files Libraries/**/*Native*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore',
+    'npx --no-install @react-native-windows/codegen --files Libraries/**/*[Nn]ative*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore',
   );
 });
 

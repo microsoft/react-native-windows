@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-386dbd943",
+  "baseVersion": "0.0.0-a8ac5ea32",
   "overrides": [
     {
       "type": "patch",
@@ -13,6 +13,13 @@
       "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
       "baseHash": "c211a725a3f935a4425f7af92bc7a4cba4f0655a",
       "issue": 6341
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/Border/BorderExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Border/BorderExample.js",
+      "baseHash": "88069b6d56cc0902624073a81faed20cbc5fbb0d",
+      "issue": 8511
     },
     {
       "type": "patch",
@@ -25,7 +32,7 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "af8b28c15a9b5729f3edd98731d5ee2a74ab6b17",
+      "baseHash": "7c160ed70055a586a4017f30cf3c12cd92095352",
       "issue": 5688
     },
     {
@@ -45,7 +52,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "dd52a34f77f0cbfe08cbd11610cd71edc1ecd96f"
+      "baseHash": "cab581fd600f109a2efae881734e19e07c3bd350"
     }
   ]
 }

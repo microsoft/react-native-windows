@@ -170,3 +170,6 @@ tsdoc-metadata.json
 # cppwinrt
 nul
 
+# Graveyard of old packages (whose build-outputs may exist on disk after pull)
+/packages/jest-environment-winappdriver/*
+/packages/node-rnw-rpc/*

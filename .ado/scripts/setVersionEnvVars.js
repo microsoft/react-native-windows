@@ -1,5 +1,5 @@
 // @ts-check
-const fs = require('fs'); 
+const fs = require('fs');
 const path = require('path');
 const process = require('process');
 const child_process = require('child_process');
@@ -57,7 +57,7 @@ console.log(`##vso[task.setvariable variable=reactNativeDevDependency]${versionE
 const dirPath = path.resolve(process.env.RUNNER_TEMP, 'versionEnvVars');
 fs.mkdirSync(dirPath, {recursive: true});
 
-fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.js'), 
+fs.writeFileSync(path.resolve(dirPath, 'versionEnvVars.js'),
 `
 console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_STR]${versionEnvVars.RNW_PKG_VERSION_STR}");
 console.log("##vso[task.setvariable variable=RNW_PKG_VERSION_MAJOR]${versionEnvVars.RNW_PKG_VERSION_MAJOR}");

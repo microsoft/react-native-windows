@@ -31,9 +31,9 @@ import {totalmem, cpus} from 'os';
 
 function setExitProcessWithError(
   error: Error,
-  loggingWasEnabled: boolean,
+  loggingWasEnabled?: boolean,
 ): void {
-  if (!loggingWasEnabled) {
+  if (loggingWasEnabled !== true) {
     console.log(
       `Re-run the command with ${chalk.bold('--logging')} for more information`,
     );
@@ -220,7 +220,7 @@ async function runWindowsInternal(
   config: Config,
   options: RunWindowsOptions,
 ) {
-  const verbose = options.logging;
+  const verbose = options.logging === true;
 
   if (verbose) {
     newInfo('Verbose: ON');
@@ -347,8 +347,9 @@ async function runWindowsInternal(
 
 function shouldLaunchPackager(options: RunWindowsOptions): boolean {
   return (
-    options.packager === true ||
-    (options.packager === undefined && options.release !== true)
+    options.packager === true &&
+    options.launch === true &&
+    options.release !== true
   );
 }
 

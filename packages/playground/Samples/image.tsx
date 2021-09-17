@@ -4,7 +4,7 @@
  * @format
  */
 import React from 'react';
-import {Picker} from 'react-native-windows';
+import {Picker} from '@react-native-picker/picker';
 import {AppRegistry, Image, View, Text, Switch, StyleSheet} from 'react-native';
 
 const largeImageUri =
