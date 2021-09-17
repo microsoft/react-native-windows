@@ -1,0 +1,17 @@
+name: Community Module support request 2
+description: Suggest that Windows support be added to a community module
+title: Support react-native-foo
+labels: [Extensions, enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This Issue template helps us track which modules need to work with React Native for Windows. If you have found a community module that doesn't yet work with React Native for Windows, fill out the Issue fields below! 
+        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: Module
+      description: Name of the module
+      placeholder: react-native-foo
