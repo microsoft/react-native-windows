@@ -92,7 +92,7 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   // Associate environment to holder.
   napi_set_instance_data(env, this, nullptr /*finalize_cb*/, nullptr /*finalize_hint*/);
 
-  m_runtime = MakeNapiJsiRuntime2(env);
+  m_runtime = MakeNodeApiJsiRuntime(env);
   m_ownThreadId = std::this_thread::get_id();
 }
 

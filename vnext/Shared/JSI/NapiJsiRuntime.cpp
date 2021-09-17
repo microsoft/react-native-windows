@@ -1307,7 +1307,7 @@ size_t NapiJsiRuntime::VectorBuffer::size() const {
 
 #pragma region error - handling
 
-// Throws facebook::jsi::JSError or facebook::jsi::JSINativeException from NAPI error.
+// Throws facebook::jsi::JSError or facebook::jsi::JSINativeException from NodeApi error.
 [[noreturn]] void NapiJsiRuntime::ThrowJsException(napi_status status) const {
   napi_value jsError{};
   CHECK_NAPI_ELSE_CRASH(napi_get_and_clear_last_exception(m_env, &jsError));
@@ -1319,7 +1319,7 @@ size_t NapiJsiRuntime::VectorBuffer::size() const {
     throw JSError(*const_cast<NapiJsiRuntime *>(this), ToJsiValue(jsError));
   } else {
     std::ostringstream errorString;
-    errorString << "A call to Chakra API returned error code 0x" << std::hex << status << '.';
+    errorString << "A call to NodeApi returned error code 0x" << std::hex << status << '.';
 
     throw JSINativeException(errorString.str().c_str());
   }
@@ -1558,7 +1558,7 @@ string NapiJsiRuntime::StringToStdString(napi_value stringValue) const {
   string result;
   CHECK_ELSE_THROW(
       TypeOf(stringValue) == napi_valuetype::napi_string,
-      "Cannot convert a non JS string ChakraObjectRef to a std::string.");
+      "Cannot convert a non JS string NodeApi Value to a std::string.");
   size_t strLength{};
   CHECK_NAPI(napi_get_value_string_utf8(m_env, stringValue, nullptr, 0, &strLength));
   result.assign(strLength, '\0');

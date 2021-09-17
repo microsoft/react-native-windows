@@ -13,9 +13,9 @@
 namespace Microsoft::JSI {
 
 ///
-// NapiJsiRuntime factory function.
+// NodeApiJsiRuntime factory function.
 // TODO: Rename as MakeNapiJsiRuntime once code is dropped from V8-JSI.
 ///
-std::unique_ptr<facebook::jsi::Runtime> __cdecl MakeNapiJsiRuntime2(napi_env env) noexcept;
+std::unique_ptr<facebook::jsi::Runtime> __cdecl MakeNodeApiJsiRuntime(napi_env env) noexcept;
 
 } // namespace Microsoft::JSI
