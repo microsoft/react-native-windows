@@ -24,6 +24,9 @@ class TabStopExample extends React.Component {
         <Text>No tab index, this item will be tabbed to last</Text>
         <TouchableHighlight
           style={itemStyle}
+          {...{
+            focusable: true,
+          }}
           onPress={() => {
             //onPress, even if empty, is required for TouchableWithoutFeedback to be focusable
           }}>
@@ -41,25 +44,34 @@ class TabStopExample extends React.Component {
           }}>
           <TouchableHighlight
             style={itemStyle}
-            {...{tabIndex: 1}}
             onPress={() => {
               //onPress, even if empty, is required for Touchable components to be focusable
+            }}
+            {...{
+              focusable: true,
+              tabIndex: 1,
             }}>
             <Text>tabIndex 1</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={itemStyle}
-            {...{tabIndex: 3}}
             onPress={() => {
               //onPress, even if empty, is required for Touchable components to be focusable
+            }}
+            {...{
+              focusable: true,
+              tabIndex: 3,
             }}>
             <Text>tabIndex 3</Text>
           </TouchableHighlight>
           <TouchableHighlight
             style={itemStyle}
-            {...{tabIndex: 2}}
             onPress={() => {
               //onPress, even if empty, is required for Touchable components to be focusable
+            }}
+            {...{
+              focusable: true,
+              tabIndex: 2,
             }}>
             <Text>tabIndex 2</Text>
           </TouchableHighlight>
