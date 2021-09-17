@@ -1,0 +1,63 @@
+name: Application Card Rendering Bug Report
+description: Create a bug report for problems rendering Adaptive Cards in an Application
+title: "[Rendering] Bug Title Here"
+labels: [Area-Renderers, Bug, Triage-Needed]
+body:
+  - type: dropdown
+    validations:
+      required: true
+    attributes:
+      label: Target Platforms
+      description: Select the platform(s) that you are rendering on
+      multiple: true
+      options:
+        - NodeJS
+        - iOS
+        - Android
+        - WPF
+        - UWP
+        - Other
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: SDK Version
+      description: What version of the SDK are you using
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: Application Name
+      description: The name of the application that is having problems with Card Rendering
+      placeholder: Microsoft Teams
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Problem Description
+      description: Please enter a description of the issue. If you just have a question, please post [on GitHub Discussions](https://github.com/microsoft/AdaptiveCards/discussions)
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: Screenshots
+      description: Please provide a screenshot of the problem (if possible)
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Card JSON
+      description: Please provide the JSON of the Card that is being rendered
+      render: JSON
+  - type: input
+    validations:
+      required: false
+    attributes:
+      label: Sample Code Language
+      description: The language of the code sample
+  - type: textarea
+    validations:
+      required: false
+    attributes:
+      label: Sample Code
+      description: Please provide any relevant code samples to help reproduce the issue
