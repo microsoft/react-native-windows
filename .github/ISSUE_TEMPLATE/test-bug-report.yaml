@@ -4,20 +4,6 @@ title: Describe the problem
 labels: [bug]
 body:
   - type: dropdown
-    validations:
-      required: true
-    attributes:
-      label: Target Platforms
-      description: Select the platform(s) that you are rendering on
-      multiple: true
-      options:
-        - NodeJS
-        - iOS
-        - Android
-        - WPF
-        - UWP
-        - Other
-  - type: dropdown
     attributes:
       label: Target Platform Version
       description: What SDK version are you building for?
@@ -50,3 +36,27 @@ body:
         - "DebugBundle"
         - "Release"
         - "ReleaseBundle"
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Steps To Reproduce
+      description: Provide a detailed list of steps that reproduce the issue.
+      placeholder: |
+        1.
+        2.
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Expected Results
+      description: Describe what you expected to happen.
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Snack, code example, screenshot, or link to a repository
+      description: |
+        Please provide a Snack (https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem.
+        You may provide a screenshot of the application if you think it is relevant to your bug report.
+        Here are some tips for providing a minimal example: https://stackoverflow.com/help/mcve
