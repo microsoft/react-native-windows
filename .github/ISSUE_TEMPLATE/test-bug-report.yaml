@@ -1,0 +1,19 @@
+name: Fake Bug Report
+description: Create a bug report for problems rendering Adaptive Cards in an Application
+title: "[Rendering] Bug Title Here"
+labels: [Area-Renderers, Bug, Triage-Needed]
+body:
+  - type: dropdown
+    validations:
+      required: true
+    attributes:
+      label: Target Platforms
+      description: Select the platform(s) that you are rendering on
+      multiple: true
+      options:
+        - NodeJS
+        - iOS
+        - Android
+        - WPF
+        - UWP
+        - Other
