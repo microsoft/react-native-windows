@@ -3,23 +3,29 @@ description: File a bug report
 title: Describe the problem
 labels: [bug]
 body:
+#  - type: markdown
+#    attributes:
+#      value: |
+#        Your issue will be triaged by the RNW team according to this process: https://github.com/microsoft/react-native-windows/wiki/Triage-Process
   - type: textarea
     validations:
       required: true
     attributes:
       label: CLI version
-      description: "`npx react-native --version`"
-      placeholder: Run the command in your terminal and copy the results here
-      value: "`npx react-native --version`"
+      description: |
+        Run the command in your terminal and copy the results here
+        `npx react-native --version`
+      value: "npx react-native --version"
       render: markdown
   - type: textarea
     validations:
       required: true
     attributes:
       label: Environment
-      description: "`npx react-native info`"
-      placeholder: Run the command in your terminal and copy the results here
-      value: "`npx react-native info`"
+      description: |
+        Run the command in your terminal and copy the results here
+        `npx react-native info`
+      value: "npx react-native info"
       render: markdown
   - type: dropdown
     attributes:
@@ -74,8 +80,6 @@ body:
 #      label: Troubleshooting
 #      description: If you see build failure on `react-native run-windows`, please try again with 'react-native run-windows --logging' and provide the output.
   - type: textarea
-    validations:
-      required: true
     attributes:
       label: Snack, code example, screenshot, or link to a repository
       description: |
