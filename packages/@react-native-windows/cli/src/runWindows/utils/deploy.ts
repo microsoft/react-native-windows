@@ -45,7 +45,7 @@ export function getBuildConfiguration(options: RunWindowsOptions): BuildConfig {
 }
 
 function shouldLaunchApp(options: RunWindowsOptions): boolean {
-  return options.launch;
+  return options.launch === true;
 }
 
 function getAppPackage(

@@ -94,6 +94,6 @@ exit /b 0
         copy %scriptFolder%%nuspecFile% %targetNuspec% /y
     )
     echo nuget pack %targetNuspec% -properties CommitId=TestCommit;version=%version%;id=%packageId%;nugetroot=%nugetRoot%;baseconfiguration=%baseConfiguration%;baseplatform=%basePlatform%
-    nuget pack %targetNuspec% -OutputDirectory %targetDir%\pkgs -properties CommitId=TestCommit;version=%version%;id=%packageId%;nugetroot=%nugetRoot%;baseconfiguration=%baseConfiguration%;baseplatform=%basePlatform%;NoWarn=NU5100
+    nuget pack %targetNuspec% -OutputDirectory %targetDir%\pkgs -symbols -properties CommitId=TestCommit;version=%version%;id=%packageId%;nugetroot=%nugetRoot%;baseconfiguration=%baseConfiguration%;baseplatform=%basePlatform%;NoWarn=NU5100
     nuget add %targetNupkg% -Source %targetDir%\feed
     goto :EOF

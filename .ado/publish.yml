@@ -329,6 +329,8 @@ jobs:
           packMicrosoftReactNativeProjectReunion: true
           ${{ if or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(parameters.skipStableCodesign))) }}: # Sign on stable release builds
             signMicrosoft: true
+          ${{ if eq(variables['Build.SourceBranchName'], 'main') }}: # Enable symbol packages on main builds
+            createSymbolPackages: true
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
