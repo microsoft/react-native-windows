@@ -30,8 +30,6 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ReactWindowsDesktopABITests</RootNamespace>
     <ProjectSubType>NativeUnitTestProject</ProjectSubType>
-    <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
-    <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -78,10 +76,6 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>
-        delayimp.lib;
-        %(AdditionalDependencies)
-      </AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
     </Link>
@@ -174,7 +168,6 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="$(V8Package)\build\native\$(V8PackageName).targets" Condition="Exists('$(V8Package)\build\native\$(V8PackageName).targets') AND '$(UseV8)' == 'true'" />
     <Import Project="..\Microsoft.ReactNative.IntegrationTests\TestBundle.targets" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -183,6 +176,5 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('$(V8Package)\build\native\$(V8PackageName).targets') AND '$(UseV8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8Package)\build\native\$(V8PackageName).targets'))" />
   </Target>
 </Project>
