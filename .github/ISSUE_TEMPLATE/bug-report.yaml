@@ -6,7 +6,26 @@ body:
   - type: markdown
     attributes:
       value: |
-        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process)
+        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Problem Description
+      description: Please enter a description of the issue. If you just have a question, please post on [Discussions](https://github.com/microsoft/react-native-windows/discussions).
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Steps To Reproduce
+      description: Provide a detailed list of steps that reproduce the issue.
+      placeholder: |
+        1.
+        2.
+  - type: textarea
+    attributes:
+      label: Expected Results
+      description: Describe what you expected to happen.
   - type: input
     validations:
       required: true
@@ -57,21 +76,6 @@ body:
         - "DebugBundle"
         - "Release"
         - "ReleaseBundle"
-  - type: textarea
-    validations:
-      required: true
-    attributes:
-      label: Steps To Reproduce
-      description: Provide a detailed list of steps that reproduce the issue.
-      placeholder: |
-        1.
-        2.
-  - type: textarea
-    validations:
-      required: true
-    attributes:
-      label: Expected Results
-      description: Describe what you expected to happen.
   - type: markdown
     attributes:
       value: |
