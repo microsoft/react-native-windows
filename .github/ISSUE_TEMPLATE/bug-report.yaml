@@ -77,11 +77,11 @@ body:
     attributes:
       value: |
         **Troubleshooting**
-        If you see build failure on `react-native run-windows`, please try again with 'react-native run-windows --logging' and provide the output.
+        If you see build failure on `react-native run-windows`, please try again with `react-native run-windows --logging` and provide the output.
   - type: textarea
     attributes:
       label: Snack, code example, screenshot, or link to a repository
       description: |
-        Please provide a Snack (https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem.
+        Please provide a [Snack](https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem.
         You may provide a screenshot of the application if you think it is relevant to your bug report.
-        Here are some tips for providing a minimal example: https://stackoverflow.com/help/mcve
+        [Here are some tips for providing a minimal example](https://stackoverflow.com/help/mcve).
