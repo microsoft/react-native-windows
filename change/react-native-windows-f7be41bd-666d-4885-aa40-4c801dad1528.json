@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Initial implementation of TextVisitor",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

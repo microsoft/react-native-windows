@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds shouldConstrainToRootBounds prop to Flyout",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

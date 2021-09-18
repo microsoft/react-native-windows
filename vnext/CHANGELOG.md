@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 17 Sep 2021 05:06:53 GMT and should not be manually modified.
+This log was last generated on Sat, 18 Sep 2021 05:07:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.379
+
+Sat, 18 Sep 2021 05:07:45 GMT
+
+### Changes
+
+- Adds autoFocus prop to FlyoutViewManager (erozell@outlook.com)
+- Migrate NapiJsiRuntime from V8/JSI. (julio.rocha@microsoft.com)
+- "add missing include due to pr conflict" (agnel@microsoft.com)
+- Adds shouldConstrainToRootBounds prop to Flyout (erozell@outlook.com)
+- Initial implementation of TextVisitor (erozell@outlook.com)
 
 ## 0.0.0-canary.378
 

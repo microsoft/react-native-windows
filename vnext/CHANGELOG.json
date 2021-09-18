@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 18 Sep 2021 05:07:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.379",
+      "version": "0.0.0-canary.379",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adds autoFocus prop to FlyoutViewManager",
+            "author": "erozell@outlook.com",
+            "commit": "fbbfb83843c60abb8c02368077fd0a406f0bdcc0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate NapiJsiRuntime from V8/JSI.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a858af11ba43c0b67dc0284a56e7b37b6d2808de",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "\"add missing include due to pr conflict\"",
+            "author": "agnel@microsoft.com",
+            "commit": "cab81260cfb7d6051902d4eb7dce6946a9cc7423",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Adds shouldConstrainToRootBounds prop to Flyout",
+            "author": "erozell@outlook.com",
+            "commit": "fa19aceb9b7bca38c204e04e3a9ccbc035c99c3f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Initial implementation of TextVisitor",
+            "author": "erozell@outlook.com",
+            "commit": "485f0ffcc4d0d9f24d4d529ee35e9de2a6ae4ef6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Sep 2021 05:06:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.378",
       "version": "0.0.0-canary.378",

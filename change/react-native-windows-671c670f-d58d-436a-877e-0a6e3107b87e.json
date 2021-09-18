@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "\"add missing include due to pr conflict\"",
-  "packageName": "react-native-windows",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}
