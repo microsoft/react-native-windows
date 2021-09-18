@@ -120,7 +120,9 @@
     <ClInclude Include="ReactModuleBuilderMock.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="JsiTest.cpp" />
+    <ClCompile Include="JsiTest.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="JsonJSValueReader.cpp" />
     <ClCompile Include="JsonReader.cpp" />
     <ClCompile Include="JSValueReaderTest.cpp" />
