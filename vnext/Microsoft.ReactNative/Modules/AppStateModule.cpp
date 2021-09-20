@@ -47,10 +47,10 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
 }
 
 void AppState::GetCurrentAppState(
-    std::function<void(React::JSValueObject const &)> const &success,
+    std::function<void(AppStateChangeArgs const &)> const &success,
     std::function<void(React::JSValue const &)> const &error) noexcept {
-  React::JSValueObject args;
-  args["app_state"] = m_active ? "active" : "background";
+  AppStateChangeArgs args;
+  args.app_state = m_active ? "active" : "background";
   success(args);
 }
 

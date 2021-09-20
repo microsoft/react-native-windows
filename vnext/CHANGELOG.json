@@ -2,6 +2,144 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 18 Sep 2021 05:07:45 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.379",
+      "version": "0.0.0-canary.379",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adds autoFocus prop to FlyoutViewManager",
+            "author": "erozell@outlook.com",
+            "commit": "fbbfb83843c60abb8c02368077fd0a406f0bdcc0",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Migrate NapiJsiRuntime from V8/JSI.",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a858af11ba43c0b67dc0284a56e7b37b6d2808de",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "\"add missing include due to pr conflict\"",
+            "author": "agnel@microsoft.com",
+            "commit": "cab81260cfb7d6051902d4eb7dce6946a9cc7423",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Adds shouldConstrainToRootBounds prop to Flyout",
+            "author": "erozell@outlook.com",
+            "commit": "fa19aceb9b7bca38c204e04e3a9ccbc035c99c3f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Initial implementation of TextVisitor",
+            "author": "erozell@outlook.com",
+            "commit": "485f0ffcc4d0d9f24d4d529ee35e9de2a6ae4ef6",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Sep 2021 05:06:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.378",
+      "version": "0.0.0-canary.378",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Enable publishing NuGet symbol packages",
+            "author": "jthysell@microsoft.com",
+            "commit": "95fecc02d3dcc9f03d0fc7d47d30cb45e128bca6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Break in Fast Refresh Behavior",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "4e8f1ac111ce991748dcff1e88c936102899d7e6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Ensures IsHitTestVisible is set on correct view",
+            "author": "erozell@outlook.com",
+            "commit": "6d40868bc10bb8dbba6197866c6639623fee2084",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow injection of custom UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "77ebdd47cd2feead7885933ac351a045041bee2e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Sep 2021 05:06:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.377",
+      "version": "0.0.0-canary.377",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adds showMode prop to FlyoutViewManager",
+            "author": "erozell@outlook.com",
+            "commit": "b46965a75f179c1855a2499c7f3c6b4b10daf416",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Sep 2021 05:07:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.376",
+      "version": "0.0.0-canary.376",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Provide more TS type information for ViewWindows",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "5dbd74b1852c38f851483478d6da7d81949d0195",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Generate anonymous objects in correct order for turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "df2e77140ebe63c91039226a83f4d2e49e4af408",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Sep 2021 05:07:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.375",
+      "version": "0.0.0-canary.375",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.86",
+            "author": "jthysell@microsoft.com",
+            "commit": "d3de4a2b04415ff9004b7ba08ee21787b924d0d4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Sep 2021 05:06:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.374",
+      "version": "0.0.0-canary.374",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump hermes to v0.9",
+            "author": "anandrag@microsoft.com",
+            "commit": "09bc9974c8721bf5559680dc7a8aa00514c1c7f3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Sep 2021 05:07:31 GMT",
       "tag": "react-native-windows_v0.0.0-canary.373",
       "version": "0.0.0-canary.373",

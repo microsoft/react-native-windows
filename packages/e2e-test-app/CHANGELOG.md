@@ -1,8 +1,56 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Fri, 10 Sep 2021 05:07:31 GMT and should not be manually modified.
+This log was last generated on Sat, 18 Sep 2021 05:07:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Sat, 18 Sep 2021 05:07:45 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.379 (erozell@outlook.com)
+
+## 0.0.0
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.378 (jthysell@microsoft.com)
+
+## 0.0.0
+
+Thu, 16 Sep 2021 05:06:44 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.377 (erozell@outlook.com)
+
+## 0.0.0
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.376 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.375 (jthysell@microsoft.com)
+
+## 0.0.0
+
+Sat, 11 Sep 2021 05:06:55 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.374 (anandrag@microsoft.com)
 
 ## 0.0.0
 

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 09 Sep 2021 05:07:46 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Sep 2021 05:06:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.111
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Fix exception in View when props are undefined (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.110
 

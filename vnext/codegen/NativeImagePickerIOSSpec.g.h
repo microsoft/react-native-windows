@@ -13,12 +13,28 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(ImagePickerIOSSpec_openCameraDialog_config)
+struct ImagePickerIOSSpec_openCameraDialog_config {
+    REACT_FIELD(unmirrorFrontFacingCamera)
+    bool unmirrorFrontFacingCamera;
+    REACT_FIELD(videoMode)
+    bool videoMode;
+};
+
+REACT_STRUCT(ImagePickerIOSSpec_openSelectDialog_config)
+struct ImagePickerIOSSpec_openSelectDialog_config {
+    REACT_FIELD(showImages)
+    bool showImages;
+    REACT_FIELD(showVideos)
+    bool showVideos;
+};
+
 struct ImagePickerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(Callback<bool>) noexcept>{0, L"canRecordVideos"},
       Method<void(Callback<bool>) noexcept>{1, L"canUseCamera"},
-      Method<void(React::JSValueObject, Callback<std::string, double, double>, Callback<>) noexcept>{2, L"openCameraDialog"},
-      Method<void(React::JSValueObject, Callback<std::string, double, double>, Callback<>) noexcept>{3, L"openSelectDialog"},
+      Method<void(ImagePickerIOSSpec_openCameraDialog_config, Callback<std::string, double, double>, Callback<>) noexcept>{2, L"openCameraDialog"},
+      Method<void(ImagePickerIOSSpec_openSelectDialog_config, Callback<std::string, double, double>, Callback<>) noexcept>{3, L"openSelectDialog"},
       Method<void() noexcept>{4, L"clearAllPendingVideos"},
       Method<void(std::string) noexcept>{5, L"removePendingVideo"},
   };
@@ -40,13 +56,13 @@ struct ImagePickerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "openCameraDialog",
-          "    REACT_METHOD(openCameraDialog) void openCameraDialog(React::JSValueObject && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(openCameraDialog) static void openCameraDialog(React::JSValueObject && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(openCameraDialog) void openCameraDialog(ImagePickerIOSSpec_openCameraDialog_config && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(openCameraDialog) static void openCameraDialog(ImagePickerIOSSpec_openCameraDialog_config && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "openSelectDialog",
-          "    REACT_METHOD(openSelectDialog) void openSelectDialog(React::JSValueObject && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(openSelectDialog) static void openSelectDialog(React::JSValueObject && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(openSelectDialog) void openSelectDialog(ImagePickerIOSSpec_openSelectDialog_config && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(openSelectDialog) static void openSelectDialog(ImagePickerIOSSpec_openSelectDialog_config && config, std::function<void(std::string, double, double)> const & successCallback, std::function<void()> const & cancelCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "clearAllPendingVideos",

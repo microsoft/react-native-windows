@@ -13,6 +13,34 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers)
+struct AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers {
+    REACT_FIELD(extraSmall)
+    std::optional<double> extraSmall;
+    REACT_FIELD(small)
+    std::optional<double> small;
+    REACT_FIELD(medium)
+    std::optional<double> medium;
+    REACT_FIELD(large)
+    std::optional<double> large;
+    REACT_FIELD(extraLarge)
+    std::optional<double> extraLarge;
+    REACT_FIELD(extraExtraLarge)
+    std::optional<double> extraExtraLarge;
+    REACT_FIELD(extraExtraExtraLarge)
+    std::optional<double> extraExtraExtraLarge;
+    REACT_FIELD(accessibilityMedium)
+    std::optional<double> accessibilityMedium;
+    REACT_FIELD(accessibilityLarge)
+    std::optional<double> accessibilityLarge;
+    REACT_FIELD(accessibilityExtraLarge)
+    std::optional<double> accessibilityExtraLarge;
+    REACT_FIELD(accessibilityExtraExtraLarge)
+    std::optional<double> accessibilityExtraExtraLarge;
+    REACT_FIELD(accessibilityExtraExtraExtraLarge)
+    std::optional<double> accessibilityExtraExtraExtraLarge;
+};
+
 struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(Callback<bool>, Callback<React::JSValue>) noexcept>{0, L"getCurrentBoldTextState"},
@@ -21,7 +49,7 @@ struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
       Method<void(Callback<bool>, Callback<React::JSValue>) noexcept>{3, L"getCurrentReduceMotionState"},
       Method<void(Callback<bool>, Callback<React::JSValue>) noexcept>{4, L"getCurrentReduceTransparencyState"},
       Method<void(Callback<bool>, Callback<React::JSValue>) noexcept>{5, L"getCurrentVoiceOverState"},
-      Method<void(React::JSValueObject) noexcept>{6, L"setAccessibilityContentSizeMultipliers"},
+      Method<void(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers) noexcept>{6, L"setAccessibilityContentSizeMultipliers"},
       Method<void(double) noexcept>{7, L"setAccessibilityFocus"},
       Method<void(std::string) noexcept>{8, L"announceForAccessibility"},
   };
@@ -63,8 +91,8 @@ struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "setAccessibilityContentSizeMultipliers",
-          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) void setAccessibilityContentSizeMultipliers(React::JSValueObject && JSMultipliers) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) static void setAccessibilityContentSizeMultipliers(React::JSValueObject && JSMultipliers) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) void setAccessibilityContentSizeMultipliers(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers && JSMultipliers) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setAccessibilityContentSizeMultipliers) static void setAccessibilityContentSizeMultipliers(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers && JSMultipliers) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
           "setAccessibilityFocus",

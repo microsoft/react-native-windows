@@ -11,7 +11,11 @@ import {
   NativeModuleParamTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
-import {getAliasCppName} from './ObjectTypes';
+import {
+  AliasMap,
+  getAliasCppName,
+  getAnonymousAliasCppName,
+} from './AliasManaging';
 
 type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>
@@ -32,6 +36,8 @@ function decorateType(type: string, target: ParamTarget): string {
 
 function translateParam(
   param: NativeModuleParamTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
   target: ParamTarget,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
@@ -52,15 +58,25 @@ function translateParam(
       switch (target) {
         case 'spec':
           return `Callback<${param.params
-            .map(translateSpecFunctionParam)
+            .map((p: NativeModuleParamShape) =>
+              translateSpecFunctionParam(
+                p,
+                aliases,
+                `${baseAliasName}_${p.name}`,
+              ),
+            )
             .join(', ')}>`;
         case 'template':
           return `std::function<void(${param.params
-            .map(translateCallbackParam)
+            .map((p: NativeModuleParamShape) =>
+              translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+            )
             .join(', ')})>`;
         default:
           return `std::function<void(${param.params
-            .map(translateCallbackParam)
+            .map((p: NativeModuleParamShape) =>
+              translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+            )
             .join(', ')})> const &`;
       }
     }
@@ -71,12 +87,16 @@ function translateParam(
           case 'template':
             return `std::vector<${translateNullableParamType(
               param.elementType,
+              aliases,
+              `${baseAliasName}_element`,
               'template',
               'template',
             )}>`;
           default:
             return `std::vector<${translateNullableParamType(
               param.elementType,
+              aliases,
+              `${baseAliasName}_element`,
               'template',
               'template',
             )}> const &`;
@@ -87,8 +107,10 @@ function translateParam(
     case 'GenericObjectTypeAnnotation':
       return decorateType('React::JSValue', target);
     case 'ObjectTypeAnnotation':
-      // TODO: we have more information here, and could create a more specific type
-      return decorateType('React::JSValueObject', target);
+      return decorateType(
+        getAnonymousAliasCppName(aliases, baseAliasName, param),
+        target,
+      );
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = param.name;
@@ -107,6 +129,8 @@ function translateParam(
 
 function translateNullableParamType(
   paramType: Nullable<NativeModuleParamTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
   nullableTarget: ParamTarget,
   target: ParamTarget,
 ): string {
@@ -114,28 +138,52 @@ function translateNullableParamType(
     case 'NullableTypeAnnotation':
       return `std::optional<${translateParam(
         paramType.typeAnnotation,
+        aliases,
+        baseAliasName,
         nullableTarget,
       )}>`;
     default:
-      return translateParam(paramType, target);
+      return translateParam(paramType, aliases, baseAliasName, target);
   }
 }
 
-function translateSpecFunctionParam(param: NativeModuleParamShape): string {
-  return translateNullableParamType(param.typeAnnotation, 'spec', 'spec');
-}
-
-function translateCallbackParam(param: NativeModuleParamShape): string {
+function translateSpecFunctionParam(
+  param: NativeModuleParamShape,
+  aliases: AliasMap,
+  baseAliasName: string,
+): string {
   return translateNullableParamType(
     param.typeAnnotation,
+    aliases,
+    baseAliasName,
+    'spec',
+    'spec',
+  );
+}
+
+function translateCallbackParam(
+  param: NativeModuleParamShape,
+  aliases: AliasMap,
+  baseAliasName: string,
+): string {
+  return translateNullableParamType(
+    param.typeAnnotation,
+    aliases,
+    baseAliasName,
     'template',
     'callback-arg',
   );
 }
 
-function translateFunctionParam(param: NativeModuleParamShape): string {
+function translateFunctionParam(
+  param: NativeModuleParamShape,
+  aliases: AliasMap,
+  baseAliasName: string,
+): string {
   return translateNullableParamType(
     param.typeAnnotation,
+    aliases,
+    baseAliasName,
     'template',
     'method-arg',
   );
@@ -143,16 +191,30 @@ function translateFunctionParam(param: NativeModuleParamShape): string {
 
 export function translateSpecArgs(
   params: ReadonlyArray<NativeModuleParamShape>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ) {
   return params.map(param => {
-    const translatedParam = translateSpecFunctionParam(param);
+    const translatedParam = translateSpecFunctionParam(
+      param,
+      aliases,
+      `${baseAliasName}_${param.name}`,
+    );
     return `${translatedParam}`;
   });
 }
 
-export function translateArgs(params: ReadonlyArray<NativeModuleParamShape>) {
+export function translateArgs(
+  params: ReadonlyArray<NativeModuleParamShape>,
+  aliases: AliasMap,
+  baseAliasName: string,
+) {
   return params.map(param => {
-    const translatedParam = translateFunctionParam(param);
+    const translatedParam = translateFunctionParam(
+      param,
+      aliases,
+      `${baseAliasName}_${param.name}`,
+    );
     return `${translatedParam} ${param.name}`;
   });
 }

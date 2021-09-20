@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 17 Sep 2021 05:06:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.111",
+      "version": "0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix exception in View when props are undefined",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "77ebdd47cd2feead7885933ac351a045041bee2e",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Sep 2021 05:07:46 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.110",
       "version": "0.0.0-canary.110",
