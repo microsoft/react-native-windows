@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 20 Sep 2021 15:07:01 GMT",
+      "tag": "react-native-windows_v0.66.0-preview.4",
+      "version": "0.66.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Restore Fast Refresh",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "71803345c9e89ee419332119fd5667370c5c19d3",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Sep 2021 15:06:37 GMT",
       "tag": "react-native-windows_v0.66.0-preview.3",
       "version": "0.66.0-preview.3",

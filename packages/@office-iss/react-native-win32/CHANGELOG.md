@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 03 Sep 2021 18:48:19 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Sep 2021 15:07:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.0-preview.2
+
+Mon, 20 Sep 2021 15:07:01 GMT
+
+### Changes
+
+- Adding ItemType prop on ViewWIn32 (safreibe@microsoft.com)
 
 ## 0.66.0-preview.1
 

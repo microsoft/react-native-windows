@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 20 Sep 2021 15:07:01 GMT",
+      "tag": "@office-iss/react-native-win32_v0.66.0-preview.2",
+      "version": "0.66.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding ItemType prop on ViewWIn32",
+            "author": "safreibe@microsoft.com",
+            "commit": "e5689bf41dd6322456a917391aee3c3940e19070",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 18:48:19 GMT",
       "tag": "@office-iss/react-native-win32_v0.66.0-preview.1",
       "version": "0.66.0-preview.1",

@@ -2,6 +2,21 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Mon, 20 Sep 2021 15:07:01 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.66.0-preview.4",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "71803345c9e89ee419332119fd5667370c5c19d3",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Sep 2021 15:06:37 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",

@@ -1,8 +1,16 @@
 # Change Log - integration-test-app
 
-This log was last generated on Mon, 13 Sep 2021 15:06:37 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Sep 2021 15:07:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 20 Sep 2021 15:07:01 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.66.0-preview.4 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0
 
