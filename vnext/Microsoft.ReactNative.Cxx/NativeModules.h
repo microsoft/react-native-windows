@@ -768,7 +768,7 @@ struct ModuleConstantInfo<TStruct (*)() noexcept> {
 
   static ConstantProviderDelegate GetConstantProvider(void * /*module*/, MethodType method) noexcept {
     return [method](IJSValueWriter const &argWriter) mutable noexcept {
-      auto constants = (method *)();
+      auto constants = (*method)();
       WriteProperties(argWriter, constants);
     };
   }
