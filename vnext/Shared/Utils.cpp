@@ -30,11 +30,8 @@ std::future<std::string> getPackagedApplicationDataPath(const wchar_t *childFold
 
 std::future<std::string> getUnPackagedApplicationDataPath(const wchar_t *childFolder) {
   wchar_t *pwzAppDataPath = NULL;
-  if (SHGetKnownFolderPath(
-          FOLDERID_AppDataProgramData,
-          KF_FLAG_CREATE,
-          static_cast<HANDLE>(NULL),
-          &pwzAppDataPath) != S_OK)
+  if (SHGetKnownFolderPath(FOLDERID_AppDataProgramData, KF_FLAG_CREATE, static_cast<HANDLE>(NULL), &pwzAppDataPath) !=
+      S_OK)
     std::abort();
 
   auto appDataPath = winrt::to_string(pwzAppDataPath);
