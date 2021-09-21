@@ -218,7 +218,7 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "The @JSIEngine override to be used with the React instance.\n"
       "In order for the override to work, Microsoft.ReactNative must be compiled with support of that engine. "
-      "This override will be ignored when @UseWebDebugger is set to true, since the browser must use its own "
+      "This override will be ignored when @.UseWebDebugger is set to true, since the browser must use its own "
       "engine to debug correctly.")
     DOC_DEFAULT("JSIEngine.Chakra")
     JSIEngine JSIEngineOverride { get; set; };
