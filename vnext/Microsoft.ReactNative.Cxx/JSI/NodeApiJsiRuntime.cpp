@@ -117,8 +117,6 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Value evaluatePreparedJavaScript(
       const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
 
-  bool drainMicrotasks(int maxMicrotasksHint = -1) override;
-
   facebook::jsi::Object global() override;
 
   std::string description() override;
@@ -645,10 +643,6 @@ Value NapiJsiRuntime::evaluatePreparedJavaScript(const shared_ptr<const Prepared
       RunSerializedScript(ToSpan(preparedScript->SerializedBuffer()), source, preparedScript->SourceUrl().c_str());
 
   return ToJsiValue(result);
-}
-
-bool NapiJsiRuntime::drainMicrotasks(int /*maxMicrotasksHint*/) {
-  return true;
 }
 
 Object NapiJsiRuntime::global() {
