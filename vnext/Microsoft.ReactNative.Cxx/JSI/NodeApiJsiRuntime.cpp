@@ -117,8 +117,6 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Value evaluatePreparedJavaScript(
       const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
 
-  bool drainMicrotasks(int maxMicrotasksHint = -1) override;
-
   facebook::jsi::Object global() override;
 
   std::string description() override;
@@ -175,7 +173,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Array getPropertyNames(const facebook::jsi::Object &obj) override;
 
   facebook::jsi::WeakObject createWeakObject(const facebook::jsi::Object &obj) override;
-  facebook::jsi::Value lockWeakObject(facebook::jsi::WeakObject &weakObj) override;
+  facebook::jsi::Value lockWeakObject(const facebook::jsi::WeakObject &weakObj) override;
 
   facebook::jsi::Array createArray(size_t length) override;
   size_t size(const facebook::jsi::Array &arr) override;
@@ -647,10 +645,6 @@ Value NapiJsiRuntime::evaluatePreparedJavaScript(const shared_ptr<const Prepared
   return ToJsiValue(result);
 }
 
-bool NapiJsiRuntime::drainMicrotasks(int /*maxMicrotasksHint*/) {
-  return true;
-}
-
 Object NapiJsiRuntime::global() {
   EnvScope scope{m_env};
 
@@ -894,7 +888,7 @@ WeakObject NapiJsiRuntime::createWeakObject(const Object &obj) {
   return MakePointer<WeakObject>(weakRef);
 }
 
-Value NapiJsiRuntime::lockWeakObject(WeakObject &weakObject) {
+Value NapiJsiRuntime::lockWeakObject(const WeakObject &weakObject) {
   EnvScope scope{m_env};
   napi_value value = GetNapiValue(weakObject);
 

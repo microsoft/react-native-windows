@@ -65,7 +65,7 @@
     <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <IncludePath>$(ReactNativeDir)\ReactCommon;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Shared;$(IncludePath)</IncludePath>
+    <IncludePath>$(ReactNativeDir)\ReactCommon;$(FollyDir);$(ReactNativeWindowsDir)stubs;$(JSI_SourcePath);$(JSI_Source);$(ReactNativeWindowsDir)Common;$(ReactNativeWindowsDir);$(ReactNativeWindowsDir)Shared;$(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;$(IncludePath)</IncludePath>
     <!--
       C4459 - declaration hides global declaration
      -->
