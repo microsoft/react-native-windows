@@ -165,8 +165,11 @@ function parseAppxManifest(appxManifestPath: string): parse.Document {
   return parse(fs.readFileSync(appxManifestPath, 'utf8'));
 }
 
-function getAppxManifest(options: RunWindowsOptions): parse.Document {
-  return parseAppxManifest(getAppxManifestPath(options, undefined));
+function getAppxManifest(
+  options: RunWindowsOptions,
+  projectName?: string,
+): parse.Document {
+  return parseAppxManifest(getAppxManifestPath(options, projectName));
 }
 
 function handleResponseError(e: Error): never {
@@ -187,7 +190,14 @@ function handleResponseError(e: Error): never {
 export async function deployToDevice(
   options: RunWindowsOptions,
   verbose: boolean,
+  config: Config,
 ) {
+  const windowsConfig: Partial<WindowsProjectConfig> | undefined =
+    config.project.windows;
+  const projectName =
+    windowsConfig && windowsConfig.project && windowsConfig.project.projectName
+      ? windowsConfig.project.projectName
+      : path.parse(options.proj!).name;
   const appPackageFolder = getAppPackage(options);
 
   const deployTarget = options.target
@@ -196,7 +206,7 @@ export async function deployToDevice(
     ? 'emulator'
     : 'device';
   const deployTool = new WinAppDeployTool();
-  const appxManifest = getAppxManifest(options);
+  const appxManifest = getAppxManifest(options, projectName);
   const shouldLaunch = shouldLaunchApp(options);
   const identity = appxManifest.root.children.filter(x => {
     return x.name === 'mp:PhoneIdentity';
