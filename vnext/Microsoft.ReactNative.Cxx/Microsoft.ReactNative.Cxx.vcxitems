@@ -17,6 +17,7 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
@@ -64,5 +65,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ModuleRegistration.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReactPromise.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
+      <ExcludedFromBuild Condition="'$(USE_V8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
 </Project>
