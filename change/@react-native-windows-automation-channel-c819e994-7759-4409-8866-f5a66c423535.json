@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate RN nightly build 9/9.",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "igklemen@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Issue#8397 Hermes profiler needs more work to function in win32 unpackaged apps Essentially, we are adding a new function to fetch the application data directory which works with both packaged and unpackaged apps, and consuming it in Hermes sampling profiler.",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "dependentChangeType": "patch"
-}
