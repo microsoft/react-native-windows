@@ -9,6 +9,23 @@
 #include "future/futureWait.h"
 
 namespace ReactNativeTests {
+
+REACT_STRUCT(MyTurboModuleConstants1)
+struct MyTurboModuleConstants1 {
+  REACT_FIELD(const71)
+  Point const71;
+  REACT_FIELD(const72)
+  std::string const72;
+};
+
+REACT_STRUCT(MyTurboModuleConstants2)
+struct MyTurboModuleConstants2 {
+  REACT_FIELD(const81)
+  Point const81;
+  REACT_FIELD(const82)
+  std::string const82;
+};
+
 REACT_MODULE(MyTurboModule)
 struct MyTurboModule {
   REACT_INIT(Initialize)
@@ -580,6 +597,24 @@ struct MyTurboModule {
   static void Constant6(React::ReactConstantProvider &provider) noexcept {
     provider.Add(L"const61", Point{/*X =*/15, /*Y =*/17});
     provider.Add(L"const62", "MyConstant62");
+  }
+
+  REACT_GET_CONSTANTS(Constant7)
+  MyTurboModuleConstants1 Constant7() noexcept {
+    MyTurboModuleConstants1 constants{};
+    constants.const71.X = 710;
+    constants.const71.Y = 711;
+    constants.const72 = "MyConstant72";
+    return constants;
+  }
+
+  REACT_GET_CONSTANTS(Constant8)
+  static MyTurboModuleConstants2 Constant8() noexcept {
+    MyTurboModuleConstants2 constants{};
+    constants.const81.X = 810;
+    constants.const81.Y = 811;
+    constants.const82 = "MyConstant82";
+    return constants;
   }
 
   // Allows to emit native module events
@@ -2066,6 +2101,12 @@ TEST_CLASS (TurboModuleTest) {
     TestCheck(constants["const61"]["X"] == 15);
     TestCheck(constants["const61"]["Y"] == 17);
     TestCheck(constants["const62"] == "MyConstant62");
+    TestCheck(constants["const71"]["X"] == 710);
+    TestCheck(constants["const71"]["Y"] == 711);
+    TestCheck(constants["const72"] == "MyConstant72");
+    TestCheck(constants["const81"]["X"] == 810);
+    TestCheck(constants["const81"]["Y"] == 811);
+    TestCheck(constants["const82"] == "MyConstant82");
   }
 
   TEST_METHOD(TestEvent_IntEventField) {
