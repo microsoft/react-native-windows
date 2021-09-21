@@ -601,20 +601,20 @@ struct MyTurboModule {
 
   REACT_GET_CONSTANTS(Constant7)
   MyTurboModuleConstants1 Constant7() noexcept {
-    MyTurboModuleConstants1 x;
-    x.const71.X = 710;
-    x.const71.Y = 711;
-    x.const72 = "MyConstant72";
-    return x;
+    MyTurboModuleConstants1 constants{};
+    constants.const71.X = 710;
+    constants.const71.Y = 711;
+    constants.const72 = "MyConstant72";
+    return constants;
   }
 
   REACT_GET_CONSTANTS(Constant8)
   static MyTurboModuleConstants2 Constant8() noexcept {
-    MyTurboModuleConstants2 x;
-    x.const81.X = 810;
-    x.const81.Y = 811;
-    x.const82 = "MyConstant82";
-    return x;
+    MyTurboModuleConstants2 constants{};
+    constants.const81.X = 810;
+    constants.const81.Y = 811;
+    constants.const82 = "MyConstant82";
+    return constants;
   }
 
   // Allows to emit native module events
