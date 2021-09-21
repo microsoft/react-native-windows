@@ -27,7 +27,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp">
-      <ExcludedFromBuild Condition="'$(UseHermes)' != 'true'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(IncludeHermes)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp">
+      <ExcludedFromBuild Condition="'$(IncludeHermes)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp">
+      <ExcludedFromBuild Condition="'$(IncludeHermes)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp" />
