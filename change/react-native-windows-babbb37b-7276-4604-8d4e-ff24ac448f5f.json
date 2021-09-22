@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix ARM64 layout issues in Office",
+  "packageName": "react-native-windows",
+  "email": "hpratt@microsoft.com",
+  "dependentChangeType": "patch"
+}
