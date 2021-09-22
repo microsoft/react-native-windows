@@ -23,6 +23,7 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples/Button/ButtonExample'),
   },
+  ,
   /*
   {
     key: 'FlatListExampleIndex',
@@ -75,8 +76,7 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'SwipeableCardExample',
     category: 'UI',
     module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
-  }*/,
-  {
+  }*/ {
     key: 'SwitchExample',
     category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
