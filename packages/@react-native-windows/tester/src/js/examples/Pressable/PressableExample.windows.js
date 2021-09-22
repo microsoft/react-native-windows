@@ -269,7 +269,10 @@ function PressableFocusCallbacks() {
   return (
     <>
       <View style={styles.row}>
+        <Button tabIndex={45}></Button>
         <Pressable
+        some_prop={34}
+          tabIndex={3}
           ref={viewRef}
           onFocus={() => console.log('Pressable onFocus')}
           onBlur={() => console.log('Pressable onBlur')}
@@ -278,6 +281,18 @@ function PressableFocusCallbacks() {
           }}>
           {({pressed}) => (
             <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
+          )}
+        </Pressable>
+        <Pressable
+          tabindex={1}
+          ref={viewRef}
+          onFocus={() => console.log('2Pressable onFocus')}
+          onBlur={() => console.log('2Pressable onBlur')}
+          onPress={() => {
+            setTimesPressed(current => current + 1);
+          }}>
+          {({pressed}) => (
+            <Text style={styles.text}>{pressed ? '2Pressed!' : 'Press Me'}</Text>
           )}
         </Pressable>
       </View>
