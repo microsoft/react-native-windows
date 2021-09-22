@@ -23,7 +23,9 @@ class ScrollViewUWPImplementation {
  public:
   ScrollViewUWPImplementation(const winrt::ScrollViewer &scrollViewer);
 
+  void ContentAnchoringEnabled(bool enabled);
   void SetHorizontal(bool isHorizontal);
+  void SetInverted(bool isInverted);
   void SnapToInterval(float interval);
   void SnapToStart(bool snapToStart);
   void SnapToEnd(bool snapToEnd);
