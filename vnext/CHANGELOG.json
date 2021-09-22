@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 Sep 2021 05:08:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.380",
+      "version": "0.0.0-canary.380",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Issue#8397 Hermes profiler needs more work to function in win32 unpackaged apps Essentially, we are adding a new function to fetch the application data directory which works with both packaged and unpackaged apps, and consuming it in Hermes sampling profiler.",
+            "author": "anandrag@microsoft.com",
+            "commit": "5f494d4154fd5274f531abe9435aea8d07e4548f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RN nightly build 9/9.",
+            "author": "igklemen@microsoft.com",
+            "commit": "08eb19f42f4f74bd82f33db2e27ba2d33b2ddd1b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 18 Sep 2021 05:07:45 GMT",
       "tag": "react-native-windows_v0.0.0-canary.379",
       "version": "0.0.0-canary.379",

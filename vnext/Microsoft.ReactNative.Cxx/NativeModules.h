@@ -75,6 +75,16 @@
 // It can be an instance or static method.
 #define REACT_CONSTANT_PROVIDER(method) INTERNAL_REACT_MEMBER_2_ARGS(ConstantMethod, method)
 
+// REACT_GET_CONSTANTS(method)
+// Arguments:
+// - method (required) - the method name the macro is attached to.
+//
+// REACT_GET_CONSTANTS annotates a method that defines constants.
+// It must have no parameter.
+// It must return a REACT_STRUCT decorated struct, fields become constants.
+// It can be an instance or static method.
+#define REACT_GET_CONSTANTS(method) INTERNAL_REACT_MEMBER_2_ARGS(ConstantStrongTypedMethod, method)
+
 // REACT_CONSTANT(field, [opt] constantName)
 // Arguments:
 // - field (required) - the field name the macro is attached to.
@@ -739,6 +749,31 @@ struct ModuleConstantInfo<void (*)(ReactConstantProvider &) noexcept> {
   }
 };
 
+template <class TModule, class TStruct>
+struct ModuleConstantInfo<TStruct (TModule::*)() noexcept> {
+  using ModuleType = TModule;
+  using MethodType = TStruct (TModule::*)() noexcept;
+
+  static ConstantProviderDelegate GetConstantProvider(void *module, MethodType method) noexcept {
+    return [module = static_cast<ModuleType *>(module), method](IJSValueWriter const &argWriter) mutable noexcept {
+      auto constants = (module->*method)();
+      WriteProperties(argWriter, constants);
+    };
+  }
+};
+
+template <class TStruct>
+struct ModuleConstantInfo<TStruct (*)() noexcept> {
+  using MethodType = TStruct (*)() noexcept;
+
+  static ConstantProviderDelegate GetConstantProvider(void * /*module*/, MethodType method) noexcept {
+    return [method](IJSValueWriter const &argWriter) mutable noexcept {
+      auto constants = (*method)();
+      WriteProperties(argWriter, constants);
+    };
+  }
+};
+
 template <class TField>
 struct ModuleEventFieldInfo;
 
@@ -829,6 +864,7 @@ enum class ReactMemberKind {
   AsyncMethod,
   SyncMethod,
   ConstantMethod,
+  ConstantStrongTypedMethod,
   ConstantField,
   EventField,
   FunctionField,
@@ -847,6 +883,7 @@ using ReactInitMethodAttribute = ReactMemberAttribute<ReactMemberKind::InitMetho
 using ReactAsyncMethodAttribute = ReactMemberAttribute<ReactMemberKind::AsyncMethod>;
 using ReactSyncMethodAttribute = ReactMemberAttribute<ReactMemberKind::SyncMethod>;
 using ReactConstantMethodAttribute = ReactMemberAttribute<ReactMemberKind::ConstantMethod>;
+using ReactConstantStrongTypedMethodAttribute = ReactMemberAttribute<ReactMemberKind::ConstantStrongTypedMethod>;
 using ReactConstantFieldAttribute = ReactMemberAttribute<ReactMemberKind::ConstantField>;
 using ReactEventFieldAttribute = ReactMemberAttribute<ReactMemberKind::EventField>;
 using ReactFunctionFieldAttribute = ReactMemberAttribute<ReactMemberKind::FunctionField>;
@@ -893,6 +930,8 @@ struct ReactModuleBuilder {
       RegisterSyncMethod(member, attributeInfo.JSMemberName);
     } else if constexpr (std::is_same_v<TAttribute, ReactConstantMethodAttribute>) {
       RegisterConstantMethod(member);
+    } else if constexpr (std::is_same_v<TAttribute, ReactConstantStrongTypedMethodAttribute>) {
+      RegisterConstantStrongTypedMethod(member);
     } else if constexpr (std::is_same_v<TAttribute, ReactConstantFieldAttribute>) {
       RegisterConstantField(member, attributeInfo.JSMemberName);
     } else if constexpr (std::is_same_v<TAttribute, ReactEventFieldAttribute>) {
@@ -923,6 +962,12 @@ struct ReactModuleBuilder {
 
   template <class TMethod>
   void RegisterConstantMethod(TMethod method) noexcept {
+    auto constantProvider = ModuleConstantInfo<TMethod>::GetConstantProvider(m_module, method);
+    m_moduleBuilder.AddConstantProvider(constantProvider);
+  }
+
+  template <class TMethod>
+  void RegisterConstantStrongTypedMethod(TMethod method) noexcept {
     auto constantProvider = ModuleConstantInfo<TMethod>::GetConstantProvider(m_module, method);
     m_moduleBuilder.AddConstantProvider(constantProvider);
   }

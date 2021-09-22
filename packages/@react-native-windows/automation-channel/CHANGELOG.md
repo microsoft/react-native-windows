@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Sat, 18 Sep 2021 05:07:45 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Sep 2021 05:08:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.3-8
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Changes
+
+- Integrate RN nightly build 9/9. (igklemen@microsoft.com)
 
 ## 0.0.3-7
 

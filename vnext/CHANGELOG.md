@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 18 Sep 2021 05:07:45 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Sep 2021 05:08:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.380
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Changes
+
+- Issue#8397 Hermes profiler needs more work to function in win32 unpackaged apps Essentially, we are adding a new function to fetch the application data directory which works with both packaged and unpackaged apps, and consuming it in Hermes sampling profiler. (anandrag@microsoft.com)
+- Integrate RN nightly build 9/9. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.379
 
