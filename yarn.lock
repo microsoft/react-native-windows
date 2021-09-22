@@ -1745,23 +1745,7 @@
     hermes-profile-transformer "^0.0.6"
     ip "^1.1.5"
 
-"@react-native-community/cli-platform-android@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-6.0.0.tgz#004f98e9a5e8adf07aea552a140958e0bbd7e1b6"
-  integrity sha512-yXyrM2elKM8/thf1d8EMMm0l0KdeWmIMhWZzCoRpCIQoUuVtiCEMyrZF+aufvNvy74soKiCFeAmGNI8LPk2hzg==
-  dependencies:
-    "@react-native-community/cli-tools" "^6.0.0-rc.0"
-    chalk "^3.0.0"
-    execa "^1.0.0"
-    fs-extra "^8.1.0"
-    glob "^7.1.3"
-    jetifier "^1.6.2"
-    lodash "^4.17.15"
-    logkitty "^0.7.1"
-    slash "^3.0.0"
-    xmldoc "^1.1.2"
-
-"@react-native-community/cli-platform-android@^6.0.1":
+"@react-native-community/cli-platform-android@^6.0.0", "@react-native-community/cli-platform-android@^6.0.1":
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-6.0.1.tgz#b5100fd7fbb9625d7342f53bad362e14ff1f07e4"
   integrity sha512-0dPEE94H4Ug8jfP+sTHgXDlofghB4YsB1WoPa6ciqpP3d4h6DbiczdNhtds6jFFR5W+Q/DfwIwOFtKfWEwg2iQ==
