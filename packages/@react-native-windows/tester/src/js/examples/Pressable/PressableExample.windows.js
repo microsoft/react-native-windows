@@ -19,6 +19,7 @@ import {
   Platform,
   View,
   Switch,
+  Button,
 } from 'react-native';
 
 const {useEffect, useRef, useState} = React;
@@ -269,9 +270,9 @@ function PressableFocusCallbacks() {
   return (
     <>
       <View style={styles.row}>
-        <Button tabIndex={45}></Button>
+        <Button tabIndex={45} />
         <Pressable
-        some_prop={34}
+          some_prop={34}
           tabIndex={3}
           ref={viewRef}
           onFocus={() => console.log('Pressable onFocus')}
@@ -292,7 +293,9 @@ function PressableFocusCallbacks() {
             setTimesPressed(current => current + 1);
           }}>
           {({pressed}) => (
-            <Text style={styles.text}>{pressed ? '2Pressed!' : 'Press Me'}</Text>
+            <Text style={styles.text}>
+              {pressed ? '2Pressed!' : 'Press Me'}
+            </Text>
           )}
         </Pressable>
       </View>

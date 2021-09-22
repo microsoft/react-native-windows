@@ -5,7 +5,14 @@
  */
 
 import React from 'react';
-import {AppRegistry, StyleSheet, Switch, Pressable, Text, View} from 'react-native';
+import {
+  AppRegistry,
+  StyleSheet,
+  Switch,
+  Pressable,
+  Text,
+  View,
+} from 'react-native';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -145,20 +152,22 @@ export default class Bootstrap extends React.Component<
         </View>
 
         <Pressable
-            focusable={this.state.focusable ? true : false} onPress={()=>console.log('xd')}
-            style={
-              this.state.hasStyle
-                ? this.state.hasBorder
-                  ? this.state.radius
-                    ? styles.outerBorder
-                    : styles.innerBorder
-                  : this.state.radius
-                  ? styles.radial
-                  : styles.noBorder
-                : null
-            } tabIndex={2}>
-            <Text style={styles.child}>The Text</Text>
-          </Pressable>
+          focusable={this.state.focusable ? true : false}
+          onPress={() => console.log('xd')}
+          style={
+            this.state.hasStyle
+              ? this.state.hasBorder
+                ? this.state.radius
+                  ? styles.outerBorder
+                  : styles.innerBorder
+                : this.state.radius
+                ? styles.radial
+                : styles.noBorder
+              : null
+          }
+          tabIndex={2}>
+          <Text style={styles.child}>The Text</Text>
+        </Pressable>
 
         <View
           style={{

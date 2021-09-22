@@ -34,6 +34,7 @@ import type {
 import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
 import TextInputState from '../TextInput/TextInputState';
+import {number} from 'prop-types';
 
 type ViewStyleProp = $ElementType<React.ElementConfig<typeof View>, 'style'>;
 
@@ -188,6 +189,8 @@ type Props = $ReadOnly<{|
    * Duration to wait after press down before calling `onPressIn`.
    */
   unstable_pressDelay?: ?number,
+
+  tabIndex?: ?number, // [Windows]
 |}>;
 
 /**
