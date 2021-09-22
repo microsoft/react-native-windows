@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 13 Sep 2021 15:12:34 GMT",
+      "tag": "@office-iss/react-native-win32_v0.63.12",
+      "version": "0.63.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Adding accessibilityItemType to ViewWin32",
+            "author": "safreibe@microsoft.com",
+            "commit": "ba349baf933d9d997e8c8548599db437986b2649",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 07 Jul 2021 18:01:29 GMT",
       "tag": "@office-iss/react-native-win32_v0.63.11",
       "version": "0.63.11",

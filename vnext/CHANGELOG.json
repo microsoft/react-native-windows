@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Sep 2021 15:08:15 GMT",
+      "tag": "react-native-windows_v0.63.37",
+      "version": "0.63.37",
+      "comments": {
+        "none": [
+          {
+            "comment": "Stop Tagging 0.63 Builds",
+            "author": "ngerlem@microsoft.com",
+            "commit": "42a5b19bd6aeba6dc1edf2e597511d9f819f7554",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Aug 2021 14:12:28 GMT",
       "tag": "react-native-windows_v0.63.37",
       "version": "0.63.37",

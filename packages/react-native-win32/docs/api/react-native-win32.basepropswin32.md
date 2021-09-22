@@ -14,5 +14,6 @@ export declare type BasePropsWin32 = {
     accessibilityDescribedBy?: React.RefObject<any>;
     accessibilityLabeledBy?: React.RefObject<any>;
     accessibilityControls?: React.RefObject<any>;
+    accessibilityItemType?: string;
 };
 ```

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 07 Jul 2021 18:01:29 GMT and should not be manually modified.
+This log was last generated on Mon, 13 Sep 2021 15:12:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.12
+
+Mon, 13 Sep 2021 15:12:34 GMT
+
+### Patches
+
+- Adding accessibilityItemType to ViewWin32 (safreibe@microsoft.com)
 
 ## 0.63.11
 
