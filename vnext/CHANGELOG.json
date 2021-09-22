@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Sep 2021 05:06:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.381",
+      "version": "0.0.0-canary.381",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable broken x64 debug build of ComponentTestt",
+            "author": "jthysell@microsoft.com",
+            "commit": "50e54f7037a3196329ff229544d0da73522cad54",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Bug in Animation Clamping",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "304bdb2ba0522768be866ac6611aa34cd2351a98",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add REACT_GET_CONSTANTS to turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "096855bab43705436f96ee2e80f1f88c519ca2ce",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.88",
+            "author": "ali-hk@users.noreply.github.com",
+            "commit": "0bc36a30ab3cd5bb4cfd767e503b29c185cfcddd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Sep 2021 05:08:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.380",
       "version": "0.0.0-canary.380",

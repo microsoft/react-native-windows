@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 21 Sep 2021 05:08:39 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Sep 2021 05:06:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.381
+
+Wed, 22 Sep 2021 05:06:43 GMT
+
+### Changes
+
+- Disable broken x64 debug build of ComponentTestt (jthysell@microsoft.com)
+- Fix Bug in Animation Clamping (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.380
 

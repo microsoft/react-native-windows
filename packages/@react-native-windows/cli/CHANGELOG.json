@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 22 Sep 2021 05:06:43 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.88",
+      "version": "0.0.0-canary.88",
+      "comments": {
+        "none": [
+          {
+            "comment": "fix(deploy): broken projectName override for deployToDevice",
+            "author": "ali-hk@users.noreply.github.com",
+            "commit": "0bc36a30ab3cd5bb4cfd767e503b29c185cfcddd",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Sep 2021 05:06:53 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.88",
       "version": "0.0.0-canary.88",
