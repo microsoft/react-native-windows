@@ -1,0 +1,8 @@
+{
+  "type": "patch",
+  "comment": "Change the definitino of YGUndefined from NAN (contra the comment in YGValue, MSVC does define NAN) to __builtin_nanf(\"0\"), which generates a quiet NaN. The problem with NAN is that corecrt_math.h defines it as:",
+  "packageName": "react-native-windows",
+  "email": "hpratt@microsoft.com",
+  "dependentChangeType": "patch",
+  "date": "2021-09-21T21:02:03.830Z"
+}
