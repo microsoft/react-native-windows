@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 Aug 2021 14:12:28 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Sep 2021 21:25:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.38
+
+Wed, 22 Sep 2021 21:25:30 GMT
+
+### Patches
+
+- Change the definitino of YGUndefined from NAN (contra the comment in YGValue, MSVC does define NAN) to __builtin_nanf("0"), which generates a quiet NaN. The problem with NAN is that corecrt_math.h defines it as: (hpratt@microsoft.com)
 
 ## 0.63.37
 
