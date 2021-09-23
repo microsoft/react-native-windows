@@ -1065,6 +1065,11 @@ struct ReactModuleVerifier {
 
 template <class TModule, class TConstantType>
 struct ReactTypedConstantVerifier {
+  template <int I>
+  constexpr void RegisterModule(std::wstring_view /*_*/, std::wstring_view /*_*/, ReactAttributeId<I>) noexcept {
+    ReactMemberInfoIterator<TModule>{}.template ForEachMember<I + 1>(*this);
+  }
+
   template <class TMember, class TAttribute, int I>
   constexpr void Visit(
       [[maybe_unused]] TMember /*member*/,
@@ -1079,7 +1084,6 @@ struct ReactTypedConstantVerifier {
     }
   }
 
- private:
   int m_matchedCount{0};
 };
 
@@ -1132,13 +1136,26 @@ struct TurboModuleSpec {
     bool IsMethodUnique{true};
   };
 
-  template <class TModule, class TModuleSpec, size_t I>
-  static constexpr ConstantCheckResult CheckConstant() noexcept {
-    ReactTypedConstantVerifier verifier;
+  template <class TModule, class TModuleSpec, class TConstantType>
+  static constexpr ConstantCheckResult CheckConstant(TypedConstant<TConstantType>) noexcept {
+    ReactTypedConstantVerifier<TModule, TConstantType> verifier;
     GetReactModuleInfo(static_cast<TModule *>(nullptr), verifier);
     ConstantCheckResult result;
     result.IsMethodFound = verifier.m_matchedCount > 0;
     result.IsMethodFound = verifier.m_matchedCount < 2;
+    return result;
+  }
+
+  template <class TModule, class TModuleSpec, size_t... I>
+  static constexpr auto CheckConstantsHelper(std::index_sequence<I...>) noexcept {
+    return std::array<ConstantCheckResult, sizeof...(I)>{
+        CheckConstant<TModule, TModuleSpec>(std::get<I>(TModuleSpec::constants))...};
+  }
+
+  template <class TModule, class TModuleSpec>
+  static constexpr auto CheckConstants() noexcept {
+    return CheckConstantsHelper<TModule, TModuleSpec>(
+        std::make_index_sequence<std::tuple_size_v<decltype(TModuleSpec::constants)>>{});
   }
 
   struct BaseMethodSpec {
@@ -1147,17 +1164,6 @@ struct TurboModuleSpec {
     int Index;
     std::wstring_view Name;
   };
-
-  template <class TModule, class TModuleSpec, size_t... I>
-  static constexpr auto CheckConstantsHelper(std::index_sequence<I...>) noexcept {
-    return std::array<ConstantCheckResult, sizeof...(I)>{CheckConstant<TModule, TModuleSpec, I>()...};
-  }
-
-  template <class TModule, class TModuleSpec>
-  static constexpr auto CheckConstants() noexcept {
-    return CheckConstantsHelper<TModule, TModuleSpec>(
-        std::make_index_sequence<std::tuple_size_v<decltype(TModuleSpec::constants)>>{});
-  }
 
   template <class TSignature>
   struct Method : BaseMethodSpec {
