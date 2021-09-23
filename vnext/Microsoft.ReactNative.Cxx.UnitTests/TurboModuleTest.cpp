@@ -756,10 +756,24 @@ struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<int(int) noexcept>{67, L"StaticNegateSync"},
       SyncMethod<std::string() noexcept>{68, L"StaticSayHelloSync"},
   };
+  static constexpr auto constants = std::tuple{
+      TypedConstant<MyTurboModuleConstants1>{},
+      TypedConstant<MyTurboModuleConstants2>{},
+  };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
     constexpr auto methodCheckResults = CheckMethods<TModule, MyTurboModuleSpec>();
+    constexpr auto constantCheckResults = CheckConstants<TModule, MyTurboModuleSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+        0,
+        "    REACT_GET_CONSTANTS(GetConstants1) MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n"
+        "    REACT_GET_CONSTANTS(GetConstants1) static MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n");
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+        1,
+        "    REACT_GET_CONSTANTS(GetConstants2) MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n"
+        "    REACT_GET_CONSTANTS(GetConstants2) static MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
         0,
