@@ -681,6 +681,10 @@ struct MyTurboModule {
 // - method names are matching to the module spec method names;
 // - method signatures match the spec method signatures.
 struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<MyTurboModuleConstants1>{0},
+      TypedConstant<MyTurboModuleConstants2>{1},
+  };
   static constexpr auto methods = std::tuple{
       Method<void(int, int, Callback<int>) noexcept>{0, L"Add"},
       Method<void(int, Callback<int>) noexcept>{1, L"Negate"},
@@ -756,15 +760,11 @@ struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<int(int) noexcept>{67, L"StaticNegateSync"},
       SyncMethod<std::string() noexcept>{68, L"StaticSayHelloSync"},
   };
-  static constexpr auto constants = std::tuple{
-      TypedConstant<MyTurboModuleConstants1>{},
-      TypedConstant<MyTurboModuleConstants2>{},
-  };
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto methodCheckResults = CheckMethods<TModule, MyTurboModuleSpec>();
     constexpr auto constantCheckResults = CheckConstants<TModule, MyTurboModuleSpec>();
+    constexpr auto methodCheckResults = CheckMethods<TModule, MyTurboModuleSpec>();
 
     REACT_SHOW_CONSTANT_SPEC_ERRORS(
         0,

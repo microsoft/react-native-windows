@@ -141,13 +141,12 @@
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
 
 #define REACT_SHOW_CONSTANT_SPEC_ERRORS(index, typeName, signatures)                                                  \
-  static_assert(constantCheckResults[index].IsUniqueName, "Constant type '" typeName "' used for multiple methods");  \
   static_assert(                                                                                                      \
       constantCheckResults[index].IsMethodFound,                                                                      \
       "Method for constant type '" typeName "' is not defined" REACT_SHOW_METHOD_SIGNATURES(methodName, signatures)); \
   static_assert(                                                                                                      \
-      !constantCheckResults[index].IsMethodOverloaded,                                                                \
-      "Method for constant type '" typeName "' is overloaded"
+      constantCheckResults[index].IsMethodUnique,                                                                     \
+      "Method for constant type '" typeName "' is not unique"
 
 #define REACT_SHOW_METHOD_SPEC_ERRORS(index, methodName, signatures)                                        \
   static_assert(methodCheckResults[index].IsUniqueName, "Name '" methodName "' used for multiple methods"); \
@@ -1066,6 +1065,30 @@ struct ReactModuleVerifier {
   VerificationResult m_result;
 };
 
+template <class TModule, class TConstantType>
+struct ReactTypedConstantVerifier {
+  template <class TMember, class TAttribute, int I>
+  constexpr void Visit(
+      [[maybe_unused]] TMember /*member*/,
+      ReactAttributeId<I> /*attributeId*/,
+      TAttribute /*attributeInfo*/) noexcept {
+    if constexpr (std::is_same_v<TAttribute, ReactConstantStrongTypedMethodAttribute>) {
+      using T1 = TConstant (*)() noexcept;
+      using T2 = TConstant (TModule::*)() noexcept;
+      if constexpr (std::is_same_v<TMember, T1> || std::is_same_v<TMember, T2>) {
+        if (!m_result.IsMethodFound) {
+          m_result.IsMethodFound = true;
+        } else {
+          m_result.IsMethodUnique = false;
+        }
+      }
+    }
+  }
+
+ private:
+  TurboModuleSpec::ConstantCheckResult m_result{};
+};
+
 template <class TModule, int I, class TMethodSpec>
 struct ReactMethodVerifier {
   static constexpr bool Verify() noexcept {
@@ -1109,6 +1132,34 @@ struct TurboModuleSpec {
     int Index;
     std::wstring_view Name;
   };
+
+  template <class TSignature>
+  struct TypedConstant : BaseMethodSpec {
+    int Index;
+  };
+
+  struct ConstantCheckResult {
+    bool IsMethodFound{false};
+    bool IsMethodUnique{true};
+  };
+
+  template <class TModule, class TModuleSpec, size_t I>
+  static constexpr ConstantCheckResult CheckConstant() noexcept {
+    ReactTypedConstantVerifier verifier;
+    GetReactModuleInfo(static_cast<TModule *>(nullptr), verifier);
+    return verifier.m_result;
+  }
+
+  template <class TModule, class TModuleSpec, size_t... I>
+  static constexpr auto CheckConstantsHelper(std::index_sequence<I...>) noexcept {
+    return std::array<ConstantCheckResult, sizeof...(I)>{CheckConstant<TModule, TModuleSpec, I>()...};
+  }
+
+  template <class TModule, class TModuleSpec>
+  static constexpr auto CheckConstants() noexcept {
+    return CheckConstantsHelper<TModule, TModuleSpec>(
+        std::make_index_sequence<std::tuple_size_v<decltype(TModuleSpec::constants)>>{});
+  }
 
   template <class TSignature>
   struct Method : BaseMethodSpec {
