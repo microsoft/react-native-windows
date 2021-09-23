@@ -12,9 +12,10 @@
 #include <hermes/hermes.h>
 #ifndef NDEBUG
 #include <hermes/hermes_dbg.h>
-#include <tracing/tracing.h>
 #endif
 #include "HermesRuntimeHolder.h"
+
+#include <tracing/tracing.h>
 
 #if defined(HERMES_ENABLE_DEBUGGER)
 #include <hermes/inspector/chrome/Registration.h>
