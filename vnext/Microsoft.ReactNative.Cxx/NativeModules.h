@@ -121,6 +121,11 @@
 #define REACT_FUNCTION(/* field, [opt] functionName, [opt] moduleName */...) \
   INTERNAL_REACT_MEMBER(__VA_ARGS__)(FunctionField, __VA_ARGS__)
 
+#define REACT_SHOW_CONSTANT_SIGNATURES(signatures)  \
+  " (see details below in output).\n"               \
+  "  It must be one of the following:\n" signatures \
+  "  The C++ method name could be different, just keep the method name identical to the argument in REACT_GET_CONSTANTS\n"
+
 #define REACT_SHOW_METHOD_SIGNATURES(methodName, signatures)                      \
   " (see details below in output).\n"                                             \
   "  It must be one of the following:\n" signatures                               \
@@ -134,6 +139,15 @@
   "  The C++ method name could be different. In that case add the L\"" methodName \
   "\" to the attribute:\n"                                                        \
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
+
+#define REACT_SHOW_CONSTANT_SPEC_ERRORS(index, typeName, signatures)                                                  \
+  static_assert(constantCheckResults[index].IsUniqueName, "Constant type '" typeName "' used for multiple methods");  \
+  static_assert(                                                                                                      \
+      constantCheckResults[index].IsMethodFound,                                                                      \
+      "Method for constant type '" typeName "' is not defined" REACT_SHOW_METHOD_SIGNATURES(methodName, signatures)); \
+  static_assert(                                                                                                      \
+      !constantCheckResults[index].IsMethodOverloaded,                                                                \
+      "Method for constant type '" typeName "' is overloaded"
 
 #define REACT_SHOW_METHOD_SPEC_ERRORS(index, methodName, signatures)                                        \
   static_assert(methodCheckResults[index].IsUniqueName, "Name '" methodName "' used for multiple methods"); \

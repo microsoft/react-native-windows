@@ -768,10 +768,12 @@ struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
     REACT_SHOW_CONSTANT_SPEC_ERRORS(
         0,
+        "MyTurboModuleConstants1",
         "    REACT_GET_CONSTANTS(GetConstants1) MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n"
         "    REACT_GET_CONSTANTS(GetConstants1) static MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n");
     REACT_SHOW_CONSTANT_SPEC_ERRORS(
         1,
+        "MyTurboModuleConstants2",
         "    REACT_GET_CONSTANTS(GetConstants2) MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n"
         "    REACT_GET_CONSTANTS(GetConstants2) static MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n");
 
