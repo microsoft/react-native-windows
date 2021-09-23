@@ -108,6 +108,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           failOnMinTestsNotRun: true
@@ -139,6 +140,7 @@ jobs:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
           publishRunAttachments: true
+          codeCoverageEnabled: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           failOnMinTestsNotRun: true
