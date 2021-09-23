@@ -1,5 +1,5 @@
 param(
-    [bool]$NoAnalysis = $False,
+    [switch]$NoAnalysis,
     [string]$outputFolder
 )
 
@@ -36,7 +36,7 @@ if (!(Get-Command "wpa.exe" -ErrorAction SilentlyContinue)) {
     Write-Host "Ensure that WPT (Windows Performance Toolkit) is installed and its tools are added to the path "
 }
 
-if ($NoAnalysis) {
+if ($NoAnalysis.IsPresent) {
     Write-Host "To analys this trace, install WPT and run: 'wpa $etlPath'"
 }
 else {
