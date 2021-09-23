@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Sep 2021 21:25:30 GMT",
+      "tag": "react-native-windows_v0.63.38",
+      "version": "0.63.38",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Change the definitino of YGUndefined from NAN (contra the comment in YGValue, MSVC does define NAN) to __builtin_nanf(\"0\"), which generates a quiet NaN. The problem with NAN is that corecrt_math.h defines it as:",
+            "author": "hpratt@microsoft.com",
+            "commit": "f15581dc3540b8484936fc7311506d3ac6fcb480",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Sep 2021 15:08:15 GMT",
       "tag": "react-native-windows_v0.63.37",
       "version": "0.63.37",

@@ -38,6 +38,14 @@
     },
     {
       "type": "patch",
+      "file": "DeforkingPatches/ReactCommon/yoga/yoga/YGValue.h",
+      "baseFile": "ReactCommon/yoga/yoga/YGValue.h",
+      "baseVersion": "0.63.2",
+      "baseHash": "1beec1c755f33ebbd4ab9ec5e138cd1a3cfba3ee",
+      "issue": 8683
+    },
+    {
+      "type": "patch",
       "file": "DeforkingPatches/ReactCommon/yoga/yoga/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseVersion": "0.63.2",
