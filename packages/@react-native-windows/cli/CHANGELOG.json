@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 23 Sep 2021 05:06:48 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.89",
+      "version": "0.0.0-canary.89",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Certificate From Template",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "3813907b2eaa6198f0a8b9dc570075f0c7117301",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Sep 2021 05:06:43 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.88",
       "version": "0.0.0-canary.88",

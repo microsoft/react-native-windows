@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Sep 2021 05:06:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.382",
+      "version": "0.0.0-canary.382",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Certificate From Template",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "3813907b2eaa6198f0a8b9dc570075f0c7117301",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Revert creation of symbol packages, main codesign",
+            "author": "jthysell@microsoft.com",
+            "commit": "2940b0ee911240714e0a0f5c541a52b41e9ee3ab",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update JSIEngineOverride documentation to clarify that the setting is ignored while the web debugger is being used, since the browser responsible for debugging must use its own engine to debug correctly.",
+            "author": "email not defined",
+            "commit": "2c578c743f157506b827c8fc926a6ac439e18507",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Sep 2021 05:06:43 GMT",
       "tag": "react-native-windows_v0.0.0-canary.381",
       "version": "0.0.0-canary.381",
