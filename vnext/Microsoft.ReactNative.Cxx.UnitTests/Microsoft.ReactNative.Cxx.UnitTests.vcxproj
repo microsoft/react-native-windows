@@ -11,6 +11,8 @@
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
+    <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
+    <V8AppPlatform>uwp</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props')" />
@@ -72,6 +74,10 @@
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>
+        delayimp.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
@@ -114,6 +120,9 @@
     <ClInclude Include="ReactModuleBuilderMock.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="JsiTest.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="JsonJSValueReader.cpp" />
     <ClCompile Include="JsonReader.cpp" />
     <ClCompile Include="JSValueReaderTest.cpp" />
@@ -157,6 +166,7 @@
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" />
+    <Import Project="$(V8Package)\build\native\$(V8PackageName).targets" Condition="Exists('$(V8Package)\build\native\$(V8PackageName).targets') AND '$(UseV8)' == 'true'" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -165,5 +175,6 @@
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets'))" />
+    <Error Condition="!Exists('$(V8Package)\build\native\$(V8PackageName).targets') AND '$(UseV8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8Package)\build\native\$(V8PackageName).targets'))" />
   </Target>
 </Project>
