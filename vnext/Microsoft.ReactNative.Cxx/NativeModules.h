@@ -140,13 +140,11 @@
   "\" to the attribute:\n"                                                        \
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
 
-#define REACT_SHOW_CONSTANT_SPEC_ERRORS(index, typeName, signatures)                                                  \
-  static_assert(                                                                                                      \
-      constantCheckResults[index].IsMethodFound,                                                                      \
-      "Method for constant type '" typeName "' is not defined" REACT_SHOW_METHOD_SIGNATURES(methodName, signatures)); \
-  static_assert(                                                                                                      \
-      constantCheckResults[index].IsMethodUnique,                                                                     \
-      "Method for constant type '" typeName "' is not unique"
+#define REACT_SHOW_CONSTANT_SPEC_ERRORS(index, typeName, signatures)                                        \
+  static_assert(                                                                                            \
+      constantCheckResults[index].IsMethodFound,                                                            \
+      "Method for constant type '" typeName "' is not defined" REACT_SHOW_CONSTANT_SIGNATURES(signatures)); \
+  static_assert(constantCheckResults[index].IsMethodUnique, "Method for constant type '" typeName "' is not unique");
 
 #define REACT_SHOW_METHOD_SPEC_ERRORS(index, methodName, signatures)                                        \
   static_assert(methodCheckResults[index].IsUniqueName, "Name '" methodName "' used for multiple methods"); \
@@ -1073,20 +1071,16 @@ struct ReactTypedConstantVerifier {
       ReactAttributeId<I> /*attributeId*/,
       TAttribute /*attributeInfo*/) noexcept {
     if constexpr (std::is_same_v<TAttribute, ReactConstantStrongTypedMethodAttribute>) {
-      using T1 = TConstant (*)() noexcept;
-      using T2 = TConstant (TModule::*)() noexcept;
+      using T1 = TConstantType (*)() noexcept;
+      using T2 = TConstantType (TModule::*)() noexcept;
       if constexpr (std::is_same_v<TMember, T1> || std::is_same_v<TMember, T2>) {
-        if (!m_result.IsMethodFound) {
-          m_result.IsMethodFound = true;
-        } else {
-          m_result.IsMethodUnique = false;
-        }
+        m_matchedCount++;
       }
     }
   }
 
  private:
-  TurboModuleSpec::ConstantCheckResult m_result{};
+  int m_matchedCount{0};
 };
 
 template <class TModule, int I, class TMethodSpec>
@@ -1126,15 +1120,10 @@ struct ReactSyncMethodVerifier {
 };
 
 struct TurboModuleSpec {
-  struct BaseMethodSpec {
-    constexpr BaseMethodSpec(int index, std::wstring_view name) : Index{index}, Name{name} {}
-
-    int Index;
-    std::wstring_view Name;
-  };
-
   template <class TSignature>
-  struct TypedConstant : BaseMethodSpec {
+  struct TypedConstant {
+    constexpr TypedConstant(int index) : Index{index} {}
+
     int Index;
   };
 
@@ -1147,8 +1136,17 @@ struct TurboModuleSpec {
   static constexpr ConstantCheckResult CheckConstant() noexcept {
     ReactTypedConstantVerifier verifier;
     GetReactModuleInfo(static_cast<TModule *>(nullptr), verifier);
-    return verifier.m_result;
+    ConstantCheckResult result;
+    result.IsMethodFound = verifier.m_matchedCount > 0;
+    result.IsMethodFound = verifier.m_matchedCount < 2;
   }
+
+  struct BaseMethodSpec {
+    constexpr BaseMethodSpec(int index, std::wstring_view name) : Index{index}, Name{name} {}
+
+    int Index;
+    std::wstring_view Name;
+  };
 
   template <class TModule, class TModuleSpec, size_t... I>
   static constexpr auto CheckConstantsHelper(std::index_sequence<I...>) noexcept {
