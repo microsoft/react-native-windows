@@ -112,6 +112,13 @@ jobs:
                 arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
               condition: true
 
+            - task: PublishBuildArtifacts@1
+              displayName: Upload traces
+              inputs:
+                pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+                artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+              condition: true
+
             - task: CopyFiles@2
               displayName: Copy snapshots
               inputs:
