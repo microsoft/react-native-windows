@@ -68,6 +68,13 @@ jobs:
                 script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd RNTesterApp
                 workingDirectory: $(Build.SourcesDirectory)
 
+
+            - task: PowerShell@2
+              displayName: Start tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+
             - template: ../templates/set-experimental-feature.yml
               parameters:
                 package: packages/e2e-test-app
@@ -96,6 +103,13 @@ jobs:
               displayName: Update snapshots
               workingDirectory: packages/e2e-test-app
               condition: and(failed(), eq(variables.StartedTests, 'true'))
+
+            - task: PowerShell@2
+              displayName: Stop tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+                arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
 
             - task: CopyFiles@2
               displayName: Copy snapshots

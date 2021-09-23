@@ -12,6 +12,7 @@
 #include <hermes/hermes.h>
 #ifndef NDEBUG
 #include <hermes/hermes_dbg.h>
+#include <tracing/tracing.h>
 #endif
 #include "HermesRuntimeHolder.h"
 
@@ -30,6 +31,15 @@ namespace {
 std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(
     const ::hermes::vm::RuntimeConfig &runtimeConfig) {
   SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
+
+  auto res = LoadLibrary(L"hermes.dll");
+  if (!res) {
+    DWORD lastError = GetLastError();
+    std::stringstream ostr;
+    ostr << "Failure loading hermes.dll:" << std::hex << lastError;
+    facebook::react::tracing::error(ostr.str().c_str());
+  }
+
   return hermes::makeHermesRuntime(runtimeConfig);
 }
 
