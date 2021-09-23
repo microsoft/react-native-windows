@@ -110,6 +110,7 @@ jobs:
                 targetType: filePath # filePath | inline
                 filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
                 arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+              condition: true
 
             - task: CopyFiles@2
               displayName: Copy snapshots
