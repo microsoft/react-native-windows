@@ -1142,7 +1142,7 @@ struct TurboModuleSpec {
     GetReactModuleInfo(static_cast<TModule *>(nullptr), verifier);
     ConstantCheckResult result;
     result.IsMethodFound = verifier.m_matchedCount > 0;
-    result.IsMethodFound = verifier.m_matchedCount < 2;
+    result.IsMethodUnique = verifier.m_matchedCount < 2;
     return result;
   }
 
