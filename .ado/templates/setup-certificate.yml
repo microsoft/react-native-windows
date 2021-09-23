@@ -21,6 +21,10 @@ steps:
     displayName: Specify Certificate
     condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'playgroundEncodedKey'))
 
+  - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(RNWEncodedKey)"
+    displayName: Specify Certificate
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'RNWEncodedKey'))
+
   - task: PowerShell@2
     displayName: Set Up Certificate
     inputs:
