@@ -6,7 +6,8 @@
  */
 
 import AutomationEnvironment from './AutomationEnvironment';
-import {app} from './AutomationClient';
+import {app, AutomationElement} from './AutomationClient';
 
 export {app};
+export type {AutomationElement}
 export default AutomationEnvironment;
