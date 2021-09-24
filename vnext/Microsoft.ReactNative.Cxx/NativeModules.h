@@ -121,6 +121,11 @@
 #define REACT_FUNCTION(/* field, [opt] functionName, [opt] moduleName */...) \
   INTERNAL_REACT_MEMBER(__VA_ARGS__)(FunctionField, __VA_ARGS__)
 
+#define REACT_SHOW_CONSTANT_SIGNATURES(signatures)  \
+  " (see details below in output).\n"               \
+  "  It must be one of the following:\n" signatures \
+  "  The C++ method name could be different, just keep the method name identical to the argument in REACT_GET_CONSTANTS\n"
+
 #define REACT_SHOW_METHOD_SIGNATURES(methodName, signatures)                      \
   " (see details below in output).\n"                                             \
   "  It must be one of the following:\n" signatures                               \
@@ -134,6 +139,12 @@
   "  The C++ method name could be different. In that case add the L\"" methodName \
   "\" to the attribute:\n"                                                        \
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
+
+#define REACT_SHOW_CONSTANT_SPEC_ERRORS(index, typeName, signatures)                                        \
+  static_assert(                                                                                            \
+      constantCheckResults[index].IsMethodFound,                                                            \
+      "Method for constant type '" typeName "' is not defined" REACT_SHOW_CONSTANT_SIGNATURES(signatures)); \
+  static_assert(constantCheckResults[index].IsMethodUnique, "Method for constant type '" typeName "' is not unique");
 
 #define REACT_SHOW_METHOD_SPEC_ERRORS(index, methodName, signatures)                                        \
   static_assert(methodCheckResults[index].IsUniqueName, "Name '" methodName "' used for multiple methods"); \
@@ -1052,6 +1063,30 @@ struct ReactModuleVerifier {
   VerificationResult m_result;
 };
 
+template <class TModule, class TConstantType>
+struct ReactTypedConstantVerifier {
+  template <int I>
+  constexpr void RegisterModule(std::wstring_view /*_*/, std::wstring_view /*_*/, ReactAttributeId<I>) noexcept {
+    ReactMemberInfoIterator<TModule>{}.template ForEachMember<I + 1>(*this);
+  }
+
+  template <class TMember, class TAttribute, int I>
+  constexpr void Visit(
+      [[maybe_unused]] TMember /*member*/,
+      ReactAttributeId<I> /*attributeId*/,
+      TAttribute /*attributeInfo*/) noexcept {
+    if constexpr (std::is_same_v<TAttribute, ReactConstantStrongTypedMethodAttribute>) {
+      using T1 = TConstantType (*)() noexcept;
+      using T2 = TConstantType (TModule::*)() noexcept;
+      if constexpr (std::is_same_v<TMember, T1> || std::is_same_v<TMember, T2>) {
+        m_matchedCount++;
+      }
+    }
+  }
+
+  int m_matchedCount{0};
+};
+
 template <class TModule, int I, class TMethodSpec>
 struct ReactMethodVerifier {
   static constexpr bool Verify() noexcept {
@@ -1089,6 +1124,40 @@ struct ReactSyncMethodVerifier {
 };
 
 struct TurboModuleSpec {
+  template <class TSignature>
+  struct TypedConstant {
+    constexpr TypedConstant(int index) : Index{index} {}
+
+    int Index;
+  };
+
+  struct ConstantCheckResult {
+    bool IsMethodFound{false};
+    bool IsMethodUnique{true};
+  };
+
+  template <class TModule, class TModuleSpec, class TConstantType>
+  static constexpr ConstantCheckResult CheckConstant(TypedConstant<TConstantType>) noexcept {
+    ReactTypedConstantVerifier<TModule, TConstantType> verifier;
+    GetReactModuleInfo(static_cast<TModule *>(nullptr), verifier);
+    ConstantCheckResult result;
+    result.IsMethodFound = verifier.m_matchedCount > 0;
+    result.IsMethodUnique = verifier.m_matchedCount < 2;
+    return result;
+  }
+
+  template <class TModule, class TModuleSpec, size_t... I>
+  static constexpr auto CheckConstantsHelper(std::index_sequence<I...>) noexcept {
+    return std::array<ConstantCheckResult, sizeof...(I)>{
+        CheckConstant<TModule, TModuleSpec>(std::get<I>(TModuleSpec::constants))...};
+  }
+
+  template <class TModule, class TModuleSpec>
+  static constexpr auto CheckConstants() noexcept {
+    return CheckConstantsHelper<TModule, TModuleSpec>(
+        std::make_index_sequence<std::tuple_size_v<decltype(TModuleSpec::constants)>>{});
+  }
+
   struct BaseMethodSpec {
     constexpr BaseMethodSpec(int index, std::wstring_view name) : Index{index}, Name{name} {}
 

@@ -681,6 +681,10 @@ struct MyTurboModule {
 // - method names are matching to the module spec method names;
 // - method signatures match the spec method signatures.
 struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<MyTurboModuleConstants1>{0},
+      TypedConstant<MyTurboModuleConstants2>{1},
+  };
   static constexpr auto methods = std::tuple{
       Method<void(int, int, Callback<int>) noexcept>{0, L"Add"},
       Method<void(int, Callback<int>) noexcept>{1, L"Negate"},
@@ -759,7 +763,19 @@ struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
+    constexpr auto constantCheckResults = CheckConstants<TModule, MyTurboModuleSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, MyTurboModuleSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+        0,
+        "MyTurboModuleConstants1",
+        "    REACT_GET_CONSTANTS(GetConstants1) MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n"
+        "    REACT_GET_CONSTANTS(GetConstants1) static MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n");
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+        1,
+        "MyTurboModuleConstants2",
+        "    REACT_GET_CONSTANTS(GetConstants2) MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n"
+        "    REACT_GET_CONSTANTS(GetConstants2) static MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
         0,
