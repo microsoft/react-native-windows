@@ -68,7 +68,6 @@ jobs:
                 script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd RNTesterApp
                 workingDirectory: $(Build.SourcesDirectory)
 
-
             - task: PowerShell@2
               displayName: Start tracing
               inputs:

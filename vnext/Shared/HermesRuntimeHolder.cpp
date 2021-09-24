@@ -52,7 +52,7 @@ std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(
     facebook::react::tracing::error("hermes.dll loaded successfully without resolving references");
   }
 
-auto res3 = LoadLibrary(L"icu.dll");
+  auto res3 = LoadLibrary(L"icu.dll");
   if (!res3) {
     DWORD lastError = GetLastError();
     std::stringstream ostr;
@@ -71,7 +71,6 @@ auto res3 = LoadLibrary(L"icu.dll");
   } else {
     facebook::react::tracing::error("c:\\windows\\system32\\icu.dll loaded successfully");
   }
-
 
   auto res5 = LoadLibrary(L"icuuc.dll");
   if (!res5) {
