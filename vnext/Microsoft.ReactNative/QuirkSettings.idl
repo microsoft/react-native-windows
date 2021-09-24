@@ -39,5 +39,11 @@ namespace Microsoft.ReactNative
       "these events, including forwarding to JavaScript.  This will allow applications to handle back "
       "navigation in native code, but will prevent the `BackHandler` native module from receiving events.")
     static void SetBackHandlerKind(ReactInstanceSettings settings, BackNavigationHandlerKind kind);
+
+    DOC_STRING(
+        "When running multiple windows from a single UI thread, focusing a native view causes the parent "
+        "window of that view to get focus as well. Set this setting to true to prevent focus of a blurred "
+        "window when a view in that window is programmatically focused.")
+    static void SetSuppressWindowFocusOnViewFocus(ReactInstanceSettings settings, Boolean value);
   }
 } // namespace Microsoft.ReactNative
