@@ -17,7 +17,7 @@ export type SharedTextPropsAndroidandWin32 = {
 /**
  * Role-based text style names.
  */
-export type TextStyle =
+export type TextWin32TextStyle =
   | 'None'
   | 'SmallStandard'
   | 'SmallSecondary'
@@ -88,7 +88,7 @@ export interface ITextWin32Props extends Omit<RN.TextProps, TextWin32OmitTypes>,
    *
    * @deprecated Use `style` instead.
    */
-  textStyle?: TextStyle;
+  textStyle?: TextWin32TextStyle;
 
   /** Tooltip displayed on mouse hover of this element */
   tooltip?: string;

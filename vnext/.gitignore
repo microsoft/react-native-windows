@@ -50,6 +50,8 @@ node_modules
 /RNTester.*
 /index.*
 /interface.*
+/src/rntypes
+/rntypes
 /typings-index.*
 /rn-get-polyfills.js
 

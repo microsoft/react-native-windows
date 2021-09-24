@@ -9,4 +9,7 @@
 /local-cli/lib-commonjs
 /packages
 /ReactCopies
+/RNTester.d.ts
+/src/rntypes
+/rntypes
 /target
