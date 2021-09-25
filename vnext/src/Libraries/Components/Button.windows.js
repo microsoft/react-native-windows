@@ -152,7 +152,7 @@ type ButtonProps = $ReadOnly<{|
   /**
     Set the order in which elements receive focus when the user navigates through them by pressing Tab.
    */
-  tabIndex?: ?number,
+  //tabIndex?: ?number,
   // Windows]
 |}>;
 
@@ -297,7 +297,7 @@ class Button extends React.Component<
       accessible,
       accessibilityActions,
       onAccessibilityAction,
-      tabIndex,
+      //tabIndex,
     } = this.props;
     const buttonStyles = [styles.button];
     const textStyles = [styles.text];
@@ -350,7 +350,7 @@ class Button extends React.Component<
           testID={testID}
           disabled={disabled}
           onPress={onPress}
-          tabIndex={tabIndex}
+          //tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
           underlayColor={PlatformColor('ButtonBackgroundPressed')}
           onShowUnderlay={() => {
