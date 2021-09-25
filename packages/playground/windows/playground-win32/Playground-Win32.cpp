@@ -287,8 +287,13 @@ struct WindowData {
 
             auto themeComboBox = GetDlgItem(hwnd, IDC_THEME);
             self->m_theme = ComboBox_GetCurSel(themeComboBox);
-            auto theme = self->m_theme == 0 ? xaml::ElementTheme::Default
-                                            : self->m_theme == 1 ? xaml::ElementTheme::Light : xaml::ElementTheme::Dark;
+            auto theme;
+            switch (self->m_theme) {
+                // Matches list item order populated in IDC_THEME above
+                default: theme = xaml::ElementTheme::Default; break
+                case 1: theme = xaml::ElementTheme::Light; break;
+                case 2: theme = xaml::ElementTheme::Dark; break;
+            }
             auto panel = self->m_desktopWindowXamlSource.Content().as<controls::Panel>();
             panel.RequestedTheme(theme);
 
