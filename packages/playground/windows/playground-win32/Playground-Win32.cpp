@@ -6,6 +6,7 @@
 #include <shlobj.h>
 #include <shobjidl.h>
 #include <windows.h>
+#include <windowsx.h>
 
 #include <filesystem>
 #include <memory>
@@ -26,6 +27,8 @@
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Hosting.h>
+#include <UI.Xaml.Media.h>
+#include <UI.Xaml.Markup.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #pragma pop_macro("GetCurrentTime")
 
@@ -65,6 +68,7 @@ struct WindowData {
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
+  uint16_t m_theme{0};
 
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
@@ -277,6 +281,12 @@ struct WindowData {
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("V8"));
         // SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM) static_cast<int32_t>(self->m_jsEngine), (LPARAM)0);
 
+        auto cmbTheme = GetDlgItem(hwnd, IDC_THEME);
+        SendMessageW(cmbTheme, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Default"));
+        SendMessageW(cmbTheme, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Light"));
+        SendMessageW(cmbTheme, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Dark"));
+        ComboBox_SetCurSel(cmbTheme, self->m_theme);
+
         return TRUE;
       }
       case WM_COMMAND: {
@@ -287,6 +297,18 @@ struct WindowData {
             self->m_fastRefreshEnabled = IsDlgButtonChecked(hwnd, IDC_FASTREFRESH) == BST_CHECKED;
             self->m_useDirectDebugger = IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED;
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
+
+            auto themeComboBox = GetDlgItem(hwnd, IDC_THEME);
+            self->m_theme = ComboBox_GetCurSel(themeComboBox);
+            auto theme;
+            switch (self->m_theme) {
+                // Matches list item order populated in IDC_THEME above
+                default: theme = xaml::ElementTheme::Default; break
+                case 1: theme = xaml::ElementTheme::Light; break;
+                case 2: theme = xaml::ElementTheme::Dark; break;
+            }
+            auto panel = self->m_desktopWindowXamlSource.Content().as<controls::Panel>();
+            panel.RequestedTheme(theme);
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
@@ -384,7 +406,15 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
   windowData->m_useWebDebugger = useWebDebugger;
 
-  auto xamlContent = controls::Grid();
+  // We have to use a XAML string here to access the ThemeResource.
+  // XAML Islands requires us to set the background color to handle theme changes.
+  const winrt::hstring xamlString =
+      LR"(
+  <Grid
+    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+    Background='{ThemeResource ApplicationPageBackgroundThemeBrush}' />)";
+  auto xamlContent = winrt::unbox_value<controls::Grid>(xaml::Markup::XamlReader::Load(xamlString));
   desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(
