@@ -13,9 +13,12 @@ Get-WmiObject -class Win32_OperatingSystem
 
 If (!(test-path "c:\windows\system32\icu.dll")) {
    Write-Host "c:\windows\system32\icu.dll not found."   
-} else {
+}
+else {
    Write-Host "c:\windows\system32\icu.dll found."   
 }
+
+dir c:\windows\system32\icu*.dll
 
 if (!(Get-Command "wpr.exe" -ErrorAction SilentlyContinue)) { 
    throw "
