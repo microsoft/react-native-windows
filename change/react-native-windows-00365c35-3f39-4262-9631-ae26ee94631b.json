@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add CheckConstants<TModule, TModuleSpec> for REACT_GET_CONSTANTS",
-  "packageName": "react-native-windows",
-  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

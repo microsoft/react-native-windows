@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 25 Sep 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.384",
+      "version": "0.0.0-canary.384",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add CheckConstants<TModule, TModuleSpec> for REACT_GET_CONSTANTS",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "eaf932469678b8b67b0b2b17fd2bcdda1ed4e358",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 Sep 2021 05:06:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.383",
       "version": "0.0.0-canary.383",
