@@ -74,6 +74,12 @@ jobs:
             - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
               displayName: Set LocalDumps
 
+            - task: PowerShell@2
+              displayName: Start tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+
             - template: ../templates/set-experimental-feature.yml
               parameters:
                 package: packages/integration-test-app
@@ -154,6 +160,21 @@ jobs:
                   targetPath: $(Build.StagingDirectory)/Screenshots
                 condition: succeededOrFailed()
 
+              - task: PowerShell@2
+                displayName: Stop tracing
+                inputs:
+                  targetType: filePath # filePath | inline
+                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+                  arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+                condition: true
+
+              - task: PublishBuildArtifacts@1
+                displayName: Upload traces
+                inputs:
+                  pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+                  artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+                condition: true
+                
             - task: PublishPipelineArtifact@1
               displayName: Upload targets
               inputs:
