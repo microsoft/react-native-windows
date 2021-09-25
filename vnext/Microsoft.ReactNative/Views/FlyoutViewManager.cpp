@@ -427,7 +427,16 @@ void FlyoutShadowNode::SetTargetFrameworkElement() {
       }
     }
   } else {
-    m_targetElement = xaml::Window::Current().Content().as<xaml::FrameworkElement>();
+    if (IsXamlIsland()) {
+      // // XamlRoot added in 19H1
+      if (Is19H1OrHigher()) {
+        if (auto xamlRoot = React::XamlUIService::GetXamlRoot(GetViewManager()->GetReactContext().Properties())) {
+          m_targetElement = xamlRoot.Content().as<xaml::FrameworkElement>();
+        }
+      }
+    } else {
+      m_targetElement = xaml::Window::Current().Content().as<xaml::FrameworkElement>();
+    }
   }
 }
 
