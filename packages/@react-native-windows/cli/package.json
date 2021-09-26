@@ -34,7 +34,7 @@
     "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
-    "xmldom": "^0.5.0",
+    "xmldom": "github:xmldom/xmldom#0.7.0",
     "xpath": "^0.0.27"
   },
   "devDependencies": {
