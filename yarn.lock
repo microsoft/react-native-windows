@@ -9383,10 +9383,10 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
-react-native@0.0.0-fa768df2a:
-  version "0.0.0-fa768df2a"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-fa768df2a.tgz#f71f70b38110961c93d40c0d8c9b7be02a0f9727"
-  integrity sha512-omqYhArtQJLX4bqy16O46xSYSE2qROOOJNEr68xB3zDXS6mulpCDvwi2aNZprtCNuEUDVdnR/iYykQ+ggHuc0w==
+react-native@0.0.0-d3c7e2018:
+  version "0.0.0-d3c7e2018"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-d3c7e2018.tgz#85faed33fbc5b28cc01ab0b82b1e39e21ed03ab3"
+  integrity sha512-7REvELBsKlT9L9qgOk3M6rhlqZcwa69Yws9UrC5cGFUw1q191dA6ehS1KdSyNgTaQoV/T5KnNgSunrlvTXw5hA==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
@@ -11666,7 +11666,6 @@ xmldoc@^1.1.2:
 
 xmldom@^0.5.0, xmldom@^0.6.0, "xmldom@github:xmldom/xmldom#0.7.0":
   version "0.7.0"
-  uid c568938641cc1f121cef5b4df80fcfda1e489b6e
   resolved "https://codeload.github.com/xmldom/xmldom/tar.gz/c568938641cc1f121cef5b4df80fcfda1e489b6e"
 
 xpath@^0.0.27:
