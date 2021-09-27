@@ -15,7 +15,14 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
   try {
     return getHealthChecksUnsafe();
   } catch {
-    return undefined;
+    return [{
+      label: 'Windows',
+      healthchecks: [{
+        label: 'Enumerate Health Checks',
+        getDiagnostics: async () => ({needsToBeFixed: true}),
+        runAutomaticFix: async ({loader}) => {loader.fail()},
+      }]
+    }];
   }
 }
 
