@@ -95,16 +95,15 @@ TEST_CLASS (ReactNativeHostTests) {
     TestEventService::Initialize();
 
     auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
-      auto loadAction =
-          host.ReloadInstance().Completed([](auto const &task, winrt::Windows::Foundation::AsyncStatus status) mutable {
-            if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
-              TestEventService::LogEvent("InstanceLoaded::Completed", nullptr);
-            } else if (status == winrt::Windows::Foundation::AsyncStatus::Canceled) {
-              TestEventService::LogEvent("InstanceLoaded::Canceled", nullptr);
-            } else {
-              TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
-            }
-          });
+      host.ReloadInstance().Completed([](auto const &task, winrt::Windows::Foundation::AsyncStatus status) mutable {
+        if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
+          TestEventService::LogEvent("InstanceLoaded::Completed", nullptr);
+        } else if (status == winrt::Windows::Foundation::AsyncStatus::Canceled) {
+          TestEventService::LogEvent("InstanceLoaded::Canceled", nullptr);
+        } else {
+          TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
+        }
+      });
       return false; // Already called ReloadInstance, so we dont need the holder to load the instance
     });
 
