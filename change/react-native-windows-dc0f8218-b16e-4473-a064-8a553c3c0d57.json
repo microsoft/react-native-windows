@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Migrate NapiJsiRuntime from V8-JSI (#8617)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
