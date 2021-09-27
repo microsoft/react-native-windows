@@ -554,6 +554,8 @@
      return (
        <View>
          <Text 
+         accessibilityLabel="label for landmark"
+         accessibilityHint="hint for landmark"
          //@ts-ignore
          accessibilityLandmarkType="Main">
            The following uses accessibilityRole: 'header', and accessibilityLandmarkType.

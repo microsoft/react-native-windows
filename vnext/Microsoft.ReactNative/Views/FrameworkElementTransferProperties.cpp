@@ -50,6 +50,8 @@ void TransferFrameworkElementProperties(const xaml::DependencyObject &oldView, c
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::NameProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::HelpTextProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::LiveSettingProperty());
+  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::LandmarkTypeProperty());
+  TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::LocalizedLandmarkTypeProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::PositionInSetProperty());
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::SizeOfSetProperty());
   auto accessibilityView = xaml::Automation::AutomationProperties::GetAccessibilityView(oldView);
