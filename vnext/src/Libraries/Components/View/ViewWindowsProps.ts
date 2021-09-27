@@ -54,6 +54,11 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
   accessibilitySetSize?: number;
 
   /**
+   * Specifies the UIA Landmark Type for the view
+   */
+  accessibilityLandmarkType?: string;
+
+  /**
    * Specifies the Tooltip for the view
    */
   tooltip?: string;

@@ -367,6 +367,7 @@ const ReactNativeViewConfig: ViewConfig = {
     accessibilitySetSize: true,
     tooltip: true,
     accessibilityPosInSet: true,
+    accessibilityLandmarkType: true,
     onMouseEnter: true,
     enableFocusRing: true,
     onClick: true,

@@ -29,6 +29,7 @@ import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
 } from './ViewAccessibility';
+import { string } from 'prop-types';
 
 export type ViewLayout = Layout;
 export type ViewLayoutEvent = LayoutEvent;
@@ -411,6 +412,8 @@ type WindowsViewProps = $ReadOnly<{|
 
   accessibilityPosInSet?: ?number,
   accessibilitySetSize?: ?number,
+
+  accessibilityLandmarkType?: ?string,
 
   /**
    * Specifies if the control should show System focus visuals
