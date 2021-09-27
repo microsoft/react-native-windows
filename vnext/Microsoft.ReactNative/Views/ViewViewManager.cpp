@@ -409,7 +409,8 @@ bool ViewViewManager::UpdateProperty(
     } else if (propertyName == "pointerEvents") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         bool hitTestable = propertyValue.AsString() != "none";
-        pPanel.IsHitTestVisible(hitTestable);
+        if (const auto element = nodeToUpdate->GetView().try_as<xaml::UIElement>())
+          element.IsHitTestVisible(hitTestable);
       }
     } else if (propertyName == "focusable") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)

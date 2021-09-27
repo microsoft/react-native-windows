@@ -21,6 +21,7 @@ import * as configUtils from '../../config/configUtils';
 
 import {
   Command,
+  CommandOption,
   Config,
   Dependency,
   ProjectConfig,
@@ -686,11 +687,23 @@ export class AutolinkWindows {
         configUtils
           .tryFindPropertyValue(experimentalFeatures.content, 'UseWinUI3')
           ?.toLowerCase() === 'true';
-      // use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
+      // Check if WinUI2xVersion is specified in experimental features
+      const targetWinUI2xVersion = configUtils.tryFindPropertyValue(
+        experimentalFeatures.content,
+        'WinUI2xVersion',
+      );
+      // Check if WinUI3Version is specified in experimental features
+      const targetWinUI3xVersion = configUtils.tryFindPropertyValue(
+        experimentalFeatures.content,
+        'WinUI3Version',
+      );
+      // Use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
       changesNeeded = await this.updatePackagesConfigXAMLDialect(
         useWinUI3FromConfig !== undefined
           ? useWinUI3FromConfig
           : useWinUI3FromExperimentalFeatures,
+        targetWinUI2xVersion,
+        targetWinUI3xVersion,
       );
       if (useWinUI3FromConfig !== undefined) {
         // Make sure ExperimentalFeatures.props matches the value that comes from react-native.config.js
@@ -730,7 +743,11 @@ export class AutolinkWindows {
     return undefined;
   }
 
-  private async updatePackagesConfigXAMLDialect(useWinUI3: boolean) {
+  private async updatePackagesConfigXAMLDialect(
+    useWinUI3: boolean,
+    targetWinUI2xVersion: string | null,
+    targetWinUI3xVersion: string | null,
+  ) {
     let changed = false;
     const packagesConfig = this.getPackagesConfigXml();
     if (packagesConfig) {
@@ -742,14 +759,16 @@ export class AutolinkWindows {
         'PropertySheets/WinUI.props',
       );
       const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
-      const winui2xVersion = configUtils.tryFindPropertyValue(
-        winuiPropsContents,
-        'WinUI2xVersion',
-      );
-      const winui3Version = configUtils.tryFindPropertyValue(
-        winuiPropsContents,
-        'WinUI3Version',
-      );
+
+      // Use the given WinUI2xVersion, otherwise fallback to WinUI.props
+      const winui2xVersion =
+        targetWinUI2xVersion ??
+        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI2xVersion');
+
+      // Use the given WinUI3Version, otherwise fallback to WinUI.props
+      const winui3Version =
+        targetWinUI3xVersion ??
+        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI3Version');
 
       const dialects = [
         {id: 'Microsoft.WinUI', version: winui3Version!},
@@ -859,7 +878,7 @@ function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
  * @param message The message to log.
  * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message: any, verbose: boolean) {
+function verboseMessage(message: any, verbose?: boolean) {
   if (verbose) {
     console.log(message);
   }
@@ -933,39 +952,42 @@ async function updateAutoLink(
   }
 }
 
-interface AutoLinkOptions {
-  logging: boolean;
-  check: boolean;
+export interface AutoLinkOptions {
+  logging?: boolean;
+  check?: boolean;
   sln?: string;
   proj?: string;
 }
 
+export const autolinkOptions: CommandOption[] = [
+  {
+    name: '--logging',
+    description: 'Verbose output logging',
+  },
+  {
+    name: '--check',
+    description: 'Only check whether any autolinked files need to change',
+  },
+  {
+    name: '--sln [string]',
+    description:
+      "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
+    default: undefined,
+  },
+  {
+    name: '--proj [string]',
+    description:
+      "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
+    default: undefined,
+  },
+];
+
+/**
+ * Performs auto-linking for RNW native modules and apps.
+ */
 export const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
   func: updateAutoLink,
-  options: [
-    {
-      name: '--logging',
-      description: 'Verbose output logging',
-      default: false,
-    },
-    {
-      name: '--check',
-      description: 'Only check whether any autolinked files need to change',
-      default: false,
-    },
-    {
-      name: '--sln [string]',
-      description:
-        "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
-      default: undefined,
-    },
-    {
-      name: '--proj [string]',
-      description:
-        "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
-      default: undefined,
-    },
-  ],
+  options: autolinkOptions,
 };

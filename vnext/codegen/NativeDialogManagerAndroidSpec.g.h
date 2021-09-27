@@ -26,14 +26,14 @@ struct DialogManagerAndroidSpec_DialogOptions {
     REACT_FIELD(buttonNeutral)
     std::optional<std::string> buttonNeutral;
     REACT_FIELD(items)
-    std::optional<React::JSValueArray> items;
+    std::optional<std::vector<std::string>> items;
     REACT_FIELD(cancelable)
     std::optional<bool> cancelable;
 };
 
 struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(DialogManagerAndroidSpec_DialogOptions, Callback<React::JSValue>, Callback<React::JSValue>) noexcept>{0, L"showAlert"},
+      Method<void(DialogManagerAndroidSpec_DialogOptions, Callback<std::string>, Callback<std::string, double>) noexcept>{0, L"showAlert"},
   };
 
   template <class TModule>
@@ -43,8 +43,8 @@ struct DialogManagerAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "showAlert",
-          "    REACT_METHOD(showAlert) void showAlert(DialogManagerAndroidSpec_DialogOptions && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(showAlert) static void showAlert(DialogManagerAndroidSpec_DialogOptions && config, std::function<void(React::JSValue const &)> const & onError, std::function<void(React::JSValue const &)> const & onAction) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(showAlert) void showAlert(DialogManagerAndroidSpec_DialogOptions && config, std::function<void(std::string)> const & onError, std::function<void(std::string, double)> const & onAction) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(showAlert) static void showAlert(DialogManagerAndroidSpec_DialogOptions && config, std::function<void(std::string)> const & onError, std::function<void(std::string, double)> const & onAction) noexcept { /* implementation */ }}\n");
   }
 };
 

@@ -18,8 +18,8 @@ struct BlobModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void() noexcept>{0, L"addNetworkingHandler"},
       Method<void(double) noexcept>{1, L"addWebSocketHandler"},
       Method<void(double) noexcept>{2, L"removeWebSocketHandler"},
-      Method<void(React::JSValueObject, double) noexcept>{3, L"sendOverSocket"},
-      Method<void(React::JSValueArray, std::string) noexcept>{4, L"createFromParts"},
+      Method<void(React::JSValue, double) noexcept>{3, L"sendOverSocket"},
+      Method<void(std::vector<React::JSValue>, std::string) noexcept>{4, L"createFromParts"},
       Method<void(std::string) noexcept>{5, L"release"},
   };
 
@@ -45,13 +45,13 @@ struct BlobModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "sendOverSocket",
-          "    REACT_METHOD(sendOverSocket) void sendOverSocket(React::JSValueObject && blob, double socketID) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(sendOverSocket) static void sendOverSocket(React::JSValueObject && blob, double socketID) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(sendOverSocket) void sendOverSocket(React::JSValue && blob, double socketID) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(sendOverSocket) static void sendOverSocket(React::JSValue && blob, double socketID) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "createFromParts",
-          "    REACT_METHOD(createFromParts) void createFromParts(React::JSValueArray && parts, std::string withId) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(createFromParts) static void createFromParts(React::JSValueArray && parts, std::string withId) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(createFromParts) void createFromParts(std::vector<React::JSValue> const & parts, std::string withId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(createFromParts) static void createFromParts(std::vector<React::JSValue> const & parts, std::string withId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
           "release",

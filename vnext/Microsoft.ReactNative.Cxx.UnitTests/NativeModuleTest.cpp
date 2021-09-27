@@ -10,6 +10,22 @@
 
 namespace ReactNativeTests {
 
+REACT_STRUCT(SimpleNativeModuleConstants1)
+struct SimpleNativeModuleConstants1 {
+  REACT_FIELD(const71)
+  Point const71;
+  REACT_FIELD(const72)
+  std::string const72;
+};
+
+REACT_STRUCT(SimpleNativeModuleConstants2)
+struct SimpleNativeModuleConstants2 {
+  REACT_FIELD(const81)
+  Point const81;
+  REACT_FIELD(const82)
+  std::string const82;
+};
+
 REACT_MODULE(SimpleNativeModule)
 struct SimpleNativeModule {
   REACT_INIT(Initialize)
@@ -581,6 +597,24 @@ struct SimpleNativeModule {
   static void Constant6(React::ReactConstantProvider &provider) noexcept {
     provider.Add(L"const61", Point{/*X =*/15, /*Y =*/17});
     provider.Add(L"const62", "MyConstant62");
+  }
+
+  REACT_GET_CONSTANTS(Constant7)
+  SimpleNativeModuleConstants1 Constant7() noexcept {
+    SimpleNativeModuleConstants1 constants{};
+    constants.const71.X = 710;
+    constants.const71.Y = 711;
+    constants.const72 = "MyConstant72";
+    return constants;
+  }
+
+  REACT_GET_CONSTANTS(Constant8)
+  static SimpleNativeModuleConstants2 Constant8() noexcept {
+    SimpleNativeModuleConstants2 constants{};
+    constants.const81.X = 810;
+    constants.const81.Y = 811;
+    constants.const82 = "MyConstant82";
+    return constants;
   }
 
   // Allows to emit native module events
@@ -1471,6 +1505,12 @@ TEST_CLASS (NativeModuleTest) {
     TestCheck(constants["const61"]["X"] == 15);
     TestCheck(constants["const61"]["Y"] == 17);
     TestCheck(constants["const62"] == "MyConstant62");
+    TestCheck(constants["const71"]["X"] == 710);
+    TestCheck(constants["const71"]["Y"] == 711);
+    TestCheck(constants["const72"] == "MyConstant72");
+    TestCheck(constants["const81"]["X"] == 810);
+    TestCheck(constants["const81"]["Y"] == 811);
+    TestCheck(constants["const82"] == "MyConstant82");
   }
 
   TEST_METHOD(TestEvent_IntEventField) {

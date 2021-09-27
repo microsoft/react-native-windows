@@ -11,19 +11,34 @@ import {
   NativeModuleParamTypeAnnotation,
   Nullable,
 } from 'react-native-tscodegen';
-import {getAliasCppName} from './ObjectTypes';
+import {
+  AliasMap,
+  getAliasCppName,
+  getAnonymousAliasCppName,
+} from './AliasManaging';
 
 type NativeModuleParamShape = NamedShape<
   Nullable<NativeModuleParamTypeAnnotation>
 >;
 
-function decorateType(type: string, forSpec: boolean): string {
-  return forSpec ? type : `${type} &&`;
+type ParamTarget = 'spec' | 'template' | 'callback-arg' | 'method-arg';
+
+function decorateType(type: string, target: ParamTarget): string {
+  switch (target) {
+    case 'method-arg':
+      return `${type} &&`;
+    case 'callback-arg':
+      return `${type} const &`;
+    default:
+      return type;
+  }
 }
 
 function translateParam(
   param: NativeModuleParamTypeAnnotation,
-  forSpec: boolean,
+  aliases: AliasMap,
+  baseAliasName: string,
+  target: ParamTarget,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const paramType = param.type;
@@ -39,21 +54,63 @@ function translateParam(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'FunctionTypeAnnotation': {
-      // TODO: type.params && type.returnTypeAnnotation
-      if (forSpec) {
-        return 'Callback<React::JSValue>';
-      } else {
-        return 'std::function<void(React::JSValue const &)> const &';
+      // TODO: type.returnTypeAnnotation
+      switch (target) {
+        case 'spec':
+          return `Callback<${param.params
+            .map((p: NativeModuleParamShape) =>
+              translateSpecFunctionParam(
+                p,
+                aliases,
+                `${baseAliasName}_${p.name}`,
+              ),
+            )
+            .join(', ')}>`;
+        case 'template':
+          return `std::function<void(${param.params
+            .map((p: NativeModuleParamShape) =>
+              translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+            )
+            .join(', ')})>`;
+        default:
+          return `std::function<void(${param.params
+            .map((p: NativeModuleParamShape) =>
+              translateCallbackParam(p, aliases, `${baseAliasName}_${p.name}`),
+            )
+            .join(', ')})> const &`;
       }
     }
     case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return decorateType('React::JSValueArray', forSpec);
+      if (param.elementType) {
+        switch (target) {
+          case 'spec':
+          case 'template':
+            return `std::vector<${translateNullableParamType(
+              param.elementType,
+              aliases,
+              `${baseAliasName}_element`,
+              'template',
+              'template',
+            )}>`;
+          default:
+            return `std::vector<${translateNullableParamType(
+              param.elementType,
+              aliases,
+              `${baseAliasName}_element`,
+              'template',
+              'template',
+            )}> const &`;
+        }
+      } else {
+        return decorateType('React::JSValueArray', target);
+      }
     case 'GenericObjectTypeAnnotation':
-      return decorateType('React::JSValueObject', forSpec);
+      return decorateType('React::JSValue', target);
     case 'ObjectTypeAnnotation':
-      // TODO: we have more information here, and could create a more specific type
-      return decorateType('React::JSValueObject', forSpec);
+      return decorateType(
+        getAnonymousAliasCppName(aliases, baseAliasName, param),
+        target,
+      );
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = param.name;
@@ -64,52 +121,100 @@ function translateParam(
       return 'double';
     }
     case 'TypeAliasTypeAnnotation':
-      return decorateType(getAliasCppName(param.name), forSpec);
+      return decorateType(getAliasCppName(param.name), target);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
 }
 
-function translateSpecFunctionParam(param: NativeModuleParamShape): string {
-  switch (param.typeAnnotation.type) {
+function translateNullableParamType(
+  paramType: Nullable<NativeModuleParamTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
+  nullableTarget: ParamTarget,
+  target: ParamTarget,
+): string {
+  switch (paramType.type) {
     case 'NullableTypeAnnotation':
-      // TODO: should be
-      // return `std::optional<${translateParam(
-      //   param.typeAnnotation.typeAnnotation,
-      //   true,
-      // )}>`;
-      return translateParam(param.typeAnnotation.typeAnnotation, true);
+      return `std::optional<${translateParam(
+        paramType.typeAnnotation,
+        aliases,
+        baseAliasName,
+        nullableTarget,
+      )}>`;
     default:
-      return translateParam(param.typeAnnotation, true);
+      return translateParam(paramType, aliases, baseAliasName, target);
   }
 }
 
-function translateFunctionParam(param: NativeModuleParamShape): string {
-  switch (param.typeAnnotation.type) {
-    case 'NullableTypeAnnotation':
-      // TODO: should be
-      // return `std::optional<${translateParam(
-      //   param.typeAnnotation.typeAnnotation,
-      //   false,
-      // )}>`;
-      return translateParam(param.typeAnnotation.typeAnnotation, false);
-    default:
-      return translateParam(param.typeAnnotation, false);
-  }
+function translateSpecFunctionParam(
+  param: NativeModuleParamShape,
+  aliases: AliasMap,
+  baseAliasName: string,
+): string {
+  return translateNullableParamType(
+    param.typeAnnotation,
+    aliases,
+    baseAliasName,
+    'spec',
+    'spec',
+  );
+}
+
+function translateCallbackParam(
+  param: NativeModuleParamShape,
+  aliases: AliasMap,
+  baseAliasName: string,
+): string {
+  return translateNullableParamType(
+    param.typeAnnotation,
+    aliases,
+    baseAliasName,
+    'template',
+    'callback-arg',
+  );
+}
+
+function translateFunctionParam(
+  param: NativeModuleParamShape,
+  aliases: AliasMap,
+  baseAliasName: string,
+): string {
+  return translateNullableParamType(
+    param.typeAnnotation,
+    aliases,
+    baseAliasName,
+    'template',
+    'method-arg',
+  );
 }
 
 export function translateSpecArgs(
   params: ReadonlyArray<NativeModuleParamShape>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ) {
   return params.map(param => {
-    const translatedParam = translateSpecFunctionParam(param);
+    const translatedParam = translateSpecFunctionParam(
+      param,
+      aliases,
+      `${baseAliasName}_${param.name}`,
+    );
     return `${translatedParam}`;
   });
 }
 
-export function translateArgs(params: ReadonlyArray<NativeModuleParamShape>) {
+export function translateArgs(
+  params: ReadonlyArray<NativeModuleParamShape>,
+  aliases: AliasMap,
+  baseAliasName: string,
+) {
   return params.map(param => {
-    const translatedParam = translateFunctionParam(param);
+    const translatedParam = translateFunctionParam(
+      param,
+      aliases,
+      `${baseAliasName}_${param.name}`,
+    );
     return `${translatedParam} ${param.name}`;
   });
 }
