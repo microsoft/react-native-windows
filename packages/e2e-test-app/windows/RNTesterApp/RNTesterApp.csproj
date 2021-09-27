@@ -135,7 +135,7 @@
       <Version>1.0.9</Version>
     </PackageReference>
     <PackageReference Include="ReactNative.Hermes.Windows">
-      <Version>0.9.0-ms.3</Version>
+      <Version>0.9.0-ms.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
