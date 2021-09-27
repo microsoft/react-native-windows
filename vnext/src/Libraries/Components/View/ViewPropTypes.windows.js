@@ -29,7 +29,6 @@ import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
 } from './ViewAccessibility';
-import { string } from 'prop-types';
 
 export type ViewLayout = Layout;
 export type ViewLayoutEvent = LayoutEvent;
