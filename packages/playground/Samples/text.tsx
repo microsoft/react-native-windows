@@ -11,7 +11,7 @@ export default class Bootstrap extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
+        <Text style={styles.welcome}>React Native!</Text>
       </View>
     );
   }
