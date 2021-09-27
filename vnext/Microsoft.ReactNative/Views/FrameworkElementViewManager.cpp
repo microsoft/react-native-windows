@@ -115,6 +115,7 @@ void FrameworkElementViewManager::GetNativeProps(const winrt::Microsoft::ReactNa
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tooltip", L"string");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityActions", L"array");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityLiveRegion", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityLandmarkType", L"string");
   writer.WritePropertyName(L"accessibilityValue");
   GetAccessibilityValueProps(writer);
 }
@@ -264,6 +265,38 @@ bool FrameworkElementViewManager::UpdateProperty(
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         if (!propertyValue.AsBoolean())
           xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::Peers::AccessibilityView::Raw);
+      }
+    } else if (propertyName == "accessibilityLandmarkType") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        auto value = propertyValue.AsString();
+        auto landmarkType = winrt::AutomationLandmarkType::None;
+
+        element.ClearValue(xaml::Automation::AutomationProperties::LocalizedLandmarkTypeProperty());
+
+        if (value == "Form") {
+          landmarkType = winrt::AutomationLandmarkType::Form;
+        } else if (value == "Main") {
+          landmarkType = winrt::AutomationLandmarkType::Main;
+        } else if (value == "Navigation") {
+          landmarkType = winrt::AutomationLandmarkType::Navigation;
+        } else if (value == "None") {
+          landmarkType = winrt::AutomationLandmarkType::None;
+        } else if (value == "Search") {
+          landmarkType = winrt::AutomationLandmarkType::Search;
+        } else {
+          landmarkType = winrt::AutomationLandmarkType::Custom;
+
+          auto customLandmarkType = asHstring(propertyValue);
+          auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(customLandmarkType);
+          element.SetValue(xaml::Automation::AutomationProperties::LocalizedLandmarkTypeProperty(), boxedValue);
+        }
+
+        element.SetValue(
+            xaml::Automation::AutomationProperties::LandmarkTypeProperty(), winrt::box_value(landmarkType));
+
+      } else if (propertyValue.IsNull()) {
+        element.ClearValue(xaml::Automation::AutomationProperties::LandmarkTypeProperty());
+        element.ClearValue(xaml::Automation::AutomationProperties::LocalizedLandmarkTypeProperty());
       }
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
