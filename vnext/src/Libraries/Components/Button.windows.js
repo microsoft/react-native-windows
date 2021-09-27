@@ -335,7 +335,67 @@ class Button extends React.Component<
     //  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
     // Windows]
     // [Windows
-    if (Platform.OS === 'windows') {
+    if (Platform.OS === 'windows' && color) {
+      return (
+        <Touchable
+          accessibilityLabel={accessibilityLabel}
+          accessibilityRole="button"
+          accessibilityState={accessibilityState}
+          hasTVPreferredFocus={hasTVPreferredFocus}
+          nextFocusDown={nextFocusDown}
+          nextFocusForward={nextFocusForward}
+          nextFocusLeft={nextFocusLeft}
+          nextFocusRight={nextFocusRight}
+          nextFocusUp={nextFocusUp}
+          testID={testID}
+          disabled={disabled}
+          onPress={onPress}
+          tabIndex={tabIndex}
+          touchSoundDisabled={touchSoundDisabled}
+          underlayColor="white"
+          onShowUnderlay={() => {
+            this.setState({pressed: true});
+          }}
+          onHideUnderlay={() => {
+            this.setState({pressed: false});
+          }}
+          onMouseEnter={() => {
+            if (!disabled) this.setState({hover: true});
+          }}
+          onMouseLeave={() => {
+            if (!disabled) this.setState({hover: false});
+          }}>
+          <View
+            style={
+              this.state.pressed
+                ? [
+                    buttonStyles,
+                    {
+                      borderColor: PlatformColor('ButtonBorderBrushPressed'),
+                      borderBottomWidth: 1,
+                    },
+                  ]
+                : buttonStyles
+            }>
+            <View
+              style={
+                this.state.hover
+                  ? [
+                      {
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        borderRadius: 3,
+                      },
+                    ]
+                  : [{}]
+              }>
+              <Text style={textStyles} disabled={disabled}>
+                {formattedTitle}
+              </Text>
+            </View>
+          </View>
+        </Touchable>
+      );
+    } else if (Platform.OS === 'windows') {
       return (
         <Touchable
           accessibilityLabel={accessibilityLabel}
