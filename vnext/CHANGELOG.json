@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Sep 2021 15:07:31 GMT",
+      "tag": "react-native-windows_v0.66.0-preview.5",
+      "version": "0.66.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Migrate NapiJsiRuntime from V8-JSI (#8617)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b4d6793bc39203a7671163f7770307f24f90ef91",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Sep 2021 15:07:01 GMT",
       "tag": "react-native-windows_v0.66.0-preview.4",
       "version": "0.66.0-preview.4",

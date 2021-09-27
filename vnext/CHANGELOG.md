@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 20 Sep 2021 15:07:01 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Sep 2021 15:07:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.0-preview.5
+
+Mon, 27 Sep 2021 15:07:31 GMT
+
+### Changes
+
+- Migrate NapiJsiRuntime from V8-JSI (#8617) (julio.rocha@microsoft.com)
 
 ## 0.66.0-preview.4
 
