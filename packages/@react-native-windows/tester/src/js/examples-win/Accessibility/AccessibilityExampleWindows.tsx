@@ -553,27 +553,23 @@
    public render() {
      return (
        <View>
-         <Text 
-         accessibilityLabel="label for landmark"
-         accessibilityHint="hint for landmark"
+         <View accessibilityRole="summary"
+         accessibilityLabel="This text is within 'Main' accessibilityLandmarkType."
          //@ts-ignore
          accessibilityLandmarkType="Main">
-           The following uses accessibilityRole: 'header', and accessibilityLandmarkType.
-           Enable scan mode to hear Narrator announce Headings and Landmarks.
-         </Text>
-         <View
-           //@ts-ignore
-           accessibilityLandmarkType="Main">
-           <Text accessibilityRole="header">Heading text in "Main" Landmark</Text>
+          <Text>
+            This text is within "Main" accessibilityLandmarkType.
+            Enable scan mode to hear Narrator announce Headings and Landmarks.
+          </Text>
          </View>
-         <Text>
-           The following does the same, but within a TouchableWithoutFeedback.
-         </Text>
-         <TouchableHighlight
-           //@ts-ignore
-           accessibilityLandmarkType="Testing">
-           <Text accessibilityRole="header">Heading text in "Custom" Landmark</Text>
-         </TouchableHighlight>
+         <View
+          accessibilityRole="text"
+          //@ts-ignore
+          accessibilityLandmarkType="custom test">
+            <Text>This text is within a custom accessibilityLandmarkType</Text>
+         </View>
+         <Text accessibilityRole="header">
+           Heading Level 2 text</Text>
        </View>
      );
    }
