@@ -12,7 +12,7 @@ using namespace Windows::System;
 
 TestReactNativeHostHolder::TestReactNativeHostHolder(
     std::wstring_view jsBundle,
-    Mso::Functor<void(ReactNativeHost const &)> &&hostInitializer) noexcept {
+    Mso::Functor<bool(ReactNativeHost const &)> &&hostInitializer) noexcept {
   m_host = ReactNativeHost{};
   m_queueController = DispatcherQueueController::CreateOnDedicatedThread();
   m_queueController.DispatcherQueue().TryEnqueue(
@@ -30,9 +30,9 @@ TestReactNativeHostHolder::TestReactNativeHostHolder(
         m_host.InstanceSettings().UseLiveReload(false);
         m_host.InstanceSettings().EnableDeveloperMenu(false);
 
-        hostInitializer(m_host);
-
-        m_host.LoadInstance();
+        if (hostInitializer(m_host)) {
+          m_host.LoadInstance();
+        }
       });
 }
 
