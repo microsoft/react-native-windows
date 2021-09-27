@@ -95,7 +95,7 @@ TEST_CLASS (ReactNativeHostTests) {
     TestEventService::Initialize();
 
     auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
-      host.ReloadInstance().Completed([](auto const &task, winrt::Windows::Foundation::AsyncStatus status) mutable {
+      host.ReloadInstance().Completed([](auto const &, winrt::Windows::Foundation::AsyncStatus status) mutable {
         if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
           TestEventService::LogEvent("InstanceLoaded::Completed", nullptr);
         } else if (status == winrt::Windows::Foundation::AsyncStatus::Canceled) {
