@@ -633,12 +633,12 @@ function getReunionPackages(nugetVersion: string): NugetPackage[] {
     version: nugetVersion,
   });
 
-  const reunionVersion = '1.0.0-experimental1';
+  const reunionVersion = '1.0.0-preview1';
   for (const pkg of [
     'Microsoft.WindowsAppSDK',
     'Microsoft.WindowsAppSDK.Foundation',
     'Microsoft.WindowsAppSDK.WinUI',
-    'Microsoft.WindowsAppSDK.InteractiveExperiences',
+    // 'Microsoft.WindowsAppSDK.InteractiveExperiences',
   ]) {
     reunionPackages.push({
       id: pkg,

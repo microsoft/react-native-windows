@@ -22,10 +22,10 @@
   </ItemGroup>
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />-->
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-experimental1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-experimental1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-experimental1" />
-    <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-preview1" />
+    <!-- <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-preview1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-preview1" /> -->
+    <!-- <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-preview1" /> -->
 
     <!-- 
       See comment in ExperimentalFeatures.props - we can't use 22000 _yet_
