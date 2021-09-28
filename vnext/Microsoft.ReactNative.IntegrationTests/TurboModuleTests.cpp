@@ -167,6 +167,7 @@ TEST_CLASS (TurboModuleTests) {
 
     auto reactNativeHost = TestReactNativeHostHolder(L"TurboModuleTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<SampleTurboModulePackageProvider>());
+      return true;
     });
 
     TestEventService::ObserveEvents({
