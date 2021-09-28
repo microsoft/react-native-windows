@@ -9,6 +9,7 @@
 import {SchemaType} from 'react-native-tscodegen';
 import {AliasMap, setPreferredModuleName} from './AliasManaging';
 import {createAliasMap, generateAliases} from './AliasGen';
+import {generateValidateConstants} from './ValidateConstants';
 import {generateValidateMethods} from './ValidateMethods';
 
 type FilesOutput = Map<string, string>;
@@ -68,18 +69,30 @@ export function createNM2Generator({namespace}: {namespace: string}) {
 
         // prepare methods
         const methods = generateValidateMethods(nativeModule, aliases);
-
-        // generate code for structs
-        const traversedAliasedStructs = generateAliases(aliases);
-
-        // prepare method spec
-        const tuples = `
+        let tuples = `
   static constexpr auto methods = std::tuple{
 ${methods[0]}
   };`;
-        const checks = `
+        let checks = `
     constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();`;
-        const errors = methods[1];
+        let errors = methods[1];
+
+        // prepare constants
+        const constants = generateValidateConstants(nativeModule, aliases);
+        if (constants !== undefined) {
+          tuples = `
+  static constexpr auto constants = std::tuple{
+${constants[0]}
+  };${tuples}`;
+          checks = `
+    constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();${checks}`;
+          errors = `${constants[1]}
+
+${errors}`;
+        }
+
+        // generate code for structs
+        const traversedAliasedStructs = generateAliases(aliases);
 
         files.set(
           `Native${preferredModuleName}Spec.g.h`,
