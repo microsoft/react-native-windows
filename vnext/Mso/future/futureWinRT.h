@@ -57,7 +57,9 @@ struct AsyncActionFutureAdapter : winrt::implements<
       m_completedAssigned = true;
 
       if (m_status == AsyncStatus::Started) {
-        m_completed = winrt::impl::make_agile_delegate(handler);
+        m_completed = winrt::impl::make_agile_delegate(
+            [keepAlive = get_strong(), handler = std::move(handler)](
+                auto const &task, winrt::Windows::Foundation::AsyncStatus status) { handler(task, status); });
         return;
       }
 
