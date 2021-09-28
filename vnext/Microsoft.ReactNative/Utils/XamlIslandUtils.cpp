@@ -43,7 +43,7 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase co
             // https://github.com/microsoft/microsoft-ui-xaml/issues/5818
             appBarButton.Click([weakCommandBarFlyout = winrt::make_weak(flyout)](auto &&...) {
               if (auto flyout = weakCommandBarFlyout.get()) {
-                Xaml::Input::FocusManager::TryFocusAsync(flyout.Target(), FocusState::Programmatic);
+                xaml::Input::FocusManager::TryFocusAsync(flyout.Target(), xaml::FocusState::Programmatic);
               }
             });
           } else if (appBarButton.Flyout() == textBox.ProofingMenuFlyout()) {
