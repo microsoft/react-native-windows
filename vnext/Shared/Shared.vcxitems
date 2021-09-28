@@ -20,7 +20,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)cdebug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
@@ -72,7 +71,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AbiSafe.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorageModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />

@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp">
       <Filter>Source Files\AsyncStorage</Filter>
@@ -35,9 +36,6 @@
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)cdebug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp">
@@ -362,7 +360,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraCoreRuntime.h">
       <Filter>Header Files\JSI</Filter>
     </ClInclude>

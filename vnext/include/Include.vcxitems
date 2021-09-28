@@ -15,7 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\AsyncStorageModuleWin32Config.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\cdebug.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\II18nModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ReactWindowsAPI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\ViewManager.h" />
