@@ -15,17 +15,6 @@ import {AliasMap} from './AliasManaging';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
-const validateMethodTemplate = `
-  static constexpr auto methods = std::tuple{
-::_MODULE_PROPERTIES_TUPLE_::
-  };
-
-  template <class TModule>
-  static constexpr void ValidateModule() noexcept {
-    constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();
-
-::_MODULE_PROPERTIES_SPEC_ERRORS_::`;
-
 function isMethodSync(funcType: NativeModuleFunctionTypeAnnotation) {
   return (
     funcType.returnTypeAnnotation.type !== 'VoidTypeAnnotation' &&
@@ -138,13 +127,9 @@ function renderProperties(
 export function generateValidateMethods(
   nativeModule: NativeModuleSchema,
   aliases: AliasMap,
-): string {
+): [string, string] {
   const properties = nativeModule.spec.properties;
   const traversedProperties = renderProperties(properties, aliases, false);
   const traversedPropertyTuples = renderProperties(properties, aliases, true);
-
-  return validateMethodTemplate
-    .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
-    .replace(/::_MODULE_PROPERTIES_SPEC_ERRORS_::/g, traversedProperties)
-    .substr(1);
+  return [traversedPropertyTuples, traversedProperties];
 }

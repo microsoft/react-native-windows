@@ -29,7 +29,13 @@ const moduleTemplate = `
 namespace ::_NAMESPACE_:: {
 ::_MODULE_ALIASED_STRUCTS_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-::_MODULE_MEMBERS_VALIDATION_::
+::_MODULE_MEMBERS_TUPLES_::
+
+  template <class TModule>
+  static constexpr void ValidateModule() noexcept {
+    constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();
+
+::_MODULE_MEMBERS_ERRORS_::
   }
 };
 
@@ -66,11 +72,20 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         // generate code for structs
         const traversedAliasedStructs = generateAliases(aliases);
 
+        // prepare spec
+        const tuples = `
+  static constexpr auto methods = std::tuple{
+${methods[0]}
+  };`;
+
+        const errors = methods[1];
+
         files.set(
           `Native${preferredModuleName}Spec.g.h`,
           moduleTemplate
             .replace(/::_MODULE_ALIASED_STRUCTS_::/g, traversedAliasedStructs)
-            .replace(/::_MODULE_MEMBERS_VALIDATION_::/g, methods)
+            .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substr(1))
+            .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)
             .replace(/::_MODULE_NAME_::/g, preferredModuleName)
             .replace(/::_NAMESPACE_::/g, namespace),
         );
