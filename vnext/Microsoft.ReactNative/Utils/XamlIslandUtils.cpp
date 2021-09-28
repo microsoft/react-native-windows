@@ -37,7 +37,16 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase co
       const auto &commands = flyout.SecondaryCommands();
       for (uint32_t i = 0; i < commands.Size(); ++i) {
         if (const auto &appBarButton = commands.GetAt(i).try_as<xaml::Controls::AppBarButton>()) {
-          if (appBarButton.Flyout() == textBox.ProofingMenuFlyout()) {
+          if (!appBarButton.Flyout()) {
+            // This works around a loss of focus on the Proofing sub-menu when clicking on
+            // on the menu items.
+            // https://github.com/microsoft/microsoft-ui-xaml/issues/5818
+            appBarButton.Click([weakCommandBarFlyout = winrt::make_weak(cbf)](auto &&...) {
+              if (auto flyout = weakCommandBarFlyout.get()) {
+                Xaml::Input::FocusManager::TryFocusAsync(flyout.Target(), FocusState::Programmatic);
+              }
+            });
+          } else if (appBarButton.Flyout() == textBox.ProofingMenuFlyout()) {
             // Replace the AppBarButton for the proofing menu with one that doesn't crash
             const auto customAppBarButton = winrt::make<CustomAppBarButton>();
             customAppBarButton.Label(appBarButton.Label());
