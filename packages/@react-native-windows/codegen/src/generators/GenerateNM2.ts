@@ -85,7 +85,7 @@ ${methods[0]}
 ${constants[0]}
   };${tuples}`;
           checks = `
-    constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();${checks}`;
+    constexpr auto constantCheckResults = CheckConstants<TModule, ::_MODULE_NAME_::Spec>();${checks}`;
           errors = `${constants[1]}
 
 ${errors}`;
