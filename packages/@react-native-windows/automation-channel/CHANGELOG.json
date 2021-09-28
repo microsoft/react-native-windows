@@ -2,6 +2,80 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 28 Sep 2021 05:07:03 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.4",
+      "version": "0.0.4",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 9/23",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d4970fdd583866c3ac7af6a0cf38040cf3b22d93",
+            "package": "@react-native-windows/automation-channel"
+          },
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.385",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d4970fdd583866c3ac7af6a0cf38040cf3b22d93",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Remove RNW peerDep from automation-commands package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "09d6b43a7c4a647d38e165a41d788ff8b693a40a",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Sep 2021 05:06:39 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.3-12",
+      "version": "0.0.3-12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.384",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "eaf932469678b8b67b0b2b17fd2bcdda1ed4e358",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Sep 2021 05:06:42 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.3-11",
+      "version": "0.0.3-11",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RN nightly 9/16.",
+            "author": "igklemen@microsoft.com",
+            "commit": "8b63ada9ba1d55bfd161388fc18c2b5c6445b508",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Sep 2021 05:06:48 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.3-10",
+      "version": "0.0.3-10",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.0.0-canary.382",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "3813907b2eaa6198f0a8b9dc570075f0c7117301",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Sep 2021 05:06:43 GMT",
       "tag": "@react-native-windows/automation-channel_v0.0.3-9",
       "version": "0.0.3-9",

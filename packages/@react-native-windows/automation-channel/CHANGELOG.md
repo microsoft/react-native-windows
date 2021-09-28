@@ -1,8 +1,45 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Wed, 22 Sep 2021 05:06:43 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 05:07:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.4
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Patches
+
+- Remove RNW peerDep from automation-commands package (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate 9/23 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.385 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.3-12
+
+Sat, 25 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.384 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.3-11
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Changes
+
+- Integrate RN nightly 9/16. (igklemen@microsoft.com)
+
+## 0.0.3-10
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.382 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.3-9
 

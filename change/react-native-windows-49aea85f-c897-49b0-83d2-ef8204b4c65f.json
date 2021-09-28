@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update JSIEngineOverride documentation to clarify that the setting is ignored while the web debugger is being used, since the browser responsible for debugging must use its own engine to debug correctly.",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}

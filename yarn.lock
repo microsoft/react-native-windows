@@ -1329,11 +1329,11 @@
     strip-ansi "^6.0.0"
 
 "@jest/create-cache-key-function@^27.0.1":
-  version "27.2.0"
-  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.2.0.tgz#949f7f7261fc6199610e3078caddf4d872d6f034"
-  integrity sha512-o+Q6CAT/mPNxiOGn6+UD/buY8O5cyDHbjD8FXDCUZbzfCwt6zYlmCMObLE+k1i/XJc5M3YIvEeaa6L7x7uAeYQ==
+  version "27.2.3"
+  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.2.3.tgz#1cc6a5f0cb50ad78de76d131b09ff1017ba54306"
+  integrity sha512-tKflOJSc5iROqk75XtkhN81bKeT3apE9361mfakiwXQelXd7LsEE9tIW/2wiFlPn+PggcV/yDS32+oiqRtlOnA==
   dependencies:
-    "@jest/types" "^27.1.1"
+    "@jest/types" "^27.2.3"
 
 "@jest/environment@^26.6.2":
   version "26.6.2"
@@ -1469,10 +1469,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^27.1.1":
-  version "27.1.1"
-  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.1.1.tgz#77a3fc014f906c65752d12123a0134359707c0ad"
-  integrity sha512-yqJPDDseb0mXgKqmNqypCsb85C22K1aY5+LUxh7syIM9n/b0AsaltxNy+o6tt29VcfGDpYEve175bm3uOhcehA==
+"@jest/types@^27.2.3":
+  version "27.2.3"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.2.3.tgz#e0242545f442242c2538656d947a147443eee8f2"
+  integrity sha512-UJMDg90+W2i/QsS1NIN6Go8O/rSHLFWUkofGqKsUQs54mhmCVyLTiDy1cwKhoNO5fpmr9fctm9L/bRp/YzA1uQ==
   dependencies:
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^3.0.0"
@@ -1573,6 +1573,11 @@
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-10.0.0.tgz#db4335de99509021f501fc4e026e6ff495fe1e62"
   integrity sha512-k1iO2zKuEjjRS1EJb4FwSLk+iF6EGp+ZV0OMRViQoWhQ1fZTk9hg1xccZII5uyYoiqcbC73MRBmT45y1vp2PPg==
 
+"@octokit/openapi-types@^10.6.1":
+  version "10.6.1"
+  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-10.6.1.tgz#4eb303e7da4de3d17216db80e3be6309f03b9fcc"
+  integrity sha512-53YKy8w8+sHQhUONhTiYt6MqNqPolejYr6rK/3VOevpORAIYGQEX2pmXnnhgdSsjHy176e5ZBgVt0ppOGziS7g==
+
 "@octokit/openapi-types@^9.5.0":
   version "9.7.0"
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-9.7.0.tgz#9897cdefd629cd88af67b8dbe2e5fb19c63426b2"
@@ -1590,12 +1595,12 @@
   resolved "https://registry.yarnpkg.com/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz#5e50ed7083a613816b1e4a28aeec5fb7f1462e85"
   integrity sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==
 
-"@octokit/plugin-rest-endpoint-methods@^5.9.0":
-  version "5.9.0"
-  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.9.0.tgz#f9a7d8411e7e4e49a65fc95b5cc23cf96bf05e1f"
-  integrity sha512-Rz67pg+rEJq2Qn/qfHsMiBoP7GL5NDn8Gg0ezGznZ745Ixn1gPusZYZqCXNhICYrIZaVXmusNP0iwPdphJneqQ==
+"@octokit/plugin-rest-endpoint-methods@5.11.3":
+  version "5.11.3"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.11.3.tgz#d3b01fafb4a64bf7da4e3852f969cb65293e78ae"
+  integrity sha512-E19gqHqfP3uJa2/hx6Abhx2NrVP5tsNbst2/AeqGxlGM+eL4N8fRbzhd+NEIsGAB4y3R7e9kVE0y8OOghlXUXw==
   dependencies:
-    "@octokit/types" "^6.26.0"
+    "@octokit/types" "^6.31.1"
     deprecation "^2.3.1"
 
 "@octokit/request-error@^2.0.5", "@octokit/request-error@^2.1.0":
@@ -1620,14 +1625,14 @@
     universal-user-agent "^6.0.0"
 
 "@octokit/rest@^18.5.3":
-  version "18.10.0"
-  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.10.0.tgz#8a0add9611253e0e31d3ed5b4bc941a3795a7648"
-  integrity sha512-esHR5OKy38bccL/sajHqZudZCvmv4yjovMJzyXlphaUo7xykmtOdILGJ3aAm0mFHmMLmPFmDMJXf39cAjNJsrw==
+  version "18.11.2"
+  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.11.2.tgz#0a38cd42f5e41128276099fa0513f456044a4a52"
+  integrity sha512-XZPD5HN0B8AfvXhdztFqoZxNVC6hRgQSZTWS1Eh0xHAoJvduVBwniWJ0t4DsdO9in+odZZ9EYAOFtQuaLVZ44Q==
   dependencies:
     "@octokit/core" "^3.5.1"
     "@octokit/plugin-paginate-rest" "^2.16.0"
     "@octokit/plugin-request-log" "^1.0.4"
-    "@octokit/plugin-rest-endpoint-methods" "^5.9.0"
+    "@octokit/plugin-rest-endpoint-methods" "5.11.3"
 
 "@octokit/types@^6.0.0", "@octokit/types@^6.0.3", "@octokit/types@^6.16.1":
   version "6.25.0"
@@ -1642,6 +1647,13 @@
   integrity sha512-RDxZBAFMtqs1ZPnbUu1e7ohPNfoNhTiep4fErY7tZs995BeHu369Vsh5woMIaFbllRWEZBfvTCS4hvDnMPiHrA==
   dependencies:
     "@octokit/openapi-types" "^10.0.0"
+
+"@octokit/types@^6.31.1":
+  version "6.31.1"
+  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.31.1.tgz#223d062778bb6121635a022d3bf545d506fcc880"
+  integrity sha512-xkF46eaYcpT8ieO78mZWhMq3bt37zIsP5BUkN+zWgX+mTYDB7jOtUP1MOxcSF8hhJhsjjlB1YDgQAhX0z0oqPw==
+  dependencies:
+    "@octokit/openapi-types" "^10.6.1"
 
 "@opencensus/web-types@0.0.7":
   version "0.0.7"
@@ -2156,9 +2168,9 @@
     "@types/node" "*"
 
 "@types/lodash@^4.14.168":
-  version "4.14.173"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.173.tgz#9d3b674c67a26cf673756f6aca7b429f237f91ed"
-  integrity sha512-vv0CAYoaEjCw/mLy96GBTnRoZrSxkGE0BKzKimdR8P3OzrNYNvBgtW7p055A+E8C31vXNUhWKoFCbhq7gbyhFg==
+  version "4.14.175"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.175.tgz#b78dfa959192b01fae0ad90e166478769b215f45"
+  integrity sha512-XmdEOrKQ8a1Y/yxQFOMbC47G/V2VDO1GvMRnl4O75M4GW/abC5tnfzadQYkqEveqRM1dEJGFFegfPNA2vvx2iw==
 
 "@types/minimatch@*", "@types/minimatch@^3.0.3":
   version "3.0.5"
@@ -2179,9 +2191,9 @@
     form-data "^3.0.0"
 
 "@types/node@*", "@types/node@^14.14.22":
-  version "14.17.18"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.18.tgz#0198489a751005f71217744aa966cd1f29447c81"
-  integrity sha512-haYyibw4pbteEhkSg0xdDLAI3679L75EJ799ymVrPxOA922bPx3ML59SoDsQ//rHlvqpu+e36kcbR3XRQtFblA==
+  version "14.17.19"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.19.tgz#7341e9ac1b5d748d7a3ddc04336ed536a6f91c31"
+  integrity sha512-jjYI6NkyfXykucU6ELEoT64QyKOdvaA6enOqKtP4xUsGY0X0ZUZz29fUmrTRo+7v7c6TgDu82q3GHHaCEkqZwA==
 
 "@types/node@10.17.13":
   version "10.17.13"
@@ -5575,9 +5587,9 @@ form-data@~2.3.2:
     mime-types "^2.1.12"
 
 fp-ts@^2.5.0:
-  version "2.11.3"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.11.3.tgz#e19444da75252e24f40766d1316dc6600f3499df"
-  integrity sha512-qHI5iaVSFNFmdl6yDensWfFMk32iafAINCnqx8m486DV1+Jht/bTnA9CyahL+Xm7h2y3erinviVBIAWvv5bPYw==
+  version "2.11.4"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.11.4.tgz#ad78a0d8eafb0dcfc835a0fb200f6da6422c27f0"
+  integrity sha512-lhV7tGEbs2qoVw4vmqOovChS7CAoIYU0gdiPEF8Vc4bLZct+PAMMeXrCqRyBNEo33XOvwvAmFDEDIrHPWH2/fg==
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -5834,9 +5846,9 @@ glob@^6.0.1:
     path-is-absolute "^1.0.0"
 
 glob@^7.0.0, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.1.6:
-  version "7.1.7"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-7.1.7.tgz#3b193e9233f01d42d0b3f78294bbeeb418f94a90"
-  integrity sha512-OvD9ENzPLbegENnYP5UUfJIirTg4+XwMWGaQfQTY0JenxNvvIKP3U3/tAQSPIu/lHxXYSZmpXlUHeqAIdKzBLQ==
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.0.tgz#d15535af7732e02e948f4c41628bd910293f6023"
+  integrity sha512-lmLf6gtyrPq8tTjSmrO94wBeQbFR3HbLHbuyD69wuyQkImp2hWqMGB47OX65FBkPffO641IP9jWa1z4ivqG26Q==
   dependencies:
     fs.realpath "^1.0.0"
     inflight "^1.0.4"
@@ -9371,10 +9383,10 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
-react-native@0.0.0-d40cb0e1b:
-  version "0.0.0-d40cb0e1b"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-d40cb0e1b.tgz#f4d02d37a09d8a16c4a0464c92f07c6ca5c6130e"
-  integrity sha512-xa4+S7y6QfWLhzwFInzxy0OK/F4m9mr4VLlJUCSe6UIXum+8vntkV7GPm0EtoHUHHc2vYsX8T6RpeNaIVQSTsA==
+react-native@0.0.0-d3c7e2018:
+  version "0.0.0-d3c7e2018"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-d3c7e2018.tgz#85faed33fbc5b28cc01ab0b82b1e39e21ed03ab3"
+  integrity sha512-7REvELBsKlT9L9qgOk3M6rhlqZcwa69Yws9UrC5cGFUw1q191dA6ehS1KdSyNgTaQoV/T5KnNgSunrlvTXw5hA==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"

@@ -1,8 +1,41 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Sep 2021 05:06:43 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 05:07:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.385
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Changes
+
+- Integrate 9/23 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.384
+
+Sat, 25 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Add CheckConstants<TModule, TModuleSpec> for REACT_GET_CONSTANTS (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.383
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Changes
+
+- Integrate RN nightly 9/16. (igklemen@microsoft.com)
+
+## 0.0.0-canary.382
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Remove Certificate From Template (34109996+chiaramooney@users.noreply.github.com)
+- Revert creation of symbol packages, main codesign (jthysell@microsoft.com)
 
 ## 0.0.0-canary.381
 

@@ -2,6 +2,80 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Tue, 28 Sep 2021 05:07:03 GMT",
+      "tag": "@react-native-windows/automation_v0.0.7",
+      "version": "0.0.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Export AutomationElement type",
+            "author": "ngerlem@microsoft.com",
+            "commit": "8abfa2f5ffa3768eca66e68d9dd211ff62cdf9a7",
+            "package": "@react-native-windows/automation"
+          },
+          {
+            "comment": "Remove RNW peerDep from automation-commands package",
+            "author": "ngerlem@microsoft.com",
+            "commit": "09d6b43a7c4a647d38e165a41d788ff8b693a40a",
+            "package": "@react-native-windows/automation"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.4",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d4970fdd583866c3ac7af6a0cf38040cf3b22d93",
+            "package": "@react-native-windows/automation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Sep 2021 05:06:39 GMT",
+      "tag": "@react-native-windows/automation_v0.0.6-0",
+      "version": "0.0.6-0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.3-12",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "eaf932469678b8b67b0b2b17fd2bcdda1ed4e358",
+            "package": "@react-native-windows/automation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Sep 2021 05:06:42 GMT",
+      "tag": "@react-native-windows/automation_v0.0.5",
+      "version": "0.0.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.3-11",
+            "author": "igklemen@microsoft.com",
+            "commit": "8b63ada9ba1d55bfd161388fc18c2b5c6445b508",
+            "package": "@react-native-windows/automation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Sep 2021 05:06:48 GMT",
+      "tag": "@react-native-windows/automation_v0.0.5-1",
+      "version": "0.0.5-1",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.3-10",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "3813907b2eaa6198f0a8b9dc570075f0c7117301",
+            "package": "@react-native-windows/automation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Sep 2021 05:06:43 GMT",
       "tag": "@react-native-windows/automation_v0.0.5-0",
       "version": "0.0.5-0",

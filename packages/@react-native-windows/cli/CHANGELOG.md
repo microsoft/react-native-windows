@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 17 Sep 2021 05:06:53 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Sep 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.89
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Remove Certificate From Template (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.88
 

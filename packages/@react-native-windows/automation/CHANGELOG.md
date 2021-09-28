@@ -1,8 +1,45 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Wed, 22 Sep 2021 05:06:43 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 05:07:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.7
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Patches
+
+- Export AutomationElement type (ngerlem@microsoft.com)
+- Remove RNW peerDep from automation-commands package (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.4 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.6-0
+
+Sat, 25 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.3-12 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.5
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.3-11 (igklemen@microsoft.com)
+
+## 0.0.5-1
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.3-10 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.5-0
 
