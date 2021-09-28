@@ -412,7 +412,15 @@ type WindowsViewProps = $ReadOnly<{|
   accessibilityPosInSet?: ?number,
   accessibilitySetSize?: ?number,
 
-  accessibilityLandmarkType?: ?string,
+  accessibilityLandmarkType?: ?(
+    | 'Custom'
+    | 'Form'
+    | 'Main'
+    | 'Navigation'
+    | 'None'
+    | 'Search'
+    | string
+  ),
 
   /**
    * Specifies if the control should show System focus visuals
