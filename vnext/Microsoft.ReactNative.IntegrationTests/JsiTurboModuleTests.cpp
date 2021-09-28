@@ -288,6 +288,7 @@ TEST_CLASS (JsiTurboModuleTests) {
 
     auto reactNativeHost = TestReactNativeHostHolder(L"JsiTurboModuleTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<MySimpleTurboModulePackageProvider>());
+      return true;
     });
 
     TestEventService::ObserveEvents(
