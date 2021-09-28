@@ -18,7 +18,7 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
     return [{
       label: 'Windows',
       healthchecks: [{
-        label: 'Enumerate Health Checks',
+        label: 'Failed to enumerate health checks',
         getDiagnostics: async () => ({needsToBeFixed: true}),
         runAutomaticFix: async ({loader}) => {loader.fail()},
       }]
@@ -36,7 +36,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
         'react-native-windows/package.json',
         {paths: [process.cwd()]})), 'Scripts/rnw-dependencies.ps1');
     
-    const rnwDeps = execSync(`powershell -ExecutionPolicy Unrestricted -NoProfile ${rnwDepScriptPath} -NoPrompt -ListChecks`);
+    const rnwDeps = execSync(`powershell -ExecutionPolicy Unrestricted -NoProfile ${rnwDepScriptPath} -NoPrompt -ListChecks`, {stdio: 'pipe'});
     const deps = rnwDeps.toString().trim().split('\n');
     return [
       {
