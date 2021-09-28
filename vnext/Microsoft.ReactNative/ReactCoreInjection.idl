@@ -50,19 +50,19 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
     interface IReactViewHost
   {
     DOC_STRING("Reloads the IReactViewInstance if it is attached.")
-      /*Windows.Foundation.IAsyncAction*/ void ReloadViewInstance();
+      Windows.Foundation.IAsyncAction ReloadViewInstance();
 
     DOC_STRING("Reloads IReactViewInstance if it is attached with a new set of options.")
-      /*Windows.Foundation.IAsyncAction*/ void ReloadViewInstanceWithOptions(ReactViewOptions options);
+      Windows.Foundation.IAsyncAction ReloadViewInstanceWithOptions(ReactViewOptions options);
 
     DOC_STRING("Unloads the attached IReactViewInstance.")
-      /*Windows.Foundation.IAsyncAction*/ void UnloadViewInstance();
+      Windows.Foundation.IAsyncAction UnloadViewInstance();
 
     DOC_STRING("Attaches IReactViewInstance to the IReactViewHost.")
-      /*Windows.Foundation.IAsyncAction*/ void AttachViewInstance(IReactViewInstance viewInstance);
+      Windows.Foundation.IAsyncAction AttachViewInstance(IReactViewInstance viewInstance);
 
     DOC_STRING("Detaches IReactViewInstance from the IReactViewHost.")
-      /*Windows.Foundation.IAsyncAction*/ void DetachViewInstance();
+      Windows.Foundation.IAsyncAction DetachViewInstance();
   }
 
   [experimental]
