@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "remove local copy of cdebug",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
