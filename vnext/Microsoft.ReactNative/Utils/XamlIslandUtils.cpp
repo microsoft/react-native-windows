@@ -38,7 +38,7 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase co
       for (uint32_t i = 0; i < commands.Size(); ++i) {
         if (const auto &appBarButton = commands.GetAt(i).try_as<xaml::Controls::AppBarButton>()) {
           if (!appBarButton.Flyout()) {
-            // This works around a loss of focus on the Proofing sub-menu when clicking on
+            // This works around a loss of focus from the target element when clicking on
             // on the menu items.
             // https://github.com/microsoft/microsoft-ui-xaml/issues/5818
             appBarButton.Click([weakCommandBarFlyout = winrt::make_weak(flyout)](auto &&...) {
