@@ -29,6 +29,8 @@ exports.copyTask = baseDir => {
   return series(
     exports.cleanTask(baseDir),
 
+    // For the TS compiler to be able to reference the files and create
+    // correct output the imported .d.ts files must be within our src dir
     copyTask({
       paths: reactNativeTypes('*.d.ts'),
       dest: base('src/rntypes'),
