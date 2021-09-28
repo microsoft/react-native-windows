@@ -62,6 +62,10 @@ void AppState::RemoveListeners(double /*count*/) noexcept {
   // noop
 }
 
+ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
+  return {"native"};
+}
+
 void AppState::SetActive(bool active) noexcept {
   m_active = active;
   m_context.JSDispatcher().Post([this]() { AppStateDidChange({m_active ? "active" : "background"}); });
