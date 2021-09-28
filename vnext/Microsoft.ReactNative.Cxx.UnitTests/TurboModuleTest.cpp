@@ -9,6 +9,23 @@
 #include "future/futureWait.h"
 
 namespace ReactNativeTests {
+
+REACT_STRUCT(MyTurboModuleConstants1)
+struct MyTurboModuleConstants1 {
+  REACT_FIELD(const71)
+  Point const71;
+  REACT_FIELD(const72)
+  std::string const72;
+};
+
+REACT_STRUCT(MyTurboModuleConstants2)
+struct MyTurboModuleConstants2 {
+  REACT_FIELD(const81)
+  Point const81;
+  REACT_FIELD(const82)
+  std::string const82;
+};
+
 REACT_MODULE(MyTurboModule)
 struct MyTurboModule {
   REACT_INIT(Initialize)
@@ -582,6 +599,24 @@ struct MyTurboModule {
     provider.Add(L"const62", "MyConstant62");
   }
 
+  REACT_GET_CONSTANTS(Constant7)
+  MyTurboModuleConstants1 Constant7() noexcept {
+    MyTurboModuleConstants1 constants{};
+    constants.const71.X = 710;
+    constants.const71.Y = 711;
+    constants.const72 = "MyConstant72";
+    return constants;
+  }
+
+  REACT_GET_CONSTANTS(Constant8)
+  static MyTurboModuleConstants2 Constant8() noexcept {
+    MyTurboModuleConstants2 constants{};
+    constants.const81.X = 810;
+    constants.const81.Y = 811;
+    constants.const82 = "MyConstant82";
+    return constants;
+  }
+
   // Allows to emit native module events
   REACT_EVENT(OnIntEvent)
   std::function<void(int)> OnIntEvent;
@@ -646,6 +681,10 @@ struct MyTurboModule {
 // - method names are matching to the module spec method names;
 // - method signatures match the spec method signatures.
 struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<MyTurboModuleConstants1>{0},
+      TypedConstant<MyTurboModuleConstants2>{1},
+  };
   static constexpr auto methods = std::tuple{
       Method<void(int, int, Callback<int>) noexcept>{0, L"Add"},
       Method<void(int, Callback<int>) noexcept>{1, L"Negate"},
@@ -724,7 +763,19 @@ struct MyTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
+    constexpr auto constantCheckResults = CheckConstants<TModule, MyTurboModuleSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, MyTurboModuleSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+        0,
+        "MyTurboModuleConstants1",
+        "    REACT_GET_CONSTANTS(GetConstants1) MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n"
+        "    REACT_GET_CONSTANTS(GetConstants1) static MyTurboModuleConstants1 GetConstants1() noexcept {/*implementation*/}\n");
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+        1,
+        "MyTurboModuleConstants2",
+        "    REACT_GET_CONSTANTS(GetConstants2) MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n"
+        "    REACT_GET_CONSTANTS(GetConstants2) static MyTurboModuleConstants2 GetConstants2() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
         0,
@@ -2066,6 +2117,12 @@ TEST_CLASS (TurboModuleTest) {
     TestCheck(constants["const61"]["X"] == 15);
     TestCheck(constants["const61"]["Y"] == 17);
     TestCheck(constants["const62"] == "MyConstant62");
+    TestCheck(constants["const71"]["X"] == 710);
+    TestCheck(constants["const71"]["Y"] == 711);
+    TestCheck(constants["const72"] == "MyConstant72");
+    TestCheck(constants["const81"]["X"] == 810);
+    TestCheck(constants["const81"]["Y"] == 811);
+    TestCheck(constants["const82"] == "MyConstant82");
   }
 
   TEST_METHOD(TestEvent_IntEventField) {

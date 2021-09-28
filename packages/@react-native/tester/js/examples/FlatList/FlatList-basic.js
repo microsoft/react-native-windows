@@ -10,12 +10,19 @@
 
 'use strict';
 
-const RNTesterPage = require('../../components/RNTesterPage');
-const React = require('react');
-
-const infoLog = require('react-native/Libraries/Utilities/infoLog');
-
-const {
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+import * as React from 'react';
+import {
+  Alert,
+  Animated,
+  Platform,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
+import RNTesterPage from '../../components/RNTesterPage';
+import infoLog from 'react-native/Libraries/Utilities/infoLog';
+import {
   FooterComponent,
   HeaderComponent,
   ItemComponent,
@@ -28,15 +35,7 @@ const {
   getItemLayout,
   pressItem,
   renderSmallSwitchOption,
-} = require('../../components/ListExampleShared');
-const {
-  Alert,
-  Animated,
-  Platform,
-  StyleSheet,
-  TextInput,
-  View,
-} = require('react-native');
+} from '../../components/ListExampleShared';
 
 import type {Item} from '../../components/ListExampleShared';
 
@@ -59,6 +58,8 @@ type State = {|
   empty: boolean,
   useFlatListItemComponent: boolean,
   fadingEdgeLength: number,
+  onPressDisabled: boolean,
+  textSelectable: boolean,
 |};
 
 class FlatListExample extends React.PureComponent<Props, State> {
@@ -74,6 +75,8 @@ class FlatListExample extends React.PureComponent<Props, State> {
     empty: false,
     useFlatListItemComponent: false,
     fadingEdgeLength: 0,
+    onPressDisabled: false,
+    textSelectable: true,
   };
 
   _onChangeFilterText = filterText => {
@@ -162,6 +165,16 @@ class FlatListExample extends React.PureComponent<Props, State> {
                 this._setBooleanValue('debug'),
               )}
               {renderSmallSwitchOption(
+                'onPress Disabled',
+                this.state.onPressDisabled,
+                this._setBooleanValue('onPressDisabled'),
+              )}
+              {renderSmallSwitchOption(
+                'Text Selectable',
+                this.state.textSelectable,
+                this._setBooleanValue('textSelectable'),
+              )}
+              {renderSmallSwitchOption(
                 'Use FlatListItemComponent',
                 this.state.useFlatListItemComponent,
                 this._setBooleanValue('useFlatListItemComponent'),
@@ -236,6 +249,12 @@ class FlatListExample extends React.PureComponent<Props, State> {
       data: state.data.concat(genItemData(100, state.data.length)),
     }));
   };
+  _onPressCallback = () => {
+    const {onPressDisabled} = this.state;
+    const warning = () => console.log('onPress disabled');
+    const onPressAction = onPressDisabled ? warning : this._pressItem;
+    return onPressAction;
+  };
   _onRefresh = () => Alert.alert('onRefresh: nothing to refresh :P');
   _renderItemComponent = () => {
     const flatListPropKey = this.state.useFlatListItemComponent
@@ -253,9 +272,10 @@ class FlatListExample extends React.PureComponent<Props, State> {
             item={item}
             horizontal={this.state.horizontal}
             fixedHeight={this.state.fixedHeight}
-            onPress={this._pressItem}
+            onPress={this._onPressCallback()}
             onShowUnderlay={separators.highlight}
             onHideUnderlay={separators.unhighlight}
+            textSelectable={this.state.textSelectable}
           />
         );
       },
@@ -319,15 +339,9 @@ const styles = StyleSheet.create({
   },
 });
 
-exports.title = 'FlatList';
-exports.category = 'ListView';
-exports.documentationURL = 'https://reactnative.dev/docs/flatlist';
-exports.description = 'Performant, scrollable list of data.';
-exports.examples = [
-  {
-    title: 'Simple list of items',
-    render: function(): React.Element<typeof FlatListExample> {
-      return <FlatListExample />;
-    },
-  },
-];
+export default ({
+  title: 'Basic',
+  name: 'basic',
+  description: 'Simple list of items',
+  render: () => <FlatListExample />,
+}: RNTesterModuleExample);

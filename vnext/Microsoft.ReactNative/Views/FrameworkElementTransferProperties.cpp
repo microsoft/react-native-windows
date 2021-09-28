@@ -33,6 +33,9 @@ void TransferFrameworkElementProperties(const xaml::DependencyObject &oldView, c
   // Render Properties
   TransferProperty(oldView, newView, xaml::UIElement::OpacityProperty());
 
+  // Hit Test Properties
+  TransferProperty(oldView, newView, xaml::UIElement::IsHitTestVisibleProperty());
+
   // Layout Properties
   TransferProperty(oldView, newView, xaml::FrameworkElement::WidthProperty());
   TransferProperty(oldView, newView, xaml::FrameworkElement::HeightProperty());

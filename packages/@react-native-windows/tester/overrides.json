@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-ad9030ca9",
+  "baseVersion": "0.0.0-d3c7e2018",
   "overrides": [
     {
       "type": "patch",
@@ -13,13 +13,6 @@
       "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
       "baseHash": "c211a725a3f935a4425f7af92bc7a4cba4f0655a",
       "issue": 6341
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/Border/BorderExample.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/Border/BorderExample.js",
-      "baseHash": "88069b6d56cc0902624073a81faed20cbc5fbb0d",
-      "issue": 8511
     },
     {
       "type": "patch",
@@ -52,7 +45,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "cab581fd600f109a2efae881734e19e07c3bd350"
+      "baseHash": "ddd1efab44c0998488de268c691aeec9ad063f22"
     }
   ]
 }

@@ -11,11 +11,8 @@ import {
   NativeModulePropertyShape,
   SchemaType,
 } from 'react-native-tscodegen';
-import {
-  getAliasCppName,
-  setPreferredModuleName,
-  translateObjectBody,
-} from './ObjectTypes';
+import {AliasMap, setPreferredModuleName} from './AliasManaging';
+import {createAliasMap, generateAliases} from './AliasGen';
 import {translateArgs, translateSpecArgs} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
@@ -66,25 +63,31 @@ function isMethodReturnPromise(funcType: NativeModuleFunctionTypeAnnotation) {
 function getPossibleMethodSignatures(
   prop: NativeModulePropertyShape,
   funcType: NativeModuleFunctionTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string[] {
-  const args = translateArgs(funcType.params);
+  const args = translateArgs(funcType.params, aliases, baseAliasName);
   if (isMethodReturnPromise(funcType)) {
-    // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
+    // TODO: type of the promise could be provided in the future
     args.push('React::ReactPromise<React::JSValue> &&result');
   }
 
   // TODO: be much more exhastive on the possible method signatures that can be used..
   const sig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
-  }) ${translateImplReturnType(funcType.returnTypeAnnotation)} ${
-    prop.name
-  }(${args.join(', ')}) noexcept { /* implementation */ }}`;
+  }) ${translateImplReturnType(
+    funcType.returnTypeAnnotation,
+    aliases,
+    baseAliasName,
+  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
   const staticsig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
     prop.name
-  }) static ${translateImplReturnType(funcType.returnTypeAnnotation)} ${
-    prop.name
-  }(${args.join(', ')}) noexcept { /* implementation */ }}`;
+  }) static ${translateImplReturnType(
+    funcType.returnTypeAnnotation,
+    aliases,
+    baseAliasName,
+  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
 
   return [sig, staticsig];
 }
@@ -92,35 +95,45 @@ function getPossibleMethodSignatures(
 function translatePossibleMethodSignatures(
   prop: NativeModulePropertyShape,
   funcType: NativeModuleFunctionTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string {
-  return getPossibleMethodSignatures(prop, funcType)
+  return getPossibleMethodSignatures(prop, funcType, aliases, baseAliasName)
     .map(sig => `"    ${sig}\\n"`)
     .join('\n          ');
 }
 
 function renderProperties(
   properties: ReadonlyArray<NativeModulePropertyShape>,
+  aliases: AliasMap,
   tuple: boolean,
 ): string {
-  // We skip the constants for now, since we dont have Spec file validation of them.
+  // TODO: generate code for constants
   return properties
     .filter(prop => prop.name !== 'getConstants')
     .map((prop, index) => {
       // TODO: prop.optional === true
       // TODO: prop.typeAnnotation.type === 'NullableTypeAnnotation'
+      const propAliasName = prop.name;
       const funcType =
         prop.typeAnnotation.type === 'NullableTypeAnnotation'
           ? prop.typeAnnotation.typeAnnotation
           : prop.typeAnnotation;
 
-      const traversedArgs = translateSpecArgs(funcType.params);
+      const traversedArgs = translateSpecArgs(
+        funcType.params,
+        aliases,
+        propAliasName,
+      );
 
       const translatedReturnParam = translateSpecReturnType(
         funcType.returnTypeAnnotation,
+        aliases,
+        propAliasName,
       );
 
       if (isMethodReturnPromise(funcType)) {
-        // Sadly, currently, the schema doesn't currently provide us information on the type of the promise.
+        // TODO: type of the promise could be provided in the future
         traversedArgs.push('Promise<React::JSValue>');
       }
 
@@ -134,7 +147,12 @@ function renderProperties(
         return `    REACT_SHOW_METHOD_SPEC_ERRORS(
           ${index},
           "${prop.name}",
-          ${translatePossibleMethodSignatures(prop, funcType)});`;
+          ${translatePossibleMethodSignatures(
+            prop,
+            funcType,
+            aliases,
+            propAliasName,
+          )});`;
       }
     })
     .join('\n');
@@ -161,20 +179,24 @@ export function createNM2Generator({namespace}: {namespace: string}) {
       if (nativeModule.type === 'NativeModule') {
         console.log(`Generating Native${preferredModuleName}Spec.g.h`);
 
-        let traversedAliasedStructs = '';
-        for (const aliasName of Object.keys(nativeModule.aliases)) {
-          const aliasType = nativeModule.aliases[aliasName];
-          traversedAliasedStructs = `${traversedAliasedStructs}
-REACT_STRUCT(${getAliasCppName(aliasName)})
-struct ${getAliasCppName(aliasName)} {
-${translateObjectBody(aliasType, '    ')}
-};
-`;
-        }
+        // copy all explicit to a map
+        const aliases: AliasMap = createAliasMap(nativeModule.aliases);
 
+        // prepare members for turbo modules
         const properties = nativeModule.spec.properties;
-        const traversedProperties = renderProperties(properties, false);
-        const traversedPropertyTuples = renderProperties(properties, true);
+        const traversedProperties = renderProperties(
+          properties,
+          aliases,
+          false,
+        );
+        const traversedPropertyTuples = renderProperties(
+          properties,
+          aliases,
+          true,
+        );
+
+        // generate code for structs
+        const traversedAliasedStructs = generateAliases(aliases);
 
         files.set(
           `Native${preferredModuleName}Spec.g.h`,

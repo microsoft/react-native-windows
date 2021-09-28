@@ -38,21 +38,21 @@ struct ExceptionsManagerSpec_ExceptionData {
     REACT_FIELD(componentStack)
     std::optional<std::string> componentStack;
     REACT_FIELD(stack)
-    React::JSValueArray stack;
+    std::vector<ExceptionsManagerSpec_StackFrame> stack;
     REACT_FIELD(id)
     double id;
     REACT_FIELD(isFatal)
     bool isFatal;
     REACT_FIELD(extraData)
-    std::optional<React::JSValueObject> extraData;
+    std::optional<React::JSValue> extraData;
 };
 
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, React::JSValueArray, double) noexcept>{0, L"reportFatalException"},
-      Method<void(std::string, React::JSValueArray, double) noexcept>{1, L"reportSoftException"},
+      Method<void(std::string, std::vector<ExceptionsManagerSpec_StackFrame>, double) noexcept>{0, L"reportFatalException"},
+      Method<void(std::string, std::vector<ExceptionsManagerSpec_StackFrame>, double) noexcept>{1, L"reportSoftException"},
       Method<void(ExceptionsManagerSpec_ExceptionData) noexcept>{2, L"reportException"},
-      Method<void(std::string, React::JSValueArray, double) noexcept>{3, L"updateExceptionMessage"},
+      Method<void(std::string, std::vector<ExceptionsManagerSpec_StackFrame>, double) noexcept>{3, L"updateExceptionMessage"},
       Method<void() noexcept>{4, L"dismissRedbox"},
   };
 
@@ -63,13 +63,13 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "reportFatalException",
-          "    REACT_METHOD(reportFatalException) void reportFatalException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(reportFatalException) static void reportFatalException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(reportFatalException) void reportFatalException(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportFatalException) static void reportFatalException(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "reportSoftException",
-          "    REACT_METHOD(reportSoftException) void reportSoftException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(reportSoftException) static void reportSoftException(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(reportSoftException) void reportSoftException(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(reportSoftException) static void reportSoftException(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "reportException",
@@ -78,8 +78,8 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "updateExceptionMessage",
-          "    REACT_METHOD(updateExceptionMessage) void updateExceptionMessage(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(updateExceptionMessage) static void updateExceptionMessage(std::string message, React::JSValueArray && stack, double exceptionId) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(updateExceptionMessage) void updateExceptionMessage(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(updateExceptionMessage) static void updateExceptionMessage(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "dismissRedbox",

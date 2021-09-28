@@ -1,10 +1,10 @@
 {
   "name": "@rnw-scripts/jest-unittest-config",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "license": "MIT",
   "main": "jest.unittest.config.js",
   "dependencies": {
-    "@rnw-scripts/babel-node-config": "2.0.1"
+    "@rnw-scripts/babel-node-config": "2.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
@@ -18,5 +18,8 @@
   "peerDependencies": {
     "babel-jest": "^26.3.0",
     "jest": "^26.4.0"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
   }
 }

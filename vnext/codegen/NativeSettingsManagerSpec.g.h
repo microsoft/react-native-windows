@@ -15,8 +15,8 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct SettingsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(React::JSValueObject) noexcept>{0, L"setValues"},
-      Method<void(React::JSValueArray) noexcept>{1, L"deleteValues"},
+      Method<void(React::JSValue) noexcept>{0, L"setValues"},
+      Method<void(std::vector<std::string>) noexcept>{1, L"deleteValues"},
   };
 
   template <class TModule>
@@ -26,13 +26,13 @@ struct SettingsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "setValues",
-          "    REACT_METHOD(setValues) void setValues(React::JSValueObject && values) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setValues) static void setValues(React::JSValueObject && values) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setValues) void setValues(React::JSValue && values) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setValues) static void setValues(React::JSValue && values) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "deleteValues",
-          "    REACT_METHOD(deleteValues) void deleteValues(React::JSValueArray && values) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(deleteValues) static void deleteValues(React::JSValueArray && values) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(deleteValues) void deleteValues(std::vector<std::string> const & values) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(deleteValues) static void deleteValues(std::vector<std::string> const & values) noexcept { /* implementation */ }}\n");
   }
 };
 

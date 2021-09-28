@@ -31,9 +31,9 @@ import {totalmem, cpus} from 'os';
 
 function setExitProcessWithError(
   error: Error,
-  loggingWasEnabled: boolean,
+  loggingWasEnabled?: boolean,
 ): void {
-  if (!loggingWasEnabled) {
+  if (loggingWasEnabled !== true) {
     console.log(
       `Re-run the command with ${chalk.bold('--logging')} for more information`,
     );
@@ -220,7 +220,7 @@ async function runWindowsInternal(
   config: Config,
   options: RunWindowsOptions,
 ) {
-  const verbose = options.logging;
+  const verbose = options.logging === true;
 
   if (verbose) {
     newInfo('Verbose: ON');
@@ -332,7 +332,7 @@ async function runWindowsInternal(
     try {
       runWindowsPhase = 'Deploy';
       if (options.device || options.emulator || options.target) {
-        await deploy.deployToDevice(options, verbose);
+        await deploy.deployToDevice(options, verbose, config);
       } else {
         await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
@@ -346,7 +346,11 @@ async function runWindowsInternal(
 }
 
 function shouldLaunchPackager(options: RunWindowsOptions): boolean {
-  return options.packager && options.launch && options.release !== true;
+  return (
+    options.packager === true &&
+    options.launch === true &&
+    options.release !== true
+  );
 }
 
 /*

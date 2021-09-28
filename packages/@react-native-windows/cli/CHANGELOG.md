@@ -1,8 +1,56 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Sep 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.89
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Remove Certificate From Template (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.88
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Fixed CLI options defaults (jthysell@microsoft.com)
+
+## 0.0.0-canary.87
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Better handle spaces in project path (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.86
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Fix autolinking to respect WinUI2xVersion or WinUI3Version set in ExperimentalFeatures.props (jthysell@microsoft.com)
+
+## 0.0.0-canary.85
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-unittest-config to v1.2.4 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+- Fix autolinking to support solution files using LF instead of CRLF (jthysell@microsoft.com)
 
 ## 0.0.0-canary.84
 

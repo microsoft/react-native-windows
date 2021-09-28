@@ -1,8 +1,148 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Sep 2021 05:06:39 GMT and should not be manually modified.
+This log was last generated on Tue, 28 Sep 2021 05:07:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.385
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Changes
+
+- Integrate 9/23 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.384
+
+Sat, 25 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Add CheckConstants<TModule, TModuleSpec> for REACT_GET_CONSTANTS (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.383
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Changes
+
+- Integrate RN nightly 9/16. (igklemen@microsoft.com)
+
+## 0.0.0-canary.382
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Remove Certificate From Template (34109996+chiaramooney@users.noreply.github.com)
+- Revert creation of symbol packages, main codesign (jthysell@microsoft.com)
+
+## 0.0.0-canary.381
+
+Wed, 22 Sep 2021 05:06:43 GMT
+
+### Changes
+
+- Disable broken x64 debug build of ComponentTestt (jthysell@microsoft.com)
+- Fix Bug in Animation Clamping (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.380
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Changes
+
+- Issue#8397 Hermes profiler needs more work to function in win32 unpackaged apps Essentially, we are adding a new function to fetch the application data directory which works with both packaged and unpackaged apps, and consuming it in Hermes sampling profiler. (anandrag@microsoft.com)
+- Integrate RN nightly build 9/9. (igklemen@microsoft.com)
+
+## 0.0.0-canary.379
+
+Sat, 18 Sep 2021 05:07:45 GMT
+
+### Changes
+
+- Adds autoFocus prop to FlyoutViewManager (erozell@outlook.com)
+- Migrate NapiJsiRuntime from V8/JSI. (julio.rocha@microsoft.com)
+- "add missing include due to pr conflict" (agnel@microsoft.com)
+- Adds shouldConstrainToRootBounds prop to Flyout (erozell@outlook.com)
+- Initial implementation of TextVisitor (erozell@outlook.com)
+
+## 0.0.0-canary.378
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Enable publishing NuGet symbol packages (jthysell@microsoft.com)
+- Fix Break in Fast Refresh Behavior (34109996+chiaramooney@users.noreply.github.com)
+- Ensures IsHitTestVisible is set on correct view (erozell@outlook.com)
+- Allow injection of custom UI thread (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.377
+
+Thu, 16 Sep 2021 05:06:44 GMT
+
+### Changes
+
+- Adds showMode prop to FlyoutViewManager (erozell@outlook.com)
+
+## 0.0.0-canary.376
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Provide more TS type information for ViewWindows (30809111+acoates-ms@users.noreply.github.com)
+- Generate anonymous objects in correct order for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.375
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.86 (jthysell@microsoft.com)
+
+## 0.0.0-canary.374
+
+Sat, 11 Sep 2021 05:06:55 GMT
+
+### Changes
+
+- Bump hermes to v0.9 (anandrag@microsoft.com)
+
+## 0.0.0-canary.373
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Generate `std::vector<T>` for array types in turbo modules (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Fix EBUSY race conditions between metro bundler and msbuild (dannyvv@microsoft.com)
+
+## 0.0.0-canary.372
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Generate nullable type for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.371
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate 9/2 (34109996+chiaramooney@users.noreply.github.com)
+- announce changes to accessibilityState (agnel@microsoft.com)
+- Match Alert module with NativeDialogManagerAndroidSpec.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.370
 
