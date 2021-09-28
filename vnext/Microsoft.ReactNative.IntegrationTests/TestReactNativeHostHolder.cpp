@@ -12,28 +12,33 @@ using namespace Windows::System;
 
 TestReactNativeHostHolder::TestReactNativeHostHolder(
     std::wstring_view jsBundle,
-    Mso::Functor<bool(ReactNativeHost const &)> &&hostInitializer) noexcept {
+    Mso::Functor<void(ReactNativeHost const &)> &&hostInitializer,
+    Options &&options) noexcept {
   m_host = ReactNativeHost{};
   m_queueController = DispatcherQueueController::CreateOnDedicatedThread();
-  m_queueController.DispatcherQueue().TryEnqueue(
-      [this, jsBundle = std::wstring{jsBundle}, hostInitializer = std::move(hostInitializer)]() noexcept {
-        // bundle is assumed to be co-located with the test binary
-        wchar_t testBinaryPath[MAX_PATH];
-        TestCheck(GetModuleFileNameW(NULL, testBinaryPath, MAX_PATH) < MAX_PATH);
-        testBinaryPath[std::wstring_view{testBinaryPath}.rfind(L"\\")] = 0;
+  m_queueController.DispatcherQueue().TryEnqueue([this,
+                                                  jsBundle = std::wstring{jsBundle},
+                                                  hostInitializer = std::move(hostInitializer),
+                                                  options = std::move(options)]() noexcept {
+    // bundle is assumed to be co-located with the test binary
+    wchar_t testBinaryPath[MAX_PATH];
+    TestCheck(GetModuleFileNameW(NULL, testBinaryPath, MAX_PATH) < MAX_PATH);
+    testBinaryPath[std::wstring_view{testBinaryPath}.rfind(L"\\")] = 0;
 
-        m_host.InstanceSettings().BundleRootPath(testBinaryPath);
-        m_host.InstanceSettings().JavaScriptBundleFile(jsBundle);
-        m_host.InstanceSettings().UseDeveloperSupport(false);
-        m_host.InstanceSettings().UseWebDebugger(false);
-        m_host.InstanceSettings().UseFastRefresh(false);
-        m_host.InstanceSettings().UseLiveReload(false);
-        m_host.InstanceSettings().EnableDeveloperMenu(false);
+    m_host.InstanceSettings().BundleRootPath(testBinaryPath);
+    m_host.InstanceSettings().JavaScriptBundleFile(jsBundle);
+    m_host.InstanceSettings().UseDeveloperSupport(false);
+    m_host.InstanceSettings().UseWebDebugger(false);
+    m_host.InstanceSettings().UseFastRefresh(false);
+    m_host.InstanceSettings().UseLiveReload(false);
+    m_host.InstanceSettings().EnableDeveloperMenu(false);
 
-        if (hostInitializer(m_host)) {
-          m_host.LoadInstance();
-        }
-      });
+    hostInitializer(m_host);
+
+    if (options.LoadInstance) {
+      m_host.LoadInstance();
+    }
+  });
 }
 
 TestReactNativeHostHolder::~TestReactNativeHostHolder() noexcept {
