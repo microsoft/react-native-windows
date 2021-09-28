@@ -5,21 +5,6 @@ param(
 $scriptPath = split-path -parent $MyInvocation.MyCommand.Definition
 $wprpPath = Join-Path -Path $scriptPath -ChildPath "rnw.wprp"
 
-[System.Environment]::OSVersion.Version
-
-(Get-WmiObject -class Win32_OperatingSystem).Caption
-
-Get-WmiObject -class Win32_OperatingSystem
-
-If (!(test-path "c:\windows\system32\icu.dll")) {
-   Write-Host "c:\windows\system32\icu.dll not found."   
-}
-else {
-   Write-Host "c:\windows\system32\icu.dll found."   
-}
-
-dir c:\windows\system32\icu*.dll
-
 if (!(Get-Command "wpr.exe" -ErrorAction SilentlyContinue)) { 
    throw "
    ################################################################

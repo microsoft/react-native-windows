@@ -15,8 +15,6 @@
 #endif
 #include "HermesRuntimeHolder.h"
 
-#include <tracing/tracing.h>
-
 #if defined(HERMES_ENABLE_DEBUGGER)
 #include <hermes/inspector/chrome/Registration.h>
 #endif
@@ -31,55 +29,6 @@ namespace {
 std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(
     const ::hermes::vm::RuntimeConfig &runtimeConfig) {
   SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
-
-  auto res = LoadLibrary(L"hermes.dll");
-  if (!res) {
-    DWORD lastError = GetLastError();
-    std::stringstream ostr;
-    ostr << "Failure loading hermes.dll:" << std::hex << lastError;
-    facebook::react::tracing::error(ostr.str().c_str());
-  } else {
-    facebook::react::tracing::error("hermes.dll loaded successfully");
-  }
-
-  auto res2 = LoadLibraryEx(L"hermes.dll", NULL, DONT_RESOLVE_DLL_REFERENCES);
-  if (!res2) {
-    DWORD lastError = GetLastError();
-    std::stringstream ostr;
-    ostr << "Failure loading hermes.dll even without resolving references:" << std::hex << lastError;
-    facebook::react::tracing::error(ostr.str().c_str());
-  } else {
-    facebook::react::tracing::error("hermes.dll loaded successfully without resolving references");
-  }
-
-  auto res3 = LoadLibrary(L"icu.dll");
-  if (!res3) {
-    DWORD lastError = GetLastError();
-    std::stringstream ostr;
-    ostr << "Failure loading icu.dll:" << std::hex << lastError;
-    facebook::react::tracing::error(ostr.str().c_str());
-  } else {
-    facebook::react::tracing::error("icu.dll loaded successfully");
-  }
-
-  auto res4 = LoadLibrary(L"c:\\windows\\system32\\icu.dll");
-  if (!res4) {
-    DWORD lastError = GetLastError();
-    std::stringstream ostr;
-    ostr << "Failure loading c:\\windows\\system32\\icu.dll:" << std::hex << lastError;
-    facebook::react::tracing::error(ostr.str().c_str());
-  } else {
-    facebook::react::tracing::error("c:\\windows\\system32\\icu.dll loaded successfully");
-  }
-
-  auto res5 = LoadLibrary(L"icuuc.dll");
-  if (!res5) {
-    DWORD lastError = GetLastError();
-    std::stringstream ostr;
-    ostr << "Failure loading icuuc.dll:" << std::hex << lastError;
-    facebook::react::tracing::error(ostr.str().c_str());
-  }
-
   return hermes::makeHermesRuntime(runtimeConfig);
 }
 
