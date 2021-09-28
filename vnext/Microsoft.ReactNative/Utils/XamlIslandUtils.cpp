@@ -30,9 +30,9 @@ struct CustomAppBarButton : xaml::Controls::AppBarButtonT<CustomAppBarButton> {
   }
 };
 
-void FixProofingMenuCrashForXamlIsland(xaml::Controls::TextCommandBarFlyout const &flyout) {
+void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase const &flyout) {
   flyout.Opening([](winrt::IInspectable const &sender, auto &&) {
-    const auto &flyout = sender.as<xaml::Controls::TextCommandBarFlyout>();
+    const auto &flyout = sender.as<winrt::Microsoft::UI::Xaml::Controls::TextCommandBarFlyout>();
     if (const auto &textBox = flyout.Target().try_as<xaml::Controls::TextBox>()) {
       const auto &commands = flyout.SecondaryCommands();
       for (uint32_t i = 0; i < commands.Size(); ++i) {
