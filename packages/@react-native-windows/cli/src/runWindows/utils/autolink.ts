@@ -21,6 +21,7 @@ import * as configUtils from '../../config/configUtils';
 
 import {
   Command,
+  CommandOption,
   Config,
   Dependency,
   ProjectConfig,
@@ -877,7 +878,7 @@ function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
  * @param message The message to log.
  * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message: any, verbose: boolean) {
+function verboseMessage(message: any, verbose?: boolean) {
   if (verbose) {
     console.log(message);
   }
@@ -951,39 +952,42 @@ async function updateAutoLink(
   }
 }
 
-interface AutoLinkOptions {
-  logging: boolean;
-  check: boolean;
+export interface AutoLinkOptions {
+  logging?: boolean;
+  check?: boolean;
   sln?: string;
   proj?: string;
 }
 
+export const autolinkOptions: CommandOption[] = [
+  {
+    name: '--logging',
+    description: 'Verbose output logging',
+  },
+  {
+    name: '--check',
+    description: 'Only check whether any autolinked files need to change',
+  },
+  {
+    name: '--sln [string]',
+    description:
+      "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
+    default: undefined,
+  },
+  {
+    name: '--proj [string]',
+    description:
+      "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
+    default: undefined,
+  },
+];
+
+/**
+ * Performs auto-linking for RNW native modules and apps.
+ */
 export const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
   func: updateAutoLink,
-  options: [
-    {
-      name: '--logging',
-      description: 'Verbose output logging',
-      default: false,
-    },
-    {
-      name: '--check',
-      description: 'Only check whether any autolinked files need to change',
-      default: false,
-    },
-    {
-      name: '--sln [string]',
-      description:
-        "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
-      default: undefined,
-    },
-    {
-      name: '--proj [string]',
-      description:
-        "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
-      default: undefined,
-    },
-  ],
+  options: autolinkOptions,
 };

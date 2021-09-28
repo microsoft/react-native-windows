@@ -116,6 +116,7 @@ TEST_CLASS (ExecuteJsiTests) {
 
     auto reactNativeHost = TestReactNativeHostHolder(L"ExecuteJsiTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<TestPackageProvider>());
+      return true;
     });
 
     TestEventService::ObserveEvents({

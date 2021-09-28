@@ -15,6 +15,14 @@ namespace ReactNativeIntegrationTests {
 
 namespace {
 
+REACT_STRUCT(SampleTurboModuleConstants)
+struct SampleTurboModuleConstants {
+  REACT_FIELD(constantString3)
+  std::string constantString3;
+  REACT_FIELD(constantInt3)
+  int constantInt3;
+};
+
 REACT_MODULE(SampleTurboModule)
 struct SampleTurboModule {
   REACT_INIT(Initialize)
@@ -30,6 +38,14 @@ struct SampleTurboModule {
   void GetConstants(React::ReactConstantProvider &provider) noexcept {
     provider.Add(L"constantString2", L"Hello");
     provider.Add(L"constantInt2", 10);
+  }
+
+  REACT_GET_CONSTANTS(GetConstants2)
+  SampleTurboModuleConstants GetConstants2() noexcept {
+    SampleTurboModuleConstants x;
+    x.constantString3 = "strong-typed-constants!";
+    x.constantInt3 = 20;
+    return x;
   }
 
   REACT_METHOD(Succeeded, L"succeeded")
@@ -71,8 +87,9 @@ struct SampleTurboModule {
   }
 
   REACT_METHOD(Constants, L"constants")
-  void Constants(std::string a, int b, std::string c, int d) noexcept {
-    auto resultString = (std::stringstream() << a << ", " << b << ", " << c << ", " << d).str();
+  void Constants(std::string a, int b, std::string c, int d, std::string e, int f) noexcept {
+    auto resultString =
+        (std::stringstream() << a << ", " << b << ", " << c << ", " << d << ", " << e << ", " << f).str();
     TestEventService::LogEvent("constantsSignal", std::move(resultString));
   }
 
@@ -119,7 +136,7 @@ struct SampleTurboModuleSpec : TurboModuleSpec {
       Method<void(std::string) noexcept>{3, L"promiseFunctionResult"},
       SyncMethod<std::string(std::string, int, bool) noexcept>{4, L"syncFunction"},
       Method<void(std::string) noexcept>{5, L"syncFunctionResult"},
-      Method<void(std::string, int, std::string, int) noexcept>{6, L"constants"},
+      Method<void(std::string, int, std::string, int, std::string, int) noexcept>{6, L"constants"},
       Method<void(int, int, const std::function<void(int)> &) noexcept>{7, L"oneCallback"},
       Method<void(int) noexcept>{8, L"oneCallbackResult"},
       Method<void(
@@ -167,6 +184,7 @@ TEST_CLASS (TurboModuleTests) {
 
     auto reactNativeHost = TestReactNativeHostHolder(L"TurboModuleTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<SampleTurboModulePackageProvider>());
+      return true;
     });
 
     TestEventService::ObserveEvents({
@@ -175,7 +193,7 @@ TEST_CLASS (TurboModuleTests) {
         TestEvent{"twoCallbacksResolvedSignal", 123},
         TestEvent{"twoCallbacksResolvedSignal", "Failed"},
         TestEvent{"syncFunctionSignal", "something, 2, false"},
-        TestEvent{"constantsSignal", "constantString, 3, Hello, 10"},
+        TestEvent{"constantsSignal", "constantString, 3, Hello, 10, strong-typed-constants!, 20"},
         TestEvent{"succeededSignal", true},
     });
   }

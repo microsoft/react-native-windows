@@ -15,18 +15,13 @@ namespace Microsoft::ReactNative {
 struct VirtualTextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
   TextTransform textTransform{TextTransform::Undefined};
+  bool hasDescendantTextHighlighter{false};
+  std::optional<winrt::Windows::UI::Color> backgroundColor;
+  std::optional<winrt::Windows::UI::Color> foregroundColor;
 
   void AddView(ShadowNode &child, int64_t index) override;
   void RemoveChildAt(int64_t indexToRemove) override;
   void removeAllChildren() override;
-
-  void NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType);
-
-  static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
-
-  std::optional<winrt::Windows::UI::Color> m_backgroundColor;
-  std::optional<winrt::Windows::UI::Color> m_foregroundColor;
-  bool m_hasDescendantBackgroundColor{false};
 };
 
 class VirtualTextViewManager : public ViewManagerBase {
