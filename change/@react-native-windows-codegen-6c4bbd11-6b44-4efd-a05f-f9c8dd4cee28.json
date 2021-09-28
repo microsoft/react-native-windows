@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Check constants in generated turbo module specs",
+  "packageName": "@react-native-windows/codegen",
+  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
