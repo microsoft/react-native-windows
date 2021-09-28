@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Created msbuildeval.ps1 script for evaluating MSBuild properties",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
