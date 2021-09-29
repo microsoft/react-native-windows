@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include <NativeModules.h>
 #include <React.h>
 #include <ReactNotificationService.h>
@@ -22,10 +23,13 @@ struct DeviceInfoHolder {
       const React::ReactPropertyBag &propertyBag,
       Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
   static void InitDeviceInfoHolder(const Mso::React::IReactContext &context) noexcept;
-  static React::JSValueObject GetDimensions(const React::ReactPropertyBag &propertyBag) noexcept;
+  static ReactNativeSpecs::DeviceInfoSpec_DimensionsPayload GetDimensions(
+      const React::ReactPropertyBag &propertyBag) noexcept;
 
  private:
-  React::JSValueObject getDimensions() noexcept;
+  ReactNativeSpecs::DeviceInfoSpec_DisplayMetricsAndroid getWindow() noexcept;
+  ReactNativeSpecs::DeviceInfoSpec_DisplayMetricsAndroid getScreen() noexcept;
+  ReactNativeSpecs::DeviceInfoSpec_DimensionsPayload getDimensions() noexcept;
   void updateDeviceInfo() noexcept;
   void notifyChanged() noexcept;
 
@@ -49,8 +53,8 @@ struct DeviceInfo : public std::enable_shared_from_this<DeviceInfo> {
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
-  REACT_CONSTANT_PROVIDER(GetConstants)
-  void GetConstants(React::ReactConstantProvider &provider) noexcept;
+  REACT_GET_CONSTANTS(GetConstants)
+  ReactNativeSpecs::DeviceInfoSpec_Constants GetConstants() noexcept;
 
  private:
   winrt::Microsoft::ReactNative::ReactContext m_context;

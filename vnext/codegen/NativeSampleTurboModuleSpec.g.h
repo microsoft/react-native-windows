@@ -13,7 +13,20 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(SampleTurboModuleSpec_Constants)
+struct SampleTurboModuleSpec_Constants {
+    REACT_FIELD(const1)
+    bool const1;
+    REACT_FIELD(const2)
+    double const2;
+    REACT_FIELD(const3)
+    std::string const3;
+};
+
 struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<SampleTurboModuleSpec_Constants>{0},
+  };
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"voidFunc"},
       SyncMethod<bool(bool) noexcept>{1, L"getBool"},
@@ -30,7 +43,14 @@ struct SampleTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
+    constexpr auto constantCheckResults = CheckConstants<TModule, SampleTurboModuleSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, SampleTurboModuleSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+          0,
+          "SampleTurboModuleSpec_Constants",
+          "    REACT_GET_CONSTANTS(GetConstants) SampleTurboModuleSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
+          "    REACT_GET_CONSTANTS(GetConstants) static SampleTurboModuleSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
