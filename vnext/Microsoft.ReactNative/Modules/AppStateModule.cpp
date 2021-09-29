@@ -63,7 +63,7 @@ void AppState::RemoveListeners(double /*count*/) noexcept {
 }
 
 ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
-  return {"native"};
+  return {m_active ? "active" : "background"};
 }
 
 void AppState::SetActive(bool active) noexcept {
