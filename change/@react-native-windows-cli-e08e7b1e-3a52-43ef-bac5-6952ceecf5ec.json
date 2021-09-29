@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make CLI Fail Gracefully on Dep Script Errors",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
