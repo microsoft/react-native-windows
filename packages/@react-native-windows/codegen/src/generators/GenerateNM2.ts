@@ -6,15 +6,11 @@
 
 'use strict';
 
-import {
-  NativeModuleFunctionTypeAnnotation,
-  NativeModulePropertyShape,
-  SchemaType,
-} from 'react-native-tscodegen';
+import {SchemaType} from 'react-native-tscodegen';
 import {AliasMap, setPreferredModuleName} from './AliasManaging';
 import {createAliasMap, generateAliases} from './AliasGen';
-import {translateArgs, translateSpecArgs} from './ParamTypes';
-import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
+import {generateValidateConstants} from './ValidateConstants';
+import {generateValidateMethods} from './ValidateMethods';
 
 type FilesOutput = Map<string, string>;
 
@@ -34,129 +30,18 @@ const moduleTemplate = `
 namespace ::_NAMESPACE_:: {
 ::_MODULE_ALIASED_STRUCTS_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
-  static constexpr auto methods = std::tuple{
-::_MODULE_PROPERTIES_TUPLE_::
-  };
+::_MODULE_MEMBERS_TUPLES_::
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
-    constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();
+::_MODULE_MEMBERS_CHECKS_::
 
-::_MODULE_PROPERTIES_SPEC_ERRORS_::
+::_MODULE_MEMBERS_ERRORS_::
   }
 };
 
 } // namespace ::_NAMESPACE_::
 `;
-
-function isMethodSync(funcType: NativeModuleFunctionTypeAnnotation) {
-  return (
-    funcType.returnTypeAnnotation.type !== 'VoidTypeAnnotation' &&
-    funcType.returnTypeAnnotation.type !== 'PromiseTypeAnnotation'
-  );
-}
-
-function isMethodReturnPromise(funcType: NativeModuleFunctionTypeAnnotation) {
-  return funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation';
-}
-
-function getPossibleMethodSignatures(
-  prop: NativeModulePropertyShape,
-  funcType: NativeModuleFunctionTypeAnnotation,
-  aliases: AliasMap,
-  baseAliasName: string,
-): string[] {
-  const args = translateArgs(funcType.params, aliases, baseAliasName);
-  if (isMethodReturnPromise(funcType)) {
-    // TODO: type of the promise could be provided in the future
-    args.push('React::ReactPromise<React::JSValue> &&result');
-  }
-
-  // TODO: be much more exhastive on the possible method signatures that can be used..
-  const sig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
-    prop.name
-  }) ${translateImplReturnType(
-    funcType.returnTypeAnnotation,
-    aliases,
-    baseAliasName,
-  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
-
-  const staticsig = `REACT_${isMethodSync(funcType) ? 'SYNC_' : ''}METHOD(${
-    prop.name
-  }) static ${translateImplReturnType(
-    funcType.returnTypeAnnotation,
-    aliases,
-    baseAliasName,
-  )} ${prop.name}(${args.join(', ')}) noexcept { /* implementation */ }}`;
-
-  return [sig, staticsig];
-}
-
-function translatePossibleMethodSignatures(
-  prop: NativeModulePropertyShape,
-  funcType: NativeModuleFunctionTypeAnnotation,
-  aliases: AliasMap,
-  baseAliasName: string,
-): string {
-  return getPossibleMethodSignatures(prop, funcType, aliases, baseAliasName)
-    .map(sig => `"    ${sig}\\n"`)
-    .join('\n          ');
-}
-
-function renderProperties(
-  properties: ReadonlyArray<NativeModulePropertyShape>,
-  aliases: AliasMap,
-  tuple: boolean,
-): string {
-  // TODO: generate code for constants
-  return properties
-    .filter(prop => prop.name !== 'getConstants')
-    .map((prop, index) => {
-      // TODO: prop.optional === true
-      // TODO: prop.typeAnnotation.type === 'NullableTypeAnnotation'
-      const propAliasName = prop.name;
-      const funcType =
-        prop.typeAnnotation.type === 'NullableTypeAnnotation'
-          ? prop.typeAnnotation.typeAnnotation
-          : prop.typeAnnotation;
-
-      const traversedArgs = translateSpecArgs(
-        funcType.params,
-        aliases,
-        propAliasName,
-      );
-
-      const translatedReturnParam = translateSpecReturnType(
-        funcType.returnTypeAnnotation,
-        aliases,
-        propAliasName,
-      );
-
-      if (isMethodReturnPromise(funcType)) {
-        // TODO: type of the promise could be provided in the future
-        traversedArgs.push('Promise<React::JSValue>');
-      }
-
-      if (tuple) {
-        return `      ${
-          isMethodSync(funcType) ? 'Sync' : ''
-        }Method<${translatedReturnParam}(${traversedArgs.join(
-          ', ',
-        )}) noexcept>{${index}, L"${prop.name}"},`;
-      } else {
-        return `    REACT_SHOW_METHOD_SPEC_ERRORS(
-          ${index},
-          "${prop.name}",
-          ${translatePossibleMethodSignatures(
-            prop,
-            funcType,
-            aliases,
-            propAliasName,
-          )});`;
-      }
-    })
-    .join('\n');
-}
 
 export function createNM2Generator({namespace}: {namespace: string}) {
   return (
@@ -182,18 +67,29 @@ export function createNM2Generator({namespace}: {namespace: string}) {
         // copy all explicit to a map
         const aliases: AliasMap = createAliasMap(nativeModule.aliases);
 
-        // prepare members for turbo modules
-        const properties = nativeModule.spec.properties;
-        const traversedProperties = renderProperties(
-          properties,
-          aliases,
-          false,
-        );
-        const traversedPropertyTuples = renderProperties(
-          properties,
-          aliases,
-          true,
-        );
+        // prepare methods
+        const methods = generateValidateMethods(nativeModule, aliases);
+        let tuples = `
+  static constexpr auto methods = std::tuple{
+${methods[0]}
+  };`;
+        let checks = `
+    constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();`;
+        let errors = methods[1];
+
+        // prepare constants
+        const constants = generateValidateConstants(nativeModule, aliases);
+        if (constants !== undefined) {
+          tuples = `
+  static constexpr auto constants = std::tuple{
+${constants[0]}
+  };${tuples}`;
+          checks = `
+    constexpr auto constantCheckResults = CheckConstants<TModule, ::_MODULE_NAME_::Spec>();${checks}`;
+          errors = `${constants[1]}
+
+${errors}`;
+        }
 
         // generate code for structs
         const traversedAliasedStructs = generateAliases(aliases);
@@ -202,11 +98,9 @@ export function createNM2Generator({namespace}: {namespace: string}) {
           `Native${preferredModuleName}Spec.g.h`,
           moduleTemplate
             .replace(/::_MODULE_ALIASED_STRUCTS_::/g, traversedAliasedStructs)
-            .replace(/::_MODULE_PROPERTIES_TUPLE_::/g, traversedPropertyTuples)
-            .replace(
-              /::_MODULE_PROPERTIES_SPEC_ERRORS_::/g,
-              traversedProperties,
-            )
+            .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substr(1))
+            .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substr(1))
+            .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)
             .replace(/::_MODULE_NAME_::/g, preferredModuleName)
             .replace(/::_NAMESPACE_::/g, namespace),
         );

@@ -10,6 +10,23 @@ const execa = require(execaPath);
 import type {HealthCheckCategory} from '@react-native-community/cli-types';
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
+  // #8471: There are known cases where the dependencies script will error out.
+  // Fail gracefully if that happens in the meantime.
+  try {
+    return getHealthChecksUnsafe();
+  } catch {
+    return [{
+      label: 'Windows',
+      healthchecks: [{
+        label: 'Failed to enumerate health checks',
+        getDiagnostics: async () => ({needsToBeFixed: true}),
+        runAutomaticFix: async ({loader}) => {loader.fail()},
+      }]
+    }];
+  }
+}
+
+function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
 // All our health checks are windows only...
     if (process.platform !== 'win32') {
         return undefined;
@@ -19,7 +36,7 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
         'react-native-windows/package.json',
         {paths: [process.cwd()]})), 'Scripts/rnw-dependencies.ps1');
     
-    const rnwDeps = execSync(`powershell -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`);
+    const rnwDeps = execSync(`powershell -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`, {stdio: 'pipe'});
     const deps = rnwDeps.toString().trim().split('\n');
     return [
       {
