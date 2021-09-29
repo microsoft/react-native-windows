@@ -352,7 +352,7 @@ class Button extends React.Component<
           onPress={onPress}
           tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
-          underlayColor="white"
+          underlayColor={PlatformColor('SolidBackgroundFillColorBaseBrush')}
           onShowUnderlay={() => {
             this.setState({pressed: true});
           }}
@@ -364,26 +364,21 @@ class Button extends React.Component<
           }}
           onMouseLeave={() => {
             if (!disabled) this.setState({hover: false});
-          }}>
+          }}
+          style={{borderRadius: 3}}>
           <View
             style={
               this.state.pressed
-                ? [
-                    buttonStyles,
-                    {
-                      borderColor: PlatformColor('ButtonBorderBrushPressed'),
-                      borderBottomWidth: 1,
-                    },
-                  ]
+                ? [buttonStyles, styles.buttonPressed]
                 : buttonStyles
             }>
             <View
               style={
                 this.state.hover
                   ? [
+                      styles.buttonHover,
                       {
                         backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                        borderRadius: 3,
                       },
                     ]
                   : [{}]
@@ -421,23 +416,9 @@ class Button extends React.Component<
           }}
           style={
             this.state.pressed
-              ? [
-                  buttonStyles,
-                  {
-                    borderColor: PlatformColor('ButtonBorderBrushPressed'),
-                    borderBottomWidth: 1,
-                  },
-                ]
+              ? [buttonStyles, styles.buttonPressed]
               : this.state.hover
-              ? [
-                  buttonStyles,
-                  {
-                    backgroundColor: PlatformColor(
-                      'ButtonBackgroundPointerOver',
-                    ),
-                    borderColor: PlatformColor('ButtonBorderBrushPointerOver'),
-                  },
-                ]
+              ? [buttonStyles, styles.buttonHover]
               : buttonStyles
           }
           onMouseEnter={() => {
@@ -565,6 +546,15 @@ const styles = StyleSheet.create({
     },
     // Windows]
   }),
+  buttonHover: {
+    backgroundColor: PlatformColor('ButtonBackgroundPointerOver'),
+    borderColor: PlatformColor('ButtonBorderBrushPointerOver'),
+    borderRadius: 3,
+  },
+  buttonPressed: {
+    borderColor: PlatformColor('ButtonBorderBrushPressed'),
+    borderBottomWidth: 1,
+  },
 });
 
 module.exports = Button;
