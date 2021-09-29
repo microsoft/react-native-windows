@@ -8,7 +8,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as glob from 'glob';
 
-import {DOMParser} from 'xmldom';
+import {DOMParser} from '@xmldom/xmldom';
 import * as xpath from 'xpath';
 
 const msbuildSelect = xpath.useNamespaces({
