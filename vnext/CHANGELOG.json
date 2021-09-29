@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 Sep 2021 05:06:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.386",
+      "version": "0.0.0-canary.386",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make Hermes consume the ICU.dll in Windows 10 for i18n Earlier we had a WinNLS based stub implementation to avoid depending on ICU.",
+            "author": "anandrag@microsoft.com",
+            "commit": "eb04aeb2e5fcb74988f1630f24adc27a034351fe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Check constants in generated turbo module specs",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "6238240df45549967e66f7fcfa411c67007eade3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d59110ab4e86431506ab51d377ec1a888631039e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 05:07:03 GMT",
       "tag": "react-native-windows_v0.0.0-canary.385",
       "version": "0.0.0-canary.385",

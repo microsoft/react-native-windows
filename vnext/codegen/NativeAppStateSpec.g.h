@@ -19,7 +19,16 @@ struct AppStateSpec_getCurrentAppState_success_appState {
     std::string app_state;
 };
 
+REACT_STRUCT(AppStateSpec_Constants)
+struct AppStateSpec_Constants {
+    REACT_FIELD(initialAppState)
+    std::string initialAppState;
+};
+
 struct AppStateSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<AppStateSpec_Constants>{0},
+  };
   static constexpr auto methods = std::tuple{
       Method<void(Callback<AppStateSpec_getCurrentAppState_success_appState>, Callback<React::JSValue>) noexcept>{0, L"getCurrentAppState"},
       Method<void(std::string) noexcept>{1, L"addListener"},
@@ -28,7 +37,14 @@ struct AppStateSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
+    constexpr auto constantCheckResults = CheckConstants<TModule, AppStateSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, AppStateSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+          0,
+          "AppStateSpec_Constants",
+          "    REACT_GET_CONSTANTS(GetConstants) AppStateSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
+          "    REACT_GET_CONSTANTS(GetConstants) static AppStateSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
