@@ -106,13 +106,6 @@ void WebSocketJSExecutor::registerBundle(uint32_t bundleId, const std::string &b
   std::terminate();
 }
 
-void WebSocketJSExecutor::flush() {
-  folly::dynamic jarray = folly::dynamic::array();
-  auto calls = Call("flushedQueue", jarray);
-  if (m_delegate && !IsInError())
-    m_delegate->callNativeModules(*this, folly::parseJson(std::move(calls)), true);
-}
-
 void WebSocketJSExecutor::callFunction(
     const std::string &moduleId,
     const std::string &methodId,

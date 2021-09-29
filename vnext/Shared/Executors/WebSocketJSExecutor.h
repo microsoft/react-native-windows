@@ -75,7 +75,6 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor,
   std::string Call(const std::string &methodName, folly::dynamic &arguments);
   std::future<std::string> SendMessageAsync(int requestId, const std::string &message);
   void OnMessageReceived(const std::string &msg);
-  void flush();
 
   void SetState(State state) noexcept {
     m_state = state;
