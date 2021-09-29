@@ -58,7 +58,7 @@
     "node-fetch": "2.6.1",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
     "webdriverio": "5.12.1",
-    "xmldom": "github:xmldom/xmldom#0.7.0",
+    "xmldom": "github:xmldom/xmldom#^0.7.5",
     "xpath": "^0.0.27",
     "yargs-parser": "^18.1.1",
     "**/@react-native/repo-config/ws": "^6.2.2",
