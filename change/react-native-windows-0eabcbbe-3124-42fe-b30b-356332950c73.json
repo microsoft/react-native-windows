@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Stop compiling yoga.cpp with /fp:strict. Doing so caused layout issues if Yoga code ran with the processor's rounding mode set to round down, due to NAN being defined in math.h as: ``` (float)(INFINITY * 0.0f) ``` Which macro-expands to: ``` (float)(((float)(1e+300 * 1e+300)) * 0.0f) ``` Which evaluates as follows: ``` (float)(((float)(inf.double)) * 0.0f) (float)(FLT_MAX * 0.0f) // Casting an infinite double to a float yields                         // FLT_MAX! (float)0.0f ```",
+  "packageName": "react-native-windows",
+  "email": "hpratt@microsoft.com",
+  "dependentChangeType": "patch"
+}
