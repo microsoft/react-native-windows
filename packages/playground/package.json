@@ -10,7 +10,7 @@
     "windows": "react-native run-windows"
   },
   "dependencies": {
-    "@react-native-picker/picker": "1.16.5",
+    "@react-native-picker/picker": "2.1.0",
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
     "react-native": "0.0.0-d3c7e2018",
