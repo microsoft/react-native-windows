@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { projectConfigWindows } from '../config/projectConfig';
 import {AutolinkWindows} from '../runWindows/utils/autolink';
-import {DOMParser} from 'xmldom';
+import {DOMParser} from '@xmldom/xmldom';
 import { ensureWinUI3Project } from './projectConfig.utils';
 
 test('autolink with no windows project', () => {
