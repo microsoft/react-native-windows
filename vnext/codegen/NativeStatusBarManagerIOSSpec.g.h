@@ -19,7 +19,18 @@ struct StatusBarManagerIOSSpec_getHeight_callback_result {
     double height;
 };
 
+REACT_STRUCT(StatusBarManagerIOSSpec_Constants)
+struct StatusBarManagerIOSSpec_Constants {
+    REACT_FIELD(HEIGHT)
+    double HEIGHT;
+    REACT_FIELD(DEFAULT_BACKGROUND_COLOR)
+    std::optional<double> DEFAULT_BACKGROUND_COLOR;
+};
+
 struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<StatusBarManagerIOSSpec_Constants>{0},
+  };
   static constexpr auto methods = std::tuple{
       Method<void(Callback<StatusBarManagerIOSSpec_getHeight_callback_result>) noexcept>{0, L"getHeight"},
       Method<void(bool) noexcept>{1, L"setNetworkActivityIndicatorVisible"},
@@ -31,7 +42,14 @@ struct StatusBarManagerIOSSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
+    constexpr auto constantCheckResults = CheckConstants<TModule, StatusBarManagerIOSSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, StatusBarManagerIOSSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+          0,
+          "StatusBarManagerIOSSpec_Constants",
+          "    REACT_GET_CONSTANTS(GetConstants) StatusBarManagerIOSSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
+          "    REACT_GET_CONSTANTS(GetConstants) static StatusBarManagerIOSSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,

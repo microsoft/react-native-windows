@@ -27,8 +27,8 @@ struct AppState : public std::enable_shared_from_this<AppState> {
   REACT_METHOD(RemoveListeners, L"removeListeners")
   void RemoveListeners(double count) noexcept;
 
-  REACT_CONSTANT(initialAppState)
-  const std::string initialAppState{"active"};
+  REACT_GET_CONSTANTS(GetConstants)
+  ReactNativeSpecs::AppStateSpec_Constants GetConstants() noexcept;
 
   REACT_EVENT(AppStateDidChange, L"appStateDidChange")
   std::function<void(AppStateChangeArgs const &)> AppStateDidChange;

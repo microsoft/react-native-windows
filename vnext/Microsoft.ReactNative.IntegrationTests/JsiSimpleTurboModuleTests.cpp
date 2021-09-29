@@ -96,7 +96,6 @@ TEST_CLASS (JsiSimpleTurboModuleTests) {
                 TestEventService::LogEvent("Instance destroyed event", nullptr);
                 TestCheck(ReactContext(args.Context()).JSDispatcher().HasThreadAccess());
               });
-          return true;
         });
 
     TestEventService::ObserveEvents({
