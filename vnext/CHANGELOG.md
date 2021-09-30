@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Sep 2021 05:06:54 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Sep 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.387
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Adds hook for view managers to capture pointer events (erozell@outlook.com)
 
 ## 0.0.0-canary.386
 

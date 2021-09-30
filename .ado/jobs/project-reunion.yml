@@ -63,7 +63,7 @@ jobs:
           pathToPublish: $(Build.StagingDirectory)
           parallel: true
 
-      - task: NuGetToolInstaller@0
+      - task: NuGetToolInstaller@1
         inputs:
           versionSpec: ">=5.8.0"
 

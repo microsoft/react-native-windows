@@ -1329,11 +1329,11 @@
     strip-ansi "^6.0.0"
 
 "@jest/create-cache-key-function@^27.0.1":
-  version "27.2.3"
-  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.2.3.tgz#1cc6a5f0cb50ad78de76d131b09ff1017ba54306"
-  integrity sha512-tKflOJSc5iROqk75XtkhN81bKeT3apE9361mfakiwXQelXd7LsEE9tIW/2wiFlPn+PggcV/yDS32+oiqRtlOnA==
+  version "27.2.4"
+  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.2.4.tgz#5d3350ba32f1bd07145054601bac7a8d5c47bf0c"
+  integrity sha512-Cd9A6ugtkkHiQHDNbifdFrBBTgsKHp1KgCAjyAGMCrxFudR2icTKIPkXN2R2/IoMAMObUidMRBLDJy/RgX7uDQ==
   dependencies:
-    "@jest/types" "^27.2.3"
+    "@jest/types" "^27.2.4"
 
 "@jest/environment@^26.6.2":
   version "26.6.2"
@@ -1469,10 +1469,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^27.2.3":
-  version "27.2.3"
-  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.2.3.tgz#e0242545f442242c2538656d947a147443eee8f2"
-  integrity sha512-UJMDg90+W2i/QsS1NIN6Go8O/rSHLFWUkofGqKsUQs54mhmCVyLTiDy1cwKhoNO5fpmr9fctm9L/bRp/YzA1uQ==
+"@jest/types@^27.2.4":
+  version "27.2.4"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.2.4.tgz#2430042a66e00dc5b140c3636f4474d464c21ee8"
+  integrity sha512-IDO2ezTxeMvQAHxzG/ZvEyA47q0aVfzT95rGFl7bZs/Go0aIucvfDbS2rmnoEdXxlLQhcolmoG/wvL/uKx4tKA==
   dependencies:
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^3.0.0"
@@ -1568,11 +1568,6 @@
     "@octokit/types" "^6.0.0"
     universal-user-agent "^6.0.0"
 
-"@octokit/openapi-types@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-10.0.0.tgz#db4335de99509021f501fc4e026e6ff495fe1e62"
-  integrity sha512-k1iO2zKuEjjRS1EJb4FwSLk+iF6EGp+ZV0OMRViQoWhQ1fZTk9hg1xccZII5uyYoiqcbC73MRBmT45y1vp2PPg==
-
 "@octokit/openapi-types@^10.6.1":
   version "10.6.1"
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-10.6.1.tgz#4eb303e7da4de3d17216db80e3be6309f03b9fcc"
@@ -1583,12 +1578,12 @@
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-9.7.0.tgz#9897cdefd629cd88af67b8dbe2e5fb19c63426b2"
   integrity sha512-TUJ16DJU8mekne6+KVcMV5g6g/rJlrnIKn7aALG9QrNpnEipFc1xjoarh0PKaAWf2Hf+HwthRKYt+9mCm5RsRg==
 
-"@octokit/plugin-paginate-rest@^2.16.0":
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-2.16.0.tgz#09dbda2e5fbca022e3cdf76b63618f7b357c9f0c"
-  integrity sha512-8YYzALPMvEZ35kgy5pdYvQ22Roz+BIuEaedO575GwE2vb/ACDqQn0xQrTJR4tnZCJn7pi8+AWPVjrFDaERIyXQ==
+"@octokit/plugin-paginate-rest@^2.16.4":
+  version "2.16.5"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-2.16.5.tgz#4d8098410f4c4697d33979f06f38d2ed2574adf1"
+  integrity sha512-2PfRGymdBypqRes4Xelu0BAZZRCV/Qg0xgo8UB10UKoghCM+zg640+T5WkRsRD0edwfLBPP3VsJgDyDTG4EIYg==
   dependencies:
-    "@octokit/types" "^6.26.0"
+    "@octokit/types" "^6.31.0"
 
 "@octokit/plugin-request-log@^1.0.4":
   version "1.0.4"
@@ -1625,12 +1620,12 @@
     universal-user-agent "^6.0.0"
 
 "@octokit/rest@^18.5.3":
-  version "18.11.2"
-  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.11.2.tgz#0a38cd42f5e41128276099fa0513f456044a4a52"
-  integrity sha512-XZPD5HN0B8AfvXhdztFqoZxNVC6hRgQSZTWS1Eh0xHAoJvduVBwniWJ0t4DsdO9in+odZZ9EYAOFtQuaLVZ44Q==
+  version "18.11.3"
+  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.11.3.tgz#f5b04fab82fbc879747c033097ccee744a57b8d1"
+  integrity sha512-k4uCg4PVo6r9ncguSD4fXt6pYkM/FXs7759sYfpvIEhGNPJbFROooOJpkagKPAcSPoEGyEbIR+A9KYIv4jNe4A==
   dependencies:
     "@octokit/core" "^3.5.1"
-    "@octokit/plugin-paginate-rest" "^2.16.0"
+    "@octokit/plugin-paginate-rest" "^2.16.4"
     "@octokit/plugin-request-log" "^1.0.4"
     "@octokit/plugin-rest-endpoint-methods" "5.11.3"
 
@@ -1641,14 +1636,7 @@
   dependencies:
     "@octokit/openapi-types" "^9.5.0"
 
-"@octokit/types@^6.26.0":
-  version "6.26.0"
-  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.26.0.tgz#b8af298485d064ad9424cb41520541c1bf820346"
-  integrity sha512-RDxZBAFMtqs1ZPnbUu1e7ohPNfoNhTiep4fErY7tZs995BeHu369Vsh5woMIaFbllRWEZBfvTCS4hvDnMPiHrA==
-  dependencies:
-    "@octokit/openapi-types" "^10.0.0"
-
-"@octokit/types@^6.31.1":
+"@octokit/types@^6.31.0", "@octokit/types@^6.31.1":
   version "6.31.1"
   resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.31.1.tgz#223d062778bb6121635a022d3bf545d506fcc880"
   integrity sha512-xkF46eaYcpT8ieO78mZWhMq3bt37zIsP5BUkN+zWgX+mTYDB7jOtUP1MOxcSF8hhJhsjjlB1YDgQAhX0z0oqPw==
@@ -2191,9 +2179,9 @@
     form-data "^3.0.0"
 
 "@types/node@*", "@types/node@^14.14.22":
-  version "14.17.19"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.19.tgz#7341e9ac1b5d748d7a3ddc04336ed536a6f91c31"
-  integrity sha512-jjYI6NkyfXykucU6ELEoT64QyKOdvaA6enOqKtP4xUsGY0X0ZUZz29fUmrTRo+7v7c6TgDu82q3GHHaCEkqZwA==
+  version "14.17.20"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.20.tgz#74cc80438fd0467dc4377ee5bbad89a886df3c10"
+  integrity sha512-gI5Sl30tmhXsqkNvopFydP7ASc4c2cLfGNQrVKN3X90ADFWFsPEsotm/8JHSUJQKTHbwowAHtcJPeyVhtKv0TQ==
 
 "@types/node@10.17.13":
   version "10.17.13"
@@ -9362,9 +9350,9 @@ react-clone-referenced-element@^1.0.1:
   integrity sha512-LZBPvQV8W0B5dFzXFu+D3Tpil8YHS8tO00iFsfXcTLdtpuH7XyvaHqHcoz4hd4uNPQCZ30fceh+s7mLznzMXvg==
 
 react-devtools-core@^4.13.0:
-  version "4.18.0"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.18.0.tgz#06b2375dcea7858c957d1779cc2339d2a0af200a"
-  integrity sha512-Kg/LhDkdt9J0ned1D1RfeuSdX4cKW83/valJLYswGdsYc0g2msmD0kfYozsaRacjDoZwcKlxGOES1wrkET5O6Q==
+  version "4.19.0"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.19.0.tgz#467bb17d940e2b54948511bea293ff8fb5fa44fa"
+  integrity sha512-8XDaKCo1DXi/2XKxUDCDyK/XSRepABW6ESdDngPAQZzGD6sMkhqnYsaTisloSEKVZBf8iAO8cAdj1PUziJV/hQ==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -11671,6 +11659,7 @@ xmldoc@^1.1.2:
 
 xmldom@^0.6.0, "xmldom@github:xmldom/xmldom#^0.7.5":
   version "0.7.5"
+  uid "03fcf987307a9b1963075007d9fe2e8720fa7e25"
   resolved "https://codeload.github.com/xmldom/xmldom/tar.gz/03fcf987307a9b1963075007d9fe2e8720fa7e25"
 
 xpath@^0.0.27:

@@ -78,7 +78,7 @@ steps:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
-  - task: NuGetToolInstaller@0
+  - task: NuGetToolInstaller@1
     inputs:
       versionSpec: ">=5.8.0"
 
