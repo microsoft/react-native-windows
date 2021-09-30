@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "ReactNative.V8Jsi.Windows to 0.64.17",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
