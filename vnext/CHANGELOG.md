@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Sep 2021 15:04:40 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Sep 2021 23:54:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.40
+
+Thu, 30 Sep 2021 23:54:23 GMT
+
+### Patches
+
+- Upgrade ReactNative.V8Jsi.Windows to 0.63.15 (julio.rocha@microsoft.com)
+- Upgrade to V8-JSI 0.63.16 (julio.rocha@microsoft.com)
 
 ## 0.63.39
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 Sep 2021 23:54:23 GMT",
+      "tag": "react-native-windows_v0.63.40",
+      "version": "0.63.40",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.63.15",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9b2a25cc8da398280d4aa46d0b4b1538aa2ff6ce",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade to V8-JSI 0.63.16",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "186f16f592b357a37aefe22a400c449becec0ace",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:04:40 GMT",
       "tag": "react-native-windows_v0.63.39",
       "version": "0.63.39",

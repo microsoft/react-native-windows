@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 30 Sep 2021 23:54:23 GMT",
+      "tag": "@react-native-windows/cli_v0.63.14",
+      "version": "0.63.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump the version of xmldom used by @react-native-windows/cli to 0.7.0.",
+            "author": "yicyao@microsoft.com",
+            "commit": "c2f2b40ccd38366cae2c9ff9428fd3a3f9d8a0ef",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Aug 2021 14:12:28 GMT",
       "tag": "@react-native-windows/cli_v0.63.13",
       "version": "0.63.13",

@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Upgrade to V8-JSI 0.63.16",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-09-28T02:45:59.359Z"
-}

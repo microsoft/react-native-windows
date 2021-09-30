@@ -1,8 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump the version of xmldom used by @react-native-windows/cli to 0.7.0.",
-  "packageName": "@react-native-windows/cli",
-  "email": "yicyao@microsoft.com",
-  "dependentChangeType": "patch",
-  "date": "2021-09-29T19:53:41.956Z"
-}
