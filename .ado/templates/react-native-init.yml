@@ -184,6 +184,12 @@ steps:
       script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd msbuild
       workingDirectory: $(Build.SourcesDirectory)
 
+  - task: PowerShell@2
+    displayName: Start tracing
+    inputs:
+      targetType: filePath # filePath | inline
+      filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
@@ -238,3 +244,18 @@ steps:
       targetPath: 'verdaccio.log'
       artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
     condition: failed()
+
+  - task: PowerShell@2
+    displayName: Stop tracing
+    inputs:
+      targetType: filePath # filePath | inline
+      filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+      arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+    condition: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: Upload traces
+    inputs:
+      pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+      artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+    condition: true

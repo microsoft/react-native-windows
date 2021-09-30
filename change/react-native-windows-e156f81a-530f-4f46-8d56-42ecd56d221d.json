@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Make hermes consume icu.dll in Windows for local aware functions",
+  "packageName": "react-native-windows",
+  "email": "anandrag@microsoft.com",
+  "dependentChangeType": "patch"
+}
