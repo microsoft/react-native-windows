@@ -21,8 +21,8 @@
 #include <CppWinRTIncludes.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Hosting.h>
-#include <UI.Xaml.Media.h>
 #include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Media.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #pragma pop_macro("GetCurrentTime")
 
