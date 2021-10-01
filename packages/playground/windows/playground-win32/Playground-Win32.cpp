@@ -62,7 +62,7 @@ struct WindowData {
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
-  uint16_t m_theme{0};
+  xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
@@ -269,10 +269,10 @@ struct WindowData {
         // SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM) static_cast<int32_t>(self->m_jsEngine), (LPARAM)0);
 
         auto cmbTheme = GetDlgItem(hwnd, IDC_THEME);
-        SendMessageW(cmbTheme, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Default"));
-        SendMessageW(cmbTheme, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Light"));
-        SendMessageW(cmbTheme, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("Dark"));
-        ComboBox_SetCurSel(cmbTheme, self->m_theme);
+        SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Default");
+        SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Light");
+        SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Dark");
+        ComboBox_SetCurSel(cmbTheme, static_cast<int>(self->m_theme));
 
         return TRUE;
       }
@@ -286,16 +286,9 @@ struct WindowData {
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
 
             auto themeComboBox = GetDlgItem(hwnd, IDC_THEME);
-            self->m_theme = ComboBox_GetCurSel(themeComboBox);
-            auto theme;
-            switch (self->m_theme) {
-                // Matches list item order populated in IDC_THEME above
-                default: theme = xaml::ElementTheme::Default; break
-                case 1: theme = xaml::ElementTheme::Light; break;
-                case 2: theme = xaml::ElementTheme::Dark; break;
-            }
+            self->m_theme = static_cast<xaml::ElementTheme>(ComboBox_GetCurSel(themeComboBox));
             auto panel = self->m_desktopWindowXamlSource.Content().as<controls::Panel>();
-            panel.RequestedTheme(theme);
+            panel.RequestedTheme(self->m_theme);
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
