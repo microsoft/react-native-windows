@@ -15,7 +15,7 @@ npx react-native run-windows
 Options:
 | option                | description                          | type                                             |
 |-----------------------|--------------------------------------|--------------------------------------------------|
-| `--release`           | Specifies a Release build | [boolean] |
+| `--release`           | Specifies a Release build. Requires a [certificate](https://docs.microsoft.com/en-us/windows/msix/package/create-certificate-package-signing) in `windows/<App>` directory. | [boolean] |
 | `--root`              | Override the root directory for the windows build which contains the windows folder. (default: "E:\\test63") | [string] |
 | `--arch`              | The build architecture (ARM64, x86, x64). default: x86 | [string] |
 | `--singleproc`        | Disables multi-proc build | [boolean] |
