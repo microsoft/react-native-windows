@@ -2,6 +2,71 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Oct 2021 05:05:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.388",
+      "version": "0.0.0-canary.388",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.65.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "eaefea114554d0b91dbf2d6aff650b2fc5673f7a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Sep 2021 05:06:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.387",
+      "version": "0.0.0-canary.387",
+      "comments": {
+        "none": [
+          {
+            "comment": "Cleanup of TestReactNativeHostHolder API",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "26d4ef069ca3b2f9d6fecd67854d83430daf69ae",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Adds hook for view managers to capture pointer events",
+            "author": "erozell@outlook.com",
+            "commit": "4bc8637395ea828788c0ba267561c1a01f06f484",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Sep 2021 05:06:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.386",
+      "version": "0.0.0-canary.386",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make Hermes consume the ICU.dll in Windows 10 for i18n Earlier we had a WinNLS based stub implementation to avoid depending on ICU.",
+            "author": "anandrag@microsoft.com",
+            "commit": "eb04aeb2e5fcb74988f1630f24adc27a034351fe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Check constants in generated turbo module specs",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "6238240df45549967e66f7fcfa411c67007eade3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d59110ab4e86431506ab51d377ec1a888631039e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 05:07:03 GMT",
       "tag": "react-native-windows_v0.0.0-canary.385",
       "version": "0.0.0-canary.385",

@@ -13,7 +13,16 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(SettingsManagerSpec_Constants)
+struct SettingsManagerSpec_Constants {
+    REACT_FIELD(settings)
+    React::JSValue settings;
+};
+
 struct SettingsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<SettingsManagerSpec_Constants>{0},
+  };
   static constexpr auto methods = std::tuple{
       Method<void(React::JSValue) noexcept>{0, L"setValues"},
       Method<void(std::vector<std::string>) noexcept>{1, L"deleteValues"},
@@ -21,7 +30,14 @@ struct SettingsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
+    constexpr auto constantCheckResults = CheckConstants<TModule, SettingsManagerSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, SettingsManagerSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+          0,
+          "SettingsManagerSpec_Constants",
+          "    REACT_GET_CONSTANTS(GetConstants) SettingsManagerSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
+          "    REACT_GET_CONSTANTS(GetConstants) static SettingsManagerSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
