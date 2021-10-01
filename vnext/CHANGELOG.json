@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Oct 2021 05:05:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.388",
+      "version": "0.0.0-canary.388",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.65.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "eaefea114554d0b91dbf2d6aff650b2fc5673f7a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Sep 2021 05:06:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.387",
       "version": "0.0.0-canary.387",
