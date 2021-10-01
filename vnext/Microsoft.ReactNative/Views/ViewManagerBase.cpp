@@ -25,6 +25,11 @@ using namespace xaml;
 
 namespace Microsoft::ReactNative {
 
+static const std::unordered_map<std::string, PointerEventsKind> pointerEventsMap = {
+    {"box-none", PointerEventsKind::BoxNone},
+    {"box-only", PointerEventsKind::BoxOnly},
+    {"none", PointerEventsKind::None}};
+
 float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode) {
   // Round up to workaround truncation inside yoga
   measuredSize = ceil(measuredSize);
@@ -263,15 +268,16 @@ bool ViewManagerBase::UpdateProperty(
   } else if (propertyName == "keyUpEvents") {
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
   } else if (propertyName == "pointerEvents") {
-    if (propertyValue.Type() == React::JSValueType::String) {
-      nodeToUpdate->m_pointerEvents = propertyValue.AsString();
-      if (nodeToUpdate->m_pointerEvents == "none") {
+    const auto iter = pointerEventsMap.find(propertyValue.AsString());
+    if (iter != pointerEventsMap.end()) {
+      nodeToUpdate->m_pointerEvents = iter->second;
+      if (nodeToUpdate->m_pointerEvents == PointerEventsKind::None) {
         if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
           uiElement.IsHitTestVisible(false);
         }
       }
-    } else if (propertyValue.IsNull()) {
-      nodeToUpdate->m_pointerEvents = "";
+    } else {
+      nodeToUpdate->m_pointerEvents = PointerEventsKind::Auto;
       if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
         uiElement.ClearValue(xaml::UIElement::IsHitTestVisibleProperty());
       }
@@ -385,9 +391,10 @@ bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
 void ViewManagerBase::OnPointerEvent(
     ShadowNodeBase *node,
     const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args) {
-  if ((args.Target() == node->GetView() && node->m_pointerEvents == "box-none") || node->m_pointerEvents == "none") {
+  if ((args.Target() == node->GetView() && node->m_pointerEvents == PointerEventsKind::BoxNone) ||
+      node->m_pointerEvents == PointerEventsKind::None) {
     args.Target(nullptr);
-  } else if (node->m_pointerEvents == "box-only") {
+  } else if (node->m_pointerEvents == PointerEventsKind::BoxOnly) {
     args.Target(node->GetView());
   }
 }
