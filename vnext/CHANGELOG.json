@@ -2,6 +2,201 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Oct 2021 05:05:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.388",
+      "version": "0.0.0-canary.388",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.65.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "eaefea114554d0b91dbf2d6aff650b2fc5673f7a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Sep 2021 05:06:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.387",
+      "version": "0.0.0-canary.387",
+      "comments": {
+        "none": [
+          {
+            "comment": "Cleanup of TestReactNativeHostHolder API",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "26d4ef069ca3b2f9d6fecd67854d83430daf69ae",
+            "package": "react-native-windows"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Adds hook for view managers to capture pointer events",
+            "author": "erozell@outlook.com",
+            "commit": "4bc8637395ea828788c0ba267561c1a01f06f484",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Sep 2021 05:06:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.386",
+      "version": "0.0.0-canary.386",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make Hermes consume the ICU.dll in Windows 10 for i18n Earlier we had a WinNLS based stub implementation to avoid depending on ICU.",
+            "author": "anandrag@microsoft.com",
+            "commit": "eb04aeb2e5fcb74988f1630f24adc27a034351fe",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Check constants in generated turbo module specs",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "6238240df45549967e66f7fcfa411c67007eade3",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d59110ab4e86431506ab51d377ec1a888631039e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Sep 2021 05:07:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.385",
+      "version": "0.0.0-canary.385",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 9/23",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d4970fdd583866c3ac7af6a0cf38040cf3b22d93",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Sep 2021 05:06:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.384",
+      "version": "0.0.0-canary.384",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Add CheckConstants<TModule, TModuleSpec> for REACT_GET_CONSTANTS",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "eaf932469678b8b67b0b2b17fd2bcdda1ed4e358",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Sep 2021 05:06:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.383",
+      "version": "0.0.0-canary.383",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RN nightly 9/16.",
+            "author": "igklemen@microsoft.com",
+            "commit": "8b63ada9ba1d55bfd161388fc18c2b5c6445b508",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Sep 2021 05:06:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.382",
+      "version": "0.0.0-canary.382",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Remove Certificate From Template",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "3813907b2eaa6198f0a8b9dc570075f0c7117301",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Revert creation of symbol packages, main codesign",
+            "author": "jthysell@microsoft.com",
+            "commit": "2940b0ee911240714e0a0f5c541a52b41e9ee3ab",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Update JSIEngineOverride documentation to clarify that the setting is ignored while the web debugger is being used, since the browser responsible for debugging must use its own engine to debug correctly.",
+            "author": "email not defined",
+            "commit": "2c578c743f157506b827c8fc926a6ac439e18507",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Sep 2021 05:06:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.381",
+      "version": "0.0.0-canary.381",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Disable broken x64 debug build of ComponentTestt",
+            "author": "jthysell@microsoft.com",
+            "commit": "50e54f7037a3196329ff229544d0da73522cad54",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Bug in Animation Clamping",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "304bdb2ba0522768be866ac6611aa34cd2351a98",
+            "package": "react-native-windows"
+          }
+        ],
+        "none": [
+          {
+            "comment": "Add REACT_GET_CONSTANTS to turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "096855bab43705436f96ee2e80f1f88c519ca2ce",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.88",
+            "author": "ali-hk@users.noreply.github.com",
+            "commit": "0bc36a30ab3cd5bb4cfd767e503b29c185cfcddd",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Sep 2021 05:08:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.380",
+      "version": "0.0.0-canary.380",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Issue#8397 Hermes profiler needs more work to function in win32 unpackaged apps Essentially, we are adding a new function to fetch the application data directory which works with both packaged and unpackaged apps, and consuming it in Hermes sampling profiler.",
+            "author": "anandrag@microsoft.com",
+            "commit": "5f494d4154fd5274f531abe9435aea8d07e4548f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Integrate RN nightly build 9/9.",
+            "author": "igklemen@microsoft.com",
+            "commit": "08eb19f42f4f74bd82f33db2e27ba2d33b2ddd1b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 18 Sep 2021 05:07:45 GMT",
       "tag": "react-native-windows_v0.0.0-canary.379",
       "version": "0.0.0-canary.379",

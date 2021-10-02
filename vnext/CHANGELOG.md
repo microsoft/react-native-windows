@@ -1,8 +1,85 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 18 Sep 2021 05:07:45 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Oct 2021 05:05:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.388
+
+Fri, 01 Oct 2021 05:05:54 GMT
+
+### Changes
+
+- Upgrade ReactNative.V8Jsi.Windows to 0.65.5 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.387
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Adds hook for view managers to capture pointer events (erozell@outlook.com)
+
+## 0.0.0-canary.386
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Make Hermes consume the ICU.dll in Windows 10 for i18n Earlier we had a WinNLS based stub implementation to avoid depending on ICU. (anandrag@microsoft.com)
+- Check constants in generated turbo module specs (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.385
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Changes
+
+- Integrate 9/23 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.384
+
+Sat, 25 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Add CheckConstants<TModule, TModuleSpec> for REACT_GET_CONSTANTS (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.383
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Changes
+
+- Integrate RN nightly 9/16. (igklemen@microsoft.com)
+
+## 0.0.0-canary.382
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Remove Certificate From Template (34109996+chiaramooney@users.noreply.github.com)
+- Revert creation of symbol packages, main codesign (jthysell@microsoft.com)
+
+## 0.0.0-canary.381
+
+Wed, 22 Sep 2021 05:06:43 GMT
+
+### Changes
+
+- Disable broken x64 debug build of ComponentTestt (jthysell@microsoft.com)
+- Fix Bug in Animation Clamping (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.380
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Changes
+
+- Issue#8397 Hermes profiler needs more work to function in win32 unpackaged apps Essentially, we are adding a new function to fetch the application data directory which works with both packaged and unpackaged apps, and consuming it in Hermes sampling profiler. (anandrag@microsoft.com)
+- Integrate RN nightly build 9/9. (igklemen@microsoft.com)
 
 ## 0.0.0-canary.379
 

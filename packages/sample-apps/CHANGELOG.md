@@ -1,8 +1,80 @@
 # Change Log - sample-apps
 
-This log was last generated on Sat, 18 Sep 2021 05:07:45 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Oct 2021 05:05:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 01 Oct 2021 05:05:54 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.388 (julio.rocha@microsoft.com)
+
+## 0.0.0
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.387 (erozell@outlook.com)
+
+## 0.0.0
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.16 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.11 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0
+
+Sat, 25 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.384 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.10 (igklemen@microsoft.com)
+
+## 0.0.0
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.382 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0
+
+Wed, 22 Sep 2021 05:06:43 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.381 (ali-hk@users.noreply.github.com)
+
+## 0.0.0
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.9 (igklemen@microsoft.com)
 
 ## 0.0.0
 

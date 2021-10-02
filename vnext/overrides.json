@@ -8,7 +8,7 @@
   "excludePatterns": [
     "**/__snapshots__/**"
   ],
-  "baseVersion": "0.0.0-d40cb0e1b",
+  "baseVersion": "0.0.0-d3c7e2018",
   "overrides": [
     {
       "type": "derived",
@@ -140,7 +140,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "36af83fdc0ec38699dc14f0e6695d6844bdb5860"
+      "baseHash": "bd8393ad2a1ab91c2832e27b5434edeac262d7ee"
     },
     {
       "type": "copy",

@@ -1,8 +1,32 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 17 Sep 2021 05:06:53 GMT and should not be manually modified.
+This log was last generated on Thu, 30 Sep 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.91
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump xmldom to 0.7.0 in @react-native-windows/cli. (yicyao@microsoft.com)
+
+## 0.0.0-canary.90
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Make CLI Fail Gracefully on Dep Script Errors (ngerlem@microsoft.com)
+
+## 0.0.0-canary.89
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Remove Certificate From Template (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.88
 

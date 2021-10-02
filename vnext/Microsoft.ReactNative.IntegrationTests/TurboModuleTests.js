@@ -44,7 +44,9 @@ try {
       c.constantString,
       c.constantInt,
       c.constantString2,
-      c.constantInt2
+      c.constantInt2,
+      c.constantString3,
+      c.constantInt3
     );
 
   sampleTurboModule

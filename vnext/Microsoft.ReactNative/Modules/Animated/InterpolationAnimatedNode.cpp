@@ -138,9 +138,10 @@ winrt::hstring InterpolationAnimatedNode::GetLeftExpression(
     const winrt::hstring &value,
     const winrt::hstring &leftInterpolateExpression) {
   const auto firstInput = s_inputName.data() + std::to_wstring(0);
+  const auto firstOutput = s_outputName.data() + std::to_wstring(0);
   switch (ExtrapolationTypeFromString(m_extrapolateLeft)) {
     case ExtrapolationType::Clamp:
-      return value + L" < " + firstInput + L" ? " + firstInput + L" : ";
+      return value + L" < " + firstInput + L" ? " + firstOutput + L" : ";
     case ExtrapolationType::Identity:
       return value + L" < " + firstInput + L" ? " + value + L" : ";
     case ExtrapolationType::Extend:
@@ -154,9 +155,10 @@ winrt::hstring InterpolationAnimatedNode::GetRightExpression(
     const winrt::hstring &value,
     const winrt::hstring &rightInterpolateExpression) {
   const auto lastInput = s_inputName.data() + std::to_wstring(m_inputRanges.size() - 1);
+  const auto lastOutput = s_outputName.data() + std::to_wstring(m_outputRanges.size() - 1);
   switch (ExtrapolationTypeFromString(m_extrapolateRight)) {
     case ExtrapolationType::Clamp:
-      return value + L" > " + lastInput + L" ? " + lastInput + L" : ";
+      return value + L" > " + lastInput + L" ? " + lastOutput + L" : ";
     case ExtrapolationType::Identity:
       return value + L" > " + lastInput + L" ? " + value + L" : ";
     case ExtrapolationType::Extend:

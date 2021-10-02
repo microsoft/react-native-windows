@@ -13,7 +13,24 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(ToastAndroidSpec_Constants)
+struct ToastAndroidSpec_Constants {
+    REACT_FIELD(SHORT)
+    double SHORT;
+    REACT_FIELD(LONG)
+    double LONG;
+    REACT_FIELD(TOP)
+    double TOP;
+    REACT_FIELD(BOTTOM)
+    double BOTTOM;
+    REACT_FIELD(CENTER)
+    double CENTER;
+};
+
 struct ToastAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
+  static constexpr auto constants = std::tuple{
+      TypedConstant<ToastAndroidSpec_Constants>{0},
+  };
   static constexpr auto methods = std::tuple{
       Method<void(std::string, double) noexcept>{0, L"show"},
       Method<void(std::string, double, double) noexcept>{1, L"showWithGravity"},
@@ -22,7 +39,14 @@ struct ToastAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 
   template <class TModule>
   static constexpr void ValidateModule() noexcept {
+    constexpr auto constantCheckResults = CheckConstants<TModule, ToastAndroidSpec>();
     constexpr auto methodCheckResults = CheckMethods<TModule, ToastAndroidSpec>();
+
+    REACT_SHOW_CONSTANT_SPEC_ERRORS(
+          0,
+          "ToastAndroidSpec_Constants",
+          "    REACT_GET_CONSTANTS(GetConstants) ToastAndroidSpec_Constants GetConstants() noexcept {/*implementation*/}\n"
+          "    REACT_GET_CONSTANTS(GetConstants) static ToastAndroidSpec_Constants GetConstants() noexcept {/*implementation*/}\n");
 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,

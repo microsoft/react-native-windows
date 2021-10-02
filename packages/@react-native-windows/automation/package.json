@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.0.4-5",
+  "version": "0.0.8-2",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -14,7 +14,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.0.3-7",
+    "@react-native-windows/automation-channel": "^0.0.5-2",
     "webdriverio": "^6.9.0"
   },
   "devDependencies": {

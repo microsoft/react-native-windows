@@ -24,6 +24,7 @@
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
+#include "../../codegen/NativeImageLoaderIOSSpec.g.h"
 #include "../../codegen/NativeLogBoxSpec.g.h"
 #include "../../codegen/NativeUIManagerSpec.g.h"
 #include "NativeModules.h"
@@ -55,6 +56,7 @@
 #endif
 #include "Modules/DevSettingsModule.h"
 #ifndef CORE_ABI
+#include <Modules/ImageViewManagerModule.h>
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
 #include "Modules/LogBoxModule.h"
@@ -323,6 +325,12 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
           ::Microsoft::ReactNative::DeviceInfo,
           ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
+
+  registerTurboModule(
+      L"ImageLoader",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::ImageLoader,
+          ::Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec>());
 #endif
 
   registerTurboModule(
