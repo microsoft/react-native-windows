@@ -55,6 +55,8 @@ async function clearState() {
 }
 
 async function toggleSelectable() {
-  const toggleButton = await app.findElementByTestID('toggle-selectable-button');
+  const toggleButton = await app.findElementByTestID(
+    'toggle-selectable-button',
+  );
   await toggleButton.click();
 }
