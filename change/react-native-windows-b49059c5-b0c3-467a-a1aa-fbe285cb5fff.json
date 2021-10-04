@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds functionality for box-only and box-none via OnPointerEvent callback",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
