@@ -9,7 +9,7 @@ parameters:
     type: string
   - name: buildConfiguration
     type: string
-    default: 'Debug'
+    default: Debug
     values:
       - Debug
       - Release

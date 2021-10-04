@@ -68,8 +68,7 @@ jobs:
         parameters:
           buildEnvironment: ${{ parameters.BuildEnvironment }}
           encodedKey: sampleAppCPPEncodedKey
-          ${{ if eq(variables.BuildConfiguration, 'Release') }}:
-            buildConfiguration: Release
+          buildConfiguration: $(BuildConfiguration)
           buildPlatform: $(BuildPlatform)
           deployOption: $(DeployOption)
           buildLogDirectory: $(BuildLogDirectory)
