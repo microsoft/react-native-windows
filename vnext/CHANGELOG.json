@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 Oct 2021 15:07:37 GMT",
+      "tag": "react-native-windows_v0.66.0-preview.6",
+      "version": "0.66.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.65.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "8b1048e4a3491c01f2b2d4382822f8d98f3ccfe5",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow injection of custom UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "a20892ade44390cdb10f25c31a2f35ce61328b97",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b848d68c45c3f9b51938ce9881e276cae1d58448",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Make hermes consume icu.dll in Windows for local aware functions",
+            "author": "anandrag@microsoft.com",
+            "commit": "652dfd2e5f50f575c0dfb9dd90efd5eb14d485bb",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:07:31 GMT",
       "tag": "react-native-windows_v0.66.0-preview.5",
       "version": "0.66.0-preview.5",
