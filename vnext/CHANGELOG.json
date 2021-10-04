@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 Oct 2021 15:07:05 GMT",
+      "tag": "react-native-windows_v0.65.4",
+      "version": "0.65.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow injection of custom UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c5a4ad149cf0e9fbfa1be60592581081ac822d5f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.65.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "e7a0d5fc8cca1a886f6788c5bfdf870ce201c62c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "bd4794c46b84e38850491a23170da36dfef3c709",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:07:16 GMT",
       "tag": "react-native-windows_v0.65.3",
       "version": "0.65.3",

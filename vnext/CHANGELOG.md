@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Sep 2021 15:07:16 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Oct 2021 15:07:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.4
+
+Mon, 04 Oct 2021 15:07:05 GMT
+
+### Patches
+
+- Allow injection of custom UI thread (30809111+acoates-ms@users.noreply.github.com)
+- Upgrade ReactNative.V8Jsi.Windows to 0.65.5 (julio.rocha@microsoft.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.65.3
 
