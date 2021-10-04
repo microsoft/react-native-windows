@@ -10,9 +10,6 @@ parameters:
   - name: buildConfiguration
     type: string
     default: Debug
-    values:
-      - Debug
-      - Release
   - name: buildPlatform
     type: string
   - name: deployOption

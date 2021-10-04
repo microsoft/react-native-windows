@@ -6,10 +6,6 @@ parameters:
     type: string
   - name: configuration
     type: string
-    default: Debug
-    values:
-      - Debug
-      - Release
   - name: projectType
     type: string
   - name: additionalRunArguments
