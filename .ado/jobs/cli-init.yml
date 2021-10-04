@@ -193,14 +193,14 @@ jobs:
         matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
           X64DebugCppNuget:
             language: cpp
-            config: Debug
+            localConfig: Debug
             platform: x86
             projectType: app
             additionalInitArguments:
             additionalRunArguments:
           X64DebugCsNuget:
             language: cs
-            config: Debug
+            localConfig: Debug
             platform: x86
             projectType: app
             additionalInitArguments:
@@ -213,7 +213,7 @@ jobs:
         - template: ../templates/react-native-init.yml
           parameters:
             language: $(language)
-            configuration: $(config)
+            configuration: $(localConfig)
             platform: $(platform)
             projectType: $(projectType)
             additionalInitArguments: $(additionalInitArguments)
