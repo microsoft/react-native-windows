@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix issue using react-native-debugger with react-native-windows",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

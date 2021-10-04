@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 23 Aug 2021 15:10:07 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Oct 2021 15:06:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.6
+
+Mon, 04 Oct 2021 15:06:58 GMT
+
+### Patches
+
+- Bump the version of xmldom used by @react-native-windows/cli to 0.7.0. (yicyao@microsoft.com)
 
 ## 0.64.5
 

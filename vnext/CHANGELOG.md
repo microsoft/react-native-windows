@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Sep 2021 15:06:37 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Oct 2021 15:06:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.20
+
+Mon, 04 Oct 2021 15:06:58 GMT
+
+### Patches
+
+- ReactNative.V8Jsi.Windows to 0.64.17 (julio.rocha@microsoft.com)
+- Fix issue using react-native-debugger with react-native-windows (30809111+acoates-ms@users.noreply.github.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.19
 

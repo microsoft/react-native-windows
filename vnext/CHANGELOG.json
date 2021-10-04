@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 Oct 2021 15:06:58 GMT",
+      "tag": "react-native-windows_v0.64.20",
+      "version": "0.64.20",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ReactNative.V8Jsi.Windows to 0.64.17",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5a573a64fc55e1065140d8532ff15a690a111e98",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix issue using react-native-debugger with react-native-windows",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b46bc5d00b698f93d155e2c7f67f1267b85082ca",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "2552ab3b58714b472787ec5d521a5d730c2b660e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:06:37 GMT",
       "tag": "react-native-windows_v0.64.19",
       "version": "0.64.19",
