@@ -182,6 +182,12 @@ export type BasePropsWin32 = {
     * ItemType is used to obtain information about items in a list, tree view, or data grid. For example, an item in a file directory view might be a "Document File" or a "Folder".
     */
    accessibilityItemType?: string;
+
+  /**
+   * Used to specify a class name for an automation element which can be used to identify a group of automation elements
+   * with similar characteristics.
+   */
+   accessibilityClassName?: string;
 };
 
 export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
