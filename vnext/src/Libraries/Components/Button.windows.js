@@ -335,7 +335,7 @@ class Button extends React.Component<
     //  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
     // Windows]
     // [Windows
-    if (Platform.OS === 'windows' && color) {
+    if (Platform.OS === 'windows') {
       return (
         <Touchable
           accessibilityLabel={accessibilityLabel}
@@ -352,62 +352,11 @@ class Button extends React.Component<
           onPress={onPress}
           tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
-          underlayColor={PlatformColor('SolidBackgroundFillColorBaseBrush')}
-          onShowUnderlay={() => {
-            this.setState({pressed: true});
-          }}
-          onHideUnderlay={() => {
-            this.setState({pressed: false});
-          }}
-          onMouseEnter={() => {
-            if (!disabled) this.setState({hover: true});
-          }}
-          onMouseLeave={() => {
-            if (!disabled) this.setState({hover: false});
-          }}
-          style={{borderRadius: 3}}>
-          <View
-            style={
-              this.state.pressed
-                ? [buttonStyles, styles.buttonPressed]
-                : buttonStyles
-            }>
-            <View
-              style={
-                this.state.hover
-                  ? [
-                      styles.buttonHover,
-                      {
-                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                      },
-                    ]
-                  : [{}]
-              }>
-              <Text style={textStyles} disabled={disabled}>
-                {formattedTitle}
-              </Text>
-            </View>
-          </View>
-        </Touchable>
-      );
-    } else if (Platform.OS === 'windows') {
-      return (
-        <Touchable
-          accessibilityLabel={accessibilityLabel}
-          accessibilityRole="button"
-          accessibilityState={accessibilityState}
-          hasTVPreferredFocus={hasTVPreferredFocus}
-          nextFocusDown={nextFocusDown}
-          nextFocusForward={nextFocusForward}
-          nextFocusLeft={nextFocusLeft}
-          nextFocusRight={nextFocusRight}
-          nextFocusUp={nextFocusUp}
-          testID={testID}
-          disabled={disabled}
-          onPress={onPress}
-          tabIndex={tabIndex}
-          touchSoundDisabled={touchSoundDisabled}
-          underlayColor={PlatformColor('ButtonBackgroundPressed')}
+          underlayColor={
+            color
+              ? PlatformColor('SolidBackgroundFillColorBaseBrush')
+              : PlatformColor('ButtonBackgroundPressed')
+          }
           onShowUnderlay={() => {
             this.setState({pressed: true});
           }}
@@ -415,7 +364,9 @@ class Button extends React.Component<
             this.setState({pressed: false});
           }}
           style={
-            this.state.pressed
+            color
+              ? {borderRadius: 3}
+              : this.state.pressed
               ? [buttonStyles, styles.buttonPressed]
               : this.state.hover
               ? [buttonStyles, styles.buttonHover]
@@ -427,27 +378,52 @@ class Button extends React.Component<
           onMouseLeave={() => {
             if (!disabled) this.setState({hover: false});
           }}>
-          <Text
+          <View
             style={
-              this.state.pressed
-                ? [
-                    textStyles,
-                    {
-                      color: PlatformColor('ButtonForegroundPressed'),
-                    },
-                  ]
-                : this.state.hover
-                ? [
-                    textStyles,
-                    {
-                      color: PlatformColor('ButtonForegroundPointerOver'),
-                    },
-                  ]
-                : textStyles
-            }
-            disabled={disabled}>
-            {formattedTitle}
-          </Text>
+              color
+                ? this.state.pressed
+                  ? [buttonStyles, styles.buttonPressed]
+                  : buttonStyles
+                : {}
+            }>
+            <View
+              style={
+                color
+                  ? this.state.hover
+                    ? [
+                        styles.buttonHover,
+                        {
+                          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        },
+                      ]
+                    : {}
+                  : {}
+              }>
+              <Text
+                style={
+                  color
+                    ? textStyles
+                    : this.state.pressed
+                    ? [
+                        textStyles,
+                        {
+                          color: PlatformColor('ButtonForegroundPressed'),
+                        },
+                      ]
+                    : this.state.hover
+                    ? [
+                        textStyles,
+                        {
+                          color: PlatformColor('ButtonForegroundPointerOver'),
+                        },
+                      ]
+                    : textStyles
+                }
+                disabled={disabled}>
+                {formattedTitle}
+              </Text>
+            </View>
+          </View>
         </Touchable>
       );
     } else {
@@ -546,6 +522,7 @@ const styles = StyleSheet.create({
     },
     // Windows]
   }),
+  // [Windows
   buttonHover: {
     backgroundColor: PlatformColor('ButtonBackgroundPointerOver'),
     borderColor: PlatformColor('ButtonBorderBrushPointerOver'),
@@ -555,6 +532,7 @@ const styles = StyleSheet.create({
     borderColor: PlatformColor('ButtonBorderBrushPressed'),
     borderBottomWidth: 1,
   },
+  // Windows]
 });
 
 module.exports = Button;
