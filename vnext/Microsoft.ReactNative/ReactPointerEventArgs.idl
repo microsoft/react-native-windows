@@ -49,13 +49,10 @@ namespace Microsoft.ReactNative {
       get;
     };
     DOC_STRING(
-      "Gets or sets the pointer event kind. The only valid overrides are:\n "
-      "- @PointerEventKind.Cancel\n"
-      "- @PointerEventKind.End\n"
-      "View managers must not override @PointerEventKind.Start kinds.\n"
-      "E.g., a view manager may choose to cancel the React pointer event "
-      "sequence after the pointer moves beyond a given threshold, or to "
-      "switch a @PointerEventKind.CaptureLost event to @PointerEventKind.End."
+      "Gets or sets the pointer event kind. The only valid override is "
+      "@PointerEventKind.CaptureLost to @PointerEventKind.End to handle cases "
+      "where PointerCaptureLost events on ReactRootView can be safely treated "
+      "as PointerReleased events, e.g., for pointer events on selectable text."
     )
     PointerEventKind Kind {
       get;

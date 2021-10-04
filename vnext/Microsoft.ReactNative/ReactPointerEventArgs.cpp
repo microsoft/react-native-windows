@@ -16,8 +16,8 @@ PointerEventKind ReactPointerEventArgs::Kind() const noexcept {
 }
 
 void ReactPointerEventArgs::Kind(PointerEventKind kind) noexcept {
-  assert(kind != PointerEventKind::Start);
-  assert(kind == PointerEventKind::Cancel || kind == PointerEventKind::End);
+  // The only event type change that is supported is CaptureLost to End.
+  assert(kind == PointerEventKind::End && m_kind == PointerEventKind::CaptureLost);
   m_kind = kind;
 }
 
