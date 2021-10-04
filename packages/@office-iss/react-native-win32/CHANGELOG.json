@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 04 Oct 2021 15:07:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.66.0-preview.3",
+      "version": "0.66.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix exception in View when props are undefined",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "a20892ade44390cdb10f25c31a2f35ce61328b97",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Sep 2021 15:07:01 GMT",
       "tag": "@office-iss/react-native-win32_v0.66.0-preview.2",
       "version": "0.66.0-preview.2",

@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Sep 2021 15:07:31 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Oct 2021 15:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.0-preview.6
+
+Mon, 04 Oct 2021 15:07:37 GMT
+
+### Changes
+
+- Upgrade ReactNative.V8Jsi.Windows to 0.65.5 (julio.rocha@microsoft.com)
+- Allow injection of custom UI thread (30809111+acoates-ms@users.noreply.github.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
+- Make hermes consume icu.dll in Windows for local aware functions (anandrag@microsoft.com)
 
 ## 0.66.0-preview.5
 
