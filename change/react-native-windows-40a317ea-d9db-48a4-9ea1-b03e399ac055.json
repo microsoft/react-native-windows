@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add ARM64 support to React.Windows.Desktop.Test.DLL",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
