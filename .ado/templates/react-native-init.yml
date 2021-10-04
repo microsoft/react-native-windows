@@ -92,6 +92,7 @@ steps:
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
+      Write-Host "##vso[task.setvariable variable=localConfiguration]${{ parameters.configuration}}"
 
   # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
   # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies
