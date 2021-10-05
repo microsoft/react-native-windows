@@ -113,7 +113,7 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     '..',
     '..',
     '..',
-    powershell,
+    'powershell',
     'WindowsStoreAppUtils.ps1',
   );
   execSync(
