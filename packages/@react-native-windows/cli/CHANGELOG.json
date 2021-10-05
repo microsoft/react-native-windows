@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 05 Oct 2021 05:07:00 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.92",
+      "version": "0.0.0-canary.92",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "CLI: Default to deploy by layout",
+            "author": "jthysell@microsoft.com",
+            "commit": "afb7054ff284e62884bcf987d8a494326aadb8c5",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Sep 2021 05:06:48 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.91",
       "version": "0.0.0-canary.91",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CLI: Default to deploy by layout",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

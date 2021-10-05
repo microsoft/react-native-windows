@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 05 Oct 2021 05:07:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.391",
+      "version": "0.0.0-canary.391",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Logs exception from IReactDispatcher callback",
+            "author": "erozell@outlook.com",
+            "commit": "a3c9cb062592146f5bfa2b7c14166e702e0e6f6a",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Add ARM64 support to React.Windows.Desktop.Test.DLL",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "4dd22491fac624fee8c5172ea9f470209c2a1691",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Oct 2021 05:06:55 GMT",
       "tag": "react-native-windows_v0.0.0-canary.390",
       "version": "0.0.0-canary.390",

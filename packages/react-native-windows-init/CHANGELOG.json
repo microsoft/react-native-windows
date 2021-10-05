@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Tue, 05 Oct 2021 05:07:00 GMT",
+      "tag": "react-native-windows-init_v1.1.63",
+      "version": "1.1.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.92",
+            "author": "jthysell@microsoft.com",
+            "commit": "afb7054ff284e62884bcf987d8a494326aadb8c5",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 Sep 2021 05:06:48 GMT",
       "tag": "react-native-windows-init_v1.1.63",
       "version": "1.1.63",
