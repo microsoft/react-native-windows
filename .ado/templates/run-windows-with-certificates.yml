@@ -9,10 +9,6 @@ parameters:
     type: string
   - name: buildConfiguration
     type: string
-    default: 'Debug'
-    values:
-      - Debug
-      - Release
   - name: buildPlatform
     type: string
   - name: deployOption
@@ -28,26 +24,30 @@ steps:
       buildEnvironment: ${{ parameters.BuildEnvironment }}
       encodedKey: ${{ parameters.encodedKey }}
 
+  # Work around issue of parameters not getting expanded in conditions properly
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.buildConfiguration }}"
+
   - task: CmdLine@2
     displayName: run-windows (Debug)
     inputs:
       script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
       workingDirectory: ${{ parameters.workingDirectory }}
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Debug'))
+    condition: and(succeeded(), eq(variables.localConfig, 'Debug'))
 
   - task: CmdLine@2
     displayName: run-windows (Release) - PR
     inputs:
       script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
       workingDirectory: ${{ parameters.workingDirectory }}
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Release'), eq('${{ parameters.buildEnvironment }}', 'PullRequest'))
+    condition: and(succeeded(), eq(variables.localConfig, 'Release'), eq('${{ parameters.buildEnvironment }}', 'PullRequest'))
 
   - task: CmdLine@2
     displayName: run-windows (Release) - CI
     inputs:
       script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
       workingDirectory: ${{ parameters.workingDirectory }}
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Release'), eq('${{ parameters.buildEnvironment }}', 'Continuous'))
+    condition: and(succeeded(), eq(variables.localConfig, 'Release'), eq('${{ parameters.buildEnvironment }}', 'Continuous'))
 
   - template: ../templates/cleanup-certificate.yml
     parameters:
