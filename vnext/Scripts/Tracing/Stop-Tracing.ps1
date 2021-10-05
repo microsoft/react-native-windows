@@ -1,11 +1,22 @@
 param(
-    [bool]$NoAnalysis = $False
+    [switch]$NoAnalysis,
+    [string]$outputFolder
 )
 
 $mypath = split-path -parent $MyInvocation.MyCommand.Definition
 $timestamp = [DateTime]::Now.ToString("yyyyMMdd_HHmmss") 
 $fileName = "rnw_" + $timestamp + ".etl"
-$etlPath = Join-Path -Path $mypath -ChildPath $fileName
+
+if (![string]::IsNullOrEmpty($outputFolder)) {
+    If (!(test-path $outputFolder)) {
+        New-Item -ItemType Directory -Force -Path $outputFolder
+    }
+    $etlPath = Join-Path -Path $outputFolder -ChildPath $fileName
+}
+else {
+    $etlPath = Join-Path -Path $mypath -ChildPath $fileName
+}
+
 
 if (!(Get-Command "wpr.exe" -ErrorAction SilentlyContinue)) { 
     throw "
@@ -25,7 +36,7 @@ if (!(Get-Command "wpa.exe" -ErrorAction SilentlyContinue)) {
     Write-Host "Ensure that WPT (Windows Performance Toolkit) is installed and its tools are added to the path "
 }
 
-if ($NoAnalysis) {
+if ($NoAnalysis.IsPresent) {
     Write-Host "To analys this trace, install WPT and run: 'wpa $etlPath'"
 }
 else {

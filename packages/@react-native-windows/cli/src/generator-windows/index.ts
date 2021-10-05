@@ -10,7 +10,6 @@ import username from 'username';
 import uuid from 'uuid';
 import childProcess from 'child_process';
 import fs from 'fs';
-import os from 'os';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
@@ -30,55 +29,6 @@ import {
 
 const windowsDir = 'windows';
 const bundleDir = 'Bundle';
-
-async function generateCertificate(
-  srcPath: string,
-  destPath: string,
-  newProjectName: string,
-  currentUser: string,
-): Promise<string | null> {
-  console.log('Generating self-signed certificate...');
-  if (os.platform() === 'win32') {
-    try {
-      const thumbprint = childProcess
-        .execSync(
-          `powershell -NoProfile -Command "Write-Output (New-SelfSignedCertificate -KeyUsage DigitalSignature -KeyExportPolicy Exportable -Subject 'CN=${currentUser}' -TextExtension @('2.5.29.37={text}1.3.6.1.5.5.7.3.3', '2.5.29.19={text}Subject Type:End Entity') -CertStoreLocation 'Cert:\\CurrentUser\\My').Thumbprint"`,
-        )
-        .toString()
-        .trim();
-      if (!fs.existsSync(path.join(windowsDir, newProjectName))) {
-        fs.mkdirSync(path.join(windowsDir, newProjectName));
-      }
-      childProcess.execSync(
-        `powershell -NoProfile -Command "$pwd = (ConvertTo-SecureString -String password -Force -AsPlainText); Export-PfxCertificate -Cert 'cert:\\CurrentUser\\My\\${thumbprint}' -FilePath ${path.join(
-          windowsDir,
-          newProjectName,
-          newProjectName,
-        )}_TemporaryKey.pfx -Password $pwd"`,
-      );
-      console.log(
-        chalk.green('Self-signed certificate generated successfully.'),
-      );
-      return thumbprint;
-    } catch (err) {
-      console.log(
-        chalk.yellow('Unable to generate the self-signed certificate:'),
-      );
-      console.log(chalk.red(err));
-    }
-  }
-
-  console.log(
-    chalk.yellow('Using Default Certificate. Use Visual Studio to renew it.'),
-  );
-  await copyAndReplaceWithChangedCallback(
-    path.join(srcPath, 'keys', 'MyApp_TemporaryKey.pfx'),
-    destPath,
-    path.join(windowsDir, newProjectName, newProjectName + '_TemporaryKey.pfx'),
-  );
-
-  return null;
-}
 
 /**
  * This represents the data to insert nuget packages
@@ -186,16 +136,6 @@ export async function copyProjectTemplateAndReplace(
     mainComponentName = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
   }
 
-  const certificateThumbprint =
-    projectType === 'app'
-      ? await generateCertificate(
-          srcPath,
-          destPath,
-          newProjectName,
-          currentUser,
-        )
-      : null;
-
   const xamlNamespace = options.useWinUI3
     ? 'Microsoft.UI.Xaml'
     : 'Windows.UI.Xaml';
@@ -299,7 +239,6 @@ export async function copyProjectTemplateAndReplace(
     // packaging and signing variables:
     packageGuid: packageGuid,
     currentUser: currentUser,
-    certificateThumbprint: certificateThumbprint,
 
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,

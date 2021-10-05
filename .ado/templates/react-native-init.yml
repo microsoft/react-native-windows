@@ -78,7 +78,7 @@ steps:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
-  - task: NuGetToolInstaller@0
+  - task: NuGetToolInstaller@1
     inputs:
       versionSpec: ">=5.8.0"
 
@@ -92,6 +92,7 @@ steps:
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
+      Write-Host "##vso[task.setvariable variable=localConfiguration]${{ parameters.configuration}}"
 
   # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
   # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies
@@ -184,9 +185,14 @@ steps:
       script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd msbuild
       workingDirectory: $(Build.SourcesDirectory)
 
+  - task: PowerShell@2
+    displayName: Start tracing
+    inputs:
+      targetType: filePath # filePath | inline
+      filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
-      Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
       Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
 
   # Useful info to have in the log, but also a necessary workaround to make sure the cli is cached by npx
@@ -203,21 +209,15 @@ steps:
       script: npx react-native doctor
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - task: CmdLine@2
-    displayName: Build project (Release)
-    inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release ${{ parameters.additionalRunArguments }}
+  - template: ../templates/run-windows-with-certificates.yml
+    parameters:
+      buildEnvironment: ${{ parameters.BuildEnvironment }}
+      encodedKey: RNWEncodedKey
+      buildConfiguration: ${{ parameters.configuration }}
+      buildPlatform: ${{ parameters.platform }}
+      deployOption: ${{ parameters.additionalRunArguments }}
+      buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
       workingDirectory: $(Agent.BuildDirectory)\testcli
-    continueOnError: ${{ parameters.continueOnBuildFailure }}
-    condition: and(succeeded(), eq('Release', variables['localConfig']))
-
-  - task: CmdLine@2
-    displayName: Build project (Debug)
-    inputs:
-      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs ${{ parameters.additionalRunArguments }}
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-    continueOnError: ${{ parameters.continueOnBuildFailure }}
-    condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
   - template: upload-build-logs.yml
     parameters:
@@ -238,3 +238,18 @@ steps:
       targetPath: 'verdaccio.log'
       artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
     condition: failed()
+
+  - task: PowerShell@2
+    displayName: Stop tracing
+    inputs:
+      targetType: filePath # filePath | inline
+      filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+      arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+    condition: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: Upload traces
+    inputs:
+      pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+      artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+    condition: true

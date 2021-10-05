@@ -30,6 +30,8 @@ export type ShowMode =
 export interface IFlyoutProps extends ViewProps {
   horizontalOffset?: number;
   isLightDismissEnabled?: boolean;
+  autoFocus?: boolean;
+  shouldConstrainToRootBounds?: boolean;
 
   /**
    * Specifies whether the area outside the flyout is darkened

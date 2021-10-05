@@ -309,6 +309,25 @@
     <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextParentVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextPropertyChangedParentVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextTransformVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactPointerEventArgs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -672,6 +691,31 @@
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Views\Text\TextHighlighterVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextParentVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextPropertyChangedParentVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextTransformParentVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextTransformVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextVisitorScope.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextVisitors.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactPointerEventArgs.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -709,6 +753,7 @@
     <Midl Include="JsiApi.idl" />
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
@@ -754,6 +799,9 @@
     </Filter>
     <Filter Include="JSI">
       <UniqueIdentifier>{24290499-e864-407e-89c0-473f2b8dbb6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Views\Text">
+      <UniqueIdentifier>{8b871c42-6131-44c2-a73f-f1061780e97f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

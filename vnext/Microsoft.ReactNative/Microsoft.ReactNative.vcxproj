@@ -344,6 +344,14 @@
     <ClInclude Include="Views\SwitchViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />
+    <ClInclude Include="Views\Text\TextHighlighterVisitor.h" />
+    <ClInclude Include="Views\Text\TextParentVisitor.h" />
+    <ClInclude Include="Views\Text\TextPropertyChangedParentVisitor.h" />
+    <ClInclude Include="Views\Text\TextTransformParentVisitor.h" />
+    <ClInclude Include="Views\Text\TextTransformVisitor.h" />
+    <ClInclude Include="Views\Text\TextVisitorScope.h" />
+    <ClInclude Include="Views\Text\TextVisitor.h" />
+    <ClInclude Include="Views\Text\TextVisitors.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewControl.h" />
     <ClInclude Include="Views\ViewManager.h" />
@@ -381,6 +389,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="XamlView.h" />
+    <ClInclude Include="ReactPointerEventArgs.h">
+      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\config\ReactNativeConfig.cpp" />
@@ -567,6 +579,10 @@
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="ReactPointerEventArgs.cpp">
+      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
@@ -646,6 +662,12 @@
     <ClCompile Include="Views\SwitchViewManager.cpp" />
     <ClCompile Include="Views\TextInputViewManager.cpp" />
     <ClCompile Include="Views\TextViewManager.cpp" />
+    <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextParentVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextPropertyChangedParentVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextTransformVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextVisitor.cpp" />
     <ClCompile Include="Views\TouchEventHandler.cpp" />
     <ClCompile Include="Views\ViewControl.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />
@@ -732,6 +754,7 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

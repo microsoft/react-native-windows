@@ -406,11 +406,6 @@ bool ViewViewManager::UpdateProperty(
         bool clipChildren = propertyValue.AsString() == "hidden";
         pPanel.ClipChildren(clipChildren);
       }
-    } else if (propertyName == "pointerEvents") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        bool hitTestable = propertyValue.AsString() != "none";
-        pPanel.IsHitTestVisible(hitTestable);
-      }
     } else if (propertyName == "focusable") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         pViewShadowNode->IsFocusable(propertyValue.AsBoolean());

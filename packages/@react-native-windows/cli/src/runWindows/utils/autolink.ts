@@ -37,7 +37,7 @@ import {
   startTelemetrySession,
   endTelemetrySession,
 } from './telemetryHelpers';
-import {XMLSerializer} from 'xmldom';
+import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 

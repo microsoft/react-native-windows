@@ -19,11 +19,13 @@ import {
   newSpinner,
   commandWithProgress,
   runPowerShellScriptFunction,
+  powershell,
 } from './commandWithProgress';
 import * as build from './build';
 import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 import MSBuildTools from './msbuildtools';
 import {Config} from '@react-native-community/cli-types';
+import * as configUtils from '../../config/configUtils';
 import {WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import Version from './version';
@@ -42,6 +44,69 @@ export function getBuildConfiguration(options: RunWindowsOptions): BuildConfig {
     : options.bundle
     ? 'DebugBundle'
     : 'Debug';
+}
+
+function shouldDeployByPackage(
+  options: RunWindowsOptions,
+  config: Config,
+): boolean {
+  if (options.deployFromLayout) {
+    // Force deploy by layout
+    return false;
+  }
+
+  let hasAppxSigningEnabled: boolean | null = null;
+  let hasPackageCertificateKeyFile: boolean | null = null;
+
+  // TODO: These two properties should really be determined by
+  // getting the actual values msbuild used during the build,
+  // but for now we'll try to get them manually
+
+  // Check passed in msbuild property overrides
+  if (options.msbuildprops) {
+    const msbuildprops = build.parseMsBuildProps(options);
+    if ('AppxSigningEnabled' in msbuildprops) {
+      hasAppxSigningEnabled =
+        msbuildprops.AppxSigningEnabled.toLowerCase() === 'true';
+    }
+    if ('PackageCertificateKeyFile' in msbuildprops) {
+      hasPackageCertificateKeyFile = true;
+    }
+  }
+
+  // If at least one override wasn't set, we need to parse the project file
+  if (hasAppxSigningEnabled === null || hasPackageCertificateKeyFile === null) {
+    const projectFile = build.getAppProjectFile(options, config);
+    if (projectFile) {
+      const projectContents = configUtils.readProjectFile(projectFile);
+
+      // Find AppxSigningEnabled
+      if (hasAppxSigningEnabled === null) {
+        const appxSigningEnabled = configUtils.tryFindPropertyValue(
+          projectContents,
+          'AppxSigningEnabled',
+        );
+        if (appxSigningEnabled !== null) {
+          hasAppxSigningEnabled = appxSigningEnabled.toLowerCase() === 'true';
+        }
+      }
+
+      // Find PackageCertificateKeyFile
+      if (hasPackageCertificateKeyFile === null) {
+        const packageCertificateKeyFile = configUtils.tryFindPropertyValue(
+          projectContents,
+          'PackageCertificateKeyFile',
+        );
+        if (packageCertificateKeyFile !== null) {
+          hasPackageCertificateKeyFile = true;
+        }
+      }
+    }
+  }
+
+  return (
+    hasAppxSigningEnabled === true && hasPackageCertificateKeyFile === true
+  );
 }
 
 function shouldLaunchApp(options: RunWindowsOptions): boolean {
@@ -115,7 +180,9 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.ps1',
   );
-  execSync(`powershell -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`);
+  execSync(
+    `${powershell} -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`,
+  );
   popd();
   return windowsStoreAppUtilsPath;
 }
@@ -165,8 +232,11 @@ function parseAppxManifest(appxManifestPath: string): parse.Document {
   return parse(fs.readFileSync(appxManifestPath, 'utf8'));
 }
 
-function getAppxManifest(options: RunWindowsOptions): parse.Document {
-  return parseAppxManifest(getAppxManifestPath(options, undefined));
+function getAppxManifest(
+  options: RunWindowsOptions,
+  projectName?: string,
+): parse.Document {
+  return parseAppxManifest(getAppxManifestPath(options, projectName));
 }
 
 function handleResponseError(e: Error): never {
@@ -187,7 +257,14 @@ function handleResponseError(e: Error): never {
 export async function deployToDevice(
   options: RunWindowsOptions,
   verbose: boolean,
+  config: Config,
 ) {
+  const windowsConfig: Partial<WindowsProjectConfig> | undefined =
+    config.project.windows;
+  const projectName =
+    windowsConfig && windowsConfig.project && windowsConfig.project.projectName
+      ? windowsConfig.project.projectName
+      : path.parse(options.proj!).name;
   const appPackageFolder = getAppPackage(options);
 
   const deployTarget = options.target
@@ -196,7 +273,7 @@ export async function deployToDevice(
     ? 'emulator'
     : 'device';
   const deployTool = new WinAppDeployTool();
-  const appxManifest = getAppxManifest(options);
+  const appxManifest = getAppxManifest(options, projectName);
   const shouldLaunch = shouldLaunchApp(options);
   const identity = appxManifest.root.children.filter(x => {
     return x.name === 'mp:PhoneIdentity';
@@ -280,7 +357,8 @@ export async function deployToDesktop(
 
   const appPackageFolder = getAppPackage(options, projectName);
 
-  if (options.release && !options.deployFromLayout) {
+  if (shouldDeployByPackage(options, config)) {
+    // Deploy by package
     await runPowerShellScriptFunction(
       'Removing old version of the app',
       windowsStoreAppUtils,
@@ -301,6 +379,7 @@ export async function deployToDesktop(
       'InstallAppFailure',
     );
   } else {
+    // Deploy from layout
     // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
     const appxRecipe = path.join(
       path.dirname(appxManifestPath),
@@ -343,7 +422,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyName = execSync(
-    `powershell -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `${powershell} -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();

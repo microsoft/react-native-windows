@@ -7,7 +7,7 @@
 import envinfo from 'envinfo';
 import fs from 'fs/promises';
 import path from 'path';
-import {DOMParser} from 'xmldom';
+import {DOMParser} from '@xmldom/xmldom';
 import xpath from 'xpath';
 
 const msbuildSelect = xpath.useNamespaces({

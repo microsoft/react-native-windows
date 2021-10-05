@@ -1,8 +1,125 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Thu, 16 Sep 2021 05:06:44 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Oct 2021 05:07:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.8-5
+
+Tue, 05 Oct 2021 05:07:00 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-5 (erozell@outlook.com)
+
+## 0.0.8-4
+
+Mon, 04 Oct 2021 05:06:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-4 (erozell@outlook.com)
+
+## 0.0.8-3
+
+Sat, 02 Oct 2021 05:05:38 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-3 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.8-2
+
+Fri, 01 Oct 2021 05:05:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-2 (julio.rocha@microsoft.com)
+
+## 0.0.8-1
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-1 (erozell@outlook.com)
+
+## 0.0.8-0
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-0 (anandrag@microsoft.com)
+
+## 0.0.7
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Patches
+
+- Export AutomationElement type (ngerlem@microsoft.com)
+- Remove RNW peerDep from automation-commands package (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.4 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.6-0
+
+Sat, 25 Sep 2021 05:06:39 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.3-12 (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.5
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.3-11 (igklemen@microsoft.com)
+
+## 0.0.5-1
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.3-10 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.5-0
+
+Wed, 22 Sep 2021 05:06:43 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.3-9 (ali-hk@users.noreply.github.com)
+
+## 0.0.4
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.3-8 (igklemen@microsoft.com)
+
+## 0.0.4-5
+
+Sat, 18 Sep 2021 05:07:45 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.3-7 (erozell@outlook.com)
+
+## 0.0.4-4
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.3-6 (jthysell@microsoft.com)
 
 ## 0.0.4-3
 

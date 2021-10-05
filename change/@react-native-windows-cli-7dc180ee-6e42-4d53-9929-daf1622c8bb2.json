@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Fixed CLI options defaults",
+  "comment": "Use full path to powershell.exe",
   "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
+  "email": "asklar@microsoft.com",
   "dependentChangeType": "patch"
 }

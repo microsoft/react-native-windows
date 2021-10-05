@@ -29,6 +29,8 @@ struct ActionSheetManagerSpec_showActionSheetWithOptions_options {
     std::optional<double> anchor;
     REACT_FIELD(tintColor)
     std::optional<double> tintColor;
+    REACT_FIELD(cancelButtonTintColor)
+    std::optional<double> cancelButtonTintColor;
     REACT_FIELD(userInterfaceStyle)
     std::optional<std::string> userInterfaceStyle;
     REACT_FIELD(disabledButtonIndices)
@@ -47,6 +49,8 @@ struct ActionSheetManagerSpec_showShareActionSheetWithOptions_options {
     std::optional<double> anchor;
     REACT_FIELD(tintColor)
     std::optional<double> tintColor;
+    REACT_FIELD(cancelButtonTintColor)
+    std::optional<double> cancelButtonTintColor;
     REACT_FIELD(excludedActivityTypes)
     std::optional<std::vector<std::string>> excludedActivityTypes;
     REACT_FIELD(userInterfaceStyle)

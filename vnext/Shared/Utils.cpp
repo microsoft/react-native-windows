@@ -4,9 +4,67 @@
 #include "Utils.h"
 #include <regex>
 
+#include <DesktopWindowBridge.h>
+#include <ShlObj.h>
+#include <Shlwapi.h>
+#include <appmodel.h>
+#include <winrt/Windows.Storage.h>
+
+#include <sstream>
+
 using std::string;
 
 namespace Microsoft::React {
+
+namespace {
+std::future<std::string> getPackagedApplicationDataPath(const wchar_t *childFolder) {
+  auto localFolder = winrt::Windows::Storage::ApplicationData::Current().LocalFolder();
+  if (!childFolder) {
+    co_return winrt::to_string(localFolder.Path());
+  } else {
+    auto subfolder = co_await localFolder.CreateFolderAsync(
+        childFolder, winrt::Windows::Storage::CreationCollisionOption::OpenIfExists);
+    co_return winrt::to_string(subfolder.Path());
+  }
+}
+
+std::future<std::string> getUnPackagedApplicationDataPath(const wchar_t *childFolder) {
+  wchar_t *pwzAppDataPath = NULL;
+  if (CALL_INDIRECT(
+          L"shell32.dll",
+          SHGetKnownFolderPath,
+          FOLDERID_AppDataProgramData,
+          KF_FLAG_CREATE,
+          static_cast<HANDLE>(NULL),
+          &pwzAppDataPath) != S_OK)
+    std::abort();
+
+  auto appDataPath = winrt::to_string(pwzAppDataPath);
+  CoTaskMemFree(pwzAppDataPath);
+
+  if (!childFolder) {
+    co_return appDataPath;
+  } else {
+    std::ostringstream os;
+    os << appDataPath << "\\" << winrt::to_string(childFolder);
+    auto childFolderPath = os.str();
+    if (!CreateDirectoryA(childFolderPath.c_str(), NULL) && GetLastError() != ERROR_ALREADY_EXISTS)
+      std::abort();
+    co_return childFolderPath;
+  }
+}
+} // namespace
+
+std::future<std::string> getApplicationDataPath(const wchar_t *childFolder) {
+  uint32_t length{0};
+  bool isPackagedApp = GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE;
+  std::string appDataPath;
+  if (false) {
+    co_return co_await getPackagedApplicationDataPath(childFolder);
+  } else {
+    co_return co_await getUnPackagedApplicationDataPath(childFolder);
+  }
+}
 
 Url::Url(string &&source) {
   //                           ( 1 )              ( 2 )   ( 3 (4) )   ( 5 )    ( 6 (7) )
