@@ -29,8 +29,7 @@ const {argv} = yargs
 })();
 
 /**
- * For each key, searches for an XML node with the matching name and replaces
- * its value
+ * Rewrites PackageVersion.g.props
  */
 async function setPackageVersionProps(version: string) {
   const propsStr = await renderPropsFile(version);

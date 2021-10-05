@@ -23,11 +23,11 @@ module.exports = {
       if (name === 'react-native-windows') {
         console.log(`Stamping RNW Version ${version}`);
 
-        execSync(`yarn stamp-version ${version}`);
-
         // prepublish is run before bumping or commiting. Append an additional
         // commit to check-in stamped versions when we push.
+        
         execSilent('git stash', );
+        execSilent(`yarn stamp-version ${version}`);
         execSilent('git add --all');
         execSilent(`git commit --message "Stamp RNW ${version}"`);
         execSilent('git stash pop');
