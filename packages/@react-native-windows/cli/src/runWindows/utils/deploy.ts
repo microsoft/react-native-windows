@@ -19,6 +19,7 @@ import {
   newSpinner,
   commandWithProgress,
   runPowerShellScriptFunction,
+  powershell,
 } from './commandWithProgress';
 import * as build from './build';
 import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
@@ -179,7 +180,9 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.ps1',
   );
-  execSync(`powershell -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`);
+  execSync(
+    `${powershell} -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`,
+  );
   popd();
   return windowsStoreAppUtilsPath;
 }
@@ -419,7 +422,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyName = execSync(
-    `powershell -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `${powershell} -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();
