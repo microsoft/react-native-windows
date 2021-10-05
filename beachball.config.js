@@ -14,7 +14,7 @@ module.exports = {
   // release for every package.
   gitTags: false,
 
-  // Default commit message, used if we do not detect an RNW version update
+  // Commit message used when publishing
   message: 'Publish Packages | ***NO_CI***',
 
   hooks: {
