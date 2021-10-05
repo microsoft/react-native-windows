@@ -49,9 +49,5 @@
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
     "**/detox/ws": "^5.2.3"
-  },
-  "beachball": {
-    "branch": "main",
-    "gitTags": false
   }
 }

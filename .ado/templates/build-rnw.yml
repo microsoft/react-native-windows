@@ -66,10 +66,6 @@ steps:
       msbuildArgs:
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
-        /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
-        /p:RNW_PKG_VERSION_MAJOR="$(RNW_PKG_VERSION_MAJOR)"
-        /p:RNW_PKG_VERSION_MINOR="$(RNW_PKG_VERSION_MINOR)"
-        /p:RNW_PKG_VERSION_PATCH="$(RNW_PKG_VERSION_PATCH)"
         /p:PublishToolDuringBuild=true
         /p:EnableSourceLink=true
         /bl:$(BuildLogDirectory)\MsBuild.binlog

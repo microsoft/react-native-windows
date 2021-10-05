@@ -47,17 +47,13 @@ steps:
   # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
   - template: yarn-install.yml
 
-  - task: CmdLine@2
-    displayName: yarn build
-    inputs:
-      script: yarn build
+  - template: configure-git.yml
 
-  - task: PowerShell@2
+  - script: yarn build
+    displayName: yarn build
+
+  - powershell: start-process npx -ArgumentList @('verdaccio', '--config', '.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)
-    inputs:
-      targetType: inline
-      script: |
-        start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
 
   - script: |
       node .ado/scripts/waitForVerdaccio.js
@@ -67,7 +63,7 @@ steps:
       node .ado/scripts/npmAddUser.js user pass mail@nomail.com http://localhost:4873
     displayName: Add npm user to verdaccio
 
-  - template: ../templates/compute-beachball-branch-name.yml
+  - template: compute-beachball-branch-name.yml
 
   - script: |
       npx --no-install beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
