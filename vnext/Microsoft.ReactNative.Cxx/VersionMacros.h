@@ -14,6 +14,6 @@
 
 #define RNW_VERSION_LESS_THAN(major, minor, patch)                    \
   (RNW_MAJOR < major) || (RNW_MAJOR == major && RNW_MINOR < minor) || \
-      (RNW_MAJOR == major && RNW_MINOR == minor < RNW_PATCH < patch)
+      (RNW_MAJOR == major && RNW_MINOR == minor && RNW_PATCH < patch)
 
 #endif
