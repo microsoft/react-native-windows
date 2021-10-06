@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 05 Oct 2021 05:07:00 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Oct 2021 05:07:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.392
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.5.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.93 (asklar@microsoft.com)
 
 ## 0.0.0-canary.391
 

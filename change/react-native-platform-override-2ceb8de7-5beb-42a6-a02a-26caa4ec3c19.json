@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Teach integration tooling about new nightly pattern",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use full path to powershell.exe",
-  "packageName": "@react-native-windows/cli",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

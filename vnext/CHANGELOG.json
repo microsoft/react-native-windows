@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Oct 2021 05:07:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.392",
+      "version": "0.0.0-canary.392",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.93",
+            "author": "asklar@microsoft.com",
+            "commit": "f881f033a0d286a9c1df596c8ea3644c41ea9e8f",
+            "package": "react-native-windows"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.5.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7a0c68516b825131c798978f1dfc0088f7115614",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Oct 2021 05:07:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.391",
       "version": "0.0.0-canary.391",
