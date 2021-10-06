@@ -112,7 +112,10 @@ export function isMsftInternal(): boolean {
  * @returns Whether the process is running as part of our CLI tests.
  */
 export function isCliTest(): boolean {
-  return process.env.RNW_CLI_TEST === 'true';
+  return (
+    process.env.RNW_CLI_TEST !== undefined &&
+    process.env.RNW_CLI_TEST.toLowerCase().trim() === 'true'
+  );
 }
 
 let sessionId: string | undefined;
