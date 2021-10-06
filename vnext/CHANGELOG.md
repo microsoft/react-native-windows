@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Sep 2021 05:07:03 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Oct 2021 05:07:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.391
+
+Tue, 05 Oct 2021 05:07:00 GMT
+
+### Changes
+
+- Logs exception from IReactDispatcher callback (erozell@outlook.com)
+- Add ARM64 support to React.Windows.Desktop.Test.DLL (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.390
+
+Mon, 04 Oct 2021 05:06:55 GMT
+
+### Changes
+
+- Adds functionality for box-only and box-none via OnPointerEvent callback (erozell@outlook.com)
+
+## 0.0.0-canary.389
+
+Sat, 02 Oct 2021 05:05:38 GMT
+
+### Changes
+
+- Switch ImageLoader to be a codegen'd turbomodule (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.388
+
+Fri, 01 Oct 2021 05:05:54 GMT
+
+### Changes
+
+- Upgrade ReactNative.V8Jsi.Windows to 0.65.5 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.387
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Adds hook for view managers to capture pointer events (erozell@outlook.com)
+
+## 0.0.0-canary.386
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Make Hermes consume the ICU.dll in Windows 10 for i18n Earlier we had a WinNLS based stub implementation to avoid depending on ICU. (anandrag@microsoft.com)
+- Check constants in generated turbo module specs (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.385
 

@@ -326,6 +326,7 @@
     </ClCompile>
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
+    <ClCompile Include="ReactPointerEventArgs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -712,6 +713,7 @@
     </ClInclude>
     <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\ReactViewInstance.h" />
+    <ClInclude Include="ReactPointerEventArgs.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -750,6 +752,7 @@
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="ReactCoreInjection.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

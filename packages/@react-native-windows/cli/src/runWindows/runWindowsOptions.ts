@@ -125,7 +125,7 @@ export const runWindowsOptions: CommandOption[] = [
   },
   {
     name: '--deploy-from-layout',
-    description: 'Force deploy from layout, even in release builds',
+    description: 'Force deploy from layout',
   },
   {
     name: '--sln [string]',

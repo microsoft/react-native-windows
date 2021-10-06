@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 05 Oct 2021 05:07:00 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.92",
+      "version": "0.0.0-canary.92",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "CLI: Default to deploy by layout",
+            "author": "jthysell@microsoft.com",
+            "commit": "afb7054ff284e62884bcf987d8a494326aadb8c5",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Sep 2021 05:06:48 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.91",
+      "version": "0.0.0-canary.91",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump xmldom to 0.7.0 in @react-native-windows/cli.",
+            "author": "yicyao@microsoft.com",
+            "commit": "58c1fb59eaebbf496915921062540b963aff3685",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Sep 2021 05:06:54 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.90",
+      "version": "0.0.0-canary.90",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Make CLI Fail Gracefully on Dep Script Errors",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3bac02eb67a31b7060cfa8541a013055f87eb7b4",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Sep 2021 05:06:48 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.89",
       "version": "0.0.0-canary.89",

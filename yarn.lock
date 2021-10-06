@@ -1329,11 +1329,11 @@
     strip-ansi "^6.0.0"
 
 "@jest/create-cache-key-function@^27.0.1":
-  version "27.2.3"
-  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.2.3.tgz#1cc6a5f0cb50ad78de76d131b09ff1017ba54306"
-  integrity sha512-tKflOJSc5iROqk75XtkhN81bKeT3apE9361mfakiwXQelXd7LsEE9tIW/2wiFlPn+PggcV/yDS32+oiqRtlOnA==
+  version "27.2.4"
+  resolved "https://registry.yarnpkg.com/@jest/create-cache-key-function/-/create-cache-key-function-27.2.4.tgz#5d3350ba32f1bd07145054601bac7a8d5c47bf0c"
+  integrity sha512-Cd9A6ugtkkHiQHDNbifdFrBBTgsKHp1KgCAjyAGMCrxFudR2icTKIPkXN2R2/IoMAMObUidMRBLDJy/RgX7uDQ==
   dependencies:
-    "@jest/types" "^27.2.3"
+    "@jest/types" "^27.2.4"
 
 "@jest/environment@^26.6.2":
   version "26.6.2"
@@ -1469,10 +1469,10 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
-"@jest/types@^27.2.3":
-  version "27.2.3"
-  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.2.3.tgz#e0242545f442242c2538656d947a147443eee8f2"
-  integrity sha512-UJMDg90+W2i/QsS1NIN6Go8O/rSHLFWUkofGqKsUQs54mhmCVyLTiDy1cwKhoNO5fpmr9fctm9L/bRp/YzA1uQ==
+"@jest/types@^27.2.4":
+  version "27.2.4"
+  resolved "https://registry.yarnpkg.com/@jest/types/-/types-27.2.4.tgz#2430042a66e00dc5b140c3636f4474d464c21ee8"
+  integrity sha512-IDO2ezTxeMvQAHxzG/ZvEyA47q0aVfzT95rGFl7bZs/Go0aIucvfDbS2rmnoEdXxlLQhcolmoG/wvL/uKx4tKA==
   dependencies:
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^3.0.0"
@@ -1568,39 +1568,39 @@
     "@octokit/types" "^6.0.0"
     universal-user-agent "^6.0.0"
 
-"@octokit/openapi-types@^10.0.0":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-10.0.0.tgz#db4335de99509021f501fc4e026e6ff495fe1e62"
-  integrity sha512-k1iO2zKuEjjRS1EJb4FwSLk+iF6EGp+ZV0OMRViQoWhQ1fZTk9hg1xccZII5uyYoiqcbC73MRBmT45y1vp2PPg==
-
 "@octokit/openapi-types@^10.6.1":
   version "10.6.1"
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-10.6.1.tgz#4eb303e7da4de3d17216db80e3be6309f03b9fcc"
   integrity sha512-53YKy8w8+sHQhUONhTiYt6MqNqPolejYr6rK/3VOevpORAIYGQEX2pmXnnhgdSsjHy176e5ZBgVt0ppOGziS7g==
+
+"@octokit/openapi-types@^10.6.4":
+  version "10.6.4"
+  resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-10.6.4.tgz#c8b5b1f5c60ab7c62858abe2ef57bc709f426a30"
+  integrity sha512-JVmwWzYTIs6jACYOwD6zu5rdrqGIYsiAsLzTCxdrWIPNKNVjEF6vPTL20shmgJ4qZsq7WPBcLXLsaQD+NLChfg==
 
 "@octokit/openapi-types@^9.5.0":
   version "9.7.0"
   resolved "https://registry.yarnpkg.com/@octokit/openapi-types/-/openapi-types-9.7.0.tgz#9897cdefd629cd88af67b8dbe2e5fb19c63426b2"
   integrity sha512-TUJ16DJU8mekne6+KVcMV5g6g/rJlrnIKn7aALG9QrNpnEipFc1xjoarh0PKaAWf2Hf+HwthRKYt+9mCm5RsRg==
 
-"@octokit/plugin-paginate-rest@^2.16.0":
-  version "2.16.0"
-  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-2.16.0.tgz#09dbda2e5fbca022e3cdf76b63618f7b357c9f0c"
-  integrity sha512-8YYzALPMvEZ35kgy5pdYvQ22Roz+BIuEaedO575GwE2vb/ACDqQn0xQrTJR4tnZCJn7pi8+AWPVjrFDaERIyXQ==
+"@octokit/plugin-paginate-rest@^2.16.4":
+  version "2.16.5"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-paginate-rest/-/plugin-paginate-rest-2.16.5.tgz#4d8098410f4c4697d33979f06f38d2ed2574adf1"
+  integrity sha512-2PfRGymdBypqRes4Xelu0BAZZRCV/Qg0xgo8UB10UKoghCM+zg640+T5WkRsRD0edwfLBPP3VsJgDyDTG4EIYg==
   dependencies:
-    "@octokit/types" "^6.26.0"
+    "@octokit/types" "^6.31.0"
 
 "@octokit/plugin-request-log@^1.0.4":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@octokit/plugin-request-log/-/plugin-request-log-1.0.4.tgz#5e50ed7083a613816b1e4a28aeec5fb7f1462e85"
   integrity sha512-mLUsMkgP7K/cnFEw07kWqXGF5LKrOkD+lhCrKvPHXWDywAwuDUeDwWBpc69XK3pNX0uKiVt8g5z96PJ6z9xCFA==
 
-"@octokit/plugin-rest-endpoint-methods@5.11.3":
-  version "5.11.3"
-  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.11.3.tgz#d3b01fafb4a64bf7da4e3852f969cb65293e78ae"
-  integrity sha512-E19gqHqfP3uJa2/hx6Abhx2NrVP5tsNbst2/AeqGxlGM+eL4N8fRbzhd+NEIsGAB4y3R7e9kVE0y8OOghlXUXw==
+"@octokit/plugin-rest-endpoint-methods@5.11.4":
+  version "5.11.4"
+  resolved "https://registry.yarnpkg.com/@octokit/plugin-rest-endpoint-methods/-/plugin-rest-endpoint-methods-5.11.4.tgz#221dedcbdc45d6bfa54228d469e8c34acb4e0e34"
+  integrity sha512-iS+GYTijrPUiEiLoDsGJhrbXIvOPfm2+schvr+FxNMs7PeE9Nl4bAMhE8ftfNX3Z1xLxSKwEZh0O7GbWurX5HQ==
   dependencies:
-    "@octokit/types" "^6.31.1"
+    "@octokit/types" "^6.31.2"
     deprecation "^2.3.1"
 
 "@octokit/request-error@^2.0.5", "@octokit/request-error@^2.1.0":
@@ -1625,14 +1625,14 @@
     universal-user-agent "^6.0.0"
 
 "@octokit/rest@^18.5.3":
-  version "18.11.2"
-  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.11.2.tgz#0a38cd42f5e41128276099fa0513f456044a4a52"
-  integrity sha512-XZPD5HN0B8AfvXhdztFqoZxNVC6hRgQSZTWS1Eh0xHAoJvduVBwniWJ0t4DsdO9in+odZZ9EYAOFtQuaLVZ44Q==
+  version "18.11.4"
+  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-18.11.4.tgz#9fb6d826244554fbf8c110b9064018d7198eec51"
+  integrity sha512-QplypCyYxqMK05JdMSm/bDWZO8VWWaBdzQ9tbF9rEV9rIEiICh+v6q+Vu/Y5hdze8JJaxfUC+PBC7vrnEkZvZg==
   dependencies:
     "@octokit/core" "^3.5.1"
-    "@octokit/plugin-paginate-rest" "^2.16.0"
+    "@octokit/plugin-paginate-rest" "^2.16.4"
     "@octokit/plugin-request-log" "^1.0.4"
-    "@octokit/plugin-rest-endpoint-methods" "5.11.3"
+    "@octokit/plugin-rest-endpoint-methods" "5.11.4"
 
 "@octokit/types@^6.0.0", "@octokit/types@^6.0.3", "@octokit/types@^6.16.1":
   version "6.25.0"
@@ -1641,19 +1641,19 @@
   dependencies:
     "@octokit/openapi-types" "^9.5.0"
 
-"@octokit/types@^6.26.0":
-  version "6.26.0"
-  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.26.0.tgz#b8af298485d064ad9424cb41520541c1bf820346"
-  integrity sha512-RDxZBAFMtqs1ZPnbUu1e7ohPNfoNhTiep4fErY7tZs995BeHu369Vsh5woMIaFbllRWEZBfvTCS4hvDnMPiHrA==
-  dependencies:
-    "@octokit/openapi-types" "^10.0.0"
-
-"@octokit/types@^6.31.1":
+"@octokit/types@^6.31.0":
   version "6.31.1"
   resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.31.1.tgz#223d062778bb6121635a022d3bf545d506fcc880"
   integrity sha512-xkF46eaYcpT8ieO78mZWhMq3bt37zIsP5BUkN+zWgX+mTYDB7jOtUP1MOxcSF8hhJhsjjlB1YDgQAhX0z0oqPw==
   dependencies:
     "@octokit/openapi-types" "^10.6.1"
+
+"@octokit/types@^6.31.2":
+  version "6.31.3"
+  resolved "https://registry.yarnpkg.com/@octokit/types/-/types-6.31.3.tgz#14c2961baea853b2bf148d892256357a936343f8"
+  integrity sha512-IUG3uMpsLHrtEL6sCVXbxCgnbKcgpkS4K7gVEytLDvYYalkK3XcuMCHK1YPD8xJglSJAOAbL4MgXp47rS9G49w==
+  dependencies:
+    "@octokit/openapi-types" "^10.6.4"
 
 "@opencensus/web-types@0.0.7":
   version "0.0.7"
@@ -1758,11 +1758,11 @@
     ip "^1.1.5"
 
 "@react-native-community/cli-platform-android@^6.0.0", "@react-native-community/cli-platform-android@^6.0.1":
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-6.0.1.tgz#b5100fd7fbb9625d7342f53bad362e14ff1f07e4"
-  integrity sha512-0dPEE94H4Ug8jfP+sTHgXDlofghB4YsB1WoPa6ciqpP3d4h6DbiczdNhtds6jFFR5W+Q/DfwIwOFtKfWEwg2iQ==
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-6.1.0.tgz#8c853807c8c1526593b735e8a19dc1f4471de69e"
+  integrity sha512-MBYGfgCpieoqskKc5QyQYIPc74DBEW60JaacQLntHjPLCEXG+hPsJi3AuXeNTJYPki5pyiSp3kviqciUvrS96A==
   dependencies:
-    "@react-native-community/cli-tools" "^6.0.0-rc.0"
+    "@react-native-community/cli-tools" "^6.1.0"
     chalk "^3.0.0"
     execa "^1.0.0"
     fs-extra "^8.1.0"
@@ -1774,11 +1774,11 @@
     xmldoc "^1.1.2"
 
 "@react-native-community/cli-platform-ios@^6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-6.0.0.tgz#885bd363d76bf422567d007f5e67aa9a67a1296a"
-  integrity sha512-+f6X4jDGuPpVcY2NsVAstnId4stnG7EvzLUhs7FUpMFjzss9c1ZJhsqQeKikOtzZbwLzFrpki/QrTK79ur7xSg==
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-6.1.0.tgz#369cd936b689af93d070f52df2796994223e7705"
+  integrity sha512-whIm55fUeJUHrqZ2ecZ6FycZ5c/R3ZK8ViHwZQ+wM4uhXY8YSkrjnrJPUg68Q8inLkrAliLisypfm1z+VqJljw==
   dependencies:
-    "@react-native-community/cli-tools" "^6.0.0-rc.0"
+    "@react-native-community/cli-tools" "^6.1.0"
     chalk "^3.0.0"
     glob "^7.1.3"
     js-yaml "^3.13.1"
@@ -1801,16 +1801,19 @@
     serve-static "^1.13.1"
     ws "^1.1.0"
 
-"@react-native-community/cli-tools@^6.0.0-rc.0":
-  version "6.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-6.0.0-rc.0.tgz#d81c4c792db583ab42458fe8cc27ebf0b55e1660"
-  integrity sha512-N31BhNacTe0UGYQxUx0WHWPKnF4pBe62hNRV9WNJdWqVl4TP45T1Fd/7ziiosfalIar+tOo9Sk0Pqq48x1+wNw==
+"@react-native-community/cli-tools@^6.0.0-rc.0", "@react-native-community/cli-tools@^6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-6.1.0.tgz#fb16b8e4805dadf4d2a57c69ffe83ddadffbe771"
+  integrity sha512-MT8syhvk0vpfyYyHlcDoGicKcqMtBN7WPmDeyW16u+eKBtw/+EKq+86cFCuOHCfHK20ujG1mZqA1txxlCbu8GA==
   dependencies:
+    appdirsjs "^1.2.4"
     chalk "^3.0.0"
     lodash "^4.17.15"
     mime "^2.4.1"
+    mkdirp "^0.5.1"
     node-fetch "^2.6.0"
     open "^6.2.0"
+    semver "^6.3.0"
     shell-quote "1.6.1"
 
 "@react-native-community/cli-types@^5.0.1-alpha.0":
@@ -1894,10 +1897,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-plugin/-/eslint-plugin-1.1.0.tgz#e42b1bef12d2415411519fd528e64b593b1363dc"
   integrity sha512-W/J0fNYVO01tioHjvYWQ9m6RgndVtbElzYozBq1ZPrHO/iCzlqoySHl4gO/fpCl9QEFjvJfjPgtPMTMlsoq5DQ==
 
-"@react-native-picker/picker@1.16.5":
-  version "1.16.5"
-  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.5.tgz#f55f22bb8fcaec412170e8a1ac1c7b11818919e5"
-  integrity sha512-IYfMXdUsfQe4RBLJPZq6GoPkr2otOTZqej/gU93x+oIjrR+UCcCb0fsqmXHT8qX29E+0cEQZd/4bWnzbICHNrg==
+"@react-native-picker/picker@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.1.0.tgz#1ef22d4e9b2e555d44b43453f51a46d8631f3182"
+  integrity sha512-iJ/QaDrBMBaW6cFuQyR3DXzcn2h7c5O7mGgmNLCBQHTTtLNBZR+Sxogy6YleFPeToNdysG5mTTkXqBmlWHMQqg==
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
@@ -2191,9 +2194,9 @@
     form-data "^3.0.0"
 
 "@types/node@*", "@types/node@^14.14.22":
-  version "14.17.19"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.19.tgz#7341e9ac1b5d748d7a3ddc04336ed536a6f91c31"
-  integrity sha512-jjYI6NkyfXykucU6ELEoT64QyKOdvaA6enOqKtP4xUsGY0X0ZUZz29fUmrTRo+7v7c6TgDu82q3GHHaCEkqZwA==
+  version "14.17.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.21.tgz#6359d8cf73481e312a43886fa50afc70ce5592c6"
+  integrity sha512-zv8ukKci1mrILYiQOwGSV4FpkZhyxQtuFWGya2GujWg+zVAeRQ4qbaMmWp9vb9889CFA8JECH7lkwCL6Ygg8kA==
 
 "@types/node@10.17.13":
   version "10.17.13"
@@ -2553,6 +2556,11 @@
   integrity sha512-vf0sOQzd28WbI26d6/ORrQ4XKWTzSlWLm9W/K/eJO0NASKPEzR+E+Q2kaa+MJ4FKXUpjbt+Lxfo+C26TzBk7tg==
   dependencies:
     "@wdio/logger" "6.10.10"
+
+"@xmldom/xmldom@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.7.5.tgz#09fa51e356d07d0be200642b0e4f91d8e6dd408d"
+  integrity sha512-V3BIhmY36fXZ1OtVcI9W+FxQqxVLsPKcNjWigIaa81dLC9IolJl5Mt4Cvhmr0flUnjSpTdrbMTSbXqYqV5dT6A==
 
 "@yarnpkg/lockfile@^1.1.0":
   version "1.1.0"
@@ -3843,9 +3851,9 @@ cli-cursor@^3.1.0:
     restore-cursor "^3.1.0"
 
 cli-spinners@^2.0.0, cli-spinners@^2.2.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.6.0.tgz#36c7dc98fb6a9a76bd6238ec3f77e2425627e939"
-  integrity sha512-t+4/y50K/+4xcCRosKkA7W4gTr1MySvLV0q+PxmG7FJ5g+66ChKurYjxBCjHggHH3HA5Hh9cy+lcUGWDqVH+4Q==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/cli-spinners/-/cli-spinners-2.6.1.tgz#adc954ebe281c37a6319bfa401e6dd2488ffb70d"
+  integrity sha512-x/5fWmGMnbKQAaNwN+UZlV79qBLM9JFnJuJ03gIi5whrob0xV0ofNVHy9DhwGdsMJQc2OKv0oGmLzvaqvAVv+g==
 
 cli-table@^0.3.1:
   version "0.3.1"
@@ -9357,9 +9365,9 @@ react-clone-referenced-element@^1.0.1:
   integrity sha512-LZBPvQV8W0B5dFzXFu+D3Tpil8YHS8tO00iFsfXcTLdtpuH7XyvaHqHcoz4hd4uNPQCZ30fceh+s7mLznzMXvg==
 
 react-devtools-core@^4.13.0:
-  version "4.18.0"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.18.0.tgz#06b2375dcea7858c957d1779cc2339d2a0af200a"
-  integrity sha512-Kg/LhDkdt9J0ned1D1RfeuSdX4cKW83/valJLYswGdsYc0g2msmD0kfYozsaRacjDoZwcKlxGOES1wrkET5O6Q==
+  version "4.19.0"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.19.0.tgz#467bb17d940e2b54948511bea293ff8fb5fa44fa"
+  integrity sha512-8XDaKCo1DXi/2XKxUDCDyK/XSRepABW6ESdDngPAQZzGD6sMkhqnYsaTisloSEKVZBf8iAO8cAdj1PUziJV/hQ==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -11664,10 +11672,10 @@ xmldoc@^1.1.2:
   dependencies:
     sax "^1.2.1"
 
-xmldom@^0.5.0, xmldom@^0.6.0, "xmldom@github:xmldom/xmldom#0.7.0":
-  version "0.7.0"
-  uid c568938641cc1f121cef5b4df80fcfda1e489b6e
-  resolved "https://codeload.github.com/xmldom/xmldom/tar.gz/c568938641cc1f121cef5b4df80fcfda1e489b6e"
+xmldom@^0.6.0, "xmldom@github:xmldom/xmldom#^0.7.5":
+  version "0.7.5"
+  uid "03fcf987307a9b1963075007d9fe2e8720fa7e25"
+  resolved "https://codeload.github.com/xmldom/xmldom/tar.gz/03fcf987307a9b1963075007d9fe2e8720fa7e25"
 
 xpath@^0.0.27:
   version "0.0.27"

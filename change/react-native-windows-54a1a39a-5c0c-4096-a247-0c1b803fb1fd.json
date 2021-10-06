@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make Hermes consume the ICU.dll in Windows 10 for i18n Earlier we had a WinNLS based stub implementation to avoid depending on ICU.",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "dependentChangeType": "patch"
-}
