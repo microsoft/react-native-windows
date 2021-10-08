@@ -4,7 +4,8 @@
     "src/**"
   ],
   "excludePatterns": [
-    "**/__snapshots__/**"
+    "**/__snapshots__/**",
+    "src/rntypes/**"
   ],
   "baseVersion": "0.0.0-d3c7e2018",
   "overrides": [
