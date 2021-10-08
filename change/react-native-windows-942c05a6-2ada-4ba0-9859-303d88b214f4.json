@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Promote 0.65 to legacy",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
