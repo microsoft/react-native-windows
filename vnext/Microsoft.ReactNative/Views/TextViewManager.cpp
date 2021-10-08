@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "TextViewManager.h"
+#include "TouchEventHandler.h"
 #include "Utils/ShadowNodeTypeUtils.h"
 #include "Utils/XamlIslandUtils.h"
 
@@ -44,6 +45,8 @@ class TextShadowNode final : public ShadowNodeBase {
   bool m_hasDescendantPressable{false};
   std::optional<winrt::Windows::UI::Color> m_backgroundColor{};
   std::optional<winrt::Windows::UI::Color> m_foregroundColor{};
+  std::unique_ptr<TouchEventHandler> m_touchEventHandler = nullptr;
+  winrt::event_revoker<xaml::Controls::ITextBlock> m_selectionChangedRevoker;
 
  public:
   TextShadowNode() {
@@ -133,7 +136,41 @@ class TextShadowNode final : public ShadowNodeBase {
     }
   }
 
+  void ToggleTouchEvents(XamlView xamlView, bool selectable) {
+    if (selectable) {
+      if (m_touchEventHandler == nullptr) {
+        m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext(), false);
+      }
+
+      m_selectionChangedRevoker = xamlView.as<xaml::Controls::TextBlock>().SelectionChanged(
+          winrt::auto_revoke, [selectionChanged = this->selectionChanged](const auto &sender, auto &&) {
+            const auto textBlock = sender.as<xaml::Controls::TextBlock>();
+            *selectionChanged =
+                *selectionChanged || textBlock.SelectionStart().Offset() != textBlock.SelectionEnd().Offset();
+          });
+
+      m_touchEventHandler->AddTouchHandlers(xamlView, GetRootView(), true);
+    } else {
+      if (m_touchEventHandler != nullptr) {
+        m_touchEventHandler->RemoveTouchHandlers();
+        m_selectionChangedRevoker.revoke();
+      }
+    }
+  }
+
+  XamlView GetRootView() {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(m_rootTag);
+      if (!shadowNode)
+        return nullptr;
+
+      return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
+    }
+    return nullptr;
+  }
+
   TextTransform textTransform{TextTransform::Undefined};
+  std::shared_ptr<bool> selectionChanged = std::make_shared<bool>(false);
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -207,14 +244,17 @@ bool TextViewManager::UpdateProperty(
       textBlock.ClearValue(xaml::Controls::TextBlock::LineStackingStrategyProperty());
     }
   } else if (propertyName == "selectable") {
+    const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
       const auto selectable = propertyValue.AsBoolean();
       textBlock.IsTextSelectionEnabled(selectable);
+      node->ToggleTouchEvents(textBlock, selectable);
       if (selectable) {
         EnsureUniqueTextFlyoutForXamlIsland(textBlock);
       }
     } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextSelectionEnabledProperty());
+      node->ToggleTouchEvents(textBlock, false);
       ClearUniqueTextFlyoutForXamlIsland(textBlock);
     }
   } else if (propertyName == "allowFontScaling") {
@@ -305,6 +345,13 @@ void TextViewManager::OnPointerEvent(
     if (!args.Target()) {
       args.Target(node->GetView());
     }
+  }
+
+  if (args.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::CaptureLost) {
+    if (!*textNode->selectionChanged) {
+      args.Kind(winrt::Microsoft::ReactNative::PointerEventKind::End);
+    }
+    *textNode->selectionChanged = false;
   }
 
   Super::OnPointerEvent(node, args);
