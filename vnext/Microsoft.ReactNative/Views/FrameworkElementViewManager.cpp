@@ -262,8 +262,13 @@ bool FrameworkElementViewManager::UpdateProperty(
       AnnounceLiveRegionChangedIfNeeded(element);
     } else if (propertyName == "accessible") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-        if (!propertyValue.AsBoolean())
-          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::Peers::AccessibilityView::Raw);
+        if (propertyValue.AsBoolean()) {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
+        } else {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
+        }
+      } else if (propertyValue.IsNull()) {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
       }
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
