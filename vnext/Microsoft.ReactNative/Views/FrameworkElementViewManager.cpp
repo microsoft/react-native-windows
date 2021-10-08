@@ -263,9 +263,9 @@ bool FrameworkElementViewManager::UpdateProperty(
     } else if (propertyName == "accessible") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         if (propertyValue.AsBoolean()) {
-          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
-        } else {
           xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
+        } else {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
         }
       } else if (propertyValue.IsNull()) {
           xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
