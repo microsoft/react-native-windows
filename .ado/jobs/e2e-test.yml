@@ -144,7 +144,7 @@ jobs:
             - task: PublishPipelineArtifact@1
               displayName: "Publish Artifact:Snapshots"
               inputs:
-                artifactName: Snapshots-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                artifactName: E2E-Snapshots-${{ matrix.Name }}}-Job$(System.JobAttempt)
                 targetPath: $(Build.StagingDirectory)/snapshots
               condition: failed()
 

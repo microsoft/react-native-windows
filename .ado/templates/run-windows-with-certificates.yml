@@ -28,25 +28,24 @@ steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.buildConfiguration }}"
 
-  - task: CmdLine@2
-    displayName: run-windows (Debug)
-    inputs:
+  - script: |
       script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
-      workingDirectory: ${{ parameters.workingDirectory }}
+    displayName: run-windows (Debug)
+    workingDirectory: ${{ parameters.workingDirectory }}
     condition: and(succeeded(), eq(variables.localConfig, 'Debug'))
 
-  - task: CmdLine@2
+
+  - script: |
+      yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
     displayName: run-windows (Release) - PR
-    inputs:
-      script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
-      workingDirectory: ${{ parameters.workingDirectory }}
+    workingDirectory: $(Agent.BuildDirectory)\testcli
+    continueOnError: ${{ parameters.continueOnBuildFailure }}
     condition: and(succeeded(), eq(variables.localConfig, 'Release'), eq('${{ parameters.buildEnvironment }}', 'PullRequest'))
 
-  - task: CmdLine@2
+  - script: |
+       yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
     displayName: run-windows (Release) - CI
-    inputs:
-      script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
-      workingDirectory: ${{ parameters.workingDirectory }}
+    workingDirectory: ${{ parameters.workingDirectory }}
     condition: and(succeeded(), eq(variables.localConfig, 'Release'), eq('${{ parameters.buildEnvironment }}', 'Continuous'))
 
   - template: ../templates/cleanup-certificate.yml
