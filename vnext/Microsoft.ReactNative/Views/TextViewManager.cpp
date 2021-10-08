@@ -331,7 +331,6 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
 void TextViewManager::OnPointerEvent(
     ShadowNodeBase *node,
     winrt::Microsoft::ReactNative::ReactPointerEventArgs const &args) {
-
   const auto textNode = static_cast<TextShadowNode *>(node);
   const auto textBlock = node->GetView().as<xaml::Controls::TextBlock>();
   if (textNode->m_hasDescendantPressable && args.Target() == node->GetView()) {
