@@ -65,7 +65,7 @@
     "powershell"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.65-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
