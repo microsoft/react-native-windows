@@ -16,6 +16,8 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
   TextTransform textTransform{TextTransform::Undefined};
   bool hasDescendantTextHighlighter{false};
+  bool hasDescendantPressable{false};
+  bool isPressable{false};
   std::optional<winrt::Windows::UI::Color> backgroundColor;
   std::optional<winrt::Windows::UI::Color> foregroundColor;
 

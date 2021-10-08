@@ -150,6 +150,10 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'LegacyImageTest',
     module: require('../examples-win/LegacyTests/ImageTestPage'),
   },
+  {
+    key: 'LegacyTextHitTestTest',
+    module: require('../examples-win/LegacyTests/TextHitTestPage'),
+  },
 ];
 
 const APIs: Array<RNTesterModuleInfo> = [
