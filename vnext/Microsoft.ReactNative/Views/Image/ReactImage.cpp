@@ -13,10 +13,10 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include <Utils/ValueUtils.h>
+#include "DynamicAutomationPeer.h"
 #include "Unicode.h"
 #include "XamlView.h"
 #include "cdebug.h"
-#include "DynamicAutomationPeer.h"
 
 namespace winrt {
 using namespace Windows::Foundation;

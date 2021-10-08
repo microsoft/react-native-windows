@@ -8,8 +8,8 @@
 
 #include "ImageViewManager.h"
 
-#include <winrt/Windows.Foundation.h>
 #include <UI.Xaml.Automation.h>
+#include <winrt/Windows.Foundation.h>
 
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
