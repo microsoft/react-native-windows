@@ -1,8 +1,69 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 29 Sep 2021 05:06:54 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Oct 2021 05:05:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.393
+
+Fri, 08 Oct 2021 05:05:52 GMT
+
+### Changes
+
+- Update Button Coloring (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.392
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.5.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.93 (asklar@microsoft.com)
+
+## 0.0.0-canary.391
+
+Tue, 05 Oct 2021 05:07:00 GMT
+
+### Changes
+
+- Logs exception from IReactDispatcher callback (erozell@outlook.com)
+- Add ARM64 support to React.Windows.Desktop.Test.DLL (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.390
+
+Mon, 04 Oct 2021 05:06:55 GMT
+
+### Changes
+
+- Adds functionality for box-only and box-none via OnPointerEvent callback (erozell@outlook.com)
+
+## 0.0.0-canary.389
+
+Sat, 02 Oct 2021 05:05:38 GMT
+
+### Changes
+
+- Switch ImageLoader to be a codegen'd turbomodule (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.388
+
+Fri, 01 Oct 2021 05:05:54 GMT
+
+### Changes
+
+- Upgrade ReactNative.V8Jsi.Windows to 0.65.5 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.387
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Adds hook for view managers to capture pointer events (erozell@outlook.com)
 
 ## 0.0.0-canary.386
 

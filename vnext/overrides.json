@@ -6,7 +6,8 @@
     "ReactCommon/TEMP_UntilReactCommonUpdate/**"
   ],
   "excludePatterns": [
-    "**/__snapshots__/**"
+    "**/__snapshots__/**",
+    "src/rntypes/**"
   ],
   "baseVersion": "0.0.0-d3c7e2018",
   "overrides": [
@@ -36,6 +37,12 @@
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
       "baseHash": "6951c3418c9aed3ab5f0378a168289968c02aef0",
       "issue": 7821
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/TextNativeComponent.windows.js",
+      "baseFile": "Libraries/Text/TextNativeComponent.js",
+      "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb"
     },
     {
       "type": "patch",

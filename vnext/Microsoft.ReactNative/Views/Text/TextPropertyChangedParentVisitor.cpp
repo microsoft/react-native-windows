@@ -55,12 +55,23 @@ void TextPropertyChangedParentVisitor::VisitText(ShadowNodeBase *node) {
   if (isTextUpdate || isHighlightAdded || isHighlightRemoved) {
     TextViewManager::UpdateTextHighlighters(node, isHighlightAdded);
   }
+
+  // Set pressable descendant
+  if (HasPropertyChangeType(PropertyChangeType::AddPressable)) {
+    TextViewManager::SetDescendantPressable(node);
+  }
 }
 
 void TextPropertyChangedParentVisitor::VisitVirtualText(ShadowNodeBase *node) {
+  const auto textNode = static_cast<VirtualTextShadowNode *>(node);
   // Update descendant text highlight flag
   if (HasPropertyChangeType(PropertyChangeType::AddHighlight)) {
-    static_cast<VirtualTextShadowNode *>(node)->hasDescendantTextHighlighter = true;
+    textNode->hasDescendantTextHighlighter = true;
+  }
+
+  // Update pressable descendant flag
+  if (HasPropertyChangeType(PropertyChangeType::AddPressable)) {
+    textNode->hasDescendantPressable = true;
   }
 
   Super::VisitVirtualText(node);

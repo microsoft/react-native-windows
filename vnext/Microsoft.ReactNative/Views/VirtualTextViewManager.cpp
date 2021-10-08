@@ -29,6 +29,8 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
     const auto &childTextNode = static_cast<VirtualTextShadowNode &>(childNode);
     propertyChangeType |=
         childTextNode.hasDescendantTextHighlighter ? PropertyChangeType::AddHighlight : PropertyChangeType::None;
+    propertyChangeType |=
+        childTextNode.hasDescendantPressable ? PropertyChangeType::AddPressable : PropertyChangeType::None;
   }
   Super::AddView(child, index);
   NotifyAncestorsTextPropertyChanged(this, propertyChangeType);
@@ -86,6 +88,12 @@ bool VirtualTextViewManager::UpdateProperty(
       const auto propertyChangeType =
           node->backgroundColor ? PropertyChangeType::AddHighlight : PropertyChangeType::RemoveHighlight;
       NotifyAncestorsTextPropertyChanged(node, propertyChangeType);
+    }
+  } else if (propertyName == "isPressable") {
+    auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+    node->isPressable = propertyValue.AsBoolean();
+    if (node->isPressable) {
+      NotifyAncestorsTextPropertyChanged(node, PropertyChangeType::AddPressable);
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);

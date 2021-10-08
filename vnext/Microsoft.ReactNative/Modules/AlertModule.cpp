@@ -43,9 +43,12 @@ void Alert::ProcessPendingAlertRequests() noexcept {
     dialog.DefaultButton(static_cast<xaml::Controls::ContentDialogButton>(defaultButton));
   }
 
+  auto useXamlRootForThemeBugWorkaround = false;
+
   if (Is19H1OrHigher()) {
     // XamlRoot added in 19H1
     if (const auto xamlRoot = React::XamlUIService::GetXamlRoot(m_context.Properties().Handle())) {
+      useXamlRootForThemeBugWorkaround = true;
       dialog.XamlRoot(xamlRoot);
       auto rootChangedToken = xamlRoot.Changed([=](auto &&, auto &&) {
         const auto rootSize = xamlRoot.Size();
@@ -70,6 +73,22 @@ void Alert::ProcessPendingAlertRequests() noexcept {
       dialog.Closed([=](auto &&, auto &&) { xamlRoot.Changed(rootChangedToken); });
     }
   }
+
+  // Workaround XAML bug with ContentDialog and dark theme:
+  // https://github.com/microsoft/microsoft-ui-xaml/issues/2331
+  dialog.Opened([useXamlRootForThemeBugWorkaround](winrt::IInspectable const &sender, auto &&) {
+    auto contentDialog = sender.as<xaml::Controls::ContentDialog>();
+    auto popups = xaml::Media::VisualTreeHelper::GetOpenPopupsForXamlRoot(contentDialog.XamlRoot());
+
+    auto contentAsFrameworkElement = useXamlRootForThemeBugWorkaround
+        ? contentDialog.XamlRoot().Content().try_as<xaml::FrameworkElement>()
+        : xaml::Window::Current().Content().try_as<xaml::FrameworkElement>();
+    if (contentAsFrameworkElement) {
+      for (uint32_t i = 0; i < popups.Size(); i++) {
+        popups.GetAt(i).RequestedTheme(contentAsFrameworkElement.ActualTheme());
+      }
+    }
+  });
 
   auto asyncOp = dialog.ShowAsync();
   asyncOp.Completed(

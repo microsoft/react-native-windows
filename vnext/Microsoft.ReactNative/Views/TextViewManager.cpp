@@ -12,13 +12,19 @@
 #include <Views/Text/TextVisitors.h>
 #include <Views/VirtualTextViewManager.h>
 
+#include <UI.Input.h>
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Input.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
+
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Input.Experimental.h>
+#endif
 
 namespace winrt {
 using namespace xaml::Documents;
@@ -36,6 +42,7 @@ class TextShadowNode final : public ShadowNodeBase {
   ShadowNode *m_firstChildNode;
 
   bool m_hasDescendantTextHighlighter{false};
+  bool m_hasDescendantPressable{false};
   std::optional<winrt::Windows::UI::Color> m_backgroundColor{};
   std::optional<winrt::Windows::UI::Color> m_foregroundColor{};
   std::unique_ptr<TouchEventHandler> m_touchEventHandler = nullptr;
@@ -56,6 +63,7 @@ class TextShadowNode final : public ShadowNodeBase {
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
       m_hasDescendantTextHighlighter |= textChildNode.hasDescendantTextHighlighter;
+      m_hasDescendantPressable |= textChildNode.hasDescendantPressable;
     }
 
     auto addInline = true;
@@ -322,14 +330,32 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
 
 void TextViewManager::OnPointerEvent(
     ShadowNodeBase *node,
-    const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args) {
+    winrt::Microsoft::ReactNative::ReactPointerEventArgs const &args) {
+
+  const auto textNode = static_cast<TextShadowNode *>(node);
+  const auto textBlock = node->GetView().as<xaml::Controls::TextBlock>();
+  if (textNode->m_hasDescendantPressable && args.Target() == node->GetView()) {
+    // Set the target to null temporarily
+    args.Target(nullptr);
+
+    // Get the pointer point and hit test
+    const auto point = args.Args().GetCurrentPoint(textBlock).RawPosition();
+    HitTest(node, args, point);
+
+    // Set the target back to the current view if hit test failed
+    if (!args.Target()) {
+      args.Target(node->GetView());
+    }
+  }
+
   if (args.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::CaptureLost) {
-    const auto textNode = static_cast<const TextShadowNode *>(node);
     if (!*textNode->selectionChanged) {
       args.Kind(winrt::Microsoft::ReactNative::PointerEventKind::End);
     }
     *textNode->selectionChanged = false;
   }
+
+  Super::OnPointerEvent(node, args);
 }
 
 /*static*/ void TextViewManager::UpdateTextHighlighters(ShadowNodeBase *node, bool highlightAdded) {
@@ -339,6 +365,13 @@ void TextViewManager::OnPointerEvent(
       textNode->m_hasDescendantTextHighlighter = true;
     }
     textNode->RecalculateTextHighlighters();
+  }
+}
+
+/*static*/ void TextViewManager::SetDescendantPressable(ShadowNodeBase *node) {
+  if (IsTextShadowNode(node)) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    textNode->m_hasDescendantPressable = true;
   }
 }
 

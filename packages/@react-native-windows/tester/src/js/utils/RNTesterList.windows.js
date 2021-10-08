@@ -154,6 +154,10 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'LegacySelectableTextTest',
     module: require('../examples-win/LegacyTests/SelectableTextTestPage'),
   },
+  {
+    key: 'LegacyTextHitTestTest',
+    module: require('../examples-win/LegacyTests/TextHitTestPage'),
+  },
 ];
 
 const APIs: Array<RNTesterModuleInfo> = [
