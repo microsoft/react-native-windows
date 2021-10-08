@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix XAML bug with alerts inside a dark themed parent",
+  "packageName": "react-native-windows",
+  "email": "lyahdav@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
