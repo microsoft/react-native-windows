@@ -4,6 +4,7 @@
 #pragma once
 
 #include "TextHighlighterVisitor.h"
+#include "TextHitTestVisitor.h"
 #include "TextPropertyChangedParentVisitor.h"
 #include "TextTransformParentVisitor.h"
 #include "TextTransformVisitor.h"
@@ -22,6 +23,12 @@ static inline void ApplyTextTransformToChild(ShadowNode *node) {
   TextTransformParentVisitor parentVisitor;
   parentVisitor.Visit(node);
   TextTransformVisitor visitor{parentVisitor.textTransform, false};
+  visitor.Visit(node);
+}
+
+static inline void
+HitTest(ShadowNode *node, winrt::Microsoft::ReactNative::ReactPointerEventArgs const &args, winrt::Point const &point) {
+  TextHitTestVisitor visitor{args, point};
   visitor.Visit(node);
 }
 
