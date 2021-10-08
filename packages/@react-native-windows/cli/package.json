@@ -19,6 +19,7 @@
   "dependencies": {
     "@react-native-windows/package-utils": "0.66.0-preview.1",
     "@react-native-windows/telemetry": "0.66.0-preview.1",
+    "@xmldom/xmldom": "^0.7.5",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
@@ -34,7 +35,6 @@
     "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
-    "@xmldom/xmldom": "^0.7.5",
     "xpath": "^0.0.27"
   },
   "devDependencies": {

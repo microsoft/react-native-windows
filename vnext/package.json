@@ -35,7 +35,7 @@
     "anser": "^1.4.9",
     "base64-js": "^1.1.2",
     "event-target-shim": "^5.0.1",
-    "hermes-engine": "~0.8.0",
+    "hermes-engine": "~0.9.0",
     "invariant": "^2.2.4",
     "jsc-android": "^250230.2.1",
     "metro-babel-register": "0.66.2",
@@ -73,7 +73,7 @@
     "metro-config": "^0.66.0",
     "prettier": "1.19.1",
     "react": "17.0.2",
-    "react-native": "0.66.0-rc.1",
+    "react-native": "0.66.0",
     "react-native-platform-override": "^1.4.17",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -81,7 +81,7 @@
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.66.0-rc.1"
+    "react-native": "0.66.0"
   },
   "beachball": {
     "defaultNpmTag": "preview",
