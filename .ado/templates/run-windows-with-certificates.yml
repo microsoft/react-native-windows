@@ -29,7 +29,7 @@ steps:
       Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.buildConfiguration }}"
 
   - script: |
-      script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
+      yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
     displayName: run-windows (Debug)
     workingDirectory: ${{ parameters.workingDirectory }}
     condition: and(succeeded(), eq(variables.localConfig, 'Debug'))
@@ -38,8 +38,7 @@ steps:
   - script: |
       yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
     displayName: run-windows (Release) - PR
-    workingDirectory: $(Agent.BuildDirectory)\testcli
-    continueOnError: ${{ parameters.continueOnBuildFailure }}
+    workingDirectory: ${{ parameters.workingDirectory }}
     condition: and(succeeded(), eq(variables.localConfig, 'Release'), eq('${{ parameters.buildEnvironment }}', 'PullRequest'))
 
   - script: |
