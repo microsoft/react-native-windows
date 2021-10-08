@@ -16,6 +16,7 @@
 #include "Unicode.h"
 #include "XamlView.h"
 #include "cdebug.h"
+#include "DynamicAutomationPeer.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -25,6 +26,7 @@ using namespace xaml;
 using namespace xaml::Media;
 using namespace xaml::Media::Imaging;
 using namespace Windows::Web::Http;
+using namespace xaml::Automation::Peers;
 } // namespace winrt
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
@@ -55,6 +57,10 @@ winrt::event_token ReactImage::OnLoadEnd(winrt::EventHandler<bool> const &handle
 
 void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
+}
+
+winrt::AutomationPeer ReactImage::OnCreateAutomationPeer() {
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::DynamicAutomationPeer>(*this);
 }
 
 void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
