@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 Oct 2021 05:05:52 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.394
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Changes
+
+- Refines algorithm for hit testing Text (erozell@outlook.com)
+- Fixes crash when animating Opacity on custom view with TranslateTransform (erozell@outlook.com)
+- Export complete type information (30809111+acoates-ms@users.noreply.github.com)
+- Allow pointer events on selectable Text (erozell@outlook.com)
+- Fix XAML bug with alerts inside a dark themed parent (lyahdav@users.noreply.github.com)
+- Integrate 10-8-21 Nightly Build (ngerlem@microsoft.com)
+- Fix crash in Islands when opening Flyout without a target #6714 (lyahdav@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.94
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.13
 
 ## 0.0.0-canary.393
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Integrate 10-8-21 Nightly Build",
-  "packageName": "@react-native-windows/virtualized-list",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

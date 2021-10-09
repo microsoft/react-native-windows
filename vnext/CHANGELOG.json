@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.394",
+      "version": "0.0.0-canary.394",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Refines algorithm for hit testing Text",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes crash when animating Opacity on custom view with TranslateTransform",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Export complete type information",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Allow pointer events on selectable Text",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Fix XAML bug with alerts inside a dark themed parent",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Integrate 10-8-21 Nightly Build",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Fix crash in Islands when opening Flyout without a target #6714",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.94",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.13",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Oct 2021 05:05:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.393",
       "version": "0.0.0-canary.393",

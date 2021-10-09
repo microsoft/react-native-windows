@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.37",
+      "version": "1.0.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Fix integration commit comparison link for new nightly builds",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Oct 2021 05:07:05 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.0.36",
       "version": "1.0.36",

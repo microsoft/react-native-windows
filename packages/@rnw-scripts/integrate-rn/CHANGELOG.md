@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Wed, 06 Oct 2021 05:07:05 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.37
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Patches
+
+- Fix integration commit comparison link for new nightly builds (ngerlem@microsoft.com)
 
 ## 1.0.36
 

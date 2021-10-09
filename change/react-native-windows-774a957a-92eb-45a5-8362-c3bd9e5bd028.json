@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes crash when animating Opacity on custom view with TranslateTransform",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

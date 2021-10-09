@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix integration commit comparison link for new nightly builds",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

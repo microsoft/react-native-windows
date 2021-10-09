@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.94",
+      "version": "0.0.0-canary.94",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "comment": "Integrate 10-8-21 Nightly Build",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Oct 2021 05:07:05 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.93",
       "version": "0.0.0-canary.93",
