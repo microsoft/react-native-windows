@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Improve autolinking check performance by delaying checking whether dependencies are met until it is needed.",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
