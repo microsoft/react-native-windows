@@ -2,4 +2,14 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.VersionCheck.targets" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\tools\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)\..\..\tools\Microsoft.ReactNative.Cxx</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)\..\..\tools\Microsoft.ReactNative.Cxx</AdditionalIncludeDirectories>
+    </Midl>
+  </ItemDefinitionGroup>
+
 </Project>

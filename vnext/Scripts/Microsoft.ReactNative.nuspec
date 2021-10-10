@@ -54,5 +54,10 @@
     <file src="$nugetroot$\x86\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x86\native" />
     <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-x64\native" />
 
+
+    <file src="$nugetroot$\PropertySheets\**" target="package\PropertySheets" />
+    <file src="$nugetroot$\package.json" target="package" />
+
+
   </files>
 </package>

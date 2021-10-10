@@ -21,6 +21,20 @@ steps:
       targetFolder: $(Build.StagingDirectory)/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
       contents: ${{parameters.contents}}
 
+  - task: CopyFiles@2
+    displayName: Copy package.json
+    inputs:
+      sourceFolder: $(Build.SourcesDirectory)/vnext
+      targetFolder: $(Build.StagingDirectory)
+      contents: package.json
+
+  - task: CopyFiles@2
+    displayName: Copy PropertySheets
+    inputs:
+      sourceFolder: $(Build.SourcesDirectory)/vnext/PropertySheets
+      targetFolder: $(Build.StagingDirectory)/PropertySheets
+      contents: .\**
+
   - task: PublishBuildArtifacts@1
     displayName: "Publish Artifact: ${{parameters.artifactName}}"
     inputs:
