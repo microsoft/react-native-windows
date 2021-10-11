@@ -172,6 +172,8 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       float x = static_cast<float>(point[0]);
       float y = static_cast<float>(point[1]);
       m_nativeUIManager->findSubviewIn(*node, x, y, std::move(callback));
+    } else {
+      callback(0, 0, 0, 0, 0);
     }
   }
 
