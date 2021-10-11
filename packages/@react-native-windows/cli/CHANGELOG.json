@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 11 Oct 2021 15:06:57 GMT",
+      "tag": "@react-native-windows/cli_v0.65.2",
+      "version": "0.65.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.65 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31e9fc28e3edddde4c7a86e40201aede6242e73c",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Oct 2021 15:07:05 GMT",
       "tag": "@react-native-windows/cli_v0.65.1",
       "version": "0.65.1",

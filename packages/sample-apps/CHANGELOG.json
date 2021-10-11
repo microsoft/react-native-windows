@@ -2,6 +2,21 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Mon, 11 Oct 2021 15:06:57 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/codegen to v0.65.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31e9fc28e3edddde4c7a86e40201aede6242e73c",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Oct 2021 15:07:05 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",
