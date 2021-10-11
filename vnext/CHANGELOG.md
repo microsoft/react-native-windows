@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 30 Sep 2021 23:54:23 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Oct 2021 15:09:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.63.41
+
+Mon, 11 Oct 2021 15:09:25 GMT
+
+### Patches
+
+- [0.63] Add ARM64 support to React.Windows.Desktop.Test.DLL (julio.rocha@microsoft.com)
 
 ## 0.63.40
 
