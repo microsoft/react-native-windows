@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Oct 2021 15:06:31 GMT",
+      "tag": "react-native-windows_v0.64.21",
+      "version": "0.64.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Add ARM64 support to React.Windows.Desktop.Test.DLL",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "52156e93730c703dfc55d01f11dd1a28db747b69",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Oct 2021 15:06:58 GMT",
       "tag": "react-native-windows_v0.64.20",
       "version": "0.64.20",
