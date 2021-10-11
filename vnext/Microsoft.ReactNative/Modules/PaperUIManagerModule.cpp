@@ -195,10 +195,15 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     if (auto node = m_nodeRegistry.findNode(reactTag)) {
       int64_t rootTag = reactTag;
       while (true) {
-        auto currNode = m_nodeRegistry.getNode(rootTag);
-        if (currNode.m_parent == -1)
-          break;
-        rootTag = currNode.m_parent;
+        if (auto currNode = m_nodeRegistry.findNode(rootTag)) {
+          if (currNode->m_parent == -1) {
+            break;
+          }
+          rootTag = currNode->m_parent;
+        } else {
+          callback(0, 0, 0, 0, 0, 0);
+          return;
+        }
       }
       auto &rootNode = m_nodeRegistry.getNode(rootTag);
 
