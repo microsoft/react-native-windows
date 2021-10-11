@@ -2,6 +2,21 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 11 Oct 2021 15:07:19 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/virtualized-list to v0.66.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5d1e5ae98139204e02f0ac5d8c06ae7ee1157395",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Oct 2021 15:07:37 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

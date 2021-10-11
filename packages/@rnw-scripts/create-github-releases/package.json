@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
-    "@react-native-windows/find-repo-root": "0.66.0-preview.1",
+    "@react-native-windows/find-repo-root": "0.66.0",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "lodash": "^4.17.15",
