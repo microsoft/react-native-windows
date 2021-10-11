@@ -91,10 +91,10 @@
 <li>Open the project in Visual Studio</li>
 <li>Remove all projects except your own app project</li>
 </ol></li>
-<li><p>Edit the project file <code>windows\&lt;projectName&gt;\&lt;projectName.csproj&gt;</code></p>
+<li><p>Edit the file <code>windows\ExperimentalFeatures.props</code></p>
 <ol>
-<li>Add the the NuGet flag to the first property group
-<pre><code class="hljs css language-diff"><span class="hljs-addition">+   &lt;UseExperimentalNuGet&gt;true&lt;/UseExperimentalNuGet&gt;</span><br />  &lt;/PropertyGroup&gt;<br /></code></pre></li>
+<li>Set the following to true
+<pre><code class="hljs css language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">UseExperimentalNuGet</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">UseExperimentalNuGet</span>&gt;</span><br /></code></pre></li>
 <li>If you have a project that was created before 0.63, you should remove all references to <code>Microsoft.ReactNative.*</code> projects.</li>
 <li>Add a NuGet reference to <code>Microsoft.ReactNative.Managed</code>.
 You can do this either through Visual Studio's UI or by adding:
@@ -111,10 +111,10 @@ You can do this either through Visual Studio's UI or by adding:
 <li>Open the project in Visual Studio</li>
 <li>Remove all projects that are not your project</li>
 </ol></li>
-<li>Edit the project file <code>windows\&lt;projectName&gt;\&lt;projectName.vcxproj&gt;</code>
+<li>Edit the file <code>windows\ExperimentalFeatures.props</code>
 <ol>
-<li><p>Add the the NuGet flag to the first property group</p>
-<pre><code class="hljs css language-diff">  &lt;PropertyGroup Label="ReactNativeWindowsProps"&gt;<br />    &lt;ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''"&gt;...&lt;/ReactNativeWindowsDir&gt;<br /><span class="hljs-addition">+   &lt;UseExperimentalNuGet&gt;true&lt;/UseExperimentalNuGet&gt;</span><br />  &lt;/PropertyGroup&gt;<br /></code></pre></li>
+<li><p>Set the following to true</p>
+<pre><code class="hljs css language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">UseExperimentalNuGet</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">UseExperimentalNuGet</span>&gt;</span><br /></code></pre></li>
 <li><p>Add NuGet references to the following NuGet packages:</p>
 <ul>
 <li><code>Microsoft.ReactNative</code></li>
