@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Oct 2021 05:07:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.395",
+      "version": "0.0.0-canary.395",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Improve autolinking check performance by delaying checking whether dependencies are met until it is needed.",
+            "commit": "45e8eae5d6b79f8d08d3cf53d86b98a02b647514"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Oct 2021 05:06:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.394",
       "version": "0.0.0-canary.394",
