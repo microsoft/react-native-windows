@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Set Automation Peer for ReactImage",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

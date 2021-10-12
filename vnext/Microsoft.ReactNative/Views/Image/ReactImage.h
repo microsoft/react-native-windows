@@ -39,6 +39,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 
   // Overrides
   winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
+  xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   // Events
   winrt::event_token OnLoadEnd(winrt::Windows::Foundation::EventHandler<bool> const &handler);
