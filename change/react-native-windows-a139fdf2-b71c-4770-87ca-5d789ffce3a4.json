@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixes bug introduced by e7735a8",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
