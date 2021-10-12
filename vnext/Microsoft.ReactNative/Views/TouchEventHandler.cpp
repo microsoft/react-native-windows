@@ -55,7 +55,7 @@ void TouchEventHandler::AddTouchHandlers(XamlView xamlView, XamlView rootView, b
   RemoveTouchHandlers();
 
   m_xamlView = xamlView;
-  m_rootView = rootView;
+  m_rootView = rootView != nullptr ? rootView : xamlView;
   m_pressedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerPressed});
   m_releasedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerReleased});
   m_canceledHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerCanceled});
