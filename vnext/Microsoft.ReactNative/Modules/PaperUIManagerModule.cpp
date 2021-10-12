@@ -264,7 +264,6 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   void removeSubviewsFromContainerWithID(int64_t containerID) noexcept {
     m_nativeUIManager->ensureInBatch();
     if (auto containerNode = m_nodeRegistry.findNode(containerID)) {
-
       std::vector<int64_t> indicesToRemove(containerNode->m_children.size());
       for (size_t i = 0; i < containerNode->m_children.size(); i++)
         indicesToRemove[static_cast<size_t>(i)] = static_cast<int64_t>(i);
