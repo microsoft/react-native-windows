@@ -268,7 +268,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
         }
       } else if (propertyValue.IsNull()) {
-        xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
+        element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
       }
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
