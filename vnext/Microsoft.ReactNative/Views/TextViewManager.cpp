@@ -96,10 +96,12 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
-    if (indexToRemove == 0) {
+    if (m_firstChildNode) {
+      this->GetView().as<xaml::Controls::TextBlock>().ClearValue(xaml::Controls::TextBlock::TextProperty());
       m_firstChildNode = nullptr;
+    } else {
+      Super::RemoveChildAt(indexToRemove);
     }
-    Super::RemoveChildAt(indexToRemove);
     RecalculateTextHighlighters();
   }
 
