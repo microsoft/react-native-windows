@@ -7,216 +7,261 @@ parameters:
       - Continuous
   - name: buildNuGetOnly
     type: boolean
-    default: false
-
-jobs:
-  - ${{ if not(parameters.buildNuGetOnly) }}:
-    - job: CliInit
-      variables:
-        - template: ../variables/vs2019.yml
-      displayName: Verify Cli
-      strategy:
-        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-          # Start Continuous only
-          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            Arm64DebugCpp:
-              language: cpp
-              configuration: Debug
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-            Arm64DebugCs:
-              language: cs
-              configuration: Debug
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-            Arm64ReleaseCpp:
-              language: cpp
-              configuration: Release
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-            Arm64ReleaseCs:
-              language: cs
-              configuration: Release
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-          # End Continuous only
-          X64ReleaseCpp:
+  - name: buildMatrix
+    type: object
+    default:
+      - BuildEnvironment: PullRequest
+        Matrix:
+          - Name: X64ReleaseCpp
             language: cpp
             configuration: Release
             platform: x64
             projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          X64ReleaseCs:
+            runWack: true
+          - Name: X64ReleaseCs
             language: cs
             configuration: Release
             platform: x64
             projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          X86DebugCpp:
+            runWack: true
+          - Name: X86DebugCpp
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-            additionalRunArguments:
-          X86DebugCs:
+          - Name: X86DebugCs
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
-            additionalRunArguments:
-          # Start Continuous only
-          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            X86ReleaseCpp:
-              language: cpp
-              configuration: Release
-              platform: x86
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-            X86ReleaseCs:
-              language: cs
-              configuration: Release
-              platform: x86
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-            X64DebugCpp:
-              language: cpp
-              configuration: Debug
-              platform: x64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-            X64DebugCs:
-              language: cs
-              configuration: Debug
-              platform: x64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-          # End Continuous only
-
-          X86DebugCppLib:
+          - Name: X86DebugCppLib
             language: cpp
             configuration: Debug
             platform: x86
             projectType: lib
-            additionalInitArguments:
             additionalRunArguments: --no-autolink --no-deploy
-          X86DebugCsLib:
+          - Name: X86DebugCsLib
             language: cs
             configuration: Debug
             platform: x86
             projectType: lib
-            additionalInitArguments:
             additionalRunArguments: --no-autolink --no-deploy
-
-          X86DebugCppWinUI3:
+          - Name: X86DebugCppWinUI3
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useWinUI3 true
-            additionalRunArguments:
-          X86DebugCsWinUI3:
+          - Name: X86DebugCsWinUI3
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useWinUI3 true
-            additionalRunArguments:
-          X86DebugCppHermes:
+          - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useHermes
-            additionalRunArguments:
-          X64ReleaseCsHermes:
+          - Name: X64ReleaseCsHermes
             language: cs
             configuration: Release
             platform: x64
             projectType: app
             additionalInitArguments: --useHermes
-            additionalRunArguments:
-          # ARM64ReleaseCsHermes:
-          #   language: cs
-          #   configuration: Release
-          #   platform: arm64
-          #   projectType: app
-          #   additionalInitArguments: --useHermes
-          #   additionalRunArguments:
-          X64ReleaseCppHermes:
+            runWack: true
+          - Name: ARM64ReleaseCsHermes
+            language: cs
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalInitArguments: --useHermes
+            additionalRunArguments: --no-deploy
+          - Name: X64ReleaseCppHermes
             language: cpp
             configuration: Release
             platform: x64
             projectType: app
             additionalInitArguments: --useHermes
-            additionalRunArguments:
-
-      pool: $(AgentPool.Medium)
-      timeoutInMinutes: 60
-      cancelTimeoutInMinutes: 5
-
-      steps:
-        - template: ../templates/react-native-init.yml
-          parameters:
-            language: $(language)
-            configuration: $(configuration)
-            platform: $(platform)
-            projectType: $(projectType)
-            additionalInitArguments: $(additionalInitArguments)
-            additionalRunArguments: $(additionalRunArguments)
-            buildEnvironment: ${{ parameters.buildEnvironment }}
-
-  # We unfortunately can't add the nuget ones to the existing matrix above because Azure DevOps does not allow the dependsOn to be dynamic based on matrix expansion
-  - ${{ if parameters.buildNuGetOnly }}:
-    - job: CliInitNuGet
-      variables:
-        - template: ../variables/vs2019.yml
-      displayName: Verify Cli
-      dependsOn:
-        - UniversalBuild
-      strategy:
-        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-          X64DebugCppNuget:
+            runWack: true
+          - Name: X64DebugCppNuget
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-          X64DebugCsNuget:
-            language: cs
-            configuration: Debug
-            platform: x86
-            projectType: app
-            additionalInitArguments:
-            additionalRunArguments:
-      pool: $(AgentPool.Medium)
-      timeoutInMinutes: 60
-      cancelTimeoutInMinutes: 5
-
-      steps:
-        - template: ../templates/react-native-init.yml
-          parameters:
-            language: $(language)
-            configuration: $(configuration)
-            platform: $(platform)
-            projectType: $(projectType)
-            additionalInitArguments: $(additionalInitArguments)
-            additionalRunArguments: $(additionalRunArguments)
             useNuGet: true
-            buildEnvironment: ${{ parameters.buildEnvironment }}
+          - Name: X64DebugCsNuget
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            useNuGet: true
+      - BuildEnvironment: Continuous
+        Matrix:
+          - Name: X64ReleaseCpp
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            runWack: true
+          - Name: X64ReleaseCs
+            language: cs
+            configuration: Release
+            platform: x64
+            projectType: app
+            runWack: true
+          - Name: X86DebugCpp
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          - Name: X86DebugCs
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          - Name: X86DebugCppLib
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: lib
+            additionalRunArguments: --no-autolink --no-deploy
+          - Name: X86DebugCsLib
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: lib
+            additionalRunArguments: --no-autolink --no-deploy
+          - Name: X86DebugCppWinUI3
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --useWinUI3 true
+          - Name: X86DebugCsWinUI3
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --useWinUI3 true
+          - Name: X86DebugCppHermes
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            additionalInitArguments: --useHermes
+          - Name: X64ReleaseCsHermes
+            language: cs
+            configuration: Release
+            platform: x64
+            projectType: app
+            additionalInitArguments: --useHermes
+            runWack: true
+          - Name: ARM64ReleaseCsHermes
+            language: cs
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalInitArguments: --useHermes
+            additionalRunArguments: --no-deploy
+          - Name: X64ReleaseCppHermes
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            additionalInitArguments: --useHermes
+            runWack: true
+          - Name: X64DebugCppNuget
+            language: cpp
+            configuration: Debug
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X64DebugCsNuget
+            language: cs
+            configuration: Debug
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: Arm64DebugCpp
+            language: cpp
+            configuration: Debug
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: Arm64DebugCs
+            language: cs
+            configuration: Debug
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: Arm64ReleaseCpp
+            language: cpp
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: Arm64ReleaseCs
+            language: cs
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: X86ReleaseCpp
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            runWack: true
+          - Name: X86ReleaseCs
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            runWack: true
+          - Name: X64DebugCpp
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+          - Name: X64DebugCs
+            language: cs
+            configuration: Debug
+            platform: x64
+            projectType: app
+jobs:
+  - ${{ each config in parameters.buildMatrix }}:
+    - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+      - ${{ each matrix in config.Matrix }}:
+        - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
+          - job: CliInit${{ matrix.Name }}
+            displayName: Verify Cli ${{ matrix.Name }}
+
+            ${{ if eq(matrix.useNuGet, true) }}:
+              dependsOn:
+                - UniversalBuild
+
+            variables:
+              - template: ../variables/vs2019.yml
+
+            pool: $(AgentPool.Medium)
+            timeoutInMinutes: 60
+            cancelTimeoutInMinutes: 5
+
+            steps:
+              - template: ../templates/react-native-init.yml
+                parameters:
+                  language: ${{ matrix.language }}
+                  configuration: ${{ matrix.configuration }}
+                  platform: ${{ matrix.platform }}
+                  projectType: ${{ matrix.projectType }}
+                  additionalInitArguments: ${{ matrix.additionalInitArguments }}
+                  additionalRunArguments: ${{ matrix.additionalRunArguments }}
+                  runWack: ${{ coalesce(matrix.runWack, false) }}
+                  buildEnvironment: ${{ parameters.buildEnvironment }}
+                  useNuGet: ${{ coalesce(matrix.useNuGet, false) }}

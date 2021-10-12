@@ -18,6 +18,7 @@
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
+              CreateApiDocs: true
               FastBuild: true
         - BuildEnvironment: Continuous
           Matrix:
@@ -41,6 +42,7 @@
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
+              CreateApiDocs: true
               FastBuild: false
             - Name: X86Release
               BuildConfiguration: Release
@@ -82,6 +84,19 @@
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
                     multicoreBuild: true
                     msbuildArguments: /p:RNW_FASTBUILD=${{ matrix.FastBuild }}
+
+                - ${{ if eq(matrix.CreateApiDocs, true) }}: 
+                  - powershell: |
+                      $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
+                      Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
+                      & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd
+                    displayName: "Generate WinRT API docs"
+
+                  - task: PublishBuildArtifacts@1
+                    displayName: Upload WinRT API docs
+                    inputs:
+                      pathtoPublish: 'vnext\target\winmd2md'
+                      artifactName: 'WinRT API docs - $(Agent.JobName)-$(System.JobAttempt)'
 
                 - task: BinSkim@3
                   displayName: "Run Binskim Analysis"
