@@ -269,7 +269,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       for (size_t i = 0; i < containerNode->m_children.size(); i++)
         indicesToRemove[static_cast<size_t>(i)] = static_cast<int64_t>(i);
       std::vector<int64_t> emptyVec;
-      manageChildren(*containerID, emptyVec, emptyVec, emptyVec, emptyVec, indicesToRemove);
+      manageChildren(containerID, emptyVec, emptyVec, emptyVec, emptyVec, indicesToRemove);
     }
   }
 
@@ -295,7 +295,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
   void removeRootView(int64_t rootViewTag) noexcept {
     m_nativeUIManager->ensureInBatch();
-    if (auto node = m_nodeRegistry.findRoot(rootViewTag)) {
+    if (auto node = m_nodeRegistry.findNode(rootViewTag)) {
       m_nativeUIManager->removeRootView(*node);
       DropView(rootViewTag, true);
       m_nodeRegistry.removeRootView(rootViewTag);
