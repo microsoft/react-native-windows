@@ -13,7 +13,7 @@ steps:
       $nsm.AddNamespace('ns', $experimentalFeatures.DocumentElement.NamespaceURI)
 
       $xmlNode = $experimentalFeatures.SelectSingleNode('//ns:PropertyGroup/ns:${{ parameters.feature }}', $nsm);
-      $xmlNode.InnerText = '{{ parameters.value }}'
+      $xmlNode.InnerText = '${{ parameters.value }}'
 
       $experimentalFeatures.Save("$pwd\ExperimentalFeatures.props")
     displayName: Set "${{ parameters.feature }}" to "${{ parameters.value }}"
