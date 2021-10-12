@@ -19,7 +19,7 @@ type DialogAction = string;
   buttonNegative = -2,
   buttonNeutral = -3
 */
-type DialogButtonKey = number;
+type DialogButtonKey = Int32;
 export type DialogOptions = {|
   title?: string,
   message?: string,

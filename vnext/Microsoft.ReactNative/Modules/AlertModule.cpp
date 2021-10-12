@@ -15,7 +15,10 @@
 
 namespace Microsoft::ReactNative {
 
-void Alert::showAlert(DialogOptions &&args, std::function<void(std::string)> result) noexcept {
+void Alert::showAlert(
+    DialogOptions &&args,
+    std::function<void(std::string)> /*rerror*/,
+    std::function<void(std::string, int)> result) noexcept {
   m_context.UIDispatcher().Post([weakThis = weak_from_this(), args = std::move(args), result]() mutable {
     if (auto strongThis = weakThis.lock()) {
       strongThis->pendingAlerts.emplace(std::move(args), result);
@@ -96,13 +99,13 @@ void Alert::ProcessPendingAlertRequests() noexcept {
           const winrt::IAsyncOperation<xaml::Controls::ContentDialogResult> &asyncOp, winrt::AsyncStatus status) {
         switch (asyncOp.GetResults()) {
           case xaml::Controls::ContentDialogResult::Primary:
-            jsDispatcher.Post([result] { result("positive"); });
+            jsDispatcher.Post([result] { result(m_constants.buttonClicked, m_constants.buttonPositive); });
             break;
           case xaml::Controls::ContentDialogResult::Secondary:
-            jsDispatcher.Post([result] { result("negative"); });
+            jsDispatcher.Post([result] { result(m_constants.buttonClicked, m_constants.buttonNegative); });
             break;
           case xaml::Controls::ContentDialogResult::None:
-            jsDispatcher.Post([result] { result("neutral"); });
+            jsDispatcher.Post([result] { result(m_constants.buttonClicked, m_constants.buttonNeutral); });
             break;
           default:
             break;
@@ -112,8 +115,17 @@ void Alert::ProcessPendingAlertRequests() noexcept {
       });
 }
 
+Alert::Constants Alert::GetConstants() noexcept {
+  return m_constants;
+}
+
 void Alert::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
+  m_constants.buttonClicked = "buttonClicked";
+  m_constants.dismissed = "dismissed";
+  m_constants.buttonPositive = "dismissed";
+  m_constants.buttonNegative = "dismissed";
+  m_constants.buttonNeutral = "dismissed";
 }
 
 } // namespace Microsoft::ReactNative

@@ -14,6 +14,7 @@ namespace Microsoft::ReactNative {
 REACT_MODULE(Alert)
 struct Alert : public std::enable_shared_from_this<Alert> {
   using DialogOptions = ReactNativeSpecs::DialogManagerWindowsSpec_DialogOptions;
+  using Constants = ReactNativeSpecs::DialogManagerWindowsSpec_Constants;
 
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
@@ -21,14 +22,21 @@ struct Alert : public std::enable_shared_from_this<Alert> {
   REACT_METHOD(showAlert)
   void showAlert(DialogOptions &&args, std::function<void(std::string)> result) noexcept;
 
+  REACT_GET_CONSTANTS(GetConstants)
+  Constants GetConstants() noexcept;
+
  private:
   React::ReactContext m_context;
+  Constants m_constants;
 
   struct AlertRequest {
     DialogOptions args;
-    std::function<void(std::string)> result;
+    std::function<void(std::string, int)> result;
 
-    AlertRequest(DialogOptions &&rargs, std::function<void(std::string)> rresult) noexcept
+    AlertRequest(
+        DialogOptions &&rargs,
+        std::function<void(std::string)> rerror,
+        std::function<void(std::string, int)> rresult) noexcept
         : args(std::move(rargs)), result(rresult) {}
   };
 
