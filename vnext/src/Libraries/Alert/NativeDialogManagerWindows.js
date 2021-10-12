@@ -12,20 +12,37 @@ import type {TurboModule} from '../TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 import type {Int32} from '../Types/CodegenTypes';
 
+/* 'buttonClicked' | 'dismissed' */
+type DialogAction = string;
+/*
+  buttonPositive = -1,
+  buttonNegative = -2,
+  buttonNeutral = -3
+*/
+type DialogButtonKey = number;
 export type DialogOptions = {|
   title?: string,
   message?: string,
   buttonPositive?: string,
   buttonNegative?: string,
   buttonNeutral?: string,
+  items?: Array<string>,
   cancelable?: boolean,
   defaultButton?: Int32,
 |};
 
 export interface Spec extends TurboModule {
+  +getConstants: () => {|
+    +buttonClicked: DialogAction,
+    +dismissed: DialogAction,
+    +buttonPositive: DialogButtonKey,
+    +buttonNegative: DialogButtonKey,
+    +buttonNeutral: DialogButtonKey,
+  |};
   +showAlert: (
     config: DialogOptions,
-    callback: (error: string) => void,
+    onError: (error: string) => void,
+    onAction: (action: DialogAction, buttonKey?: DialogButtonKey) => void,
   ) => void;
 }
 
