@@ -17,7 +17,7 @@ namespace Microsoft::ReactNative {
 
 void Alert::showAlert(
     DialogOptions &&args,
-    std::function<void(std::string)> /*rerror*/,
+    std::function<void(std::string)> /*error*/,
     std::function<void(std::string, int)> result) noexcept {
   m_context.UIDispatcher().Post([weakThis = weak_from_this(), args = std::move(args), result]() mutable {
     if (auto strongThis = weakThis.lock()) {
@@ -99,13 +99,13 @@ void Alert::ProcessPendingAlertRequests() noexcept {
           const winrt::IAsyncOperation<xaml::Controls::ContentDialogResult> &asyncOp, winrt::AsyncStatus status) {
         switch (asyncOp.GetResults()) {
           case xaml::Controls::ContentDialogResult::Primary:
-            jsDispatcher.Post([result] { result(m_constants.buttonClicked, m_constants.buttonPositive); });
+            jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonPositive); });
             break;
           case xaml::Controls::ContentDialogResult::Secondary:
-            jsDispatcher.Post([result] { result(m_constants.buttonClicked, m_constants.buttonNegative); });
+            jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonNegative); });
             break;
           case xaml::Controls::ContentDialogResult::None:
-            jsDispatcher.Post([result] { result(m_constants.buttonClicked, m_constants.buttonNeutral); });
+            jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonNeutral); });
             break;
           default:
             break;
@@ -123,9 +123,9 @@ void Alert::Initialize(React::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
   m_constants.buttonClicked = "buttonClicked";
   m_constants.dismissed = "dismissed";
-  m_constants.buttonPositive = "dismissed";
-  m_constants.buttonNegative = "dismissed";
-  m_constants.buttonNeutral = "dismissed";
+  m_constants.buttonPositive = -1;
+  m_constants.buttonNegative = -2;
+  m_constants.buttonNeutral = -3;
 }
 
 } // namespace Microsoft::ReactNative

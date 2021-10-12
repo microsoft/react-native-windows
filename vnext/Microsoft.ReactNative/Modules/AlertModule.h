@@ -20,7 +20,10 @@ struct Alert : public std::enable_shared_from_this<Alert> {
   void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(showAlert)
-  void showAlert(DialogOptions &&args, std::function<void(std::string)> result) noexcept;
+  void showAlert(
+      DialogOptions &&args,
+      std::function<void(std::string)> error,
+      std::function<void(std::string, int)> result) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
   Constants GetConstants() noexcept;
@@ -33,10 +36,7 @@ struct Alert : public std::enable_shared_from_this<Alert> {
     DialogOptions args;
     std::function<void(std::string, int)> result;
 
-    AlertRequest(
-        DialogOptions &&rargs,
-        std::function<void(std::string)> rerror,
-        std::function<void(std::string, int)> rresult) noexcept
+    AlertRequest(DialogOptions &&rargs, std::function<void(std::string, int)> rresult) noexcept
         : args(std::move(rargs)), result(rresult) {}
   };
 
