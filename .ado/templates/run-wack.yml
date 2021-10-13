@@ -1,0 +1,17 @@
+parameters:
+  - name: packageName
+    type: string
+  - name: reportArtifact
+    type: string
+
+steps:
+  - powershell: .ado/scripts/TestWACK.ps1 -PackageName ${{ parameters.packageName }} -OutputDir $(Build.StagingDirectory)\WACK
+    displayName: Run WACK
+    continueOnError: true # Issue 8812: Not clean
+
+  - task: PublishBuildArtifacts@1
+    displayName: Upload WACK report
+    condition: succeededOrFailed()
+    inputs:
+      pathtoPublish: $(Build.StagingDirectory)\WACK
+      artifactName: ${{ parameters.reportArtifact }}
