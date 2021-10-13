@@ -1,8 +1,63 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Tue, 05 Oct 2021 05:07:00 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Oct 2021 05:07:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Wed, 13 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.7
+- Bump react-native-windows to v0.0.0-canary.396
+- Bump @react-native-windows/automation to v0.0.10
+- Bump @react-native-windows/automation-commands to v0.0.8
+
+## 0.0.0
+
+Tue, 12 Oct 2021 05:07:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.6
+- Bump react-native-windows to v0.0.0-canary.395
+- Bump @react-native-windows/automation to v0.0.9
+- Bump @react-native-windows/automation-commands to v0.0.7
+
+## 0.0.0
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.5
+- Bump react-native-windows to v0.0.0-canary.394
+- Bump @react-native-windows/automation to v0.0.8
+- Bump @react-native-windows/automation-commands to v0.0.6
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.13
+
+## 0.0.0
+
+Fri, 08 Oct 2021 05:05:52 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.393 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/tester to v0.0.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.392 (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.12 (ngerlem@microsoft.com)
 
 ## 0.0.0
 

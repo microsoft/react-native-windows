@@ -2,6 +2,48 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Export complete type information",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Integrate 10-8-21 Nightly Build",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.13",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Oct 2021 05:07:05 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.115",
+      "version": "0.0.0-canary.115",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.5.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7a0c68516b825131c798978f1dfc0088f7115614",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Sep 2021 05:07:03 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.114",
       "version": "0.0.0-canary.114",

@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include "TextViewManager.h"
+#include "TouchEventHandler.h"
 #include "Utils/ShadowNodeTypeUtils.h"
 #include "Utils/XamlIslandUtils.h"
 
@@ -11,13 +12,19 @@
 #include <Views/Text/TextVisitors.h>
 #include <Views/VirtualTextViewManager.h>
 
+#include <UI.Input.h>
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Input.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
+
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Input.Experimental.h>
+#endif
 
 namespace winrt {
 using namespace xaml::Documents;
@@ -35,8 +42,11 @@ class TextShadowNode final : public ShadowNodeBase {
   ShadowNode *m_firstChildNode;
 
   bool m_hasDescendantTextHighlighter{false};
+  bool m_hasDescendantPressable{false};
   std::optional<winrt::Windows::UI::Color> m_backgroundColor{};
   std::optional<winrt::Windows::UI::Color> m_foregroundColor{};
+  std::unique_ptr<TouchEventHandler> m_touchEventHandler = nullptr;
+  winrt::event_revoker<xaml::Controls::ITextBlock> m_selectionChangedRevoker;
 
  public:
   TextShadowNode() {
@@ -53,6 +63,7 @@ class TextShadowNode final : public ShadowNodeBase {
     if (IsVirtualTextShadowNode(&childNode)) {
       auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
       m_hasDescendantTextHighlighter |= textChildNode.hasDescendantTextHighlighter;
+      m_hasDescendantPressable |= textChildNode.hasDescendantPressable;
     }
 
     auto addInline = true;
@@ -79,16 +90,24 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void removeAllChildren() override {
-    m_firstChildNode = nullptr;
-    Super::removeAllChildren();
+    if (m_firstChildNode) {
+      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
+      m_firstChildNode = nullptr;
+    } else {
+      Super::removeAllChildren();
+    }
     RecalculateTextHighlighters();
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
-    if (indexToRemove == 0) {
+    if (indexToRemove == 0 && m_firstChildNode) {
+      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
       m_firstChildNode = nullptr;
+    } else {
+      Super::RemoveChildAt(indexToRemove);
     }
-    Super::RemoveChildAt(indexToRemove);
     RecalculateTextHighlighters();
   }
 
@@ -125,7 +144,41 @@ class TextShadowNode final : public ShadowNodeBase {
     }
   }
 
+  void ToggleTouchEvents(XamlView xamlView, bool selectable) {
+    if (selectable) {
+      if (m_touchEventHandler == nullptr) {
+        m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext(), false);
+      }
+
+      m_selectionChangedRevoker = xamlView.as<xaml::Controls::TextBlock>().SelectionChanged(
+          winrt::auto_revoke, [selectionChanged = this->selectionChanged](const auto &sender, auto &&) {
+            const auto textBlock = sender.as<xaml::Controls::TextBlock>();
+            *selectionChanged =
+                *selectionChanged || textBlock.SelectionStart().Offset() != textBlock.SelectionEnd().Offset();
+          });
+
+      m_touchEventHandler->AddTouchHandlers(xamlView, GetRootView(), true);
+    } else {
+      if (m_touchEventHandler != nullptr) {
+        m_touchEventHandler->RemoveTouchHandlers();
+        m_selectionChangedRevoker.revoke();
+      }
+    }
+  }
+
+  XamlView GetRootView() {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(m_rootTag);
+      if (!shadowNode)
+        return nullptr;
+
+      return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
+    }
+    return nullptr;
+  }
+
   TextTransform textTransform{TextTransform::Undefined};
+  std::shared_ptr<bool> selectionChanged = std::make_shared<bool>(false);
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -199,14 +252,17 @@ bool TextViewManager::UpdateProperty(
       textBlock.ClearValue(xaml::Controls::TextBlock::LineStackingStrategyProperty());
     }
   } else if (propertyName == "selectable") {
+    const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
       const auto selectable = propertyValue.AsBoolean();
       textBlock.IsTextSelectionEnabled(selectable);
+      node->ToggleTouchEvents(textBlock, selectable);
       if (selectable) {
         EnsureUniqueTextFlyoutForXamlIsland(textBlock);
       }
     } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextSelectionEnabledProperty());
+      node->ToggleTouchEvents(textBlock, false);
       ClearUniqueTextFlyoutForXamlIsland(textBlock);
     }
   } else if (propertyName == "allowFontScaling") {
@@ -280,6 +336,35 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
+void TextViewManager::OnPointerEvent(
+    ShadowNodeBase *node,
+    winrt::Microsoft::ReactNative::ReactPointerEventArgs const &args) {
+  const auto textNode = static_cast<TextShadowNode *>(node);
+  const auto textBlock = node->GetView().as<xaml::Controls::TextBlock>();
+  if (textNode->m_hasDescendantPressable && args.Target() == node->GetView()) {
+    // Set the target to null temporarily
+    args.Target(nullptr);
+
+    // Get the pointer point and hit test
+    const auto point = args.Args().GetCurrentPoint(textBlock).RawPosition();
+    HitTest(node, args, point);
+
+    // Set the target back to the current view if hit test failed
+    if (!args.Target()) {
+      args.Target(node->GetView());
+    }
+  }
+
+  if (args.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::CaptureLost) {
+    if (!*textNode->selectionChanged) {
+      args.Kind(winrt::Microsoft::ReactNative::PointerEventKind::End);
+    }
+    *textNode->selectionChanged = false;
+  }
+
+  Super::OnPointerEvent(node, args);
+}
+
 /*static*/ void TextViewManager::UpdateTextHighlighters(ShadowNodeBase *node, bool highlightAdded) {
   if (IsTextShadowNode(node)) {
     const auto textNode = static_cast<TextShadowNode *>(node);
@@ -287,6 +372,13 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
       textNode->m_hasDescendantTextHighlighter = true;
     }
     textNode->RecalculateTextHighlighters();
+  }
+}
+
+/*static*/ void TextViewManager::SetDescendantPressable(ShadowNodeBase *node) {
+  if (IsTextShadowNode(node)) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    textNode->m_hasDescendantPressable = true;
   }
 }
 

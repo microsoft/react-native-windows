@@ -1,0 +1,10 @@
+parameters:
+  - name: certificateName
+    type: string
+
+steps:
+  - powershell: |
+      $PfxBytes = [System.Convert]::FromBase64String("${{ variables[parameters.certificateVariable] }}")
+      $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx) )
+      [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
+    displayName: Write certificate
