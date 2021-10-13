@@ -14,19 +14,6 @@ variables:
   - name: NugetSecurityAnalysisWarningLevel
     value: 'warn'
 
-schedules:
-- cron: "0 5 * * *" # 5AM Daily UTC (10PM Daily PST)
-  displayName: Nightly master publish build
-  branches:
-    include:
-      - master
-
-- cron: "0 15 * * 1" # 3PM Monday UTC (8AM Monday PST)
-  displayName: Weekly stable publish build
-  branches:
-    include:
-      - "*-stable"
-
 trigger: none
 pr: none
 
