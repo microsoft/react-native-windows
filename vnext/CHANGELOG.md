@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 12 Oct 2021 05:07:11 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Oct 2021 05:07:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.396
+
+Wed, 13 Oct 2021 05:07:05 GMT
+
+### Changes
+
+- Update Alert.windows.js to catch up facebook's latest Alert.js (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Set Automation Peer for ReactImage (ngerlem@microsoft.com)
+- Guard against nodes going away (i.e. in react-navigation) (asklar@microsoft.com)
+- Fixes bug introduced by e7735a8 (erozell@outlook.com)
 
 ## 0.0.0-canary.395
 

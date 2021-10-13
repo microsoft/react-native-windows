@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update Alert.windows.js to catch up facebook's latest Alert.js",
-  "packageName": "react-native-windows",
-  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 13 Oct 2021 05:07:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.396",
+      "version": "0.0.0-canary.396",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Update Alert.windows.js to catch up facebook's latest Alert.js",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Set Automation Peer for ReactImage",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Guard against nodes going away (i.e. in react-navigation)",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes bug introduced by e7735a8",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Oct 2021 05:07:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.395",
       "version": "0.0.0-canary.395",
