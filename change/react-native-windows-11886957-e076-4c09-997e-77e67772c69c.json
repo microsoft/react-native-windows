@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Remove rtti even when fabric enabled",
+  "comment": "Remove rtti even when fabric enabled (in release)",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
