@@ -1050,8 +1050,9 @@ struct dynamic::GetAddrImpl<dynamic::ObjectImpl> {
   }
 };
 
-// [Win - Forked to avoid using exported data across the dll boundary.  Using exported data prevents the ability to delay load the dll
-// We can remove this, once react-native-win32 stops exporting folly (gets entirely onto the ABI interface)
+// [Win - Forked to avoid using exported data across the dll boundary.  Using exported data prevents the ability to
+// delay load the dll We can remove this, once react-native-win32 stops exporting folly (gets entirely onto the ABI
+// interface)
 template <class T>
 T &dynamic::get() {
   if (auto *p = get_nothrow<T>()) {
