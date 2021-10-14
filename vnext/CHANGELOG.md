@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 Oct 2021 05:07:05 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Oct 2021 05:06:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.397
+
+Thu, 14 Oct 2021 05:06:00 GMT
+
+### Changes
+
+- Fixes text child removal for fast text path (erozell@outlook.com)
 
 ## 0.0.0-canary.396
 

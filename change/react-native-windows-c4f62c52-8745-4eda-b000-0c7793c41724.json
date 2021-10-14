@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes text child removal for fast text path",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
