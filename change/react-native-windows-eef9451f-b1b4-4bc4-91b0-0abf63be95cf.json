@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove Proofing menu item when spellCheck disabled",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
