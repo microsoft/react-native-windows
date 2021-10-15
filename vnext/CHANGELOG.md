@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 14 Oct 2021 05:06:00 GMT and should not be manually modified.
+This log was last generated on Fri, 15 Oct 2021 05:06:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.398
+
+Fri, 15 Oct 2021 05:06:52 GMT
+
+### Changes
+
+- Remove rtti even when fabric enabled (in release) (30809111+acoates-ms@users.noreply.github.com)
+- Remove Proofing menu item when spellCheck disabled (erozell@outlook.com)
 
 ## 0.0.0-canary.397
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 Oct 2021 05:06:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.398",
+      "version": "0.0.0-canary.398",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Remove rtti even when fabric enabled (in release)",
+            "commit": "752875e9120201cd1952ebdf7add3de20ed4bd9c"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Remove Proofing menu item when spellCheck disabled",
+            "commit": "752875e9120201cd1952ebdf7add3de20ed4bd9c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Oct 2021 05:06:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.397",
       "version": "0.0.0-canary.397",
