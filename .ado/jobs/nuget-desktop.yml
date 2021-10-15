@@ -5,7 +5,8 @@ jobs:
       - template: ../variables/vs2019.yml
     displayName: Pack Desktop NuGet Package
     dependsOn:
-      - Desktop
+      - DesktopX64Release
+      - DesktopX86Debug
       - UniversalBuild # Needed to have artifacts uploaded from LayoutHeaders
     pool:
       vmImage: $(VmImage)

@@ -2,6 +2,90 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 Oct 2021 05:06:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.398",
+      "version": "0.0.0-canary.398",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Remove rtti even when fabric enabled (in release)",
+            "commit": "752875e9120201cd1952ebdf7add3de20ed4bd9c"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Remove Proofing menu item when spellCheck disabled",
+            "commit": "752875e9120201cd1952ebdf7add3de20ed4bd9c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Oct 2021 05:06:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.397",
+      "version": "0.0.0-canary.397",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes text child removal for fast text path",
+            "commit": "235047afcbddf692cd6f4ed65e5f59e30cf2ae15"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Oct 2021 05:07:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.396",
+      "version": "0.0.0-canary.396",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Update Alert.windows.js to catch up facebook's latest Alert.js",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Set Automation Peer for ReactImage",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Guard against nodes going away (i.e. in react-navigation)",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes bug introduced by e7735a8",
+            "commit": "23627a081b49643d73a76569b654b43f14fcc434"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Oct 2021 05:07:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.395",
+      "version": "0.0.0-canary.395",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Improve autolinking check performance by delaying checking whether dependencies are met until it is needed.",
+            "commit": "45e8eae5d6b79f8d08d3cf53d86b98a02b647514"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Oct 2021 05:06:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.394",
       "version": "0.0.0-canary.394",
