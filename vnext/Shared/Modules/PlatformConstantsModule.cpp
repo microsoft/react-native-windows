@@ -60,10 +60,16 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
 }
 
 /*static*/ int32_t PlatformConstantsModule::OsVersion() noexcept {
-  for (uint16_t i = 1;; ++i) {
-    if (!ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", i)) {
-      return i - 1;
+  try {
+    for (uint16_t i = 1;; ++i) {
+      if (!ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", i)) {
+        return i - 1;
+      }
     }
+  } catch (winrt::hresult_error const &e) {
+    // ApiInformation::IsApiContractPresent did not exist before Windows 10240
+    // So this indicates a version of windows earlier than this.
+    return 0;
   }
 }
 
