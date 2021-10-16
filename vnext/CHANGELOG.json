@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 16 Oct 2021 05:08:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.399",
+      "version": "0.0.0-canary.399",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Fix WACK for apps not packaging hermes.dll",
+            "commit": "306d5d6dfbb6e0613371142ab77e446e752348ab"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Oct 2021 05:06:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.398",
       "version": "0.0.0-canary.398",

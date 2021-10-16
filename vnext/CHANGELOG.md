@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 15 Oct 2021 05:06:52 GMT and should not be manually modified.
+This log was last generated on Sat, 16 Oct 2021 05:08:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.399
+
+Sat, 16 Oct 2021 05:08:25 GMT
+
+### Changes
+
+- Fix WACK for apps not packaging hermes.dll (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.398
 
