@@ -103,14 +103,24 @@ auto LinkingManagerModule::getMethods() -> std::vector<Method> {
       Method(
           "openURL",
           [](folly::dynamic args, Callback successCallback, Callback errorCallback) {
-            winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
-            openURLAsync(uri, successCallback, errorCallback);
+            auto inputUrl = facebook::xplat::jsArgAsString(args, 0);
+            try {
+              winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(inputUrl));
+              openURLAsync(uri, successCallback, errorCallback);
+            } catch (winrt::hresult_error& e) {
+              errorCallback({folly::dynamic::object("code", e.code().value)(
+                  "message", "Unable to open URL: " + inputUrl)});
+            }
           }),
       Method(
           "canOpenURL",
           [](folly::dynamic args, Callback successCallback, Callback errorCallback) {
-            winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
-            canOpenURLAsync(uri, successCallback, errorCallback);
+            try {
+              winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
+              canOpenURLAsync(uri, successCallback, errorCallback);
+            } catch (winrt::hresult_error& e) {
+              successCallback({false});
+            }
           }),
       Method(
           "getInitialURL",
