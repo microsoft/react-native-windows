@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Catch and report errors in linking module",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
