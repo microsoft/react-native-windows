@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.0.0-canary.16",
+  "version": "0.67.0-preview.0",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -43,7 +43,7 @@
     "typescript": "^3.8.3"
   },
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

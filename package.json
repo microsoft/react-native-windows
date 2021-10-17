@@ -6,7 +6,7 @@
     "build": "lage build -- --color",
     "lint": "lage lint --verbose -- --color",
     "lint:fix": "lage lint:fix -- --color",
-    "change": "beachball change",
+    "change": "beachball change --branch 0.67-stable",
     "clean": "lage clean -- --color",
     "doc": "doxysaurus --config vnext/doxysaurus.json",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
@@ -50,7 +50,7 @@
     "**/detox/ws": "^5.2.3"
   },
   "beachball": {
-    "branch": "main",
+    "branch": "0.67-stable",
     "gitTags": false
   }
 }
