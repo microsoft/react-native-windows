@@ -15,6 +15,7 @@
 #endif
 
 #include "HermesSamplingProfiler.h"
+#include "HermesShim.h"
 
 namespace Microsoft::ReactNative {
 
@@ -54,7 +55,7 @@ winrt::fire_and_forget HermesSamplingProfiler::Start() noexcept {
   if (!s_isStarted) {
     s_isStarted = true;
     co_await winrt::resume_background();
-    facebook::hermes::HermesRuntime::enableSamplingProfiler();
+    HermesShim::enableSamplingProfiler();
   }
 #endif
   co_return;
@@ -65,9 +66,9 @@ std::future<std::string> HermesSamplingProfiler::Stop() noexcept {
   if (s_isStarted) {
     s_isStarted = false;
     co_await winrt::resume_background();
-    facebook::hermes::HermesRuntime::disableSamplingProfiler();
+    HermesShim::disableSamplingProfiler();
     s_lastTraceFilePath = co_await getTraceFilePath();
-    facebook::hermes::HermesRuntime::dumpSampledTraceToFile(s_lastTraceFilePath);
+    HermesShim::dumpSampledTraceToFile(s_lastTraceFilePath);
   }
 #endif
   co_return s_lastTraceFilePath;
