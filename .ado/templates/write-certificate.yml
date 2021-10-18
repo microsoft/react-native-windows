@@ -6,6 +6,9 @@ steps:
   - powershell: |
       Write-Host "Using certificate named ${{ parameters.certificateName }}"
       Write-Host "##vso[task.setvariable variable=EncodedKey]$(${{ parameters.certificateName }})"
+    displayName: Determining certificate
+
+  - powershell: |
       $PfxBytes = [System.Convert]::FromBase64String("$(EncodedKey)")
       $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx) )
       [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
