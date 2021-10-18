@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 18 Oct 2021 15:07:56 GMT",
+      "tag": "react-native-windows_v0.64.23",
+      "version": "0.64.23",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Avoid exporting data as that breaks delay loading",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d6ab3a6fb5a1c5992d295e9cf1d6eacac1696b94",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Crash using PlatformConstants on Windows 8.1",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "7cd470896df06c5196ee37a5d52eb6dc7abe8498",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Oct 2021 20:39:16 GMT",
       "tag": "react-native-windows_v0.64.22",
       "version": "0.64.22",

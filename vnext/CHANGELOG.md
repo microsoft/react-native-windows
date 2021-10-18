@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 Oct 2021 20:39:16 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Oct 2021 15:07:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.23
+
+Mon, 18 Oct 2021 15:07:56 GMT
+
+### Patches
+
+- Avoid exporting data as that breaks delay loading (30809111+acoates-ms@users.noreply.github.com)
+- Crash using PlatformConstants on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.22
 
