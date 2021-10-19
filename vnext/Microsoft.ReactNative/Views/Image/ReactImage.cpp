@@ -306,13 +306,6 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       bool createImageBrush{!imageBrush};
       if (createImageBrush) {
         imageBrush = winrt::ImageBrush{};
-
-        strong_this->m_imageBrushOpenedRevoker =
-            imageBrush.ImageOpened(winrt::auto_revoke, [weak_this, imageBrush](const auto &, const auto &) {
-              if (auto strong_this{weak_this.get()}) {
-                imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
-              }
-            });
       }
 
       if (source.sourceFormat == ImageSourceFormat::Svg) {
@@ -321,11 +314,14 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         if (!svgImageSource) {
           svgImageSource = winrt::SvgImageSource{};
 
-          strong_this->m_svgImageSourceOpenedRevoker =
-              svgImageSource.Opened(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
+          strong_this->m_svgImageSourceOpenedRevoker = svgImageSource.Opened(
+              winrt::auto_revoke, [weak_this, fireLoadEndEvent, imageBrush](const auto &, const auto &) {
                 auto strong_this{weak_this.get()};
-                if (strong_this && fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                if (strong_this) {
+                  imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
+                  if (fireLoadEndEvent) {
+                    strong_this->m_onLoadEndEvent(*strong_this, true);
+                  }
                 }
               });
 
@@ -354,17 +350,20 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
           bitmapImage = winrt::BitmapImage{};
 
           strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
-              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
+              winrt::auto_revoke, [weak_this, fireLoadEndEvent, imageBrush](const auto &, const auto &) {
                 imageBrush.Opacity(1);
 
                 auto strong_this{weak_this.get()};
-                if (strong_this && fireLoadEndEvent) {
-                  if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
-                    strong_this->m_imageSource.height = bitmap.PixelHeight();
-                    strong_this->m_imageSource.width = bitmap.PixelWidth();
-                  }
+                if (strong_this) {
+                  imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
+                  if (fireLoadEndEvent) {
+                    if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
+                      strong_this->m_imageSource.height = bitmap.PixelHeight();
+                      strong_this->m_imageSource.width = bitmap.PixelWidth();
+                    }
 
-                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                    strong_this->m_onLoadEndEvent(*strong_this, true);
+                  }
                 }
               });
 
