@@ -288,7 +288,7 @@ function syncReactNativeDependencies(
   const newDeps = {
     ..._.pick(pkg.dependencies, extraDeps),
     ...reactNativePackageDiff.newPackage.dependencies,
-  };
+  } as Record<string, string>;
   if (Object.keys(newDeps).length === 0) {
     delete pkg.dependencies;
   } else {
@@ -302,7 +302,7 @@ function syncReactNativeDependencies(
   const newPeerDeps = {
     ..._.pick(pkg.peerDependencies, extraPeerDeps),
     ...reactNativePackageDiff.newPackage.peerDependencies,
-  };
+  } as Record<string, string>;
   if (Object.keys(newPeerDeps).length === 0) {
     delete pkg.peerDependencies;
   } else {

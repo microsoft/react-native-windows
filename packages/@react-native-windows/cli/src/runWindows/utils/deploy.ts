@@ -298,7 +298,7 @@ export async function deployToDevice(
       verbose,
     );
   } catch (e) {
-    if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
+    if ((e as Error).message.includes('Error code 2148734208 for command')) {
       await deployTool.installAppPackage(
         appxFile,
         device,
@@ -307,7 +307,7 @@ export async function deployToDevice(
         verbose,
       );
     } else {
-      handleResponseError(e);
+      handleResponseError(e as Error);
     }
   }
 }

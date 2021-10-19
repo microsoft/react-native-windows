@@ -41,7 +41,7 @@
     "metro-config": "^0.66.0",
     "ora": "^3.4.0",
     "prettier": "1.19.1",
-    "typescript": "^3.8.3",
+    "typescript": "^4.4.4",
     "walkdir": "^0.4.1",
     "ws": "^7.4.6"
   },

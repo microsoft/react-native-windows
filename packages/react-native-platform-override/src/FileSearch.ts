@@ -95,7 +95,7 @@ async function exists(filepath: string): Promise<boolean> {
     await fs.promises.access(filepath);
     return true;
   } catch (ex) {
-    if (ex.code === 'ENOENT') {
+    if ((ex as any).code === 'ENOENT') {
       return false;
     } else {
       throw ex;
