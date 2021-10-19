@@ -127,12 +127,6 @@ export type AccessibilityActionInfo = Readonly<{
   label?: string;
 }>;
 
-export type AccessibilityActionEvent = RN.NativeSyntheticEvent<
-  Readonly<{
-    actionName: string;
-  }>
-  >;
-
 export type AccessibilityState = RN.AccessibilityState & { multiselectable?: boolean, required?: boolean };
 
 export type SharedAccessibilityPropsIOSandWin32 = {

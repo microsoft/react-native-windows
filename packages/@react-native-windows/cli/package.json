@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.89",
+  "version": "0.0.0-canary.94",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "@react-native-windows/package-utils": "^0.0.0-canary.21",
     "@react-native-windows/telemetry": "^0.0.0-canary.23",
+    "@xmldom/xmldom": "^0.7.5",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
@@ -34,7 +35,6 @@
     "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
-    "xmldom": "^0.5.0",
     "xpath": "^0.0.27"
   },
   "devDependencies": {

@@ -312,6 +312,12 @@
     <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Text\TextHitTestUtils.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextHitTestVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
     <ClCompile Include="Views\Text\TextParentVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
@@ -327,6 +333,7 @@
     <ClCompile Include="Views\Text\TextVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
+    <ClCompile Include="ReactPointerEventArgs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -693,6 +700,12 @@
     <ClInclude Include="Views\Text\TextHighlighterVisitor.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
+    <ClInclude Include="Views\Text\TextHitTestVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextHitTestUtils.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
     <ClInclude Include="Views\Text\TextParentVisitor.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
@@ -714,6 +727,7 @@
     <ClInclude Include="Views\Text\TextVisitors.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
+    <ClInclude Include="ReactPointerEventArgs.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -751,6 +765,7 @@
     <Midl Include="JsiApi.idl" />
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

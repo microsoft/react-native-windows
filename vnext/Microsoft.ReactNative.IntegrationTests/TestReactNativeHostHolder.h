@@ -11,9 +11,14 @@
 namespace ReactNativeIntegrationTests {
 
 struct TestReactNativeHostHolder {
+  struct Options {
+    bool LoadInstance = true;
+  };
+
   TestReactNativeHostHolder(
       std::wstring_view jsBundle,
-      Mso::Functor<bool(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer) noexcept;
+      Mso::Functor<void(winrt::Microsoft::ReactNative::ReactNativeHost const &)> &&hostInitializer,
+      Options &&options = {}) noexcept;
   ~TestReactNativeHostHolder() noexcept;
 
   winrt::Microsoft::ReactNative::ReactNativeHost const &Host() const noexcept;

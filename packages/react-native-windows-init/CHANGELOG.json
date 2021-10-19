@@ -2,6 +2,81 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "react-native-windows-init_v1.1.64",
+      "version": "1.1.64",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.94",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Oct 2021 05:07:05 GMT",
+      "tag": "react-native-windows-init_v1.1.63",
+      "version": "1.1.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.93",
+            "author": "asklar@microsoft.com",
+            "commit": "f881f033a0d286a9c1df596c8ea3644c41ea9e8f",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 05 Oct 2021 05:07:00 GMT",
+      "tag": "react-native-windows-init_v1.1.63",
+      "version": "1.1.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.92",
+            "author": "jthysell@microsoft.com",
+            "commit": "afb7054ff284e62884bcf987d8a494326aadb8c5",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 Sep 2021 05:06:48 GMT",
+      "tag": "react-native-windows-init_v1.1.63",
+      "version": "1.1.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.91",
+            "author": "yicyao@microsoft.com",
+            "commit": "58c1fb59eaebbf496915921062540b963aff3685",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Sep 2021 05:06:54 GMT",
+      "tag": "react-native-windows-init_v1.1.63",
+      "version": "1.1.63",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.90",
+            "author": "ngerlem@microsoft.com",
+            "commit": "3bac02eb67a31b7060cfa8541a013055f87eb7b4",
+            "package": "react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 Sep 2021 05:06:48 GMT",
       "tag": "react-native-windows-init_v1.1.63",
       "version": "1.1.63",

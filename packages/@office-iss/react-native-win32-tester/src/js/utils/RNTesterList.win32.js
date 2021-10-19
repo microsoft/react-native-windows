@@ -23,7 +23,6 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples/Button/ButtonExample'),
   },
-  ,
   /*
   {
     key: 'FlatListExampleIndex',
@@ -80,6 +79,10 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'SwitchExample',
     category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
+  },
+  {
+    key: 'TextInputs with key prop',
+    module: require('../examples/TextInput/TextInputKeyProp'),
   },
   {
     key: 'TouchableExample',

@@ -1,8 +1,128 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Tue, 28 Sep 2021 05:07:03 GMT and should not be manually modified.
+This log was last generated on Sun, 17 Oct 2021 05:06:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.12
+
+Sun, 17 Oct 2021 05:06:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.11
+
+## 0.0.11
+
+Sat, 16 Oct 2021 05:08:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.10
+
+## 0.0.10
+
+Fri, 15 Oct 2021 05:06:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.9
+
+## 0.0.9
+
+Thu, 14 Oct 2021 05:06:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.8
+
+## 0.0.8
+
+Wed, 13 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.7
+
+## 0.0.7
+
+Tue, 12 Oct 2021 05:07:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.6
+
+## 0.0.6
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.5
+
+## 0.0.6-7
+
+Fri, 08 Oct 2021 05:05:52 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-7 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.6-6
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-6 (asklar@microsoft.com)
+
+## 0.0.6-5
+
+Tue, 05 Oct 2021 05:07:00 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-5 (erozell@outlook.com)
+
+## 0.0.6-4
+
+Mon, 04 Oct 2021 05:06:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-4 (erozell@outlook.com)
+
+## 0.0.6-3
+
+Sat, 02 Oct 2021 05:05:38 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-3 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.6-2
+
+Fri, 01 Oct 2021 05:05:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-2 (julio.rocha@microsoft.com)
+
+## 0.0.6-1
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-1 (erozell@outlook.com)
+
+## 0.0.6-0
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/automation-channel to v0.0.5-0 (anandrag@microsoft.com)
 
 ## 0.0.5
 

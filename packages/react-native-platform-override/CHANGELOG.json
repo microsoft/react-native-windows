@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 06 Oct 2021 05:07:05 GMT",
+      "tag": "react-native-platform-override_v1.5.0",
+      "version": "1.5.0",
+      "comments": {
+        "minor": [
+          {
+            "comment": "Teach integration tooling about new nightly pattern",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7a0c68516b825131c798978f1dfc0088f7115614",
+            "package": "react-native-platform-override"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "react-native-platform-override_v1.4.18",
       "version": "1.4.18",

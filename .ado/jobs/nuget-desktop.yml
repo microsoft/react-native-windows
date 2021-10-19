@@ -5,7 +5,8 @@ jobs:
       - template: ../variables/vs2019.yml
     displayName: Pack Desktop NuGet Package
     dependsOn:
-      - Desktop
+      - DesktopX64Release
+      - DesktopX86Debug
       - UniversalBuild # Needed to have artifacts uploaded from LayoutHeaders
     pool:
       vmImage: $(VmImage)
@@ -19,7 +20,7 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - task: NuGetToolInstaller@0
+      - task: NuGetToolInstaller@1
         inputs:
           versionSpec: ">=5.8.0"
 
