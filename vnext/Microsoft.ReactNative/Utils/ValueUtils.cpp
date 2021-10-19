@@ -94,14 +94,11 @@ struct BrushCache {
               oldSCBrush.Color(newSCBrush.Color());
             }
           }
-          // Similar logic can be applied to copy Acrylic or Reveal brushes
-          /*
-          else if (auto oldAcBrush = entry.second.try_as<xaml::Media::AcrylicBrush>()) {
-            if (auto newAcBrush = resource.try_as<xaml::Media::AcrylicBrush>()) {
-              // ...
-            }
+          // Handle other brush types changing by simply updating the value stored at the resource name's
+          // entry in the map
+          else if (auto newBrush = resource.try_as<xaml::Media::Brush>()) {
+            m_map.insert_or_assign(entry.first, newBrush);
           }
-          */
         }
       });
     });
