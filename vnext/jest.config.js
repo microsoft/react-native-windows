@@ -13,7 +13,7 @@ module.exports = {
   testRegex: '/__tests__/.*-test\\.js$',
   testPathIgnorePatterns: [
     // Only run the version of the tests that are part of the merged source output
-    'src',
+    'src/Libraries',
   ],
   unmockedModulePathPatterns: [
     'react',
