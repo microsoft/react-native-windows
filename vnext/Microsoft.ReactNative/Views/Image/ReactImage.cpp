@@ -47,7 +47,7 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
       brush->AvailableSize(finalSize);
     }
   } else if (auto brush{Background().try_as<winrt::ImageBrush>()}) {
-    brush.Stretch(ResizeModeToStretch(m_resizeMode, finalSize));
+    brush.Stretch(ResizeModeToStretch(finalSize));
   }
 
   return finalSize;
@@ -79,7 +79,7 @@ void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
     } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->ResizeMode(value);
     } else if (auto bitmapBrush{Background().as<winrt::ImageBrush>()}) {
-      bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
+      bitmapBrush.Stretch(ResizeModeToStretch());
     }
   }
 }
@@ -120,12 +120,12 @@ void ReactImage::TintColor(winrt::Color value) {
   }
 }
 
-winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode value) {
-  return ResizeModeToStretch(value, {static_cast<float>(ActualWidth()), static_cast<float>(ActualHeight())});
+winrt::Stretch ReactImage::ResizeModeToStretch() {
+  return ResizeModeToStretch({static_cast<float>(ActualWidth()), static_cast<float>(ActualHeight())});
 }
 
-winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode value, winrt::Size size) {
-  switch (value) {
+winrt::Stretch ReactImage::ResizeModeToStretch(winrt::Size size) {
+  switch (m_resizeMode) {
     case facebook::react::ImageResizeMode::Cover:
       return winrt::Stretch::UniformToFill;
     case facebook::react::ImageResizeMode::Stretch:
@@ -312,7 +312,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       bool createImageBrush{!imageBrush};
       if (createImageBrush) {
         imageBrush = winrt::ImageBrush{};
-        imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
+        imageBrush.Stretch(strong_this->ResizeModeToStretch());
       }
 
       if (source.sourceFormat == ImageSourceFormat::Svg) {
@@ -362,6 +362,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                   if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
                     strong_this->m_imageSource.height = bitmap.PixelHeight();
                     strong_this->m_imageSource.width = bitmap.PixelWidth();
+                    imageBrush.Stretch(strong_this->ResizeModeToStretch());
                   }
 
                   strong_this->m_onLoadEndEvent(*strong_this, true);
