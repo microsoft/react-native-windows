@@ -45,6 +45,7 @@
     "node-fetch": "2.6.1",
     "node-notifier": "^9.0.0",
     "set-value": "^4.0.1",
+    "strip-ansi": "^6.0.1",
     "**/parse-url/normalize-url": "^4.5.1",
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
