@@ -68,6 +68,9 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 
  private:
   xaml::Media::Stretch ResizeModeToStretch(facebook::react::ImageResizeMode value);
+  xaml::Media::Stretch ResizeModeToStretch(
+      facebook::react::ImageResizeMode value,
+      winrt::Windows::Foundation::Size size);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
   GetImageMemoryStreamAsync(ReactImageSource source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
