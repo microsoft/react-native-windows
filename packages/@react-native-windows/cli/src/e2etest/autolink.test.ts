@@ -1,8 +1,14 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ * Licensed under the MIT License.
+ * @format
+ */
+
 import path from 'path';
-import { projectConfigWindows } from '../config/projectConfig';
-import {AutolinkWindows} from '../runWindows/utils/autolink';
-import {DOMParser} from 'xmldom';
-import { ensureWinUI3Project } from './projectConfig.utils';
+import {projectConfigWindows} from '../config/projectConfig';
+import {AutolinkWindows, autolinkOptions} from '../runWindows/utils/autolink';
+import {DOMParser} from '@xmldom/xmldom';
+import {ensureWinUI3Project} from './projectConfig.utils';
 
 test('autolink with no windows project', () => {
     expect(() => {
@@ -43,9 +49,9 @@ test('autolink with no windows project', () => {
 
   test('autolink fixup sln', () => {
     const autolink = new AutolinkTest(
-      {windows: {folder: __dirname, sourceDir: '.'}},
+      {windows: {}},
       {},
-      {check: true, logging: false, sln: 'foo'},
+      {check: true, logging: false},
     );
     expect(autolink.getWindowsProjectConfig().solutionFile).toBeUndefined();
     expect(() => {
@@ -116,6 +122,9 @@ test('autolink with no windows project', () => {
           hooks: {},
           params: [],
         },
+        assets: [],
+        hooks: {},
+        params: [],
       },
       {
         check: true,
@@ -144,6 +153,9 @@ test('autolink with no windows project', () => {
           hooks: {},
           params: [],
         },
+        assets: [],
+        hooks: {},
+        params: [],
       },
       {
         check: true,
@@ -177,10 +189,10 @@ test('autolink with no windows project', () => {
               ],
             },
           },
-          assets: [],
-          hooks: {},
-          params: [],
         },
+        assets: [],
+        hooks: {},
+        params: [],
       },
       {
         check: true,
@@ -217,10 +229,10 @@ test('autolink with no windows project', () => {
               ],
             },
           },
-          assets: [],
-          hooks: {},
-          params: [],
         },
+        assets: [],
+        hooks: {},
+        params: [],
       },
       {
         check: true,
@@ -360,21 +372,45 @@ test('autolink with no windows project', () => {
               ],
             },
           },
-          assets: [],
-          hooks: {},
-          params: [],
         },
+        assets: [],
+        hooks: {},
+        params: [],
       },
-      {
-        check: true,
-        logging: false,
-        proj: 'projects/WithIndirectDependency/windows/WithIndirectDependency/WithIndirectDependency.vcxproj',
-      },
-    );
-    const replacements = autolink.getCppReplacements();
-    expect(replacements.cppIncludes).toMatch(/#include <Garfield.h>/);
-    expect(replacements.cppIncludes).toMatch(/#include <Snoopy.h>/);
-    expect(replacements.cppPackageProviders).toContain(
-      'packageProviders.Append(winrt::FamousAnimalCartoons())',
-    );
-  });
+    },
+    {
+      check: true,
+      logging: false,
+      proj:
+        'projects/WithIndirectDependency/windows/WithIndirectDependency/WithIndirectDependency.vcxproj',
+    },
+  );
+  const replacements = autolink.getCppReplacements();
+  expect(replacements.cppIncludes).toMatch(/#include <Garfield.h>/);
+  expect(replacements.cppIncludes).toMatch(/#include <Snoopy.h>/);
+  expect(replacements.cppPackageProviders).toContain(
+    'packageProviders.Append(winrt::FamousAnimalCartoons())',
+  );
+});
+
+test('autolinkOptions - validate options', () => {
+  for (const commandOption of autolinkOptions) {
+    // Validate names
+    expect(commandOption.name).not.toBeNull();
+    expect(commandOption.name.startsWith('--')).toBe(true);
+    expect(commandOption.name).toBe(commandOption.name.trim());
+
+    // Validate defaults
+    if (
+      !commandOption.name.endsWith(' [string]') &&
+      !commandOption.name.endsWith(' [number]')
+    ) {
+      // Commander ignores defaults for flags, so leave undefined to prevent confusion
+      expect(commandOption.default).toBeUndefined();
+    }
+
+    // Validate description
+    expect(commandOption.description).not.toBeNull();
+    expect(commandOption.description!).toBe(commandOption.description!.trim());
+  }
+});

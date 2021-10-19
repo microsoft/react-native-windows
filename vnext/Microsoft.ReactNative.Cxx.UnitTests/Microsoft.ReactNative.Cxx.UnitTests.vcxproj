@@ -11,6 +11,8 @@
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
+    <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
+    <V8AppPlatform>uwp</V8AppPlatform>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -71,6 +73,10 @@
       <CallingConvention>Cdecl</CallingConvention>
     </ClCompile>
     <Link>
+      <AdditionalDependencies>
+        delayimp.lib;
+        %(AdditionalDependencies)
+      </AdditionalDependencies>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
     </Link>
@@ -113,6 +119,9 @@
     <ClInclude Include="ReactModuleBuilderMock.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="JsiTest.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="JsonJSValueReader.cpp" />
     <ClCompile Include="JsonReader.cpp" />
     <ClCompile Include="JSValueReaderTest.cpp" />
@@ -149,11 +158,13 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiApi.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactInstanceSettings.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeHost.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactPointerEventArgs.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
+    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.4" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210312.4" />
+    <PackageReference Include="$(V8PackageName)" Version="$(V8PackageVersion)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>

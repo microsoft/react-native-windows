@@ -21,6 +21,7 @@ import * as configUtils from '../../config/configUtils';
 
 import {
   Command,
+  CommandOption,
   Config,
   Dependency,
   ProjectConfig,
@@ -31,7 +32,7 @@ import {
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
-import {XMLSerializer} from 'xmldom';
+import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 
 export class AutolinkWindows {
@@ -681,7 +682,28 @@ export class AutolinkWindows {
     const useWinUI3FromConfig = this.getWindowsConfig().useWinUI3;
     const experimentalFeatures = this.getExperimentalFeaturesPropsXml();
     if (experimentalFeatures) {
-      // use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
+      const useWinUI3FromExperimentalFeatures =
+        configUtils
+          .tryFindPropertyValue(experimentalFeatures.content, 'UseWinUI3')
+          ?.toLowerCase() === 'true';
+      // Check if WinUI2xVersion is specified in experimental features
+      const targetWinUI2xVersion = configUtils.tryFindPropertyValue(
+        experimentalFeatures.content,
+        'WinUI2xVersion',
+      );
+      // Check if WinUI3Version is specified in experimental features
+      const targetWinUI3xVersion = configUtils.tryFindPropertyValue(
+        experimentalFeatures.content,
+        'WinUI3Version',
+      );
+      // Use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
+      changesNeeded = await this.updatePackagesConfigXAMLDialect(
+        useWinUI3FromConfig !== undefined
+          ? useWinUI3FromConfig
+          : useWinUI3FromExperimentalFeatures,
+        targetWinUI2xVersion,
+        targetWinUI3xVersion,
+      );
       if (useWinUI3FromConfig !== undefined) {
         // Make sure ExperimentalFeatures.props matches the value that comes from react-native.config.js
         const node = experimentalFeatures.content.getElementsByTagName(
@@ -702,6 +724,117 @@ export class AutolinkWindows {
       }
     }
     return changesNeeded;
+  }
+
+  protected getPackagesConfigXml() {
+    const projectFile = this.getProjectFile();
+    const packagesConfig = path.join(
+      path.dirname(projectFile),
+      'packages.config',
+    );
+
+    if (fs.existsSync(packagesConfig)) {
+      return {
+        path: packagesConfig,
+        content: configUtils.readProjectFile(packagesConfig),
+      };
+    }
+    return undefined;
+  }
+
+  private async updatePackagesConfigXAMLDialect(
+    useWinUI3: boolean,
+    targetWinUI2xVersion: string | null,
+    targetWinUI3xVersion: string | null,
+  ) {
+    let changed = false;
+    const packagesConfig = this.getPackagesConfigXml();
+    if (packagesConfig) {
+      // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
+      const project = this.getWindowsConfig();
+
+      const winUIPropsPath = path.join(
+        resolveRnwRoot(project),
+        'PropertySheets/WinUI.props',
+      );
+      const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
+
+      // Use the given WinUI2xVersion, otherwise fallback to WinUI.props
+      const winui2xVersion =
+        targetWinUI2xVersion ??
+        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI2xVersion');
+
+      // Use the given WinUI3Version, otherwise fallback to WinUI.props
+      const winui3Version =
+        targetWinUI3xVersion ??
+        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI3Version');
+
+      const dialects = [
+        {id: 'Microsoft.WinUI', version: winui3Version!},
+        {id: 'Microsoft.UI.Xaml', version: winui2xVersion!},
+      ];
+      const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
+      const removePkg = useWinUI3 ? dialects[1] : dialects[0];
+
+      changed = this.updatePackagesConfig(
+        packagesConfig,
+        [removePkg],
+        [keepPkg],
+      );
+
+      if (!this.options.check && changed) {
+        const serializer = new XMLSerializer();
+        const output = serializer.serializeToString(packagesConfig.content);
+        const formattedXml = formatter(output, {indentation: '  '});
+        await this.updateFile(packagesConfig.path, formattedXml);
+      }
+    }
+    return changed;
+  }
+
+  private updatePackagesConfig(
+    packagesConfig: {path: string; content: Document},
+    removePkgs: {id: string; version: string}[],
+    keepPkgs: {id: string; version: string}[],
+  ) {
+    let changed = false;
+    const packageElements = packagesConfig.content.documentElement.getElementsByTagName(
+      'package',
+    );
+
+    const nodesToRemove: Element[] = [];
+
+    for (let i = 0; i < packageElements.length; i++) {
+      const packageElement = packageElements.item(i)!;
+      const idAttr = packageElement!.getAttributeNode('id');
+      const id = idAttr!.value;
+      const keepPkg = keepPkgs.find(pkg => pkg.id === id);
+      if (removePkgs.find(pkg => pkg.id === id)) {
+        nodesToRemove.push(packageElement);
+        changed = true;
+      } else if (keepPkg) {
+        changed =
+          changed || keepPkg.version !== packageElement.getAttribute('version');
+        packageElement.setAttribute('version', keepPkg.version!);
+        keepPkgs = keepPkgs.filter(pkg => pkg.id !== keepPkg.id);
+      }
+    }
+
+    nodesToRemove.forEach(pkg =>
+      packagesConfig.content.documentElement.removeChild(pkg),
+    );
+
+    keepPkgs.forEach(keepPkg => {
+      const newPkg = packagesConfig.content.createElement('package');
+
+      Object.entries(keepPkg).forEach(([attr, value]) => {
+        newPkg.setAttribute(attr, value as string);
+      });
+      newPkg.setAttribute('targetFramework', 'native');
+      packagesConfig.content.documentElement.appendChild(newPkg);
+      changed = true;
+    });
+    return changed;
   }
 
   /** @return The CLI command to invoke autolink-windows independently */
@@ -744,7 +877,7 @@ function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
  * @param message The message to log.
  * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message: any, verbose: boolean) {
+function verboseMessage(message: any, verbose?: boolean) {
   if (verbose) {
     console.log(message);
   }
@@ -818,39 +951,42 @@ async function updateAutoLink(
   }
 }
 
-interface AutoLinkOptions {
-  logging: boolean;
-  check: boolean;
+export interface AutoLinkOptions {
+  logging?: boolean;
+  check?: boolean;
   sln?: string;
   proj?: string;
 }
 
+export const autolinkOptions: CommandOption[] = [
+  {
+    name: '--logging',
+    description: 'Verbose output logging',
+  },
+  {
+    name: '--check',
+    description: 'Only check whether any autolinked files need to change',
+  },
+  {
+    name: '--sln [string]',
+    description:
+      "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
+    default: undefined,
+  },
+  {
+    name: '--proj [string]',
+    description:
+      "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
+    default: undefined,
+  },
+];
+
+/**
+ * Performs auto-linking for RNW native modules and apps.
+ */
 export const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
   func: updateAutoLink,
-  options: [
-    {
-      name: '--logging',
-      description: 'Verbose output logging',
-      default: false,
-    },
-    {
-      name: '--check',
-      description: 'Only check whether any autolinked files need to change',
-      default: false,
-    },
-    {
-      name: '--sln [string]',
-      description:
-        "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
-      default: undefined,
-    },
-    {
-      name: '--proj [string]',
-      description:
-        "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
-      default: undefined,
-    },
-  ],
+  options: autolinkOptions,
 };

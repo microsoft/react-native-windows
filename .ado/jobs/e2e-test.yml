@@ -68,6 +68,12 @@ jobs:
                 script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd RNTesterApp
                 workingDirectory: $(Build.SourcesDirectory)
 
+            - task: PowerShell@2
+              displayName: Start tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+
             - template: ../templates/set-experimental-feature.yml
               parameters:
                 package: packages/e2e-test-app
@@ -77,7 +83,7 @@ jobs:
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
-                encodedKey: RNTesterAppEncodedKey
+                certificateName: reactUWPTestAppEncodedKey
                 buildConfiguration: Release
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 deployOption: ${{ matrix.DeployOption }}
@@ -96,6 +102,21 @@ jobs:
               displayName: Update snapshots
               workingDirectory: packages/e2e-test-app
               condition: and(failed(), eq(variables.StartedTests, 'true'))
+
+            - task: PowerShell@2
+              displayName: Stop tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+                arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+              condition: true
+
+            - task: PublishBuildArtifacts@1
+              displayName: Upload traces
+              inputs:
+                pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+                artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+              condition: true
 
             - task: CopyFiles@2
               displayName: Copy snapshots

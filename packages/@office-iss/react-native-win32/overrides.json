@@ -4,15 +4,16 @@
     "src/**"
   ],
   "excludePatterns": [
-    "**/__snapshots__/**"
+    "**/__snapshots__/**",
+    "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-ad9030ca9",
+  "baseVersion": "0.0.0-e612d3a11-20211007-2009",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a715deecb01066f69db3959e0d270f5a2a88e598"
+      "baseHash": "a692668e747e9ea62902ef16cd4cef7fb4664f18"
     },
     {
       "type": "derived",
@@ -383,7 +384,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "1a47d1e4a1026573cabdda0fa6374ca64bd41b81"
+      "baseHash": "9940bfdf0c803eb1d6905563803fa9deac1c7770"
     },
     {
       "type": "derived",

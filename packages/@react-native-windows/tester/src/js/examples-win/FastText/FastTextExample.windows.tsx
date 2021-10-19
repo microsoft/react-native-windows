@@ -109,6 +109,24 @@ class SlowExamples extends React.Component<{}, any> {
   }
 }
 
+class ClearFastTextExample extends React.Component<{}, any> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {pressed: false};
+  }
+  public render() {
+    return (
+      <View>
+        <Button
+          title={'UPDATE STATE'}
+          onPress={() => this.setState({pressed: !this.state.pressed})}
+        />
+        <Text>{this.state.pressed ? 'Some text' : null}</Text>
+      </View>
+    );
+  }
+}
+
 export const displayName = undefined;
 export const title = 'Fast Path Texts';
 export const category = 'Basic';
@@ -149,6 +167,12 @@ export const examples = [
     title: 'Slow path text examples',
     render: function() {
       return <SlowExamples />;
+    },
+  },
+  {
+    title: 'Clear fast path text example',
+    render: function() {
+      return <ClearFastTextExample />;
     },
   },
 ];

@@ -235,13 +235,16 @@ export default class GitReactFileRepository
       throw new Error(`${reactNativeVersion} is not a valid semver version`);
     }
 
-    // Stable releases of React Native use a tag where nightly releases embed
-    // a commit hash into the prerelease tag of 0.0.0 versions
+    // Nightly builds are in the form of either 0.0.0-<commitHash> or
+    // 0.0.0-<commitHash>-<date>-<time>.
     if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
+      const preSegment = semver.prerelease(reactNativeVersion)![0];
+      const abbrevHash = preSegment.split('-')[0];
+
       // We cannot do a shallow fetch of an abbreviated commit hash
-      const shortHash = semver.prerelease(reactNativeVersion)![0];
-      return this.longCommitHash(shortHash);
+      return this.longCommitHash(abbrevHash);
     } else {
+      // Stable builds have tags matching their version
       return `refs/tags/v${reactNativeVersion}`;
     }
   }

@@ -13,10 +13,6 @@ parameters:
   displayName: Skip Deploying Bots to Azure Functions
   type: boolean
   default: false
-- name: skipStableCodesign
-  displayName: Skip Codesigning for Stable Branch
-  type: boolean
-  default: false
 - name: stopOnNoCI
   displayName: Stop if latest commit is ***NO_CI***
   type: boolean
@@ -40,7 +36,7 @@ variables:
     value: microsoft
   - name: ArtifactServices.Symbol.PAT
     value: $(pat-symbols-publish-microsoft)
-  - name: AgentPool.Medium.Microsoft 
+  - name: AgentPool.Medium.Microsoft
     value: rnw-pool-4-microsoft
   - name: AgentPool.Large.Microsoft
     value: rnw-pool-8-microsoft
@@ -317,12 +313,17 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
+      # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
+      - task: NuGetToolInstaller@1
+        inputs:
+          versionSpec: ">=5.8.0"
+
       - template: templates/prep-and-pack-nuget.yml
         parameters:
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
           packMicrosoftReactNativeProjectReunion: true
-          ${{ if or(eq(variables['EnableCodesign'], 'true'), and(endsWith(variables['Build.SourceBranchName'], '-stable'), not(parameters.skipStableCodesign))) }}: # Sign on stable release builds
+          ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
             signMicrosoft: true
 
       - task: PublishPipelineArtifact@1

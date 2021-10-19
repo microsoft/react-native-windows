@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <future>
 #include <string>
 
 namespace Microsoft::React {
@@ -18,5 +19,7 @@ struct Url {
 
   std::string Target();
 };
+
+std::future<std::string> getApplicationDataPath(const wchar_t *childfolder);
 
 } // namespace Microsoft::React

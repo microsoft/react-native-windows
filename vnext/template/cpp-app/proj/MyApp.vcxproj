@@ -13,11 +13,6 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <PackageCertificateKeyFile>{{ name }}_TemporaryKey.pfx</PackageCertificateKeyFile>
-    {{#certificateThumbprint}}
-    <PackageCertificateThumbprint>{{certificateThumbprint}}</PackageCertificateThumbprint>
-    {{/certificateThumbprint}}
-    <PackageCertificatePassword>password</PackageCertificatePassword>
   </PropertyGroup>
   <PropertyGroup Label="NuGet">
     <ResolveNuGetPackages>false</ResolveNuGetPackages>

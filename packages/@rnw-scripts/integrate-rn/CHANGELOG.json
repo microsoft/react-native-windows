@@ -2,6 +2,71 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.37",
+      "version": "1.0.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Fix integration commit comparison link for new nightly builds",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Oct 2021 05:07:05 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.36",
+      "version": "1.0.36",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.5.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7a0c68516b825131c798978f1dfc0088f7115614",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.35",
+      "version": "1.0.35",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.24",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/integrate-rn"
+          },
+          {
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.21",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/integrate-rn"
+          },
+          {
+            "comment": "Bump react-native-platform-override to v1.4.18",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.0.34",
       "version": "1.0.34",

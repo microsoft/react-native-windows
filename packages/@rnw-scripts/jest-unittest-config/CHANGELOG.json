@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-unittest-config",
   "entries": [
     {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@rnw-scripts/jest-unittest-config_v1.2.4",
+      "version": "1.2.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/jest-unittest-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Jun 2021 05:10:07 GMT",
       "tag": "@rnw-scripts/jest-unittest-config_v1.2.3",
       "version": "1.2.3",

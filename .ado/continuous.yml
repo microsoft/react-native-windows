@@ -1,14 +1,5 @@
 name: RNW CI $(Date:yyyyMMdd).$(Rev:r)
 
-schedules:
-- cron: "0 11 * * *" # 11AM Daily UTC (3AM Daily PST)
-  displayName: Nightly CI verification build
-  branches:
-    include:
-      - main
-      - master
-      - 0.65-stable
-
 trigger: none # will disable CI builds entirely
 pr: none
 

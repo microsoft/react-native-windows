@@ -15,11 +15,11 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<React::JSValue>) noexcept>{0, L"isReduceMotionEnabled"},
-      Method<void(Callback<React::JSValue>) noexcept>{1, L"isTouchExplorationEnabled"},
+      Method<void(Callback<bool>) noexcept>{0, L"isReduceMotionEnabled"},
+      Method<void(Callback<bool>) noexcept>{1, L"isTouchExplorationEnabled"},
       Method<void(double) noexcept>{2, L"setAccessibilityFocus"},
       Method<void(std::string) noexcept>{3, L"announceForAccessibility"},
-      Method<void(double, Callback<React::JSValue>) noexcept>{4, L"getRecommendedTimeoutMillis"},
+      Method<void(double, Callback<double>) noexcept>{4, L"getRecommendedTimeoutMillis"},
   };
 
   template <class TModule>
@@ -29,13 +29,13 @@ struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "isReduceMotionEnabled",
-          "    REACT_METHOD(isReduceMotionEnabled) void isReduceMotionEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(isReduceMotionEnabled) static void isReduceMotionEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(isReduceMotionEnabled) void isReduceMotionEnabled(std::function<void(bool)> const & onSuccess) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(isReduceMotionEnabled) static void isReduceMotionEnabled(std::function<void(bool)> const & onSuccess) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "isTouchExplorationEnabled",
-          "    REACT_METHOD(isTouchExplorationEnabled) void isTouchExplorationEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(isTouchExplorationEnabled) static void isTouchExplorationEnabled(std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(isTouchExplorationEnabled) void isTouchExplorationEnabled(std::function<void(bool)> const & onSuccess) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(isTouchExplorationEnabled) static void isTouchExplorationEnabled(std::function<void(bool)> const & onSuccess) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "setAccessibilityFocus",
@@ -49,8 +49,8 @@ struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "getRecommendedTimeoutMillis",
-          "    REACT_METHOD(getRecommendedTimeoutMillis) void getRecommendedTimeoutMillis(double mSec, std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getRecommendedTimeoutMillis) static void getRecommendedTimeoutMillis(double mSec, std::function<void(React::JSValue const &)> const & onSuccess) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getRecommendedTimeoutMillis) void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const & onSuccess) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getRecommendedTimeoutMillis) static void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const & onSuccess) noexcept { /* implementation */ }}\n");
   }
 };
 

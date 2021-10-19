@@ -2,6 +2,158 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Export complete type information",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Integrate 10-8-21 Nightly Build",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.13",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Oct 2021 05:07:05 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.115",
+      "version": "0.0.0-canary.115",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.5.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7a0c68516b825131c798978f1dfc0088f7115614",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Sep 2021 05:07:03 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.114",
+      "version": "0.0.0-canary.114",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate 9/23",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "d4970fdd583866c3ac7af6a0cf38040cf3b22d93",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Sep 2021 05:06:42 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.113",
+      "version": "0.0.0-canary.113",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RN nightly 9/16.",
+            "author": "igklemen@microsoft.com",
+            "commit": "8b63ada9ba1d55bfd161388fc18c2b5c6445b508",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 21 Sep 2021 05:08:39 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.112",
+      "version": "0.0.0-canary.112",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Integrate RN nightly build 9/9.",
+            "author": "igklemen@microsoft.com",
+            "commit": "08eb19f42f4f74bd82f33db2e27ba2d33b2ddd1b",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Sep 2021 05:06:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.111",
+      "version": "0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix exception in View when props are undefined",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "77ebdd47cd2feead7885933ac351a045041bee2e",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Sep 2021 05:07:46 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.110",
+      "version": "0.0.0-canary.110",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Adding accessibilityItemType property to ViewWin32",
+            "author": "safreibe@microsoft.com",
+            "commit": "465dae11d372626fcb90d966e9e97f2d3d531f43",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.109",
+      "version": "0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Integrate 9/2",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "8b91737bde65fc50b454be74f64bc50b5d2cfda2",
+            "package": "@office-iss/react-native-win32"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 05:06:04 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.108",
       "version": "0.0.0-canary.108",

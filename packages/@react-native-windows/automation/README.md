@@ -57,6 +57,11 @@ testEnvironmentOptions: {
   // or path to an .exe for an unpackaged application.
   app: 'Microsoft.WindowsAlarms',
 
+  /**
+   * Optional: Arguments to be passed to your application when launched
+   */
+  appArguments: '--bundle testBundle.js';
+
   // Optional: Explicit path to WinAppDriver. By default,
   // `@react-native-windows/automation` tries to use
   // "%PROGRAMFILES(X86)%\Windows Application Driver\WinAppDriver.exe"
