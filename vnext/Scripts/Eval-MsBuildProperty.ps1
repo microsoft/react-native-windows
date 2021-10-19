@@ -1,5 +1,7 @@
 # Evaluate an MSBuild property name
 param(
+    [Parameter()]
+    [String]$MSBuildPath,
     [Parameter(Mandatory=$true)]
     [String]$SolutionFile,
     [Parameter(Mandatory=$true)]
@@ -20,6 +22,8 @@ function Get-MSBuildPath {
 function Get-MSBuildProperty {
     param (
         [Parameter(Mandatory=$true)]
+        [String]$MSBuildPath,
+        [Parameter(Mandatory=$true)]
         [String]$SolutionPath,
         [Parameter(Mandatory=$true)]
         [String]$ProjectPath,
@@ -27,15 +31,20 @@ function Get-MSBuildProperty {
         [String]$PropertyName
     )
 
-    # Identify location of MSBuild
-    $MsBuildPath = Get-MSBuildPath
+    if (!(Test-Path (Join-Path $MSBuildPath "MSBuild.exe"))) {
+        throw "Unable to find MSBuild.exe in $MSBuildPath"
+    }
+
+    if (!(Test-Path (Join-Path $MSBuildPath "MSBuild.exe"))) {
+        throw "Unable to find Microsoft.Build.dll in $MSBuildPath"
+    }
 
     # Load Microsoft.Build.dll into script
-    Add-Type -Path "$MsBuildPath\Microsoft.Build.dll" | Out-Null
+    Add-Type -Path "$MSBuildPath\Microsoft.Build.dll" | Out-Null
 
     # Build a temporary "metaproj" of the solution file so it can be processed
     ${env:MSBUILDEMITSOLUTION} = 1
-    & $MsBuildPath\MSBuild.exe $SolutionPath | Out-Null
+    & $MSBuildPath\MSBuild.exe $SolutionPath | Out-Null
 
     # Build a local project collection
     $projectCollection =[Microsoft.Build.Evaluation.ProjectCollection]::new()
@@ -67,7 +76,18 @@ function Get-MSBuildProperty {
     }
 }
 
+# Main
+
+if (Test-Path $MSBuildPath) {
+    # Just keep the folder
+    $MSBuildPath = [System.IO.Path]::GetDirectoryName($MSBuildPath)
+} else {
+    # Use simple logic to find MSBuild
+    $MSBuildPath = Get-MSBuildPath
+}
+
+# Get the full absolute paths
 $SolutionPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $SolutionFile))
 $ProjectPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $ProjectFile))
 
-Get-MSBuildProperty -SolutionPath $SolutionPath -ProjectPath $ProjectPath -PropertyName $PropertyName
+Get-MSBuildProperty -MSBuildPath $MSBuildPath -SolutionPath $SolutionPath -ProjectPath $ProjectPath -PropertyName $PropertyName
