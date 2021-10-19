@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix test expression to not exclude all tests.",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "none"
+}
