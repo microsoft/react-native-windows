@@ -16,7 +16,7 @@ function Get-MSBuildPath {
         throw "Unable to find vswhere.exe."
     }
     $vsPath = & $vsWhere -version 16.5 -property installationPath;
-    return "$vsPath\MSBuild\Current\Bin\";
+    return "$vsPath\MSBuild\Current\Bin";
 }
 
 function Get-MSBuildProperty {
@@ -79,14 +79,16 @@ function Get-MSBuildProperty {
 # Main
 
 if (Test-Path $MSBuildPath) {
-    # Just keep the folder
-    $MSBuildPath = [System.IO.Path]::GetDirectoryName($MSBuildPath)
+    if (Test-Path $MSBuildPath -PathType Leaf) {
+        # It's a file (probably msbuild.exe), just get the folder path
+        $MSBuildPath = [System.IO.Path]::GetDirectoryName($MSBuildPath)
+    }
 } else {
-    # Use simple logic to find MSBuild
+    # Use simple fallback logic in this script to find MSBuild path
     $MSBuildPath = Get-MSBuildPath
 }
 
-# Get the full absolute paths
+# Get the full absolute paths to the solution and projects
 $SolutionPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $SolutionFile))
 $ProjectPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $ProjectFile))
 
