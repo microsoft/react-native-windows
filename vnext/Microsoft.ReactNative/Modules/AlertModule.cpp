@@ -93,9 +93,10 @@ void Alert::ProcessPendingAlertRequests() noexcept {
     }
   });
 
+  const auto hasCloseButton = dialog.CloseButtonText().size() > 0;
   auto asyncOp = dialog.ShowAsync();
   asyncOp.Completed(
-      [jsDispatcher, result, this](
+      [hasCloseButton, jsDispatcher, result, this](
           const winrt::IAsyncOperation<xaml::Controls::ContentDialogResult> &asyncOp, winrt::AsyncStatus status) {
         switch (asyncOp.GetResults()) {
           case xaml::Controls::ContentDialogResult::Primary:
@@ -105,7 +106,9 @@ void Alert::ProcessPendingAlertRequests() noexcept {
             jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonNegative); });
             break;
           case xaml::Controls::ContentDialogResult::None:
-            jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonNeutral); });
+            jsDispatcher.Post([hasCloseButton, result, this] {
+              result(hasCloseButton ? m_constants.buttonClicked : m_constants.dismissed, m_constants.buttonNeutral);
+            });
             break;
           default:
             break;
