@@ -32,7 +32,9 @@ void Alert::showAlert(
 void Alert::ProcessPendingAlertRequests() noexcept {
   if (pendingAlerts.empty())
     return;
-  const auto &[args, result] = pendingAlerts.front();
+  const auto &pendingAlert = pendingAlerts.front();
+  const auto &args = pendingAlert.args;
+  const auto &result = pendingAlert.result;
   auto jsDispatcher = m_context.JSDispatcher();
 
   xaml::Controls::ContentDialog dialog{};
