@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Handle non-SolidColor brushes when updating brush cache on theme change",
+  "packageName": "react-native-windows",
+  "email": "jahiggin@microsoft.com",
+  "dependentChangeType": "patch"
+}
