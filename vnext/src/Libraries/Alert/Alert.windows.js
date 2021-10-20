@@ -25,6 +25,7 @@ export type Buttons = Array<{
 type Options = {
   cancelable?: ?boolean,
   onDismiss?: ?() => void,
+  rootTag?: number,
   ...
 };
 
@@ -49,11 +50,17 @@ class Alert {
       title: title || '',
       message: message || '',
       cancelable: false,
+      rootTag: -1,
     };
 
     if (options && options.cancelable) {
       config.cancelable = options.cancelable;
     }
+
+    if (options && options.rootTag) {
+      config.rootTag = options.rootTag;
+    }
+
     // At most three buttons (neutral, negative, positive). Ignore rest.
     // The text 'OK' should be probably localized. iOS Alert does that in native.
     const defaultPositiveText = 'OK';

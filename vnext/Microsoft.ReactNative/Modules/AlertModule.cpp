@@ -52,7 +52,19 @@ void Alert::ProcessPendingAlertRequests() noexcept {
 
   if (Is19H1OrHigher()) {
     // XamlRoot added in 19H1
-    if (const auto xamlRoot = React::XamlUIService::GetXamlRoot(m_context.Properties().Handle())) {
+    const auto xamlUIService = React::XamlUIService::FromContext(m_context.Handle());
+    xaml::XamlRoot xamlRoot = nullptr;
+    if (args.rootTag) {
+      if (const auto element = xamlUIService.ElementFromReactTag(args.rootTag.value()).try_as<xaml::UIElement>()) {
+        xamlRoot = element.XamlRoot();
+      }
+    }
+
+    if (!xamlRoot) {
+      xamlRoot = React::XamlUIService::GetXamlRoot(m_context.Properties().Handle());
+    }
+
+    if (xamlRoot) {
       useXamlRootForThemeBugWorkaround = true;
       dialog.XamlRoot(xamlRoot);
       auto rootChangedToken = xamlRoot.Changed([=](auto &&, auto &&) {
