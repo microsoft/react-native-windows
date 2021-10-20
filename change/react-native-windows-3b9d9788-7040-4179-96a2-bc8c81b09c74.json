@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add config option to ensure Alert is shown on correct window",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
