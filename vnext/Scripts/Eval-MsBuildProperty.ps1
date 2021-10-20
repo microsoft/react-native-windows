@@ -42,19 +42,21 @@ function Get-MSBuildProperty {
     # Load Microsoft.Build.dll into script
     Add-Type -Path "$MSBuildPath\Microsoft.Build.dll" | Out-Null
 
-    # Build a temporary "metaproj" of the solution file so it can be processed
-    ${env:MSBUILDEMITSOLUTION} = 1
-    & $MSBuildPath\MSBuild.exe $SolutionPath | Out-Null
-
     # Build a local project collection
     $projectCollection =[Microsoft.Build.Evaluation.ProjectCollection]::new()
 
-    # Process solution
-    $solution = [Microsoft.Build.Evaluation.Project]::new("$SolutionPath.metaproj", $null, "Current", $projectCollection)
+    try {
+        # Build a temporary "metaproj" of the solution file so it can be processed
+        ${env:MSBUILDEMITSOLUTION} = 1
+        & $MSBuildPath\MSBuild.exe $SolutionPath | Out-Null
 
-    # Clean up "metaproj" files
-    Remove-Item "$SolutionPath.metaproj" | Out-Null
-    Remove-Item "$SolutionPath.metaproj.tmp" | Out-Null
+        # Process solution
+        $solution = [Microsoft.Build.Evaluation.Project]::new("$SolutionPath.metaproj", $null, "Current", $projectCollection)
+    } finally {
+        # Clean up "metaproj" files
+        Remove-Item "$SolutionPath.metaproj" | Out-Null
+        Remove-Item "$SolutionPath.metaproj.tmp" | Out-Null
+    }
 
     # Evaluate all of the Solution* properties and save into a collection
     $globalProps = New-Object 'System.Collections.Generic.Dictionary[String,String]'
