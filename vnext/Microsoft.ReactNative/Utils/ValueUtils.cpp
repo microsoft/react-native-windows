@@ -89,14 +89,15 @@ struct BrushCache {
       dq.TryEnqueue([this]() {
         for (auto &entry : m_map) {
           winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(entry.first))};
+          // If both the incoming new brush and the old brush are BOTH solid color brushes, update the brush color
           if (auto oldSCBrush = entry.second.try_as<xaml::Media::SolidColorBrush>()) {
             if (auto newSCBrush = resource.try_as<xaml::Media::SolidColorBrush>()) {
               oldSCBrush.Color(newSCBrush.Color());
+              return;
             }
           }
-          // Handle other brush types changing by simply updating the value stored at the resource name's
-          // entry in the map
-          else if (auto newBrush = resource.try_as<xaml::Media::Brush>()) {
+          // If the incoming or old brush are not solid color brushes, replace the brush in the cache map
+          if (auto newBrush = resource.try_as<xaml::Media::Brush>()) {
             m_map.insert_or_assign(entry.first, newBrush);
           }
         }
