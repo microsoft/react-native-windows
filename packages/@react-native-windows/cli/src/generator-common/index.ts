@@ -122,7 +122,7 @@ export async function copyAndReplace(
           contentChanged = 'changed';
         }
       } catch (err) {
-        if ((err as any).code === 'ENOENT') {
+        if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
           contentChanged = 'new';
         } else {
           throw err;
@@ -153,7 +153,7 @@ export async function copyAndReplace(
           contentChanged = 'changed';
         }
       } catch (err) {
-        if ((err as any).code === 'ENOENT') {
+        if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
           contentChanged = 'new';
         } else {
           throw err;
