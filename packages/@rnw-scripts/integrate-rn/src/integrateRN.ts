@@ -210,7 +210,7 @@ async function funcStep(
     const result = await func();
     logger[result.status](name, result.body);
   } catch (ex) {
-    logger.error(name, ex.stack);
+    logger.error(name, (ex as Error).stack);
     throw ex;
   }
 }
@@ -234,6 +234,6 @@ async function failableCommandStep(cmd: string) {
     await runCommand(cmd);
     logger.success(cmd);
   } catch (ex) {
-    logger.error(cmd, ex.stack);
+    logger.error(cmd, (ex as Error).stack);
   }
 }

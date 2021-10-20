@@ -164,12 +164,14 @@ export default class GitReactFileRepository
           // conflicts when we're using raw commands (which we need to since it
           // doesn't support apply). Try to detect if Git gave us a bad exit code
           // because of merge conflicts, which we explicitly want to allow.
-          if (!ex.message.includes('with conflicts')) {
+          if (!(ex as Error).message.includes('with conflicts')) {
             throw ex;
           }
 
           hasConflicts = true;
-          binaryConflicts = ex.message.includes('Cannot merge binary files');
+          binaryConflicts = (ex as Error).message.includes(
+            'Cannot merge binary files',
+          );
         }
 
         const patchedFile = binaryConflicts
@@ -223,7 +225,9 @@ export default class GitReactFileRepository
       ]);
     } catch (ex) {
       throw new Error(
-        `Failed to fetch '${gitRef}'. Does it exist? (${ex.message})`,
+        `Failed to fetch '${gitRef}'. Does it exist? (${
+          (ex as Error).message
+        })`,
       );
     }
 
