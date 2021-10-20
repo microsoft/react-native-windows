@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 20 Oct 2021 19:14:28 GMT",
+      "tag": "react-native-windows_v0.65.6",
+      "version": "0.65.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Arm64 Desktop linker experts due to mangled name mismatches",
+            "author": "dannyvv@microsoft.com",
+            "commit": "2169bb4bc9a4d801b480be9d84638a20a6b4a718",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Oct 2021 15:06:57 GMT",
       "tag": "react-native-windows_v0.65.5",
       "version": "0.65.5",
