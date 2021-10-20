@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Arm64 Desktop linker experts due to mangled name mismatches",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
