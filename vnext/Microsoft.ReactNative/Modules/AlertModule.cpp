@@ -36,8 +36,14 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   auto jsDispatcher = m_context.JSDispatcher();
 
   xaml::Controls::ContentDialog dialog{};
-  dialog.Title(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.title.value_or(std::string{}))));
-  dialog.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.message.value_or(std::string{}))));
+  xaml::Controls::TextBlock titleTextBlock;
+  xaml::Controls::TextBlock messageTextBlock;
+  titleTextBlock.Text(Microsoft::Common::Unicode::Utf8ToUtf16(args.title.value_or(std::string{})));
+  titleTextBlock.IsTextSelectionEnabled(true);
+  messageTextBlock.Text(Microsoft::Common::Unicode::Utf8ToUtf16(args.message.value_or(std::string{})));
+  messageTextBlock.IsTextSelectionEnabled(true);
+  dialog.Title(titleTextBlock);
+  dialog.Content(messageTextBlock);
   dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive.value_or(std::string{})));
   dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative.value_or(std::string{})));
   dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral.value_or(std::string{})));
