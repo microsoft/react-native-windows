@@ -2,6 +2,66 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Mon, 18 Oct 2021 15:07:56 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.23",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d6ab3a6fb5a1c5992d295e9cf1d6eacac1696b94",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Oct 2021 20:39:16 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.22",
+            "author": "anandrag@microsoft.com",
+            "commit": "bfd47dd49105fbc28b31a52cb8d95ae15a7a7326",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Oct 2021 15:06:31 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.21",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "52156e93730c703dfc55d01f11dd1a28db747b69",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:06:58 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.20",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5a573a64fc55e1065140d8532ff15a690a111e98",
+            "package": "@react-native-windows/tester"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:06:37 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

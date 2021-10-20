@@ -1,8 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Sep 2021 15:06:37 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Oct 2021 15:07:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.23
+
+Mon, 18 Oct 2021 15:07:56 GMT
+
+### Patches
+
+- Avoid exporting data as that breaks delay loading (30809111+acoates-ms@users.noreply.github.com)
+- Crash using PlatformConstants on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.64.22
+
+Wed, 13 Oct 2021 20:39:16 GMT
+
+### Patches
+
+- Use V8 by default in desktop (if enabled) (anandrag@microsoft.com)
+
+## 0.64.21
+
+Mon, 11 Oct 2021 15:06:31 GMT
+
+### Patches
+
+- [0.64] Add ARM64 support to React.Windows.Desktop.Test.DLL (julio.rocha@microsoft.com)
+
+## 0.64.20
+
+Mon, 04 Oct 2021 15:06:58 GMT
+
+### Patches
+
+- ReactNative.V8Jsi.Windows to 0.64.17 (julio.rocha@microsoft.com)
+- Fix issue using react-native-debugger with react-native-windows (30809111+acoates-ms@users.noreply.github.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.64.19
 

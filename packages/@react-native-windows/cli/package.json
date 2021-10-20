@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.64.5",
+  "version": "0.64.6",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -32,7 +32,7 @@
     "username": "^5.1.0",
     "uuid": "^3.3.2",
     "xml-parser": "^1.2.1",
-    "xmldom": "^0.5.0",
+    "@xmldom/xmldom": "^0.7.5",
     "xpath": "^0.0.27"
   },
   "devDependencies": {
