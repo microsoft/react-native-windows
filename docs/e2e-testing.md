@@ -119,7 +119,7 @@ describe('FancyWidget', () => {
 
 Before adding a custom page, consider whether the change can be made to an existing RNTester page and upstreamed. If needed, new examples may be integrated into the Windows fork of RNTester, [`@react-native-windows/tester`](../packages/@react-native-windows/tester).
 
-Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://app.pluralsight.com/library/courses/using-react-hooks) to learn more about Hooks)
+Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://www.pluralsight.com/courses/using-react-hooks) to learn more about Hooks)
 
 ```js
 // ControlStyleTestPage.tsx
