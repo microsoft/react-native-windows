@@ -40,8 +40,11 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   xaml::Controls::TextBlock messageTextBlock;
   titleTextBlock.Text(Microsoft::Common::Unicode::Utf8ToUtf16(args.title.value_or(std::string{})));
   titleTextBlock.IsTextSelectionEnabled(true);
+  titleTextBlock.MaxLines(2);
+  titleTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
   messageTextBlock.Text(Microsoft::Common::Unicode::Utf8ToUtf16(args.message.value_or(std::string{})));
   messageTextBlock.IsTextSelectionEnabled(true);
+  messageTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
   dialog.Title(titleTextBlock);
   dialog.Content(messageTextBlock);
   dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive.value_or(std::string{})));
