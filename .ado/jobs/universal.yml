@@ -19,6 +19,24 @@
               BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: true
+            # Build more flavors for PRs to stable branches
+            - ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}:
+              - Name: Arm64DebugFast
+                BuildConfiguration: Debug
+                BuildPlatform: ARM64
+                FastBuild: true
+              - Name: Arm64ReleaseFast
+                BuildConfiguration: Release
+                BuildPlatform: ARM64
+                FastBuild: true
+              - Name: X64DebugFast
+                BuildConfiguration: Debug
+                BuildPlatform: x64
+                FastBuild: true
+              - Name: X86ReleaseFast
+                BuildConfiguration: Release
+                BuildPlatform: x86
+                FastBuild: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: Arm64Debug

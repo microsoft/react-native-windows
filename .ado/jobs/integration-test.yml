@@ -20,6 +20,23 @@ parameters:
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
+          # Test more flavors for PRs to stable branches
+          - ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}:
+            - Name: Arm64Debug
+              BuildPlatform: ARM64
+              BuildConfiguration: Debug
+              DeployOptions: --no-deploy # We don't have Arm agents
+              UseHermes: false
+            - Name: X86WebDebug
+              BuildPlatform: x86
+              BuildConfiguration: Debug
+              DeployOptions:
+              UseHermes: false
+            - Name: X86ReleaseHermes
+              BuildPlatform: x86
+              BuildConfiguration: Release
+              DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+              UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug

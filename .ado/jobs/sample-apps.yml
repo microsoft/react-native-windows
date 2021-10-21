@@ -15,8 +15,8 @@ jobs:
     displayName: Sample Apps
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        # Start Continuous (or PR to stable) only
+        ${{ if or(eq(parameters.buildEnvironment, 'Continuous'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
           Arm64Debug:
             BuildConfiguration: Debug
             BuildPlatform: ARM64
@@ -29,7 +29,7 @@ jobs:
             BuildConfiguration: Debug
             BuildPlatform: x64
             DeployOption:
-        # End Continuous only
+        # End Continuous (or PR to stable) only
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -38,13 +38,13 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x86
           DeployOption:
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        # Start Continuous (or PR to stable) only
+        ${{ if or(eq(parameters.buildEnvironment, 'Continuous'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
           X86Release:
             BuildConfiguration: Release
             BuildPlatform: x86
             DeployOption:
-        # End Continuous only
+        # End Continuous (or PR to stable) only
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
     pool: $(AgentPool.Medium)

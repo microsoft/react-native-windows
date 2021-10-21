@@ -19,6 +19,16 @@ parameters:
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
             UseHermes: true
+          # Test more flavors for PRs to stable branches
+          - ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}:
+            - Name: X86Chakra
+              BuildPlatform: x86
+              DeployOptions: --deploy-from-layout
+              UseHermes: false
+            - Name: X86Hermes
+              BuildPlatform: x86
+              DeployOptions: --deploy-from-layout
+              UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Chakra
