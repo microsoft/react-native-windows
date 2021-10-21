@@ -14,7 +14,8 @@ require('@rnw-scripts/just-task');
 
 task('codegen', () => {
   execSync(
-    'npx @react-native-windows/codegen --file NativeMyModule.js --namespace SampleLibraryCpp',
+    'react-native-windows-codegen --file NativeMyModule.js --namespace SampleLibraryCpp',
+    {env: process.env},
   );
 });
 
