@@ -17,6 +17,12 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/YGValue.h",
+      "baseFile": "ReactCommon/yoga/yoga/YGValue.h",
+      "baseHash": "1beec1c755f33ebbd4ab9ec5e138cd1a3cfba3ee"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "caab3561363f0adf848ffd7da38f07aad5bb70cb",

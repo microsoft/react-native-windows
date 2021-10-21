@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Change the definition of YGUndefined from NAN to __builtin_nanf(\"0\")",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
