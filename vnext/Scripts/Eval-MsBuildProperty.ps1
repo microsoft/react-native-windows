@@ -1,13 +1,15 @@
 # Evaluate an MSBuild property name
 param(
-    [Parameter()]
-    [String]$MSBuildPath,
     [Parameter(Mandatory=$true)]
     [String]$SolutionFile,
     [Parameter(Mandatory=$true)]
     [String]$ProjectFile,
     [Parameter(Mandatory=$true)]
-    [String]$PropertyName
+    [String]$PropertyName,
+    [Parameter()]
+    [String]$MSBuildPath,
+    [Parameter()]
+    [String]$ExtraMSBuildProps
 )
 
 function Get-MSBuildPath {
@@ -28,7 +30,9 @@ function Get-MSBuildProperty {
         [Parameter(Mandatory=$true)]
         [String]$ProjectPath,
         [Parameter(Mandatory=$true)]
-        [String]$PropertyName
+        [String]$PropertyName,
+        [Parameter()]
+        [String]$ExtraMSBuildProps
     )
 
     if (!(Test-Path (Join-Path $MSBuildPath "MSBuild.exe"))) {
@@ -66,6 +70,12 @@ function Get-MSBuildProperty {
         }
     }
 
+    # Evaluate all extra build props and save into the collection
+    $extraPropsTable = ConvertFrom-StringData -StringData $ExtraMSBuildProps.Replace(",", "`n")
+    $extraPropsTable.Keys | ForEach-Object -Process {
+        $globalProps[$_] = $extraPropsTable[$_]
+    }
+
     # Process the project file (with the Solution* properties we calculated before)
     $project = [Microsoft.Build.Evaluation.Project]::new("$ProjectPath", $globalProps, "Current", $projectCollection)
 
@@ -94,4 +104,4 @@ if (Test-Path $MSBuildPath) {
 $SolutionPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $SolutionFile))
 $ProjectPath = [System.IO.Path]::GetFullPath((Join-Path $pwd $ProjectFile))
 
-Get-MSBuildProperty -MSBuildPath $MSBuildPath -SolutionPath $SolutionPath -ProjectPath $ProjectPath -PropertyName $PropertyName
+Get-MSBuildProperty -MSBuildPath $MSBuildPath -SolutionPath $SolutionPath -ProjectPath $ProjectPath -PropertyName $PropertyName -ExtraMSBuildProps $ExtraMSBuildProps
