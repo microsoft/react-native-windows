@@ -14,83 +14,83 @@
               BuildConfiguration: Release
               BuildPlatform: x64
               FastBuild: true
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: X86DebugFast
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: true
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: Arm64DebugFast
               BuildConfiguration: Debug
               BuildPlatform: ARM64
               FastBuild: true
-              BuildForNonStableBranch: false
+              EnabledForNonStableBranch: false
             - Name: Arm64ReleaseFast
               BuildConfiguration: Release
               BuildPlatform: ARM64
               FastBuild: true
-              BuildForNonStableBranch: false
+              EnabledForNonStableBranch: false
             - Name: X64DebugFast
               BuildConfiguration: Debug
               BuildPlatform: x64
               FastBuild: true
-              BuildForNonStableBranch: false
+              EnabledForNonStableBranch: false
             - Name: X86ReleaseFast
               BuildConfiguration: Release
               BuildPlatform: x86
               FastBuild: true
-              BuildForNonStableBranch: false
+              EnabledForNonStableBranch: false
         - BuildEnvironment: Continuous
           Matrix:
             - Name: Arm64Debug
               BuildConfiguration: Debug
               BuildPlatform: ARM64
               FastBuild: false
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: Arm64Release
               BuildConfiguration: Release
               BuildPlatform: ARM64
               FastBuild: false
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: X64Debug
               BuildConfiguration: Debug
               BuildPlatform: x64
               FastBuild: false
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
               FastBuild: false
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: false
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: x86
               FastBuild: false
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: X64ReleaseFast
               BuildConfiguration: Release
               BuildPlatform: x64
               FastBuild: true
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
             - Name: X86DebugFast
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: true
-              BuildForNonStableBranch: true
+              EnabledForNonStableBranch: true
 
   jobs:
     - ${{ each config in parameters.buildMatrix }}:
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
         - ${{ each matrix in config.Matrix }}:
-          - ${{ if or(matrix.BuildForNonStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+          - ${{ if or(matrix.EnabledForNonStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
             - job: UniversalBuild${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
@@ -253,7 +253,7 @@
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:
-              - ${{ if or(matrix.BuildForNonStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+              - ${{ if or(matrix.EnabledForNonStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
                 - UniversalBuild${{ matrix.Name }}
       pool:
         vmImage: $(VmImage)
