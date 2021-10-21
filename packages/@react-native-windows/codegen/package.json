@@ -42,6 +42,13 @@
     "prettier": "1.19.1",
     "typescript": "^3.8.3"
   },
+  "files": [
+    "bin.js",
+    "CHANGELOG.md",
+    "README.md",
+    "lib-commonjs",
+    "src"
+  ],
   "beachball": {
     "defaultNpmTag": "canary",
     "disallowedChangeTypes": [
