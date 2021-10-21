@@ -307,7 +307,8 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
-  if (m_devSettings->useDirectDebugger && !m_devSettings->useWebDebugger) {
+  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes && m_devSettings->useDirectDebugger &&
+      !m_devSettings->useWebDebugger) {
     m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
@@ -608,7 +609,9 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
-  m_devManager->StopInspector();
+  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes) {
+    m_devManager->StopInspector();
+  }
   m_nativeQueue->quitSynchronous();
 }
 
