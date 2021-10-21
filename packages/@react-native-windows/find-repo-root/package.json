@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.0-canary.24",
+  "version": "0.0.0-canary.25",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",

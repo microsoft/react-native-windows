@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes issue with lambda capture of structured bindings",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

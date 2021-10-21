@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update to typescript 4",
-  "packageName": "@react-native-windows/find-repo-root",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

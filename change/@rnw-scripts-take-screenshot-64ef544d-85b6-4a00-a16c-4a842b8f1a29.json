@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update to typescript 4",
-  "packageName": "@rnw-scripts/take-screenshot",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
