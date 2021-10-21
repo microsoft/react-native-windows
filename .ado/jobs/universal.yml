@@ -8,19 +8,32 @@
     - name: buildMatrix
       type: object
       default:
-        - BuildEnvironment: PullRequest
-          Matrix:
-            - Name: X64ReleaseFast
-              BuildConfiguration: Release
-              BuildPlatform: x64
-              FastBuild: true
-            - Name: X86DebugFast
-              BuildConfiguration: Debug
-              BuildPlatform: x86
-              LayoutHeaders: true
-              FastBuild: true
-            # Build more flavors for PRs to stable branches
-            - ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}:
+        - ${{ if not(endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+          # PRs to non-stable branches
+          - BuildEnvironment: PullRequest
+            Matrix:
+              - Name: X64ReleaseFast
+                BuildConfiguration: Release
+                BuildPlatform: x64
+                FastBuild: true
+              - Name: X86DebugFast
+                BuildConfiguration: Debug
+                BuildPlatform: x86
+                LayoutHeaders: true
+                FastBuild: true
+        - ${{ if endsWith(variables['Build.SourceBranchName'], '-stable') }}:
+          # PRs to stable branches
+          - BuildEnvironment: PullRequest
+            Matrix:
+              - Name: X64ReleaseFast
+                BuildConfiguration: Release
+                BuildPlatform: x64
+                FastBuild: true
+              - Name: X86DebugFast
+                BuildConfiguration: Debug
+                BuildPlatform: x86
+                LayoutHeaders: true
+                FastBuild: true
               - Name: Arm64DebugFast
                 BuildConfiguration: Debug
                 BuildPlatform: ARM64
