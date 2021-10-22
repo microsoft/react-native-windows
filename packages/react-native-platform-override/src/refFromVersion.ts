@@ -16,7 +16,7 @@ export function getAbbreviatedRef(reactNativeVersion: string): string {
   if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
     return extractHashFromNightlyVersion(reactNativeVersion);
   } else {
-    return extractTagFromStableVersions(reactNativeVersion);
+    return `v${reactNativeVersion}`;
   }
 }
 
@@ -32,7 +32,7 @@ export async function fetchFullRef(
     const abbrevHash = extractHashFromNightlyVersion(reactNativeVersion);
     return fetchFullCommitHash(abbrevHash, opts);
   } else {
-    return extractTagFromStableVersions(reactNativeVersion);
+    return `refs/tags/v${reactNativeVersion}`;
   }
 }
 
@@ -76,10 +76,6 @@ function extractHashFromNightlyVersion(reactNativeVersion: string): string {
 
   // Handle #3
   return splitPre[2];
-}
-
-function extractTagFromStableVersions(reactNativeVersion: string): string {
-  return `refs/tags/v${reactNativeVersion}`;
 }
 
 async function fetchFullCommitHash(
