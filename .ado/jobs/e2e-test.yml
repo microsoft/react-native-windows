@@ -84,6 +84,15 @@ jobs:
                 feature: UseHermes
                 value: ${{ matrix.UseHermes }}
 
+            # Set IncludeHermes flag if the test explicitly excludes Hermes.
+            # And let the default to take effect in rest of the tests.
+            - template: ../templates/set-experimental-feature.yml
+              parameters:
+                package: packages/e2e-test-app
+                feature: IncludeHermes
+                value: ${{ matrix.IncludeHermes }}
+              condition: eq(${{ matrix.IncludeHermes }}, 'false')
+
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
