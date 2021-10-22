@@ -45,11 +45,9 @@
 #include <safeint.h>
 #include "PackagerConnection.h"
 
-#if defined(INCLUDE_HERMES)
 #include <hermes/BytecodeVersion.h>
-
 #include "HermesRuntimeHolder.h"
-#endif
+
 #if defined(USE_V8)
 #include <JSI/NapiJsiV8RuntimeHolder.h>
 
@@ -360,14 +358,9 @@ InstanceImpl::InstanceImpl(
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
-#if defined(INCLUDE_HERMES)
           m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
           m_devSettings->inlineSourceMap = false;
           break;
-#else
-          assert(false); // Hermes is not available in this build, fallthrough
-          [[fallthrough]];
-#endif
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::ScriptStore> scriptStore = nullptr;

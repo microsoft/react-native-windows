@@ -18,7 +18,6 @@ parameters:
           - Name: X64ChakraExcludeHermes
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
-            IncludeHermes: false
           - Name: X64Hermes
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
@@ -83,15 +82,6 @@ jobs:
                 package: packages/e2e-test-app
                 feature: UseHermes
                 value: ${{ matrix.UseHermes }}
-
-            # Set IncludeHermes flag if the test explicitly excludes Hermes.
-            # And let the default to take effect in rest of the tests.
-            - ${{ if eq(matrix.IncludeHermes, false) }}:
-              - template: ../templates/set-experimental-feature.yml
-                parameters:
-                  package: packages/e2e-test-app
-                  feature: IncludeHermes
-                  value: ${{ matrix.IncludeHermes }}
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:

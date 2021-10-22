@@ -110,7 +110,6 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   devMenu.FastRefreshText().Text(
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
-#if defined(INCLUDE_HERMES)
   if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     devMenu.SamplingProfilerText().Text(
         !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
@@ -135,7 +134,6 @@ void DevMenuManager::CreateAndShowUI() noexcept {
 
     devMenu.SamplingProfilerDescText().Text(winrt::to_hstring(os.str()));
   }
-#endif
 
   devMenu.DirectDebugText().Text(
       Mso::React::ReactOptions::UseDirectDebugger(m_context->Properties()) ? L"Disable Direct Debugging"
@@ -204,7 +202,6 @@ void DevMenuManager::CreateAndShowUI() noexcept {
         }
       });
 
-#if defined(INCLUDE_HERMES)
   if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
         winrt::auto_revoke,
@@ -229,9 +226,6 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   } else {
     devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
   }
-#else
-  devMenu.SamplingProfiler().Visibility(xaml::Visibility::Collapsed);
-#endif
 
   m_toggleInspectorRevoker = devMenu.Inspector().Click(
       winrt::auto_revoke,

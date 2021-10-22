@@ -3,7 +3,6 @@
 
   <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
     <UseHermes>false</UseHermes>
-    <IncludeHermes>true</IncludeHermes>
   </PropertyGroup>
 
 </Project>
