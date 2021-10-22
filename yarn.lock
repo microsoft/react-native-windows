@@ -5461,10 +5461,10 @@ flatted@^2.0.0:
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-2.0.2.tgz#4575b21e2bcee7434aa9be662f4b7b5f9c2b5138"
   integrity sha512-r5wGx7YeOwNWNlCA0wQ86zKyDLMQr+/RB8xy74M4hTphfmjlijTSSXGuH8rnvKZnfT9i+75zmd8jcKdMR4O6jA==
 
-flow-bin@^0.161.0:
-  version "0.161.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.161.0.tgz#1c03ea4a9e3036a8bc639f050bd8dc6f5288e8bb"
-  integrity sha512-5BKQi+sjOXz67Kbc1teiBwd5e0Da6suW7S5oUCm9VclnzSZ3nlfNZUdrkvgJ5S4w5KDBDToEL7rREpn8rKF1zg==
+flow-bin@^0.162.0:
+  version "0.162.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.162.1.tgz#5aaac790dab8664ce363fd0f09764fb9f0daed20"
+  integrity sha512-gFNWkEzBuQ9YzQcPKcVL16V5MZixbiQ+Kn867iwaCfs1TAFuhQQcng4vX3Rtyd7JI3O+g8jToEX7pEDhdzG80Q==
 
 flow-parser@0.*:
   version "0.113.0"
@@ -9248,10 +9248,10 @@ react-clone-referenced-element@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.1.tgz#8d76727dc0459788e461741e804a512d20757381"
   integrity sha512-LZBPvQV8W0B5dFzXFu+D3Tpil8YHS8tO00iFsfXcTLdtpuH7XyvaHqHcoz4hd4uNPQCZ30fceh+s7mLznzMXvg==
 
-react-devtools-core@4.19.1:
-  version "4.19.1"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.19.1.tgz#bc37c2ef2f48f28c6af4c7292be9dca1b63deace"
-  integrity sha512-2wJiGffPWK0KggBjVwnTaAk+Z3MSxKInHmdzPTrBh1mAarexsa93Kw+WMX88+XjN+TtYgAiLe9xeTqcO5FfJTw==
+react-devtools-core@4.20.0:
+  version "4.20.0"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.20.0.tgz#49640f374bcf541cd86410d86c2cb07392005b33"
+  integrity sha512-85889TaQpU4HImySgOjVwsGE1vkS9dgEjtruRHutnXlBN3IZN8lDRuqRBLmhFkS50BEmfpTR28qV7bHAqwHooA==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -9284,10 +9284,10 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
-react-native@0.0.0-e612d3a11-20211007-2009:
-  version "0.0.0-e612d3a11-20211007-2009"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-e612d3a11-20211007-2009.tgz#e15bb80155e6544270fe26cae9cb0105eb89cbac"
-  integrity sha512-zhjDontzuoXcQj9b+itgtGGL5JwvTIjnPnMXNLGeAv87fnCzaNY83sjyTjbu9yLgP+Mwe7om1yj+mKFJaUG1wA==
+react-native@0.0.0-20211016-2009-e1b698c5f:
+  version "0.0.0-20211016-2009-e1b698c5f"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211016-2009-e1b698c5f.tgz#aa592288a9e634ade3082d762630153ddca70405"
+  integrity sha512-a3qbaWyJT6fkubI5nvbrmzrBV1C9HqCFLozpDtqyPj8Icnwd3MkkpuccufvCFDhvTUT2SNMzGOXkqfkPt0d9Dw==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
@@ -9310,7 +9310,7 @@ react-native@0.0.0-e612d3a11-20211007-2009:
     pretty-format "^26.5.2"
     promise "^8.0.3"
     prop-types "^15.7.2"
-    react-devtools-core "4.19.1"
+    react-devtools-core "4.20.0"
     react-native-codegen "^0.0.8"
     react-refresh "^0.4.0"
     regenerator-runtime "^0.13.2"
