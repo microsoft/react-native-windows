@@ -18,6 +18,7 @@ import {
 } from '@react-native-windows/package-utils';
 
 import {
+  getAbbreviatedRef,
   upgradeOverrides,
   validateManifest,
   ValidationError,
@@ -170,27 +171,9 @@ async function generateCommitsUrl(newRnVersion: string): Promise<string> {
     searchPath: rnwPackage.path,
   }))!;
 
-  return `https://github.com/facebook/react-native/compare/${refFromVersion(
+  return `https://github.com/facebook/react-native/compare/${getAbbreviatedRef(
     rnPackage.json.version,
-  )}...${refFromVersion(newRnVersion)}`;
-}
-
-/**
- * Returns a git ref that may be used in a GitHub comparison URL from an npm package version
- */
-function refFromVersion(reactNativeVersion: string): string {
-  if (!semver.valid(reactNativeVersion)) {
-    throw new Error(`${reactNativeVersion} is not a valid semver version`);
-  }
-
-  // Stable releases of React Native use a tag where nightly releases embed
-  // a commit hash into the prerelease tag of 0.0.0 versions as either
-  // 0.0.0-<commitHash> or 0.0.0-<commitHash>-<date>-<time>
-  if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
-    return semver.prerelease(reactNativeVersion)![0].split('-')[0];
-  } else {
-    return `v${reactNativeVersion}`;
-  }
+  )}...${getAbbreviatedRef(newRnVersion)}`;
 }
 
 type StepResult = {
