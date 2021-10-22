@@ -15,9 +15,6 @@ parameters:
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
             UseHermes: false
-          - Name: X64ChakraExcludeHermes
-            BuildPlatform: x64
-            DeployOptions: --deploy-from-layout
           - Name: X64Hermes
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
