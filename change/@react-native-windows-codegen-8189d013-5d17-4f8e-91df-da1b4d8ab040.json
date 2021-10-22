@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Built files not included in published package",
+  "comment": "Only generate component files if a component is specified",
   "packageName": "@react-native-windows/codegen",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

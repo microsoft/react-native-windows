@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Allow text selection on Alert content",
+  "comment": "fix codegen task",
   "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
 }
