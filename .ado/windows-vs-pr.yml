@@ -11,23 +11,10 @@ variables:
   - group: platform-override-zero-permission-token
 
 jobs:
-  - job: Setup
-    variables:
-      - template: variables/vs2019.yml
-    steps:
-      - task: powershell@2
-        name: checkPayload
-        displayName: "Check if build is required for this PR"
-        inputs:
-          targetType: filePath
-          filePath: .ado/shouldSkipPRBuild.ps1
-
   - job: RNWUniversalPR
     variables:
       - template: variables/vs2019.yml
     displayName: Universal PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         #X64Debug:
@@ -165,8 +152,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: WinUI3 Playground
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86:
@@ -223,8 +208,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Universal Other Projects PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86Debug:
@@ -308,8 +291,6 @@ jobs:
       - name: BuildLogDirectory
         value: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
     displayName: Sample Apps PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         #X64Debug:
@@ -394,8 +375,6 @@ jobs:
           (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
     displayName: Desktop PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         X64Debug:
@@ -506,8 +485,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Verify react-native init
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugCpp:
@@ -635,8 +612,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Verify react-native init WinUI3
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugCpp:
@@ -665,8 +640,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Verify react-native init Hermes
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         X64DebugCpp:
@@ -695,14 +668,8 @@ jobs:
       - template: variables/vs2019.yml
     displayName: Verify react-native init experimental
     dependsOn:
-     - Setup
      - RNWUniversalPR
-    condition: |
-      and
-      (
-        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-      )
+    condition: in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
@@ -726,8 +693,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: JavaScript Checks
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
@@ -794,7 +759,6 @@ jobs:
     dependsOn:
       - RNWDesktopPR
       - RNWUniversalPR # Needed to have artifacts uploaded from LayoutHeaders
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
