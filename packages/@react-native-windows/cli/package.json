@@ -33,6 +33,7 @@
     "shelljs": "^0.8.4",
     "username": "^5.1.0",
     "uuid": "^3.3.2",
+    "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.27"
   },

@@ -34,6 +34,7 @@ import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
+const formatter = require('xml-formatter');
 
 export class AutolinkWindows {
   private changesNecessary: boolean;
