@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 23 Oct 2021 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.403",
+      "version": "0.0.0-canary.403",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c39ba3f4e8eac73445eec4d405a0209ccf2df1bf",
+            "comment": "fix codegen task"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.19",
+            "commit": "82aa530d95d792b3c68fb0ff75103336976afe5d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 22 Oct 2021 05:06:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.402",
       "version": "0.0.0-canary.402",

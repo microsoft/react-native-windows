@@ -2,6 +2,27 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Sat, 23 Oct 2021 05:06:49 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump react-native-windows to v0.0.0-canary.403",
+            "commit": "82aa530d95d792b3c68fb0ff75103336976afe5d"
+          },
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.19",
+            "commit": "82aa530d95d792b3c68fb0ff75103336976afe5d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 22 Oct 2021 05:06:46 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 Oct 2021 05:06:46 GMT and should not be manually modified.
+This log was last generated on Sat, 23 Oct 2021 05:06:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.403
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Changes
+
+- fix codegen task (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.19
 
 ## 0.0.0-canary.402
 
