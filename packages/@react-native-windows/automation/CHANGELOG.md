@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Sun, 17 Oct 2021 05:06:34 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Oct 2021 05:06:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.16
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.13
+
+## 0.0.15
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.0.12
 
 ## 0.0.14
 

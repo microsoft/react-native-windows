@@ -2,6 +2,21 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.14",
+      "version": "0.0.0-canary.14",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.5.1",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Oct 2021 05:06:48 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.13",
       "version": "0.0.0-canary.13",

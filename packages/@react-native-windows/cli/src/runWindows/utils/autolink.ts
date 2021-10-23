@@ -944,7 +944,7 @@ async function updateAutoLink(
     spinner.fail();
     const endTime = performance.now();
     console.log(
-      `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
+      `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
         endTime - startTime,
       )}ms)`,
     );

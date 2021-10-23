@@ -1,8 +1,18 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.65
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.24
+- Bump @react-native-windows/cli to v0.0.0-canary.95
 
 ## 1.1.64
 

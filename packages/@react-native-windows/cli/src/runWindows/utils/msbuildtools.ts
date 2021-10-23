@@ -116,7 +116,7 @@ export default class MSBuildTools {
     try {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
-      newError(e.message);
+      newError((e as Error).message);
       throw e;
     }
 
@@ -143,7 +143,7 @@ export default class MSBuildTools {
           .toString()
           .split(EOL)[0];
         error = new CodedError('MSBuildError', firstMessage);
-        error.logfile = errorLog;
+        (error as any).logfile = errorLog;
       }
       throw error;
     }

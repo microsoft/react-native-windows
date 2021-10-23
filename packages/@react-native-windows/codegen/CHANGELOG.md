@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 29 Sep 2021 05:06:54 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Oct 2021 05:06:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.18
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Changes
+
+- Built files not included in published package (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.17
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.16
 

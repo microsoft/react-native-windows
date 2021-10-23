@@ -2,6 +2,78 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 22 Oct 2021 05:06:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.402",
+      "version": "0.0.0-canary.402",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes resizeMode for data URI images",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Allow text selection on Alert content",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.18",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.401",
+      "version": "0.0.0-canary.401",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes issue with lambda capture of structured bindings",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.95",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.14",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.17",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.5.1",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 17 Oct 2021 05:06:34 GMT",
       "tag": "react-native-windows_v0.0.0-canary.400",
       "version": "0.0.0-canary.400",

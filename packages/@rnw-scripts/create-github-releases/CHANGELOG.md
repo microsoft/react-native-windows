@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.5
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.25
 
 ## 1.1.4
 
