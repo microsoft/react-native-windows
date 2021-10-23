@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix win32 apps referencing the M.RN nuget package so they can use RNW",
   "packageName": "react-native-windows",
   "email": "asklar@microsoft.com",
