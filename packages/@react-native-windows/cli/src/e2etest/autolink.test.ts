@@ -122,9 +122,6 @@ test('autolink with no windows project', () => {
           hooks: {},
           params: [],
         },
-        assets: [],
-        hooks: {},
-        params: [],
       },
       {
         check: true,
@@ -153,9 +150,6 @@ test('autolink with no windows project', () => {
           hooks: {},
           params: [],
         },
-        assets: [],
-        hooks: {},
-        params: [],
       },
       {
         check: true,
@@ -189,10 +183,10 @@ test('autolink with no windows project', () => {
               ],
             },
           },
-        },
         assets: [],
         hooks: {},
         params: [],
+        },
       },
       {
         check: true,
@@ -229,10 +223,10 @@ test('autolink with no windows project', () => {
               ],
             },
           },
-        },
         assets: [],
         hooks: {},
         params: [],
+        },
       },
       {
         check: true,
@@ -368,11 +362,10 @@ test('autolink with no windows project', () => {
                 {
                   directDependency: false,
                   projectFile: 'indirect.vcxproj',
-                }
+                },
               ],
             },
           },
-        },
         assets: [],
         hooks: {},
         params: [],
