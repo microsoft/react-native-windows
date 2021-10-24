@@ -116,7 +116,8 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
+      <!-- #8824: The Hermes NuGet package adds itself to be linked, but we go through Hermes Shim instead. Ignore the unused DLL until using NuGet package with "HermesNoLink" -->
+      <AdditionalOptions>%(AdditionalOptions) /minpdbpathlen:256 /IGNORE:4199</AdditionalOptions>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
@@ -339,7 +340,7 @@
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
     <Import Project="$(SolutionDir)\packages\ReactWindows.ChakraCore.ARM64.1.11.20\build\native\ReactWindows.ChakraCore.ARM64.targets" Condition="'$(Platform)' == 'ARM64' AND Exists('$(SolutionDir)\packages\ReactWindows.ChakraCore.ARM64.1.11.20\build\native\ReactWindows.ChakraCore.ARM64.targets')" />
-    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets') AND '$(IncludeHermes)' == 'true'" />
+    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets')" />
   </ImportGroup>
   <!-- See $(CppWinRTRootNamespace) comments above. -->
   <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
@@ -367,7 +368,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets'))" />
     <Error Condition="!Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(UseV8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
-    <Error Condition="!Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets') AND '$(IncludeHermes)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets'))" />
+    <Error Condition="!Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props'))" />
