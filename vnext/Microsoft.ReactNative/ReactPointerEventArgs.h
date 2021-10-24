@@ -11,6 +11,7 @@ struct ReactPointerEventArgs : ReactPointerEventArgsT<ReactPointerEventArgs> {
   xaml::Input::PointerRoutedEventArgs Args() const noexcept;
 
   PointerEventKind Kind() const noexcept;
+  void Kind(PointerEventKind kind) noexcept;
 
   winrt::IInspectable Target() const noexcept;
   void Target(winrt::IInspectable const &target) noexcept;

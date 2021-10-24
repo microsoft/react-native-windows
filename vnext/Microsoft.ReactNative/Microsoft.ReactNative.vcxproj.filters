@@ -312,6 +312,12 @@
     <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Views\Text\TextHitTestUtils.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Views\Text\TextHitTestVisitor.cpp">
+      <Filter>Views\Text</Filter>
+    </ClCompile>
     <ClCompile Include="Views\Text\TextParentVisitor.cpp">
       <Filter>Views\Text</Filter>
     </ClCompile>
@@ -692,6 +698,12 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Views\Text\TextHighlighterVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextHitTestVisitor.h">
+      <Filter>Views\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Views\Text\TextHitTestUtils.h">
       <Filter>Views\Text</Filter>
     </ClInclude>
     <ClInclude Include="Views\Text\TextParentVisitor.h">

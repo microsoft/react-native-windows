@@ -4,15 +4,16 @@
     "src/**"
   ],
   "excludePatterns": [
-    "**/__snapshots__/**"
+    "**/__snapshots__/**",
+    "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-d3c7e2018",
+  "baseVersion": "0.0.0-e612d3a11-20211007-2009",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "87b17404811d82484497bb8f73b63e57b90b5006"
+      "baseHash": "a692668e747e9ea62902ef16cd4cef7fb4664f18"
     },
     {
       "type": "derived",

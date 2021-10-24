@@ -1,8 +1,117 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Tue, 05 Oct 2021 05:07:00 GMT and should not be manually modified.
+This log was last generated on Sun, 24 Oct 2021 05:06:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Sun, 24 Oct 2021 05:06:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.404
+
+## 0.0.1
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.403
+
+## 0.0.1
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.402
+
+## 0.0.1
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.5.1
+- Bump react-native-windows to v0.0.0-canary.401
+
+## 0.0.1
+
+Sun, 17 Oct 2021 05:06:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.400
+
+## 0.0.1
+
+Sat, 16 Oct 2021 05:08:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.399
+
+## 0.0.1
+
+Fri, 15 Oct 2021 05:06:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.398
+
+## 0.0.1
+
+Thu, 14 Oct 2021 05:06:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.397
+
+## 0.0.1
+
+Wed, 13 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.396
+
+## 0.0.1
+
+Tue, 12 Oct 2021 05:07:11 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.395
+
+## 0.0.1
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.394
+
+## 0.0.1
+
+Fri, 08 Oct 2021 05:05:52 GMT
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.393 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.1
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.5.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump react-native-windows to v0.0.0-canary.392 (ngerlem@microsoft.com)
 
 ## 0.0.1
 

@@ -32,7 +32,7 @@
     ]
   },
   "devDependencies": {
-    "beachball": "2.4.0",
+    "beachball": "^2.16.0",
     "husky": "^4.2.5",
     "unbroken": "1.0.27",
     "lage": "^0.29.3",
@@ -44,8 +44,10 @@
     "glob-parent": "^5.1.2",
     "node-fetch": "2.6.1",
     "node-notifier": "^9.0.0",
-    "xmldom": "github:xmldom/xmldom#^0.7.5",
+    "set-value": "^4.0.1",
+    "strip-ansi": "^6.0.1",
     "**/parse-url/normalize-url": "^4.5.1",
+    "**/@react-native/repo-config/jest-junit": "^13.0.0",
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
     "**/detox/ws": "^5.2.3"

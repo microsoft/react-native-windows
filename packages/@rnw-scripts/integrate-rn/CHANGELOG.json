@@ -2,6 +2,69 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.38",
+      "version": "1.0.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.25",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.22",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.5.1",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Oct 2021 05:06:48 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.37",
+      "version": "1.0.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Fix integration commit comparison link for new nightly builds",
+            "commit": "db9fd0f1192d6340c5e766ac2630fc182c99de4f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Oct 2021 05:07:05 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.36",
+      "version": "1.0.36",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-platform-override to v1.5.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "7a0c68516b825131c798978f1dfc0088f7115614",
+            "package": "@rnw-scripts/integrate-rn"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.0.35",
       "version": "1.0.35",

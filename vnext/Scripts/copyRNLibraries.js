@@ -14,9 +14,14 @@ const rnCopiesDir = path.join(
   path.dirname(require.resolve('react-native-windows/package.json')),
   'ReactCopies',
 );
+const rnTypesDir = path.dirname(
+  require.resolve('@types/react-native/package.json'),
+);
 
 exports.copyTask = baseDir => {
   const reactNative = (...files) => files.map(f => path.join(rnDir, f));
+  const reactNativeTypes = (...files) =>
+    files.map(f => path.join(rnTypesDir, f));
   const reactCopies = (...files) => files.map(f => path.join(rnCopiesDir, f));
   const src = (...files) => files.map(f => path.join(baseDir, 'src', f));
   const base = file => path.join(baseDir, file);
@@ -24,6 +29,12 @@ exports.copyTask = baseDir => {
   return series(
     exports.cleanTask(baseDir),
 
+    // For the TS compiler to be able to reference the files and create
+    // correct output the imported .d.ts files must be within our src dir
+    copyTask({
+      paths: reactNativeTypes('*.d.ts'),
+      dest: base('src/rntypes'),
+    }),
     copyTask({
       paths: reactNative('flow/**'),
       dest: base('flow'),
@@ -73,6 +84,7 @@ exports.cleanTask = baseDir => {
       base('index.js'),
       base('interface.js'),
       base('rn-get-polyfills.js'),
+      base('src/rntypes'),
 
       // Remove TS compiled gunk in our root
       ...glob.sync(

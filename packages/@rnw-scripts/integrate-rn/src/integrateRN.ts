@@ -184,9 +184,10 @@ function refFromVersion(reactNativeVersion: string): string {
   }
 
   // Stable releases of React Native use a tag where nightly releases embed
-  // a commit hash into the prerelease tag of 0.0.0 versions
+  // a commit hash into the prerelease tag of 0.0.0 versions as either
+  // 0.0.0-<commitHash> or 0.0.0-<commitHash>-<date>-<time>
   if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
-    return semver.prerelease(reactNativeVersion)![0];
+    return semver.prerelease(reactNativeVersion)![0].split('-')[0];
   } else {
     return `v${reactNativeVersion}`;
   }
@@ -209,7 +210,7 @@ async function funcStep(
     const result = await func();
     logger[result.status](name, result.body);
   } catch (ex) {
-    logger.error(name, ex.stack);
+    logger.error(name, (ex as Error).stack);
     throw ex;
   }
 }
@@ -233,6 +234,6 @@ async function failableCommandStep(cmd: string) {
     await runCommand(cmd);
     logger.success(cmd);
   } catch (ex) {
-    logger.error(cmd, ex.stack);
+    logger.error(cmd, (ex as Error).stack);
   }
 }
