@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "applying package updates ***NO_CI***",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
