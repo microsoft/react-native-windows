@@ -116,7 +116,8 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalOptions>%(AdditionalOptions) -minpdbpathlen:256</AdditionalOptions>
+      <!-- #8824: The Hermes NuGet package adds itself to be linked, but we go through Hermes Shim instead. Ignore the unused DLL until using NuGet package with "HermesNoLink" -->
+      <AdditionalOptions>%(AdditionalOptions) /minpdbpathlen:256 /IGNORE:4199</AdditionalOptions>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
