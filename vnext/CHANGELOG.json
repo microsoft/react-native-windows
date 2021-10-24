@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 24 Oct 2021 05:06:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.404",
+      "version": "0.0.0-canary.404",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e18fd3f87be9237ff82f97758a334c4302287bb0",
+            "comment": "Fix win32 apps referencing the M.RN nuget package so they can use RNW"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Oct 2021 05:06:49 GMT",
       "tag": "react-native-windows_v0.0.0-canary.403",
       "version": "0.0.0-canary.403",

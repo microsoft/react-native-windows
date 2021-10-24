@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 Oct 2021 05:06:49 GMT and should not be manually modified.
+This log was last generated on Sun, 24 Oct 2021 05:06:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.404
+
+Sun, 24 Oct 2021 05:06:50 GMT
+
+### Changes
+
+- Fix win32 apps referencing the M.RN nuget package so they can use RNW (asklar@microsoft.com)
 
 ## 0.0.0-canary.403
 
