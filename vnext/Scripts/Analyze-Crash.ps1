@@ -30,10 +30,7 @@ if (!(Test-Path $localDumpsPath)) {
 }
 
 
-
-
-
-$cdb = 'C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\cdb.exe'
+$cdb = "${env:ProgramFiles(x86)}\Windows Kits\10\Debuggers\x64\cdb.exe"
 
 if (!(Test-Path $cdb)) {
   if (!$isElevated) {
@@ -62,17 +59,19 @@ if ($ExeName) {
 }
 
 Write-Host Analyzing crash dump $DumpFilePath
-& $cdb -z $DumpFilePath -c ".lines; !analyze -v; .ecxr; kP; q" > analyze.txt
+& $cdb -z "$DumpFilePath" -c ".lines; !analyze -v; .ecxr; kP; q" > analyze.txt
 
-Write-Host "Written analysis to analyze.txt - Please paste its contents in the bug inside of a <details>...</details> tag."
+Write-Host "Written analysis to $PWD\analyze.txt"
+Write-Host "If you wish to file a bug, please paste its contents in inside of a <details>...</details> tag."
 Write-Host "You may also upload the file $DumpFilePath to your OneDrive or other cloud provider and share a link in the bug description."
+Write-Host "Note that the contents of analyze.txt and the dump file might contain personally identifiable information. Please carefully review its contents before sharing them."
 
 start analyze.txt
 
 function FileIssue {
   # We can't populate the !analyze output because the URL ends up being too long and GitHub rejects it. Following up internally but at least we can prepopulate the <details> tags etc.
-  $title = "[Crash] ENTER TITLE HERE"
-  $body = "ENTER YOUR ISSUE DESCRIPTION HERE
+  $title = [uri]::EscapeUriString("[Crash] ENTER TITLE HERE")
+  $body = [uri]::EscapeUriString("ENTER YOUR ISSUE DESCRIPTION HERE
 
 <details>
 
@@ -80,10 +79,9 @@ function FileIssue {
   PASTE YOUR ANALYZE.TXT HERE
 ``````
 </details>
-"
+")
 
-  $bodyUrl = [uri]::EscapeUriString($body)
-  start "https://github.com/microsoft/react-native-windows/issues/new?title=$title&body=$bodyUrl"
+  start "https://github.com/microsoft/react-native-windows/issues/new?title=$title&body=$body&labels=bug"
 }
 
 FileIssue
