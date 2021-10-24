@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance.",
+  "packageName": "react-native-windows",
+  "email": "anandrag@microsoft.com",
+  "dependentChangeType": "patch"
+}
