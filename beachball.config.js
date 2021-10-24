@@ -15,7 +15,7 @@ module.exports = {
   gitTags: false,
 
   // Commit message used when publishing
-  message: 'Publish Packages | ***NO_CI***',
+  message: 'applying package updates ***NO_CI***',
 
   hooks: {
     // Stamp versions when we publish a new package
