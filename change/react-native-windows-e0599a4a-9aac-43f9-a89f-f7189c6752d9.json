@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix AppTheme Regressions",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
