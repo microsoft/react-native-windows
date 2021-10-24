@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "Crash.h"
 #include "HermesShim.h"
 
 namespace Microsoft::ReactNative::HermesShim {

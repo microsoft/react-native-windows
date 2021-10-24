@@ -116,7 +116,7 @@
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
-      <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) -minpdbpathlen:256</AdditionalOptions>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)\Microsoft.ReactNative;$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx;</AdditionalIncludeDirectories>
