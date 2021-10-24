@@ -221,6 +221,8 @@ ReactInstanceWin::ReactInstanceWin(
           this,
           options.Properties,
           winrt::make<implementation::ReactNotificationService>(options.Notifications))} {
+  VerifyElseCrash(false);
+
   // As soon as the bundle is loaded or failed to load, we set the m_whenLoaded promise value in JS queue.
   // It then synchronously raises the OnInstanceLoaded event in the JS queue.
   // Then, we notify the ReactHost about the load event in the internal queue.
