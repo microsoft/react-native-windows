@@ -17,4 +17,5 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PackageVersionDefinitions.props" />
 </Project>
