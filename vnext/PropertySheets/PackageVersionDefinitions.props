@@ -18,7 +18,7 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
 
-      <PreprocessorDefinitions Condition='"$(ReactNativeWindowsCanary)" == "true"'>
+      <PreprocessorDefinitions Condition="'$(ReactNativeWindowsCanary)' == 'true'">
         RNW_CANARY;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
