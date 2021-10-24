@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Sun, 24 Oct 2021 14:04:21 GMT and should not be manually modified.
+This log was last generated on Sun, 24 Oct 2021 14:04:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.0
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Major changes
+
+- Write to generated beachball config package (ngerlem@microsoft.com)
 
 ## 2.0.0
 

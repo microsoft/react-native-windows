@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 24 Oct 2021 14:04:21 GMT and should not be manually modified.
+This log was last generated on Sun, 24 Oct 2021 14:04:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.405
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Changes
+
+- Stamp version into Props + Definitions (ngerlem@microsoft.com)
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance. (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.405
 
