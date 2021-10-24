@@ -1,6 +1,7 @@
 param(
   [String]$ExeName,
-  [String]$DumpFilePath
+  [String]$DumpFilePath,
+  [String]$Repo = "microsoft/react-native-windows"
 )
 
 $logfile = 'analyze.log'
@@ -109,7 +110,7 @@ function FileIssue {
 </details>
 ")
 
-  start "https://github.com/microsoft/react-native-windows/issues/new?title=$title&body=$body&labels=bug"
+  start "https://github.com/$Repo/issues/new?title=$title&body=$body&labels=bug"
 }
 
 FileIssue
