@@ -51,18 +51,16 @@ std::string HermesSamplingProfiler::GetLastTraceFilePath() noexcept {
 }
 
 winrt::fire_and_forget HermesSamplingProfiler::Start() noexcept {
-#ifdef INCLUDE_HERMES
   if (!s_isStarted) {
     s_isStarted = true;
     co_await winrt::resume_background();
     HermesShim::enableSamplingProfiler();
   }
-#endif
+
   co_return;
 }
 
 std::future<std::string> HermesSamplingProfiler::Stop() noexcept {
-#ifdef INCLUDE_HERMES
   if (s_isStarted) {
     s_isStarted = false;
     co_await winrt::resume_background();
@@ -70,7 +68,7 @@ std::future<std::string> HermesSamplingProfiler::Stop() noexcept {
     s_lastTraceFilePath = co_await getTraceFilePath();
     HermesShim::dumpSampledTraceToFile(s_lastTraceFilePath);
   }
-#endif
+
   co_return s_lastTraceFilePath;
 }
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "HermesShim.h"
+#include "Crash.h"
 
 namespace Microsoft::ReactNative::HermesShim {
 
