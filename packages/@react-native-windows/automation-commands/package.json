@@ -9,7 +9,7 @@
     "url": "git@github.com:microsoft/react-native-windows.git",
     "directory": "packages/@react-native-windows/automation-commands"
   },
-  "private": false,
+  "private": true,
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",

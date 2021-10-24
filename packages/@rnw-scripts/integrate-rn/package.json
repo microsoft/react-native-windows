@@ -14,8 +14,8 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.25",
-    "@react-native-windows/package-utils": "^0.0.0-canary.22",
+    "@react-native-windows/find-repo-root": "0.67.0-preview.0",
+    "@react-native-windows/package-utils": "0.67.0-preview.0",
     "async": "^3.2.0",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
@@ -53,5 +53,6 @@
   "windowsOnly": true,
   "engines": {
     "node": ">= 12.0.0"
-  }
+  },
+  "private": true
 }

@@ -22,7 +22,7 @@
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "^0.0.0-canary.22",
+    "@react-native-windows/package-utils": "0.67.0-preview.0",
     "async": "^3.2.0",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
@@ -43,7 +43,7 @@
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@react-native-windows/package-utils": "0.0.0-canary.22",
+    "@react-native-windows/package-utils": "0.67.0-preview.0",
     "@rnw-scripts/eslint-config": "1.1.8",
     "@rnw-scripts/jest-unittest-config": "1.2.4",
     "@rnw-scripts/just-task": "2.2.1",
@@ -81,5 +81,6 @@
     "lib-commonjs",
     "!lib-commonjs/e2etest/**",
     "!lib-commonjs/test/**"
-  ]
+  ],
+  "private": true
 }
