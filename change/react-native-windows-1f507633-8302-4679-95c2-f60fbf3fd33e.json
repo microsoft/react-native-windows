@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add more symbols to Hermes DLL Loader Shim",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
