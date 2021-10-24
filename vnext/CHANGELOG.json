@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 24 Oct 2021 14:04:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.405",
+      "version": "0.0.0-canary.405",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3d191bf9794bf19869676de1558760f502650aca",
+            "comment": "Stamp version into Props + Definitions"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e65e6b13eff0f2644361e2f9d9b3855a56e58dc8",
+            "comment": "Add more symbols to Hermes DLL Loader Shim"
+          },
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b11bdc61da7680dbe5842060650cb375d8b761e",
+            "comment": "This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance."
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0fdf672e4e99208fdb7cc1397518e59176b076be",
+            "comment": "Fix AppTheme Regressions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 24 Oct 2021 05:06:50 GMT",
       "tag": "react-native-windows_v0.0.0-canary.404",
       "version": "0.0.0-canary.404",
