@@ -3,6 +3,8 @@ param(
   [String]$DumpFilePath
 )
 
+$logfile = 'analyze.log'
+
 if (!$ExeName -and !$DumpFilePath) {
   Write-Output "Either specify an exe name or a dump file path"
 }
@@ -12,7 +14,7 @@ $localDumpsPath = "HKLM:\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Loca
 
 $crashDumpsFolder = "$env:TEMP\CrashDumps"
 
-if (!(Test-Path $localDumpsPath)) {
+if ($ExeName -and !(Test-Path $localDumpsPath)) {
   if (!$isElevated) {
     Write-Output "This script must run elevated to set up crash dump collection. Exiting.";
     exit 1;
@@ -53,20 +55,46 @@ if (!(Test-Path $cdb)) {
   $wss.WaitForExit()
 }
 
+if (!(Test-Path $cdb)) {
+  Write-Output "Failed to find cdb.exe in the Windows SDK Debuggers folder. Try to manually install the debuggers from the Windows SDK setup. Exiting."
+  exit 2;
+}
+
 if ($ExeName) {
   $r = Read-Host Please reproduce your crash scenario. Press Enter when done
   $DumpFilePath = gci $crashDumpsFolder\*.dmp | Sort-Object -Property LastWriteTime -Descending | Select-Object -First 1
 }
 
 Write-Host Analyzing crash dump $DumpFilePath
-& $cdb -z "$DumpFilePath" -c ".lines; !analyze -v; .ecxr; kP; q" > analyze.txt
+& $cdb -z "$DumpFilePath" -c ".lines; !analyze -v; .ecxr; kP; q" > $logfile
 
-Write-Host "Written analysis to $PWD\analyze.txt"
-Write-Host "If you wish to file a bug, please paste its contents in inside of a <details>...</details> tag."
-Write-Host "You may also upload the file $DumpFilePath to your OneDrive or other cloud provider and share a link in the bug description."
-Write-Host "Note that the contents of analyze.txt and the dump file might contain personally identifiable information. Please carefully review its contents before sharing them."
+if ($LASTEXITCODE -ne 0) {
+  Write-Output "Failed to analyze the crash dump. Exiting"
+  if (Test-Path $logfile) {
+    gc $logfile
+  }
+  exit 3
+}
 
-start analyze.txt
+if (!(Test-Path $logfile)) {
+  Write-Output "Couldn't find analysis log file $logfile. Exiting"
+  exit 4
+}
+
+Get-Content $logfile | & "${env:SystemRoot}\System32\clip.exe"
+
+Write-Host "
+Written analysis to $PWD\$logfile
+
+The contents have been copied to the clipboard.
+If you wish to file a bug, please paste its contents in inside of a <details>...</details> tag.
+You may also upload the file $DumpFilePath and associated .pdb symbol files to your OneDrive or other cloud provider and share a link in the bug description.
+
+"
+
+Write-Warning "Note: the contents of $logfile, crash dump, and symbol files, might contain personally identifiable information. Please carefully review these contents before sharing them."
+
+start notepad.exe $logfile
 
 function FileIssue {
   # We can't populate the !analyze output because the URL ends up being too long and GitHub rejects it. Following up internally but at least we can prepopulate the <details> tags etc.
@@ -76,7 +104,7 @@ function FileIssue {
 <details>
 
 ``````
-  PASTE YOUR ANALYZE.TXT HERE
+  PASTE YOUR ANALYSIS LOG FILE HERE
 ``````
 </details>
 ")
