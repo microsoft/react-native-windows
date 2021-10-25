@@ -2,6 +2,21 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:48 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/tester",
+            "comment": "Bump react-native-windows to v0.67.0-preview.1",
+            "commit": "666510e980ced292bffd23a44982e8a800f91444"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Oct 2021 15:07:20 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

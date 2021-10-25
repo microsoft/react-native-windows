@@ -2,6 +2,27 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:48 GMT",
+      "tag": "@react-native-windows/package-utils_v0.67.0-preview.1",
+      "version": "0.67.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "not available",
+            "comment": "Promote 0.67 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0-preview.1",
+            "commit": "666510e980ced292bffd23a44982e8a800f91444"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Oct 2021 15:07:19 GMT",
       "tag": "@react-native-windows/package-utils_v0.67.0-preview.1",
       "version": "0.67.0-preview.1",
