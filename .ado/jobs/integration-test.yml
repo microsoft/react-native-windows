@@ -15,31 +15,36 @@ parameters:
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64Debug
             BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
-            EnabledForNonStableBranch: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
           - Name: X86WebDebug
             BuildPlatform: x86
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
-            EnabledForNonStableBranch: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
           - Name: X86ReleaseHermes
             BuildPlatform: x86
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
-            EnabledForNonStableBranch: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug
@@ -47,37 +52,43 @@ parameters:
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64WebDebug
             BuildPlatform: x64
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86WebDebug
             BuildPlatform: x86
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86ReleaseHermes
             BuildPlatform: x86
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if or(matrix.EnabledForNonStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+        # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
           - job: IntegrationTest${{ matrix.Name }}
             displayName: Integration Test App ${{ matrix.Name }}
             variables:

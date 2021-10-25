@@ -15,50 +15,59 @@ parameters:
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
             UseHermes: false
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Hermes
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
             UseHermes: true
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Chakra
             BuildPlatform: x86
             DeployOptions: --deploy-from-layout
             UseHermes: false
-            EnabledForNonStableBranch: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
           - Name: X86Hermes
             BuildPlatform: x86
             DeployOptions: --deploy-from-layout
             UseHermes: true
-            EnabledForNonStableBranch: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
             DeployOptions:
             UseHermes: false
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Hermes
             BuildPlatform: x64
             DeployOptions:
             UseHermes: true
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Chakra
             BuildPlatform: x86
             DeployOptions:
             UseHermes: false
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Hermes
             BuildPlatform: x86
             DeployOptions:
             UseHermes: true
-            EnabledForNonStableBranch: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if or(matrix.EnabledForNonStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+        # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
           - job: E2ETest${{ matrix.Name }}
             displayName: E2E Test App ${{ matrix.Name }}
 
