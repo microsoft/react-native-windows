@@ -74,6 +74,18 @@
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl">
       <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
     </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactDispatcher.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNonAbiValue.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNotificationService.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
