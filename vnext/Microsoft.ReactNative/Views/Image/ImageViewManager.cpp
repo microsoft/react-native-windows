@@ -8,17 +8,20 @@
 
 #include "ImageViewManager.h"
 
+#include <UI.Xaml.Automation.h>
 #include <winrt/Windows.Foundation.h>
 
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Views/ShadowNodeBase.h>
+#include "DynamicAutomationProperties.h"
 #include "ReactImage.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace xaml::Controls;
+using namespace xaml::Automation::Peers;
 } // namespace winrt
 
 // Such code is better to move to a seperate parser layer
@@ -79,6 +82,12 @@ class ImageShadowNode : public ShadowNodeBase {
     ShadowNodeBase::createView(props);
     auto reactImage{m_view.as<ReactImage>()};
 
+    // Image should default to "accessible: false", but this is not done on the JS level
+    // https://reactnative.dev/docs/image#accessible
+    xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
+    DynamicAutomationProperties::SetAccessibilityRole(
+        *reactImage, winrt::Microsoft::ReactNative::AccessibilityRoles::Image);
+
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
                                               reactImage](const auto &, const bool &succeeded) {
       ReactImageSource source{reactImage->Source()};
@@ -116,9 +125,7 @@ bool ImageViewManager::UpdateProperty(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto grid{nodeToUpdate->GetView().as<winrt::Grid>()};
-
-  if (grid == nullptr)
-    return true;
+  auto reactImage{grid.as<ReactImage>()};
 
   bool finalizeBorderRadius{false};
   bool ret = true;
@@ -127,21 +134,24 @@ bool ImageViewManager::UpdateProperty(
     setSource(grid, propertyValue);
   } else if (propertyName == "resizeMode") {
     auto resizeMode{json_type_traits<facebook::react::ImageResizeMode>::parseJson(propertyValue)};
-    auto reactImage{grid.as<ReactImage>()};
     reactImage->ResizeMode(resizeMode);
   } else if (
       propertyName == "blurRadius" &&
       (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
-    auto reactImage{grid.as<ReactImage>()};
     reactImage->BlurRadius(propertyValue.AsSingle());
   } else if (propertyName == "tintColor") {
     const auto isValidColorValue = IsValidColorValue(propertyValue);
     if (isValidColorValue || propertyValue.IsNull()) {
-      auto reactImage{grid.as<ReactImage>()};
       const auto color = isValidColorValue ? ColorFrom(propertyValue) : winrt::Colors::Transparent();
       reactImage->TintColor(color);
     }
+    // Override default accessibility behavior
+  } else if (propertyName == "accessible" && propertyValue.IsNull()) {
+    xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
+  } else if (propertyName == "accessibilityRole" && propertyValue.IsNull()) {
+    DynamicAutomationProperties::SetAccessibilityRole(
+        *reactImage, winrt::Microsoft::ReactNative::AccessibilityRoles::Image);
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
   } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {

@@ -32,6 +32,7 @@ import {getInstalledRNVersion} from './PackageUtils';
 // reach into our guts to import them.
 export * from './OverrideFactory';
 export * from './Override';
+export * from './refFromVersion';
 export {UpgradeResult, ValidationError};
 
 const MAX_CONCURRENT_TASKS = 30;

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.17
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.0.16
 

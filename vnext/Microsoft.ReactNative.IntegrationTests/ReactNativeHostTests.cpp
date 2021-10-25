@@ -81,7 +81,6 @@ TEST_CLASS (ReactNativeHostTests) {
 
     auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<TestPackageProvider>());
-      return true;
     });
 
     TestEventService::ObserveEvents(
@@ -94,18 +93,22 @@ TEST_CLASS (ReactNativeHostTests) {
   TEST_METHOD(HostReloadedAsyncActionCompletedEvent) {
     TestEventService::Initialize();
 
-    auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
-      host.ReloadInstance().Completed([](auto const &, winrt::Windows::Foundation::AsyncStatus status) mutable {
-        if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
-          TestEventService::LogEvent("InstanceLoaded::Completed", nullptr);
-        } else if (status == winrt::Windows::Foundation::AsyncStatus::Canceled) {
-          TestEventService::LogEvent("InstanceLoaded::Canceled", nullptr);
-        } else {
-          TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
-        }
-      });
-      return false; // Already called ReloadInstance, so we dont need the holder to load the instance
-    });
+    auto options = TestReactNativeHostHolder::Options{};
+    options.LoadInstance = false;
+    auto reactNativeHost = TestReactNativeHostHolder(
+        L"ReactNativeHostTests",
+        [](ReactNativeHost const &host) noexcept {
+          host.ReloadInstance().Completed([](auto const &, winrt::Windows::Foundation::AsyncStatus status) mutable {
+            if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
+              TestEventService::LogEvent("InstanceLoaded::Completed", nullptr);
+            } else if (status == winrt::Windows::Foundation::AsyncStatus::Canceled) {
+              TestEventService::LogEvent("InstanceLoaded::Canceled", nullptr);
+            } else {
+              TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
+            }
+          });
+        },
+        std::move(options));
 
     TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Completed", nullptr}});
   }

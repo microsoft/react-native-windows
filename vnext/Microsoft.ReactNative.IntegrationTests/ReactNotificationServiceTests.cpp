@@ -314,7 +314,6 @@ TEST_CLASS (ReactNotificationServiceTests) {
                 // Unsubscribe after the first notification.
                 args.Subscription().Unsubscribe();
               });
-          return true;
         });
 
     TestEventService::ObserveEvents({

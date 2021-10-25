@@ -121,7 +121,6 @@ void PropsAnimatedNode::StartAnimations() {
     if (const auto uiElement = GetUIElement()) {
       // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
       EnsureUIElementDirtyForRender(uiElement);
-      uiElement.RotationAxis(m_rotationAxis);
       for (const auto &anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
           m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
@@ -135,6 +134,9 @@ void PropsAnimatedNode::StartAnimations() {
         } else if (anim.second.Target() == L"Scale.Y") {
           m_subchannelPropertySet.StartAnimation(L"ScaleY", anim.second);
           uiElement.StartAnimation(m_scaleCombined);
+        } else if (anim.second.Target() == L"Rotation") {
+          uiElement.RotationAxis(m_rotationAxis);
+          uiElement.StartAnimation(anim.second);
         } else {
           uiElement.StartAnimation(anim.second);
         }

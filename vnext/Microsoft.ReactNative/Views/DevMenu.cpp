@@ -110,7 +110,6 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   devMenu.FastRefreshText().Text(
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
-
   if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     devMenu.SamplingProfilerText().Text(
         !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"

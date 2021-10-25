@@ -79,6 +79,8 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
 
+  virtual void OnPointerEvent(ShadowNodeBase *node, const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args);
+
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
   }

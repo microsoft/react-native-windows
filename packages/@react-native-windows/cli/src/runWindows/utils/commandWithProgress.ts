@@ -42,6 +42,8 @@ export function newSpinner(text: string) {
   return ora(options).start();
 }
 
+export const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+
 export async function runPowerShellScriptFunction(
   taskDescription: string,
   script: string | null,
@@ -55,7 +57,7 @@ export async function runPowerShellScriptFunction(
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
-      'powershell',
+      powershell,
       [
         '-NoProfile',
         '-ExecutionPolicy',
@@ -80,7 +82,7 @@ export function commandWithProgress(
   verbose: boolean,
   errorCategory: CodedErrorType,
 ) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 
     if (verbose) {
