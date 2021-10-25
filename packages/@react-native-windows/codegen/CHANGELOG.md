@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Sat, 23 Oct 2021 05:06:49 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 15:07:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0-preview.1
+
+Mon, 25 Oct 2021 15:07:19 GMT
+
+### Changes
+
+- Promote 0.67 to preview (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.19
 

@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 15:07:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.1
+
+Mon, 25 Oct 2021 15:07:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/package-utils to v0.67.0-preview.1
 
 ## 1.5.1
 

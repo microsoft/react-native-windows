@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:20 GMT",
+      "tag": "@rnw-scripts/promote-release_v2.0.0",
+      "version": "2.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0-preview.1",
+            "commit": "be5b1c696dc4bb50281f444713575830d3bf72e3"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/package-utils to v0.67.0-preview.1",
+            "commit": "be5b1c696dc4bb50281f444713575830d3bf72e3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 24 Oct 2021 14:04:42 GMT",
       "tag": "@rnw-scripts/promote-release_v2.0.0",
       "version": "2.0.0",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Promote 0.67 to preview",
-  "packageName": "@react-native-windows/virtualized-list",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

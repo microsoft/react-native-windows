@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:20 GMT",
+      "tag": "@rnw-scripts/integrate-rn_v1.0.38",
+      "version": "1.0.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0-preview.1",
+            "commit": "be5b1c696dc4bb50281f444713575830d3bf72e3"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump @react-native-windows/package-utils to v0.67.0-preview.1",
+            "commit": "be5b1c696dc4bb50281f444713575830d3bf72e3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Oct 2021 05:08:01 GMT",
       "tag": "@rnw-scripts/integrate-rn_v1.0.38",
       "version": "1.0.38",
