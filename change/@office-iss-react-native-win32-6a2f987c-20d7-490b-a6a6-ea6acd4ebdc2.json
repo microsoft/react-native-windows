@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Revert back to a warning for acceptsKeyboardFocus deprecation",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

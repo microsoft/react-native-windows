@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:12 GMT",
+      "tag": "react-native-windows_v0.64.24",
+      "version": "0.64.24",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Change the definition of YGUndefined from NAN to __builtin_nanf(\"0\")",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0e9b7079479724b5f86cb8c3c9659f749429ba26",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Oct 2021 15:07:56 GMT",
       "tag": "react-native-windows_v0.64.23",
       "version": "0.64.23",
