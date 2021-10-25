@@ -79,6 +79,10 @@ steps:
   - script: npx --no-install beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
     displayName: Publish packages to verdaccio
 
+    # Beachball reverts to local state after publish, but we need to know the new version it pushed.
+  - script: npx --no-install beachball bump --branch origin/$(BeachBallBranchName) --yes
+    displayName: beachball bump
+
   - template: set-version-vars.yml
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
