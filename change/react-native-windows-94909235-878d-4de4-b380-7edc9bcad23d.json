@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix crash when direct debugging Chakra",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "dependentChangeType": "patch"
-}

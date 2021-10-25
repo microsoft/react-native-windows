@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix EBUSY race conditions between metro bundler and msbuild",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

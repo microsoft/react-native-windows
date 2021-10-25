@@ -2,6 +2,21 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:26 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fb9caf3b0384f30a615c4ece8e79f335bbbb4e33",
+            "package": "sample-apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Oct 2021 15:08:36 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",
