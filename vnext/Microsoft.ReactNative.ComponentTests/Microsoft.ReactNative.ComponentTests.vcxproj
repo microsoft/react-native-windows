@@ -93,6 +93,7 @@
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;
         $(YogaDir);
         $(FmtDir)include;
         %(AdditionalIncludeDirectories)

@@ -63,6 +63,9 @@
     <ClCompile Include="..\Shared\JSI\ChakraApi.cpp">
       <Filter>ExternalFiles\Shared\JSI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Shared\JSI\ChakraJsiRuntime_edgemode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl">
