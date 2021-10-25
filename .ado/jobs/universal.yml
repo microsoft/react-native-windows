@@ -208,7 +208,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'))
+                  condition: and(succeeded(), and(eq('${{ matrix.BuildConfiguration }}', 'Debug'), eq('${{ matrix.BuildPlatform }}', 'x64')))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (UWP)
