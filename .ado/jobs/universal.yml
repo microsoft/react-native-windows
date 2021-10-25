@@ -268,7 +268,7 @@
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:
-              - ${{ if or(matrix.EnabledForNonStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+              - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
                 - UniversalBuild${{ matrix.Name }}
       pool:
         vmImage: $(VmImage)
