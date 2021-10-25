@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 05:06:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.406",
+      "version": "0.0.0-canary.406",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "40ab2ecba1709d5469f9eac576ed47e843b76bb9",
+            "comment": "Add Analyze-Crash.ps1 script to aid in reporting crashes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 24 Oct 2021 14:04:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.405",
       "version": "0.0.0-canary.405",

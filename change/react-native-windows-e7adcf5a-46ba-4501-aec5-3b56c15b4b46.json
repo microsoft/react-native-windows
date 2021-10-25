@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Analyze-Crash.ps1 script to aid in reporting crashes",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,16 @@
 # Change Log - playground
 
-This log was last generated on Sun, 24 Oct 2021 14:04:42 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 05:06:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.406
 
 ## 0.0.54
 
