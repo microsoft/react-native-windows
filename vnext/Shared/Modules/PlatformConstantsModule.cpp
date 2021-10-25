@@ -10,18 +10,6 @@ using namespace winrt::Windows::Foundation::Metadata;
 
 using Method = facebook::xplat::module::CxxModule::Method;
 
-#ifndef RNW_PKG_VERSION_MAJOR
-#define RNW_PKG_VERSION_MAJOR 1000
-#endif
-
-#ifndef RNW_PKG_VERSION_MINOR
-#define RNW_PKG_VERSION_MINOR 0
-#endif
-
-#ifndef RNW_PKG_VERSION_PATCH
-#define RNW_PKG_VERSION_PATCH 0
-#endif
-
 namespace facebook::react {
 
 const char *PlatformConstantsModule::Name = "PlatformConstants";
@@ -46,9 +34,7 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
 
       // Provide version information for react-native-windows -- which is independant of
       // the version of react-native we are built from
-      {"reactNativeWindowsVersion",
-       folly::dynamic::object("major", RNW_PKG_VERSION_MAJOR)("minor", RNW_PKG_VERSION_MINOR)(
-           "patch", RNW_PKG_VERSION_PATCH)},
+      {"reactNativeWindowsVersion", folly::dynamic::object("major", RNW_MAJOR)("minor", RNW_MINOR)("patch", RNW_PATCH)},
 
       // Provide the universal API contract as an OS version
       {"osVersion", OsVersion()},

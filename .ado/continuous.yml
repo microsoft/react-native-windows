@@ -21,8 +21,8 @@ stages:
 
           - template: templates/yarn-install.yml
 
-          - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags --no-push --no-publish
-            displayName: Beachball Determine versions
+          - script: npx --no-install beachball bump --branch origin/$(Build.SourceBranchName) --yes
+            displayName: beachball bump
 
           - template: templates/set-version-vars.yml
             parameters:

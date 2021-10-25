@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes resizeMode for data URI images",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

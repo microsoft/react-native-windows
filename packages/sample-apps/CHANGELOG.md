@@ -1,8 +1,66 @@
 # Change Log - sample-apps
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 05:06:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 25 Oct 2021 05:06:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.406
+
+## 0.0.0
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.406
+
+## 0.0.0
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.405
+
+## 0.0.0
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.405
+
+## 0.0.0
+
+Sun, 24 Oct 2021 05:06:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.404
+
+## 0.0.0
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.403
+- Bump @react-native-windows/codegen to v0.0.0-canary.19
+
+## 0.0.0
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.402
+- Bump @react-native-windows/codegen to v0.0.0-canary.18
 
 ## 0.0.0
 

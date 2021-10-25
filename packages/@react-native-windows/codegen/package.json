@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.0.0-canary.17",
+  "version": "0.0.0-canary.19",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -15,7 +15,7 @@
     "watch": "rnw-scripts watch"
   },
   "bin": {
-    "codegen": "./bin.js"
+    "react-native-windows-codegen": "./bin.js"
   },
   "dependencies": {
     "chalk": "^4.1.0",

@@ -2,6 +2,165 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 05:06:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.406",
+      "version": "0.0.0-canary.406",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Add Analyze-Crash.ps1 script to aid in reporting crashes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 05:06:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.406",
+      "version": "0.0.0-canary.406",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "40ab2ecba1709d5469f9eac576ed47e843b76bb9",
+            "comment": "Add Analyze-Crash.ps1 script to aid in reporting crashes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 14:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.405",
+      "version": "0.0.0-canary.405",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Stamp version into Props + Definitions"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Add more symbols to Hermes DLL Loader Shim"
+          },
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance."
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fix AppTheme Regressions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 14:04:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.405",
+      "version": "0.0.0-canary.405",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3d191bf9794bf19869676de1558760f502650aca",
+            "comment": "Stamp version into Props + Definitions"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e65e6b13eff0f2644361e2f9d9b3855a56e58dc8",
+            "comment": "Add more symbols to Hermes DLL Loader Shim"
+          },
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b11bdc61da7680dbe5842060650cb375d8b761e",
+            "comment": "This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance."
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0fdf672e4e99208fdb7cc1397518e59176b076be",
+            "comment": "Fix AppTheme Regressions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 05:06:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.404",
+      "version": "0.0.0-canary.404",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e18fd3f87be9237ff82f97758a334c4302287bb0",
+            "comment": "Fix win32 apps referencing the M.RN nuget package so they can use RNW"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Oct 2021 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.403",
+      "version": "0.0.0-canary.403",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c39ba3f4e8eac73445eec4d405a0209ccf2df1bf",
+            "comment": "fix codegen task"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.19",
+            "commit": "82aa530d95d792b3c68fb0ff75103336976afe5d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Oct 2021 05:06:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.402",
+      "version": "0.0.0-canary.402",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes resizeMode for data URI images",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Allow text selection on Alert content",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.18",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Oct 2021 05:08:01 GMT",
       "tag": "react-native-windows_v0.0.0-canary.401",
       "version": "0.0.0-canary.401",

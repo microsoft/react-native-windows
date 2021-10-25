@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Sun, 24 Oct 2021 14:04:42 GMT",
+      "tag": "@rnw-scripts/promote-release_v2.0.0",
+      "version": "2.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/promote-release",
+            "commit": "not available",
+            "comment": "Write to generated beachball config package"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 14:04:21 GMT",
+      "tag": "@rnw-scripts/promote-release_v2.0.0",
+      "version": "2.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/promote-release",
+            "commit": "3d191bf9794bf19869676de1558760f502650aca",
+            "comment": "Write to generated beachball config package"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Oct 2021 05:08:01 GMT",
       "tag": "@rnw-scripts/promote-release_v1.2.27",
       "version": "1.2.27",

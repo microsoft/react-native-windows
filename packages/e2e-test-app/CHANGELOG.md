@@ -1,8 +1,85 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 05:06:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 25 Oct 2021 05:06:59 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.17
+- Bump react-native-windows to v0.0.0-canary.406
+- Bump @react-native-windows/automation to v0.0.20
+- Bump @react-native-windows/automation-commands to v0.0.18
+
+## 0.0.0
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.17
+- Bump react-native-windows to v0.0.0-canary.406
+- Bump @react-native-windows/automation to v0.0.20
+- Bump @react-native-windows/automation-commands to v0.0.18
+
+## 0.0.0
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.16
+- Bump react-native-windows to v0.0.0-canary.405
+- Bump @react-native-windows/automation to v0.0.19
+- Bump @react-native-windows/automation-commands to v0.0.17
+
+## 0.0.0
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.16
+- Bump react-native-windows to v0.0.0-canary.405
+- Bump @react-native-windows/automation to v0.0.19
+- Bump @react-native-windows/automation-commands to v0.0.17
+
+## 0.0.0
+
+Sun, 24 Oct 2021 05:06:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.15
+- Bump react-native-windows to v0.0.0-canary.404
+- Bump @react-native-windows/automation to v0.0.18
+- Bump @react-native-windows/automation-commands to v0.0.16
+
+## 0.0.0
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.14
+- Bump react-native-windows to v0.0.0-canary.403
+- Bump @react-native-windows/automation to v0.0.17
+- Bump @react-native-windows/automation-commands to v0.0.15
+
+## 0.0.0
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.0.13
+- Bump react-native-windows to v0.0.0-canary.402
+- Bump @react-native-windows/automation to v0.0.16
+- Bump @react-native-windows/automation-commands to v0.0.14
 
 ## 0.0.0
 

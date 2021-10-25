@@ -1,8 +1,73 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 05:06:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.406
+
+Mon, 25 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- Add Analyze-Crash.ps1 script to aid in reporting crashes (asklar@microsoft.com)
+
+## 0.0.0-canary.406
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Changes
+
+- Add Analyze-Crash.ps1 script to aid in reporting crashes (asklar@microsoft.com)
+
+## 0.0.0-canary.405
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Changes
+
+- Stamp version into Props + Definitions (ngerlem@microsoft.com)
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance. (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
+
+## 0.0.0-canary.405
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Changes
+
+- Stamp version into Props + Definitions (ngerlem@microsoft.com)
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance. (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
+
+## 0.0.0-canary.404
+
+Sun, 24 Oct 2021 05:06:50 GMT
+
+### Changes
+
+- Fix win32 apps referencing the M.RN nuget package so they can use RNW (asklar@microsoft.com)
+
+## 0.0.0-canary.403
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Changes
+
+- fix codegen task (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.19
+
+## 0.0.0-canary.402
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Changes
+
+- Fixes resizeMode for data URI images (erozell@outlook.com)
+- Allow text selection on Alert content (erozell@outlook.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.18
 
 ## 0.0.0-canary.401
 

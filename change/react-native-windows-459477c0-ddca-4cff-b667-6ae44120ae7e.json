@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow text selection on Alert content",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

@@ -57,6 +57,8 @@ steps:
     submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
     persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
+  - template: configure-git.yml
+
   # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
   - template: yarn-install.yml
 
@@ -72,10 +74,14 @@ steps:
   - script: node .ado/scripts/npmAddUser.js user pass mail@nomail.com http://localhost:4873
     displayName: Add npm user to verdaccio
 
-  - template: ../templates/compute-beachball-branch-name.yml
+  - template: compute-beachball-branch-name.yml
 
   - script: npx --no-install beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
     displayName: Publish packages to verdaccio
+
+    # Beachball reverts to local state after publish, but we need to know the new version it pushed.
+  - script: npx --no-install beachball bump --branch origin/$(BeachBallBranchName) --yes
+    displayName: beachball bump
 
   - template: set-version-vars.yml
     parameters:
