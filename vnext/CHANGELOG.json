@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:26 GMT",
+      "tag": "react-native-windows_v0.66.2",
+      "version": "0.66.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add more symbols to Hermes DLL Loader Shim",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fb9caf3b0384f30a615c4ece8e79f335bbbb4e33",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix win32 apps referencing the M.RN nuget package so they can use RNW",
+            "author": "asklar@microsoft.com",
+            "commit": "4963656efc29f87d6850186b220563086ded4bc2",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix EBUSY race conditions between metro bundler and msbuild",
+            "author": "dannyvv@microsoft.com",
+            "commit": "7e93fce8ba42bbd170995c114c65c9aa120dc68b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix crash when direct debugging Chakra",
+            "author": "anandrag@microsoft.com",
+            "commit": "1314dbfb3268b9919adb1c125f91f2dddd82690b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix AppTheme Regressions",
+            "author": "ngerlem@microsoft.com",
+            "commit": "d86d0d22a59a84ae9984378cb6aa239bfbe2031f",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Oct 2021 15:08:36 GMT",
       "tag": "react-native-windows_v0.66.1",
       "version": "0.66.1",
