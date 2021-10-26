@@ -150,7 +150,7 @@ void TouchEventHandler::OnPointerExited(
     return;
 
   std::vector<int64_t> tagsForBranch;
-  UpdatePointersInViews(args, INVALID_TAG, nullptr);
+  UpdatePointersInViews(args, nullptr, std::move(tagsForBranch));
 }
 
 void TouchEventHandler::OnPointerMoved(
@@ -656,7 +656,8 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
         // Nested React <Text> elements get translated into nested XAML <Span> elements,
         // while the content of the <Text> becomes a list of XAML <Run> elements.
         // However, we should report the Text element as the target, not the contexts of the text.
-        if (auto tag = GetTagAsPropertyValue(args.Target().as<XamlView>())) {
+        int64_t tag;
+        if (TryGetTag(args.Target().as<XamlView>(), tag)) {
           if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
             const auto pointerPos = args.Args().GetCurrentPoint(textBlock).RawPosition();
             const auto inlines = textBlock.Inlines().GetView();
@@ -664,7 +665,7 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
             const auto finerTag = TestHit(inlines, pointerPos, isHit);
             if (finerTag) {
               // Insert nested text tags in reverse order
-              const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(finerTag), GetTag(tag));
+              const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), finerTag, tag);
               auto iter = tagsToCurrentTarget.rbegin();
               while (iter != tagsToCurrentTarget.rend()) {
                 tagsForBranch.insert(tagsForBranch.begin(), *iter);
