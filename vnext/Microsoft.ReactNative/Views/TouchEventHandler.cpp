@@ -392,12 +392,9 @@ facebook::react::SharedEventEmitter EventEmitterForElement(
 
   auto element = view->Element();
   while (auto parent = element.Parent()) {
-    if (element = parent.try_as<xaml::FrameworkElement>()) {
-      auto boxedTag = element.Tag();
-      if (boxedTag) {
-        if (tag = winrt::unbox_value<facebook::react::Tag>(element.Tag()))
-          return EventEmitterForElement(uimanager, tag);
-      }
+    int64_t elementTag;
+    if (TryGetTag(element, elementTag)) {
+      return EventEmitterForElement(uimanager, static_cast<facebook::react::Tag>(elementTag));
     }
   }
   return nullptr;

@@ -27,7 +27,7 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
     return m_ReactTagProperty;
   }
   static int64_t GetReactTag(xaml::DependencyObject const &target) {
-    return winrt::unbox_value<int64_t>(target.GetValue(m_ReactTagProperty));
+    return winrt::unbox_value_or<int64_t>(target.GetValue(m_ReactTagProperty), -1);
   }
   static void SetReactTag(xaml::DependencyObject const &target, int64_t value) {
     target.SetValue(m_ReactTagProperty, winrt::box_value(value));

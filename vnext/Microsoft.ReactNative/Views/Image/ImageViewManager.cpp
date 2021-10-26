@@ -157,7 +157,7 @@ bool ImageViewManager::UpdateProperty(
 }
 
 void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {
-  int64_t tag = grid.Tag().as<winrt::IPropertyValue>().GetInt64();
+  int64_t tag = GetTag(grid);
   folly::dynamic imageSource =
       folly::dynamic::object()("uri", source.uri)("width", source.width)("height", source.height);
 
