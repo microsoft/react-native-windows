@@ -37,15 +37,14 @@ jobs:
 
     strategy:
       matrix:
-        # Start Continuous (or PR to stable) only
-        ${{ if or(eq(parameters.buildEnvironment, 'Continuous'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           Arm64Debug:
             BuildConfiguration: Debug
             BuildPlatform: ARM64
           Arm64Release:
             BuildConfiguration: Release
             BuildPlatform: ARM64
-        # End Continuous (or PR to stable) only
+        # End Continuous only
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
@@ -55,12 +54,12 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
-        # Start Continuous (or PR to stable) only
-        ${{ if or(eq(parameters.buildEnvironment, 'Continuous'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
+        # Start Continuous only
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           X86Release:
             BuildConfiguration: Release
             BuildPlatform: x86
-        # End Continuous (or PR to stable) only
+        # End Continuous only
     pool: $(AgentPool.Medium)
     timeoutInMinutes: 60 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
