@@ -337,9 +337,6 @@ void ReactRootView::ShowInstanceLoading() noexcept {
 
 void ReactRootView::EnsureFocusSafeHarbor() noexcept {
   if (!m_focusSafeHarbor) {
-    // focus safe harbor is delayed to be inserted to the visual tree
-    VerifyElseCrash(Children().Size() == 1);
-
     m_focusSafeHarbor = xaml::Controls::ContentControl{};
     m_focusSafeHarbor.Width(0.0);
     m_focusSafeHarbor.IsTabStop(false);
