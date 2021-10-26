@@ -13,158 +13,193 @@ parameters:
           - Name: X64Debug
             BuildConfiguration: Debug
             BuildPlatform: x64
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Release
             BuildConfiguration: Release
             BuildPlatform: x64
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
+          - Name: Arm64Debug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: Arm64Release
+            BuildConfiguration: Release
+            BuildPlatform: ARM64
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X86Release
+            BuildConfiguration: Release
+            BuildPlatform: x86
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Debug
             BuildConfiguration: Debug
             BuildPlatform: x64
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Release
             BuildConfiguration: Release
             BuildPlatform: x64
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64Debug
             BuildConfiguration: Debug
             BuildPlatform: ARM64
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64Release
             BuildConfiguration: Release
             BuildPlatform: ARM64
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - job: Desktop${{ matrix.Name }}
-          displayName: Desktop ${{ matrix.Name }}
+        # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
+          - job: Desktop${{ matrix.Name }}
+            displayName: Desktop ${{ matrix.Name }}
 
-          variables:
-            - template: ../variables/vs2019.yml
+            variables:
+              - template: ../variables/vs2019.yml
 
-            # Enable if any issues RNTesterIntegrationTests::* become unstable.
-            - name: Desktop.IntegrationTests.SkipRNTester
-              value: false
+              # Enable if any issues RNTesterIntegrationTests::* become unstable.
+              - name: Desktop.IntegrationTests.SkipRNTester
+                value: false
 
-            #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
-            #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
-            - name: Desktop.IntegrationTests.Filter
-              value: >
-                (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
-                (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-                (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
-                (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
+              #5059 - Disable failing or intermittent tests (IntegrationTestHarness,AsyncStorage,WebSocket,Logging).
+              #5265 - WebSocketModuleIntegrationTest::WebSocketModule_Ping fails for Release
+              - name: Desktop.IntegrationTests.Filter
+                value: >
+                  (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+                  (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
+                  (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
-            #6799 -
-            #       HostFunctionTest              - Crashes under JSI/V8
-            #       HostObjectProtoTest           - Crashes under JSI/V8
-            #       PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
-            - name: Desktop.UnitTests.Filter
-              value: >
-                (FullyQualifiedName!~HostFunctionTest)&
-                (FullyQualifiedName!~HostObjectProtoTest)&
-                (FullyQualifiedName!~PreparedJavaScriptSourceTest)
+              #6799 -
+              #       HostFunctionTest              - Crashes under JSI/V8
+              #       HostObjectProtoTest           - Crashes under JSI/V8
+              #       PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
+              - name: Desktop.UnitTests.Filter
+                value: >
+                  (FullyQualifiedName!~HostFunctionTest)&
+                  (FullyQualifiedName!~HostObjectProtoTest)&
+                  (FullyQualifiedName!~PreparedJavaScriptSourceTest)
 
-          pool: $(AgentPool.Medium)
-          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-          cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+            pool: $(AgentPool.Medium)
+            timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+            cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
-          steps:
-            - checkout: self
-              clean: false
-              submodules: false
+            steps:
+              - checkout: self
+                clean: false
+                submodules: false
 
-            - template: ../templates/apply-published-version-vars.yml
+              - template: ../templates/apply-published-version-vars.yml
 
-            - ${{ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], true) }}:
-              - powershell: |
-                  $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
-                  Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
-                displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
+              - ${{ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], true) }}:
+                - powershell: |
+                    $newValue = '(FullyQualifiedName!~RNTesterIntegrationTests::)&' + "$(Desktop.IntegrationTests.Filter)"
+                    Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
+                  displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
-            - template: ../templates/build-rnw.yml
-              parameters:
-                project: vnext/ReactWindows-Desktop.sln
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                buildConfiguration: ${{ matrix.BuildConfiguration }}
+              - template: ../templates/build-rnw.yml
+                parameters:
+                  project: vnext/ReactWindows-Desktop.sln
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  buildConfiguration: ${{ matrix.BuildConfiguration }}
 
-            - ${{ if and(eq(matrix.BuildConfiguration, 'Debug'), eq(matrix.BuildPlatform, 'x64')) }}:
-              - script: yarn bundle
-                displayName: Build react-native-win32 RNTester bundle
-                workingDirectory: packages/@office-iss/react-native-win32
+              - ${{ if and(eq(matrix.BuildConfiguration, 'Debug'), eq(matrix.BuildPlatform, 'x64')) }}:
+                - script: yarn bundle
+                  displayName: Build react-native-win32 RNTester bundle
+                  workingDirectory: packages/@office-iss/react-native-win32
 
-            - template: ../templates/discover-google-test-adapter.yml
+              - template: ../templates/discover-google-test-adapter.yml
 
-            - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
-              - task: VSTest@2
-                displayName: Run Desktop Unit Tests
-                timeoutInMinutes: 5 # Set smaller timeout , due to hangs
-                inputs:
-                  testSelector: testAssemblies
-                  testAssemblyVer2: |
-                    React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
-                  # Bug #8000: Tracks fixing the tests
-                  # ReactCommon.UnitTests/ReactCommon.UnitTests.exe
-                  pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
-                  searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                  testFiltercriteria: $(Desktop.UnitTests.Filter)
-                  runTestsInIsolation: true
-                  platform: ${{ matrix.BuildPlatform }}
-                  configuration: ${{ matrix.BuildConfiguration }}
-                  publishRunAttachments: true
-                  collectDumpOn: onAbortOnly
-                  vsTestVersion: latest
-                  failOnMinTestsNotRun: true
+              - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
+                - task: VSTest@2
+                  displayName: Run Desktop Unit Tests
+                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+                  inputs:
+                    testSelector: testAssemblies
+                    testAssemblyVer2: |
+                      React.Windows.Desktop.UnitTests/React.Windows.Desktop.UnitTests.dll
+                    # Bug #8000: Tracks fixing the tests
+                    # ReactCommon.UnitTests/ReactCommon.UnitTests.exe
+                    pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    testFiltercriteria: $(Desktop.UnitTests.Filter)
+                    runTestsInIsolation: true
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    publishRunAttachments: true
+                    collectDumpOn: onAbortOnly
+                    vsTestVersion: latest
+                    failOnMinTestsNotRun: true
 
-              # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64')) }}:
-              - task: PowerShell@2
-                displayName: Set up test servers
-                inputs:
-                  targetType: filePath # filePath | inline
-                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
-                  arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
+                # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
+              - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64')) }}:
+                - task: PowerShell@2
+                  displayName: Set up test servers
+                  inputs:
+                    targetType: filePath # filePath | inline
+                    filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
+                    arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
 
-              - task: PowerShell@2
-                displayName: Check the metro bundle server
-                inputs:
-                  targetType: 'inline'
-                  script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
+                - task: PowerShell@2
+                  displayName: Check the metro bundle server
+                  inputs:
+                    targetType: 'inline'
+                    script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
 
-              - task: VSTest@2
-                displayName: Run Desktop Integration Tests
-                inputs:
-                  testSelector: testAssemblies
-                  testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
-                  searchFolder: $(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}
-                  testFiltercriteria: $(Desktop.IntegrationTests.Filter)
-                  runTestsInIsolation: true
-                  platform: ${{ matrix.BuildPlatform }}
-                  configuration: ${{ matrix.BuildConfiguration }}
-                  publishRunAttachments: true
-                  collectDumpOn: onAbortOnly
-                  vsTestVersion: latest
-                  failOnMinTestsNotRun: true
-                  otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
+                - task: VSTest@2
+                  displayName: Run Desktop Integration Tests
+                  inputs:
+                    testSelector: testAssemblies
+                    testAssemblyVer2: React.Windows.Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.dll
+                    searchFolder: $(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}
+                    testFiltercriteria: $(Desktop.IntegrationTests.Filter)
+                    runTestsInIsolation: true
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    publishRunAttachments: true
+                    collectDumpOn: onAbortOnly
+                    vsTestVersion: latest
+                    failOnMinTestsNotRun: true
+                    otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
 
-              - template: ../templates/stop-packagers.yml
+                - template: ../templates/stop-packagers.yml
 
-            - template: ../templates/publish-build-artifacts-for-nuget.yml
-              parameters:
-                artifactName: ReactWindows
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                buildConfiguration: ${{ matrix.BuildConfiguration }}
-                contents: |
-                  React.Windows.Desktop\**
-                  React.Windows.Desktop.DLL\**
-                  React.Windows.Desktop.Test.DLL\**
+              - template: ../templates/publish-build-artifacts-for-nuget.yml
+                parameters:
+                  artifactName: ReactWindows
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  buildConfiguration: ${{ matrix.BuildConfiguration }}
+                  contents: |
+                    React.Windows.Desktop\**
+                    React.Windows.Desktop.DLL\**
+                    React.Windows.Desktop.Test.DLL\**
 
-            - template: ../templates/component-governance.yml
+              - template: ../templates/component-governance.yml

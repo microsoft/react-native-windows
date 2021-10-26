@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Integrate 10/16 Nightly Build (Base of 0.67)",
+  "comment": "Upgrade WinUI/MUX to 2.7",
   "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
+  "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
 }
