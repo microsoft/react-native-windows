@@ -376,7 +376,7 @@ jobs:
         - ${{ if eq(matrix.EnabledForMainBranch, true) }}:
           - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
             - job: CliInit${{ matrix.Name }}
-              displayName: Verify Cli ${{ matrix.Name }} ${{ variables['Build.SourceBranchName'] }}
+              displayName: Verify Cli ${{ matrix.Name }} ${{ variables['System.PullRequest.TargetBranch'] }}
 
               ${{ if eq(matrix.useNuGet, true) }}:
                 dependsOn:
