@@ -15,11 +15,29 @@ parameters:
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
+          - Name: Arm64Debug
+            BuildPlatform: ARM64
+            BuildConfiguration: Debug
+            DeployOptions: --no-deploy # We don't have Arm agents
+            UseHermes: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X86Debug
+            BuildPlatform: x86
+            BuildConfiguration: Debug
+            DeployOptions:
+            UseHermes: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug
@@ -27,141 +45,151 @@ parameters:
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Debug
             BuildPlatform: x64
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Debug
             BuildPlatform: x86
             BuildConfiguration: Debug
             DeployOptions:
             UseHermes: false
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - job: IntegrationTest${{ matrix.Name }}
-          displayName: Integration Test App ${{ matrix.Name }}
-          variables:
-            - template: ../variables/vs2019.yml
+        # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
+          - job: IntegrationTest${{ matrix.Name }}
+            displayName: Integration Test App ${{ matrix.Name }}
+            variables:
+              - template: ../variables/vs2019.yml
 
-          pool:
-            vmImage: $(VmImage)
+            pool:
+              vmImage: $(VmImage)
 
-          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-          cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+            timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+            cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
-          steps:
-            - checkout: self
-              clean: true
-              submodules: false
-                  
-            - template: ../templates/prepare-env.yml
+            steps:
+              - checkout: self
+                clean: true
+                submodules: false
+                    
+              - template: ../templates/prepare-env.yml
 
-            - powershell: |
-                Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
-              displayName: Set BuildLogDirectory
-
-            - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
-              displayName: Set LocalDumps
-
-            - ${{ if eq(matrix.UseHermes, 'true') }}:
               - powershell: |
-                  [xml] $experimentalFeatures = Get-Content .\ExperimentalFeatures.props
-                  $experimentalFeatures.Project.PropertyGroup.UseHermes = 'true'
-                  $experimentalFeatures.Save("$pwd\ExperimentalFeatures.props")
-                displayName: Enable Hermes
-                workingDirectory: packages/integration-test-app/windows
+                  Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
+                displayName: Set BuildLogDirectory
 
-            - ${{ if eq(matrix.BuildConfiguration, 'Debug') }}:
-              # The build is more likely to crash after we've started other bits that
-              # take up memory. Do the expensive parts of the build first.
-              - script: yarn windows --no-launch --no-packager --no-deploy --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
-                displayName: yarn windows --no-launch
-                workingDirectory: packages/integration-test-app
+              - script: .ado\scripts\SetupLocalDumps.cmd integrationtest
+                displayName: Set LocalDumps
 
-              - powershell: Start-Process npm -ArgumentList "run","start"
-                displayName: Start packager
-                workingDirectory: packages/integration-test-app
+              - ${{ if eq(matrix.UseHermes, 'true') }}:
+                - powershell: |
+                    [xml] $experimentalFeatures = Get-Content .\ExperimentalFeatures.props
+                    $experimentalFeatures.Project.PropertyGroup.UseHermes = 'true'
+                    $experimentalFeatures.Save("$pwd\ExperimentalFeatures.props")
+                  displayName: Enable Hermes
+                  workingDirectory: packages/integration-test-app/windows
 
-              # Instance load may time out if the packager takes too long to return a
-              # bundle. Request the bundle ahead of time so that the instance will get
-              # it back quickly.
-              - powershell: |
-                  while ($true) {
-                    try {
-                      Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/index.bundle?platform=windows&dev=true"
-                      break
-                    } catch [Exception] {
-                      echo $_.Exception
-                      Start-Sleep -s 1
+              - ${{ if eq(matrix.BuildConfiguration, 'Debug') }}:
+                # The build is more likely to crash after we've started other bits that
+                # take up memory. Do the expensive parts of the build first.
+                - script: yarn windows --no-launch --no-packager --no-deploy --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
+                  displayName: yarn windows --no-launch
+                  workingDirectory: packages/integration-test-app
+
+                - powershell: Start-Process npm -ArgumentList "run","start"
+                  displayName: Start packager
+                  workingDirectory: packages/integration-test-app
+
+                # Instance load may time out if the packager takes too long to return a
+                # bundle. Request the bundle ahead of time so that the instance will get
+                # it back quickly.
+                - powershell: |
+                    while ($true) {
+                      try {
+                        Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/index.bundle?platform=windows&dev=true"
+                        break
+                      } catch [Exception] {
+                        echo $_.Exception
+                        Start-Sleep -s 1
+                      }
                     }
-                  }
-                displayName: Warm packager
-  
-              # If a debugger isn't connected to the packager, the CLI will launch the
-              # default browser to go there. On Windows Server that means launching IE
-              # with a bunch of restrictions. Explicitly launch Chrome to the debugger
-              # UI instead.
-              - powershell: Start-Process chrome http://localhost:8081/debugger-ui/
-                displayName: Launch debugger-ui
+                  displayName: Warm packager
+    
+                # If a debugger isn't connected to the packager, the CLI will launch the
+                # default browser to go there. On Windows Server that means launching IE
+                # with a bunch of restrictions. Explicitly launch Chrome to the debugger
+                # UI instead.
+                - powershell: Start-Process chrome http://localhost:8081/debugger-ui/
+                  displayName: Launch debugger-ui
 
-              # There's a slight race condition here, where we assume Chrome will open
-              # before this launches the app. This step takes ~1m on CI machines so it
-              # shouldn't be a practical concern.
-              - script: yarn windows --no-build ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging
-                displayName: yarn windows --no-build
-                workingDirectory: packages/integration-test-app
+                # There's a slight race condition here, where we assume Chrome will open
+                # before this launches the app. This step takes ~1m on CI machines so it
+                # shouldn't be a practical concern.
+                - script: yarn windows --no-build ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging
+                  displayName: yarn windows --no-build
+                  workingDirectory: packages/integration-test-app
 
-            - ${{ if eq(matrix.BuildConfiguration, 'Release') }}:
-              - script: yarn windows --release ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
-                displayName: yarn windows --release
-                workingDirectory: packages/integration-test-app
+              - ${{ if eq(matrix.BuildConfiguration, 'Release') }}:
+                - script: yarn windows --release ${{ matrix.DeployOptions }} --no-packager --no-autolink --arch ${{ matrix.BuildPlatform }} --logging --buildLogDirectory $(BuildLogDirectory)
+                  displayName: yarn windows --release
+                  workingDirectory: packages/integration-test-app
 
-            - ${{ if ne(matrix.DeployOptions, '--no-deploy') }}:
-              - powershell: |
-                  $wshell = New-Object -ComObject wscript.shell
-                  $wshell.AppActivate('integrationtest')
-                displayName: Activate test window
+              - ${{ if ne(matrix.DeployOptions, '--no-deploy') }}:
+                - powershell: |
+                    $wshell = New-Object -ComObject wscript.shell
+                    $wshell.AppActivate('integrationtest')
+                  displayName: Activate test window
 
-              # Wait a brief moment before taking a screenshot to give the bundle a chance to load
-              - powershell: Start-Sleep -s 5
-                displayName: Pause before screenshot
+                # Wait a brief moment before taking a screenshot to give the bundle a chance to load
+                - powershell: Start-Sleep -s 5
+                  displayName: Pause before screenshot
 
-              - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/before-test.png
-                displayName: Screenshot desktop before tests
-                condition: succeededOrFailed()
+                - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/before-test.png
+                  displayName: Screenshot desktop before tests
+                  condition: succeededOrFailed()
 
-              - script: yarn integration-test
-                displayName: yarn integration-test
-                workingDirectory: packages/integration-test-app
+                - script: yarn integration-test
+                  displayName: yarn integration-test
+                  workingDirectory: packages/integration-test-app
 
-              - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
-                displayName: Screenshot desktop after tests
-                condition: succeededOrFailed()
+                - script: yarn take-screenshot --filename $(Build.StagingDirectory)/Screenshots/after-test.png
+                  displayName: Screenshot desktop after tests
+                  condition: succeededOrFailed()
+
+                - task: PublishPipelineArtifact@1
+                  displayName: Upload screenshots
+                  inputs:
+                    artifactName: Screenshots - IntegrationTest-${{ matrix.Name }}-$(System.JobAttempt)
+                    targetPath: $(Build.StagingDirectory)/Screenshots
+                  condition: succeededOrFailed()
 
               - task: PublishPipelineArtifact@1
-                displayName: Upload screenshots
+                displayName: Upload targets
                 inputs:
-                  artifactName: Screenshots - IntegrationTest-${{ matrix.Name }}-$(System.JobAttempt)
-                  targetPath: $(Build.StagingDirectory)/Screenshots
-                condition: succeededOrFailed()
+                  artifactName: Targets - IntegrationTest-${{ matrix.Name }}-$(System.JobAttempt)
+                  targetPath: packages/integration-test-app/windows/${{ matrix.Name }}}/Debug/integrationtest
+                condition: failed()
 
-            - task: PublishPipelineArtifact@1
-              displayName: Upload targets
-              inputs:
-                artifactName: Targets - IntegrationTest-${{ matrix.Name }}-$(System.JobAttempt)
-                targetPath: packages/integration-test-app/windows/${{ matrix.Name }}}/Debug/integrationtest
-              condition: failed()
-
-            - template: ../templates/upload-build-logs.yml
-              parameters:
-                buildLogDirectory: '$(BuildLogDirectory)'
-                condition: succeededOrFailed()
+              - template: ../templates/upload-build-logs.yml
+                parameters:
+                  buildLogDirectory: '$(BuildLogDirectory)'
+                  condition: succeededOrFailed()

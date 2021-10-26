@@ -12,7 +12,8 @@ jobs:
     displayName: E2E Test App
     strategy:
       matrix:
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+        # Start Continuous (or PR to stable) only
+        ${{ if or(eq(parameters.buildEnvironment, 'Continuous'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}:
           # Arm E2E does not build on non-arm agents
           # Arm64:
           #   BuildPlatform: ARM64
@@ -20,7 +21,7 @@ jobs:
             BuildPlatform: x64
           x86:
             BuildPlatform: x86
-        # End Continuous only
+        # End Continuous (or PR to stable) only
         ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
           x86:
             BuildPlatform: x86
