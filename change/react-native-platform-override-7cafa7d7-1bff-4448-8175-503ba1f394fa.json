@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Use New RN Nightly Scheme in Scripts",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

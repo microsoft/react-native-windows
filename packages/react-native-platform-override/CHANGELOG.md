@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Oct 2021 05:06:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.0
+
+Tue, 26 Oct 2021 05:06:25 GMT
+
+### Minor changes
+
+- Use New RN Nightly Scheme in Scripts (ngerlem@microsoft.com)
 
 ## 1.5.1
 

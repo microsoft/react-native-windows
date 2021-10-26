@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Tue, 26 Oct 2021 05:06:25 GMT",
+      "tag": "react-native-platform-override_v1.6.0",
+      "version": "1.6.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "858f02ad716cdc51115a3423845ccaad0589e3b6",
+            "comment": "Use New RN Nightly Scheme in Scripts"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Oct 2021 05:08:01 GMT",
       "tag": "react-native-platform-override_v1.5.1",
       "version": "1.5.1",
