@@ -27,7 +27,8 @@ stages:
               targetType: filePath
               filePath: .ado/scripts/shouldSkipPRBuild.ps1
 
-          - template: templates/yarn-install.yml
+          - script: npx midgard-yarn-strict@1.2.4 --scope react-native-windows-ado --frozen-lockfile --network-concurrency 40 --cache-folder \.yarnCache
+            displayName: Minimal yarn install
 
           - template: templates/compute-beachball-branch-name.yml
 

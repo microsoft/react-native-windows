@@ -22,6 +22,7 @@
   "license": "MIT",
   "workspaces": {
     "packages": [
+      ".ado",
       "packages/*",
       "packages/@office-iss/*",
       "packages/@react-native-windows/*",
