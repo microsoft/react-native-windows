@@ -7,6 +7,7 @@
 
 #include <IXamlRootView.h>
 #include <UI.Xaml.Controls.h>
+#include <ReactRootView.h>
 
 namespace winrt {
 using namespace Windows::UI;
@@ -29,21 +30,19 @@ XamlView RootViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft
 }
 
 void RootViewManager::AddView(const XamlView &parent, const XamlView &child, int64_t index) {
-  auto panel(parent.as<winrt::Panel>());
-  if (panel != nullptr)
-    panel.Children().InsertAt(static_cast<uint32_t>(index), child.as<xaml::UIElement>());
+  // Goes through RootShadowNode::AddView instead of here
+  assert(false);
 }
 
 void RootViewManager::RemoveAllChildren(const XamlView &parent) {
-  auto panel(parent.as<winrt::Panel>());
-  if (panel != nullptr)
-    panel.Children().Clear();
+  auto panel(parent.as<winrt::Microsoft::ReactNative::ReactRootView>());
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactRootView>(panel)->RemoveAllChildren();
 }
 
 void RootViewManager::RemoveChildAt(const XamlView &parent, int64_t index) {
-  auto panel(parent.as<winrt::Panel>());
-  if (panel != nullptr)
-    panel.Children().RemoveAt(static_cast<uint32_t>(index));
+  auto panel(parent.as<winrt::Microsoft::ReactNative::ReactRootView>());
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactRootView>(panel)->RemoveChildAt(
+      static_cast<uint32_t>(index));
 }
 
 void RootViewManager::SetLayoutProps(
