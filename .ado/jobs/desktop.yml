@@ -25,6 +25,21 @@ parameters:
             BuildPlatform: x86
             EnabledForMainBranch: true
             EnabledForStableBranch: true
+          - Name: Arm64Debug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: Arm64Release
+            BuildConfiguration: Release
+            BuildPlatform: ARM64
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X86Release
+            BuildConfiguration: Release
+            BuildPlatform: x86
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Debug
