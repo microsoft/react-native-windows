@@ -1,8 +1,6 @@
 # Steps template for building any React Native Windows variant.
 
 parameters:
-  debug: false
-
   # NuGet & MSBuild
   project:
   msbuildVersion: $(MSBuildVersion)
@@ -15,32 +13,25 @@ parameters:
   multicoreBuild: false
   warnAsError: true
 
-  # Visual Studio Installer
-  vsComponents: ''
-  listVsComponents: false
-  installVsComponents: false
+variables:
+  MSBuildArchitecture: x64
+  MSBuildPreferredToolArchitecture: x64
+  MSBuildPlatformToolset: v142
+  TargetPlatformVersion: 10.0.19041.0
+
+  ${if parameters.warnAsError }}:
+    MsBuildWarnAsErrorArgument: /warnaserror
+  ${if not(parameters.warnAsError) }}:
+    MsBuildWarnAsErrorArgument: ''
 
 steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
-      Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]/warnaserror"
-    displayName: Set Log directory and warn as error
+    displayName: Set Log directory
 
-  - powershell: |
-      Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]"
-    condition: not(eq('${{parameters.warnAsError}}', 'true'))
-    displayName: Disable WarnAsError
+  - template: prepare-build-env.yml
 
-
-  - template: prepare-env.yml
-    parameters:
-      vsComponents: ${{ parameters.vsComponents }}
-      listVsComponents: ${{ parameters.listVsComponents }}
-      installVsComponents: ${{ parameters.installVsComponents }}
-      debug: ${{ parameters.debug }}
-
-  # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
-  - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
+  - task: NuGetCommand@2
     displayName: NuGet restore
     inputs:
       command: restore
@@ -71,7 +62,7 @@ steps:
         /bl:$(BuildLogDirectory)\MsBuild.binlog
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn
-        /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log
+        /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log        
         $(MsBuildWarnAsErrorArgument)
         ${{parameters.msbuildArguments}}
 

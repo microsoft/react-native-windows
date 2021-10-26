@@ -10,7 +10,7 @@ jobs:
   - job: Reunion
     displayName: Project Reunion
     variables:
-      - template: ../variables/vs2019.yml
+      - template: ../variables/windows.yml
     strategy:
       matrix:
         # ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
@@ -32,7 +32,7 @@ jobs:
 
       - template: ../templates/apply-published-version-vars.yml
 
-      - template: ../templates/build-rnw.yml
+      - template: ../templates/msbuild-solution.yml
         parameters:
           project: vnext/Microsoft.ReactNative.ProjectReunion.sln
           buildPlatform: $(BuildPlatform)

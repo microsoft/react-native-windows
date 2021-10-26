@@ -1,0 +1,10 @@
+steps:
+  - task: NodeTool@0
+    displayName: Set NodeJS Version
+    inputs:
+      versionSpec: '14.x'
+
+  - template: yarn-install.yml
+
+  - task: yarn build
+    displayName: yarn build

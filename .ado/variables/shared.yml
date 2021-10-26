@@ -1,8 +1,4 @@
 variables:
-  VmImage: windows-2019
-  AgentPool.Medium: rnw-pool-4
-  AgentPool.Large: rnw-pool-8
-  MSBuildVersion: 16.0
   runCodesignValidationInjection: false
   NUGET_PLUGIN_HANDSHAKE_TIMEOUT_IN_SECONDS: 60
   NUGET_PLUGIN_REQUEST_TIMEOUT_IN_SECONDS: 60

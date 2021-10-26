@@ -10,7 +10,7 @@ parameters:
   type: string
 
 variables:
-  - template: variables/vs2019.yml
+  - template: variables/windows.yml
   - group: RNW Secrets
 
 pool:

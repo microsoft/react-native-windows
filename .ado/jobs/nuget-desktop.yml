@@ -2,7 +2,7 @@
 jobs:
   - job: PackDesktop
     variables:
-      - template: ../variables/vs2019.yml
+      - template: ../variables/windows.yml
     displayName: Pack Desktop NuGet Package
     dependsOn:
       - DesktopX64Release

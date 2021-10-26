@@ -9,7 +9,7 @@ parameters:
 jobs:
   - job: JSChecks
     variables:
-      - template: ../variables/vs2019.yml
+      - template: ../variables/windows.yml
     displayName: JavaScript Checks
     pool:
       vmImage: $(VmImage)

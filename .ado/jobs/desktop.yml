@@ -48,7 +48,7 @@ jobs:
           displayName: Desktop ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
 
             # Enable if any issues RNTesterIntegrationTests::* become unstable.
             - name: Desktop.IntegrationTests.SkipRNTester
@@ -90,7 +90,7 @@ jobs:
                   Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
                 displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
-            - template: ../templates/build-rnw.yml
+            - template: ../templates/msbuild-solution.yml
               parameters:
                 project: vnext/ReactWindows-Desktop.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}

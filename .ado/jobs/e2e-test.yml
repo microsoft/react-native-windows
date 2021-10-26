@@ -46,7 +46,7 @@ jobs:
           displayName: E2E Test App ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
           pool: $(AgentPool.Medium)
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -60,7 +60,7 @@ jobs:
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
               displayName: Set BuildLogDirectory
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-build-env.yml
 
             - task: CmdLine@2
               displayName: Set LocalDumps

@@ -59,11 +59,7 @@ steps:
 
   - template: configure-git.yml
 
-  # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
-  - template: yarn-install.yml
-
-  - script: yarn build
-    displayName: yarn build
+  - template: prepare-js-env.yml
 
   - powershell: start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)

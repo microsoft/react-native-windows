@@ -55,7 +55,7 @@ jobs:
         - job: IntegrationTest${{ matrix.Name }}
           displayName: Integration Test App ${{ matrix.Name }}
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
           pool: $(AgentPool.Medium)
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
@@ -65,7 +65,7 @@ jobs:
               clean: true
               submodules: false
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-build-env.yml
 
             - powershell: |
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
