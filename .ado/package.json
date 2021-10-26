@@ -1,0 +1,10 @@
+{
+  "name": "react-native-windows-ado",
+  "description": "Minimal dependencies to run ADO scripts (sharing the main lockfile)",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "beachball": "^2.16.0",
+    "semver": "^7.3.2"
+  }
+}
