@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "applying package updates ***NO_CI***",
+  "comment": "applying package updates",
   "packageName": "react-native-windows",
   "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
   "dependentChangeType": "none"
