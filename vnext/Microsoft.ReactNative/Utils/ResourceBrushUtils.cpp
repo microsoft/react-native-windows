@@ -5,6 +5,7 @@
 
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/StandardControlResourceKeyNames.h>
+using namespace Microsoft::ReactNative;
 
 namespace Microsoft::ReactNative {
 
@@ -37,7 +38,15 @@ void UpdateResourceBrush(
   const auto resources = element.Resources();
   if (resources != nullptr) {
     if (brush != nullptr) {
+       auto resourceBrush = resources.Lookup(winrt::box_value(resourceName));
+       // if both the old resource and new resource is a solidColorBrush, just change the color of the brush to support runtime change
+       if (resourceBrush.try_as<xaml::Media::SolidColorBrush>() && brush.try_as<xaml::Media::SolidColorBrush>()) {
+        auto color = brush.as<xaml::Media::SolidColorBrush>().Color();
+        winrt::unbox_value<winrt::Windows::UI::Xaml::Media::SolidColorBrush>(resources.Lookup(winrt::box_value(resourceName))).Color(color);
+      } else {
+      // else, add the new brush to the resource directory (will need to reload component to see change)
       resources.Insert(winrt::box_value(resourceName), brush);
+      }
     } else {
       resources.Remove(winrt::box_value(resourceName));
     }
@@ -98,21 +107,25 @@ void UpdateToggleSwitchThumbResourceBrushes(
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffDisabled, thumbBrush);
+
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOn, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPointerOver, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPressed, thumbBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnDisabled, thumbBrush);
 }
 
-void UpdateToggleSwitchTrackResourceBrushes(
+void UpdateToggleSwitchTrackResourceBrushesOn(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
-    const xaml::Media::Brush onTrackBrush,
-    const xaml::Media::Brush offTrackBrush) {
+    const xaml::Media::Brush onTrackBrush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnDisabled, onTrackBrush);
+}
 
+void UpdateToggleSwitchTrackResourceBrushesOff(
+    const xaml::Controls::ToggleSwitch &toggleSwitch,
+    const xaml::Media::Brush offTrackBrush) {
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOff, offTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPointerOver, offTrackBrush);
   UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPressed, offTrackBrush);
