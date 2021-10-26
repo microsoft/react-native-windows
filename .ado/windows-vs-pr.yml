@@ -30,9 +30,9 @@ jobs:
     condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -40,21 +40,21 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x86
           LayoutHeaders: true
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #ArmDebug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-        #Arm64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM64
-        #Arm64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: ARM64
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
