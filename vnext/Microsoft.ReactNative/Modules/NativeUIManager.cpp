@@ -930,12 +930,21 @@ winrt::Windows::Foundation::Rect GetRectOfElementInParentCoords(xaml::UIElement 
 
   winrt::GeneralTransform transform = element.TransformToVisual(parent);
   winrt::Point anchorTopLeftConverted = transform.TransformPoint(anchorTopLeft);
-  auto size = element.ActualSize();
 
   anchorRect.X = anchorTopLeftConverted.X;
   anchorRect.Y = anchorTopLeftConverted.Y;
-  anchorRect.Width = size.x;
-  anchorRect.Height = size.y;
+
+  if (auto uiElem = element.try_as<xaml::IUIElement10>()) {
+    auto size = uiElem.ActualSize();
+    anchorRect.Width = size.x;
+    anchorRect.Height = size.y;
+  } else if (auto fe = element.try_as<xaml::FrameworkElement>()) {
+    anchorRect.Width = static_cast<float>(fe.ActualWidth());
+    anchorRect.Height = static_cast<float>(fe.ActualHeight());
+  } else {
+    anchorRect.Width = 0;
+    anchorRect.Height = 0;
+  }
 
   return anchorRect;
 }
