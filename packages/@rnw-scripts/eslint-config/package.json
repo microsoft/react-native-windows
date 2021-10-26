@@ -3,6 +3,11 @@
   "version": "1.1.8",
   "license": "MIT",
   "main": "eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/eslint-config"
+  },
   "dependencies": {
     "@react-native-community/eslint-config": "^2.0.0",
     "eslint-config-prettier": "^6.0.0"

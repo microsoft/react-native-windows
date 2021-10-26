@@ -2,6 +2,11 @@
   "name": "@rnw-scripts/take-screenshot",
   "version": "1.0.17",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/take-screenshot"
+  },
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",

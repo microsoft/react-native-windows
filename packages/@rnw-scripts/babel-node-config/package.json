@@ -3,6 +3,11 @@
   "version": "2.0.2",
   "license": "MIT",
   "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/babel-node-config"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
