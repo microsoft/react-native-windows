@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.65.0",
+  "version": "0.65.1",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -39,7 +39,7 @@
     "lib-commonjs"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.65-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",

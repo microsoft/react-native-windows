@@ -22,7 +22,7 @@
     "react-native-platform-override": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "0.65.0",
+    "@react-native-windows/package-utils": "0.65.1",
     "async": "^3.2.0",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
@@ -43,7 +43,7 @@
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@react-native-windows/package-utils": "0.65.0",
+    "@react-native-windows/package-utils": "0.65.1",
     "@rnw-scripts/eslint-config": "1.1.6",
     "@rnw-scripts/jest-unittest-config": "1.2.1",
     "@rnw-scripts/just-task": "2.1.1",

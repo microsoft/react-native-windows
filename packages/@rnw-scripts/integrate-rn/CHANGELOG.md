@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Mon, 23 Aug 2021 15:09:39 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Oct 2021 15:06:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.31
+
+Mon, 11 Oct 2021 15:06:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.65.1 (ngerlem@microsoft.com)
 
 ## 1.0.31
 

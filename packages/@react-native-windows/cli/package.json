@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.65.0",
+  "version": "0.65.2",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,8 +17,8 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "0.65.0",
-    "@react-native-windows/telemetry": "0.65.0",
+    "@react-native-windows/package-utils": "0.65.1",
+    "@react-native-windows/telemetry": "0.65.1",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
     "envinfo": "^7.5.0",
@@ -33,7 +33,7 @@
     "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
-    "xmldom": "^0.5.0",
+    "@xmldom/xmldom": "^0.7.5",
     "xpath": "^0.0.27"
   },
   "devDependencies": {
@@ -65,7 +65,7 @@
     "powershell"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.65-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",

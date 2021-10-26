@@ -2,6 +2,36 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 11 Oct 2021 15:06:57 GMT",
+      "tag": "@react-native-windows/cli_v0.65.2",
+      "version": "0.65.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.65 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31e9fc28e3edddde4c7a86e40201aede6242e73c",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:07:05 GMT",
+      "tag": "@react-native-windows/cli_v0.65.1",
+      "version": "0.65.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump the version of xmldom used by @react-native-windows/cli to 0.7.0.",
+            "author": "yicyao@microsoft.com",
+            "commit": "c6aee447eb511bd75c22a6781276f920a7809ea8",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 15:09:39 GMT",
       "tag": "@react-native-windows/cli_v0.65.0",
       "version": "0.65.0",

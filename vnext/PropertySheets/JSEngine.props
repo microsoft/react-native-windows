@@ -11,9 +11,10 @@
     <EnableHermesInspectorInReleaseFlavor Condition="'$(EnableHermesInspectorInReleaseFlavor)' == ''">false</EnableHermesInspectorInReleaseFlavor>
 
     <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
-    <V8Version Condition="'$(V8Version)' == ''">0.65.2</V8Version>
-    <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' == 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.$(V8Version)</V8Package>
-    <V8Package Condition="'$(V8Package)' == '' AND '$(V8AppPlatform)' != 'win32'">$(SolutionDir)packages\ReactNative.V8Jsi.Windows.UWP.$(V8Version)</V8Package>
+    <V8Version Condition="'$(V8Version)' == ''">0.65.5</V8Version>
+    <V8PackageName>ReactNative.V8Jsi.Windows</V8PackageName>
+    <V8PackageName Condition="'$(V8AppPlatform)' != 'win32'">$(V8PackageName).UWP</V8PackageName>
+    <V8Package>$(SolutionDir)packages\$(V8PackageName).$(V8Version)</V8Package>
   </PropertyGroup>
 
 </Project>

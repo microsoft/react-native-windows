@@ -2,6 +2,123 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 20 Oct 2021 19:14:28 GMT",
+      "tag": "react-native-windows_v0.65.6",
+      "version": "0.65.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Arm64 Desktop linker experts due to mangled name mismatches",
+            "author": "dannyvv@microsoft.com",
+            "commit": "2169bb4bc9a4d801b480be9d84638a20a6b4a718",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Oct 2021 15:06:57 GMT",
+      "tag": "react-native-windows_v0.65.5",
+      "version": "0.65.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.65] Add ARM64 support to React.Windows.Desktop.Test.DLL",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "61c436f7ba37dba9ae812dbd84a74d5c5944dfd1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Promote 0.65 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31e9fc28e3edddde4c7a86e40201aede6242e73c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:07:05 GMT",
+      "tag": "react-native-windows_v0.65.4",
+      "version": "0.65.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow injection of custom UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c5a4ad149cf0e9fbfa1be60592581081ac822d5f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.65.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "e7a0d5fc8cca1a886f6788c5bfdf870ce201c62c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "bd4794c46b84e38850491a23170da36dfef3c709",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 27 Sep 2021 15:07:16 GMT",
+      "tag": "react-native-windows_v0.65.3",
+      "version": "0.65.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Migrate NapiJsiRuntime from V8-JSI #8617",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a5abc7af8435b8031d974e3d0f6e03cba787e53c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Sep 2021 15:06:57 GMT",
+      "tag": "react-native-windows_v0.65.2",
+      "version": "0.65.2",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix race condition when building customer projects",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b376766f3a64bcdaef810c8d065ddead2e361840",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Allow override of global.nativeLoggingHook",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e9d1fd2961708f3b6d301a1c6dea853c8fa58c70",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "UIA Heading support",
+            "author": "agnel@microsoft.com",
+            "commit": "daa66f1b0a402b5e0610678fabc72b642ed039b4",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Cherry Pick e64bc29",
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "commit": "668a30a0b97a3f3cc8d04f57931e1891bca50e37",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Pass JSValueArgWriter around instead of immediately converting to dynamic",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "79e083a77b0e8d2f1b363563160dc959448560e1",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Aug 2021 15:06:56 GMT",
       "tag": "react-native-windows_v0.65.1",
       "version": "0.65.1",

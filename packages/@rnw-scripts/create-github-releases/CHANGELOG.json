@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Mon, 11 Oct 2021 15:06:57 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.1.0",
+      "version": "1.1.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.65.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31e9fc28e3edddde4c7a86e40201aede6242e73c",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Aug 2021 15:09:39 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.1.0",
       "version": "1.1.0",

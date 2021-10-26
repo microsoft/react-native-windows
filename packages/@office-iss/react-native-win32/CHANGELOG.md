@@ -1,8 +1,32 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 23 Aug 2021 15:09:39 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Oct 2021 15:06:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.3
+
+Mon, 11 Oct 2021 15:06:57 GMT
+
+### Patches
+
+- Promote 0.65 to legacy (ngerlem@microsoft.com)
+
+## 0.65.2
+
+Mon, 04 Oct 2021 15:07:05 GMT
+
+### Patches
+
+- Fix exception in View when props are undefined (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.65.1
+
+Mon, 13 Sep 2021 15:06:21 GMT
+
+### Patches
+
+- Adding accessibilityItemType to ViewWin32 (safreibe@microsoft.com)
 
 ## 0.65.0
 
