@@ -378,9 +378,9 @@ jobs:
             - job: CliInit${{ matrix.Name }}
               displayName: Verify Cli ${{ matrix.Name }}
 
-              ${{ if eq(matrix.useNuGet, true) }}:
-                dependsOn:
-                  - UniversalBuild
+              # ${{ if eq(matrix.useNuGet, true) }}:
+              #   dependsOn:
+              #     - UniversalBuild
 
               variables:
                 - template: ../variables/vs2019.yml
