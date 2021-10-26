@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "CppWinRTIncludes.h"
 #include <winrt/Microsoft.ReactNative.h>
+#include "CppWinRTIncludes.h"
 
 namespace Microsoft::ReactNative {
 
@@ -36,7 +36,6 @@ inline bool TryGetTag(XamlView view, int64_t &value) {
 // Walk up the XAML element tree to find the closest React element
 // Searches itself and its parent to get a valid XamlView.
 bool TryGetClosestTag(XamlView view, int64_t &value);
-
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view);
 comp::Compositor GetCompositor(const XamlView &view);

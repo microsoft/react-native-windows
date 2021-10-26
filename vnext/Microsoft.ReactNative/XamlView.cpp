@@ -15,8 +15,7 @@ bool TryGetClosestTag(XamlView view, int64_t &value) {
   while (view) {
     if (TryGetTag(view, value)) {
       return true;
-    }
-    else {
+    } else {
       view = xaml::Media::VisualTreeHelper::GetParent(view);
     }
   }

@@ -17,15 +17,21 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   xaml::DependencyObject ElementFromReactTag(int64_t reactTag) noexcept;
 
   void DispatchEvent(
-    xaml::DependencyObject const &view,
-    hstring const &eventName,
-    JSValueArgWriter const &eventDataArgWriter) noexcept;
+      xaml::DependencyObject const &view,
+      hstring const &eventName,
+      JSValueArgWriter const &eventDataArgWriter) noexcept;
 
   static ReactPropertyId<XamlUIService> XamlUIServiceProperty() noexcept;
 
-  static xaml::DependencyProperty ReactTagProperty() noexcept { return m_ReactTagProperty; }
-  static int64_t GetReactTag(xaml::DependencyObject const& target) { return winrt::unbox_value<int64_t>(target.GetValue(m_ReactTagProperty)); }
-  static void SetReactTag(xaml::DependencyObject const& target, int64_t value) { target.SetValue(m_ReactTagProperty, winrt::box_value(value)); }
+  static xaml::DependencyProperty ReactTagProperty() noexcept {
+    return m_ReactTagProperty;
+  }
+  static int64_t GetReactTag(xaml::DependencyObject const &target) {
+    return winrt::unbox_value<int64_t>(target.GetValue(m_ReactTagProperty));
+  }
+  static void SetReactTag(xaml::DependencyObject const &target, int64_t value) {
+    target.SetValue(m_ReactTagProperty, winrt::box_value(value));
+  }
 
   static winrt::Microsoft::ReactNative::XamlUIService FromContext(IReactContext context);
   static void SetXamlRoot(IReactPropertyBag const &properties, xaml::XamlRoot const &xamlRoot) noexcept;

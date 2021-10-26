@@ -61,7 +61,7 @@ std::vector<HandledKeyboardEvent> KeyboardHelper::FromJS(winrt::Microsoft::React
 
 static folly::dynamic ToEventData(ReactKeyboardEvent event, double timestamp) {
   return folly::dynamic::object(TARGET, event.target)(ALT_KEY, event.altKey)(CTRL_KEY, event.ctrlKey)(KEY, event.key)(
-    META_KEY, event.metaKey)(SHIFT_KEY, event.shiftKey)(CODE, event.code)(TIMESTAMP, timestamp);
+      META_KEY, event.metaKey)(SHIFT_KEY, event.shiftKey)(CODE, event.code)(TIMESTAMP, timestamp);
 }
 
 KeyboardEventBaseHandler::KeyboardEventBaseHandler(KeyboardEventCallback &&keyDown, KeyboardEventCallback &&keyUp)

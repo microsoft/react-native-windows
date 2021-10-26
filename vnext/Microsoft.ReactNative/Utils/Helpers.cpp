@@ -13,89 +13,89 @@
 #include <processthreadsapi.h>
 
 namespace winrt {
-  using namespace xaml::Controls::Primitives;
-  using namespace xaml::Media;
-  using namespace Windows::Foundation::Metadata;
+using namespace xaml::Controls::Primitives;
+using namespace xaml::Media;
+using namespace Windows::Foundation::Metadata;
 } // namespace winrt
 
 namespace Microsoft::ReactNative {
 
-  std::int32_t CountOpenPopups() {
-    // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against
-    // RS6
-    winrt::Windows::Foundation::Collections::IVectorView<xaml::Controls::Primitives::Popup> popups =
+std::int32_t CountOpenPopups() {
+  // TODO: Use VisualTreeHelper::GetOpenPopupsFromXamlRoot when running against
+  // RS6
+  winrt::Windows::Foundation::Collections::IVectorView<xaml::Controls::Primitives::Popup> popups =
       xaml::Media::VisualTreeHelper::GetOpenPopups(xaml::Window::Current());
-    return (int32_t)popups.Size();
-  }
+  return (int32_t)popups.Size();
+}
 
-  template <uint16_t APIVersion>
-  bool IsAPIContractVxAvailable() {
-    static bool isAPIContractVxAvailableInitialized = false;
-    static bool isAPIContractVxAvailable = false;
-    if (!isAPIContractVxAvailableInitialized) {
-      isAPIContractVxAvailableInitialized = true;
-      isAPIContractVxAvailable =
+template <uint16_t APIVersion>
+bool IsAPIContractVxAvailable() {
+  static bool isAPIContractVxAvailableInitialized = false;
+  static bool isAPIContractVxAvailable = false;
+  if (!isAPIContractVxAvailableInitialized) {
+    isAPIContractVxAvailableInitialized = true;
+    isAPIContractVxAvailable =
         winrt::ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", APIVersion);
-    }
-
-    return isAPIContractVxAvailable;
   }
 
-  bool IsAPIContractV5Available() {
-    return IsAPIContractVxAvailable<5>();
-  }
+  return isAPIContractVxAvailable;
+}
 
-  bool IsAPIContractV6Available() {
-    return IsAPIContractVxAvailable<6>();
-  }
+bool IsAPIContractV5Available() {
+  return IsAPIContractVxAvailable<5>();
+}
 
-  bool IsAPIContractV7Available() {
-    return IsAPIContractVxAvailable<7>();
-  }
+bool IsAPIContractV6Available() {
+  return IsAPIContractVxAvailable<6>();
+}
 
-  bool IsAPIContractV8Available() {
-    return IsAPIContractVxAvailable<8>();
-  }
+bool IsAPIContractV7Available() {
+  return IsAPIContractVxAvailable<7>();
+}
 
-  bool IsAPIContractV12Available() {
-    return IsAPIContractVxAvailable<12>();
-  }
+bool IsAPIContractV8Available() {
+  return IsAPIContractVxAvailable<8>();
+}
 
-  bool IsRS3OrHigher() {
-    return IsAPIContractV5Available();
-  }
+bool IsAPIContractV12Available() {
+  return IsAPIContractVxAvailable<12>();
+}
 
-  bool IsRS4OrHigher() {
-    return IsAPIContractV6Available();
-  }
+bool IsRS3OrHigher() {
+  return IsAPIContractV5Available();
+}
 
-  bool IsRS5OrHigher() {
-    return IsAPIContractV7Available();
-  }
+bool IsRS4OrHigher() {
+  return IsAPIContractV6Available();
+}
 
-  bool Is19H1OrHigher() {
-    return IsAPIContractV8Available();
-  }
+bool IsRS5OrHigher() {
+  return IsAPIContractV7Available();
+}
 
-  bool Is21H1OrHigher() {
-    return IsAPIContractV12Available();
-  }
+bool Is19H1OrHigher() {
+  return IsAPIContractV8Available();
+}
 
-  bool IsXamlIsland() {
-    AppPolicyWindowingModel e;
-    if (FAILED(AppPolicyGetWindowingModel(GetCurrentThreadEffectiveToken(), &e)) ||
+bool Is21H1OrHigher() {
+  return IsAPIContractV12Available();
+}
+
+bool IsXamlIsland() {
+  AppPolicyWindowingModel e;
+  if (FAILED(AppPolicyGetWindowingModel(GetCurrentThreadEffectiveToken(), &e)) ||
       e == AppPolicyWindowingModel_ClassicDesktop) {
-      return true;
-    }
-    return false;
+    return true;
   }
+  return false;
+}
 
-  bool IsWinUI3Island() {
+bool IsWinUI3Island() {
 #ifndef USE_WINUI3
-    return false;
+  return false;
 #else
-    return IsXamlIsland();
+  return IsXamlIsland();
 #endif
-  }
+}
 
 } // namespace Microsoft::ReactNative
