@@ -48,7 +48,8 @@ void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
 
    // sets the resources to SolidColorBrushs if the user sets the color before runtime, this lets the user change the
-   // color of the SolidColorBrush at runtime.
+   // color of the SolidColorBrush at runtime and keeps the toggleswitches who did not change colors on the default ThemeResource
+   // TODO: fix this for other Platform Brushes
   for (const auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;

@@ -40,11 +40,12 @@ void UpdateResourceBrush(
     if (brush != nullptr) {
        auto resourceBrush = resources.Lookup(winrt::box_value(resourceName));
        // if both the old resource and new resource is a solidColorBrush, just change the color of the brush to support runtime change
+       // TODO: see if other resourceBrushes can change this way
        if (resourceBrush.try_as<xaml::Media::SolidColorBrush>() && brush.try_as<xaml::Media::SolidColorBrush>()) {
         auto color = brush.as<xaml::Media::SolidColorBrush>().Color();
         winrt::unbox_value<winrt::Windows::UI::Xaml::Media::SolidColorBrush>(resources.Lookup(winrt::box_value(resourceName))).Color(color);
       } else {
-      // else, add the new brush to the resource directory (will need to reload component to see change)
+      // else, add the new brush to the resource directory (will need to reload component to see changes)
       resources.Insert(winrt::box_value(resourceName), brush);
       }
     } else {
