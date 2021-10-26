@@ -2,6 +2,104 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:48 GMT",
+      "tag": "@react-native-windows/package-utils_v0.67.0-preview.1",
+      "version": "0.67.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "not available",
+            "comment": "Promote 0.67 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0-preview.1",
+            "commit": "666510e980ced292bffd23a44982e8a800f91444"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 15:07:19 GMT",
+      "tag": "@react-native-windows/package-utils_v0.67.0-preview.1",
+      "version": "0.67.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "5ca0feb9bccbf395aa8297f97a1a8832971d4f2e",
+            "comment": "Promote 0.67 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0-preview.1",
+            "commit": "be5b1c696dc4bb50281f444713575830d3bf72e3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.22",
+      "version": "0.0.0-canary.22",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.25",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@react-native-windows/package-utils_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/package-utils"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/package-utils"
+          },
+          {
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/package-utils"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/package-utils"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.20",
       "version": "0.0.0-canary.20",

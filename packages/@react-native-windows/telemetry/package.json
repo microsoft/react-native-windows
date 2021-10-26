@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.0.0-canary.22",
+  "version": "0.67.0-preview.1",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -21,10 +21,10 @@
     "applicationinsights": "^1.8.8"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.7",
-    "@rnw-scripts/jest-unittest-config": "1.2.3",
-    "@rnw-scripts/just-task": "2.2.0",
-    "@rnw-scripts/ts-config": "2.0.0",
+    "@rnw-scripts/eslint-config": "1.1.8",
+    "@rnw-scripts/jest-unittest-config": "1.2.4",
+    "@rnw-scripts/just-task": "2.2.1",
+    "@rnw-scripts/ts-config": "2.0.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/semver": "^7.3.3",
@@ -33,13 +33,13 @@
     "jest": "^26.6.3",
     "just-scripts": "^1.3.3",
     "prettier": "1.19.1",
-    "typescript": "^3.8.3"
+    "typescript": "^4.4.4"
   },
   "files": [
     "lib-commonjs"
   ],
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

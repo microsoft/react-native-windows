@@ -2,6 +2,194 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:48 GMT",
+      "tag": "@react-native-windows/codegen_v0.67.0-preview.1",
+      "version": "0.67.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "not available",
+            "comment": "Promote 0.67 to preview"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 15:07:19 GMT",
+      "tag": "@react-native-windows/codegen_v0.67.0-preview.1",
+      "version": "0.67.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "5ca0feb9bccbf395aa8297f97a1a8832971d4f2e",
+            "comment": "Promote 0.67 to preview"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Oct 2021 05:06:49 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.19",
+      "version": "0.0.0-canary.19",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "c39ba3f4e8eac73445eec4d405a0209ccf2df1bf",
+            "comment": "Only generate component files if a component is specified"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Oct 2021 05:06:46 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.18",
+      "version": "0.0.0-canary.18",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "comment": "Built files not included in published package",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.17",
+      "version": "0.0.0-canary.17",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Sep 2021 05:06:54 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.16",
+      "version": "0.0.0-canary.16",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Check constants in generated turbo module specs",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "6238240df45549967e66f7fcfa411c67007eade3",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Sep 2021 05:07:04 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Generate anonymous objects in correct order for turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "df2e77140ebe63c91039226a83f4d2e49e4af408",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Sep 2021 05:07:31 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.14",
+      "version": "0.0.0-canary.14",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Generate `std::vector<T>` for array types in turbo modules",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "42d0853c684f0e9f9c9f1f7fa34cbf4ca3810edc",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Sep 2021 05:07:46 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.13",
+      "version": "0.0.0-canary.13",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump to 0.66-based react-native-tscodegen",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6e2dd6a4334285633e4f939be8184d911d34707a",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Generate nullable type for turbo module",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "66a9f86f24f862c9e9e611ad435f68daddb4e04e",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.12",
+      "version": "0.0.0-canary.12",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Match Alert module with NativeDialogManagerWindowsSpec.h",
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "commit": "d085526651bb421f97b536a753365c7375b74828",
+            "package": "@react-native-windows/codegen"
+          }
+        ],
+        "patch": [
+          {
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.4",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Bump @rnw-scripts/just-task to v2.2.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          },
+          {
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.8",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@react-native-windows/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Sep 2021 05:06:04 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.11",
       "version": "0.0.0-canary.11",

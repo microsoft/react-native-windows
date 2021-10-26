@@ -34,7 +34,7 @@ function getConstants(): Object {
 function getViewManagerConfig(viewManagerName: string): any {
   if (
     viewManagerConfigs[viewManagerName] === undefined &&
-    global.nativeCallSyncHook && // [Windows] getConstantsForViewManager doesn't work while web debugging. So skip calling it since all constants will have been provided ahead of time.
+    global.nativeCallSyncHook && // If we're in the Chrome Debugger, let's not even try calling the sync method
     NativeUIManager.getConstantsForViewManager
   ) {
     try {

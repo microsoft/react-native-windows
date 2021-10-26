@@ -17,4 +17,6 @@
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''">false</UseExperimentalNuget>
     <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>
   </PropertyGroup>
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Generated\PackageVersion.g.props" />
 </Project>

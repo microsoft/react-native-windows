@@ -25,24 +25,10 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   /*
   {
-    key: 'FlatListExample',
+    key: 'FlatListExampleIndex',
+    module: require('../examples/FlatList/FlatListExampleIndex').default,
     category: 'ListView',
-    module: require('../examples/FlatList/FlatListExample'),
-  },
-  {
-    key: 'FlatList-withSeparators',
-    module: require('../examples/FlatList/FlatList-withSeparators'),
-    category: 'ListView',
-  },
-  {
-    key: 'FlatList-onViewableItemsChanged',
-    module: require('../examples/FlatList/FlatList-onViewableItemsChanged'),
-    category: 'ListView',
-  },
-  {
-    key: 'FlatList-onEndReached',
-    module: require('../examples/FlatList/FlatList-onEndReached'),
-    category: 'ListView',
+    supportsTVOS: true,
   },
   {
     key: 'ImageExample',
@@ -50,10 +36,18 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/Image/ImageExample'),
   },
   {
-    key: 'MultiColumnExample',
-    category: 'ListView',
-    module: require('../examples/MultiColumn/MultiColumnExample'),
-  }*/
+    key: 'JSResponderHandlerExample',
+    module: require('../examples/JSResponderHandlerExample/JSResponderHandlerExample'),
+  },
+  {
+    key: 'KeyboardAvoidingViewExample',
+    module: require('../examples/KeyboardAvoidingView/KeyboardAvoidingViewExample'),
+  },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
   {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
@@ -81,11 +75,14 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'SwipeableCardExample',
     category: 'UI',
     module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
-  }*/,
-  {
+  }*/ {
     key: 'SwitchExample',
     category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
+  },
+  {
+    key: 'TextInputs with key prop',
+    module: require('../examples/TextInput/TextInputKeyProp'),
   },
   {
     key: 'TouchableExample',

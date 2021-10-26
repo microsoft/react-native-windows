@@ -2,6 +2,36 @@
   "name": "@rnw-bots/coordinator",
   "entries": [
     {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@rnw-bots/coordinator_v1.0.11",
+      "version": "1.0.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-bots/coordinator",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@rnw-bots/coordinator_v1.0.10",
+      "version": "1.0.10",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-bots/coordinator"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@rnw-bots/coordinator_v1.0.9",
       "version": "1.0.9",

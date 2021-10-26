@@ -6,25 +6,17 @@
 
 'use strict';
 
+import {NativeModuleBaseTypeAnnotation, Nullable} from 'react-native-tscodegen';
 import {
-  NativeModuleBaseTypeAnnotation,
-  NativeModuleObjectTypeAnnotation,
-  NamedShape,
-  Nullable,
-} from 'react-native-tscodegen';
+  AliasMap,
+  getAliasCppName,
+  getAnonymousAliasCppName,
+} from './AliasManaging';
 
-let preferredModuleName: string = '';
-
-export function setPreferredModuleName(moduleName: string): void {
-  preferredModuleName = moduleName;
-}
-
-export function getAliasCppName(typeName: string): string {
-  return `${preferredModuleName}Spec_${typeName}`;
-}
-
-function translateField(
+export function translateField(
   type: Nullable<NativeModuleBaseTypeAnnotation>,
+  aliases: AliasMap,
+  baseAliasName: string,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
@@ -40,13 +32,19 @@ function translateField(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      // TODO: type.elementType
-      return 'React::JSValueArray';
+      if (type.elementType) {
+        return `std::vector<${translateField(
+          type.elementType,
+          aliases,
+          `${baseAliasName}_element`,
+        )}>`;
+      } else {
+        return `React::JSValueArray`;
+      }
     case 'GenericObjectTypeAnnotation':
-      return 'React::JSValueObject';
+      return 'React::JSValue';
     case 'ObjectTypeAnnotation':
-      // TODO: we have more information here, and could create a more specific type
-      return 'React::JSValueObject';
+      return getAnonymousAliasCppName(aliases, baseAliasName, type);
     case 'ReservedTypeAnnotation': {
       // avoid: Property 'name' does not exist on type 'never'
       const name = type.name;
@@ -61,25 +59,12 @@ function translateField(
     case 'TypeAliasTypeAnnotation':
       return getAliasCppName(type.name);
     case 'NullableTypeAnnotation':
-      return `std::optional<${translateField(type.typeAnnotation)}>`;
+      return `std::optional<${translateField(
+        type.typeAnnotation,
+        aliases,
+        baseAliasName,
+      )}>`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
-}
-
-export function translateObjectBody(
-  type: NativeModuleObjectTypeAnnotation,
-  prefix: string,
-) {
-  return type.properties
-    .map((prop: NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>) => {
-      let propType = prop.typeAnnotation;
-      if (prop.optional && propType.type !== 'NullableTypeAnnotation') {
-        propType = {type: 'NullableTypeAnnotation', typeAnnotation: propType};
-      }
-      const first = `${prefix}REACT_FIELD(${prop.name})`;
-      const second = `${prefix}${translateField(propType)} ${prop.name};`;
-      return `${first}\n${second}`;
-    })
-    .join('\n');
 }

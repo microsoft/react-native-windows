@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 #include <DevSettings.h>
+#include "IReactDispatcher.h"
 #include "IRedBoxHandler.h"
 #include "ReactHost/React.h"
 
@@ -12,5 +13,5 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
 
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
-    Mso::DispatchQueue &&uiQueue) noexcept;
+    const Mso::React::IDispatchQueue2 &uiQueue) noexcept;
 } // namespace Mso::React

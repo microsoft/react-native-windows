@@ -1,8 +1,106 @@
 # Change Log - @office-iss/react-native-win32-tester
 
-This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 15:07:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Mon, 25 Oct 2021 15:07:48 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.67.0-preview.1
+
+## 0.0.1
+
+Mon, 25 Oct 2021 15:07:20 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.67.0-preview.1
+
+## 0.0.1
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.117
+- Bump react-native-platform-override to v1.5.1
+
+## 0.0.1
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.116
+
+## 0.0.1
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.5.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.115 (ngerlem@microsoft.com)
+
+## 0.0.1
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.114 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.1
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.113 (igklemen@microsoft.com)
+
+## 0.0.1
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.112 (igklemen@microsoft.com)
+
+## 0.0.1
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.111 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.1
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.110 (safreibe@microsoft.com)
+
+## 0.0.1
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.109 (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.4.18 (ngerlem@microsoft.com)
 
 ## 0.0.1
 

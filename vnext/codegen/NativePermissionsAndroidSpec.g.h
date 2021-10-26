@@ -18,7 +18,7 @@ struct PermissionsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(std::string, Promise<React::JSValue>) noexcept>{0, L"checkPermission"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{1, L"requestPermission"},
       Method<void(std::string, Promise<React::JSValue>) noexcept>{2, L"shouldShowRequestPermissionRationale"},
-      Method<void(React::JSValueArray, Promise<React::JSValue>) noexcept>{3, L"requestMultiplePermissions"},
+      Method<void(std::vector<std::string>, Promise<React::JSValue>) noexcept>{3, L"requestMultiplePermissions"},
   };
 
   template <class TModule>
@@ -43,8 +43,8 @@ struct PermissionsAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "requestMultiplePermissions",
-          "    REACT_METHOD(requestMultiplePermissions) void requestMultiplePermissions(React::JSValueArray && permissions, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(requestMultiplePermissions) static void requestMultiplePermissions(React::JSValueArray && permissions, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(requestMultiplePermissions) void requestMultiplePermissions(std::vector<std::string> const & permissions, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(requestMultiplePermissions) static void requestMultiplePermissions(std::vector<std::string> const & permissions, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
   }
 };
 

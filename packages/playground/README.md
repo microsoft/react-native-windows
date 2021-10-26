@@ -24,6 +24,8 @@ Playground is a sample standalone application that allows testing of various JS 
 
 This command will build and deploy the application along with launching Metro bundler and the dev tools.
 
+The default configuration is x86. If it fails the build, please open `Playground.sln` in Visual Studio and build x64. If it builds, then run `yarn start` before running this app in Visual Studio.
+
 ## Using the app
 
 You can find several sample .tsx files under the `/playground/samples` folder. You can load any of these files from the drop down at the top of the app, ensure the right App/component name has been picked for the sample on the drop down against "App Name". Click `Load` to load the .tsx file to the bottom pane.

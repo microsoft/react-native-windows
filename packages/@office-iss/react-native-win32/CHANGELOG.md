@@ -1,8 +1,108 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 15:07:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0-preview.1
+
+Mon, 25 Oct 2021 15:07:48 GMT
+
+### Changes
+
+- Promote 0.67 to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.67.0-preview.1
+
+## 0.67.0-preview.1
+
+Mon, 25 Oct 2021 15:07:19 GMT
+
+### Changes
+
+- Promote 0.67 to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.67.0-preview.1
+
+## 0.0.0-canary.117
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.14
+- Bump react-native-platform-override to v1.5.1
+
+## 0.0.0-canary.116
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Changes
+
+- Export complete type information (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 10-8-21 Nightly Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.13
+
+## 0.0.0-canary.115
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.5.0 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.114
+
+Tue, 28 Sep 2021 05:07:03 GMT
+
+### Changes
+
+- Integrate 9/23 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.113
+
+Fri, 24 Sep 2021 05:06:42 GMT
+
+### Changes
+
+- Integrate RN nightly 9/16. (igklemen@microsoft.com)
+
+## 0.0.0-canary.112
+
+Tue, 21 Sep 2021 05:08:39 GMT
+
+### Changes
+
+- Integrate RN nightly build 9/9. (igklemen@microsoft.com)
+
+## 0.0.0-canary.111
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Fix exception in View when props are undefined (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.110
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Adding accessibilityItemType property to ViewWin32 (safreibe@microsoft.com)
+
+## 0.0.0-canary.109
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+- Integrate 9/2 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.108
 

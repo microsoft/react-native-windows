@@ -226,23 +226,29 @@ function generate(
     generatedFiles,
   );
 
-  const componentGenerators = [
-    generatorPropsH,
-    generatorPropsCPP,
-    generatorShadowNodeH,
-    generatorShadowNodeCPP,
-    generatorComponentDescriptorH,
-    generatorEventEmitterH,
-  ];
+  if (
+    Object.keys(schema.modules).some(
+      moduleName => schema.modules[moduleName].type === 'Component',
+    )
+  ) {
+    const componentGenerators = [
+      generatorPropsH,
+      generatorPropsCPP,
+      generatorShadowNodeH,
+      generatorShadowNodeCPP,
+      generatorComponentDescriptorH,
+      generatorEventEmitterH,
+    ];
 
-  componentGenerators.forEach(generator => {
-    const generated: Map<string, string> = generator(
-      libraryName,
-      schema,
-      moduleSpecName,
-    );
-    normalizeFileMap(generated, componentOutputdir, generatedFiles);
-  });
+    componentGenerators.forEach(generator => {
+      const generated: Map<string, string> = generator(
+        libraryName,
+        schema,
+        moduleSpecName,
+      );
+      normalizeFileMap(generated, componentOutputdir, generatedFiles);
+    });
+  }
 
   if (test === true) {
     return checkFilesForChanges(generatedFiles, outputDirectory);

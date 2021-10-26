@@ -258,7 +258,7 @@ test.skip('thrown exception a->b, hello world', () => {
   try {
     a('world');
   } catch (e) {
-    Telemetry.client!.trackException({exception: e});
+    Telemetry.client!.trackException({exception: e as Error});
   }
   Telemetry.client!.flush();
 
@@ -277,7 +277,7 @@ test('throw exception with error code', done => {
   try {
     throw new Error('hello from an error FOO2020: the error string');
   } catch (e) {
-    Telemetry.client!.trackException({exception: e});
+    Telemetry.client!.trackException({exception: e as Error});
     Telemetry.client!.flush();
   }
   Telemetry.client!.clearTelemetryProcessors();
@@ -315,7 +315,7 @@ test.skip('thrown exception a->b, hello path', done => {
   try {
     a(process.cwd());
   } catch (e) {
-    Telemetry.client!.trackException({exception: e});
+    Telemetry.client!.trackException({exception: e as Error});
   }
   Telemetry.client!.flush();
 
@@ -367,7 +367,7 @@ test('No message', done => {
     });
   } catch (e) {
     Telemetry.client!.trackException({
-      exception: e,
+      exception: e as Error,
       properties: (e as CodedError).data,
     });
     Telemetry.client!.flush();

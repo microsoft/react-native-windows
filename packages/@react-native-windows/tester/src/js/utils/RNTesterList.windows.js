@@ -21,30 +21,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/Button/ButtonExample'),
   },
   {
-    key: 'FlatListExample',
+    key: 'FlatListExampleIndex',
+    module: require('../examples/FlatList/FlatListExampleIndex').default,
     category: 'ListView',
-    module: require('../examples/FlatList/FlatListExample'),
-  },
-  {
-    key: 'FlatList-withSeparators',
-    module: require('../examples/FlatList/FlatList-withSeparators'),
-    category: 'ListView',
-  },
-  {
-    // shows up as <FlatList> - MultiColumn
-    key: 'MultiColumnExample',
-    category: 'ListView',
-    module: require('../examples/MultiColumn/MultiColumnExample'),
-  },
-  {
-    key: 'FlatList-onViewableItemsChanged',
-    module: require('../examples/FlatList/FlatList-onViewableItemsChanged'),
-    category: 'ListView',
-  },
-  {
-    key: 'FlatList-onEndReached',
-    module: require('../examples/FlatList/FlatList-onEndReached'),
-    category: 'ListView',
+    supportsTVOS: true,
   },
   {
     key: 'ImageExample',
@@ -136,6 +116,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/TextInput/TextInputExample'),
   },
   {
+    key: 'TextInputs with key prop',
+    module: require('../examples/TextInput/TextInputKeyProp'),
+  },
+  {
     key: 'TouchableExample',
     category: 'UI',
     module: require('../examples/Touchable/TouchableExample'),
@@ -169,6 +153,14 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'LegacyImageTest',
     module: require('../examples-win/LegacyTests/ImageTestPage'),
+  },
+  {
+    key: 'LegacySelectableTextTest',
+    module: require('../examples-win/LegacyTests/SelectableTextTestPage'),
+  },
+  {
+    key: 'LegacyTextHitTestTest',
+    module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
 ];
 

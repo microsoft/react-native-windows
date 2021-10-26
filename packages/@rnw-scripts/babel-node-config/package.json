@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/babel-node-config",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "main": "babel.config.js",
   "devDependencies": {
@@ -18,5 +18,6 @@
   },
   "engines": {
     "node": ">= 12.0.0"
-  }
+  },
+  "private": true
 }

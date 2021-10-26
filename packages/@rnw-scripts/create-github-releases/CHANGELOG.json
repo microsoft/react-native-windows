@@ -2,6 +2,80 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:48 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.1.5",
+      "version": "1.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0-preview.1",
+            "commit": "666510e980ced292bffd23a44982e8a800f91444"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 15:07:20 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.1.5",
+      "version": "1.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0-preview.1",
+            "commit": "be5b1c696dc4bb50281f444713575830d3bf72e3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.1.5",
+      "version": "1.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.25",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.1.4",
+      "version": "1.1.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ],
+        "prerelease": [
+          {
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.24",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/create-github-releases"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Jul 2021 05:05:52 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.1.3",
       "version": "1.1.3",

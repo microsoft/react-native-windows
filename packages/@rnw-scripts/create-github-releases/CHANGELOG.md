@@ -1,8 +1,45 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Oct 2021 15:07:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.5
+
+Mon, 25 Oct 2021 15:07:48 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.67.0-preview.1
+
+## 1.1.5
+
+Mon, 25 Oct 2021 15:07:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.67.0-preview.1
+
+## 1.1.5
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.25
+
+## 1.1.4
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.24 (ngerlem@microsoft.com)
 
 ## 1.1.3
 
