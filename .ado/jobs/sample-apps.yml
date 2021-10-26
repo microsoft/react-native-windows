@@ -14,81 +14,123 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             DeployOption:
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
             DeployOption:
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
+          - Name: Arm64Debug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
+            DeployOption: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: Arm64Release
+            BuildConfiguration: Release
+            BuildPlatform: ARM64
+            DeployOption: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X64Debug
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            DeployOption:
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X86Release
+            BuildConfiguration: Release
+            BuildPlatform: x86
+            DeployOption:
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Release
             BuildConfiguration: Release
             BuildPlatform: x64
             DeployOption:
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
             DeployOption:
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64Debug
             BuildConfiguration: Debug
             BuildPlatform: ARM64
             DeployOption: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64Release
             BuildConfiguration: Release
             BuildPlatform: ARM64
             DeployOption: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Debug
             BuildConfiguration: Debug
             BuildPlatform: x64
             DeployOption:
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
             DeployOption:
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - job: SampleApps${{ matrix.Name }}
-          displayName: Sample Apps ${{ matrix.Name }}
+        # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
+          - job: SampleApps${{ matrix.Name }}
+            displayName: Sample Apps ${{ matrix.Name }}
 
-          variables:
-            - template: ../variables/vs2019.yml
-            - name: BuildLogDirectory
-              value: $(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\BuildLogs
-          
-          timeoutInMinutes: 60
-          cancelTimeoutInMinutes: 5
-          pool: $(AgentPool.Medium)
+            variables:
+              - template: ../variables/vs2019.yml
+              - name: BuildLogDirectory
+                value: $(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\BuildLogs
+            
+            timeoutInMinutes: 60
+            cancelTimeoutInMinutes: 5
+            pool: $(AgentPool.Medium)
 
-          steps:
-            - checkout: self
-              clean: false
-              submodules: false
+            steps:
+              - checkout: self
+                clean: false
+                submodules: false
 
-            - template: ../templates/prepare-env.yml
+              - template: ../templates/prepare-env.yml
 
-            - task: NuGetCommand@2
-              displayName: NuGet restore - SampleApps
-              inputs:
-                command: restore
-                restoreSolution: packages/sample-apps/windows/SampleApps.sln
-                verbosityRestore: Detailed # Options: quiet, normal, detailed
+              - task: NuGetCommand@2
+                displayName: NuGet restore - SampleApps
+                inputs:
+                  command: restore
+                  restoreSolution: packages/sample-apps/windows/SampleApps.sln
+                  verbosityRestore: Detailed # Options: quiet, normal, detailed
 
-            - template: ../templates/run-windows-with-certificates.yml
-              parameters:
-                buildEnvironment: ${{ parameters.BuildEnvironment }}
-                certificateName: sampleAppCPPEncodedKey
-                buildConfiguration: ${{ matrix.BuildConfiguration }}
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                deployOption:  ${{ matrix.DeployOption }}
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
-                workingDirectory: packages/sample-apps
+              - template: ../templates/run-windows-with-certificates.yml
+                parameters:
+                  buildEnvironment: ${{ parameters.BuildEnvironment }}
+                  certificateName: sampleAppCPPEncodedKey
+                  buildConfiguration: ${{ matrix.BuildConfiguration }}
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  deployOption:  ${{ matrix.DeployOption }}
+                  buildLogDirectory: ${{ variables.BuildLogDirectory }}
+                  workingDirectory: packages/sample-apps
 
-            - script: yarn bundle-cpp --verbose
-              displayName: Create SampleApp bundle
-              workingDirectory: packages\sample-apps
+              - script: yarn bundle-cpp --verbose
+                displayName: Create SampleApp bundle
+                workingDirectory: packages\sample-apps
 
-            - template: ../templates/upload-build-logs.yml
-              parameters:
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
+              - template: ../templates/upload-build-logs.yml
+                parameters:
+                  buildLogDirectory: ${{ variables.BuildLogDirectory }}
