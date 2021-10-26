@@ -18,54 +18,72 @@ parameters:
             platform: x64
             projectType: app
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseCs
             language: cs
             configuration: Release
             platform: x64
             projectType: app
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCpp
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCs
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCppLib
             language: cpp
             configuration: Debug
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCsLib
             language: cs
             configuration: Debug
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCppWinUI3
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useWinUI3 true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCsWinUI3
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useWinUI3 true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useHermes
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseCsHermes
             language: cs
             configuration: Release
@@ -73,6 +91,8 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: ARM64ReleaseCsHermes
             language: cs
             configuration: Release
@@ -80,6 +100,8 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments: --no-deploy
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseCppHermes
             language: cpp
             configuration: Release
@@ -87,18 +109,86 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64DebugCppNuget
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64DebugCsNuget
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
+          - Name: Arm64DebugCpp
+            language: cpp
+            configuration: Debug
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: Arm64DebugCs
+            language: cs
+            configuration: Debug
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: Arm64ReleaseCpp
+            language: cpp
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: Arm64ReleaseCs
+            language: cs
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X86ReleaseCpp
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            runWack: true
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X86ReleaseCs
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            runWack: true
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X64DebugCpp
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X64DebugCs
+            language: cs
+            configuration: Debug
+            platform: x64
+            projectType: app
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64ReleaseCpp
@@ -107,54 +197,72 @@ parameters:
             platform: x64
             projectType: app
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseCs
             language: cs
             configuration: Release
             platform: x64
             projectType: app
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCpp
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCs
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCppLib
             language: cpp
             configuration: Debug
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCsLib
             language: cs
             configuration: Debug
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCppWinUI3
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useWinUI3 true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCsWinUI3
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useWinUI3 true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             additionalInitArguments: --useHermes
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseCsHermes
             language: cs
             configuration: Release
@@ -162,6 +270,8 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: ARM64ReleaseCsHermes
             language: cs
             configuration: Release
@@ -169,6 +279,8 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments: --no-deploy
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64ReleaseCppHermes
             language: cpp
             configuration: Release
@@ -176,92 +288,116 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64DebugCppNuget
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64DebugCsNuget
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64DebugCpp
             language: cpp
             configuration: Debug
             platform: arm64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64DebugCs
             language: cs
             configuration: Debug
             platform: arm64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64ReleaseCpp
             language: cpp
             configuration: Release
             platform: arm64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: Arm64ReleaseCs
             language: cs
             configuration: Release
             platform: arm64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86ReleaseCpp
             language: cpp
             configuration: Release
             platform: x86
             projectType: app
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86ReleaseCs
             language: cs
             configuration: Release
             platform: x86
             projectType: app
             runWack: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64DebugCpp
             language: cpp
             configuration: Debug
             platform: x64
             projectType: app
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64DebugCs
             language: cs
             configuration: Debug
             platform: x64
             projectType: app
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
-          - job: CliInit${{ matrix.Name }}
-            displayName: Verify Cli ${{ matrix.Name }}
+        # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
+          - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
+            - job: CliInit${{ matrix.Name }}
+              displayName: Verify Cli ${{ matrix.Name }}
 
-            ${{ if eq(matrix.useNuGet, true) }}:
-              dependsOn:
-                - UniversalBuild
+              ${{ if eq(matrix.useNuGet, true) }}:
+                dependsOn:
+                  - UniversalBuild
 
-            variables:
-              - template: ../variables/vs2019.yml
+              variables:
+                - template: ../variables/vs2019.yml
 
-            pool: $(AgentPool.Medium)
-            timeoutInMinutes: 60
-            cancelTimeoutInMinutes: 5
+              pool: $(AgentPool.Medium)
+              timeoutInMinutes: 60
+              cancelTimeoutInMinutes: 5
 
-            steps:
-              - template: ../templates/react-native-init.yml
-                parameters:
-                  language: ${{ matrix.language }}
-                  configuration: ${{ matrix.configuration }}
-                  platform: ${{ matrix.platform }}
-                  projectType: ${{ matrix.projectType }}
-                  additionalInitArguments: ${{ matrix.additionalInitArguments }}
-                  additionalRunArguments: ${{ matrix.additionalRunArguments }}
-                  runWack: ${{ coalesce(matrix.runWack, false) }}
-                  buildEnvironment: ${{ parameters.buildEnvironment }}
-                  useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
+              steps:
+                - template: ../templates/react-native-init.yml
+                  parameters:
+                    language: ${{ matrix.language }}
+                    configuration: ${{ matrix.configuration }}
+                    platform: ${{ matrix.platform }}
+                    projectType: ${{ matrix.projectType }}
+                    additionalInitArguments: ${{ matrix.additionalInitArguments }}
+                    additionalRunArguments: ${{ matrix.additionalRunArguments }}
+                    runWack: ${{ coalesce(matrix.runWack, false) }}
+                    buildEnvironment: ${{ parameters.buildEnvironment }}
+                    useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
