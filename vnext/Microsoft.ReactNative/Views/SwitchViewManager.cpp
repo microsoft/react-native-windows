@@ -99,7 +99,6 @@ void SwitchShadowNode::UpdateThumbColor() {
     return;
 
   const auto thumbBrush = IsValidColorValue(m_thumbColor) ? BrushFrom(m_thumbColor) : nullptr;
-  auto resources = GetView().as<winrt::ToggleSwitch>().Resources();
   if (thumbBrush != nullptr) {
     UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
   }
@@ -107,7 +106,6 @@ void SwitchShadowNode::UpdateThumbColor() {
 }
 
 void SwitchShadowNode::UpdateTrackColorOn() {
-  auto resources = GetView().as<winrt::ToggleSwitch>().Resources();
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
     return;
@@ -117,13 +115,12 @@ void SwitchShadowNode::UpdateTrackColorOn() {
 }
 
 void SwitchShadowNode::UpdateTrackColorOff() {
-  auto resources = GetView().as<winrt::ToggleSwitch>().Resources();
+
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
   return;
 
   const auto offTrackBrush = IsValidColorValue(m_offTrackColor) ? BrushFrom(m_offTrackColor) : nullptr;
-  auto color2 = ColorFrom(m_onTrackColor);
   UpdateToggleSwitchTrackResourceBrushesOff(toggleSwitch,offTrackBrush);
 }
 
