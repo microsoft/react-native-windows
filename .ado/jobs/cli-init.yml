@@ -373,14 +373,14 @@ jobs:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
         # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
-        - ${{ if and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')) }}:
+        ${{ if and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')) }}:
           - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
             - job: CliInit${{ matrix.Name }}
               displayName: Verify Cli ${{ matrix.Name }}
 
-              # ${{ if eq(matrix.useNuGet, true) }}:
-              #   dependsOn:
-              #     - UniversalBuild
+              ${{ if eq(matrix.useNuGet, true) }}:
+                dependsOn:
+                  - UniversalBuild
 
               variables:
                 - template: ../variables/vs2019.yml
