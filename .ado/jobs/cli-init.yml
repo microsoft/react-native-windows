@@ -373,7 +373,7 @@ jobs:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
         # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
-        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables.Build.SourceBranchName, 'main')), and(matrix.EnabledForStableBranch, endsWith(variables.Build.SourceBranchName, '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
           - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
             - job: CliInit${{ matrix.Name }}
               displayName: Verify Cli ${{ matrix.Name }}
