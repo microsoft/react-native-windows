@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Switch to MUX:CommandBarFlyout in XAML Islands proofing menu",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
