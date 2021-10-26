@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Tue, 26 Oct 2021 05:06:25 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Oct 2021 05:06:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.0
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Minor changes
+
+- Use New RN Nightly Scheme in Scripts (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.0
 
 ## 1.1.0
 

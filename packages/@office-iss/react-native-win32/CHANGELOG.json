@@ -2,6 +2,41 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 26 Oct 2021 05:06:56 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.118",
+      "version": "0.0.0-canary.118",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "not available",
+            "comment": "Integrate 10/16 Nightly Build (Base of 0.67)"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.15",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.6.0",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Oct 2021 05:06:24 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.118",
       "version": "0.0.0-canary.118",
