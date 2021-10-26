@@ -373,10 +373,10 @@ jobs:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
         # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
-        - ${{ if eq(matrix.EnabledForMainBranch, true) }}:
+        - ${{ if eq(matrix.EnabledForMainBranch, true), eq(variables.RNWTargetBranchName, 'main')) }}:
           - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
             - job: CliInit${{ matrix.Name }}
-              displayName: Verify Cli ${{ matrix.Name }} ${{ variables['System.PullRequest.TargetBranch'] }}
+              displayName: Verify Cli ${{ matrix.Name }}
 
               ${{ if eq(matrix.useNuGet, true) }}:
                 dependsOn:

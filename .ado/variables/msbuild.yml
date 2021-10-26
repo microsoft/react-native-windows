@@ -4,3 +4,4 @@ variables:
   MSBuildPlatformToolset: v142
   TargetPlatformVersion: 10.0.19041.0
   Win10Version: 19041
+  RNWTargetBranchName: main # Update in each repo
