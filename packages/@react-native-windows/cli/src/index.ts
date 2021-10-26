@@ -100,7 +100,7 @@ export async function generateWindows(
     );
   } catch (e) {
     error = e;
-    Telemetry.trackException(error);
+    Telemetry.trackException(error as Error);
     throw e;
   } finally {
     if (Telemetry.client) {

@@ -13,6 +13,7 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include <Utils/ValueUtils.h>
+#include "DynamicAutomationPeer.h"
 #include "Unicode.h"
 #include "XamlView.h"
 #include "cdebug.h"
@@ -25,6 +26,7 @@ using namespace xaml;
 using namespace xaml::Media;
 using namespace xaml::Media::Imaging;
 using namespace Windows::Web::Http;
+using namespace xaml::Automation::Peers;
 } // namespace winrt
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
@@ -44,6 +46,8 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
     if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->AvailableSize(finalSize);
     }
+  } else if (auto brush{Background().try_as<winrt::ImageBrush>()}) {
+    brush.Stretch(ResizeModeToStretch(finalSize));
   }
 
   return finalSize;
@@ -55,6 +59,10 @@ winrt::event_token ReactImage::OnLoadEnd(winrt::EventHandler<bool> const &handle
 
 void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
+}
+
+winrt::AutomationPeer ReactImage::OnCreateAutomationPeer() {
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::DynamicAutomationPeer>(*this);
 }
 
 void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
@@ -71,7 +79,7 @@ void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
     } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->ResizeMode(value);
     } else if (auto bitmapBrush{Background().as<winrt::ImageBrush>()}) {
-      bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
+      bitmapBrush.Stretch(ResizeModeToStretch());
     }
   }
 }
@@ -112,8 +120,12 @@ void ReactImage::TintColor(winrt::Color value) {
   }
 }
 
-winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode value) {
-  switch (value) {
+winrt::Stretch ReactImage::ResizeModeToStretch() {
+  return ResizeModeToStretch({static_cast<float>(ActualWidth()), static_cast<float>(ActualHeight())});
+}
+
+winrt::Stretch ReactImage::ResizeModeToStretch(winrt::Size size) {
+  switch (m_resizeMode) {
     case facebook::react::ImageResizeMode::Cover:
       return winrt::Stretch::UniformToFill;
     case facebook::react::ImageResizeMode::Stretch:
@@ -121,7 +133,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode 
     case facebook::react::ImageResizeMode::Contain:
       return winrt::Stretch::Uniform;
     default: // ResizeMode::Center || ResizeMode::Repeat
-      if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
+      if (m_imageSource.height < size.Height && m_imageSource.width < size.Width) {
         return winrt::Stretch::None;
       } else {
         return winrt::Stretch::Uniform;
@@ -300,13 +312,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       bool createImageBrush{!imageBrush};
       if (createImageBrush) {
         imageBrush = winrt::ImageBrush{};
-
-        strong_this->m_imageBrushOpenedRevoker =
-            imageBrush.ImageOpened(winrt::auto_revoke, [weak_this, imageBrush](const auto &, const auto &) {
-              if (auto strong_this{weak_this.get()}) {
-                imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
-              }
-            });
+        imageBrush.Stretch(strong_this->ResizeModeToStretch());
       }
 
       if (source.sourceFormat == ImageSourceFormat::Svg) {
@@ -356,6 +362,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                   if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
                     strong_this->m_imageSource.height = bitmap.PixelHeight();
                     strong_this->m_imageSource.width = bitmap.PixelWidth();
+                    imageBrush.Stretch(strong_this->ResizeModeToStretch());
                   }
 
                   strong_this->m_onLoadEndEvent(*strong_this, true);

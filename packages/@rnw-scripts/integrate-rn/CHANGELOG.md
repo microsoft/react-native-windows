@@ -1,8 +1,35 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.38
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.25
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
+- Bump react-native-platform-override to v1.5.1
+
+## 1.0.37
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Patches
+
+- Fix integration commit comparison link for new nightly builds (ngerlem@microsoft.com)
+
+## 1.0.36
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.5.0 (ngerlem@microsoft.com)
 
 ## 1.0.35
 

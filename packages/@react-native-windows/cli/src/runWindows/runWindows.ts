@@ -116,7 +116,8 @@ async function runWindows(
       const sdks = MSBuildTools.getAllAvailableUAPVersions();
       sdks.forEach(version => console.log('    ' + version));
       return;
-    } catch (e) {
+    } catch (err) {
+      const e = err as Error;
       Telemetry.trackException(e);
       newError('Unable to print environment info.\n' + e.toString());
       return setExitProcessWithError(e, options.logging);
@@ -127,7 +128,7 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (e) {
-    Telemetry.trackException(e);
+    Telemetry.trackException(e as Error);
     runWindowsError = e;
     if (!hasRunRnwDependencies) {
       const rnwPkgJsonPath = require.resolve(
@@ -145,7 +146,7 @@ async function runWindows(
         `It is possible your installation is missing required software dependencies. Dependencies can be automatically installed by running ${rnwDependenciesPath} from an elevated PowerShell prompt.\nFor more information, go to http://aka.ms/rnw-deps`,
       );
     }
-    return setExitProcessWithError(e, options.logging);
+    return setExitProcessWithError(e as Error, options.logging);
   } finally {
     Telemetry.client?.trackEvent({
       name: 'run-windows',
@@ -231,7 +232,7 @@ async function runWindowsInternal(
   try {
     slnFile = build.getAppSolutionFile(options, config);
   } catch (e) {
-    newError(`Couldn't get app solution information. ${e.message}`);
+    newError(`Couldn't get app solution information. ${(e as Error).message}`);
     throw e;
   }
 
@@ -250,7 +251,7 @@ async function runWindowsInternal(
       newInfo('Autolink step is skipped');
     }
   } catch (e) {
-    newError(`Autolinking failed. ${e.message}`);
+    newError(`Autolinking failed. ${(e as Error).message}`);
     throw e;
   }
 
@@ -269,7 +270,7 @@ async function runWindowsInternal(
         true, // preRelease
       );
     } catch (e) {
-      newError(e.message);
+      newError((e as Error).message);
       throw error;
     }
   }
@@ -305,10 +306,12 @@ async function runWindowsInternal(
       );
     } catch (e) {
       newError(
-        `Build failed with message ${e.message}. Check your build configuration.`,
+        `Build failed with message ${
+          (e as Error).message
+        }. Check your build configuration.`,
       );
-      if (e.logfile) {
-        console.log('See', chalk.bold(e.logfile));
+      if ((e as any).logfile) {
+        console.log('See', chalk.bold((e as any).logfile));
       }
       throw e;
     }
@@ -337,7 +340,7 @@ async function runWindowsInternal(
         await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
     } catch (e) {
-      newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
+      newError(`Failed to deploy${e ? `: ${(e as Error).message}` : ''}`);
       throw e;
     }
   } else {

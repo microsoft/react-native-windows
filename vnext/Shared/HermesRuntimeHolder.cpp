@@ -14,12 +14,14 @@
 #include <hermes/hermes_dbg.h>
 #endif
 #include "HermesRuntimeHolder.h"
+#include "HermesShim.h"
 
 #if defined(HERMES_ENABLE_DEBUGGER)
 #include <hermes/inspector/chrome/Registration.h>
 #endif
 
 using namespace facebook;
+using namespace Microsoft::ReactNative;
 
 namespace facebook {
 namespace react {
@@ -29,7 +31,7 @@ namespace {
 std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(
     const ::hermes::vm::RuntimeConfig &runtimeConfig) {
   SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
-  return hermes::makeHermesRuntime(runtimeConfig);
+  return HermesShim::makeHermesRuntime(runtimeConfig);
 }
 
 #ifdef HERMES_ENABLE_DEBUGGER
