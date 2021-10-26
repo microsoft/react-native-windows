@@ -15,147 +15,173 @@ parameters:
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
             UseHermes: false
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Hermes
             BuildPlatform: x64
             DeployOptions: --deploy-from-layout
             UseHermes: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
+          - Name: X86Chakra
+            BuildPlatform: x86
+            DeployOptions: --deploy-from-layout
+            UseHermes: false
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
+          - Name: X86Hermes
+            BuildPlatform: x86
+            DeployOptions: --deploy-from-layout
+            UseHermes: true
+            EnabledForMainBranch: false
+            EnabledForStableBranch: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
             DeployOptions:
             UseHermes: false
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X64Hermes
             BuildPlatform: x64
             DeployOptions:
             UseHermes: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Chakra
             BuildPlatform: x86
             DeployOptions:
             UseHermes: false
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
           - Name: X86Hermes
             BuildPlatform: x86
             DeployOptions:
             UseHermes: true
+            EnabledForMainBranch: true
+            EnabledForStableBranch: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - job: E2ETest${{ matrix.Name }}
-          displayName: E2E Test App ${{ matrix.Name }}
+        # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+        - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
+          - job: E2ETest${{ matrix.Name }}
+            displayName: E2E Test App ${{ matrix.Name }}
 
-          variables:
-            - template: ../variables/vs2019.yml
-          pool: $(AgentPool.Medium)
-          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-          cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+            variables:
+              - template: ../variables/vs2019.yml
+            pool: $(AgentPool.Medium)
+            timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+            cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
-          steps:
-            - checkout: self
-              clean: true
-              submodules: false
+            steps:
+              - checkout: self
+                clean: true
+                submodules: false
 
-            - powershell: |
-                Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
-              displayName: Set BuildLogDirectory
+              - powershell: |
+                  Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
+                displayName: Set BuildLogDirectory
 
-            - template: ../templates/prepare-env.yml
+              - template: ../templates/prepare-env.yml
 
-            - task: CmdLine@2
-              displayName: Set LocalDumps
-              inputs:
-                script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd ReactUWPTestApp
-                workingDirectory: $(Build.SourcesDirectory)
+              - task: CmdLine@2
+                displayName: Set LocalDumps
+                inputs:
+                  script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd ReactUWPTestApp
+                  workingDirectory: $(Build.SourcesDirectory)
 
-            - task: CmdLine@2
-              displayName: Set up AppVerifer on ReactUWPTestApp
-              inputs:
-                script: regedit /S $(Build.SourcesDirectory)\.ado\scripts\ReactUWPTestApp.reg
-                workingDirectory: $(Build.SourcesDirectory)
-              condition: false # Must be manually enabled, since it causes a 5x perf reduction that causes test instability
+              - task: CmdLine@2
+                displayName: Set up AppVerifer on ReactUWPTestApp
+                inputs:
+                  script: regedit /S $(Build.SourcesDirectory)\.ado\scripts\ReactUWPTestApp.reg
+                  workingDirectory: $(Build.SourcesDirectory)
+                condition: false # Must be manually enabled, since it causes a 5x perf reduction that causes test instability
 
-            - task: PowerShell@2
-              displayName: Start tracing
-              inputs:
-                targetType: filePath # filePath | inline
-                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
+              - task: PowerShell@2
+                displayName: Start tracing
+                inputs:
+                  targetType: filePath # filePath | inline
+                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
 
-            - template: ../templates/set-experimental-feature.yml
-              parameters:
-                package: packages/e2e-test-app
-                feature: UseHermes
-                value: ${{ matrix.UseHermes }}
+              - template: ../templates/set-experimental-feature.yml
+                parameters:
+                  package: packages/e2e-test-app
+                  feature: UseHermes
+                  value: ${{ matrix.UseHermes }}
 
-            - template: ../templates/run-windows-with-certificates.yml
-              parameters:
-                buildEnvironment: ${{ parameters.BuildEnvironment }}
-                encodedKey: reactUWPTestAppEncodedKey
-                buildConfiguration: Release
-                buildPlatform: ${{ matrix.BuildPlatform }}
-                deployOption: ${{ matrix.DeployOption }}
-                buildLogDirectory: $(BuildLogDirectory)
+              - template: ../templates/run-windows-with-certificates.yml
+                parameters:
+                  buildEnvironment: ${{ parameters.BuildEnvironment }}
+                  encodedKey: reactUWPTestAppEncodedKey
+                  buildConfiguration: Release
+                  buildPlatform: ${{ matrix.BuildPlatform }}
+                  deployOption: ${{ matrix.DeployOption }}
+                  buildLogDirectory: $(BuildLogDirectory)
+                  workingDirectory: packages/e2e-test-app
+
+              - script: |
+                  echo ##vso[task.setvariable variable=StartedTests]true
+                displayName: Set StartedTests
+
+              - script: yarn e2etest
+                displayName: yarn e2etest
                 workingDirectory: packages/e2e-test-app
 
-            - script: |
-                echo ##vso[task.setvariable variable=StartedTests]true
-              displayName: Set StartedTests
+              - script: yarn e2etest -u
+                displayName: Update snapshots
+                workingDirectory: packages/e2e-test-app
+                condition: and(failed(), eq(variables.StartedTests, 'true'))
 
-            - script: yarn e2etest
-              displayName: yarn e2etest
-              workingDirectory: packages/e2e-test-app
+              - task: PowerShell@2
+                displayName: Stop tracing
+                inputs:
+                  targetType: filePath # filePath | inline
+                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+                  arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+                condition: true
 
-            - script: yarn e2etest -u
-              displayName: Update snapshots
-              workingDirectory: packages/e2e-test-app
-              condition: and(failed(), eq(variables.StartedTests, 'true'))
+              - task: PublishBuildArtifacts@1
+                displayName: Upload traces
+                inputs:
+                  pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+                  artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+                condition: true
 
-            - task: PowerShell@2
-              displayName: Stop tracing
-              inputs:
-                targetType: filePath # filePath | inline
-                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
-                arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
-              condition: true
+              - task: CopyFiles@2
+                displayName: Copy snapshots
+                inputs:
+                  sourceFolder: packages/e2e-test-app/test/__snapshots__
+                  targetFolder: $(Build.StagingDirectory)/snapshots
+                  contents: "**"
+                condition: failed()
 
-            - task: PublishBuildArtifacts@1
-              displayName: Upload traces
-              inputs:
-                pathtoPublish: '$(Build.StagingDirectory)/Tracing'
-                artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
-              condition: true
+              - task: CopyFiles@2
+                displayName: Copy ReactUWPTestApp artifacts
+                inputs:
+                  sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/ReactUWPTestApp
+                  targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
+                  contents: AppPackages\**
+                condition: failed()
 
-            - task: CopyFiles@2
-              displayName: Copy snapshots
-              inputs:
-                sourceFolder: packages/e2e-test-app/test/__snapshots__
-                targetFolder: $(Build.StagingDirectory)/snapshots
-                contents: "**"
-              condition: failed()
+              - task: PublishPipelineArtifact@1
+                displayName: "Publish Artifact:ReactUWPTestApp"
+                inputs:
+                  artifactName: ReactUWPTestApp-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                  targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
+                condition: failed()
 
-            - task: CopyFiles@2
-              displayName: Copy ReactUWPTestApp artifacts
-              inputs:
-                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/ReactUWPTestApp
-                targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
-                contents: AppPackages\**
-              condition: failed()
+              - task: PublishPipelineArtifact@1
+                displayName: "Publish Artifact:Snapshots"
+                inputs:
+                  artifactName: Snapshots-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                  targetPath: $(Build.StagingDirectory)/snapshots
+                condition: failed()
 
-            - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact:ReactUWPTestApp"
-              inputs:
-                artifactName: ReactUWPTestApp-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
-              condition: failed()
-
-            - task: PublishPipelineArtifact@1
-              displayName: "Publish Artifact:Snapshots"
-              inputs:
-                artifactName: Snapshots-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
-                targetPath: $(Build.StagingDirectory)/snapshots
-              condition: failed()
-
-            - template: ../templates/upload-build-logs.yml
-              parameters:
-                buildLogDirectory: '$(BuildLogDirectory)'
-                condition: succeededOrFailed()
+              - template: ../templates/upload-build-logs.yml
+                parameters:
+                  buildLogDirectory: '$(BuildLogDirectory)'
+                  condition: succeededOrFailed()

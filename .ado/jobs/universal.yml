@@ -14,52 +14,98 @@
               BuildConfiguration: Release
               BuildPlatform: x64
               FastBuild: true
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: X86DebugFast
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: true
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
+            - Name: Arm64DebugFast
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
+              FastBuild: true
+              EnabledForMainBranch: false
+              EnabledForStableBranch: true
+            - Name: Arm64ReleaseFast
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
+              FastBuild: true
+              EnabledForMainBranch: false
+              EnabledForStableBranch: true
+            - Name: X64DebugFast
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+              FastBuild: true
+              EnabledForMainBranch: false
+              EnabledForStableBranch: true
+            - Name: X86ReleaseFast
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              FastBuild: true
+              EnabledForMainBranch: false
+              EnabledForStableBranch: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: Arm64Debug
               BuildConfiguration: Debug
               BuildPlatform: ARM64
               FastBuild: false
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: Arm64Release
               BuildConfiguration: Release
               BuildPlatform: ARM64
               FastBuild: false
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: X64Debug
               BuildConfiguration: Debug
               BuildPlatform: x64
               FastBuild: false
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
               FastBuild: false
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: false
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: x86
               FastBuild: false
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: X64ReleaseFast
               BuildConfiguration: Release
               BuildPlatform: x64
               FastBuild: true
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
             - Name: X86DebugFast
               BuildConfiguration: Debug
               BuildPlatform: x86
               LayoutHeaders: true
               FastBuild: true
+              EnabledForMainBranch: true
+              EnabledForStableBranch: true
 
   jobs:
     - ${{ each config in parameters.buildMatrix }}:
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
         - ${{ each matrix in config.Matrix }}:
+          # Run if (main && enabled for main) || (stable && enabled for stable) || (enabled for main && enabled for stable)
+          - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
             - job: UniversalBuild${{ matrix.Name }}
               variables:
                 - template: ../variables/vs2019.yml
@@ -222,7 +268,8 @@
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:
-              - UniversalBuild${{ matrix.Name }}
+              - ${{ if or(and(matrix.EnabledForMainBranch, eq(variables['Build.SourceBranchName'], 'main')), and(matrix.EnabledForStableBranch, endsWith(variables['Build.SourceBranchName'], '-stable')), and(matrix.EnabledForMainBranch, matrix.EnabledForStableBranch)) }}:
+                - UniversalBuild${{ matrix.Name }}
       pool:
         vmImage: $(VmImage)
       timeoutInMinutes: 60
