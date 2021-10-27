@@ -17,7 +17,6 @@
 #include <WindowsNumerics.h>
 #include <winrt/Windows.Foundation.h>
 
-#include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include "Utils/PropertyHandlerUtils.h"
@@ -454,9 +453,6 @@ bool FrameworkElementViewManager::UpdateProperty(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded)]);
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
-      if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-        peer.RaiseAutomationEvent(xaml::Automation::Peers::AutomationEvents::LiveRegionChanged);
-      }
     } else if (propertyName == "accessibilityValue") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {
