@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <UI.Xaml.Controls.h>
+#include <Views/ViewViewManager.h>
 #include "ScrollViewUWPImplementation.h"
 #include "ScrollViewViewChanger.h"
 #include "SnapPointManagingContentControl.h"
@@ -79,10 +80,12 @@ void ScrollViewViewChanger::SetContentScrollAnchors(const xaml::Controls::Scroll
   auto panel = snapPointManager->Content().as<xaml::Controls::Panel>();
   for (auto child : panel.Children()) {
     const auto childElement = child.as<xaml::UIElement>();
-    if (enabled) {
-      childElement.CanBeScrollAnchor(true);
-    } else {
-      childElement.ClearValue(xaml::UIElement::CanBeScrollAnchorProperty());
+    if (winrt::unbox_value<bool>(childElement.GetValue(ViewViewManager::CanBeScrollAnchorProperty()))) {
+      if (enabled) {
+        childElement.CanBeScrollAnchor(true);
+      } else {
+        childElement.ClearValue(xaml::UIElement::CanBeScrollAnchorProperty());
+      }
     }
   }
 }

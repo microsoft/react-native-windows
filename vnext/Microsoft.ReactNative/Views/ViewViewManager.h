@@ -14,6 +14,8 @@ class ViewViewManager : public FrameworkElementViewManager {
   using Super = FrameworkElementViewManager;
 
  public:
+  static xaml::DependencyProperty CanBeScrollAnchorProperty();
+
   ViewViewManager(const Mso::React::IReactContext &context);
 
   const wchar_t *GetName() const override;

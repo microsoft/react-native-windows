@@ -38,6 +38,7 @@ const UIView = {
   // [Windows
   onMouseEnter: true,
   onMouseLeave: true,
+  overflowAnchor: true,
   // Windows]
 };
 

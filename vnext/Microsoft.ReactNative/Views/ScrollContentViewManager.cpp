@@ -6,6 +6,7 @@
 #include "ScrollContentViewManager.h"
 
 #include <UI.Xaml.Controls.h>
+#include <Views/ViewViewManager.h>
 #include "Impl/SnapPointManagingContentControl.h"
 #include "ViewPanel.h"
 
@@ -33,7 +34,9 @@ void ScrollContentViewManager::AddView(const XamlView &parent, const XamlView &c
   if (viewParent) {
     const auto scrollViewContentControl = viewParent.as<SnapPointManagingContentControl>();
     if (scrollViewContentControl->IsInverted() && scrollViewContentControl->IsContentAnchoringEnabled()) {
-      childElement.CanBeScrollAnchor(true);
+      if (winrt::unbox_value<bool>(child.GetValue(ViewViewManager::CanBeScrollAnchorProperty()))) {
+        childElement.CanBeScrollAnchor(true);
+      }
     }
   }
 

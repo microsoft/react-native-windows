@@ -77,4 +77,9 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
    * Event fired when the mouse enters the view
    */
   onMouseEnter?: (args: IMouseEvent) => void;
+
+  /**
+   * Indicates that view must not be used as scroll anchor candidate.
+   */
+  overflowAnchor?: "none" | "auto";
 }

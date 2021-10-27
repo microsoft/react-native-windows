@@ -477,6 +477,7 @@ type WindowsViewProps = $ReadOnly<{|
   onBlur?: ?(event: FocusEvent) => mixed,
   onMouseLeave?: ?(event: MouseEvent) => mixed,
   onMouseEnter?: ?(event: MouseEvent) => mixed,
+  overflowAnchor?: 'auto' | 'none',
 |}>;
 // Windows]
 

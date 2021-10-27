@@ -33,6 +33,10 @@
 
 using namespace facebook::react;
 
+namespace winrt {
+using namespace winrt::Windows::UI::Xaml::Interop;
+}
+
 namespace Microsoft::ReactNative {
 
 // ViewShadowNode
@@ -352,6 +356,20 @@ bool TryUpdateBorderProperties(
 
 ViewViewManager::ViewViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
+const winrt::TypeName viewViewManagerTypeName{
+    winrt::hstring{L"ViewViewManager"},
+    winrt::TypeKind::Metadata};
+
+/*static*/ xaml::DependencyProperty ViewViewManager::CanBeScrollAnchorProperty() {
+  static xaml::DependencyProperty s_canBeScrollAnchorProperty = xaml::DependencyProperty::RegisterAttached(
+      L"CanBeScrollAnchor",
+      winrt::xaml_typename<bool>(),
+      viewViewManagerTypeName,
+      winrt::PropertyMetadata(winrt::box_value(true)));
+
+  return s_canBeScrollAnchorProperty;
+}
+
 const wchar_t *ViewViewManager::GetName() const {
   return L"RCTView";
 }
@@ -391,6 +409,7 @@ void ViewViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"enableFocusRing", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"overflowAnchor", L"string");
 }
 
 bool ViewViewManager::UpdateProperty(
@@ -447,6 +466,18 @@ bool ViewViewManager::UpdateProperty(
       if (resetTabIndex) {
         pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
+    } else if (propertyName == "overflowAnchor") {
+#ifndef USE_WINUI3
+      if (propertyValue.Type() == React::JSValueType::String) {
+        if (propertyValue.AsString() == "none") {
+          pViewShadowNode->GetView().SetValue(CanBeScrollAnchorProperty(), winrt::box_value(false));
+        } else {
+          pViewShadowNode->GetView().ClearValue(CanBeScrollAnchorProperty());
+        }
+      } else if (propertyValue.IsNull()) {
+        pViewShadowNode->GetView().ClearValue(CanBeScrollAnchorProperty());
+      }
+#endif
     } else {
       if (propertyName == "accessible") {
         pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
