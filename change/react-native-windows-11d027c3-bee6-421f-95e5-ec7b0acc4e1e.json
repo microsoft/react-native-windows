@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "applying package updates ***NO_CI***",
+  "comment": "FastDebug hermes binaries and symbols",
   "packageName": "react-native-windows",
   "email": "anandrag@microsoft.com",
   "dependentChangeType": "patch"

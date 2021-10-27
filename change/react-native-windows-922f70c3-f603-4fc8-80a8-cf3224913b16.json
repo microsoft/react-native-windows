@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Changes needed to compile with clang ",
+  "comment": "Bump ReactNative.Hermes.Windows nuget package",
   "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
+  "email": "dannyvv@microsoft.com",
   "dependentChangeType": "patch"
 }
