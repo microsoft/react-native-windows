@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 05:07:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.408",
+      "version": "0.0.0-canary.408",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Switch to MUX:CommandBarFlyout in XAML Islands proofing menu"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Upgrade WinUI/MUX to 2.7"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.96",
+            "commit": "598401a0f83875669a1a20e62eaf5bbf8a69e5db"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 05:06:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.408",
       "version": "0.0.0-canary.408",
