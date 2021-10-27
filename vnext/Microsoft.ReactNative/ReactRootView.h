@@ -38,6 +38,11 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
 
   void ReloadView() noexcept;
 
+  // Used by RootViewManager
+  void AddView(uint32_t index, xaml::UIElement child);
+  void RemoveAllChildren();
+  void RemoveChildAt(uint32_t index);
+
  public: // IXamlRootView
   ::Microsoft::ReactNative::XamlView GetXamlView() const noexcept override;
 
@@ -93,6 +98,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   //     JS created children
   winrt::Grid m_xamlRootView{nullptr};
 
+  uint32_t RNIndexToXamlIndex(uint32_t index) noexcept;
   void UpdatePerspective();
   void UpdateRootViewInternal() noexcept;
   void ClearLoadingUI() noexcept;

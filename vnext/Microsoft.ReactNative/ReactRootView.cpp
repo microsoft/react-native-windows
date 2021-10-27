@@ -304,9 +304,6 @@ void ReactRootView::ShowInstanceLoading() noexcept {
 
 void ReactRootView::EnsureFocusSafeHarbor() noexcept {
   if (!m_focusSafeHarbor) {
-    // focus safe harbor is delayed to be inserted to the visual tree
-    VerifyElseCrash(Children().Size() == 1);
-
     m_focusSafeHarbor = xaml::Controls::ContentControl{};
     m_focusSafeHarbor.Width(0.0);
     m_focusSafeHarbor.IsTabStop(false);
@@ -484,6 +481,34 @@ Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Si
   }
 #endif
   return finalSize;
+}
+
+// Maps react-native's view of the root view to the actual UI
+// react-native is unaware that there are non-RN elements within the ReactRootView
+uint32_t ReactRootView::RNIndexToXamlIndex(uint32_t index) noexcept {
+  // If m_focusSafeHarbor exists, it should be at index 0
+  // m_xamlRootView is the next element, followed by any RN content.
+#if DEBUG
+  uint32_t findIndex{0};
+  Assert(!m_focusSafeHarbor || Children().IndexOf(m_focusSafeHarbor, findIndex) && findIndex == 0);
+  Assert(Children().IndexOf(m_xamlRootView, findIndex) && findIndex == (m_focusSafeHarbor ? 1 : 0));
+#endif
+
+  return index + (m_focusSafeHarbor ? 2 : 1);
+}
+
+void ReactRootView::AddView(uint32_t index, xaml::UIElement child) {
+  Children().InsertAt(RNIndexToXamlIndex(index), child);
+}
+
+void ReactRootView::RemoveAllChildren() {
+  const uint32_t numLeft = m_focusSafeHarbor ? 2 : 1;
+  while (Children().Size() > numLeft)
+    Children().RemoveAt(numLeft);
+}
+
+void ReactRootView::RemoveChildAt(uint32_t index) {
+  Children().RemoveAt(RNIndexToXamlIndex(index));
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
