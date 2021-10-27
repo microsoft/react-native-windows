@@ -8,9 +8,11 @@
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
+
 namespace Microsoft::ReactNative {
 
-void FixProofingMenuCrashForXamlIsland(xaml::Controls::TextCommandBarFlyout const &flyout);
+void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase const &flyout);
 
 template <typename T>
 inline void EnsureUniqueTextFlyoutForXamlIsland(T const &textView) {
@@ -19,7 +21,7 @@ inline void EnsureUniqueTextFlyoutForXamlIsland(T const &textView) {
   // to show the flyout on other windows cause the first window to get focus.
   // https://github.com/microsoft/microsoft-ui-xaml/issues/5341
   if (IsXamlIsland()) {
-    xaml::Controls::TextCommandBarFlyout flyout;
+    winrt::Microsoft::UI::Xaml::Controls::TextCommandBarFlyout flyout;
     flyout.Placement(xaml::Controls::Primitives::FlyoutPlacementMode::BottomEdgeAlignedLeft);
 
     // This works around a XAML Islands bug where the Proofing sub-menu for
