@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 05:06:59 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.96",
+      "version": "0.0.0-canary.96",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d76872dc96a1a3c3360f1be5b0f3e8bd099c1647",
+            "comment": "Upgrade WinUI/MUX to 2.7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Oct 2021 05:08:01 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.95",
       "version": "0.0.0-canary.95",

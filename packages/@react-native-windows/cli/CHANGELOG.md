@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 05:06:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.96
+
+Wed, 27 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.95
 
