@@ -221,18 +221,6 @@ jobs:
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: ARM
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        Arm64Release:
-          BuildConfiguration: Release
-          BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -312,6 +300,7 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
+          NoDeployOption:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -323,9 +312,11 @@ jobs:
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
+          NoDeployOption:
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: ARM
+          NoDeployOption: --no-deploy
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
@@ -333,9 +324,11 @@ jobs:
         Arm64Debug:
           BuildConfiguration: Debug
           BuildPlatform: ARM64
+          NoDeployOption: --no-deploy
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
+          NoDeployOption: --no-deploy
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
     pool:
@@ -523,18 +516,26 @@ jobs:
           language: cpp
           configuration: Release
           platform: x86
+          additionalInitArguments:
+          additionalRunArguments:
         X86ReleaseCs:
           language: cs
           configuration: Release
           platform: x86
+          additionalInitArguments:
+          additionalRunArguments:
         X64DebugCpp:
           language: cpp
           configuration: Debug
           platform: x64
+          additionalInitArguments:
+          additionalRunArguments:
         X64DebugCs:
           language: cs
           configuration: Debug
           platform: x64
+          additionalInitArguments:
+          additionalRunArguments:
         X64ReleaseCpp:
           language: cpp
           configuration: Release
@@ -551,10 +552,14 @@ jobs:
           language: cpp
           configuration: Debug
           platform: arm
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         ArmDebugCs:
           language: cs
           configuration: Debug
           platform: arm
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         ArmReleaseCpp:
           language: cpp
           configuration: Release
@@ -571,18 +576,26 @@ jobs:
           language: cpp
           configuration: Debug
           platform: arm64
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         Arm64DebugCs:
           language: cs
           configuration: Debug
           platform: arm64
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         Arm64ReleaseCpp:
           language: cpp
           configuration: Release
           platform: arm64
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         Arm64ReleaseCs:
           language: cs
           configuration: Release
           platform: arm64
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         WinUI3_X86DebugCpp:
           language: cpp
           configuration: Debug
