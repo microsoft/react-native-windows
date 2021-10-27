@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Conditionally fires `onDismiss` when receiving `ContentDialogResult::None`",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

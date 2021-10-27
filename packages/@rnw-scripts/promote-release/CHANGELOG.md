@@ -1,8 +1,34 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Sun, 24 Oct 2021 14:04:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.0
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Major changes
+
+- Write to generated beachball config package (ngerlem@microsoft.com)
+
+## 2.0.0
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Major changes
+
+- Write to generated beachball config package (ngerlem@microsoft.com)
+
+## 1.2.27
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.25
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
 
 ## 1.2.26
 

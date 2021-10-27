@@ -173,11 +173,9 @@ struct RootShadowNode final : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
-    auto panel(GetView().as<winrt::Panel>());
-    if (panel != nullptr) {
-      auto childView = static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>();
-      panel.Children().InsertAt(static_cast<uint32_t>(index), childView);
-    }
+    auto panel(GetView().as<winrt::Microsoft::ReactNative::ReactRootView>());
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactRootView>(panel)->AddView(
+        static_cast<uint32_t>(index), static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>());
   }
 };
 
@@ -1072,7 +1070,7 @@ void NativeUIManager::findSubviewIn(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
-  auto rootUIView = view.as<xaml::UIElement>();
+  auto rootUIView = view.try_as<xaml::UIElement>();
   if (rootUIView == nullptr) {
     m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;

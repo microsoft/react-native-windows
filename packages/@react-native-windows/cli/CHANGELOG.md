@@ -1,8 +1,42 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 06 Oct 2021 05:07:05 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 05:07:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.96
+
+Wed, 27 Oct 2021 05:07:22 GMT
+
+### Changes
+
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+
+## 0.0.0-canary.96
+
+Wed, 27 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+
+## 0.0.0-canary.95
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
+- Bump @react-native-windows/telemetry to v0.0.0-canary.24
+
+## 0.0.0-canary.94
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Changes
+
+- Integrate 10-8-21 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.93
 

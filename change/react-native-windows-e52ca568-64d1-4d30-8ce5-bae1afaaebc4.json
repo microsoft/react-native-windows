@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Export complete type information",
+  "comment": "Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

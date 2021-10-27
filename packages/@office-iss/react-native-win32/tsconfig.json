@@ -1,6 +1,7 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
+    "types": ["react-native"],
     "baseUrl": ".",
     "outDir": ".",
 

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Refines algorithm for hit testing Text",
+  "comment": "Remove additional #pragma once from FlyoutViewManager ",
   "packageName": "react-native-windows",
   "email": "erozell@outlook.com",
   "dependentChangeType": "patch"

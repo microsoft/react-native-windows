@@ -12,20 +12,20 @@
   },
   "dependencies": {
     "@react-native-picker/picker": "2.1.0",
-    "@react-native-windows/automation-channel": "^0.0.5-7",
+    "@react-native-windows/automation-channel": "^0.0.19",
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-d3c7e2018",
-    "react-native-windows": "^0.0.0-canary.393"
+    "react-native": "0.0.0-20211016-2009-e1b698c5f",
+    "react-native-windows": "^0.0.0-canary.408"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/automation": "^0.0.8-7",
-    "@react-native-windows/automation-commands": "^0.0.6-7",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.12",
+    "@react-native-windows/automation": "^0.0.22",
+    "@react-native-windows/automation-commands": "^0.0.20",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.15",
     "@rnw-scripts/babel-node-config": "2.0.2",
     "@rnw-scripts/eslint-config": "1.1.8",
     "@rnw-scripts/just-task": "2.2.1",
@@ -34,7 +34,7 @@
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.21",
-    "@types/react-native": "^0.65.0",
+    "@types/react-native": "^0.66.0",
     "babel-jest": "^26.3.0",
     "eslint": "7.12.0",
     "jest": "^26.6.3",
@@ -44,7 +44,7 @@
     "prettier": "1.19.1",
     "react-test-renderer": "17.0.2",
     "sanitize-filename": "^1.6.3",
-    "typescript": "^3.8.3"
+    "typescript": "^4.4.4"
   },
   "engines": {
     "node": ">= 12.0.0"

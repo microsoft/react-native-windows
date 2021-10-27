@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Changes needed to compile with clang ",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

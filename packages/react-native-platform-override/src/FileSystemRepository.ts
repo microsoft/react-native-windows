@@ -43,7 +43,7 @@ export default class FileSystemRepository implements WritableFileRepository {
       const stats = await fs.promises.stat(filePath);
       return stats.isDirectory() ? 'directory' : 'file';
     } catch (ex) {
-      if (ex.code === 'ENOENT') {
+      if ((ex as NodeJS.ErrnoException).code === 'ENOENT') {
         return 'none';
       } else {
         throw ex;

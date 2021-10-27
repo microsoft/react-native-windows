@@ -4,10 +4,11 @@
   <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
     <UseHermes>true</UseHermes>
     <UseFabric>true</UseFabric>
+    <UseWinUI3>false</UseWinUI3>
   </PropertyGroup>
 
   <PropertyGroup Label="Unpackaged playground-win32" Condition="'$(SolutionName)'=='playground-win32'">
-    <WinUI2xVersion>2.6.1-prerelease.210709001</WinUI2xVersion>
+    <WinUI2xVersion>2.7.0-prerelease.210913003</WinUI2xVersion>
   </PropertyGroup>
 
 </Project>

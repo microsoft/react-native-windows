@@ -9,13 +9,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-d3c7e2018",
+  "baseVersion": "0.0.0-20211016-2009-e1b698c5f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "87b17404811d82484497bb8f73b63e57b90b5006"
+      "baseHash": "1920d4cf4c839eb21889eb28e4596fbbfcc4a0cd"
     },
     {
       "type": "patch",
@@ -39,12 +39,6 @@
       "issue": 7821
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Text/TextNativeComponent.windows.js",
-      "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb"
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
@@ -62,7 +56,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "9995fd5764d9b3ea8c7d3f9c4979eefc4e5e3d78",
+      "baseHash": "31c4404054e4154e79aa4bde8cd2248a4653975a",
       "issue": 5430
     },
     {
@@ -285,13 +279,13 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372"
+      "baseHash": "689895e8755aed42e913460d1fa964907a74f06c"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewAccessibility.windows.js",
       "baseFile": "Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "b6c5dab8543275d60d0d0efd4be435c372376f3d"
+      "baseHash": "f3c5673a96779c9b442ddaf14d0d2d8a529a5b78"
     },
     {
       "type": "patch",
@@ -404,7 +398,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "696351a1f296e1bd595d7a22253f5b31b62ed5f8",
+      "baseHash": "05c53428a4b7b142fabb6833ecf54ba88c0aa05d",
       "issue": 4379
     },
     {
@@ -428,6 +422,12 @@
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
       "baseHash": "8b90eb090dcfed88a40a38bbb51cbbd1e0d9ca9e"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/TextNativeComponent.windows.js",
+      "baseFile": "Libraries/Text/TextNativeComponent.js",
+      "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb"
     },
     {
       "type": "patch",

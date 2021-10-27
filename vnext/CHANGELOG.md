@@ -1,8 +1,196 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 Oct 2021 05:05:52 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 05:07:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.408
+
+Wed, 27 Oct 2021 05:07:23 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (agnel@microsoft.com)
+- Switch to MUX:CommandBarFlyout in XAML Islands proofing menu (jthysell@microsoft.com)
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.96
+
+## 0.0.0-canary.408
+
+Wed, 27 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (agnel@microsoft.com)
+- Switch to MUX:CommandBarFlyout in XAML Islands proofing menu (jthysell@microsoft.com)
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.96
+
+## 0.0.0-canary.407
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.407
+
+Tue, 26 Oct 2021 05:06:25 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.406
+
+Mon, 25 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- Add Analyze-Crash.ps1 script to aid in reporting crashes (asklar@microsoft.com)
+
+## 0.0.0-canary.406
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Changes
+
+- Add Analyze-Crash.ps1 script to aid in reporting crashes (asklar@microsoft.com)
+
+## 0.0.0-canary.405
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Changes
+
+- Stamp version into Props + Definitions (ngerlem@microsoft.com)
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance. (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
+
+## 0.0.0-canary.405
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Changes
+
+- Stamp version into Props + Definitions (ngerlem@microsoft.com)
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance. (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
+
+## 0.0.0-canary.404
+
+Sun, 24 Oct 2021 05:06:50 GMT
+
+### Changes
+
+- Fix win32 apps referencing the M.RN nuget package so they can use RNW (asklar@microsoft.com)
+
+## 0.0.0-canary.403
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Changes
+
+- fix codegen task (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.19
+
+## 0.0.0-canary.402
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Changes
+
+- Fixes resizeMode for data URI images (erozell@outlook.com)
+- Allow text selection on Alert content (erozell@outlook.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.18
+
+## 0.0.0-canary.401
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Fixes issue with lambda capture of structured bindings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.95
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.14
+- Bump @react-native-windows/codegen to v0.0.0-canary.17
+- Bump react-native-platform-override to v1.5.1
+
+## 0.0.0-canary.400
+
+Sun, 17 Oct 2021 05:06:34 GMT
+
+### Changes
+
+- Catch and report errors in linking module (asklar@microsoft.com)
+
+## 0.0.0-canary.399
+
+Sat, 16 Oct 2021 05:08:25 GMT
+
+### Changes
+
+- Fix WACK for apps not packaging hermes.dll (ngerlem@microsoft.com)
+
+## 0.0.0-canary.398
+
+Fri, 15 Oct 2021 05:06:52 GMT
+
+### Changes
+
+- Remove rtti even when fabric enabled (in release) (30809111+acoates-ms@users.noreply.github.com)
+- Remove Proofing menu item when spellCheck disabled (erozell@outlook.com)
+
+## 0.0.0-canary.397
+
+Thu, 14 Oct 2021 05:06:00 GMT
+
+### Changes
+
+- Fixes text child removal for fast text path (erozell@outlook.com)
+
+## 0.0.0-canary.396
+
+Wed, 13 Oct 2021 05:07:05 GMT
+
+### Changes
+
+- Update Alert.windows.js to catch up facebook's latest Alert.js (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Set Automation Peer for ReactImage (ngerlem@microsoft.com)
+- Guard against nodes going away (i.e. in react-navigation) (asklar@microsoft.com)
+- Fixes bug introduced by e7735a8 (erozell@outlook.com)
+
+## 0.0.0-canary.395
+
+Tue, 12 Oct 2021 05:07:11 GMT
+
+### Changes
+
+- Improve autolinking check performance by delaying checking whether dependencies are met until it is needed. (asklar@microsoft.com)
+
+## 0.0.0-canary.394
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Changes
+
+- Refines algorithm for hit testing Text (erozell@outlook.com)
+- Fixes crash when animating Opacity on custom view with TranslateTransform (erozell@outlook.com)
+- Export complete type information (30809111+acoates-ms@users.noreply.github.com)
+- Allow pointer events on selectable Text (erozell@outlook.com)
+- Fix XAML bug with alerts inside a dark themed parent (lyahdav@users.noreply.github.com)
+- Integrate 10-8-21 Nightly Build (ngerlem@microsoft.com)
+- Fix crash in Islands when opening Flyout without a target #6714 (lyahdav@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.94
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.13
 
 ## 0.0.0-canary.393
 

@@ -1,8 +1,42 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Wed, 06 Oct 2021 05:07:05 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Oct 2021 05:06:56 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.15
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.15
+
+Tue, 26 Oct 2021 05:06:24 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.14
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.5.1
+
+## 0.0.0-canary.13
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Changes
+
+- Integrate 10-8-21 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.12
 

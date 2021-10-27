@@ -8,6 +8,7 @@
 
 #include "ImageViewManager.h"
 
+#include <UI.Xaml.Automation.h>
 #include <winrt/Windows.Foundation.h>
 #include <UI.Xaml.Automation.h>
 
@@ -15,6 +16,7 @@
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Views/ShadowNodeBase.h>
+#include "DynamicAutomationProperties.h"
 #include "ReactImage.h"
 
 namespace winrt {
@@ -83,7 +85,9 @@ class ImageShadowNode : public ShadowNodeBase {
 
     // Image should default to "accessible: false", but this is not done on the JS level
     // https://reactnative.dev/docs/image#accessible
-    xaml::Automation::AutomationProperties::SetAccessibilityView(m_view, winrt::AccessibilityView::Raw);
+    xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
+    DynamicAutomationProperties::SetAccessibilityRole(
+        *reactImage, winrt::Microsoft::ReactNative::AccessibilityRoles::Image);
 
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
                                               reactImage](const auto &, const bool &succeeded) {
@@ -143,9 +147,12 @@ bool ImageViewManager::UpdateProperty(
       const auto color = isValidColorValue ? ColorFrom(propertyValue) : winrt::Colors::Transparent();
       reactImage->TintColor(color);
     }
-    // Default behavior when cleared should be "accessible: false"
+    // Override default accessibility behavior
   } else if (propertyName == "accessible" && propertyValue.IsNull()) {
     xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
+  } else if (propertyName == "accessibilityRole" && propertyValue.IsNull()) {
+    DynamicAutomationProperties::SetAccessibilityRole(
+        *reactImage, winrt::Microsoft::ReactNative::AccessibilityRoles::Image);
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
   } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
