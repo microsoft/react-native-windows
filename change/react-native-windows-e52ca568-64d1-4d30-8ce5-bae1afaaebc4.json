@@ -1,6 +1,6 @@
 {
-  "type": "prerelease",
-  "comment": "Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance",
+  "type": "patch",
+  "comment": "Fix crash when using TextInput.blur()",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
