@@ -222,18 +222,6 @@ jobs:
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: ARM
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        Arm64Release:
-          BuildConfiguration: Release
-          BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -314,6 +302,7 @@ jobs:
         X64Debug:
           BuildConfiguration: Debug
           BuildPlatform: x64
+          DeployOption:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -325,9 +314,11 @@ jobs:
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
+          DeployOption:
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: ARM
+          DeployOption: --no-deploy
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
@@ -335,9 +326,11 @@ jobs:
         Arm64Debug:
           BuildConfiguration: Debug
           BuildPlatform: ARM64
+          DeployOption: --no-deploy
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
+          DeployOption: --no-deploy
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
     pool:
@@ -362,8 +355,7 @@ jobs:
         parameters:
           buildEnvironment: 'PullRequest'
           encodedKey: sampleAppCPPEncodedKey
-          ${{ if eq(variables.BuildConfiguration, 'Release') }}:
-            buildConfiguration: Release
+          buildConfiguration: $(BuildConfiguration)
           buildPlatform: $(BuildPlatform)
           deployOption: $(DeployOption)
           buildLogDirectory: $(BuildLogDirectory)
@@ -530,21 +522,29 @@ jobs:
           configuration: Release
           platform: x86
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments:
         X86ReleaseCs:
           language: cs
           configuration: Release
           platform: x86
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments:
         X64DebugCpp:
           language: cpp
           configuration: Debug
           platform: x64
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments:
         X64DebugCs:
           language: cs
           configuration: Debug
           platform: x64
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments:
         X64ReleaseCpp:
           language: cpp
           configuration: Release
@@ -564,11 +564,15 @@ jobs:
           configuration: Debug
           platform: arm
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         ArmDebugCs:
           language: cs
           configuration: Debug
           platform: arm
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         ArmReleaseCpp:
           language: cpp
           configuration: Release
@@ -588,21 +592,29 @@ jobs:
           configuration: Debug
           platform: arm64
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         Arm64DebugCs:
           language: cs
           configuration: Debug
           platform: arm64
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         Arm64ReleaseCpp:
           language: cpp
           configuration: Release
           platform: arm64
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         Arm64ReleaseCs:
           language: cs
           configuration: Release
           platform: arm64
           projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         X86DebugCppLib:
           language: cpp
           configuration: Debug
@@ -614,6 +626,34 @@ jobs:
           language: cs
           configuration: Debug
           platform: x86
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        X64DebugCppLib:
+          language: cpp
+          configuration: Debug
+          platform: x64
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        X64DebugCsLib:
+          language: cs
+          configuration: Debug
+          platform: x64
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        Arm64DebugCppLib:
+          language: cpp
+          configuration: Debug
+          platform: arm64
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        ArmDebugCsLib:
+          language: cs
+          configuration: Debug
+          platform: arm64
           projectType: lib
           additionalInitArguments:
           additionalRunArguments: --no-autolink --no-deploy
