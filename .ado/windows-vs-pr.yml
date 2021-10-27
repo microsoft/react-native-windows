@@ -16,6 +16,8 @@ variables:
 
 jobs:
   - job: Setup
+    pool:
+      vmImage: $(VmImage)
     steps:
       - task: powershell@2
         name: checkPayload
