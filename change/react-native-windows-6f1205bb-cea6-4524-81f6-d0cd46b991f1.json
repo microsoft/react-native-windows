@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Handle *Undefined* for SolutionPath for the WapProj sdk",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

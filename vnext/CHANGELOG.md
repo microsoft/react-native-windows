@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Oct 2021 15:07:12 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:04:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.25
+
+Wed, 27 Oct 2021 19:04:04 GMT
+
+### Patches
+
+- Handle *Undefined* for SolutionPath for the WapProj sdk (dannyvv@microsoft.com)
 
 ## 0.64.24
 
