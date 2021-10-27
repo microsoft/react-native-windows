@@ -17,9 +17,9 @@ jobs:
     displayName: Universal PR
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -27,21 +27,21 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x86
           LayoutHeaders: true
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #ArmDebug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-        #Arm64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM64
-        #Arm64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: ARM64
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -210,12 +210,30 @@ jobs:
     displayName: Universal Other Projects PR
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X86Debug:
+        X64Debug:
           BuildConfiguration: Debug
-          BuildPlatform: x86
+          BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
+        ArmRelease:
+          BuildConfiguration: Release
+          BuildPlatform: ARM
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -293,9 +311,9 @@ jobs:
     displayName: Sample Apps PR
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -304,22 +322,22 @@ jobs:
          BuildConfiguration: Debug
          BuildPlatform: x86
          DeployOption:
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #ArmDebug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
           DeployOption: --no-deploy
-        #Arm64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM64
-        #Arm64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: ARM64
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
     pool:
@@ -386,8 +404,14 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
         ARM64Debug:
           BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        ARM64Release:
+          BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
@@ -501,26 +525,26 @@ jobs:
           projectType: app
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
           additionalRunArguments:
-        #X86ReleaseCpp:
-        #  language: cpp
-        #  configuration: Release
-        #  platform: x86
-        #  projectType: app
-        #X86ReleaseCs:
-        #  language: cs
-        #  configuration: Release
-        #  platform: x86
-        #  projectType: app
-        #X64DebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: x64
-        #  projectType: app
-        #X64DebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: x64
-        #  projectType: app
+        X86ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: x86
+          projectType: app
+        X86ReleaseCs:
+          language: cs
+          configuration: Release
+          platform: x86
+          projectType: app
+        X64DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x64
+          projectType: app
+        X64DebugCs:
+          language: cs
+          configuration: Debug
+          platform: x64
+          projectType: app
         X64ReleaseCpp:
           language: cpp
           configuration: Release
@@ -535,16 +559,16 @@ jobs:
           projectType: app
           additionalInitArguments:
           additionalRunArguments:
-        #ArmDebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: arm
-        #  projectType: app
-        #ArmDebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: arm
-        #  projectType: app
+        ArmDebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: arm
+          projectType: app
+        ArmDebugCs:
+          language: cs
+          configuration: Debug
+          platform: arm
+          projectType: app
         ArmReleaseCpp:
           language: cpp
           configuration: Release
@@ -559,26 +583,26 @@ jobs:
           projectType: app
           additionalInitArguments:
           additionalRunArguments: --no-deploy
-        #Arm64DebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: arm64
-        #  projectType: app
-        #Arm64DebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: arm64
-        #  projectType: app
-        #Arm64ReleaseCpp:
-        #  language: cpp
-        #  configuration: Release
-        #  platform: arm64
-        #  projectType: app
-        #Arm64ReleaseCs:
-        #  language: cs
-        #  configuration: Release
-        #  platform: arm64
-        #  projectType: app
+        Arm64DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: arm64
+          projectType: app
+        Arm64DebugCs:
+          language: cs
+          configuration: Debug
+          platform: arm64
+          projectType: app
+        Arm64ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: arm64
+          projectType: app
+        Arm64ReleaseCs:
+          language: cs
+          configuration: Release
+          platform: arm64
+          projectType: app
         X86DebugCppLib:
           language: cpp
           configuration: Debug
