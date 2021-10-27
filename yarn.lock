@@ -1863,47 +1863,6 @@
   resolved "https://registry.yarnpkg.com/@reactions/component/-/component-2.0.2.tgz#40f8c1c2c37baabe57a0c944edb9310dc1ec6642"
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
-"@rnw-scripts/babel-node-config@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@rnw-scripts/babel-node-config/-/babel-node-config-2.0.1.tgz#708d6ccd260085209fcdf407e91f8b65869ab702"
-  integrity sha512-kEWySbdA0qLFAPWWqgBs9kG5pIWduRsKXcq6ceg5oXmQGuAPGBDDsUniEHbRzoMbUuL1dqkDriXN1JyZA0yWrQ==
-
-"@rnw-scripts/eslint-config@1.1.7":
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/@rnw-scripts/eslint-config/-/eslint-config-1.1.7.tgz#917a3455a44312d0a076e27ffb9a8b8082f7fed2"
-  integrity sha512-ZgtqViVvByWK5bGo/wx13Yeup3fOrqHp2Ubr0k/6dLURxql1U6IIr+bJkIJTHaje05SLnXCP836DXnj782c3iA==
-  dependencies:
-    "@react-native-community/eslint-config" "^2.0.0"
-    eslint-config-prettier "^6.0.0"
-
-"@rnw-scripts/jest-e2e-config@1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@rnw-scripts/jest-e2e-config/-/jest-e2e-config-1.1.5.tgz#bf953e35b59391a6ad4a2b00a3bc26441ffa12bb"
-  integrity sha512-jyxhEGq0iisJGJNnZrinR7rPEgMaKnWPSs9gqLN1ExJGbyGOyC5jic3CRE7+NWjT4cBASaakrFjW56lzG+Qirg==
-  dependencies:
-    "@rnw-scripts/babel-node-config" "2.0.1"
-
-"@rnw-scripts/jest-unittest-config@1.2.3":
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/@rnw-scripts/jest-unittest-config/-/jest-unittest-config-1.2.3.tgz#1ddcd82a7bf138fe883345edc3c510a61c75a921"
-  integrity sha512-ncN97jro72AH1kvOrjQtymse+JvonEbuT4+C9kTJ5LJ0/KDy6G7Rp414olYyUH2WbX/ECzvLZnlr9BbFLoDT7Q==
-  dependencies:
-    "@rnw-scripts/babel-node-config" "2.0.1"
-
-"@rnw-scripts/just-task@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@rnw-scripts/just-task/-/just-task-2.2.0.tgz#8fd992d8038c97565dff7b111d63d0156fa18d4c"
-  integrity sha512-JYVPD/vwX/bSXUudlRroRWcTATFt9q0cYX91TbeL28iQ/2au7dtq5pngh/7qoM2mtdsmdceVqT/WLtrloJkUNw==
-  dependencies:
-    "@rnw-scripts/jest-e2e-config" "1.1.5"
-    "@rnw-scripts/jest-unittest-config" "1.2.3"
-    depcheck "^1.4.1"
-
-"@rnw-scripts/ts-config@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@rnw-scripts/ts-config/-/ts-config-2.0.0.tgz#72d2bd7f5fe9af9d155aa67bdcc23c95f427e2e1"
-  integrity sha512-+FVO93JPx89GUYir4I/hUxB3bKkXvkeguOrAuBQ0WN39EB71KmNhdtzKj3Y9SVAymqkRjF1833ufCWmYp2fp7g==
-
 "@rnx-kit/jest-preset@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.1.tgz#b45863659ce4f6c75d3c0d5ed5b5b784d3b7caa2"
