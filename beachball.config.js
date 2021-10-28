@@ -14,9 +14,6 @@ module.exports = {
   // release for every package.
   gitTags: false,
 
-  // Commit message used when publishing
-  message: 'applying package updates ***NO_CI***',
-
   hooks: {
     // Stamp versions when we publish a new package
     prepublish: (_packagePath, name, version) => {
