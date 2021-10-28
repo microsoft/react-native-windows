@@ -13,7 +13,7 @@
 # This should make it easy to add new rules without breaking existing ones.
 
 # All entries should end in '@microsoft/react-native-windows-write' as it
-# encourages everyone with write access be notfiied of PRs. However when
+# encourages everyone with write access be notified of PRs. However when
 # snapping this file into a stable branch, replace
 # '@microsoft/react-native-windows-write' with
 # '@microsoft/react-native-windows-backport-triage'
