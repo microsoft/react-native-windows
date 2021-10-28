@@ -10,6 +10,11 @@ parameters:
   default: --network-concurrency 40 --cache-folder \.yarnCache
 
 steps:
+  - task: NodeTool@0
+    displayName: Installing Node
+    inputs:
+      versionSpec: '16.x'
+
   - ${{ if eq(parameters.frozenLockfile, true) }}:
     - script: npx midgard-yarn@1.23.33 --frozen-lockfile --cwd ${{ parameters.workingDirectory }} ${{ parameters.extraArgs }}
       displayName: midgard-yarn (faster yarn install)
