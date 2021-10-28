@@ -13,6 +13,7 @@
 namespace Microsoft::ReactNative {
 
 void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase const &flyout);
+void FixMenuThemeForXamlIsland(xaml::Controls::Primitives::FlyoutBase const &flyout);
 
 template <typename T>
 inline void EnsureUniqueTextFlyoutForXamlIsland(T const &textView) {
@@ -22,6 +23,7 @@ inline void EnsureUniqueTextFlyoutForXamlIsland(T const &textView) {
   // https://github.com/microsoft/microsoft-ui-xaml/issues/5341
   if (IsXamlIsland()) {
     winrt::Microsoft::UI::Xaml::Controls::TextCommandBarFlyout flyout;
+    FixMenuThemeForXamlIsland(flyout);
     flyout.Placement(xaml::Controls::Primitives::FlyoutPlacementMode::BottomEdgeAlignedLeft);
 
     // This works around a XAML Islands bug where the Proofing sub-menu for
