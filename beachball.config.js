@@ -8,7 +8,7 @@
 const {execSync} = require('child_process');
 
 module.exports = {
-  ...require(`${__dirname}/packages/@rnw-sripts/generated-beachball-config/beachball.config.g.json`),
+  ...require(`${__dirname}/packages/@rnw-scripts/generated-beachball-config/beachball.config.g.json`),
   
   // Do not generate tags for monorepo packages by default, to avoid a GitHub
   // release for every package.
