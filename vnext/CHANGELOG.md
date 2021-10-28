@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 28 Oct 2021 05:05:43 GMT and should not be manually modified.
+This log was last generated on Thu, 28 Oct 2021 05:06:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.409
+
+Thu, 28 Oct 2021 05:06:02 GMT
+
+### Changes
+
+- FastDebug hermes binaries and symbols (anandrag@microsoft.com)
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Remove additional #pragma once from FlyoutViewManager  (erozell@outlook.com)
+- Bump ReactNative.Hermes.Windows nuget package (dannyvv@microsoft.com)
+- Changes needed to compile with clang  (erozell@outlook.com)
+- Conditionally fires `onDismiss` when receiving `ContentDialogResult::None` (erozell@outlook.com)
+- Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.409
 

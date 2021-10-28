@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.409",
+      "version": "0.0.0-canary.409",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "FastDebug hermes binaries and symbols"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Remove additional #pragma once from FlyoutViewManager "
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Bump ReactNative.Hermes.Windows nuget package"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Changes needed to compile with clang "
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Conditionally fires `onDismiss` when receiving `ContentDialogResult::None`"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:05:43 GMT",
       "tag": "react-native-windows_v0.0.0-canary.409",
       "version": "0.0.0-canary.409",

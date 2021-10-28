@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.17",
+      "version": "1.0.17",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:05:42 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.0.17",
       "version": "1.0.17",

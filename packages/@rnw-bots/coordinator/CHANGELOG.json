@@ -2,6 +2,21 @@
   "name": "@rnw-bots/coordinator",
   "entries": [
     {
+      "date": "Thu, 28 Oct 2021 05:06:01 GMT",
+      "tag": "@rnw-bots/coordinator_v1.0.11",
+      "version": "1.0.11",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-bots/coordinator",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:05:41 GMT",
       "tag": "@rnw-bots/coordinator_v1.0.11",
       "version": "1.0.11",

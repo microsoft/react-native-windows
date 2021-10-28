@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/ts-config",
   "entries": [
     {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.1",
+      "version": "2.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/ts-config",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:05:42 GMT",
       "tag": "@rnw-scripts/ts-config_v2.0.1",
       "version": "2.0.1",
