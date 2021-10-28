@@ -109,7 +109,7 @@ jobs:
     pool:
       name: $(AgentPool.Medium.Microsoft)
       demands:
-                -  $(AgentImage)
+          -  $(AgentImage)
     timeoutInMinutes: 30
     steps:
       - template: templates/prepare-env.yml
