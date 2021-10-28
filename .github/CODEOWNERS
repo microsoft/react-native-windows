@@ -2,5 +2,5 @@
 * @microsoft/react-native-windows-write
 
 # API Review for DEF/IDL file changes
-*.def @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
-*.idl @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+**/*.def @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+**/*.idl @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
