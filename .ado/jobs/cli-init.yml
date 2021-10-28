@@ -252,7 +252,7 @@ jobs:
             pool:
               name: $(AgentPool.Medium)
               demands:
-                - ImageOverride -equals rnw-img-test-fail
+                -  $(AgentImage)
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 
