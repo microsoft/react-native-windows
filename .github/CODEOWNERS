@@ -58,7 +58,7 @@
 /vnext/react-native.config.js  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
 
 # OfficeCXE for Desktop-specific files
-/vnext/ReactWindows-Desktop.sln
+/vnext/ReactWindows-Desktop.sln  @microsoft/officecxe @microsoft/react-native-windows-write
 
 # API Review for DEF/IDL file changes
 /vnext/**/*.def  @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
