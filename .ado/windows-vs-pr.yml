@@ -35,7 +35,7 @@ stages:
           - script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
             displayName: Check for change files
 
-          - script: npx --no-install beachball@ bump --branch origin/$(BeachBallBranchName) --yes
+          - script: npx --no-install beachball bump --branch origin/$(BeachBallBranchName) --yes
             displayName: beachball bump
 
           - template: templates/set-version-vars.yml
