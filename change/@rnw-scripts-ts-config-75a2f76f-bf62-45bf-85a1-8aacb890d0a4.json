@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update package.json to include the repository",
-  "packageName": "@rnw-scripts/ts-config",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update package.json to include the repository",
-  "packageName": "@rnw-scripts/jest-debug-config",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump ReactNative.Hermes.Windows nuget package",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

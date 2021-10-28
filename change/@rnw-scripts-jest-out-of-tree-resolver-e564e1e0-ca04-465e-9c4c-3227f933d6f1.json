@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update package.json to include the repository",
-  "packageName": "@rnw-scripts/jest-out-of-tree-resolver",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

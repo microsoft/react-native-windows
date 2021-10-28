@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update package.json to include the repository",
-  "packageName": "@rnw-scripts/promote-release",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

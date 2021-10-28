@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update package.json to include the repository",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

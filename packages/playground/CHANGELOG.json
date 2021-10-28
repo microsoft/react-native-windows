@@ -2,6 +2,21 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Thu, 28 Oct 2021 05:05:43 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.409",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 05:07:23 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",
