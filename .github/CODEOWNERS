@@ -1,6 +1,32 @@
+
+# Lines starting with '#' are comments.
+# Each line is a file pattern followed by one or more owners.
+
+# More details are here: https://help.github.com/articles/about-codeowners/
+
+# The '*' pattern is global owners.
+
+# Order is important. The last matching pattern has the most precedence.
+# The folders are ordered as follows:
+
+# In each subsection folders are ordered first by depth, then alphabetically.
+# This should make it easy to add new rules without breaking existing ones.
+
+# All entries should end in '@microsoft/react-native-windows-write' as it
+# encourages everyone with write access be notfiied of PRs.
+
 # Global Catch-All
-* @microsoft/react-native-windows-write
+*                      @microsoft/react-native-windows-write
+
+# DevOps for ADO Pipelines
+/.ado/**               @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
 
 # API Review for DEF/IDL file changes
-/vnext/**/*.def @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
-/vnext/**/*.idl @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+/vnext/**/*.def        @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+/vnext/**/*.idl        @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+
+# Ownership by specific files or file types
+# This section MUST stay at the bottom of the CODEOWNERS file.
+
+# CODEOWNERS
+/.github/CODEOWNERS    @microsoft/react-native-windows-admin @microsoft/react-native-windows-write
