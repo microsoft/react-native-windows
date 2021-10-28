@@ -20,6 +20,8 @@
 
 # DevOps for ADO Pipelines
 /.ado/**               @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
+/.github/**            @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
+/vnext/Scripts/**      @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
 
 # API Review for DEF/IDL file changes
 /vnext/**/*.def        @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
