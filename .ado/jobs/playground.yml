@@ -104,7 +104,7 @@ jobs:
                   platform: ${{ matrix.BuildPlatform}} # Optional
                   configuration: ${{ matrix.BuildConfiguration}} # Optional
                   clean: true # Optional
-                  maximumCpuCount: false # Optional
+                  maximumCpuCount: true
                   restoreNugetPackages: false # Optional
                   msbuildArgs:
                     /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
@@ -125,7 +125,7 @@ jobs:
                   platform: ${{ matrix.BuildPlatform}} # Optional
                   configuration: ${{ matrix.BuildConfiguration}} # Optional
                   clean: true # Optional
-                  maximumCpuCount: false # Optional
+                  maximumCpuCount: true
                   restoreNugetPackages: false # Optional
                   msbuildArgs:
                     /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)

@@ -12,7 +12,6 @@ parameters:
   buildPlatform: x64
   buildConfiguration: Debug
   msbuildArguments: ''
-  multicoreBuild: false
   warnAsError: true
 
   # Visual Studio Installer
@@ -59,7 +58,7 @@ steps:
       platform: ${{ parameters.buildPlatform }}
       configuration: ${{ parameters.buildConfiguration }}
       clean: false # Optional
-      maximumCpuCount: ${{ parameters.multicoreBuild }} # Optional
+      maximumCpuCount: true
       restoreNugetPackages: false # Optional
       createLogFile: true
       logFileVerbosity: detailed
