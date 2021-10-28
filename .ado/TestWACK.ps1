@@ -8,6 +8,9 @@ if (!(Test-Path $OutputPath)) {
 }
 
 if ($Configuration -eq 'Release') {
+    if ($Platform -eq 'x86') {
+        $Platform = 'Win32'
+    }
     $appxPath = Resolve-Path $PSScriptRoot\..\packages\playground\windows\AppPackages\playground\playground_1.0.0.0_${Platform}_Test\playground_1.0.0.0_$Platform.appx
     gci $appxPath
 
