@@ -1,7 +1,7 @@
 variables:
   VmImage: windows-2019
   AgentPool.Medium: rnw-pool-4
-  AgentPool.Large: rnw-pool-4
+  AgentPool.Large: rnw-pool-8
   AgentImage: ImageOverride -equals rnw-img
   MSBuildVersion: 16.0
   runCodesignValidationInjection: false
