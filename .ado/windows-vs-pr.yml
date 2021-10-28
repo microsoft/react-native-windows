@@ -523,14 +523,14 @@ jobs:
           platform: x86
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments:
         X86ReleaseCs:
           language: cs
           configuration: Release
           platform: x86
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments:
         X64DebugCpp:
           language: cpp
           configuration: Debug
@@ -551,14 +551,14 @@ jobs:
           platform: x64
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments: --no-deploy
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments: --no-deploy
         ArmDebugCpp:
           language: cpp
           configuration: Debug
