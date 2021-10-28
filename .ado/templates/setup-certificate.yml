@@ -11,19 +11,15 @@ parameters:
 steps:
   - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(sampleAppCPPEncodedKey)"
     displayName: Specify Certificate
-    condition: eq('${{ parameters.encodedKey }}' , 'sampleAppCPPEncodedKey')
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'sampleAppCPPEncodedKey'))
 
   - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(reactUWPTestAppEncodedKey)"
     displayName: Specify Certificate
-    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey }}' , 'reactUWPTestAppEncodedKey'))
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'reactUWPTestAppEncodedKey'))
 
   - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(playgroundEncodedKey)"
     displayName: Specify Certificate
-    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey }}' , 'playgroundEncodedKey'))
-
-  - powershell: Write-Host "##vso[task.setvariable variable=EncodedKey]$(RNWEncodedKey)"
-    displayName: Specify Certificate
-    condition: eq('${{ parameters.encodedKey }}' , 'RNWEncodedKey')
+    condition: and(eq('${{ parameters.buildEnvironment }}', 'Continuous'), eq('${{ parameters.encodedKey}}' , 'playgroundEncodedKey'))
 
   - task: PowerShell@2
     displayName: Set Up Certificate

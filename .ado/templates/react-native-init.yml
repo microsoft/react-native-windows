@@ -172,6 +172,7 @@ steps:
 
   # Work around issue of parameters not getting expanded in conditions properly
   - powershell: |
+      Write-Host "##vso[task.setvariable variable=localConfig]${{ parameters.configuration}}"
       Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
 
   # Useful info to have in the log, but also a necessary workaround to make sure the cli is cached by npx
@@ -195,15 +196,21 @@ steps:
       targetType: inline
       script: Remove-Item $env:APPDATA\NuGet\NuGet.Config
 
-  - template: ../templates/run-windows-with-certificates.yml
-    parameters:
-      buildEnvironment: ${{ parameters.BuildEnvironment }}
-      certificateName: RNWEncodedKey
-      buildConfiguration: ${{ parameters.configuration }}
-      buildPlatform: ${{ parameters.platform }}
-      deployOption: ${{ parameters.additionalRunArguments }}
-      buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
+  - task: CmdLine@2
+    displayName: Build project (Release)
+    inputs:
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs --release ${{ parameters.additionalRunArguments }}
       workingDirectory: $(Agent.BuildDirectory)\testcli
+    continueOnError: ${{ parameters.continueOnBuildFailure }}
+    condition: and(succeeded(), eq('Release', variables['localConfig']))
+
+  - task: CmdLine@2
+    displayName: Build project (Debug)
+    inputs:
+      script: npx --no-install react-native run-windows --arch ${{ parameters.platform }} --no-launch --logging --buildLogDirectory $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs ${{ parameters.additionalRunArguments }}
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+    continueOnError: ${{ parameters.continueOnBuildFailure }}
+    condition: and(succeeded(), eq('Debug', variables['localConfig']))
 
   - template: upload-build-logs.yml
     parameters:
