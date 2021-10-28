@@ -665,6 +665,7 @@ jobs:
     steps:
       - template: templates/react-native-init.yml
         parameters:
+          buildEnvironment: 'PullRequest'
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
@@ -693,6 +694,7 @@ jobs:
     steps:
       - template: templates/react-native-init.yml
         parameters:
+          buildEnvironment: 'PullRequest'
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
@@ -721,6 +723,7 @@ jobs:
     steps:
       - template: templates/react-native-init.yml
         parameters:
+          buildEnvironment: 'PullRequest'
           language: $(language)
           configuration: $(configuration)
           platform: $(platform)
@@ -747,6 +750,7 @@ jobs:
     steps:
       - template: templates/react-native-init.yml
         parameters:
+          buildEnvironment: 'PullRequest'
           language: $(Language)
           configuration: Debug
           platform: x86
