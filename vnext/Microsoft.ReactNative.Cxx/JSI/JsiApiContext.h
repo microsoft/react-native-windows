@@ -20,6 +20,9 @@ facebook::jsi::Runtime &GetOrCreateContextRuntime(ReactContext const &context) n
 // The code is executed synchronously if it is already in JSDispatcher, or asynchronously otherwise.
 template <class TCodeWithRuntime>
 void ExecuteJsi(ReactContext const &context, TCodeWithRuntime const &code) {
+  if (context.Handle().SettingsSnapshot().UseWebDebugger()) {
+    throw std::invalid_argument("Attempted to use JSI while web debugging is enabled.");
+  }
   ReactDispatcher jsDispatcher = context.JSDispatcher();
   if (jsDispatcher.HasThreadAccess()) {
     // Execute immediately if we are in JS thread.
