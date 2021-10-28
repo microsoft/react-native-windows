@@ -9248,10 +9248,10 @@ react-clone-referenced-element@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.1.tgz#8d76727dc0459788e461741e804a512d20757381"
   integrity sha512-LZBPvQV8W0B5dFzXFu+D3Tpil8YHS8tO00iFsfXcTLdtpuH7XyvaHqHcoz4hd4uNPQCZ30fceh+s7mLznzMXvg==
 
-react-devtools-core@4.20.0:
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.20.0.tgz#49640f374bcf541cd86410d86c2cb07392005b33"
-  integrity sha512-85889TaQpU4HImySgOjVwsGE1vkS9dgEjtruRHutnXlBN3IZN8lDRuqRBLmhFkS50BEmfpTR28qV7bHAqwHooA==
+react-devtools-core@4.20.1:
+  version "4.20.1"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.20.1.tgz#77e8aacd93ca34cf908c11e6c72151b79217b618"
+  integrity sha512-HBcLfLi2R6VxlWFF2i5lONYlr3KLh324RPFeApZ3G6GGaJrcS/qtk9M/iESw7fRTlgPHEg+A4j6e1j9oXpvi5w==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -9284,10 +9284,10 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
-react-native@0.0.0-20211016-2009-e1b698c5f:
-  version "0.0.0-20211016-2009-e1b698c5f"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211016-2009-e1b698c5f.tgz#aa592288a9e634ade3082d762630153ddca70405"
-  integrity sha512-a3qbaWyJT6fkubI5nvbrmzrBV1C9HqCFLozpDtqyPj8Icnwd3MkkpuccufvCFDhvTUT2SNMzGOXkqfkPt0d9Dw==
+react-native@0.0.0-20211021-2008-eccbf9b5c:
+  version "0.0.0-20211021-2008-eccbf9b5c"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211021-2008-eccbf9b5c.tgz#7de7a430d8b2e5c2aa8bae67975811190c5979da"
+  integrity sha512-q8uKYlLnqvCiyf9kqRet0WzD1jObjIIBLOpwE7ZGlkTRlYqqzhyvUpqe0qSrlqzKGDEqjL3SkAJ2qKykBDsKTQ==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
@@ -9310,7 +9310,7 @@ react-native@0.0.0-20211016-2009-e1b698c5f:
     pretty-format "^26.5.2"
     promise "^8.0.3"
     prop-types "^15.7.2"
-    react-devtools-core "4.20.0"
+    react-devtools-core "4.20.1"
     react-native-codegen "^0.0.8"
     react-refresh "^0.4.0"
     regenerator-runtime "^0.13.2"
