@@ -29,12 +29,6 @@ parameters:
   - name: continueOnBuildFailure
     type: boolean
     default: false
-  - name: buildEnvironment
-    type: string
-    default: PullRequest
-    values:
-      - PullRequest
-      - Continuous
 
 steps:
   - checkout: self # self represents the repo where the initial Pipelines YAML file was found
@@ -203,7 +197,7 @@ steps:
 
   - template: ../templates/run-windows-with-certificates.yml
     parameters:
-      buildEnvironment: ${{ parameters.buildEnvironment }}
+      buildEnvironment: ${{ parameters.BuildEnvironment }}
       certificateName: RNWEncodedKey
       buildConfiguration: ${{ parameters.configuration }}
       buildPlatform: ${{ parameters.platform }}
