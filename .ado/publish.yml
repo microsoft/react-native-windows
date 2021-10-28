@@ -77,11 +77,11 @@ jobs:
       - script: yarn build
         displayName: yarn build
 
-      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps  --access public --no-git-tags
+      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***" --no-git-tags
         displayName: Beachball Publish (Main Branch)
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
 
-      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps  --access public
+      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***"
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
 
