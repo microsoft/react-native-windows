@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Throw an exception when trying to call into JSI when using web debugging, as it won't work",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
