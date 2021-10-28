@@ -13,22 +13,64 @@
 # This should make it easy to add new rules without breaking existing ones.
 
 # All entries should end in '@microsoft/react-native-windows-write' as it
-# encourages everyone with write access be notfiied of PRs.
+# encourages everyone with write access be notfiied of PRs. However when
+# snapping this file into a stable branch, replace
+# '@microsoft/react-native-windows-write' with
+# '@microsoft/react-native-windows-backport-triage'
 
 # Global Catch-All
-*                      @microsoft/react-native-windows-write
+*  @microsoft/react-native-windows-write
 
 # DevOps for ADO Pipelines
-/.ado/**               @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
-/.github/**            @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
-/vnext/Scripts/**      @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
+/.ado/**  @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
 
-# API Review for DEF/IDL file changes
-/vnext/**/*.def        @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
-/vnext/**/*.idl        @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+# Admins for GitHub Repo Features
+/.github/**  @microsoft/react-native-windows-admin @microsoft/react-native-windows-write
+
+# CLI for the CLI packages
+/packages/@react-native-windows/cli/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+/packages/@react-native-windows/telemetry/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+/packages/react-native-windows-init/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+
+# OfficeCXE for Desktop
+/vnext/Desktop*/**  @microsoft/officecxe @microsoft/react-native-windows-write
+
+# XAML for Views
+/vnext/Microsoft.ReactNative/Views/**  @microsoft/react-native-windows-xaml @microsoft/react-native-windows-write
+
+# OfficeCXE for Mso
+/vnext/Mso*/**  @microsoft/officecxe @microsoft/react-native-windows-write
+
+# CLI for the External PropertySheets
+/vnext/PropertySheets/External/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+
+# DevOps for Scripts used by ADO Pipelines
+/vnext/Scripts/**  @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
+
+# CLI for the new project templates
+/vnext/template/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
 
 # Ownership by specific files or file types
 # This section MUST stay at the bottom of the CODEOWNERS file.
 
-# CODEOWNERS
-/.github/CODEOWNERS    @microsoft/react-native-windows-admin @microsoft/react-native-windows-write
+# CLI for CLI specific files
+/vnext/generate.js  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+/vnext/react-native.config.js  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+
+# OfficeCXE for Desktop-specific files
+/vnext/ReactWindows-Desktop.sln
+
+# API Review for DEF/IDL file changes
+/vnext/**/*.def  @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+/vnext/**/*.idl  @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+
+# XAML for files with XAML in the name
+/vnext/Microsoft.ReactNative*/**/*Xaml*.*  @microsoft/react-native-windows-xaml @microsoft/react-native-windows-write
+
+# API Review and OfficeCXE for DEF/IDL file changes in Desktop
+/vnext/Desktop*/**/*.def  @microsoft/react-native-windows-api-review @microsoft/officecxe @microsoft/react-native-windows-write
+/vnext/Desktop*/**/*.idl  @microsoft/react-native-windows-api-review @microsoft/officecxe @microsoft/react-native-windows-write
+
+# API Review and CLI for the new project templates
+/vnext/template/**/*.def  @microsoft/react-native-windows-api-review @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
+/vnext/template/**/*.idl  @microsoft/react-native-windows-api-review @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
