@@ -306,7 +306,7 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-          DeployOption:
+          DeployOption: --no-deploy # Can't deploy without certs
         X86Debug:
          BuildConfiguration: Debug
          BuildPlatform: x86
@@ -314,7 +314,7 @@ jobs:
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
-          DeployOption:
+          DeployOption: --no-deploy # Can't deploy without certs
         ArmDebug:
           BuildConfiguration: Debug
           BuildPlatform: ARM
@@ -523,14 +523,14 @@ jobs:
           platform: x86
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments: --no-deploy # Can't deploy without certs
         X86ReleaseCs:
           language: cs
           configuration: Release
           platform: x86
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments: --no-deploy # Can't deploy without certs
         X64DebugCpp:
           language: cpp
           configuration: Debug
@@ -551,14 +551,14 @@ jobs:
           platform: x64
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments: --no-deploy # Can't deploy without certs
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
           projectType: app
           additionalInitArguments:
-          additionalRunArguments: --deploy-from-layout
+          additionalRunArguments: --no-deploy # Can't deploy without certs
         ArmDebugCpp:
           language: cpp
           configuration: Debug
