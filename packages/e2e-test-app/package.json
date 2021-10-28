@@ -7,7 +7,7 @@
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
-    "windows": "react-native run-windows --deploy-from-layout --msbuildprops AppxPackageSigningEnabled=False",
+    "windows": "react-native run-windows",
     "e2etest": "jest --color"
   },
   "dependencies": {

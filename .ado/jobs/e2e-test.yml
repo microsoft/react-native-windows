@@ -13,29 +13,23 @@ parameters:
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
-            DeployOptions: --deploy-from-layout
             UseHermes: false
           - Name: X64Hermes
             BuildPlatform: x64
-            DeployOptions: --deploy-from-layout
             UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
-            DeployOptions:
             UseHermes: false
           - Name: X64Hermes
             BuildPlatform: x64
-            DeployOptions:
             UseHermes: true
           - Name: X86Chakra
             BuildPlatform: x86
-            DeployOptions:
             UseHermes: false
           - Name: X86Hermes
             BuildPlatform: x86
-            DeployOptions:
             UseHermes: true
 
 jobs:
@@ -86,7 +80,6 @@ jobs:
                 certificateName: reactUWPTestAppEncodedKey
                 buildConfiguration: Release
                 buildPlatform: ${{ matrix.BuildPlatform }}
-                deployOption: ${{ matrix.DeployOption }}
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app
 

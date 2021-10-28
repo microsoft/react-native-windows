@@ -23,12 +23,12 @@ parameters:
 
 steps:
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
+    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }}
       displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'PullRequest')) }}:
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
+    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release
       displayName: run-windows (Release) - PR
       workingDirectory: ${{ parameters.workingDirectory }}
 
