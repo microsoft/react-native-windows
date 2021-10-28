@@ -10,6 +10,11 @@
     "watch": "rnw-scripts watch"
   },
   "main": "lib-commonjs/packageUtils.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@react-native-windows/package-utils"
+  },
   "dependencies": {
     "@react-native-windows/find-repo-root": "^0.0.0-canary.25",
     "get-monorepo-packages": "^1.2.0",

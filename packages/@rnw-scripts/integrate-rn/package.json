@@ -2,6 +2,11 @@
   "name": "@rnw-scripts/integrate-rn",
   "version": "1.1.0",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/integrate-rn"
+  },
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",

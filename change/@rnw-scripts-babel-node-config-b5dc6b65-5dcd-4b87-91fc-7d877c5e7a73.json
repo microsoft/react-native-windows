@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update package.json to include the repository",
+  "packageName": "@rnw-scripts/babel-node-config",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
