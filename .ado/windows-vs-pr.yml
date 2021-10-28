@@ -15,10 +15,8 @@ stages:
   - stage: Setup
     jobs:
       - job: Setup
-        variables:
-          - template: variables/vs2019.yml
         pool:
-          vmImage: windows-2019
+          vmImage: ubuntu-latest
         steps:
           - task: powershell@2
             name: checkPayload
