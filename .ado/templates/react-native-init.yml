@@ -204,7 +204,7 @@ steps:
   - template: ../templates/run-windows-with-certificates.yml
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
-      encodedKey: RNWEncodedKey
+      certificateName: RNWEncodedKey
       buildConfiguration: ${{ parameters.configuration }}
       buildPlatform: ${{ parameters.platform }}
       deployOption: ${{ parameters.additionalRunArguments }}
