@@ -16,6 +16,7 @@ parameters:
     type: string
   - name: deployOption
     type: string
+    default: ''
   - name: buildLogDirectory
     type: string
   - name: workingDirectory
