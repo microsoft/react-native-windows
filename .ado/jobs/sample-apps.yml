@@ -61,7 +61,8 @@ jobs:
           cancelTimeoutInMinutes: 5
           pool:
             name: $(AgentPool.Medium)
-            demands: $(AgentImage)
+            demands:
+              -  $(AgentImage)
 
           steps:
             - checkout: self

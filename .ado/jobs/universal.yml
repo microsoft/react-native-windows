@@ -68,7 +68,8 @@
               displayName: Universal Build ${{ matrix.Name }}
               pool:
                 name: $(AgentPool.Large)
-                demands: $(AgentImage)
+                demands:
+                  -  $(AgentImage)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
@@ -138,7 +139,8 @@
 
               pool:
                 name: $(AgentPool.Medium)
-                demands: $(AgentImage)
+                demands:
+                -  $(AgentImage)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 

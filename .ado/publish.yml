@@ -49,7 +49,8 @@ jobs:
     displayName: React-Native-Windows Npm Build Rev Publish
     pool:
       name: $(AgentPool.Medium.Microsoft)
-      demands: $(AgentImage)
+      demands:
+        -  $(AgentImage)
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
     steps:
@@ -107,7 +108,8 @@ jobs:
     dependsOn: RnwNpmPublish
     pool:
       name: $(AgentPool.Medium.Microsoft)
-      demands: $(AgentImage)
+      demands:
+                -  $(AgentImage)
     timeoutInMinutes: 30
     steps:
       - template: templates/prepare-env.yml
@@ -171,7 +173,8 @@ jobs:
           BuildPlatform: ARM64
     pool:
       name: $(AgentPool.Large.Microsoft)
-      demands: $(AgentImage)
+      demands:
+                -  $(AgentImage)
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -222,7 +225,8 @@ jobs:
           BuildPlatform: arm64
     pool:
       name: $(AgentPool.Large.Microsoft)
-      demands: $(AgentImage)
+      demands:
+                -  $(AgentImage)
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -265,7 +269,8 @@ jobs:
           BuildPlatform: x64
     pool:
       name: $(AgentPool.Large.Microsoft)
-      demands: $(AgentImage)
+      demands:
+                -  $(AgentImage)
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -314,7 +319,8 @@ jobs:
     displayName: Sign Binaries and Publish NuGet
     pool:
       name: $(AgentPool.Medium.Microsoft)
-      demands: $(AgentImage)
+      demands:
+                -  $(AgentImage)
 
     steps:
       - checkout: none
