@@ -22,6 +22,6 @@ parameters:
 # only build a single platform. This is only done in PRs, to allow testing the
 # un-overriden path in official tests. 
 steps:
-  - ${{ if and(eq(parameters.buildEnvironment, "PullRequest"), eq(parameters.configuration, "Release")}}:
+  - ${{ if and(eq(parameters.buildEnvironment, "PullRequest"), eq(parameters.configuration, "Release")) }}:
     - powershell: $env:AppxBundlePlatforms = "${{ parameters.configuration }}"
       displayName: Set AppxBundlePlatforms to "${{ parameters.configuration }}"
