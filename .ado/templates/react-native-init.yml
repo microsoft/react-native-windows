@@ -168,15 +168,6 @@ steps:
           -Components ${{ parameters.vsComponents }}
           -Cleanup:$true
 
-  - script: .ado\scripts\SetupLocalDumps.cmd cl
-    displayName: Set LocalDumps for cl.exe
-
-  - script: .ado\scripts\SetupLocalDumps.cmd link
-    displayName: Set LocalDumps for link.exe
-
-  - script: .ado\scripts\SetupLocalDumps.cmd msbuild
-    displayName: Set LocalDumps for msbuild.exe
-
   - task: PowerShell@2
     displayName: Start tracing
     inputs:
