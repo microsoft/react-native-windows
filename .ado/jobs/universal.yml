@@ -141,11 +141,20 @@
                   clean: false
                   submodules: false
 
+                - template: ../templates/js-env.yml
+
                 - template: ../templates/prepare-build-env.yml
                   parameters:
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
                     buildEnvironment: ${{ config.BuildEnvironment }}
+
+                - task: PowerShell@2
+                  displayName: "Check if this environment meets the development dependencies"
+                  inputs:
+                    targetType: filePath
+                    filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+                    arguments: -NoPrompt -Tags buildLab
 
                 - task: NuGetCommand@2
                   displayName: NuGet restore
