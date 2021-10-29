@@ -12,7 +12,8 @@ jobs:
       - template: ../variables/vs2019.yml
     displayName: JavaScript Checks
     pool:
-      vmImage: $(VmImage)
+      name: ${{ variables['AgentPool.Medium'] }}
+      demands: ${{ variables['AgentImage'] }}
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
