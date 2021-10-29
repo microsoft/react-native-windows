@@ -48,8 +48,8 @@ jobs:
   - job: RnwNpmPublish
     displayName: React-Native-Windows Npm Build Rev Publish
     pool:
-      name: ${{ variables.AgentPool.Medium.Microsoft }}
-      demands: ${{ variables.AgentImage }}
+      name: ${{ variables['AgentPool.Medium.Microsoft'] }}
+      demands: ${{ variables['AgentImage'] }}
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
     steps:
@@ -106,8 +106,8 @@ jobs:
     condition: eq(variables['Build.SourceBranchName'], 'main')
     dependsOn: RnwNpmPublish
     pool:
-      name: ${{ variables.AgentPool.Medium.Microsoft }}
-      demands: ${{ variables.AgentImage }}
+      name: ${{ variables['AgentPool.Medium.Microsoft'] }}
+      demands: ${{ variables['AgentImage'] }}
     timeoutInMinutes: 30
     steps:
       - template: templates/prepare-env.yml
@@ -170,8 +170,8 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
-      name: ${{ variables.AgentPool.Large.Microsoft }}
-      demands: ${{ variables.AgentImage }}
+      name: ${{ variables['AgentPool.Large.Microsoft'] }}
+      demands: ${{ variables['AgentImage'] }}
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -221,8 +221,8 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm64
     pool:
-      name: ${{ variables.AgentPool.Large.Microsoft }}
-      demands: ${{ variables.AgentImage }}
+      name: ${{ variables['AgentPool.Large.Microsoft'] }}
+      demands: ${{ variables['AgentImage'] }}
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -264,8 +264,8 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: x64
     pool:
-      name: ${{ variables.AgentPool.Large.Microsoft }}
-      demands: ${{ variables.AgentImage }}
+      name: ${{ variables['AgentPool.Large.Microsoft'] }}
+      demands: ${{ variables['AgentImage'] }}
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -313,8 +313,8 @@ jobs:
       - RnwNativeBuildReunion
     displayName: Sign Binaries and Publish NuGet
     pool:
-      name: ${{ variables.AgentPool.Medium.Microsoft }}
-      demands: ${{ variables.AgentImage }}
+      name: ${{ variables['AgentPool.Medium.Microsoft'] }}
+      demands: ${{ variables['AgentImage'] }}
 
     steps:
       - checkout: none
