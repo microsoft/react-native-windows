@@ -48,7 +48,7 @@ jobs:
   - job: RnwNpmPublish
     displayName: React-Native-Windows Npm Build Rev Publish
     pool:
-      name: ${{ variables.AgentPool.Medium.Microsoft) }}
+      name: ${{ variables.AgentPool.Medium.Microsoft }}
       demands:
         -  ${{ variables.AgentImage }}
     timeoutInMinutes: 120
@@ -107,7 +107,7 @@ jobs:
     condition: eq(variables['Build.SourceBranchName'], 'main')
     dependsOn: RnwNpmPublish
     pool:
-      name: ${{ variables.AgentPool.Medium.Microsoft) }}
+      name: ${{ variables.AgentPool.Medium.Microsoft }}
       demands:
         -  ${{ variables.AgentImage }}
     timeoutInMinutes: 30
@@ -172,7 +172,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
-      name: ${{ variables.AgentPool.Large.Microsoft) }}
+      name: ${{ variables.AgentPool.Large.Microsoft }}
       demands:
         -  ${{ variables.AgentImage }}
 
@@ -224,7 +224,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: arm64
     pool:
-      name: ${{ variables.AgentPool.Large.Microsoft) }}
+      name: ${{ variables.AgentPool.Large.Microsoft }}
       demands:
         -  ${{ variables.AgentImage }}
 
@@ -268,7 +268,7 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: x64
     pool:
-      name: ${{ variables.AgentPool.Large.Microsoft) }}
+      name: ${{ variables.AgentPool.Large.Microsoft }}
       demands:
         -  ${{ variables.AgentImage }}
 
@@ -318,7 +318,7 @@ jobs:
       - RnwNativeBuildReunion
     displayName: Sign Binaries and Publish NuGet
     pool:
-      name: ${{ variables.AgentPool.Medium.Microsoft) }}
+      name: ${{ variables.AgentPool.Medium.Microsoft }}
       demands:
         -  ${{ variables.AgentImage }}
 

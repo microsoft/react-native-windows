@@ -12,7 +12,7 @@ jobs:
       - template: ../variables/vs2019.yml
     displayName: JavaScript Checks
     pool:
-      name: ${{ variables.AgentPool.Medium) }}
+      name: ${{ variables.AgentPool.Medium }}
       demands:
         -  ${{ variables.AgentImage }}
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling

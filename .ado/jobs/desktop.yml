@@ -74,7 +74,7 @@ jobs:
                 (FullyQualifiedName!~PreparedJavaScriptSourceTest)
 
           pool:
-            name: ${{ variables.AgentPool.Medium) }}
+            name: ${{ variables.AgentPool.Medium }}
             demands:
               -  ${{ variables.AgentImage }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling

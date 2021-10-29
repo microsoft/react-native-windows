@@ -67,7 +67,7 @@
                 - template: ../variables/vs2019.yml
               displayName: Universal Build ${{ matrix.Name }}
               pool:
-                name: ${{ variables.AgentPool.Large) }}
+                name: ${{ variables.AgentPool.Large }}
                 demands:
                   -  ${{ variables.AgentImage }}
               timeoutInMinutes: 60
@@ -138,7 +138,7 @@
                 - UniversalBuild${{ matrix.Name }}
 
               pool:
-                name: ${{ variables.AgentPool.Medium) }}
+                name: ${{ variables.AgentPool.Medium }}
                 demands:
                 -  ${{ variables.AgentImage }}
               timeoutInMinutes: 60
