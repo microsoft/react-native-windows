@@ -2,8 +2,9 @@ variables:
   VmImage: windows-2019
   AgentPool.Medium: rnw-pool-4
   AgentPool.Large: rnw-pool-8
-  # WARNING: mistyped or not-yet-provisioned images silently fall back to "rnw-img"
-  AgentImage: ImageOverride -equals rnw-img-node16-fail
+  # WARNING: Mistyped or not yet provisioned images may fall back to one whose
+  # name is a prefix. E.g. `rnw-img-new` may fall back to `rnw-img`.
+  AgentImage: ImageOverride -equals rnw-img-fail
   MSBuildVersion: 16.0
   runCodesignValidationInjection: false
   NUGET_PLUGIN_HANDSHAKE_TIMEOUT_IN_SECONDS: 60
