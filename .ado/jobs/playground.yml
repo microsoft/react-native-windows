@@ -109,7 +109,6 @@ jobs:
                   msbuildArgs:
                     /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
                     /p:PlatformToolset=$(MSBuildPlatformToolset)
-                    /p:AppxPackageSigningEnabled=false
                     
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/write-certificate.yml
