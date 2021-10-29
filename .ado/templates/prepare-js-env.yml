@@ -1,7 +1,5 @@
 # Steps to setup an environment that can run JavaScript executables
 
-parameters:
-
 steps:
   - task: NodeTool@0
     displayName: Set Node Version
