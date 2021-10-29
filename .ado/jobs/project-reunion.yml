@@ -36,7 +36,7 @@ jobs:
         parameters:
           platform: $(BuildPlatform)
           configuration: $(BuildConfiguration)
-          buildEnvironment: ${{ paramters.BuildEnvironment }}
+          buildEnvironment: ${{ parameters.BuildEnvironment }}
 
       - template: ../templates/apply-published-version-vars.yml
 
