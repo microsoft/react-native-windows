@@ -27,6 +27,9 @@
 # Admins for GitHub Repo Features
 /.github/**  @microsoft/react-native-windows-admin @microsoft/react-native-windows-write
 
+# OfficeCXE for office packages
+/packages/@office-iss/**  @microsoft/officecxe @microsoft/react-native-windows-write
+
 # CLI for the CLI packages
 /packages/@react-native-windows/cli/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
 /packages/@react-native-windows/telemetry/**  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
@@ -53,7 +56,7 @@
 # Ownership by specific files or file types
 # This section MUST stay at the bottom of the CODEOWNERS file.
 
-# CLI for CLI specific files
+# CLI for CLI-specific files
 /vnext/generate.js  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
 /vnext/react-native.config.js  @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
 
@@ -70,6 +73,10 @@
 # API Review and OfficeCXE for DEF/IDL file changes in Desktop
 /vnext/Desktop*/**/*.def  @microsoft/react-native-windows-api-review @microsoft/officecxe @microsoft/react-native-windows-write
 /vnext/Desktop*/**/*.idl  @microsoft/react-native-windows-api-review @microsoft/officecxe @microsoft/react-native-windows-write
+
+# DevOps and OfficeCXE for Desktop-specific files in Scripts
+/vnext/Scripts/OfficeReact.Win32.nuspec  @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
+/vnext/Scripts/run-desktop-integration-tests.js  @microsoft/react-native-windows-devops @microsoft/react-native-windows-write
 
 # API Review and CLI for the new project templates
 /vnext/template/**/*.def  @microsoft/react-native-windows-api-review @microsoft/react-native-windows-cli @microsoft/react-native-windows-write
