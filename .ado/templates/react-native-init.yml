@@ -63,9 +63,9 @@ steps:
 
   - template: prepare-build-env.yml
     parameters:
-      platform: ${{ matrix.BuildPlatform }}
-      configuration: ${{ matrix.BuildConfiguration }}
-      buildEnvironment: ${{ config.BuildEnvironment }}
+      platform: ${{ parameters.platform }}
+      configuration: ${{ parameters.configuration }}
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - script: yarn build
     displayName: yarn build
