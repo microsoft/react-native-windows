@@ -61,8 +61,7 @@ jobs:
           cancelTimeoutInMinutes: 5
           pool:
             name: ${{ variables.AgentPool.Medium }}
-            demands:
-              -  ${{ variables.AgentImage }}
+            demands: ${{ variables.AgentImage }}
 
           steps:
             - checkout: self

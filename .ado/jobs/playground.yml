@@ -70,8 +70,7 @@ jobs:
             - template: ../variables/vs2019.yml
           pool:
             name: ${{ variables.AgentPool.Medium }}
-            demands:
-              -  ${{ variables.AgentImage }}
+            demands: ${{ variables.AgentImage }}
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
 

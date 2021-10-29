@@ -49,8 +49,7 @@ jobs:
     displayName: React-Native-Windows Npm Build Rev Publish
     pool:
       name: ${{ variables.AgentPool.Medium.Microsoft }}
-      demands:
-        -  ${{ variables.AgentImage }}
+      demands: ${{ variables.AgentImage }}
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
     steps:
@@ -108,8 +107,7 @@ jobs:
     dependsOn: RnwNpmPublish
     pool:
       name: ${{ variables.AgentPool.Medium.Microsoft }}
-      demands:
-        -  ${{ variables.AgentImage }}
+      demands: ${{ variables.AgentImage }}
     timeoutInMinutes: 30
     steps:
       - template: templates/prepare-env.yml
@@ -173,8 +171,7 @@ jobs:
           BuildPlatform: ARM64
     pool:
       name: ${{ variables.AgentPool.Large.Microsoft }}
-      demands:
-        -  ${{ variables.AgentImage }}
+      demands: ${{ variables.AgentImage }}
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -225,8 +222,7 @@ jobs:
           BuildPlatform: arm64
     pool:
       name: ${{ variables.AgentPool.Large.Microsoft }}
-      demands:
-        -  ${{ variables.AgentImage }}
+      demands: ${{ variables.AgentImage }}
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -269,8 +265,7 @@ jobs:
           BuildPlatform: x64
     pool:
       name: ${{ variables.AgentPool.Large.Microsoft }}
-      demands:
-        -  ${{ variables.AgentImage }}
+      demands: ${{ variables.AgentImage }}
 
     steps:
       - template: templates/apply-published-version-vars.yml
@@ -319,8 +314,7 @@ jobs:
     displayName: Sign Binaries and Publish NuGet
     pool:
       name: ${{ variables.AgentPool.Medium.Microsoft }}
-      demands:
-        -  ${{ variables.AgentImage }}
+      demands: ${{ variables.AgentImage }}
 
     steps:
       - checkout: none
