@@ -13,25 +13,51 @@ parameters:
   packMicrosoftReactNativeManagedCodeGen: true
   packMicrosoftReactNativeProjectReunion: false
   signMicrosoft: false
-  downloadPatterns:
-    - "**"
-    - ${{ if not(contains(parameters.slices, 'x86')) }}:
-      - "!**/x86/**"
-    - ${{ if not(contains(parameters.slices, 'x64')) }}:
-      - "!**/x64/**"
-    - ${{ if not(contains(parameters.slices, 'ARM64')) }}:
-      - "!**/ARM64/**"
-    - ${{ if not(parameters.packDesktop) }}:
-      - "!**/React.Windows.Desktop*/**"
 
 steps:
   - task: DownloadPipelineArtifact@2
-    displayName: 'Download ReactWindows Artifact'
+    displayName: Download Shared Artifacts
     inputs:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
-      patterns: ${{ join( '\n', parameters.downloadPatterns) }}
+      patterns: |
+        **
+        !**/x86/**
+        !**/x64/**
+        !**/ARM64/**
+        !**/React.Windows.Desktop*/**
 
+  - ${{ if contains(parameters.slices, 'x86') }}:
+    - task: DownloadPipelineArtifact@2
+      displayName: Download x86 Artifacts
+      inputs:
+        artifact: ReactWindows
+        path: $(System.DefaultWorkingDirectory)/ReactWindows
+        patterns: "**/x86/**"
+
+  - ${{ if contains(parameters.slices, 'x64') }}:
+    - task: DownloadPipelineArtifact@2
+      displayName: Download x64 Artifacts
+      inputs:
+        artifact: ReactWindows
+        path: $(System.DefaultWorkingDirectory)/ReactWindows
+        patterns: "**/x64/**"
+
+  - ${{ if contains(parameters.slices, 'ARM64') }}:
+    - task: DownloadPipelineArtifact@2
+      displayName: Download ARM64 Artifacts
+      inputs:
+        artifact: ReactWindows
+        path: $(System.DefaultWorkingDirectory)/ReactWindows
+        patterns: "**/ARM64/**"
+
+  - ${{ if parameters.packDesktop }}:
+    - task: DownloadPipelineArtifact@2
+      displayName: Download Desktop Artifacts
+      inputs:
+        artifact: ReactWindows
+        path: $(System.DefaultWorkingDirectory)/ReactWindows
+        patterns: "**/React.Windows.Desktop*/**"
 
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeProjectReunion, false)) }}:
     - powershell: |
