@@ -47,7 +47,7 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase co
               }
             });
           } else if (appBarButton.Flyout() == textBox.ProofingMenuFlyout()) {
-            if (textBox.IsSpellCheckEnabled()) {
+            if (!appBarButton.try_as<CustomAppBarButton>()) {
               // Replace the AppBarButton for the proofing menu with one that doesn't crash
               const auto customAppBarButton = winrt::make<CustomAppBarButton>();
               customAppBarButton.Label(appBarButton.Label());
@@ -55,7 +55,7 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase co
               customAppBarButton.Flyout(appBarButton.Flyout());
               commands.RemoveAt(i);
               commands.InsertAt(i, customAppBarButton);
-            } else {
+            } else if (!textBox.IsSpellCheckEnabled()) {
               // Remove proofing menu option if spell-check is disabled
               commands.RemoveAt(i);
             }

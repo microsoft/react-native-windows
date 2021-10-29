@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes issue with Proofing menu override on XAML Islands",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
