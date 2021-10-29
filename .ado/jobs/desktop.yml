@@ -74,9 +74,9 @@ jobs:
                 (FullyQualifiedName!~PreparedJavaScriptSourceTest)
 
           pool:
-            name: $(AgentPool.Medium)
+            name: ${{ variables.AgentPool.Medium) }}
             demands:
-              -  $(AgentImage)
+              -  ${{ variables.AgentImage }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
