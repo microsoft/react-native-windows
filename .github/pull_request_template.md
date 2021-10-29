@@ -1,11 +1,11 @@
 ## Description
 
 ### Type of Change
-_Select all that apply._
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+_Erase all that don't apply._
+- Bug fix (non-breaking change which fixes an issue)
+- New feature (non-breaking change which adds functionality)
+- Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- This change requires a documentation update
 
 ### Why
 What is the motivation for this change? Add a few sentences describing the context and overall goals of the pull request's commits.
