@@ -1,0 +1,49 @@
+# Steps to setup an environment that can build native code
+
+parameters:
+  - name: platform
+    type: string
+    values:
+      - x86
+      - x64
+      - arm64
+  - name: configuration
+    type: string
+    values:
+      - Debug
+      - Release
+  - name: buildEnvironment
+    type: string
+    values:
+      - PullRequest
+      - Continuous  
+      - Publish
+  
+steps:
+  # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
+  - task: NuGetToolInstaller@1
+    displayName: Set NuGet version
+    inputs:
+      versionSpec: ">=5.8.0"
+
+  - template: set-appx-platforms.yml
+    parameters:
+      platform: ${{ parameters.platform }}
+      configuration: ${{ parameters.configuration }}
+      buildEnvironment: ${{ parameters.buildEnvironment }}
+
+  - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd cl
+    displayName: Set LocalDumps for cl.exe
+    workingDirectory: $(Build.SourcesDirectory)
+
+  - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd link
+    displayName: Set LocalDumps for link.exe
+    workingDirectory: $(Build.SourcesDirectory)
+
+  - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd msbuild
+    displayName: Set LocalDumps for msbuild.exe
+    workingDirectory: $(Build.SourcesDirectory)
+
+  - powershell: |
+        Write-Host "##vso[task.setvariable variable=MSBUILDDEBUGPATH]$(Build.StagingDirectory)\CrashDumps"
+    displayName: Set MSBUILDDEBUGPATH

@@ -65,7 +65,13 @@ jobs:
               clean: true
               submodules: false
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - powershell: |
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"

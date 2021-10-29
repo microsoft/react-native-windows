@@ -17,10 +17,7 @@ jobs:
         clean: true
         submodules: false
 
-      - template: ../templates/yarn-install.yml
-
-      - script: yarn build
-        displayName: yarn build
+      - template: ../templates/prepare-js-env.yml
 
       - script: yarn test
         displayName: yarn test

@@ -14,6 +14,7 @@
           Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.props')" />
 
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Appx.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.props" />

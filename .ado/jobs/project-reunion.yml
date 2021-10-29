@@ -30,6 +30,14 @@ jobs:
         clean: false
         submodules: false
 
+      - template: ../templates/prepare-js-env.yml
+
+      - template: ../templates/prepare-build-env.yml
+        parameters:
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          buildEnvironment: ${{ paramters.BuildEnvironment }}
+
       - template: ../templates/apply-published-version-vars.yml
 
       - template: ../templates/build-rnw.yml

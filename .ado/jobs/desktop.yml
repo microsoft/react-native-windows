@@ -82,6 +82,14 @@ jobs:
               clean: false
               submodules: false
 
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
+
             - template: ../templates/apply-published-version-vars.yml
 
             - ${{ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], true) }}:
