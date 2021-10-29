@@ -13,6 +13,16 @@ parameters:
   packMicrosoftReactNativeManagedCodeGen: true
   packMicrosoftReactNativeProjectReunion: false
   signMicrosoft: false
+  downloadPatterns:
+    - "**"
+    - ${{ if not(contains(parameters.slices, 'x86')) }}:
+      - "!**/x86/**"
+    - ${{ if not(contains(parameters.slices, 'x64')) }}:
+      - "!**/x64/**"
+    - ${{ if not(contains(parameters.slices, 'ARM64')) }}:
+      - "!**/ARM64/**"
+    - ${{ if not(parameters.packDesktop) }}:
+      - "!**/React.Windows.Desktop*/**"
 
 steps:
   - task: DownloadPipelineArtifact@2
@@ -20,16 +30,7 @@ steps:
     inputs:
       artifact: ReactWindows
       path: $(System.DefaultWorkingDirectory)/ReactWindows
-      patterns:
-        - "**"
-        - ${{ if not(contains(parameters.slices, 'x86')) }}:
-          - "!**/x86/**"
-        - ${{ if not(contains(parameters.slices, 'x64')) }}:
-          - "!**/x64/**"
-        - ${{ if not(contains(parameters.slices, 'ARM64')) }}:
-          - "!**/ARM64/**"
-        - ${{ if not(parameters.packDesktop) }}:
-          - "!**/React.Windows.Desktop*/**"
+      patterns: ${{ join( '\n', parameters.downloadPatterns) }}
 
 
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeProjectReunion, false)) }}:
