@@ -83,6 +83,13 @@
                     configuration: ${{ matrix.BuildConfiguration }}
                     buildEnvironment: ${{ config.BuildEnvironment }}
 
+                - task: PowerShell@2
+                  displayName: "Check if this environment meets the development dependencies"
+                  inputs:
+                    targetType: filePath
+                    filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
+                    arguments: -NoPrompt -Tags buildLab
+
                 - template: ../templates/apply-published-version-vars.yml
 
                 - template: ../templates/build-rnw.yml
@@ -150,15 +157,6 @@
                 - checkout: self
                   clean: false
                   submodules: false
-
-                - task: PowerShell@2
-                  displayName: "Check if this environment meets the development dependencies"
-                  inputs:
-                    targetType: filePath
-                    filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
-                    arguments: -NoPrompt -Tags buildLab
-
-                - template: ../templates/prepare-env.yml
 
                 - task: NuGetCommand@2
                   displayName: NuGet restore
