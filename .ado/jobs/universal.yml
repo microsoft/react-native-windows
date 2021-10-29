@@ -141,7 +141,7 @@
                   clean: false
                   submodules: false
 
-                - template: ../templates/js-env.yml
+                - template: ../templates/prepare-js-env.yml
 
                 - template: ../templates/prepare-build-env.yml
                   parameters:
