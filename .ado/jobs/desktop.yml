@@ -32,10 +32,10 @@ parameters:
             BuildPlatform: x86
           - Name: Arm64Debug
             BuildConfiguration: Debug
-            BuildPlatform: ARM64
+            BuildPlatform: arm64
           - Name: Arm64Release
             BuildConfiguration: Release
-            BuildPlatform: ARM64
+            BuildPlatform: arm64
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
@@ -84,6 +84,14 @@ jobs:
               clean: false
               submodules: false
 
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
+
             - template: ../templates/apply-published-version-vars.yml
 
             - ${{ if eq(variables['Desktop.IntegrationTests.SkipRNTester'], true) }}:
@@ -105,7 +113,7 @@ jobs:
 
             - template: ../templates/discover-google-test-adapter.yml
 
-            - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
+            - ${{ if ne(matrix.BuildPlatform, 'arm64') }}:
               - task: VSTest@2
                 displayName: Run Desktop Unit Tests
                 timeoutInMinutes: 5 # Set smaller timeout , due to hangs
@@ -127,7 +135,7 @@ jobs:
                   failOnMinTestsNotRun: true
 
               # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64')) }}:
+            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'arm64')) }}:
               - task: PowerShell@2
                 displayName: Set up test servers
                 inputs:

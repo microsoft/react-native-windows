@@ -59,8 +59,13 @@ steps:
 
   - template: configure-git.yml
 
-  # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
-  - template: yarn-install.yml
+  - template: prepare-js-env.yml
+
+  - template: prepare-build-env.yml
+    parameters:
+      platform: ${{ parameters.platform }}
+      configuration: ${{ parameters.configuration }}
+      buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - script: yarn build
     displayName: yarn build
@@ -86,11 +91,6 @@ steps:
   - template: set-version-vars.yml
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
-
-  # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
-  - task: NuGetToolInstaller@1
-    inputs:
-      versionSpec: ">=5.8.0"
 
   - ${{ if eq(parameters.useNuGet, true) }}:
     - template: prep-and-pack-nuget.yml
@@ -167,15 +167,6 @@ steps:
         arguments:
           -Components ${{ parameters.vsComponents }}
           -Cleanup:$true
-
-  - script: .ado\scripts\SetupLocalDumps.cmd cl
-    displayName: Set LocalDumps for cl.exe
-
-  - script: .ado\scripts\SetupLocalDumps.cmd link
-    displayName: Set LocalDumps for link.exe
-
-  - script: .ado\scripts\SetupLocalDumps.cmd msbuild
-    displayName: Set LocalDumps for msbuild.exe
 
   - task: PowerShell@2
     displayName: Start tracing

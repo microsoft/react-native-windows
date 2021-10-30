@@ -30,11 +30,11 @@ parameters:
             DeployOption:
           - Name: Arm64Debug
             BuildConfiguration: Debug
-            BuildPlatform: ARM64
+            BuildPlatform: arm64
             DeployOption: --no-deploy # We don't have Arm agents
           - Name: Arm64Release
             BuildConfiguration: Release
-            BuildPlatform: ARM64
+            BuildPlatform: arm64
             DeployOption: --no-deploy # We don't have Arm agents
           - Name: X64Debug
             BuildConfiguration: Debug
@@ -68,7 +68,13 @@ jobs:
               clean: false
               submodules: false
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - task: NuGetCommand@2
               displayName: NuGet restore - SampleApps
