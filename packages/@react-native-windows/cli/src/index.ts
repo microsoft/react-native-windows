@@ -4,9 +4,9 @@
  * @format
  */
 
-import fs from 'fs';
 import path from 'path';
 import {Telemetry} from '@react-native-windows/telemetry';
+import {findPackage} from '@react-native-windows/package-utils';
 
 import {
   copyProjectTemplateAndReplace,
@@ -77,20 +77,15 @@ export async function generateWindows(
   ns: string,
   options: GenerateOptions,
 ) {
+  const rnwPackage = await findPackage('react-native-windows', {
+    searchPath: projectDir,
+  });
+
   let error;
   try {
-    if (!fs.existsSync(projectDir)) {
-      fs.mkdirSync(projectDir);
-    }
-
     await installScriptsAndDependencies(options);
 
-    const rnwPackage = path.dirname(
-      require.resolve('react-native-windows/package.json', {
-        paths: [projectDir],
-      }),
-    );
-    const templateRoot = path.join(rnwPackage, 'template');
+    const templateRoot = path.join(rnwPackage!.path, 'template');
     await copyProjectTemplateAndReplace(
       templateRoot,
       projectDir,
@@ -107,19 +102,8 @@ export async function generateWindows(
       let rnVersion = '';
       let cliVersion = '';
       try {
-        const cwd = process.cwd();
-        const rnwPkg = JSON.parse(
-          fs
-            .readFileSync(
-              require.resolve('react-native-windows/package.json', {
-                paths: [cwd],
-              }),
-            )
-            .toString(),
-        );
-        rnVersion = rnwPkg.peerDependencies['react-native'] || '';
-        const rnwCliPkgJson = require('../package.json');
-        cliVersion = rnwCliPkgJson.version;
+        rnVersion = rnwPackage!.json.peerDependencies['react-native'] || '';
+        cliVersion = require('../package.json').version;
       } catch {}
       const optScrubbed = scrubOptions(options);
       Telemetry.client.trackEvent({
