@@ -5,5 +5,5 @@
  * @format
  */
 
-import snapshotTemplate from './snapshotTemplates';
+import snapshotTemplate from './snapshotTemplate';
 snapshotTemplate('cpp', 'lib');
