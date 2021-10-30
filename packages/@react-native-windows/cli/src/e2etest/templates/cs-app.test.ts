@@ -33,7 +33,7 @@ for (const experimentalNuGetDependency of [false, true]) {
         ...(experimentalNuGetDependency ? ['NuGet'] : []),
         ...(useWinUI3 ? ['WinUI3'] : []),
         ...(useHermes ? ['Hermes'] : []),
-      ].join('+');
+      ].join(' + ');
       const name =
         friendlyExperiments.length === 0
           ? 'cs-app'
