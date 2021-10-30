@@ -256,7 +256,7 @@
             - ${{ each matrix in config.Matrix }}:
               - UniversalBuild${{ matrix.Name }}
       pool:
-        vmImage: $(VmImage)
+        vmImage: ubuntu-latest
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
 

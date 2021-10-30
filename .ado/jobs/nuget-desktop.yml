@@ -9,7 +9,7 @@ jobs:
       - DesktopX86Debug
       - UniversalBuild # Needed to have artifacts uploaded from LayoutHeaders
     pool:
-      vmImage: $(VmImage)
+      vmImage: windows-2019
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
