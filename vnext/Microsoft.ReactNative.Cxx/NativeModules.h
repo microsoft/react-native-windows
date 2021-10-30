@@ -35,7 +35,7 @@
 // - method (required) - the method name the macro is attached to.
 //
 // REACT_INIT annotates a method that is called when a native module is initialized.
-// It must have 'IReactContext const &' parameter.
+// It must have 'ReactContext const &' parameter.
 // It must be an instance method.
 #define REACT_INIT(method) INTERNAL_REACT_MEMBER_2_ARGS(InitMethod, method)
 
