@@ -51,7 +51,9 @@ export default function snapshotTemplate(
           telemetry: false,
         });
 
-        const files = glob.sync('**', {cwd: dir, absolute: true, nodir: true});
+        const files = glob
+          .sync('**', {cwd: dir, absolute: true, nodir: true})
+          .filter(f => !f.endsWith('.png'));
         for (const file of files) {
           const content = (await fs.readFile(file)).toString();
 
