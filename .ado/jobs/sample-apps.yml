@@ -30,11 +30,11 @@ parameters:
             DeployOption:
           - Name: Arm64Debug
             BuildConfiguration: Debug
-            BuildPlatform: ARM64
+            BuildPlatform: arm64
             DeployOption: --no-deploy # We don't have Arm agents
           - Name: Arm64Release
             BuildConfiguration: Release
-            BuildPlatform: ARM64
+            BuildPlatform: arm64
             DeployOption: --no-deploy # We don't have Arm agents
           - Name: X64Debug
             BuildConfiguration: Debug

@@ -24,11 +24,11 @@
           Matrix:
             - Name: Arm64Debug
               BuildConfiguration: Debug
-              BuildPlatform: ARM64
+              BuildPlatform: arm64
               FastBuild: false
             - Name: Arm64Release
               BuildConfiguration: Release
-              BuildPlatform: ARM64
+              BuildPlatform: arm64
               FastBuild: false
             - Name: X64Debug
               BuildConfiguration: Debug
@@ -177,7 +177,7 @@
 
                 - task: BinSkim@3
                   displayName: "Run Binskim Analysis"
-                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
+                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'arm64'))
                   inputs:
                       InputType: 'Basic'
                       Function: 'analyze'
@@ -206,7 +206,7 @@
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
                   # Issue #8003 Tracks restoring this test whose condition should be resotred disabled as it times out on releasex64...
-                  # condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
+                  # condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'arm64')))
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x86'))
 
                 - task: VSTest@2
@@ -225,7 +225,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'arm64')))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (NetCore)
