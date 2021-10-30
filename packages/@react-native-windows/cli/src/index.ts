@@ -47,6 +47,7 @@ export interface GenerateOptions {
   useDevMode: boolean;
   verbose: boolean;
   telemetry: boolean;
+  projectGuid?: string;
 }
 
 function scrubOptions(opt: GenerateOptions) {

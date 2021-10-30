@@ -1,0 +1,476 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cs-lib: AssemblyInfo.cs 1`] = `
+"﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle(\\"SnapshotLib\\")]
+[assembly: AssemblyDescription(\\"\\")]
+[assembly: AssemblyConfiguration(\\"\\")]
+[assembly: AssemblyCompany(\\"\\")]
+[assembly: AssemblyProduct(\\"SnapshotLib\\")]
+[assembly: AssemblyCopyright(\\"Copyright ©  2019\\")]
+[assembly: AssemblyTrademark(\\"\\")]
+[assembly: AssemblyCulture(\\"\\")]
+
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Build and Revision Numbers 
+// by using the '*' as shown below:
+// [assembly: AssemblyVersion(\\"1.0.*\\")]
+[assembly: AssemblyVersion(\\"1.0.0.0\\")]
+[assembly: AssemblyFileVersion(\\"1.0.0.0\\")]
+[assembly: ComVisible(false)]"
+`;
+
+exports[`cs-lib: Default.rd.xml 1`] = `
+"<!--
+    This file contains Runtime Directives used by .NET Native. The defaults here are suitable for most
+    developers. However, you can modify these parameters to modify the behavior of the .NET Native
+    optimizer.
+
+    Runtime Directives are documented at https://go.microsoft.com/fwlink/?LinkID=391919
+
+    To fully enable reflection for App1.MyClass and all of its public/private members
+    <Type Name=\\"App1.MyClass\\" Dynamic=\\"Required All\\"/>
+
+    To enable dynamic creation of the specific instantiation of AppClass<T> over System.Int32
+    <TypeInstantiation Name=\\"App1.AppClass\\" Arguments=\\"System.Int32\\" Activate=\\"Required Public\\" />
+
+    Using the Namespace directive to apply reflection policy to all the types in a particular namespace
+    <Namespace Name=\\"DataClasses.ViewModels\\" Serialize=\\"All\\" />
+-->
+
+<Directives xmlns=\\"http://schemas.microsoft.com/netfx/2013/01/metadata\\">
+  <Application>
+    <!--
+      An Assembly element with Name=\\"*Application*\\" applies to all assemblies in
+      the application package. The asterisks are not wildcards.
+    -->
+    <Assembly Name=\\"*Application*\\" Dynamic=\\"Required All\\" />
+    
+    
+    <!-- Add your application specific runtime directives here. -->
+    <Namespace Name=\\"Microsoft.ReactNative\\" Dynamic=\\"Required All\\" MarshalObject=\\"Required All\\" />
+    <Namespace Name=\\"Microsoft.ReactNative.Managed\\" Dynamic=\\"Required All\\" MarshalObject=\\"Required All\\" />
+
+  </Application>
+</Directives>"
+`;
+
+exports[`cs-lib: ExperimentalFeatures.props 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+<Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+
+  <!--
+    Application projects contain a file with this name to specify some important settings
+    that will apply globally for the app and *all* native modules the app consumes. These
+    values are set by the app developer.
+  -->
+
+</Project>
+"
+`;
+
+exports[`cs-lib: NuGet.Config 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+<configuration>
+  <config>
+    <add key=\\"repositoryPath\\" value=\\"packages\\" />
+  </config>
+  <packageSources>
+    <clear />
+    <add key=\\"react-native\\" value=\\"https://pkgs.dev.azure.com/ms/react-native/_packaging/react-native-public/nuget/v3/index.json\\" />
+    <add key=\\"Nuget.org\\" value=\\"https://api.nuget.org/v3/index.json\\" />
+  </packageSources>
+  <disabledPackageSources>
+    <clear />
+  </disabledPackageSources>  
+</configuration>
+"
+`;
+
+exports[`cs-lib: ReactNativeModule.cs 1`] = `
+"﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.ReactNative;
+using Microsoft.ReactNative.Managed;
+
+namespace SnapshotLib
+{
+    [ReactModule(\\"SnapshotLib\\")]
+    internal sealed class ReactNativeModule
+    {
+        // See https://microsoft.github.io/react-native-windows/docs/native-modules for details on writing native modules
+
+        private ReactContext _reactContext;
+
+        [ReactInitializer]
+        public void Initialize(ReactContext reactContext)
+        {
+            _reactContext = reactContext;
+        }
+
+        [ReactMethod]
+        public void sampleMethod(string stringArgument, int numberArgument, Action<string> callback)
+        {
+            // TODO: Implement some actually useful functionality
+            callback(\\"Received numberArgument: \\" + numberArgument + \\" stringArgument: \\" + stringArgument);
+        }
+    }
+}
+"
+`;
+
+exports[`cs-lib: ReactPackageProvider.cs 1`] = `
+"using Microsoft.ReactNative;
+
+namespace SnapshotLib
+{
+    public partial class ReactPackageProvider : IReactPackageProvider
+    {
+        public void CreatePackage(IReactPackageBuilder packageBuilder)
+        {
+            CreatePackageImplementation(packageBuilder);
+        }
+
+        /// <summary>
+        /// This method is implemented by the C# code generator
+        /// </summary>
+        partial void CreatePackageImplementation(IReactPackageBuilder packageBuilder);
+    }
+}
+"
+`;
+
+exports[`cs-lib: SnapshotLib.csproj 1`] = `
+"﻿<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+<Project ToolsVersion=\\"Current\\" DefaultTargets=\\"Build\\" xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+  <Import Project=\\"$(MSBuildExtensionsPath)\\\\$(MSBuildToolsVersion)\\\\Microsoft.Common.props\\" Condition=\\"Exists('$(MSBuildExtensionsPath)\\\\$(MSBuildToolsVersion)\\\\Microsoft.Common.props')\\" />
+  <Import Project=\\"$(SolutionDir)\\\\ExperimentalFeatures.props\\" Condition=\\"Exists('$(SolutionDir)\\\\ExperimentalFeatures.props')\\" />
+  <PropertyGroup Label=\\"ReactNativeWindowsProps\\">
+    <ReactNativeWindowsDir Condition=\\"'$(ReactNativeWindowsDir)' == ''\\">$([MSBuild]::GetDirectoryNameOfFileAbove($(SolutionDir), 'node_modules\\\\react-native-windows\\\\package.json'))\\\\node_modules\\\\react-native-windows\\\\</ReactNativeWindowsDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=\\" '$(Configuration)' == '' \\">Debug</Configuration>
+    <Platform Condition=\\" '$(Platform)' == '' \\">x86</Platform>
+    <ProjectGuid>{00000000-0000-0000-0000-000000000000}</ProjectGuid>
+    <OutputType>winmdobj</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SnapshotLib</RootNamespace>
+    <AssemblyName>SnapshotLib</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=\\" '$(TargetPlatformVersion)' == '' \\">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|x86'\\">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\\\\x86\\\\Debug\\\\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|x86'\\">
+    <OutputPath>bin\\\\x86\\\\Release\\\\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|ARM64'\\">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\\\\ARM64\\\\Debug\\\\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|ARM64'\\">
+    <OutputPath>bin\\\\ARM64\\\\Release\\\\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|x64'\\">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\\\\x64\\\\Debug\\\\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|x64'\\">
+    <OutputPath>bin\\\\x64\\\\Release\\\\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include=\\"Properties\\\\AssemblyInfo.cs\\" />
+    <Compile Include=\\"ReactNativeModule.cs\\" />
+    <Compile Include=\\"ReactPackageProvider.cs\\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include=\\"Microsoft.NETCore.UniversalWindowsPlatform\\">
+      <Version>6.2.9</Version>
+    </PackageReference>
+    <PackageReference Include=\\"ReactNative.Hermes.Windows\\">
+      <Version>0.9.0-ms.6</Version>
+    </PackageReference>
+  </ItemGroup>
+  <PropertyGroup Condition=\\" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' \\">
+    <VisualStudioVersion>16.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project=\\"$(MSBuildExtensionsPath)\\\\Microsoft\\\\WindowsXaml\\\\v$(VisualStudioVersion)\\\\Microsoft.Windows.UI.Xaml.CSharp.targets\\" />
+  <ImportGroup Label=\\"ReactNativeWindowsPropertySheets\\">
+    <Import Project=\\"$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props\\" Condition=\\"Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props')\\" />
+  </ImportGroup>
+  <ImportGroup Label=\\"ReactNativeWindowsTargets\\">
+    <Import Project=\\"$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets\\" Condition=\\"Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets')\\" />
+  </ImportGroup>
+  <Target Name=\\"EnsureReactNativeWindowsTargets\\" BeforeTargets=\\"PrepareForBuild\\">
+    <PropertyGroup>
+      <ErrorText>This project references targets in your node_modules\\\\react-native-windows folder that are missing. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition=\\"!Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props')\\" Text=\\"$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props'))\\" />
+    <Error Condition=\\"!Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets')\\" Text=\\"$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets'))\\" />
+  </Target>
+</Project>
+"
+`;
+
+exports[`cs-lib: SnapshotLib.sln 1`] = `
+"﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29215.179
+MinimumVisualStudioVersion = 10.0.40219.1
+Project(\\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\\") = \\"SnapshotLib\\", \\"SnapshotLib\\\\SnapshotLib.csproj\\", \\"{00000000-0000-0000-0000-000000000000}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Folly\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Folly\\\\Folly.vcxproj\\", \\"{A990658C-CE31-4BCC-976F-0FC6B1AF693D}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"fmt\\", \\"..\\\\node_modules\\\\react-native-windows\\\\fmt\\\\fmt.vcxproj\\", \\"{14B93DC8-FD93-4A6D-81CB-8BC96644501C}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"ReactCommon\\", \\"..\\\\node_modules\\\\react-native-windows\\\\ReactCommon\\\\ReactCommon.vcxproj\\", \\"{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}\\"
+	ProjectSection(ProjectDependencies) = postProject
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
+	EndProjectSection
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Chakra\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Chakra\\\\Chakra.vcxitems\\", \\"{C38970C0-5FBF-4D69-90D8-CBAC225AE895}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Microsoft.ReactNative\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Microsoft.ReactNative\\\\Microsoft.ReactNative.vcxproj\\", \\"{F7D32BD0-2749-483E-9A0D-1635EF7E3136}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Microsoft.ReactNative.Cxx\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Microsoft.ReactNative.Cxx\\\\Microsoft.ReactNative.Cxx.vcxitems\\", \\"{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Common\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Common\\\\Common.vcxproj\\", \\"{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}\\"
+EndProject
+Project(\\"{2150E333-8FDC-42A3-9474-1A3956D46DE8}\\") = \\"ReactNative\\", \\"ReactNative\\", \\"{5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Microsoft.ReactNative.Shared\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Shared\\\\Shared.vcxitems\\", \\"{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Mso\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Mso\\\\Mso.vcxitems\\", \\"{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E}\\"
+EndProject
+Project(\\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\\") = \\"Include\\", \\"..\\\\node_modules\\\\react-native-windows\\\\include\\\\Include.vcxitems\\", \\"{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}\\"
+EndProject
+Project(\\"{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}\\") = \\"Microsoft.ReactNative.Managed\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Microsoft.ReactNative.Managed\\\\Microsoft.ReactNative.Managed.csproj\\", \\"{F2824844-CE15-4242-9420-308923CD76C3}\\"
+EndProject
+Project(\\"{9A19103F-16F7-4668-BE54-9A1E7A4F7556}\\") = \\"Microsoft.ReactNative.Managed.CodeGen\\", \\"..\\\\node_modules\\\\react-native-windows\\\\Microsoft.ReactNative.Managed.CodeGen\\\\Microsoft.ReactNative.Managed.CodeGen.csproj\\", \\"{ADED4FBE-887D-4271-AF24-F0823BCE7961}\\"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\\\\node_modules\\\\react-native-windows\\\\Shared\\\\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
+		..\\\\node_modules\\\\react-native-windows\\\\Mso\\\\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
+		..\\\\node_modules\\\\react-native-windows\\\\Chakra\\\\Chakra.vcxitems*{c38970c0-5fbf-4d69-90d8-cbac225ae895}*SharedItemsImports = 9
+		..\\\\node_modules\\\\react-native-windows\\\\Microsoft.ReactNative.Cxx\\\\Microsoft.ReactNative.Cxx.vcxitems*{da8b35b3-da00-4b02-bde6-6a397b3fd46b}*SharedItemsImports = 9
+		..\\\\node_modules\\\\react-native-windows\\\\include\\\\Include.vcxitems*{ef074ba1-2d54-4d49-a28e-5e040b47cd2e}*SharedItemsImports = 9
+		..\\\\node_modules\\\\react-native-windows\\\\Chakra\\\\Chakra.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+		..\\\\node_modules\\\\react-native-windows\\\\Microsoft.ReactNative.Cxx\\\\Microsoft.ReactNative.Cxx.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+		..\\\\node_modules\\\\react-native-windows\\\\Mso\\\\Mso.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+		..\\\\node_modules\\\\react-native-windows\\\\Shared\\\\Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00000000-0000-0000-0000-000000000000}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{00000000-0000-0000-0000-000000000000}.Debug|ARM64.Build.0 = Debug|ARM64
+		{00000000-0000-0000-0000-000000000000}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{00000000-0000-0000-0000-000000000000}.Debug|x64.ActiveCfg = Debug|x64
+		{00000000-0000-0000-0000-000000000000}.Debug|x64.Build.0 = Debug|x64
+		{00000000-0000-0000-0000-000000000000}.Debug|x64.Deploy.0 = Debug|x64
+		{00000000-0000-0000-0000-000000000000}.Debug|x86.ActiveCfg = Debug|x86
+		{00000000-0000-0000-0000-000000000000}.Debug|x86.Build.0 = Debug|x86
+		{00000000-0000-0000-0000-000000000000}.Debug|x86.Deploy.0 = Debug|x86
+		{00000000-0000-0000-0000-000000000000}.Release|ARM64.ActiveCfg = Release|ARM64
+		{00000000-0000-0000-0000-000000000000}.Release|ARM64.Build.0 = Release|ARM64
+		{00000000-0000-0000-0000-000000000000}.Release|ARM64.Deploy.0 = Release|ARM64
+		{00000000-0000-0000-0000-000000000000}.Release|x64.ActiveCfg = Release|x64
+		{00000000-0000-0000-0000-000000000000}.Release|x64.Build.0 = Release|x64
+		{00000000-0000-0000-0000-000000000000}.Release|x64.Deploy.0 = Release|x64
+		{00000000-0000-0000-0000-000000000000}.Release|x86.ActiveCfg = Release|x86
+		{00000000-0000-0000-0000-000000000000}.Release|x86.Build.0 = Release|x86
+		{00000000-0000-0000-0000-000000000000}.Release|x86.Deploy.0 = Release|x86
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM64.Build.0 = Debug|ARM64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|x64.ActiveCfg = Debug|x64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|x64.Build.0 = Debug|x64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|x86.ActiveCfg = Debug|Win32
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|x86.Build.0 = Debug|Win32
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|ARM64.ActiveCfg = Release|ARM64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|ARM64.Build.0 = Release|ARM64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|x64.ActiveCfg = Release|x64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|x64.Build.0 = Release|x64
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|x86.ActiveCfg = Release|Win32
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Release|x86.Build.0 = Release|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|ARM64.Build.0 = Debug|ARM64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x64.ActiveCfg = Debug|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x64.Build.0 = Debug|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x86.ActiveCfg = Debug|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Debug|x86.Build.0 = Debug|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|ARM64.ActiveCfg = Release|ARM64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|ARM64.Build.0 = Release|ARM64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x64.ActiveCfg = Release|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x64.Build.0 = Release|x64
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.ActiveCfg = Release|Win32
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}.Release|x86.Build.0 = Release|Win32
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|ARM64.Build.0 = Debug|ARM64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|x64.ActiveCfg = Debug|x64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|x64.Build.0 = Debug|x64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|x86.ActiveCfg = Debug|Win32
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Debug|x86.Build.0 = Debug|Win32
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|ARM64.ActiveCfg = Release|ARM64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|ARM64.Build.0 = Release|ARM64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x64.ActiveCfg = Release|x64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x64.Build.0 = Release|x64
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.ActiveCfg = Release|Win32
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136}.Release|x86.Build.0 = Release|Win32
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Debug|ARM64.Build.0 = Debug|ARM64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Debug|x64.ActiveCfg = Debug|x64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Debug|x64.Build.0 = Debug|x64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Debug|x86.ActiveCfg = Debug|Win32
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Debug|x86.Build.0 = Debug|Win32
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|ARM64.ActiveCfg = Release|ARM64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|ARM64.Build.0 = Release|ARM64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x64.ActiveCfg = Release|x64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x64.Build.0 = Release|x64
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.ActiveCfg = Release|Win32
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}.Release|x86.Build.0 = Release|Win32
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|ARM64.Build.0 = Debug|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.ActiveCfg = Debug|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x64.Build.0 = Debug|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.ActiveCfg = Debug|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Debug|x86.Build.0 = Debug|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.ActiveCfg = Release|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|ARM64.Build.0 = Release|ARM64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.ActiveCfg = Release|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x64.Build.0 = Release|x64
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.ActiveCfg = Release|x86
+		{F2824844-CE15-4242-9420-308923CD76C3}.Release|x86.Build.0 = Release|x86
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Debug|ARM64.Build.0 = Debug|ARM64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Debug|x64.ActiveCfg = Debug|x64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Debug|x64.Build.0 = Debug|x64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Debug|x86.ActiveCfg = Debug|x86
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Debug|x86.Build.0 = Debug|x86
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|ARM64.ActiveCfg = Release|ARM64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|ARM64.Build.0 = Release|ARM64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x64.ActiveCfg = Release|x64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x64.Build.0 = Release|x64
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x86.ActiveCfg = Release|x86
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961}.Release|x86.Build.0 = Release|x86
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Debug|ARM64.Build.0 = Debug|ARM64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Debug|x64.ActiveCfg = Debug|x64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Debug|x64.Build.0 = Debug|x64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Debug|x86.ActiveCfg = Debug|Win32
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Debug|x86.Build.0 = Debug|Win32
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Debug|x86.Deploy.0 = Debug|Win32
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|ARM64.ActiveCfg = Release|ARM64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|ARM64.Build.0 = Release|ARM64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x64.ActiveCfg = Release|x64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x64.Build.0 = Release|x64
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.ActiveCfg = Release|Win32
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Build.0 = Release|Win32
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Deploy.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{C38970C0-5FBF-4D69-90D8-CBAC225AE895} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{2049DBE9-8D13-42C9-AE4B-413AE38FFFD0} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{84E05BFA-CBAF-4F0D-BFB6-4CE85742A57E} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{EF074BA1-2D54-4D49-A28E-5E040B47CD2E} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{F2824844-CE15-4242-9420-308923CD76C3} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{ADED4FBE-887D-4271-AF24-F0823BCE7961} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D43FAD39-F619-437D-BB40-04A3982ACB6A}
+	EndGlobalSection
+EndGlobal
+"
+`;

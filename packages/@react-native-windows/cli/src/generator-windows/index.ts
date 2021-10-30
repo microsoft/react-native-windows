@@ -124,7 +124,7 @@ export async function copyProjectTemplateAndReplace(
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
-  const projectGuid = uuid.v4();
+  const projectGuid = options.projectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
