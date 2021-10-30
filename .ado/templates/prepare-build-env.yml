@@ -9,15 +9,17 @@ parameters:
       - arm64
   - name: configuration
     type: string
-    values:
-      - Debug
-      - Release
+    # Publish still using runtime matrix
+    #values:
+    #  - Debug
+    #  - Release
   - name: buildEnvironment
     type: string
-    values:
-      - PullRequest
-      - Continuous  
-      - Publish
+    # Publish still using runtime matrix
+    #values:
+    #  - PullRequest
+    #  - Continuous  
+    #  - Publish
   
 steps:
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
