@@ -37,7 +37,7 @@ steps:
 
   - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
     - powershell: $env:RNW_FAST_BUILD = "true"
-      displayname: Enable RNW_FAST_BUILD
+      displayName: Enable RNW_FAST_BUILD
 
   - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd cl
     displayName: Set LocalDumps for cl.exe
