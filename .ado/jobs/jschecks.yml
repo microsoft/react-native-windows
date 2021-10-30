@@ -23,7 +23,7 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
-      - template: ../templates/yarn-install.yml
+      - template: ../templates/prepare-js-env.yml
 
       - template: ../templates/compute-beachball-branch-name.yml
 

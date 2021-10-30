@@ -59,7 +59,7 @@ jobs:
 
       - template: templates/configure-git.yml
 
-      - template: templates/prepare-env.yml
+      - template: templates/prepare-js-env.yml
 
       - powershell: |
           Write-Error "Stopping because commit message contains ***NO_CI***."
@@ -75,9 +75,6 @@ jobs:
           echo ##vso[task.setvariable variable=SkipGitPushPublishArgs]--no-push
         displayName: Enable No-Publish
         condition: ${{ parameters.skipGitPush }}
-
-      - script: yarn build
-        displayName: yarn build
 
       - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***" --no-git-tags
         displayName: Beachball Publish (Main Branch)
@@ -110,7 +107,7 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
     timeoutInMinutes: 30
     steps:
-      - template: templates/prepare-env.yml
+      - template: templates/prepare-js-env.yml
 
       # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
       - script: npx --no-install beachball bump
@@ -174,6 +171,12 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-build-env.yml
+        parameters:
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          buildEnvironment: Publish
+
       - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
@@ -225,6 +228,12 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-build-env.yml
+        parameters:
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          buildEnvironment: Publish
+
       - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml
@@ -268,6 +277,12 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-build-env.yml
+        parameters:
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          buildEnvironment: Publish
+
       - template: templates/apply-published-version-vars.yml
 
       - template: templates/build-rnw.yml

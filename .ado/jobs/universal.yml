@@ -77,6 +77,14 @@
                   clean: false
                   submodules: false
 
+                - template: ../templates/prepare-js-env.yml
+
+                - template: ../templates/prepare-build-env.yml
+                  parameters:
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    buildEnvironment: ${{ config.BuildEnvironment }}
+
                 - template: ../templates/apply-published-version-vars.yml
 
                 - template: ../templates/build-rnw.yml
@@ -99,16 +107,6 @@
                     inputs:
                       pathtoPublish: 'vnext\target\winmd2md'
                       artifactName: 'WinRT API docs - $(Agent.JobName)-$(System.JobAttempt)'
-
-                - task: BinSkim@3
-                  displayName: "Run Binskim Analysis"
-                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
-                  inputs:
-                      InputType: 'Basic'
-                      Function: 'analyze'
-                      AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
-                      AnalyzeVerbose: true
-                      toolVersion: 'LatestPreRelease'
 
                 - task: PublishPipelineArtifact@1
                   displayName: "Publish binaries for testing"
@@ -147,14 +145,20 @@
                   clean: false
                   submodules: false
 
+                - template: ../templates/prepare-js-env.yml
+
+                - template: ../templates/prepare-build-env.yml
+                  parameters:
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    buildEnvironment: ${{ config.BuildEnvironment }}
+
                 - task: PowerShell@2
                   displayName: "Check if this environment meets the development dependencies"
                   inputs:
                     targetType: filePath
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
-
-                - template: ../templates/prepare-env.yml
 
                 - task: NuGetCommand@2
                   displayName: NuGet restore
@@ -171,6 +175,16 @@
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
+
+                - task: BinSkim@3
+                  displayName: "Run Binskim Analysis"
+                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
+                  inputs:
+                      InputType: 'Basic'
+                      Function: 'analyze'
+                      AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
+                      AnalyzeVerbose: true
+                      toolVersion: 'LatestPreRelease'
 
                 - template: ../templates/discover-google-test-adapter.yml
 
