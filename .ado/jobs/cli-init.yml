@@ -99,6 +99,18 @@ parameters:
             platform: x86
             projectType: app
             useNuGet: true
+          - Name: X64DebugCppLowResource
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            lowResource: true
+          - Name: X64ReleaseCppLowResource
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            lowResource: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64ReleaseCpp
@@ -234,6 +246,18 @@ parameters:
             configuration: Debug
             platform: x64
             projectType: app
+          - Name: X64DebugCppLowResource
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            lowResource: true
+          - Name: X64ReleaseCppLowResource
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            lowResource: true
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
@@ -250,7 +274,10 @@ jobs:
               - template: ../variables/vs2019.yml
 
             pool:
-              name: ${{ variables['AgentPool.Medium'] }}
+              ${{ if eq(matrix.lowResource, true) }}:
+                name: ${{ variables['AgentPool.Small'] }}
+              ${{ else }}:
+                name: ${{ variables['AgentPool.Medium'] }}
               demands: ${{ variables['AgentImage'] }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
