@@ -6,6 +6,14 @@ steps:
     inputs:
       versionSpec: '14.x'
 
+  - task: Cache@2
+    inputs:
+      key: 'yarn | "$(Agent.OS)" | yarn.lock'
+      restoreKeys: |
+        yarn | "$(Agent.OS)"
+      path: $(YARN_CACHE_FOLDER)
+    displayName: Cache Yarn packages
+
   - template: yarn-install.yml
 
   - script: yarn build

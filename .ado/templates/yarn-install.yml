@@ -7,7 +7,7 @@ parameters:
   default: true
 - name: extraArgs
   type: string
-  default: --network-concurrency 40 --cache-folder \.yarnCache
+  default: --network-concurrency 40
 
 steps:
   - ${{ if eq(parameters.frozenLockfile, true) }}:
