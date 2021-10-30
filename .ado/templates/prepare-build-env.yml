@@ -35,7 +35,7 @@ steps:
       configuration: ${{ parameters.configuration }}
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - ${{ if eq(parameters.buildEnvironment, "PullRequest") }}:
+  - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
     - powershell: $env:RNW_FAST_BUILD = "true"
       displayname: Enable RNW_FAST_BUILD
 
