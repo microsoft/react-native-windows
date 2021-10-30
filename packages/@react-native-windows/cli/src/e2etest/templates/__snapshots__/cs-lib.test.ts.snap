@@ -1,73 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`cs-lib: AssemblyInfo.cs 1`] = `
-"﻿using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle(\\"SnapshotLib\\")]
-[assembly: AssemblyDescription(\\"\\")]
-[assembly: AssemblyConfiguration(\\"\\")]
-[assembly: AssemblyCompany(\\"\\")]
-[assembly: AssemblyProduct(\\"SnapshotLib\\")]
-[assembly: AssemblyCopyright(\\"Copyright ©  2019\\")]
-[assembly: AssemblyTrademark(\\"\\")]
-[assembly: AssemblyCulture(\\"\\")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion(\\"1.0.*\\")]
-[assembly: AssemblyVersion(\\"1.0.0.0\\")]
-[assembly: AssemblyFileVersion(\\"1.0.0.0\\")]
-[assembly: ComVisible(false)]"
-`;
-
-exports[`cs-lib: Default.rd.xml 1`] = `
-"<!--
-    This file contains Runtime Directives used by .NET Native. The defaults here are suitable for most
-    developers. However, you can modify these parameters to modify the behavior of the .NET Native
-    optimizer.
-
-    Runtime Directives are documented at https://go.microsoft.com/fwlink/?LinkID=391919
-
-    To fully enable reflection for App1.MyClass and all of its public/private members
-    <Type Name=\\"App1.MyClass\\" Dynamic=\\"Required All\\"/>
-
-    To enable dynamic creation of the specific instantiation of AppClass<T> over System.Int32
-    <TypeInstantiation Name=\\"App1.AppClass\\" Arguments=\\"System.Int32\\" Activate=\\"Required Public\\" />
-
-    Using the Namespace directive to apply reflection policy to all the types in a particular namespace
-    <Namespace Name=\\"DataClasses.ViewModels\\" Serialize=\\"All\\" />
--->
-
-<Directives xmlns=\\"http://schemas.microsoft.com/netfx/2013/01/metadata\\">
-  <Application>
-    <!--
-      An Assembly element with Name=\\"*Application*\\" applies to all assemblies in
-      the application package. The asterisks are not wildcards.
-    -->
-    <Assembly Name=\\"*Application*\\" Dynamic=\\"Required All\\" />
-    
-    
-    <!-- Add your application specific runtime directives here. -->
-    <Namespace Name=\\"Microsoft.ReactNative\\" Dynamic=\\"Required All\\" MarshalObject=\\"Required All\\" />
-    <Namespace Name=\\"Microsoft.ReactNative.Managed\\" Dynamic=\\"Required All\\" MarshalObject=\\"Required All\\" />
-
-  </Application>
-</Directives>"
-`;
-
-exports[`cs-lib: ExperimentalFeatures.props 1`] = `
+exports[`cs-lib: windows/ExperimentalFeatures.props 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
 
@@ -81,7 +14,7 @@ exports[`cs-lib: ExperimentalFeatures.props 1`] = `
 "
 `;
 
-exports[`cs-lib: NuGet.Config 1`] = `
+exports[`cs-lib: windows/NuGet.Config 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <configuration>
   <config>
@@ -99,196 +32,7 @@ exports[`cs-lib: NuGet.Config 1`] = `
 "
 `;
 
-exports[`cs-lib: ReactNativeModule.cs 1`] = `
-"﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.ReactNative;
-using Microsoft.ReactNative.Managed;
-
-namespace SnapshotLib
-{
-    [ReactModule(\\"SnapshotLib\\")]
-    internal sealed class ReactNativeModule
-    {
-        // See https://microsoft.github.io/react-native-windows/docs/native-modules for details on writing native modules
-
-        private ReactContext _reactContext;
-
-        [ReactInitializer]
-        public void Initialize(ReactContext reactContext)
-        {
-            _reactContext = reactContext;
-        }
-
-        [ReactMethod]
-        public void sampleMethod(string stringArgument, int numberArgument, Action<string> callback)
-        {
-            // TODO: Implement some actually useful functionality
-            callback(\\"Received numberArgument: \\" + numberArgument + \\" stringArgument: \\" + stringArgument);
-        }
-    }
-}
-"
-`;
-
-exports[`cs-lib: ReactPackageProvider.cs 1`] = `
-"using Microsoft.ReactNative;
-
-namespace SnapshotLib
-{
-    public partial class ReactPackageProvider : IReactPackageProvider
-    {
-        public void CreatePackage(IReactPackageBuilder packageBuilder)
-        {
-            CreatePackageImplementation(packageBuilder);
-        }
-
-        /// <summary>
-        /// This method is implemented by the C# code generator
-        /// </summary>
-        partial void CreatePackageImplementation(IReactPackageBuilder packageBuilder);
-    }
-}
-"
-`;
-
-exports[`cs-lib: SnapshotLib.csproj 1`] = `
-"﻿<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
-<Project ToolsVersion=\\"Current\\" DefaultTargets=\\"Build\\" xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
-  <Import Project=\\"$(MSBuildExtensionsPath)\\\\$(MSBuildToolsVersion)\\\\Microsoft.Common.props\\" Condition=\\"Exists('$(MSBuildExtensionsPath)\\\\$(MSBuildToolsVersion)\\\\Microsoft.Common.props')\\" />
-  <Import Project=\\"$(SolutionDir)\\\\ExperimentalFeatures.props\\" Condition=\\"Exists('$(SolutionDir)\\\\ExperimentalFeatures.props')\\" />
-  <PropertyGroup Label=\\"ReactNativeWindowsProps\\">
-    <ReactNativeWindowsDir Condition=\\"'$(ReactNativeWindowsDir)' == ''\\">$([MSBuild]::GetDirectoryNameOfFileAbove($(SolutionDir), 'node_modules\\\\react-native-windows\\\\package.json'))\\\\node_modules\\\\react-native-windows\\\\</ReactNativeWindowsDir>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Configuration Condition=\\" '$(Configuration)' == '' \\">Debug</Configuration>
-    <Platform Condition=\\" '$(Platform)' == '' \\">x86</Platform>
-    <ProjectGuid>{00000000-0000-0000-0000-000000000000}</ProjectGuid>
-    <OutputType>winmdobj</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SnapshotLib</RootNamespace>
-    <AssemblyName>SnapshotLib</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion Condition=\\" '$(TargetPlatformVersion)' == '' \\">10.0.19041.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
-    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{00000000-0000-0000-0000-000000000000};{00000000-0000-0000-0000-000000000000}</ProjectTypeGuids>
-    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
-    <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|x86'\\">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\\\\x86\\\\Debug\\\\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|x86'\\">
-    <OutputPath>bin\\\\x86\\\\Release\\\\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x86</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-  </PropertyGroup>
-  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|ARM64'\\">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\\\\ARM64\\\\Debug\\\\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>ARM64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|ARM64'\\">
-    <OutputPath>bin\\\\ARM64\\\\Release\\\\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>ARM64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-  </PropertyGroup>
-  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|x64'\\">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\\\\x64\\\\Debug\\\\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|x64'\\">
-    <OutputPath>bin\\\\x64\\\\Release\\\\</OutputPath>
-    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <Optimize>true</Optimize>
-    <NoWarn>;2008</NoWarn>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>true</Prefer32Bit>
-    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-  </PropertyGroup>
-  <PropertyGroup>
-    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include=\\"Properties\\\\AssemblyInfo.cs\\" />
-    <Compile Include=\\"ReactNativeModule.cs\\" />
-    <Compile Include=\\"ReactPackageProvider.cs\\" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include=\\"Microsoft.NETCore.UniversalWindowsPlatform\\">
-      <Version>6.2.9</Version>
-    </PackageReference>
-    <PackageReference Include=\\"ReactNative.Hermes.Windows\\">
-      <Version>0.9.0-ms.6</Version>
-    </PackageReference>
-  </ItemGroup>
-  <PropertyGroup Condition=\\" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' \\">
-    <VisualStudioVersion>16.0</VisualStudioVersion>
-  </PropertyGroup>
-  <Import Project=\\"$(MSBuildExtensionsPath)\\\\Microsoft\\\\WindowsXaml\\\\v$(VisualStudioVersion)\\\\Microsoft.Windows.UI.Xaml.CSharp.targets\\" />
-  <ImportGroup Label=\\"ReactNativeWindowsPropertySheets\\">
-    <Import Project=\\"$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props\\" Condition=\\"Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props')\\" />
-  </ImportGroup>
-  <ImportGroup Label=\\"ReactNativeWindowsTargets\\">
-    <Import Project=\\"$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets\\" Condition=\\"Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets')\\" />
-  </ImportGroup>
-  <Target Name=\\"EnsureReactNativeWindowsTargets\\" BeforeTargets=\\"PrepareForBuild\\">
-    <PropertyGroup>
-      <ErrorText>This project references targets in your node_modules\\\\react-native-windows folder that are missing. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition=\\"!Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props')\\" Text=\\"$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props'))\\" />
-    <Error Condition=\\"!Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets')\\" Text=\\"$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets'))\\" />
-  </Target>
-</Project>
-"
-`;
-
-exports[`cs-lib: SnapshotLib.sln 1`] = `
+exports[`cs-lib: windows/SnapshotLib.sln 1`] = `
 "﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
@@ -472,5 +216,261 @@ Global
 		SolutionGuid = {00000000-0000-0000-0000-000000000000}
 	EndGlobalSection
 EndGlobal
+"
+`;
+
+exports[`cs-lib: windows/SnapshotLib/Properties/AssemblyInfo.cs 1`] = `
+"﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
+// General Information about an assembly is controlled through the following 
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyTitle(\\"SnapshotLib\\")]
+[assembly: AssemblyDescription(\\"\\")]
+[assembly: AssemblyConfiguration(\\"\\")]
+[assembly: AssemblyCompany(\\"\\")]
+[assembly: AssemblyProduct(\\"SnapshotLib\\")]
+[assembly: AssemblyCopyright(\\"Copyright ©  2019\\")]
+[assembly: AssemblyTrademark(\\"\\")]
+[assembly: AssemblyCulture(\\"\\")]
+
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+// You can specify all the values or you can default the Build and Revision Numbers 
+// by using the '*' as shown below:
+// [assembly: AssemblyVersion(\\"1.0.*\\")]
+[assembly: AssemblyVersion(\\"1.0.0.0\\")]
+[assembly: AssemblyFileVersion(\\"1.0.0.0\\")]
+[assembly: ComVisible(false)]"
+`;
+
+exports[`cs-lib: windows/SnapshotLib/Properties/Default.rd.xml 1`] = `
+"<!--
+    This file contains Runtime Directives used by .NET Native. The defaults here are suitable for most
+    developers. However, you can modify these parameters to modify the behavior of the .NET Native
+    optimizer.
+
+    Runtime Directives are documented at https://go.microsoft.com/fwlink/?LinkID=391919
+
+    To fully enable reflection for App1.MyClass and all of its public/private members
+    <Type Name=\\"App1.MyClass\\" Dynamic=\\"Required All\\"/>
+
+    To enable dynamic creation of the specific instantiation of AppClass<T> over System.Int32
+    <TypeInstantiation Name=\\"App1.AppClass\\" Arguments=\\"System.Int32\\" Activate=\\"Required Public\\" />
+
+    Using the Namespace directive to apply reflection policy to all the types in a particular namespace
+    <Namespace Name=\\"DataClasses.ViewModels\\" Serialize=\\"All\\" />
+-->
+
+<Directives xmlns=\\"http://schemas.microsoft.com/netfx/2013/01/metadata\\">
+  <Application>
+    <!--
+      An Assembly element with Name=\\"*Application*\\" applies to all assemblies in
+      the application package. The asterisks are not wildcards.
+    -->
+    <Assembly Name=\\"*Application*\\" Dynamic=\\"Required All\\" />
+    
+    
+    <!-- Add your application specific runtime directives here. -->
+    <Namespace Name=\\"Microsoft.ReactNative\\" Dynamic=\\"Required All\\" MarshalObject=\\"Required All\\" />
+    <Namespace Name=\\"Microsoft.ReactNative.Managed\\" Dynamic=\\"Required All\\" MarshalObject=\\"Required All\\" />
+
+  </Application>
+</Directives>"
+`;
+
+exports[`cs-lib: windows/SnapshotLib/ReactNativeModule.cs 1`] = `
+"﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Microsoft.ReactNative;
+using Microsoft.ReactNative.Managed;
+
+namespace SnapshotLib
+{
+    [ReactModule(\\"SnapshotLib\\")]
+    internal sealed class ReactNativeModule
+    {
+        // See https://microsoft.github.io/react-native-windows/docs/native-modules for details on writing native modules
+
+        private ReactContext _reactContext;
+
+        [ReactInitializer]
+        public void Initialize(ReactContext reactContext)
+        {
+            _reactContext = reactContext;
+        }
+
+        [ReactMethod]
+        public void sampleMethod(string stringArgument, int numberArgument, Action<string> callback)
+        {
+            // TODO: Implement some actually useful functionality
+            callback(\\"Received numberArgument: \\" + numberArgument + \\" stringArgument: \\" + stringArgument);
+        }
+    }
+}
+"
+`;
+
+exports[`cs-lib: windows/SnapshotLib/ReactPackageProvider.cs 1`] = `
+"using Microsoft.ReactNative;
+
+namespace SnapshotLib
+{
+    public partial class ReactPackageProvider : IReactPackageProvider
+    {
+        public void CreatePackage(IReactPackageBuilder packageBuilder)
+        {
+            CreatePackageImplementation(packageBuilder);
+        }
+
+        /// <summary>
+        /// This method is implemented by the C# code generator
+        /// </summary>
+        partial void CreatePackageImplementation(IReactPackageBuilder packageBuilder);
+    }
+}
+"
+`;
+
+exports[`cs-lib: windows/SnapshotLib/SnapshotLib.csproj 1`] = `
+"﻿<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+<Project ToolsVersion=\\"Current\\" DefaultTargets=\\"Build\\" xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+  <Import Project=\\"$(MSBuildExtensionsPath)\\\\$(MSBuildToolsVersion)\\\\Microsoft.Common.props\\" Condition=\\"Exists('$(MSBuildExtensionsPath)\\\\$(MSBuildToolsVersion)\\\\Microsoft.Common.props')\\" />
+  <Import Project=\\"$(SolutionDir)\\\\ExperimentalFeatures.props\\" Condition=\\"Exists('$(SolutionDir)\\\\ExperimentalFeatures.props')\\" />
+  <PropertyGroup Label=\\"ReactNativeWindowsProps\\">
+    <ReactNativeWindowsDir Condition=\\"'$(ReactNativeWindowsDir)' == ''\\">$([MSBuild]::GetDirectoryNameOfFileAbove($(SolutionDir), 'node_modules\\\\react-native-windows\\\\package.json'))\\\\node_modules\\\\react-native-windows\\\\</ReactNativeWindowsDir>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=\\" '$(Configuration)' == '' \\">Debug</Configuration>
+    <Platform Condition=\\" '$(Platform)' == '' \\">x86</Platform>
+    <ProjectGuid>{00000000-0000-0000-0000-000000000000}</ProjectGuid>
+    <OutputType>winmdobj</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SnapshotLib</RootNamespace>
+    <AssemblyName>SnapshotLib</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=\\" '$(TargetPlatformVersion)' == '' \\">10.0.19041.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{00000000-0000-0000-0000-000000000000};{00000000-0000-0000-0000-000000000000}</ProjectTypeGuids>
+    <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|x86'\\">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\\\\x86\\\\Debug\\\\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|x86'\\">
+    <OutputPath>bin\\\\x86\\\\Release\\\\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|ARM64'\\">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\\\\ARM64\\\\Debug\\\\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|ARM64'\\">
+    <OutputPath>bin\\\\ARM64\\\\Release\\\\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Debug|x64'\\">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\\\\x64\\\\Debug\\\\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=\\"'$(Configuration)|$(Platform)' == 'Release|x64'\\">
+    <OutputPath>bin\\\\x64\\\\Release\\\\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include=\\"Properties\\\\AssemblyInfo.cs\\" />
+    <Compile Include=\\"ReactNativeModule.cs\\" />
+    <Compile Include=\\"ReactPackageProvider.cs\\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include=\\"Microsoft.NETCore.UniversalWindowsPlatform\\">
+      <Version>6.2.9</Version>
+    </PackageReference>
+    <PackageReference Include=\\"ReactNative.Hermes.Windows\\">
+      <Version>0.9.0-ms.6</Version>
+    </PackageReference>
+  </ItemGroup>
+  <PropertyGroup Condition=\\" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' \\">
+    <VisualStudioVersion>16.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Project=\\"$(MSBuildExtensionsPath)\\\\Microsoft\\\\WindowsXaml\\\\v$(VisualStudioVersion)\\\\Microsoft.Windows.UI.Xaml.CSharp.targets\\" />
+  <ImportGroup Label=\\"ReactNativeWindowsPropertySheets\\">
+    <Import Project=\\"$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props\\" Condition=\\"Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props')\\" />
+  </ImportGroup>
+  <ImportGroup Label=\\"ReactNativeWindowsTargets\\">
+    <Import Project=\\"$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets\\" Condition=\\"Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets')\\" />
+  </ImportGroup>
+  <Target Name=\\"EnsureReactNativeWindowsTargets\\" BeforeTargets=\\"PrepareForBuild\\">
+    <PropertyGroup>
+      <ErrorText>This project references targets in your node_modules\\\\react-native-windows folder that are missing. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition=\\"!Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props')\\" Text=\\"$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.props'))\\" />
+    <Error Condition=\\"!Exists('$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets')\\" Text=\\"$([System.String]::Format('$(ErrorText)', '$(ReactNativeWindowsDir)\\\\PropertySheets\\\\External\\\\Microsoft.ReactNative.Uwp.CSharpLib.targets'))\\" />
+  </Target>
+</Project>
 "
 `;

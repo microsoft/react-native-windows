@@ -63,7 +63,9 @@ export default function snapshotTemplate(
           );
 
           // eslint-disable-next-line no-undef
-          expect(guidNeutralContent).toMatchSnapshot(path.basename(file));
+          expect(guidNeutralContent).toMatchSnapshot(
+            path.relative(dir, file).replace(/\\/g, '/'),
+          );
         }
       });
     });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`cpp-lib: ExperimentalFeatures.props 1`] = `
+exports[`cpp-lib: windows/ExperimentalFeatures.props 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
 
@@ -14,7 +14,7 @@ exports[`cpp-lib: ExperimentalFeatures.props 1`] = `
 "
 `;
 
-exports[`cpp-lib: NuGet.Config 1`] = `
+exports[`cpp-lib: windows/NuGet.Config 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <configuration>
   <config>
@@ -32,131 +32,7 @@ exports[`cpp-lib: NuGet.Config 1`] = `
 "
 `;
 
-exports[`cpp-lib: PropertySheet.props 1`] = `
-"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
-<Project ToolsVersion=\\"Current\\" xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
-  <ImportGroup Label=\\"PropertySheets\\" />
-  <PropertyGroup Label=\\"UserMacros\\" />
-  <!--
-    To customize common C++/WinRT project properties:
-    * right-click the project node
-    * expand the Common Properties item
-    * select the C++/WinRT property page
-
-    For more advanced scenarios, and complete documentation, please see:
-    https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/nuget
-    -->
-  <PropertyGroup />
-  <ItemDefinitionGroup />
-</Project>"
-`;
-
-exports[`cpp-lib: ReactNativeModule.h 1`] = `
-"﻿#pragma once
-
-#include \\"JSValue.h\\"
-#include \\"NativeModules.h\\"
-
-using namespace winrt::Microsoft::ReactNative;
-
-namespace winrt::SnapshotLib
-{
-
-REACT_MODULE(ReactNativeModule, L\\"SnapshotLib\\")
-struct ReactNativeModule
-{
-    // See https://microsoft.github.io/react-native-windows/docs/native-modules for details on writing native modules
-
-    REACT_INIT(Initialize)
-    void Initialize(ReactContext const &reactContext) noexcept
-    {
-        m_reactContext = reactContext;
-    }
-    
-    REACT_METHOD(sampleMethod)
-    void sampleMethod(std::string stringArgument, int numberArgument, std::function<void(std::string)> &&callback) noexcept
-    {
-        // TODO: Implement some actually useful functionality
-        callback(\\"Received numberArgument: \\" + std::to_string(numberArgument) + \\" stringArgument: \\" + stringArgument);
-    }
-
-    private:
-        ReactContext m_reactContext{nullptr};
-};
-
-} // namespace winrt::SnapshotLib
-"
-`;
-
-exports[`cpp-lib: ReactPackageProvider.cpp 1`] = `
-"#include \\"pch.h\\"
-#include \\"ReactPackageProvider.h\\"
-#if __has_include(\\"ReactPackageProvider.g.cpp\\")
-#include \\"ReactPackageProvider.g.cpp\\"
-#endif
-
-#include \\"ReactNativeModule.h\\"
-
-using namespace winrt::Microsoft::ReactNative;
-
-namespace winrt::SnapshotLib::implementation
-{
-
-void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept
-{
-    AddAttributedModules(packageBuilder);
-}
-
-} // namespace winrt::SnapshotLib::implementation
-"
-`;
-
-exports[`cpp-lib: ReactPackageProvider.h 1`] = `
-"#pragma once
-#include \\"ReactPackageProvider.g.h\\"
-
-using namespace winrt::Microsoft::ReactNative;
-
-namespace winrt::SnapshotLib::implementation
-{
-    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
-    {
-        ReactPackageProvider() = default;
-
-        void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
-    };
-} // namespace winrt::SnapshotLib::implementation
-
-namespace winrt::SnapshotLib::factory_implementation
-{
-
-struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
-
-} // namespace winrt::SnapshotLib::factory_implementation
-"
-`;
-
-exports[`cpp-lib: ReactPackageProvider.idl 1`] = `
-"namespace SnapshotLib
-{
-    [webhosthidden]
-    [default_interface]
-    runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
-    {
-        ReactPackageProvider();
-    };
-}
-"
-`;
-
-exports[`cpp-lib: SnapshotLib.def 1`] = `
-"﻿EXPORTS
-DllCanUnloadNow = WINRT_CanUnloadNow                    PRIVATE
-DllGetActivationFactory = WINRT_GetActivationFactory    PRIVATE
-"
-`;
-
-exports[`cpp-lib: SnapshotLib.sln 1`] = `
+exports[`cpp-lib: windows/SnapshotLib.sln 1`] = `
 "﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
@@ -316,7 +192,131 @@ EndGlobal
 "
 `;
 
-exports[`cpp-lib: SnapshotLib.vcxproj 1`] = `
+exports[`cpp-lib: windows/SnapshotLib/PropertySheet.props 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
+<Project ToolsVersion=\\"Current\\" xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
+  <ImportGroup Label=\\"PropertySheets\\" />
+  <PropertyGroup Label=\\"UserMacros\\" />
+  <!--
+    To customize common C++/WinRT project properties:
+    * right-click the project node
+    * expand the Common Properties item
+    * select the C++/WinRT property page
+
+    For more advanced scenarios, and complete documentation, please see:
+    https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/nuget
+    -->
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+</Project>"
+`;
+
+exports[`cpp-lib: windows/SnapshotLib/ReactNativeModule.h 1`] = `
+"﻿#pragma once
+
+#include \\"JSValue.h\\"
+#include \\"NativeModules.h\\"
+
+using namespace winrt::Microsoft::ReactNative;
+
+namespace winrt::SnapshotLib
+{
+
+REACT_MODULE(ReactNativeModule, L\\"SnapshotLib\\")
+struct ReactNativeModule
+{
+    // See https://microsoft.github.io/react-native-windows/docs/native-modules for details on writing native modules
+
+    REACT_INIT(Initialize)
+    void Initialize(ReactContext const &reactContext) noexcept
+    {
+        m_reactContext = reactContext;
+    }
+    
+    REACT_METHOD(sampleMethod)
+    void sampleMethod(std::string stringArgument, int numberArgument, std::function<void(std::string)> &&callback) noexcept
+    {
+        // TODO: Implement some actually useful functionality
+        callback(\\"Received numberArgument: \\" + std::to_string(numberArgument) + \\" stringArgument: \\" + stringArgument);
+    }
+
+    private:
+        ReactContext m_reactContext{nullptr};
+};
+
+} // namespace winrt::SnapshotLib
+"
+`;
+
+exports[`cpp-lib: windows/SnapshotLib/ReactPackageProvider.cpp 1`] = `
+"#include \\"pch.h\\"
+#include \\"ReactPackageProvider.h\\"
+#if __has_include(\\"ReactPackageProvider.g.cpp\\")
+#include \\"ReactPackageProvider.g.cpp\\"
+#endif
+
+#include \\"ReactNativeModule.h\\"
+
+using namespace winrt::Microsoft::ReactNative;
+
+namespace winrt::SnapshotLib::implementation
+{
+
+void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept
+{
+    AddAttributedModules(packageBuilder);
+}
+
+} // namespace winrt::SnapshotLib::implementation
+"
+`;
+
+exports[`cpp-lib: windows/SnapshotLib/ReactPackageProvider.h 1`] = `
+"#pragma once
+#include \\"ReactPackageProvider.g.h\\"
+
+using namespace winrt::Microsoft::ReactNative;
+
+namespace winrt::SnapshotLib::implementation
+{
+    struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider>
+    {
+        ReactPackageProvider() = default;
+
+        void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
+    };
+} // namespace winrt::SnapshotLib::implementation
+
+namespace winrt::SnapshotLib::factory_implementation
+{
+
+struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
+
+} // namespace winrt::SnapshotLib::factory_implementation
+"
+`;
+
+exports[`cpp-lib: windows/SnapshotLib/ReactPackageProvider.idl 1`] = `
+"namespace SnapshotLib
+{
+    [webhosthidden]
+    [default_interface]
+    runtimeclass ReactPackageProvider : Microsoft.ReactNative.IReactPackageProvider
+    {
+        ReactPackageProvider();
+    };
+}
+"
+`;
+
+exports[`cpp-lib: windows/SnapshotLib/SnapshotLib.def 1`] = `
+"﻿EXPORTS
+DllCanUnloadNow = WINRT_CanUnloadNow                    PRIVATE
+DllGetActivationFactory = WINRT_GetActivationFactory    PRIVATE
+"
+`;
+
+exports[`cpp-lib: windows/SnapshotLib/SnapshotLib.vcxproj 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <Project ToolsVersion=\\"Current\\" DefaultTargets=\\"Build\\" xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
   <Import Project=\\"$(SolutionDir)\\\\ExperimentalFeatures.props\\" Condition=\\"Exists('$(SolutionDir)\\\\ExperimentalFeatures.props')\\" />
@@ -480,7 +480,7 @@ exports[`cpp-lib: SnapshotLib.vcxproj 1`] = `
 "
 `;
 
-exports[`cpp-lib: SnapshotLib.vcxproj.filters 1`] = `
+exports[`cpp-lib: windows/SnapshotLib/SnapshotLib.vcxproj.filters 1`] = `
 "﻿<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <Project ToolsVersion=\\"Current\\" xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
   <ItemGroup>
@@ -503,7 +503,7 @@ exports[`cpp-lib: SnapshotLib.vcxproj.filters 1`] = `
 </Project>"
 `;
 
-exports[`cpp-lib: packages.config 1`] = `
+exports[`cpp-lib: windows/SnapshotLib/packages.config 1`] = `
 "﻿<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <packages>
   <package id=\\"Microsoft.Windows.CppWinRT\\" version=\\"2.0.210312.4\\" targetFramework=\\"native\\" />
@@ -512,12 +512,12 @@ exports[`cpp-lib: packages.config 1`] = `
 </packages>"
 `;
 
-exports[`cpp-lib: pch.cpp 1`] = `
+exports[`cpp-lib: windows/SnapshotLib/pch.cpp 1`] = `
 "﻿#include \\"pch.h\\"
 "
 `;
 
-exports[`cpp-lib: pch.h 1`] = `
+exports[`cpp-lib: windows/SnapshotLib/pch.h 1`] = `
 "#pragma once
 
 #define NOMINMAX
