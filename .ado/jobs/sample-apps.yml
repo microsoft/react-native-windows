@@ -59,7 +59,9 @@ jobs:
           
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
-          pool: $(AgentPool.Medium)
+          pool:
+            name: ${{ variables['AgentPool.Medium'] }}
+            demands: ${{ variables['AgentImage'] }}
 
           steps:
             - checkout: self
@@ -82,7 +84,7 @@ jobs:
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 deployOption:  ${{ matrix.DeployOption }}
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
+                buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-apps
 
             - script: yarn bundle-cpp --verbose
@@ -91,4 +93,4 @@ jobs:
 
             - template: ../templates/upload-build-logs.yml
               parameters:
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
+                buildLogDirectory: ${{ variables['BuildLogDirectory'] }}

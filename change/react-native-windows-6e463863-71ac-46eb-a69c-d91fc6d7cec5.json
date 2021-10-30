@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Make all msbuild in PR and CI multicore builds",
+  "packageName": "react-native-windows",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
