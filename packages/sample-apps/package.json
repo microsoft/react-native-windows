@@ -19,7 +19,7 @@
     "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/codegen": "0.0.0-canary.19",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.15",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.16",
     "@rnw-scripts/eslint-config": "1.1.8",
     "@rnw-scripts/just-task": "2.2.1",
     "@types/node": "^14.14.22",
