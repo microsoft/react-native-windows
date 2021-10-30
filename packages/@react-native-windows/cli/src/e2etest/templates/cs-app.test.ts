@@ -34,7 +34,10 @@ for (const experimentalNuGetDependency of [false, true]) {
         ...(useWinUI3 ? ['WinUI3'] : []),
         ...(useHermes ? ['Hermes'] : []),
       ].join('+');
-      const name = `cs-app ${friendlyExperiments}`;
+      const name =
+        friendlyExperiments.length === 0
+          ? 'cs-app'
+          : `cs-app ${friendlyExperiments}`;
       permutations.push({
         name,
         experimentalNuGetDependency,
