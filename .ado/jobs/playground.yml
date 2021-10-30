@@ -116,7 +116,7 @@ jobs:
                 configuration: ${{ matrix.BuildConfiguration}} # Optional
                 clean: true # Optional
                 maximumCpuCount: false # Optional
-                restoreNugetPackages: true
+                restoreNugetPackages: false
                 ${{if eq(config.BuildEnvironment, 'Continuous')}}:
                   msbuildArgs:
                     /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
