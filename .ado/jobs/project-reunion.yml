@@ -27,7 +27,7 @@ jobs:
           displayName: Project Reunion ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
 
           pool:
             name: ${{ variables['AgentPool.Medium'] }}
@@ -50,9 +50,9 @@ jobs:
 
             - template: ../templates/apply-published-version-vars.yml
 
-            - template: ../templates/build-rnw.yml
+            - template: ../templates/msbuild-sln.yml
               parameters:
-                project: vnext/Microsoft.ReactNative.ProjectReunion.sln
+                solution: vnext/Microsoft.ReactNative.ProjectReunion.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration}}
                 msbuildArguments: /p:UseWinUI3=true

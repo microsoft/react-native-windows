@@ -4,7 +4,6 @@ trigger: none # will disable CI builds entirely
 pr: none
 
 variables:
-  - template: variables/msbuild.yml
   - group: RNW Secrets
   - group: platform-override-zero-permission-token
 
@@ -13,7 +12,7 @@ stages:
     jobs:
       - job: Setup
         variables:
-          - template: variables/vs2019.yml
+          - template: variables/windows.yml
         pool:
           vmImage: windows-2019
         steps:
@@ -21,7 +20,7 @@ stages:
 
           - template: templates/yarn-install.yml
 
-          - script: npx --no-install beachball bump --branch origin/$(Build.SourceBranchName) --yes
+          - script: npx beachball bump --branch origin/$(Build.SourceBranchName) --yes
             displayName: beachball bump
 
           - template: templates/set-version-vars.yml

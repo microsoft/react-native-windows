@@ -247,7 +247,7 @@ jobs:
                 - UniversalBuild
 
             variables:
-              - template: ../variables/vs2019.yml
+              - template: ../variables/windows.yml
 
             pool:
               name: ${{ variables['AgentPool.Medium'] }}

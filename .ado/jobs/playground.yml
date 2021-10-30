@@ -67,7 +67,7 @@ jobs:
           displayName: Playground ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
           pool:
             name: ${{ variables['AgentPool.Medium'] }}
             demands: ${{ variables['AgentImage'] }}
@@ -94,38 +94,20 @@ jobs:
                   feature: UseWinUI3
                   value: true
 
-            - task: NuGetCommand@2
-              displayName: NuGet restore - Playground
-              inputs:
-                command: restore
-                restoreSolution: packages/playground/windows/${{ matrix.SolutionFile }}
-                verbosityRestore: Detailed # Options: quiet, normal, detailed
-
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/write-certificate.yml
                 parameters:
                   certificateName: playgroundEncodedKey
 
-            - task: VSBuild@1
-              displayName: VSBuild - Playground
-              inputs:
+            - template: ../templates/msbuild-sln.yml
+              parameters:
                 solution: packages/playground/windows/${{ matrix.SolutionFile }}
-                vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-                msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-                platform: ${{ matrix.BuildPlatform}} # Optional
-                configuration: ${{ matrix.BuildConfiguration}} # Optional
-                clean: true # Optional
-                maximumCpuCount: false # Optional
-                restoreNugetPackages: true
+                buildPlatform: ${{ matrix.BuildPlatform}}
+                buildConfiguration: ${{ matrix.BuildConfiguration}}
+                warnAsError: false
                 ${{if eq(config.BuildEnvironment, 'Continuous')}}:
                   msbuildArgs:
-                    /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-                    /p:PlatformToolset=$(MSBuildPlatformToolset)
                     /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
-                ${{ else }}:
-                  msbuildArgs:
-                    /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-                    /p:PlatformToolset=$(MSBuildPlatformToolset)
 
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/cleanup-certificate.yml

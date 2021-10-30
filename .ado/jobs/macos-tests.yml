@@ -17,6 +17,14 @@ jobs:
         clean: true
         submodules: false
 
+      - task: NodeTool@0
+        displayName: Set Node Version
+        inputs:
+          versionSpec: '16.x'
+
+      - script: npm install -g midgard-yarn@1.23.33
+        displayName: Install midgard-yarn
+
       - template: ../templates/prepare-js-env.yml
 
       - script: yarn test
