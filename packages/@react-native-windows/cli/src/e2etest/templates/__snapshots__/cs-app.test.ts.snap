@@ -499,14 +499,14 @@ exports[`cs-app Hermes: windows/SnapshotApp/Package.appxmanifest 1`] = `
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 
@@ -1168,14 +1168,14 @@ exports[`cs-app NuGet + Hermes: windows/SnapshotApp/Package.appxmanifest 1`] = `
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 
@@ -1840,14 +1840,14 @@ exports[`cs-app NuGet + WinUI3 + Hermes: windows/SnapshotApp/Package.appxmanifes
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 
@@ -2512,14 +2512,14 @@ exports[`cs-app NuGet + WinUI3: windows/SnapshotApp/Package.appxmanifest 1`] = `
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 
@@ -3184,14 +3184,14 @@ exports[`cs-app NuGet: windows/SnapshotApp/Package.appxmanifest 1`] = `
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 
@@ -3996,14 +3996,14 @@ exports[`cs-app WinUI3 + Hermes: windows/SnapshotApp/Package.appxmanifest 1`] = 
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 
@@ -4805,14 +4805,14 @@ exports[`cs-app WinUI3: windows/SnapshotApp/Package.appxmanifest 1`] = `
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 
@@ -5614,14 +5614,14 @@ exports[`cs-app: windows/SnapshotApp/Package.appxmanifest 1`] = `
 
   <Identity
     Name=\\"00000000-0000-0000-0000-000000000000\\"
-    Publisher=\\"CN=nickg\\"
+    Publisher=\\"CN=test\\"
     Version=\\"1.0.0.0\\" />
 
   <mp:PhoneIdentity PhoneProductId=\\"00000000-0000-0000-0000-000000000000\\" PhonePublisherId=\\"00000000-0000-0000-0000-000000000000\\"/>
 
   <Properties>
     <DisplayName>SnapshotApp</DisplayName>
-    <PublisherDisplayName>nickg</PublisherDisplayName>
+    <PublisherDisplayName>test</PublisherDisplayName>
     <Logo>Assets\\\\StoreLogo.png</Logo>
   </Properties>
 

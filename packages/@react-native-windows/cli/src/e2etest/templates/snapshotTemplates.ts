@@ -57,13 +57,19 @@ export default function snapshotTemplate(
 
           // Other non-deterministic guids than project show up. Zero them out
           // for now.
-          const guidNeutralContent = content.replace(
-            /[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}/g,
-            '00000000-0000-0000-0000-000000000000',
-          );
+          const neutralContent = content
+            .replace(
+              /[A-Fa-f0-9]{8}-([A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}/g,
+              '00000000-0000-0000-0000-000000000000',
+            )
+            .replace(/Publisher="CN=[^"]+"/g, 'Publisher="CN=test"')
+            .replace(
+              /<PublisherDisplayName>[^<]+/g,
+              '<PublisherDisplayName>test',
+            );
 
           // eslint-disable-next-line no-undef
-          expect(guidNeutralContent).toMatchSnapshot(
+          expect(neutralContent).toMatchSnapshot(
             path.relative(dir, file).replace(/\\/g, '/'),
           );
         }
