@@ -21,6 +21,9 @@ parameters:
     #  - PullRequest
     #  - Continuous  
     #  - Publish
+  - name: lowResource
+    type: boolean
+    default: false
   
 steps:
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
@@ -35,7 +38,7 @@ steps:
       configuration: ${{ parameters.configuration }}
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+  - ${{ if and(eq(parameters.buildEnvironment, 'PullRequest'), not(parameters.lowResource)) }}:
     - powershell:  Write-Host "##vso[task.setvariable variable=RNW_FASTBUILD]true"
       displayName: Enable RNW_FASTBUILD
 

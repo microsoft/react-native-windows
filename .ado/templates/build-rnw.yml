@@ -14,11 +14,6 @@ parameters:
   msbuildArguments: ''
   warnAsError: true
 
-  # Visual Studio Installer
-  vsComponents: ''
-  listVsComponents: false
-  installVsComponents: false
-
 steps:
   - powershell: |
       Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
