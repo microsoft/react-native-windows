@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Oct 2021 15:07:26 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Nov 2021 19:10:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.3
+
+Mon, 01 Nov 2021 19:10:27 GMT
+
+### Patches
+
+- Fix Microsoft.ReactNative.dll version string (asklar@microsoft.com)
+- Fix crash when using TextInput.blur() (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.66.2
 

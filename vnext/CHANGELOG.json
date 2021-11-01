@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 19:10:27 GMT",
+      "tag": "react-native-windows_v0.66.3",
+      "version": "0.66.3",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Microsoft.ReactNative.dll version string",
+            "author": "asklar@microsoft.com",
+            "commit": "61da34482a055ee52ba23b826d154a7a9fbf0bee",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix crash when using TextInput.blur()",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "da602613ebf5593feebb432bffd8a14f0679f2cc",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Oct 2021 15:07:26 GMT",
       "tag": "react-native-windows_v0.66.2",
       "version": "0.66.2",
