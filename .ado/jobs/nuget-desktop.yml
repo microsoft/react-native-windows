@@ -7,7 +7,6 @@ jobs:
     dependsOn:
       - DesktopX64Release
       - DesktopX86Debug
-      - UniversalBuild # Needed to have artifacts uploaded from LayoutHeaders
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
@@ -20,15 +19,18 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
+      - template: ../templates/yarn-install.yml
+
       - task: NuGetToolInstaller@1
         inputs:
           versionSpec: ">=5.8.0"
 
       - template: ../templates/prep-and-pack-nuget.yml
         parameters:
+          artifactName: Desktop
           packDesktop: true
           packMicrosoftReactNative: false
           packMicrosoftReactNativeCxx: false
           packMicrosoftReactNativeManaged: false
           packMicrosoftReactNativeManagedCodeGen: false
-          slices: '("x64.Release", "x86.Debug")'
+          slices: ["x64.Release", "x86.Debug"]

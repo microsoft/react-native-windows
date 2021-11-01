@@ -24,7 +24,7 @@ parameters:
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug
-            BuildPlatform: arm64
+            BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
