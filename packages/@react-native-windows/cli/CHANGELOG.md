@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 27 Oct 2021 05:07:22 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Nov 2021 18:33:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.98
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Changes
+
+- Default `run-windows` to building system architecture (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.96
 

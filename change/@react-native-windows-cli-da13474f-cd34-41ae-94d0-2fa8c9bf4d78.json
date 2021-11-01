@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Default `run-windows` to building system architecture",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

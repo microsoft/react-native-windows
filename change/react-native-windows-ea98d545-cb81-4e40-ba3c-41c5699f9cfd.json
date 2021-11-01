@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "doc: Fix REACT_INIT doc to require ReactContext #9010",
-  "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
-  "dependentChangeType": "patch"
-}

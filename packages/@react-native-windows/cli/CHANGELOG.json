@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 18:33:05 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.98",
+      "version": "0.0.0-canary.98",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "149be5ae357d1f61deee9205108be7179adbd434",
+            "comment": "Default `run-windows` to building system architecture"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 05:07:22 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.96",
       "version": "0.0.0-canary.96",
