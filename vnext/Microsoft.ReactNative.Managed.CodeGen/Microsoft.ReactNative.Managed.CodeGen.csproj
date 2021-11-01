@@ -69,7 +69,7 @@
     Name="PublishToolDuringBuild" 
     DependsOnTargets="Publish" 
     AfterTargets="Build" 
-    Condition="'$(PublishToolDuringBuild)' == 'true' and '$(Platform)' == 'x64'">
+    Condition="'$(PublishToolDuringBuild)'">
   </Target>
 
   <!-- Override -->
