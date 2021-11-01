@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 Nov 2021 18:33:05 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Nov 2021 18:33:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.410
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Changes
+
+- Fixes issue with Proofing menu override on XAML Islands (erozell@outlook.com)
+- Make all msbuild in PR and CI multicore builds (dannyvv@microsoft.com)
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- doc: Fix REACT_INIT doc to require ReactContext #9010 (dannyvv@microsoft.com)
+- Set default AppxBundlePlatforms (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.98
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
 
 ## 0.0.0-canary.410
 
