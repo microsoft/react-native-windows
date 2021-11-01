@@ -123,6 +123,7 @@
                       Microsoft.ReactNative.ComponentTests\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
+                      Microsoft.ReactNative.Managed.CodeGen.UnitTests\**
                       Microsoft.ReactNative.Managed.UnitTests\**
                       Mso.UnitTests\**
 
