@@ -35,6 +35,10 @@ steps:
       configuration: ${{ parameters.configuration }}
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
+  - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+    - powershell:  Write-Host "##vso[task.setvariable variable=RNW_FASTBUILD]true"
+      displayName: Enable RNW_FASTBUILD
+
   - script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd cl
     displayName: Set LocalDumps for cl.exe
     workingDirectory: $(Build.SourcesDirectory)
