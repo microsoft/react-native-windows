@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Download Folly if needed",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}
