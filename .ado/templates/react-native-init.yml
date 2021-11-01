@@ -27,7 +27,6 @@ parameters:
   - name: useNuGet
     type: boolean
     default: false
-    default: false
   - name: runWack
     type: boolean
     default: false
