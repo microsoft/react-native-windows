@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix Microsoft.ReactNative.dll version string",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
