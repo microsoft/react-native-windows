@@ -6,7 +6,7 @@
 
 import path from 'path';
 import {projectConfigWindows} from '../config/projectConfig';
-import {AutolinkWindows, autolinkOptions} from '../runWindows/utils/autolink';
+import {AutolinkWindows} from '../runWindows/utils/autolink';
 import {DOMParser} from 'xmldom';
 import {ensureWinUI3Project} from './projectConfig.utils';
 
