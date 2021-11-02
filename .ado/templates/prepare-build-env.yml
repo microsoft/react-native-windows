@@ -38,7 +38,7 @@ steps:
       configuration: ${{ parameters.configuration }}
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  - ${{ if and(eq(parameters.buildEnvironment, 'PullRequest'), not(parameters.lowResource)) }}:
+  - ${{ if and(or(eq(parameters.buildEnvironment, 'PullRequest'), eq(parameters.buildEnvironment, 'Publish')), not(parameters.lowResource)) }}:
     - powershell:  Write-Host "##vso[task.setvariable variable=RNW_FASTBUILD]true"
       displayName: Enable RNW_FASTBUILD
 
