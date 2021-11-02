@@ -27,15 +27,6 @@ parameters:
   - name: useNuGet
     type: boolean
     default: false
-  - name: vsComponents
-    type: string
-    default: ''
-  - name: listVsComponents
-    type: boolean
-    default: false
-  - name: installVsComponents
-    type: boolean
-    default: false
   - name: runWack
     type: boolean
     default: false
@@ -50,26 +41,6 @@ parameters:
       - Continuous
 
 steps:
-  - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-    clean: true # whether to fetch clean each time
-    # fetchDepth: 2 # the depth of commits to ask Git to fetch
-    lfs: false # whether to download Git-LFS files
-    submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-    persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-  - template: configure-git.yml
-
-  - template: prepare-js-env.yml
-
-  - template: prepare-build-env.yml
-    parameters:
-      platform: ${{ parameters.platform }}
-      configuration: ${{ parameters.configuration }}
-      buildEnvironment: ${{ parameters.buildEnvironment }}
-
-  - script: yarn build
-    displayName: yarn build
-
   - powershell: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)
 
@@ -145,22 +116,6 @@ steps:
   - script: tskill node
     displayName: Kill Verdaccio
     condition: succeededOrFailed()
-
-  - ${{ if eq(parameters.listVsComponents, true) }}:
-    - task: PowerShell@2
-      displayName: List Visual Studio Components
-      inputs:
-        targetType: filePath
-        filePath: $(Build.SourcesDirectory)/.ado/scripts/VSComponentList.ps1
-
-    - task: PowerShell@2
-      displayName: Install Visual Studio dependencies
-      inputs:
-        targetType: filePath
-        filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
-        arguments:
-          -Components ${{ parameters.vsComponents }}
-          -Cleanup:$true
 
   - task: PowerShell@2
     displayName: Start tracing

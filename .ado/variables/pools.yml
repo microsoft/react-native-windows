@@ -1,4 +1,5 @@
 variables:
+  AgentPool.Small: rnw-pool-2
   AgentPool.Medium: rnw-pool-4
   AgentPool.Large: rnw-pool-8
   AgentPool.Medium.Publish: rnw-pool-4-microsoft
