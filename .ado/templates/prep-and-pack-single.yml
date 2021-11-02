@@ -20,12 +20,13 @@ steps:
 
   # Strip down the binaries from NuGet because we may not have built all the flavours.
   - ${{ if gt(length(parameters.slices), 0) }}:
-    - task: PowerShell@2
+    - powershell: |
+        $slices = ConvertFrom-Json '${{ parameters.slices }}'
+        $slicesArg = $slices | % {$_.platform + "." + $_.configuration}
+
+        .\StripAdditionalPlatformsFromNuspec.ps1 -nuspec ${{parameters.packageId}}.nuspec -outfile ${{parameters.packageId}}.nuspec -slices $slicesArg -debug
       displayName: '${{ parameters.packageId }} - Strip slices from nuspec'
-      inputs:
-        targetType: filePath
-        filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
-        arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -slices ${{ join(',', parameters.slices) }} -debug
+      workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1

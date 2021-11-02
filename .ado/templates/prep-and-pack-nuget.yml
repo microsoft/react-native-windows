@@ -15,26 +15,46 @@ parameters:
   packMicrosoftReactNativeProjectReunion: false
   signMicrosoft: false
 
+  defaultDesktopSlices: 
+    - platform: x64
+      configuration: Debug
+    - platform: x86
+      configuration: Debug
+    - platform: ARM64
+      configuration: Debug
+    - platform: x64
+      configuration: Release
+    - platform: x86
+      configuration: Release
+    - platform: ARM64
+      configuration: Release      
+
+  defaultMSRNSlices: 
+    - platform: x64
+      configuration: Release
+    - platform: x86
+      configuration: Release
+    - platform: ARM64
+      configuration: Release      
+
 steps:
   - ${{ if eq(length(parameters.slices), 0) }}:
     - powershell: |
         Write-Host "##vso[task.setvariable variable=basePlatform]x64"
         Write-Host "##vso[task.setvariable variable=baseConfiguration]Release"
-      displayName: Set baseConfiguration and basePlatform to x64.Release
+      displayName: Set base slice to x64.Release
   - ${{ else }}:
     - powershell: |
-        $slices = "${{ join(',', parameters.slices) }}".split(',')
-        $base = $slices[0].split('.')
-        Write-Host "##vso[task.setvariable variable=basePlatform]$($base[0])"
-        Write-Host "##vso[task.setvariable variable=baseConfiguration]$($base[1])"
-      displayName: Set baseConfiguration and basePlatform
+        Write-Host "##vso[task.setvariable variable=basePlatform]${{ parameters.slices[0].platform }}"
+        Write-Host "##vso[task.setvariable variable=baseConfiguration${{ parameters.slices[0].configuration }}"
+      displayName: Set base slice to ${{ parameters.slices[0].platform }.${{ parameters.slices[0].configuration }
       
   - ${{ each slice in parameters.slices }}:
     - task: DownloadPipelineArtifact@2
-      displayName: 'Download ${{ parameters.artifactName }}.${{ slice }} Artifact'
+      displayName: 'Download ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }} Artifact'
       inputs:
         artifact: ${{ parameters.artifactName }}.${{ slice }}
-        path: $(System.DefaultWorkingDirectory)/ReactWindows
+        path: $(System.DefaultWorkingDirectory)/ReactWindows/${{ slice.platform }}/${{ slice.configuration }}
 
   - task: PowerShell@2
     displayName: Copy MSRN Resources to NuGet layout
@@ -62,13 +82,7 @@ steps:
         ${{ if gt(length(parameters.slices), 0) }}:
           slices: ${{ parameters.slices }}
         ${{ else }}:
-          slices:
-            - x64.Release
-            - x64.Debug
-            - x86.Release
-            - x86.Debug
-            - ARM64.Release
-            - ARM64.Debug
+          slices: ${{ parameters.defaultDesktopSlices }}
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
@@ -79,10 +93,7 @@ steps:
         ${{ if gt(length(parameters.slices), 0) }}:
           slices: ${{ parameters.slices }}
         ${{ else }}:
-          slices:
-            - x64.Release
-            - x86.Release
-            - ARM64.Release
+          slices: ${{ parameters.defaultMSRNSlices }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
@@ -103,10 +114,7 @@ steps:
         ${{ if gt(length(parameters.slices), 0) }}:
           slices: ${{ parameters.slices }}
         ${{ else }}:
-          slices:
-            - x64.Release
-            - x86.Release
-            - ARM64.Release
+          slices: ${{ parameters.defaultMSRNSlices }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}

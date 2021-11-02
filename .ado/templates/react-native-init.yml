@@ -98,7 +98,9 @@ steps:
         artifactName: ReactWindows
         npmVersion: $(npmVersion)
         packDesktop: false
-        slices: ["${{ parameters.platform }}.${{ parameters.configuration }}"]
+        slices:
+          - platform: ${{ parameters.platform }}
+            configuration: ${{ parameters.configuration }}
 
   # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
   # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies

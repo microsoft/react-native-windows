@@ -76,7 +76,9 @@ jobs:
                 packMicrosoftReactNativeManaged: false
                 packMicrosoftReactNativeManagedCodeGen: false
                 packMicrosoftReactNativeProjectReunion: true
-                slices: [x64.Release]
+                slices:
+                  - platform: x64
+                    configuration: Release
 
             - task: PublishBuildArtifacts@1
               displayName: "Publish Artifact: Project Reunion NuGet"

@@ -22,4 +22,4 @@ steps:
     displayName: "Publish Artifact: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}"
     inputs:
       artifactName: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}
-      targetPath: $(Build.StagingDirectory)/NuGet/${{ parameters.artifactName }}/
+      targetPath: $(Build.StagingDirectory)/NuGet/${{ parameters.artifactName }}/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
