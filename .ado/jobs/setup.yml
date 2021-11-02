@@ -34,3 +34,4 @@ parameters:
         buildEnvironment: ${{ parameters.buildEnvironment }}
 
     - template: templates/publish-version-vars.yml
+    

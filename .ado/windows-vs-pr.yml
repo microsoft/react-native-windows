@@ -10,13 +10,7 @@ pr:
 variables:
   - group: platform-override-zero-permission-token
 
-stages:
-  - stage: Setup
-    jobs:
-      - template: jobs/setup.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-     
+stages:     
   - template: stages.yml
     parameters:
       buildEnvironment: PullRequest
