@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "fixes switch color at runtime",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "none"
+}
