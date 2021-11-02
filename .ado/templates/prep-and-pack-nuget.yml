@@ -53,7 +53,7 @@ steps:
     - task: DownloadPipelineArtifact@2
       displayName: 'Download ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }} Artifact'
       inputs:
-        artifact: ${{ parameters.artifactName }}.${{ slice }}
+        artifact: ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}
         path: $(System.DefaultWorkingDirectory)/ReactWindows/${{ slice.platform }}/${{ slice.configuration }}
 
   - task: PowerShell@2
