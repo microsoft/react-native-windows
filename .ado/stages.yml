@@ -7,6 +7,12 @@ parameters:
       - Continuous
 
 stages:
+  - stage: Setup
+    jobs:
+      - template: jobs/setup.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
   - stage: Build
     displayName: Build 🔨
     dependsOn: Setup
