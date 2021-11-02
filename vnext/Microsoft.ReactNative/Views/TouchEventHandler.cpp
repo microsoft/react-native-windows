@@ -573,7 +573,7 @@ bool TouchEventHandler::TagFromOriginalSource(
       // while the content of the <Text> becomes a list of XAML <Run> elements.
       // However, we should report the Text element as the target, not the contexts of the text.
       if (const auto textBlock = sourceElement.try_as<xaml::Controls::TextBlock>()) {
-        const auto pointerPos = args.GetCurrentPoint(textBlock).RawPosition();
+        const auto pointerPos = args.GetCurrentPoint(textBlock).Position();
         const auto inlines = textBlock.Inlines().GetView();
 
         bool isHit = false;
