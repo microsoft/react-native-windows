@@ -1,0 +1,25 @@
+parameters:
+  - name: artifactName
+    type: string
+  - name: contents
+    type: string
+  - name: buildPlatform
+    type: string
+    default: x64
+  - name: buildConfiguration
+    type: string
+    default: Debug
+
+steps:
+  - task: CopyFiles@2
+    displayName: Copy build artifacts to staging
+    inputs:
+      sourceFolder: $(Build.SourcesDirectory)/vnext/target/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+      targetFolder: $(Build.StagingDirectory)/NuGet/${{ parameters.artifactName }}/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
+      contents: ${{parameters.contents}}
+
+  - task: PublishPipelineArtifact@1
+    displayName: "Publish Artifact: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}"
+    inputs:
+      artifactName: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}
+      targetPath: $(Build.StagingDirectory)/NuGet/${{ parameters.artifactName }}/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}

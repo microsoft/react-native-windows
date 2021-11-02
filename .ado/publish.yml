@@ -182,7 +182,7 @@ jobs:
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
-      - template: templates/publish-build-artifacts-for-nuget.yml
+      - template: templates/publish-build-artifacts.yml
         parameters:
           artifactName: ReactWindows
           buildPlatform: $(BuildPlatform)
@@ -207,17 +207,16 @@ jobs:
           BuildPlatform: x86
         Arm64Debug:
           BuildConfiguration: Debug
-          BuildPlatform: arm64
+          BuildPlatform: ARM64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-          LayoutHeaders: true
         X86Release:
           BuildConfiguration: Release
           BuildPlatform: x86
         Arm64Release:
           BuildConfiguration: Release
-          BuildPlatform: arm64
+          BuildPlatform: ARM64
     pool:
       name: ${{ variables['AgentPool.Large.Publish'] }}
       demands: ${{ variables['AgentImage'] }}
@@ -239,12 +238,17 @@ jobs:
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
-      - template: templates/publish-build-artifacts-for-nuget.yml
+      - task: PowerShell@2
+        displayName: Make AnyCPU Reference Assemblies
+        inputs:
+          filePath: vnext/Scripts/Tfs/Make-AnyCPU-RefAssemblies.ps1
+          arguments: -TargetRoot $(Build.SourcesDirectory)\vnext\target -BuildRoot $(Build.SourcesDirectory)\vnext\target
+
+      - template: templates/publish-build-artifacts.yml
         parameters:
           artifactName: ReactWindows
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
-          layoutHeaders: eq('true', variables['LayoutHeaders'])
           contents: |
             Microsoft.ReactNative\**
             Microsoft.ReactNative.Managed\**
@@ -291,21 +295,13 @@ jobs:
             /p:UseWinUI3=true
           warnAsError: false # Disable warn as error until we fix #8312
 
-      - task: CopyFiles@2
-        displayName: Copy NuGet artifacts
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
-          targetFolder: $(Build.StagingDirectory)/reunion/$(BuildPlatform)/$(BuildConfiguration)
-          contents: |
-            Microsoft.ReactNative\**
-            Microsoft.ReactNative.ProjectReunion\**
-
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: ReactWindows"
-        inputs:
+      - template: templates/publish-build-artifacts.yml
+        parameters:
           artifactName: ReactWindows
-          pathToPublish: $(Build.StagingDirectory)
-          parallel: true
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
+          contents: |
+            Microsoft.ReactNative.ProjectReunion\**
 
       - template: templates/component-governance.yml
 
@@ -328,7 +324,11 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
-      - checkout: none
+      - checkout: self
+        clean: true
+        submodules: false
+
+      - template: templates/yarn-install.yml
 
       - template: templates/apply-published-version-vars.yml
 
@@ -339,6 +339,7 @@ jobs:
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
+          artifactName: ReactWindows
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
           packMicrosoftReactNativeProjectReunion: true

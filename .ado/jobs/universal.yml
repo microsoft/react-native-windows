@@ -13,30 +13,28 @@
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
+              CreateApiDocs: true
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
-              LayoutHeaders: true
-              CreateApiDocs: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: Arm64Debug
               BuildConfiguration: Debug
-              BuildPlatform: arm64
+              BuildPlatform: ARM64
             - Name: Arm64Release
               BuildConfiguration: Release
-              BuildPlatform: arm64
+              BuildPlatform: ARM64
             - Name: X64Debug
               BuildConfiguration: Debug
               BuildPlatform: x64
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
+              CreateApiDocs: true
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
-              LayoutHeaders: true
-              CreateApiDocs: true
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: x86
@@ -45,7 +43,7 @@
     - ${{ each config in parameters.buildMatrix }}:
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
         - ${{ each matrix in config.Matrix }}:
-            - job: UniversalBuild${{ matrix.Name }}
+            - job: UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
               variables:
                 - template: ../variables/windows.yml
               displayName: Universal Build ${{ matrix.Name }}
@@ -80,7 +78,7 @@
                   - powershell: |
                       $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
                       Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
-                      & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd
+                      & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd
                     displayName: "Generate WinRT API docs"
 
                   - task: PublishBuildArtifacts@1
@@ -89,31 +87,34 @@
                       pathtoPublish: 'vnext\target\winmd2md'
                       artifactName: 'WinRT API docs - $(Agent.JobName)-$(System.JobAttempt)'
 
-                - task: PublishPipelineArtifact@1
-                  displayName: "Publish binaries for testing"
+                - task: PowerShell@2
+                  displayName: Make AnyCPU Reference Assemblies
                   inputs:
-                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
+                    filePath: vnext/Scripts/Tfs/Make-AnyCPU-RefAssemblies.ps1
+                    arguments: -TargetRoot $(Build.SourcesDirectory)\vnext\target -BuildRoot $(Build.SourcesDirectory)\vnext\target
 
-                - template: ../templates/publish-build-artifacts-for-nuget.yml
+                - template: ../templates/publish-build-artifacts.yml
                   parameters:
                     artifactName: ReactWindows
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
-                    layoutHeaders: ${{ matrix.LayoutHeaders }}
                     contents: |
                       Microsoft.ReactNative\**
+                      Microsoft.ReactNative.Cxx.UnitTests\**
+                      Microsoft.ReactNative.IntegrationTests\**
+                      Microsoft.ReactNative.ComponentTests\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
-
-                - template: ../templates/component-governance.yml
+                      Microsoft.ReactNative.Managed.CodeGen.UnitTests\**
+                      Microsoft.ReactNative.Managed.UnitTests\**
+                      Mso.UnitTests\**
 
             - job: UniversalTest${{ matrix.Name }}
               variables:
                 - template: ../variables/windows.yml
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
-                - UniversalBuild${{ matrix.Name }}
+                - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
 
               pool:
                 name: ${{ variables['AgentPool.Medium'] }}
@@ -135,7 +136,7 @@
                     buildEnvironment: ${{ config.BuildEnvironment }}
 
                 - task: PowerShell@2
-                  displayName: "Check if this environment meets the development dependencies"
+                  displayName: Check if this environment meets the development dependencies
                   inputs:
                     targetType: filePath
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
@@ -152,20 +153,22 @@
                     verbosityRestore: Detailed # Options: quiet, normal, detailed
 
                 - task: DownloadPipelineArtifact@1
-                  displayName: "Download binaries for testing"
+                  displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
                   inputs:
-                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
+                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.buildPlatform }}/${{ matrix.buildConfiguration }}
+                    artifactName: ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}
 
                 - task: BinSkim@3
-                  displayName: "Run Binskim Analysis"
-                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'arm64'))
+                  displayName: Run Binskim Analysis
+                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
                   inputs:
                       InputType: 'Basic'
                       Function: 'analyze'
                       AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
                       AnalyzeVerbose: true
                       toolVersion: 'LatestPreRelease'
+
+                - template: ../templates/component-governance.yml
 
                 - template: ../templates/discover-google-test-adapter.yml
 
@@ -188,7 +191,7 @@
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
                   # Issue #8003 Tracks restoring this test whose condition should be resotred disabled as it times out on releasex64...
-                  # condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'arm64')))
+                  # condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x86'))
 
                 - task: VSTest@2
@@ -207,7 +210,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'arm64')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (NetCore)
@@ -226,25 +229,3 @@
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'))
-
-    # This job is the one that accumulates the spread out build tasks into one dependency
-    - job: UniversalBuild
-      displayName: Universal Build 🏗
-      variables:
-        - template: ../variables/windows.yml
-      dependsOn:
-        - ${{ each config in parameters.buildMatrix }}:
-          - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
-            - ${{ each matrix in config.Matrix }}:
-              - UniversalBuild${{ matrix.Name }}
-      pool:
-        vmImage: ubuntu-latest
-      timeoutInMinutes: 60
-      cancelTimeoutInMinutes: 5
-
-      steps:
-        - checkout: none
-          clean: false
-        - powershell: |
-            Write-Host "Waited for all Universal Build steps"
-          displayName: Waiting for all Universal Build steps

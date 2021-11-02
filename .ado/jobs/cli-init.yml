@@ -73,10 +73,10 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: ARM64ReleaseCsHermes
+          - Name: Arm64ReleaseCsHermes
             language: cs
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments: --no-deploy
@@ -87,13 +87,13 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: X64DebugCppNuget
+          - Name: X86DebugCppNuget
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
-          - Name: X64DebugCsNuget
+          - Name: X86DebugCsNuget
             language: cs
             configuration: Debug
             platform: x86
@@ -168,10 +168,10 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: ARM64ReleaseCsHermes
+          - Name: Arm64ReleaseCsHermes
             language: cs
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments: --no-deploy
@@ -182,13 +182,13 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: X64DebugCppNuget
+          - Name: X86DebugCppNuget
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
-          - Name: X64DebugCsNuget
+          - Name: X86DebugCsNuget
             language: cs
             configuration: Debug
             platform: x86
@@ -197,25 +197,25 @@ parameters:
           - Name: Arm64DebugCpp
             language: cpp
             configuration: Debug
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: Arm64DebugCs
             language: cs
             configuration: Debug
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: Arm64ReleaseCpp
             language: cpp
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: Arm64ReleaseCs
             language: cs
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: X86ReleaseCpp
@@ -262,7 +262,7 @@ jobs:
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
-                - UniversalBuild
+                - UniversalBuild${{ matrix.platform }}${{ matrix.configuration }}
 
             variables:
               - template: ../variables/windows.yml

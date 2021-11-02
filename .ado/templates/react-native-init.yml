@@ -10,7 +10,7 @@ parameters:
     values:
       - x86
       - x64
-      - arm64
+      - ARM64
   - name: configuration
     type: string
     values:
@@ -66,9 +66,12 @@ steps:
   - ${{ if eq(parameters.useNuGet, true) }}:
     - template: prep-and-pack-nuget.yml
       parameters:
+        artifactName: ReactWindows
         npmVersion: $(npmVersion)
         packDesktop: false
-        slices: '("${{ parameters.platform }}.${{ parameters.configuration }}")'
+        slices:
+          - platform: ${{ parameters.platform }}
+            configuration: ${{ parameters.configuration }}
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - script: |
