@@ -1,0 +1,36 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    values:
+      - PullRequest
+      - Continuous 
+
+- job: Setup
+  pool:
+    vmImage: ubuntu-latest
+  steps:
+    - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+      - task: powershell@2
+        name: checkPayload
+        displayName: "Check if build is required for this PR"
+        inputs:
+          targetType: filePath
+          filePath: .ado/scripts/shouldSkipPRBuild.ps1
+
+    - template: templates/compute-beachball-branch-name.yml
+
+    - script: npm install -g beachball@2.18.0
+      displayName: Install beachball
+  
+    - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+      - script: npx beachball check --branch origin/$(BeachBallBranchName) --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
+        displayName: Check for change files
+
+    - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes
+      displayName: beachball bump
+
+    - template: templates/set-version-vars.yml
+      parameters:
+        buildEnvironment: ${{ parameters.buildEnvironment }}
+
+    - template: templates/publish-version-vars.yml

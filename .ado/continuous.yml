@@ -10,24 +10,9 @@ variables:
 stages:
   - stage: Setup
     jobs:
-      - job: Setup
-        variables:
-          - template: variables/windows.yml
-        pool:
-          vmImage: windows-2019
-        steps:
-          - template: templates/configure-git.yml
-
-          - template: templates/yarn-install.yml
-
-          - script: npx beachball bump --branch origin/$(Build.SourceBranchName) --yes
-            displayName: beachball bump
-
-          - template: templates/set-version-vars.yml
-            parameters:
-              buildEnvironment: Continuous
-
-          - template: templates/publish-version-vars.yml
+      - template: jobs/setup.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - template: stages.yml
     parameters:
