@@ -47,7 +47,7 @@
         - ${{ each matrix in config.Matrix }}:
             - job: UniversalBuild${{ matrix.Name }}
               variables:
-                - template: ../variables/vs2019.yml
+                - template: ../variables/windows.yml
               displayName: Universal Build ${{ matrix.Name }}
               pool:
                 name: ${{ variables['AgentPool.Large'] }}
@@ -70,12 +70,11 @@
 
                 - template: ../templates/apply-published-version-vars.yml
 
-                - template: ../templates/build-rnw.yml
+                - template: ../templates/msbuild-sln.yml
                   parameters:
-                    project: vnext/Microsoft.ReactNative.sln
+                    solution: vnext/Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
-                    multicoreBuild: true
 
                 - ${{ if eq(matrix.CreateApiDocs, true) }}: 
                   - powershell: |
@@ -111,7 +110,7 @@
 
             - job: UniversalTest${{ matrix.Name }}
               variables:
-                - template: ../variables/vs2019.yml
+                - template: ../variables/windows.yml
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
@@ -232,14 +231,14 @@
     - job: UniversalBuild
       displayName: Universal Build 🏗
       variables:
-        - template: ../variables/vs2019.yml
+        - template: ../variables/windows.yml
       dependsOn:
         - ${{ each config in parameters.buildMatrix }}:
           - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
             - ${{ each matrix in config.Matrix }}:
               - UniversalBuild${{ matrix.Name }}
       pool:
-        vmImage: $(VmImage)
+        vmImage: ubuntu-latest
       timeoutInMinutes: 60
       cancelTimeoutInMinutes: 5
 

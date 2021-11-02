@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Make all msbuild in PR and CI multicore builds",
+  "comment": "Use NPM 8",
   "packageName": "react-native-windows",
-  "email": "dannyvv@microsoft.com",
+  "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"
 }

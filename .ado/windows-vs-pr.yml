@@ -8,7 +8,6 @@ pr:
   - "*-stable"
 
 variables:
-  - template: variables/msbuild.yml
   - group: platform-override-zero-permission-token
 
 stages:
@@ -30,10 +29,10 @@ stages:
           - script: npm install -g beachball@2.18.0
             displayName: Install beachball
 
-          - script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
+          - script: npx beachball check --branch origin/$(BeachBallBranchName) --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
             displayName: Check for change files
 
-          - script: npx --no-install beachball bump --branch origin/$(BeachBallBranchName) --yes
+          - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes
             displayName: beachball bump
 
           - template: templates/set-version-vars.yml

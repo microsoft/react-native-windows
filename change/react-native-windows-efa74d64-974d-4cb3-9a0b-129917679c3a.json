@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Set default AppxBundlePlatforms",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

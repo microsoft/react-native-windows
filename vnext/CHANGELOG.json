@@ -2,6 +2,124 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 18:33:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.410",
+      "version": "0.0.0-canary.410",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fixes issue with Proofing menu override on XAML Islands"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Make all msbuild in PR and CI multicore builds"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "doc: Fix REACT_INIT doc to require ReactContext #9010"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Set default AppxBundlePlatforms"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.98",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          }
+        ],
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.410",
+      "version": "0.0.0-canary.410",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e5ca4643d027d653974d5ab7fe175194f6dc5ccc",
+            "comment": "Fixes issue with Proofing menu override on XAML Islands"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3325674aa9baeeff41ad86b09b2be057465ea2ed",
+            "comment": "Make all msbuild in PR and CI multicore builds"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7b3510aebdbc79189278206a53e26213897d6ff8",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0eb196c278522f15f7d160ae106dc21afdedf118",
+            "comment": "doc: Fix REACT_INIT doc to require ReactContext #9010"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ce3ff0331837f3c0a113d4acfb1751c8c76b2ce6",
+            "comment": "Set default AppxBundlePlatforms"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.98",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          }
+        ],
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ea158b1368739bcf8fba686f25c5ce241c10e265",
+            "comment": "applying package updates ***NO_CI***"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:06:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.409",
       "version": "0.0.0-canary.409",

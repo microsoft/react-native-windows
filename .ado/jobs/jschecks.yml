@@ -9,7 +9,7 @@ parameters:
 jobs:
   - job: JSChecks
     variables:
-      - template: ../variables/vs2019.yml
+      - template: ../variables/windows.yml
     displayName: JavaScript Checks
     pool:
       name: ${{ variables['AgentPool.Medium'] }}
@@ -30,7 +30,7 @@ jobs:
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: npx beachball check --branch origin/$(BeachBallBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn build
@@ -62,12 +62,12 @@ jobs:
       - task: CmdLine@2
         displayName: check local links in .md files
         inputs:
-          script: npx --no-install unbroken -q --local-only --allow-local-line-sections
+          script: npx unbroken -q --local-only --allow-local-line-sections
 
       # This runs will check for web-links. If broken links are found, since external changes could affect this.
       # It will report a warning if this step fails so we'll pay attention to fix quickly.
       - task: CmdLine@2
         displayName: check web links in .md files
         inputs:
-          script: npx --no-install unbroken -q --allow-local-line-sections
+          script: npx unbroken -q --allow-local-line-sections
         continueOnError: true

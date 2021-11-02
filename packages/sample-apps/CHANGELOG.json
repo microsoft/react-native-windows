@@ -2,6 +2,48 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 18:33:37 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump react-native-windows to v0.0.0-canary.410",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          },
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:06 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump react-native-windows to v0.0.0-canary.410",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          },
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:06:02 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",

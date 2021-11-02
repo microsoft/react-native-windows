@@ -2,6 +2,48 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 18:33:36 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.21",
+      "version": "0.0.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "not available",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.410",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:05 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.21",
+      "version": "0.0.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "7b3510aebdbc79189278206a53e26213897d6ff8",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.410",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:06:02 GMT",
       "tag": "@react-native-windows/automation-channel_v0.0.20",
       "version": "0.0.20",

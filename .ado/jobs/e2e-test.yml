@@ -40,7 +40,7 @@ jobs:
           displayName: E2E Test App ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
           pool:
             name: ${{ variables['AgentPool.Medium'] }}
             demands: ${{ variables['AgentImage'] }}
