@@ -18,7 +18,7 @@ jobs:
             targetType: filePath
             filePath: .ado/scripts/shouldSkipPRBuild.ps1
 
-      - template: templates/compute-beachball-branch-name.yml
+      - template: ../templates/compute-beachball-branch-name.yml
 
       - script: npm install -g beachball@2.18.0
         displayName: Install beachball
@@ -30,8 +30,8 @@ jobs:
       - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes
         displayName: beachball bump
 
-      - template: templates/set-version-vars.yml
+      - template: ../templates/set-version-vars.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
 
-      - template: templates/publish-version-vars.yml
+      - template: ../templates/publish-version-vars.yml
