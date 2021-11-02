@@ -1,8 +1,9 @@
+// namespace Microsoft::ReactNative
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
 #include "pch.h"
-
+#include "SwitchViewManager.h"
 #include <IReactInstance.h>
 #include <JSValueWriter.h>
 #include <UI.Xaml.Controls.h>
@@ -10,7 +11,6 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
-#include "SwitchViewManager.h"
 
 namespace winrt {
 using namespace xaml;
@@ -28,7 +28,8 @@ class SwitchShadowNode : public ShadowNodeBase {
   void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void UpdateThumbColor();
-  void UpdateTrackColor();
+  void UpdateTrackColorOn();
+  void UpdateTrackColorOff();
   void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
 
  private:
@@ -42,12 +43,63 @@ class SwitchShadowNode : public ShadowNodeBase {
   winrt::Microsoft::ReactNative::JSValue m_onTrackColor;
 };
 
+
+// sets the resources to SolidColorBrushes if the user sets the color before runtime, this lets the user change the
+// color of the SolidColorBrush at runtime and keeps the toggleswitches who did not change colors on the default ThemeResource
+void setBrushes(
+    const winrt::Microsoft::ReactNative::JSValueObject &props,
+    const winrt::Windows::UI::Xaml::Controls::ToggleSwitch toggleSwitch) {
+    for (const auto &pair : props) {
+      const std::string &propertyName = pair.first;
+      const auto &propertyValue = pair.second;
+      if (propertyName == "thumbTintColor") {
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOff"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOffPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOffPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOffDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOnPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOnDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOn"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchKnobFillOnPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+      } else if (propertyName == "tintColor") {
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOff"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOffPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOffPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOffDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+      } else if (propertyName == "onTintColor") {
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOn"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOnPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOnPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+        toggleSwitch.Resources().Insert(
+            winrt::box_value(L"ToggleSwitchFillOnDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+      }
+  }
+}
+
 void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
-
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
+
+  setBrushes(props, toggleSwitch);
+
   m_toggleSwitchToggledRevoker = toggleSwitch.Toggled(winrt::auto_revoke, [=](auto &&, auto &&) {
-    UpdateTrackColor();
+    UpdateTrackColorOn();
+    UpdateTrackColorOff();
     if (!m_updating)
       OnToggled(GetViewManager()->GetReactContext(), m_tag, toggleSwitch.IsOn());
   });
@@ -56,7 +108,8 @@ void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   // hook up loading event which is called right at beginning of Measure
   m_toggleSwitchLoadingRevoker = toggleSwitch.Loading(winrt::auto_revoke, [=](auto &&, auto &&) {
     UpdateThumbColor();
-    UpdateTrackColor();
+    UpdateTrackColorOn();
+    UpdateTrackColorOff();
   });
 }
 
@@ -66,21 +119,32 @@ void SwitchShadowNode::UpdateThumbColor() {
     return;
 
   const auto thumbBrush = IsValidColorValue(m_thumbColor) ? BrushFrom(m_thumbColor) : nullptr;
-  UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
+  if (thumbBrush != nullptr) {
+    UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
+  }
 }
 
-void SwitchShadowNode::UpdateTrackColor() {
+void SwitchShadowNode::UpdateTrackColorOn() {
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
   if (toggleSwitch == nullptr)
     return;
 
   const auto onTrackBrush = IsValidColorValue(m_onTrackColor) ? BrushFrom(m_onTrackColor) : nullptr;
+  UpdateToggleSwitchTrackResourceBrushesOn(toggleSwitch, onTrackBrush);
+}
+
+void SwitchShadowNode::UpdateTrackColorOff() {
+  auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
+  if (toggleSwitch == nullptr)
+    return;
+
   const auto offTrackBrush = IsValidColorValue(m_offTrackColor) ? BrushFrom(m_offTrackColor) : nullptr;
-  UpdateToggleSwitchTrackResourceBrushes(toggleSwitch, onTrackBrush, offTrackBrush);
+  UpdateToggleSwitchTrackResourceBrushesOff(toggleSwitch, offTrackBrush);
 }
 
 void SwitchShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
+  auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
 
   Super::updateProperties(props);
   for (const auto &pair : props) {
@@ -94,10 +158,10 @@ void SwitchShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
       UpdateThumbColor();
     } else if (propertyName == "tintColor") {
       m_offTrackColor = propertyValue.Copy();
-      UpdateTrackColor();
+      UpdateTrackColorOff();
     } else if (propertyName == "onTintColor") {
       m_onTrackColor = propertyValue.Copy();
-      UpdateTrackColor();
+      UpdateTrackColorOn();
     }
   }
 
