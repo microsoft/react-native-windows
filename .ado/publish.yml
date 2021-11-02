@@ -171,6 +171,8 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-js-env.yml
+
       - template: templates/prepare-build-env.yml
         parameters:
           platform: $(BuildPlatform)
@@ -228,6 +230,8 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-js-env.yml
+
       - template: templates/prepare-build-env.yml
         parameters:
           platform: $(BuildPlatform)
@@ -277,6 +281,8 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-js-env.yml
+
       - template: templates/prepare-build-env.yml
         parameters:
           platform: $(BuildPlatform)
