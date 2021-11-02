@@ -69,12 +69,7 @@ jobs:
 
             - template: ../templates/prep-and-pack-nuget.yml
               parameters:
-                artifactName: ProjectReunion
-                packDesktop: false
-                packMicrosoftReactNative: false
-                packMicrosoftReactNativeCxx: false
-                packMicrosoftReactNativeManaged: false
-                packMicrosoftReactNativeManagedCodeGen: false
+                artifacts: [ProjectReunion]
                 packMicrosoftReactNativeProjectReunion: true
                 slices:
                   - platform: x64

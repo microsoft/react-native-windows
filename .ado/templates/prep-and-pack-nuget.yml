@@ -1,5 +1,5 @@
 parameters:
-  artifactName: ''
+  artifacts: []
   publishCommitId: '0'
   npmVersion: '0.0.1-pr'
   # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
@@ -7,11 +7,11 @@ parameters:
   desktopId: 'OfficeReact.Win32'
   microsoftRNId: 'Microsoft.ReactNative'
   slices: []
-  packDesktop: true
-  packMicrosoftReactNative: true
-  packMicrosoftReactNativeCxx: true
-  packMicrosoftReactNativeManaged: true
-  packMicrosoftReactNativeManagedCodeGen: true
+  packDesktop: false
+  packMicrosoftReactNative: false
+  packMicrosoftReactNativeCxx: false
+  packMicrosoftReactNativeManaged: false
+  packMicrosoftReactNativeManagedCodeGen: false
   packMicrosoftReactNativeProjectReunion: false
   signMicrosoft: false
 
@@ -49,29 +49,30 @@ steps:
         Write-Host "##vso[task.setvariable variable=baseConfiguration]${{ parameters.slices[0].configuration }}"
       displayName: Set base slice to ${{ parameters.slices[0].platform }}.${{ parameters.slices[0].configuration }}
       
-  - ${{ each slice in parameters.slices }}:
-    - task: DownloadPipelineArtifact@2
-      displayName: 'Download ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }} Artifact'
-      inputs:
-        artifact: ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}
-        path: $(System.DefaultWorkingDirectory)/ReactWindows/${{ slice.platform }}/${{ slice.configuration }}
+  - ${{ each artifact in parameters.artifacts }}:
+    - ${{ each slice in parameters.slices }}:
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download ${{ artifact }}.${{ slice.platform }}.${{ slice.configuration }}'
+        inputs:
+          artifact: ${{ artifact }}.${{ slice.platform }}.${{ slice.configuration }}
+          path: ${{parameters.nugetroot}}/${{ slice.platform }}/${{ slice.configuration }}
 
   - task: PowerShell@2
     displayName: Copy MSRN Resources to NuGet layout
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-MSRN-Headers.ps1
-      arguments: -TargetRoot  $(System.DefaultWorkingDirectory)/ReactWindows
+      arguments: -TargetRoot ${{parameters.nugetroot}}
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - task: PowerShell@2
       displayName: Copy Desktop Resources to NuGet layout
       inputs:
         filePath: vnext/Scripts/Tfs/Layout-Desktop-Headers.ps1
-        arguments: -TargetRoot  $(System.DefaultWorkingDirectory)/ReactWindows
+        arguments: -TargetRoot ${{parameters.nugetroot}}
 
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeProjectReunion, false)) }}:
     - powershell: |
-        (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
+        (Get-Content -Path ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
 
   - ${{ if eq(parameters.packDesktop, true) }}:

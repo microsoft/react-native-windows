@@ -28,12 +28,8 @@ jobs:
 
       - template: ../templates/prep-and-pack-nuget.yml
         parameters:
-          artifactName: Desktop
+          artifacts: [Desktop]
           packDesktop: true
-          packMicrosoftReactNative: false
-          packMicrosoftReactNativeCxx: false
-          packMicrosoftReactNativeManaged: false
-          packMicrosoftReactNativeManagedCodeGen: false
           slices:
             - platform: x64
               configuration: Release
