@@ -57,7 +57,7 @@ jobs:
         - job: IntegrationTest${{ matrix.Name }}
           displayName: Integration Test App ${{ matrix.Name }}
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
           pool:
             name: ${{ variables['AgentPool.Medium'] }}
             demands: ${{ variables['AgentImage'] }}
@@ -103,7 +103,7 @@ jobs:
                 displayName: yarn windows --no-launch
                 workingDirectory: packages/integration-test-app
 
-              - powershell: Start-Process npm -ArgumentList "run","start"
+              - powershell: Start-Process npm.cmd -ArgumentList "run","start"
                 displayName: Start packager
                 workingDirectory: packages/integration-test-app
 

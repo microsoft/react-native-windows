@@ -19,8 +19,7 @@ parameters:
   default: true
 
 variables:
-  - template: variables/msbuild.yml
-  - template: variables/vs2019.yml
+  - template: variables/windows.yml
   - group: RNW Secrets
   - name: SkipNpmPublishArgs
     value: ''
@@ -36,10 +35,6 @@ variables:
     value: microsoft
   - name: ArtifactServices.Symbol.PAT
     value: $(pat-symbols-publish-microsoft)
-  - name: AgentPool.Medium.Microsoft 
-    value: rnw-pool-4-microsoft
-  - name: AgentPool.Large.Microsoft
-    value: rnw-pool-8-microsoft
 
 trigger: none
 pr: none
@@ -48,7 +43,7 @@ jobs:
   - job: RnwNpmPublish
     displayName: React-Native-Windows Npm Build Rev Publish
     pool:
-      name: ${{ variables['AgentPool.Medium.Microsoft'] }}
+      name: ${{ variables['AgentPool.Medium.Publish'] }}
       demands: ${{ variables['AgentImage'] }}
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
@@ -76,11 +71,11 @@ jobs:
         displayName: Enable No-Publish
         condition: ${{ parameters.skipGitPush }}
 
-      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***" --no-git-tags
+      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***" --no-git-tags
         displayName: Beachball Publish (Main Branch)
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
 
-      - script: npx --no-install beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***"
+      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***"
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
 
@@ -88,7 +83,7 @@ jobs:
       - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
         displayName: git pull
 
-      - script: npx --ignore-existing @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
+      - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
 
@@ -103,14 +98,14 @@ jobs:
     condition: eq(variables['Build.SourceBranchName'], 'main')
     dependsOn: RnwNpmPublish
     pool:
-      name: ${{ variables['AgentPool.Medium.Microsoft'] }}
+      name: ${{ variables['AgentPool.Medium.Publish'] }}
       demands: ${{ variables['AgentImage'] }}
     timeoutInMinutes: 30
     steps:
       - template: templates/prepare-js-env.yml
 
       # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
-      - script: npx --no-install beachball bump
+      - script: npx beachball bump
         displayName: beachball bump
 
       # Azure Functions expects a fully packagable folder with dependencies.
@@ -167,10 +162,12 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
-      name: ${{ variables['AgentPool.Large.Microsoft'] }}
+      name: ${{ variables['AgentPool.Large.Publish'] }}
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-js-env.yml
+
       - template: templates/prepare-build-env.yml
         parameters:
           platform: $(BuildPlatform)
@@ -179,7 +176,7 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
-      - template: templates/build-rnw.yml
+      - template: templates/msbuild-sln.yml
         parameters:
           project: vnext/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
@@ -223,10 +220,12 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
-      name: ${{ variables['AgentPool.Large.Microsoft'] }}
+      name: ${{ variables['AgentPool.Large.Publish'] }}
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-js-env.yml
+
       - template: templates/prepare-build-env.yml
         parameters:
           platform: $(BuildPlatform)
@@ -235,9 +234,9 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
-      - template: templates/build-rnw.yml
+      - template: templates/msbuild-sln.yml
         parameters:
-          project: vnext/Microsoft.ReactNative.sln
+          solution: vnext/Microsoft.ReactNative.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
@@ -277,10 +276,12 @@ jobs:
           BuildConfiguration: Release
           BuildPlatform: x64
     pool:
-      name: ${{ variables['AgentPool.Large.Microsoft'] }}
+      name: ${{ variables['AgentPool.Large.Publish'] }}
       demands: ${{ variables['AgentImage'] }}
 
     steps:
+      - template: templates/prepare-js-env.yml
+
       - template: templates/prepare-build-env.yml
         parameters:
           platform: $(BuildPlatform)
@@ -289,9 +290,9 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
-      - template: templates/build-rnw.yml
+      - template: templates/msbuild-sln.yml
         parameters:
-          project: vnext/Microsoft.ReactNative.ProjectReunion.sln
+          solution: vnext/Microsoft.ReactNative.ProjectReunion.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
@@ -324,7 +325,7 @@ jobs:
       - RnwNativeBuildReunion
     displayName: Sign Binaries and Publish NuGet
     pool:
-      name: ${{ variables['AgentPool.Medium.Microsoft'] }}
+      name: ${{ variables['AgentPool.Medium.Publish'] }}
       demands: ${{ variables['AgentImage'] }}
 
     steps:
