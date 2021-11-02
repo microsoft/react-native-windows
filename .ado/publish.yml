@@ -178,7 +178,7 @@ jobs:
 
       - template: templates/msbuild-sln.yml
         parameters:
-          project: vnext/ReactWindows-Desktop.sln
+          solution: vnext/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
