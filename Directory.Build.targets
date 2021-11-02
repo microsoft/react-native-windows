@@ -15,7 +15,7 @@
   <!-- 
     This target checks if Yarn install needs to run or not. 
     This is a common cause of failed builds for developers not used to running it after syncing...
-    This check does not run during design time build and in our CI validation runs (detected via PublishToolDuringBuild because we know yarn install runs there.
+    This check does not run during design time build and in our CI validation runs (detected via AGENT_NAME).
   -->
   <Target
     Name="EnsureJavaScriptCodeUpToDate"
@@ -23,13 +23,13 @@
     DependsOnTargets="EnsureJavaScriptCodeUpToDateInputAndOutputs"
     Inputs="@(_EnsureJavaScriptCodeUpToDateInputFiles)"
     Outputs="@(_EnsureJavaScriptCodeUpToDateOutputFiles)"
-    Condition="'$(DesignTimeBuild)'=='' AND '$(PublishToolDuringBuild)' == ''"
+    Condition="'$(DesignTimeBuild)'=='' AND '$(AGENT_NAME)' == ''"
     >
 
     <Message Text="Checking if yarn is 'up to date' by running a 'dry-run' version of `yarn install` and checking the exit code" />
     <Exec 
       ContinueOnError="True"
-      Command="npx yarn install --offline --cache-folder $(RootIntDir)\JsUpToDateCheck\Cache"
+      Command="yarn install --offline --cache-folder $(RootIntDir)\JsUpToDateCheck\Cache"
       WorkingDirectory="$(MSBuildThisFileDirectory)"
       >
       <Output TaskParameter="ExitCode" ItemName="_YarnExitCode"/>
