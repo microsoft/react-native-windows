@@ -99,6 +99,12 @@ parameters:
             platform: x86
             projectType: app
             useNuGet: true
+          - Name: X64DebugCppLowResource
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            lowResource: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64ReleaseCpp
@@ -234,6 +240,18 @@ parameters:
             configuration: Debug
             platform: x64
             projectType: app
+          - Name: X64DebugCppLowResource
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            lowResource: true
+          - Name: X64ReleaseCppLowResource
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            lowResource: true
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
@@ -250,12 +268,33 @@ jobs:
               - template: ../variables/windows.yml
 
             pool:
-              name: ${{ variables['AgentPool.Medium'] }}
+              ${{ if eq(matrix.lowResource, true) }}:
+                name: ${{ variables['AgentPool.Small'] }}
+              ${{ else }}:
+                name: ${{ variables['AgentPool.Medium'] }}
               demands: ${{ variables['AgentImage'] }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 
             steps:
+              - checkout: self # self represents the repo where the initial Pipelines YAML file was found
+                clean: true # whether to fetch clean each time
+                # fetchDepth: 2 # the depth of commits to ask Git to fetch
+                lfs: false # whether to download Git-LFS files
+                submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
+                persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+
+              - template: ../templates/configure-git.yml
+
+              - template: ../templates/prepare-js-env.yml
+
+              - template: ../templates/prepare-build-env.yml
+                parameters:
+                  platform: ${{ parameters.platform }}
+                  configuration: ${{ parameters.configuration }}
+                  buildEnvironment: ${{ parameters.buildEnvironment }}
+                  lowResource: ${{ coalesce(matrix.lowResource, false) }}
+
               - template: ../templates/react-native-init.yml
                 parameters:
                   language: ${{ matrix.language }}

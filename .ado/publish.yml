@@ -181,8 +181,6 @@ jobs:
           project: vnext/ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
-          msbuildArguments:
-            /p:RNW_FASTBUILD=true
 
       - template: templates/publish-build-artifacts.yml
         parameters:
@@ -239,8 +237,6 @@ jobs:
           solution: vnext/Microsoft.ReactNative.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
-          msbuildArguments:
-            /p:RNW_FASTBUILD=true
 
       - task: PowerShell@2
         displayName: Make AnyCPU Reference Assemblies
@@ -297,7 +293,6 @@ jobs:
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
             /p:UseWinUI3=true
-            /p:RNW_FASTBUILD=true
           warnAsError: false # Disable warn as error until we fix #8312
 
       - template: templates/publish-build-artifacts.yml
