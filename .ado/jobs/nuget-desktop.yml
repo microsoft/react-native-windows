@@ -28,7 +28,7 @@ jobs:
 
       - template: ../templates/prep-and-pack-nuget.yml
         parameters:
-          artifacts: [Desktop]
+          artifactName: Desktop
           packDesktop: true
           slices:
             - platform: x64

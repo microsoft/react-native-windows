@@ -69,7 +69,7 @@ jobs:
 
             - template: ../templates/prep-and-pack-nuget.yml
               parameters:
-                artifacts: [ProjectReunion]
+                artifactName: ProjectReunion
                 packMicrosoftReactNativeProjectReunion: true
                 slices:
                   - platform: x64

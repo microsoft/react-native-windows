@@ -66,7 +66,7 @@ steps:
   - ${{ if eq(parameters.useNuGet, true) }}:
     - template: prep-and-pack-nuget.yml
       parameters:
-        artifacts: [ReactWindows]
+        artifactName: ReactWindows
         npmVersion: $(npmVersion)
         packMicrosoftReactNative: true
         ${{ if eq(parameters.language, 'cpp') }}:
