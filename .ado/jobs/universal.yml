@@ -173,7 +173,7 @@
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
                   inputs:
-                    targetPath: $(Build.SourcesDirectory)/vnext/target
+                    targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.buildPlatform }}/${{ matrix.buildConfiguration }}
                     artifactName: ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}
 
                 - task: BinSkim@3
