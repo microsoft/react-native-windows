@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Delete Install-VsFeatures.ps1",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
