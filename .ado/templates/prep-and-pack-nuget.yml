@@ -47,7 +47,7 @@ steps:
     - powershell: |
         Write-Host "##vso[task.setvariable variable=basePlatform]${{ parameters.slices[0].platform }}"
         Write-Host "##vso[task.setvariable variable=baseConfiguration${{ parameters.slices[0].configuration }}"
-      displayName: Set base slice to ${{ parameters.slices[0].platform }.${{ parameters.slices[0].configuration }
+      displayName: Set base slice to ${{ parameters.slices[0].platform }}.${{ parameters.slices[0].configuration }}
       
   - ${{ each slice in parameters.slices }}:
     - task: DownloadPipelineArtifact@2
