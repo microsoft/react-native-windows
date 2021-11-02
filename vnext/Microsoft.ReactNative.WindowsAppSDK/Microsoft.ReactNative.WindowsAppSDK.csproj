@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.3.3" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="1.3.5" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-preview3" />
   </ItemGroup>
   <ItemGroup>
     <!--<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.19041.1" />-->
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0-preview1" />
     <!-- <PackageReference Include="Microsoft.WindowsAppSDK.Foundation" Version="1.0.0-preview1" />
     <PackageReference Include="Microsoft.WindowsAppSDK.WinUI" Version="1.0.0-preview1" /> -->
     <!-- <PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="1.0.0-preview1" /> -->

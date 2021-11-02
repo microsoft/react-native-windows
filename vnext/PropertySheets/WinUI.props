@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="WinUI3 versioning">
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.0.0-preview1</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.0.0-preview3</WinUI3Version>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">

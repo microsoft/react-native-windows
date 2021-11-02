@@ -633,7 +633,7 @@ function getReunionPackages(nugetVersion: string): NugetPackage[] {
     version: nugetVersion,
   });
 
-  const reunionVersion = '1.0.0-preview1';
+  const reunionVersion = '1.0.0-preview3';
   for (const pkg of [
     'Microsoft.WindowsAppSDK',
     'Microsoft.WindowsAppSDK.Foundation',
