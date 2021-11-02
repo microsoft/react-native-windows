@@ -1,7 +1,6 @@
 #include "pch.h"
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/StandardControlResourceKeyNames.h>
-using namespace Microsoft::ReactNative;
 
 namespace Microsoft::ReactNative {
 
