@@ -21,7 +21,7 @@ steps:
   # Strip down the binaries from NuGet because we may not have built all the flavours.
   - ${{ if gt(length(parameters.slices), 0) }}:
     - powershell: |
-        $slices = ConvertFrom-Json '${{ parameters.slices }}'
+        $slices = ConvertFrom-Json '${{ convertToJson(parameters.slices) }}'
         $slicesArg = $slices | % {$_.platform + "." + $_.configuration}
 
         .\StripAdditionalPlatformsFromNuspec.ps1 -nuspec ${{parameters.packageId}}.nuspec -outfile ${{parameters.packageId}}.nuspec -slices $slicesArg -debug
