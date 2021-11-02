@@ -1,41 +1,41 @@
 parameters:
-  - Name: artifactName
+  - name: artifactName
     type: string
-  - Name: slices
+  - name: slices
     type: object
 
-  - Name: publishCommitId
+  - name: publishCommitId
     type: string
     default: '0'
-  - Name : npmVersion
+  - name : npmVersion
     type: string
     default: '0.0.1-pr'
     
     # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
-  - Name: nugetroot
+  - name: nugetroot
     type: string
     default: $(System.DefaultWorkingDirectory)\ReactWindows
   
-  - Name: packDesktop
+  - name: packDesktop
     type: boolean
     default: false
-  - Name: packMicrosoftReactNative
+  - name: packMicrosoftReactNative
     type: boolean
     default: false
-  - Name: packMicrosoftReactNativeCxx
+  - name: packMicrosoftReactNativeCxx
     type: boolean
     default: false
-  - Name: packMicrosoftReactNativeManaged
+  - name: packMicrosoftReactNativeManaged
     type: boolean
     default: false
-  - Name: packMicrosoftReactNativeManagedCodeGen
+  - name: packMicrosoftReactNativeManagedCodeGen
     type: boolean
     default: false
-  - Name: packMicrosoftReactNativeProjectReunion
+  - name: packMicrosoftReactNativeProjectReunion
     type: boolean
     default: false 
 
-  - Name: signMicrosoft
+  - name: signMicrosoft
     type: boolean
     default: false
 
