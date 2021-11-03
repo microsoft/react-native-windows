@@ -195,6 +195,24 @@
                   condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x86'))
 
                 - task: VSTest@2
+                  displayName: Run Universal Unit Tests (Native - ComponentTests)
+                  timeoutInMinutes: 5 # Set smaller timeout , due to hangs
+                  inputs:
+                    testSelector: testAssemblies
+                    testAssemblyVer2: |
+                      Microsoft.ReactNative.ComponentTests/Microsoft.ReactNative.ComponentTests.exe
+                    pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
+                    searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    runTestsInIsolation: true
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    publishRunAttachments: true
+                    collectDumpOn: onAbortOnly
+                    vsTestVersion: latest
+                    failOnMinTestsNotRun: true
+                  condition: and(succeeded(), and(eq('${{ matrix.BuildConfiguration }}', 'Debug'), eq('${{ matrix.BuildPlatform }}', 'x64')))
+
+                - task: VSTest@2
                   displayName: Run Universal Unit Tests (UWP)
                   timeoutInMinutes: 5 # Set smaller timeout , due to hangs
                   inputs:
