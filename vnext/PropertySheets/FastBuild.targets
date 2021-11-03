@@ -58,7 +58,7 @@
       <ClCompile>
          <PreprocessorDefinitions>RNW_FASTBUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       </ClCompile>
-    </ItemGroup>
+    </ItemDefinitionGroup>
   </Target>
 
 </Project>
