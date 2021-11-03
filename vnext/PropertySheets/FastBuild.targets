@@ -56,7 +56,7 @@
 
     <!-- Add RNW_FASTBUILD as preprocessor definition to existing ClCompile items -->
     <ItemGroup Condition="'$(RNW_FASTBUILD)' == 'true' or ('$(RNW_FASTBUILD)' == '' and '$(_MemoryClass)' == 'High')">
-      <ClCompile Include="@(ClCompile)">
+      <ClCompile>
          <PreprocessorDefinitions>RNW_FASTBUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       </ClCompile>
     </ItemGroup>
