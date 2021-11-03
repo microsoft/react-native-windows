@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Codegen prints `::React::JSValue` instead of `React::JSValue`",
+  "packageName": "@react-native-windows/codegen",
+  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
