@@ -1282,9 +1282,24 @@ struct ReactModuleTraits {
   static constexpr FactoryType *Factory = GetReactModuleFactory((TModule *)nullptr, 0);
 };
 
+template <class TModule, typename = void>
+struct ReactModuleSpecOrVoid {
+  using Type = void;
+};
+
+template <class TModule>
+struct ReactModuleSpecOrVoid<TModule, std::enable_if_t<(sizeof(typename TModule::ModuleSpec) >= 0)>> {
+  using Type = typename TModule::ModuleSpec;
+};
+
 // Create a module provider for TModule type.
+// If TModule::ModuleSpec exists, it ensures that the module satisfies the spec.
 template <class TModule>
 inline ReactModuleProvider MakeModuleProvider() noexcept {
+  using TModuleSpec = typename ReactModuleSpecOrVoid<TModule>::Type;
+  if constexpr (!std::is_same_v<void, TModuleSpec>) {
+    TModuleSpec::template ValidateModule<TModule>();
+  }
   return [](IReactModuleBuilder const &moduleBuilder) noexcept {
     auto [moduleWrapper, module] = ReactModuleTraits<TModule>::Factory();
     ReactModuleBuilder builder{module, moduleBuilder};
@@ -1294,10 +1309,12 @@ inline ReactModuleProvider MakeModuleProvider() noexcept {
   };
 }
 
-// Create a module provider for TModule type that satisfies the TModuleSpec.
-template <class TModule, class TModuleSpec>
+// Create a module provider for TModule type.
+// It is the same to MakeModuleProvider but it requires TModule::ModuleSpec to exist.
+template <class TModule>
 inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
-  TModuleSpec::template ValidateModule<TModule>();
+  using TModuleSpec = typename ReactModuleSpecOrVoid<TModule>::Type;
+  static_assert(!std::is_same_v<void, TModuleSpec>, "TModule::ModuleSpec must exist and it specifies the specification for this module.");
   return MakeModuleProvider<TModule>();
 }
 

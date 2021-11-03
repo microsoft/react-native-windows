@@ -15,6 +15,46 @@ namespace ReactNativeIntegrationTests {
 
 namespace {
 
+struct SampleTurboModuleSpec : TurboModuleSpec {
+  static constexpr auto methods = std::tuple{
+      Method<void() noexcept>{0, L"succeeded"},
+      Method<void(std::string) noexcept>{1, L"onError"},
+      Method<void(std::string, int, bool, ReactPromise<React::JSValue>) noexcept>{2, L"promiseFunction"},
+      Method<void(std::string) noexcept>{3, L"promiseFunctionResult"},
+      SyncMethod<std::string(std::string, int, bool) noexcept>{4, L"syncFunction"},
+      Method<void(std::string) noexcept>{5, L"syncFunctionResult"},
+      Method<void(std::string, int, std::string, int, std::string, int) noexcept>{6, L"constants"},
+      Method<void(int, int, const std::function<void(int)> &) noexcept>{7, L"oneCallback"},
+      Method<void(int) noexcept>{8, L"oneCallbackResult"},
+      Method<void(
+          bool,
+          int,
+          std::string,
+          const std::function<void(int)> &,
+          const std::function<void(std::string)> &) noexcept>{9, L"twoCallbacks"},
+      Method<void(int) noexcept>{10, L"twoCallbacksResolved"},
+      Method<void(std::string) noexcept>{11, L"twoCallbacksRejected"},
+  };
+
+  template <class TModule>
+  static constexpr void ValidateModule() noexcept {
+    constexpr auto methodCheckResults = CheckMethods<TModule, SampleTurboModuleSpec>();
+
+    REACT_SHOW_METHOD_SPEC_ERRORS(0, "succeeded", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(1, "onError", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(2, "promiseFunction", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(3, "promiseFunctionResult", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(4, "syncFunction", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(5, "syncFunctionResult", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(6, "constants", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(7, "oneCallback", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(8, "oneCallbackResult", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(9, "twoCallbacks", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(10, "twoCallbacksResolved", "I don't care error message");
+    REACT_SHOW_METHOD_SPEC_ERRORS(11, "twoCallbacksRejected", "I don't care error message");
+  }
+};
+
 REACT_STRUCT(SampleTurboModuleConstants)
 struct SampleTurboModuleConstants {
   REACT_FIELD(constantString3)
@@ -25,6 +65,8 @@ struct SampleTurboModuleConstants {
 
 REACT_MODULE(SampleTurboModule)
 struct SampleTurboModule {
+  using ModuleSpec = SampleTurboModuleSpec;
+
   REACT_INIT(Initialize)
   void Initialize(ReactContext const & /*reactContext*/) noexcept {}
 
@@ -128,51 +170,11 @@ struct SampleTurboModule {
   }
 };
 
-struct SampleTurboModuleSpec : TurboModuleSpec {
-  static constexpr auto methods = std::tuple{
-      Method<void() noexcept>{0, L"succeeded"},
-      Method<void(std::string) noexcept>{1, L"onError"},
-      Method<void(std::string, int, bool, ReactPromise<React::JSValue>) noexcept>{2, L"promiseFunction"},
-      Method<void(std::string) noexcept>{3, L"promiseFunctionResult"},
-      SyncMethod<std::string(std::string, int, bool) noexcept>{4, L"syncFunction"},
-      Method<void(std::string) noexcept>{5, L"syncFunctionResult"},
-      Method<void(std::string, int, std::string, int, std::string, int) noexcept>{6, L"constants"},
-      Method<void(int, int, const std::function<void(int)> &) noexcept>{7, L"oneCallback"},
-      Method<void(int) noexcept>{8, L"oneCallbackResult"},
-      Method<void(
-          bool,
-          int,
-          std::string,
-          const std::function<void(int)> &,
-          const std::function<void(std::string)> &) noexcept>{9, L"twoCallbacks"},
-      Method<void(int) noexcept>{10, L"twoCallbacksResolved"},
-      Method<void(std::string) noexcept>{11, L"twoCallbacksRejected"},
-  };
-
-  template <class TModule>
-  static constexpr void ValidateModule() noexcept {
-    constexpr auto methodCheckResults = CheckMethods<TModule, SampleTurboModuleSpec>();
-
-    REACT_SHOW_METHOD_SPEC_ERRORS(0, "succeeded", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(1, "onError", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(2, "promiseFunction", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(3, "promiseFunctionResult", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(4, "syncFunction", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(5, "syncFunctionResult", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(6, "constants", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(7, "oneCallback", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(8, "oneCallbackResult", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(9, "twoCallbacks", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(10, "twoCallbacksResolved", "I don't care error message");
-    REACT_SHOW_METHOD_SPEC_ERRORS(11, "twoCallbacksRejected", "I don't care error message");
-  }
-};
-
 struct SampleTurboModulePackageProvider : winrt::implements<SampleTurboModulePackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
     auto experimental = packageBuilder.as<IReactPackageBuilderExperimental>();
     experimental.AddTurboModule(
-        L"SampleTurboModule", MakeTurboModuleProvider<SampleTurboModule, SampleTurboModuleSpec>());
+        L"SampleTurboModule", MakeTurboModuleProvider<SampleTurboModule>());
   }
 };
 

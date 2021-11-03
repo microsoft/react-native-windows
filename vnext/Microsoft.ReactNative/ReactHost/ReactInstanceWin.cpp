@@ -260,11 +260,6 @@ ReactInstanceWin::~ReactInstanceWin() noexcept {}
 void ReactInstanceWin::LoadModules(
     const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
     const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
-  auto registerNativeModule = [&nativeModulesProvider](
-                                  const wchar_t *name, const ReactModuleProvider &provider) noexcept {
-    nativeModulesProvider->AddModuleProvider(name, provider);
-  };
-
   auto registerTurboModule = [this, &nativeModulesProvider, &turboModulesProvider](
                                  const wchar_t *name, const ReactModuleProvider &provider) noexcept {
     if (m_options.UseWebDebugger()) {
