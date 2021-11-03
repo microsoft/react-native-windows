@@ -173,8 +173,7 @@ struct SampleTurboModule {
 struct SampleTurboModulePackageProvider : winrt::implements<SampleTurboModulePackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
     auto experimental = packageBuilder.as<IReactPackageBuilderExperimental>();
-    experimental.AddTurboModule(
-        L"SampleTurboModule", MakeTurboModuleProvider<SampleTurboModule>());
+    experimental.AddTurboModule(L"SampleTurboModule", MakeTurboModuleProvider<SampleTurboModule>());
   }
 };
 

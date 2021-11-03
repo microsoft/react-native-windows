@@ -277,38 +277,30 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AccessibilityInfo>());
 
   registerTurboModule(
-      L"Alert",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Alert>());
+      L"Alert", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Alert>());
 
   registerTurboModule(
-      L"AppState",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
+      L"AppState", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
 
   registerTurboModule(
-      L"LogBox",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>());
+      L"LogBox", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>());
 
   registerTurboModule(
-      L"Clipboard",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard>());
+      L"Clipboard", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard>());
 
   registerTurboModule(
-      L"DeviceInfo",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DeviceInfo>());
+      L"DeviceInfo", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DeviceInfo>());
 
   registerTurboModule(
-      L"ImageLoader",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+      L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
 #endif
 
   registerTurboModule(
-      L"DevSettings",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
+      L"DevSettings", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
 
 #ifndef CORE_ABI
   registerTurboModule(
-      L"I18nManager",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
+      L"I18nManager", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
 #endif
 }
 

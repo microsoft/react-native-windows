@@ -1314,7 +1314,9 @@ inline ReactModuleProvider MakeModuleProvider() noexcept {
 template <class TModule>
 inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
   using TModuleSpec = typename ReactModuleSpecOrVoid<TModule>::Type;
-  static_assert(!std::is_same_v<void, TModuleSpec>, "TModule::ModuleSpec must exist and it specifies the specification for this module.");
+  static_assert(
+      !std::is_same_v<void, TModuleSpec>,
+      "TModule::ModuleSpec must exist and it specifies the specification for this module.");
   return MakeModuleProvider<TModule>();
 }
 
