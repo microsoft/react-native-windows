@@ -1,88 +1,81 @@
 parameters:
-  artifactName: ''
-  publishCommitId: '0'
-  npmVersion: '0.0.1-pr'
-  # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
-  nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
-  desktopId: 'OfficeReact.Win32'
-  microsoftRNId: 'Microsoft.ReactNative'
-  slices: []
-  packDesktop: true
-  packMicrosoftReactNative: true
-  packMicrosoftReactNativeCxx: true
-  packMicrosoftReactNativeManaged: true
-  packMicrosoftReactNativeManagedCodeGen: true
-  packMicrosoftReactNativeProjectReunion: false
-  signMicrosoft: false
+  - name: artifactName
+    type: string
+  - name: slices
+    type: object
 
-  defaultDesktopSlices: 
-    - platform: x64
-      configuration: Debug
-    - platform: x86
-      configuration: Debug
-    - platform: ARM64
-      configuration: Debug
-    - platform: x64
-      configuration: Release
-    - platform: x86
-      configuration: Release
-    - platform: ARM64
-      configuration: Release      
+  - name: publishCommitId
+    type: string
+    default: '0'
+  - name : npmVersion
+    type: string
+    default: '0.0.1-pr'
+    
+    # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
+  - name: nugetroot
+    type: string
+    default: $(System.DefaultWorkingDirectory)\ReactWindows
+  
+  - name: packDesktop
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNative
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeCxx
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeManaged
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeManagedCodeGen
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeProjectReunion
+    type: boolean
+    default: false 
 
-  defaultMSRNSlices: 
-    - platform: x64
-      configuration: Release
-    - platform: x86
-      configuration: Release
-    - platform: ARM64
-      configuration: Release      
+  - name: signMicrosoft
+    type: boolean
+    default: false
 
 steps:
-  - ${{ if eq(length(parameters.slices), 0) }}:
-    - powershell: |
-        Write-Host "##vso[task.setvariable variable=basePlatform]x64"
-        Write-Host "##vso[task.setvariable variable=baseConfiguration]Release"
-      displayName: Set base slice to x64.Release
-  - ${{ else }}:
-    - powershell: |
-        Write-Host "##vso[task.setvariable variable=basePlatform]${{ parameters.slices[0].platform }}"
-        Write-Host "##vso[task.setvariable variable=baseConfiguration]${{ parameters.slices[0].configuration }}"
-      displayName: Set base slice to ${{ parameters.slices[0].platform }}.${{ parameters.slices[0].configuration }}
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=basePlatform]${{ parameters.slices[0].platform }}"
+      Write-Host "##vso[task.setvariable variable=baseConfiguration]${{ parameters.slices[0].configuration }}"
+    displayName: Set base slice to ${{ parameters.slices[0].platform }}.${{ parameters.slices[0].configuration }}
       
   - ${{ each slice in parameters.slices }}:
     - task: DownloadPipelineArtifact@2
-      displayName: 'Download ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }} Artifact'
+      displayName: 'Download ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}'
       inputs:
         artifact: ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}
-        path: $(System.DefaultWorkingDirectory)/ReactWindows/${{ slice.platform }}/${{ slice.configuration }}
+        path: ${{parameters.nugetroot}}/${{ slice.platform }}/${{ slice.configuration }}
 
   - task: PowerShell@2
     displayName: Copy MSRN Resources to NuGet layout
     inputs:
       filePath: vnext/Scripts/Tfs/Layout-MSRN-Headers.ps1
-      arguments: -TargetRoot  $(System.DefaultWorkingDirectory)/ReactWindows
+      arguments: -TargetRoot ${{parameters.nugetroot}}
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - task: PowerShell@2
       displayName: Copy Desktop Resources to NuGet layout
       inputs:
         filePath: vnext/Scripts/Tfs/Layout-Desktop-Headers.ps1
-        arguments: -TargetRoot  $(System.DefaultWorkingDirectory)/ReactWindows
+        arguments: -TargetRoot ${{parameters.nugetroot}}
 
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeProjectReunion, false)) }}:
     - powershell: |
-        (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
+        (Get-Content -Path ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml
       parameters:
-        packageId: ${{parameters.desktopId}}
+        packageId: OfficeReact.Win32
         packageVersion: ${{parameters.npmVersion}}
-        ${{ if gt(length(parameters.slices), 0) }}:
-          slices: ${{ parameters.slices }}
-        ${{ else }}:
-          slices: ${{ parameters.defaultDesktopSlices }}
+        slices: ${{ parameters.slices }}
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
@@ -90,10 +83,7 @@ steps:
       parameters:
         packageId: Microsoft.ReactNative
         packageVersion: ${{parameters.npmVersion}}
-        ${{ if gt(length(parameters.slices), 0) }}:
-          slices: ${{ parameters.slices }}
-        ${{ else }}:
-          slices: ${{ parameters.defaultMSRNSlices }}
+        slices: ${{ parameters.slices }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
@@ -111,10 +101,7 @@ steps:
       parameters:
         packageId: Microsoft.ReactNative.Managed
         packageVersion: ${{parameters.npmVersion}}
-        ${{ if gt(length(parameters.slices), 0) }}:
-          slices: ${{ parameters.slices }}
-        ${{ else }}:
-          slices: ${{ parameters.defaultMSRNSlices }}
+        slices: ${{ parameters.slices }}
         buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}

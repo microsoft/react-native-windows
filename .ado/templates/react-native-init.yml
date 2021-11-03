@@ -68,7 +68,12 @@ steps:
       parameters:
         artifactName: ReactWindows
         npmVersion: $(npmVersion)
-        packDesktop: false
+        packMicrosoftReactNative: true
+        ${{ if eq(parameters.language, 'cpp') }}:
+          packMicrosoftReactNativeCxx: true
+        ${{ if eq(parameters.language, 'cs') }}:
+          packMicrosoftReactNativeManaged: true
+          packMicrosoftReactNativeManagedCodeGen: true
         slices:
           - platform: ${{ parameters.platform }}
             configuration: ${{ parameters.configuration }}
