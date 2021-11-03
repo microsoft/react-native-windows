@@ -44,7 +44,7 @@ struct ExceptionsManagerSpec_ExceptionData {
     REACT_FIELD(isFatal)
     bool isFatal;
     REACT_FIELD(extraData)
-    std::optional<React::JSValue> extraData;
+    std::optional<::React::JSValue> extraData;
 };
 
 struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {

@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 REACT_STRUCT(WebSocketModuleSpec_connect_options)
 struct WebSocketModuleSpec_connect_options {
     REACT_FIELD(headers)
-    std::optional<React::JSValue> headers;
+    std::optional<::React::JSValue> headers;
 };
 
 struct WebSocketModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
