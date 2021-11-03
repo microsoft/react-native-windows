@@ -4,7 +4,7 @@
   <UsingTask
     TaskName="GetMemoryClass"
     TaskFactory="RoslynCodeTaskFactory"
-    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
 
     <ParameterGroup>
       <MemoryClass ParameterType="System.String" Output="true" />
@@ -45,8 +45,7 @@
   
   <Target 
     Name="ReactNativeWindowsDetermineFastBuild" 
-    BeforeTargets="PrepareForBuild"
-    >
+    BeforeTargets="ClCompile">
 
     <GetMemoryClass>
       <Output PropertyName="_MemoryClass" TaskParameter="MemoryClass" />
