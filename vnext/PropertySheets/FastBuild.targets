@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask
+    TaskName="GetMemoryClass"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
+
+    <ParameterGroup>
+      <MemoryClass ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    
+    <Task>
+      <Code Type="Fragnent" Language="cs">
+        <![CDATA[
+          var totalMemory = new Microsoft.VisualBasic.Devices.ComputerInfo().TotalPhysicalMemory;
+          var totalMemoryGB = ((Double)totalMemory) / 1024 / 1024 / 1024;
+          var memoryGbPerThread = totalMemoryGB / Environment.ProcessorCount;
+
+          if (memoryGbPerThread > 7.0) {
+            MemoryClass = "High";
+          } else {
+            MemoryClass = "Low";
+          }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <Target 
+    Name="ReactNativeWindowsDetermineFastBuild" 
+    BeforeTargets="PrepareForBuild"
+    >
+
+    <GetMemoryClass>
+      <Output PropertyName="_MemoryClass" TaskParameter="MemoryClass" />
+    </GetMemoryClass>
+
+
+    <!-- Add RNW_FASTBUILD as preprocessor definition to existing ClCompile items -->
+    <ItemGroup Condition="'$(RNW_FASTBUILD)' == 'true' or  ('$(RNW_FASTBUILD)' == '' and '$(_MemoryClass) == 'High')">
+      <ClCompile Include="@(ClCompile)" >
+         <PreprocessorDefinitions>RNW_FASTBUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      </ClCompile>
+    </ItemGroup>
+  </Target>
+
+</Project>
