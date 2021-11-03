@@ -16,17 +16,6 @@
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
-
-#include "../../codegen/NativeAccessibilityInfoSpec.g.h"
-#include "../../codegen/NativeAppStateSpec.g.h"
-#include "../../codegen/NativeClipboardSpec.g.h"
-#include "../../codegen/NativeDevSettingsSpec.g.h"
-#include "../../codegen/NativeDeviceInfoSpec.g.h"
-#include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
-#include "../../codegen/NativeI18nManagerSpec.g.h"
-#include "../../codegen/NativeImageLoaderIOSSpec.g.h"
-#include "../../codegen/NativeLogBoxSpec.g.h"
-#include "../../codegen/NativeUIManagerSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -280,64 +269,46 @@ void ReactInstanceWin::LoadModules(
 #ifndef CORE_ABI
   registerTurboModule(
       L"UIManager",
-      // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
-      // now
-      // winrt::Microsoft::ReactNative::MakeTurboModuleProvider < ::Microsoft::ReactNative::UIManager,
-      //::Microsoft::ReactNativeSpecs::UIManagerSpec>());
+      // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
 
   registerTurboModule(
       L"AccessibilityInfo",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::AccessibilityInfo,
-          ::Microsoft::ReactNativeSpecs::AccessibilityInfoSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AccessibilityInfo>());
 
   registerTurboModule(
       L"Alert",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::Alert,
-          ::Microsoft::ReactNativeSpecs::DialogManagerWindowsSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Alert>());
 
   registerTurboModule(
       L"AppState",
-      winrt::Microsoft::ReactNative::
-          MakeTurboModuleProvider<::Microsoft::ReactNative::AppState, ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
 
   registerTurboModule(
       L"LogBox",
-      winrt::Microsoft::ReactNative::
-          MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox, ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>());
 
   registerTurboModule(
       L"Clipboard",
-      winrt::Microsoft::ReactNative::
-          MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard, ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard>());
 
   registerTurboModule(
       L"DeviceInfo",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::DeviceInfo,
-          ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DeviceInfo>());
 
   registerTurboModule(
       L"ImageLoader",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::ImageLoader,
-          ::Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
 #endif
 
   registerTurboModule(
       L"DevSettings",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::DevSettings,
-          ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
 
 #ifndef CORE_ABI
   registerTurboModule(
       L"I18nManager",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::I18nManager,
-          ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
 #endif
 }
 
