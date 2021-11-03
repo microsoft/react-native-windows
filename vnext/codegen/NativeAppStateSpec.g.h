@@ -30,7 +30,7 @@ struct AppStateSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       TypedConstant<AppStateSpec_Constants>{0},
   };
   static constexpr auto methods = std::tuple{
-      Method<void(Callback<AppStateSpec_getCurrentAppState_success_appState>, Callback<React::JSValue>) noexcept>{0, L"getCurrentAppState"},
+      Method<void(Callback<AppStateSpec_getCurrentAppState_success_appState>, Callback<::React::JSValue>) noexcept>{0, L"getCurrentAppState"},
       Method<void(std::string) noexcept>{1, L"addListener"},
       Method<void(double) noexcept>{2, L"removeListeners"},
   };
@@ -49,8 +49,8 @@ struct AppStateSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getCurrentAppState",
-          "    REACT_METHOD(getCurrentAppState) void getCurrentAppState(std::function<void(AppStateSpec_getCurrentAppState_success_appState const &)> const & success, std::function<void(React::JSValue const &)> const & error) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getCurrentAppState) static void getCurrentAppState(std::function<void(AppStateSpec_getCurrentAppState_success_appState const &)> const & success, std::function<void(React::JSValue const &)> const & error) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getCurrentAppState) void getCurrentAppState(std::function<void(AppStateSpec_getCurrentAppState_success_appState const &)> const & success, std::function<void(::React::JSValue const &)> const & error) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getCurrentAppState) static void getCurrentAppState(std::function<void(AppStateSpec_getCurrentAppState_success_appState const &)> const & success, std::function<void(::React::JSValue const &)> const & error) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "addListener",

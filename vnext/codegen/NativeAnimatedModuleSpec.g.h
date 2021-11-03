@@ -31,13 +31,13 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"startOperationBatch"},
       Method<void() noexcept>{1, L"finishOperationBatch"},
-      Method<void(double, React::JSValue) noexcept>{2, L"createAnimatedNode"},
+      Method<void(double, ::React::JSValue) noexcept>{2, L"createAnimatedNode"},
       Method<void(double, Callback<double>) noexcept>{3, L"getValue"},
       Method<void(double) noexcept>{4, L"startListeningToAnimatedNodeValue"},
       Method<void(double) noexcept>{5, L"stopListeningToAnimatedNodeValue"},
       Method<void(double, double) noexcept>{6, L"connectAnimatedNodes"},
       Method<void(double, double) noexcept>{7, L"disconnectAnimatedNodes"},
-      Method<void(double, double, React::JSValue, Callback<AnimatedModuleSpec_EndResult>) noexcept>{8, L"startAnimatingNode"},
+      Method<void(double, double, ::React::JSValue, Callback<AnimatedModuleSpec_EndResult>) noexcept>{8, L"startAnimatingNode"},
       Method<void(double) noexcept>{9, L"stopAnimation"},
       Method<void(double, double) noexcept>{10, L"setAnimatedNodeValue"},
       Method<void(double, double) noexcept>{11, L"setAnimatedNodeOffset"},
@@ -70,8 +70,8 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "createAnimatedNode",
-          "    REACT_METHOD(createAnimatedNode) void createAnimatedNode(double tag, React::JSValue && config) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(createAnimatedNode) static void createAnimatedNode(double tag, React::JSValue && config) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(createAnimatedNode) void createAnimatedNode(double tag, ::React::JSValue && config) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(createAnimatedNode) static void createAnimatedNode(double tag, ::React::JSValue && config) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "getValue",
@@ -100,8 +100,8 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
           "startAnimatingNode",
-          "    REACT_METHOD(startAnimatingNode) void startAnimatingNode(double animationId, double nodeTag, React::JSValue && config, std::function<void(AnimatedModuleSpec_EndResult const &)> const & endCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(startAnimatingNode) static void startAnimatingNode(double animationId, double nodeTag, React::JSValue && config, std::function<void(AnimatedModuleSpec_EndResult const &)> const & endCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(startAnimatingNode) void startAnimatingNode(double animationId, double nodeTag, ::React::JSValue && config, std::function<void(AnimatedModuleSpec_EndResult const &)> const & endCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(startAnimatingNode) static void startAnimatingNode(double animationId, double nodeTag, ::React::JSValue && config, std::function<void(AnimatedModuleSpec_EndResult const &)> const & endCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "stopAnimation",

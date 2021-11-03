@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct NetworkingAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::string, std::string, double, React::JSValueArray, React::JSValue, std::string, bool, double, bool) noexcept>{0, L"sendRequest"},
+      Method<void(std::string, std::string, double, ::React::JSValueArray, ::React::JSValue, std::string, bool, double, bool) noexcept>{0, L"sendRequest"},
       Method<void(double) noexcept>{1, L"abortRequest"},
       Method<void(Callback<bool>) noexcept>{2, L"clearCookies"},
       Method<void(std::string) noexcept>{3, L"addListener"},
@@ -29,8 +29,8 @@ struct NetworkingAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "sendRequest",
-          "    REACT_METHOD(sendRequest) void sendRequest(std::string method, std::string url, double requestId, React::JSValueArray && headers, React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(sendRequest) static void sendRequest(std::string method, std::string url, double requestId, React::JSValueArray && headers, React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(sendRequest) void sendRequest(std::string method, std::string url, double requestId, ::React::JSValueArray && headers, ::React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(sendRequest) static void sendRequest(std::string method, std::string url, double requestId, ::React::JSValueArray && headers, ::React::JSValue && data, std::string responseType, bool useIncrementalUpdates, double timeout, bool withCredentials) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "abortRequest",
