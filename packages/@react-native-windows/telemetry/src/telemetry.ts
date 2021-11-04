@@ -72,7 +72,7 @@ export class Telemetry {
   protected static reset(): void {
     // Reset client
     if (Telemetry.client) {
-      Telemetry.client.flush({isAppCrashing: true});
+      Telemetry.client.flush();
       Telemetry.client = undefined;
     }
 
@@ -119,8 +119,8 @@ export class Telemetry {
   /** Sets up Telemetry.client. */
   private static setupClient() {
     appInsights.Configuration.setInternalLogging(
-      false, //Telemetry.isTest,
-      false, //Telemetry.isTest,
+      Telemetry.isTest,
+      Telemetry.isTest,
     );
 
     Telemetry.client = new appInsights.TelemetryClient(
