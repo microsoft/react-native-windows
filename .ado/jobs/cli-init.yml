@@ -293,7 +293,6 @@ jobs:
                   platform: ${{ parameters.platform }}
                   configuration: ${{ parameters.configuration }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
-                  lowResource: ${{ coalesce(matrix.lowResource, false) }}
 
               - template: ../templates/react-native-init.yml
                 parameters:
