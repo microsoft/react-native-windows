@@ -4,20 +4,15 @@ parameters:
   debug: false
 
   # NuGet & MSBuild
-  project:
-  msbuildVersion: $(MSBuildVersion)
-  msBuildArchitecture: $(MSBuildArchitecture)
-  preferredToolArchitecture: $(MSBuildPreferredToolArchitecture)
-  platformToolset: $(MSBuildPlatformToolset)
+  solution:
+  msbuildVersion: 16.0
+  msBuildArchitecture: x64
+  preferredToolArchitecture: x64
+  platformToolset: v142
   buildPlatform: x64
   buildConfiguration: Debug
   msbuildArguments: ''
   warnAsError: true
-
-  # Visual Studio Installer
-  vsComponents: ''
-  listVsComponents: false
-  installVsComponents: false
 
 steps:
   - powershell: |
@@ -36,16 +31,16 @@ steps:
     displayName: NuGet restore
     inputs:
       command: restore
-      restoreSolution: ${{parameters.project }}
+      restoreSolution: ${{parameters.solution }}
       feedsToUse: config
       nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
       restoreDirectory: packages/
       verbosityRestore: Detailed # Options: quiet, normal, detailed
 
   - task: VSBuild@1
-    displayName: VSBuild ${{parameters.project}}
+    displayName: VSBuild ${{parameters.solution}}
     inputs:
-      solution: ${{parameters.project}}
+      solution: ${{parameters.solution}}
       vsVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: ${{ parameters.buildPlatform }}

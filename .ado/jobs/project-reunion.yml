@@ -27,7 +27,7 @@ jobs:
           displayName: Project Reunion ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
 
           pool:
             name: ${{ variables['AgentPool.Medium'] }}
@@ -50,50 +50,30 @@ jobs:
 
             - template: ../templates/apply-published-version-vars.yml
 
-            - template: ../templates/build-rnw.yml
+            - template: ../templates/msbuild-sln.yml
               parameters:
-                project: vnext/Microsoft.ReactNative.ProjectReunion.sln
+                solution: vnext/Microsoft.ReactNative.ProjectReunion.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration}}
                 msbuildArguments: /p:UseWinUI3=true
                 warnAsError: false # Disable warn as error until we fix #8312
 
-            - task: CopyFiles@2
-              displayName: Copy NuGet artifacts
-              inputs:
-                sourceFolder: $(Build.SourcesDirectory)\vnext\scripts
-                targetFolder: $(Build.StagingDirectory)
-                contents: Microsoft.ReactNative.ProjectReunion.nuspec
-
-            - task: CopyFiles@2
-              displayName: Copy NuGet artifacts
-              inputs:
-                sourceFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}
-                targetFolder: $(Build.StagingDirectory)/reunion/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration}}
+            - template: ../templates/publish-build-artifacts.yml
+              parameters:
+                artifactName: ProjectReunion
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildConfiguration: ${{ matrix.BuildConfiguration}}
                 contents: |
                   Microsoft.ReactNative\**
                   Microsoft.ReactNative.ProjectReunion\**
 
-            - task: PublishBuildArtifacts@1
-              displayName: "Publish Artifact: Project Reunion"
-              inputs:
-                artifactName: ReactWindows
-                pathToPublish: $(Build.StagingDirectory)
-                parallel: true
-
-            - task: NuGetToolInstaller@1
-              inputs:
-                versionSpec: ">=5.8.0"
-
             - template: ../templates/prep-and-pack-nuget.yml
               parameters:
-                packDesktop: false
-                packMicrosoftReactNative: false
-                packMicrosoftReactNativeCxx: false
-                packMicrosoftReactNativeManaged: false
-                packMicrosoftReactNativeManagedCodeGen: false
+                artifactName: ProjectReunion
                 packMicrosoftReactNativeProjectReunion: true
-                slices: '("x64.Release")'
+                slices:
+                  - platform: x64
+                    configuration: Release
 
             - task: PublishBuildArtifacts@1
               displayName: "Publish Artifact: Project Reunion NuGet"

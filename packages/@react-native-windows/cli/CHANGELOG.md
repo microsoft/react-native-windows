@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 01 Nov 2021 18:33:36 GMT and should not be manually modified.
+This log was last generated on Tue, 02 Nov 2021 20:20:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.99
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Changes
+
+- Use NPM 8 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Tue, 02 Nov 2021 20:20:12 GMT
+
+### Changes
+
+- Use NPM 8 (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.98
 

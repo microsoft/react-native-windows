@@ -32,10 +32,10 @@ parameters:
             BuildPlatform: x86
           - Name: Arm64Debug
             BuildConfiguration: Debug
-            BuildPlatform: arm64
+            BuildPlatform: ARM64
           - Name: Arm64Release
             BuildConfiguration: Release
-            BuildPlatform: arm64
+            BuildPlatform: ARM64
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
@@ -48,7 +48,7 @@ jobs:
           displayName: Desktop ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
 
             # Enable if any issues RNTesterIntegrationTests::* become unstable.
             - name: Desktop.IntegrationTests.SkipRNTester
@@ -100,9 +100,9 @@ jobs:
                   Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
                 displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
-            - template: ../templates/build-rnw.yml
+            - template: ../templates/msbuild-sln.yml
               parameters:
-                project: vnext/ReactWindows-Desktop.sln
+                solution: vnext/ReactWindows-Desktop.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
 
@@ -113,7 +113,7 @@ jobs:
 
             - template: ../templates/discover-google-test-adapter.yml
 
-            - ${{ if ne(matrix.BuildPlatform, 'arm64') }}:
+            - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
               - task: VSTest@2
                 displayName: Run Desktop Unit Tests
                 timeoutInMinutes: 5 # Set smaller timeout , due to hangs
@@ -135,7 +135,7 @@ jobs:
                   failOnMinTestsNotRun: true
 
               # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'arm64')) }}:
+            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64')) }}:
               - task: PowerShell@2
                 displayName: Set up test servers
                 inputs:
@@ -167,9 +167,9 @@ jobs:
 
               - template: ../templates/stop-packagers.yml
 
-            - template: ../templates/publish-build-artifacts-for-nuget.yml
+            - template: ../templates/publish-build-artifacts.yml
               parameters:
-                artifactName: ReactWindows
+                artifactName: Desktop
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |

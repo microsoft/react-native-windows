@@ -1775,9 +1775,9 @@
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
 "@rnx-kit/jest-preset@^0.1.0":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.4.tgz#4371ba7b97a70950df8db917806f2b2ad43cdabb"
-  integrity sha512-cz+9G0u16E8JUyYJsE4Ar9YPQAX30zwywBAGd4glCF/b/eEArpdR92m+FIfZR+4wD73pAayTAkLc133BsJ7cpw==
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.5.tgz#8d82301b0254017bd4cde289ee2edad167d010d6"
+  integrity sha512-1Y5gIEjnlCV1mmRdKVGFoIChFwqB18/zanY6S3rTU+qo7FPZeTbaMBYTAJ8uLRuBNwebaDAOvug9UzBAkV2zJA==
   dependencies:
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
@@ -2122,16 +2122,16 @@
     "@types/node" "*"
 
 "@types/react-native@^0.66.0":
-  version "0.66.1"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.1.tgz#093b4a2a9fce2335548d35be3c8900bf3ebb9373"
-  integrity sha512-CjKGkhXFcMZDYJQ0blz+gxDNH4Jcbbdwoc43onKDVvr9kwg5Nh9liHBixAh2vGYYpO1xLgYm3Y7FIr1CCSmZtg==
+  version "0.66.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.2.tgz#54e7ff048e659a434de7cb91778a8ec88d88e288"
+  integrity sha512-mcId+yp2BKXNDFwyblnNS2GNl4XBC56rPBaGXRTD2/Nbc4PzpKxEbfeJneZxLmlYCNf3vWMfOCKllRTSW8OFLw==
   dependencies:
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^17.0.21":
-  version "17.0.33"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.33.tgz#e01ae3de7613dac1094569880bb3792732203ad5"
-  integrity sha512-pLWntxXpDPaU+RTAuSGWGSEL2FRTNyRQOjSWDke/rxRg14ncsZvx8AKWMWZqvc1UOaJIAoObdZhAWvRaHFi5rw==
+  version "17.0.34"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.34.tgz#797b66d359b692e3f19991b6b07e4b0c706c0102"
+  integrity sha512-46FEGrMjc2+8XhHXILr+3+/sTe3OfzSPU9YGKILLrUYbQ1CLQC9Daqo1KzENGXAWwrFwiY0l4ZbF20gRvgpWTg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3186,10 +3186,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-beachball@^2.16.0:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.18.0.tgz#429fbe6c546c9db7557d7594cf35f029263bef49"
-  integrity sha512-3Uk4TJfDQoj/zQy1c9vQeVZZ2sKWWDdL/d3zlyCM2pJsZjQSYveLjRRBJjG7fsz+lFtU0uYiUhbMW4oWn9HXSw==
+beachball@^2.20.0:
+  version "2.20.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.20.0.tgz#7fe55e7d86c9c890de15474c84f6a32653bdb6ca"
+  integrity sha512-vVdF6qDDurO66GZigUtqKuXzQM8ImlG7MgN5iTj9rvZ4RM6vy+nklu0EmqaQtqS5K6hZ4WrHDwgcR/kLa0VHpA==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"

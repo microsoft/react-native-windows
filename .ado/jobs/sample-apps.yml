@@ -30,11 +30,11 @@ parameters:
             DeployOption:
           - Name: Arm64Debug
             BuildConfiguration: Debug
-            BuildPlatform: arm64
+            BuildPlatform: ARM64
             DeployOption: --no-deploy # We don't have Arm agents
           - Name: Arm64Release
             BuildConfiguration: Release
-            BuildPlatform: arm64
+            BuildPlatform: ARM64
             DeployOption: --no-deploy # We don't have Arm agents
           - Name: X64Debug
             BuildConfiguration: Debug
@@ -53,7 +53,7 @@ jobs:
           displayName: Sample Apps ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
             - name: BuildLogDirectory
               value: $(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\BuildLogs
           

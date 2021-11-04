@@ -5,7 +5,7 @@ parameters:
     #values:
     #  - x86
     #  - x64
-    #  - arm64
+    #  - ARM64
   - name: configuration
     type: string
     # Publish still using runtime matrix

@@ -93,6 +93,7 @@
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;
         $(YogaDir);
         $(FmtDir)include;
         %(AdditionalIncludeDirectories)
@@ -163,11 +164,12 @@
       <!--
         The JSI tests have a number of violations that we must suppress to avoid chaning the code.
         C4100 - unreferenced formal parameter
+        C4127 - conditional expression is constant
         C4245 - 'initializing': conversion from 'int' to 'unsigned __int64', signed/unsigned mismatch
         C4389 - '==': signed/unsigned mismatch
         C4458 - declaration of '<varname>' hides class member
       -->
-      <DisableSpecificWarnings>4100;4245;4389;4458;$(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4127;4245;4389;4458;$(DisableSpecificWarnings)</DisableSpecificWarnings>
       <!-- JSI tests require RuntimeTypeInfo -->
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <!-- To avoid RuntimeTypeInfo conflict with project's PCH -->
@@ -181,6 +183,10 @@
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactDispatcher.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNonAbiValue.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNotificationService.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Shared\tracing\fbsystrace.h" />

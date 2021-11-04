@@ -1,8 +1,50 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 Nov 2021 18:33:36 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Nov 2021 05:07:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.412
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Changes
+
+- MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Automatically Use Large PCH on Machines With >7GB per Thread (ngerlem@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0-canary.412
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Changes
+
+- MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Automatically Use Large PCH on Machines With >7GB per Thread (ngerlem@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0-canary.411
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Changes
+
+- Split LayoutHeaders (ngerlem@microsoft.com)
+- Use NPM 8 (ngerlem@microsoft.com)
+- Delete Install-VsFeatures.ps1 (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.99
+
+## 0.0.0-canary.411
+
+Tue, 02 Nov 2021 20:20:13 GMT
+
+### Changes
+
+- Split LayoutHeaders (ngerlem@microsoft.com)
+- Use NPM 8 (ngerlem@microsoft.com)
+- Delete Install-VsFeatures.ps1 (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.99
 
 ## 0.0.0-canary.410
 
