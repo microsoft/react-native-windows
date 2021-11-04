@@ -119,8 +119,9 @@ async function runWindows(
       console.log('  Installed UWP SDKs:');
       const sdks = MSBuildTools.getAllAvailableUAPVersions();
       sdks.forEach(version => console.log('    ' + version));
-    } catch (error) {
-      runWindowsError = error as Error;
+    } catch (ex) {
+      runWindowsError =
+        ex instanceof Error ? (ex as Error) : new Error(String(ex));
       Telemetry.trackException(runWindowsError);
 
       newError(
@@ -134,8 +135,9 @@ async function runWindows(
 
   try {
     await runWindowsInternal(args, config, options);
-  } catch (error) {
-    runWindowsError = error as Error;
+  } catch (ex) {
+    runWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(runWindowsError);
 
     if (!hasRunRnwDependencies) {

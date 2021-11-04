@@ -936,8 +936,9 @@ async function autolinkWindows(
   let autolinkWindowsError: Error | undefined;
   try {
     await autolinkWindowsInternal(args, config, options);
-  } catch (error) {
-    autolinkWindowsError = error as Error;
+  } catch (ex) {
+    autolinkWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(autolinkWindowsError);
   }
 

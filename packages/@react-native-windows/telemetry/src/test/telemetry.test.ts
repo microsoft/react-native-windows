@@ -266,8 +266,8 @@ async function runTestCommandE2E(commandBody: () => Promise<void>) {
   let caughtError: Error | undefined;
   try {
     await commandBody();
-  } catch (error) {
-    caughtError = error as Error;
+  } catch (ex) {
+    caughtError = ex instanceof Error ? (ex as Error) : new Error(String(ex));
     errorCode =
       caughtError instanceof errorUtils.CodedError
         ? (caughtError as errorUtils.CodedError).type
@@ -368,7 +368,9 @@ function verifyTestCommandTelemetryProcessor(
         done();
       }
     } catch (ex) {
-      caughtErrors.push(ex as Error);
+      caughtErrors.push(
+        ex instanceof Error ? (ex as Error) : new Error(String(ex)),
+      );
     }
 
     return true;
@@ -536,7 +538,9 @@ function getVerifyStackTelemetryProcessor(
         done();
       }
     } catch (ex) {
-      caughtErrors.push(ex as Error);
+      caughtErrors.push(
+        ex instanceof Error ? (ex as Error) : new Error(String(ex)),
+      );
     }
 
     return true;
