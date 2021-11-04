@@ -53,7 +53,7 @@ export class TelemetryTest extends Telemetry {
 }
 
 beforeEach(async () => {
-  //jest.setTimeout(10000);
+  jest.setTimeout(10000);
   TelemetryTest.startTest();
   await TelemetryTest.setup({preserveErrorMessages: true});
 });
