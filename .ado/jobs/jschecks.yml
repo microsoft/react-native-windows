@@ -30,7 +30,7 @@ jobs:
       - task: CmdLine@2
         displayName: Check for change files
         inputs:
-          script: npx beachball check --branch origin/$(BeachBallBranchName) --changehint "Run `yarn change` from root of repo to generate a change file."
+          script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "Run `yarn change` from root of repo to generate a change file."
 
       - task: CmdLine@2
         displayName: yarn build
