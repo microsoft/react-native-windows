@@ -21,7 +21,7 @@
       "type": "derived",
       "file": "src/ExperimentalVirtualizedList.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
-      "baseHash": "6738b75dd2dee0eaca869c44bfb7ca53cad31439",
+      "baseHash": "020035fe631f052ff31daf706d24a8212e0274f6",
       "issue": 8120
     },
     {
