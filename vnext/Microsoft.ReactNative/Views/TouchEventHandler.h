@@ -50,12 +50,11 @@ class TouchEventHandler {
   winrt::event_revoker<winrt::IUIElement> m_exitedRevoker;
   winrt::event_revoker<winrt::IUIElement> m_movedRevoker;
 
-  #ifdef USE_WINUI3
+#ifdef USE_WINUI3
   using PointerDeviceType = winrt::Microsoft::UI::Input::PointerDeviceType;
-  #else
+#else
   using PointerDeviceType = winrt::Windows::Devices::Input::PointerDeviceType;
-  #endif
-
+#endif
 
   struct ReactPointer {
     int64_t target = 0;
