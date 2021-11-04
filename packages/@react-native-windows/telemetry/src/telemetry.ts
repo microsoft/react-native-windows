@@ -119,8 +119,8 @@ export class Telemetry {
   /** Sets up Telemetry.client. */
   private static setupClient() {
     appInsights.Configuration.setInternalLogging(
-      Telemetry.isTest,
-      Telemetry.isTest,
+      false, //Telemetry.isTest,
+      false, //Telemetry.isTest,
     );
 
     Telemetry.client = new appInsights.TelemetryClient(
