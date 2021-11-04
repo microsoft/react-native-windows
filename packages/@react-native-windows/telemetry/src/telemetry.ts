@@ -53,7 +53,7 @@ export const NuGetPackagesWeTrack: string[] = [
 ];
 
 /**
- * The Telemetry class is responsible for reporting telemtery for RNW CLI.
+ * The Telemetry class is responsible for reporting telemetry for RNW CLI.
  */
 export class Telemetry {
   protected static client?: appInsights.TelemetryClient = undefined;
