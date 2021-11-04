@@ -109,14 +109,14 @@ void UpdateTextControlBorderResourceBrushes(const xaml::FrameworkElement &elemen
 void UpdateToggleSwitchBorderResourceBrushes(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush brush) {
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOff, brush);
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPointerOver, brush);
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPressed, brush);
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffDisabled, brush);
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOn, brush);
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPointerOver, brush);
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPressed, brush);
-  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOff, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPointerOver, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPressed, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffDisabled, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOn, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPointerOver, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPressed, brush);
+  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
 }
 
 void UpdateToggleSwitchThumbResourceBrushes(
