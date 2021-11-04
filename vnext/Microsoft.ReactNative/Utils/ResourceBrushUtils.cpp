@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #include "pch.h"
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/StandardControlResourceKeyNames.h>
@@ -31,11 +34,27 @@ void UpdateResourceBrush(
     const std::wstring &resourceName,
     const xaml::Media::Brush brush) {
   const auto resources = element.Resources();
+  if (resources != nullptr) {
+    if (brush != nullptr) {
+      resources.Insert(winrt::box_value(resourceName), brush);
+    } else {
+      resources.Remove(winrt::box_value(resourceName));
+    }
+  }
+}
 
-  // sanity check for null pointers
-  if (resources != nullptr && brush != nullptr) {
+void UpdateToggleResourceBrush(
+    const xaml::FrameworkElement &element,
+    const std::wstring &resourceName,
+    const xaml::Media::Brush brush) {
+  const auto resources = element.Resources();
+
+  // sanity check for null pointer
+  if (resources != nullptr) {
+    if (brush != nullptr) {
       auto resourceBrush = resources.Lookup(winrt::box_value(resourceName));
-      // if both the old Resource Brush and new Resource Brush is a SolidColorBrush, change the color of the brush to support runtime changes
+      // if both the old Resource Brush and new Resource Brush is a SolidColorBrush, change the color of the brush to
+      // support runtime changes
       if (resourceBrush.try_as<xaml::Media::SolidColorBrush>() && brush.try_as<xaml::Media::SolidColorBrush>()) {
         auto color = brush.as<xaml::Media::SolidColorBrush>().Color();
         auto value = resourceBrush.try_as<xaml::Media::SolidColorBrush>().Color();
@@ -45,7 +64,11 @@ void UpdateResourceBrush(
       } else {
         // else, add the new brush to the resource directory (will need to reload component to see changes)
         resources.Insert(winrt::box_value(resourceName), brush);
-      }   
+      }
+      // if the brush is null, remove the resource
+    } else {
+      resources.Remove(winrt::box_value(resourceName));
+    }
   }
 }
 
@@ -86,46 +109,46 @@ void UpdateTextControlBorderResourceBrushes(const xaml::FrameworkElement &elemen
 void UpdateToggleSwitchBorderResourceBrushes(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush brush) {
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOff, brush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPointerOver, brush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPressed, brush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffDisabled, brush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOn, brush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPointerOver, brush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPressed, brush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOff, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPointerOver, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffPressed, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOffDisabled, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOn, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPointerOver, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnPressed, brush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchStrokeOnDisabled, brush);
 }
 
 void UpdateToggleSwitchThumbResourceBrushes(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush thumbBrush) {
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffDisabled, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffDisabled, thumbBrush);
 
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOn, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPointerOver, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPressed, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnDisabled, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOn, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPointerOver, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPressed, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnDisabled, thumbBrush);
 }
 
 void UpdateToggleSwitchTrackResourceBrushesOn(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush onTrackBrush) {
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnDisabled, onTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOnDisabled, onTrackBrush);
 }
 
 void UpdateToggleSwitchTrackResourceBrushesOff(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush offTrackBrush) {
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOff, offTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPointerOver, offTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPressed, offTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffDisabled, offTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOff, offTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOffPointerOver, offTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOffPressed, offTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOffDisabled, offTrackBrush);
 }
 
 bool IsObjectATextControl(const xaml::DependencyObject &object) {
