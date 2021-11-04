@@ -5,10 +5,8 @@
     xmlns:local="using:{{ namespace }}"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:rnw="using:Microsoft.ReactNative"
     mc:Ignorable="d">
 
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <rnw:ReactRootView x:Name="reactRootView" MinWidth="400" MinHeight="600" ComponentName="{{ mainComponentName }}" Background="Red" />
-    </StackPanel>
+    <local:MainPage/>
+
 </Window>
