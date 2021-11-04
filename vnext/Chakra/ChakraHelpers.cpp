@@ -405,72 +405,11 @@ JsValueRef evaluateScriptWithBytecode(
     JsValueRef scriptFileName,
     [[maybe_unused]] std::string &&bytecodeFileName,
     [[maybe_unused]] bool asyncBytecodeGeneration) {
-#if defined(WINRT)
   // TODO:
   // ChakraRT does not support the JsRunSerialized() API.
   // Hence for UWP implementation, we fall back to using the original source
   // code right now.
   return evaluateScript(std::move(script), scriptFileName);
-#else
-  auto bytecodePrefixOptional = BytecodePrefix::getBytecodePrefix(scriptVersion);
-  if (!bytecodePrefixOptional.first) {
-    return evaluateScript(std::move(script), scriptFileName);
-  }
-
-  auto &bytecodePrefix = bytecodePrefixOptional.second;
-  std::unique_ptr<const JSBigString> bytecode = tryGetBytecode(bytecodePrefix, bytecodeFileName);
-  if (!bytecode) {
-    std::shared_ptr<const JSBigString> sharedScript(script.release());
-    serializeBytecodeToFile(sharedScript, bytecodePrefix, std::move(bytecodeFileName), asyncBytecodeGeneration);
-    ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
-    JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(sharedScript);
-    ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
-    return evaluateScript(jsScript.get(), scriptFileName);
-  }
-
-  ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
-  JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(std::move(script));
-  ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
-  JsValueRef exn = nullptr;
-  JsValueRef value = nullptr;
-  JsErrorCode result = JsRunSerialized(
-      jsArrayBufferFromBigString(std::move(bytecode)).get(),
-      [](JsSourceContext sourceContext, JsValueRef *value, JsParseScriptAttributes *parseAttributes) {
-        *value = reinterpret_cast<JsValueRef>(sourceContext);
-        *parseAttributes = JsParseScriptAttributeNone;
-        return true;
-      },
-      reinterpret_cast<JsSourceContext>(jsScript.get()),
-      scriptFileName,
-      &value);
-
-  // Currently, when the existing bundle.bytecode is incompatible with the
-  // ChakraCore.dll used, we do not update it. This is because we memory mapped
-  // bundle.bytecode into a JsExternalArrayBuffer, whose lifetime is controlled
-  // by the JS engine. Hence we cannot remove/rename/modify bytecode.bundle
-  // until the JS garbage collector deletes the corresponding
-  // JsExternalArrayBuffer.
-  if (result == JsErrorBadSerializedScript) {
-    JsGetAndClearException(&exn);
-    return evaluateScript(jsScript.get(), scriptFileName);
-  }
-
-  // This code is duplicated from evaluateScript.
-  // TODO (task 1977635) get rid of this duplicated code.
-  bool hasException = false;
-  if (result == JsErrorInExceptionState || (JsHasException(&hasException), hasException)) {
-    JsGetAndClearException(&exn);
-    std::string exceptionDescription = "JavaScriptException in " + ChakraValue(scriptFileName).toString().str();
-
-    throw ChakraJSException(exn, exceptionDescription.c_str());
-  }
-
-  if (value == nullptr) {
-    formatAndThrowJSException(exn, scriptFileName);
-  }
-
-  return value;
-#endif
 }
 
 void formatAndThrowJSException(JsValueRef exn, JsValueRef source) {
