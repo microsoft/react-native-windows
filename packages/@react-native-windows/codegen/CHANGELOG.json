@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 04 Nov 2021 05:07:29 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.20",
+      "version": "0.0.0-canary.20",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "not available",
+            "comment": "Codegen prints `::React::JSValue` instead of `React::JSValue`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Nov 2021 05:07:08 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.20",
       "version": "0.0.0-canary.20",
