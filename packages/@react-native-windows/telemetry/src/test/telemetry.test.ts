@@ -53,7 +53,7 @@ export class TelemetryTest extends Telemetry {
 }
 
 beforeEach(async () => {
-  jest.setTimeout(10000);
+  jest.setTimeout(15000); // AI can get stuck retrying, see https://github.com/microsoft/ApplicationInsights-node.js/issues/833
   TelemetryTest.startTest();
   await TelemetryTest.setup({preserveErrorMessages: true});
 });
