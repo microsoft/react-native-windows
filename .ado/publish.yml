@@ -71,11 +71,11 @@ jobs:
         displayName: Enable No-Publish
         condition: ${{ parameters.skipGitPush }}
 
-      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***" --no-git-tags
+      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***" --no-git-tags
         displayName: Beachball Publish (Main Branch)
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
 
-      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***"
+      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
 
@@ -105,7 +105,7 @@ jobs:
       - template: templates/prepare-js-env.yml
 
       # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
-      - script: npx beachball bump
+      - script: npx beachball bump --verbose
         displayName: beachball bump
 
       # Azure Functions expects a fully packagable folder with dependencies.

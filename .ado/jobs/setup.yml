@@ -24,10 +24,10 @@ jobs:
         displayName: Install beachball
     
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
-        - script: npx beachball check --branch origin/$(BeachBallBranchName) --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
+        - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
           displayName: Check for change files
 
-      - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes
+      - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
         displayName: beachball bump
 
       - template: ../templates/set-version-vars.yml
