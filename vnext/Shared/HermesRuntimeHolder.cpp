@@ -10,16 +10,15 @@
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/SystraceSection.h>
 #include <hermes/hermes.h>
-#ifndef NDEBUG
-#include <hermes/hermes_dbg.h>
-#endif
 #include "HermesRuntimeHolder.h"
+#include "HermesShim.h"
 
 #if defined(HERMES_ENABLE_DEBUGGER)
 #include <hermes/inspector/chrome/Registration.h>
 #endif
 
 using namespace facebook;
+using namespace Microsoft::ReactNative;
 
 namespace facebook {
 namespace react {
@@ -29,7 +28,7 @@ namespace {
 std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(
     const ::hermes::vm::RuntimeConfig &runtimeConfig) {
   SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
-  return hermes::makeHermesRuntime(runtimeConfig);
+  return HermesShim::makeHermesRuntime(runtimeConfig);
 }
 
 #ifdef HERMES_ENABLE_DEBUGGER
@@ -93,11 +92,7 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   auto hermesRuntime = makeHermesRuntimeSystraced(runtimeConfig);
   facebook::hermes::HermesRuntime &hermesRuntimeRef = *hermesRuntime;
 
-#ifndef NDEBUG
-  m_runtime = std::make_shared<hermes::RuntimeDebugFlavorProxy>(std::move(hermesRuntime));
-#else
   m_runtime = std::move(hermesRuntime);
-#endif
   m_own_thread_id = std::this_thread::get_id();
 
 #ifdef HERMES_ENABLE_DEBUGGER

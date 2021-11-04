@@ -35,7 +35,7 @@ function main() {
     // Pass all arguments to clang-format, including e.g. -version etc.
     spawnClangFormat(args, verify ? queryNoOpenFiles : process.exit, 'inherit');
   } catch (e) {
-    process.stdout.write(e.message);
+    process.stdout.write((e as Error).message);
     process.exit(1);
   }
 }

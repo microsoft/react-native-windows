@@ -597,10 +597,10 @@ function isProjectUsingYarn(cwd: string): boolean {
     // Now that the project has been generated, add project info
     await addProjectInfoToTelemetry();
   } catch (error) {
-    Telemetry.trackException(error);
-    initWindowsError = error;
+    initWindowsError = error as Error;
+    Telemetry.trackException(initWindowsError);
 
-    console.error(chalk.red(error.message));
+    console.error(chalk.red(initWindowsError.message));
     console.error(error);
   }
   endTelemetrySession(initWindowsError);

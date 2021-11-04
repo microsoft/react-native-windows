@@ -1,8 +1,66 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Tue, 02 Nov 2021 20:20:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.99
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Changes
+
+- Use NPM 8 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Tue, 02 Nov 2021 20:20:12 GMT
+
+### Changes
+
+- Use NPM 8 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.98
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Changes
+
+- Default `run-windows` to building system architecture (ngerlem@microsoft.com)
+
+## 0.0.0-canary.98
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Changes
+
+- Default `run-windows` to building system architecture (ngerlem@microsoft.com)
+
+## 0.0.0-canary.96
+
+Wed, 27 Oct 2021 05:07:22 GMT
+
+### Changes
+
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+
+## 0.0.0-canary.96
+
+Wed, 27 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+
+## 0.0.0-canary.95
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
+- Bump @react-native-windows/telemetry to v0.0.0-canary.24
 
 ## 0.0.0-canary.94
 

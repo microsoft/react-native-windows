@@ -3,6 +3,11 @@
   "version": "1.1.6",
   "license": "MIT",
   "main": "jest.e2e.config.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/jest-e2e-config"
+  },
   "dependencies": {
     "@rnw-scripts/babel-node-config": "2.0.2"
   },

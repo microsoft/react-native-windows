@@ -53,20 +53,28 @@ jobs:
           displayName: Sample Apps ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
             - name: BuildLogDirectory
               value: $(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\BuildLogs
           
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
-          pool: $(AgentPool.Medium)
+          pool:
+            name: ${{ variables['AgentPool.Medium'] }}
+            demands: ${{ variables['AgentImage'] }}
 
           steps:
             - checkout: self
               clean: false
               submodules: false
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - task: NuGetCommand@2
               displayName: NuGet restore - SampleApps
@@ -82,7 +90,7 @@ jobs:
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 deployOption:  ${{ matrix.DeployOption }}
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
+                buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-apps
 
             - script: yarn bundle-cpp --verbose
@@ -91,4 +99,4 @@ jobs:
 
             - template: ../templates/upload-build-logs.yml
               parameters:
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
+                buildLogDirectory: ${{ variables['BuildLogDirectory'] }}

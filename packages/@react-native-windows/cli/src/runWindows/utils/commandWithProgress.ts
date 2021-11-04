@@ -87,7 +87,7 @@ export function commandWithProgress(
   verbose: boolean,
   errorCategory: CodedErrorType,
 ) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 
     if (verbose) {

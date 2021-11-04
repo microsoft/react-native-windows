@@ -1,21 +1,32 @@
 parameters:
-  packageId: ''
-  packageVersion: ''
-  slices: ''
-  buildProperties: ''
-  codesignBinaries: false
-  codesignNuget: false
+  - name: packageId
+    type: string
+  - name: packageVersion
+    type: string
+  - name: slices
+    type: object
+    default: []
+  - name: buildProperties
+    type: string
+    default: ''
+  - name: codesignBinaries
+    type: boolean
+    default: false
+  - name: codesignNuget
+    type: boolean
+    default: false
 
 steps:
 
   # Strip down the binaries from NuGet because we may not have built all the flavours.
-  - task: PowerShell@2
-    displayName: '${{ parameters.packageId }} - Strip slices from nuspec'
-    inputs:
-      targetType: filePath
-      filePath: $(System.DefaultWorkingDirectory)\ReactWindows\StripAdditionalPlatformsFromNuspec.ps1
-      arguments: -nuspec $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -outfile $(System.DefaultWorkingDirectory)/ReactWindows/${{parameters.packageId}}.nuspec -slices ${{ parameters.slices }} -debug
-    condition: and(succeeded(), ne('', '${{ parameters.slices }}'))
+  - ${{ if gt(length(parameters.slices), 0) }}:
+    - powershell: |
+        $slices = ConvertFrom-Json '${{ convertToJson(parameters.slices) }}'
+        $slicesArg = $slices | % {$_.platform + "." + $_.configuration}
+
+        .\StripAdditionalPlatformsFromNuspec.ps1 -nuspec ${{parameters.packageId}}.nuspec -outfile ${{parameters.packageId}}.nuspec -slices $slicesArg -debug
+      displayName: '${{ parameters.packageId }} - Strip slices from nuspec'
+      workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
@@ -92,10 +103,11 @@ steps:
             }
           ]
 
-  - task: CmdLine@2
+  - powershell: gci $(System.DefaultWorkingDirectory)/NugetRootFinal
+    displayName: List files in NugetRootFinal
+
+  - script: |
+      set TestFeed=$(System.DefaultWorkingDirectory)\NugetTestFeed
+      if NOT EXIST %TestFeed% (mkdir %TestFeed%)
+      nuget add $(System.DefaultWorkingDirectory)\NugetRootFinal\${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg -Source %TestFeed%
     displayName: '${{ parameters.packageId }} - Nuget push to local test feed'
-    inputs:
-      script: |
-        set TestFeed=$(System.DefaultWorkingDirectory)\NugetTestFeed
-        if NOT EXIST %TestFeed% (mkdir %TestFeed%)
-        nuget add $(System.DefaultWorkingDirectory)\NugetRootFinal\${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg -Source %TestFeed%

@@ -123,7 +123,7 @@ function InstallVS {
 function CheckNode {
     try {
         $v = (Get-Command node -ErrorAction Stop).Version.Major
-        return $v -eq 12 -or $v -eq 13 -or $v -eq 14
+        return ($v -ge 12) -and (($v % 2) -eq 0);
     } catch {
         return $false;
     }
@@ -254,7 +254,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'NodeJS lts installed';
+        Name = 'NodeJS LTS';
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };

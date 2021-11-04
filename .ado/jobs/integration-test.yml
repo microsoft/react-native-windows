@@ -10,15 +10,16 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          - Name: X64WebDebug
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            DeployOptions:
-            UseHermes: false
+          # See #9015
+          # - Name: X64ReleaseHermes
+          #   BuildPlatform: x64
+          #   BuildConfiguration: Release
+          #   DeployOptions:
+          #   UseHermes: true
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
-            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+            DeployOptions:
             UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
@@ -27,15 +28,16 @@ parameters:
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
-          - Name: X64WebDebug
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            DeployOptions:
-            UseHermes: false
+          # See #9015
+          # - Name: X64ReleaseHermes
+          #   BuildPlatform: x64
+          #   BuildConfiguration: Release
+          #   DeployOptions:
+          #   UseHermes: true
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
-            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+            DeployOptions:
             UseHermes: true
           - Name: X86WebDebug
             BuildPlatform: x86
@@ -45,7 +47,7 @@ parameters:
           - Name: X86ReleaseHermes
             BuildPlatform: x86
             BuildConfiguration: Release
-            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+            DeployOptions:
             UseHermes: true
 
 jobs:
@@ -55,8 +57,10 @@ jobs:
         - job: IntegrationTest${{ matrix.Name }}
           displayName: Integration Test App ${{ matrix.Name }}
           variables:
-            - template: ../variables/vs2019.yml
-          pool: $(AgentPool.Medium)
+            - template: ../variables/windows.yml
+          pool:
+            name: ${{ variables['AgentPool.Medium'] }}
+            demands: ${{ variables['AgentImage'] }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -65,7 +69,13 @@ jobs:
               clean: true
               submodules: false
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - powershell: |
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
@@ -93,7 +103,7 @@ jobs:
                 displayName: yarn windows --no-launch
                 workingDirectory: packages/integration-test-app
 
-              - powershell: Start-Process npm -ArgumentList "run","start"
+              - powershell: Start-Process npm.cmd -ArgumentList "run","start"
                 displayName: Start packager
                 workingDirectory: packages/integration-test-app
 

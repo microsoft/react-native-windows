@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "@rnw-scripts/format-files_v1.0.26",
+      "version": "1.0.26",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/format-files",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:05:41 GMT",
+      "tag": "@rnw-scripts/format-files_v1.0.26",
+      "version": "1.0.26",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/format-files",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@rnw-scripts/format-files_v1.0.26",
+      "version": "1.0.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "@rnw-scripts/format-files_v1.0.25",
       "version": "1.0.25",

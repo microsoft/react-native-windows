@@ -1,8 +1,259 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 Oct 2021 05:07:05 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Nov 2021 05:07:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.412
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Changes
+
+- MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Automatically Use Large PCH on Machines With >7GB per Thread (ngerlem@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0-canary.412
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Changes
+
+- MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Automatically Use Large PCH on Machines With >7GB per Thread (ngerlem@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0-canary.411
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Changes
+
+- Split LayoutHeaders (ngerlem@microsoft.com)
+- Use NPM 8 (ngerlem@microsoft.com)
+- Delete Install-VsFeatures.ps1 (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.99
+
+## 0.0.0-canary.411
+
+Tue, 02 Nov 2021 20:20:13 GMT
+
+### Changes
+
+- Split LayoutHeaders (ngerlem@microsoft.com)
+- Use NPM 8 (ngerlem@microsoft.com)
+- Delete Install-VsFeatures.ps1 (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.99
+
+## 0.0.0-canary.410
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Changes
+
+- Fixes issue with Proofing menu override on XAML Islands (erozell@outlook.com)
+- Make all msbuild in PR and CI multicore builds (dannyvv@microsoft.com)
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- doc: Fix REACT_INIT doc to require ReactContext #9010 (dannyvv@microsoft.com)
+- Set default AppxBundlePlatforms (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.98
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0-canary.410
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Changes
+
+- Fixes issue with Proofing menu override on XAML Islands (erozell@outlook.com)
+- Make all msbuild in PR and CI multicore builds (dannyvv@microsoft.com)
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- doc: Fix REACT_INIT doc to require ReactContext #9010 (dannyvv@microsoft.com)
+- Set default AppxBundlePlatforms (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.98
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0-canary.409
+
+Thu, 28 Oct 2021 05:06:02 GMT
+
+### Changes
+
+- FastDebug hermes binaries and symbols (anandrag@microsoft.com)
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Remove additional #pragma once from FlyoutViewManager  (erozell@outlook.com)
+- Bump ReactNative.Hermes.Windows nuget package (dannyvv@microsoft.com)
+- Changes needed to compile with clang  (erozell@outlook.com)
+- Conditionally fires `onDismiss` when receiving `ContentDialogResult::None` (erozell@outlook.com)
+- Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.409
+
+Thu, 28 Oct 2021 05:05:43 GMT
+
+### Changes
+
+- FastDebug hermes binaries and symbols (anandrag@microsoft.com)
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Remove additional #pragma once from FlyoutViewManager  (erozell@outlook.com)
+- Bump ReactNative.Hermes.Windows nuget package (dannyvv@microsoft.com)
+- Changes needed to compile with clang  (erozell@outlook.com)
+- Conditionally fires `onDismiss` when receiving `ContentDialogResult::None` (erozell@outlook.com)
+- Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.408
+
+Wed, 27 Oct 2021 05:07:23 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (agnel@microsoft.com)
+- Switch to MUX:CommandBarFlyout in XAML Islands proofing menu (jthysell@microsoft.com)
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.96
+
+## 0.0.0-canary.408
+
+Wed, 27 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (agnel@microsoft.com)
+- Switch to MUX:CommandBarFlyout in XAML Islands proofing menu (jthysell@microsoft.com)
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.96
+
+## 0.0.0-canary.407
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.407
+
+Tue, 26 Oct 2021 05:06:25 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.406
+
+Mon, 25 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- Add Analyze-Crash.ps1 script to aid in reporting crashes (asklar@microsoft.com)
+
+## 0.0.0-canary.406
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Changes
+
+- Add Analyze-Crash.ps1 script to aid in reporting crashes (asklar@microsoft.com)
+
+## 0.0.0-canary.405
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Changes
+
+- Stamp version into Props + Definitions (ngerlem@microsoft.com)
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance. (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
+
+## 0.0.0-canary.405
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Changes
+
+- Stamp version into Props + Definitions (ngerlem@microsoft.com)
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance. (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
+
+## 0.0.0-canary.404
+
+Sun, 24 Oct 2021 05:06:50 GMT
+
+### Changes
+
+- Fix win32 apps referencing the M.RN nuget package so they can use RNW (asklar@microsoft.com)
+
+## 0.0.0-canary.403
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Changes
+
+- fix codegen task (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.19
+
+## 0.0.0-canary.402
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Changes
+
+- Fixes resizeMode for data URI images (erozell@outlook.com)
+- Allow text selection on Alert content (erozell@outlook.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.18
+
+## 0.0.0-canary.401
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Fixes issue with lambda capture of structured bindings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.95
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.14
+- Bump @react-native-windows/codegen to v0.0.0-canary.17
+- Bump react-native-platform-override to v1.5.1
+
+## 0.0.0-canary.400
+
+Sun, 17 Oct 2021 05:06:34 GMT
+
+### Changes
+
+- Catch and report errors in linking module (asklar@microsoft.com)
+
+## 0.0.0-canary.399
+
+Sat, 16 Oct 2021 05:08:25 GMT
+
+### Changes
+
+- Fix WACK for apps not packaging hermes.dll (ngerlem@microsoft.com)
+
+## 0.0.0-canary.398
+
+Fri, 15 Oct 2021 05:06:52 GMT
+
+### Changes
+
+- Remove rtti even when fabric enabled (in release) (30809111+acoates-ms@users.noreply.github.com)
+- Remove Proofing menu item when spellCheck disabled (erozell@outlook.com)
+
+## 0.0.0-canary.397
+
+Thu, 14 Oct 2021 05:06:00 GMT
+
+### Changes
+
+- Fixes text child removal for fast text path (erozell@outlook.com)
 
 ## 0.0.0-canary.396
 

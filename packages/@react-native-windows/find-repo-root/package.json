@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.0-canary.24",
+  "version": "0.0.0-canary.25",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -10,6 +10,11 @@
     "watch": "rnw-scripts watch"
   },
   "main": "lib-commonjs/findRepoRoot.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@react-native-windows/find-repo-root"
+  },
   "dependencies": {
     "find-up": "^4.1.0"
   },
@@ -22,7 +27,7 @@
     "eslint": "7.12.0",
     "just-scripts": "^1.3.3",
     "prettier": "1.19.1",
-    "typescript": "^3.8.3"
+    "typescript": "^4.4.4"
   },
   "beachball": {
     "defaultNpmTag": "canary",

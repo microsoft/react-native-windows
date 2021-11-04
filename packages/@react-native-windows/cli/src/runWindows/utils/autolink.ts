@@ -937,8 +937,8 @@ async function autolinkWindows(
   try {
     await autolinkWindowsInternal(args, config, options);
   } catch (error) {
-    Telemetry.trackException(error);
-    autolinkWindowsError = error;
+    autolinkWindowsError = error as Error;
+    Telemetry.trackException(autolinkWindowsError);
   }
 
   await endTelemetrySession(autolinkWindowsError, getExtraProps);
@@ -1005,7 +1005,7 @@ export async function autolinkWindowsInternal(
     spinner.fail();
     const endTime = performance.now();
     console.log(
-      `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
+      `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
         endTime - startTime,
       )}ms)`,
     );

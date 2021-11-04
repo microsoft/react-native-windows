@@ -2,6 +2,93 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 18:33:36 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.17",
+      "version": "0.0.0-canary.17",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "not available",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:05 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.17",
+      "version": "0.0.0-canary.17",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "7b3510aebdbc79189278206a53e26213897d6ff8",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Oct 2021 05:06:56 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "not available",
+            "comment": "Integrate 10/16 Nightly Build (Base of 0.67)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.6.0",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Oct 2021 05:06:24 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.15",
+      "version": "0.0.0-canary.15",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "d3c720b909b3c8de50cac5665c849288eabcf5da",
+            "comment": "Integrate 10/16 Nightly Build (Base of 0.67)"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.6.0",
+            "commit": "5d10d4cf3b1329d0221a891ee169af31d44c2d53"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.14",
+      "version": "0.0.0-canary.14",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.5.1",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Oct 2021 05:06:48 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.13",
       "version": "0.0.0-canary.13",

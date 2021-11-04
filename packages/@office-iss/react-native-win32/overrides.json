@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-e612d3a11-20211007-2009",
+  "baseVersion": "0.0.0-20211021-2008-eccbf9b5c",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a692668e747e9ea62902ef16cd4cef7fb4664f18"
+      "baseHash": "1920d4cf4c839eb21889eb28e4596fbbfcc4a0cd"
     },
     {
       "type": "derived",
@@ -173,7 +173,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "7d6114901e76fa8f73f84dbb3f486ea2e1c9ce0e"
+      "baseHash": "cf2b9765b9002b0724662417ac77d24153de02bb"
     },
     {
       "type": "platform",
@@ -183,7 +183,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
-      "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372"
+      "baseHash": "689895e8755aed42e913460d1fa964907a74f06c"
     },
     {
       "type": "platform",

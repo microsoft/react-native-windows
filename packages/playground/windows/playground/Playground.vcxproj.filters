@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />
-    <None Include="playground_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

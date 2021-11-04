@@ -205,6 +205,28 @@ function PropagationSample() {
   );
 }
 
+function SpellCheckSample() {
+  const [spellCheckEnabled, setSpellCheckEnabled] = useState(true);
+  return (
+    <>
+      <Text>Spell Check Enabled:</Text>
+      <Switch
+        /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
+         * found when making Flow check .android.js files. */
+        value={spellCheckEnabled}
+        /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
+         * found when making Flow check .android.js files. */
+        onValueChange={setSpellCheckEnabled}
+      />
+      <TextInput
+        placeholder="Type text to test spell check functionality."
+        style={[styles.singleLineWithHeightTextInput]}
+        spellCheck={spellCheckEnabled}
+      />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   multiline: {
     height: 60,
@@ -572,6 +594,12 @@ exports.examples = ([
     title: 'Stop propagation sample',
     render: function(): React.Node {
       return <PropagationSample />;
+    },
+  },
+  {
+    title: 'Toggle spell check',
+    render: function(): React.Node {
+      return <SpellCheckSample />;
     },
   },
   // Windows]

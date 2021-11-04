@@ -263,14 +263,16 @@ async function runTestCommandE2E(commandBody: () => Promise<void>) {
   TelemetryTest.startCommand(getTestCommandStartInfo());
   TelemetryTest.setProjectInfo(getTestCommandProjectInfo());
   let errorCode: errorUtils.CodedErrorType = 'Success';
+  let caughtError: Error | undefined;
   try {
     await commandBody();
   } catch (error) {
+    caughtError = error as Error;
     errorCode =
-      error instanceof errorUtils.CodedError
-        ? (error as errorUtils.CodedError).type
+      caughtError instanceof errorUtils.CodedError
+        ? (caughtError as errorUtils.CodedError).type
         : 'Unknown';
-    TelemetryTest.trackException(error);
+    TelemetryTest.trackException(caughtError);
   }
   TelemetryTest.endCommand(getTestCommandEndInfo(errorCode), getExtraProps());
 }
@@ -366,7 +368,7 @@ function verifyTestCommandTelemetryProcessor(
         done();
       }
     } catch (ex) {
-      caughtErrors.push(ex);
+      caughtErrors.push(ex as Error);
     }
 
     return true;
@@ -534,7 +536,7 @@ function getVerifyStackTelemetryProcessor(
         done();
       }
     } catch (ex) {
-      caughtErrors.push(ex);
+      caughtErrors.push(ex as Error);
     }
 
     return true;

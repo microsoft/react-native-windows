@@ -2,6 +2,768 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Nov 2021 05:07:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.412",
+      "version": "0.0.0-canary.412",
+      "comments": {
+        "none": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Automatically Use Large PCH on Machines With >7GB per Thread"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.20",
+            "commit": "71601897e5e5bf36fa9465196ed3be1cfa669231"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Nov 2021 05:07:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.412",
+      "version": "0.0.0-canary.412",
+      "comments": {
+        "none": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "814e6753aae4ee6438d4904b7baafdf344ebda0f",
+            "comment": "applying package updates"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7977ece4ea5808693b1c594c51a863b107999b45",
+            "comment": "MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7354daf2972573c78b5ca031218138c280cd3401",
+            "comment": "Automatically Use Large PCH on Machines With >7GB per Thread"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.20",
+            "commit": "0427f750ffad4e45db83f0d4c3ed111340eeeef5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Nov 2021 20:20:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.411",
+      "version": "0.0.0-canary.411",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Split LayoutHeaders"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Use NPM 8"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Delete Install-VsFeatures.ps1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.99",
+            "commit": "ccef4eba9bde1cd87a7ecd96ce0030bc10486d21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Nov 2021 20:20:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.411",
+      "version": "0.0.0-canary.411",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9440c876b2410d0a211d8ef73cd5a906963ee243",
+            "comment": "Split LayoutHeaders"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1ead60977cb700ef8849694af3b53a5e643d0b3a",
+            "comment": "Use NPM 8"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "27bf6651f8497f9f4d2d6ab89ff3b3f81dd06fdb",
+            "comment": "Delete Install-VsFeatures.ps1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.99",
+            "commit": "9440c876b2410d0a211d8ef73cd5a906963ee243"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.410",
+      "version": "0.0.0-canary.410",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fixes issue with Proofing menu override on XAML Islands"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Make all msbuild in PR and CI multicore builds"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "doc: Fix REACT_INIT doc to require ReactContext #9010"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Set default AppxBundlePlatforms"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.98",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          }
+        ],
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.410",
+      "version": "0.0.0-canary.410",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e5ca4643d027d653974d5ab7fe175194f6dc5ccc",
+            "comment": "Fixes issue with Proofing menu override on XAML Islands"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3325674aa9baeeff41ad86b09b2be057465ea2ed",
+            "comment": "Make all msbuild in PR and CI multicore builds"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7b3510aebdbc79189278206a53e26213897d6ff8",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0eb196c278522f15f7d160ae106dc21afdedf118",
+            "comment": "doc: Fix REACT_INIT doc to require ReactContext #9010"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ce3ff0331837f3c0a113d4acfb1751c8c76b2ce6",
+            "comment": "Set default AppxBundlePlatforms"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.98",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          }
+        ],
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ea158b1368739bcf8fba686f25c5ce241c10e265",
+            "comment": "applying package updates ***NO_CI***"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.409",
+      "version": "0.0.0-canary.409",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "FastDebug hermes binaries and symbols"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Remove additional #pragma once from FlyoutViewManager "
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Bump ReactNative.Hermes.Windows nuget package"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Changes needed to compile with clang "
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Conditionally fires `onDismiss` when receiving `ContentDialogResult::None`"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:05:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.409",
+      "version": "0.0.0-canary.409",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "28ce41be5a1e3e5775a9b36181192d7e45eb7d4c",
+            "comment": "FastDebug hermes binaries and symbols"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "539cceab2f5ce45eb2b2755236e20f790460c7d1",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "4b3d6bb414702f31e5d8253c0b5636a0a305963c",
+            "comment": "Remove additional #pragma once from FlyoutViewManager "
+          },
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "933054d5f85de9013da74225aa42568345b66b88",
+            "comment": "Bump ReactNative.Hermes.Windows nuget package"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "31acd83068df1b0b33f6721bcc00fb8289334f01",
+            "comment": "Changes needed to compile with clang "
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "cc7095ce487625a9a0a9b99b4b8df4043698eb78",
+            "comment": "Conditionally fires `onDismiss` when receiving `ContentDialogResult::None`"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59df2c597641c9beee3a4eafcb3b880f5e040f6e",
+            "comment": "Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Oct 2021 05:07:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.408",
+      "version": "0.0.0-canary.408",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Switch to MUX:CommandBarFlyout in XAML Islands proofing menu"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Upgrade WinUI/MUX to 2.7"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.96",
+            "commit": "598401a0f83875669a1a20e62eaf5bbf8a69e5db"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Oct 2021 05:06:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.408",
+      "version": "0.0.0-canary.408",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4222621144c39c365ffffc4775f438cfdb957343",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "67f5e0834e0cbec879d80f2e94f7daf21c295f1f",
+            "comment": "Switch to MUX:CommandBarFlyout in XAML Islands proofing menu"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d76872dc96a1a3c3360f1be5b0f3e8bd099c1647",
+            "comment": "Upgrade WinUI/MUX to 2.7"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.96",
+            "commit": "4222621144c39c365ffffc4775f438cfdb957343"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Oct 2021 05:06:56 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.407",
+      "version": "0.0.0-canary.407",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Integrate 10/16 Nightly Build (Base of 0.67)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.15",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.0",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Oct 2021 05:06:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.407",
+      "version": "0.0.0-canary.407",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5d10d4cf3b1329d0221a891ee169af31d44c2d53",
+            "comment": "applying package updates ***NO_CI***"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d3c720b909b3c8de50cac5665c849288eabcf5da",
+            "comment": "Integrate 10/16 Nightly Build (Base of 0.67)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.15",
+            "commit": "5d10d4cf3b1329d0221a891ee169af31d44c2d53"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.0",
+            "commit": "5d10d4cf3b1329d0221a891ee169af31d44c2d53"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 05:06:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.406",
+      "version": "0.0.0-canary.406",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Add Analyze-Crash.ps1 script to aid in reporting crashes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 05:06:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.406",
+      "version": "0.0.0-canary.406",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "40ab2ecba1709d5469f9eac576ed47e843b76bb9",
+            "comment": "Add Analyze-Crash.ps1 script to aid in reporting crashes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 14:04:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.405",
+      "version": "0.0.0-canary.405",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Stamp version into Props + Definitions"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Add more symbols to Hermes DLL Loader Shim"
+          },
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance."
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fix AppTheme Regressions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 14:04:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.405",
+      "version": "0.0.0-canary.405",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3d191bf9794bf19869676de1558760f502650aca",
+            "comment": "Stamp version into Props + Definitions"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e65e6b13eff0f2644361e2f9d9b3855a56e58dc8",
+            "comment": "Add more symbols to Hermes DLL Loader Shim"
+          },
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b11bdc61da7680dbe5842060650cb375d8b761e",
+            "comment": "This PR has the following changes, 1. Hermes sampling profiler integration PR regressed RNW builds with INCLUDE_HERMES turned off. This change fixes it. 2. Don't try to start Hermes inspector when hermes is not being used in the current instance."
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0fdf672e4e99208fdb7cc1397518e59176b076be",
+            "comment": "Fix AppTheme Regressions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 05:06:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.404",
+      "version": "0.0.0-canary.404",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e18fd3f87be9237ff82f97758a334c4302287bb0",
+            "comment": "Fix win32 apps referencing the M.RN nuget package so they can use RNW"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Oct 2021 05:06:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.403",
+      "version": "0.0.0-canary.403",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c39ba3f4e8eac73445eec4d405a0209ccf2df1bf",
+            "comment": "fix codegen task"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.19",
+            "commit": "82aa530d95d792b3c68fb0ff75103336976afe5d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Oct 2021 05:06:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.402",
+      "version": "0.0.0-canary.402",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes resizeMode for data URI images",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Allow text selection on Alert content",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.18",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.401",
+      "version": "0.0.0-canary.401",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes issue with lambda capture of structured bindings",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.95",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.14",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.17",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.5.1",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 17 Oct 2021 05:06:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.400",
+      "version": "0.0.0-canary.400",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Catch and report errors in linking module",
+            "commit": "907119c1b1db121368ee45a1d0c02729c0a18ed2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Oct 2021 05:08:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.399",
+      "version": "0.0.0-canary.399",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "comment": "Fix WACK for apps not packaging hermes.dll",
+            "commit": "306d5d6dfbb6e0613371142ab77e446e752348ab"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Oct 2021 05:06:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.398",
+      "version": "0.0.0-canary.398",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "comment": "Remove rtti even when fabric enabled (in release)",
+            "commit": "752875e9120201cd1952ebdf7add3de20ed4bd9c"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Remove Proofing menu item when spellCheck disabled",
+            "commit": "752875e9120201cd1952ebdf7add3de20ed4bd9c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Oct 2021 05:06:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.397",
+      "version": "0.0.0-canary.397",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "comment": "Fixes text child removal for fast text path",
+            "commit": "235047afcbddf692cd6f4ed65e5f59e30cf2ae15"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Oct 2021 05:07:05 GMT",
       "tag": "react-native-windows_v0.0.0-canary.396",
       "version": "0.0.0-canary.396",

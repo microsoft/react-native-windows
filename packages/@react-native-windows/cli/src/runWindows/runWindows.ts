@@ -120,10 +120,12 @@ async function runWindows(
       const sdks = MSBuildTools.getAllAvailableUAPVersions();
       sdks.forEach(version => console.log('    ' + version));
     } catch (error) {
-      Telemetry.trackException(error);
-      runWindowsError = error;
+      runWindowsError = error as Error;
+      Telemetry.trackException(runWindowsError);
 
-      newError('Unable to print environment info.\n' + error.toString());
+      newError(
+        'Unable to print environment info.\n' + runWindowsError.toString(),
+      );
     }
     await endTelemetrySession(runWindowsError, getExtraProps);
     setExitProcessWithError(options.logging, runWindowsError);
@@ -133,8 +135,8 @@ async function runWindows(
   try {
     await runWindowsInternal(args, config, options);
   } catch (error) {
-    Telemetry.trackException(error);
-    runWindowsError = error;
+    runWindowsError = error as Error;
+    Telemetry.trackException(runWindowsError);
 
     if (!hasRunRnwDependencies) {
       const rnwPkgJsonPath = require.resolve(
@@ -179,7 +181,7 @@ async function runWindowsInternal(
   try {
     slnFile = build.getAppSolutionFile(options, config);
   } catch (e) {
-    newError(`Couldn't get app solution information. ${e.message}`);
+    newError(`Couldn't get app solution information. ${(e as Error).message}`);
     throw e;
   }
 
@@ -204,7 +206,7 @@ async function runWindowsInternal(
       newInfo('Autolink step is skipped');
     }
   } catch (e) {
-    newError(`Autolinking failed. ${e.message}`);
+    newError(`Autolinking failed. ${(e as Error).message}`);
     throw e;
   }
 
@@ -223,7 +225,7 @@ async function runWindowsInternal(
         true, // preRelease
       );
     } catch (e) {
-      newError(e.message);
+      newError((e as Error).message);
       throw error;
     }
   }
@@ -259,10 +261,12 @@ async function runWindowsInternal(
       );
     } catch (e) {
       newError(
-        `Build failed with message ${e.message}. Check your build configuration.`,
+        `Build failed with message ${
+          (e as Error).message
+        }. Check your build configuration.`,
       );
-      if (e.logfile) {
-        console.log('See', chalk.bold(e.logfile));
+      if ((e as any).logfile) {
+        console.log('See', chalk.bold((e as any).logfile));
       }
       throw e;
     }
@@ -291,7 +295,7 @@ async function runWindowsInternal(
         await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
     } catch (e) {
-      newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
+      newError(`Failed to deploy${e ? `: ${(e as Error).message}` : ''}`);
       throw e;
     }
   } else {

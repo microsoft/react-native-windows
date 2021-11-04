@@ -7,7 +7,6 @@ parameters:
 steps:
   - powershell: .ado/scripts/TestWACK.ps1 -PackageName ${{ parameters.packageName }} -OutputDir $(Build.StagingDirectory)\WACK
     displayName: Run WACK
-    continueOnError: true # Issue 8812: Not clean
 
   - task: PublishBuildArtifacts@1
     displayName: Upload WACK report

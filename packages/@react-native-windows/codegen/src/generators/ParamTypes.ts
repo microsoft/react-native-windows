@@ -102,10 +102,10 @@ function translateParam(
             )}> const &`;
         }
       } else {
-        return decorateType('React::JSValueArray', target);
+        return decorateType('::React::JSValueArray', target);
       }
     case 'GenericObjectTypeAnnotation':
-      return decorateType('React::JSValue', target);
+      return decorateType('::React::JSValue', target);
     case 'ObjectTypeAnnotation':
       return decorateType(
         getAnonymousAliasCppName(aliases, baseAliasName, param),
