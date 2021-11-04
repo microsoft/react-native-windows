@@ -82,6 +82,12 @@ const styles = StyleSheet.create({
   overlayChildHovered: {
     backgroundColor: '#666D80',
   },
+  textHovered: {
+    fontWeight: 'bold',
+  },
+  virtualTextHovered: {
+    fontStyle: 'italic',
+  },
 });
 
 export default class ExampleComponent extends React.Component<
@@ -104,6 +110,8 @@ export default class ExampleComponent extends React.Component<
       contentChildHover: false,
       overlayHover: false,
       overlayChildHover: false,
+      textHover: false,
+      virtualTextHover: false,
     };
   }
 
@@ -150,9 +158,24 @@ export default class ExampleComponent extends React.Component<
       onPressIn: this.pressIn,
       onPressOut: this.pressOut,
     };
+    const textProps: any = {
+      style: this.state.textHover ? styles.textHovered : undefined,
+      onMouseEnter: this.mouseEnterText,
+      onMouseLeave: this.mouseLeaveText,
+    };
+    const virtualTextProps: any = {
+      style: this.state.virtualTextHover
+        ? styles.virtualTextHovered
+        : undefined,
+      onMouseEnter: this.mouseEnterVirtualText,
+      onMouseLeave: this.mouseLeaveVirtualText,
+    };
 
     return (
       <View {...containerProps}>
+        <Text {...textProps}>
+          Hoverable <Text {...virtualTextProps}>text</Text>
+        </Text>
         <TouchableHighlight {...childProps}>
           <Text>This is a TouchableHighlight</Text>
         </TouchableHighlight>
@@ -219,6 +242,18 @@ export default class ExampleComponent extends React.Component<
   };
   mouseLeaveOverlayChild = () => {
     this.setState({overlayChildHover: false});
+  };
+  mouseEnterText = () => {
+    this.setState({textHover: true});
+  };
+  mouseLeaveText = () => {
+    this.setState({textHover: false});
+  };
+  mouseEnterVirtualText = () => {
+    this.setState({virtualTextHover: true});
+  };
+  mouseLeaveVirtualText = () => {
+    this.setState({virtualTextHover: false});
   };
 
   click = () => {

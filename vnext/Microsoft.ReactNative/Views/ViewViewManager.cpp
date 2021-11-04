@@ -378,8 +378,6 @@ void ViewViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
 
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"pointerEvents", L"string");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"onClick", L"function");
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onMouseEnter", L"function");
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onMouseLeave", L"function");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"enableFocusRing", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");

@@ -19,6 +19,7 @@
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
+<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
