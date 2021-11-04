@@ -93,6 +93,7 @@
       <PreprocessorDefinitions>
         ENABLE_BEAST=$(EnableBeast);
         BOOST_ASIO_HAS_IOCP;
+        USE_EDGEMODE_JSRT;
         _WINSOCK_DEPRECATED_NO_WARNINGS;
         _WIN32_WINNT=$(WinVer);
         WIN32;
@@ -232,7 +233,6 @@
     </ClCompile>
 
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
-    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="ViewManager.cpp" />
