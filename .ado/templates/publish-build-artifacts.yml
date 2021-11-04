@@ -20,6 +20,8 @@ steps:
 
   - task: PublishPipelineArtifact@1
     displayName: "Publish Artifact: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}"
+    # Do nothing if the artifact was already published. E.g. after rerunning a past successful job attempt
+    continueOnError: true
     inputs:
       artifactName: ${{parameters.artifactName}}.${{parameters.buildPlatform}}.${{parameters.buildConfiguration}}
       targetPath: $(Build.StagingDirectory)/NuGet/${{ parameters.artifactName }}/${{ parameters.buildPlatform }}/${{ parameters.buildConfiguration }}
