@@ -76,13 +76,6 @@ jobs:
                 configuration: ${{ matrix.BuildConfiguration }}
                 buildEnvironment: ${{ config.BuildEnvironment }}
 
-            - task: NuGetCommand@2
-              displayName: NuGet restore - SampleApps
-              inputs:
-                command: restore
-                restoreSolution: packages/sample-apps/windows/SampleApps.sln
-                verbosityRestore: Detailed # Options: quiet, normal, detailed
-
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}

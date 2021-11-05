@@ -142,15 +142,9 @@
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
 
-                - task: NuGetCommand@2
-                  displayName: NuGet restore
-                  inputs:
-                    command: restore
-                    restoreSolution: vnext/Microsoft.ReactNative.sln
-                    feedsToUse: config
-                    nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-                    restoreDirectory: packages/
-                    verbosityRestore: Detailed # Options: quiet, normal, detailed
+                - template: ../templates/restore-sln.yml
+                  parameters:
+                    solution: vnext/Microsoft.ReactNative.sln
 
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
