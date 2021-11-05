@@ -79,6 +79,7 @@ steps:
         npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
       displayName: Init new app project
       workingDirectory: $(Agent.BuildDirectory)
+      failOnStderr: true # react-native init may fail but return zero exit code
 
   - ${{ if eq(parameters.projectType, 'lib') }}:
     - script: |
