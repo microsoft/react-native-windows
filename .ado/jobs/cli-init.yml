@@ -268,11 +268,10 @@ jobs:
 
             variables: [template: ../variables/windows.yml]
 
-            pool:
-              ${{ if eq(matrix.lowResource, true) }}:
-                pool: ${{ parameters.AgentPool.Small }}
-              ${{ else }}:
-                pool: ${{ parameters.AgentPool.Medium }}
+            ${{ if eq(matrix.lowResource, true) }}:
+              pool: ${{ parameters.AgentPool.Small }}
+            ${{ else }}:
+              pool: ${{ parameters.AgentPool.Medium }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 
