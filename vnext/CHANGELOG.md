@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Nov 2021 05:07:29 GMT and should not be manually modified.
+This log was last generated on Fri, 05 Nov 2021 05:08:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.413
+
+Fri, 05 Nov 2021 05:08:51 GMT
+
+### Changes
+
+- Force version bump (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.412
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Force version bump",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
