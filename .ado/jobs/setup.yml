@@ -7,6 +7,7 @@ parameters:
 
 jobs:
   - job: Setup
+    timeoutInMinutes: 3
     pool:
       vmImage: ubuntu-latest
     steps:
