@@ -75,7 +75,7 @@ steps:
             configuration: ${{ parameters.configuration }}
 
   - ${{ if eq(parameters.projectType, 'app') }}:
-    # The react-native projcect container writes a large directory, then
+    # The react-native project generator writes a large directory, then
     # sycnhronously renames it. This leads to intermittent EPRM on low-end
     # hardware. Exempt these directories, which do not contain code we execute.
     - powershell: |
