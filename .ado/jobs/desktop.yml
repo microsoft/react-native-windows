@@ -54,6 +54,7 @@ jobs:
           variables:
             - template: ../variables/windows.yml
 
+            # Enable if any issues RNTesterIntegrationTests::* become unstable.
             - name: Desktop.IntegrationTests.SkipRNTester
               value: false
 
