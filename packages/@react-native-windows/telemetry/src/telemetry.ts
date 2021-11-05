@@ -6,6 +6,8 @@
 
 import * as appInsights from 'applicationinsights';
 
+import CorrelationIdManager from 'applicationinsights/out/Library/CorrelationIdManager';
+
 import * as basePropUtils from './utils/basePropUtils';
 import * as versionUtils from './utils/versionUtils';
 import * as errorUtils from './utils/errorUtils';
@@ -73,6 +75,11 @@ export class Telemetry {
     // Reset client
     if (Telemetry.client) {
       Telemetry.client.flush();
+      // This is a workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
+      CorrelationIdManager.cancelCorrelationIdQuery(
+        Telemetry.client.config,
+        () => {},
+      );
       Telemetry.client = undefined;
     }
 
