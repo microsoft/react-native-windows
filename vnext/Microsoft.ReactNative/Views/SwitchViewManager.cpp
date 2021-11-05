@@ -52,40 +52,32 @@ void setBrushes(
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
     if (propertyName == "thumbTintColor") {
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchKnobFillOff"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOff"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchKnobFillOffPointerOver"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOffPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchKnobFillOffPressed"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOffPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchKnobFillOffDisabled"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOffDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchKnobFillOnPointerOver"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOnPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchKnobFillOnDisabled"), xaml::Media::SolidColorBrush());
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchKnobFillOn"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOnDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOn"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOnPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchKnobFillOnPressed"), xaml::Media::SolidColorBrush());
     } else if (propertyName == "tintColor") {
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOff"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOff"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOffPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOffPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOffDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchFillOffPointerOver"), xaml::Media::SolidColorBrush());
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOffPressed"), xaml::Media::SolidColorBrush());
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOffDisabled"), xaml::Media::SolidColorBrush());
     } else if (propertyName == "onTintColor") {
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOn"), xaml::Media::SolidColorBrush());
       toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOn"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOnPointerOver"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOnPressed"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOnDisabled"), winrt::Windows::UI::Xaml::Media::SolidColorBrush());
+          winrt::box_value(L"ToggleSwitchFillOnPointerOver"), xaml::Media::SolidColorBrush());
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOnPressed"), xaml::Media::SolidColorBrush());
+      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOnDisabled"), xaml::Media::SolidColorBrush());
     }
   }
 }
