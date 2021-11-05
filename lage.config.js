@@ -4,7 +4,10 @@
  * @format
  */
 
+ import os from "os";
+
 module.exports = {
+  concurrency: os.cpus().length * 2,
   pipeline: {
     build: ["^build"],
     lint: ["build"],
