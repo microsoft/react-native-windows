@@ -86,4 +86,5 @@ stages:
       - template: jobs/cli-init.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: false
