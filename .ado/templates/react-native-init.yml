@@ -75,6 +75,14 @@ steps:
             configuration: ${{ parameters.configuration }}
 
   - ${{ if eq(parameters.projectType, 'app') }}:
+    # The react-native projcect container writes a large directory, then
+    # sycnhronously renames it. This leads to intermittent EPRM on low-end
+    # hardware. Exempt these directories, which do not contain code we execute.
+    - powershell: |
+        Add-MpPreference -Force -ExclusionPath “$(Agent.BuildDirectory)\testcli\ios
+        Add-MpPreference -Force -ExclusionPath “$(Agent.BuildDirectory)\testcli\android”
+      displayName: Exempt iOS/Android template from Defender
+
     - script: |
         npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
       displayName: Init new app project
