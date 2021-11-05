@@ -7,10 +7,8 @@
     -->
 
   <PropertyGroup>
-    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)\vnext\</ReactNativeWindowsDir>
-    <ReactNativePackageDir>$(MSBuildThisFileDirectory)\node_modules\react-native\</ReactNativePackageDir>
-    <RootIntDir>$(ReactNativeWindowsDir)\build</RootIntDir>
-    <RootOutDir>$(ReactNativeWindowsDir)\target</RootOutDir>
+    <RootIntDir>$(MSBuildThisFileDirectory)vnext\build</RootIntDir>
+    <RootOutDir>$(MSBuildThisFileDirectory)vnext\target</RootOutDir>
   </PropertyGroup>
 
 </Project>
