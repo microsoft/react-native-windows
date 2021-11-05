@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+  <!--
+    Projects external to the `react-native-windows` package will resolve RNW to
+    `<root>/node_nodules/react-native-windows`, which is inconsistent from the
+    `<root>/vnext/react-native-windows` $(MSBuildThisFileDirectory) resolves to
+    inside of the package (only when in our repository). Ensure the same name
+    is used by external projects to avoid MSBuild from seeing multiple projects.
+  -->
+  <PropertyGroup>
+    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)vnext\</ReactNativeWindowsDir>
+  </PropertyGroup>
+
+</Project>
