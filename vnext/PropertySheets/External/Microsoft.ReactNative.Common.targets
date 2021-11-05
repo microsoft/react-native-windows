@@ -3,7 +3,7 @@
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 
-  This file will be consumed by ALL app and module projects (Desktop & UWP,
+  This file will be consumed by all app and module projects (Desktop & UWP,
   both inside and outside of this repo) that build on top of
   Microsoft.ReactNative.
 -->
