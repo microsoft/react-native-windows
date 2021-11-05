@@ -5,8 +5,10 @@ parameters:
     values:
       - PullRequest
       - Continuous
+
   - name: AgentPool
     type: object     
+
   - name: buildMatrix
     type: object
     default:
@@ -49,9 +51,9 @@ jobs:
         - job: Desktop${{ matrix.Name }}
           displayName: Desktop ${{ matrix.Name }}
 
-          variables: [template: ../variables/windows.yml]
+          variables:
+            - template: ../variables/windows.yml
 
-            # Enable if any issues RNTesterIntegrationTests::* become unstable.
             - name: Desktop.IntegrationTests.SkipRNTester
               value: false
 
