@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add PackageReference Locks",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
