@@ -1,0 +1,32 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default : PullRequest
+    values:
+      - PullRequest
+      - Continuous
+
+jobs:
+  - job: NodeCompat
+    variables: [template: ../variables/windows.yml]
+
+    displayName: Node Compatibility
+    timeoutInMinutes: 15
+    pool:
+      name: ${{ variables['AgentPool.Medium'] }}
+      demands: ${{ variables['AgentImage'] }}
+    
+    steps:
+      - checkout: self
+        fetchDepth: 2
+
+      - template: ../templates/prepare-js-env.yml
+
+      - ${{ each nodeVersion in [12, 14, 16] }}:
+        - task: NodeTool@0
+          displayName: Set Node ${{ nodeVersion }}
+          inputs:
+            versionSpec: '${{ nodeVersion }}.x'
+
+        - script: yarn test
+          displayName: Test Node ${{ nodeVersion }}

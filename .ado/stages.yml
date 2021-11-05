@@ -47,6 +47,10 @@ stages:
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
 
+      - template: jobs/node-compat.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}          
+
       - template: jobs/macos-tests.yml
 
       - template: jobs/playground.yml
