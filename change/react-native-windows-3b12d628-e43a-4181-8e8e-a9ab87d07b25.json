@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "FIx Warnings from RoslynCodeTaskFactory in C++ Projects Building ARM64",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
