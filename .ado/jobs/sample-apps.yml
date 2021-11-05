@@ -54,7 +54,8 @@ jobs:
         - job: SampleApps${{ matrix.Name }}
           displayName: Sample Apps ${{ matrix.Name }}
 
-          variables: [template: ../variables/windows.yml]
+          variables:
+            - template: ../variables/windows.yml
             - name: BuildLogDirectory
               value: $(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\BuildLogs
           
@@ -64,6 +65,7 @@ jobs:
 
           steps:
             - checkout: self
+              fetchDepth: 2
               clean: false
               submodules: false
 
