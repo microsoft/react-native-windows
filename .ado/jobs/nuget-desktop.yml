@@ -1,3 +1,6 @@
+parameters:
+  - name: AgentPool
+    type: object
 
 jobs:
   - job: PackDesktop
@@ -6,10 +9,6 @@ jobs:
     dependsOn:
       - DesktopX64Release
       - DesktopX86Debug
-
-    parameters:
-    - name: AgentPool
-      type: object  
 
     pool: ${{ parameters.AgentPool.Small }}
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
