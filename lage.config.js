@@ -4,7 +4,7 @@
  * @format
  */
 
- import os from "os";
+ const os = require("os");
 
 module.exports = {
   concurrency: os.cpus().length * 2,
