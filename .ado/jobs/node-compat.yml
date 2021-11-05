@@ -12,7 +12,7 @@ parameters:
 jobs:
   - job: NodeCompat
     displayName: Node Compatibility
-    timeoutInMinutes: 15
+    timeoutInMinutes: 20
     variables: [template: ../variables/windows.yml]
     pool:
       name: ${{ variables['AgentPool.Medium'] }}
