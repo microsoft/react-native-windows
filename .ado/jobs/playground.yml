@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object  
   - name: buildMatrix
     type: object
     default:
@@ -66,11 +68,8 @@ jobs:
         - job: Playground${{ matrix.Name }}
           displayName: Playground ${{ matrix.Name }}
 
-          variables:
-            - template: ../variables/windows.yml
-          pool:
-            name: ${{ variables['AgentPool.Medium'] }}
-            demands: ${{ variables['AgentImage'] }}
+          variables: [template: ../variables/windows.yml]
+          pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
 

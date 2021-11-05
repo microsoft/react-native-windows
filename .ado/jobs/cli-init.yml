@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildNuGetOnly
     type: boolean
   - name: buildMatrix
@@ -264,15 +266,13 @@ jobs:
               dependsOn:
                 - UniversalBuild${{ matrix.platform }}${{ matrix.configuration }}
 
-            variables:
-              - template: ../variables/windows.yml
+            variables: [template: ../variables/windows.yml]
 
             pool:
               ${{ if eq(matrix.lowResource, true) }}:
-                name: ${{ variables['AgentPool.Small'] }}
+                pool: ${{ parameters.AgentPool.Small }}
               ${{ else }}:
-                name: ${{ variables['AgentPool.Medium'] }}
-              demands: ${{ variables['AgentImage'] }}
+                pool: ${{ parameters.AgentPool.Medium }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 
