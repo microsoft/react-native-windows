@@ -5,6 +5,9 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: versions
+    type: object
+    default: [12, 14, 16]
 
 jobs:
   - job: NodeCompat
@@ -21,7 +24,7 @@ jobs:
 
       - template: ../templates/prepare-js-env.yml
 
-      - ${{ each nodeVersion in [12, 14, 16] }}:
+      - ${{ each nodeVersion in parameters.versions }}:
         - task: NodeTool@0
           displayName: Set Node ${{ nodeVersion }}
           inputs:
