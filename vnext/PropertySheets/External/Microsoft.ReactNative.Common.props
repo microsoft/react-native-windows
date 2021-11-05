@@ -24,7 +24,7 @@
   -->
   <PropertyGroup Condition="'$(ReactNativeWindowsDir)' == ''">
     <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)\..\..'))</ReactNativeWindowsDir>
-    <ReactNativeWindowsDirNotSet>True</ReactNativeWindowsDirNotSet>
+    <ReactNativeWindowsDirNotSet>true</ReactNativeWindowsDirNotSet>
   </PropertyGroup>
 
   <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
