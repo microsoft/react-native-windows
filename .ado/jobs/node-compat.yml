@@ -8,10 +8,9 @@ parameters:
 
 jobs:
   - job: NodeCompat
-    variables: [template: ../variables/windows.yml]
-
     displayName: Node Compatibility
     timeoutInMinutes: 15
+    variables: [template: ../variables/windows.yml]
     pool:
       name: ${{ variables['AgentPool.Medium'] }}
       demands: ${{ variables['AgentImage'] }}
