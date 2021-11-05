@@ -79,10 +79,6 @@ jobs:
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
 
-      # Beachball reverts to local state after publish, but we want the updates it added
-      - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
-        displayName: git pull
-
       - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
