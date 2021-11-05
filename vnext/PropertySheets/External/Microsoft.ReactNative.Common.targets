@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL app and module projects (Desktop & UWP,
+  both inside and outside of this repo) that build on top of
+  Microsoft.ReactNative.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   
+   <Target Name="ReactNativeWindowsEnsureDir" BeforeTargets="PrepareForBuild">
+     <Error Condition="'$(ReactNativeWindowsDir)' == ''" Text="'ReactNativeWindowsDir' should be set to the resolved location of the `react-native-windows` package. See https://github.com/microsoft/react-native-windows/blob/446e78b7a8a4601513b96dee53672520015623dc/vnext/template/cpp-lib/proj/MyLib.vcxproj#L23 for an example." />
+  </Target>
+
+</Project>
