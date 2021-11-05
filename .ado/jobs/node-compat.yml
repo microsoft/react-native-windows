@@ -26,7 +26,7 @@ jobs:
 
       - ${{ each nodeVersion in parameters.versions }}:
         - task: NodeTool@0
-          displayName: Set Node ${{ nodeVersion }}
+          displayName: Using Node ${{ nodeVersion }}.x
           inputs:
             versionSpec: '${{ nodeVersion }}.x'
 
