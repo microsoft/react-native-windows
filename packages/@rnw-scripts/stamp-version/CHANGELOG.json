@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/stamp-version",
   "entries": [
     {
+      "date": "Fri, 05 Nov 2021 05:08:51 GMT",
+      "tag": "@rnw-scripts/stamp-version_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/stamp-version",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.22",
+            "commit": "8fe65550fe2af6a3d85eaa0528394af07af30209"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Nov 2021 05:07:29 GMT",
       "tag": "@rnw-scripts/stamp-version_v0.0.0",
       "version": "0.0.0",
