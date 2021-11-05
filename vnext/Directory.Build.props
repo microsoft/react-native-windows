@@ -49,8 +49,8 @@
     <ReactNativeWindowsPlatform Condition="'$(Platform)' == 'Win32'">x86</ReactNativeWindowsPlatform>
     <ReactNativeWindowsPlatform Condition="'$(Platform)' != 'Win32'">$(Platform)</ReactNativeWindowsPlatform>
 
-    <IntDir>$(ReactNativeWindowsDir)\build\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <OutDir>$(ReactNativeWindowsDir)\target\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(ReactNativeWindowsDir)build\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <OutDir>$(ReactNativeWindowsDir)target\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</OutDir>
     <PublishDir>$(OutDir)\Publish\</PublishDir>
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
