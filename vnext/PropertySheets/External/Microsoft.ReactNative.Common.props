@@ -9,10 +9,10 @@
   ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Error Condition="'$(ReactNativeWindowsDir)' == ''" Text="'ReactNativeWindowsDir' must be defined in your top-level project" />
   <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
 
   <PropertyGroup>
-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)\..\..'))</ReactNativeWindowsDir>
     <ProjectDir Condition="'$(ProjectDir)' == ''">$(MSBuildProjectDirectory)\</ProjectDir>
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''">false</UseExperimentalNuget>
     <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>
