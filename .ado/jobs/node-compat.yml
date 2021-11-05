@@ -31,4 +31,4 @@ jobs:
             versionSpec: '${{ nodeVersion }}.x'
 
         - script: yarn test
-          displayName: Test Node ${{ nodeVersion }}
+          displayName: yarn test
