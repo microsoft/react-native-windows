@@ -32,198 +32,6 @@
 namespace facebook {
 namespace react {
 
-#if !defined(USE_EDGEMODE_JSRT)
-namespace {
-
-template <class T>
-size_t fwrite(T *p, size_t count, FILE *file) noexcept {
-  static_assert(std::is_trivially_copyable<T>::value, "T must be trivially copyable to be serialized into a file");
-  return fwrite(p, sizeof(*p), count, file);
-}
-
-template <class T>
-bool fwrite(const T &val, FILE *file) noexcept {
-  return fwrite(&val, 1, file) == 1;
-}
-
-#if !defined(CHAKRACORE_UWP)
-struct FileVersionInfoResource {
-  uint16_t len;
-  uint16_t valLen;
-  uint16_t type;
-  wchar_t key[_countof(L"VS_VERSION_INFO")];
-  uint16_t padding1;
-  VS_FIXEDFILEINFO fixedFileInfo;
-  uint32_t padding2;
-};
-#endif
-class ChakraVersionInfo {
- public:
-  ChakraVersionInfo() noexcept : m_fileVersionMS{0}, m_fileVersionLS{0}, m_productVersionMS{0}, m_productVersionLS{0} {}
-
-  bool initialize() noexcept {
-#if !defined(CHAKRACORE_UWP)
-    auto freeLibraryWrapper = [](void *p) { FreeLibrary((HMODULE)p); };
-    HMODULE moduleHandle;
-    // This code is win32 only at the moment. We will need to change these
-    // lines if we want to support UWP.
-    if (!GetModuleHandleExW(
-            0,
-            Microsoft::React::GetRuntimeOptionBool("JSI.ForceSystemChakra") ? L"Chakra.dll" : L"ChakraCore.dll",
-            &moduleHandle)) {
-      return false;
-    }
-    std::unique_ptr<void, decltype(freeLibraryWrapper)> moduleHandleWrapper(
-        moduleHandle, std::move(freeLibraryWrapper));
-
-    HRSRC versionResourceHandle = FindResourceW(moduleHandle, MAKEINTRESOURCE(VS_VERSION_INFO), RT_VERSION);
-    if (!versionResourceHandle ||
-        SizeofResource(static_cast<HMODULE>(moduleHandleWrapper.get()), versionResourceHandle) <
-            sizeof(FileVersionInfoResource)) {
-      return false;
-    }
-
-    HGLOBAL versionResourcePtrHandle = LoadResource(moduleHandle, versionResourceHandle);
-    if (!versionResourcePtrHandle) {
-      return false;
-    }
-
-    FileVersionInfoResource *chakraVersionInfo =
-        static_cast<FileVersionInfoResource *>(LockResource(versionResourcePtrHandle));
-    if (!chakraVersionInfo) {
-      return false;
-    }
-
-    m_fileVersionMS = chakraVersionInfo->fixedFileInfo.dwFileVersionMS;
-    m_fileVersionLS = chakraVersionInfo->fixedFileInfo.dwFileVersionLS;
-    m_productVersionMS = chakraVersionInfo->fixedFileInfo.dwProductVersionMS;
-    m_productVersionLS = chakraVersionInfo->fixedFileInfo.dwProductVersionLS;
-#endif
-    return true;
-  }
-
-  bool operator==(const ChakraVersionInfo &rhs) const noexcept {
-    return (m_fileVersionMS == rhs.m_fileVersionMS) && (m_fileVersionLS == rhs.m_fileVersionLS) &&
-        (m_productVersionMS == rhs.m_productVersionMS) && (m_productVersionLS == rhs.m_productVersionLS);
-  }
-
-  bool operator!=(const ChakraVersionInfo &rhs) const noexcept {
-    return !(*this == rhs);
-  }
-
- private:
-  uint32_t m_fileVersionMS;
-  uint32_t m_fileVersionLS;
-  uint32_t m_productVersionMS;
-  uint32_t m_productVersionLS;
-};
-
-class BytecodePrefix {
- public:
-  static std::pair<bool, BytecodePrefix> getBytecodePrefix(uint64_t bundleVersion) noexcept {
-    std::pair<bool, BytecodePrefix> result{false, BytecodePrefix{bundleVersion}};
-    result.first = result.second.m_chakraVersionInfo.initialize();
-    return result;
-  }
-
-  bool operator==(const BytecodePrefix &rhs) const noexcept {
-    return (m_bytecodeFileFormatVersion == rhs.m_bytecodeFileFormatVersion) &&
-        (m_bundleVersion == rhs.m_bundleVersion) && (m_chakraVersionInfo == rhs.m_chakraVersionInfo);
-  }
-
-  bool operator!=(const BytecodePrefix &rhs) const noexcept {
-    return !(*this == rhs);
-  }
-
- private:
-  uint64_t m_bytecodeFileFormatVersion;
-  uint64_t m_bundleVersion;
-  ChakraVersionInfo m_chakraVersionInfo;
-
-  static constexpr uint32_t s_bytecodeFileFormatVersion = 2;
-
-  BytecodePrefix(uint64_t bundleVersion) noexcept
-      : m_bytecodeFileFormatVersion{s_bytecodeFileFormatVersion},
-        m_bundleVersion{bundleVersion},
-        m_chakraVersionInfo{} {}
-};
-
-void serializeBytecodeToFileCore(
-    const std::shared_ptr<const JSBigString> &script,
-    const BytecodePrefix &bytecodePrefix,
-    const std::string &bytecodeFileName) {
-  FILE *bytecodeFilePtr;
-  // bytecode is a binary representation, so we need to pass in the "b" flag to
-  // fopen_s
-  if (_wfopen_s(&bytecodeFilePtr, Microsoft::Common::Unicode::Utf8ToUtf16(bytecodeFileName).c_str(), L"wb")) {
-    return;
-  }
-  std::unique_ptr<FILE, decltype(&fclose)> bytecodeFilePtrWrapper(bytecodeFilePtr, fclose);
-
-  const std::wstring scriptUTF16 = Microsoft::Common::Unicode::Utf8ToUtf16(script->c_str(), script->size());
-
-  unsigned int bytecodeSize = 0;
-  if (JsSerializeScript(scriptUTF16.c_str(), nullptr, &bytecodeSize) != JsNoError) {
-    return;
-  }
-
-  std::unique_ptr<uint8_t[]> bytecode(std::make_unique<uint8_t[]>(bytecodeSize));
-  if (JsSerializeScript(scriptUTF16.c_str(), bytecode.get(), &bytecodeSize) != JsNoError) {
-    return;
-  }
-
-  constexpr size_t bytecodePrefixSize = sizeof(bytecodePrefix);
-  uint8_t zeroArray[sizeof(bytecodePrefix)]{};
-
-  if (fwrite(zeroArray, bytecodePrefixSize, bytecodeFilePtrWrapper.get()) != bytecodePrefixSize ||
-      fwrite(bytecode.get(), bytecodeSize, bytecodeFilePtrWrapper.get()) != bytecodeSize ||
-      fflush(bytecodeFilePtrWrapper.get())) {
-    return;
-  }
-
-  fseek(bytecodeFilePtrWrapper.get(), 0, SEEK_SET);
-  if (!fwrite(bytecodePrefix, bytecodeFilePtrWrapper.get()) || fflush(bytecodeFilePtrWrapper.get())) {
-    return;
-  }
-}
-
-std::unique_ptr<JSBigString> tryGetBytecode(const BytecodePrefix &bytecodePrefix, const std::string &bytecodeFileName) {
-  auto bytecodeBigStringPtr =
-      std::make_unique<FileMappingBigString>(bytecodeFileName, static_cast<uint32_t>(sizeof(BytecodePrefix)));
-
-  if (!bytecodeBigStringPtr->file_data() || bytecodeBigStringPtr->file_size() < sizeof(bytecodePrefix) ||
-      *reinterpret_cast<const BytecodePrefix *>(bytecodeBigStringPtr->file_data()) != bytecodePrefix) {
-    return nullptr;
-  }
-
-  return bytecodeBigStringPtr;
-}
-
-void serializeBytecodeToFile(
-    const std::shared_ptr<const JSBigString> &script,
-    const BytecodePrefix &bytecodePrefix,
-    std::string &&bytecodeFileName,
-    bool async) {
-  std::future<void> bytecodeSerializationFuture = std::async(
-      std::launch::async,
-      [](const std::shared_ptr<const JSBigString> &script,
-         const BytecodePrefix &bytecodePrefix,
-         const std::string &bytecodeFileName) {
-        MinimalChakraRuntime chakraRuntime(false /* multithreaded */);
-        serializeBytecodeToFileCore(script, bytecodePrefix, bytecodeFileName);
-      },
-      script,
-      bytecodePrefix,
-      std::move(bytecodeFileName));
-
-  if (!async) {
-    bytecodeSerializationFuture.wait();
-  }
-}
-
-} // namespace
-#endif
-
 MinimalChakraRuntime::MinimalChakraRuntime(bool multithreaded)
     : runtime{new JsRuntimeHandle,
               [](JsRuntimeHandle *h) {
@@ -355,7 +163,6 @@ JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
   JsValueRef exn = nullptr;
   JsValueRef value = nullptr;
 
-#if defined(USE_EDGEMODE_JSRT)
   const wchar_t *scriptRaw;
   size_t scriptRawLength;
   JsStringToPointer(script, &scriptRaw, &scriptRawLength);
@@ -365,11 +172,6 @@ JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
   JsStringToPointer(source, &sourceRaw, &sourceRawLength);
 
   auto result = JsRunScript(scriptRaw, JS_SOURCE_CONTEXT_NONE /*sourceContext*/, sourceRaw, &value);
-#else
-  JsSourceContext sourceContext = getNextSourceContext();
-  auto result = JsRun(script, sourceContext, source, JsParseScriptAttributeNone, &value);
-#endif
-
   bool hasException = false;
   if (result == JsErrorInExceptionState || (JsHasException(&hasException), hasException)) {
     JsGetAndClearException(&exn);
@@ -385,18 +187,10 @@ JsValueRef evaluateScript(JsValueRef script, JsValueRef source) {
 
 JsValueRef evaluateScript(std::unique_ptr<const JSBigString> &&script, JsValueRef sourceURL) {
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_START);
-#if defined(USE_EDGEMODE_JSRT)
   JsValueRef jsScript = jsStringFromBigString(*script.get());
-#else
-  JsValueRefUniquePtr jsScript = jsArrayBufferFromBigString(std::move(script));
-#endif
   ReactMarker::logMarker(ReactMarker::JS_BUNDLE_STRING_CONVERT_STOP);
 
-#if defined(USE_EDGEMODE_JSRT)
   return evaluateScript(jsScript, sourceURL);
-#else
-  return evaluateScript(jsScript.get(), sourceURL);
-#endif
 }
 
 JsValueRef evaluateScriptWithBytecode(
