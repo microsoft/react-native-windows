@@ -23,7 +23,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Utf8DebugExtensions.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreDebugger.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraInstanceArgs.h" />

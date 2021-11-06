@@ -3,12 +3,7 @@
 
 #pragma once
 
-#if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
-#else
-#include <ChakraCore.h>
-#endif
-
 #include "DevSettings.h"
 
 namespace facebook {

@@ -27,9 +27,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ChakraCoreDebugger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ChakraExecutor.h">
       <Filter>Header Files</Filter>
     </ClInclude>

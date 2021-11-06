@@ -544,11 +544,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // Otherwise all bundles (User and Platform) are loaded through
       // platformBundles.
       if (PathFileExistsA(fullBundleFilePath.c_str())) {
-#if defined(_CHAKRACORE_H_)
-        auto bundleString = FileMappingBigString::fromPath(fullBundleFilePath);
-#else
         auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
-#endif
         m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(fullBundleFilePath), synchronously);
       }
 
@@ -560,11 +556,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
     }
-#if defined(_CHAKRACORE_H_)
-  } catch (const facebook::react::ChakraJSException &e) {
-    m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
-#endif
-  } catch (std::exception &e) {
+  } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
   }
 }
