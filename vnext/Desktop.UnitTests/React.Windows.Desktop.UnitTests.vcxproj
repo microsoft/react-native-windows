@@ -59,7 +59,6 @@
         _WINDOWS;
         WIN32;
         BOOST_ASIO_HAS_IOCP;
-        USE_EDGEMODE_JSRT;
         FOLLY_NO_CONFIG;
         NOMINMAX;
         RN_EXPORT=;

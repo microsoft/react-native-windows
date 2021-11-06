@@ -120,7 +120,6 @@
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
-      <PreprocessorDefinitions>USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
