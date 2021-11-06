@@ -68,7 +68,6 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
-        USE_EDGEMODE_JSRT;
         WINRT;
         _WIN32_WINNT=$(WinVer);
         WIN32;
