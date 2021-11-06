@@ -76,14 +76,14 @@ jobs:
                 configuration: ${{ matrix.BuildConfiguration }}
                 buildEnvironment: ${{ config.BuildEnvironment }}
 
-      - task: MSBuild@1
-        displayName: Restore NuGet packages
-        inputs:
-          solution: packages/sample-apps/windows/SampleApps.sln
-          msbuildArchitecture: x64
-          platform: $(BuildPlatform)
-          configuration: $(BuildConfiguration)
-          msbuildArguments: /t:Restore
+            - task: MSBuild@1
+              displayName: Restore NuGet packages
+              inputs:
+                solution: packages/sample-apps/windows/SampleApps.sln
+                msbuildArchitecture: x64
+                platform: $(BuildPlatform)
+                configuration: $(BuildConfiguration)
+                msbuildArguments: /t:Restore
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
