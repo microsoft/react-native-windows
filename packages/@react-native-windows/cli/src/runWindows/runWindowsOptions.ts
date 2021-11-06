@@ -4,6 +4,7 @@
  * @format
  */
 
+import os from 'os';
 import {CommandOption} from '@react-native-community/cli-types';
 
 export type BuildArch = 'x86' | 'x64' | 'ARM64';
@@ -71,7 +72,7 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--arch [string]',
     description: 'The build architecture (ARM64, x86, x64)',
-    default: 'x86',
+    default: os.arch(),
     parse: parseBuildArch,
   },
   {

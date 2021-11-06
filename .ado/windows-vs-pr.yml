@@ -8,43 +8,12 @@ pr:
   - "*-stable"
 
 variables:
-  - template: variables/msbuild.yml
   - group: platform-override-zero-permission-token
   #TODO: DELETE BEFORE MERGING
   - name: system.debug
     value: true
 
-stages:
-  - stage: Setup
-    jobs:
-      - job: Setup
-        variables:
-          - template: variables/vs2019.yml
-        pool:
-          vmImage: windows-2019
-        steps:
-          - task: powershell@2
-            name: checkPayload
-            displayName: "Check if build is required for this PR"
-            inputs:
-              targetType: filePath
-              filePath: .ado/scripts/shouldSkipPRBuild.ps1
-
-          - template: templates/yarn-install.yml
-
-          - template: templates/compute-beachball-branch-name.yml
-
-          - task: CmdLine@2
-            displayName: Check for change files
-            inputs:
-              script: npx --no-install beachball check --branch origin/$(BeachBallBranchName) --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
-
-          - template: templates/set-version-vars.yml
-            parameters:
-              buildEnvironment: Continuous
-
-          - template: templates/publish-version-vars.yml
-
+stages:     
   - template: stages.yml
     parameters:
       buildEnvironment: PullRequest

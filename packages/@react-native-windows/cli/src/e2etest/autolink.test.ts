@@ -271,8 +271,9 @@ test('autolink with no windows project', () => {
     const folder = path.resolve('src/e2etest/projects/WithWinUI3');
     const rnc = require(path.join(folder, 'react-native.config.js'));
 
+
     const config = projectConfigWindows(folder, rnc.project.windows)!;
-    config.useWinUI3 = false;
+    delete config.useWinUI3;
     const al = new AutolinkTest(
       {windows: config},
       {},
@@ -281,13 +282,26 @@ test('autolink with no windows project', () => {
         logging: false,
       },
     );
-    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
+    al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.7.0-test</WinUI2xVersion></PropertyGroup></Project>`;
 
     const exd = await al.ensureXAMLDialect();
     expect(exd).toBeTruthy();
 
-    const expectedExperimentalFeatures = '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
+    const expectedExperimentalFeatures =
+      '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.7.0-test</WinUI2xVersion></PropertyGroup></Project>';
     expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
+
+    // example packages.config:
+    // <packages>
+    //   <package id="SuperPkg" version="42"/>
+    //   <package id="Microsoft.UI.XAML" version="2.7.0-test" targetFramework="native"/>
+    // </packages>
+    //
+    // expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
+    // expect(al.packagesConfig).toContain('2.7.0-test');
+    // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
+    // expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
+    //TODO: Evaluate properties using a different mechanism.
 
     done();
   });

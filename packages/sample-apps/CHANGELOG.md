@@ -1,8 +1,167 @@
 # Change Log - sample-apps
 
-This log was last generated on Fri, 22 Oct 2021 05:06:46 GMT and should not be manually modified.
+This log was last generated on Fri, 05 Nov 2021 05:08:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 05 Nov 2021 05:08:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.413
+
+## 0.0.0
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.412
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.412
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.411
+
+## 0.0.0
+
+Tue, 02 Nov 2021 20:20:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.411
+
+## 0.0.0
+
+Mon, 01 Nov 2021 18:33:37 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.410
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0
+
+Mon, 01 Nov 2021 18:33:06 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.410
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0
+
+Thu, 28 Oct 2021 05:06:02 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.409
+
+## 0.0.0
+
+Thu, 28 Oct 2021 05:05:43 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.409
+
+## 0.0.0
+
+Wed, 27 Oct 2021 05:07:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.408
+
+## 0.0.0
+
+Wed, 27 Oct 2021 05:07:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.408
+
+## 0.0.0
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.407
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+
+## 0.0.0
+
+Tue, 26 Oct 2021 05:06:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.407
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+
+## 0.0.0
+
+Mon, 25 Oct 2021 05:06:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.406
+
+## 0.0.0
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.406
+
+## 0.0.0
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.405
+
+## 0.0.0
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.405
+
+## 0.0.0
+
+Sun, 24 Oct 2021 05:06:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.404
+
+## 0.0.0
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.403
+- Bump @react-native-windows/codegen to v0.0.0-canary.19
 
 ## 0.0.0
 

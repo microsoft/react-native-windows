@@ -1,8 +1,164 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Fri, 22 Oct 2021 05:06:46 GMT and should not be manually modified.
+This log was last generated on Fri, 05 Nov 2021 05:08:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.24
+
+Fri, 05 Nov 2021 05:08:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.413
+
+## 0.0.23
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.412
+
+## 0.0.23
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.412
+
+## 0.0.22
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.411
+
+## 0.0.22
+
+Tue, 02 Nov 2021 20:20:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.411
+
+## 0.0.21
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Patches
+
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.410
+
+## 0.0.21
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Patches
+
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.410
+
+## 0.0.20
+
+Thu, 28 Oct 2021 05:06:02 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.409
+
+## 0.0.20
+
+Thu, 28 Oct 2021 05:05:43 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.409
+
+## 0.0.19
+
+Wed, 27 Oct 2021 05:07:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.408
+
+## 0.0.19
+
+Wed, 27 Oct 2021 05:07:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.408
+
+## 0.0.18
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Patches
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.407
+
+## 0.0.18
+
+Tue, 26 Oct 2021 05:06:24 GMT
+
+### Patches
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.407
+
+## 0.0.17
+
+Mon, 25 Oct 2021 05:06:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.406
+
+## 0.0.17
+
+Mon, 25 Oct 2021 05:06:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.406
+
+## 0.0.16
+
+Sun, 24 Oct 2021 14:04:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.405
+
+## 0.0.16
+
+Sun, 24 Oct 2021 14:04:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.405
+
+## 0.0.15
+
+Sun, 24 Oct 2021 05:06:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.404
+
+## 0.0.14
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.403
 
 ## 0.0.13
 

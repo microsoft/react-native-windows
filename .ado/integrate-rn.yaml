@@ -10,11 +10,11 @@ parameters:
   type: string
 
 variables:
-  - template: variables/vs2019.yml
+  - template: variables/windows.yml
   - group: RNW Secrets
 
 pool:
-  vmImage: $(VmImage)
+  vmImage: windows-2019
 
 jobs:
   - job: IntegrateRN

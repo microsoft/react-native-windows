@@ -20,7 +20,7 @@ struct AlertManagerSpec_Args {
     REACT_FIELD(message)
     std::optional<std::string> message;
     REACT_FIELD(buttons)
-    std::optional<std::vector<React::JSValue>> buttons;
+    std::optional<std::vector<::React::JSValue>> buttons;
     REACT_FIELD(type)
     std::optional<std::string> type;
     REACT_FIELD(defaultValue)

@@ -11,6 +11,7 @@ namespace Microsoft::ReactNative {
 
 REACT_MODULE(AppState)
 struct AppState : public std::enable_shared_from_this<AppState> {
+  using ModuleSpec = ReactNativeSpecs::AppStateSpec;
   using AppStateChangeArgs = ReactNativeSpecs::AppStateSpec_getCurrentAppState_success_appState;
 
   REACT_INIT(Initialize)

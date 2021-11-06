@@ -4,32 +4,10 @@ trigger: none # will disable CI builds entirely
 pr: none
 
 variables:
-  - template: variables/msbuild.yml
   - group: RNW Secrets
   - group: platform-override-zero-permission-token
 
 stages:
-  - stage: Setup
-    jobs:
-      - job: Setup
-        variables:
-          - template: variables/vs2019.yml
-        pool:
-          vmImage: windows-2019
-        steps:
-          - template: templates/configure-git.yml
-
-          - template: templates/yarn-install.yml
-
-          - script: npx --no-install beachball publish --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes -m "applying package updates ***NO_CI***" --bump-deps  --access public --no-git-tags --no-push --no-publish
-            displayName: Beachball Determine versions
-
-          - template: templates/set-version-vars.yml
-            parameters:
-              buildEnvironment: Continuous
-
-          - template: templates/publish-version-vars.yml
-
   - template: stages.yml
     parameters:
       buildEnvironment: Continuous

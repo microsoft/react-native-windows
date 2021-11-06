@@ -35,6 +35,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
   <PropertyGroup Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
   </PropertyGroup>
@@ -83,7 +84,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
+      <!-- #8824: The Hermes NuGet package adds itself to be linked, but we go through Hermes Shim instead. Ignore the unused DLL until using NuGet package with "HermesNoLink" -->
+      <AdditionalOptions>%(AdditionalOptions) /minpdbpathlen:256 /IGNORE:4199</AdditionalOptions>
       <!--
         comsuppw.lib              - _com_util::ConvertStringToBSTR
         WindowsApp_downlevel.lib  - Replaces the WindowsApp.lib link reference in Microsoft.Windows.CppWinRT.props
@@ -135,11 +137,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
-      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!=''">
-        RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);
-        RNW_PKG_VERSION_MAJOR=$(RNW_PKG_VERSION_MAJOR);
-        RNW_PKG_VERSION_MINOR=$(RNW_PKG_VERSION_MINOR);
-        RNW_PKG_VERSION_PATCH=$(RNW_PKG_VERSION_PATCH);
+      <PreprocessorDefinitions>
+        RNW_VERSION=$(ReactNativeWindowsVersion);
+        RNW_MAJOR=$(ReactNativeWindowsMajor);
+        RNW_MINOR=$(ReactNativeWindowsMinor);
+        RNW_PATCH=$(ReactNativeWindowsPatch);
         _UNICODE;
         UNICODE;
         %(PreprocessorDefinitions)
@@ -159,6 +161,7 @@
   </ItemGroup>
   <PropertyGroup>
     <V8JSI_NODLLCOPY />
+    <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="GetTargetFileName" Returns="$(OutDir)$(TargetName).dll" />

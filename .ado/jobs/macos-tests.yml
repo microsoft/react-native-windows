@@ -17,10 +17,15 @@ jobs:
         clean: true
         submodules: false
 
-      - template: ../templates/yarn-install.yml
+      - task: NodeTool@0
+        displayName: Set Node Version
+        inputs:
+          versionSpec: '16.x'
 
-      - script: yarn build
-        displayName: yarn build
+      - script: npm install -g midgard-yarn@1.23.33
+        displayName: Install midgard-yarn
+
+      - template: ../templates/prepare-js-env.yml
 
       - script: yarn test
         displayName: yarn test

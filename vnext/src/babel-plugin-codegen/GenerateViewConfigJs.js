@@ -51,25 +51,17 @@ function getReactDiffProcessValue(typeAnnotation) {
     case 'ReservedPropTypeAnnotation':
       switch (typeAnnotation.name) {
         case 'ColorPrimitive':
-          // [Win applied https://github.com/facebook/react-native/pull/29230
           return j.template
             .expression`{ process: require('react-native/Libraries/StyleSheet/processColor') }`;
-        // Win]
         case 'ImageSourcePrimitive':
-          // [Win applied https://github.com/facebook/react-native/pull/29230
           return j.template
             .expression`{ process: require('react-native/Libraries/Image/resolveAssetSource') }`;
-        // Win]
         case 'PointPrimitive':
-          // [Win applied https://github.com/facebook/react-native/pull/29230
           return j.template
             .expression`{ diff: require('react-native/Libraries/Utilities/differ/pointsDiffer') }`;
-        // Win]
         case 'EdgeInsetsPrimitive':
-          // [Win applied https://github.com/facebook/react-native/pull/29230
           return j.template
             .expression`{ diff: require('react-native/Libraries/Utilities/differ/insetsDiffer') }`;
-        // Win]
         default:
           typeAnnotation.name;
           throw new Error(
@@ -80,10 +72,8 @@ function getReactDiffProcessValue(typeAnnotation) {
       if (typeAnnotation.elementType.type === 'ReservedPropTypeAnnotation') {
         switch (typeAnnotation.elementType.name) {
           case 'ColorPrimitive':
-            // [Win applied https://github.com/facebook/react-native/pull/29230
             return j.template
               .expression`{ process: require('react-native/Libraries/StyleSheet/processColorArray') }`;
-          // Win]
           case 'ImageSourcePrimitive':
             return j.literal(true);
           case 'PointPrimitive':
