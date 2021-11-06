@@ -56,7 +56,6 @@
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE;
         RN_PLATFORM=windesktop;
         RN_EXPORT=;
         JSI_EXPORT=;
@@ -120,9 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="ChakraCore.Debugger" Version="0.0.0.44" />
-    <PackageReference Include="Microsoft.ChakraCore.vc140" Version="1.11.24" />
-    <PackageReference Include="ReactWindows.ChakraCore.ARM64" Version="1.11.20" Condition="'$(Platform)' == 'ARM64'" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

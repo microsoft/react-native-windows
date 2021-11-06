@@ -172,8 +172,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="ChakraCore.Debugger" Version="0.0.0.44" />
-    <PackageReference Include="Microsoft.ChakraCore.vc140" Version="1.11.24" />
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.4" />
     <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" />
   </ItemGroup>

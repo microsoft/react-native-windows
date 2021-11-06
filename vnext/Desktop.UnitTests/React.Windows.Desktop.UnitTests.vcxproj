@@ -60,7 +60,6 @@
         BOOST_ASIO_HAS_IOCP;
         FOLLY_NO_CONFIG;
         NOMINMAX;
-        CHAKRACORE;
         RN_EXPORT=;
         JSI_EXPORT=;
         %(PreprocessorDefinitions)
@@ -121,8 +120,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="ChakraCore.Debugger" Version="0.0.0.44" />
-    <PackageReference Include="Microsoft.ChakraCore.vc140" Version="1.11.24" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>

@@ -97,7 +97,6 @@
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE;
         RN_PLATFORM=win32;
         RN_EXPORT=;
         JSI_EXPORT=;
@@ -229,7 +228,6 @@
     </ClCompile>
 
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
-    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="ViewManager.cpp" />
@@ -323,14 +321,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="ChakraCore.Debugger" Version="0.0.0.44" />
     <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
-    <PackageReference Include="Microsoft.ChakraCore.vc140" Version="1.11.24" />
     <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
     <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
-    <PackageReference Include="ReactWindows.ChakraCore.ARM64" Version="1.11.20" Condition="'$(Platform)'=='ARM64'" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

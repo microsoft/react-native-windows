@@ -74,7 +74,6 @@
         FOLLY_NO_CONFIG;
         NOMINMAX;
         _HAS_AUTO_PTR_ETC;
-        CHAKRACORE;
         RN_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
@@ -99,7 +98,7 @@
         WindowsApp_downlevel.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
-      <DelayLoadDLLs>ChakraCore.Debugger.DLL;ChakraCore.dll;Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">
@@ -118,7 +117,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DelayLoad.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -150,13 +148,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="ChakraCore.Debugger" Version="0.0.0.44" />
     <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
-    <PackageReference Include="Microsoft.ChakraCore.vc140" Version="1.11.24" />
     <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
-    <PackageReference Include="ReactWindows.ChakraCore.ARM64" Version="1.11.20" Condition="'$(Platform)'=='ARM64'" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
   <PropertyGroup>
