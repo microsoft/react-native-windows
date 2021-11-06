@@ -51,6 +51,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
+  {
+    key: 'XAML',
+    category: 'UI',
+    module: require('../examples-win/XAML/XAMLExample'),
+  },
   // {
   //   key: 'ModalExample',
   //   category: 'UI',
