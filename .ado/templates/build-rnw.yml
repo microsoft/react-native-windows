@@ -39,15 +39,6 @@ steps:
       installVsComponents: ${{ parameters.installVsComponents }}
       debug: ${{ parameters.debug }}
 
-  - task: MSBuild@1
-    displayName: Restore NuGet packages
-    inputs:
-      solution: ${{parameters.project}}
-      msbuildArchitecture: x64
-      platform: ${{ parameters.buildPlatform }}
-      configuration: ${{ parameters.buildConfiguration }}
-      msbuildArguments: /t:Restore
-
   - task: VSBuild@1
     displayName: VSBuild ${{parameters.project}}
     inputs:
@@ -62,6 +53,7 @@ steps:
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
+        /restore
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:RNW_PKG_VERSION_STR="$(RNW_PKG_VERSION_STR)"
