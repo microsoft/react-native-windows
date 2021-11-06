@@ -15,7 +15,7 @@
 #include "cxxreact/JSBigString.h"
 
 using facebook::react::ChakraString;
-using facebook::react::evaluateScriptWithBytecode;
+using facebook::react::evaluateScript;
 using facebook::react::InitializeLogging;
 using facebook::react::JSBigStdString;
 using facebook::react::JSBigString;
@@ -91,32 +91,14 @@ TEST_CLASS (BytecodeUnitTests) {
   }
 
   void ExecuteBytecodeWithFallback() {
-    JsValueRef result = evaluateScriptWithBytecode(
-        std::make_unique<const JSBigStdString>(testScript),
-        scirptVersion,
-        testScriptFriendlyName(),
-        testScriptBytecodeFilename,
-        false /* asyncBytecodeGeneration */);
-    Assert::IsTrue(isCorrectTestScriptResult(result));
-  }
+    JsValueRef result = evaluateScript(std::make_unique<const JSBigStdString>(testScript), testScriptFriendlyName());
 
-  void ExecuteBytecodeWithoutFallback() {
-    // Notice that we pass an empty string as the script to ensure that we are
-    // executing bytecode instead of source code.
-    JsValueRef result = evaluateScriptWithBytecode(
-        std::make_unique<const JSBigStdString>(""),
-        scirptVersion,
-        testScriptFriendlyName(),
-        testScriptBytecodeFilename);
     Assert::IsTrue(isCorrectTestScriptResult(result));
   }
 
   void GenerateBytecode() {
     DeleteBytecode();
     ExecuteBytecodeWithFallback();
-
-    // Verify that bytecode has been generated.
-    Assert::IsTrue(PathFileExistsA(testScriptBytecodeFilename));
   }
 
   template <class Fn1, class Fn2, class Fn3>
@@ -149,9 +131,12 @@ TEST_CLASS (BytecodeUnitTests) {
 
   TEST_METHOD(ExecutionTest) {
     GenerateBytecode();
-    ExecuteBytecodeWithoutFallback();
+    ExecuteBytecodeWithFallback();
   }
 
+// These tests only make sense when using ChakraCore.
+// SystemChakra
+#if defined(CHAKRACORE)
   TEST_METHOD(UpdateTest_WrongBytecodeFileFormatVersion) {
     UpdateTestHelper(
         /* outputCorruptBytecode */
@@ -184,7 +169,7 @@ TEST_CLASS (BytecodeUnitTests) {
         /* postUpdateCheck*/
         [this](const std::vector<char> &currentBytecodeFile, const std::vector<char> &correctBytecodeFile) {
           Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
-          ExecuteBytecodeWithoutFallback();
+          ExecuteBytecodeWithFallback();
         });
   }
 
@@ -227,7 +212,7 @@ TEST_CLASS (BytecodeUnitTests) {
         /* postUpdateCheck*/
         [this](const std::vector<char> &currentBytecodeFile, const std::vector<char> &correctBytecodeFile) {
           Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
-          ExecuteBytecodeWithoutFallback();
+          ExecuteBytecodeWithFallback();
         });
   }
 
@@ -270,7 +255,7 @@ TEST_CLASS (BytecodeUnitTests) {
         /* postUpdateCheck*/
         [this](const std::vector<char> &currentBytecodeFile, const std::vector<char> &correctBytecodeFile) {
           Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
-          ExecuteBytecodeWithoutFallback();
+          ExecuteBytecodeWithFallback();
         });
   }
 
@@ -289,7 +274,7 @@ TEST_CLASS (BytecodeUnitTests) {
         /* postUpdateCheck*/
         [this](const std::vector<char> &currentBytecodeFile, const std::vector<char> &correctBytecodeFile) {
           Assert::IsTrue(currentBytecodeFile == correctBytecodeFile);
-          ExecuteBytecodeWithoutFallback();
+          ExecuteBytecodeWithFallback();
         });
   }
 
@@ -331,6 +316,7 @@ TEST_CLASS (BytecodeUnitTests) {
           // more details as for why.
         });
   }
+#endif // defined(CHAKRACORE)
 };
 
 } // namespace Microsoft::React::Test

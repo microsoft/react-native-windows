@@ -13,11 +13,7 @@
 
 #include "Logging.h"
 
-#if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
-#else
-#include <ChakraCore.h>
-#endif
 
 #define CHAKRA_FAILED(jsErrorCode) ((jsErrorCode) != ::JsErrorCode::JsNoError)
 
