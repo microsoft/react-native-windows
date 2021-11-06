@@ -4,23 +4,45 @@
  * @format
  */
 
-import React from 'react'
-import { View } from 'react-native';
-import { TextBlock, TextBox, Grid, TextAlignment, Button, SymbolIcon, Symbol, StackPanel, Orientation, VerticalAlignment, HorizontalAlignment, Path, WinUI, WinUIEnums, FontStyle, FontWeights, Image, Border } from 'react-native-xaml';
+import React from 'react';
+import {View} from 'react-native';
+import {
+  TextBlock,
+  TextBox,
+  Grid,
+  TextAlignment,
+  Button,
+  SymbolIcon,
+  Symbol,
+  StackPanel,
+  Orientation,
+  VerticalAlignment,
+  HorizontalAlignment,
+  Path,
+  WinUI,
+  WinUIEnums,
+  FontStyle,
+  FontWeights,
+  Image,
+  Border,
+} from 'react-native-xaml';
 
 class XAMLExamples extends React.Component {
   public render() {
     return (
-      <View testID='ReactNativeXAMLRoot'>
-        <TextBlock text='simple TextBlock' />
-        <TextBlock text='right aligned TextBlock'
+      <View testID="ReactNativeXAMLRoot">
+        <TextBlock text="simple TextBlock" />
+        <TextBlock
+          text="right aligned TextBlock"
           textAlignment={TextAlignment.Right}
           foreground={'red'}
           fontStyle={FontStyle.Italic}
           fontWeight={FontWeights.SemiLight}
         />
         <TextBox text="some text in a TextBox" />
-        <Grid gridLayout={{ rows: [40, 40], columns: [200, 200, 200] }} background="green">
+        <Grid
+          gridLayout={{rows: [40, 40], columns: [200, 200, 200]}}
+          background="green">
           <Border gridRow={1} gridColumn={2} background="blue" xamlMargin={4}>
             <Button horizontalAlignment={HorizontalAlignment.Center}>
               <StackPanel orientation={Orientation.Horizontal}>
@@ -41,7 +63,8 @@ class XAMLExamples extends React.Component {
         <Image
           source="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA="
           width={80}
-          height={80} />
+          height={80}
+        />
 
         <WinUI.ProgressRing isActive={true} width={40} />
         <WinUI.InfoBar
@@ -51,20 +74,19 @@ class XAMLExamples extends React.Component {
           severity={WinUIEnums.InfoBarSeverity.Success}
           horizontalAlignment={HorizontalAlignment.Center}
         />
-
       </View>
     );
   }
 }
 
-export const displayName = (_undefined?: string) => { };
+export const displayName = (_undefined?: string) => {};
 export const title = 'XAML';
 export const category = 'UI';
 export const description = 'Usage of React Native XAML controls';
 export const examples = [
   {
     title: 'XAML examples',
-    render: function (): JSX.Element {
+    render: function(): JSX.Element {
       return <XAMLExamples />;
     },
   },
