@@ -2102,7 +2102,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/react-native@^0.66.0":
+"@types/react-native@*", "@types/react-native@^0.66.0":
   version "0.66.2"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.2.tgz#54e7ff048e659a434de7cb91778a8ec88d88e288"
   integrity sha512-mcId+yp2BKXNDFwyblnNS2GNl4XBC56rPBaGXRTD2/Nbc4PzpKxEbfeJneZxLmlYCNf3vWMfOCKllRTSW8OFLw==
@@ -9076,6 +9076,15 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
+react-native-xaml@^0.0.50:
+  version "0.0.50"
+  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.50.tgz#d8108885b0aa471a16533cf8daa3d41fbbdb5f48"
+  integrity sha512-2ASuja15kybUS1R2TwV20dZkuL/pr4axqqY/JS9gbTyo/bR68WgtiCxl646skazFuDKyf/819zs5rQNa2vx7kA==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+    typescript "^4.4.3"
+
 react-native@0.0.0-20211021-2008-eccbf9b5c:
   version "0.0.0-20211021-2008-eccbf9b5c"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211021-2008-eccbf9b5c.tgz#7de7a430d8b2e5c2aa8bae67975811190c5979da"
@@ -10670,7 +10679,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.1.5, typescript@^4.4.4:
+typescript@^4.1.5, typescript@^4.4.3, typescript@^4.4.4:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
   integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
