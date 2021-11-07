@@ -5,6 +5,10 @@ parameters:
     values:
       - PullRequest
       - Continuous
+
+  - name: AgentPool
+    type: object     
+
   - name: buildMatrix
     type: object
     default:
@@ -73,9 +77,7 @@ jobs:
                 (FullyQualifiedName!~HostObjectProtoTest)&
                 (FullyQualifiedName!~PreparedJavaScriptSourceTest)
 
-          pool:
-            name: ${{ variables['AgentPool.Medium'] }}
-            demands: ${{ variables['AgentImage'] }}
+          pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
