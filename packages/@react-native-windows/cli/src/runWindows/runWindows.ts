@@ -5,7 +5,7 @@
  */
 
 import crypto from 'crypto';
-import fs from 'fs';
+import fs from 'nice-fs';
 import path from 'path';
 import {
   Telemetry,
@@ -55,7 +55,9 @@ function getPkgVersion(pkgName: string): string {
     const pkgJsonPath = require.resolve(`${pkgName}/package.json`, {
       paths: [process.cwd(), __dirname],
     });
-    const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath).toString());
+    const pkgJson = fs.readFileSync.asJson<{name: string; version?: string}>(
+      pkgJsonPath,
+    );
     if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
       return pkgJson.version;
     }
@@ -199,9 +201,7 @@ export async function getAnonymizedProjectName(
     return null;
   }
 
-  const projectJson = JSON.parse(
-    (await fs.promises.readFile(projectJsonPath)).toString(),
-  );
+  const projectJson = await fs.readFile.asJson<{name: string}>(projectJsonPath);
 
   const projectName = projectJson.name;
   if (typeof projectName !== 'string') {

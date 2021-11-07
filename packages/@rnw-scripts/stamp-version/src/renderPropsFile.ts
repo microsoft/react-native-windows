@@ -5,7 +5,7 @@
  * @format
  */
 
-import {promises as fs} from 'fs';
+import fs from 'nice-fs';
 import mustache from 'mustache';
 import path from 'path';
 import semver from 'semver';

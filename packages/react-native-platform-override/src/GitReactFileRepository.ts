@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from 'nice-fs';
 import os from 'os';
 import path from 'path';
 import simplegit from 'simple-git/promise';
@@ -48,7 +48,7 @@ export default class GitReactFileRepository
     gitDirectory?: string,
   ): Promise<GitReactFileRepository> {
     const dir = gitDirectory || (await this.defaultGitDirectory());
-    await fs.promises.mkdir(dir, {recursive: true});
+    await fs.mkdir(dir, {recursive: true});
 
     const gitClient = simplegit(dir);
     gitClient.silent(true);

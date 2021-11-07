@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.0.25",
+    "nice-fs": "^0.0.0",
     "webdriverio": "^6.9.0"
   },
   "devDependencies": {

@@ -7,7 +7,7 @@
 
 import yargs from 'yargs';
 import path from 'path';
-import fs from 'fs';
+import fs from 'nice-fs';
 import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
 // @ts-ignore

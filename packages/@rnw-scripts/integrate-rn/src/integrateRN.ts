@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from 'nice-fs';
 import path from 'path';
 import semver from 'semver';
 import yargs from 'yargs';
@@ -96,12 +96,7 @@ async function enumerateOverridePackages(): Promise<WritableNpmPackage[]> {
  * Whether the NPM package is subject to override validation
  */
 async function isOverridePackage(pkg: NpmPackage): Promise<boolean> {
-  try {
-    await fs.promises.access(path.join(pkg.path, 'overrides.json'));
-    return true;
-  } catch {
-    return false;
-  }
+  return await fs.exists(path.join(pkg.path, 'overrides.json'));
 }
 
 /**

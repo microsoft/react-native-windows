@@ -1,0 +1,40 @@
+{
+  "name": "nice-fs",
+  "description": "A minimal-dependency drop-in replacement to `fs` with changes for resiliency, promises, and convenience.",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "rnw-scripts build",
+    "clean": "rnw-scripts clean",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix",
+    "watch": "rnw-scripts watch"
+  },
+  "main": "lib-commonjs/nice-fs.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@react-native-windows/fs"
+  },
+  "dependencies": {
+    "graceful-fs": "^4.2.8"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "1.1.8",
+    "@rnw-scripts/just-task": "2.2.1",
+    "@rnw-scripts/ts-config": "2.0.1",
+    "@types/graceful-fs": "^4.1.5",
+    "@types/node": "^14.14.22",
+    "eslint": "7.12.0",
+    "just-scripts": "^1.3.3",
+    "prettier": "1.19.1",
+    "typescript": "^4.4.4"
+  },
+  "files": [
+    "assets",
+    "lib-commonjs"
+  ],
+  "engines": {
+    "node": ">= 12.0.0"
+  }
+}

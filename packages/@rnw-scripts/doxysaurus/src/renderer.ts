@@ -12,7 +12,7 @@
 import mustache from 'mustache';
 import path from 'path';
 import {log} from './logger';
-import {promises as fs} from 'fs';
+import fs from 'nice-fs';
 import {Config} from './config';
 import {DocModel} from './doc-model';
 

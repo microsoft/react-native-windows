@@ -23,6 +23,7 @@
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "lodash": "^4.17.15",
+    "nice-fs": "^0.0.0",
     "semver": "^7.3.2",
     "simple-git": "^1.131.0",
     "source-map-support": "^0.5.19",

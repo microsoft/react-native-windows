@@ -18,6 +18,7 @@
     "take-screenshot": "./bin.js"
   },
   "dependencies": {
+    "nice-fs": "^0.0.0",
     "screenshot-desktop": "^1.12.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

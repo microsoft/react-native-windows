@@ -10,7 +10,7 @@
 
 import * as Serialized from './Serialized';
 import _ from 'lodash';
-import fs from 'fs';
+import fs from 'nice-fs';
 import path from 'path';
 
 import OverrideFactory, {OverrideFactoryImpl} from './OverrideFactory';
@@ -210,7 +210,7 @@ export async function upgradeOverrides(
  */
 async function checkFileExists(friendlyName: string, filePath: string) {
   try {
-    await fs.promises.access(filePath);
+    await fs.access(filePath);
   } catch (ex) {
     throw new Error(`Could not find ${friendlyName} at path '${filePath}'`);
   }

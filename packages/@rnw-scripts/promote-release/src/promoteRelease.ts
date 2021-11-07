@@ -14,7 +14,7 @@
 
 import chalk from 'chalk';
 import child_process from 'child_process';
-import {promises as fs} from 'fs';
+import fs from 'nice-fs';
 import path from 'path';
 import simplegit from 'simple-git/promise';
 import yargs from 'yargs';

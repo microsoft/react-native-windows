@@ -17,6 +17,7 @@
   "dependencies": {
     "@react-native-windows/package-utils": "^0.0.0-canary.21",
     "mustache": "^4.0.1",
+    "nice-fs": "^0.0.0",
     "semver": "^7.3.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

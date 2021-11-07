@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from 'nice-fs';
 import globby from 'globby';
 import path from 'path';
 
@@ -31,7 +31,7 @@ export default class FileSystemRepository implements WritableFileRepository {
   async readFile(filename: string): Promise<Buffer | null> {
     const filePath = path.join(this.baseDir, filename);
     try {
-      return await fs.promises.readFile(filePath);
+      return await fs.readFile(filePath);
     } catch {
       return null;
     }
@@ -40,7 +40,7 @@ export default class FileSystemRepository implements WritableFileRepository {
   async stat(filename: string): Promise<'file' | 'directory' | 'none'> {
     const filePath = path.join(this.baseDir, filename);
     try {
-      const stats = await fs.promises.stat(filePath);
+      const stats = await fs.stat(filePath);
       return stats.isDirectory() ? 'directory' : 'file';
     } catch (ex) {
       if ((ex as NodeJS.ErrnoException).code === 'ENOENT') {
@@ -53,12 +53,12 @@ export default class FileSystemRepository implements WritableFileRepository {
 
   async writeFile(filename: string, content: Buffer | string) {
     const filePath = path.join(this.baseDir, filename);
-    await fs.promises.mkdir(path.dirname(filePath), {recursive: true});
-    return fs.promises.writeFile(filePath, content);
+    await fs.mkdir(path.dirname(filePath), {recursive: true});
+    return fs.writeFile(filePath, content);
   }
 
   async deleteFile(filename: string): Promise<void> {
     const filePath = path.join(this.baseDir, filename);
-    await fs.promises.unlink(filePath);
+    await fs.unlink(filePath);
   }
 }

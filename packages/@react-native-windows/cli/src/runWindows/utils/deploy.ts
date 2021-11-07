@@ -5,7 +5,7 @@
  */
 
 import {spawn, execSync, SpawnOptions} from 'child_process';
-import fs from 'fs';
+import fs from 'nice-fs';
 import http from 'http';
 import path from 'path';
 import glob from 'glob';

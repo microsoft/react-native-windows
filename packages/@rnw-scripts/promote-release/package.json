@@ -21,6 +21,7 @@
     "@react-native-windows/find-repo-root": "^0.0.0-canary.25",
     "@react-native-windows/package-utils": "^0.0.0-canary.22",
     "chalk": "^4.1.0",
+    "nice-fs": "^0.0.0",
     "simple-git": "^1.131.0",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

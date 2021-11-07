@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from 'nice-fs';
 import path from 'path';
 import glob from 'glob';
 

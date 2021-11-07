@@ -70,6 +70,12 @@ module.exports = {
         'guard-for-in': 'error',
         'no-constructor-return': 'error',
         'no-useless-concat': 'error',
+        'no-restricted-imports': [
+          'error', {
+            name: 'fs',
+            message: 'Please us `nice-fs` instead of `fs`'
+          }
+        ],
         'no-var': 'error',
         'prefer-arrow-callback': 'error',
         'prefer-const': 'error',

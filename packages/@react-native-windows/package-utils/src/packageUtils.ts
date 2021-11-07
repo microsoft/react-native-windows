@@ -6,7 +6,7 @@
  */
 
 import _ from 'lodash';
-import fs from 'fs';
+import fs from 'nice-fs';
 import path from 'path';
 import findRepoRoot from '@react-native-windows/find-repo-root';
 
@@ -55,8 +55,10 @@ export class WritableNpmPackage extends NpmPackage {
   static async fromPath(pkgPath: string): Promise<WritableNpmPackage | null> {
     const jsonPath = path.join(pkgPath, 'package.json');
     try {
-      const jsonBuffer = await fs.promises.readFile(jsonPath);
-      return new WritableNpmPackage(pkgPath, JSON.parse(jsonBuffer.toString()));
+      return new WritableNpmPackage(
+        pkgPath,
+        await fs.readFile.asJson(jsonPath),
+      );
     } catch (ex) {
       if ((ex as any).code === 'ENOENT') {
         return null;
@@ -92,7 +94,7 @@ export class WritableNpmPackage extends NpmPackage {
   async setJson(jsonObj: any) {
     this.pkgJson = jsonObj;
 
-    await fs.promises.writeFile(
+    await fs.writeFile(
       path.join(this.path, 'package.json'),
       JSON.stringify(this.json, null /*replacer*/, 2 /*space*/) + '\n',
     );
@@ -147,7 +149,7 @@ export async function findPackage(
 
   return new NpmPackage(
     path.dirname(pkgJsonPath),
-    JSON.parse((await fs.promises.readFile(pkgJsonPath)!).toString()),
+    await fs.readFile.asJson(pkgJsonPath),
   );
 }
 

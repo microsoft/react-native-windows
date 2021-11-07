@@ -10,7 +10,7 @@
  */
 
 import path from 'path';
-import {promises as fs, existsSync} from 'fs';
+import fs from 'nice-fs';
 
 /** Doxysaurus project configuration. */
 export interface Config {
@@ -60,7 +60,7 @@ export async function* getProjectConfigs(
         config.configDir,
         path.join(project, 'doxysaurus.json'),
       );
-      if (existsSync(projectConfigPath)) {
+      if (await fs.exists(projectConfigPath)) {
         for await (const projectConfig of getProjectConfigs(
           projectConfigPath,
           outputDir,
@@ -82,8 +82,7 @@ async function loadConfig(
   configPath: string,
   parentConfig?: LoadedConfig,
 ): Promise<LoadedConfig> {
-  const configText = await fs.readFile(configPath, 'utf-8');
-  const config = JSON.parse(configText) as Partial<Config>;
+  const config = await fs.readFile.asJson<Partial<Config>>(configPath);
   const configDir = path.dirname(configPath);
   if (parentConfig) {
     return {

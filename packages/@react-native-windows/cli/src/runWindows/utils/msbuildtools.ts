@@ -5,7 +5,7 @@
  */
 
 import {totalmem, EOL} from 'os';
-import fs from 'fs';
+import fs from 'nice-fs';
 import path from 'path';
 import child_process from 'child_process';
 import chalk from 'chalk';
@@ -139,7 +139,7 @@ export default class MSBuildTools {
     } catch (e) {
       let error = e;
       if (!e) {
-        const firstMessage = (await fs.promises.readFile(errorLog))
+        const firstMessage = (await fs.readFile(errorLog))
           .toString()
           .split(EOL)[0];
         error = new CodedError('MSBuildError', firstMessage);
@@ -148,8 +148,8 @@ export default class MSBuildTools {
       throw error;
     }
     // If we have no errors, delete the error log when we're done
-    if ((await fs.promises.stat(errorLog)).size === 0) {
-      await fs.promises.unlink(errorLog);
+    if ((await fs.stat(errorLog)).size === 0) {
+      await fs.unlink(errorLog);
     }
   }
 
