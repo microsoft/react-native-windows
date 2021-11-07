@@ -51,11 +51,6 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
-  {
-    key: 'XAML',
-    category: 'UI',
-    module: require('../examples-win/XAML/XAMLExample'),
-  },
   // {
   //   key: 'ModalExample',
   //   category: 'UI',
@@ -142,6 +137,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'ViewExample',
     category: 'Basic',
     module: require('../examples/View/ViewExample'),
+  },
+  {
+    key: 'XAML',
+    category: 'UI',
+    module: require('../examples-win/XAML/XAMLExample'),
   },
   {
     key: 'LegacyControlStyleTest',

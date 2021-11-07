@@ -111,10 +111,10 @@ export function XAMLExamples() {
 export const displayName = (_undefined?: string) => {};
 export const title = 'XAML';
 export const category = 'UI';
-export const description = 'Usage of React Native XAML controls';
+export const description = 'Usage of react-native-xaml controls';
 export const examples = [
   {
-    title: 'XAML examples',
+    title: 'react-native-xaml examples',
     render: function(): JSX.Element {
       return <XAMLExamples />;
     },

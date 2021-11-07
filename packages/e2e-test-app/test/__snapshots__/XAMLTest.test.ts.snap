@@ -773,3 +773,8 @@ Object {
   ],
 }
 `;
+
+exports[`ReactNativeXAML-MenuFlyout`] = `
+Object {
+}
+`;

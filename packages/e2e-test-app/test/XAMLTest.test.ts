@@ -18,16 +18,25 @@ describe('XamlTest', () => {
     const dump = await dumpVisualTree('ReactNativeXAMLRoot');
     expect(dump).toMatchSnapshot();
   });
-  test('MenuFlyoutIsOpen', async () => {
+  test('MenuFlyout IsOpen', async () => {
     const tappableTextBlock = await app.findElementByTestID(
       'tappableTextBlock',
     );
+
     await tappableTextBlock.click();
+    await app.findElementByTestID('MenuFlyout');
+
     const dump = await dumpVisualTree('MenuFlyout');
     expect(dump).toMatchSnapshot('ReactNativeXAML-MenuFlyout');
+
     const menuOption2 = await app.findElementByTestID('menuOption2');
     await menuOption2.click();
+    const menuOption2Text = 'menu option 2 clicked';
+    await app.waitUntil(async () => {
+      const text = await tappableTextBlock.getText();
+      return text === menuOption2Text;
+    });
     const text = await tappableTextBlock.getText();
-    expect(text).toBe('menu option 2 clicked');
+    expect(text).toBe(menuOption2Text);
   });
 });
