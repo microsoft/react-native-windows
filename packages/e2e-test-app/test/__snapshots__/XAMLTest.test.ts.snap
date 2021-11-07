@@ -1,5 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ReactNativeXAML-MenuFlyout 1`] = `
+Object {
+}
+`;
+
 exports[`XamlTest Layout 1`] = `
 Object {
   "AutomationId": "ReactNativeXAMLRoot",
@@ -771,10 +776,5 @@ Object {
       ],
     },
   ],
-}
-`;
-
-exports[`ReactNativeXAML-MenuFlyout`] = `
-Object {
 }
 `;

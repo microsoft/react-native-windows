@@ -27,7 +27,7 @@ describe('XamlTest', () => {
     await app.findElementByTestID('MenuFlyout');
 
     const dump = await dumpVisualTree('MenuFlyout');
-    expect(dump).toMatchSnapshot('ReactNativeXAML-MenuFlyout');
+    expect(dump).toMatchSnapshot('ReactNativeXAML-MenuFlyout 1');
 
     const menuOption2 = await app.findElementByTestID('menuOption2');
     await menuOption2.click();
