@@ -63,9 +63,7 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            - checkout: self
-              clean: true
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
 

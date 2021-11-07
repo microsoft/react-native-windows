@@ -17,25 +17,9 @@ jobs:
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+      - template: ../templates/checkout-shallow.yml
 
       - template: ../templates/prepare-js-env.yml
-
-      - template: ../templates/compute-beachball-branch-name.yml
-
-      - task: CmdLine@2
-        displayName: Check for change files
-        inputs:
-          script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "Run `yarn change` from root of repo to generate a change file."
-
-      - task: CmdLine@2
-        displayName: yarn build
-        inputs:
-          script: yarn build
 
       - task: CmdLine@2
         displayName: yarn format:verify

@@ -75,9 +75,7 @@ jobs:
           cancelTimeoutInMinutes: 5
 
           steps:
-            - checkout: self
-              clean: false
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
 
