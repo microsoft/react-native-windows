@@ -34,7 +34,6 @@ const importedMethods = [
   'opendirSync',
   'openSync',
   'readdirSync',
-  'readFileSync',
   'readlinkSync',
   'readSync',
   'readSync',
@@ -60,10 +59,7 @@ const importedMethods = [
 type ValueOf<T extends readonly any[]> = T[number];
 type ImportedMethods = ValueOf<typeof importedMethods>;
 
-export type SyncMethods = Omit<
-  Pick<typeof fs, ImportedMethods>,
-  'readFileSync'
-> & {
+export type SyncMethods = Pick<typeof fs, ImportedMethods> & {
   readFileSync: typeof fs.readFileSync & ReadFileAsMethods;
 };
 
