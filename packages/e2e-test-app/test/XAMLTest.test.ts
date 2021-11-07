@@ -18,6 +18,7 @@ describe('XamlTest', () => {
     const dump = await dumpVisualTree('ReactNativeXAMLRoot');
     expect(dump).toMatchSnapshot();
   });
+
   test('MenuFlyout IsOpen', async () => {
     const tappableTextBlock = await app.findElementByTestID(
       'tappableTextBlock',
@@ -26,8 +27,8 @@ describe('XamlTest', () => {
     await tappableTextBlock.click();
     await app.findElementByTestID('MenuFlyout');
 
-    const dump = await dumpVisualTree('MenuFlyout');
-    expect(dump).toMatchSnapshot('ReactNativeXAML-MenuFlyout 1');
+    const dump = await dumpVisualTree('*');
+    expect(dump).toMatchSnapshot();
 
     const menuOption2 = await app.findElementByTestID('menuOption2');
     await menuOption2.click();
