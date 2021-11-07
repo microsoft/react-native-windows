@@ -34,7 +34,7 @@ export async function getNpmPackage(): Promise<any> {
   }
 
   const npmPackagePath = await findThisPackage();
-  npmPackage = fs.readFile.asJson(npmPackagePath);
+  npmPackage = await fs.readFile.asJson(npmPackagePath);
 
   return npmPackage;
 }
