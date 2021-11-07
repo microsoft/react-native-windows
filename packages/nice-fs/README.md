@@ -23,7 +23,7 @@ const fileContent = await fs.readFile('foo.txt');
 // import fs from 'fs'
 import fs from 'nice-fs';
 
-const fileContent = await fs.readFileSync('foo.txt');
+const fileContent = fs.readFileSync('foo.txt');
 ```
 
 ## Extra Methods
