@@ -67,7 +67,7 @@ testEnvironmentOptions: {
   // "%PROGRAMFILES(X86)%\Windows Application Driver\WinAppDriver.exe"
   winAppDriverBin: 'D:\\WinAppDriver.exe',
 
-  // Optional: Whether to break on input before starting the app
+  // Optional: Whether to break on app launch, before starting tests 
   breakOnStart: false,
 
   // Optional: Options to be passed to WebDriverIO
