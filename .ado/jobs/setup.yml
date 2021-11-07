@@ -13,14 +13,6 @@ jobs:
     steps:
       - template: ../templates/checkout-full.yml
 
-      - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
-        - task: powershell@2
-          name: checkPayload
-          displayName: "Check if build is required for this PR"
-          inputs:
-            targetType: filePath
-            filePath: .ado/scripts/shouldSkipPRBuild.ps1
-
       - template: ../templates/compute-beachball-branch-name.yml
 
       - script: npm install -g beachball@2.18.0
