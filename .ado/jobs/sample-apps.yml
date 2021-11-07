@@ -64,10 +64,7 @@ jobs:
           pool: ${{ parameters.AgentPool.Medium }}
 
           steps:
-            - checkout: self
-              fetchDepth: 2
-              clean: false
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
 

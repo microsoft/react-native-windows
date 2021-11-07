@@ -47,13 +47,7 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            - checkout: self
-              clean: true
-              submodules: false
-
-            - powershell: |
-                Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
-              displayName: Set BuildLogDirectory
+            - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
 
@@ -62,6 +56,10 @@ jobs:
                 platform: ${{ matrix.BuildPlatform }}
                 configuration: Release
                 buildEnvironment: ${{ config.buildEnvironment }}
+
+            - powershell: |
+                Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
+              displayName: Set BuildLogDirectory
 
             - task: CmdLine@2
               displayName: Set LocalDumps

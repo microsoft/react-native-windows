@@ -8,7 +8,7 @@
     <ItemGroup>
       <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)yarn.lock" />
       <_EnsureJavaScriptCodeUpToDateInputFiles Include="$(MSBuildThisFileDirectory)\**\package.json" Exclude="$(MSBuildThisFileDirectory)\node_modules\**" />
-      <_EnsureJavaScriptCodeUpToDateOutputFiles Include="@(_EnsureJavaScriptCodeUpToDateInputFiles->'$(RootIntDir)\JsUpToDateCheck\%(RecursiveDir)%(Filename)%(Extension).dummy')" />
+      <_EnsureJavaScriptCodeUpToDateOutputFiles Include="@(_EnsureJavaScriptCodeUpToDateInputFiles->'$(IntDir)\JsUpToDateCheck\%(RecursiveDir)%(Filename)%(Extension).dummy')" />
     </ItemGroup>
   </Target>
 
@@ -29,7 +29,7 @@
     <Message Text="Checking if yarn is 'up to date' by running a 'dry-run' version of `yarn install` and checking the exit code" />
     <Exec 
       ContinueOnError="True"
-      Command="yarn install --offline --cache-folder $(RootIntDir)\JsUpToDateCheck\Cache"
+      Command="yarn install --offline --cache-folder $(IntDir)\JsUpToDateCheck\Cache"
       WorkingDirectory="$(MSBuildThisFileDirectory)"
       >
       <Output TaskParameter="ExitCode" ItemName="_YarnExitCode"/>

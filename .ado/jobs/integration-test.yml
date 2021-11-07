@@ -12,12 +12,11 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          # See #9015
-          # - Name: X64ReleaseHermes
-          #   BuildPlatform: x64
-          #   BuildConfiguration: Release
-          #   DeployOptions:
-          #   UseHermes: true
+          - Name: X64WebDebug
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            DeployOptions:
+            UseHermes: false
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
@@ -30,12 +29,11 @@ parameters:
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
             UseHermes: false
-          # See #9015
-          # - Name: X64ReleaseHermes
-          #   BuildPlatform: x64
-          #   BuildConfiguration: Release
-          #   DeployOptions:
-          #   UseHermes: true
+          - Name: X64WebDebug
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            DeployOptions:
+            UseHermes: false
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
@@ -64,9 +62,7 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            - checkout: self
-              clean: true
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
 

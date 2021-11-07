@@ -196,6 +196,42 @@ parameters:
             platform: x86
             projectType: app
             useNuGet: true
+          - Name: X86ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X86ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true            
+          - Name: X64ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            useNuGet: true
+          - Name: X64ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: x64
+            projectType: app
+            useNuGet: true                     
+          - Name: Arm64ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            useNuGet: true
+          - Name: Arm64ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            useNuGet: true                       
           - Name: Arm64DebugCpp
             language: cpp
             configuration: Debug
@@ -269,19 +305,17 @@ jobs:
             variables: [template: ../variables/windows.yml]
 
             ${{ if eq(matrix.lowResource, true) }}:
-              pool: ${{ parameters.AgentPool.Small }}
+              # 9079: Use Medium hardware until new drop of
+              # `@react-native-community/cli` with windows init reliability
+              # improvements.
+              pool: ${{ parameters.AgentPool.Medium }}
             ${{ else }}:
               pool: ${{ parameters.AgentPool.Medium }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 
             steps:
-              - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-                clean: true # whether to fetch clean each time
-                # fetchDepth: 2 # the depth of commits to ask Git to fetch
-                lfs: false # whether to download Git-LFS files
-                submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-                persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+              - template: ../templates/checkout-full.yml
 
               - template: ../templates/configure-git.yml
 
@@ -292,6 +326,12 @@ jobs:
                   platform: ${{ parameters.platform }}
                   configuration: ${{ parameters.configuration }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
+
+              # 9079: Force disable RNW_FASTBUILD on low resource jobs, until
+              # they are back on low-end hardware.
+              - ${{ if eq(matrix.lowResource, true) }}:
+                - powershell: Write-Host "##vso[task.setvariable variable=RNW_FASTBUILD]false"
+                  displayName: Force off RNW_FASTBUILD
 
               - template: ../templates/react-native-init.yml
                 parameters:

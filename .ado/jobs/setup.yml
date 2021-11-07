@@ -7,9 +7,12 @@ parameters:
 
 jobs:
   - job: Setup
+    timeoutInMinutes: 3
     pool:
       vmImage: ubuntu-latest
     steps:
+      - template: ../templates/checkout-full.yml
+
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
         - task: powershell@2
           name: checkPayload
