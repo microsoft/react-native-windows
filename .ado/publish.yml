@@ -48,9 +48,7 @@ jobs:
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-full.yml
 
       - template: templates/configure-git.yml
 
@@ -312,9 +310,7 @@ jobs:
       demands: ${{ variables['AgentImage'] }}
 
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-shallow.yml
 
       - template: templates/yarn-install.yml
 
