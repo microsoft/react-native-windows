@@ -25,7 +25,7 @@ parameters:
 steps:
   - task: Cache@2
     inputs:
-      key: '"run-windows-with-certificates" | "${{ parameters.workingDirectory }}" | ${{ parameters.workingDirectory }}/windows/NuGet.config | **/packages.config | **/*.csproj'
+      key: '"run-windows-with-certificates" | "${{ parameters.workingDirectory }}" | ${{ parameters.workingDirectory }}/windows/NuGet.config | **/packages.config | **/packages.lock.json'
       restoreKeys: '"run-windows-with-certificates" | "${{ parameters.workingDirectory }}" | ${{ parameters.workingDirectory }}/windows/NuGet.config'
       path: ${{ parameters.workingDirectory }}/windows/packages/
     displayName: Copy cached NuGet packages
