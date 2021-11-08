@@ -17,22 +17,28 @@ import * as versionUtils from '../utils/versionUtils';
 
 export class TelemetryTest extends Telemetry {
   /** Run at the beginning of each test. */
-  static startTest(): void {
+  static async startTest() {
+    // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
+    jest.setTimeout(15000);
+
     if (TelemetryTest.isEnabled()) {
       Telemetry.reset();
     }
+
     // Ensure that we don't actually fire events when testing
     Telemetry.isTest = true;
-  }
 
-  /** Run at the end of each test. */
-  static endTest(): void {
-    // This is a workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
+    await Telemetry.setup({preserveErrorMessages: true});
+
+    // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
     CorrelationIdManager.cancelCorrelationIdQuery(
       Telemetry.client!.config,
       () => {},
     );
   }
+
+  /** Run at the end of each test. */
+  static endTest(): void {}
 
   /** Retrieves the value of a common property.*/
   static getCommonProperty(key: string): string | undefined {
@@ -60,9 +66,7 @@ export class TelemetryTest extends Telemetry {
 }
 
 beforeEach(async () => {
-  jest.setTimeout(15000); // AI can get stuck retrying, see https://github.com/microsoft/ApplicationInsights-node.js/issues/833
-  TelemetryTest.startTest();
-  await TelemetryTest.setup({preserveErrorMessages: true});
+  await TelemetryTest.startTest();
 });
 
 afterEach(() => {
