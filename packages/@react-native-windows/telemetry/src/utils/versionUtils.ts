@@ -5,7 +5,7 @@
  */
 
 import envinfo from 'envinfo';
-import fs from 'fs/promises';
+const fs = require('fs').promises; // Required to support Node 12
 import path from 'path';
 import {DOMParser} from '@xmldom/xmldom';
 import xpath from 'xpath';

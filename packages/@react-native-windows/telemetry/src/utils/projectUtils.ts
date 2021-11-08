@@ -5,7 +5,7 @@
  */
 
 import {createHash} from 'crypto';
-import fs from 'fs/promises';
+const fs = require('fs').promises; // Required to support Node 12
 import path from 'path';
 
 interface ProjectInfo {
