@@ -1,13 +1,15 @@
 parameters:
-  - name: solution
+  - name: solutionDir
+    type: string
+  - name: solutionName
     type: string
 
 steps:
   - task: Cache@2
     inputs:
-      key: '"restore-sln" | "${{ parameters.solution }}" | ${{ parameters.solution }}/../NuGet.config | **/packages.config | **/packages.lock.json'
-      restoreKeys: '"restore-sln" | "${{ parameters.solution }}" | ${{ parameters.solution }}/../NuGet.config'
-      path: ${{ parameters.solution }}/../packages/
+      key: '"restore-sln" | "${{ parameters.solutionDir }/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config | **/packages.config | **/packages.lock.json'
+      restoreKeys: '"restore-sln" | "${{ parameters.solutionDir }/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config'
+      path: ${{ parameters.solutionDir }}/packages/
     displayName: Copy cached NuGet packages
 
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
@@ -15,8 +17,8 @@ steps:
     displayName: NuGet restore
     inputs:
       command: restore
-      restoreSolution: ${{ parameters.solution }}
+      restoreSolution: ${{ parameters.solutionDir }}/${{ parameters.solutionName }}
       feedsToUse: config
-      nugetConfigPath: ${{ parameters.solution }}/../NuGet.config
+      nugetConfigPath: ${{ parameters.solutionDir }}/NuGet.config
       restoreDirectory: packages/
       verbosityRestore: Detailed

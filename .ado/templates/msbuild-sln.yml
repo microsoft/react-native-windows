@@ -4,7 +4,8 @@ parameters:
   debug: false
 
   # NuGet & MSBuild
-  solution:
+  solutionDir:
+  solutionName:
   msbuildVersion: 16.0
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
@@ -27,7 +28,8 @@ steps:
 
   - template: restore-sln.yml
     parameters:
-      solution: ${{parameters.solution}}
+      solutionDir: ${{parameters.solutionDir}}
+      solutionName: ${{parameters.solutionName}}
 
   - task: VSBuild@1
     displayName: VSBuild ${{parameters.solution}}

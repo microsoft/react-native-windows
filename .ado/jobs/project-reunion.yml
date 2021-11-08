@@ -52,7 +52,8 @@ jobs:
 
             - template: ../templates/msbuild-sln.yml
               parameters:
-                solution: vnext/Microsoft.ReactNative.ProjectReunion.sln
+                solutionDir: vnext
+                solutionName: Microsoft.ReactNative.ProjectReunion.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration}}
                 msbuildArguments: /p:UseWinUI3=true

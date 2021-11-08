@@ -70,7 +70,8 @@
 
                 - template: ../templates/msbuild-sln.yml
                   parameters:
-                    solution: vnext/Microsoft.ReactNative.sln
+                    solutionDir: vnext
+                    solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
 
@@ -144,7 +145,8 @@
 
                 - template: ../templates/restore-sln.yml
                   parameters:
-                    solution: vnext/Microsoft.ReactNative.sln
+                    solutionDir: vnext
+                    solutionName: Microsoft.ReactNative.sln
 
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"

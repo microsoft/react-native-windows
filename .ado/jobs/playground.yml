@@ -101,7 +101,8 @@ jobs:
 
             - template: ../templates/msbuild-sln.yml
               parameters:
-                solution: packages/playground/windows/${{ matrix.SolutionFile }}
+                solutionDir: packages/playground/windows
+                solutionName: ${{ matrix.SolutionFile }}
                 buildPlatform: ${{ matrix.BuildPlatform}}
                 buildConfiguration: ${{ matrix.BuildConfiguration}}
                 warnAsError: false
