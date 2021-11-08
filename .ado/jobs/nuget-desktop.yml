@@ -1,24 +1,20 @@
+parameters:
+  - name: AgentPool
+    type: object
 
 jobs:
   - job: PackDesktop
-    variables:
-      - template: ../variables/windows.yml
     displayName: Pack Desktop NuGet Package
+    variables: [template: ../variables/windows.yml]
     dependsOn:
       - DesktopX64Release
       - DesktopX86Debug
-    pool:
-      name: ${{ variables['AgentPool.Small'] }}
-      demands: ${{ variables['AgentImage'] }}
+
+    pool: ${{ parameters.AgentPool.Small }}
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+      - template: ../templates/checkout-shallow.yml
 
       - template: ../templates/yarn-install.yml
 

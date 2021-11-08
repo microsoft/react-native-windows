@@ -10,5 +10,9 @@
     <ProjectReference Include="$(ProjectDir)..\..\..\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj">
       <Project>{c0a69310-6119-46dc-a6d6-0bab7826dc92}</Project>
     </ProjectReference>
+    <!-- Projects from react-native-xaml -->
+    <ProjectReference Include="$(ProjectDir)..\..\..\..\node_modules\react-native-xaml\windows\ReactNativeXaml\ReactNativeXaml.vcxproj">
+      <Project>{0ff7027a-222c-4ffb-8f17-91d18bbaf7a8}</Project>
+    </ProjectReference>
   </ItemGroup>
 </Project>

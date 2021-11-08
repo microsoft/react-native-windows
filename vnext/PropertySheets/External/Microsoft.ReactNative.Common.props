@@ -9,10 +9,27 @@
   ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <!--
+    Projects internal to the `react-native-windows` package should resolve
+    '$(ReactNativeWindowsDir)` via "Directory.Build.Props".
+
+    External projects should resolve '$(ReactNativeWindowsDir)` using the
+    node_modules resolution logic of the template project. Home-rolled projects
+    may miss this logic, and instead import props directly by path.
+
+    If this happens, set a valid $(ReactNativeWindowsDir) to allow our project
+    to load, so we can load targets to show a later error via
+    $(ReactNativeWindowsDirNotSet).
+  -->
+  <PropertyGroup Condition="'$(ReactNativeWindowsDir)' == ''">
+    <ReactNativeWindowsDir>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)\..\..'))</ReactNativeWindowsDir>
+    <ReactNativeWindowsDirNotSet>true</ReactNativeWindowsDirNotSet>
+  </PropertyGroup>
+
   <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
 
   <PropertyGroup>
-    <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)\..\..'))</ReactNativeWindowsDir>
     <ProjectDir Condition="'$(ProjectDir)' == ''">$(MSBuildProjectDirectory)\</ProjectDir>
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''">false</UseExperimentalNuget>
     <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>

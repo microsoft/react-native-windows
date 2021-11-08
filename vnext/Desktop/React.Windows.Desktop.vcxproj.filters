@@ -159,9 +159,6 @@
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="Modules\UIManagerModule.cpp" />
-    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MessageQueueShim.h">

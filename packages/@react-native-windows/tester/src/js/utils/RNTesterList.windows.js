@@ -139,6 +139,11 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/View/ViewExample'),
   },
   {
+    key: 'XAML',
+    category: 'UI',
+    module: require('../examples-win/XAML/XAMLExample'),
+  },
+  {
     key: 'LegacyControlStyleTest',
     module: require('../examples-win/LegacyTests/ControlStyleTestPage'),
   },

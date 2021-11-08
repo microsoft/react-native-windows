@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "FIx Warnings from RoslynCodeTaskFactory in C++ Projects Building ARM64",
+  "comment": "Remove extra definition of ReactNativeWindowsDir",
   "packageName": "react-native-windows",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"

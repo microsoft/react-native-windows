@@ -1,7 +1,0 @@
-variables:
-  AgentPool.Small: rnw-pool-2
-  AgentPool.Medium: rnw-pool-4
-  AgentPool.Large: rnw-pool-8
-  AgentPool.Medium.Publish: rnw-pool-4-microsoft
-  AgentPool.Large.Publish: rnw-pool-8-microsoft
-  AgentImage: ImageOverride -equals rnw-img-test
