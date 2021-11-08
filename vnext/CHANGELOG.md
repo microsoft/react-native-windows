@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Nov 2021 05:07:29 GMT and should not be manually modified.
+This log was last generated on Sat, 06 Nov 2021 05:08:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.414
+
+Sat, 06 Nov 2021 05:08:39 GMT
+
+### Changes
+
+- Remove ChakraCore dependency (julio.rocha@microsoft.com)
+- FIx Warnings from RoslynCodeTaskFactory in C++ Projects Building ARM64 (ngerlem@microsoft.com)
+- Fixes default background for mouse events with border (erozell@outlook.com)
+
+## 0.0.0-canary.413
+
+Fri, 05 Nov 2021 05:08:51 GMT
+
+### Changes
+
+- Force version bump (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.412
 

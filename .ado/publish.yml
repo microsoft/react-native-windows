@@ -17,6 +17,16 @@ parameters:
   displayName: Stop if latest commit is ***NO_CI***
   type: boolean
   default: true
+- name: AgentPool
+  type: object
+  default:
+    Medium:
+      name: rnw-pool-4-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+    Large:
+      name: rnw-pool-8-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+
 
 variables:
   - template: variables/windows.yml
@@ -42,15 +52,11 @@ pr: none
 jobs:
   - job: RnwNpmPublish
     displayName: React-Native-Windows Npm Build Rev Publish
-    pool:
-      name: ${{ variables['AgentPool.Medium.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Medium }}
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-full.yml
 
       - template: templates/configure-git.yml
 
@@ -71,17 +77,13 @@ jobs:
         displayName: Enable No-Publish
         condition: ${{ parameters.skipGitPush }}
 
-      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***" --no-git-tags
+      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***" --no-git-tags
         displayName: Beachball Publish (Main Branch)
         condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
 
-      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --access public --message "applying package updates ***NO_CI***"
+      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
-
-      # Beachball reverts to local state after publish, but we want the updates it added
-      - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
-        displayName: git pull
 
       - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
@@ -97,15 +99,13 @@ jobs:
     displayName: Deploy @rnw-bots/coordinator
     condition: eq(variables['Build.SourceBranchName'], 'main')
     dependsOn: RnwNpmPublish
-    pool:
-      name: ${{ variables['AgentPool.Medium.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Medium }}
     timeoutInMinutes: 30
     steps:
       - template: templates/prepare-js-env.yml
 
       # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
-      - script: npx beachball bump
+      - script: npx beachball bump --verbose
         displayName: beachball bump
 
       # Azure Functions expects a fully packagable folder with dependencies.
@@ -208,9 +208,7 @@ jobs:
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
-    pool:
-      name: ${{ variables['AgentPool.Large.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Large }}
 
     steps:
       - template: templates/prepare-js-env.yml
@@ -262,9 +260,7 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-    pool:
-      name: ${{ variables['AgentPool.Large.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Large }}
 
     steps:
       - template: templates/prepare-js-env.yml
@@ -311,14 +307,10 @@ jobs:
       - RnwNativeBuildUniversal
       - RnwNativeBuildReunion
     displayName: Sign Binaries and Publish NuGet
-    pool:
-      name: ${{ variables['AgentPool.Medium.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Medium }}
 
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-shallow.yml
 
       - template: templates/yarn-install.yml
 

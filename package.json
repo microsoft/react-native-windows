@@ -11,7 +11,6 @@
     "doc": "doxysaurus --config vnext/doxysaurus.json",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -verify",
-    "postinstall": "patch-package",
     "test": "lage test --verbose -- --color",
     "validate-overrides": "react-native-platform-override validate --color"
   },
@@ -32,12 +31,10 @@
     ]
   },
   "devDependencies": {
-    "beachball": "^2.16.0",
+    "beachball": "^2.20.0",
     "husky": "^4.2.5",
     "unbroken": "1.0.27",
-    "lage": "^0.29.3",
-    "patch-package": "^6.4.7",
-    "postinstall-postinstall": "^2.1.0"
+    "lage": "^0.29.3"
   },
   "resolutions": {
     "kind-of": "6.0.3",

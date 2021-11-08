@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Add `breakOnStart` option",
+  "packageName": "@react-native-windows/automation",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

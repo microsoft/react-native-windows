@@ -15,11 +15,6 @@
     <Message Text="=> DefaultPlatformToolset  [$(DefaultPlatformToolset)]" />
     <Message Text="=> PlatformToolset         [$(PlatformToolset)]" />
     <Message Text="=> SolutionDir             [$(SolutionDir)]" />
-    <Message Text="=> RootDir                 [$(RootDir)]" />
-    <Message Text="=> RootIntDir              [$(RootIntDir)]" />
-    <Message Text="=> RootOutDir              [$(RootOutDir)]" />
-    <Message Text="=> BaseIntDir              [$(BaseIntDir)]" />
-    <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
     <Message Text="=> IntDir                  [$(IntDir)]" />
     <Message Text="=> OutDir                  [$(OutDir)]" />
     <Message Text="=> TargetDir               [$(TargetDir)]" />

@@ -500,7 +500,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
 
       int64_t currentTimeInMilliSeconds =
-          std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono ::system_clock::now().time_since_epoch())
+          std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
               .count();
       m_devManager->UpdateBundleStatus(true, currentTimeInMilliSeconds);
 
@@ -571,11 +571,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // Otherwise all bundles (User and Platform) are loaded through
       // platformBundles.
       if (PathFileExistsA(fullBundleFilePath.c_str())) {
-#if defined(_CHAKRACORE_H_)
-        auto bundleString = FileMappingBigString::fromPath(fullBundleFilePath);
-#else
         auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
-#endif
         m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(fullBundleFilePath), synchronously);
       }
 
@@ -586,10 +582,6 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
     }
-#if defined(_CHAKRACORE_H_)
-  } catch (const facebook::react::ChakraJSException &e) {
-    m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
-#endif
   } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
   } catch (const winrt::hresult_error &hrerr) {
@@ -620,10 +612,10 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       },
       nativeQueue));
 
-// TODO: This is not included for UWP because we have a different module which
-// is added later. However, this one is designed
-//  so that we can base a UWP version on it. We need to do that but is not high
-//  priority.
+  // TODO: This is not included for UWP because we have a different module which
+  // is added later. However, this one is designed
+  //  so that we can base a UWP version on it. We need to do that but is not high
+  //  priority.
 #if (defined(_MSC_VER) && !defined(WINRT))
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,

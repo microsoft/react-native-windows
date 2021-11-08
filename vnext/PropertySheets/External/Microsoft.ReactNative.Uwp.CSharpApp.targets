@@ -8,6 +8,8 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Common.targets" />
+
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
           Condition="'$(ReactNativeCodeGenEnabled)' == 'true' and '$(UseExperimentalNuget)' != 'true'" />
 
