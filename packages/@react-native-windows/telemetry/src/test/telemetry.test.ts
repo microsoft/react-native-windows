@@ -38,7 +38,13 @@ export class TelemetryTest extends Telemetry {
   }
 
   /** Run at the end of each test. */
-  static endTest(): void {}
+  static endTest(): void {
+    // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
+    CorrelationIdManager.cancelCorrelationIdQuery(
+      Telemetry.client!.config,
+      () => {},
+    );
+  }
 
   /** Retrieves the value of a common property.*/
   static getCommonProperty(key: string): string | undefined {
