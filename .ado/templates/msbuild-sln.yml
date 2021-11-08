@@ -32,9 +32,9 @@ steps:
       solutionName: ${{parameters.solutionName}}
 
   - task: VSBuild@1
-    displayName: VSBuild ${{parameters.solution}}
+    displayName: VSBuild ${{parameters.solutionName}}
     inputs:
-      solution: ${{parameters.solution}}
+      solution: ${{parameters.solutionDir}}/${{parameters.solution}}
       vsVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: ${{ parameters.buildPlatform }}
