@@ -5,15 +5,17 @@ parameters:
     values:
       - PullRequest
       - Continuous
+
   - name: AgentPool
-    type: object  
+    type: object
+
   - name: versions
     type: object
     default: [12, 14, 16]
 
 jobs:
-  - job: NodeCompat
-    displayName: Node Compatibility
+  - job: NodeTests
+    displayName: Node Tests
     timeoutInMinutes: 20
     variables: [template: ../variables/windows.yml]
     pool: ${{ parameters.AgentPool.Medium }}

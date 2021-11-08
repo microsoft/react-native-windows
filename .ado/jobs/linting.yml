@@ -1,0 +1,39 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default : PullRequest
+    values:
+      - PullRequest
+      - Continuous
+
+  - name: AgentPool
+    type: object  
+
+jobs:
+  - job: Linting
+    displayName: Linting
+    timeoutInMinutes: 20
+    variables: [template: ../variables/windows.yml]
+    pool: ${{ parameters.AgentPool.Medium }}
+    steps:
+      - template: ../templates/checkout-shallow.yml
+
+      - template: ../templates/prepare-js-env.yml
+
+      - script: yarn format:verify
+        displayName: yarn format:verify
+
+      - script: yarn lint
+        displayName: yarn lint
+
+      - script: yarn validate-overrides
+        displayName: yarn validate-overrides
+
+      - script: npx unbroken -q --local-only --allow-local-line-sections
+        displayName: check local links in .md files          
+
+      # This runs will check for web-links. If broken links are found, since external changes could affect this.
+      # It will report a warning if this step fails so we'll pay attention to fix quickly.
+      - script: npx unbroken -q --allow-local-line-sections
+        displayName: check web links in .md files          
+        continueOnError: true
