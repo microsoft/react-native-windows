@@ -16,8 +16,14 @@ import * as projectUtils from '../utils/projectUtils';
 import * as versionUtils from '../utils/versionUtils';
 
 export class TelemetryTest extends Telemetry {
+  protected static hasTestTelemetryProviders: boolean;
+  protected static testTelemetryProvidersRan: boolean;
+
   /** Run at the beginning of each test. */
   static async startTest() {
+    TelemetryTest.hasTestTelemetryProviders = false;
+    TelemetryTest.testTelemetryProvidersRan = false;
+
     // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
     jest.setTimeout(15000);
 
@@ -31,19 +37,28 @@ export class TelemetryTest extends Telemetry {
     await Telemetry.setup({preserveErrorMessages: true});
 
     // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
+    Telemetry.client!.config.correlationIdRetryIntervalMs = 1000;
     CorrelationIdManager.cancelCorrelationIdQuery(
       Telemetry.client!.config,
       () => {},
     );
   }
 
-  /** Run at the end of each test. */
-  static endTest(): void {
-    // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
-    CorrelationIdManager.cancelCorrelationIdQuery(
-      Telemetry.client!.config,
-      () => {},
-    );
+  /** Run at the end of each test where telemetry was fired. */
+  static endTest(cb: () => void): void {
+    Telemetry.client?.flush({
+      callback: _ => {
+        if (TelemetryTest.hasTestTelemetryProviders) {
+          expect(TelemetryTest.testTelemetryProvidersRan).toBe(true);
+        }
+        cb();
+      },
+    });
+  }
+
+  /** Sets that the telemetry provider has run. */
+  static setTestTelemetryProvidersRan() {
+    TelemetryTest.testTelemetryProvidersRan = true;
   }
 
   /** Retrieves the value of a common property.*/
@@ -68,15 +83,12 @@ export class TelemetryTest extends Telemetry {
     ) => boolean,
   ): void {
     TelemetryTest.client?.addTelemetryProcessor(telemetryProcessor);
+    TelemetryTest.hasTestTelemetryProviders = true;
   }
 }
 
 beforeEach(async () => {
   await TelemetryTest.startTest();
-});
-
-afterEach(() => {
-  TelemetryTest.endTest();
 });
 
 test('setup() verify session id is valid and a common property', async () => {
@@ -296,7 +308,6 @@ async function runTestCommandE2E(commandBody: () => Promise<void>) {
 
 /** Verifys the contents of events fired during the 'test-command'. */
 function verifyTestCommandTelemetryProcessor(
-  done: jest.DoneCallback,
   caughtErrors: Error[],
   expectedResultCode?: errorUtils.CodedErrorType,
   expectedError?: Error,
@@ -381,8 +392,8 @@ function verifyTestCommandTelemetryProcessor(
           }
         }
 
-        // Don't stop the test until this processor has run
-        done();
+        // Processor has run, so the test can (potentially) pass
+        TelemetryTest.setTestTelemetryProvidersRan();
       }
     } catch (ex) {
       caughtErrors.push(
@@ -398,13 +409,16 @@ test('Telemetry run test command end to end, verify event fires', async done => 
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(done, caughtErrors),
+    verifyTestCommandTelemetryProcessor(caughtErrors),
   );
 
   await runTestCommandE2E(testCommandBody);
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });
 
 test('Telemetry run test command end to end with CodedError, verify events fire', async done => {
@@ -414,7 +428,6 @@ test('Telemetry run test command end to end with CodedError, verify events fire'
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
     verifyTestCommandTelemetryProcessor(
-      done,
       caughtErrors,
       expectedError.type,
       expectedError,
@@ -423,8 +436,11 @@ test('Telemetry run test command end to end with CodedError, verify events fire'
 
   await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });
 
 test('Telemetry run test command end to end with CodedError (with error in message), verify events fire', async done => {
@@ -437,7 +453,6 @@ test('Telemetry run test command end to end with CodedError (with error in messa
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
     verifyTestCommandTelemetryProcessor(
-      done,
       caughtErrors,
       expectedError.type,
       expectedError,
@@ -446,8 +461,11 @@ test('Telemetry run test command end to end with CodedError (with error in messa
 
   await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });
 
 test('Telemetry run test command end to end with CodedError (with data), verify events fire', async done => {
@@ -461,7 +479,6 @@ test('Telemetry run test command end to end with CodedError (with data), verify 
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
     verifyTestCommandTelemetryProcessor(
-      done,
       caughtErrors,
       expectedError.type,
       expectedError,
@@ -470,8 +487,11 @@ test('Telemetry run test command end to end with CodedError (with data), verify 
 
   await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });
 
 test('Telemetry run test command end to end with Error, verify events fire', async done => {
@@ -480,18 +500,16 @@ test('Telemetry run test command end to end with Error, verify events fire', asy
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(
-      done,
-      caughtErrors,
-      'Unknown',
-      expectedError,
-    ),
+    verifyTestCommandTelemetryProcessor(caughtErrors, 'Unknown', expectedError),
   );
 
   await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });
 
 test('Telemetry run test command end to end with Error (no message), verify events fire', async done => {
@@ -500,18 +518,16 @@ test('Telemetry run test command end to end with Error (no message), verify even
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(
-      done,
-      caughtErrors,
-      'Unknown',
-      expectedError,
-    ),
+    verifyTestCommandTelemetryProcessor(caughtErrors, 'Unknown', expectedError),
   );
 
   await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });
 
 function b(s: string) {
@@ -524,7 +540,6 @@ function a(s: string) {
 
 /** Verifies the contents of an exception's message and stack frames */
 function getVerifyStackTelemetryProcessor(
-  done: jest.DoneCallback,
   caughtErrors: Error[],
   expectedError: Error,
 ): (
@@ -552,7 +567,9 @@ function getVerifyStackTelemetryProcessor(
         expect(stack[1].method).toEqual('a');
         expect(stack[0].fileName).toEqual(`test\\${filename}`);
         expect(stack[1].fileName).toEqual(`test\\${filename}`);
-        done();
+
+        // Don't stop the test until this processor has run
+        TelemetryTest.setTestTelemetryProvidersRan();
       }
     } catch (ex) {
       caughtErrors.push(
@@ -570,7 +587,7 @@ test('Telemetry run test command end to end with Error, verify sanitized message
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
-    getVerifyStackTelemetryProcessor(done, caughtErrors, expectedError),
+    getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
   );
 
   await runTestCommandE2E(async () => {
@@ -578,8 +595,11 @@ test('Telemetry run test command end to end with Error, verify sanitized message
     a('world');
   });
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });
 
 test('Telemetry run test command end to end with Error, verify sanitized message with path and stack', async done => {
@@ -588,7 +608,7 @@ test('Telemetry run test command end to end with Error, verify sanitized message
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
-    getVerifyStackTelemetryProcessor(done, caughtErrors, expectedError),
+    getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
   );
 
   await runTestCommandE2E(async () => {
@@ -596,6 +616,9 @@ test('Telemetry run test command end to end with Error, verify sanitized message
     a(process.cwd());
   });
 
-  // Check if any errors were thrown
-  expect(caughtErrors).toHaveLength(0);
+  TelemetryTest.endTest(() => {
+    // Check if any errors were thrown
+    expect(caughtErrors).toHaveLength(0);
+    done();
+  });
 });

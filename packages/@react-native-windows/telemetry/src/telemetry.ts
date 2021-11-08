@@ -132,7 +132,6 @@ export class Telemetry {
     // Telemetry.client.config.proxyHttpsUrl = 'http://localhost:8888';
 
     Telemetry.client.config.disableAppInsights = Telemetry.isTest;
-    Telemetry.client.config.correlationIdRetryIntervalMs = 1000;
     Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
   }
 
