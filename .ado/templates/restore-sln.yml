@@ -7,8 +7,8 @@ parameters:
 steps:
   - task: Cache@2
     inputs:
-      key: '"restore-sln" | "${{ parameters.solutionDir }}/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config | **/packages.config | **/packages.lock.json'
-      restoreKeys: '"restore-sln" | "${{ parameters.solutionDir }}/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config'
+      key: '"restore-sln-v2" | "${{ parameters.solutionDir }}/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config | **/packages.config | **/packages.lock.json'
+      restoreKeys: '"restore-sln-v2" | "${{ parameters.solutionDir }}/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config'
       path: ${{ parameters.solutionDir }}/packages/
     displayName: Copy cached NuGet packages
 
