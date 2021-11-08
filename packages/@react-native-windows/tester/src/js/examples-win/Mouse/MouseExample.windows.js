@@ -42,6 +42,14 @@ const styles = StyleSheet.create({
     height: 400,
     backgroundColor: '#CCCCCC',
   },
+  borderContainer: {
+    padding: 10,
+    borderColor: 'black',
+    borderWidth: 2,
+  },
+  borderContainerHovered: {
+    borderColor: 'green',
+  },
   contentContainer: {
     flex: 1,
     backgroundColor: '#F2E2C4',
@@ -100,6 +108,7 @@ export default class ExampleComponent extends React.Component<
     this.state = {
       clicked: 0,
       pageHover: false,
+      borderHover: false,
       contentHover: false,
       contentChildHover: false,
       overlayHover: false,
@@ -117,11 +126,21 @@ export default class ExampleComponent extends React.Component<
       onMouseEnter: this.mouseEnterPage,
       onMouseLeave: this.mouseLeavePage,
     };
+    const borderProps: any = {
+      style: [
+        styles.borderContainer,
+        this.state.borderHover ? styles.borderContainerHovered : undefined,
+      ],
+      onMouseEnter: this.mouseEnterBorder,
+      onMouseLeave: this.mouseLeaveBorder,
+    };
     return (
       <View {...pageProps}>
-        <View style={styles.mainContainer}>
-          {this.renderContent()}
-          {this.renderOverlay()}
+        <View {...borderProps}>
+          <View style={styles.mainContainer}>
+            {this.renderContent()}
+            {this.renderOverlay()}
+          </View>
         </View>
         <View>
           <Text>{this.state.pageHover ? 'Mouse over page' : ''}</Text>
@@ -192,6 +211,14 @@ export default class ExampleComponent extends React.Component<
   };
   mouseLeavePage = () => {
     this.setState({pageHover: false});
+  };
+
+  mouseEnterBorder = () => {
+    this.setState({borderHover: true});
+  };
+
+  mouseLeaveBorder = () => {
+    this.setState({borderHover: false});
   };
 
   mouseEnterContentContainer = () => {

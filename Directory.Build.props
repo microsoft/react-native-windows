@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
-  <!-- 
-    Due to the mono-repo setup in this repo, we should ensure that all the projects
-    are pointing to the same place for react-native and react-native-windows.
-    -->
-
+  <!--
+    Projects external to the `react-native-windows` package will resolve RNW to
+    `<root>/node_nodules/react-native-windows`, which is inconsistent from the
+    `<root>/vnext/react-native-windows` $(MSBuildThisFileDirectory) resolves to
+    inside of the package (only when in our repository). Ensure the same name
+    is used by external projects to avoid MSBuild from seeing multiple projects.
+  -->
   <PropertyGroup>
-    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)\vnext\</ReactNativeWindowsDir>
-    <ReactNativePackageDir>$(MSBuildThisFileDirectory)\node_modules\react-native\</ReactNativePackageDir>
-    <RootIntDir>$(ReactNativeWindowsDir)\build</RootIntDir>
-    <RootOutDir>$(ReactNativeWindowsDir)\target</RootOutDir>
+    <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)vnext\</ReactNativeWindowsDir>
   </PropertyGroup>
 
 </Project>
