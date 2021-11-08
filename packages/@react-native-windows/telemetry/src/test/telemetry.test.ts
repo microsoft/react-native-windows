@@ -24,8 +24,7 @@ export class TelemetryTest extends Telemetry {
     TelemetryTest.hasTestTelemetryProviders = false;
     TelemetryTest.testTelemetryProvidersRan = false;
 
-    // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
-    jest.setTimeout(15000);
+    jest.setTimeout(10000); // These E2E tests can run longer than the default 5000ms
 
     if (TelemetryTest.isEnabled()) {
       Telemetry.reset();
@@ -37,7 +36,7 @@ export class TelemetryTest extends Telemetry {
     await Telemetry.setup({preserveErrorMessages: true});
 
     // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
-    Telemetry.client!.config.correlationIdRetryIntervalMs = 1000;
+    Telemetry.client!.config.correlationIdRetryIntervalMs = 500;
     CorrelationIdManager.cancelCorrelationIdQuery(
       Telemetry.client!.config,
       () => {},
@@ -45,13 +44,13 @@ export class TelemetryTest extends Telemetry {
   }
 
   /** Run at the end of each test where telemetry was fired. */
-  static endTest(cb: () => void): void {
+  static endTest(finalCallback: () => void): void {
     Telemetry.client?.flush({
       callback: _ => {
         if (TelemetryTest.hasTestTelemetryProviders) {
           expect(TelemetryTest.testTelemetryProvidersRan).toBe(true);
         }
-        cb();
+        finalCallback();
       },
     });
   }
@@ -568,7 +567,7 @@ function getVerifyStackTelemetryProcessor(
         expect(stack[0].fileName).toEqual(`test\\${filename}`);
         expect(stack[1].fileName).toEqual(`test\\${filename}`);
 
-        // Don't stop the test until this processor has run
+        // Processor has run, so the test can (potentially) pass
         TelemetryTest.setTestTelemetryProvidersRan();
       }
     } catch (ex) {
