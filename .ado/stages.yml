@@ -51,7 +51,12 @@ stages:
     dependsOn: Setup
     condition: and (succeeded(), ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ))
     jobs:
-      - template: jobs/jschecks.yml
+      - template: jobs/linting.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
+
+      - template: jobs/node-tests.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
