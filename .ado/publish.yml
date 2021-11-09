@@ -178,7 +178,8 @@ jobs:
 
       - template: templates/msbuild-sln.yml
         parameters:
-          solution: vnext/ReactWindows-Desktop.sln
+          solutionDir: vnext
+          aolutionName: ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
@@ -223,7 +224,8 @@ jobs:
 
       - template: templates/msbuild-sln.yml
         parameters:
-          solution: vnext/Microsoft.ReactNative.sln
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
@@ -275,7 +277,8 @@ jobs:
 
       - template: templates/msbuild-sln.yml
         parameters:
-          solution: vnext/Microsoft.ReactNative.ProjectReunion.sln
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.ProjectReunion.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
