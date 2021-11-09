@@ -15,6 +15,7 @@ export {CodedError, CodedErrorType, CodedErrors} from './utils/errorUtils';
 
 export {
   yargsOptionsToOptions,
+  commanderNameToOptionName,
   commanderOptionsToOptions,
   optionsToArgs,
   OptionSanitizer,

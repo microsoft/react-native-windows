@@ -16,6 +16,27 @@ export interface CommanderOptionsType extends Record<string, any> {
 }
 
 /**
+ * Converts a raw Commander arg name ('--no-bad-dog') into an options property name ('badDog').
+ * @param name The raw Commander arg name.
+ * @returns The options name.
+ */
+export function commanderNameToOptionName(name: string): string {
+  if (name.startsWith('--')) {
+    name = name.slice('--'.length);
+  }
+  if (name.startsWith('no-')) {
+    name = name.slice('no-'.length);
+  }
+  if (name.endsWith(' [string]')) {
+    name = name.slice(0, name.length - ' [string]'.length);
+  }
+  if (name.endsWith(' [number]')) {
+    name = name.slice(0, name.length - ' [number]'.length);
+  }
+  return camelCase(name);
+}
+
+/**
  * Converts a yargs-parsed options object into an options object suitable for telemetry.
  * @param options The options object as parsed by yargs.
  * @param sanitizer Function to sanitize the option values for telemetry.

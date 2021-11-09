@@ -895,13 +895,19 @@ function verboseMessage(message: any, verbose?: boolean) {
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-function optionSanitizer(key: string, value: any): any {
+// eslint-disable-next-line complexity
+function optionSanitizer(key: keyof AutoLinkOptions, value: any): any {
+  // Do not add a default case here.
+  // Strings risking PII should just return true if present, false otherwise.
+  // All others should return the value (or false if undefined).
   switch (key) {
     case 'sln':
     case 'proj':
-      return value === undefined ? false : true;
-    default:
-      return value === undefined ? false : value;
+      return value === undefined ? false : true; // Strip PII
+    case 'logging':
+    case 'check':
+    case 'telemetry':
+      return value === undefined ? false : value; // Return value
   }
 }
 

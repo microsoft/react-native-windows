@@ -36,18 +36,38 @@ import {autolinkWindowsInternal, AutoLinkOptions} from './utils/autolink';
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-function optionSanitizer(key: string, value: any): any {
+// eslint-disable-next-line complexity
+function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
+  // Do not add a default case here.
+  // Strings risking PII should just return true if present, false otherwise.
+  // All others should return the value (or false if undefined).
   switch (key) {
     case 'root':
     case 'target':
     case 'sln':
     case 'proj':
     case 'buildLogDirectory':
-      return value === undefined ? false : true;
+      return value === undefined ? false : true; // Strip PII
     case 'msbuildprops':
-      return value === undefined ? 0 : value.split(',').length;
-    default:
-      return value === undefined ? false : value;
+      return value === undefined ? 0 : value.split(',').length; // Convert to count
+    case 'release':
+    case 'arch':
+    case 'singleproc':
+    case 'emulator':
+    case 'device':
+    case 'remoteDebugging':
+    case 'logging':
+    case 'packager':
+    case 'bundle':
+    case 'launch':
+    case 'autolink':
+    case 'build':
+    case 'deploy':
+    case 'deployFromLayout':
+    case 'info':
+    case 'directDebugging':
+    case 'telemetry':
+      return value === undefined ? false : value; // Return value
   }
 }
 
