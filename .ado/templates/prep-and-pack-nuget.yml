@@ -40,6 +40,12 @@ parameters:
     default: false
 
 steps:
+  # To be removed before merge (when new image is ready)
+  - powershell: |
+      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+      Invoke-Expression "& { $(Invoke-RestMethod https://aka.ms/install-powershell.ps1) } -UseMSI -Quiet"
+    displayName: Install pwsh
+  
   - pwsh: |
       $slices = ConvertFrom-Json -NoEnumerate '${{ convertToJson(parameters.slices) }}'
       $debugSlices = @($slices.where{$_.configuration -match 'Debug'});
