@@ -610,17 +610,20 @@ function getReunionPackages(nugetVersion: string): NugetPackage[] {
     version: nugetVersion,
   });
 
-  const reunionVersion = '1.0.0-preview3';
-  for (const pkg of [
-    'Microsoft.WindowsAppSDK',
-    'Microsoft.WindowsAppSDK.Foundation',
-    'Microsoft.WindowsAppSDK.WinUI',
-    // 'Microsoft.WindowsAppSDK.InteractiveExperiences',
-  ]) {
-    reunionPackages.push({
-      id: pkg,
-      version: reunionVersion,
-    });
-  }
+  reunionPackages.push({
+    id: 'Microsoft.WindowsAppSDK',
+    version: '1.0.0-preview3',
+  });
+
+  reunionPackages.push({
+    id: 'Microsoft.WindowsAppSDK.Foundation',
+    version: '1.0.0-experimental1',
+  });
+
+  reunionPackages.push({
+    id: 'Microsoft.WindowsAppSDK.WinUI',
+    version: '1.0.0-experimental1',
+  });
+
   return reunionPackages;
 }
