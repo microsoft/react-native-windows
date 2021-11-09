@@ -30,6 +30,7 @@ steps:
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+      condition: eq($(Build.Repository.ID), 'microsoft/react-native-windows')
       displayName: '${{ parameters.packageId }} CodeSign Binaries'
       inputs:
         ConnectedServiceName: ReactNativeSigning
@@ -77,6 +78,7 @@ steps:
 
   - ${{ if eq(parameters.codesignNuget, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+      condition: eq($(Build.Repository.ID), 'microsoft/react-native-windows')
       displayName: '${{ parameters.packageId }} CodeSign NuGet'
       inputs:
         ConnectedServiceName: ReactNativeSigning

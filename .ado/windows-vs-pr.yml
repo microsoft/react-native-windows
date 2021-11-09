@@ -4,7 +4,6 @@ trigger: none # will disable CI builds entirely
 
 pr:
   - main
-  - master
   - "*-stable"
 
 variables:

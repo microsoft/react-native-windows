@@ -13,6 +13,10 @@ parameters:
   displayName: Skip Deploying Bots to Azure Functions
   type: boolean
   default: false
+- name: skipCodeSign
+  displayName: Skip signing and publishing packages to NuGet.org
+  type: boolean
+  default: false  
 - name: stopOnNoCI
   displayName: Stop if latest commit is ***NO_CI***
   type: boolean
@@ -38,8 +42,6 @@ variables:
   - name: NugetSecurityAnalysisWarningLevel
     value: 'warn'
   - name: FailCGOnAlert
-    value: false
-  - name: EnableCodesign
     value: false
   - name: ArtifactServices.Symbol.AccountName
     value: microsoft
@@ -335,8 +337,7 @@ jobs:
           packMicrosoftReactNativeCxx: true
           packMicrosoftReactNativeManaged: true
           packMicrosoftReactNativeManagedCodeGen: true
-          ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-            signMicrosoft: true
+          signMicrosoft: ${{ eq(parameters.skipCodeSign, false) }}}
           slices: 
             - platform: x64
               configuration: Release
@@ -352,8 +353,7 @@ jobs:
           npmVersion: $(npmVersion)
           nugetroot: $(System.DefaultWorkingDirectory)\Desktop
           packDesktop: true
-          ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-            signMicrosoft: true
+          signMicrosoft: ${{ eq(parameters.skipCodeSign, false) }}}
           slices:
             - platform: x64
               configuration: Release
@@ -375,8 +375,7 @@ jobs:
           npmVersion: $(npmVersion)
           nugetroot: $(System.DefaultWorkingDirectory)\Reunion
           packMicrosoftReactNativeProjectReunion: true
-          ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
-            signMicrosoft: true
+          signMicrosoft: ${{ eq(parameters.skipCodeSign, false) }}}
           slices: 
             - platform: x64
               configuration: Release
