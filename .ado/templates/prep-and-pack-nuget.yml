@@ -90,7 +90,7 @@ steps:
       parameters:
         outputPackage: OfficeReact.Win32
         packageVersion: ${{parameters.npmVersion}}
-        stripToSlices: $(slicesArgs)
+        stripToSlices: $(sliceArgs)
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
