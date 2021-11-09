@@ -377,14 +377,6 @@ function isProjectUsingYarn(cwd: string): boolean {
     const useDevMode = !!argv.useDevMode;
     let version = argv.version;
 
-    if (argv.useWinUI3 && argv.experimentalNuGetDependency) {
-      throw new CodedError(
-        'IncompatibleOptions',
-        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
-        {detail: 'useWinUI3 and experimentalNuGetDependency'},
-      );
-    }
-
     if (!useDevMode) {
       if (!version) {
         const rnVersion = getReactNativeVersion();
