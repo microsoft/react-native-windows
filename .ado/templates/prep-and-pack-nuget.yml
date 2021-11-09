@@ -94,25 +94,25 @@ steps:
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
-      ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
-        - template: prep-and-pack-single.yml
-          parameters:
-            outputPackage: Microsoft.ReactNative.Debug
-            nuspec: Microsoft.ReactNative
-            stripToSlices: $(debugSliceArgs)
-            packageVersion: ${{parameters.npmVersion}}
-            codesignBinaries: ${{ parameters.signMicrosoft }}
-            codesignNuget: ${{ parameters.signMicrosoft }}
-            buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
-      ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
-        - template: prep-and-pack-single.yml
-          parameters:
-            outputPackage: Microsoft.ReactNative
-            stripToSlices: $(releaseSliceArgs)
-            packageVersion: ${{parameters.npmVersion}}
-            codesignBinaries: ${{ parameters.signMicrosoft }}
-            codesignNuget: ${{ parameters.signMicrosoft }}
-            buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.Debug
+          nuspec: Microsoft.ReactNative
+          stripToSlices: $(debugSliceArgs)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative
+          stripToSlices: $(releaseSliceArgs)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
 
 
   - ${{ if eq(parameters.packMicrosoftReactNativeCxx, true) }}:
@@ -124,25 +124,25 @@ steps:
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
-      ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
-        - template: prep-and-pack-single.yml
-          parameters:
-            outputPackage: Microsoft.ReactNative.Managed.Debug
-            nuspec: Microsoft.ReactNative.Managed
-            stripToSlices: $(debugSliceArgs)
-            packageVersion: ${{parameters.npmVersion}}
-            codesignBinaries: ${{ parameters.signMicrosoft }}
-            codesignNuget: ${{ parameters.signMicrosoft }}
-            buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
-      ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
-        - template: prep-and-pack-single.yml
-          parameters:
-            outputPackage: Microsoft.ReactNative.Managed
-            stripToSlices: $(releaseSliceArgs)
-            packageVersion: ${{parameters.npmVersion}}
-            codesignBinaries: ${{ parameters.signMicrosoft }}
-            codesignNuget: ${{ parameters.signMicrosoft }}
-            buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.Managed.Debug
+          nuspec: Microsoft.ReactNative.Managed
+          stripToSlices: $(debugSliceArgs)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.Managed
+          stripToSlices: $(releaseSliceArgs)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManagedCodeGen, true) }}:
     - template: prep-and-pack-single.yml
@@ -154,31 +154,31 @@ steps:
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeProjectReunion, true) }}:
-      ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
-        - template: prep-and-pack-single.yml
-          parameters:
-            outputPackage: Microsoft.ReactNative.ProjectReunion.Debug
-            nuspec: Microsoft.ReactNative.ProjectReunion
-            stripToSlices: $(debugSliceArgs)
-            packageVersion: ${{parameters.npmVersion}}
-            codesignBinaries: ${{ parameters.signMicrosoft }}
-            codesignNuget: ${{ parameters.signMicrosoft }}
-            buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
-            binariesToSign: |
-              **/Microsoft.ReactNative.dll
-              **/Microsoft.ReactNative.winmd
-              **/Microsoft.ReactNative.ProjectReunion.dll
-      ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
-        - template: prep-and-pack-single.yml
-          parameters:
-            outputPackage: Microsoft.ReactNative.ProjectReunion
-            stripToSlices: $(releaseSliceArgs)
-            packageVersion: ${{parameters.npmVersion}}
-            codesignBinaries: ${{ parameters.signMicrosoft }}
-            codesignNuget: ${{ parameters.signMicrosoft }}
-            buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
-            binariesToSign: |
-              **/Microsoft.ReactNative.dll
-              **/Microsoft.ReactNative.winmd
-              **/Microsoft.ReactNative.ProjectReunion.dll
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.ProjectReunion.Debug
+          nuspec: Microsoft.ReactNative.ProjectReunion
+          stripToSlices: $(debugSliceArgs)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
+          binariesToSign: |
+            **/Microsoft.ReactNative.dll
+            **/Microsoft.ReactNative.winmd
+            **/Microsoft.ReactNative.ProjectReunion.dll
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.ProjectReunion
+          stripToSlices: $(releaseSliceArgs)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
+          binariesToSign: |
+            **/Microsoft.ReactNative.dll
+            **/Microsoft.ReactNative.winmd
+            **/Microsoft.ReactNative.ProjectReunion.dll
 
