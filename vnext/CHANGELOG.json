@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Nov 2021 01:12:34 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.2",
+      "version": "0.67.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Switch to MUX:CommandBarFlyout in XAML Islands proofing menu"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Upgrade WinUI/MUX to 2.7"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.67.0-preview.2",
+            "commit": "2296f425f01f2136a9529d574102530049e12894"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Nov 2021 01:12:18 GMT",
       "tag": "react-native-windows_v0.67.0-preview.2",
       "version": "0.67.0-preview.2",

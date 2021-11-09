@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 09 Nov 2021 01:12:34 GMT",
+      "tag": "@react-native-windows/cli_v0.67.0-preview.2",
+      "version": "0.67.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "not available",
+            "comment": "Upgrade WinUI/MUX to 2.7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Nov 2021 01:12:18 GMT",
       "tag": "@react-native-windows/cli_v0.67.0-preview.2",
       "version": "0.67.0-preview.2",

@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 09 Nov 2021 01:12:18 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Nov 2021 01:12:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0-preview.2
+
+Tue, 09 Nov 2021 01:12:34 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (agnel@microsoft.com)
+- Switch to MUX:CommandBarFlyout in XAML Islands proofing menu (jthysell@microsoft.com)
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+- Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.67.0-preview.2
 
 ## 0.67.0-preview.2
 
