@@ -92,13 +92,13 @@ parameters:
           - Name: X86DebugCppNuget
             language: cpp
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
             useNuGet: true
-          - Name: X86DebugCsNuget
+          - Name: X64ReleaseCsNuget
             language: cs
-            configuration: Debug
-            platform: x86
+            configuration: Release
+            platform: x64
             projectType: app
             useNuGet: true
           - Name: X64DebugCppLowResource
@@ -302,7 +302,7 @@ jobs:
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
-                - UniversalBuild${{ matrix.platform }}${{ matrix.configuration }}
+                - UniversalBuild${{ matrix.platform }}Release
 
             variables: [template: ../variables/windows.yml]
 

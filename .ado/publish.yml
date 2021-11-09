@@ -210,6 +210,15 @@ jobs:
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64          
     pool: ${{ parameters.AgentPool.Large }}
 
     steps:
@@ -263,6 +272,9 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64          
     pool: ${{ parameters.AgentPool.Large }}
 
     steps:
@@ -344,6 +356,12 @@ jobs:
               configuration: Release
             - platform: ARM64
               configuration: Release  
+            - platform: x64
+              configuration: Debug
+            - platform: x86
+              configuration: Debug
+            - platform: ARM64
+              configuration: Debug
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
@@ -380,6 +398,8 @@ jobs:
           slices: 
             - platform: x64
               configuration: Release
+            - platform: x64
+              configuration: Debug
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
