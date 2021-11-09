@@ -90,7 +90,7 @@ steps:
       parameters:
         outputPackage: OfficeReact.Win32
         packageVersion: ${{parameters.npmVersion}}
-        slices: $(slicesArgs)
+        stripToSlices: $(slicesArgs)
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
@@ -108,7 +108,7 @@ steps:
         - template: prep-and-pack-single.yml
           parameters:
             outputPackage: Microsoft.ReactNative
-            slices: $(releaseSliceArgs)
+            stripToSlices: $(releaseSliceArgs)
             packageVersion: ${{parameters.npmVersion}}
             codesignBinaries: ${{ parameters.signMicrosoft }}
             codesignNuget: ${{ parameters.signMicrosoft }}
