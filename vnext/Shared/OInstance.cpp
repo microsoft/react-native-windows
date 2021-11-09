@@ -388,12 +388,6 @@ InstanceImpl::InstanceImpl(
           [[fallthrough]];
 #endif
         }
-        case JSIEngineOverride::Chakra:
-          // Applies only to ChakraCore-linked binaries.
-          Microsoft::React::SetRuntimeOptionBool("JSI.ForceSystemChakra", true);
-          m_devSettings->jsiRuntimeHolder =
-              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
-          break;
         case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
@@ -421,6 +415,7 @@ InstanceImpl::InstanceImpl(
           [[fallthrough]];
 #endif
         }
+        case JSIEngineOverride::Chakra:
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
