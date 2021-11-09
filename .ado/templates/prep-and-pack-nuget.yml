@@ -54,8 +54,8 @@ steps:
       Write-Host "##vso[task.setvariable variable=releaseSlices]$releaseSliceTags"
 
       Write-Host "##vso[task.setvariable variable=basePlatform]$( $slices[0].platform)"
-      Write-Host "##vso[task.setvariable variable=debugBasePlatform$($debugSlices[0].platform)"
-      Write-Host "##vso[task.setvariable variable=releaseBasePlatform$($releaseSlices[0].platform)"
+      Write-Host "##vso[task.setvariable variable=debugBasePlatform]$($debugSlices[0].platform)"
+      Write-Host "##vso[task.setvariable variable=releaseBasePlatform]$($releaseSlices[0].platform)"
 
       Write-Host "##vso[task.setvariable variable=baseConfiguration]$($slices[0].configuration)"
     displayName: Setting slices to keep from NuSpec
