@@ -141,6 +141,8 @@
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
+      <!-- #8824: The Hermes NuGet package adds itself to be linked, but we go through Hermes Shim instead. Ignore the unused DLL until using NuGet package with "HermesNoLink" -->
+      <AdditionalOptions>/IGNORE:4199</AdditionalOptions>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -779,7 +781,7 @@
     <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" />
     <Import Project="$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
     <Import Project="$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets" Condition="Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(UseV8)' == 'true'" />
-    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets') AND '$(IncludeHermes)' == 'true'" />
+    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />

@@ -1,8 +1,32 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 20 Sep 2021 15:07:01 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Oct 2021 15:08:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.1
+
+Mon, 18 Oct 2021 15:08:36 GMT
+
+### Patches
+
+- Loosen RN peer dependency (ngerlem@microsoft.com)
+
+## 0.66.0
+
+Mon, 11 Oct 2021 15:07:19 GMT
+
+### Patches
+
+- Promote 0.66 to latest (ngerlem@microsoft.com)
+
+## 0.66.0-preview.3
+
+Mon, 04 Oct 2021 15:07:37 GMT
+
+### Changes
+
+- Fix exception in View when props are undefined (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.66.0-preview.2
 

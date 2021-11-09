@@ -2,6 +2,81 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 19:10:27 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.3",
+            "author": "asklar@microsoft.com",
+            "commit": "61da34482a055ee52ba23b826d154a7a9fbf0bee",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 15:07:26 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.2",
+            "author": "ngerlem@microsoft.com",
+            "commit": "fb9caf3b0384f30a615c4ece8e79f335bbbb4e33",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 18 Oct 2021 15:08:36 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.1",
+            "author": "ngerlem@microsoft.com",
+            "commit": "dc11d60eef65114d80fc92e8c7f19c24f3dbacc9",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Oct 2021 15:07:19 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/virtualized-list to v0.66.0",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5d1e5ae98139204e02f0ac5d8c06ae7ee1157395",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:07:37 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Bump react-native-windows to v0.66.0-preview.6",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "8b1048e4a3491c01f2b2d4382822f8d98f3ccfe5",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:07:31 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

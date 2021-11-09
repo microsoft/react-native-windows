@@ -14,8 +14,8 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "0.66.0-preview.1",
-    "@react-native-windows/package-utils": "0.66.0-preview.1",
+    "@react-native-windows/find-repo-root": "0.66.0",
+    "@react-native-windows/package-utils": "0.66.0",
     "async": "^3.2.0",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",

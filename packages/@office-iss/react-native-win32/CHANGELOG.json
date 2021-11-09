@@ -2,6 +2,51 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 18 Oct 2021 15:08:36 GMT",
+      "tag": "@office-iss/react-native-win32_v0.66.1",
+      "version": "0.66.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Loosen RN peer dependency",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c37292c2a955bdffedc5dbd89eb4225c24582df",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Oct 2021 15:07:19 GMT",
+      "tag": "@office-iss/react-native-win32_v0.66.0",
+      "version": "0.66.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Promote 0.66 to latest",
+            "author": "ngerlem@microsoft.com",
+            "commit": "5d1e5ae98139204e02f0ac5d8c06ae7ee1157395",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:07:37 GMT",
+      "tag": "@office-iss/react-native-win32_v0.66.0-preview.3",
+      "version": "0.66.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "comment": "Fix exception in View when props are undefined",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "a20892ade44390cdb10f25c31a2f35ce61328b97",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Sep 2021 15:07:01 GMT",
       "tag": "@office-iss/react-native-win32_v0.66.0-preview.2",
       "version": "0.66.0-preview.2",

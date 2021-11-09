@@ -1,8 +1,57 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Sep 2021 15:07:31 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Nov 2021 19:10:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.3
+
+Mon, 01 Nov 2021 19:10:27 GMT
+
+### Patches
+
+- Fix Microsoft.ReactNative.dll version string (asklar@microsoft.com)
+- Fix crash when using TextInput.blur() (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.66.2
+
+Mon, 25 Oct 2021 15:07:26 GMT
+
+### Patches
+
+- Add more symbols to Hermes DLL Loader Shim (ngerlem@microsoft.com)
+- Fix win32 apps referencing the M.RN nuget package so they can use RNW (asklar@microsoft.com)
+- Fix EBUSY race conditions between metro bundler and msbuild (dannyvv@microsoft.com)
+- Fix crash when direct debugging Chakra (anandrag@microsoft.com)
+- Fix AppTheme Regressions (ngerlem@microsoft.com)
+
+## 0.66.1
+
+Mon, 18 Oct 2021 15:08:36 GMT
+
+### Patches
+
+- Fix WACK for apps not packaging hermes.dll (ngerlem@microsoft.com)
+- Loosen RN peer dependency (ngerlem@microsoft.com)
+
+## 0.66.0
+
+Mon, 11 Oct 2021 15:07:19 GMT
+
+### Patches
+
+- Promote 0.66 to latest (ngerlem@microsoft.com)
+
+## 0.66.0-preview.6
+
+Mon, 04 Oct 2021 15:07:37 GMT
+
+### Changes
+
+- Upgrade ReactNative.V8Jsi.Windows to 0.65.5 (julio.rocha@microsoft.com)
+- Allow injection of custom UI thread (30809111+acoates-ms@users.noreply.github.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
+- Make hermes consume icu.dll in Windows for local aware functions (anandrag@microsoft.com)
 
 ## 0.66.0-preview.5
 

@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.66.0-preview.1",
+  "version": "0.66.0",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -39,11 +39,11 @@
     "lib-commonjs"
   ],
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ]
   },
   "promoteRelease": true,

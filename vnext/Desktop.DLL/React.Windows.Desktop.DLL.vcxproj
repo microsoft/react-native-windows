@@ -86,7 +86,8 @@
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <AdditionalOptions>-minpdbpathlen:256</AdditionalOptions>
+      <!-- #8824: The Hermes NuGet package adds itself to be linked, but we go through Hermes Shim instead. Ignore the unused DLL until using NuGet package with "HermesNoLink" -->
+      <AdditionalOptions>%(AdditionalOptions) /minpdbpathlen:256 /IGNORE:4199</AdditionalOptions>
       <!--
         comsuppw.lib              - _com_util::ConvertStringToBSTR
         WindowsApp_downlevel.lib  - Replaces the WindowsApp.lib link reference in Microsoft.Windows.CppWinRT.props
@@ -153,6 +154,7 @@
   </ItemGroup>
   <PropertyGroup>
     <V8JSI_NODLLCOPY />
+    <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
@@ -172,6 +174,7 @@
     <Error Condition="!Exists('$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.5\build\native\ReactWindows.OpenSSL.StdCall.Static.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\ReactWindows.OpenSSL.StdCall.Static.1.0.2-p.5\build\native\ReactWindows.OpenSSL.StdCall.Static.targets'))" />
     <Error Condition="!Exists('$(SolutionDir)packages\boost.1.76.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\boost.1.76.0.0\build\boost.targets'))" />
     <Error Condition="!Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.targets') AND '$(UseV8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8Package)\build\native\ReactNative.V8JSI.Windows.targets'))" />
+    <Error Condition="!Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets'))" />
     <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props'))" />
