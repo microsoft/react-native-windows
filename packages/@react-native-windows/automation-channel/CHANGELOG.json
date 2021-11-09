@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 09 Nov 2021 01:12:18 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.2",
+            "commit": "d4affbcb57c0b99c4808ed76428d78fa27507845"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Oct 2021 15:07:48 GMT",
       "tag": "@react-native-windows/automation-channel_v0.0.16",
       "version": "0.0.16",

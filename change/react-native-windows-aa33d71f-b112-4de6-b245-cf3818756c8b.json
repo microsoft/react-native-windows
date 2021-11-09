@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Upgrade WinUI/MUX to 2.7",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
