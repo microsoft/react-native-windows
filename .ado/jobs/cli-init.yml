@@ -225,12 +225,14 @@ parameters:
             configuration: Release
             platform: ARM64
             projectType: app
+            additionalRunArguments: --no-deploy
             useNuGet: true
           - Name: Arm64ReleaseCsNuget
             language: cs
             configuration: Release
             platform: ARM64
             projectType: app
+            additionalRunArguments: --no-deploy
             useNuGet: true                       
           - Name: Arm64DebugCpp
             language: cpp
