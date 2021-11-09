@@ -342,7 +342,6 @@
     <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
-    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets')" />
   </ImportGroup>
   <!-- See $(CppWinRTRootNamespace) comments above. -->
   <Target Name="CppWinRTSetRootNamespace" BeforeTargets="CppWinRTMakeComponentProjection" Condition="'$(CppWinRTRootNamespace)' != ''">
