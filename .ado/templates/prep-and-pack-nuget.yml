@@ -46,8 +46,8 @@ steps:
       $releaseSlices = $slices.where{$_.configuration -match 'Release'};
   
       $sliceArgs = $slices | % {$_.platform + "." + $_.configuration}
-      $debugSliceArgs = debugSlices | % {$_.platform + "." + $_.configuration}
-      $releaseSliceArgs = releaseSlices | % {$_.platform + "." + $_.configuration}
+      $debugSliceArgs = $debugSlices | % {$_.platform + "." + $_.configuration}
+      $releaseSliceArgs = $releaseSlices | % {$_.platform + "." + $_.configuration}
 
       Write-Host "##vso[task.setvariable variable=sliceArgs]" + $slicesArgs -join ','
       Write-Host "##vso[task.setvariable variable=debugSliceArgs]" + $debugSliceArgs -join ','
