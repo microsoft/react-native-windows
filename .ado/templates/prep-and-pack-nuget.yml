@@ -45,13 +45,13 @@ steps:
       $debugSlices = $slices.where{$_.configuration -match 'Debug'};
       $releaseSlices = $slices.where{$_.configuration -match 'Release'};
   
-      $sliceArgs = $slices | % {$_.platform + "." + $_.configuration}
-      $debugSliceArgs = $debugSlices | % {$_.platform + "." + $_.configuration}
-      $releaseSliceArgs = $releaseSlices | % {$_.platform + "." + $_.configuration}
+      $sliceTags = $slices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json
+      $debugSliceTags = $debugSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json
+      $releaseSliceTags = $releaseSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json
 
-      Write-Host "##vso[task.setvariable variable=sliceArgs]" + $slicesArgs -join ','
-      Write-Host "##vso[task.setvariable variable=debugSliceArgs]" + $debugSliceArgs -join ','
-      Write-Host "##vso[task.setvariable variable=releaseSliceArgs]" + $releaseSliceArgs -join ','
+      Write-Host "##vso[task.setvariable variable=allSlices]$sliceTags"
+      Write-Host "##vso[task.setvariable variable=debugSlices]$debugSliceTags"
+      Write-Host "##vso[task.setvariable variable=releaseSlices]$releaseSliceTags"
 
       Write-Host "##vso[task.setvariable variable=basePlatform]" + $slices[0].platform
       Write-Host "##vso[task.setvariable variable=debugBasePlatform]" + $debugSlices[0].platform
@@ -90,7 +90,7 @@ steps:
       parameters:
         outputPackage: OfficeReact.Win32
         packageVersion: ${{parameters.npmVersion}}
-        stripToSlices: $(sliceArgs)
+        slices: $(allSlices)
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
@@ -99,7 +99,7 @@ steps:
         parameters:
           outputPackage: Microsoft.ReactNative.Debug
           nuspec: Microsoft.ReactNative
-          stripToSlices: $(debugSliceArgs)
+          slices: $(debugSlices)
           packageVersion: ${{parameters.npmVersion}}
           codesignBinaries: ${{ parameters.signMicrosoft }}
           codesignNuget: ${{ parameters.signMicrosoft }}
@@ -108,7 +108,7 @@ steps:
       - template: prep-and-pack-single.yml
         parameters:
           outputPackage: Microsoft.ReactNative
-          stripToSlices: $(releaseSliceArgs)
+          slices: $(releaseSlices)
           packageVersion: ${{parameters.npmVersion}}
           codesignBinaries: ${{ parameters.signMicrosoft }}
           codesignNuget: ${{ parameters.signMicrosoft }}
@@ -129,7 +129,7 @@ steps:
         parameters:
           outputPackage: Microsoft.ReactNative.Managed.Debug
           nuspec: Microsoft.ReactNative.Managed
-          stripToSlices: $(debugSliceArgs)
+          slices: $(debugSlices)
           packageVersion: ${{parameters.npmVersion}}
           codesignBinaries: ${{ parameters.signMicrosoft }}
           codesignNuget: ${{ parameters.signMicrosoft }}
@@ -138,7 +138,7 @@ steps:
       - template: prep-and-pack-single.yml
         parameters:
           outputPackage: Microsoft.ReactNative.Managed
-          stripToSlices: $(releaseSliceArgs)
+          slices: $(releaseSlices)
           packageVersion: ${{parameters.npmVersion}}
           codesignBinaries: ${{ parameters.signMicrosoft }}
           codesignNuget: ${{ parameters.signMicrosoft }}
@@ -159,7 +159,7 @@ steps:
         parameters:
           outputPackage: Microsoft.ReactNative.ProjectReunion.Debug
           nuspec: Microsoft.ReactNative.ProjectReunion
-          stripToSlices: $(debugSliceArgs)
+          slices: $(debugSlices)
           packageVersion: ${{parameters.npmVersion}}
           codesignBinaries: ${{ parameters.signMicrosoft }}
           codesignNuget: ${{ parameters.signMicrosoft }}
@@ -172,7 +172,7 @@ steps:
       - template: prep-and-pack-single.yml
         parameters:
           outputPackage: Microsoft.ReactNative.ProjectReunion
-          stripToSlices: $(releaseSliceArgs)
+          slices: $(releaseSlices)
           packageVersion: ${{parameters.npmVersion}}
           codesignBinaries: ${{ parameters.signMicrosoft }}
           codesignNuget: ${{ parameters.signMicrosoft }}

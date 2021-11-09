@@ -19,8 +19,8 @@ parameters:
     default: ''
 
   # Optional: Excludes platform-specific files from the NuSpec of they are not
-  # included in stripToSlices
-  - name: stripToSlices
+  # included in slices
+  - name: slices
     type: string
     default: ''
 
@@ -41,9 +41,13 @@ parameters:
 
 steps:
 
-  - ${{ if ne(parameters.stripToSlices, '') }}:
-    - powershell: |
-        .\StripAdditionalPlatformsFromNuspec.ps1 -nuspec ${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.nuspec -outfile ${{parameters.outputPackage}}.nuspec -slices ${{parameters.stripToSlices}} -debug
+  - ${{ if ne(parameters.slices, '') }}:
+    - powershell: >
+        .\StripAdditionalPlatformsFromNuspec.ps1
+        -nuspec ${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.nuspec
+        -outfile ${{ parameters.outputPackage }}.nuspec
+        -slices (ConvertFrom-Json '${{ parameters.slices }}')
+        -debug
       displayName: '${{ parameters.outputPackage }} - Strip slices from nuspec'
       workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
 
