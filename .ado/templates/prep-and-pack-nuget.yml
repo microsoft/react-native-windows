@@ -40,20 +40,20 @@ parameters:
     default: false
 
 steps:
-  - powershell: |
-      $slices = ConvertFrom-Json '${{ convertToJson(parameters.slices) }}'
-      $debugSlices = $slices.where{$_.configuration -match 'Debug'};
-      $releaseSlices = $slices.where{$_.configuration -match 'Release'};
+  - pwsh: |
+      $slices = ConvertFrom-Json -NoEnumerate '${{ convertToJson(parameters.slices) }}'
+      $debugSlices = @($slices.where{$_.configuration -match 'Debug'});
+      $releaseSlices = @($slices.where{$_.configuration -match 'Release'});
   
-      $sliceTags = $slices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json
-      $debugSliceTags = $debugSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json
-      $releaseSliceTags = $releaseSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json
+      $sliceTags = $slices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
+      $debugSliceTags = $debugSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
+      $releaseSliceTags = $releaseSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
 
       Write-Host "##vso[task.setvariable variable=allSlices]$sliceTags"
       Write-Host "##vso[task.setvariable variable=debugSlices]$debugSliceTags"
       Write-Host "##vso[task.setvariable variable=releaseSlices]$releaseSliceTags"
 
-      Write-Host "##vso[task.setvariable variable=basePlatform]$( $slices[0].platform)"
+      Write-Host "##vso[task.setvariable variable=basePlatform]$($slices[0].platform)"
       Write-Host "##vso[task.setvariable variable=debugBasePlatform]$($debugSlices[0].platform)"
       Write-Host "##vso[task.setvariable variable=releaseBasePlatform]$($releaseSlices[0].platform)"
 
