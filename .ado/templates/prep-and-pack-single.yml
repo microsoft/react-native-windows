@@ -43,7 +43,7 @@ steps:
 
   - ${{ if ne(parameters.stripToSlices, '') }}:
     - powershell: |
-        .\StripAdditionalPlatformsFromNuspec.ps1 -nuspec ${{ coalesce(nuspec, parameters.outputPackage) }}.nuspec -outfile ${{parameters.outputPackage}}.nuspec -slices ${{parameters.stripToSlices}} -debug
+        .\StripAdditionalPlatformsFromNuspec.ps1 -nuspec ${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.nuspec -outfile ${{parameters.outputPackage}}.nuspec -slices ${{parameters.stripToSlices}} -debug
       displayName: '${{ parameters.outputPackage }} - Strip slices from nuspec'
       workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
 
@@ -58,9 +58,9 @@ steps:
           Pattern: ${{ parameters.binariesToSign }}
         ${{ else }}:
           Pattern: |
-            **/${{ coalesce(nuspec, parameters.outputPackage) }}.dll
-            **/${{ coalesce(nuspec, parameters.outputPackage) }}.winmd
-            **/${{ coalesce(nuspec, parameters.outputPackage) }}.exe
+            **/${{ coalesce(parameters.nuspec,, parameters.outputPackage) }}.dll
+            **/${{ coalesce(parameters.nuspec,, parameters.outputPackage) }}.winmd
+            **/${{ coalesce(parameters.nuspec,, parameters.outputPackage) }}.exe
         UseMinimatch: true
         signConfigType: inlineSignParams
         inlineOperation: |
@@ -93,7 +93,7 @@ steps:
     inputs:
       command: pack
       verbosityPack: 'Detailed'
-      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.outputPackage }}.nuspec
+      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
