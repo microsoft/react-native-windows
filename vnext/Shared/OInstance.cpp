@@ -388,12 +388,6 @@ InstanceImpl::InstanceImpl(
           [[fallthrough]];
 #endif
         }
-        case JSIEngineOverride::Chakra:
-          // Applies only to ChakraCore-linked binaries.
-          Microsoft::React::SetRuntimeOptionBool("JSI.ForceSystemChakra", true);
-          m_devSettings->jsiRuntimeHolder =
-              std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
-          break;
         case JSIEngineOverride::V8NodeApi: {
 #if defined(USE_V8)
           std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore;
@@ -421,6 +415,7 @@ InstanceImpl::InstanceImpl(
           [[fallthrough]];
 #endif
         }
+        case JSIEngineOverride::Chakra:
         case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
@@ -564,11 +559,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // Otherwise all bundles (User and Platform) are loaded through
       // platformBundles.
       if (PathFileExistsA(fullBundleFilePath.c_str())) {
-#if defined(_CHAKRACORE_H_)
-        auto bundleString = FileMappingBigString::fromPath(fullBundleFilePath);
-#else
         auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
-#endif
         m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(fullBundleFilePath), synchronously);
       }
 
@@ -580,11 +571,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       m_innerInstance->loadScriptFromString(std::move(bundleString), jsBundleRelativePath, synchronously);
 #endif
     }
-#if defined(_CHAKRACORE_H_)
-  } catch (const facebook::react::ChakraJSException &e) {
-    m_devSettings->errorCallback(std::string{e.what()} + "\r\n" + e.getStack());
-#endif
-  } catch (std::exception &e) {
+  } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
   }
 }

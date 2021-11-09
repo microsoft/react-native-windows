@@ -144,17 +144,9 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
   JsPropertyIdRef propertyId{JS_INVALID_REFERENCE};
   // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
   // using ChakraCore's JsCreatePropertyId API.
-#ifdef CHAKRACORE
-  if (React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
-    std::wstring utf16 = Common::Unicode::Utf8ToUtf16(name.data(), name.length());
-    ChakraVerifyJsErrorElseThrow(JsGetPropertyIdFromName(utf16.data(), &propertyId));
-  } else {
-    ChakraVerifyJsErrorElseThrow(JsCreatePropertyId(name.data(), name.length(), &propertyId));
-  }
-#else
   std::wstring utf16 = Common::Unicode::Utf8ToUtf16(name.data(), name.length());
   ChakraVerifyJsErrorElseThrow(JsGetPropertyIdFromName(utf16.data(), &propertyId));
-#endif
+
   return propertyId;
 }
 
@@ -275,18 +267,7 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
 /*static*/ JsValueRef ChakraApi::PointerToString(std::string_view value) {
   ChakraVerifyElseThrow(value.data(), "Cannot convert a nullptr to a JS string.");
 
-  // ChakraCore  API helps to reduce cost of UTF-8 to UTF-16 conversion.
-#ifdef CHAKRACORE
-  if (React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
-    return PointerToString(Common::Unicode::Utf8ToUtf16(value));
-  } else {
-    JsValueRef result{JS_INVALID_REFERENCE};
-    ChakraVerifyJsErrorElseThrow(JsCreateString(value.data(), value.length(), &result));
-    return result;
-  }
-#else
   return PointerToString(Common::Unicode::Utf8ToUtf16(value));
-#endif
 }
 
 /*static*/ std::wstring_view ChakraApi::StringToPointer(JsValueRef string) {
@@ -300,24 +281,7 @@ ChakraApi::JsRefHolder::~JsRefHolder() noexcept {
   ChakraVerifyElseThrow(
       GetValueType(string) == JsString, "Cannot convert a non JS string ChakraObjectRef to a std::string.");
 
-  // We use a #ifdef here because we can avoid a UTF-8 to UTF-16 conversion
-  // using ChakraCore's JsCopyString API.
-#ifdef CHAKRACORE
-  if (React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
-    return Common::Unicode::Utf16ToUtf8(StringToPointer(string));
-  } else {
-    size_t length{0};
-    ChakraVerifyJsErrorElseThrow(JsCopyString(string, nullptr, 0, &length));
-
-    std::string result(length, 'a');
-    ChakraVerifyJsErrorElseThrow(JsCopyString(string, result.data(), result.length(), &length));
-
-    ChakraVerifyElseThrow(length == result.length(), "Failed to convert a JS string to a std::string.");
-    return result;
-  }
-#else
   return Common::Unicode::Utf16ToUtf8(StringToPointer(string));
-#endif
 }
 
 /*static*/ JsValueRef ChakraApi::ConvertValueToString(JsValueRef value) {
