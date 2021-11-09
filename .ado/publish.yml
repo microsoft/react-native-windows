@@ -161,9 +161,7 @@ jobs:
         ARM64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
-    pool:
-      name: ${{ variables['AgentPool.Large.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Large }}
 
     steps:
       - template: templates/prepare-js-env.yml
