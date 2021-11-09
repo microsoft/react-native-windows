@@ -58,6 +58,9 @@ jobs:
     steps:
       - template: templates/checkout-full.yml
 
+      - powershell: gci env:/BUILD_*
+        displayName: Show build information
+
       - template: templates/configure-git.yml
 
       - template: templates/prepare-js-env.yml
