@@ -89,10 +89,10 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: X86DebugCppNuget
+          - Name: X64DebugCppNuget
             language: cpp
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
             useNuGet: true
           - Name: X64ReleaseCsNuget
