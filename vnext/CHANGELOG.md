@@ -1,8 +1,45 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 Sep 2021 15:07:16 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Nov 2021 19:07:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.7
+
+Mon, 01 Nov 2021 19:07:16 GMT
+
+### Patches
+
+- Fix race condition when building customer projects (dannyvv@microsoft.com)
+- Fix Microsoft.ReactNative.dll version string (asklar@microsoft.com)
+- Fix crash when using TextInput.blur() (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.65.6
+
+Wed, 20 Oct 2021 19:14:28 GMT
+
+### Patches
+
+- Fix Arm64 Desktop linker experts due to mangled name mismatches (dannyvv@microsoft.com)
+
+## 0.65.5
+
+Mon, 11 Oct 2021 15:06:57 GMT
+
+### Patches
+
+- [0.65] Add ARM64 support to React.Windows.Desktop.Test.DLL (julio.rocha@microsoft.com)
+- Promote 0.65 to legacy (ngerlem@microsoft.com)
+
+## 0.65.4
+
+Mon, 04 Oct 2021 15:07:05 GMT
+
+### Patches
+
+- Allow injection of custom UI thread (30809111+acoates-ms@users.noreply.github.com)
+- Upgrade ReactNative.V8Jsi.Windows to 0.65.5 (julio.rocha@microsoft.com)
+- ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.65.3
 

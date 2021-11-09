@@ -2,6 +2,96 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Nov 2021 19:07:16 GMT",
+      "tag": "react-native-windows_v0.65.7",
+      "version": "0.65.7",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix race condition when building customer projects",
+            "author": "dannyvv@microsoft.com",
+            "commit": "b376766f3a64bcdaef810c8d065ddead2e361840",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix Microsoft.ReactNative.dll version string",
+            "author": "asklar@microsoft.com",
+            "commit": "73ad2b8c3467aaab54fc49e316c219f3a9fc7892",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix crash when using TextInput.blur()",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b2cdb561fc91f81181a1e6d1edf9056dba6e0f01",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Oct 2021 19:14:28 GMT",
+      "tag": "react-native-windows_v0.65.6",
+      "version": "0.65.6",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix Arm64 Desktop linker experts due to mangled name mismatches",
+            "author": "dannyvv@microsoft.com",
+            "commit": "2169bb4bc9a4d801b480be9d84638a20a6b4a718",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Oct 2021 15:06:57 GMT",
+      "tag": "react-native-windows_v0.65.5",
+      "version": "0.65.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.65] Add ARM64 support to React.Windows.Desktop.Test.DLL",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "61c436f7ba37dba9ae812dbd84a74d5c5944dfd1",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Promote 0.65 to legacy",
+            "author": "ngerlem@microsoft.com",
+            "commit": "31e9fc28e3edddde4c7a86e40201aede6242e73c",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:07:05 GMT",
+      "tag": "react-native-windows_v0.65.4",
+      "version": "0.65.4",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Allow injection of custom UI thread",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "c5a4ad149cf0e9fbfa1be60592581081ac822d5f",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Upgrade ReactNative.V8Jsi.Windows to 0.65.5",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "e7a0d5fc8cca1a886f6788c5bfdf870ce201c62c",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "bd4794c46b84e38850491a23170da36dfef3c709",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:07:16 GMT",
       "tag": "react-native-windows_v0.65.3",
       "version": "0.65.3",
