@@ -1756,9 +1756,9 @@
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
 "@rnx-kit/jest-preset@^0.1.0":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.6.tgz#874fc0d905d24e6b71bbc415bd507f0b39473b06"
-  integrity sha512-qbXf4ivFYY0TOA3NkxhEhrV8L6lRn9DslwbKmeGuBbR2qiClU2cxM726/ShjhZRn5fklmKnkY1nRq4GQwkLYDQ==
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.7.tgz#3fa41fb3cf02412521faa71f4b23ca63b27d3e68"
+  integrity sha512-Frxy8iPqhYOnDfS96C8aweBw+iSmn6rTEeDW6TMLdZYNc8GkuXuqLDUpp5MxOSzEB1gFP1OfWuZZ1Dzi82G33w==
   dependencies:
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
@@ -2102,10 +2102,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/react-native@^0.66.0":
-  version "0.66.2"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.2.tgz#54e7ff048e659a434de7cb91778a8ec88d88e288"
-  integrity sha512-mcId+yp2BKXNDFwyblnNS2GNl4XBC56rPBaGXRTD2/Nbc4PzpKxEbfeJneZxLmlYCNf3vWMfOCKllRTSW8OFLw==
+"@types/react-native@*", "@types/react-native@^0.66.0":
+  version "0.66.3"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.3.tgz#a9910e973d1273a3d8d28433ecbf31e64241a22f"
+  integrity sha512-ZJmd4R36dPmgm5I0lEcR/1wCPH31Lwqz2ApDmvNXPow2ssoF5EO7NlNMG6hsROBbzYSf5U0DPVDAyW39VzvuAA==
   dependencies:
     "@types/react" "*"
 
@@ -2117,6 +2117,11 @@
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
+
+"@types/readline-sync@^1.4.4":
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/@types/readline-sync/-/readline-sync-1.4.4.tgz#8568292efe4ddd94d0ccee958b29cc3f4e0ea140"
+  integrity sha512-cFjVIoiamX7U6zkO2VPvXyTxbFDdiRo902IarJuPVxBhpDnXhwSaVE86ip+SCuyWBbEioKCkT4C88RNTxBM1Dw==
 
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
@@ -3486,7 +3491,7 @@ chai@^4.2.0:
     pathval "^1.1.1"
     type-detect "^4.0.5"
 
-chalk@*, chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
+chalk@*, chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1, chalk@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -9076,6 +9081,15 @@ react-native-tscodegen@0.68.4:
     nullthrows "1.1.1"
     typescript "^4.1.5"
 
+react-native-xaml@^0.0.50:
+  version "0.0.50"
+  resolved "https://registry.yarnpkg.com/react-native-xaml/-/react-native-xaml-0.0.50.tgz#d8108885b0aa471a16533cf8daa3d41fbbdb5f48"
+  integrity sha512-2ASuja15kybUS1R2TwV20dZkuL/pr4axqqY/JS9gbTyo/bR68WgtiCxl646skazFuDKyf/819zs5rQNa2vx7kA==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+    typescript "^4.4.3"
+
 react-native@0.0.0-20211021-2008-eccbf9b5c:
   version "0.0.0-20211021-2008-eccbf9b5c"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211021-2008-eccbf9b5c.tgz#7de7a430d8b2e5c2aa8bae67975811190c5979da"
@@ -9227,6 +9241,11 @@ readdirp@^3.5.0, readdirp@~3.6.0:
   integrity sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==
   dependencies:
     picomatch "^2.2.1"
+
+readline-sync@1.4.10:
+  version "1.4.10"
+  resolved "https://registry.yarnpkg.com/readline-sync/-/readline-sync-1.4.10.tgz#41df7fbb4b6312d673011594145705bf56d8873b"
+  integrity sha512-gNva8/6UAe8QYepIQH/jQ2qn91Qj0B9sYjMBBs3QOB8F2CXcKgLxQaJRP76sWVRQt+QU+8fAkCbCvjjMFu7Ycw==
 
 readline@^1.3.0:
   version "1.3.0"
@@ -10670,7 +10689,7 @@ typedarray-to-buffer@^3.1.5:
   dependencies:
     is-typedarray "^1.0.0"
 
-typescript@^4.1.5, typescript@^4.4.4:
+typescript@^4.1.5, typescript@^4.4.3, typescript@^4.4.4:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
   integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==

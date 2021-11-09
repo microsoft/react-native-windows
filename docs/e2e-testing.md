@@ -41,6 +41,10 @@ module.exports = {
 ⚠ Only the test filename (without the rest of the path) should be included.
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest visitAllPages.test.ts`
 
+**Break on app start**
+
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest:debug visitAllPages.test.ts`
+
 ## Debugging E2E Tests in CI
 ### Increasing verbosity
 By default the only messages printed during tests are related to errors returned by WinAppDriver or assertion failures. It is possible to increase verbosity to show individual WebDriver wire commands by editing [`/packages/e2e-test-app/jest.config.js`](../packages/e2e-test-app/jest.config.js).

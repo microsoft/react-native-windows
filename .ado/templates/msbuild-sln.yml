@@ -4,7 +4,8 @@ parameters:
   debug: false
 
   # NuGet & MSBuild
-  solution:
+  solutionDir:
+  solutionName:
   msbuildVersion: 16.0
   msBuildArchitecture: x64
   preferredToolArchitecture: x64
@@ -25,10 +26,15 @@ steps:
     condition: not(eq('${{parameters.warnAsError}}', 'true'))
     displayName: Disable WarnAsError
 
+  - template: restore-sln.yml
+    parameters:
+      solutionDir: ${{parameters.solutionDir}}
+      solutionName: ${{parameters.solutionName}}
+
   - task: VSBuild@1
-    displayName: VSBuild ${{parameters.solution}}
+    displayName: VSBuild ${{parameters.solutionName}}
     inputs:
-      solution: ${{parameters.solution}}
+      solution: ${{parameters.solutionDir}}/${{parameters.solutionName}}
       vsVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: ${{ parameters.buildPlatform }}

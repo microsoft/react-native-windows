@@ -5,6 +5,8 @@
       values:
         - PullRequest
         - Continuous
+    - name: AgentPool
+      type: object        
     - name: buildMatrix
       type: object
       default:
@@ -51,16 +53,12 @@
                 - name: NUGET_PACKAGES
                   value: D:\NugetPackages
               displayName: Universal Build ${{ matrix.Name }}
-              pool:
-                name: ${{ variables['AgentPool.Large'] }}
-                demands: ${{ variables['AgentImage'] }}
+              pool: ${{ parameters.AgentPool.Large }}
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
               steps:
-                - checkout: self
-                  clean: false
-                  submodules: false
+                - template: ../templates/checkout-shallow.yml
 
                 - template: ../templates/prepare-js-env.yml
 
@@ -74,7 +72,8 @@
 
                 - template: ../templates/msbuild-sln.yml
                   parameters:
-                    solution: vnext/Microsoft.ReactNative.sln
+                    solutionDir: vnext
+                    solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
 
@@ -124,16 +123,12 @@
               dependsOn:
                 - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
 
-              pool:
-                name: ${{ variables['AgentPool.Medium'] }}
-                demands: ${{ variables['AgentImage'] }}
+              pool: ${{ parameters.AgentPool.Medium }}
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
               steps:
-                - checkout: self
-                  clean: false
-                  submodules: false
+                - template: ../templates/checkout-shallow.yml
 
                 - template: ../templates/prepare-js-env.yml
 
@@ -149,6 +144,7 @@
                     targetType: filePath
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
+
                 - task: MSBuild@1
                   displayName: Restore NuGet packages
                   inputs:
@@ -157,6 +153,12 @@
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
                     msbuildArguments: /t:Restore
+
+                - template: ../templates/restore-sln.yml
+                  parameters:
+                    solutionDir: vnext
+                    solutionName: Microsoft.ReactNative.sln
+
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
                   inputs:

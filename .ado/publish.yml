@@ -17,6 +17,16 @@ parameters:
   displayName: Stop if latest commit is ***NO_CI***
   type: boolean
   default: true
+- name: AgentPool
+  type: object
+  default:
+    Medium:
+      name: rnw-pool-4-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+    Large:
+      name: rnw-pool-8-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+
 
 variables:
   - template: variables/windows.yml
@@ -42,15 +52,14 @@ pr: none
 jobs:
   - job: RnwNpmPublish
     displayName: React-Native-Windows Npm Build Rev Publish
-    pool:
-      name: ${{ variables['AgentPool.Medium.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Medium }}
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-full.yml
+
+      - powershell: gci env:/BUILD_*
+        displayName: Show build information
 
       - template: templates/configure-git.yml
 
@@ -93,9 +102,7 @@ jobs:
     displayName: Deploy @rnw-bots/coordinator
     condition: eq(variables['Build.SourceBranchName'], 'main')
     dependsOn: RnwNpmPublish
-    pool:
-      name: ${{ variables['AgentPool.Medium.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Medium }}
     timeoutInMinutes: 30
     steps:
       - template: templates/prepare-js-env.yml
@@ -157,9 +164,7 @@ jobs:
         ARM64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
-    pool:
-      name: ${{ variables['AgentPool.Large.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Large }}
 
     steps:
       - template: templates/prepare-js-env.yml
@@ -174,7 +179,8 @@ jobs:
 
       - template: templates/msbuild-sln.yml
         parameters:
-          solution: vnext/ReactWindows-Desktop.sln
+          solutionDir: vnext
+          aolutionName: ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
@@ -204,9 +210,7 @@ jobs:
         Arm64Release:
           BuildConfiguration: Release
           BuildPlatform: ARM64
-    pool:
-      name: ${{ variables['AgentPool.Large.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Large }}
 
     steps:
       - template: templates/prepare-js-env.yml
@@ -221,7 +225,8 @@ jobs:
 
       - template: templates/msbuild-sln.yml
         parameters:
-          solution: vnext/Microsoft.ReactNative.sln
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
@@ -258,9 +263,7 @@ jobs:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-    pool:
-      name: ${{ variables['AgentPool.Large.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Large }}
 
     steps:
       - template: templates/prepare-js-env.yml
@@ -275,7 +278,8 @@ jobs:
 
       - template: templates/msbuild-sln.yml
         parameters:
-          solution: vnext/Microsoft.ReactNative.ProjectReunion.sln
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.ProjectReunion.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
@@ -307,14 +311,10 @@ jobs:
       - RnwNativeBuildUniversal
       - RnwNativeBuildReunion
     displayName: Sign Binaries and Publish NuGet
-    pool:
-      name: ${{ variables['AgentPool.Medium.Publish'] }}
-      demands: ${{ variables['AgentImage'] }}
+    pool: ${{ parameters.AgentPool.Medium }}
 
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-shallow.yml
 
       - template: templates/yarn-install.yml
 

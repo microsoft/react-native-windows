@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 05 Nov 2021 05:08:51 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Nov 2021 06:11:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.415
+
+Tue, 09 Nov 2021 06:11:23 GMT
+
+### Changes
+
+- Add PackageReference Locks (ngerlem@microsoft.com)
+- Remove extra definition of ReactNativeWindowsDir (ngerlem@microsoft.com)
+- Short-circuit ChakraCore to Chakra (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.414
+
+Sat, 06 Nov 2021 05:08:39 GMT
+
+### Changes
+
+- Remove ChakraCore dependency (julio.rocha@microsoft.com)
+- FIx Warnings from RoslynCodeTaskFactory in C++ Projects Building ARM64 (ngerlem@microsoft.com)
+- Fixes default background for mouse events with border (erozell@outlook.com)
 
 ## 0.0.0-canary.413
 

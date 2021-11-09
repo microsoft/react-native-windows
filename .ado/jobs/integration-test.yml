@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object  
   - name: buildMatrix
     type: object
     default:
@@ -54,18 +56,13 @@ jobs:
       - ${{ each matrix in config.Matrix }}:
         - job: IntegrationTest${{ matrix.Name }}
           displayName: Integration Test App ${{ matrix.Name }}
-          variables:
-            - template: ../variables/windows.yml
-          pool:
-            name: ${{ variables['AgentPool.Medium'] }}
-            demands: ${{ variables['AgentImage'] }}
+          variables: [template: ../variables/windows.yml]
+          pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            - checkout: self
-              clean: true
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
 

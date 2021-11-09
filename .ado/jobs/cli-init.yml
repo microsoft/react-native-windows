@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildNuGetOnly
     type: boolean
   - name: buildMatrix
@@ -194,6 +196,44 @@ parameters:
             platform: x86
             projectType: app
             useNuGet: true
+          - Name: X86ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X86ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true            
+          - Name: X64ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            useNuGet: true
+          - Name: X64ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: x64
+            projectType: app
+            useNuGet: true                     
+          - Name: Arm64ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy
+            useNuGet: true
+          - Name: Arm64ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy
+            useNuGet: true                       
           - Name: Arm64DebugCpp
             language: cpp
             configuration: Debug
@@ -264,28 +304,20 @@ jobs:
               dependsOn:
                 - UniversalBuild${{ matrix.platform }}${{ matrix.configuration }}
 
-            variables:
-              - template: ../variables/windows.yml
+            variables: [template: ../variables/windows.yml]
 
-            pool:
-              ${{ if eq(matrix.lowResource, true) }}:
-                # 9079: Use Medium hardware until new drop of
-                # `@react-native-community/cli` with windows init reliability
-                # improvements.
-                name: ${{ variables['AgentPool.Medium'] }}
-              ${{ else }}:
-                name: ${{ variables['AgentPool.Medium'] }}
-              demands: ${{ variables['AgentImage'] }}
+            ${{ if eq(matrix.lowResource, true) }}:
+              # 9079: Use Medium hardware until new drop of
+              # `@react-native-community/cli` with windows init reliability
+              # improvements.
+              pool: ${{ parameters.AgentPool.Medium }}
+            ${{ else }}:
+              pool: ${{ parameters.AgentPool.Medium }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 
             steps:
-              - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-                clean: true # whether to fetch clean each time
-                # fetchDepth: 2 # the depth of commits to ask Git to fetch
-                lfs: false # whether to download Git-LFS files
-                submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-                persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+              - template: ../templates/checkout-full.yml
 
               - template: ../templates/configure-git.yml
 

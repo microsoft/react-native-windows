@@ -2,6 +2,60 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Nov 2021 06:11:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.415",
+      "version": "0.0.0-canary.415",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "26db8a0e95797adf2646e614eecf7fbb1e707601",
+            "comment": "Add PackageReference Locks"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "98948c6eb811c91674cd8ce2086f0140029c81a8",
+            "comment": "Remove extra definition of ReactNativeWindowsDir"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a2d40465bbd906d7ae1685938cad6312d866221a",
+            "comment": "Short-circuit ChakraCore to Chakra"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Nov 2021 05:08:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.414",
+      "version": "0.0.0-canary.414",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6810b7bc0b60943926d4e23cf9ffed984e3ccc6b",
+            "comment": "Remove ChakraCore dependency"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "34591d14051a5f8cbbcbfa6da113f5cc1f4a75a6",
+            "comment": "FIx Warnings from RoslynCodeTaskFactory in C++ Projects Building ARM64"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "44b31187b313e7304c63ef73d09fb0c252c191ee",
+            "comment": "Fixes default background for mouse events with border"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Nov 2021 05:08:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.413",
       "version": "0.0.0-canary.413",

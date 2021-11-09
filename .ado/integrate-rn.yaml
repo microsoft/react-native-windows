@@ -22,19 +22,11 @@ jobs:
     timeoutInMinutes: 30
 
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-full.yml
 
       - template: templates/configure-git.yml
 
-      # Using standard "yarn install" instead of midgarn-yarn because the integration
-      # script will do a normal yarn install anyway and we want to share results
-      - script: yarn install
-        displayName: yarn install
-
-      - script: yarn build
-        displayName: yarn build
+      - template: templates/prepare-js-env.yml
 
       - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/main
         displayName: Create a new branch

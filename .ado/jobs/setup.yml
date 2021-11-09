@@ -11,6 +11,11 @@ jobs:
     pool:
       vmImage: ubuntu-latest
     steps:
+      - template: ../templates/checkout-full.yml
+
+      - powershell: gci env:/BUILD_*
+        displayName: Show build information
+
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
         - task: powershell@2
           name: checkPayload

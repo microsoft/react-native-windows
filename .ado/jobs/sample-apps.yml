@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object  
   - name: buildMatrix
     type: object
     default:
@@ -59,14 +61,10 @@ jobs:
 
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
-          pool:
-            name: ${{ variables['AgentPool.Medium'] }}
-            demands: ${{ variables['AgentImage'] }}
+          pool: ${{ parameters.AgentPool.Medium }}
 
           steps:
-            - checkout: self
-              clean: false
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
 

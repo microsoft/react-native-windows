@@ -13,7 +13,22 @@ variables:
   - name: system.debug
     value: true
 
+parameters:
+  - name: AgentPool
+    type: object
+    default:
+      Small:
+        name: rnw-pool-2
+        demands: ImageOverride -equals rnw-img-node16
+      Medium:
+        name: rnw-pool-4
+        demands: ImageOverride -equals rnw-img-node16
+      Large:
+        name: rnw-pool-8
+        demands: ImageOverride -equals rnw-img-node16
+
 stages:     
   - template: stages.yml
     parameters:
       buildEnvironment: PullRequest
+      AgentPool: ${{ parameters.AgentPool }}
