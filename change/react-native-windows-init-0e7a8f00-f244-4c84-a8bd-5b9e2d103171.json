@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Prevent --useWinUI3 and --experimentalNugetDependency from being used at the same time in react-native-windows-init",
+  "packageName": "react-native-windows-init",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
