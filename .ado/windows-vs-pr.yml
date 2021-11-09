@@ -11,28 +11,15 @@ variables:
   - group: platform-override-zero-permission-token
 
 jobs:
-  - job: Setup
-    variables:
-      - template: variables/vs2019.yml
-    steps:
-      - task: powershell@2
-        name: checkPayload
-        displayName: "Check if build is required for this PR"
-        inputs:
-          targetType: filePath
-          filePath: .ado/shouldSkipPRBuild.ps1
-
   - job: RNWUniversalPR
     variables:
       - template: variables/vs2019.yml
     displayName: Universal PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -40,21 +27,21 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x86
           LayoutHeaders: true
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #ArmDebug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
-        #Arm64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM64
-        #Arm64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: ARM64
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -165,8 +152,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: WinUI3 Playground
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86:
@@ -223,16 +208,20 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Universal Other Projects PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X86Debug:
+        X64Debug:
           BuildConfiguration: Debug
-          BuildPlatform: x86
+          BuildPlatform: x64
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
+        X86Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x86
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
@@ -308,37 +297,40 @@ jobs:
       - name: BuildLogDirectory
         value: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
     displayName: Sample Apps PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        #X64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: x64
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+          DeployOption:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
-          DeployOption:
+          DeployOption: --no-deploy # Can't deploy without certs
         X86Debug:
          BuildConfiguration: Debug
          BuildPlatform: x86
          DeployOption:
-        #X86Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: x86
-        #ArmDebug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+          DeployOption: --no-deploy # Can't deploy without certs
+        ArmDebug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM
+          DeployOption: --no-deploy
         ArmRelease:
           BuildConfiguration: Release
           BuildPlatform: ARM
           DeployOption: --no-deploy
-        #Arm64Debug:
-        #  BuildConfiguration: Debug
-        #  BuildPlatform: ARM64
-        #Arm64Release:
-        #  BuildConfiguration: Release
-        #  BuildPlatform: ARM64
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+          DeployOption: --no-deploy
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
+          DeployOption: --no-deploy
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
     pool:
@@ -363,8 +355,7 @@ jobs:
         parameters:
           buildEnvironment: 'PullRequest'
           encodedKey: sampleAppCPPEncodedKey
-          ${{ if eq(variables.BuildConfiguration, 'Release') }}:
-            buildConfiguration: Release
+          buildConfiguration: $(BuildConfiguration)
           buildPlatform: $(BuildPlatform)
           deployOption: $(DeployOption)
           buildLogDirectory: $(BuildLogDirectory)
@@ -394,8 +385,6 @@ jobs:
           (FullyQualifiedName!~WebSocketModule_)&
           (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
     displayName: Desktop PR
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         X64Debug:
@@ -407,8 +396,14 @@ jobs:
         X86Debug:
           BuildConfiguration: Debug
           BuildPlatform: x86
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
         ARM64Debug:
           BuildConfiguration: Debug
+          BuildPlatform: ARM64
+        ARM64Release:
+          BuildConfiguration: Release
           BuildPlatform: ARM64
     pool:
       vmImage: $(VmImage)
@@ -506,8 +501,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Verify react-native init
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugCpp:
@@ -524,50 +517,62 @@ jobs:
           projectType: app
           additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
           additionalRunArguments:
-        #X86ReleaseCpp:
-        #  language: cpp
-        #  configuration: Release
-        #  platform: x86
-        #  projectType: app
-        #X86ReleaseCs:
-        #  language: cs
-        #  configuration: Release
-        #  platform: x86
-        #  projectType: app
-        #X64DebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: x64
-        #  projectType: app
-        #X64DebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: x64
-        #  projectType: app
+        X86ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: x86
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy # Can't deploy without certs
+        X86ReleaseCs:
+          language: cs
+          configuration: Release
+          platform: x86
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy # Can't deploy without certs
+        X64DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: x64
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments:
+        X64DebugCs:
+          language: cs
+          configuration: Debug
+          platform: x64
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments:
         X64ReleaseCpp:
           language: cpp
           configuration: Release
           platform: x64
           projectType: app
           additionalInitArguments:
-          additionalRunArguments:
+          additionalRunArguments: --no-deploy # Can't deploy without certs
         X64ReleaseCs:
           language: cs
           configuration: Release
           platform: x64
           projectType: app
           additionalInitArguments:
-          additionalRunArguments:
-        #ArmDebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: arm
-        #  projectType: app
-        #ArmDebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: arm
-        #  projectType: app
+          additionalRunArguments: --no-deploy # Can't deploy without certs
+        ArmDebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: arm
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
+        ArmDebugCs:
+          language: cs
+          configuration: Debug
+          platform: arm
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         ArmReleaseCpp:
           language: cpp
           configuration: Release
@@ -582,26 +587,34 @@ jobs:
           projectType: app
           additionalInitArguments:
           additionalRunArguments: --no-deploy
-        #Arm64DebugCpp:
-        #  language: cpp
-        #  configuration: Debug
-        #  platform: arm64
-        #  projectType: app
-        #Arm64DebugCs:
-        #  language: cs
-        #  configuration: Debug
-        #  platform: arm64
-        #  projectType: app
-        #Arm64ReleaseCpp:
-        #  language: cpp
-        #  configuration: Release
-        #  platform: arm64
-        #  projectType: app
-        #Arm64ReleaseCs:
-        #  language: cs
-        #  configuration: Release
-        #  platform: arm64
-        #  projectType: app
+        Arm64DebugCpp:
+          language: cpp
+          configuration: Debug
+          platform: arm64
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
+        Arm64DebugCs:
+          language: cs
+          configuration: Debug
+          platform: arm64
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
+        Arm64ReleaseCpp:
+          language: cpp
+          configuration: Release
+          platform: arm64
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
+        Arm64ReleaseCs:
+          language: cs
+          configuration: Release
+          platform: arm64
+          projectType: app
+          additionalInitArguments:
+          additionalRunArguments: --no-deploy
         X86DebugCppLib:
           language: cpp
           configuration: Debug
@@ -613,6 +626,34 @@ jobs:
           language: cs
           configuration: Debug
           platform: x86
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        X64DebugCppLib:
+          language: cpp
+          configuration: Debug
+          platform: x64
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        X64DebugCsLib:
+          language: cs
+          configuration: Debug
+          platform: x64
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        Arm64DebugCppLib:
+          language: cpp
+          configuration: Debug
+          platform: arm64
+          projectType: lib
+          additionalInitArguments:
+          additionalRunArguments: --no-autolink --no-deploy
+        ArmDebugCsLib:
+          language: cs
+          configuration: Debug
+          platform: arm64
           projectType: lib
           additionalInitArguments:
           additionalRunArguments: --no-autolink --no-deploy
@@ -635,8 +676,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Verify react-native init WinUI3
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
         X86DebugCpp:
@@ -665,8 +704,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: Verify react-native init Hermes
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     strategy:
       matrix:
         X64DebugCpp:
@@ -695,14 +732,8 @@ jobs:
       - template: variables/vs2019.yml
     displayName: Verify react-native init experimental
     dependsOn:
-     - Setup
      - RNWUniversalPR
-    condition: |
-      and
-      (
-        ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ),
-        in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
-      )
+    condition: in(dependencies.RNWUniversalPR.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
     timeoutInMinutes: 40 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     pool:
@@ -726,8 +757,6 @@ jobs:
     variables:
       - template: variables/vs2019.yml
     displayName: JavaScript Checks
-    dependsOn: Setup
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
@@ -794,7 +823,6 @@ jobs:
     dependsOn:
       - RNWDesktopPR
       - RNWUniversalPR # Needed to have artifacts uploaded from LayoutHeaders
-    condition: ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' )
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling

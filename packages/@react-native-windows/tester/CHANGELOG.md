@@ -1,8 +1,56 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Mon, 27 Sep 2021 15:06:37 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Oct 2021 19:04:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Wed, 27 Oct 2021 19:04:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.25 (dannyvv@microsoft.com)
+
+## 0.0.1
+
+Mon, 25 Oct 2021 15:07:12 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.24 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.1
+
+Mon, 18 Oct 2021 15:07:56 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.23 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.1
+
+Wed, 13 Oct 2021 20:39:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.22 (anandrag@microsoft.com)
+
+## 0.0.1
+
+Mon, 11 Oct 2021 15:06:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.21 (julio.rocha@microsoft.com)
+
+## 0.0.1
+
+Mon, 04 Oct 2021 15:06:58 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.64.20 (julio.rocha@microsoft.com)
 
 ## 0.0.1
 

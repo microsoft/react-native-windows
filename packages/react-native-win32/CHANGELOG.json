@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 25 Oct 2021 15:07:12 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.8",
+      "version": "0.64.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Revert back to a warning for acceptsKeyboardFocus deprecation",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e615b1c46b7396fe617dc3019091cc367bd145a8",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Sep 2021 15:06:37 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.7",
       "version": "0.64.7",

@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:04:04 GMT",
+      "tag": "react-native-windows_v0.64.25",
+      "version": "0.64.25",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Handle *Undefined* for SolutionPath for the WapProj sdk",
+            "author": "dannyvv@microsoft.com",
+            "commit": "96f2a44dc56b0d7b4ccb573af6fa74725cceeb7a",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 15:07:12 GMT",
+      "tag": "react-native-windows_v0.64.24",
+      "version": "0.64.24",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Change the definition of YGUndefined from NAN to __builtin_nanf(\"0\")",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0e9b7079479724b5f86cb8c3c9659f749429ba26",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 18 Oct 2021 15:07:56 GMT",
+      "tag": "react-native-windows_v0.64.23",
+      "version": "0.64.23",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Avoid exporting data as that breaks delay loading",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d6ab3a6fb5a1c5992d295e9cf1d6eacac1696b94",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Crash using PlatformConstants on Windows 8.1",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "7cd470896df06c5196ee37a5d52eb6dc7abe8498",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Oct 2021 20:39:16 GMT",
+      "tag": "react-native-windows_v0.64.22",
+      "version": "0.64.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use V8 by default in desktop (if enabled)",
+            "author": "anandrag@microsoft.com",
+            "commit": "bfd47dd49105fbc28b31a52cb8d95ae15a7a7326",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Oct 2021 15:06:31 GMT",
+      "tag": "react-native-windows_v0.64.21",
+      "version": "0.64.21",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Add ARM64 support to React.Windows.Desktop.Test.DLL",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "52156e93730c703dfc55d01f11dd1a28db747b69",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:06:58 GMT",
+      "tag": "react-native-windows_v0.64.20",
+      "version": "0.64.20",
+      "comments": {
+        "patch": [
+          {
+            "comment": "ReactNative.V8Jsi.Windows to 0.64.17",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5a573a64fc55e1065140d8532ff15a690a111e98",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix issue using react-native-debugger with react-native-windows",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "b46bc5d00b698f93d155e2c7f67f1267b85082ca",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReactNativeHost ReloadInstance and UnloadInstance actions do not always fire completed events",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "2552ab3b58714b472787ec5d521a5d730c2b660e",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:06:37 GMT",
       "tag": "react-native-windows_v0.64.19",
       "version": "0.64.19",

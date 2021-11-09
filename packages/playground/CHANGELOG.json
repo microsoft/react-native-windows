@@ -2,6 +2,96 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Wed, 27 Oct 2021 19:04:04 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "dannyvv@microsoft.com",
+            "commit": "96f2a44dc56b0d7b4ccb573af6fa74725cceeb7a",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 15:07:12 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "0e9b7079479724b5f86cb8c3c9659f749429ba26",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 18 Oct 2021 15:07:56 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "d6ab3a6fb5a1c5992d295e9cf1d6eacac1696b94",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Oct 2021 20:39:16 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "anandrag@microsoft.com",
+            "commit": "bfd47dd49105fbc28b31a52cb8d95ae15a7a7326",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Oct 2021 15:06:31 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "52156e93730c703dfc55d01f11dd1a28db747b69",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 04 Oct 2021 15:06:58 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "5a573a64fc55e1065140d8532ff15a690a111e98",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Sep 2021 15:06:37 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",
