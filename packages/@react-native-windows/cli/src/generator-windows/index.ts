@@ -141,9 +141,6 @@ export async function copyProjectTemplateAndReplace(
       );
     }
 
-    if (!fs.existsSync(path.join(windowsDir, newProjectName + ' (Package)'))) {
-      fs.mkdirSync(path.join(windowsDir, newProjectName + ' (Package)'));
-    }
     realProjectType += '-reunion';
   }
   const projDir = 'proj';
@@ -367,19 +364,7 @@ export async function copyProjectTemplateAndReplace(
             },
           ];
 
-    const realCsMappings = options.useWinUI3
-      ? csMappings.concat([
-          {
-            from: path.join(srcPath, projDir, 'MyApp (Package).wapproj'),
-            to: path.join(
-              windowsDir,
-              `${newProjectName} (Package)`,
-              newProjectName + ' (Package).wapproj',
-            ),
-          },
-        ])
-      : csMappings;
-    for (const mapping of realCsMappings) {
+    for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(
         mapping.from,
         destPath,
@@ -511,6 +496,7 @@ export async function copyProjectTemplateAndReplace(
       );
     }
   } else {
+    //TODO update template to use shared assets and src
     if (fs.existsSync(path.join(srcPath, 'MyApp'))) {
       await copyAndReplaceAll(
         path.join(srcPath, 'MyApp'),
@@ -520,17 +506,8 @@ export async function copyProjectTemplateAndReplace(
         options.overwrite,
       );
     }
-    const wapSourcePath = path.join(srcPath, 'MyApp (Package)');
-    if (fs.existsSync(wapSourcePath)) {
-      await copyAndReplaceAll(
-        wapSourcePath,
-        destPath,
-        path.join(windowsDir, newProjectName + ' (Package)'),
-        templateVars,
-        options.overwrite,
-      );
-    }
   }
+
   // src
   if (fs.existsSync(path.join(srcPath, 'src'))) {
     await copyAndReplaceAll(
