@@ -58,9 +58,9 @@ steps:
           Pattern: ${{ parameters.binariesToSign }}
         ${{ else }}:
           Pattern: |
-            **/${{ coalesce(parameters.nuspec,, parameters.outputPackage) }}.dll
-            **/${{ coalesce(parameters.nuspec,, parameters.outputPackage) }}.winmd
-            **/${{ coalesce(parameters.nuspec,, parameters.outputPackage) }}.exe
+            **/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.dll
+            **/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.winmd
+            **/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.exe
         UseMinimatch: true
         signConfigType: inlineSignParams
         inlineOperation: |
