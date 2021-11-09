@@ -77,7 +77,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraCoreRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeArgs.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntimeFactory.h" />
