@@ -92,7 +92,7 @@ parameters:
           - Name: X86DebugCppNuget
             language: cpp
             configuration: Debug
-            platform: x64
+            platform: x86
             projectType: app
             useNuGet: true
           - Name: X64ReleaseCsNuget
