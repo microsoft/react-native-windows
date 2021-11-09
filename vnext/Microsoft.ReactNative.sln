@@ -144,9 +144,11 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Debug|ARM = Debug|ARM
 		Debug|ARM64 = Debug|ARM64
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		Release|ARM = Release|ARM
 		Release|ARM64 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
