@@ -5,13 +5,13 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20211021-2008-eccbf9b5c",
+  "baseVersion": "0.0.0-20211028-2008-61e1b6f86",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/RNTesterEmptyBookmarksState.windows.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
-      "baseHash": "c211a725a3f935a4425f7af92bc7a4cba4f0655a",
+      "baseHash": "6fd62afad748df5a019a0307fa9d91a444ec081c",
       "issue": 6341
     },
     {

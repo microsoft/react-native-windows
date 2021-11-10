@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
 
 stages:
   - stage: Setup
@@ -20,48 +22,64 @@ stages:
       - template: jobs/universal.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/desktop.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/nuget-desktop.yml
+        parameters:
+          AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/project-reunion.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
       # NuGet using tests rely on "UniversalBuild" which is done in the build stage
       - template: jobs/cli-init.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: true
 
   - stage: IntegrationTests
     displayName: Tests 🧪
     dependsOn: Setup
     jobs:
-      - template: jobs/jschecks.yml
+      - template: jobs/linting.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
+
+      - template: jobs/node-tests.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/macos-tests.yml
 
       - template: jobs/playground.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/sample-apps.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/e2e-test.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/integration-test.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
 
   - stage: CLI
     displayName: Cli 🖥
@@ -70,4 +88,5 @@ stages:
       - template: jobs/cli-init.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: false

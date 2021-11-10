@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Tue, 09 Nov 2021 06:11:23 GMT",
+      "tag": "@react-native-windows/automation_v0.1.0",
+      "version": "0.1.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "3a060ca15358d9470e5a78230a8f5ac1a8eca062",
+            "comment": "Add `breakOnStart` option"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.26",
+            "commit": "b3292416f3945415de12bf661a8031970cc7323a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 06 Nov 2021 05:08:39 GMT",
       "tag": "@react-native-windows/automation_v0.0.28",
       "version": "0.0.28",

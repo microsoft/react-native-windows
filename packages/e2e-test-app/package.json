@@ -8,23 +8,25 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows",
-    "e2etest": "jest --color"
+    "e2etest": "jest --color",
+    "e2etest:debug": "jest --color --config ./jest.debug.config.js"
   },
   "dependencies": {
     "@react-native-picker/picker": "2.2.0",
-    "@react-native-windows/automation-channel": "^0.0.25",
+    "@react-native-windows/automation-channel": "^0.0.26",
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211021-2008-eccbf9b5c",
-    "react-native-windows": "^0.0.0-canary.414"
+    "react-native": "0.0.0-20211028-2008-61e1b6f86",
+    "react-native-windows": "^0.0.0-canary.415",
+    "react-native-xaml": "^0.0.50"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/automation": "^0.0.28",
-    "@react-native-windows/automation-commands": "^0.0.26",
+    "@react-native-windows/automation": "^0.1.0",
+    "@react-native-windows/automation-commands": "^0.0.27",
     "@react-native-windows/virtualized-list": "0.0.0-canary.17",
     "@rnw-scripts/babel-node-config": "2.0.2",
     "@rnw-scripts/eslint-config": "1.1.8",
