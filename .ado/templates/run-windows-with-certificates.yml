@@ -48,5 +48,5 @@ steps:
     - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
-                  
+
     - template: ../templates/cleanup-certificate.yml

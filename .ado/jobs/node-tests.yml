@@ -19,7 +19,7 @@ jobs:
     timeoutInMinutes: 20
     variables: [template: ../variables/windows.yml]
     pool: ${{ parameters.AgentPool.Medium }}
-    
+
     steps:
       - template: ../templates/checkout-shallow.yml
 

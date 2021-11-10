@@ -24,7 +24,7 @@ parameters:
         name: rnw-pool-8
         demands: ImageOverride -equals rnw-img-node16
 
-stages:     
+stages:
   - template: stages.yml
     parameters:
       buildEnvironment: PullRequest

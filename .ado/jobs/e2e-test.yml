@@ -7,7 +7,7 @@ parameters:
       - PullRequest
       - Continuous
   - name: AgentPool
-    type: object  
+    type: object
   - name: buildMatrix
     type: object
     default:
