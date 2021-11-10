@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add MSRN Debug NuGet Packages",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
