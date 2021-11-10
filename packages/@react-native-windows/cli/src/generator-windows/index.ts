@@ -165,7 +165,7 @@ export async function copyProjectTemplateAndReplace(
   const cppNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
-      version: '2.0.210708.4',
+      version: '2.0.210312.4',
     },
     {
       id: 'ReactNative.Hermes.Windows',

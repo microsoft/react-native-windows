@@ -177,7 +177,7 @@
     -->
     <!-- <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.1-prerelease.210709001" /> -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210312.4" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="0.8.1-ms.5" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />

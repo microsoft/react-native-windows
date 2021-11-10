@@ -163,7 +163,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.6" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210708.4" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210312.4" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="TestBundle.targets" />
