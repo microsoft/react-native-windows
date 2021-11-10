@@ -120,7 +120,7 @@ In a YAML file the basic steps to generate your certificate from an encoded stri
 <pre><code class="hljs css language-yaml"><span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Decode</span> <span class="hljs-string">the</span> <span class="hljs-string">pfx</span>
   <span class="hljs-attr">run:</span> <span class="hljs-string">|
     $PfxBytes = [System.Convert]::FromBase64String("${{ secrets.Base64_Encoded_Pfx }}")
-    $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path ProjectDirectoryPath -ChildPath EncodedKey.pfx) )
+    $PfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path ProjectDirectoryPath -ChildPath GitHubActionsWorkflow.pfx) )
     [System.IO.File]::WriteAllBytes("$PfxPath", $PfxBytes)
 </span></code></pre>
 <p>where your encoded string is a GitHub secret named <code>Base64_Encoded_Pfx</code>.</p>
