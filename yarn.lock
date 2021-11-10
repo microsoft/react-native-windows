@@ -1740,7 +1740,7 @@
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
-"@react-native/normalize-color@2.0.0":
+"@react-native/normalize-color@*", "@react-native/normalize-color@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/normalize-color/-/normalize-color-2.0.0.tgz#da955909432474a9a0fe1cbffc66576a0447f567"
   integrity sha512-Wip/xsc5lw8vsBlmY2MO/gFLp3MvuZ2baBZjDeTjjndMgM0h5sxz7AZR62RDPGgstp8Np7JzjvVqVT7tpFZqsw==
@@ -4295,6 +4295,24 @@ depd@^1.1.2, depd@~1.1.2:
   resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.2.tgz#9bcd52e14c097763e749b274c4346ed2e560b5a9"
   integrity sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=
 
+deprecated-react-native-prop-types@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-2.1.0.tgz#1f71cc06951131dc6b968c352047bfdab9d478b2"
+  integrity sha512-VZZzU9V6hHxinVI4Ca7imJyXkCcJoRD1GTomQMZt+wcbx0iY22lqFXcJvpWVEoAz01+vhbuWt5Sc3tzrXhRZYw==
+  dependencies:
+    "@react-native/normalize-color" "*"
+    invariant "*"
+    prop-types "*"
+
+deprecated-react-native-prop-types@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-2.3.0.tgz#c10c6ee75ff2b6de94bb127f142b814e6e08d9ab"
+  integrity sha512-pWD0voFtNYxrVqvBMYf5gq3NA2GCpfodS1yNynTPc93AYA/KEMGeWDqqeUB6R2Z9ZofVhks2aeJXiuQqKNpesA==
+  dependencies:
+    "@react-native/normalize-color" "*"
+    invariant "*"
+    prop-types "*"
+
 deprecation@^2.0.0, deprecation@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/deprecation/-/deprecation-2.3.1.tgz#6368cbdb40abf3373b525ac87e4a260c3a700919"
@@ -6079,17 +6097,17 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"
   integrity sha512-mT34yGKMNceBQUoVn7iCDKDntA7SC6gycMAWzGx1z/CMCTV7b2AAtXlo3nRyHZ1FelRkQbQjprHSYGwzLtkVbw==
 
+invariant@*, invariant@2.2.4, invariant@^2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
+  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
+  dependencies:
+    loose-envify "^1.0.0"
+
 invariant@2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
   integrity sha1-nh9WrArNtr8wMwbzOL47IErmA2A=
-  dependencies:
-    loose-envify "^1.0.0"
-
-invariant@2.2.4, invariant@^2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
-  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
   dependencies:
     loose-envify "^1.0.0"
 
@@ -8948,7 +8966,7 @@ prompts@~2.1.0:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.7.2:
+prop-types@*, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -9045,10 +9063,10 @@ react-clone-referenced-element@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-clone-referenced-element/-/react-clone-referenced-element-1.1.1.tgz#8d76727dc0459788e461741e804a512d20757381"
   integrity sha512-LZBPvQV8W0B5dFzXFu+D3Tpil8YHS8tO00iFsfXcTLdtpuH7XyvaHqHcoz4hd4uNPQCZ30fceh+s7mLznzMXvg==
 
-react-devtools-core@4.20.1:
-  version "4.20.1"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.20.1.tgz#77e8aacd93ca34cf908c11e6c72151b79217b618"
-  integrity sha512-HBcLfLi2R6VxlWFF2i5lONYlr3KLh324RPFeApZ3G6GGaJrcS/qtk9M/iESw7fRTlgPHEg+A4j6e1j9oXpvi5w==
+react-devtools-core@4.20.2:
+  version "4.20.2"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.20.2.tgz#0be500c80e09b640a2ee57f5ad5407e53bff6651"
+  integrity sha512-ep2j84M1ZtDFWsTtFrKyLyg4GEbnw4gFj/8brA+BZtsINgKHhWEVzscz5E/bFWRdyTM8mWdcaKQAk2hR+IezPw==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
@@ -9063,10 +9081,10 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-native-codegen@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.8.tgz#b7796a54074139d956fff2862cf1285db43c891b"
-  integrity sha512-k/944+0XD+8l7zDaiKfYabyEKmAmyZgS1mj+4LcSRPyHnrjgCHKrh/Y6jM6kucQ6xU1+1uyMmF/dSkikxK8i+Q==
+react-native-codegen@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.9.tgz#7076b0f7f1b6b557b6ec831c0b4da40ea8152171"
+  integrity sha512-N2lWfeKSucXOQiQOAYVgIbMYWgzPnN6Oi7qcFe4ksoPf7uMDhw4f2A+XzrqUBU9mCzI0VcNZ6P5opoKriva3HA==
   dependencies:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
@@ -9090,10 +9108,10 @@ react-native-xaml@^0.0.50:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20211021-2008-eccbf9b5c:
-  version "0.0.0-20211021-2008-eccbf9b5c"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211021-2008-eccbf9b5c.tgz#7de7a430d8b2e5c2aa8bae67975811190c5979da"
-  integrity sha512-q8uKYlLnqvCiyf9kqRet0WzD1jObjIIBLOpwE7ZGlkTRlYqqzhyvUpqe0qSrlqzKGDEqjL3SkAJ2qKykBDsKTQ==
+react-native@0.0.0-20211028-2008-61e1b6f86:
+  version "0.0.0-20211028-2008-61e1b6f86"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211028-2008-61e1b6f86.tgz#d5d689b582b3f5596521442e59a127de52ee4559"
+  integrity sha512-LWtj0rWsBLWvh6ja5NSEfZwyF8vfC/PU4VpKFqdl85SQB7hB+AVC9N0Rky/yx3yk0PZsjIGNOCnpMI8lTmOskA==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
@@ -9105,6 +9123,7 @@ react-native@0.0.0-20211021-2008-eccbf9b5c:
     abort-controller "^3.0.0"
     anser "^1.4.9"
     base64-js "^1.1.2"
+    deprecated-react-native-prop-types "^2.1.0"
     event-target-shim "^5.0.1"
     hermes-engine "~0.9.0"
     invariant "^2.2.4"
@@ -9116,8 +9135,8 @@ react-native@0.0.0-20211021-2008-eccbf9b5c:
     pretty-format "^26.5.2"
     promise "^8.0.3"
     prop-types "^15.7.2"
-    react-devtools-core "4.20.1"
-    react-native-codegen "^0.0.8"
+    react-devtools-core "4.20.2"
+    react-native-codegen "^0.0.9"
     react-refresh "^0.4.0"
     regenerator-runtime "^0.13.2"
     scheduler "^0.20.2"

@@ -14,7 +14,6 @@ type NativeTextProps = $ReadOnly<{
 export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComponentClass(
   'RCTText',
   () => ({
-    // $FlowFixMe[incompatible-call]
     validAttributes: {
       ...ReactNativeViewAttributes.UIView,
       isHighlighted: true,
@@ -57,7 +56,6 @@ export const NativeVirtualText: HostComponent<NativeTextProps> =
   UIManager.getViewManagerConfig('RCTVirtualText') == null
     ? NativeText
     : (createReactNativeComponentClass('RCTVirtualText', () => ({
-        // $FlowFixMe[incompatible-call]
         validAttributes: {
           ...ReactNativeViewAttributes.UIView,
           isHighlighted: true,
