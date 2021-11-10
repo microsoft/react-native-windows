@@ -10,11 +10,11 @@
     "integration-test": "jest --config jest.integration.config.js --runInBand --verbose --color"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.0.25",
+    "@react-native-windows/automation-channel": "^0.0.26",
     "chai": "^4.2.0",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211021-2008-eccbf9b5c",
-    "react-native-windows": "^0.0.0-canary.414"
+    "react-native": "0.0.0-20211028-2008-61e1b6f86",
+    "react-native-windows": "^0.0.0-canary.415"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

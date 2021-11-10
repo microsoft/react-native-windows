@@ -182,7 +182,7 @@ jobs:
       - template: templates/msbuild-sln.yml
         parameters:
           solutionDir: vnext
-          aolutionName: ReactWindows-Desktop.sln
+          solutionName: ReactWindows-Desktop.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
 
@@ -344,7 +344,7 @@ jobs:
             - platform: x86
               configuration: Release
             - platform: ARM64
-              configuration: Release  
+              configuration: Release
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
@@ -360,7 +360,7 @@ jobs:
             - platform: x86
               configuration: Release
             - platform: ARM64
-              configuration: Release  
+              configuration: Release
             - platform: x64
               configuration: Debug
             - platform: x86

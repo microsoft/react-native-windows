@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Short-circuit ChakraCore to Chakra",
+  "comment": "Integrate OCt 28 RN nightly build.",
   "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
+  "email": "igklemen@microsoft.com",
   "dependentChangeType": "patch"
 }
