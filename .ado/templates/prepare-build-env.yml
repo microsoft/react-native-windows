@@ -19,9 +19,9 @@ parameters:
     # Publish still using runtime matrix
     #values:
     #  - PullRequest
-    #  - Continuous  
+    #  - Continuous
     #  - Publish
-  
+
 steps:
   # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
   - task: NuGetToolInstaller@1

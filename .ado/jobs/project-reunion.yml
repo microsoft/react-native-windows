@@ -6,7 +6,7 @@ parameters:
       - PullRequest
       - Continuous
   - name: AgentPool
-    type: object  
+    type: object
   - name: buildMatrix
     type: object
     default:
@@ -19,7 +19,7 @@ parameters:
         Matrix:
           - Name: X64Release
             BuildConfiguration: Release
-            BuildPlatform: x64    
+            BuildPlatform: x64
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -49,7 +49,8 @@ jobs:
 
             - template: ../templates/msbuild-sln.yml
               parameters:
-                solution: vnext/Microsoft.ReactNative.ProjectReunion.sln
+                solutionDir: vnext
+                solutionName: Microsoft.ReactNative.ProjectReunion.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration}}
                 msbuildArguments: /p:UseWinUI3=true

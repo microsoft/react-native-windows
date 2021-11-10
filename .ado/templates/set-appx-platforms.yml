@@ -17,13 +17,13 @@ parameters:
     # Publish still using runtime matrix
     #values:
     #  - PullRequest
-    #  - Continuous  
+    #  - Continuous
     #  - Publish
 
 # Release builds by default build multiple platforms to bundle into the AppX.
 # Set AppxBundlePlatforms, as en environment variable to be read by MSBuild, to
 # only build a single platform. This is only done in PRs, to allow testing the
-# un-overriden path in official tests. 
+# un-overriden path in official tests.
 steps:
   - ${{ if and(eq(parameters.buildEnvironment, 'PullRequest'), eq(parameters.configuration, 'Release')) }}:
     - powershell: $env:AppxBundlePlatforms = "${{ parameters.platform }}"

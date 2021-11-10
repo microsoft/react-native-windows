@@ -6,7 +6,7 @@ parameters:
       - PullRequest
       - Continuous
   - name: AgentPool
-    type: object  
+    type: object
   - name: buildMatrix
     type: object
     default:
@@ -58,7 +58,7 @@ jobs:
             - template: ../variables/windows.yml
             - name: BuildLogDirectory
               value: $(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\BuildLogs
-          
+
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
           pool: ${{ parameters.AgentPool.Medium }}
@@ -73,13 +73,6 @@ jobs:
                 platform: ${{ matrix.BuildPlatform }}
                 configuration: ${{ matrix.BuildConfiguration }}
                 buildEnvironment: ${{ config.BuildEnvironment }}
-
-            - task: NuGetCommand@2
-              displayName: NuGet restore - SampleApps
-              inputs:
-                command: restore
-                restoreSolution: packages/sample-apps/windows/SampleApps.sln
-                verbosityRestore: Detailed # Options: quiet, normal, detailed
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:

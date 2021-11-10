@@ -23,6 +23,13 @@ parameters:
     type: string
 
 steps:
+  - task: Cache@2
+    inputs:
+      key: '"run-windows-with-certificates" | "${{ parameters.workingDirectory }}" | ${{ parameters.workingDirectory }}/windows/NuGet.config | **/packages.config | **/packages.lock.json'
+      restoreKeys: '"run-windows-with-certificates" | "${{ parameters.workingDirectory }}" | ${{ parameters.workingDirectory }}/windows/NuGet.config'
+      path: ${{ parameters.workingDirectory }}/windows/packages/
+    displayName: Copy cached NuGet packages
+
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
     - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }}
       displayName: run-windows (Debug)
@@ -41,5 +48,5 @@ steps:
     - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
-                  
+
     - template: ../templates/cleanup-certificate.yml

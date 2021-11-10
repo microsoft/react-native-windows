@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Nov 2021 06:11:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.415",
+      "version": "0.0.0-canary.415",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "26db8a0e95797adf2646e614eecf7fbb1e707601",
+            "comment": "Add PackageReference Locks"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "98948c6eb811c91674cd8ce2086f0140029c81a8",
+            "comment": "Remove extra definition of ReactNativeWindowsDir"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a2d40465bbd906d7ae1685938cad6312d866221a",
+            "comment": "Short-circuit ChakraCore to Chakra"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 06 Nov 2021 05:08:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.414",
       "version": "0.0.0-canary.414",

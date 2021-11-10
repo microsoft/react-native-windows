@@ -6,7 +6,7 @@
         - PullRequest
         - Continuous
     - name: AgentPool
-      type: object        
+      type: object
     - name: buildMatrix
       type: object
       default:
@@ -67,11 +67,12 @@
 
                 - template: ../templates/msbuild-sln.yml
                   parameters:
-                    solution: vnext/Microsoft.ReactNative.sln
+                    solutionDir: vnext
+                    solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
 
-                - ${{ if eq(matrix.CreateApiDocs, true) }}: 
+                - ${{ if eq(matrix.CreateApiDocs, true) }}:
                   - powershell: |
                       $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
                       Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
@@ -134,15 +135,10 @@
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
 
-                - task: NuGetCommand@2
-                  displayName: NuGet restore
-                  inputs:
-                    command: restore
-                    restoreSolution: vnext/Microsoft.ReactNative.sln
-                    feedsToUse: config
-                    nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-                    restoreDirectory: packages/
-                    verbosityRestore: Detailed # Options: quiet, normal, detailed
+                - template: ../templates/restore-sln.yml
+                  parameters:
+                    solutionDir: vnext
+                    solutionName: Microsoft.ReactNative.sln
 
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
