@@ -1,6 +1,6 @@
 steps:
   - powershell: |
-      $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx
-      Write-Host $PfxPath
-      Remove-Item -path $PfxPath
+    $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx
+    Write-Host $PfxPath
+    Remove-Item -path $PfxPath
     displayName: Remove Certificate
