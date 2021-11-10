@@ -3,4 +3,4 @@ steps:
       $PfxPath = Join-Path -Path $(Build.SourcesDirectory) -ChildPath EncodedKey.pfx
       Write-Host $PfxPath
       Remove-Item -path $PfxPath
-      displayName: Remove Certificate
+    displayName: Remove Certificate
