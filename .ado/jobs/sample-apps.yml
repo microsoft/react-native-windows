@@ -6,7 +6,7 @@ parameters:
       - PullRequest
       - Continuous
   - name: AgentPool
-    type: object  
+    type: object
   - name: buildMatrix
     type: object
     default:
@@ -79,8 +79,8 @@ jobs:
               inputs:
                 solution: packages/sample-apps/windows/SampleApps.sln
                 msbuildArchitecture: x64
-                platform: $(BuildPlatform)
-                configuration: $(BuildConfiguration)
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
                 msbuildArguments: /t:Restore
 
             - template: ../templates/run-windows-with-certificates.yml
