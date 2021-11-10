@@ -398,8 +398,6 @@ jobs:
           slices:
             - platform: x64
               configuration: Release
-            - platform: x64
-              configuration: Debug
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
