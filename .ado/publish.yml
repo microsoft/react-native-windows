@@ -271,10 +271,7 @@ jobs:
       matrix:
         X64Release:
           BuildConfiguration: Release
-          BuildPlatform: x64
-        X64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: x64          
+          BuildPlatform: x64       
     pool: ${{ parameters.AgentPool.Large }}
 
     steps:
