@@ -18,7 +18,6 @@ stages:
   - stage: Build
     displayName: Build 🔨
     dependsOn: Setup
-    condition: and (succeeded(), ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ))
     jobs:
       - template: jobs/universal.yml
         parameters:
@@ -49,7 +48,6 @@ stages:
   - stage: IntegrationTests
     displayName: Tests 🧪
     dependsOn: Setup
-    condition: and (succeeded(), ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ))
     jobs:
       - template: jobs/linting.yml
         parameters:
@@ -86,7 +84,6 @@ stages:
   - stage: CLI
     displayName: Cli 🖥
     dependsOn: Setup
-    condition: and (succeeded(), ne( dependencies.Setup.outputs['checkPayload.shouldSkipPRBuild'], 'True' ))
     jobs:
       - template: jobs/cli-init.yml
         parameters:
