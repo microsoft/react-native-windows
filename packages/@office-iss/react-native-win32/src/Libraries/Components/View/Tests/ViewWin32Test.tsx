@@ -54,6 +54,7 @@ class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentSta
           style={this.state.hasFocus ? { backgroundColor: '#aee8fcff' } : { backgroundColor: '#00000000' }}
           onFocus={this._onFocus}
           onBlur={this._onBlur}
+          enableFocusRing={false}
         >
           <Text>{this.state.hasFocus ? 'Focus: Yes' : 'Focus: No'}</Text>
         </ViewWin32>
@@ -118,6 +119,7 @@ class KeyboardTestComponent extends React.Component<{}, IFocusableComponentState
           onKeyDown={this._onKeyDown}
           onFocus={this._onFocus}
           onBlur={this._onBlur}
+          enableFocusRing={false}
         >
           <ViewWin32 style={styles.keyEnterVisualizer}>
             <Text>OnKeyDown</Text>
@@ -245,6 +247,20 @@ const CursorExample: React.FunctionComponent = () => {
   );
 }
 
+const EnableFocusRingExample: React.FunctionComponent<{}> = () => {
+  return (
+    <ViewWin32
+      style={{
+        backgroundColor: 'red',
+        height: 100,
+        width: 100,
+      }}
+      enableFocusRing={true}
+      focusable
+    />
+  );
+}
+
 export const title = 'ViewWin32';
 export const displayName = 'ViewWin32 Example';
 export const description = 'All the stock View props plus Win32 specific ones';
@@ -288,6 +304,13 @@ export const examples = [
     description: 'Each of these boxes should display a different cursor',
     render(): JSX.Element {
       return <CursorExample />;
+    },
+  },
+  {
+    title: 'EnableFocusRing example',
+    description: 'Displays focus visuals that are driven by native',
+    render(): JSX.Element {
+      return <EnableFocusRingExample />;
     },
   },
 ];

@@ -381,6 +381,7 @@ const ReactNativeViewConfig: ViewConfig = {
     accessibilityDescription: true,
     accessibilityControls: true,
     accessibilityItemType: true,
+    enableFocusRing: true,
     // Windows]
   },
 };
