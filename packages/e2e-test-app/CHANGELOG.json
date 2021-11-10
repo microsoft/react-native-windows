@@ -2,6 +2,45 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Wed, 10 Nov 2021 23:57:31 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.27",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.416",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation to v0.1.1",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation-commands to v0.0.28",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.18",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Nov 2021 06:11:23 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

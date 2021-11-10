@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 10 Nov 2021 23:57:30 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.121",
+      "version": "0.0.0-canary.121",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "igklemen@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "6b0407bd2a10578b3010412c49cc61b41d43ac16",
+            "comment": "Integrate OCt 28 RN nightly build."
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.18",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Nov 2021 18:33:36 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.120",
       "version": "0.0.0-canary.120",
