@@ -207,7 +207,7 @@ parameters:
             configuration: Release
             platform: x86
             projectType: app
-            useNuGet: true            
+            useNuGet: true
           - Name: X64ReleaseCppNuget
             language: cpp
             configuration: Release
@@ -219,19 +219,21 @@ parameters:
             configuration: Release
             platform: x64
             projectType: app
-            useNuGet: true                     
+            useNuGet: true
           - Name: Arm64ReleaseCppNuget
             language: cpp
             configuration: Release
             platform: ARM64
             projectType: app
+            additionalRunArguments: --no-deploy
             useNuGet: true
           - Name: Arm64ReleaseCsNuget
             language: cs
             configuration: Release
             platform: ARM64
             projectType: app
-            useNuGet: true                       
+            additionalRunArguments: --no-deploy
+            useNuGet: true
           - Name: Arm64DebugCpp
             language: cpp
             configuration: Debug

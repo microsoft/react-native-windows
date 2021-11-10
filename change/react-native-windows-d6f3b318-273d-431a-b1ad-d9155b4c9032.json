@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Remove extra definition of ReactNativeWindowsDir",
+  "comment": "Integrate OCt 28 RN nightly build.",
   "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
+  "email": "igklemen@microsoft.com",
   "dependentChangeType": "patch"
 }

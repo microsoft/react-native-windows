@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Integrate OCt 28 RN nightly build.",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "igklemen@microsoft.com",
+  "dependentChangeType": "patch"
+}

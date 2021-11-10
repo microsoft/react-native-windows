@@ -534,7 +534,6 @@ test('Indirect autolink dependency', () => {
   );
 });
 
-// eslint-disable-next-line complexity
 function validateOptionName(
   name: string,
   optionName: keyof AutoLinkOptions,
