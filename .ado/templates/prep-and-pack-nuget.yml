@@ -154,20 +154,6 @@ steps:
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeProjectReunion, true) }}:
-    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
-      - template: prep-and-pack-single.yml
-        parameters:
-          outputPackage: Microsoft.ReactNative.ProjectReunion.Debug
-          nuspec: Microsoft.ReactNative.ProjectReunion
-          slices: $(debugSlices)
-          packageVersion: ${{parameters.npmVersion}}
-          codesignBinaries: ${{ parameters.signMicrosoft }}
-          codesignNuget: ${{ parameters.signMicrosoft }}
-          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
-          binariesToSign: |
-            **/Microsoft.ReactNative.dll
-            **/Microsoft.ReactNative.winmd
-            **/Microsoft.ReactNative.ProjectReunion.dll
     - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
       - template: prep-and-pack-single.yml
         parameters:
