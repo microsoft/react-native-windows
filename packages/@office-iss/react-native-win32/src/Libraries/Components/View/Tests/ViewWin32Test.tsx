@@ -246,20 +246,61 @@ const CursorExample: React.FunctionComponent = () => {
     </ViewWin32>
   );
 }
+class EnableFocusRingExample extends React.Component<{}, IFocusableComponentState> {
+  public constructor(props) {
+    super(props);
+    this.state = {
+      hasFocus: false,
+    };
+  }
+  
+  public render() {
+    return (
+      <ViewWin32 style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', marginVertical: 5 }}>
+        <ViewWin32
+          style={{
+            backgroundColor: 'pink',
+            height: 100,
+            width: 100,
+          }}
+          enableFocusRing={true}
+          focusable
+        >
+          <Text>enableFocusRing set to true</Text>
+        </ViewWin32>
+        <ViewWin32
+          style={{
+            backgroundColor: 'pink',
+            height: 100,
+            width: 100,
+          }}
+          enableFocusRing={true}
+          focusable
+          onFocus={this._onFocus}
+          onBlur={this._onBlur}
+        >
+          <>
+            <Text>enableFocusRing set to false</Text>
+            <Text>{this.state.hasFocus ? 'Focus: Yes' : 'Focus: No'}</Text>
+          </>
+        </ViewWin32>
+      </ViewWin32>
+    );
+  }
 
-const EnableFocusRingExample: React.FunctionComponent<{}> = () => {
-  return (
-    <ViewWin32
-      style={{
-        backgroundColor: 'red',
-        height: 100,
-        width: 100,
-      }}
-      enableFocusRing={true}
-      focusable
-    />
-  );
+  private readonly _onFocus = () => {
+    this.setState({
+      hasFocus: true,
+    });
+  };
+
+  private readonly _onBlur = () => {
+    this.setState({
+      hasFocus: false,
+    });
+  };
 }
+
 
 export const title = 'ViewWin32';
 export const displayName = 'ViewWin32 Example';
