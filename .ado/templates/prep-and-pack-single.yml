@@ -97,7 +97,7 @@ steps:
     inputs:
       command: pack
       verbosityPack: 'Detailed'
-      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.nuspec
+      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.outputPackage }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
