@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "[0.66] Fix autolinking to support solution files using LF instead of CRLF",
   "packageName": "@react-native-windows/cli",
   "email": "jthysell@microsoft.com",
