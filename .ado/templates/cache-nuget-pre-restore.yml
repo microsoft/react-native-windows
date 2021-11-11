@@ -36,7 +36,7 @@ steps:
           "cache-nuget-global.rev4"
           | ${{ parameters.solutionPath }}
           | ${{ parameters.nugetConfigPath }}
-          | ${{ parameters.solutionPath }}/**.sln
+          | **/${{ parameters.solutionPath }}/**.sln
           | **/packages.config
           | **/packages.lock.json
       # On cache miss, start from another copy for the same solution.
