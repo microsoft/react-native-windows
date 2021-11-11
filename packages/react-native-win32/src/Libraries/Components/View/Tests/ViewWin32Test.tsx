@@ -274,7 +274,7 @@ class EnableFocusRingExample extends React.Component<{}, IFocusableComponentStat
             height: 100,
             width: 100,
           }}
-          enableFocusRing={true}
+          enableFocusRing={false}
           focusable
           onFocus={this._onFocus}
           onBlur={this._onBlur}
