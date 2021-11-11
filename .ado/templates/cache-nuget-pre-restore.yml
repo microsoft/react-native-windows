@@ -3,7 +3,7 @@ parameters:
   - name: nugetConfigPath
     type: string
 
-  # Path to the .sln file to restore
+  # Path to a .sln file or a directory containing one
   - name: solutionPath
     type: string
 
@@ -23,14 +23,22 @@ steps:
       # This is scoped to the entire repo + node_modules because we cannot
       # reason about the dependency graph between packages. It can be keyed
       # solely to solution lockfile once we are fully PackageReference.
-      key: >
-        "cache-nuget-global.rev4"
-        | "${{ parameters.solutionPath }}"
-        | ${{ parameters.solutionPath }}
-        | ${{ parameters.nugetConfigPath }}
-        | **/packages.config
-        | **/packages.lock.json
-
+      ${{ if endsWith(parameters.solutionPath, '.sln') }}:
+        key: >
+          "cache-nuget-global.rev4"
+          | "${{ parameters.solutionPath }}"
+          | ${{ parameters.solutionPath }}
+          | ${{ parameters.nugetConfigPath }}
+          | **/packages.config
+          | **/packages.lock.json
+      ${{ else }}:
+        key: >
+          "cache-nuget-global.rev4"
+          | ${{ parameters.solutionPath }}
+          | ${{ parameters.nugetConfigPath }}
+          | ${{ parameters.solutionPath }}/**.sln
+          | **/packages.config
+          | **/packages.lock.json
       # On cache miss, start from another copy for the same solution.
       # Invalidate the cache if NuGet config changes.
       restoreKeys: >

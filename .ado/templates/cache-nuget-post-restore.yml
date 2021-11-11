@@ -11,5 +11,5 @@ steps:
           $relativePath = Resolve-Path -relative $file.FullName
           $outputFile = Join-Path '$(nupkgCacheDirectory)' $relativePath
           New-Item -ItemType File -Path $outputFile -Force
-          Copy-Item $_.FullName -Destination $outputFile
+          Copy-Item $file.FullName -Destination $outputFile
         }
