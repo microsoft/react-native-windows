@@ -82,7 +82,7 @@ async function loadConfig(
   configPath: string,
   parentConfig?: LoadedConfig,
 ): Promise<LoadedConfig> {
-  const config = await fs.readFile.asJson<Partial<Config>>(configPath);
+  const config = await fs.readJsonFile<Partial<Config>>(configPath);
   const configDir = path.dirname(configPath);
   if (parentConfig) {
     return {

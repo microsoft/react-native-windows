@@ -133,7 +133,7 @@ export async function copyProjectTemplateAndReplace(
   let mainComponentName = newProjectName;
   const appJsonPath = await findUp('app.json', {cwd: destPath});
   if (appJsonPath) {
-    const appJson = await fs.readFile.asJson<{name: string}>(appJsonPath);
+    const appJson = await fs.readJsonFile<{name: string}>(appJsonPath);
     mainComponentName = appJson.name;
   }
 

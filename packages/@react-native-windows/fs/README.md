@@ -44,25 +44,25 @@ import fs from '@react-native-windows/fs';
 const fooExists = await fs.exists('foo.txt');
 ```
 
-### `readFile.asJson`
+### `readJsonFile` and `readJsonFileSync`
 
 `@react-native-windows/fs` provides convenience methods to handle JSON files. These are implemented
 as methods under `fs.ReadFile`. The following conversions are added:
 
 | Method | Return type |
 |-|-|
-| `readFile.asJson<T>` | `Promise<T>` or `Promise<Record<string, unknown> \| Array<unknown>>` |
-| `readFileSync.asJson<T>` | `T` or `Record<string, unknown> \| Array<unknown>` |
+| `readJsonFile<T>` | `Promise<T>` or `Promise<Record<string, unknown>>` |
+| `readJsonFileSync<T>` | `T` or `Record<string, unknown>` |
 
 ```ts
 import fs from '@react-native-windows/fs';
 
-// foo is type: Record<string, unknown>
-const foo = await fs.readFile.asJson('foo.json');
+// foo is type: Record<string, unknown> by default
+const foo = await fs.readJsonFile('foo.json');
 
 // foo is type: FooProps
 type FooProps = { name: string, version: string };
-const foo = await fs.readFile.asJson<FooProps>('foo.json');
+const foo = await fs.readJsonFile<FooProps>('foo.json');
 ```
 
 ## Resiliency

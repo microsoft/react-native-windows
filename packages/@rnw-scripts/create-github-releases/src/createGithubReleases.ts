@@ -144,7 +144,7 @@ async function readChangelogs(): Promise<Changelog[]> {
   return Promise.all(
     changelogs.map(async changelog => {
       const fullPath = path.join(repoRoot, changelog);
-      return await fs.readFile.asJson<Changelog>(fullPath);
+      return await fs.readJsonFile<Changelog>(fullPath);
     }),
   );
 }

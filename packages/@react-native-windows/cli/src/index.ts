@@ -108,7 +108,7 @@ export async function generateWindows(
       let cliVersion = '';
       try {
         const cwd = process.cwd();
-        const rnwPkg = fs.readFileSync.asJson<{
+        const rnwPkg = fs.readJsonFileSync<{
           version: string;
           peerDependencies: Record<string, string>;
         }>(

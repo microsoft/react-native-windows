@@ -35,7 +35,7 @@ const importedMethods = [
   'openSync',
   'readdirSync',
   'readlinkSync',
-  'readSync',
+  'readFileSync',
   'readSync',
   'readvSync',
   'realpathSync',
@@ -57,40 +57,40 @@ const importedMethods = [
 ] as const;
 
 type ValueOf<T extends readonly any[]> = T[number];
-type ImportedMethods = ValueOf<typeof importedMethods>;
+type ImportedMethodNames = ValueOf<typeof importedMethods>;
+type ImportedMethods = Pick<typeof fs, ImportedMethodNames>;
 
-export type SyncMethods = Pick<typeof fs, ImportedMethods> & {
-  readFileSync: typeof fs.readFileSync & ReadFileAsMethods;
-};
-
-type ReadFileAsMethods = {
-  asJson: <T = Record<string, unknown> | unknown[]>(
+type ExtraMethods = {
+  readJsonFileSync: <T = Record<string, unknown>>(
     path: fs.PathLike | number,
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
   ) => T;
 };
 
-const copiedMethods: Partial<Pick<typeof fs, ImportedMethods>> = {};
-for (const methodName of importedMethods) {
-  // @ts-ignore
-  copiedMethods[methodName] = fs[methodName];
-}
+export type SyncMethods = ImportedMethods & ExtraMethods;
 
 const syncMethods: SyncMethods = {
-  ...(copiedMethods as Omit<SyncMethods, 'readFileSync'>),
+  ...importMethods(),
 
-  readFileSync: Object.assign(fs.readFileSync, {
-    asJson: (
-      path: fs.PathLike | number,
-      options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
-    ) => {
-      const opts = {
-        encoding: options?.encoding || 'utf-8',
-        flag: options?.flag,
-      };
-      return JSON.parse(syncMethods.readFileSync(path, opts));
-    },
-  }),
+  readJsonFileSync: (
+    path: fs.PathLike | number,
+    options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
+  ) => {
+    const opts = {
+      encoding: options?.encoding || 'utf-8',
+      flag: options?.flag,
+    };
+    return JSON.parse(syncMethods.readFileSync(path, opts));
+  },
 };
 
 export default syncMethods;
+
+function importMethods(): ImportedMethods {
+  const copiedMethods: Partial<ImportedMethods> = {};
+  for (const methodName of importedMethods) {
+    // @ts-ignore
+    copiedMethods[methodName] = fs[methodName];
+  }
+  return copiedMethods as ImportedMethods;
+}

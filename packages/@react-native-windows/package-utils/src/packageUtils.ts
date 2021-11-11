@@ -55,10 +55,7 @@ export class WritableNpmPackage extends NpmPackage {
   static async fromPath(pkgPath: string): Promise<WritableNpmPackage | null> {
     const jsonPath = path.join(pkgPath, 'package.json');
     try {
-      return new WritableNpmPackage(
-        pkgPath,
-        await fs.readFile.asJson(jsonPath),
-      );
+      return new WritableNpmPackage(pkgPath, await fs.readJsonFile(jsonPath));
     } catch (ex) {
       if ((ex as any).code === 'ENOENT') {
         return null;
@@ -149,7 +146,7 @@ export async function findPackage(
 
   return new NpmPackage(
     path.dirname(pkgJsonPath),
-    await fs.readFile.asJson(pkgJsonPath),
+    await fs.readJsonFile(pkgJsonPath),
   );
 }
 

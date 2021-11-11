@@ -145,12 +145,12 @@ function getReactNativeProjectName(): string {
   }
   type PackageJson = {name: string};
 
-  let name = fs.readFileSync.asJson<PackageJson>(pkgJsonPath).name;
+  let name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
   if (!name) {
     const appJsonPath = findUp.sync('app.json', {cwd});
     if (appJsonPath) {
       console.log('Reading project name from app.json...');
-      name = fs.readFileSync.asJson<PackageJson>(pkgJsonPath).name;
+      name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
     }
   }
   if (!name) {

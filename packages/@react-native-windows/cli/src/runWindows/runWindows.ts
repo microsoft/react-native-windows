@@ -55,7 +55,7 @@ function getPkgVersion(pkgName: string): string {
     const pkgJsonPath = require.resolve(`${pkgName}/package.json`, {
       paths: [process.cwd(), __dirname],
     });
-    const pkgJson = fs.readFileSync.asJson<{name: string; version?: string}>(
+    const pkgJson = fs.readJsonFileSync<{name: string; version?: string}>(
       pkgJsonPath,
     );
     if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
@@ -201,7 +201,7 @@ export async function getAnonymizedProjectName(
     return null;
   }
 
-  const projectJson = await fs.readFile.asJson<{name: string}>(projectJsonPath);
+  const projectJson = await fs.readJsonFile<{name: string}>(projectJsonPath);
 
   const projectName = projectJson.name;
   if (typeof projectName !== 'string') {
