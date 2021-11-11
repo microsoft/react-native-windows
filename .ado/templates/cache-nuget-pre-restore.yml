@@ -8,12 +8,16 @@ parameters:
     type: string
 
 steps:
+  - powershell: |
+      nuget locals global-packages -clear
+      Write-Host "##vso[task.setvariable variable=NUGET_PACKAGES]$(nugetGloblPackagesCacheDirectory)"
+    displayName: Set NuGet Package Directory
 
   - task: Cache@2
     displayName: Cache nupkgs
     inputs:
       # Cache the packages downloaded to system global cache
-      path: ${{ variables.nupkgCacheDirectory }}
+      path: $(nupkgCacheDirectory)
       
       # Cause a cache miss if:
       #   1. NuGet.config changes
@@ -25,7 +29,7 @@ steps:
       # solely to solution lockfile once we are fully PackageReference.
       ${{ if endsWith(parameters.solutionPath, '.sln') }}:
         key: >
-          "cache-nuget-global.rev4"
+          "cache-nuget-global.rev5"
           | "${{ parameters.solutionPath }}"
           | ${{ parameters.solutionPath }}
           | ${{ parameters.nugetConfigPath }}
@@ -42,7 +46,7 @@ steps:
       # On cache miss, start from another copy for the same solution.
       # Invalidate the cache if NuGet config changes.
       restoreKeys: >
-        "cache-nuget-global.rev4"
+        "cache-nuget-global.rev5"
         | "${{ parameters.solutionPath }}"
         | ${{ parameters.nugetConfigPath }}
 
@@ -53,14 +57,14 @@ steps:
     condition: and(succeeded(), or(eq(variables.nugetCacheHit, 'true'), eq(variables.nugetCacheHit, 'inexact')))
     inputs:
       pwsh: true # Needed for `ForEach-Object -Parallel`
-      workingDirectory: ${{ variables.nupkgCacheDirectory }}
+      workingDirectory: $(nupkgCacheDirectory)
       script: |
         $size = @{label="Size";expression={"$([math]::ceiling($_.length / 1mb))MB"}}
         gci . -File -Recurse -Filter *.nupkg | Sort-Object Length -Descending | Select-Object -First 50 name, $size
 
         gci . -File -Recurse -Filter *.nupkg | ForEach-Object -Parallel {
           $relativePackageDir = Resolve-Path -relative $_.Directory
-          $outputDir = Join-Path '${{ variables.NUGET_PACKAGES }}' $relativePackageDir
+          $outputDir = Join-Path '$(NUGET_PACKAGES)' $relativePackageDir
           Copy-Item -Recurse $_.Directory -Destination $outputDir
 
           # 7-zip is orders of magnitude faster than Expand-Archive;

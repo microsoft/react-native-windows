@@ -4,7 +4,7 @@ steps:
     condition: and(succeeded(), or(eq(variables.nugetCacheHit, 'false'), eq(variables.nugetCacheHit, 'inexact')))
     inputs:
       targetType: inline
-      workingDirectory: ${{ variables.NUGET_PACKAGES }}
+      workingDirectory: $(NUGET_PACKAGES)
       script: |
         $filesToCache = gci . -File -Recurse -Filter *nupkg*
         foreach ($file in $filesToCache) {

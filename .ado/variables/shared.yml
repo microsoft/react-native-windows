@@ -6,12 +6,12 @@ variables:
   NPM_CONFIG_YES: false
 
   # NuGet Config
-  NUGET_PACKAGES: $(Agent.TempDirectory)/.nuget2/packages
   NUGET_PLUGIN_HANDSHAKE_TIMEOUT_IN_SECONDS: 60
   NUGET_PLUGIN_REQUEST_TIMEOUT_IN_SECONDS: 60
 
   # NuPkg Cache Config
-  nupkgCacheDirectory: $(Agent.TempDirectory)/.nupkg
+  nugetCacheDirectory
+  nugetGloblPackagesCacheDirectory: $(Agent.TempDirectory)/.nuget-cache/packages
 
   # Yarn Config
   YARN_CACHE_FOLDER: $(Agent.TempDirectory)/.yarnCache
