@@ -24,6 +24,7 @@ const importedMethods = [
   'open',
   'opendir',
   'readdir',
+  'readFile',
   'readlink',
   'realpath',
   'rename',
