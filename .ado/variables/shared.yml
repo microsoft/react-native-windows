@@ -15,4 +15,4 @@ variables:
   # Yarn Config
   YARN_CACHE_FOLDER: $(Agent.TempDirectory)/.yarnCache
   YARN_NETWORK_CONCURRENCY: 40
-  
+

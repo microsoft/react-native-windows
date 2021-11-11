@@ -2,6 +2,60 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Nov 2021 23:57:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.416",
+      "version": "0.0.0-canary.416",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55",
+            "comment": "Add MSRN Debug NuGet Packages"
+          },
+          {
+            "author": "igklemen@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6b0407bd2a10578b3010412c49cc61b41d43ac16",
+            "comment": "Integrate OCt 28 RN nightly build."
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.18",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Nov 2021 06:11:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.415",
+      "version": "0.0.0-canary.415",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "26db8a0e95797adf2646e614eecf7fbb1e707601",
+            "comment": "Add PackageReference Locks"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "98948c6eb811c91674cd8ce2086f0140029c81a8",
+            "comment": "Remove extra definition of ReactNativeWindowsDir"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a2d40465bbd906d7ae1685938cad6312d866221a",
+            "comment": "Short-circuit ChakraCore to Chakra"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 06 Nov 2021 05:08:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.414",
       "version": "0.0.0-canary.414",

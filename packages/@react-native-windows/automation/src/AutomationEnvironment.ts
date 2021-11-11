@@ -5,9 +5,11 @@
  * @format
  */
 
+import chalk from 'chalk';
 import {execSync, spawn, ChildProcess} from 'child_process';
 import fs from '@react-native-windows/fs';
 import path from 'path';
+import readlineSync from 'readline-sync';
 
 import NodeEnvironment = require('jest-environment-node');
 
@@ -34,6 +36,7 @@ export type EnvironmentOptions = {
   enableAutomationChannel?: boolean;
   automationChannelPort?: number;
   winAppDriverBin?: string;
+  breakOnStart?: boolean;
   webdriverOptions?: RemoteOptions;
 };
 
@@ -46,6 +49,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
   private readonly webDriverOptions: RemoteOptions;
   private readonly channelOptions: AutomationChannelOptions;
   private readonly winappdriverBin: string;
+  private readonly breakOnStart: boolean;
   private winAppDriverProcess: ChildProcess | undefined;
   private browser: BrowserObject | undefined;
   private automationClient: AutomationClient | undefined;
@@ -111,16 +115,25 @@ export default class AutomationEnvironment extends NodeEnvironment {
       enable: passedOptions.enableAutomationChannel === true,
       port: passedOptions.automationChannelPort || 8603,
     };
+
+    this.breakOnStart = passedOptions.breakOnStart === true;
   }
 
   async setup() {
     await super.setup();
-
     this.winAppDriverProcess = await spawnWinAppDriver(
       this.winappdriverBin,
       this.webDriverOptions.port!,
     );
+
     this.browser = await webdriverio.remote(this.webDriverOptions);
+
+    if (this.breakOnStart) {
+      readlineSync.question(
+        chalk.bold.yellow('Breaking before tests start\n') +
+          'Press Enter to resume...',
+      );
+    }
 
     if (this.channelOptions.enable) {
       this.automationClient = await waitForConnection({

@@ -1,3 +1,2 @@
 variables:
-  - template: pools.yml
   - template: shared.yml

@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildNuGetOnly
     type: boolean
   - name: buildMatrix
@@ -87,16 +89,16 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: X86DebugCppNuget
+          - Name: X64DebugCppNuget
             language: cpp
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
             useNuGet: true
-          - Name: X86DebugCsNuget
+          - Name: X64ReleaseCsNuget
             language: cs
-            configuration: Debug
-            platform: x86
+            configuration: Release
+            platform: x64
             projectType: app
             useNuGet: true
           - Name: X64DebugCppLowResource
@@ -205,7 +207,7 @@ parameters:
             configuration: Release
             platform: x86
             projectType: app
-            useNuGet: true            
+            useNuGet: true
           - Name: X64ReleaseCppNuget
             language: cpp
             configuration: Release
@@ -217,19 +219,21 @@ parameters:
             configuration: Release
             platform: x64
             projectType: app
-            useNuGet: true                     
+            useNuGet: true
           - Name: Arm64ReleaseCppNuget
             language: cpp
             configuration: Release
             platform: ARM64
             projectType: app
+            additionalRunArguments: --no-deploy
             useNuGet: true
           - Name: Arm64ReleaseCsNuget
             language: cs
             configuration: Release
             platform: ARM64
             projectType: app
-            useNuGet: true                       
+            additionalRunArguments: --no-deploy
+            useNuGet: true
           - Name: Arm64DebugCpp
             language: cpp
             configuration: Debug
@@ -298,20 +302,17 @@ jobs:
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
-                - UniversalBuild${{ matrix.platform }}${{ matrix.configuration }}
+                - UniversalBuild${{ matrix.platform }}Release
 
-            variables:
-              - template: ../variables/windows.yml
+            variables: [template: ../variables/windows.yml]
 
-            pool:
-              ${{ if eq(matrix.lowResource, true) }}:
-                # 9079: Use Medium hardware until new drop of
-                # `@react-native-community/cli` with windows init reliability
-                # improvements.
-                name: ${{ variables['AgentPool.Medium'] }}
-              ${{ else }}:
-                name: ${{ variables['AgentPool.Medium'] }}
-              demands: ${{ variables['AgentImage'] }}
+            ${{ if eq(matrix.lowResource, true) }}:
+              # 9079: Use Medium hardware until new drop of
+              # `@react-native-community/cli` with windows init reliability
+              # improvements.
+              pool: ${{ parameters.AgentPool.Medium }}
+            ${{ else }}:
+              pool: ${{ parameters.AgentPool.Medium }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 

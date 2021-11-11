@@ -1,15 +1,16 @@
+parameters:
+  - name: AgentPool
+    type: object
 
 jobs:
   - job: PackDesktop
-    variables:
-      - template: ../variables/windows.yml
     displayName: Pack Desktop NuGet Package
+    variables: [template: ../variables/windows.yml]
     dependsOn:
       - DesktopX64Release
       - DesktopX86Debug
-    pool:
-      name: ${{ variables['AgentPool.Small'] }}
-      demands: ${{ variables['AgentImage'] }}
+
+    pool: ${{ parameters.AgentPool.Small }}
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:

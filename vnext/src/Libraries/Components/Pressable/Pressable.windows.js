@@ -25,6 +25,7 @@ import usePressability from '../../Pressability/usePressability';
 import {normalizeRect, type RectOrSize} from '../../StyleSheet/Rect';
 import type {
   LayoutEvent,
+  MouseEvent,
   PressEvent,
   // [Windows
   BlurEvent,
@@ -73,6 +74,16 @@ type Props = $ReadOnly<{|
   children: React.Node | ((state: StateCallbackType) => React.Node),
 
   /**
+   * Duration to wait after hover in before calling `onHoverIn`.
+   */
+  delayHoverIn?: ?number,
+
+  /**
+   * Duration to wait after hover out before calling `onHoverOut`.
+   */
+  delayHoverOut?: ?number,
+
+  /**
    * Duration (in milliseconds) from `onPressIn` before `onLongPress` is called.
    */
   delayLongPress?: ?number,
@@ -97,6 +108,16 @@ type Props = $ReadOnly<{|
    * Called when this view's layout changes.
    */
   onLayout?: ?(event: LayoutEvent) => mixed,
+
+  /**
+   * Called when the hover is activated to provide visual feedback.
+   */
+  onHoverIn?: ?(event: MouseEvent) => mixed,
+
+  /**
+   * Called when the hover is deactivated to undo visual feedback.
+   */
+  onHoverOut?: ?(event: MouseEvent) => mixed,
 
   /**
    * Called when a long-tap gesture is detected.
@@ -201,9 +222,13 @@ function Pressable(props: Props, forwardedRef): React.Node {
     android_ripple,
     cancelable,
     children,
+    delayHoverIn,
+    delayHoverOut,
     delayLongPress,
     disabled,
     focusable,
+    onHoverIn,
+    onHoverOut,
     onLongPress,
     onPress,
     onPressIn,
@@ -267,8 +292,12 @@ function Pressable(props: Props, forwardedRef): React.Node {
       hitSlop,
       pressRectOffset: pressRetentionOffset,
       android_disableSound,
+      delayHoverIn,
+      delayHoverOut,
       delayLongPress,
       delayPressIn: unstable_pressDelay,
+      onHoverIn,
+      onHoverOut,
       onLongPress,
       onPress,
       onPressIn(event: PressEvent): void {
@@ -301,9 +330,13 @@ function Pressable(props: Props, forwardedRef): React.Node {
       android_disableSound,
       android_rippleConfig,
       cancelable,
+      delayHoverIn,
+      delayHoverOut,
       delayLongPress,
       disabled,
       hitSlop,
+      onHoverIn,
+      onHoverOut,
       onLongPress,
       onPress,
       onPressIn,
