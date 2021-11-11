@@ -5,7 +5,7 @@
  */
 
 import {totalmem, EOL} from 'os';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import child_process from 'child_process';
 import chalk from 'chalk';

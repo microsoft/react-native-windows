@@ -73,7 +73,7 @@ module.exports = {
         'no-restricted-imports': [
           'error', {
             name: 'fs',
-            message: 'Please us `nice-fs` instead of `fs`'
+            message: 'Please us `@react-native-windows/fs` instead of `fs`'
           }
         ],
         'no-var': 'error',

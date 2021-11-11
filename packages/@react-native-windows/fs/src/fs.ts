@@ -9,7 +9,7 @@ import asyncMethods, {AsyncMethods} from './asyncMethods';
 import syncMethods, {SyncMethods} from './syncMethods';
 import fs from 'graceful-fs';
 
-export interface NiceFS extends AsyncMethods, SyncMethods {
+export interface ReactBativeWindowsFs extends AsyncMethods, SyncMethods {
   constants: typeof fs.constants;
 
   /**
@@ -19,9 +19,9 @@ export interface NiceFS extends AsyncMethods, SyncMethods {
   renameSync(oldPath: fs.PathLike, newPath: fs.PathLike): void;
 }
 
-const niceFs: NiceFS = {
+const rnwFs: ReactBativeWindowsFs = {
   constants: fs.constants,
   ...asyncMethods,
   ...syncMethods,
 };
-export default niceFs;
+export default rnwFs;

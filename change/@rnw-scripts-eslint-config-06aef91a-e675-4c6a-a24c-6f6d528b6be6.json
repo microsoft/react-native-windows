@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Use 'nice-fs'",
+  "comment": "Use '@react-native-windows/fs'",
   "packageName": "@rnw-scripts/eslint-config",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"

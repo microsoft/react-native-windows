@@ -17,7 +17,7 @@
  */
 
 import chalk from 'chalk';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import util from 'util';
 

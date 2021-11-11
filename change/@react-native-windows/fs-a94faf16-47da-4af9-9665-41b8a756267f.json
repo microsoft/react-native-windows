@@ -1,7 +1,7 @@
 {
   "type": "major",
-  "comment": "Use 'nice-fs'",
-  "packageName": "nice-fs",
+  "comment": "Use '@react-native-windows/fs'",
+  "packageName": "@react-native-windows/fs",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"
 }

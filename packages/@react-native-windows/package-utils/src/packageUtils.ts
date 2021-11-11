@@ -6,7 +6,7 @@
  */
 
 import _ from 'lodash';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import findRepoRoot from '@react-native-windows/find-repo-root';
 

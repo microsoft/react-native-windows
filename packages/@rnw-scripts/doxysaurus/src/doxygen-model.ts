@@ -13,7 +13,7 @@
 import path from 'path';
 import xml2js from 'xml2js';
 import {log} from './logger';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import {Config} from './config';
 
 export class DoxModel {

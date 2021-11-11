@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import path from 'path';
 

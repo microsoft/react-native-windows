@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import {enumerateRepoPackages} from '@react-native-windows/package-utils';
 

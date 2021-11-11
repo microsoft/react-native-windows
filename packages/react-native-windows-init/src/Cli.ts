@@ -6,7 +6,7 @@
  */
 
 import yargs from 'yargs';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import {execSync} from 'child_process';
 import validUrl from 'valid-url';

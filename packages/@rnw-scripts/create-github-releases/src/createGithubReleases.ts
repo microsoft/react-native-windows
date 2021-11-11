@@ -11,7 +11,7 @@
 
 import _ from 'lodash';
 import chalk from 'chalk';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import semver from 'semver';
 import simplegit from 'simple-git/promise';

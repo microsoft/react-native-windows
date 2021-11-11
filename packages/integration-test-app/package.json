@@ -12,7 +12,7 @@
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.0.25",
     "chai": "^4.2.0",
-    "nice-fs": "^0.0.0",
+    "@react-native-windows/fs": "^0.0.0",
     "react": "17.0.2",
     "react-native": "0.0.0-20211021-2008-eccbf9b5c",
     "react-native-windows": "^0.0.0-canary.414"

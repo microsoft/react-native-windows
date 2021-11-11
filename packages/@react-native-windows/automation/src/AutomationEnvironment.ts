@@ -6,7 +6,7 @@
  */
 
 import {execSync, spawn, ChildProcess} from 'child_process';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import NodeEnvironment = require('jest-environment-node');

@@ -6,7 +6,7 @@
  */
 
 import crypto from 'crypto';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import os from 'os';
 import path from 'path';

@@ -31,7 +31,7 @@
     "io-ts": "^2.1.1",
     "isutf8": "^3.0.0",
     "lodash": "^4.17.15",
-    "nice-fs": "^0.0.0",
+    "@react-native-windows/fs": "^0.0.0",
     "node-fetch": "^2.6.0",
     "ora": "^3.4.0",
     "semver": "^7.3.2",

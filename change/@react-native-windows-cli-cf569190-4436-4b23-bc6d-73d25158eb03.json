@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Use 'nice-fs'",
+  "comment": "Use '@react-native-windows/fs'",
   "packageName": "@react-native-windows/cli",
   "email": "ngerlem@microsoft.com",
   "dependentChangeType": "patch"

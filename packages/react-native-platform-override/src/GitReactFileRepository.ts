@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import os from 'os';
 import path from 'path';
 import simplegit from 'simple-git/promise';

@@ -9,7 +9,7 @@ import path from 'path';
 import username from 'username';
 import uuid from 'uuid';
 import childProcess from 'child_process';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';

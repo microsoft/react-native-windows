@@ -10,7 +10,7 @@
  */
 
 import path from 'path';
-import fs from 'nice-fs';
+import fs from '@react-native-windows/fs';
 
 /** Doxysaurus project configuration. */
 export interface Config {

@@ -22,7 +22,7 @@
     "chalk": "^4.1.0",
     "find-up": "^4.1.0",
     "mustache": "^4.0.1",
-    "nice-fs": "^0.0.0",
+    "@react-native-windows/fs": "^0.0.0",
     "npm-registry-fetch": "^11.0.0",
     "prompts": "^2.4.1",
     "semver": "^7.3.2",
