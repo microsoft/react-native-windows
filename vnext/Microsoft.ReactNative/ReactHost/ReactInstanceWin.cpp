@@ -565,7 +565,7 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
     } else {
       m_state = ReactInstanceState::HasError;
       m_whenLoaded.SetError(errorCode);
-      AbandonJSCallQueue();
+      OnError(errorCode);
     }
   }
 }
@@ -758,22 +758,23 @@ std::function<void(std::string)> ReactInstanceWin::GetErrorCallback() noexcept {
 }
 
 void ReactInstanceWin::OnErrorWithMessage(const std::string &errorMessage) noexcept {
+  OnError(Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorMessage.c_str()}));
+}
+
+void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   m_state = ReactInstanceState::HasError;
   AbandonJSCallQueue();
 
   if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
     ErrorInfo errorInfo;
-    errorInfo.Message = errorMessage;
+    errorInfo.Message = errorCode.ToString();
     errorInfo.Id = 0;
     m_redboxHandler->showNewError(std::move(errorInfo), ErrorType::Native);
   }
 
-  OnError(Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorMessage.c_str()}));
-  m_updateUI();
-}
-
-void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   InvokeInQueue([this, errorCode]() noexcept { m_options.OnError(errorCode); });
+
+  m_updateUI();
 }
 
 void ReactInstanceWin::OnLiveReload() noexcept {
