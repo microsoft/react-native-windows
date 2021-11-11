@@ -211,6 +211,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   accessibilitySetSize?: number;
   animationClass?: string;
   focusable?: boolean;
+  enableFocusRing?: boolean;
 
   /**
    * The onBlur event occurs when an element loses focus.  The opposite of onBlur is onFocus.  Note that in React
