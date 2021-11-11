@@ -5,12 +5,10 @@ parameters:
     type: string
 
 steps:
-  - task: Cache@2
-    inputs:
-      key: '"restore-sln-v2" | "${{ parameters.solutionDir }}/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config | **/packages.config | **/packages.lock.json'
-      restoreKeys: '"restore-sln-v2" | "${{ parameters.solutionDir }}/${{ parameters.solutionName }}" | ${{ parameters.solutionDir }}/NuGet.config'
-      path: ${{ parameters.solutionDir }}/packages/
-    displayName: Copy cached NuGet packages
+  - template: ../templates/cache-nuget-pre-restore.yml
+    parameters:
+      solutionPath: ${{ parameters.solutionDir }}/${{ parameters.solutionName }}
+      nugetConfigPath: ${{ parameters.solutionDir }}/NuGet.config
 
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
   - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
@@ -20,5 +18,6 @@ steps:
       restoreSolution: ${{ parameters.solutionDir }}/${{ parameters.solutionName }}
       feedsToUse: config
       nugetConfigPath: ${{ parameters.solutionDir }}/NuGet.config
-      restoreDirectory: packages/
       verbosityRestore: Detailed
+
+  - template: ../templates/cache-nuget-post-restore.yml

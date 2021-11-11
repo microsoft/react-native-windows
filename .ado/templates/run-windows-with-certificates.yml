@@ -21,22 +21,38 @@ parameters:
     type: string
   - name: workingDirectory
     type: string
+  - name: restoreLockedMode
+    type: boolean
+    default: true
 
 steps:
-  - task: Cache@2
-    inputs:
-      key: '"run-windows-with-certificates" | "${{ parameters.workingDirectory }}" | ${{ parameters.workingDirectory }}/windows/NuGet.config | **/packages.config | **/packages.lock.json'
-      restoreKeys: '"run-windows-with-certificates" | "${{ parameters.workingDirectory }}" | ${{ parameters.workingDirectory }}/windows/NuGet.config'
-      path: ${{ parameters.workingDirectory }}/windows/packages/
-    displayName: Copy cached NuGet packages
+  - template: ../templates/cache-nuget-pre-restore.yml
+    parameters:
+      solutionPath: ${{ parameters.workingDirectory }}
+      nugetConfigPath: ${{ parameters.workingDirectory }}/windows/NuGet.config
 
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }}
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }}
+        ${{ parameters.deployOption }}
       displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'PullRequest')) }}:
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --release
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }}
+        ${{ parameters.deployOption }}
       displayName: run-windows (Release) - PR
       workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -45,8 +61,18 @@ steps:
       parameters:
         certificateName: ${{ parameters.certificateName }}
 
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --release
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+        ${{ parameters.deployOption }}
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
 
     - template: ../templates/cleanup-certificate.yml
+  
+  - template: ../templates/cache-nuget-post-restore.yml

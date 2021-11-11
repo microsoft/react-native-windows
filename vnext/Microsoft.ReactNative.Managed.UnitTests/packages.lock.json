@@ -298,8 +298,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9",
-          "Microsoft.ReactNative": "1.0.0",
-          "Microsoft.UI.Xaml": "2.7.0"
+          "Microsoft.ReactNative": "1.0.0"
         }
       },
       "reactcommon": {

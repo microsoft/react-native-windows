@@ -1,0 +1,68 @@
+parameters:
+  # Path to NuGet.config used to restore packages
+  - name: nugetConfigPath
+    type: string
+
+  # Path to the .sln file to restore
+  - name: solutionPath
+    type: string
+
+steps:
+
+  - task: Cache@2
+    displayName: Cache nupkgs
+    inputs:
+      # Cache the packages downloaded to system global cache
+      path: ${{ variables.nupkgCacheDirectory }}
+      
+      # Cause a cache miss if:
+      #   1. NuGet.config changes
+      #   2. Any changes to a `packages.config` file in the repo or npm depdency
+      #   3. Any changes to a `packages.lock.json` file in the repo or npm depdency (for PackageReference)
+      #
+      # This is scoped to the entire repo + node_modules because we cannot
+      # reason about the dependency graph between packages. It can be keyed
+      # solely to solution lockfile once we are fully PackageReference.
+      key: >
+        "cache-nuget-global.rev4"
+        | "${{ parameters.solutionPath }}"
+        | ${{ parameters.solutionPath }}
+        | ${{ parameters.nugetConfigPath }}
+        | **/packages.config
+        | **/packages.lock.json
+
+      # On cache miss, start from another copy for the same solution.
+      # Invalidate the cache if NuGet config changes.
+      restoreKeys: >
+        "cache-nuget-global.rev4"
+        | "${{ parameters.solutionPath }}"
+        | ${{ parameters.nugetConfigPath }}
+
+      cacheHitVar: nugetCacheHit
+
+  - task: PowerShell@2
+    displayName: Inflate cached nupkgs
+    condition: and(succeeded(), or(eq(variables.nugetCacheHit, 'true'), eq(variables.nugetCacheHit, 'inexact')))
+    inputs:
+      pwsh: true # Needed for `ForEach-Object -Parallel`
+      workingDirectory: ${{ variables.nupkgCacheDirectory }}
+      script: |
+        $size = @{label="Size";expression={"$([math]::ceiling($_.length / 1mb))MB"}}
+        gci . -File -Recurse -Filter *.nupkg | Sort-Object Length -Descending | Select-Object -First 50 name, $size
+
+        gci . -File -Recurse -Filter *.nupkg | ForEach-Object -Parallel {
+          $relativePackageDir = Resolve-Path -relative $_.Directory
+          $outputDir = Join-Path '${{ variables.NUGET_PACKAGES }}' $relativePackageDir
+          Copy-Item -Recurse $_.Directory -Destination $outputDir
+
+          # 7-zip is orders of magnitude faster than Expand-Archive;
+          & $env:ProgramFiles\7-Zip\7z.exe x -y "-o$($outputDir)\" "$($_.FullName)"
+
+          $extractedFiles = gci -Exclude *.nupkg -Recurse $outputDir | Sort-Object -Property FullName -Descending
+          foreach ($extracted in $extractedFiles) {
+            $urlDecodedName = [System.Web.HttpUtility]::UrlDecode($extracted.Name)
+            if ($extracted.Name -ne $urlDecodedName) {
+              Rename-Item -Path $extracted.FullName -NewName $urlDecodedName
+            }
+          }
+        }

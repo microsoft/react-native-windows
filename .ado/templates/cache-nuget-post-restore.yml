@@ -1,0 +1,15 @@
+steps:
+  - task: PowerShell@2
+    displayName: Write new newpkgs to cache
+    condition: and(succeeded(), or(eq(variables.nugetCacheHit, 'false'), eq(variables.nugetCacheHit, 'inexact')))
+    inputs:
+      targetType: inline
+      workingDirectory: ${{ variables.NUGET_PACKAGES }}
+      script: |
+        $filesToCache = gci . -File -Recurse -Filter *nupkg*
+        foreach ($file in $filesToCache) {
+          $relativePath = Resolve-Path -relative $file.FullName
+          $outputFile = Join-Path '$(nupkgCacheDirectory)' $relativePath
+          New-Item -ItemType File -Path $outputFile -Force
+          Copy-Item $_.FullName -Destination $outputFile
+        }
