@@ -21,8 +21,8 @@ steps:
       
       # Cause a cache miss if:
       #   1. NuGet.config changes
-      #   2. Any changes to a `packages.config` file in the repo or npm depdency
-      #   3. Any changes to a `packages.lock.json` file in the repo or npm depdency (for PackageReference)
+      #   2. Any changes to a `packages.config` file in the repo or npm dependency
+      #   3. Any changes to a `packages.lock.json` file in the repo or npm dependency (for PackageReference)
       #
       # This is scoped to the entire repo + node_modules because we cannot
       # reason about the dependency graph between packages. It can be keyed
@@ -43,12 +43,10 @@ steps:
           | **/${{ parameters.solutionPath }}/**/*.sln
           | **/packages.config
           | **/packages.lock.json
-      # On cache miss, start from another copy for the same solution.
-      # Invalidate the cache if NuGet config changes.
-      restoreKeys: >
-        "cache-nuget-global.rev5"
-        | "${{ parameters.solutionPath }}"
-        | ${{ parameters.nugetConfigPath }}
+      
+      # Do not perform partial restore, since it may lead to new caches
+      # bloating with data from the old cache.
+      # restoreKeys:
 
       cacheHitVar: nugetCacheHit
 
