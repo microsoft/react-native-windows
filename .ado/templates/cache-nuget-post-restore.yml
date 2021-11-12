@@ -1,6 +1,6 @@
 steps:
   - task: PowerShell@2
-    displayName: Write new newpkgs to cache
+    displayName: Write new nupkgs to cache
     condition: and(succeeded(), or(eq(variables.nugetCacheHit, 'false'), eq(variables.nugetCacheHit, 'inexact')))
     inputs:
       targetType: inline
