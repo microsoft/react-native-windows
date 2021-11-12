@@ -36,12 +36,16 @@ import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 
+class AutolinkChange {
+  public constructor(public readonly packageName: string, public readonly operation: string) {}
+}
+
 export class AutolinkWindows {
-  private changesNecessary: boolean;
+  private changesNecessary: AutolinkChange[] = [];
   protected windowsAppConfig: WindowsProjectConfig;
 
   public areChangesNeeded() {
-    return this.changesNecessary;
+    return this.changesNecessary.length > 0;
   }
 
   private getWindowsConfig() {
@@ -61,7 +65,6 @@ export class AutolinkWindows {
     readonly dependenciesConfig: {[key: string]: Dependency},
     readonly options: AutoLinkOptions,
   ) {
-    this.changesNecessary = false;
     if (
       !('windows' in this.projectConfig) ||
       this.projectConfig.windows === null
@@ -104,24 +107,13 @@ export class AutolinkWindows {
 
     verboseMessage('Parsing dependencies...', verbose);
 
-    this.changesNecessary =
-      (await this.ensureXAMLDialect()) || this.changesNecessary;
+    await this.ensureXAMLDialect();
 
     // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
-      this.changesNecessary =
-        (await this.generateCSAutolinking(
-          templateRoot,
-          projectLang,
-          projectDir,
-        )) || this.changesNecessary;
+      await this.generateCSAutolinking(templateRoot, projectLang, projectDir);
     } else if (projectLang === 'cpp') {
-      this.changesNecessary =
-        (await this.generateCppAutolinking(
-          templateRoot,
-          projectLang,
-          projectDir,
-        )) || this.changesNecessary;
+      await this.generateCppAutolinking(templateRoot, projectLang, projectDir);
     }
 
     // Generating props for app project consumption
@@ -138,21 +130,17 @@ export class AutolinkWindows {
       }
     }
 
-    this.changesNecessary =
-      (await this.generateAutolinkProps(
-        templateRoot,
-        projectDir,
-        propertiesForProps,
-      )) || this.changesNecessary;
+    await this.generateAutolinkProps(
+      templateRoot,
+      projectDir,
+      propertiesForProps,
+    );
 
     // Generating targets for app project consumption
-    this.changesNecessary =
-      (await this.generateAutolinkTargets(projectDir, templateRoot)) ||
-      this.changesNecessary;
+    await this.generateAutolinkTargets(projectDir, templateRoot);
 
     // Generating project entries for solution
-    this.changesNecessary =
-      this.updateSolution(rnwRoot, solutionFile) || this.changesNecessary;
+    this.updateSolution(rnwRoot, solutionFile);
 
     spinner.succeed();
   }
@@ -490,6 +478,16 @@ export class AutolinkWindows {
         chalk.yellow(`${fileName} needs to be updated.`),
         this.options.logging,
       );
+      const minLength = Math.min(actualContents.length, expectedContents.length);
+      let firstDifference = 0;
+      for (let i = 0; i < minLength; i++) {
+        if (actualContents[i] !== expectedContents) {
+          firstDifference = i; break;
+        }
+      }
+      const startAtDifference = actualContents.substr(firstDifference);
+      const extract = startAtDifference.substr(0, startAtDifference.indexOf('\n'));
+      this.changesNecessary.push(new AutolinkChange(extract, `${fileName} needs to be updated.`));
       if (!this.options.check) {
         verboseMessage(`Writing ${fileName}...`, this.options.logging);
         await fs.promises.writeFile(filePath, expectedContents, {
@@ -648,7 +646,6 @@ export class AutolinkWindows {
       this.options.logging,
     );
 
-    let changesNecessary = false;
     projectsForSolution.forEach(project => {
       const contentsChanged = vstools.addProjectToSolution(
         solutionFile,
@@ -656,9 +653,12 @@ export class AutolinkWindows {
         this.options.logging,
         this.options.check,
       );
-      changesNecessary = changesNecessary || contentsChanged;
+      if (contentsChanged) {
+        this.changesNecessary.push(
+          new AutolinkChange(project.projectName, `added project to ${solutionFile}`),
+        );
+      }
     });
-    return changesNecessary;
   }
 
   protected getExperimentalFeaturesPropsXml() {
@@ -679,7 +679,6 @@ export class AutolinkWindows {
   }
 
   public async ensureXAMLDialect() {
-    let changesNeeded = false;
     const useWinUI3FromConfig = this.getWindowsConfig().useWinUI3;
     const experimentalFeatures = this.getExperimentalFeaturesPropsXml();
     if (experimentalFeatures) {
@@ -698,7 +697,7 @@ export class AutolinkWindows {
         'WinUI3Version',
       );
       // Use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
-      changesNeeded = await this.updatePackagesConfigXAMLDialect(
+      await this.updatePackagesConfigXAMLDialect(
         useWinUI3FromConfig !== undefined
           ? useWinUI3FromConfig
           : useWinUI3FromExperimentalFeatures,
@@ -711,20 +710,22 @@ export class AutolinkWindows {
           'UseWinUI3',
         );
         const newValue = useWinUI3FromConfig ? 'true' : 'false';
-        changesNeeded = node.item(0)?.textContent !== newValue || changesNeeded;
-        if (!this.options.check && changesNeeded) {
-          node.item(0)!.textContent = newValue;
-          const experimentalFeaturesOutput = new XMLSerializer().serializeToString(
-            experimentalFeatures.content,
-          );
-          await this.updateFile(
-            experimentalFeatures.path,
-            experimentalFeaturesOutput,
-          );
+        const oldValue = node.item(0)?.textContent;
+        if (oldValue !== newValue) {
+          this.changesNecessary.push(new AutolinkChange('UseWinUI3', `updating feature flag value from ${oldValue} to ${newValue}`));
+          if (!this.options.check) {
+            node.item(0)!.textContent = newValue;
+            const experimentalFeaturesOutput = new XMLSerializer().serializeToString(
+              experimentalFeatures.content,
+            );
+            await this.updateFile(
+              experimentalFeatures.path,
+              experimentalFeaturesOutput,
+            );
+          }  
         }
       }
     }
-    return changesNeeded;
   }
 
   protected getPackagesConfigXml() {
@@ -748,7 +749,6 @@ export class AutolinkWindows {
     targetWinUI2xVersion: string | null,
     targetWinUI3xVersion: string | null,
   ) {
-    let changed = false;
     const packagesConfig = this.getPackagesConfigXml();
     if (packagesConfig) {
       // if we don't have a packages.config, then this is a C# project, in which case we use <PackageReference> and dynamically pick the right XAML package.
@@ -777,20 +777,20 @@ export class AutolinkWindows {
       const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
       const removePkg = useWinUI3 ? dialects[1] : dialects[0];
 
-      changed = this.updatePackagesConfig(
+      const changesNeededOld = this.changesNecessary.length;
+      this.updatePackagesConfig(
         packagesConfig,
         [removePkg],
         [keepPkg],
       );
 
-      if (!this.options.check && changed) {
+      if (!this.options.check && changesNeededOld !== this.changesNecessary.length) {
         const serializer = new XMLSerializer();
         const output = serializer.serializeToString(packagesConfig.content);
         const formattedXml = formatter(output, {indentation: '  '});
         await this.updateFile(packagesConfig.path, formattedXml);
       }
     }
-    return changed;
   }
 
   private updatePackagesConfig(
@@ -798,7 +798,6 @@ export class AutolinkWindows {
     removePkgs: {id: string; version: string}[],
     keepPkgs: {id: string; version: string}[],
   ) {
-    let changed = false;
     const packageElements = packagesConfig.content.documentElement.getElementsByTagName(
       'package',
     );
@@ -812,10 +811,12 @@ export class AutolinkWindows {
       const keepPkg = keepPkgs.find(pkg => pkg.id === id);
       if (removePkgs.find(pkg => pkg.id === id)) {
         nodesToRemove.push(packageElement);
-        changed = true;
+        this.changesNecessary.push(new AutolinkChange(id, 'removing from packages.config'));
       } else if (keepPkg) {
-        changed =
-          changed || keepPkg.version !== packageElement.getAttribute('version');
+        const existingVersion = packageElement.getAttribute('version');
+        if (keepPkg.version !== existingVersion) {
+          this.changesNecessary.push(new AutolinkChange(id, `updating version from ${existingVersion} to ${keepPkg.version}`));
+        }
         packageElement.setAttribute('version', keepPkg.version!);
         keepPkgs = keepPkgs.filter(pkg => pkg.id !== keepPkg.id);
       }
@@ -833,9 +834,8 @@ export class AutolinkWindows {
       });
       newPkg.setAttribute('targetFramework', 'native');
       packagesConfig.content.documentElement.appendChild(newPkg);
-      changed = true;
+      this.changesNecessary.push(new AutolinkChange(keepPkg.id, `adding package with version ${keepPkg.version}`));
     });
-    return changed;
   }
 
   /** @return The CLI command to invoke autolink-windows independently */
