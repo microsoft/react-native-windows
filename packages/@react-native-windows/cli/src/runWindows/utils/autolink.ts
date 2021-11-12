@@ -41,7 +41,7 @@ class AutolinkChange {
 }
 
 export class AutolinkWindows {
-  private changesNecessary: AutolinkChange[] = [];
+  public readonly changesNecessary: AutolinkChange[] = [];
   protected windowsAppConfig: WindowsProjectConfig;
 
   public areChangesNeeded() {
@@ -927,6 +927,9 @@ async function updateAutoLink(
           `${autolinkCommand}`,
         )}' to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
+
+      const changesNecessary = autolink.changesNecessary.map(alc => `${alc.operation}: ${alc.packageName}`).join('\n\t-  ');
+      console.log(`Required changes:`, changesNecessary);
       throw new CodedError(
         'NeedAutolinking',
         `Auto-linking changes were necessary but --check was specified. Run '${autolinkCommand}' to apply the changes`,
