@@ -10,7 +10,7 @@ parameters:
 steps:
   - powershell: |
       nuget locals global-packages -clear
-      Write-Host "##vso[task.setvariable variable=NUGET_PACKAGES]$(nugetGloblPackagesCacheDirectory)"
+      Write-Host "##vso[task.setvariable variable=NUGET_PACKAGES]$(nugetGloblPackageDirectory)"
     displayName: Set NuGet Package Directory
 
   - task: Cache@2
@@ -64,7 +64,7 @@ steps:
 
         gci . -File -Recurse -Filter *.nupkg | ForEach-Object -Parallel {
           $relativePackageDir = Resolve-Path -relative $_.Directory
-          $outputDir = Join-Path '$(NUGET_PACKAGES)' $relativePackageDir
+          $outputDir = Join-Path '$(nugetGloblPackageDirectory)' $relativePackageDir
           Copy-Item -Recurse $_.Directory -Destination $outputDir
 
           # 7-zip is orders of magnitude faster than Expand-Archive;

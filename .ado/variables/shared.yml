@@ -10,8 +10,8 @@ variables:
   NUGET_PLUGIN_REQUEST_TIMEOUT_IN_SECONDS: 60
 
   # NuPkg Cache Config
-  nugetCacheDirectory
-  nugetGloblPackagesCacheDirectory: $(Agent.TempDirectory)/.nuget-cache/packages
+  nupkgCacheDirectory: $(Agent.TempDirectory)/.nupkgCache
+  nugetGloblPackageDirectory: $(Agent.TempDirectory)/.nugetCache/packages
 
   # Yarn Config
   YARN_CACHE_FOLDER: $(Agent.TempDirectory)/.yarnCache
