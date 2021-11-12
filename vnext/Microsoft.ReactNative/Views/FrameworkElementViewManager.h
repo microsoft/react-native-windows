@@ -13,6 +13,11 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
  public:
   FrameworkElementViewManager(const Mso::React::IReactContext &context);
 
+  virtual XamlView CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props);
+
+  winrt::event_token onUnloadedRevoker;
+  virtual void onUnloaded(winrt::Windows::Foundation::IInspectable const &sender, xaml::RoutedEventArgs const &args);
+
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   // Helper functions related to setting/updating TransformMatrix

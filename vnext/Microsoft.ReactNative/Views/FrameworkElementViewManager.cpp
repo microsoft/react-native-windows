@@ -76,6 +76,15 @@ using DynamicAutomationProperties = Microsoft::ReactNative::DynamicAutomationPro
 
 FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
+XamlView FrameworkElementViewManager::CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props){
+  auto view = Super::CreateView(tag, props);
+  auto frameworkElem = view.try_as<xaml::FrameworkElement>();
+  onUnloadedRevoker=frameworkElem.Unloaded({this, &FrameworkElementViewManager::onUnloaded});
+  return view;
+}
+
+void FrameworkElementViewManager::onUnloaded(winrt::Windows::Foundation::IInspectable const &sender, xaml::RoutedEventArgs const &args){}
+
 void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferFrameworkElementProperties(oldView, newView);
 }
