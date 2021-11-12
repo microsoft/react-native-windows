@@ -79,7 +79,7 @@ FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReac
 XamlView FrameworkElementViewManager::CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props){
   auto view = Super::CreateView(tag, props);
   auto frameworkElem = view.try_as<xaml::FrameworkElement>();
-  onUnloadedRevoker=frameworkElem.Unloaded({this, &FrameworkElementViewManager::OnUnloaded});
+  onUnloadedRevoker = frameworkElem.Unloaded({this, &FrameworkElementViewManager::OnUnloaded});
   return view;
 }
 
