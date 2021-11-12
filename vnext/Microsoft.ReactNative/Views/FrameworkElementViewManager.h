@@ -16,7 +16,7 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   virtual XamlView CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props);
 
   winrt::event_token onUnloadedRevoker;
-  virtual void onUnloaded(winrt::Windows::Foundation::IInspectable const &sender, xaml::RoutedEventArgs const &args);
+  virtual void OnUnloaded(winrt::Windows::Foundation::IInspectable const &sender, xaml::RoutedEventArgs const &args);
 
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
