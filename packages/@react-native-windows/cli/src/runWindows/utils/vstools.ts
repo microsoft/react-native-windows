@@ -115,10 +115,11 @@ export function addProjectToSolution(
     );
   }
 
-  const slnLines = fs
-    .readFileSync(slnFile)
-    .toString()
-    .split('\r\n');
+  const originalSlnContents = fs.readFileSync(slnFile).toString();
+
+  const isCRLF = originalSlnContents.includes('\r\n');
+
+  const slnLines = originalSlnContents.split(isCRLF ? '\r\n' : '\n');
 
   let contentsChanged = false;
 
@@ -219,7 +220,7 @@ export function addProjectToSolution(
         );
       }
 
-      const slnContents = slnLines.join('\r\n');
+      const slnContents = slnLines.join(isCRLF ? '\r\n' : '\n');
       fs.writeFileSync(slnFile, slnContents, {
         encoding: 'utf8',
         flag: 'w',
