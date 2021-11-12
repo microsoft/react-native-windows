@@ -37,7 +37,10 @@ import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 
 class AutolinkChange {
-  public constructor(public readonly packageName: string, public readonly operation: string) {}
+  public constructor(
+    public readonly packageName: string,
+    public readonly operation: string,
+  ) {}
 }
 
 export class AutolinkWindows {
@@ -478,16 +481,25 @@ export class AutolinkWindows {
         chalk.yellow(`${fileName} needs to be updated.`),
         this.options.logging,
       );
-      const minLength = Math.min(actualContents.length, expectedContents.length);
+      const minLength = Math.min(
+        actualContents.length,
+        expectedContents.length,
+      );
       let firstDifference = 0;
       for (let i = 0; i < minLength; i++) {
         if (actualContents[i] !== expectedContents) {
-          firstDifference = i; break;
+          firstDifference = i;
+          break;
         }
       }
       const startAtDifference = actualContents.substr(firstDifference);
-      const extract = startAtDifference.substr(0, startAtDifference.indexOf('\n'));
-      this.changesNecessary.push(new AutolinkChange(extract, `${fileName} needs to be updated.`));
+      const extract = startAtDifference.substr(
+        0,
+        startAtDifference.indexOf('\n'),
+      );
+      this.changesNecessary.push(
+        new AutolinkChange(extract, `${fileName} needs to be updated.`),
+      );
       if (!this.options.check) {
         verboseMessage(`Writing ${fileName}...`, this.options.logging);
         await fs.promises.writeFile(filePath, expectedContents, {
@@ -655,7 +667,10 @@ export class AutolinkWindows {
       );
       if (contentsChanged) {
         this.changesNecessary.push(
-          new AutolinkChange(project.projectName, `added project to ${solutionFile}`),
+          new AutolinkChange(
+            project.projectName,
+            `added project to ${solutionFile}`,
+          ),
         );
       }
     });
@@ -712,7 +727,12 @@ export class AutolinkWindows {
         const newValue = useWinUI3FromConfig ? 'true' : 'false';
         const oldValue = node.item(0)?.textContent;
         if (oldValue !== newValue) {
-          this.changesNecessary.push(new AutolinkChange('UseWinUI3', `updating feature flag value from ${oldValue} to ${newValue}`));
+          this.changesNecessary.push(
+            new AutolinkChange(
+              'UseWinUI3',
+              `updating feature flag value from ${oldValue} to ${newValue}`,
+            ),
+          );
           if (!this.options.check) {
             node.item(0)!.textContent = newValue;
             const experimentalFeaturesOutput = new XMLSerializer().serializeToString(
@@ -722,7 +742,7 @@ export class AutolinkWindows {
               experimentalFeatures.path,
               experimentalFeaturesOutput,
             );
-          }  
+          }
         }
       }
     }
@@ -778,13 +798,12 @@ export class AutolinkWindows {
       const removePkg = useWinUI3 ? dialects[1] : dialects[0];
 
       const changesNeededOld = this.changesNecessary.length;
-      this.updatePackagesConfig(
-        packagesConfig,
-        [removePkg],
-        [keepPkg],
-      );
+      this.updatePackagesConfig(packagesConfig, [removePkg], [keepPkg]);
 
-      if (!this.options.check && changesNeededOld !== this.changesNecessary.length) {
+      if (
+        !this.options.check &&
+        changesNeededOld !== this.changesNecessary.length
+      ) {
         const serializer = new XMLSerializer();
         const output = serializer.serializeToString(packagesConfig.content);
         const formattedXml = formatter(output, {indentation: '  '});
@@ -811,11 +830,18 @@ export class AutolinkWindows {
       const keepPkg = keepPkgs.find(pkg => pkg.id === id);
       if (removePkgs.find(pkg => pkg.id === id)) {
         nodesToRemove.push(packageElement);
-        this.changesNecessary.push(new AutolinkChange(id, 'removing from packages.config'));
+        this.changesNecessary.push(
+          new AutolinkChange(id, 'removing from packages.config'),
+        );
       } else if (keepPkg) {
         const existingVersion = packageElement.getAttribute('version');
         if (keepPkg.version !== existingVersion) {
-          this.changesNecessary.push(new AutolinkChange(id, `updating version from ${existingVersion} to ${keepPkg.version}`));
+          this.changesNecessary.push(
+            new AutolinkChange(
+              id,
+              `updating version from ${existingVersion} to ${keepPkg.version}`,
+            ),
+          );
         }
         packageElement.setAttribute('version', keepPkg.version!);
         keepPkgs = keepPkgs.filter(pkg => pkg.id !== keepPkg.id);
@@ -834,7 +860,12 @@ export class AutolinkWindows {
       });
       newPkg.setAttribute('targetFramework', 'native');
       packagesConfig.content.documentElement.appendChild(newPkg);
-      this.changesNecessary.push(new AutolinkChange(keepPkg.id, `adding package with version ${keepPkg.version}`));
+      this.changesNecessary.push(
+        new AutolinkChange(
+          keepPkg.id,
+          `adding package with version ${keepPkg.version}`,
+        ),
+      );
     });
   }
 
@@ -928,8 +959,13 @@ async function updateAutoLink(
         )}' to apply the changes. (${Math.round(endTime - startTime)}ms)`,
       );
 
-      const changesNecessary = autolink.changesNecessary.map(alc => `${alc.operation}: ${alc.packageName}`).join('\n\t-  ');
-      console.log(`Required changes:`, changesNecessary);
+      if (options.logging) {
+        const changesNecessary = autolink.changesNecessary
+          .map(alc => `${alc.operation}: ${alc.packageName}`)
+          .join('\n\t-  ');
+        console.log(`Required changes:`, changesNecessary);
+      }
+
       throw new CodedError(
         'NeedAutolinking',
         `Auto-linking changes were necessary but --check was specified. Run '${autolinkCommand}' to apply the changes`,
