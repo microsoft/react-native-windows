@@ -26,11 +26,6 @@ parameters:
     default: true
 
 steps:
-  - template: ../templates/cache-nuget-pre-restore.yml
-    parameters:
-      solutionPath: ${{ parameters.workingDirectory }}
-      nugetConfigPath: ${{ parameters.workingDirectory }}/windows/NuGet.config
-
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
     - script: >
         yarn windows
@@ -74,5 +69,3 @@ steps:
       workingDirectory: ${{ parameters.workingDirectory }}
 
     - template: ../templates/cleanup-certificate.yml
-  
-  - template: ../templates/cache-nuget-post-restore.yml
