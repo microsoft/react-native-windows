@@ -13,7 +13,6 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
@@ -802,7 +801,7 @@
     <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.210312.4" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.211028.7" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
