@@ -15,10 +15,10 @@
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
-              CreateApiDocs: true
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
+              CreateApiDocs: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: Arm64Debug
@@ -33,10 +33,10 @@
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
-              CreateApiDocs: true
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
+              CreateApiDocs: true
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: x86
@@ -81,7 +81,7 @@
                   - powershell: |
                       $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
                       Invoke-WebRequest -UseBasicParsing $winmd2md_url -OutFile $env:TEMP\winmd2md.exe
-                      & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd
+                      & $env:TEMP\winmd2md.exe /experimental /outputDirectory vnext\target\winmd2md vnext\target\x86\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd
                     displayName: "Generate WinRT API docs"
 
                   - task: PublishBuildArtifacts@1

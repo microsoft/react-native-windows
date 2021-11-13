@@ -364,10 +364,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@babel/parser@^7.1.0", "@babel/parser@^7.1.6", "@babel/parser@^7.11.5", "@babel/parser@^7.12.0", "@babel/parser@^7.12.5", "@babel/parser@^7.13.9", "@babel/parser@^7.14.0", "@babel/parser@^7.16.0", "@babel/parser@^7.7.0":
-  version "7.16.2"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.16.2.tgz#3723cd5c8d8773eef96ce57ea1d9b7faaccd12ac"
-  integrity sha512-RUVpT0G2h6rOZwqLDTrKk7ksNv7YpAilTnYe1/Q+eDjxEceRMKVWbCsX7t8h6C1qCFi/1Y8WZjcEPBAFG27GPw==
+"@babel/parser@^7.1.0", "@babel/parser@^7.1.6", "@babel/parser@^7.11.5", "@babel/parser@^7.12.0", "@babel/parser@^7.12.5", "@babel/parser@^7.13.9", "@babel/parser@^7.14.0", "@babel/parser@^7.16.0", "@babel/parser@^7.16.3", "@babel/parser@^7.7.0":
+  version "7.16.3"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.16.3.tgz#271bafcb811080905a119222edbc17909c82261d"
+  integrity sha512-dcNwU1O4sx57ClvLBVFbEgx0UZWfd0JQX5X6fxFRCLHelFBGXFfSz6Y0FAq2PEwUqlqLkdVjVr4VASEOuUnLJw==
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.16.0":
   version "7.16.0"
@@ -1096,9 +1096,9 @@
     source-map-support "^0.5.9"
 
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.8.4":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.0.tgz#e27b977f2e2088ba24748bf99b5e1dece64e4f0b"
-  integrity sha512-Nht8L0O8YCktmsDV6FqFue7vQLRx3Hb0B37lS5y0jDRqRxlBG4wIJHnf9/bgSE2UyipKFA01YtS+npRdTWBUyw==
+  version "7.16.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
+  integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1112,16 +1112,16 @@
     "@babel/types" "^7.16.0"
 
 "@babel/traverse@^7.1.0", "@babel/traverse@^7.11.5", "@babel/traverse@^7.12.5", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.0", "@babel/traverse@^7.16.0", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.16.0.tgz#965df6c6bfc0a958c1e739284d3c9fa4a6e3c45b"
-  integrity sha512-qQ84jIs1aRQxaGaxSysII9TuDaguZ5yVrEuC0BN2vcPlalwfLovVmCjbFDPECPXcYM/wLvNFfp8uDOliLxIoUQ==
+  version "7.16.3"
+  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.16.3.tgz#f63e8a938cc1b780f66d9ed3c54f532ca2d14787"
+  integrity sha512-eolumr1vVMjqevCpwVO99yN/LoGL0EyHiLO5I043aYQvwOJ9eR5UsZSClHVCzfhBduMAsSzgA/6AyqPjNayJag==
   dependencies:
     "@babel/code-frame" "^7.16.0"
     "@babel/generator" "^7.16.0"
     "@babel/helper-function-name" "^7.16.0"
     "@babel/helper-hoist-variables" "^7.16.0"
     "@babel/helper-split-export-declaration" "^7.16.0"
-    "@babel/parser" "^7.16.0"
+    "@babel/parser" "^7.16.3"
     "@babel/types" "^7.16.0"
     debug "^4.1.0"
     globals "^11.1.0"
@@ -2019,9 +2019,9 @@
     form-data "^3.0.0"
 
 "@types/node@*", "@types/node@^14.14.22":
-  version "14.17.32"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.32.tgz#2ca61c9ef8c77f6fa1733be9e623ceb0d372ad96"
-  integrity sha512-JcII3D5/OapPGx+eJ+Ik1SQGyt6WvuqdRfh9jUwL6/iHGjmyOriBDciBUu7lEIBTL2ijxwrR70WUnw5AEDmFvQ==
+  version "14.17.33"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.33.tgz#011ee28e38dc7aee1be032ceadf6332a0ab15b12"
+  integrity sha512-noEeJ06zbn3lOh4gqe2v7NMGS33jrulfNqYFDjjEbhpDEHR5VTxgYNQSBqBlJIsBJW3uEYDgD6kvMnrrhGzq8g==
 
 "@types/node@10.17.13":
   version "10.17.13"
@@ -2103,9 +2103,9 @@
     "@types/node" "*"
 
 "@types/react-native@*", "@types/react-native@^0.66.0":
-  version "0.66.3"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.3.tgz#a9910e973d1273a3d8d28433ecbf31e64241a22f"
-  integrity sha512-ZJmd4R36dPmgm5I0lEcR/1wCPH31Lwqz2ApDmvNXPow2ssoF5EO7NlNMG6hsROBbzYSf5U0DPVDAyW39VzvuAA==
+  version "0.66.4"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.4.tgz#075d9521de1ee53a4f3eff729133d897039c0d7f"
+  integrity sha512-Aby37oZ0S8LS4abOVWbBgChfHLZsx3skcj2QJU9ZHPhA1h6+yBbdBH2wJLxIUXfYT1Ejkwuv8n5u+/VxLzzcmA==
   dependencies:
     "@types/react" "*"
 
@@ -4769,9 +4769,9 @@ eslint-plugin-prettier@3.1.2:
     prettier-linter-helpers "^1.0.0"
 
 eslint-plugin-react-hooks@^4.0.4, eslint-plugin-react-hooks@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.2.0.tgz#8c229c268d468956334c943bb45fc860280f5556"
-  integrity sha512-623WEiZJqxR7VdxFCKLI6d6LLpwJkGPYKODnkH3D7WpOG5KM8yWueBd8TLsNAetEJNF5iJmolaAKO3F8yzyVBQ==
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-4.3.0.tgz#318dbf312e06fab1c835a4abef00121751ac1172"
+  integrity sha512-XslZy0LnMn+84NEG9jSGR6eGqaZB3133L8xewQo3fQagbQuGt7a63gf+P1NGKZavEYEC3UXaWEAA/AqDkuN6xA==
 
 eslint-plugin-react-native-globals@^0.1.1:
   version "0.1.2"
@@ -7317,12 +7317,12 @@ lodash.flatten@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.flatten/-/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
   integrity sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8=
 
-lodash.get@^4.0.0:
+lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
-lodash.isequal@^4.0.0:
+lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
@@ -10964,10 +10964,10 @@ validate-npm-package-name@^3.0.0:
   dependencies:
     builtins "^1.0.3"
 
-validator@^8.0.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-8.2.0.tgz#3c1237290e37092355344fef78c231249dab77b9"
-  integrity sha512-Yw5wW34fSv5spzTXNkokD6S6/Oq92d8q/t14TqsS3fAiA1RYnxSFSIZ+CY3n6PGGRCq5HhJTSepQvFUS2QUDxA==
+validator@^13.7.0:
+  version "13.7.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
+  integrity sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==
 
 vary@~1.1.2:
   version "1.1.2"
@@ -11462,14 +11462,14 @@ yauzl@^2.10.0, yauzl@^2.4.2:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-z-schema@~3.18.3:
-  version "3.18.4"
-  resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-3.18.4.tgz#ea8132b279533ee60be2485a02f7e3e42541a9a2"
-  integrity sha512-DUOKC/IhbkdLKKiV89gw9DUauTV8U/8yJl1sjf6MtDmzevLKOF2duNJ495S3MFVjqZarr+qNGCPbkg4mu4PpLw==
+z-schema@^5.0.2, z-schema@~3.18.3:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-5.0.2.tgz#f410394b2c9fcb9edaf6a7511491c0bb4e89a504"
+  integrity sha512-40TH47ukMHq5HrzkeVE40Ad7eIDKaRV2b+Qpi2prLc9X9eFJFzV7tMe5aH12e6avaSS/u5l653EQOv+J9PirPw==
   dependencies:
-    lodash.get "^4.0.0"
-    lodash.isequal "^4.0.0"
-    validator "^8.0.0"
+    lodash.get "^4.4.2"
+    lodash.isequal "^4.5.0"
+    validator "^13.7.0"
   optionalDependencies:
     commander "^2.7.1"
 
