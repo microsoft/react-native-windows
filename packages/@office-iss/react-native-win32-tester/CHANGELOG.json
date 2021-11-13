@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32-tester",
   "entries": [
     {
+      "date": "Fri, 12 Nov 2021 06:09:53 GMT",
+      "tag": "@office-iss/react-native-win32-tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32-tester",
+            "comment": "Bump @office-iss/react-native-win32 to v0.0.0-canary.122",
+            "commit": "b9c7719736b434457fd397a9fab199f9ab5331bf"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Nov 2021 23:57:31 GMT",
       "tag": "@office-iss/react-native-win32-tester_v0.0.1",
       "version": "0.0.1",

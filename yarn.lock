@@ -7322,12 +7322,12 @@ lodash.flatten@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.flatten/-/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
   integrity sha1-8xwiIlqWMtK7+OSt2+8kCqdlph8=
 
-lodash.get@^4.0.0:
+lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
-lodash.isequal@^4.0.0:
+lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
@@ -10969,10 +10969,10 @@ validate-npm-package-name@^3.0.0:
   dependencies:
     builtins "^1.0.3"
 
-validator@^8.0.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-8.2.0.tgz#3c1237290e37092355344fef78c231249dab77b9"
-  integrity sha512-Yw5wW34fSv5spzTXNkokD6S6/Oq92d8q/t14TqsS3fAiA1RYnxSFSIZ+CY3n6PGGRCq5HhJTSepQvFUS2QUDxA==
+validator@^13.7.0:
+  version "13.7.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-13.7.0.tgz#4f9658ba13ba8f3d82ee881d3516489ea85c0857"
+  integrity sha512-nYXQLCBkpJ8X6ltALua9dRrZDHVYxjJ1wgskNt1lH9fzGjs3tgojGSCBjmEPwkWS1y29+DrizMTW19Pr9uB2nw==
 
 vary@~1.1.2:
   version "1.1.2"
@@ -11467,14 +11467,14 @@ yauzl@^2.10.0, yauzl@^2.4.2:
     buffer-crc32 "~0.2.3"
     fd-slicer "~1.1.0"
 
-z-schema@~3.18.3:
-  version "3.18.4"
-  resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-3.18.4.tgz#ea8132b279533ee60be2485a02f7e3e42541a9a2"
-  integrity sha512-DUOKC/IhbkdLKKiV89gw9DUauTV8U/8yJl1sjf6MtDmzevLKOF2duNJ495S3MFVjqZarr+qNGCPbkg4mu4PpLw==
+z-schema@^5.0.2, z-schema@~3.18.3:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/z-schema/-/z-schema-5.0.2.tgz#f410394b2c9fcb9edaf6a7511491c0bb4e89a504"
+  integrity sha512-40TH47ukMHq5HrzkeVE40Ad7eIDKaRV2b+Qpi2prLc9X9eFJFzV7tMe5aH12e6avaSS/u5l653EQOv+J9PirPw==
   dependencies:
-    lodash.get "^4.0.0"
-    lodash.isequal "^4.0.0"
-    validator "^8.0.0"
+    lodash.get "^4.4.2"
+    lodash.isequal "^4.5.0"
+    validator "^13.7.0"
   optionalDependencies:
     commander "^2.7.1"
 

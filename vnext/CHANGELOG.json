@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 13 Nov 2021 06:08:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.417",
+      "version": "0.0.0-canary.417",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "2e05cd78ee34026d340c027c008a63df32a45227",
+            "comment": "Removes unnecessary prop settings on VM base class"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d336f1a7364c9c62325bda1737fb91bce0c3fa50",
+            "comment": "Fix Restore Determinism of Microsoft.ReactNative.Managed"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b2c2a30810c378439f3a88b6267ab7dae6381b3",
+            "comment": "Fix crash loading bundle in win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Nov 2021 23:57:30 GMT",
       "tag": "react-native-windows_v0.0.0-canary.416",
       "version": "0.0.0-canary.416",

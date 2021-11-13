@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 12 Nov 2021 06:09:53 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.122",
+      "version": "0.0.0-canary.122",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ruaraki@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "ea292e188b4252c11a80a56ef8e94f7cfe5a6909",
+            "comment": "Fix test case to have correct state"
+          },
+          {
+            "author": "ruaraki@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b1f9db3915f232fa38711e6b607966df9e412350",
+            "comment": "Add enableFocusRing prop for View and test"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Nov 2021 23:57:30 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.121",
       "version": "0.0.0-canary.121",
