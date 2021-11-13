@@ -26,7 +26,8 @@ const importedMethods = [
   'futimesSync',
   'lchmodSync',
   'lchownSync',
-  'lutimesSync',
+  // Not available in Node 12
+  // 'lutimesSync',
   'linkSync',
   'lstatSync',
   'mkdirSync',
@@ -37,12 +38,14 @@ const importedMethods = [
   'readlinkSync',
   'readFileSync',
   'readSync',
-  'readvSync',
+  // Not available in Node 12
+  // 'readvSync',
   'realpathSync',
   'realpathSync',
   'renameSync',
   'rmdirSync',
-  'rmSync',
+  // Not available in Node 12
+  // 'rmSync',
   'statSync',
   'symlinkSync',
   'truncateSync',
@@ -61,6 +64,21 @@ type ImportedMethodNames = ValueOf<typeof importedMethods>;
 type ImportedMethods = Pick<typeof fs, ImportedMethodNames>;
 
 type ExtraMethods = {
+  /**
+   * Synchronously reads the contents of a file, then parses it as JSON.
+   *
+   * By default the parsed JSON file is assumed to be a JSON object, with no
+   * assumptions made about content (`Record<string, unknown`). If the type is
+   * known at call-time, it can be passed to this function to alter the return
+   * type.This type is not validated to be correct at runtime.
+   *
+   * E.g. `fs.readJsonFileSync<Document>(documentPath)`;
+   *
+   * @param path A path to a file.
+   * @param options Optional set of options
+   * @param options.encoding The encoding of the JSON file (defaults to utf-8)
+   * @param options.flag File access flags
+   */
   readJsonFileSync: <T = Record<string, unknown>>(
     path: fs.PathLike | number,
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},

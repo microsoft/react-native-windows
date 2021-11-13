@@ -16,7 +16,8 @@ const importedMethods = [
   'copyFile',
   'lchmod',
   'lchown',
-  'lutimes',
+  // Not available in Node 12
+  // 'lutimes',
   'link',
   'lstat',
   'mkdir',
@@ -29,7 +30,8 @@ const importedMethods = [
   'realpath',
   'rename',
   'rmdir',
-  'rm',
+  // Not available in Node 12
+  // 'rm',
   'stat',
   'symlink',
   'truncate',
@@ -50,7 +52,8 @@ type PromisifedMethods = {
   copyFile: typeof fs.copyFile.__promisify__;
   lchmod: typeof fs.lchmod.__promisify__;
   lchown: typeof fs.lchown.__promisify__;
-  lutimes: typeof fs.lutimes.__promisify__;
+  // Not available in Node 12
+  // lutimes: typeof fs.lutimes.__promisify__;
   link: typeof fs.link.__promisify__;
   lstat: typeof fs.lstat.__promisify__;
   mkdir: typeof fs.mkdir.__promisify__;
@@ -63,7 +66,8 @@ type PromisifedMethods = {
   realpath: typeof fs.realpath.__promisify__;
   rename: typeof fs.rename.__promisify__;
   rmdir: typeof fs.rmdir.__promisify__;
-  rm: typeof fs.rm.__promisify__;
+  // Not available in Node 12
+  // rm: typeof fs.rm.__promisify__;
   stat: typeof fs.stat.__promisify__;
   symlink: typeof fs.symlink.__promisify__;
   truncate: typeof fs.truncate.__promisify__;
@@ -73,7 +77,28 @@ type PromisifedMethods = {
 };
 
 type ExtraMethods = {
+  /**
+   * Asynchronously tests whether or not the given path exists within the
+   * file-system.
+   * @param path A path to a file or directory.
+   */
   exists: (path: fs.PathLike) => Promise<boolean>;
+
+  /**
+   * Asynchronously reads the contents of a file, then parses it as JSON.
+   *
+   * By default the parsed JSON file is assumed to be a JSON object, with no
+   * assumptions made about content (`Record<string, unknown`). If the type is
+   * known at call-time, it can be passed to this function to alter the return
+   * type.This type is not validated to be correct at runtime.
+   *
+   * E.g. `await fs.readJsonFile<Document>(documentPath)`;
+   *
+   * @param path A path to a file.
+   * @param options Optional set of options
+   * @param options.encoding The encoding of the JSON file (defaults to utf-8)
+   * @param options.flag File access flags
+   */
   readJsonFile: <T = Record<string, unknown>>(
     path: fs.PathLike | number,
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
