@@ -7,9 +7,6 @@
   <PropertyGroup>
     <SolutionDir Condition="'$(SolutionDir)' == '' OR '$(SolutionDir)' == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
 
-    <Platform Condition="'$(Platform)' == ''">x64</Platform>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
-
     <!-- This property sets the CscTask to print the full path of the csharp file on errors and warnings rather than just the filename. -->
     <GenerateFullPaths>true</GenerateFullPaths>
 
@@ -43,16 +40,6 @@
 
     <FmtDir Condition="'$(FmtDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.fmt\fmt-$(FmtVersion)</FmtDir>
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <ReactNativeWindowsPlatform Condition="'$(Platform)' == 'Win32'">x86</ReactNativeWindowsPlatform>
-    <ReactNativeWindowsPlatform Condition="'$(Platform)' != 'Win32'">$(Platform)</ReactNativeWindowsPlatform>
-
-    <IntDir>$(ReactNativeWindowsDir)build\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <OutDir>$(ReactNativeWindowsDir)target\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</OutDir>
-    <PublishDir>$(OutDir)\Publish\</PublishDir>
-    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
 
 </Project>

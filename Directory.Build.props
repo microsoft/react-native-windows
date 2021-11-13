@@ -10,6 +10,23 @@
   -->
   <PropertyGroup>
     <ReactNativeWindowsDir>$(MSBuildThisFileDirectory)vnext\</ReactNativeWindowsDir>
+
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+
+    <RootIntDir>$(ReactNativeWindowsDir)build</RootIntDir>
+    <RootOutDir>$(ReactNativeWindowsDir)target</RootOutDir>
+    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
+    <BaseIntDir Condition="'$(Platform)' == 'Win32'">$(RootIntDir)\x86\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(Platform)' != 'Win32'">$(RootIntDir)\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(RootOutDir)\x86\$(Configuration)</BaseOutDir>
+    <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(RootOutDir)\$(Platform)\$(Configuration)</BaseOutDir>
+
+    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
+    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+
+    <PublishDir>$(OutDir)\Publish\</PublishDir>
+    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
