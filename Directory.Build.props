@@ -22,15 +22,18 @@
     <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(RootOutDir)\x86\$(Configuration)</BaseOutDir>
     <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(RootOutDir)\$(Platform)\$(Configuration)</BaseOutDir>
 
-    <IntDir>$(BaseIntDir)\$(ProjectName)\</IntDir>
-    <OutDir>$(BaseOutDir)\$(ProjectName)\</OutDir>
+    <IntDir Condition="'$(ProjectName)' != ''">$(BaseIntDir)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(ProjectName)' == ''">$(BaseIntDir)\$(MSBuildProjectName)\</IntDir>
+    <OutDir Condition="'$(ProjectName)' != ''">$(BaseOutDir)\$(ProjectName)\</OutDir>
+    <OutDir Condition="'$(ProjectName)' == ''">$(BaseOutDir)\$(MSBuildProjectName)\</OutDir>
 
     <PublishDir>$(OutDir)\Publish\</PublishDir>
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet">
-    <MSBuildProjectExtensionsPath>$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
+    <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' != ''">$(RootIntDir)\ProjectExtensions\$(ProjectName)\</MSBuildProjectExtensionsPath>
+    <MSBuildProjectExtensionsPath Condition="'$(ProjectName)' == ''">$(RootIntDir)\ProjectExtensions\$(MSBuildProjectName)\</MSBuildProjectExtensionsPath>
   </PropertyGroup>
 
   <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
