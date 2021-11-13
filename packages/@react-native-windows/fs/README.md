@@ -1,8 +1,8 @@
 # @react-native-windows/fs
 
 `@react-native-windows/fs` is a minimal-dependency drop-in replacement to `fs` with changes for
-resiliency, promises, and convenience. It has several opinionated changes, targeted towards
-cross-platform CLI apps.
+resiliency, promises, and convenience. It has several opinionated changes, targeted towards CLI
+applications handling JavaScript-oriented files.
 
 ![Usage Thumbnail](./assets/logo.png)
 
@@ -46,8 +46,8 @@ const fooExists = await fs.exists('foo.txt');
 
 ### `readJsonFile` and `readJsonFileSync`
 
-`@react-native-windows/fs` provides convenience methods to handle JSON files. These are implemented
-as methods under `fs.ReadFile`. The following conversions are added:
+`@react-native-windows/fs` provides convenience methods to handle JSON files. The following methods
+are added:
 
 | Method | Return type |
 |-|-|
