@@ -17,6 +17,13 @@
     },
     {
       "type": "derived",
+      "file": "Libraries/Components/Pressable/Pressable.win32.js",
+      "baseFile": "Libraries/Components/Pressable/Pressable.js",
+      "baseHash": "1ad53a6a5e1e751c8f23b07a84a343c18c8802a7",
+      "issue": 6240
+    },
+    {
+      "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
       "baseHash": "a04c4a17e863ed898cdc9ba9eebbb0ac65d875f8"
