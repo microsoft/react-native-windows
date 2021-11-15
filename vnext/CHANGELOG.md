@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Nov 2021 23:57:30 GMT and should not be manually modified.
+This log was last generated on Sat, 13 Nov 2021 06:08:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.417
+
+Sat, 13 Nov 2021 06:08:58 GMT
+
+### Changes
+
+- Removes unnecessary prop settings on VM base class (erozell@outlook.com)
+- Fix Restore Determinism of Microsoft.ReactNative.Managed (ngerlem@microsoft.com)
+- Fix crash loading bundle in win32 (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.416
 
