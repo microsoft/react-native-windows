@@ -616,13 +616,13 @@ function getReunionPackages(nugetVersion: string): NugetPackage[] {
   });
 
   reunionPackages.push({
-    id: 'Microsoft.WindowsAppSDK.Foundation',
-    version: '1.0.0-experimental1',
+    id: 'Microsoft.Windows.SDK.BuildTools',
+    version: '10.0.22499-preview',
   });
 
   reunionPackages.push({
-    id: 'Microsoft.WindowsAppSDK.WinUI',
-    version: '1.0.0-experimental1',
+    id: 'Microsoft.Windows.CsWin32',
+    version: '0.1.588-beta',
   });
 
   return reunionPackages;
