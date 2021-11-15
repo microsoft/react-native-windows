@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add enableFocusRing prop for View and test",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ruaraki@microsoft.com",
-  "dependentChangeType": "patch"
-}
