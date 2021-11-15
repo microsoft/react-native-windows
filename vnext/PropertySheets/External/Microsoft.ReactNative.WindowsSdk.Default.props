@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 -->
@@ -8,10 +8,12 @@
   <!--
     This defines the default Windows SDK used to build both the app and 0.66+
     template community modules.
+
+    See https://microsoft.github.io/react-native-windows/docs/win10-compat
   -->
   <PropertyGroup Label="Globals">
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion Condition=" '$(WindowsTargetPlatformMinVersion)' == '' ">10.0.15063.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformMinVersion Condition=" '$(WindowsTargetPlatformMinVersion)' == '' ">10.0.16299.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
 </Project>
