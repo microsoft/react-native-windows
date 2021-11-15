@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 15 Nov 2021 16:10:10 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.3",
+      "version": "0.67.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Drop ChakraCore dependency (#9056)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fix crash loading bundle in win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Nov 2021 16:09:34 GMT",
       "tag": "react-native-windows_v0.67.0-preview.3",
       "version": "0.67.0-preview.3",
