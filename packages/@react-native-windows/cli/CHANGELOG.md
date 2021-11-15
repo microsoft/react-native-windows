@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 11 Oct 2021 15:07:19 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Nov 2021 16:09:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.1
+
+Mon, 15 Nov 2021 16:09:53 GMT
+
+### Patches
+
+- [0.66] Fix autolinking to support solution files using LF instead of CRLF (jthysell@microsoft.com)
 
 ## 0.66.0
 
