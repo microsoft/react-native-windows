@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 Oct 2021 19:04:04 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Nov 2021 16:09:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.26
+
+Mon, 15 Nov 2021 16:09:20 GMT
+
+### Patches
+
+- Fix crash loading bundle in win32 (30809111+acoates-ms@users.noreply.github.com)
+- Drop ChakraCore dependency (#9056) (julio.rocha@microsoft.com)
 
 ## 0.64.25
 

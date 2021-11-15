@@ -2,6 +2,21 @@
   "name": "microsoft-reactnative-sampleapps",
   "entries": [
     {
+      "date": "Mon, 15 Nov 2021 16:09:20 GMT",
+      "tag": "microsoft-reactnative-sampleapps_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.64.26",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "69875941ad1662befd6ea375bc656cb744a5067b",
+            "package": "microsoft-reactnative-sampleapps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:04:04 GMT",
       "tag": "microsoft-reactnative-sampleapps_v0.0.54",
       "version": "0.0.54",

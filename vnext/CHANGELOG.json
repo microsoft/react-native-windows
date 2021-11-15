@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 15 Nov 2021 16:09:20 GMT",
+      "tag": "react-native-windows_v0.64.26",
+      "version": "0.64.26",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix crash loading bundle in win32",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "69875941ad1662befd6ea375bc656cb744a5067b",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Drop ChakraCore dependency (#9056)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "98545128feffc0888e6f75537fc93733cdeca1be",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Oct 2021 19:04:04 GMT",
       "tag": "react-native-windows_v0.64.25",
       "version": "0.64.25",
