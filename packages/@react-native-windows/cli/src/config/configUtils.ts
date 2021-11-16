@@ -8,7 +8,7 @@ import fs from 'fs';
 import path from 'path';
 import glob from 'glob';
 
-import {DOMParser} from 'xmldom';
+import {DOMParser} from '@xmldom/xmldom';
 import xpath from 'xpath';
 import {CodedError} from '@react-native-windows/telemetry';
 

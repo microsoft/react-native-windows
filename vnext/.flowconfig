@@ -29,6 +29,7 @@
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Text/TextNativeComponent.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
@@ -118,4 +119,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.159.0
+^0.162.0

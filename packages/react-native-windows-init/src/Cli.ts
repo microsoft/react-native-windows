@@ -487,7 +487,8 @@ function isProjectUsingYarn(cwd: string): boolean {
       telemetry: argv.telemetry,
     });
     return setExit('Success');
-  } catch (error) {
+  } catch (e) {
+    const error = e as Error;
     const exitCode =
       error instanceof CodedError
         ? ((error as CodedError).name as CodedErrorType)

@@ -58,7 +58,7 @@ export class WritableNpmPackage extends NpmPackage {
       const jsonBuffer = await fs.promises.readFile(jsonPath);
       return new WritableNpmPackage(pkgPath, JSON.parse(jsonBuffer.toString()));
     } catch (ex) {
-      if (ex.code === 'ENOENT') {
+      if ((ex as any).code === 'ENOENT') {
         return null;
       }
 
@@ -138,7 +138,7 @@ export async function findPackage(
       paths: [opts.searchPath || process.cwd(), ...resolvePaths],
     });
   } catch (ex) {
-    if (ex.code === 'MODULE_NOT_FOUND') {
+    if ((ex as any).code === 'MODULE_NOT_FOUND') {
       return null;
     } else {
       throw ex;

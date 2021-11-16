@@ -26,9 +26,9 @@ stages:
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
 
+      # NuGet using tests rely on "UniversalBuild" which is done in the build stage
       - template: jobs/cli-init.yml
         parameters:
-          # The Nuget CLI verification is part of 'Build' to speed up the verification
           buildEnvironment: ${{ parameters.buildEnvironment }}
           buildNuGetOnly: true
           buildReunionOnly: true
@@ -68,3 +68,4 @@ stages:
       - template: jobs/cli-init.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
+          buildNuGetOnly: false

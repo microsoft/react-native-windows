@@ -24,6 +24,7 @@
 #include "../../codegen/NativeDeviceInfoSpec.g.h"
 #include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
 #include "../../codegen/NativeI18nManagerSpec.g.h"
+#include "../../codegen/NativeImageLoaderIOSSpec.g.h"
 #include "../../codegen/NativeLogBoxSpec.g.h"
 #include "../../codegen/NativeUIManagerSpec.g.h"
 #include "NativeModules.h"
@@ -55,6 +56,7 @@
 #endif
 #include "Modules/DevSettingsModule.h"
 #ifndef CORE_ABI
+#include <Modules/ImageViewManagerModule.h>
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
 #include "Modules/LogBoxModule.h"
@@ -68,9 +70,7 @@
 #include <Utils/UwpScriptStore.h>
 #endif
 
-#if defined(INCLUDE_HERMES)
 #include "HermesRuntimeHolder.h"
-#endif // INCLUDE_HERMES
 
 #if defined(USE_V8)
 #include <winrt/Windows.Storage.h>
@@ -323,6 +323,12 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
           ::Microsoft::ReactNative::DeviceInfo,
           ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
+
+  registerTurboModule(
+      L"ImageLoader",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
+          ::Microsoft::ReactNative::ImageLoader,
+          ::Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec>());
 #endif
 
   registerTurboModule(
@@ -434,12 +440,10 @@ void ReactInstanceWin::Initialize() noexcept {
 
           switch (m_options.JsiEngine()) {
             case JSIEngine::Hermes:
-#if defined(INCLUDE_HERMES)
               devSettings->jsiRuntimeHolder =
                   std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
               devSettings->inlineSourceMap = false;
               break;
-#endif
             case JSIEngine::V8:
 #if defined(USE_V8)
 #ifndef CORE_ABI

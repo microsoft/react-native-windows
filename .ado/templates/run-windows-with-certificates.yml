@@ -5,11 +5,10 @@ parameters:
     values:
       - PullRequest
       - Continuous
-  - name: encodedKey
+  - name: certificateName
     type: string
   - name: buildConfiguration
     type: string
-    default: 'Debug'
     values:
       - Debug
       - Release
@@ -23,32 +22,23 @@ parameters:
     type: string
 
 steps:
-  - template: ../templates/setup-certificate.yml
-    parameters:
-      buildEnvironment: ${{ parameters.BuildEnvironment }}
-      encodedKey: ${{ parameters.encodedKey }}
-
-  - task: CmdLine@2
-    displayName: run-windows (Debug)
-    inputs:
-      script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
+  - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
+    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
+      displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Debug'))
 
-  - task: CmdLine@2
-    displayName: run-windows (Release) - PR
-    inputs:
-      script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
+  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'PullRequest')) }}:
+    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
+      displayName: run-windows (Release) - PR
       workingDirectory: ${{ parameters.workingDirectory }}
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Release'), eq('${{ parameters.buildEnvironment }}', 'PullRequest'))
 
-  - task: CmdLine@2
-    displayName: run-windows (Release) - CI
-    inputs:
-      script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'Continuous')) }}:
+    - template: ../templates/write-certificate.yml
+      parameters:
+        certificateName: ${{ parameters.certificateName }}
+
+    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+      displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
-    condition: and(succeeded(), eq('${{ parameters.buildConfiguration }}', 'Release'), eq('${{ parameters.buildEnvironment }}', 'Continuous'))
-
-  - template: ../templates/cleanup-certificate.yml
-    parameters:
-      buildEnvironment: ${{ parameters.BuildEnvironment }}
+                  
+    - template: ../templates/cleanup-certificate.yml

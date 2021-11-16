@@ -32,7 +32,7 @@ import {
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
-import {XMLSerializer} from 'xmldom';
+import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 
@@ -944,7 +944,7 @@ async function updateAutoLink(
     spinner.fail();
     const endTime = performance.now();
     console.log(
-      `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
+      `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
         endTime - startTime,
       )}ms)`,
     );

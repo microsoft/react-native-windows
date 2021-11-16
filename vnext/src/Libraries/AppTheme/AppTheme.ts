@@ -5,17 +5,36 @@
  */
 'use strict';
 
-import {NativeEventEmitter, NativeModules} from 'react-native';
+import {
+  EmitterSubscription,
+  NativeEventEmitter,
+  NativeModules,
+} from 'react-native';
 import {IHighContrastColors, IHighContrastChangedEvent} from './AppThemeTypes';
 
-const NativeAppTheme = NativeModules.RTCAppTheme;
+// We previously gracefully handled importing AppTheme in the Jest environment.
+// Mock the NM until we have a coherent story for exporting our own Jest mocks,
+// or remove this API.
+const NativeAppTheme = NativeModules.RTCAppTheme || {
+  initialHighContrast: false,
+  initialHighContrastColors: {
+    ButtonFaceColor: '',
+    ButtonTextColor: '',
+    GrayTextColor: '',
+    HighlightColor: '',
+    HighlightTextColor: '',
+    HotlightColor: '',
+    WindowColor: '',
+    WindowTextColor: '',
+  },
+};
 
 class AppThemeModule extends NativeEventEmitter {
   private _isHighContrast: boolean;
   private _highContrastColors: IHighContrastColors;
 
   constructor() {
-    super(NativeAppTheme);
+    super();
 
     this._highContrastColors = NativeAppTheme.initialHighContrastColors;
     this._isHighContrast = NativeAppTheme.initialHighContrast;
@@ -26,6 +45,13 @@ class AppThemeModule extends NativeEventEmitter {
         this._highContrastColors = nativeEvent.highContrastColors;
       },
     );
+  }
+
+  addListener(
+    eventName: 'highContrastChanged',
+    listener: (nativeEvent: IHighContrastChangedEvent) => void,
+  ): EmitterSubscription {
+    return super.addListener(eventName, listener);
   }
 
   get isHighContrast(): boolean {

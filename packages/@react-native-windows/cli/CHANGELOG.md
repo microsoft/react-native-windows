@@ -1,8 +1,58 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 23 Sep 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.95
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
+- Bump @react-native-windows/telemetry to v0.0.0-canary.24
+
+## 0.0.0-canary.94
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Changes
+
+- Integrate 10-8-21 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.93
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Changes
+
+- Use full path to powershell.exe (asklar@microsoft.com)
+
+## 0.0.0-canary.92
+
+Tue, 05 Oct 2021 05:07:00 GMT
+
+### Changes
+
+- CLI: Default to deploy by layout (jthysell@microsoft.com)
+
+## 0.0.0-canary.91
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump xmldom to 0.7.0 in @react-native-windows/cli. (yicyao@microsoft.com)
+
+## 0.0.0-canary.90
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Make CLI Fail Gracefully on Dep Script Errors (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.89
 
