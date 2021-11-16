@@ -10,6 +10,7 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
+using namespace Microsoft::ReactNative;
 
 namespace winrt {
 using namespace xaml;
@@ -42,42 +43,38 @@ class SwitchShadowNode : public ShadowNodeBase {
   winrt::Microsoft::ReactNative::JSValue m_onTrackColor;
 };
 
-// sets the resources to SolidColorBrushes if the user sets the color before runtime, this lets the user change the
-// color of the SolidColorBrush at runtime and keeps the toggleswitches who did not change colors on the default
+// sets the resources to Empty SolidColorBrushes if the user sets the color before runtime, this lets the user change
+// the color of the SolidColorBrush at runtime and keeps the toggleswitches who did not change colors on the default
 // ThemeResource
-void setBrushes(
+void setEmptyResouceBrushes(
     const winrt::Microsoft::ReactNative::JSValueObject &props,
     const xaml::Controls::ToggleSwitch toggleSwitch) {
+  auto brush = xaml::Media::SolidColorBrush();
   for (const auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
     if (propertyName == "thumbTintColor") {
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchKnobFillOff"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOffPointerOver"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOffPressed"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOffDisabled"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOnPointerOver"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOnDisabled"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchKnobFillOn"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchKnobFillOnPressed"), xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOff", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOffPointerOver", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOffPressed", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOffDisabled", xaml::Media::SolidColorBrush());
+
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOnPointerOver", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOnDisabled", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOn", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOnPressed", xaml::Media::SolidColorBrush());
+
     } else if (propertyName == "tintColor") {
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOff"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOffPointerOver"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOffPressed"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOffDisabled"), xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOff", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOffPressed", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOffDisabled", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOffPointerOver", xaml::Media::SolidColorBrush());
+
     } else if (propertyName == "onTintColor") {
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOn"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(
-          winrt::box_value(L"ToggleSwitchFillOnPointerOver"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOnPressed"), xaml::Media::SolidColorBrush());
-      toggleSwitch.Resources().Insert(winrt::box_value(L"ToggleSwitchFillOnDisabled"), xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOn", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOnPointerOver", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOnPressed", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOnDisabled", xaml::Media::SolidColorBrush());
     }
   }
 }
@@ -86,7 +83,7 @@ void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   Super::createView(props);
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
 
-  setBrushes(props, toggleSwitch);
+  setEmptyResouceBrushes(props, toggleSwitch);
 
   m_toggleSwitchToggledRevoker = toggleSwitch.Toggled(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (m_offTrackColor)
