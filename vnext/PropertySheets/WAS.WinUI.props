@@ -22,6 +22,7 @@
     <WindowsKitsPath Condition="'$(IsWinUIAlpha)' == 'true'">WinUI-Alpha-Projects-Don-t-Use-SDK-Xaml-Tools</WindowsKitsPath>
   </PropertyGroup>
 
+<Import Condition="'$(UseWinUI3)'=='true'" Project="C:\repos\a-rnw\vnext\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\Microsoft.WindowsAppSDK.props" />
   <!-- <Import Condition="'$(UseWinUI3)'=='true'" Project="$(SolutionDir)\packages\Microsoft.WindowsAppSDK.InteractiveExperiences.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.InteractiveExperiences.props" /> -->
 
   <!-- There is no WinAppSDK.targets
