@@ -55,10 +55,10 @@ void UpdateToggleResourceBrush(
       auto resourceBrush = resources.Lookup(winrt::box_value(resourceName));
       // if both the old Resource Brush and new Resource Brush is a SolidColorBrush, change the color of the brush to
       // support runtime changes
-      if (resourceBrush.try_as<xaml::Media::SolidColorBrush>() && brush.try_as<xaml::Media::SolidColorBrush>()) {
-        auto color = brush.as<xaml::Media::SolidColorBrush>().Color();
-        auto value = resourceBrush.try_as<xaml::Media::SolidColorBrush>().Color();
-        winrt::unbox_value<xaml::Media::SolidColorBrush>(resources.Lookup(winrt::box_value(resourceName))).Color(color);
+      auto colorBrush = brush.try_as<xaml::Media::SolidColorBrush>();
+      auto resourceColorBrush = resourceBrush.try_as<xaml::Media::SolidColorBrush>();
+      if (colorBrush && resourceColorBrush) {
+        resourceColorBrush.Color(colorBrush.Color());
       } else {
         // else, add the new brush to the resource directory (will need to reload component to see changes)
         resources.Insert(winrt::box_value(resourceName), brush);

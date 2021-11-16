@@ -106,8 +106,6 @@ void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
 
 void SwitchShadowNode::UpdateThumbColor() {
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
-  if (toggleSwitch == nullptr)
-    return;
 
   const auto thumbBrush = IsValidColorValue(m_thumbColor) ? BrushFrom(m_thumbColor) : nullptr;
   if (thumbBrush != nullptr) {
@@ -117,8 +115,6 @@ void SwitchShadowNode::UpdateThumbColor() {
 
 void SwitchShadowNode::UpdateTrackColorOn() {
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
-  if (toggleSwitch == nullptr)
-    return;
 
   const auto onTrackBrush = IsValidColorValue(m_onTrackColor) ? BrushFrom(m_onTrackColor) : nullptr;
   UpdateToggleSwitchTrackResourceBrushesOn(toggleSwitch, onTrackBrush);
@@ -126,8 +122,6 @@ void SwitchShadowNode::UpdateTrackColorOn() {
 
 void SwitchShadowNode::UpdateTrackColorOff() {
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
-  if (toggleSwitch == nullptr)
-    return;
 
   const auto offTrackBrush = IsValidColorValue(m_offTrackColor) ? BrushFrom(m_offTrackColor) : nullptr;
   UpdateToggleSwitchTrackResourceBrushesOff(toggleSwitch, offTrackBrush);
