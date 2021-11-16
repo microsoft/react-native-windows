@@ -8,8 +8,6 @@
     <ProjectGuid>{6c60e295-c8ca-4dc5-b8be-09888f58b249}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Microsoft.ReactNative</RootNamespace>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
     <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
     <V8AppPlatform>uwp</V8AppPlatform>

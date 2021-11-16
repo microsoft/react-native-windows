@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removes unnecessary prop settings on VM base class",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

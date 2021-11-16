@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix crash loading bundle in win32",
+  "comment": "Remove redundant WindowsTargetPlatformVersion declarations",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"

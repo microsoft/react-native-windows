@@ -6,7 +6,6 @@
     <ProjectGuid>{14FA0516-E6D7-4E4D-B097-1470198C5072}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Microsoft.ReactNative.IntegrationTests</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
