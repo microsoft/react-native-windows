@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildMatrix
     type: object
     default:
@@ -66,18 +68,21 @@ jobs:
         - job: Playground${{ matrix.Name }}
           displayName: Playground ${{ matrix.Name }}
 
-          variables:
-            - template: ../variables/vs2019.yml
-          pool: $(AgentPool.Medium)
+          variables: [template: ../variables/windows.yml]
+          pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
 
           steps:
-            - checkout: self
-              clean: false
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - ${{ if eq(matrix.BuildWinUI3, true) }}:
               - template: ../templates/set-experimental-feature.yml
@@ -86,52 +91,23 @@ jobs:
                   feature: UseWinUI3
                   value: true
 
-            - task: NuGetCommand@2
-              displayName: NuGet restore - Playground
-              inputs:
-                command: restore
-                restoreSolution: packages/playground/windows/${{ matrix.SolutionFile }}
-                verbosityRestore: Detailed # Options: quiet, normal, detailed
-
-
-            - ${{if eq(config.BuildEnvironment, 'PullRequest')}}:
-              - task: VSBuild@1
-                displayName: VSBuild - Playground PR
-                inputs:
-                  solution: packages/playground/windows/${{ matrix.SolutionFile }}
-                  vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-                  msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-                  platform: ${{ matrix.BuildPlatform}} # Optional
-                  configuration: ${{ matrix.BuildConfiguration}} # Optional
-                  clean: true # Optional
-                  maximumCpuCount: false # Optional
-                  restoreNugetPackages: false # Optional
-                  msbuildArgs:
-                    /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-                    /p:PlatformToolset=$(MSBuildPlatformToolset)
-                    /p:AppxPackageSigningEnabled=false
-                    
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/write-certificate.yml
                 parameters:
                   certificateName: playgroundEncodedKey
 
-              - task: VSBuild@1
-                displayName: VSBuild - Playground CI
-                inputs:
-                  solution: packages/playground/windows/${{ matrix.SolutionFile }}
-                  vsVersion: $(MSBuildVersion) # Optional. Options: latest, 16.0, 15.0, 14.0, 12.0, 4.0
-                  msbuildArchitecture: $(MSBuildArchitecture) # Optional. Options: x86, x64
-                  platform: ${{ matrix.BuildPlatform}} # Optional
-                  configuration: ${{ matrix.BuildConfiguration}} # Optional
-                  clean: true # Optional
-                  maximumCpuCount: false # Optional
-                  restoreNugetPackages: false # Optional
+            - template: ../templates/msbuild-sln.yml
+              parameters:
+                solutionDir: packages/playground/windows
+                solutionName: ${{ matrix.SolutionFile }}
+                buildPlatform: ${{ matrix.BuildPlatform}}
+                buildConfiguration: ${{ matrix.BuildConfiguration}}
+                warnAsError: false
+                ${{if eq(config.BuildEnvironment, 'Continuous')}}:
                   msbuildArgs:
-                    /p:PreferredToolArchitecture=$(MSBuildPreferredToolArchitecture)
-                    /p:PlatformToolset=$(MSBuildPlatformToolset)
                     /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
 
+            - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/cleanup-certificate.yml
 
             - ${{ if eq(matrix.UploadAppx, true) }}:

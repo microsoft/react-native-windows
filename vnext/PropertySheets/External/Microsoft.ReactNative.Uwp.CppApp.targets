@@ -8,6 +8,8 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Common.targets" />
+
   <ImportGroup Condition="'$(UseExperimentalNuget)' == 'false'" Label="Shared">
     <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" 
             Label="Shared" />
@@ -42,8 +44,9 @@
   </Target>
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.targets" />
-
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\FixupRoslynCscWarnings.targets" />
+
   <ItemDefinitionGroup>
     <Reference>
         <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>

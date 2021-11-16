@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-20211016-2009-e1b698c5f",
+  "baseVersion": "0.0.0-20211028-2008-61e1b6f86",
   "overrides": [
     {
       "type": "patch",
@@ -17,14 +17,14 @@
       "type": "patch",
       "file": "src/js/components/RNTesterEmptyBookmarksState.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
-      "baseHash": "c211a725a3f935a4425f7af92bc7a4cba4f0655a",
+      "baseHash": "6fd62afad748df5a019a0307fa9d91a444ec081c",
       "issue": 6341
     },
     {
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "fd86d89d4d11ddd31261ef7bec3b0f3cf84008a1"
+      "baseHash": "5fa8d674f4df713468dc76b950f5bd0fa6945c1e"
     },
     {
       "type": "platform",
@@ -47,7 +47,7 @@
       "type": "patch",
       "file": "src/js/utils/RNTesterStatePersister.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterStatePersister.js",
-      "baseHash": "a1b342000f67d104b850d3ce6f9be4d6b674a822",
+      "baseHash": "d77e054f60d1cc6b5442130ae9640b4105dfd0cc",
       "issue": 6316
     },
     {

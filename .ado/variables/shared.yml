@@ -1,0 +1,16 @@
+variables:
+  # Injection configuration
+  runCodesignValidationInjection: false
+
+  # Automatically fails `npx` prompts to use networked version
+  NPM_CONFIG_YES: false
+
+  # NuGet Config
+  NUGET_ENABLE_EXPERIMENTAL_HTTP_RETRY : true
+  NUGET_PACKAGES: $(Agent.TempDirectory)/.nuget/packages
+  NUGET_PLUGIN_HANDSHAKE_TIMEOUT_IN_SECONDS: 60
+  NUGET_PLUGIN_REQUEST_TIMEOUT_IN_SECONDS: 60
+
+  # Yarn Config
+  YARN_CACHE_FOLDER: $(Agent.TempDirectory)/.yarnCache
+  YARN_NETWORK_CONCURRENCY: 40

@@ -50,15 +50,6 @@ static JsValueRef __stdcall nativeTraceBeginSectionJNF(
     if (argumentType == JsValueType::JsString) {
       CHAKRA_ASSERTDO(JsGetStringLength(arguments[2], &profileNameLength));
       profileName.resize(profileNameLength);
-
-      // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
-#if !defined(USE_EDGEMODE_JSRT)
-      CHAKRA_ASSERTDO(JsCopyString(
-          arguments[2],
-          const_cast<char *>(profileName.data()),
-          profileNameLength + 1 /* length */,
-          nullptr /* written */));
-#endif
     }
 #ifndef NDEBUG
     else {
@@ -73,12 +64,6 @@ static JsValueRef __stdcall nativeTraceBeginSectionJNF(
     if (argumentType == JsValueType::JsString) {
       CHAKRA_ASSERTDO(JsGetStringLength(arguments[3], &argsLength));
       argsStr.resize(argsLength + 1);
-
-      // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
-#if !defined(USE_EDGEMODE_JSRT)
-      CHAKRA_ASSERTDO(JsCopyString(
-          arguments[3], const_cast<char *>(argsStr.data()), argsLength + 1 /* length */, nullptr /* written */));
-#endif
     }
 #ifndef NDEBUG
     else {
@@ -149,15 +134,6 @@ static void beginOrEndAsync(bool isEnd, JsValueRef arguments[], unsigned short a
   if (argumentType == JsValueType::JsString) {
     CHAKRA_ASSERTDO(JsGetStringLength(arguments[2], &profileNameLength));
     profileName.resize(profileNameLength);
-
-    // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
-#if !defined(USE_EDGEMODE_JSRT)
-    CHAKRA_ASSERTDO(JsCopyString(
-        arguments[2],
-        const_cast<char *>(profileName.data()),
-        profileNameLength + 1 /* length */,
-        nullptr /* written */));
-#endif
   }
 #ifndef NDEBUG
   else {
@@ -240,15 +216,6 @@ static JsValueRef __stdcall nativeTraceCounterJNF(
     if (argumentType == JsValueType::JsString) {
       CHAKRA_ASSERTDO(JsGetStringLength(arguments[2], &profileNameLength));
       profileName.resize(profileNameLength);
-
-      // TODO: CharkaRT doesn't have JsCopyString, implement alternative.
-#if !defined(USE_EDGEMODE_JSRT)
-      CHAKRA_ASSERTDO(JsCopyString(
-          arguments[2],
-          const_cast<char *>(profileName.data()),
-          profileNameLength + 1 /* length */,
-          nullptr /* written */));
-#endif
     }
 #ifndef NDEBUG
     else {

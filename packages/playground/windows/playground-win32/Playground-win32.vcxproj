@@ -69,11 +69,6 @@
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.props" />
   </ImportGroup>
   <Import Project="..\packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('..\packages\$(WinUIPackageProps)')" />
-  <PropertyGroup>
-    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>867D41FE5091AED426000143497EA4DFC29A8097</PackageCertificateThumbprint>
-    <PackageCertificateKeyFile>Playground_TemporaryKey.pfx</PackageCertificateKeyFile>
-  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -111,7 +106,6 @@
     <None Include="AutolinkedNativeModules.g.props" />
     <None Include="AutolinkedNativeModules.g.targets" />
     <None Include="packages.config" />
-    <None Include="Playground_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AutolinkedNativeModules.g.cpp" />

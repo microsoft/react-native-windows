@@ -8,8 +8,6 @@
     <ProjectGuid>{93792779-4948-4A5D-8CA7-86ED5E3BEC27}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>ReactComponentTests</RootNamespace>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.16299.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -36,7 +34,6 @@
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -68,7 +65,6 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         BOOST_ASIO_HAS_IOCP;
-        USE_EDGEMODE_JSRT;
         WINRT;
         _WIN32_WINNT=$(WinVer);
         WIN32;
@@ -93,6 +89,7 @@
         $(ReactNativeWindowsDir)stubs;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)Microsoft.ReactNative;
+        $(ReactNativeWindowsDir)Microsoft.ReactNative.Cxx;
         $(YogaDir);
         $(FmtDir)include;
         %(AdditionalIncludeDirectories)
@@ -163,11 +160,12 @@
       <!--
         The JSI tests have a number of violations that we must suppress to avoid chaning the code.
         C4100 - unreferenced formal parameter
+        C4127 - conditional expression is constant
         C4245 - 'initializing': conversion from 'int' to 'unsigned __int64', signed/unsigned mismatch
         C4389 - '==': signed/unsigned mismatch
         C4458 - declaration of '<varname>' hides class member
       -->
-      <DisableSpecificWarnings>4100;4245;4389;4458;$(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4100;4127;4245;4389;4458;$(DisableSpecificWarnings)</DisableSpecificWarnings>
       <!-- JSI tests require RuntimeTypeInfo -->
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <!-- To avoid RuntimeTypeInfo conflict with project's PCH -->
@@ -181,6 +179,10 @@
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactDispatcher.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNonAbiValue.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNotificationService.idl" />
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeWindowsDir)Shared\tracing\fbsystrace.h" />

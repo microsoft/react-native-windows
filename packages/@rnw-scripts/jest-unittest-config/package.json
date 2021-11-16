@@ -3,6 +3,11 @@
   "version": "1.2.4",
   "license": "MIT",
   "main": "jest.unittest.config.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/jest-unittest-config"
+  },
   "dependencies": {
     "@rnw-scripts/babel-node-config": "2.0.2"
   },

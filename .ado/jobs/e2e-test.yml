@@ -6,6 +6,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildMatrix
     type: object
     default:
@@ -13,29 +15,23 @@ parameters:
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
-            DeployOptions: --deploy-from-layout
             UseHermes: false
           - Name: X64Hermes
             BuildPlatform: x64
-            DeployOptions: --deploy-from-layout
             UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
-            DeployOptions:
             UseHermes: false
           - Name: X64Hermes
             BuildPlatform: x64
-            DeployOptions:
             UseHermes: true
           - Name: X86Chakra
             BuildPlatform: x86
-            DeployOptions:
             UseHermes: false
           - Name: X86Hermes
             BuildPlatform: x86
-            DeployOptions:
             UseHermes: true
 
 jobs:
@@ -45,22 +41,25 @@ jobs:
         - job: E2ETest${{ matrix.Name }}
           displayName: E2E Test App ${{ matrix.Name }}
 
-          variables:
-            - template: ../variables/vs2019.yml
-          pool: $(AgentPool.Medium)
+          variables: [template: ../variables/windows.yml]
+          pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            - checkout: self
-              clean: true
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
+
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: Release
+                buildEnvironment: ${{ config.buildEnvironment }}
 
             - powershell: |
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
               displayName: Set BuildLogDirectory
-
-            - template: ../templates/prepare-env.yml
 
             - task: CmdLine@2
               displayName: Set LocalDumps
@@ -86,7 +85,6 @@ jobs:
                 certificateName: reactUWPTestAppEncodedKey
                 buildConfiguration: Release
                 buildPlatform: ${{ matrix.BuildPlatform }}
-                deployOption: ${{ matrix.DeployOption }}
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app
 

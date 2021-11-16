@@ -4,32 +4,25 @@ trigger: none # will disable CI builds entirely
 pr: none
 
 variables:
-  - template: variables/msbuild.yml
   - group: RNW Secrets
   - group: platform-override-zero-permission-token
 
+parameters:
+  - name: AgentPool
+    type: object
+    default:
+      Small:
+        name: rnw-pool-2
+        demands: ImageOverride -equals rnw-img-node16
+      Medium:
+        name: rnw-pool-4
+        demands: ImageOverride -equals rnw-img-node16
+      Large:
+        name: rnw-pool-8
+        demands: ImageOverride -equals rnw-img-node16
+
 stages:
-  - stage: Setup
-    jobs:
-      - job: Setup
-        variables:
-          - template: variables/vs2019.yml
-        pool:
-          vmImage: windows-2019
-        steps:
-          - template: templates/configure-git.yml
-
-          - template: templates/yarn-install.yml
-
-          - script: npx --no-install beachball bump --branch origin/$(Build.SourceBranchName) --yes
-            displayName: beachball bump
-
-          - template: templates/set-version-vars.yml
-            parameters:
-              buildEnvironment: Continuous
-
-          - template: templates/publish-version-vars.yml
-
   - template: stages.yml
     parameters:
       buildEnvironment: Continuous
+      AgentPool: ${{ parameters.AgentPool }}

@@ -8,32 +8,19 @@
 const {execSync} = require('child_process');
 
 module.exports = {
-  ...require('@rnw-scripts/generated-beachball-config'),
+  ...require(`${__dirname}/packages/@rnw-scripts/generated-beachball-config/beachball.config.g.json`),
   
   // Do not generate tags for monorepo packages by default, to avoid a GitHub
   // release for every package.
   gitTags: false,
 
-  // Commit message used when publishing
-  message: 'applying package updates ***NO_CI***',
-
   hooks: {
     // Stamp versions when we publish a new package
-    prepublish: (_packagePath, name, version) => {
+    postbump: (_packagePath, name, version) => {
       if (name === 'react-native-windows') {
         console.log(`Stamping RNW Version ${version}`);
-
-        // prepublish is run before bumping or commiting. Append an additional
-        // commit to check-in stamped versions when we push.
-        
-        execSilent(`yarn stamp-version ${version}`);
-        execSilent('git add --all');
-        execSilent(`git commit --message "Stamp RNW ${version}"`);
+        execSync(`yarn stamp-version ${version}`);
       }
     }
   }
-}
-
-function execSilent(command) {
-  execSync(command, {stdio: 'pipe'});
 }

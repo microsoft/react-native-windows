@@ -1,8 +1,184 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 26 Oct 2021 05:06:56 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Nov 2021 06:09:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.418
+
+Tue, 16 Nov 2021 06:09:18 GMT
+
+### Changes
+
+- Remove redundant WindowsTargetPlatformVersion declarations (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.417
+
+Sat, 13 Nov 2021 06:08:58 GMT
+
+### Changes
+
+- Removes unnecessary prop settings on VM base class (erozell@outlook.com)
+- Fix Restore Determinism of Microsoft.ReactNative.Managed (ngerlem@microsoft.com)
+- Fix crash loading bundle in win32 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.416
+
+Wed, 10 Nov 2021 23:57:30 GMT
+
+### Changes
+
+- Add MSRN Debug NuGet Packages (ngerlem@microsoft.com)
+- Integrate OCt 28 RN nightly build. (igklemen@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.18
+
+## 0.0.0-canary.415
+
+Tue, 09 Nov 2021 06:11:23 GMT
+
+### Changes
+
+- Add PackageReference Locks (ngerlem@microsoft.com)
+- Remove extra definition of ReactNativeWindowsDir (ngerlem@microsoft.com)
+- Short-circuit ChakraCore to Chakra (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.414
+
+Sat, 06 Nov 2021 05:08:39 GMT
+
+### Changes
+
+- Remove ChakraCore dependency (julio.rocha@microsoft.com)
+- FIx Warnings from RoslynCodeTaskFactory in C++ Projects Building ARM64 (ngerlem@microsoft.com)
+- Fixes default background for mouse events with border (erozell@outlook.com)
+
+## 0.0.0-canary.413
+
+Fri, 05 Nov 2021 05:08:51 GMT
+
+### Changes
+
+- Force version bump (ngerlem@microsoft.com)
+
+## 0.0.0-canary.412
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Changes
+
+- MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Automatically Use Large PCH on Machines With >7GB per Thread (ngerlem@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0-canary.412
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Changes
+
+- MakeTurboModuleProvider<TModule> uses TModule::ModuleSpec as the spec (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Automatically Use Large PCH on Machines With >7GB per Thread (ngerlem@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.20
+
+## 0.0.0-canary.411
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Changes
+
+- Split LayoutHeaders (ngerlem@microsoft.com)
+- Use NPM 8 (ngerlem@microsoft.com)
+- Delete Install-VsFeatures.ps1 (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.99
+
+## 0.0.0-canary.411
+
+Tue, 02 Nov 2021 20:20:13 GMT
+
+### Changes
+
+- Split LayoutHeaders (ngerlem@microsoft.com)
+- Use NPM 8 (ngerlem@microsoft.com)
+- Delete Install-VsFeatures.ps1 (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.99
+
+## 0.0.0-canary.410
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Changes
+
+- Fixes issue with Proofing menu override on XAML Islands (erozell@outlook.com)
+- Make all msbuild in PR and CI multicore builds (dannyvv@microsoft.com)
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- doc: Fix REACT_INIT doc to require ReactContext #9010 (dannyvv@microsoft.com)
+- Set default AppxBundlePlatforms (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.98
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0-canary.410
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Changes
+
+- Fixes issue with Proofing menu override on XAML Islands (erozell@outlook.com)
+- Make all msbuild in PR and CI multicore builds (dannyvv@microsoft.com)
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- doc: Fix REACT_INIT doc to require ReactContext #9010 (dannyvv@microsoft.com)
+- Set default AppxBundlePlatforms (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.98
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0-canary.409
+
+Thu, 28 Oct 2021 05:06:02 GMT
+
+### Changes
+
+- FastDebug hermes binaries and symbols (anandrag@microsoft.com)
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Remove additional #pragma once from FlyoutViewManager  (erozell@outlook.com)
+- Bump ReactNative.Hermes.Windows nuget package (dannyvv@microsoft.com)
+- Changes needed to compile with clang  (erozell@outlook.com)
+- Conditionally fires `onDismiss` when receiving `ContentDialogResult::None` (erozell@outlook.com)
+- Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.409
+
+Thu, 28 Oct 2021 05:05:43 GMT
+
+### Changes
+
+- FastDebug hermes binaries and symbols (anandrag@microsoft.com)
+- applying package updates ***NO_CI*** (erozell@outlook.com)
+- Remove additional #pragma once from FlyoutViewManager  (erozell@outlook.com)
+- Bump ReactNative.Hermes.Windows nuget package (dannyvv@microsoft.com)
+- Changes needed to compile with clang  (erozell@outlook.com)
+- Conditionally fires `onDismiss` when receiving `ContentDialogResult::None` (erozell@outlook.com)
+- Do not remove LoadingUI and FocusSafeHarbor from UI when reloading an instance (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.408
+
+Wed, 27 Oct 2021 05:07:23 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (agnel@microsoft.com)
+- Switch to MUX:CommandBarFlyout in XAML Islands proofing menu (jthysell@microsoft.com)
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.96
+
+## 0.0.0-canary.408
+
+Wed, 27 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- applying package updates ***NO_CI*** (agnel@microsoft.com)
+- Switch to MUX:CommandBarFlyout in XAML Islands proofing menu (jthysell@microsoft.com)
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.96
 
 ## 0.0.0-canary.407
 

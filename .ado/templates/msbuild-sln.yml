@@ -4,21 +4,16 @@ parameters:
   debug: false
 
   # NuGet & MSBuild
-  project:
-  msbuildVersion: $(MSBuildVersion)
-  msBuildArchitecture: $(MSBuildArchitecture)
-  preferredToolArchitecture: $(MSBuildPreferredToolArchitecture)
-  platformToolset: $(MSBuildPlatformToolset)
+  solutionDir:
+  solutionName:
+  msbuildVersion: 16.0
+  msBuildArchitecture: x64
+  preferredToolArchitecture: x64
+  platformToolset: v142
   buildPlatform: x64
   buildConfiguration: Debug
   msbuildArguments: ''
-  multicoreBuild: false
   warnAsError: true
-
-  # Visual Studio Installer
-  vsComponents: ''
-  listVsComponents: false
-  installVsComponents: false
 
 steps:
   - powershell: |
@@ -31,35 +26,21 @@ steps:
     condition: not(eq('${{parameters.warnAsError}}', 'true'))
     displayName: Disable WarnAsError
 
-
-  - template: prepare-env.yml
+  - template: restore-sln.yml
     parameters:
-      vsComponents: ${{ parameters.vsComponents }}
-      listVsComponents: ${{ parameters.listVsComponents }}
-      installVsComponents: ${{ parameters.installVsComponents }}
-      debug: ${{ parameters.debug }}
-
-  # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
-  - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
-    displayName: NuGet restore
-    inputs:
-      command: restore
-      restoreSolution: ${{parameters.project }}
-      feedsToUse: config
-      nugetConfigPath: $(Build.SourcesDirectory)/vnext/NuGet.config
-      restoreDirectory: packages/
-      verbosityRestore: Detailed # Options: quiet, normal, detailed
+      solutionDir: ${{parameters.solutionDir}}
+      solutionName: ${{parameters.solutionName}}
 
   - task: VSBuild@1
-    displayName: VSBuild ${{parameters.project}}
+    displayName: VSBuild ${{parameters.solutionName}}
     inputs:
-      solution: ${{parameters.project}}
+      solution: ${{parameters.solutionDir}}/${{parameters.solutionName}}
       vsVersion: ${{parameters.msbuildVersion}}
       msbuildArchitecture: ${{parameters.msBuildArchitecture}}
       platform: ${{ parameters.buildPlatform }}
       configuration: ${{ parameters.buildConfiguration }}
       clean: false # Optional
-      maximumCpuCount: ${{ parameters.multicoreBuild }} # Optional
+      maximumCpuCount: true
       restoreNugetPackages: false # Optional
       createLogFile: true
       logFileVerbosity: detailed
@@ -68,6 +49,7 @@ steps:
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:PublishToolDuringBuild=true
         /p:EnableSourceLink=true
+        /p:RestoreLockedMode=true
         /bl:$(BuildLogDirectory)\MsBuild.binlog
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.407",
+  "version": "0.0.0-canary.418",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,14 +26,15 @@
     "@react-native-community/cli": "^6.0.0",
     "@react-native-community/cli-platform-android": "^6.0.0",
     "@react-native-community/cli-platform-ios": "^6.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.95",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.15",
+    "@react-native-windows/cli": "0.0.0-canary.99",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.18",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
     "abort-controller": "^3.0.0",
     "anser": "^1.4.9",
     "base64-js": "^1.1.2",
+    "deprecated-react-native-prop-types": "^2.3.0",
     "event-target-shim": "^5.0.1",
     "hermes-engine": "~0.9.0",
     "invariant": "^2.2.4",
@@ -45,8 +46,8 @@
     "pretty-format": "^26.5.2",
     "promise": "^8.0.3",
     "prop-types": "^15.7.2",
-    "react-devtools-core": "4.20.0",
-    "react-native-codegen": "^0.0.8",
+    "react-devtools-core": "4.20.2",
+    "react-native-codegen": "^0.0.9",
     "react-refresh": "^0.4.0",
     "regenerator-runtime": "^0.13.2",
     "scheduler": "^0.20.2",
@@ -57,7 +58,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.19",
+    "@react-native-windows/codegen": "0.0.0-canary.20",
     "@rnw-scripts/eslint-config": "1.1.8",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.2",
     "@rnx-kit/jest-preset": "^0.1.0",
@@ -72,7 +73,7 @@
     "metro-config": "^0.66.0",
     "prettier": "1.19.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211016-2009-e1b698c5f",
+    "react-native": "0.0.0-20211028-2008-61e1b6f86",
     "react-native-platform-override": "^1.6.0",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -80,7 +81,7 @@
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-20211016-2009-e1b698c5f"
+    "react-native": "0.0.0-20211028-2008-61e1b6f86"
   },
   "beachball": {
     "defaultNpmTag": "canary",

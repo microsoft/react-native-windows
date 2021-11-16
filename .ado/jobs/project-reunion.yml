@@ -5,6 +5,21 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
+  - name: buildMatrix
+    type: object
+    default:
+      - BuildEnvironment: PullRequest
+        Matrix:
+          - Name: X64Release
+            BuildConfiguration: Release
+            BuildPlatform: x64
+      - BuildEnvironment: Continuous
+        Matrix:
+          - Name: X64Release
+            BuildConfiguration: Release
+            BuildPlatform: x64
 
 jobs:
   - job: Reunion
@@ -21,61 +36,50 @@ jobs:
         #   BuildConfiguration: Debug
         #   BuildPlatform: x86
 
-    pool: $(AgentPool.Medium)
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+          variables: [template: ../variables/windows.yml]
 
-    steps:
-      - checkout: self
-        clean: false
-        submodules: false
+          pool: ${{ parameters.AgentPool.Medium }}
+          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+          cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
-      - template: ../templates/apply-published-version-vars.yml
+          steps:
+            - template: ../templates/checkout-shallow.yml
 
-      - template: ../templates/build-rnw.yml
-        parameters:
-          project: vnext/Microsoft.ReactNative.ProjectReunion.sln
-          buildPlatform: $(BuildPlatform)
-          buildConfiguration: $(BuildConfiguration)
-          msbuildArguments: /p:UseWinUI3=true
-          warnAsError: false # Disable warn as error until we fix #8312
+            - template: ../templates/prepare-js-env.yml
 
-      - task: CopyFiles@2
-        displayName: Copy NuGet artifacts
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)\vnext\scripts
-          targetFolder: $(Build.StagingDirectory)
-          contents: Microsoft.ReactNative.ProjectReunion.nuspec
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration}}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
-      - task: CopyFiles@2
-        displayName: Copy NuGet artifacts
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)/vnext/target/$(BuildPlatform)/$(BuildConfiguration)
-          targetFolder: $(Build.StagingDirectory)/reunion/$(BuildPlatform)/$(BuildConfiguration)
-          contents: |
-            Microsoft.ReactNative\**
-            Microsoft.ReactNative.ProjectReunion\**
+            - template: ../templates/apply-published-version-vars.yml
 
-      - task: PublishBuildArtifacts@1
-        displayName: "Publish Artifact: Windows App SDK"
-        inputs:
-          artifactName: ReactWindows
-          pathToPublish: $(Build.StagingDirectory)
-          parallel: true
+            - template: ../templates/msbuild-sln.yml
+              parameters:
+                solutionDir: vnext
+                solutionName: Microsoft.ReactNative.WindowsAppSDK.sln
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildConfiguration: ${{ matrix.BuildConfiguration}}
+                msbuildArguments: /p:UseWinUI3=true
+                warnAsError: false # Disable warn as error until we fix #8312
 
-      - task: NuGetToolInstaller@1
-        inputs:
-          versionSpec: ">=5.8.0"
+            - template: ../templates/publish-build-artifacts.yml
+              parameters:
+                artifactName: ProjectReunion
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildConfiguration: ${{ matrix.BuildConfiguration}}
+                contents: |
+                  Microsoft.ReactNative\**
+                  Microsoft.ReactNative.WindowsAppSDK\**
 
-      - template: ../templates/prep-and-pack-nuget.yml
-        parameters:
-          packDesktop: false
-          packMicrosoftReactNative: false
-          packMicrosoftReactNativeCxx: false
-          packMicrosoftReactNativeManaged: false
-          packMicrosoftReactNativeManagedCodeGen: false
-          packMicrosoftReactNativeProjectReunion: true
-          slices: '("x64.Release")'
+            - template: ../templates/prep-and-pack-nuget.yml
+              parameters:
+                artifactName: ProjectReunion
+                packMicrosoftReactNativeProjectReunion: true
+                slices:
+                  - platform: x64
+                    configuration: Release
 
       - task: PublishBuildArtifacts@1
         displayName: "Publish Artifact: Windows App SDK NuGet"

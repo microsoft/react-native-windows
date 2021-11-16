@@ -63,12 +63,27 @@
     <ClCompile Include="..\Shared\JSI\ChakraApi.cpp">
       <Filter>ExternalFiles\Shared\JSI</Filter>
     </ClCompile>
+    <ClCompile Include="..\Shared\JSI\ChakraJsiRuntime_edgemode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl">
       <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
     </Midl>
     <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactDispatcher.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNonAbiValue.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNotificationService.idl">
+      <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
+    </Midl>
+    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl">
       <Filter>ExternalFiles\Microsoft.ReactNative</Filter>
     </Midl>
   </ItemGroup>

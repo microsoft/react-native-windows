@@ -2,6 +2,51 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Wed, 10 Nov 2021 23:57:30 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.18",
+      "version": "0.0.0-canary.18",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "igklemen@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "6b0407bd2a10578b3010412c49cc61b41d43ac16",
+            "comment": "Integrate OCt 28 RN nightly build."
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:36 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.17",
+      "version": "0.0.0-canary.17",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "not available",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:05 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.17",
+      "version": "0.0.0-canary.17",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "7b3510aebdbc79189278206a53e26213897d6ff8",
+            "comment": "Integrate 10/21 Nightly RN Build"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Oct 2021 05:06:56 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.15",
       "version": "0.0.0-canary.15",

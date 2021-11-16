@@ -2,6 +2,11 @@
   "name": "@rnw-scripts/format-files",
   "version": "1.0.26",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/format-files"
+  },
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",

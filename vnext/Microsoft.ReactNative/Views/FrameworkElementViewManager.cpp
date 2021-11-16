@@ -17,7 +17,6 @@
 #include <WindowsNumerics.h>
 #include <winrt/Windows.Foundation.h>
 
-#include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include "Utils/PropertyHandlerUtils.h"
@@ -172,75 +171,6 @@ bool FrameworkElementViewManager::UpdateProperty(
       } else {
         cdebug << "[Dim down] " << propertyName << "\n";
       }
-    } else if (propertyName == "width") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double width = propertyValue.AsDouble();
-        if (width >= 0)
-          element.Width(width);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::WidthProperty());
-      }
-
-    } else if (propertyName == "height") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double height = propertyValue.AsDouble();
-        if (height >= 0)
-          element.Height(height);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::HeightProperty());
-      }
-    } else if (propertyName == "minWidth") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double minWidth = propertyValue.AsDouble();
-        if (minWidth >= 0)
-          element.MinWidth(minWidth);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MinWidthProperty());
-      }
-    } else if (propertyName == "maxWidth") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double maxWidth = propertyValue.AsDouble();
-        if (maxWidth >= 0)
-          element.MaxWidth(maxWidth);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MaxWidthProperty());
-      }
-
-    } else if (propertyName == "minHeight") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double minHeight = propertyValue.AsDouble();
-        if (minHeight >= 0)
-          element.MinHeight(minHeight);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MinHeightProperty());
-      }
-    } else if (propertyName == "maxHeight") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double maxHeight = propertyValue.AsDouble();
-        if (maxHeight >= 0)
-          element.MaxHeight(maxHeight);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MaxHeightProperty());
-      }
-
     } else if (propertyName == "accessibilityHint") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto value = asHstring(propertyValue);
@@ -454,9 +384,6 @@ bool FrameworkElementViewManager::UpdateProperty(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded)]);
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
-      if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-        peer.RaiseAutomationEvent(xaml::Automation::Peers::AutomationEvents::LiveRegionChanged);
-      }
     } else if (propertyName == "accessibilityValue") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {

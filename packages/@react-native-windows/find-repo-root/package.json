@@ -10,6 +10,11 @@
     "watch": "rnw-scripts watch"
   },
   "main": "lib-commonjs/findRepoRoot.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@react-native-windows/find-repo-root"
+  },
   "dependencies": {
     "find-up": "^4.1.0"
   },

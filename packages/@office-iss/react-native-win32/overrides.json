@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211016-2009-e1b698c5f",
+  "baseVersion": "0.0.0-20211028-2008-61e1b6f86",
   "overrides": [
     {
       "type": "derived",
@@ -19,7 +19,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "3f55b3104a728f68008ba473bb64bbe8fc7ad8c9"
+      "baseHash": "a04c4a17e863ed898cdc9ba9eebbb0ac65d875f8"
     },
     {
       "type": "patch",
@@ -124,7 +124,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "d88f479a06105b51ff32122ae898b04ee66c0d33"
+      "baseHash": "d7d85c4dfa7ce16d90b456f720722ba13123f320"
     },
     {
       "type": "patch",
@@ -173,7 +173,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "7d6114901e76fa8f73f84dbb3f486ea2e1c9ce0e"
+      "baseHash": "cf2b9765b9002b0724662417ac77d24153de02bb"
     },
     {
       "type": "platform",
@@ -210,7 +210,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "c8d495e707fc61bbfb929b9a343f5460c3b60c28",
+      "baseHash": "4a474a7d546828c7a3fcebad66bd0ff7912792e7",
       "issue": 4320
     },
     {
@@ -414,7 +414,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb",
+      "baseHash": "4d7582a71082988b52d657769d0145982929e43b",
       "issue": 7074
     },
     {

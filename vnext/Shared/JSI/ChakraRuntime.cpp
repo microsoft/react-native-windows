@@ -16,14 +16,10 @@
 #include <sstream>
 #include <unordered_set>
 
-#ifdef CHAKRACORE
-#include <ChakraCore.h>
-#else
 #ifndef USE_EDGEMODE_JSRT
 #define USE_EDGEMODE_JSRT
 #endif
 #include <jsrt.h>
-#endif
 
 namespace Microsoft::JSI {
 
@@ -1011,15 +1007,7 @@ std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
 uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
-#ifdef CHAKRACORE
-  if (React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
-    return MakeSystemChakraRuntime(std::move(args));
-  } else {
-    return MakeChakraCoreRuntime(std::move(args));
-  }
-#else
   return MakeSystemChakraRuntime(std::move(args));
-#endif // CHAKRACORE
 }
 
 } // namespace Microsoft::JSI
