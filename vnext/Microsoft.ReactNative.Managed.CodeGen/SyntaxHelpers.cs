@@ -38,6 +38,14 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       return InvocationStatement(SyntaxFactory.IdentifierName(methodName), arguments);
     }
 
+    internal static ExpressionSyntax MemberAccessExpression(ExpressionSyntax instance, SyntaxToken method)
+    {
+      return SyntaxFactory.MemberAccessExpression(
+        SyntaxKind.SimpleMemberAccessExpression,
+        instance,
+        SyntaxFactory.IdentifierName(method));
+    }
+
     internal static ExpressionSyntax MemberAccessExpression(SyntaxToken instance, SyntaxToken method)
     {
       return SyntaxFactory.MemberAccessExpression(
