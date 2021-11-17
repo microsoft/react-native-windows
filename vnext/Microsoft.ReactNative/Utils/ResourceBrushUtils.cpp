@@ -47,22 +47,25 @@ void UpdateToggleResourceBrush(
     const xaml::FrameworkElement &element,
     const std::wstring &resourceName,
     const xaml::Media::Brush brush) {
-  const auto resources = element.Resources();
 
-  // sanity check for null pointer
-  if (resources != nullptr) {
-    if (brush != nullptr) {
-      auto resourceBrush = resources.Lookup(winrt::box_value(resourceName));
-      // if both the old Resource Brush and new Resource Brush is a SolidColorBrush, change the color of the brush to
-      // support runtime changes
-      auto colorBrush = brush.try_as<xaml::Media::SolidColorBrush>();
-      auto resourceColorBrush = resourceBrush.try_as<xaml::Media::SolidColorBrush>();
-      if (colorBrush && resourceColorBrush) {
-        resourceColorBrush.Color(colorBrush.Color());
-      } else {
-        // else, add the new brush to the resource directory (will need to reload component to see changes)
-        resources.Insert(winrt::box_value(resourceName), brush);
-      }
+  // check for null pointers
+  if (const auto resources = element.Resources()) {
+    if (brush) {
+      // check if resources has key
+      if (resources.HasKey(winrt::box_value(resourceName))){
+        auto resourceBrush = resources.Lookup(winrt::box_value(resourceName));
+        // if both the old Resource Brush and new Resource Brush is a SolidColorBrush, change the color of the brush to
+        // support runtime changes
+        auto colorBrush = brush.try_as<xaml::Media::SolidColorBrush>();
+        auto resourceColorBrush = resourceBrush.try_as<xaml::Media::SolidColorBrush>();
+        if (colorBrush && resourceColorBrush) 
+          resourceColorBrush.Color(colorBrush.Color());
+        else
+          resources.Insert(winrt::box_value(resourceName), brush);
+       } else {
+         // else, add the new brush to the resource directory (will need to reload component to see changes)
+         resources.Insert(winrt::box_value(resourceName), brush);
+       }
       // if the brush is null, remove the resource
     } else {
       resources.Remove(winrt::box_value(resourceName));
