@@ -5,7 +5,7 @@
  */
 
 import {createHash} from 'crypto';
-const fs = require('fs').promises; // Required to support Node 12
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 interface ProjectInfo {

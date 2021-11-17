@@ -5,7 +5,7 @@
  */
 
 import envinfo from 'envinfo';
-const fs = require('fs').promises; // Required to support Node 12
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import {DOMParser} from '@xmldom/xmldom';
 import xpath from 'xpath';
@@ -74,8 +74,9 @@ export async function getVersionOfNpmPackage(
     const pkgJsonPath = require.resolve(`${pkgName.trim()}/package.json`, {
       paths: [process.cwd(), __dirname],
     });
-    const contents = await fs.readFile(pkgJsonPath);
-    const pkgJson = JSON.parse(contents.toString());
+    const pkgJson = await fs.readJsonFile<{name: string; version: string}>(
+      pkgJsonPath,
+    );
     if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
       return pkgJson.version;
     }

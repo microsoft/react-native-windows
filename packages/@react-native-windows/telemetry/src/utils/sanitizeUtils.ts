@@ -44,7 +44,9 @@ export function getAnonymizedPath(
         if (
           rest
             .toLowerCase()
-            .startsWith(nodeModules + trackedNpmPackage.replace(/\//g, '\\'))
+            .startsWith(
+              nodeModules + trackedNpmPackage.replace(/\//g, '\\') + '\\',
+            )
         ) {
           // We are under node_modules within an npm package we're tracking, anonymize by removing root
           return '[node_modules]' + rest.slice(nodeModules.length - 1);

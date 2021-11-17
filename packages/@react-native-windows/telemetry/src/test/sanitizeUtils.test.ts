@@ -34,9 +34,18 @@ test('getAnonymizedPath() with project/windows/test.sln is anonymized', () => {
   expect(anonymizedPath.startsWith('[windows]\\???.sln')).toBe(true);
 });
 
-test('getAnonymizedPath() with project/node_modules for untracked packge is anonymized', () => {
+test('getAnonymizedPath() with project/node_modules for untracked package is anonymized', () => {
   const originalPath = path.normalize(
     path.join(projectDir, 'node_modules/untracked/index.js'),
+  );
+  const anonymizedPath = sanitizeUtils.getAnonymizedPath(originalPath);
+  expect(anonymizedPath).not.toBe(originalPath);
+  expect(anonymizedPath.startsWith('[node_modules]\\???.js')).toBe(true);
+});
+
+test('getAnonymizedPath() with project/node_modules for react-secret-pii package is anonymized', () => {
+  const originalPath = path.normalize(
+    path.join(projectDir, 'node_modules/react-secret-pii/index.js'),
   );
   const anonymizedPath = sanitizeUtils.getAnonymizedPath(originalPath);
   expect(anonymizedPath).not.toBe(originalPath);
