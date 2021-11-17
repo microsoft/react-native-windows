@@ -77,7 +77,7 @@ export async function getVersionOfNpmPackage(
     const pkgJson = await fs.readJsonFile<{name: string; version: string}>(
       pkgJsonPath,
     );
-    if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
+    if (pkgJson.name === pkgName) {
       return pkgJson.version;
     }
   } catch {}

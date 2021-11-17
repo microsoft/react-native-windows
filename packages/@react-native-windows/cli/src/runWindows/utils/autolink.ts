@@ -895,7 +895,6 @@ function verboseMessage(message: any, verbose?: boolean) {
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-// eslint-disable-next-line complexity
 function optionSanitizer(key: keyof AutoLinkOptions, value: any): any {
   // Do not add a default case here.
   // Strings risking PII should just return true if present, false otherwise.
