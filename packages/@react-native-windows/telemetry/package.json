@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0",
-    "@types/envinfo": "^7.8.1",
     "applicationinsights": "^2.1.5",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",
@@ -34,6 +33,7 @@
     "@rnw-scripts/jest-unittest-config": "1.2.4",
     "@rnw-scripts/just-task": "2.2.1",
     "@rnw-scripts/ts-config": "2.0.1",
+    "@types/envinfo": "^7.8.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
     "@types/semver": "^7.3.3",
