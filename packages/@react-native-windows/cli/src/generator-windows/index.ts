@@ -612,7 +612,7 @@ function getReunionPackages(nugetVersion: string): NugetPackage[] {
 
   reunionPackages.push({
     id: 'Microsoft.WindowsAppSDK',
-    version: '1.0.0-preview3',
+    version: '1.0.0',
   });
 
   reunionPackages.push({
