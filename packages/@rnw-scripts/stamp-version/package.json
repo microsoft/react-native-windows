@@ -15,6 +15,7 @@
     "stamp-version": "./bin.js"
   },
   "dependencies": {
+    "@react-native-windows/fs": "^0.0.0",
     "@react-native-windows/package-utils": "^0.0.0-canary.21",
     "mustache": "^4.0.1",
     "semver": "^7.3.2",

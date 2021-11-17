@@ -7,14 +7,15 @@
     "start": "react-native start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
-    "integration-test": "jest --config jest.integration.config.js --runInBand --verbose --color"
+    "integration-test": "jest --config jest.integration.config.js --runInBand --verbose"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.0.28",
+    "@react-native-windows/automation-channel": "^0.0.29",
+    "@react-native-windows/fs": "^0.0.0",
     "chai": "^4.2.0",
     "react": "17.0.2",
     "react-native": "0.0.0-20211028-2008-61e1b6f86",
-    "react-native-windows": "^0.0.0-canary.417"
+    "react-native-windows": "^0.0.0-canary.418"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

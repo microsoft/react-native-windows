@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 13 Nov 2021 06:08:58 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Nov 2021 06:09:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.418
+
+Tue, 16 Nov 2021 06:09:18 GMT
+
+### Changes
+
+- Remove redundant WindowsTargetPlatformVersion declarations (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.417
 

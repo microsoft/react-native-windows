@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure native animations fire completion callbacks",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

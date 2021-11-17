@@ -9,7 +9,7 @@ import path from 'path';
 import username from 'username';
 import uuid from 'uuid';
 import childProcess from 'child_process';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
@@ -123,7 +123,8 @@ export async function copyProjectTemplateAndReplace(
   let mainComponentName = newProjectName;
   const appJsonPath = await findUp('app.json', {cwd: destPath});
   if (appJsonPath) {
-    mainComponentName = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
+    const appJson = await fs.readJsonFile<{name: string}>(appJsonPath);
+    mainComponentName = appJson.name;
   }
 
   const xamlNamespace = options.useWinUI3

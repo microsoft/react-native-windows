@@ -31,7 +31,7 @@ jobs:
       - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/main
         displayName: Create a new branch
 
-      - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath "$(Agent.TempDirectory)\integration-report.md" --color
+      - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath "$(Agent.TempDirectory)\integration-report.md"
         displayName: yarn integrate-rn
         continueOnError: true
 
