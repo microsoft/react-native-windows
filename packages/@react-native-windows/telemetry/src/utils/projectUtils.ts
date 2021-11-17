@@ -11,7 +11,7 @@ import path from 'path';
 interface ProjectInfo {
   id: string | null;
   platforms: Array<string>;
-  rnwLang: 'cpp' | 'cs' | null;
+  rnwLang: 'cpp' | 'cs' | 'cpp+cs' | null;
 }
 
 export interface DependencyProjectInfo extends ProjectInfo {}
@@ -85,18 +85,32 @@ function getDefinedKeys(obj: Record<string, any>): string[] {
 }
 
 /**
- * Given a react-native CLI config, determine the language of the RNW project if possible.
- * @param config Config passed from react-native CLI.
- * @returns The language of the RNW project.
+ * Given a react-native CLI config, determine the language of the RNW dependency if possible.
+ * @param config Dependency config passed from react-native CLI.
+ * @returns The language of the RNW dependency.
  */
-function getRnwLang(
+function getDependencyRnwLang(
   config: Record<string, any> | null | undefined,
-): 'cpp' | 'cs' | null {
+): 'cpp' | 'cs' | 'cpp+cs' | null {
   if (config) {
+    let cppCount = 0;
+    let csCount = 0;
     for (const project of config.projects) {
-      if (project.directDependency) {
-        return project.projectLang;
+      switch (project.projectLang) {
+        case 'cpp':
+          cppCount++;
+          break;
+        case 'cs':
+          csCount++;
+          break;
       }
+    }
+    if (cppCount > 0 && csCount > 0) {
+      return 'cpp+cs';
+    } else if (cppCount > 0) {
+      return 'cpp';
+    } else if (csCount > 0) {
+      return 'cs';
     }
   }
   return null;
@@ -156,7 +170,7 @@ export async function configToProjectInfo(
           );
 
           if (dependencyPlatforms.length > 0) {
-            const dependencyRnwLang = getRnwLang(
+            const dependencyRnwLang = getDependencyRnwLang(
               config.dependencies[dependencyName].platforms.windows,
             );
             const dependencyInfo: DependencyProjectInfo = {
