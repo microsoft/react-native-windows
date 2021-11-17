@@ -98,7 +98,7 @@ class NativeAnimatedNodeManager {
   std::unordered_map<int64_t, std::unique_ptr<TrackingAnimatedNode>> m_trackingNodes{};
   std::unordered_map<std::tuple<int64_t, std::string>, std::vector<std::unique_ptr<EventAnimationDriver>>>
       m_eventDrivers{};
-  std::unordered_map<int64_t, std::unique_ptr<AnimationDriver>> m_activeAnimations{};
+  std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_activeAnimations{};
   std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
 

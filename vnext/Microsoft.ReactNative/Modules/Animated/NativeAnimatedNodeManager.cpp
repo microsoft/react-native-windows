@@ -218,12 +218,12 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
     case AnimationType::Decay:
       m_activeAnimations.emplace(
           animationId,
-          std::make_unique<DecayAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
+          std::make_shared<DecayAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
       break;
     case AnimationType::Frames:
       m_activeAnimations.emplace(
           animationId,
-          std::make_unique<FrameAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
+          std::make_shared<FrameAnimationDriver>(animationId, animatedNodeTag, endCallback, animationConfig, manager));
       break;
     case AnimationType::Spring: {
       folly::dynamic dynamicValues = [animationConfig]() {
@@ -232,7 +232,7 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
       }();
       m_activeAnimations.emplace(
           animationId,
-          std::make_unique<SpringAnimationDriver>(
+          std::make_shared<SpringAnimationDriver>(
               animationId, animatedNodeTag, endCallback, animationConfig, manager, dynamicValues));
       break;
     }
