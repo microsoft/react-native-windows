@@ -566,7 +566,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       // Otherwise all bundles (User and Platform) are loaded through
       // platformBundles.
       if (PathFileExistsA(fullBundleFilePath.c_str())) {
-        auto bundleString = JSBigFileString::fromPath(fullBundleFilePath);
+        auto bundleString = FileMappingBigString::fromPath(fullBundleFilePath);
         m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(fullBundleFilePath), synchronously);
       }
 

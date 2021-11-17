@@ -9,7 +9,7 @@
 // guarantee correct types
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import chalk from 'chalk';
 import {performance} from 'perf_hooks';
@@ -485,7 +485,7 @@ export class AutolinkWindows {
     const fileName = chalk.bold(path.basename(filePath));
     verboseMessage(`Reading ${fileName}...`, this.options.logging);
     const actualContents = fs.existsSync(filePath)
-      ? (await fs.promises.readFile(filePath)).toString()
+      ? (await fs.readFile(filePath)).toString()
       : '';
 
     const contentsChanged = expectedContents !== actualContents;
@@ -497,7 +497,7 @@ export class AutolinkWindows {
       );
       if (!this.options.check) {
         verboseMessage(`Writing ${fileName}...`, this.options.logging);
-        await fs.promises.writeFile(filePath, expectedContents, {
+        await fs.writeFile(filePath, expectedContents, {
           encoding: 'utf8',
           flag: 'w',
         });

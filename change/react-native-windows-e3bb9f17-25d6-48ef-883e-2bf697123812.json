@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Integrate OCt 28 RN nightly build.",
+  "comment": "Fix C# Module Event invocation",
   "packageName": "react-native-windows",
-  "email": "igklemen@microsoft.com",
+  "email": "vmorozov@microsoft.com",
   "dependentChangeType": "patch"
 }

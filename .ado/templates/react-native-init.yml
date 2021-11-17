@@ -72,7 +72,7 @@ steps:
           packMicrosoftReactNativeManagedCodeGen: true
         slices:
           - platform: ${{ parameters.platform }}
-            configuration: ${{ parameters.configuration }}
+            configuration: Release
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - script: |
@@ -146,6 +146,7 @@ steps:
       deployOption: ${{ parameters.additionalRunArguments }}
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      restoreLockedMode: false # Allow new lockfile to be created
 
   - template: upload-build-logs.yml
     parameters:

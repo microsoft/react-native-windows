@@ -6,7 +6,7 @@
  */
 
 import yargs from 'yargs';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import {execSync} from 'child_process';
 import validUrl from 'valid-url';
@@ -136,12 +136,14 @@ function getReactNativeProjectName(): string {
       'Unable to find package.json.  This should be run from within an existing react-native project.',
     );
   }
-  let name = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8')).name;
+  type PackageJson = {name: string};
+
+  let name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
   if (!name) {
     const appJsonPath = findUp.sync('app.json', {cwd});
     if (appJsonPath) {
       console.log('Reading project name from app.json...');
-      name = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
+      name = fs.readJsonFileSync<PackageJson>(pkgJsonPath).name;
     }
   }
   if (!name) {

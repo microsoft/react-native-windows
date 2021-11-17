@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 09 Nov 2021 06:11:23 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Nov 2021 06:09:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.418
+
+Tue, 16 Nov 2021 06:09:18 GMT
+
+### Changes
+
+- Remove redundant WindowsTargetPlatformVersion declarations (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.417
+
+Sat, 13 Nov 2021 06:08:58 GMT
+
+### Changes
+
+- Removes unnecessary prop settings on VM base class (erozell@outlook.com)
+- Fix Restore Determinism of Microsoft.ReactNative.Managed (ngerlem@microsoft.com)
+- Fix crash loading bundle in win32 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.416
+
+Wed, 10 Nov 2021 23:57:30 GMT
+
+### Changes
+
+- Add MSRN Debug NuGet Packages (ngerlem@microsoft.com)
+- Integrate OCt 28 RN nightly build. (igklemen@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.18
 
 ## 0.0.0-canary.415
 

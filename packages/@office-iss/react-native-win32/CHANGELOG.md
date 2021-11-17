@@ -1,8 +1,26 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 01 Nov 2021 18:33:36 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Nov 2021 06:09:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.122
+
+Fri, 12 Nov 2021 06:09:53 GMT
+
+### Changes
+
+- Fix test case to have correct state (ruaraki@microsoft.com)
+- Add enableFocusRing prop for View and test (ruaraki@microsoft.com)
+
+## 0.0.0-canary.121
+
+Wed, 10 Nov 2021 23:57:30 GMT
+
+### Changes
+
+- Integrate OCt 28 RN nightly build. (igklemen@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.18
 
 ## 0.0.0-canary.120
 

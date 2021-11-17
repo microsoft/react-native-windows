@@ -1,44 +1,70 @@
 parameters:
-  - name: packageId
+  # Required: Name to publish the NuGet Package As
+  - name: outputPackage
     type: string
+  
+  # Required: NPM-matching version
   - name: packageVersion
     type: string
+
+  # Optional: NuSpec used to construct the package. Defaults to $(outputPackage)
+  - name: nuspec
+    type: string
+    default: ''
+
+  # Optional: Pattern of binaries within the artifact to sign as part of this
+  # NuGet package. Defaults to .dll, .winmd, .exe matching the nuspec name
+  - name: binariesToSign
+    type: string
+    default: ''
+
+  # Optional: Excludes platform-specific files from the NuSpec of they are not
+  # included in slices
   - name: slices
-    type: object
-    default: []
+    type: string
+    default: ''
+
+  # Optional: Properties to pass to nuspec  
   - name: buildProperties
     type: string
     default: ''
+
+  # Optional: Whether to sign binaries
   - name: codesignBinaries
     type: boolean
     default: false
+
+  # Optional: Whether to sign the NuGet packag
   - name: codesignNuget
     type: boolean
     default: false
 
 steps:
 
-  # Strip down the binaries from NuGet because we may not have built all the flavours.
-  - ${{ if gt(length(parameters.slices), 0) }}:
-    - powershell: |
-        $slices = ConvertFrom-Json '${{ convertToJson(parameters.slices) }}'
-        $slicesArg = $slices | % {$_.platform + "." + $_.configuration}
-
-        .\StripAdditionalPlatformsFromNuspec.ps1 -nuspec ${{parameters.packageId}}.nuspec -outfile ${{parameters.packageId}}.nuspec -slices $slicesArg -debug
-      displayName: '${{ parameters.packageId }} - Strip slices from nuspec'
+  - ${{ if ne(parameters.slices, '') }}:
+    - powershell: >
+        .\StripAdditionalPlatformsFromNuspec.ps1
+        -nuspec ${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.nuspec
+        -outfile ${{ parameters.outputPackage }}.nuspec
+        -slices (ConvertFrom-Json '${{ parameters.slices }}')
+        -debug
+      displayName: '${{ parameters.outputPackage }} - Strip slices from nuspec'
       workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
-      displayName: '${{ parameters.packageId }} CodeSign Binaries'
+      displayName: '${{ parameters.outputPackage }} CodeSign Binaries'
       inputs:
         ConnectedServiceName: ReactNativeSigning
         FolderPath: $(System.DefaultWorkingDirectory)/ReactWindows
         # Recursively finds files matching these patterns:
-        Pattern: |
-          **/${{ parameters.packageId }}.dll
-          **/${{ parameters.packageId }}.winmd
-          **/${{ parameters.packageId }}.exe
+        ${{ if ne(parameters.binariesToSign, '') }}:
+          Pattern: ${{ parameters.binariesToSign }}
+        ${{ else }}:
+          Pattern: |
+            **/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.dll
+            **/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.winmd
+            **/${{ coalesce(parameters.nuspec, parameters.outputPackage) }}.exe
         UseMinimatch: true
         signConfigType: inlineSignParams
         inlineOperation: |
@@ -67,22 +93,22 @@ steps:
 
   # NuGetCommand@2 workaround: https://developercommunity.visualstudio.com/content/problem/288534/vsts-yaml-build-failure-the-task-name-nugetcommand.html
   - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
-    displayName: '${{ parameters.packageId }} - Nuget pack'
+    displayName: '${{ parameters.outputPackage }} - Nuget pack'
     inputs:
       command: pack
       verbosityPack: 'Detailed'
-      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.packageId }}.nuspec
+      packagesToPack: $(System.DefaultWorkingDirectory)/ReactWindows/${{ parameters.outputPackage }}.nuspec
       packDestination: $(System.DefaultWorkingDirectory)/NugetRootFinal
-      buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.packageId }};${{ parameters.buildProperties }}
+      buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
   - ${{ if eq(parameters.codesignNuget, true) }}:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
-      displayName: '${{ parameters.packageId }} CodeSign NuGet'
+      displayName: '${{ parameters.outputPackage }} CodeSign NuGet'
       inputs:
         ConnectedServiceName: ReactNativeSigning
         FolderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
         Pattern: |
-          **/${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg
+          **/${{ parameters.outputPackage }}.${{ parameters.packageVersion }}.nupkg
         UseMinimatch: true
         signConfigType: inlineSignParams
         inlineOperation: |
@@ -109,5 +135,5 @@ steps:
   - script: |
       set TestFeed=$(System.DefaultWorkingDirectory)\NugetTestFeed
       if NOT EXIST %TestFeed% (mkdir %TestFeed%)
-      nuget add $(System.DefaultWorkingDirectory)\NugetRootFinal\${{ parameters.packageId }}.${{ parameters.packageVersion }}.nupkg -Source %TestFeed%
-    displayName: '${{ parameters.packageId }} - Nuget push to local test feed'
+      nuget add $(System.DefaultWorkingDirectory)\NugetRootFinal\${{ parameters.outputPackage }}.${{ parameters.packageVersion }}.nupkg -Source %TestFeed%
+    displayName: '${{ parameters.outputPackage }} - Nuget push to local test feed'

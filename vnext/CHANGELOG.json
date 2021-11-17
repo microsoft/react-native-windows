@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Nov 2021 06:09:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.418",
+      "version": "0.0.0-canary.418",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4fa9403beb8b40e80ed52579b9c50bf5a6dca042",
+            "comment": "Remove redundant WindowsTargetPlatformVersion declarations"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Nov 2021 06:08:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.417",
+      "version": "0.0.0-canary.417",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "2e05cd78ee34026d340c027c008a63df32a45227",
+            "comment": "Removes unnecessary prop settings on VM base class"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d336f1a7364c9c62325bda1737fb91bce0c3fa50",
+            "comment": "Fix Restore Determinism of Microsoft.ReactNative.Managed"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b2c2a30810c378439f3a88b6267ab7dae6381b3",
+            "comment": "Fix crash loading bundle in win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Nov 2021 23:57:30 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.416",
+      "version": "0.0.0-canary.416",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55",
+            "comment": "Add MSRN Debug NuGet Packages"
+          },
+          {
+            "author": "igklemen@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6b0407bd2a10578b3010412c49cc61b41d43ac16",
+            "comment": "Integrate OCt 28 RN nightly build."
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.18",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Nov 2021 06:11:23 GMT",
       "tag": "react-native-windows_v0.0.0-canary.415",
       "version": "0.0.0-canary.415",

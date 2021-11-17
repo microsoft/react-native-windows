@@ -40,11 +40,6 @@
         "resolved": "2.1.0",
         "contentHash": "GmkKfoyerqmsHMn7OZj0AKpcBabD+GaafqphvX2Mw406IwiJRy1pKcKqdCfKJfYmkRyJ6+e+RaUylgdJoDa1jQ=="
       },
-      "Microsoft.UI.Xaml": {
-        "type": "Transitive",
-        "resolved": "2.7.0",
-        "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
-      },
       "NETStandard.Library": {
         "type": "Transitive",
         "resolved": "2.0.3",
@@ -144,8 +139,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9",
-          "Microsoft.ReactNative": "1.0.0",
-          "Microsoft.UI.Xaml": "2.7.0"
+          "Microsoft.ReactNative": "1.0.0"
         }
       },
       "reactcommon": {

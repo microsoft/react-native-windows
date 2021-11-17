@@ -20,6 +20,12 @@
         "resolved": "2.7.0",
         "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
       },
+      "ReactNative.Hermes.Windows": {
+        "type": "Direct",
+        "requested": "[0.9.0-ms.6, )",
+        "resolved": "0.9.0-ms.6",
+        "contentHash": "aNx28wZGWm6Bm3y33KMKdkOik3ZjoybF4xWgLF56CJ+sQXhJQ7YYaw7flk7cmgWBLFzn9GwfNNgyAp+BhrdN3Q=="
+      },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
         "resolved": "2.2.7-rel-27913-00",
@@ -145,8 +151,7 @@
         "type": "Project",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9",
-          "Microsoft.ReactNative": "1.0.0",
-          "Microsoft.UI.Xaml": "2.7.0"
+          "Microsoft.ReactNative": "1.0.0"
         }
       },
       "reactcommon": {
