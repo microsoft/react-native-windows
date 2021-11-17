@@ -19,14 +19,13 @@
     <file src="$nugetroot$\Microsoft.ReactNative.targets" target="build\native"/>
     <file src="$nugetroot$\Microsoft.ReactNative.VersionCheck.targets" target="build\native"/>
 
+    <file src="$nugetroot$\$baseplatform$\$baseconfiguration$\Microsoft.ReactNative\Microsoft.ReactNative.winmd"   target="lib\uap10.0"/>
     <!-- 
     Uncomment once we are producing doc xml file
     <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.xml"   target="lib\uap10.0"/> 
     -->
 
     <!-- Included in Microsoft.ReactNative -->
-    <file src="$nugetroot$\$baseplatform$\Release\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0"/>
-
     <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm64\native" />
     <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm64\native" />
     <file src="$nugetroot$\ARM64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-arm64\native" />
@@ -40,8 +39,6 @@
     <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x64\native" />
 
     <!-- Included in Microsoft.ReactNative.Debug -->
-    <file src="$nugetroot$\$baseplatform$\Debug\Microsoft.ReactNative\Microsoft.ReactNative.winmd" target="lib\uap10.0"/>
-
     <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm64\native" />
     <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm64\native" />
     <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-arm64\native" />
