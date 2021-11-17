@@ -8,8 +8,8 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows",
-    "e2etest": "jest --color",
-    "e2etest:debug": "jest --color --config ./jest.debug.config.js"
+    "e2etest": "jest",
+    "e2etest:debug": "jest --config ./jest.debug.config.js"
   },
   "dependencies": {
     "@react-native-picker/picker": "2.2.0",

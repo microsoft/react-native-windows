@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import {
@@ -20,7 +20,7 @@ const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
 
 async function tryMkdir(dir: string): Promise<void> {
   try {
-    await fs.promises.mkdir(dir, {recursive: true});
+    await fs.mkdir(dir, {recursive: true});
   } catch (err) {}
 }
 

@@ -5,7 +5,7 @@
  * @format
  */
 
-import {promises as fs} from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import yargs from 'yargs';
 import semver from 'semver';

@@ -7,7 +7,7 @@
 
 import chalk from 'chalk';
 import {execSync, spawn, ChildProcess} from 'child_process';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import readlineSync from 'readline-sync';
 

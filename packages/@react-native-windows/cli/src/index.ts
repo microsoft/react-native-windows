@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import {Telemetry} from '@react-native-windows/telemetry';
 
@@ -108,15 +108,15 @@ export async function generateWindows(
       let cliVersion = '';
       try {
         const cwd = process.cwd();
-        const rnwPkg = JSON.parse(
-          fs
-            .readFileSync(
-              require.resolve('react-native-windows/package.json', {
-                paths: [cwd],
-              }),
-            )
-            .toString(),
+        const rnwPkg = fs.readJsonFileSync<{
+          version: string;
+          peerDependencies: Record<string, string>;
+        }>(
+          require.resolve('react-native-windows/package.json', {
+            paths: [cwd],
+          }),
         );
+
         rnVersion = rnwPkg.peerDependencies['react-native'] || '';
         const rnwCliPkgJson = require('../package.json');
         cliVersion = rnwCliPkgJson.version;
