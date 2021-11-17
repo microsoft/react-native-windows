@@ -375,7 +375,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     {
       // generates:
       //   moduleBuilder.AddInitializer((IReactContext reactContext) =>
-      //      module.MyEvent = (ArgType0 arg0, ArgType1 arg1, ...) => reactContext.EmitJsEvent("eventEmitterName", "eventName", arg0, arg1, ...);
+      //      module.MyEvent = (ArgType0 arg0, ArgType1 arg1, ...) => new ReactContext(reactContext).EmitJsEvent("eventEmitterName", "eventName", arg0, arg1, ...);
       return InvocationStatement(
         MemberAccessExpression(ReactNativeNames.ModuleBuilder, ReactNativeNames.AddInitializer),
         ParenthesizedLambdaExpression(
@@ -389,7 +389,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     {
       // generates:
       //   moduleBuilder.AddInitializer((IReactContext reactContext) =>
-      //      module.MyEvent = (ArgType0 arg0, ArgType1 arg1, ...) => reactContext.EmitJsFunction("moduleName", "eventName", arg0, arg1, ...);
+      //      module.MyEvent = (ArgType0 arg0, ArgType1 arg1, ...) => new ReactContext(reactContext).EmitJsFunction("moduleName", "eventName", arg0, arg1, ...);
       return InvocationStatement(
         MemberAccessExpression(ReactNativeNames.ModuleBuilder, ReactNativeNames.AddInitializer),
         ParenthesizedLambdaExpression(
@@ -411,7 +411,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
           block: null,
           expressionBody: InvocationExpression(
             MemberAccessExpression(ReactNativeNames.Module, Identifier(initializer.Method.Name)),
-            ObjectCreationExpression(ReactTypes.ReactContext, IdentifierName((ReactNativeNames.ReactContextLocalName)))
+            ObjectCreationExpression(ReactTypes.ReactContext, IdentifierName(ReactNativeNames.ReactContextLocalName))
             )));
     }
 
@@ -420,7 +420,8 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
       var lambdaParams = new List<ParameterSyntax>(callback.CallbackParameters.Length);
       var arguments = new List<ArgumentSyntax>(callback.CallbackParameters.Length);
-      arguments.Add(Argument(IdentifierName(ReactNativeNames.WriterLocalName)));
+      arguments.Add(Argument(LiteralExpression(callback.CallbackContextName)));
+      arguments.Add(Argument(LiteralExpression(callback.Name)));
 
       for (int i = 0; i < callback.CallbackParameters.Length; i++)
       {
@@ -433,10 +434,10 @@ namespace Microsoft.ReactNative.Managed.CodeGen
 
       // generates:
       //  module.<callackName> = (ArgType0 arg0, ArgType1 arg0, ...) =>
-      //    reactContext.<contextCallbackMethod>(
+      //    new ReactContext(reactContext).<contextCallbackMethod>(
       //      eventEmitterName,
       //      eventName,
-      //      writer => writer.WriteArgs(arg0, arg1, ...)
+      //      arg0, arg1, ...
       //      )
       return
         AssignmentExpression(
@@ -446,16 +447,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             parameterList: ParameterList(lambdaParams.ToArray()),
             block: null,
             expressionBody: InvocationExpression(
-              MemberAccessExpression(ReactNativeNames.ReactContextLocalName, contextCallbackMethod),
-              LiteralExpression(callback.CallbackContextName),
-              LiteralExpression(callback.Name),
-              ParenthesizedLambdaExpression(
-                parameterList: ParameterList(Parameter(ReactNativeNames.WriterLocalName)),
-                block: null,
-                expressionBody: InvocationExpression(
-                  MemberAccessExpression(ReactTypes.JSValueWriter, ReactNativeNames.WriteArgsMethodName),
-                  arguments
-                  )))));
+              MemberAccessExpression(
+                ObjectCreationExpression(ReactTypes.ReactContext, IdentifierName(ReactNativeNames.ReactContextLocalName)),
+                contextCallbackMethod),
+              arguments
+              )));
     }
 
     private string GetMethodReturnTypeFromStyle(ReactMethod.MethodReturnStyle returnStyle)
