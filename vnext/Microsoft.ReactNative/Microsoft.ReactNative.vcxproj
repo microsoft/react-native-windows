@@ -83,6 +83,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(GeneratedFilesDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(EnableSourceLink)' == 'true'">
+    <!-- Workaround. SourceLink target overrides modify %(Link)->AdditionalOptions before ComputeXamlGeneratedCLOutputs is called. -->
+    <BeforeLinkTargets>ComputeXamlGeneratedCLOutputs;$(BeforeLinkTargets)</BeforeLinkTargets>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
