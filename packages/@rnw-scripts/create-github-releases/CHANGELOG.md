@@ -1,8 +1,19 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Nov 2021 06:11:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.6
+
+Thu, 18 Nov 2021 06:11:20 GMT
+
+### Patches
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.26
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
 
 ## 1.1.5
 

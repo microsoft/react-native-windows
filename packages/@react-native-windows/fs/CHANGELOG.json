@@ -1,0 +1,26 @@
+{
+  "name": "@react-native-windows/fs",
+  "entries": [
+    {
+      "date": "Thu, 18 Nov 2021 06:11:20 GMT",
+      "tag": "@react-native-windows/fs_v1.0.0",
+      "version": "1.0.0",
+      "comments": {
+        "major": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/fs",
+            "commit": "d11349e521c7ae7c86db60ba3f60dc173c2e65ef",
+            "comment": "Add @react-native-windows/fs"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.9",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          }
+        ]
+      }
+    }
+  ]
+}

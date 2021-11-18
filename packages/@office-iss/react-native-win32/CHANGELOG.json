@@ -2,6 +2,39 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 18 Nov 2021 06:11:21 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.123",
+      "version": "0.0.0-canary.123",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.19",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.9",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.3",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.6.1",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Nov 2021 06:09:53 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.122",
       "version": "0.0.0-canary.122",
