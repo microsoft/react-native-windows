@@ -79,6 +79,27 @@ jobs:
                 feature: UseHermes
                 value: ${{ matrix.UseHermes }}
 
+            # Workaround.
+            # NuGet 6 ignores packages.config if it detects <PackageReference>.
+            # Use restore packages.config directly to keep compabitility with ReactNativePicker.
+            - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
+              displayName: NuGet restore
+              inputs:
+                command: restore
+                restoreSolution: node_modules/react-native-xaml/windows/ReactNativeXaml/packages.config
+                feedsToUse: config
+                nugetConfigPath: packages/e2e-test-app/windows/NuGet.config
+                verbosityRestore: Detailed
+
+            - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
+              displayName: NuGet restore
+              inputs:
+                command: restore
+                restoreSolution: packages/e2e-test-app/packages.config
+                feedsToUse: config
+                nugetConfigPath: packages/e2e-test-app/windows/NuGet.config
+                verbosityRestore: Detailed
+
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
@@ -87,6 +108,7 @@ jobs:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app
+                restoreLockedMode: false
 
             - script: |
                 echo ##vso[task.setvariable variable=StartedTests]true

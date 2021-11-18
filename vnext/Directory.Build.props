@@ -21,6 +21,14 @@
 
   <PropertyGroup Label="Configuration">
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
+
+    <IntDir Condition="'$(ProjectName)' != ''">$(BaseIntDir)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(ProjectName)' == ''">$(BaseIntDir)\$(MSBuildProjectName)\</IntDir>
+    <OutDir Condition="'$(ProjectName)' != ''">$(BaseOutDir)\$(ProjectName)\</OutDir>
+    <OutDir Condition="'$(ProjectName)' == ''">$(BaseOutDir)\$(MSBuildProjectName)\</OutDir>
+
+    <PublishDir>$(OutDir)\Publish\</PublishDir>
+    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
 
   <!--
