@@ -572,7 +572,7 @@ test('autolinkOptions - validate options', () => {
     expect(commandOption.description).not.toBeNull();
     expect(commandOption.description!).toBe(commandOption.description!.trim());
 
-    // Validate all command options are present in RunWindowsOptions
+    // Validate all command options are present in AutoLinkOptions
     const optionName = commanderNameToOptionName(commandOption.name);
     expect(
       validateOptionName(
