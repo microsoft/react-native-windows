@@ -165,6 +165,13 @@ void TouchEventHandler::OnPointerExited(
   if (m_context->State() == Mso::React::ReactInstanceState::HasError)
     return;
 
+  // Do not fire `onMouseLeave` events while the pointer is still active.
+  // `UpdatePointersInViews` is fired OnPointerConcluded, so the `onMouseLeave`
+  // events will fire from any of the concluded events.
+  auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
+  if (optPointerIndex)
+    return;
+
   std::vector<int64_t> tagsForBranch;
   UpdatePointersInViews(args, nullptr, std::move(tagsForBranch));
 }
