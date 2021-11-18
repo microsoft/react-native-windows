@@ -34,7 +34,7 @@ test('sanitizeErrorMessage() no-op on test string', () => {
 test("sanitizeErrorMessage() 'project_dir'", () => {
   expect(
     errorUtils.sanitizeErrorMessage(`this is the cwd: '${process.cwd()}'`),
-  ).toBe(`this is the cwd: [project_dir]\\???(${process.cwd().length})`);
+  ).toBe(`this is the cwd: [project_dir]`);
 });
 
 test("sanitizeErrorMessage() 'project_dir' uppercase", () => {
@@ -42,7 +42,7 @@ test("sanitizeErrorMessage() 'project_dir' uppercase", () => {
     errorUtils.sanitizeErrorMessage(
       `uppercase: '${process.cwd().toUpperCase()}'`,
     ),
-  ).toBe(`uppercase: [project_dir]\\???(${process.cwd().length})`);
+  ).toBe(`uppercase: [project_dir]`);
 });
 
 test("sanitizeErrorMessage() 'project_dir' lowercase", () => {
@@ -50,7 +50,7 @@ test("sanitizeErrorMessage() 'project_dir' lowercase", () => {
     errorUtils.sanitizeErrorMessage(
       `lowercase: '${process.cwd().toLowerCase()}'`,
     ),
-  ).toBe(`lowercase: [project_dir]\\???(${process.cwd().length})`);
+  ).toBe(`lowercase: [project_dir]`);
 });
 
 test("sanitizeErrorMessage() 'project_dir' and something else", () => {
@@ -58,11 +58,7 @@ test("sanitizeErrorMessage() 'project_dir' and something else", () => {
     errorUtils.sanitizeErrorMessage(
       `this is the cwd: '${process.cwd()}' and something else`,
     ),
-  ).toBe(
-    `this is the cwd: [project_dir]\\???(${
-      process.cwd().length
-    }) and something else`,
-  );
+  ).toBe(`this is the cwd: [project_dir] and something else`);
 });
 
 test('sanitizeErrorMessage() project_dir and something else', () => {
@@ -71,9 +67,7 @@ test('sanitizeErrorMessage() project_dir and something else', () => {
       `this is the cwd: ${process.cwd()} and something else`,
     ),
   ).toBe(
-    `this is the cwd: [project_dir]\\???(${
-      (process.cwd() + ' and something else').length
-    })`,
+    `this is the cwd: [project_dir]\\???(${' and something else'.length})`,
   );
 });
 
@@ -82,11 +76,7 @@ test("sanitizeErrorMessage() 'node_modules'", () => {
     errorUtils.sanitizeErrorMessage(
       `this is the cwd: '${process.cwd()}\\node_modules'`,
     ),
-  ).toBe(
-    `this is the cwd: [project_dir]\\???(${
-      (process.cwd() + '\\node_modules').length
-    })`,
-  );
+  ).toBe(`this is the cwd: [project_dir]\\???(${'node_modules'.length})`);
 });
 
 test("sanitizeErrorMessage() 'node_modules\\foo'", () => {
@@ -94,11 +84,7 @@ test("sanitizeErrorMessage() 'node_modules\\foo'", () => {
     errorUtils.sanitizeErrorMessage(
       `this is the cwd: '${process.cwd()}\\node_modules\\foo'`,
     ),
-  ).toBe(
-    `this is the cwd: [node_modules]\\???(${
-      (process.cwd() + '\\node_modules\\foo').length
-    })`,
-  );
+  ).toBe(`this is the cwd: [node_modules]\\???(${'foo'.length})`);
 });
 
 test("sanitizeErrorMessage() 'node_modules\\foo' uppercase", () => {
@@ -106,23 +92,15 @@ test("sanitizeErrorMessage() 'node_modules\\foo' uppercase", () => {
     errorUtils.sanitizeErrorMessage(
       `uppercase: '${process.cwd().toUpperCase()}\\NODE_MODULES\\foo'`,
     ),
-  ).toBe(
-    `uppercase: [node_modules]\\???(${
-      (process.cwd() + '\\NODE_MODULES\\foo').length
-    })`,
-  );
+  ).toBe(`uppercase: [node_modules]\\???(${'foo'.length})`);
 });
 
 test("sanitizeErrorMessage() 'node_modules\\foo' lowercase", () => {
   expect(
     errorUtils.sanitizeErrorMessage(
-      `lowercase: '${process.cwd().toLowerCase()}\\NODE_MODULES\\'`,
+      `lowercase: '${process.cwd().toLowerCase()}\\NODE_MODULES\\foo'`,
     ),
-  ).toBe(
-    `lowercase: [node_modules]\\???(${
-      (process.cwd() + '\\NODE_MODULES\\').length
-    })`,
-  );
+  ).toBe(`lowercase: [node_modules]\\???(${'foo'.length})`);
 });
 
 test("sanitizeErrorMessage() 'node_modules\\' and something else", () => {
@@ -130,11 +108,7 @@ test("sanitizeErrorMessage() 'node_modules\\' and something else", () => {
     errorUtils.sanitizeErrorMessage(
       `trailing: '${process.cwd()}\\node_modules\\' and something else`,
     ),
-  ).toBe(
-    `trailing: [node_modules]\\???(${
-      (process.cwd() + '\\node_modules\\').length
-    }) and something else`,
-  );
+  ).toBe(`trailing: [node_modules]\\???(0) and something else`);
 });
 
 test('sanitizeErrorMessage() node_modules and something else that could be part of the path', () => {
@@ -144,10 +118,7 @@ test('sanitizeErrorMessage() node_modules and something else that could be part 
     ),
   ).toBe(
     `this is the cwd: [project_dir]\\???(${
-      (
-        process.cwd() +
-        '\\node_modules and something else that could be part of the path'
-      ).length
+      'node_modules and something else that could be part of the path'.length
     })`,
   );
 });
@@ -157,11 +128,7 @@ test('sanitizeErrorMessage() \\node_modules\\ a file under nm', () => {
     errorUtils.sanitizeErrorMessage(
       `this is the cwd: ${process.cwd()}\\node_modules\\ a file under nm`,
     ),
-  ).toBe(
-    `this is the cwd: [node_modules]\\???(${
-      (process.cwd() + '\\node_modules\\ a file under nm').length
-    })`,
-  );
+  ).toBe(`this is the cwd: [node_modules]\\???(${' a file under nm'.length})`);
 });
 
 test('sanitizeErrorMessage() other path', () => {
@@ -189,16 +156,12 @@ test('sanitizeErrorMessage() multiple known paths', () => {
   ).toBe(`Cannot find module react-native/package.json
       Require stack:
       - [AppData]\\???(${
-        (
-          process.env.AppData +
-          '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js'
-        ).length
+        '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js'
+          .length
       })
       - [AppData]\\???(${
-        (
-          process.env.AppData +
-          '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js'
-        ).length
+        '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js'
+          .length
       })`);
 });
 
@@ -212,10 +175,8 @@ test('sanitizeErrorMessage() forward slashes', () => {
     ),
   ).toBe(
     `EPERM: operation not permitted, scandir  [UserProfile]\\???(${
-      (
-        process.env.UserProfile +
-        '/source/repos/rn2/wintest/windows/packages/boost.1.76.0.0/lib/native/include'
-      ).length
+      '/source/repos/rn2/wintest/windows/packages/boost.1.76.0.0/lib/native/include'
+        .length
     })`,
   );
 });
@@ -250,7 +211,7 @@ test('sanitizeErrorStackFrame() with empty frame', () => {
   expect(emptyFrame).toEqual({
     level: 0,
     assembly: '',
-    fileName: '.',
+    fileName: '[path]',
     method: '',
     line: 0,
   });
@@ -267,7 +228,7 @@ test('sanitizeErrorStackFrame() with assembly name', () => {
   errorUtils.sanitizeErrorStackFrame(frame1);
   expect(frame1).toEqual({
     assembly: '',
-    fileName: 'telemetry\\foo.js',
+    fileName: '[project_dir]\\???.js(6)',
     method: '',
     level: 0,
     line: 0,
@@ -277,7 +238,7 @@ test('sanitizeErrorStackFrame() with assembly name', () => {
 test('sanitizeErrorStackFrame() with method name', () => {
   const frame2: appInsights.Contracts.StackFrame = {
     method: `myMethod (something ${process.cwd()}`,
-    fileName: `${process.cwd()}\\foo.js`,
+    fileName: `${process.cwd()}\\telemetry\\foo.js`,
     assembly: 'asdf',
     level: 1,
     line: 42,
@@ -285,7 +246,7 @@ test('sanitizeErrorStackFrame() with method name', () => {
   errorUtils.sanitizeErrorStackFrame(frame2);
   expect(frame2).toEqual({
     assembly: '',
-    fileName: 'telemetry\\foo.js',
+    fileName: '[project_dir]\\???.js(16)',
     method: 'myMethod',
     level: 1,
     line: 42,

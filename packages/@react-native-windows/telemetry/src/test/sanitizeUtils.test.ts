@@ -15,7 +15,7 @@ test('getAnonymizedPath() with project dir is anonymized', () => {
   const originalPath = projectDir;
   const anonymizedPath = sanitizeUtils.getAnonymizedPath(originalPath);
   expect(anonymizedPath).not.toBe(originalPath);
-  expect(anonymizedPath.startsWith('[project_dir]\\')).toBe(true);
+  expect(anonymizedPath.startsWith('[project_dir]')).toBe(true);
 });
 
 test('getAnonymizedPath() with project/index.js is anonymized', () => {

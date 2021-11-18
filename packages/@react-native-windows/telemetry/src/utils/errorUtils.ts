@@ -4,7 +4,6 @@
  * @format
  */
 
-import path from 'path';
 import * as appInsights from 'applicationinsights';
 
 import * as sanitizeUtils from './sanitizeUtils';
@@ -148,10 +147,7 @@ export function sanitizeErrorStackFrame(
   } else {
     // case 2: method === <no_method> or something without '(', fileName is full path
   }
-  // preserve only the last_directory/filename
-  frame.fileName = path.join(
-    path.basename(path.dirname(frame.fileName)),
-    path.basename(frame.fileName),
-  );
+  // anonymize the filename
+  frame.fileName = sanitizeUtils.getAnonymizedPath(frame.fileName);
   frame.assembly = '';
 }

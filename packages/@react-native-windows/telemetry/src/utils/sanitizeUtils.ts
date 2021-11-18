@@ -9,6 +9,7 @@ import path from 'path';
 import {NpmPackagesWeTrack} from '../telemetry';
 
 const nodeModules = '\\node_modules\\';
+const windows = '\\windows\\';
 
 const knownEnvironmentVariablePaths = [
   'AppData',
@@ -29,15 +30,18 @@ export function getAnonymizedPath(
   projectRoot = (projectRoot ?? process.cwd())
     .replace(/\//g, '\\')
     .toLowerCase();
+  projectRoot = projectRoot.endsWith('\\')
+    ? projectRoot.slice(0, -1)
+    : projectRoot;
   filepath = filepath.replace(/\//g, '\\');
 
   if (filepath.toLowerCase().startsWith(projectRoot)) {
     // We are under the projectRoot
     const ext = path.extname(filepath);
     const rest = filepath.slice(projectRoot.length);
-    if (rest.toLowerCase().startsWith('\\windows\\')) {
+    if (rest.toLowerCase().startsWith(windows)) {
       // We are under the windows path, anonymize with [windows]
-      return `[windows]\\???${ext}(${filepath.length})`;
+      return `[windows]\\???${ext}(${rest.length - windows.length - 1})`;
     } else if (rest.toLowerCase().startsWith(nodeModules)) {
       // We are under the node_modules path
       for (const trackedNpmPackage of NpmPackagesWeTrack) {
@@ -53,10 +57,15 @@ export function getAnonymizedPath(
         }
       }
       // We are under node_modules within an npm package we're not tracking, anonymize with [node_modules]
-      return `[node_modules]\\???${ext}(${filepath.length})`;
+      return `[node_modules]\\???${ext}(${rest.length - nodeModules.length})`;
     } else {
       // We are just within the projectRoot, anonymize with [project_dir]
-      return `[project_dir]\\???${ext}(${filepath.length})`;
+      if (rest === '' || rest === '\\') {
+        return '[project_dir]';
+      } else {
+        return `[project_dir]\\???${ext}(${rest.length -
+          (rest.startsWith('\\') ? 1 : 0)})`;
+      }
     }
   } else {
     for (const knownPath of knownEnvironmentVariablePaths) {
@@ -64,7 +73,8 @@ export function getAnonymizedPath(
         process.env[knownPath] &&
         filepath.toLowerCase().startsWith(process.env[knownPath]!.toLowerCase())
       ) {
-        return `[${knownPath}]\\???(${filepath.length})`;
+        return `[${knownPath}]\\???(${filepath.length -
+          process.env[knownPath]!.length})`;
       }
     }
   }

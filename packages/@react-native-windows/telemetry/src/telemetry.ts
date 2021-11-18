@@ -34,8 +34,11 @@ interface CommandInfo {
   endInfo?: CommandEndInfo;
 }
 
+// This is our key with the AI backend
 const DefaultSetupString = '795006ca-cf54-40ee-8bc6-03deb91401c3';
 
+// These are NPM packages we care about, in terms of capturing versions used
+// and getting more details about when reporting errors
 export const NpmPackagesWeTrack: string[] = [
   '@react-native-community/cli',
   '@react-native-windows/cli',
@@ -46,6 +49,7 @@ export const NpmPackagesWeTrack: string[] = [
   'react-native-windows-init',
 ];
 
+// These are NPM packages we care about, in terms of capturing versions used
 export const NuGetPackagesWeTrack: string[] = [
   'Microsoft.UI.Xaml',
   'Microsoft.Windows.CppWinRT',
@@ -58,7 +62,7 @@ export const NuGetPackagesWeTrack: string[] = [
 export class Telemetry {
   protected static client?: appInsights.TelemetryClient = undefined;
   protected static options: TelemetryOptions = {
-    setupString: DefaultSetupString,
+    setupString: DefaultSetupString, // We default to our AI key, but callers can easily override it in setup
     preserveErrorMessages: false,
   };
 

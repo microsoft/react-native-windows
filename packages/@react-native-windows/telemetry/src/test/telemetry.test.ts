@@ -7,7 +7,7 @@
 
 import * as appInsights from 'applicationinsights';
 import CorrelationIdManager from 'applicationinsights/out/Library/CorrelationIdManager';
-import {basename} from 'path';
+import * as path from 'path';
 
 import {Telemetry, CommandStartInfo, CommandEndInfo} from '../telemetry';
 import * as basePropUtils from '../utils/basePropUtils';
@@ -318,6 +318,9 @@ function verifyTestCommandTelemetryProcessor(
 ) => boolean {
   return (envelope, _) => {
     try {
+      // Processor has run, so the test can (potentially) pass
+      TelemetryTest.setTestTelemetryProvidersRan();
+
       // Verify roleInstance has been removed
       expect(envelope.tags['ai.cloud.roleInstance']).toBeUndefined();
 
@@ -390,9 +393,6 @@ function verifyTestCommandTelemetryProcessor(
               expect(properties[key]).toBe(extraProps[key].toString());
           }
         }
-
-        // Processor has run, so the test can (potentially) pass
-        TelemetryTest.setTestTelemetryProvidersRan();
       }
     } catch (ex) {
       caughtErrors.push(
@@ -549,6 +549,9 @@ function getVerifyStackTelemetryProcessor(
 ) => boolean {
   return (envelope, _) => {
     try {
+      // Processor has run, so the test can (potentially) pass
+      TelemetryTest.setTestTelemetryProvidersRan();
+
       if (envelope.data.baseType === 'ExceptionData') {
         const data = (envelope.data as any).baseData;
         expect(data.exceptions).toBeDefined();
@@ -561,14 +564,15 @@ function getVerifyStackTelemetryProcessor(
         expect(stack).toBeDefined();
         expect(stack.length).toBeGreaterThan(2);
 
-        const filename = basename(__filename);
+        const filename = path.relative(process.cwd(), __filename);
         expect(stack[0].method).toEqual('b');
         expect(stack[1].method).toEqual('a');
-        expect(stack[0].fileName).toEqual(`test\\${filename}`);
-        expect(stack[1].fileName).toEqual(`test\\${filename}`);
-
-        // Processor has run, so the test can (potentially) pass
-        TelemetryTest.setTestTelemetryProvidersRan();
+        expect(stack[0].fileName).toEqual(
+          `[project_dir]\\???.ts(${filename.length})`,
+        );
+        expect(stack[1].fileName).toEqual(
+          `[project_dir]\\???.ts(${filename.length})`,
+        );
       }
     } catch (ex) {
       caughtErrors.push(
