@@ -292,10 +292,10 @@ test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=fa
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.ProjectReunion.WinUI" version="0.8" targetFramework="native"/>
+  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).toContain('Microsoft.ProjectReunion.WinUI');
+  expect(al.packagesConfig).toContain('Microsoft.WinUI');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
 
@@ -329,10 +329,10 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.ProjectReunion.WinUI" version="0.8" targetFramework="native"/>
+  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).not.toContain('Microsoft.ProjectReunion.WinUI');
+  expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
 
@@ -513,10 +513,10 @@ test('Indirect autolink dependency', () => {
               },
             ],
           },
-          assets: [],
-          hooks: {},
-          params: [],
         },
+        assets: [],
+        hooks: {},
+        params: [],
       },
     },
     {
