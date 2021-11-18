@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure onMouseLeave doesn't fire when pointer down",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
