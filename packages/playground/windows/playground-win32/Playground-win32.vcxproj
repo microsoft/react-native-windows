@@ -105,6 +105,7 @@
     <Manifest Include="Application.manifest" />
     <None Include="AutolinkedNativeModules.g.props" />
     <None Include="AutolinkedNativeModules.g.targets" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AutolinkedNativeModules.g.cpp" />
