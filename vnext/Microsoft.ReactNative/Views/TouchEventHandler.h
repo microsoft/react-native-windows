@@ -50,12 +50,6 @@ namespace Microsoft::ReactNative {
     winrt::IInspectable m_exitedHandler;
     winrt::IInspectable m_movedHandler;
 
-#ifdef USE_WINUI3
-    using PointerDeviceType = winrt::Microsoft::UI::Input::PointerDeviceType;
-#else
-    using PointerDeviceType = winrt::Windows::Devices::Input::PointerDeviceType;
-#endif
-
     struct ReactPointer {
       int64_t target = 0;
       int64_t identifier = 0;
@@ -63,7 +57,14 @@ namespace Microsoft::ReactNative {
       uint64_t timestamp = 0;
       winrt::Point positionRoot = { 0, 0 };
       winrt::Point positionView = { 0, 0 };
-      PointerDeviceType deviceType{ PointerDeviceType::Mouse };
+#ifndef USE_WINUI3
+     winrt::Windows::Devices::Input::PointerDeviceType deviceType{
+          winrt::Windows::Devices::Input::PointerDeviceType::Mouse};
+#else
+      winrt::Microsoft::UI::Input::PointerDeviceType deviceType{
+          winrt::Microsoft::UI::Input::PointerDeviceType::Mouse};
+#endif
+      
       float pressure = 0;
       bool isLeftButton = false;
       bool isRightButton = false;
@@ -92,7 +93,12 @@ namespace Microsoft::ReactNative {
     void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs& args);
     void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
     bool DispatchBackEvent();
-    const char* GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
+#ifndef USE_WINUI3
+    const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
+#else
+    const char *GetPointerDeviceTypeName(winrt::Microsoft::UI::Input::PointerDeviceType deviceType) noexcept;
+#endif
+    
     winrt::Microsoft::ReactNative::PointerEventKind GetPointerEventKind(TouchEventType eventType) noexcept;
     const wchar_t* GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
