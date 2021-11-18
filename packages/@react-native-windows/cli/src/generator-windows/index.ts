@@ -618,12 +618,7 @@ function getReunionPackages(nugetVersion: string): NugetPackage[] {
 
   reunionPackages.push({
     id: 'Microsoft.Windows.SDK.BuildTools',
-    version: '10.0.22499-preview',
-  });
-
-  reunionPackages.push({
-    id: 'Microsoft.Windows.CsWin32',
-    version: '0.1.588-beta',
+    version: '10.0.22000.194',
   });
 
   return reunionPackages;
