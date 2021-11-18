@@ -92,6 +92,7 @@ jobs:
                 deployOption:  ${{ matrix.DeployOption }}
                 buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-apps
+                restoreLockedMode: false
 
             - script: yarn bundle-cpp --verbose
               displayName: Create SampleApp bundle
