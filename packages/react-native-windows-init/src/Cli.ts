@@ -17,10 +17,14 @@ import npmFetch from 'npm-registry-fetch';
 
 import {
   Telemetry,
-  isMSFTInternal,
-  CodedErrorType,
+  CommandStartInfo,
+  CommandEndInfo,
   CodedErrors,
   CodedError,
+  yargsOptionsToOptions,
+  optionsToArgs,
+  configToProjectInfo,
+  getProjectFileFromConfig,
 } from '@react-native-windows/telemetry';
 
 /**
@@ -38,7 +42,7 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
 
-const argv = yargs
+const yargsParser = yargs
   .version(false)
   .strict(true)
   .options({
@@ -60,7 +64,7 @@ const argv = yargs
       type: 'boolean',
       describe:
         'Controls sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
-      default: false,
+      default: true,
     },
     language: {
       type: 'string',
@@ -118,20 +122,9 @@ const argv = yargs
       conflicts: 'version',
     },
   })
-  .strict(true).argv;
+  .strict(true);
 
-if (argv.verbose) {
-  console.log(argv);
-}
-
-if (!argv.telemetry) {
-  if (argv.verbose) {
-    console.log('Disabling telemetry');
-  }
-  Telemetry.disable();
-} else {
-  Telemetry.setup();
-}
+const argv = yargsParser.argv;
 
 function getReactNativeProjectName(): string {
   console.log('Reading project name from package.json...');
@@ -139,7 +132,7 @@ function getReactNativeProjectName(): string {
   const pkgJsonPath = findUp.sync('package.json', {cwd});
   if (!pkgJsonPath) {
     throw new CodedError(
-      'NoPackageJSon',
+      'NoPackageJson',
       'Unable to find package.json.  This should be run from within an existing react-native project.',
     );
   }
@@ -296,7 +289,7 @@ function installReactNativeWindows(
 
   const pkgJsonPath = findUp.sync('package.json', {cwd});
   if (!pkgJsonPath) {
-    throw new CodedError('NoPackageJSon', 'Unable to find package.json');
+    throw new CodedError('NoPackageJson', 'Unable to find package.json');
   }
 
   const pkgJson = require(pkgJsonPath);
@@ -336,32 +329,127 @@ function installReactNativeWindows(
   );
 }
 
-function getRNWInitVersion(): string {
-  try {
-    const pkgJson = require('../package.json');
-    if (
-      pkgJson.name === 'react-native-windows-init' &&
-      pkgJson.version !== undefined
-    ) {
-      return pkgJson.version;
-    }
-  } catch {}
-  return '';
+/**
+ * Sanitizes the given option for telemetry.
+ * @param key The key of the option.
+ * @param value The unsanitized value of the option.
+ * @returns The sanitized value of the option.
+ */
+function optionSanitizer(key: string, value: any): any {
+  switch (key) {
+    case 'namespace':
+      return value === undefined ? false : true;
+    default:
+      return value === undefined ? false : value;
+  }
 }
 
-function setExit(exitCode: CodedErrorType, error?: string): void {
-  if (!process.exitCode || process.exitCode === CodedErrors.Success) {
-    Telemetry.client?.trackEvent({
-      name: 'init-exit',
-      properties: {
-        durationInSecs: process.uptime(),
-        msftInternal: isMSFTInternal(),
-        exitCode: exitCode,
-        rnwinitVersion: getRNWInitVersion(),
-        errorMessage: error,
-      },
-    });
-    process.exitCode = CodedErrors[exitCode];
+/**
+ * Sets up and starts the telemetry gathering for the CLI command.
+ */
+async function startTelemetrySession() {
+  if (!argv.telemetry) {
+    if (argv.verbose) {
+      console.log('Telemetry is disabled');
+    }
+    return;
+  }
+
+  await Telemetry.setup();
+
+  const sanitizedOptions = yargsOptionsToOptions(argv, optionSanitizer);
+  const sanitizedDefaultOptions = yargsOptionsToOptions(
+    yargsParser.parse(''),
+    optionSanitizer,
+  );
+  const sanitizedArgs = optionsToArgs(sanitizedOptions, process.argv);
+
+  const startInfo: CommandStartInfo = {
+    commandName: 'react-native-windows-init',
+    args: sanitizedArgs,
+    options: sanitizedOptions,
+    defaultOptions: sanitizedDefaultOptions,
+  };
+
+  Telemetry.startCommand(startInfo);
+}
+
+/**
+ * Adds the new project's telemetry info by calling and processing `react-native config`.
+ */
+async function addProjectInfoToTelemetry() {
+  if (!Telemetry.isEnabled()) {
+    return;
+  }
+
+  try {
+    const config = JSON.parse(
+      execSync('npx react-native config', {
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }).toString(),
+    );
+    const projectInfo = await configToProjectInfo(config);
+    if (projectInfo) {
+      Telemetry.setProjectInfo(projectInfo);
+    }
+
+    const projectFile = getProjectFileFromConfig(config);
+    if (projectFile) {
+      await Telemetry.populateNuGetPackageVersions(projectFile);
+    }
+  } catch {}
+}
+
+/**
+ * Ends the gathering of telemetry for the CLI command.
+ * @param error The error (if any) thrown during the command.
+ */
+function endTelemetrySession(error?: Error) {
+  const endInfo: CommandEndInfo = {
+    resultCode: 'Success',
+  };
+
+  if (error) {
+    endInfo.resultCode =
+      error instanceof CodedError ? (error as CodedError).type : 'Unknown';
+  }
+
+  Telemetry.endCommand(endInfo);
+}
+
+/**
+ * Sets the process exit code and offers some information at the end of a CLI command.
+ * @param loggingIsEnabled Is verbose logging enabled.
+ * @param error The error caught during the process, if any.
+ */
+function setExitProcessWithError(
+  loggingIsEnabled: boolean,
+  error?: Error,
+): void {
+  if (error) {
+    const errorType =
+      error instanceof CodedError ? (error as CodedError).type : 'Unknown';
+
+    process.exitCode = CodedErrors[errorType];
+
+    if (loggingIsEnabled) {
+      console.log(
+        `Command failed with error ${chalk.bold(errorType)}: ${error.message}`,
+      );
+      if (Telemetry.isEnabled()) {
+        console.log(
+          `Your telemetry sessionId was ${chalk.bold(
+            Telemetry.getSessionId(),
+          )}`,
+        );
+      }
+    } else {
+      console.log(
+        `Command failed. Re-run the command with ${chalk.bold(
+          '--verbose',
+        )} for more information.`,
+      );
+    }
   }
 }
 
@@ -373,6 +461,13 @@ function isProjectUsingYarn(cwd: string): boolean {
 }
 
 (async () => {
+  if (argv.verbose) {
+    console.log(argv);
+  }
+
+  await startTelemetrySession();
+
+  let initWindowsError: Error | undefined;
   try {
     const name = getReactNativeProjectName();
     const ns = argv.namespace || name;
@@ -483,6 +578,10 @@ function isProjectUsingYarn(cwd: string): boolean {
     installReactNativeWindows(version, useDevMode);
 
     const generateWindows = requireGenerateWindows();
+
+    // Now that new NPM packages have been installed, refresh their versions
+    await Telemetry.populateNpmPackageVersions(true);
+
     await generateWindows(process.cwd(), name, ns, {
       language: argv.language as 'cs' | 'cpp',
       overwrite: argv.overwrite,
@@ -496,19 +595,17 @@ function isProjectUsingYarn(cwd: string): boolean {
       nuGetTestFeed: argv.nuGetTestFeed,
       telemetry: argv.telemetry,
     });
-    return setExit('Success');
-  } catch (e) {
-    const error = e as Error;
-    const exitCode =
-      error instanceof CodedError
-        ? ((error as CodedError).name as CodedErrorType)
-        : 'Unknown';
-    if (exitCode !== 'Success') {
-      console.error(chalk.red(error.message));
-      console.error(error);
-    }
-    setExit(exitCode, error.message);
-  } finally {
-    Telemetry.client?.flush();
+
+    // Now that the project has been generated, add project info
+    await addProjectInfoToTelemetry();
+  } catch (ex) {
+    initWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    Telemetry.trackException(initWindowsError);
+
+    console.error(chalk.red(initWindowsError.message));
+    console.error(initWindowsError);
   }
+  endTelemetrySession(initWindowsError);
+  setExitProcessWithError(argv.verbose, initWindowsError);
 })();

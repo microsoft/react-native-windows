@@ -5,8 +5,14 @@
  */
 
 import path from 'path';
+import {commanderNameToOptionName} from '@react-native-windows/telemetry';
+
 import {projectConfigWindows} from '../config/projectConfig';
-import {AutolinkWindows, autolinkOptions} from '../runWindows/utils/autolink';
+import {
+  AutolinkWindows,
+  autolinkOptions,
+  AutoLinkOptions,
+} from '../runWindows/utils/autolink';
 import {DOMParser} from '@xmldom/xmldom';
 import {ensureWinUI3Project} from './projectConfig.utils';
 
@@ -528,6 +534,24 @@ test('Indirect autolink dependency', () => {
   );
 });
 
+function validateOptionName(
+  name: string,
+  optionName: keyof AutoLinkOptions,
+): boolean {
+  // Do not add a default case here. Every item must explicitly return true
+  switch (optionName) {
+    case 'check':
+    case 'logging':
+    case 'sln':
+    case 'proj':
+    case 'telemetry':
+      return true;
+  }
+  throw new Error(
+    `Unable to find ${optionName} to match '${name}' in AutoLinkOptions.`,
+  );
+}
+
 test('autolinkOptions - validate options', () => {
   for (const commandOption of autolinkOptions) {
     // Validate names
@@ -547,5 +571,14 @@ test('autolinkOptions - validate options', () => {
     // Validate description
     expect(commandOption.description).not.toBeNull();
     expect(commandOption.description!).toBe(commandOption.description!.trim());
+
+    // Validate all command options are present in RunWindowsOptions
+    const optionName = commanderNameToOptionName(commandOption.name);
+    expect(
+      validateOptionName(
+        commandOption.name,
+        optionName as keyof AutoLinkOptions,
+      ),
+    ).toBe(true);
   }
 });
