@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 16 Nov 2021 06:09:18 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Nov 2021 06:11:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.419
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Changes
+
+- Ensure native animations fire completion callbacks (erozell@outlook.com)
+- Fix C# Module Event invocation (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.100
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.19
+- Bump @react-native-windows/codegen to v0.0.0-canary.21
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.3
+- Bump react-native-platform-override to v1.6.1
 
 ## 0.0.0-canary.418
 

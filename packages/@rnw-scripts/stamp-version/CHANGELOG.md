@@ -1,0 +1,15 @@
+# Change Log - @rnw-scripts/stamp-version
+
+This log was last generated on Thu, 18 Nov 2021 06:11:21 GMT and should not be manually modified.
+
+<!-- Start content -->
+
+## 0.0.0
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @react-native-windows/package-utils to v0.0.0-canary.23
+- Bump @rnw-scripts/eslint-config to v1.1.9

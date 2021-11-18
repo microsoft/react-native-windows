@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Telemetry Refactor",
-  "packageName": "react-native-windows-init",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
