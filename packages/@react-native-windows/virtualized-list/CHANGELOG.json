@@ -2,6 +2,27 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Thu, 18 Nov 2021 06:11:21 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.19",
+      "version": "0.0.0-canary.19",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.9",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.6.1",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Nov 2021 23:57:30 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.18",
       "version": "0.0.0-canary.18",

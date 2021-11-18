@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Tue, 16 Nov 2021 06:09:18 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Nov 2021 06:11:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump react-native-platform-override to v1.6.1
+- Bump react-native-windows to v0.0.0-canary.419
 
 ## 0.0.1
 

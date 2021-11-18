@@ -6,7 +6,7 @@
  */
 
 import crypto from 'crypto';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import os from 'os';
 import path from 'path';
@@ -29,8 +29,8 @@ export async function acquireSratchDirectory(): Promise<
     'e2etest',
     crypto.randomBytes(16).toString('hex'),
   );
-  await fs.promises.mkdir(dir, {recursive: true});
-  return [dir, async () => fs.promises.rmdir(dir, {recursive: true})];
+  await fs.mkdir(dir, {recursive: true});
+  return [dir, async () => fs.rmdir(dir, {recursive: true})];
 }
 
 /**
@@ -81,8 +81,8 @@ export async function usingFiles<T>(
         const src = path.join(collateralPath, override);
         const dst = path.join(targetDirectory, override);
 
-        await fs.promises.mkdir(path.dirname(dst), {recursive: true});
-        return await fs.promises.copyFile(src, dst);
+        await fs.mkdir(path.dirname(dst), {recursive: true});
+        return await fs.copyFile(src, dst);
       }),
     );
 

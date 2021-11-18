@@ -6,7 +6,7 @@
 
 import {CodedError} from '@react-native-windows/telemetry';
 import {execSync} from 'child_process';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 /**

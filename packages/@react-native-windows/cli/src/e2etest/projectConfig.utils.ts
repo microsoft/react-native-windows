@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from '@react-native-windows/fs'
 import path from 'path';
 import { copyAndReplace } from '../generator-common';
 
@@ -8,14 +8,14 @@ export const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
 
 export async function tryMkdir(dir: string): Promise<void> {
   try {
-    await fs.promises.mkdir(dir, {recursive: true});
+    await fs.mkdir(dir, {recursive: true});
   } catch (err) {}
 }
 
 export async function ensureWinUI3Project(folder: string) {
   const windowsDir = path.join(folder, 'windows');
   if (fs.existsSync(windowsDir)) {
-    await fs.promises.rmdir(windowsDir, {recursive: true});
+    await fs.rmdir(windowsDir, {recursive: true});
   }
   await tryMkdir(windowsDir);
 

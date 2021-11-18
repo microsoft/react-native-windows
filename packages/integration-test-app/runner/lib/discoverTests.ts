@@ -6,7 +6,7 @@
  */
 
 import * as parser from '@babel/parser';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import walkdir from 'walkdir';
 

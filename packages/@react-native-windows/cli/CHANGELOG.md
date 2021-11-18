@@ -1,8 +1,21 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 02 Nov 2021 20:20:41 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Nov 2021 06:11:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.100
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Changes
+
+- Telemetry Refactor (jthysell@microsoft.com)
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @react-native-windows/package-utils to v0.0.0-canary.23
+- Bump @react-native-windows/telemetry to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.1.9
 
 ## 0.0.0-canary.99
 

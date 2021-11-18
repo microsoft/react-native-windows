@@ -2,6 +2,33 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 18 Nov 2021 06:11:20 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.25",
+      "version": "0.0.0-canary.25",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df",
+            "comment": "Telemetry Refactor"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v1.0.0",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.9",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Oct 2021 05:08:01 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.24",
       "version": "0.0.0-canary.24",

@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Nov 2021 06:11:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.18
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Patches
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
 
 ## 1.0.17
 

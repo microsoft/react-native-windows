@@ -9,12 +9,12 @@
 // guarantee correct types
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import chalk from 'chalk';
 import {performance} from 'perf_hooks';
 
-import {newSpinner} from './commandWithProgress';
+import {newSpinner, setExitProcessWithError} from './commandWithProgress';
 import * as vstools from './vstools';
 import * as generatorCommon from '../../generator-common';
 import * as configUtils from '../../config/configUtils';
@@ -31,7 +31,12 @@ import {
   ProjectDependency,
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
-import {CodedError} from '@react-native-windows/telemetry';
+import {Telemetry, CodedError} from '@react-native-windows/telemetry';
+import {
+  getDefaultOptions,
+  startTelemetrySession,
+  endTelemetrySession,
+} from './telemetryHelpers';
 import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
@@ -480,7 +485,7 @@ export class AutolinkWindows {
     const fileName = chalk.bold(path.basename(filePath));
     verboseMessage(`Reading ${fileName}...`, this.options.logging);
     const actualContents = fs.existsSync(filePath)
-      ? (await fs.promises.readFile(filePath)).toString()
+      ? (await fs.readFile(filePath)).toString()
       : '';
 
     const contentsChanged = expectedContents !== actualContents;
@@ -492,7 +497,7 @@ export class AutolinkWindows {
       );
       if (!this.options.check) {
         verboseMessage(`Writing ${fileName}...`, this.options.logging);
-        await fs.promises.writeFile(filePath, expectedContents, {
+        await fs.writeFile(filePath, expectedContents, {
           encoding: 'utf8',
           flag: 'w',
         });
@@ -885,12 +890,74 @@ function verboseMessage(message: any, verbose?: boolean) {
 }
 
 /**
+ * Sanitizes the given option for telemetery.
+ * @param key The key of the option.
+ * @param value The unsanitized value of the option.
+ * @returns The sanitized value of the option.
+ */
+function optionSanitizer(key: keyof AutoLinkOptions, value: any): any {
+  // Do not add a default case here.
+  // Strings risking PII should just return true if present, false otherwise.
+  // All others should return the value (or false if undefined).
+  switch (key) {
+    case 'sln':
+    case 'proj':
+      return value === undefined ? false : true; // Strip PII
+    case 'logging':
+    case 'check':
+    case 'telemetry':
+      return value === undefined ? false : value; // Return value
+  }
+}
+
+/**
+ * Get the extra props to add to the `autolink-windows` telemetry event.
+ * @returns The extra props.
+ */
+async function getExtraProps(): Promise<Record<string, any>> {
+  const extraProps: Record<string, any> = {};
+  return extraProps;
+}
+
+/**
+ * The function run when calling `react-native autolink-windows`.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
+ */
+async function autolinkWindows(
+  args: string[],
+  config: Config,
+  options: AutoLinkOptions,
+) {
+  await startTelemetrySession(
+    'autolink-windows',
+    config,
+    options,
+    getDefaultOptions(config, autolinkOptions),
+    optionSanitizer,
+  );
+
+  let autolinkWindowsError: Error | undefined;
+  try {
+    await autolinkWindowsInternal(args, config, options);
+  } catch (ex) {
+    autolinkWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    Telemetry.trackException(autolinkWindowsError);
+  }
+
+  await endTelemetrySession(autolinkWindowsError, getExtraProps);
+  setExitProcessWithError(options.logging, autolinkWindowsError);
+}
+
+/**
  * Performs auto-linking for RNW native modules and apps.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
  */
-async function updateAutoLink(
+export async function autolinkWindowsInternal(
   args: string[],
   config: Config,
   options: AutoLinkOptions,
@@ -957,6 +1024,7 @@ export interface AutoLinkOptions {
   check?: boolean;
   sln?: string;
   proj?: string;
+  telemetry?: boolean;
 }
 
 export const autolinkOptions: CommandOption[] = [
@@ -980,6 +1048,11 @@ export const autolinkOptions: CommandOption[] = [
       "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
     default: undefined,
   },
+  {
+    name: '--no-telemetry',
+    description:
+      'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+  },
 ];
 
 /**
@@ -988,6 +1061,6 @@ export const autolinkOptions: CommandOption[] = [
 export const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
-  func: updateAutoLink,
+  func: autolinkWindows,
   options: autolinkOptions,
 };

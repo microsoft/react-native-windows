@@ -4,9 +4,8 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
-import {Telemetry} from '@react-native-windows/telemetry';
 
 import {
   copyProjectTemplateAndReplace,
@@ -49,20 +48,6 @@ export interface GenerateOptions {
   telemetry: boolean;
 }
 
-function scrubOptions(opt: GenerateOptions) {
-  return {
-    overwrite: opt.overwrite,
-    language: opt.language,
-    projectType: opt.projectType,
-    experimentalNuGetDependency: opt.experimentalNuGetDependency,
-    nuGetTestFeed: opt.nuGetTestFeed !== undefined ? true : false,
-    nuGetTestVersion: opt.nuGetTestVersion !== undefined ? true : false,
-    useWinUI3: opt.useWinUI3,
-    useHermes: opt.useHermes,
-    verbose: opt.verbose,
-  };
-}
-
 /**
  * Simple utility for running the Windows generator.
  *
@@ -77,64 +62,25 @@ export async function generateWindows(
   ns: string,
   options: GenerateOptions,
 ) {
-  let error;
-  try {
-    if (!fs.existsSync(projectDir)) {
-      fs.mkdirSync(projectDir);
-    }
-
-    await installScriptsAndDependencies(options);
-
-    const rnwPackage = path.dirname(
-      require.resolve('react-native-windows/package.json', {
-        paths: [projectDir],
-      }),
-    );
-    const templateRoot = path.join(rnwPackage, 'template');
-    await copyProjectTemplateAndReplace(
-      templateRoot,
-      projectDir,
-      name,
-      ns,
-      options,
-    );
-  } catch (e) {
-    error = e;
-    Telemetry.trackException(error as Error);
-    throw e;
-  } finally {
-    if (Telemetry.client) {
-      let rnVersion = '';
-      let cliVersion = '';
-      try {
-        const cwd = process.cwd();
-        const rnwPkg = JSON.parse(
-          fs
-            .readFileSync(
-              require.resolve('react-native-windows/package.json', {
-                paths: [cwd],
-              }),
-            )
-            .toString(),
-        );
-        rnVersion = rnwPkg.peerDependencies['react-native'] || '';
-        const rnwCliPkgJson = require('../package.json');
-        cliVersion = rnwCliPkgJson.version;
-      } catch {}
-      const optScrubbed = scrubOptions(options);
-      Telemetry.client.trackEvent({
-        name: 'generate-windows',
-        properties: {
-          error: error,
-          ...optScrubbed,
-          'react-native': rnVersion,
-          'cli-version': cliVersion,
-        },
-      });
-
-      Telemetry.client.flush();
-    }
+  if (!fs.existsSync(projectDir)) {
+    fs.mkdirSync(projectDir);
   }
+
+  await installScriptsAndDependencies(options);
+
+  const rnwPackage = path.dirname(
+    require.resolve('react-native-windows/package.json', {
+      paths: [projectDir],
+    }),
+  );
+  const templateRoot = path.join(rnwPackage, 'template');
+  await copyProjectTemplateAndReplace(
+    templateRoot,
+    projectDir,
+    name,
+    ns,
+    options,
+  );
 }
 
 // Assert the interface here doesn't change for the reasons above

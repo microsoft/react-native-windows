@@ -1,6 +1,9 @@
 variables:
   # Injection configuration
   runCodesignValidationInjection: false
+  
+  # Enables `chalk` to show colored output to Azure Pipelines
+  FORCE_COLOR: 3
 
   # Automatically fails `npx` prompts to use networked version
   NPM_CONFIG_YES: false

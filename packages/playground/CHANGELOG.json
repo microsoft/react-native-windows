@@ -2,6 +2,33 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Thu, 18 Nov 2021 06:11:21 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.419",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.19",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.9",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Nov 2021 06:09:18 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Nov 2021 06:11:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.27
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.9
 
 ## 1.0.26
 

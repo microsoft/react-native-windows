@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 21 Oct 2021 05:08:01 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Nov 2021 06:11:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.25
+
+Thu, 18 Nov 2021 06:11:20 GMT
+
+### Changes
+
+- Telemetry Refactor (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
 
 ## 0.0.0-canary.24
 

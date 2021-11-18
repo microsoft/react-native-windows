@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import {enumerateRepoPackages} from '@react-native-windows/package-utils';
 
@@ -20,7 +20,7 @@ export async function findManifest(cwd?: string): Promise<string> {
   }
 
   const manifestPath = path.join(path.dirname(packagePath), 'overrides.json');
-  if (!(await exists(manifestPath))) {
+  if (!(await fs.exists(manifestPath))) {
     throw new Error(
       'Expected an "overrides.json" file at the root of the current package',
     );
@@ -41,12 +41,12 @@ export async function findAllManifests(): Promise<string[]> {
   }
 
   const packageDir = path.dirname(packagePath);
-  if (await exists(path.join(packageDir, 'overrides.json'))) {
+  if (await fs.exists(path.join(packageDir, 'overrides.json'))) {
     return [path.join(packageDir, 'overrides.json')];
   }
 
   const localPackages = await enumerateRepoPackages(pkg =>
-    exists(path.join(pkg.path, 'overrides.json')),
+    fs.exists(path.join(pkg.path, 'overrides.json')),
   );
 
   return localPackages.map(pkg => path.join(pkg.path, 'overrides.json'));
@@ -75,7 +75,7 @@ async function findFileAbove(
 ): Promise<string | null> {
   const searchPath = path.resolve(base);
   const fullPath = path.join(searchPath, target);
-  if (await exists(fullPath)) {
+  if (await fs.exists(fullPath)) {
     return fullPath;
   }
 
@@ -84,21 +84,5 @@ async function findFileAbove(
     return null;
   } else {
     return findFileAbove(searchPathParent, target);
-  }
-}
-
-/**
- * Asyncrhonusly tests if a file exists
- */
-async function exists(filepath: string): Promise<boolean> {
-  try {
-    await fs.promises.access(filepath);
-    return true;
-  } catch (ex) {
-    if ((ex as any).code === 'ENOENT') {
-      return false;
-    } else {
-      throw ex;
-    }
   }
 }
