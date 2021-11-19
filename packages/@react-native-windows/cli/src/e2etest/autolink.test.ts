@@ -284,7 +284,7 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
   const config = projectConfigWindows(folder, rnc.project.windows)!;
-  delete config.useWinUI3;
+  config.useWinUI3 = false;
   const al = new AutolinkTest(
     {windows: config},
     {},
@@ -293,19 +293,20 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
       logging: false,
     },
   );
-  al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.7.0-test</WinUI2xVersion></PropertyGroup></Project>`;
+  al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>`;
 
   const exd = await al.ensureXAMLDialect();
   expect(exd).toBeTruthy();
 
   const expectedExperimentalFeatures =
-    '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.7.0-test</WinUI2xVersion></PropertyGroup></Project>';
+    '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
+
   expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.UI.XAML" version="2.7.0-test" targetFramework="native"/>
+  // <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
   // </packages>
   //
   // expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
