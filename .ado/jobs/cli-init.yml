@@ -373,12 +373,12 @@ jobs:
       steps:
         - template: ../templates/react-native-init.yml
           parameters:
-            language: $(language)
-            configuration: $(configuration)
-            platform: $(platform)
-            projectType: $(projectType)    
-            additionalInitArguments: $(additionalInitArguments)
-            additionalRunArguments: $(additionalRunArguments)
+            language: ${{ matrix.language }}
+            configuration: ${{ matrix.configuration }}
+            platform: ${{ matrix.matrix.platform }}
+            projectType: ${{ matrix.projectType }}
+            additionalInitArguments: ${{ matrix.additionalInitArguments }}
+            additionalRunArguments: ${{ matrix.additionalRunArguments }}
             useNuGet: false
             buildEnvironment: ${{ parameters.buildEnvironment }}
             useReunion: true
