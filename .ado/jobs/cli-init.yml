@@ -9,7 +9,7 @@ parameters:
     type: object
   - name: buildNuGetOnly
     type: boolean
-  - name: buildReunionOnly
+  - name: buildWinAppSDKOnly
     type: boolean
   - name: buildMatrix
     type: object
@@ -52,7 +52,7 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-          # #8132 Support for C++ Reunion apps
+          # #8132 Support for C++ WindAppSDK apps
           # - Name: X86DebugCppWinUI3
           #   language: cpp
           #   configuration: Debug
@@ -65,7 +65,7 @@ parameters:
             platform: x64
             projectType: app
             additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
-            useReunion: true
+            useWinAppSDK: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
@@ -149,7 +149,7 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-          # #8132 Support for C++ Reunion apps
+          # #8132 Support for C++ WinAppSDK apps
           # - Name: X86DebugCppWinUI3
           #   language: cpp
           #   configuration: Debug
@@ -162,7 +162,7 @@ parameters:
             platform: x64
             projectType: app
             additionalInitArguments: --useWinUI3 true
-            useReunion: true
+            useWinAppSDK: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
@@ -302,7 +302,7 @@ jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if and(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly), eq(coalesce(matrix.useReunion, false), parameters.buildReunionOnly))}}:
+        - ${{ if and(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly), eq(coalesce(matrix.useWinAppSDK, false), parameters.buildWinAppSDKOnly))}}:
           - job: CliInit${{ matrix.Name }}
             displayName: Verify Cli ${{ matrix.Name }}
 
@@ -310,7 +310,7 @@ jobs:
               dependsOn:
                 - UniversalBuild${{ matrix.platform }}Release
 
-            ${{ if eq(matrix.useReunion, true) }}:
+            ${{ if eq(matrix.useWinAppSDK, true) }}:
               dependsOn:
                 - ReunioX64Release
 

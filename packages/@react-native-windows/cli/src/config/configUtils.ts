@@ -156,13 +156,13 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
   return dependencyProjectFiles;
 }
 
-type ReactNativeProjectType = 'unknown' | 'App-Reunion';
+type ReactNativeProjectType = 'unknown' | 'App-WinAppSDK';
 
 function getReactNativeProjectType(
   value: string | null,
 ): ReactNativeProjectType {
   switch (value) {
-    case 'App-Reunion':
+    case 'App-WinAppSDK':
       return value;
 
     default:

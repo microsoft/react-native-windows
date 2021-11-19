@@ -31,7 +31,7 @@ parameters:
   - name: packMicrosoftReactNativeManagedCodeGen
     type: boolean
     default: false
-  - name: packMicrosoftReactNativeProjectReunion
+  - name: packMicrosoftReactNativeWindowsAppSDK
     type: boolean
     default: false
 
@@ -80,7 +80,7 @@ steps:
         filePath: vnext/Scripts/Tfs/Layout-Desktop-Headers.ps1
         arguments: -TargetRoot ${{parameters.nugetroot}}
 
-  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeProjectReunion, false)) }}:
+  - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeWindowsAppsDK, false)) }}:
     - powershell: |
         (Get-Content -Path ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
@@ -153,11 +153,11 @@ steps:
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
 
-  - ${{ if eq(parameters.packMicrosoftReactNativeProjectReunion, true) }}:
+  - ${{ if eq(parameters.packMicrosoftReactNativeWindowsAppsDK, true) }}:
     - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
       - template: prep-and-pack-single.yml
         parameters:
-          outputPackage: Microsoft.ReactNative.ProjectReunion
+          outputPackage: Microsoft.ReactNative.WindowsAppSDK
           slices: $(releaseSlices)
           packageVersion: ${{parameters.npmVersion}}
           codesignBinaries: ${{ parameters.signMicrosoft }}
