@@ -35,7 +35,13 @@ interface CommandInfo {
 }
 
 // This is our key with the AI backend
-const DefaultSetupString = '795006ca-cf54-40ee-8bc6-03deb91401c3';
+const RNWSetupString = '795006ca-cf54-40ee-8bc6-03deb91401c3';
+
+// Environment variable to override the default setup string
+const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
+
+// Environment variable to override the http proxy (such as http://localhost:8888 for Fiddler debugging)
+const ENV_PROXY_OVERRIDE = 'RNW_TELEMETRY_PROXY';
 
 // These are NPM packages we care about, in terms of capturing versions used
 // and getting more details about when reporting errors
@@ -62,7 +68,7 @@ export const NuGetPackagesWeTrack: string[] = [
 export class Telemetry {
   protected static client?: appInsights.TelemetryClient = undefined;
   protected static options: TelemetryOptions = {
-    setupString: DefaultSetupString, // We default to our AI key, but callers can easily override it in setup
+    setupString: Telemetry.getDefaultSetupString(), // We default to our AI key, but callers can easily override it in setup
     preserveErrorMessages: false,
   };
 
@@ -73,6 +79,11 @@ export class Telemetry {
     | projectUtils.AppProjectInfo
     | projectUtils.DependencyProjectInfo = undefined;
 
+  protected static getDefaultSetupString(): string {
+    // Enable overriding the default setup string via an environment variable
+    return process.env[ENV_SETUP_OVERRIDE] ?? RNWSetupString;
+  }
+
   protected static reset(): void {
     // Reset client
     if (Telemetry.client) {
@@ -82,7 +93,7 @@ export class Telemetry {
 
     // Reset local members
     Telemetry.options = {
-      setupString: DefaultSetupString,
+      setupString: Telemetry.getDefaultSetupString(),
       preserveErrorMessages: false,
     };
     Telemetry.commandInfo = {};
@@ -131,9 +142,12 @@ export class Telemetry {
       Telemetry.options.setupString,
     );
 
-    // Uncomment for Fiddler testing
-    // Telemetry.client.config.proxyHttpUrl = 'http://localhost:8888';
-    // Telemetry.client.config.proxyHttpsUrl = 'http://localhost:8888';
+    // Allow overriding the proxy server via an environment variable
+    const proxyServer = process.env[ENV_PROXY_OVERRIDE];
+    if (proxyServer) {
+      Telemetry.client.config.proxyHttpUrl = proxyServer;
+      Telemetry.client.config.proxyHttpsUrl = proxyServer;
+    }
 
     Telemetry.client.config.disableAppInsights = Telemetry.isTest;
     Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
