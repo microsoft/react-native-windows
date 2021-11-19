@@ -9,6 +9,8 @@ parameters:
     type: object
   - name: buildNuGetOnly
     type: boolean
+  - name: buildReunionOnly
+    type: boolean
   - name: buildMatrix
     type: object
     default:
@@ -50,16 +52,14 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-
           # #8132 Support for C++ Reunion apps
-          # X86DebugCppWinUI3:
+          # - Name: X86DebugCppWinUI3
           #   language: cpp
           #   configuration: Debug
           #   platform: x86
           #   projectType: app
           #   additionalInitArguments: --useWinUI3 true
-          #   additionalRunArguments:
-          X86DebugCsWinUI3:
+          - Name: X86DebugCsWinUI3
             language: cs
             configuration: Debug
             platform: x86
@@ -299,7 +299,7 @@ jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
+        - ${{ if and(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly), eq(coalesce(matrix.useReunion, false), parameters.buildReunionOnly))}}:
           - job: CliInit${{ matrix.Name }}
             displayName: Verify Cli ${{ matrix.Name }}
 
@@ -349,3 +349,37 @@ jobs:
                   runWack: ${{ coalesce(matrix.runWack, false) }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
+
+  - ${{ if parameters.buildReunionOnly }}:
+    - job: CliInitReunion
+      variables:
+        - template: ../variables/vs2019.yml
+      displayName: Verify Cli (Reunion)
+      dependsOn:
+        - Reunion
+      strategy:
+        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
+          X64DebugCsWinUI3:
+            language: cs
+            configuration: Debug
+            platform: x64
+            projectType: app
+            additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+            additionalRunArguments:
+
+      pool: $(AgentPool.Medium)
+      timeoutInMinutes: 60
+      cancelTimeoutInMinutes: 5
+
+      steps:
+        - template: ../templates/react-native-init.yml
+          parameters:
+            language: $(language)
+            configuration: $(configuration)
+            platform: $(platform)
+            projectType: $(projectType)    
+            additionalInitArguments: $(additionalInitArguments)
+            additionalRunArguments: $(additionalRunArguments)
+            useNuGet: false
+            buildEnvironment: ${{ parameters.buildEnvironment }}
+            useReunion: true

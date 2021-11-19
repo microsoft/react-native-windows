@@ -89,13 +89,6 @@ steps:
         packMicrosoftReactNativeProjectReunion: true
         slices: '("x64.Release")'
 
-  # Work around issue of parameters not getting expanded in conditions properly
-  - powershell: |
-      Write-Host "##vso[task.setvariable variable=localProjectType]${{ parameters.projectType}}"
-
-  # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
-  # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies
-  # which takes over a minute on the CI machines.
   - ${{ if eq(parameters.projectType, 'app') }}:
     - script: |
         npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
