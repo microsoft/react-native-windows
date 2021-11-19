@@ -306,7 +306,7 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  // <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
+  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
   // </packages>
   //
   // expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
