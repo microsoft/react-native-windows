@@ -166,5 +166,5 @@ steps:
           binariesToSign: |
             **/Microsoft.ReactNative.dll
             **/Microsoft.ReactNative.winmd
-            **/Microsoft.ReactNative.ProjectReunion.dll
+            **/Microsoft.ReactNative.WindowsAppSDK.dll
 

@@ -288,7 +288,7 @@ jobs:
       - template: templates/msbuild-sln.yml
         parameters:
           solutionDir: vnext
-          solutionName: Microsoft.ReactNative.ProjectReunion.sln
+          solutionName: Microsoft.ReactNative.WindowsAppSDK.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
@@ -302,7 +302,7 @@ jobs:
           buildConfiguration: $(BuildConfiguration)
           contents: |
             Microsoft.ReactNative\**
-            Microsoft.ReactNative.ProjectReunion\**
+            Microsoft.ReactNative.WindowsAppSDK\**
 
       - template: templates/component-governance.yml
 
