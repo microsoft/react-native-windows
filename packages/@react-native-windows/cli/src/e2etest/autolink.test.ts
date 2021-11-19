@@ -60,9 +60,9 @@ class AutolinkTest extends AutolinkWindows {
 
 test('autolink fixup sln', () => {
   const autolink = new AutolinkTest(
-    {windows: {}},
+    {windows: {folder: __dirname, sourceDir: '.'}},
     {},
-    {check: true, logging: false},
+    {check: true, logging: false, sln: 'foo'},
   );
   expect(autolink.getWindowsProjectConfig().solutionFile).toBeUndefined();
   expect(() => {
