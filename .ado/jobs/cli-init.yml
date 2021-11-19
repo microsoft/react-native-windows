@@ -59,12 +59,13 @@ parameters:
           #   platform: x86
           #   projectType: app
           #   additionalInitArguments: --useWinUI3 true
-          - Name: X86DebugCsWinUI3
+          - Name: X64DebugCsWinUI3
             language: cs
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
-            additionalInitArguments: --useWinUI3 true
+            additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+            useReunion: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
@@ -148,18 +149,20 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-          - Name: X86DebugCppWinUI3
-            language: cpp
-            configuration: Debug
-            platform: x86
-            projectType: app
-            additionalInitArguments: --useWinUI3 true
-          - Name: X86DebugCsWinUI3
+          # #8132 Support for C++ Reunion apps
+          # - Name: X86DebugCppWinUI3
+          #   language: cpp
+          #   configuration: Debug
+          #   platform: x86
+          #   projectType: app
+          #   additionalInitArguments: --useWinUI3 true
+          - Name: X64DebugCsWinUI3
             language: cs
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
             additionalInitArguments: --useWinUI3 true
+            useReunion: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
@@ -307,6 +310,10 @@ jobs:
               dependsOn:
                 - UniversalBuild${{ matrix.platform }}Release
 
+            ${{ if eq(matrix.useReunion, true) }}:
+              dependsOn:
+                - ReunioX64Release
+
             variables: [template: ../variables/windows.yml]
 
             ${{ if eq(matrix.lowResource, true) }}:
@@ -349,36 +356,3 @@ jobs:
                   runWack: ${{ coalesce(matrix.runWack, false) }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
-
-  - ${{ if parameters.buildReunionOnly }}:
-    - job: CliInitReunion
-      variables: [template: ../variables/windows.yml]
-      displayName: Verify Cli (Reunion)
-      dependsOn:
-        - Reunion
-      strategy:
-        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-          X64DebugCsWinUI3:
-            language: cs
-            configuration: Debug
-            platform: x64
-            projectType: app
-            additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
-            additionalRunArguments:
-
-      pool: $(AgentPool.Medium)
-      timeoutInMinutes: 60
-      cancelTimeoutInMinutes: 5
-
-      steps:
-        - template: ../templates/react-native-init.yml
-          parameters:
-            language: ${{ matrix.language }}
-            configuration: ${{ matrix.configuration }}
-            platform: ${{ matrix.matrix.platform }}
-            projectType: ${{ matrix.projectType }}
-            additionalInitArguments: ${{ matrix.additionalInitArguments }}
-            additionalRunArguments: ${{ matrix.additionalRunArguments }}
-            useNuGet: false
-            buildEnvironment: ${{ parameters.buildEnvironment }}
-            useReunion: true
