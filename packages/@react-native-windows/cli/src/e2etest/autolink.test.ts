@@ -300,7 +300,6 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
 
   const expectedExperimentalFeatures =
     '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
-
   expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
   // example packages.config:
