@@ -352,8 +352,7 @@ jobs:
 
   - ${{ if parameters.buildReunionOnly }}:
     - job: CliInitReunion
-      variables:
-        - template: ../variables/vs2019.yml
+      variables: [template: ../variables/windows.yml]
       displayName: Verify Cli (Reunion)
       dependsOn:
         - Reunion
