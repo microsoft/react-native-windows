@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#include "../Pch/pch.h"
 #include <pch.h>
 
 #include <Views/ShadowNodeBase.h>
@@ -27,6 +28,9 @@
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Input.h>
+namespace input = winrt::Microsoft::UI::Input;
+#else
+namespace input = winrt::Windows::UI::Input;
 #endif
 
 namespace Microsoft::ReactNative {
@@ -117,7 +121,8 @@ void TouchEventHandler::OnPointerPressed(
     return;
 
   // If this was caused by the user pressing the "back" hardware button, fire that event instead
-  if (args.GetCurrentPoint(sourceElement).Properties().IsXButton1Pressed()) {
+  if (args.GetCurrentPoint(sourceElement).Properties().PointerUpdateKind() ==
+      input::PointerUpdateKind::XButton1Pressed) {
     args.Handled(DispatchBackEvent());
     return;
   }
@@ -382,14 +387,8 @@ winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const R
       {"locationY", pointer.positionView.Y},
       {"timestamp", pointer.timestamp},
       {
-#ifndef USE_WINUI3
           "pointerType",
           GetPointerDeviceTypeName(pointer.deviceType),
-#else
-          "pointerType",
-          GetPointerDeviceTypeName(pointer.deviceType),
-#endif
-
       },
       {"force", pointer.pressure},
       {"isLeftButton", pointer.isLeftButton},
@@ -535,18 +534,16 @@ bool TouchEventHandler::DispatchBackEvent() {
   return true;
 }
 
-#ifndef USE_WINUI3
-const char *TouchEventHandler::GetPointerDeviceTypeName(
-    winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept {
+const char *TouchEventHandler::GetPointerDeviceTypeName(PointerDeviceType deviceType) noexcept {
   const char *deviceTypeName = "unknown";
   switch (deviceType) {
-    case winrt::Windows::Devices::Input::PointerDeviceType::Mouse:
+    case PointerDeviceType::Mouse:
       deviceTypeName = "mouse";
       break;
-    case winrt::Windows::Devices::Input::PointerDeviceType::Pen:
+    case PointerDeviceType::Pen:
       deviceTypeName = "pen";
       break;
-    case winrt::Windows::Devices::Input::PointerDeviceType::Touch:
+    case PointerDeviceType::Touch:
       deviceTypeName = "touch";
       break;
     default:
@@ -554,26 +551,6 @@ const char *TouchEventHandler::GetPointerDeviceTypeName(
   }
   return deviceTypeName;
 }
-#else
-const char *TouchEventHandler::GetPointerDeviceTypeName(
-    winrt::Microsoft::UI::Input::PointerDeviceType deviceType) noexcept {
-  const char *deviceTypeName = "unknown";
-  switch (deviceType) {
-    case winrt::Microsoft::UI::Input::PointerDeviceType::Mouse:
-      deviceTypeName = "mouse";
-      break;
-    case winrt::Microsoft::UI::Input::PointerDeviceType::Pen:
-      deviceTypeName = "pen";
-      break;
-    case winrt::Microsoft::UI::Input::PointerDeviceType::Touch:
-      deviceTypeName = "touch";
-      break;
-    default:
-      break;
-  }
-  return deviceTypeName;
-}
-#endif
 
 winrt::Microsoft::ReactNative::PointerEventKind TouchEventHandler::GetPointerEventKind(
     TouchEventType eventType) noexcept {
