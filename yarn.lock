@@ -1841,9 +1841,9 @@
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
 "@rnx-kit/jest-preset@^0.1.0":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.7.tgz#3fa41fb3cf02412521faa71f4b23ca63b27d3e68"
-  integrity sha512-Frxy8iPqhYOnDfS96C8aweBw+iSmn6rTEeDW6TMLdZYNc8GkuXuqLDUpp5MxOSzEB1gFP1OfWuZZ1Dzi82G33w==
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.8.tgz#31a68a8a79ff7d63341394833bc74fb7d0ffd679"
+  integrity sha512-1I7+OsUNbwQSoswPZZhzGjOfvA3j9LXZ0jfFyIceke3E5Gtu5VvEisuHv8PUKbn/rPJMuMfwkGaBzG16jJlLeA==
   dependencies:
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
@@ -2198,9 +2198,9 @@
     "@types/node" "*"
 
 "@types/react-native@*", "@types/react-native@^0.66.0":
-  version "0.66.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.4.tgz#075d9521de1ee53a4f3eff729133d897039c0d7f"
-  integrity sha512-Aby37oZ0S8LS4abOVWbBgChfHLZsx3skcj2QJU9ZHPhA1h6+yBbdBH2wJLxIUXfYT1Ejkwuv8n5u+/VxLzzcmA==
+  version "0.66.5"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.5.tgz#a9bb2fdf6355c4a4426904eae95077d1a462f5c6"
+  integrity sha512-hTLfKfepd+A+jUpgj+OhHtW7UlIvhyHyQ4mOCnRfEjhxq4PGvspETIHIcTV2DEfnWNX3Gi9Q0gGINrU8AG7YeA==
   dependencies:
     "@types/react" "*"
 
@@ -7566,9 +7566,9 @@ loglevel@^1.6.0:
   integrity sha512-LoEDv5pgpvWgPF4kNYuIp0qqSJVWak/dML0RY74xlzMZiT9w77teNAwKYKWBTYjlokMirg+o3jBwp+vlLrcfAA==
 
 lookpath@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/lookpath/-/lookpath-1.2.1.tgz#609c16d694603465c6c4b53bb5d5e3380e8eb1ef"
-  integrity sha512-dMlL1UqJmBNoXLxRM2lZICttyf9U2+5leFewVRWujybSoL9HAWfDw53NwIffnc5uPHmBiP5EosR/R8lkB4jftQ==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/lookpath/-/lookpath-1.2.2.tgz#bddcd1440b6643e07495138376d43aed38bcd454"
+  integrity sha512-k2Gmn8iV6qdME3ztZC2spubmQISimFOPLuQKiPaLcVdRz0IpdxrNClVepMlyTJlhodm/zG/VfbkWERm3kUIh+Q==
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
@@ -10195,9 +10195,9 @@ source-map-resolve@^0.5.0:
     urix "^0.1.0"
 
 source-map-support@^0.5.19, source-map-support@^0.5.6, source-map-support@^0.5.9:
-  version "0.5.20"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.20.tgz#12166089f8f5e5e8c56926b377633392dd2cb6c9"
-  integrity sha512-n1lZZ8Ve4ksRqizaBQgxXDgKwttHDhyfQjA6YZZn8+AroHbsIz+JjwxQDxbp+7y5OYCI8t1Yk7etjD9CRd2hIw==
+  version "0.5.21"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
+  integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
