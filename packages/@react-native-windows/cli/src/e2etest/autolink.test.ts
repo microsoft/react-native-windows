@@ -276,6 +276,17 @@ test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=fa
     '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
   expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
+  // example packages.config:
+  // <packages>
+  //   <package id="SuperPkg" version="42"/>
+  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
+  // </packages>
+  //
+  // expect(al.packagesConfig).toContain('Microsoft.WinUI');
+  // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
+  // expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
+  //TODO
+
   done();
 });
 
@@ -308,11 +319,10 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
   // </packages>
   //
-  // expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
-  // expect(al.packagesConfig).toContain('2.7.0-test');
-  // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   // expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
-  //TODO: Evaluate properties using a different mechanism.
+  // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
+  // expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
+  //TODO
 
   done();
 });
@@ -340,6 +350,17 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=tru
     '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3></PropertyGroup></Project>';
   expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
+  // example packages.config:
+  // <packages>
+  //   <package id="SuperPkg" version="42"/>
+  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
+  // </packages>
+  //
+  // expect(al.packagesConfig).toContain('Microsoft.WinUI');
+  // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
+  // expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
+  //TODO
+
   done();
 });
 
@@ -365,6 +386,94 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=fal
   const expectedExperimentalFeatures =
     '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
   expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
+
+  // example packages.config:
+  // <packages>
+  //   <package id="SuperPkg" version="42"/>
+  //   <package id="Microsoft.WinUI" version="3.0.0-preview4.210210.4" targetFramework="native"/>
+  // </packages>
+  //
+  // expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
+  // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
+  // expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
+  //TODO
+
+  done();
+});
+
+test('ensureXAMLDialect - WinUI2xVersion specified in ExperimentalFeatures.props', async done => {
+  const folder = path.resolve('src/e2etest/projects/WithWinUI3');
+  const rnc = require(path.join(folder, 'react-native.config.js'));
+
+  const config = projectConfigWindows(folder, rnc.project.windows)!;
+  delete config.useWinUI3;
+  const al = new AutolinkTest(
+    {windows: config},
+    {},
+    {
+      check: false,
+      logging: false,
+    },
+  );
+  al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.7.0-test</WinUI2xVersion></PropertyGroup></Project>`;
+
+  const exd = await al.ensureXAMLDialect();
+  expect(exd).toBeTruthy();
+
+  const expectedExperimentalFeatures =
+    '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.7.0-test</WinUI2xVersion></PropertyGroup></Project>';
+  expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
+
+  // example packages.config:
+  // <packages>
+  //   <package id="SuperPkg" version="42"/>
+  //   <package id="Microsoft.UI.XAML" version="2.7.0-test" targetFramework="native"/>
+  // </packages>
+  //
+  // expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
+  // expect(al.packagesConfig).toContain('2.7.0-test');
+  // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
+  // expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
+  //TODO
+
+  done();
+});
+
+test('ensureXAMLDialect - WinUI3Version specified in ExperimentalFeatures.props', async done => {
+  const folder = path.resolve('src/e2etest/projects/WithWinUI3');
+  const rnc = require(path.join(folder, 'react-native.config.js'));
+
+  const config = projectConfigWindows(folder, rnc.project.windows)!;
+
+  const al = new AutolinkTest(
+    {windows: config},
+    {},
+    {
+      check: false,
+      logging: false,
+    },
+  );
+  al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3><WinUI3Version>3.0.0-test</WinUI3Version></PropertyGroup></Project>`;
+
+  const exd = await al.ensureXAMLDialect();
+  expect(exd).toBeTruthy();
+
+  const expectedExperimentalFeatures =
+    '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3><WinUI3Version>3.0.0-test</WinUI3Version></PropertyGroup></Project>';
+  expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
+
+  // example packages.config:
+  // <packages>
+  //   <package id="SuperPkg" version="42"/>
+  //   <package id="Microsoft.WinUI" version="3.0.0-test" targetFramework="native"/>
+  // </packages>
+  //
+
+  // expect(al.packagesConfig).toContain('Microsoft.WinUI');
+  // expect(al.packagesConfig).toContain('3.0.0-test');
+  // expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
+  // expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
+  //TODO
 
   done();
 });
@@ -451,7 +560,7 @@ test('autolinkOptions - validate options', () => {
     expect(commandOption.description).not.toBeNull();
     expect(commandOption.description!).toBe(commandOption.description!.trim());
 
-    // Validate all command options are present in RunWindowsOptions
+    // Validate all command options are present in AutoLinkOptions
     const optionName = commanderNameToOptionName(commandOption.name);
     expect(
       validateOptionName(
