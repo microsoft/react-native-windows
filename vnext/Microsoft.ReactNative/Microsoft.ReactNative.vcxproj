@@ -815,6 +815,8 @@
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
       </ItemGroup>
     </When>
+  </Choose>
+  <Choose>
     <When Condition="'$(UseV8)' == 'true'">
       <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
     </When>
