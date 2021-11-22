@@ -148,13 +148,21 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
-    <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
-    <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" Condition="'$(EnableSourceLink)' == 'true'" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
-    <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
+  <Choose Label="PackageReferences">
+    <When Condition="'$(EnableSourceLink)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(UseV8)' == 'true'">
+      <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" />
+    </When>
+  </Choose>
   <PropertyGroup>
     <V8JSI_NODLLCOPY />
     <HermesNoDLLCopy Condition="'$(UseHermes)' != 'true'">true</HermesNoDLLCopy>
