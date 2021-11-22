@@ -336,7 +336,9 @@
   </Choose>
   <Choose>
     <When Condition="'$(UseV8)' == 'true'">
-      <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" />
+      <ItemGroup>
+        <PackageReference Include="ReactNative.V8Jsi.Windows" Version="$(V8Version)" />
+      </ItemGroup>
     </When>
   </Choose>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

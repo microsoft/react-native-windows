@@ -807,7 +807,7 @@
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
-  <Choose Label="PackageReferences">
+  <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
       <ItemGroup>
         <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
@@ -818,7 +818,9 @@
   </Choose>
   <Choose>
     <When Condition="'$(UseV8)' == 'true'">
-      <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
+      <ItemGroup>
+        <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
+      </ItemGroup>
     </When>
   </Choose>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
