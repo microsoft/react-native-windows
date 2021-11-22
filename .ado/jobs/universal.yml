@@ -109,8 +109,7 @@
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
-              pool:
-                vmImage: $(VmImage)
+              pool: $(AgentPool.Medium)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
@@ -143,10 +142,6 @@
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
-                    
-                - powershell: |
-                    Get-ChildItem -Recurse
-                  workingDirectory: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
                 - powershell: |
                     Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
