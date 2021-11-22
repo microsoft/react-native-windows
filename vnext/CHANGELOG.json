@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Nov 2021 16:10:06 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.4",
+      "version": "0.67.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e454120a1dbe968f5832d2a06da645efef4fcebd",
+            "comment": "Fix C# Module Event invocation"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Nov 2021 16:10:10 GMT",
       "tag": "react-native-windows_v0.67.0-preview.3",
       "version": "0.67.0-preview.3",
