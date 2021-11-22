@@ -51,7 +51,10 @@ void AnimationDriver::StartAnimation() {
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
   if (animatedValue) {
     animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_valueName, animation);
-    animatedValue->AddActiveAnimation(m_id);
+
+    // The ValueAnimatedNode needs to retain a reference to this animation driver
+    // so it can be kept alive until the scoped batch completion callback fires.
+    animatedValue->AddActiveAnimation(shared_from_this());
   }
   scopedBatch.End();
 
@@ -81,6 +84,7 @@ void AnimationDriver::StartAnimation() {
 
 void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
   if (const auto animatedValue = GetAnimatedValue()) {
+    animatedValue->StopAnimation(m_id);
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
     m_stopped = true;
     m_ignoreCompletedHandlers = ignoreCompletedHandlers;

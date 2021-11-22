@@ -124,6 +124,7 @@ void NativeAnimatedNodeManager::StopAnimation(int64_t animationId) {
   if (m_activeAnimations.count(animationId)) {
     if (const auto animation = m_activeAnimations.at(animationId).get()) {
       animation->StopAnimation();
+      m_activeAnimations.erase(animationId);
     }
   }
 }

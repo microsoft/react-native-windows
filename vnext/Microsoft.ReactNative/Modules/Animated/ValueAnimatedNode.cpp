@@ -82,8 +82,8 @@ void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag) {
   m_dependentPropsNodes.erase(propsNodeTag);
 }
 
-void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag) {
-  m_activeAnimations.insert(animationTag);
+void ValueAnimatedNode::AddActiveAnimation(std::shared_ptr<AnimationDriver> animation) {
+  m_activeAnimations.insert({animation->Id(), animation});
   if (m_activeAnimations.size() == 1) {
     if (const auto manager = m_manager.lock()) {
       for (const auto &props : m_dependentPropsNodes) {
@@ -104,7 +104,8 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
           propsNode->DisposeCompletedAnimation(Tag());
       }
 
-      // Start any deferred animations
+      // Start any deferred animations, if the animation was stopped before
+      // this is run, we will get a null pointer for the animation driver.
       for (const auto &deferredId : m_deferredAnimations) {
         if (const auto animationDriver = manager->GetActiveAnimation(deferredId)) {
           animationDriver->StartAnimation();
