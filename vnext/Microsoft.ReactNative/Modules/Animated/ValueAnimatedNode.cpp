@@ -98,10 +98,19 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
   m_activeAnimations.erase(animationTag);
   if (!m_activeAnimations.size()) {
     if (const auto manager = m_manager.lock()) {
+      // Dispose completed props animations
       for (const auto &props : m_dependentPropsNodes) {
         if (const auto propsNode = manager->GetPropsAnimatedNode(props))
           propsNode->DisposeCompletedAnimation(Tag());
       }
+
+      // Start any deferred animations
+      for (const auto &deferredId : m_deferredAnimations) {
+        if (const auto animationDriver = manager->GetActiveAnimation(deferredId)) {
+          animationDriver->StartAnimation();
+        }
+      }
+      m_deferredAnimations.clear();
     }
   }
 }
@@ -112,6 +121,14 @@ void ValueAnimatedNode::AddActiveTrackingNode(int64_t trackingNodeTag) {
 
 void ValueAnimatedNode::RemoveActiveTrackingNode(int64_t trackingNodeTag) {
   m_activeTrackingNodes.erase(trackingNodeTag);
+}
+
+bool ValueAnimatedNode::HasActiveAnimations() const noexcept {
+  return m_activeAnimations.size();
+}
+
+void ValueAnimatedNode::DeferAnimation(int64_t animationTag) {
+  m_deferredAnimations.insert(animationTag);
 }
 
 void ValueAnimatedNode::UpdateTrackingNodes() {

@@ -124,7 +124,6 @@ void NativeAnimatedNodeManager::StopAnimation(int64_t animationId) {
   if (m_activeAnimations.count(animationId)) {
     if (const auto animation = m_activeAnimations.at(animationId).get()) {
       animation->StopAnimation();
-      m_activeAnimations.erase(animationId);
     }
   }
 }
@@ -399,6 +398,13 @@ TransformAnimatedNode *NativeAnimatedNodeManager::GetTransformAnimatedNode(int64
 TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t tag) {
   if (m_trackingNodes.count(tag)) {
     return m_trackingNodes.at(tag).get();
+  }
+  return nullptr;
+}
+
+AnimationDriver* NativeAnimatedNodeManager::GetActiveAnimation(int64_t tag) {
+  if (m_activeAnimations.count(tag)) {
+    return m_activeAnimations.at(tag).get();
   }
   return nullptr;
 }

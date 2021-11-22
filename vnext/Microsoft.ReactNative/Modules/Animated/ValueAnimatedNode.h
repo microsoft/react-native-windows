@@ -36,6 +36,9 @@ class ValueAnimatedNode : public AnimatedNode {
   void AddActiveTrackingNode(int64_t trackingNodeTag);
   void RemoveActiveTrackingNode(int64_t trackingNodeTag);
 
+  void DeferAnimation(int64_t animationTag);
+  bool HasActiveAnimations() const noexcept;
+
   static constexpr std::wstring_view s_valueName{L"v"};
   static constexpr std::wstring_view s_offsetName{L"o"};
 
@@ -52,5 +55,6 @@ class ValueAnimatedNode : public AnimatedNode {
   std::unordered_set<int64_t> m_dependentPropsNodes{};
   std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_activeTrackingNodes{};
+  std::unordered_set<int64_t> m_deferredAnimations{};
 };
 } // namespace Microsoft::ReactNative

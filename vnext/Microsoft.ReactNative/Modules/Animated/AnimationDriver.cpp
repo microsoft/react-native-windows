@@ -42,8 +42,14 @@ AnimationDriver::~AnimationDriver() {
 }
 
 void AnimationDriver::StartAnimation() {
+  auto const animatedValue = GetAnimatedValue();
+  if (animatedValue && animatedValue->HasActiveAnimations()) {
+    animatedValue->DeferAnimation(m_id);
+    return;
+  }
+
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
-  if (auto const animatedValue = GetAnimatedValue()) {
+  if (animatedValue) {
     animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_valueName, animation);
     animatedValue->AddActiveAnimation(m_id);
   }
@@ -52,7 +58,13 @@ void AnimationDriver::StartAnimation() {
   m_scopedBatchCompletedToken = scopedBatch.Completed(
       [weakSelf = weak_from_this(), weakManager = m_manager, id = m_id, tag = m_animatedValueTag](auto sender, auto) {
         if (const auto strongSelf = weakSelf.lock()) {
-          strongSelf->DoCallback(true);
+          if (strongSelf->m_ignoreCompletedHandlers) {
+            return;
+          }
+
+          strongSelf->DoCallback(strongSelf->m_stopped);
+          strongSelf->m_scopedBatch.Completed(strongSelf->m_scopedBatchCompletedToken);
+          strongSelf->m_scopedBatch = nullptr;
         }
 
         if (auto manager = weakManager.lock()) {
@@ -70,15 +82,8 @@ void AnimationDriver::StartAnimation() {
 void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
   if (const auto animatedValue = GetAnimatedValue()) {
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
-    if (!ignoreCompletedHandlers) {
-      animatedValue->RemoveActiveAnimation(m_id);
-
-      if (m_scopedBatch) {
-        DoCallback(false);
-        m_scopedBatch.Completed(m_scopedBatchCompletedToken);
-        m_scopedBatch = nullptr;
-      }
-    }
+    m_stopped = true;
+    m_ignoreCompletedHandlers = ignoreCompletedHandlers;
   }
 }
 

@@ -88,6 +88,8 @@ class NativeAnimatedNodeManager {
   StyleAnimatedNode *GetStyleAnimatedNode(int64_t tag);
   TransformAnimatedNode *GetTransformAnimatedNode(int64_t tag);
   TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
+
+  AnimationDriver *GetActiveAnimation(int64_t tag);
   void RemoveActiveAnimation(int64_t tag);
 
  private:
