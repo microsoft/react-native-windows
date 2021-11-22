@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removes unused calls from NativeAnimated",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
