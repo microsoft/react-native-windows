@@ -403,7 +403,7 @@ TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t
   return nullptr;
 }
 
-AnimationDriver* NativeAnimatedNodeManager::GetActiveAnimation(int64_t tag) {
+AnimationDriver *NativeAnimatedNodeManager::GetActiveAnimation(int64_t tag) {
   if (m_activeAnimations.count(tag)) {
     return m_activeAnimations.at(tag).get();
   }
