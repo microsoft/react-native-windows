@@ -175,7 +175,7 @@
                   inputs:
                     testSelector: testAssemblies
                     testAssemblyVer2: |
-                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
                     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}
