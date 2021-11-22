@@ -143,6 +143,10 @@
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
+                    
+                - powershell: |
+                    Get-ChildItem -Recursive
+                  workingDirectory: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
                 - powershell: |
                     Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
@@ -175,7 +179,7 @@
                   inputs:
                     testSelector: testAssemblies
                     testAssemblyVer2: |
-                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
+                      Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests/Microsoft.ReactNative.Managed.UnitTests.build.appxrecipe
                     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}
