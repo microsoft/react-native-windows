@@ -32,24 +32,22 @@ test('getNodeVersion() is valid', async () => {
 });
 
 test('getNpmVersion() is valid', async () => {
-  const node = await lookpath('npm');
   const version = await versionUtils.getNpmVersion();
-  if (node) {
+  if (version) {
     expectValidVersion(version, true);
   } else {
-    console.log('npm not installed');
-    expect(version).toBeNull();
+    jest.setTimeout(10000); // Sometimes this lookup can run longer than the default 5000ms
+    expect(await lookpath('npm')).toBeUndefined();
   }
 });
 
 test('getYarnVersion() is valid', async () => {
-  const node = await lookpath('yarn');
   const version = await versionUtils.getYarnVersion();
-  if (node) {
+  if (version) {
     expectValidVersion(version, true);
   } else {
-    console.log('yarn not installed');
-    expect(version).toBeNull();
+    jest.setTimeout(10000); // Sometimes this lookup can run longer than the default 5000ms
+    expect(await lookpath('yarn')).toBeUndefined();
   }
 });
 
