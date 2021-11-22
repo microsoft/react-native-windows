@@ -109,7 +109,7 @@
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.Name }}
-              pool: $(AgentPool.Medium)
+              pool: $(AgentPool.Large)
               timeoutInMinutes: 60
               cancelTimeoutInMinutes: 5
 
