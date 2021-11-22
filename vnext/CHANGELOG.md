@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 15 Nov 2021 16:09:53 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Nov 2021 16:09:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.5
+
+Mon, 22 Nov 2021 16:09:58 GMT
+
+### Patches
+
+- Fix C# Module Event invocation (vmorozov@microsoft.com)
 
 ## 0.66.4
 

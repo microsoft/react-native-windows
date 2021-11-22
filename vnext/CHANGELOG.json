@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Nov 2021 16:09:58 GMT",
+      "tag": "react-native-windows_v0.66.5",
+      "version": "0.66.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix C# Module Event invocation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "f5e0d1f8184cabdf83784ad272f7b82680b117cf",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Nov 2021 16:09:53 GMT",
       "tag": "react-native-windows_v0.66.4",
       "version": "0.66.4",
