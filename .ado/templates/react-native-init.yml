@@ -82,7 +82,7 @@ steps:
       parameters:
         artifactName: ReactWindows
         npmVersion: $(npmVersion)
-        packMicrosoftReactNativeProjectReunion: true
+        packMicrosoftReactNativeWindowsAppSDK: true
         slices: 
           - platform: x64
             configuration: Release

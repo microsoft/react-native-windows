@@ -141,7 +141,7 @@ export async function copyProjectTemplateAndReplace(
       );
     }
 
-    realProjectType += '-reunion';
+    realProjectType += '-WinAppSDK';
   }
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${realProjectType}`);
@@ -185,7 +185,7 @@ export async function copyProjectTemplateAndReplace(
   );
 
   const csNugetPackages: NugetPackage[] = options.useWinUI3
-    ? getReunionPackages(nugetVersion)
+    ? getWinAppSDKPackages(nugetVersion)
     : getUwpCsPackages();
 
   const cppNugetPackages: CppNugetPackage[] = [
@@ -604,22 +604,22 @@ export async function installScriptsAndDependencies(options: {
     );
   }
 }
-function getReunionPackages(nugetVersion: string): NugetPackage[] {
-  const reunionPackages: NugetPackage[] = [];
-  reunionPackages.push({
+function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
+  const winAppSDKPackages: NugetPackage[] = [];
+  winAppSDKPackages.push({
     id: 'Microsoft.ReactNative.WindowsAppSDK',
     version: nugetVersion,
   });
 
-  reunionPackages.push({
+  winAppSDKPackages.push({
     id: 'Microsoft.WindowsAppSDK',
     version: '1.0.0',
   });
 
-  reunionPackages.push({
+  winAppSDKPackages.push({
     id: 'Microsoft.Windows.SDK.BuildTools',
     version: '10.0.22000.194',
   });
 
-  return reunionPackages;
+  return winAppSDKPackages;
 }

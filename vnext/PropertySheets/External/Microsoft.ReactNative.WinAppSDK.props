@@ -17,7 +17,7 @@
     <ReactNativeCodeGenEnabled Condition="'$(ReactNativeCodeGenEnabled)' == ''">true</ReactNativeCodeGenEnabled>
   </PropertyGroup>
 
-  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinAppSDK.WinUI.props" />
 </Project>
