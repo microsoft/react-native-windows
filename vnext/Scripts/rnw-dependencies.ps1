@@ -276,14 +276,6 @@ $requirements = @(
         Install = { choco install -y yarn };
     },
     @{
-        Id=[CheckId]::AzureFunctions;
-        Name = 'Azure Functions Core Tools';
-        Tags = @('rnwDev');
-        Valid = { try { (Get-Command func -ErrorAction Stop) -ne $null } catch { $false }; }
-        Install = { choco install -y azure-functions-core-tools-3 };
-        Optional = $true;
-    },
-    @{
         Id=[CheckId]::WinAppDriver;
         Name = 'WinAppDriver';
         Tags = @('rnwDev');
