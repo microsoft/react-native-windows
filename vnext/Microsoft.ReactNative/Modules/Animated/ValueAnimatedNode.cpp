@@ -96,18 +96,21 @@ void ValueAnimatedNode::AddActiveAnimation(std::shared_ptr<AnimationDriver> anim
 
 void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
   m_activeAnimations.erase(animationTag);
-  m_stoppedAnimations.erase(animationTag);
   if (!m_activeAnimations.size()) {
     if (const auto manager = m_manager.lock()) {
-      // Dispose completed props animations
       for (const auto &props : m_dependentPropsNodes) {
         if (const auto propsNode = manager->GetPropsAnimatedNode(props))
           propsNode->DisposeCompletedAnimation(Tag());
       }
+    }
+  }
 
-      // Start any deferred animations, if the animation was stopped before
-      // this is run, we will get a null pointer for the animation driver. We
-      // also remove any deferred animation tags in StopAnimation.
+  // Start any deferred animations. If the animation was stopped before this is
+  // run, we will get a null pointer for the animation driver. We also remove
+  // any deferred animation tags in StopAnimation.
+  m_stoppedAnimations.erase(animationTag);
+  if (!m_stoppedAnimations.size() && m_deferredAnimations.size()) {
+    if (const auto manager = m_manager.lock()) {
       for (const auto &deferredId : m_deferredAnimations) {
         if (const auto animationDriver = manager->GetActiveAnimation(deferredId)) {
           animationDriver->StartAnimation();
