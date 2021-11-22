@@ -43,7 +43,9 @@ AnimationDriver::~AnimationDriver() {
 
 void AnimationDriver::StartAnimation() {
   auto const animatedValue = GetAnimatedValue();
-  if (animatedValue && animatedValue->HasActiveAnimations()) {
+  // If the animated value has any stopped animations, we must wait for a completion
+  // callback on these animations to ensure the latest value is correct.
+  if (animatedValue && animatedValue->HasStoppedAnimations()) {
     animatedValue->DeferAnimation(m_id);
     return;
   }
@@ -66,8 +68,6 @@ void AnimationDriver::StartAnimation() {
           }
 
           strongSelf->DoCallback(strongSelf->m_stopped);
-          strongSelf->m_scopedBatch.Completed(strongSelf->m_scopedBatchCompletedToken);
-          strongSelf->m_scopedBatch = nullptr;
         }
 
         if (auto manager = weakManager.lock()) {

@@ -96,6 +96,7 @@ void ValueAnimatedNode::AddActiveAnimation(std::shared_ptr<AnimationDriver> anim
 
 void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
   m_activeAnimations.erase(animationTag);
+  m_stoppedAnimations.erase(animationTag);
   if (!m_activeAnimations.size()) {
     if (const auto manager = m_manager.lock()) {
       // Dispose completed props animations
@@ -105,7 +106,8 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
       }
 
       // Start any deferred animations, if the animation was stopped before
-      // this is run, we will get a null pointer for the animation driver.
+      // this is run, we will get a null pointer for the animation driver. We
+      // also remove any deferred animation tags in StopAnimation.
       for (const auto &deferredId : m_deferredAnimations) {
         if (const auto animationDriver = manager->GetActiveAnimation(deferredId)) {
           animationDriver->StartAnimation();
@@ -124,8 +126,8 @@ void ValueAnimatedNode::RemoveActiveTrackingNode(int64_t trackingNodeTag) {
   m_activeTrackingNodes.erase(trackingNodeTag);
 }
 
-bool ValueAnimatedNode::HasActiveAnimations() const noexcept {
-  return m_activeAnimations.size();
+bool ValueAnimatedNode::HasStoppedAnimations() const noexcept {
+  return m_stoppedAnimations.size();
 }
 
 void ValueAnimatedNode::DeferAnimation(int64_t animationTag) {
@@ -139,6 +141,18 @@ void ValueAnimatedNode::UpdateTrackingNodes() {
         trackingNode->Update();
       }
     }
+  }
+}
+
+void ValueAnimatedNode::StopAnimation(int64_t animationTag) {
+  if (m_deferredAnimations.count(animationTag)) {
+    // This is not strictly necessary as the animation will be destroyed by the
+    // NativeAnimatedNodesManager if it was stopped before its deferred start.
+    m_deferredAnimations.erase(animationTag);
+  } else {
+    // The animation should already be running if it is not currently deferred.
+    assert(m_activeAnimations.count(animationTag));
+    m_stoppedAnimations.insert(animationTag);
   }
 }
 
