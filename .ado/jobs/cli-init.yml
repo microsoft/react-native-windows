@@ -312,7 +312,7 @@ jobs:
 
             ${{ if eq(matrix.useWinAppSDK, true) }}:
               dependsOn:
-                - ReunioX64Release
+                - WinAppSDKX64Release
 
             variables: [template: ../variables/windows.yml]
 
