@@ -145,7 +145,7 @@
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
                     
                 - powershell: |
-                    Get-ChildItem -Recursive
+                    Get-ChildItem -Recurse
                   workingDirectory: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
 
                 - powershell: |
