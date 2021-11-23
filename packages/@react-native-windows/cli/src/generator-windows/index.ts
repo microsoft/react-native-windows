@@ -472,18 +472,18 @@ export async function copyProjectTemplateAndReplace(
     }
   }
 
-  if (!options.useWinUI3) {
-    // shared assets
-    if (fs.existsSync(path.join(sharedPath, 'assets'))) {
-      await copyAndReplaceAll(
-        path.join(sharedPath, 'assets'),
-        destPath,
-        path.join(windowsDir, newProjectName, 'Assets'),
-        templateVars,
-        options.overwrite,
-      );
-    }
+  // shared assets
+  if (fs.existsSync(path.join(sharedPath, 'assets'))) {
+    await copyAndReplaceAll(
+      path.join(sharedPath, 'assets'),
+      destPath,
+      path.join(windowsDir, newProjectName, 'Assets'),
+      templateVars,
+      options.overwrite,
+    );
+  }
 
+  if (!options.useWinUI3) {
     // shared src
     if (fs.existsSync(path.join(sharedPath, 'src'))) {
       await copyAndReplaceAll(
@@ -495,7 +495,6 @@ export async function copyProjectTemplateAndReplace(
       );
     }
   } else {
-    //TODO update template to use shared assets and src
     if (fs.existsSync(path.join(srcPath, 'MyApp'))) {
       await copyAndReplaceAll(
         path.join(srcPath, 'MyApp'),
