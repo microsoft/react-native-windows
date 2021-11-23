@@ -74,15 +74,6 @@ jobs:
                 configuration: ${{ matrix.BuildConfiguration }}
                 buildEnvironment: ${{ config.BuildEnvironment }}
 
-            - task: MSBuild@1
-              displayName: Restore NuGet packages
-              inputs:
-                solution: packages/sample-apps/windows/SampleApps.sln
-                msbuildArchitecture: x64
-                platform: ${{ matrix.BuildPlatform }}
-                configuration: ${{ matrix.BuildConfiguration }}
-                msbuildArguments: /t:Restore
-
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
@@ -92,7 +83,6 @@ jobs:
                 deployOption:  ${{ matrix.DeployOption }}
                 buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-apps
-                restoreLockedMode: false
 
             - script: yarn bundle-cpp --verbose
               displayName: Create SampleApp bundle

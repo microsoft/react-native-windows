@@ -108,7 +108,6 @@ jobs:
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildLogDirectory: $(BuildLogDirectory)
                 workingDirectory: packages/e2e-test-app
-                restoreLockedMode: false
 
             - script: |
                 echo ##vso[task.setvariable variable=StartedTests]true
