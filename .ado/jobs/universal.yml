@@ -51,7 +51,7 @@
                 # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
                 # Keep NuGet cache independent from the user directory.
                 - name: NUGET_PACKAGES
-                  value: D:\NugetPackages
+                  value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Build ${{ matrix.Name }}
               pool: ${{ parameters.AgentPool.Large }}
               timeoutInMinutes: 60
@@ -118,7 +118,7 @@
                 # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
                 # Keep NuGet cache independent from the user directory.
                 - name: NUGET_PACKAGES
-                  value: D:\NugetPackages
+                  value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
