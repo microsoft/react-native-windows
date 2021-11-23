@@ -150,7 +150,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="Microsoft.WindowsAppSDK.WinUI">
+        <PackageReference Include="Microsoft.WindowsAppSDK">
           <Version>$(WinUI3Version)</Version>
         </PackageReference>
       </ItemGroup>

@@ -291,10 +291,10 @@ test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=fa
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WindowsAppSDK.WinUI" version="1.0.0-experimental1" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK.WinUI');
+  expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
 
@@ -328,10 +328,10 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WindowsAppSDK.WinUI" version="1.0.0-experimental1" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK.WinUI');
+  expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
 
@@ -365,10 +365,10 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=tru
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WindowsAppSDK.WinUI" version="1.0.0-experimental1" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK.WinUI');
+  expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
 
@@ -390,7 +390,7 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=fal
     },
   );
   al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
-  al.packagesConfig = `<packages><package id="SuperPkg" version="42"/><package id="Microsoft.WindowsAppSDK.WinUI"/></packages>`;
+  al.packagesConfig = `<packages><package id="SuperPkg" version="42"/><package id="Microsoft.WindowsAppSDK"/></packages>`;
 
   const exd = await al.ensureXAMLDialect();
   expect(exd).toBeTruthy();
@@ -401,10 +401,10 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=fal
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WindowsAppSDK.WinUI" version="1.0.0-experimental1" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK.WinUI');
+  expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
 

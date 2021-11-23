@@ -228,9 +228,7 @@ export async function copyProjectTemplateAndReplace(
   const packagesConfigCppNugetPackages = [
     ...cppNugetPackages,
     {
-      id: options.useWinUI3
-        ? 'Microsoft.WindowsAppSDK.WinUI'
-        : 'Microsoft.UI.Xaml',
+      id: options.useWinUI3 ? 'Microsoft.WindowsAppSDK' : 'Microsoft.UI.Xaml',
       version: options.useWinUI3 ? winui3Version : winui2xVersion,
       hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
       hasTargets: false,
