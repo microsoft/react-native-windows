@@ -26,12 +26,6 @@
           "NETStandard.Library": "2.0.3"
         }
       },
-      "Microsoft.UI.Xaml": {
-        "type": "Direct",
-        "requested": "[2.7.0, )",
-        "resolved": "2.7.0",
-        "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
-      },
       "MSTest.TestAdapter": {
         "type": "Direct",
         "requested": "[2.1.2, )",
@@ -274,37 +268,14 @@
           "System.Runtime": "4.1.0"
         }
       },
-      "common": {
-        "type": "Project"
-      },
-      "fmt": {
-        "type": "Project"
-      },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "fmt": "1.0.0"
-        }
-      },
       "microsoft.reactnative": {
-        "type": "Project",
-        "dependencies": {
-          "Common": "1.0.0",
-          "Folly": "1.0.0",
-          "ReactCommon": "1.0.0"
-        }
+        "type": "Project"
       },
       "microsoft.reactnative.managed": {
         "type": "Project",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9",
           "Microsoft.ReactNative": "1.0.0"
-        }
-      },
-      "reactcommon": {
-        "type": "Project",
-        "dependencies": {
-          "Folly": "1.0.0"
         }
       }
     },
