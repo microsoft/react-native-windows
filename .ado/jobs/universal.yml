@@ -145,14 +145,7 @@
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
 
-                - task: MSBuild@1
-                  displayName: Restore NuGet packages
-                  inputs:
-                    solution: vnext/Microsoft.ReactNative.sln
-                    msbuildArchitecture: x64
-                    platform: ${{ matrix.BuildPlatform }}
-                    configuration: ${{ matrix.BuildConfiguration }}
-                    msbuildArguments: /t:Restore
+
 
                 - template: ../templates/restore-sln.yml
                   parameters:
