@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add environment variable overrides to specify telemetry setup string and proxy",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

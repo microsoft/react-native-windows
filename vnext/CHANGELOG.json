@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Nov 2021 06:09:26 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.420",
+      "version": "0.0.0-canary.420",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "75c4d0b8d8925599bedc64bc879e5783d3e6bbc2",
+            "comment": "lets ToggleSwitch color change at runtime"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.101",
+            "commit": "75c4d0b8d8925599bedc64bc879e5783d3e6bbc2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Nov 2021 06:11:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.419",
       "version": "0.0.0-canary.419",

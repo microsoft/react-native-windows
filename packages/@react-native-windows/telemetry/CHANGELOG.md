@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 18 Nov 2021 06:11:20 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Nov 2021 06:09:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.26
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Changes
+
+- Add environment variable overrides to specify telemetry setup string and proxy (jthysell@microsoft.com)
 
 ## 0.0.0-canary.25
 

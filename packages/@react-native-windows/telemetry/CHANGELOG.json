@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 23 Nov 2021 06:09:26 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.26",
+      "version": "0.0.0-canary.26",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "4ace49611abd3e9a03d4cf4498773ad1d3ac40d9",
+            "comment": "Add environment variable overrides to specify telemetry setup string and proxy"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Nov 2021 06:11:20 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.25",
       "version": "0.0.0-canary.25",
