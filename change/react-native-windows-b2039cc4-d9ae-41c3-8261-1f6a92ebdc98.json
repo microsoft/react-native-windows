@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "lets ToggleSwitch color change at runtime",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
