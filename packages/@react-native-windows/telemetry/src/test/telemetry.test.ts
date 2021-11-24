@@ -9,7 +9,13 @@ import * as appInsights from 'applicationinsights';
 import CorrelationIdManager from 'applicationinsights/out/Library/CorrelationIdManager';
 import * as path from 'path';
 
-import {Telemetry, CommandStartInfo, CommandEndInfo} from '../telemetry';
+import {
+  Telemetry,
+  CommandStartInfo,
+  CommandEndInfo,
+  CommandEventName,
+  CodedErrorEventName,
+} from '../telemetry';
 import * as basePropUtils from '../utils/basePropUtils';
 import * as errorUtils from '../utils/errorUtils';
 import * as projectUtils from '../utils/projectUtils';
@@ -345,7 +351,7 @@ function verifyTestCommandTelemetryProcessor(
 
       if (envelope.data.baseType === 'ExceptionData') {
         // Verify event name
-        expect(properties.eventName).toBe('RNWCLI.CodedError');
+        expect(properties.eventName).toBe(CodedErrorEventName);
 
         // Verify coded error info
         const codedError = JSON.parse(properties.codedError);
@@ -364,8 +370,8 @@ function verifyTestCommandTelemetryProcessor(
         );
       } else {
         // Verify event name
-        expect(envelope.data.baseData?.name).toBe('RNWCLI.Command');
-        expect(properties.eventName).toBe('RNWCLI.Command');
+        expect(envelope.data.baseData?.name).toBe(CommandEventName);
+        expect(properties.eventName).toBe(CommandEventName);
 
         // Verify command info
         const expectedInfo = getTestCommandStartInfo();
