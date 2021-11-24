@@ -19,6 +19,13 @@
     },
     {
       "type": "patch",
+      "file": "src/Libraries/Components/View/ReactNativeViewAttributes.windows.js",
+      "baseFile": "Libraries/Components/View/ReactNativeViewAttributes.js",
+      "baseHash": "9479c8ccfeeadc90721ae2d3327eeaa76818bfaf",
+      "issue": 9053
+    },
+    {
+      "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",
       "baseHash": "82efd0f5b8a1b8500c1f6f75fff5e2e16050d176",
