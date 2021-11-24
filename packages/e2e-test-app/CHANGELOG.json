@@ -2,6 +2,39 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Wed, 24 Nov 2021 06:08:49 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.32",
+            "commit": "c896fa849e7fa3f44a84793f541f1e6220963ff8"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.421",
+            "commit": "c896fa849e7fa3f44a84793f541f1e6220963ff8"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation to v0.1.6",
+            "commit": "c896fa849e7fa3f44a84793f541f1e6220963ff8"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation-commands to v0.0.33",
+            "commit": "c896fa849e7fa3f44a84793f541f1e6220963ff8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Nov 2021 06:09:26 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",
