@@ -43,6 +43,15 @@ const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
 // Environment variable to override the http proxy (such as http://localhost:8888 for Fiddler debugging)
 const ENV_PROXY_OVERRIDE = 'RNW_TELEMETRY_PROXY';
 
+export const CommandEventName = 'RNWCLI.Command';
+export const CodedErrorEventName = 'RNWCLI.CodedError';
+
+// These are the event names we're tracking
+export const EventNamesWeTrack: string[] = [
+  CommandEventName,
+  CodedErrorEventName,
+];
+
 // These are NPM packages we care about, in terms of capturing versions used
 // and getting more details about when reporting errors
 export const NpmPackagesWeTrack: string[] = [
@@ -205,7 +214,17 @@ export class Telemetry {
     },
   ): boolean {
     delete envelope.tags['ai.cloud.roleInstance'];
-    return true;
+
+    // Filter out "legacy" events from older stable branches
+    const properties = envelope.data.baseData?.properties;
+    if (
+      properties?.eventName &&
+      EventNamesWeTrack.includes(properties.eventName)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -361,7 +380,7 @@ export class Telemetry {
 
   private static trackCommandEvent(extraProps?: Record<string, any>) {
     const props: Record<string, any> = {
-      eventName: 'RNWCLI.Command',
+      eventName: CommandEventName,
     };
 
     // Set command props
@@ -391,7 +410,7 @@ export class Telemetry {
     }
 
     const props: Record<string, any> = {
-      eventName: 'RNWCLI.CodedError',
+      eventName: CodedErrorEventName,
     };
 
     // Save off CodedError info

@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Update telemetry unittest timeouts",
+  "comment": "Block old telemetry events from firing",
   "packageName": "@react-native-windows/telemetry",
   "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"

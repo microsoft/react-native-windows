@@ -96,6 +96,13 @@ bool VirtualTextViewManager::UpdateProperty(
       NotifyAncestorsTextPropertyChanged(node, PropertyChangeType::AddPressable);
     }
   } else {
+    const auto isRegisteringMouseEvent =
+        (propertyName == "onMouseEnter" || propertyName == "onMouseLeave") && propertyValue.AsBoolean();
+    if (isRegisteringMouseEvent) {
+      auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+      NotifyAncestorsTextPropertyChanged(node, PropertyChangeType::AddPressable);
+    }
+
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
 
