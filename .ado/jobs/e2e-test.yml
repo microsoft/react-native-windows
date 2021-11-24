@@ -89,15 +89,6 @@ jobs:
               displayName: NuGet restore
               inputs:
                 command: restore
-                restoreSolution: node_modules/react-native-xaml/windows/ReactNativeXaml/packages.config
-                feedsToUse: config
-                nugetConfigPath: packages/e2e-test-app/windows/NuGet.config
-                verbosityRestore: Detailed
-
-            - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
-              displayName: NuGet restore
-              inputs:
-                command: restore
                 restoreSolution: packages/e2e-test-app/packages.config
                 feedsToUse: config
                 nugetConfigPath: packages/e2e-test-app/windows/NuGet.config
