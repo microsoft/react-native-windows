@@ -42,8 +42,7 @@ inline winrt::IPropertyValue GetTagAsPropertyValue(XamlView view) {
 }
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view);
-comp::Compositor GetCompositor(const XamlView &view);
+comp::Compositor GetCompositor(const XamlView &view = nullptr);
 void SetCompositor(const comp::Compositor &compositor);
-comp::Compositor GetCompositor();
 
 } // namespace Microsoft::ReactNative
