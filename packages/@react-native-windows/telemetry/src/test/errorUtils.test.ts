@@ -145,7 +145,7 @@ test("sanitizeErrorMessage() 'other path'", () => {
   ).toBe(`this is another path: [path]`);
 });
 
-test('sanitizeErrorMessage() multiple known paths', () => {
+test('sanitizeErrorMessage() tracked packages in the npx cache', () => {
   expect(
     errorUtils.sanitizeErrorMessage(
       `Cannot find module 'react-native/package.json'
@@ -155,14 +155,8 @@ test('sanitizeErrorMessage() multiple known paths', () => {
     ),
   ).toBe(`Cannot find module react-native/package.json
       Require stack:
-      - [AppData]\\???(${
-        '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\lib-commonjs\\Cli.js'
-          .length
-      })
-      - [AppData]\\???(${
-        '\\npm-cache\\_npx\\1384\\node_modules\\react-native-windows-init\\bin.js'
-          .length
-      })`);
+      - [node_modules]\\react-native-windows-init\\lib-commonjs\\Cli.js
+      - [node_modules]\\react-native-windows-init\\bin.js`);
 });
 
 test('sanitizeErrorMessage() forward slashes', () => {
