@@ -141,7 +141,7 @@ void NativeAnimatedNodeManager::StopAnimation(int64_t animationId) {
         }
         m_stoppedAnimations.at(nodeTag).insert(animationId);
       }
-     
+
       m_activeAnimations.erase(animationId);
     }
   }
@@ -456,7 +456,10 @@ void NativeAnimatedNodeManager::StartDeferredAnimationsForValueNode(int64_t tag)
   }
 }
 
-void NativeAnimatedNodeManager::StartAnimationAndTrackingNodes(int64_t tag, int64_t nodeTag, const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
+void NativeAnimatedNodeManager::StartAnimationAndTrackingNodes(
+    int64_t tag,
+    int64_t nodeTag,
+    const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   if (m_activeAnimations.count(tag)) {
     m_activeAnimations.at(tag)->StartAnimation();
     for (auto const &trackingAndLead : m_trackingAndLeadNodeTags) {

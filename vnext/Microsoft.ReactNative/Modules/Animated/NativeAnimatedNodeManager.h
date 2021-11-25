@@ -92,7 +92,10 @@ class NativeAnimatedNodeManager : public std::enable_shared_from_this<NativeAnim
   void RemoveActiveAnimation(int64_t tag);
   void RemoveStoppedAnimation(int64_t tag);
   void StartDeferredAnimationsForValueNode(int64_t valueNodeTag);
-  void StartAnimationAndTrackingNodes(int64_t tag, int64_t nodeTag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  void StartAnimationAndTrackingNodes(
+      int64_t tag,
+      int64_t nodeTag,
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
  private:
   std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>> m_valueNodes{};
