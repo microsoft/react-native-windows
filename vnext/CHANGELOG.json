@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 Nov 2021 06:09:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.422",
+      "version": "0.0.0-canary.422",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "80b08e1fdd5744c996bdffb213af49e9a68933ec",
+            "comment": "Remove unused bot work"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "cf106ae9a34830ccd073b575e00a4f0f2e76029a",
+            "comment": "Allow arbitrary views to register onMouseEnter/Leave"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.103",
+            "commit": "f50cac7f1c4dc3359a6b53422c6c3af86ed8df16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Nov 2021 06:08:49 GMT",
       "tag": "react-native-windows_v0.0.0-canary.421",
       "version": "0.0.0-canary.421",

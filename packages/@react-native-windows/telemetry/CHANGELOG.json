@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 25 Nov 2021 06:09:24 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "f50cac7f1c4dc3359a6b53422c6c3af86ed8df16",
+            "comment": "Block old telemetry events from firing"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Nov 2021 06:08:49 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.27",
       "version": "0.0.0-canary.27",
