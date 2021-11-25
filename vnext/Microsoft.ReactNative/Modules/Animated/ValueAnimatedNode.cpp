@@ -82,8 +82,8 @@ void ValueAnimatedNode::RemoveDependentPropsNode(int64_t propsNodeTag) {
   m_dependentPropsNodes.erase(propsNodeTag);
 }
 
-void ValueAnimatedNode::AddActiveAnimation(std::shared_ptr<AnimationDriver> animation) {
-  m_activeAnimations.insert({animation->Id(), animation});
+void ValueAnimatedNode::AddActiveAnimation(int64_t animationTag) {
+  m_activeAnimations.insert(animationTag);
   if (m_activeAnimations.size() == 1) {
     if (const auto manager = m_manager.lock()) {
       for (const auto &props : m_dependentPropsNodes) {
@@ -104,21 +104,6 @@ void ValueAnimatedNode::RemoveActiveAnimation(int64_t animationTag) {
       }
     }
   }
-
-  // Start any deferred animations. If the animation was stopped before this is
-  // run, we will get a null pointer for the animation driver. We also remove
-  // any deferred animation tags in StopAnimation.
-  m_stoppedAnimations.erase(animationTag);
-  if (!m_stoppedAnimations.size() && m_deferredAnimations.size()) {
-    if (const auto manager = m_manager.lock()) {
-      for (const auto &deferredId : m_deferredAnimations) {
-        if (const auto animationDriver = manager->GetActiveAnimation(deferredId)) {
-          animationDriver->StartAnimation();
-        }
-      }
-      m_deferredAnimations.clear();
-    }
-  }
 }
 
 void ValueAnimatedNode::AddActiveTrackingNode(int64_t trackingNodeTag) {
@@ -129,14 +114,6 @@ void ValueAnimatedNode::RemoveActiveTrackingNode(int64_t trackingNodeTag) {
   m_activeTrackingNodes.erase(trackingNodeTag);
 }
 
-bool ValueAnimatedNode::HasStoppedAnimations() const noexcept {
-  return m_stoppedAnimations.size();
-}
-
-void ValueAnimatedNode::DeferAnimation(int64_t animationTag) {
-  m_deferredAnimations.insert(animationTag);
-}
-
 void ValueAnimatedNode::UpdateTrackingNodes() {
   if (auto const manager = m_manager.lock()) {
     for (auto trackingNodeTag : m_activeTrackingNodes) {
@@ -144,18 +121,6 @@ void ValueAnimatedNode::UpdateTrackingNodes() {
         trackingNode->Update();
       }
     }
-  }
-}
-
-void ValueAnimatedNode::StopAnimation(int64_t animationTag) {
-  if (m_deferredAnimations.count(animationTag)) {
-    // This is not strictly necessary as the animation will be destroyed by the
-    // NativeAnimatedNodesManager if it was stopped before its deferred start.
-    m_deferredAnimations.erase(animationTag);
-  } else {
-    // The animation should already be running if it is not currently deferred.
-    assert(m_activeAnimations.count(animationTag));
-    m_stoppedAnimations.insert(animationTag);
   }
 }
 

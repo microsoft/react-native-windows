@@ -42,39 +42,27 @@ AnimationDriver::~AnimationDriver() {
 }
 
 void AnimationDriver::StartAnimation() {
-  auto const animatedValue = GetAnimatedValue();
-  // If the animated value has any stopped animations, we must wait for a completion
-  // callback on these animations to ensure the latest value is correct.
-  if (animatedValue && animatedValue->HasStoppedAnimations()) {
-    animatedValue->DeferAnimation(m_id);
-    return;
-  }
-
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
-  if (animatedValue) {
+  if (auto const animatedValue = GetAnimatedValue()) {
     animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_valueName, animation);
-
-    // The ValueAnimatedNode needs to retain a reference to this animation driver
-    // so it can be kept alive until the scoped batch completion callback fires.
-    animatedValue->AddActiveAnimation(shared_from_this());
+    animatedValue->AddActiveAnimation(m_id);
   }
   scopedBatch.End();
 
   m_scopedBatchCompletedToken = scopedBatch.Completed(
       [weakSelf = weak_from_this(), weakManager = m_manager, id = m_id, tag = m_animatedValueTag](auto sender, auto) {
-        if (const auto strongSelf = weakSelf.lock()) {
-          if (strongSelf->m_ignoreCompletedHandlers) {
-            return;
-          }
-
-          strongSelf->DoCallback(strongSelf->m_stopped);
-        }
-
         if (auto manager = weakManager.lock()) {
           if (auto const animatedValue = manager->GetValueAnimatedNode(tag)) {
             animatedValue->RemoveActiveAnimation(id);
           }
           manager->RemoveActiveAnimation(id);
+          manager->RemoveStoppedAnimation(id);
+        }
+
+        if (const auto strongSelf = weakSelf.lock()) {
+          if (!strongSelf->m_ignoreCompletedHandlers) {
+            strongSelf->DoCallback(!strongSelf->m_stopped);
+          }
         }
       });
 
@@ -84,7 +72,6 @@ void AnimationDriver::StartAnimation() {
 
 void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
   if (const auto animatedValue = GetAnimatedValue()) {
-    animatedValue->StopAnimation(m_id);
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
     m_stopped = true;
     m_ignoreCompletedHandlers = ignoreCompletedHandlers;

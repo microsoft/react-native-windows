@@ -37,7 +37,7 @@ class TransformAnimatedNode;
 class TrackingAnimatedNode;
 class AnimationDriver;
 class EventAnimationDriver;
-class NativeAnimatedNodeManager {
+class NativeAnimatedNodeManager : public std::enable_shared_from_this<NativeAnimatedNodeManager> {
  public:
   void CreateAnimatedNode(
       int64_t tag,
@@ -89,8 +89,10 @@ class NativeAnimatedNodeManager {
   TransformAnimatedNode *GetTransformAnimatedNode(int64_t tag);
   TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
 
-  AnimationDriver *GetActiveAnimation(int64_t tag);
   void RemoveActiveAnimation(int64_t tag);
+  void RemoveStoppedAnimation(int64_t tag);
+  void StartDeferredAnimationsForValueNode(int64_t valueNodeTag);
+  void StartAnimationAndTrackingNodes(int64_t tag, int64_t nodeTag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
  private:
   std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>> m_valueNodes{};
@@ -101,6 +103,9 @@ class NativeAnimatedNodeManager {
   std::unordered_map<std::tuple<int64_t, std::string>, std::vector<std::unique_ptr<EventAnimationDriver>>>
       m_eventDrivers{};
   std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_activeAnimations{};
+  std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_pendingCompletionAnimations{};
+  std::unordered_map<int64_t, std::unordered_set<int64_t>> m_stoppedAnimations{};
+  std::unordered_map<int64_t, std::unordered_set<int64_t>> m_deferredAnimations{};
   std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
 

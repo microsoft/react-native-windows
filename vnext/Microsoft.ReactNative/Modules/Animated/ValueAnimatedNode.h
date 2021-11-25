@@ -32,14 +32,10 @@ class ValueAnimatedNode : public AnimatedNode {
 
   void AddDependentPropsNode(int64_t propsNodeTag);
   void RemoveDependentPropsNode(int64_t propsNodeTag);
-  void AddActiveAnimation(std::shared_ptr<AnimationDriver> animation);
+  void AddActiveAnimation(int64_t animationTag);
   void RemoveActiveAnimation(int64_t animationTag);
   void AddActiveTrackingNode(int64_t trackingNodeTag);
   void RemoveActiveTrackingNode(int64_t trackingNodeTag);
-
-  void DeferAnimation(int64_t animationTag);
-  bool HasStoppedAnimations() const noexcept;
-  void StopAnimation(int64_t stoppedAnimations);
 
   static constexpr std::wstring_view s_valueName{L"v"};
   static constexpr std::wstring_view s_offsetName{L"o"};
@@ -54,10 +50,8 @@ class ValueAnimatedNode : public AnimatedNode {
 
  private:
   void UpdateTrackingNodes();
-  std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_activeAnimations{};
+  std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_dependentPropsNodes{};
   std::unordered_set<int64_t> m_activeTrackingNodes{};
-  std::unordered_set<int64_t> m_deferredAnimations{};
-  std::unordered_set<int64_t> m_stoppedAnimations{};
 };
 } // namespace Microsoft::ReactNative
