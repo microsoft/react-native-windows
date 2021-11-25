@@ -78,6 +78,31 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
   }
 }
 
+export function restorePackageConfigs(options: RunWindowsOptions) {
+  const pkgConfigs = new Array();
+
+  if (!options.sln) {
+    return;
+  }
+
+  findFiles('TODO:GET SLN DIR', 'packages.config', pkgConfigs);
+}
+
+const fs = require('fs').fs;
+function findFiles(dir: any, name: string, result: Array<string>) {
+  fs.readdirSync(dir).forEach((file: any) => {
+    const stat = fs.lstatSync(file);
+    if (stat.isDirectory()) {
+      findFiles(file, name, result);
+    } else if (
+      (stat.isFile() || stat.isSymbolicLink()) &&
+      `${file}`.endsWith('packages.config')
+    ) {
+      result.push(file);
+    }
+  });
+}
+
 export function getAppProjectFile(options: RunWindowsOptions, config: Config) {
   // Use the project file if specified
   if (options.proj) {
