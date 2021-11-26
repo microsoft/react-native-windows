@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 26 Nov 2021 06:09:53 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "c3de2ab7c21e55486b492b5b7936e6609bc7f4d7",
+            "comment": "Fix telemetry path sanitization to handle our packages in the npx cache"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Nov 2021 06:09:24 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.28",
       "version": "0.0.0-canary.28",
