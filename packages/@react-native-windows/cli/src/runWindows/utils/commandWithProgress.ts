@@ -97,11 +97,11 @@ export function commandWithProgress(
     const cp = spawn(command, args, spawnOptions);
     let firstErrorLine: string | null = null;
     if (!verbose) {
-      cp.stdout!.on('data', chunk => {
+      cp.stdout!.on('data', (chunk) => {
         const text = chunk.toString();
         setSpinnerText(spinner, taskDoingName + ': ', text);
       });
-      cp.stderr!.on('data', chunk => {
+      cp.stderr!.on('data', (chunk) => {
         const text: string = chunk.toString();
         if (!firstErrorLine) {
           firstErrorLine = text;
@@ -116,7 +116,7 @@ export function commandWithProgress(
         );
       });
     }
-    cp.on('error', e => {
+    cp.on('error', (e) => {
       if (verbose) {
         console.error(chalk.red(e.toString()));
       }
@@ -124,7 +124,7 @@ export function commandWithProgress(
       const ce = new CodedError(errorCategory, e.message);
       ce.stack = e.stack;
       reject(ce);
-    }).on('close', code => {
+    }).on('close', (code) => {
       if (code === 0) {
         spinner.succeed(taskDoingName);
         resolve();

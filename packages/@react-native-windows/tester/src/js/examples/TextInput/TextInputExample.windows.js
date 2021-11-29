@@ -88,7 +88,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           step={10}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onValueChange={value => this.setState({width: value})}
+          onValueChange={(value) => this.setState({width: value})}
         />
         <Text>Multiline:</Text>
         <Switch
@@ -97,7 +97,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           value={this.state.multiline}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onValueChange={value => this.setState({multiline: value})}
+          onValueChange={(value) => this.setState({multiline: value})}
         />
         <Text>TextInput:</Text>
         {/* $FlowFixMe(>=0.122.0 site=react_native_android_fb) This comment
@@ -112,8 +112,8 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           style={[style, {width: this.state.width + '%'}]}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onChangeText={value => this.setState({text: value})}
-          onContentSizeChange={event =>
+          onChangeText={(value) => this.setState({text: value})}
+          onContentSizeChange={(event) =>
             /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
              * found when making Flow check .android.js files. */
             this.setState({contentSize: event.nativeEvent.contentSize})
@@ -162,7 +162,7 @@ function PropagationSample() {
 
   function logEvent(eventName) {
     const limit = 6;
-    setEventLog(current => {
+    setEventLog((current) => {
       return [eventName].concat(current.slice(0, limit - 1));
     });
     console.log(eventName);
@@ -176,18 +176,20 @@ function PropagationSample() {
           {code: 'KeyW', handledEventPhase: 3},
           {code: 'KeyE', handledEventPhase: 1},
         ]}
-        onKeyDown={event => logEvent('outer keyDown ' + event.nativeEvent.code)}
-        onKeyDownCapture={event =>
+        onKeyDown={(event) =>
+          logEvent('outer keyDown ' + event.nativeEvent.code)
+        }
+        onKeyDownCapture={(event) =>
           logEvent('outer keyDownCapture ' + event.nativeEvent.code)
         }>
         <Text>some text to focus on</Text>
         <TextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
-          onKeyDown={event =>
+          onKeyDown={(event) =>
             logEvent('textinput keyDown ' + event.nativeEvent.code)
           }
-          onKeyUp={event =>
+          onKeyUp={(event) =>
             logEvent('textinput keyUp ' + event.nativeEvent.code)
           }
           keyDownEvents={[
@@ -248,7 +250,7 @@ exports.examples = ([
   ...TextInputSharedExamples,
   {
     title: 'Colors and text inputs',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -298,7 +300,7 @@ exports.examples = ([
   },
   {
     title: 'Font Weight',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -317,7 +319,7 @@ exports.examples = ([
             '300',
             '200',
             '100',
-          ].map(fontWeight => (
+          ].map((fontWeight) => (
             <TextInput
               defaultValue={`Font Weight (${fontWeight})`}
               key={fontWeight}
@@ -330,7 +332,7 @@ exports.examples = ([
   },
   {
     title: 'Text input, themes and heights',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <TextInput
           placeholder="If you set height, beware of padding set from themes"
@@ -341,7 +343,7 @@ exports.examples = ([
   },
   {
     title: 'letterSpacing',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -366,7 +368,7 @@ exports.examples = ([
   },
   {
     title: 'Passwords',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -386,7 +388,7 @@ exports.examples = ([
   },
   {
     title: 'Editable',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <TextInput
           defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
@@ -398,7 +400,7 @@ exports.examples = ([
   },
   {
     title: 'Multiline',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -440,7 +442,7 @@ exports.examples = ([
   {
     title: 'Fixed number of lines',
     platform: 'android',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -459,7 +461,7 @@ exports.examples = ([
   },
   {
     title: 'Auto-expanding',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <AutogrowingTextInputExample
@@ -483,7 +485,7 @@ exports.examples = ([
   },
   {
     title: 'Return key',
-    render: function(): React.Node {
+    render: function (): React.Node {
       const returnKeyTypes = [
         'none',
         'go',
@@ -494,7 +496,7 @@ exports.examples = ([
         'next',
       ];
       const returnKeyLabels = ['Compile', 'React Native'];
-      const examples = returnKeyTypes.map(type => {
+      const examples = returnKeyTypes.map((type) => {
         return (
           <TextInput
             key={type}
@@ -504,7 +506,7 @@ exports.examples = ([
           />
         );
       });
-      const types = returnKeyLabels.map(type => {
+      const types = returnKeyLabels.map((type) => {
         return (
           <TextInput
             key={type}
@@ -524,7 +526,7 @@ exports.examples = ([
   },
   {
     title: 'Inline Images',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -548,20 +550,20 @@ exports.examples = ([
   },
   {
     title: 'Toggle Default Padding',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <ToggleDefaultPaddingExample />;
     },
   },
   {
     title: 'onPressIn, onPressOut events',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <PressInOutEvents />;
     },
   },
   // [Windows
   {
     title: 'Clear text on submit',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <Text>Default submit key (Enter):</Text>
@@ -592,13 +594,13 @@ exports.examples = ([
   },
   {
     title: 'Stop propagation sample',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <PropagationSample />;
     },
   },
   {
     title: 'Toggle spell check',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <SpellCheckSample />;
     },
   },

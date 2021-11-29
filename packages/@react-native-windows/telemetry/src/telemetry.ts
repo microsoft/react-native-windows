@@ -164,8 +164,10 @@ export class Telemetry {
 
   /** Sets up any base properties that all telemetry events require. */
   private static async setupBaseProperties() {
-    Telemetry.client!.commonProperties.deviceId = await basePropUtils.deviceId();
-    Telemetry.client!.commonProperties.deviceLocale = await basePropUtils.deviceLocale();
+    Telemetry.client!.commonProperties.deviceId =
+      await basePropUtils.deviceId();
+    Telemetry.client!.commonProperties.deviceLocale =
+      await basePropUtils.deviceLocale();
     Telemetry.client!.commonProperties.deviceNumCPUs = basePropUtils
       .deviceNumCPUs()
       .toString();

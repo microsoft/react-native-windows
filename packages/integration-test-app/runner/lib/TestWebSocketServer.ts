@@ -19,8 +19,8 @@ export default class TestWebSocketServer {
 
   public static async start(): Promise<TestWebSocketServer> {
     const server = new Server({port: 5555});
-    server.on('connection', socket => {
-      socket.on('message', message => {
+    server.on('connection', (socket) => {
+      socket.on('message', (message) => {
         socket.send(message + '_response');
       });
 
@@ -29,7 +29,7 @@ export default class TestWebSocketServer {
 
     return new Promise((resolve, reject) => {
       server.on('listening', () => resolve(new TestWebSocketServer(server)));
-      server.on('error', err => reject(err));
+      server.on('error', (err) => reject(err));
     });
   }
 

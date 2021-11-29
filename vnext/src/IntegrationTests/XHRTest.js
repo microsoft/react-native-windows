@@ -95,8 +95,8 @@ class XHRTest extends React.Component<{}, Object> {
 
   componentDidMount() {
     this._download().then(
-      function(data) {},
-      function(e) {
+      function (data) {},
+      function (e) {
         console.log(e);
         TestModule.markTestPassed(false);
       },

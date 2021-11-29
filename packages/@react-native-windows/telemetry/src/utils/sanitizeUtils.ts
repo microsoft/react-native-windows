@@ -74,8 +74,9 @@ export function getAnonymizedPath(
       if (rest === '' || rest === '\\') {
         return '[project_dir]';
       } else {
-        return `[project_dir]\\???${ext}(${rest.length -
-          (rest.startsWith('\\') ? 1 : 0)})`;
+        return `[project_dir]\\???${ext}(${
+          rest.length - (rest.startsWith('\\') ? 1 : 0)
+        })`;
       }
     }
   }

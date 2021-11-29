@@ -50,7 +50,7 @@ class Alert {
       message || '',
       buttons,
       options,
-      buttonIndex => {
+      (buttonIndex) => {
         if (
           buttonIndex >= 0 &&
           buttons &&

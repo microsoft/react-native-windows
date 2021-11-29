@@ -72,8 +72,8 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
           <Picker
             style={{width: 200, height: 35}}
             selectedValue={this.state.placementOptions}
-            onValueChange={value => this.setState({placementOptions: value})}>
-            {placementValues.map(item => (
+            onValueChange={(value) => this.setState({placementOptions: value})}>
+            {placementValues.map((item) => (
               <Picker.Item key={item} label={item} value={item} />
             ))}
           </Picker>
@@ -117,7 +117,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 <Switch
                   style={{justifyContent: 'center', padding: 20}}
                   value={this.state.popupSwitchState}
-                  onValueChange={value =>
+                  onValueChange={(value) =>
                     this.setState({
                       popupSwitchState: value,
                       isLightDismissEnabled: value,
@@ -130,7 +130,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 <Switch
                   style={{justifyContent: 'center', padding: 20}}
                   value={this.state.isOverlayEnabled}
-                  onValueChange={value =>
+                  onValueChange={(value) =>
                     this.setState({
                       isOverlayEnabled: value,
                     })
@@ -156,10 +156,10 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   marginLeft: 50,
                 }}
                 selectedValue={this.state.placementOptions}
-                onValueChange={value =>
+                onValueChange={(value) =>
                   this.setState({placementOptions: value})
                 }>
-                {placementValues.map(item => (
+                {placementValues.map((item) => (
                   <Picker.Item key={item} label={item} value={item} />
                 ))}
               </Picker>
@@ -293,7 +293,7 @@ export const description =
 export const examples = [
   {
     title: 'Flyout Anchor to text input',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <FlyoutExample />;
     },
   },

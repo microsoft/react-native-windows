@@ -268,20 +268,17 @@ export function transformToMarkdown(
 
           if (!memberOverload.summary) {
             if (memberOverload.name === '(constructor)') {
-              memberOverload.summary = `constructs the ${'[`' +
-                compound.name +
-                '`](' +
-                compound.docId +
-                ')'}`;
+              memberOverload.summary = `constructs the ${
+                '[`' + compound.name + '`](' + compound.docId + ')'
+              }`;
             } else if (memberOverload.name === '(destructor)') {
-              memberOverload.summary = `destroys the ${'[`' +
-                compound.name +
-                '`](' +
-                compound.docId +
-                ')'}`;
+              memberOverload.summary = `destroys the ${
+                '[`' + compound.name + '`](' + compound.docId + ')'
+              }`;
             } else {
-              memberOverload.summary = member.summary.replace(/^[A-Z]/, match =>
-                match.toLowerCase(),
+              memberOverload.summary = member.summary.replace(
+                /^[A-Z]/,
+                (match) => match.toLowerCase(),
               );
             }
           }
@@ -328,11 +325,7 @@ export function transformToMarkdown(
       writeType();
       sb.writeIf('explicit ', memberDef.$.explicit === 'yes');
       sb.write(memberDef.name[0]._);
-      sb.write(
-        toMarkdown(memberDef.argsstring)
-          .trim()
-          .replace('=', ' = '),
-      );
+      sb.write(toMarkdown(memberDef.argsstring).trim().replace('=', ' = '));
       sb.write(';');
 
       return sb.toString();

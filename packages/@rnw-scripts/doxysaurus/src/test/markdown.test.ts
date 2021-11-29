@@ -941,8 +941,8 @@ interface PartialLinkResolver {
 
 function getLinkResolver(init: PartialLinkResolver = {}): LinkResolver {
   const emptyLinkResolver: LinkResolver = {
-    resolveCompoundId: _ => undefined,
-    resolveMemberId: _ => [undefined, undefined],
+    resolveCompoundId: (_) => undefined,
+    resolveMemberId: (_) => [undefined, undefined],
     stdTypeLinks: {
       linkPrefix: '',
       linkMap: new Map<string, string>(),
