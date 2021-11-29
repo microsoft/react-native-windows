@@ -253,10 +253,10 @@ const AccessibilityInfo = {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
         if (
-          NativeAccessibilityInfoAndroid != null &&
-          NativeAccessibilityInfoAndroid.isAccessibilityServiceEnabled != null
+          NativeAccessibilityInfo != null &&
+          NativeAccessibilityInfo.isAccessibilityServiceEnabled != null
         ) {
-          NativeAccessibilityInfoAndroid.isAccessibilityServiceEnabled(resolve);
+          NativeAccessibilityInfo.isAccessibilityServiceEnabled(resolve);
         } else {
           reject(null);
         }
