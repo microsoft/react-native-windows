@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Wed, 24 Nov 2021 06:08:49 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Nov 2021 06:09:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.29
+
+Fri, 26 Nov 2021 06:09:53 GMT
+
+### Changes
+
+- Fix telemetry path sanitization to handle our packages in the npx cache (jthysell@microsoft.com)
+
+## 0.0.0-canary.28
+
+Thu, 25 Nov 2021 06:09:24 GMT
+
+### Changes
+
+- Block old telemetry events from firing (jthysell@microsoft.com)
 
 ## 0.0.0-canary.27
 

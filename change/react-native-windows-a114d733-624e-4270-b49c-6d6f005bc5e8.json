@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Allow arbitrary views to register onMouseEnter/Leave",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

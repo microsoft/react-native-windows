@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 24 Nov 2021 06:08:49 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Nov 2021 06:09:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.423
+
+Fri, 26 Nov 2021 06:09:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.104
+
+## 0.0.0-canary.422
+
+Thu, 25 Nov 2021 06:09:24 GMT
+
+### Changes
+
+- Remove unused bot work (ngerlem@microsoft.com)
+- Allow arbitrary views to register onMouseEnter/Leave (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.103
 
 ## 0.0.0-canary.421
 
