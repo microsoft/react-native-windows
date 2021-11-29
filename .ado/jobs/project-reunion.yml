@@ -56,6 +56,9 @@ jobs:
                 msbuildArguments: /p:UseWinUI3=true
                 warnAsError: false # Disable warn as error until we fix #8312
 
+            - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+              - template: ../templates/component-governance.yml
+
             - template: ../templates/publish-build-artifacts.yml
               parameters:
                 artifactName: ProjectReunion
@@ -79,6 +82,3 @@ jobs:
                 artifactName: ReunionNuGet
                 pathToPublish: $(Build.SourcesDirectory)/NugetRootFinal/Microsoft.ReactNative.ProjectReunion.0.0.1-pr.nupkg
                 parallel: true
-
-
-            - template: ../templates/component-governance.yml

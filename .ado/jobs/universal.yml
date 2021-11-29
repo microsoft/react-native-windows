@@ -71,6 +71,9 @@
                     solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
+                
+                - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+                  - template: ../templates/component-governance.yml
 
                 - ${{ if eq(matrix.CreateApiDocs, true) }}:
                   - powershell: |
@@ -155,8 +158,6 @@
                       AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
                       AnalyzeVerbose: true
                       toolVersion: 'LatestPreRelease'
-
-                - template: ../templates/component-governance.yml
 
                 - template: ../templates/discover-google-test-adapter.yml
 
