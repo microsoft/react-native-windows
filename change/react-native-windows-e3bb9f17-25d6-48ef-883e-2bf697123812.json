@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix C# Module Event invocation",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

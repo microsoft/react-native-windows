@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 15 Nov 2021 16:09:31 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Nov 2021 16:12:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.9
+
+Mon, 29 Nov 2021 16:12:25 GMT
+
+### Patches
+
+- [0.65] Make ADK dependency optional in dependency script (jthysell@microsoft.com)
+- Fix C# Module Event invocation (vmorozov@microsoft.com)
 
 ## 0.65.8
 

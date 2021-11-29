@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Nov 2021 16:12:25 GMT",
+      "tag": "react-native-windows_v0.65.9",
+      "version": "0.65.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.65] Make ADK dependency optional in dependency script",
+            "author": "jthysell@microsoft.com",
+            "commit": "e914a7396c6c31a1b12910bb705dff4aa2cbe253",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix C# Module Event invocation",
+            "author": "vmorozov@microsoft.com",
+            "commit": "bce10a2d0aa3c074063a584fb25c0cbd969840ac",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Nov 2021 16:09:31 GMT",
       "tag": "react-native-windows_v0.65.8",
       "version": "0.65.8",
