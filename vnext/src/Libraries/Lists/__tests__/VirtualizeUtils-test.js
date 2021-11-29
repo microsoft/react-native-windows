@@ -62,7 +62,7 @@ describe('elementsThatOverlapOffsets', function () {
       {offset: 950, length: 150},
     ];
     expect(
-      elementsThatOverlapOffsets(offsets, frames.length, ii => frames[ii]),
+      elementsThatOverlapOffsets(offsets, frames.length, (ii) => frames[ii]),
     ).toEqual([1, 1, 3]);
   });
   it('handles out of bounds', function () {
@@ -73,7 +73,7 @@ describe('elementsThatOverlapOffsets', function () {
       {offset: 250, length: 100},
     ];
     expect(
-      elementsThatOverlapOffsets(offsets, frames.length, ii => frames[ii]),
+      elementsThatOverlapOffsets(offsets, frames.length, (ii) => frames[ii]),
     ).toEqual([1]);
   });
   it('errors on non-increasing offsets', function () {
@@ -84,7 +84,7 @@ describe('elementsThatOverlapOffsets', function () {
       {offset: 250, length: 100},
     ];
     expect(() => {
-      elementsThatOverlapOffsets(offsets, frames.length, ii => frames[ii]);
+      elementsThatOverlapOffsets(offsets, frames.length, (ii) => frames[ii]);
     }).toThrowErrorMatchingSnapshot();
   });
 });
