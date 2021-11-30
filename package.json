@@ -44,8 +44,11 @@
     "glob-parent": "^5.1.2",
     "node-fetch": "2.6.1",
     "node-notifier": "^9.0.0",
+    "set-value": "^4.0.1",
+    "strip-ansi": "^6.0.1",
     "xmldom": "github:xmldom/xmldom#^0.7.5",
     "**/parse-url/normalize-url": "^4.5.1",
+    "**/@react-native/repo-config/jest-junit": "^13.0.0",
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
     "**/detox/ws": "^5.2.3"
