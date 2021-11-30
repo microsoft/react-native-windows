@@ -77,7 +77,7 @@ void AccessibilityInfo::getRecommendedTimeoutMillis(
 }
 
 void AccessibilityInfo::isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept {
-  // no-op
+  onSuccess(false);
 }
 
 } // namespace Microsoft::ReactNative
