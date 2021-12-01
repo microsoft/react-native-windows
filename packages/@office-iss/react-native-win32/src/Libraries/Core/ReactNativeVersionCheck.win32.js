@@ -42,7 +42,12 @@ exports.checkVersions = function checkVersions(): void {
 
 function _formatVersion(
   version:
-    | {major: number, minor: number, patch: number, prerelease: ?string | number}
+    | {
+        major: number,
+        minor: number,
+        patch: number,
+        prerelease: ?string | number,
+      }
     | $TEMPORARY$object<{
         major: number,
         minor: number,
