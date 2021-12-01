@@ -117,18 +117,16 @@ TEST_CLASS (ReactNativeHostTests) {
     TestEventService::Initialize();
 
     auto options = TestReactNativeHostHolder::Options{};
-    auto reactNativeHost = TestReactNativeHostHolder(
-        L"ReactNativeHostTests",
-        [](ReactNativeHost const &host) noexcept {
-
-            host.InstanceSettings().InstanceLoaded([](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
+    auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
+      host.InstanceSettings().InstanceLoaded(
+          [](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
             if (args.Failed()) {
               TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
             } else {
               TestEventService::LogEvent("InstanceLoaded::Success", nullptr);
             }
           });
-        });
+    });
 
     TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Success", nullptr}});
   }
@@ -137,18 +135,16 @@ TEST_CLASS (ReactNativeHostTests) {
     TestEventService::Initialize();
 
     auto options = TestReactNativeHostHolder::Options{};
-    auto reactNativeHost = TestReactNativeHostHolder(
-        L"SyntaxError",
-        [](ReactNativeHost const &host) noexcept {
-
-            host.InstanceSettings().InstanceLoaded([](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
+    auto reactNativeHost = TestReactNativeHostHolder(L"SyntaxError", [](ReactNativeHost const &host) noexcept {
+      host.InstanceSettings().InstanceLoaded(
+          [](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
             if (args.Failed()) {
               TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
             } else {
               TestEventService::LogEvent("InstanceLoaded::Success", nullptr);
             }
           });
-        });
+    });
 
     TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Failed", nullptr}});
   }
