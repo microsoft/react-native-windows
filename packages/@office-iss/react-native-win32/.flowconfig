@@ -53,6 +53,7 @@
 
 ; Ignore files (temporarily) with flow typing issues #9223
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
+.*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.win32.js
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
