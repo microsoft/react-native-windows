@@ -85,6 +85,9 @@
                     multicoreBuild: true
                     msbuildArguments: /p:RNW_FASTBUILD=${{ matrix.FastBuild }}
 
+                - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+                  - template: ../templates/component-governance.yml
+
                 - ${{ if eq(matrix.CreateApiDocs, true) }}: 
                   - powershell: |
                       $winmd2md_url = "https://github.com/asklar/winmd2md/releases/download/v0.1.13/winmd2md.exe"
@@ -124,8 +127,6 @@
                       Microsoft.ReactNative\**
                       Microsoft.ReactNative.Managed\**
                       Microsoft.ReactNative.Managed.CodeGen\**
-
-                - template: ../templates/component-governance.yml
 
             - job: UniversalTest${{ matrix.Name }}
               variables:
