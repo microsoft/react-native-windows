@@ -51,7 +51,7 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src/.*
 
-; Ignore files (temporarily) with flow typing issues #9223
+; Ignore files with flow typing issues #9223
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
 
 [untyped]
