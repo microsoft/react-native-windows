@@ -40,7 +40,7 @@ jobs:
           msbuildArguments: /p:UseWinUI3=true
           warnAsError: false # Disable warn as error until we fix #8312
 
-      - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+      - ${{ if eq(parameters.BuildEnvironment, 'Continuous') }}:
         - template: ../templates/component-governance.yml
 
       - task: CopyFiles@2
