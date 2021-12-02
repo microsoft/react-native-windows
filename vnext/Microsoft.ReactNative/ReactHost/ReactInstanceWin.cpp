@@ -219,9 +219,11 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenLoaded.AsFuture()
       .Then<Mso::Executors::Inline>(
           [onLoaded = m_options.OnInstanceLoaded, reactContext = m_reactContext](Mso::Maybe<void> &&value) noexcept {
+            auto errCode = value.IsError() ? value.TakeError() : Mso::ErrorCode();
             if (onLoaded) {
-              onLoaded.Get()->Invoke(reactContext, value.IsError() ? value.TakeError() : Mso::ErrorCode());
+              onLoaded.Get()->Invoke(reactContext, errCode);
             }
+            return Mso::Maybe<void>(errCode);
           })
       .Then(Queue(), [whenLoaded = std::move(whenLoaded)](Mso::Maybe<void> &&value) noexcept {
         whenLoaded.SetValue(std::move(value));
@@ -546,7 +548,9 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
 
             try {
               instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
-              strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+              if (strongThis->State() != ReactInstanceState::HasError) {
+                strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+              }
             } catch (...) {
               strongThis->OnReactInstanceLoaded(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
             }
