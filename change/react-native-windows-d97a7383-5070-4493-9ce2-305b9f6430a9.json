@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Websocket is hitting the UI queue unnecessarily",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
