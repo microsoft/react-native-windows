@@ -149,8 +149,6 @@ TEST_CLASS (ReactNativeHostTests) {
   TEST_METHOD(LoadBundleWithError_ReloadInstance_Fails) {
     TestEventService::Initialize();
 
-    auto options = TestReactNativeHostHolder::Options{};
-    options.LoadInstance = false;
     auto reactNativeHost = TestReactNativeHostHolder(L"SyntaxError", [](ReactNativeHost const &host) noexcept {
       host.ReloadInstance().Completed([](auto const &, winrt::Windows::Foundation::AsyncStatus status) mutable {
         if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
