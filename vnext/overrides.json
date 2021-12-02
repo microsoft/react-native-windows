@@ -309,6 +309,13 @@
       "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/Core/ReactNativeVersionCheck.windows.js",
+      "baseFile": "Libraries/Core/ReactNativeVersionCheck.js",
+      "baseHash": "0b3965bb9abad17144951a91a2facc57d5a74a18",
+      "issue": 9223
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/DeprecatedPropTypes/DeprecatedImagePropType.windows.js",
       "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedImagePropType.ios.js",

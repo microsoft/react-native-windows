@@ -51,9 +51,6 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src/.*
 
-; Ignore files with flow typing issues #9223
-.*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
-
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
