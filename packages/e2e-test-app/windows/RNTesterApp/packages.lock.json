@@ -22,9 +22,9 @@
       },
       "ReactNative.Hermes.Windows": {
         "type": "Direct",
-        "requested": "[0.9.0-ms.6, )",
-        "resolved": "0.9.0-ms.6",
-        "contentHash": "aNx28wZGWm6Bm3y33KMKdkOik3ZjoybF4xWgLF56CJ+sQXhJQ7YYaw7flk7cmgWBLFzn9GwfNNgyAp+BhrdN3Q=="
+        "requested": "[0.10.0-ms.1, )",
+        "resolved": "0.10.0-ms.1",
+        "contentHash": "U+0FecIUFhmuLDNGT+kIhQdzoIgOvaGHU5gQOl66G5JdbO8xpful+E5OH/NL9Ue6N1l+ecqTH9shGrVDsdG5ow=="
       },
       "XamlTreeDump": {
         "type": "Direct",
