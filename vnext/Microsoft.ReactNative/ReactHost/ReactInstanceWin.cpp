@@ -474,6 +474,16 @@ void ReactInstanceWin::Initialize() noexcept {
 
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
 
+            // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
+            // triggered before any platform JS code is run. Using m_jsMessageThread instead of jsDispatchQueue avoids
+            // waiting for the JSCaller which can delay the event until after certain JS code has already run
+            m_jsMessageThread.Load()->runOnQueue(
+                [onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
+                  if (onCreated) {
+                    onCreated.Get()->Invoke(reactContext);
+                  }
+                });
+
             LoadJSBundles();
 
             if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
@@ -620,13 +630,6 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));
   auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
-
-  // This work item will be processed as a first item in JS queue when the react instance is created.
-  jsDispatchQueue.Post([onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
-    if (onCreated) {
-      onCreated.Get()->Invoke(reactContext);
-    }
-  });
 
   auto jsDispatcher =
       winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
