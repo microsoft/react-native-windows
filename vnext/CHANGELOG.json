@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 02 Dec 2021 06:09:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.424",
+      "version": "0.0.0-canary.424",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24e971a47fbcfa8d8f8b113fa7b13a582e1f9e87",
+            "comment": "Websocket is hitting the UI queue unnecessarily"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Nov 2021 06:09:54 GMT",
       "tag": "react-native-windows_v0.0.0-canary.423",
       "version": "0.0.0-canary.423",
