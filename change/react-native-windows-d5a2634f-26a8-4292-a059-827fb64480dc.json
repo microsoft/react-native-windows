@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Drop ChakraCore dependency (#9056)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

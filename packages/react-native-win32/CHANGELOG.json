@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 15 Nov 2021 16:09:20 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.9",
+      "version": "0.64.9",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Add enableFocusRing prop for View and test",
+            "author": "ruaraki@microsoft.com",
+            "commit": "ecbd53d9cd10b88691fc79eeaaf3be1b035f162f",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Oct 2021 15:07:12 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.8",
       "version": "0.64.8",

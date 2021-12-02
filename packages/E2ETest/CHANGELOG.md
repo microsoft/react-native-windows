@@ -1,8 +1,16 @@
 # Change Log - e2etest
 
-This log was last generated on Wed, 27 Oct 2021 19:04:04 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Nov 2021 16:09:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Mon, 15 Nov 2021 16:09:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/tester to v0.0.1 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.54
 
