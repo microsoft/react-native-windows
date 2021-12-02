@@ -99,10 +99,7 @@ export async function copyProjectTemplateAndReplace(
 
   // Similar to the above, but we want to retain namespace separators
   if (projectType === 'lib') {
-    namespace = namespace
-      .split(/[.:]+/)
-      .map(pascalCase)
-      .join('.');
+    namespace = namespace.split(/[.:]+/).map(pascalCase).join('.');
   }
 
   createDir(path.join(destPath, windowsDir));

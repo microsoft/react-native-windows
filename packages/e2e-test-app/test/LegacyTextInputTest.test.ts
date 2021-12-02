@@ -121,7 +121,7 @@ async function assertLogContainsInOrder(expectedLines: string[]) {
       const actualLines = loggedText.split('\n');
       let previousIndex = Number.MAX_VALUE;
       for (const line of expectedLines) {
-        const index = actualLines.findIndex(l => l === line);
+        const index = actualLines.findIndex((l) => l === line);
         if (index === -1 || index > previousIndex) {
           return false;
         }

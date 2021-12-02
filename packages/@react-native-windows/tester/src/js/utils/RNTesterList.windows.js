@@ -332,7 +332,7 @@ if (global.__turboModuleProxy) {
 
 const Modules: any = {};
 
-APIs.concat(Components).forEach(Example => {
+APIs.concat(Components).forEach((Example) => {
   Modules[Example.key] = Example.module;
 });
 

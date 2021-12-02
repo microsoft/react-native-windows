@@ -126,9 +126,6 @@ let sessionId: string | undefined;
  */
 export function getSessionId(): string {
   return (
-    sessionId ??
-    (sessionId = randomBytes(16)
-      .toString('hex')
-      .padStart(32, '0'))
+    sessionId ?? (sessionId = randomBytes(16).toString('hex').padStart(32, '0'))
   );
 }

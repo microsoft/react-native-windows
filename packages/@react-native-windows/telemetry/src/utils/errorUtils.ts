@@ -110,7 +110,8 @@ export function sanitizeErrorMessage(msg: string): string {
   msg = msg.replace(cpuThreadId, '');
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
-  const pathRegEx = /(['["]?)([A-Za-z]:|\\)[\\/]([^<>:;,?"*\t\r\n|/\\]+[\\/])+([^<>:;,?"*\t\r\n|]+\/?(['["]?))/gi;
+  const pathRegEx =
+    /(['["]?)([A-Za-z]:|\\)[\\/]([^<>:;,?"*\t\r\n|/\\]+[\\/])+([^<>:;,?"*\t\r\n|]+\/?(['["]?))/gi;
   for (const part of parts) {
     if (pathRegEx.test(part)) {
       pathRegEx.lastIndex = -1;

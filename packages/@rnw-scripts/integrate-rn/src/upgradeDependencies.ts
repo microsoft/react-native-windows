@@ -60,7 +60,7 @@ export default async function upgradeDependencies(
 ) {
   const reactNativeDiff = await upgradeReactNative(newReactNativeVersion);
   const repoConfigDiff = await upgradeRepoConfig(newReactNativeVersion);
-  const localPackages = (await enumerateRepoPackages()).map(pkg => ({
+  const localPackages = (await enumerateRepoPackages()).map((pkg) => ({
     ...extractPackageDeps(pkg.json),
     outOfTreePlatform: OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   }));
@@ -74,9 +74,9 @@ export default async function upgradeDependencies(
 
   const writablePackages = await enumerateRepoPackages();
   await Promise.all(
-    newDeps.map(async deps => {
+    newDeps.map(async (deps) => {
       const [writablePackage] = writablePackages.filter(
-        p => p.json.name === deps.packageName,
+        (p) => p.json.name === deps.packageName,
       );
 
       const oldJson = writablePackage.json;
@@ -111,7 +111,7 @@ export default async function upgradeDependencies(
 async function upgradeReactNative(
   newReactNativeVersion: string,
 ): Promise<PackageDiff> {
-  const platformPackages = await enumerateRepoPackages(async pkg =>
+  const platformPackages = await enumerateRepoPackages(async (pkg) =>
     OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   );
 
@@ -170,7 +170,7 @@ async function upgradeRepoConfig(
     },
   );
 
-  if (!upgradeResults.every(result => result.filesWritten)) {
+  if (!upgradeResults.every((result) => result.filesWritten)) {
     throw new Error(
       'Could not sync repo-config package due to conflicts. Please resolve manually',
     );
@@ -219,7 +219,7 @@ export function calcPackageDependencies(
   repoConfigPackageDiff: PackageDiff,
   localPackages: LocalPackageDeps[],
 ): LocalPackageDeps[] {
-  return localPackages.map(pkg => {
+  return localPackages.map((pkg) => {
     const newPackage: LocalPackageDeps = _.cloneDeep(pkg);
 
     if (newPackage.outOfTreePlatform) {
@@ -262,11 +262,7 @@ export function calcPackageDependencies(
  * Sort an object by keys
  */
 function sortByKeys<T>(obj: Record<string, T>): Record<string, T> {
-  return _(obj)
-    .toPairs()
-    .sortBy(0)
-    .fromPairs()
-    .value();
+  return _(obj).toPairs().sortBy(0).fromPairs().value();
 }
 
 /**

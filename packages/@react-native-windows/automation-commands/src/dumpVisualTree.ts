@@ -83,7 +83,7 @@ function pruneCollapsedElements(element: UIElement) {
   }
 
   element.children = element.children.filter(
-    child => child.Visibility !== 'Collapsed',
+    (child) => child.Visibility !== 'Collapsed',
   );
 
   element.children.forEach(pruneCollapsedElements);

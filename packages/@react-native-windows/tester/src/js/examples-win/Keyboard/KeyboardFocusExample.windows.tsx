@@ -98,7 +98,7 @@ class KeyboardFocusExample extends React.Component<
         <Picker
           selectedValue={this.state.selected}
           onValueChange={this._selectionChanged}>
-          {pickerItems.map(item => (
+          {pickerItems.map((item) => (
             <Picker.Item key={item} value={item} label={item} />
           ))}
         </Picker>

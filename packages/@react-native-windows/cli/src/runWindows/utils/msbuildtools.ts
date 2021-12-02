@@ -49,11 +49,8 @@ export default class MSBuildTools {
       this.msbuildPath(),
       'msbuild.exe',
     )}" "${slnFile}" /t:Clean`;
-    const results = child_process
-      .execSync(cmd)
-      .toString()
-      .split(EOL);
-    results.forEach(result => console.log(chalk.white(result)));
+    const results = child_process.execSync(cmd).toString().split(EOL);
+    results.forEach((result) => console.log(chalk.white(result)));
   }
 
   async buildProject(
@@ -109,7 +106,7 @@ export default class MSBuildTools {
       args.push(`/t:Deploy`);
     }
 
-    Object.keys(msBuildProps).forEach(key => {
+    Object.keys(msBuildProps).forEach((key) => {
       args.push(`/p:${key}=${msBuildProps[key]}`);
     });
 
@@ -242,9 +239,9 @@ export default class MSBuildTools {
 
     shell
       .ls(uapFolderPath)
-      .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
+      .filter((uapDir) => shell.test('-d', path.join(uapFolderPath, uapDir)))
       .map(Version.tryParse)
-      .forEach(version => version && results.push(version));
+      .forEach((version) => version && results.push(version));
 
     return results;
   }
@@ -272,7 +269,8 @@ function getSDK10InstallationFolder(): string {
     return folder;
   }
 
-  const re = /\\Microsoft SDKs\\Windows\\v10.0\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
+  const re =
+    /\\Microsoft SDKs\\Windows\\v10.0\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
   const match = re.exec(output);
   if (match) {
     return match[1];
