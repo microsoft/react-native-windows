@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Nov 2021 06:09:54 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Dec 2021 06:09:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.424
+
+Thu, 02 Dec 2021 06:09:50 GMT
+
+### Changes
+
+- Websocket is hitting the UI queue unnecessarily (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.423
 
