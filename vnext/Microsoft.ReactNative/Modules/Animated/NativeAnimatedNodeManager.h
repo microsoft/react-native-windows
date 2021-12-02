@@ -37,7 +37,7 @@ class TransformAnimatedNode;
 class TrackingAnimatedNode;
 class AnimationDriver;
 class EventAnimationDriver;
-class NativeAnimatedNodeManager : public std::enable_shared_from_this<NativeAnimatedNodeManager> {
+class NativeAnimatedNodeManager {
  public:
   void CreateAnimatedNode(
       int64_t tag,
@@ -90,8 +90,10 @@ class NativeAnimatedNodeManager : public std::enable_shared_from_this<NativeAnim
   TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
 
   void RemoveActiveAnimation(int64_t tag);
-  void RemoveStoppedAnimation(int64_t tag);
-  void StartDeferredAnimationsForValueNode(int64_t valueNodeTag);
+  void RemoveStoppedAnimation(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  void StartDeferredAnimationsForValueNode(
+      int64_t valueNodeTag,
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
   void StartAnimationAndTrackingNodes(
       int64_t tag,
       int64_t nodeTag,

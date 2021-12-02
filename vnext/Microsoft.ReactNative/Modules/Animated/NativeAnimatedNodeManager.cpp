@@ -429,7 +429,9 @@ void NativeAnimatedNodeManager::RemoveActiveAnimation(int64_t tag) {
   m_activeAnimations.erase(tag);
 }
 
-void NativeAnimatedNodeManager::RemoveStoppedAnimation(int64_t tag) {
+void NativeAnimatedNodeManager::RemoveStoppedAnimation(
+    int64_t tag,
+    const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   if (m_pendingCompletionAnimations.count(tag)) {
     // Remove from stopped animations for value node
     const auto animation = m_pendingCompletionAnimations.at(tag);
@@ -439,18 +441,20 @@ void NativeAnimatedNodeManager::RemoveStoppedAnimation(int64_t tag) {
       stoppedAnimations.erase(tag);
       if (stoppedAnimations.size() == 0) {
         m_stoppedAnimations.erase(nodeTag);
-        StartDeferredAnimationsForValueNode(nodeTag);
+        StartDeferredAnimationsForValueNode(nodeTag, manager);
       }
     }
     m_pendingCompletionAnimations.erase(tag);
   }
 }
 
-void NativeAnimatedNodeManager::StartDeferredAnimationsForValueNode(int64_t tag) {
+void NativeAnimatedNodeManager::StartDeferredAnimationsForValueNode(
+    int64_t tag,
+    const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   if (m_deferredAnimations.count(tag)) {
     const auto deferredAnimations = m_deferredAnimations.at(tag);
     for (const auto &animationTag : deferredAnimations) {
-      StartAnimationAndTrackingNodes(animationTag, tag, shared_from_this());
+      StartAnimationAndTrackingNodes(animationTag, tag, manager);
     }
     m_deferredAnimations.erase(tag);
   }
