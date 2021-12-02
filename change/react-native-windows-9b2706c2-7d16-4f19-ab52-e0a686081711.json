@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bumping Hermes to v0.10",
+  "packageName": "react-native-windows",
+  "email": "anandrag@microsoft.com",
+  "dependentChangeType": "patch"
+}
