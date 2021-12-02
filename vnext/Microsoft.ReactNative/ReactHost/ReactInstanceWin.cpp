@@ -467,7 +467,7 @@ void ReactInstanceWin::Initialize() noexcept {
                 m_options.TurboModuleProvider,
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),
-                Mso::Copy(m_batchingUIThread),
+                m_nativeMessageThread.Load(),
                 std::move(devSettings));
 
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
