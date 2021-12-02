@@ -112,7 +112,7 @@ void ABIViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValu
 void ABIViewManager::UpdateProperties(
     ::Microsoft::ReactNative::ShadowNodeBase *nodeToUpdate,
     winrt::Microsoft::ReactNative::JSValueObject &props) {
-  if (m_viewManagerRequiresNativeLayout &&m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
+  if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
     MarkDirty(nodeToUpdate->m_tag);
   }
 

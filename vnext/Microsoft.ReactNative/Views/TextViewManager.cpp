@@ -198,8 +198,8 @@ XamlView TextViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft
 }
 
 void TextViewManager::UpdateProperties(
-  ShadowNodeBase* nodeToUpdate,
-  winrt::Microsoft::ReactNative::JSValueObject& props) {
+    ShadowNodeBase *nodeToUpdate,
+    winrt::Microsoft::ReactNative::JSValueObject &props) {
   // This could be optimized further, but rather than paying a penalty to mark
   // the node dirty for each relevant property in UpdateProperty (which should
   // be reasonably cheap given it just does an O(1) lookup of the Yoga node
