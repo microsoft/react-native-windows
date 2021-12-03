@@ -65,18 +65,18 @@ function launchMetroServer() {
       {cwd: __dirname},
     );
 
-    serverEntries.metroServer.stdout.on('data', chunk => {
+    serverEntries.metroServer.stdout.on('data', (chunk) => {
       console.log(chunk.toString());
       if (chunk.toString().indexOf('Metro Bundler ready') >= 0) {
         resolve();
       }
     });
-    serverEntries.metroServer.on('error', err => {
+    serverEntries.metroServer.on('error', (err) => {
       console.error('Metro process failed!' + err.toString());
       reject(err);
     });
 
-    serverEntries.metroServer.on('exit', code => {
+    serverEntries.metroServer.on('exit', (code) => {
       if (code !== 0) {
         const err = `Metro process failed with error code: ${code}`;
         console.error(err);
@@ -97,17 +97,17 @@ function launchWebsocketServer() {
       {cwd: __dirname},
     );
 
-    serverEntries.websocketServer.stdout.on('data', chunk => {
+    serverEntries.websocketServer.stdout.on('data', (chunk) => {
       console.log(chunk.toString());
       if (chunk.toString().indexOf('WebSocket integration test server') >= 0) {
         resolve();
       }
     });
-    serverEntries.websocketServer.on('error', err => {
+    serverEntries.websocketServer.on('error', (err) => {
       reject(err);
     });
 
-    serverEntries.websocketServer.on('exit', code => {
+    serverEntries.websocketServer.on('exit', (code) => {
       if (code !== 0) {
         const err = `Websocket test server process failed with error code: ${code}`;
         console.error(err);

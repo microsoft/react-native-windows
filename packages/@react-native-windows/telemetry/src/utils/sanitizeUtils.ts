@@ -58,8 +58,9 @@ export function getAnonymizedPath(
     }
 
     // It's an npm package we're not tracking, anonymize with [node_modules]
-    return `[node_modules]\\???${ext}(${filepath.slice(nodeModulesIndex)
-      .length - nodeModules.length})`;
+    return `[node_modules]\\???${ext}(${
+      filepath.slice(nodeModulesIndex).length - nodeModules.length
+    })`;
   }
 
   // Check if we're under the projectRoot
@@ -74,8 +75,9 @@ export function getAnonymizedPath(
       if (rest === '' || rest === '\\') {
         return '[project_dir]';
       } else {
-        return `[project_dir]\\???${ext}(${rest.length -
-          (rest.startsWith('\\') ? 1 : 0)})`;
+        return `[project_dir]\\???${ext}(${
+          rest.length - (rest.startsWith('\\') ? 1 : 0)
+        })`;
       }
     }
   }
@@ -86,8 +88,9 @@ export function getAnonymizedPath(
       process.env[knownPath] &&
       filepath.toLowerCase().startsWith(process.env[knownPath]!.toLowerCase())
     ) {
-      return `[${knownPath}]\\???(${filepath.length -
-        process.env[knownPath]!.length})`;
+      return `[${knownPath}]\\???(${
+        filepath.length - process.env[knownPath]!.length
+      })`;
     }
   }
 

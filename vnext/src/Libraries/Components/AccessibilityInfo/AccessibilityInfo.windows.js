@@ -19,6 +19,11 @@ import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import type {ElementRef} from 'react';
 
+// Events that are only supported on Android.
+type AccessibilityEventDefinitionsAndroid = {
+  accessibilityServiceChanged: [boolean],
+};
+
 // Events that are only supported on iOS.
 type AccessibilityEventDefinitionsIOS = {
   announcementFinished: [{announcement: string, success: boolean}],
@@ -29,6 +34,7 @@ type AccessibilityEventDefinitionsIOS = {
 };
 
 type AccessibilityEventDefinitions = {
+  ...AccessibilityEventDefinitionsAndroid,
   ...AccessibilityEventDefinitionsIOS,
   change: [boolean], // screenReaderChanged
   reduceMotionChanged: [boolean],
@@ -38,29 +44,32 @@ type AccessibilityEventDefinitions = {
 type AccessibilityEventTypes = 'click' | 'focus';
 
 // Mapping of public event names to platform-specific event names.
-const EventNames: Map<$Keys<AccessibilityEventDefinitions>, string> =
-  Platform.OS === 'android'
-    ? new Map([
-        ['change', 'touchExplorationDidChange'],
-        ['reduceMotionChanged', 'reduceMotionDidChange'],
-        ['screenReaderChanged', 'touchExplorationDidChange'],
-      ])
-    : Platform.OS === 'windows'
-    ? new Map([
-        ['change', 'TOUCH_EXPLORATION_EVENT'],
-        ['reduceMotionChanged', 'REDUCE_MOTION_EVENT'],
-        ['screenReaderChanged', 'TOUCH_EXPLORATION_EVENT'],
-      ])
-    : new Map([
-        ['announcementFinished', 'announcementFinished'],
-        ['boldTextChanged', 'boldTextChanged'],
-        ['change', 'screenReaderChanged'],
-        ['grayscaleChanged', 'grayscaleChanged'],
-        ['invertColorsChanged', 'invertColorsChanged'],
-        ['reduceMotionChanged', 'reduceMotionChanged'],
-        ['reduceTransparencyChanged', 'reduceTransparencyChanged'],
-        ['screenReaderChanged', 'screenReaderChanged'],
-      ]);
+const EventNames: Map<
+  $Keys<AccessibilityEventDefinitions>,
+  string,
+> = Platform.OS === 'android'
+  ? new Map([
+      ['change', 'touchExplorationDidChange'],
+      ['reduceMotionChanged', 'reduceMotionDidChange'],
+      ['screenReaderChanged', 'touchExplorationDidChange'],
+      ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
+    ])
+  : Platform.OS === 'windows'
+  ? new Map([
+      ['change', 'TOUCH_EXPLORATION_EVENT'],
+      ['reduceMotionChanged', 'REDUCE_MOTION_EVENT'],
+      ['screenReaderChanged', 'TOUCH_EXPLORATION_EVENT'],
+    ])
+  : new Map([
+      ['announcementFinished', 'announcementFinished'],
+      ['boldTextChanged', 'boldTextChanged'],
+      ['change', 'screenReaderChanged'],
+      ['grayscaleChanged', 'grayscaleChanged'],
+      ['invertColorsChanged', 'invertColorsChanged'],
+      ['reduceMotionChanged', 'reduceMotionChanged'],
+      ['reduceTransparencyChanged', 'reduceTransparencyChanged'],
+      ['screenReaderChanged', 'screenReaderChanged'],
+    ]);
 
 /**
  * Sometimes it's useful to know whether or not the device has a screen reader
@@ -226,6 +235,33 @@ const AccessibilityInfo = {
         } else {
           reject(null);
         }
+      }
+    });
+  },
+
+  /**
+   * Query whether Accessibility Service is currently enabled.
+   *
+   * Returns a promise which resolves to a boolean.
+   * The result is `true` when any service is enabled and `false` otherwise.
+   *
+   * @platform android
+   *
+   * See https://reactnative.dev/docs/accessibilityinfo/#isaccessibilityserviceenabled-android
+   */
+  isAccessibilityServiceEnabled(): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      if (Platform.OS === 'android') {
+        if (
+          NativeAccessibilityInfo != null &&
+          NativeAccessibilityInfo.isAccessibilityServiceEnabled != null
+        ) {
+          NativeAccessibilityInfo.isAccessibilityServiceEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      } else {
+        reject(null);
       }
     });
   },

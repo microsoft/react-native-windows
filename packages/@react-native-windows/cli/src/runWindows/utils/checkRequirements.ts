@@ -50,7 +50,8 @@ function getInstalledWindowsSdks(): Version[] {
     return installedSdks;
   }
 
-  const re = /\\Microsoft SDKs\\Windows\\v(\d+\.\d+)\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
+  const re =
+    /\\Microsoft SDKs\\Windows\\v(\d+\.\d+)\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
   let match: RegExpExecArray | null;
   while ((match = re.exec(output))) {
     const sdkPath = match[2];
@@ -75,7 +76,7 @@ function checkWinSdk(windowsTargetVersion: string): string {
     'windowssdk',
     windowsTargetVersion,
   );
-  const hasSdkInstalled = installedSdks.some(installedSdk =>
+  const hasSdkInstalled = installedSdks.some((installedSdk) =>
     installedSdk.eq(requiredVersion),
   );
 

@@ -60,6 +60,9 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
+; Ignore files with flow typing issues #9223
+.*/vnext/Libraries/Core/ReactNativeVersionCheck.js
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 
@@ -76,7 +79,6 @@ flow/
 emoji=true
 
 exact_by_default=true
-indexed_access=false
 
 format.bracket_spacing=false
 
@@ -120,4 +122,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.162.0
+^0.164.0

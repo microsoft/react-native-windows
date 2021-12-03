@@ -541,7 +541,7 @@ exports.examples = [
   }, // ]TODO(macOS ISS#2323203)
   {
     title: 'BackfaceVisibility',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <>
           <Text style={{paddingBottom: 10}}>

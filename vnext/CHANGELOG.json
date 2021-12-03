@@ -2,6 +2,108 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 03 Dec 2021 06:12:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.425",
+      "version": "0.0.0-canary.425",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2a27ff7da5229d5f6db1c406317e695549afc524",
+            "comment": "Remove legacy logic to find win32 bundle"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658",
+            "comment": "Removes unused calls from NativeAnimated"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f82e877567959210fdac01a623bef359e0dc95e7",
+            "comment": "InstanceCreated should fire before any JS code is run"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "403da047bc6586216dca814c43e1d1943b2a97c9",
+            "comment": "ReloadInstance async task and InstanceLoaded event were not correctly reporting failures"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2419191300390b8106e4e5760c59bc0022839c4d",
+            "comment": "Integrate 11/11"
+          },
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8fd1aae2335105fe28fa954536572f9d7fbb9372",
+            "comment": "Bumping Hermes to v0.10"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3a666c853b625610bac57ce80b3a7dd5d416f909",
+            "comment": "Hook up DetachViewInstance method for custom UI implementations"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.105",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.20",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.22",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.10",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.4",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.2",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Dec 2021 06:09:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.424",
+      "version": "0.0.0-canary.424",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "24e971a47fbcfa8d8f8b113fa7b13a582e1f9e87",
+            "comment": "Websocket is hitting the UI queue unnecessarily"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Nov 2021 06:09:54 GMT",
       "tag": "react-native-windows_v0.0.0-canary.423",
       "version": "0.0.0-canary.423",

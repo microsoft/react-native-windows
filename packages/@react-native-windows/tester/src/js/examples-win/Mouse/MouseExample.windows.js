@@ -24,7 +24,7 @@ exports.description = 'Tests that mouse events can be observed';
 exports.examples = [
   {
     title: 'onMouseEnter and onMouseLeave affect style\n',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <ExampleComponent />;
     },
   },

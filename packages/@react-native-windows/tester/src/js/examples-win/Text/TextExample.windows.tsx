@@ -214,12 +214,12 @@ export class TextHighlightDemo extends React.Component<
         <TextInput
           placeholder="Enter search text"
           value={this.state.search}
-          onChangeText={text => this.setState({search: text})}
+          onChangeText={(text) => this.setState({search: text})}
         />
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{paddingRight: 5}}>Toggle highlight on all text:</Text>
           <Switch
-            onValueChange={isOn => this.setState({toggled: isOn})}
+            onValueChange={(isOn) => this.setState({toggled: isOn})}
             value={this.state.toggled}
           />
         </View>
@@ -752,8 +752,8 @@ export class TextExample extends React.Component<
           <Text>
             This text contains an inline image{' '}
             {/*
-            <Image source={require('./flux.png')} />.*/} Neat,
-            huh?
+            <Image source={require('./flux.png')} />.*/}{' '}
+            Neat, huh?
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text shadow">
@@ -897,7 +897,7 @@ export const title = 'Text';
 export const description = 'Base component for rendering styled text.';
 export const examples = [
   {
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <TextExample />;
     },
   },

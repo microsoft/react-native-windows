@@ -50,23 +50,23 @@ import type {KeyEvent} from '../../Types/CoreEventTypes'; // [Windows]
 // [Windows
 if (Platform.OS === 'android') {
   AndroidTextInput = require('./AndroidTextInputNativeComponent').default;
-  AndroidTextInputCommands = require('./AndroidTextInputNativeComponent')
-    .Commands;
+  AndroidTextInputCommands =
+    require('./AndroidTextInputNativeComponent').Commands;
 } else if (Platform.OS === 'ios') {
-  RCTSinglelineTextInputView = require('./RCTSingelineTextInputNativeComponent')
-    .default;
-  RCTSinglelineTextInputNativeCommands = require('./RCTSingelineTextInputNativeComponent')
-    .Commands;
-  RCTMultilineTextInputView = require('./RCTMultilineTextInputNativeComponent')
-    .default;
-  RCTMultilineTextInputNativeCommands = require('./RCTMultilineTextInputNativeComponent')
-    .Commands;
+  RCTSinglelineTextInputView =
+    require('./RCTSingelineTextInputNativeComponent').default;
+  RCTSinglelineTextInputNativeCommands =
+    require('./RCTSingelineTextInputNativeComponent').Commands;
+  RCTMultilineTextInputView =
+    require('./RCTMultilineTextInputNativeComponent').default;
+  RCTMultilineTextInputNativeCommands =
+    require('./RCTMultilineTextInputNativeComponent').Commands;
 }
 // [Windows
 else if (Platform.OS === 'windows') {
   WindowsTextInput = require('./WindowsTextInputNativeComponent').default;
-  WindowsTextInputCommands = require('./WindowsTextInputNativeComponent')
-    .Commands;
+  WindowsTextInputCommands =
+    require('./WindowsTextInputNativeComponent').Commands;
 }
 // Windows]
 
@@ -1040,7 +1040,7 @@ function InternalTextInput(props: Props): React.Node {
 
   const _setNativeRef = setAndForwardRef({
     getForwardedRef: () => props.forwardedRef,
-    setLocalRef: ref => {
+    setLocalRef: (ref) => {
       inputRef.current = ref;
 
       /*
@@ -1074,9 +1074,9 @@ function InternalTextInput(props: Props): React.Node {
   });
 
   const _onChange = (event: ChangeEvent) => {
-    const text = event.nativeEvent.text;
+    const currentText = event.nativeEvent.text;
     props.onChange && props.onChange(event);
-    props.onChangeText && props.onChangeText(text);
+    props.onChangeText && props.onChangeText(currentText);
 
     if (inputRef.current == null) {
       // calling `props.onChange` or `props.onChangeText`
@@ -1084,7 +1084,7 @@ function InternalTextInput(props: Props): React.Node {
       return;
     }
 
-    setLastNativeText(text);
+    setLastNativeText(currentText);
     // This must happen last, after we call setLastNativeText.
     // Different ordering can cause bugs when editing AndroidTextInputs
     // with multiple Fragments.
@@ -1359,7 +1359,8 @@ const ExportedForwardRef: React.AbstractComponent<
  * Switch to `deprecated-react-native-prop-types` for compatibility with future
  * releases. This is deprecated and will be removed in the future.
  */
-ExportedForwardRef.propTypes = require('deprecated-react-native-prop-types').TextInputPropTypes;
+ExportedForwardRef.propTypes =
+  require('deprecated-react-native-prop-types').TextInputPropTypes;
 
 // $FlowFixMe[prop-missing]
 ExportedForwardRef.State = {

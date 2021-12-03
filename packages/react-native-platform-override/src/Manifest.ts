@@ -41,7 +41,7 @@ export default class Manifest {
       baseVersion?: string;
     } = {},
   ) {
-    const uniquelyNamed = _.uniqBy(overrides, ovr => ovr.name());
+    const uniquelyNamed = _.uniqBy(overrides, (ovr) => ovr.name());
     if (uniquelyNamed.length !== overrides.length) {
       throw new Error('Cannot construct a manifest with duplicate overrides');
     }
@@ -53,7 +53,7 @@ export default class Manifest {
   }
 
   static fromSerialized(man: Serialized.Manifest): Manifest {
-    const overrides = man.overrides.map(ovr =>
+    const overrides = man.overrides.map((ovr) =>
       deserializeOverride(ovr, {defaultBaseVersion: man.baseVersion}),
     );
     return new Manifest(overrides, {
@@ -76,26 +76,26 @@ export default class Manifest {
 
     const globs = [
       ...(this.includePatterns || ['**']),
-      ...(this.excludePatterns || []).map(p => '!' + p),
+      ...(this.excludePatterns || []).map((p) => '!' + p),
     ];
 
     const overrideFiles = await overrideRepo.listFiles(globs);
     const missingFromManifest = overrideFiles.filter(
-      file =>
+      (file) =>
         file !== 'overrides.json' &&
         path.relative('node_modules', file).startsWith('..') &&
-        !this.overrides.some(override => override.includesFile(file)),
+        !this.overrides.some((override) => override.includesFile(file)),
     );
     for (const missingFile of missingFromManifest) {
       errors.push({type: 'missingFromManifest', overrideName: missingFile});
     }
 
-    const validationTasks = _.flatMap(this.overrides, ovr =>
+    const validationTasks = _.flatMap(this.overrides, (ovr) =>
       ovr.validationStrategies(),
     );
 
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    await eachLimit(validationTasks, 30, async task => {
+    await eachLimit(validationTasks, 30, async (task) => {
       errors.push(...(await task.validate(overrideRepo, reactRepo)));
     });
 
@@ -120,7 +120,7 @@ export default class Manifest {
    */
   hasOverride(overrideName: string): boolean {
     return this.overrides.some(
-      ovr => ovr.name() === normalizePath(overrideName),
+      (ovr) => ovr.name() === normalizePath(overrideName),
     );
   }
 
@@ -177,7 +177,7 @@ export default class Manifest {
       baseVersion: this.baseVersion,
       overrides: this.overrides
         .sort((a, b) => a.name().localeCompare(b.name(), 'en'))
-        .map(override =>
+        .map((override) =>
           override.serialize({defaultBaseVersion: this.baseVersion}),
         ),
     };
@@ -203,7 +203,7 @@ export default class Manifest {
    */
   private findOverrideIndex(overrideName: string): number {
     return this.overrides.findIndex(
-      ovr => ovr.name() === normalizePath(overrideName),
+      (ovr) => ovr.name() === normalizePath(overrideName),
     );
   }
 }

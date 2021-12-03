@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Nov 2021 06:09:54 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.425
+
+Fri, 03 Dec 2021 06:12:08 GMT
+
+### Changes
+
+- Remove legacy logic to find win32 bundle (30809111+acoates-ms@users.noreply.github.com)
+- Removes unused calls from NativeAnimated (erozell@outlook.com)
+- InstanceCreated should fire before any JS code is run (30809111+acoates-ms@users.noreply.github.com)
+- ReloadInstance async task and InstanceLoaded event were not correctly reporting failures (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bumping Hermes to v0.10 (anandrag@microsoft.com)
+- Hook up DetachViewInstance method for custom UI implementations (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.105
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.20
+- Bump @react-native-windows/codegen to v0.0.0-canary.22
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.4
+- Bump react-native-platform-override to v1.6.2
+
+## 0.0.0-canary.424
+
+Thu, 02 Dec 2021 06:09:50 GMT
+
+### Changes
+
+- Websocket is hitting the UI queue unnecessarily (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.423
 

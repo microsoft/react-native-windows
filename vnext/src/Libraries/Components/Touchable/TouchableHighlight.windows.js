@@ -178,7 +178,7 @@ class TouchableHighlight extends React.Component<Props, State> {
       android_disableSound: this.props.touchSoundDisabled,
       onMouseEnter: this.props.onMouseEnter, // [Windows]
       onMouseLeave: this.props.onMouseLeave, // [Windows]
-      onBlur: event => {
+      onBlur: (event) => {
         if (Platform.isTV) {
           this._hideUnderlay();
         }
@@ -186,7 +186,7 @@ class TouchableHighlight extends React.Component<Props, State> {
           this.props.onBlur(event);
         }
       },
-      onFocus: event => {
+      onFocus: (event) => {
         if (Platform.isTV) {
           this._showUnderlay();
         }
@@ -195,7 +195,7 @@ class TouchableHighlight extends React.Component<Props, State> {
         }
       },
       onLongPress: this.props.onLongPress,
-      onPress: event => {
+      onPress: (event) => {
         if (this._hideTimeout != null) {
           clearTimeout(this._hideTimeout);
         }
@@ -209,7 +209,7 @@ class TouchableHighlight extends React.Component<Props, State> {
           this.props.onPress(event);
         }
       },
-      onPressIn: event => {
+      onPressIn: (event) => {
         if (this._hideTimeout != null) {
           clearTimeout(this._hideTimeout);
           this._hideTimeout = null;
@@ -219,7 +219,7 @@ class TouchableHighlight extends React.Component<Props, State> {
           this.props.onPressIn(event);
         }
       },
-      onPressOut: event => {
+      onPressOut: (event) => {
         if (this._hideTimeout == null) {
           this._hideUnderlay();
         }

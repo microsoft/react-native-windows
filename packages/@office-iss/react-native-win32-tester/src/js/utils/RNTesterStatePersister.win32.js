@@ -57,7 +57,7 @@ function createContainer<Props: Object, State>(
       Win32] */
     }
     _passSetState = (stateLamda: (state: State) => State): void => {
-      this.setState(state => {
+      this.setState((state) => {
         const value = stateLamda(state.value);
         /* [Win32 #6316
         AsyncStorage.setItem(this._cacheKey, JSON.stringify(value));
