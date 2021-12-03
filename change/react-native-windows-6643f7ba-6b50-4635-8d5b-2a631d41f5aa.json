@@ -1,0 +1,10 @@
+{
+  "type": "prerelease",
+  "comment": {
+    "title": "",
+    "value": ""
+  },
+  "packageName": "react-native-windows",
+  "email": "anandrag@microsoft.com",
+  "dependentChangeType": "patch"
+}
