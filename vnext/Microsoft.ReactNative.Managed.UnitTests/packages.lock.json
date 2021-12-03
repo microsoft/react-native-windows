@@ -274,37 +274,14 @@
           "System.Runtime": "4.1.0"
         }
       },
-      "common": {
-        "type": "Project"
-      },
-      "fmt": {
-        "type": "Project"
-      },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "fmt": "1.0.0"
-        }
-      },
       "microsoft.reactnative": {
-        "type": "Project",
-        "dependencies": {
-          "Common": "1.0.0",
-          "Folly": "1.0.0",
-          "ReactCommon": "1.0.0"
-        }
+        "type": "Project"
       },
       "microsoft.reactnative.managed": {
         "type": "Project",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9",
           "Microsoft.ReactNative": "1.0.0"
-        }
-      },
-      "reactcommon": {
-        "type": "Project",
-        "dependencies": {
-          "Folly": "1.0.0"
         }
       }
     },
