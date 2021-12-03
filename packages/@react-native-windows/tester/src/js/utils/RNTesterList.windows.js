@@ -139,6 +139,9 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/View/ViewExample'),
   },
   {
+    key: 'NewArchitectureExample',
+    category: 'UI',
+    module: require('../examples/NewArchitecture/NewArchitectureExample'),
     key: 'XAML',
     category: 'UI',
     module: require('../examples-win/XAML/XAMLExample'),
