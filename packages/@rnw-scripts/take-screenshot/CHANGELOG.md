@@ -1,8 +1,19 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Thu, 18 Nov 2021 06:11:19 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.19
+
+Fri, 03 Dec 2021 06:12:08 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/just-task to v2.2.2
 
 ## 1.0.18
 

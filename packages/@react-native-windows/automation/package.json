@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -14,16 +14,16 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.0.35",
-    "@react-native-windows/fs": "^1.0.0",
+    "@react-native-windows/automation-channel": "^0.1.0",
+    "@react-native-windows/fs": "^1.0.1",
     "chalk": "^4.1.2",
     "readline-sync": "1.4.10",
     "webdriverio": "^6.9.0"
   },
   "devDependencies": {
     "@jest/types": "^26.6.2",
-    "@rnw-scripts/eslint-config": "1.1.9",
-    "@rnw-scripts/just-task": "2.2.1",
+    "@rnw-scripts/eslint-config": "1.1.10",
+    "@rnw-scripts/just-task": "2.2.2",
     "@rnw-scripts/ts-config": "2.0.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",

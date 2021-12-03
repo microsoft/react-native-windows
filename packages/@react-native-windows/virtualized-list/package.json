@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/virtualized-list",
-  "version": "0.0.0-canary.19",
+  "version": "0.0.0-canary.20",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.9",
+    "@rnw-scripts/eslint-config": "1.1.10",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
     "flow-bin": "^0.164.0",
@@ -26,7 +26,7 @@
     "prettier": "^2.4.1",
     "react": "17.0.2",
     "react-native": "0.0.0-20211111-2008-2ae06df58",
-    "react-native-platform-override": "^1.6.1"
+    "react-native-platform-override": "^1.6.2"
   },
   "peerDependencies": {
     "react": "17.0.2",
