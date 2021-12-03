@@ -28,6 +28,7 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\PackageVersionDefinitions.props" />
+  <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -813,7 +814,6 @@
     <Import Project="$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets" Condition="Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(UseV8)' == 'true'" />
     <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets')" />
     <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.targets" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
     <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
