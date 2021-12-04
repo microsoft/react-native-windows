@@ -9,9 +9,6 @@ pr:
 
 variables:
   - group: platform-override-zero-permission-token
-  #TODO: DELETE BEFORE MERGING
-  - name: system.debug
-    value: true
 
 parameters:
   - name: AgentPool
