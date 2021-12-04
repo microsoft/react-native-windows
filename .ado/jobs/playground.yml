@@ -100,7 +100,7 @@ jobs:
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.
             - pwsh: |
                 Get-ChildItem -Recurse -Path packages.config |`
-                  Foreach-Item {`
+                  Foreach-Object {`
                     NuGet.exe Restore -PackagesDirectory packages`
                   }
               workingDirectory: packages/playground/windows
