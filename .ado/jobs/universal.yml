@@ -76,7 +76,7 @@
                     solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
-                
+
                 - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
                   - template: ../templates/component-governance.yml
 
@@ -147,8 +147,6 @@
                     targetType: filePath
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
-
-
 
                 - template: ../templates/restore-sln.yml
                   parameters:

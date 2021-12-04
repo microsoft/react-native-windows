@@ -96,29 +96,15 @@ jobs:
                 parameters:
                   certificateName: playgroundEncodedKey
 
-            # Workaround.
-            # TODO: Replace with Get-ChildItem -Recurse -File packages.config | %{ nuget restore $_ }
-            #       Make this an implicit step for run-windows.
-            #
             # NuGet ignores packages.config if it detects <PackageReference>.
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.
-            - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
-              displayName: NuGet restore
-              inputs:
-                command: restore
-                restoreSolution: packages/playground/windows/playground/packages.config
-                feedsToUse: config
-                nugetConfigPath: packages/playground/windows/NuGet.config
-                verbosityRestore: Detailed
-
-            - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
-              displayName: NuGet restore
-              inputs:
-                command: restore
-                restoreSolution: packages/playground/windows/playground-win32/packages.config
-                feedsToUse: config
-                nugetConfigPath: packages/playground/windows/NuGet.config
-                verbosityRestore: Detailed
+            - pwsh: |
+                Get-ChildItem -Recurse -Path packages.config |`
+                  Foreach-Item {`
+                    NuGet.exe Restore -PackagesDirectory packages`
+                  }
+              workingDirectory: packages/playground/windows
+              displayName: Restore packages.config items
 
             - template: ../templates/msbuild-sln.yml
               parameters:
