@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Dec 2021 06:09:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.426
+
+Sat, 04 Dec 2021 06:09:39 GMT
+
+### Changes
+
+- Add WebView2Version to Experimental Props (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.425
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 Dec 2021 06:09:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.426",
+      "version": "0.0.0-canary.426",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f12eee17a0875ffd4c144ece7e536e2730475657",
+            "comment": "Add WebView2Version to Experimental Props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:08 GMT",
       "tag": "react-native-windows_v0.0.0-canary.425",
       "version": "0.0.0-canary.425",
