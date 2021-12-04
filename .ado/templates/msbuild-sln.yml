@@ -45,11 +45,13 @@ steps:
       createLogFile: true
       logFileVerbosity: detailed
       msbuildArgs:
+        /restore
         /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
         /p:PlatformToolset=${{parameters.platformToolset}}
         /p:PublishToolDuringBuild=true
         /p:EnableSourceLink=true
         /p:RestoreLockedMode=true
+        /p:RestoreForceEvaluate=true
         /bl:$(BuildLogDirectory)\MsBuild.binlog
         /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
         /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn

@@ -24,6 +24,9 @@ parameters:
   - name: restoreLockedMode
     type: boolean
     default: true
+  - name: restoreForceEvaluate
+    type: boolean
+    default: true
 
 steps:
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
@@ -33,7 +36,7 @@ steps:
         --no-launch
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
-        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}
         ${{ parameters.deployOption }}
       displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
@@ -46,7 +49,7 @@ steps:
         --no-launch
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
-        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}
         ${{ parameters.deployOption }}
       displayName: run-windows (Release) - PR
       workingDirectory: ${{ parameters.workingDirectory }}
@@ -63,7 +66,7 @@ steps:
         --no-launch
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
-        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
         ${{ parameters.deployOption }}
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}

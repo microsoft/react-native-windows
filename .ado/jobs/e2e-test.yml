@@ -79,6 +79,16 @@ jobs:
                 feature: UseHermes
                 value: ${{ matrix.UseHermes }}
 
+            # NuGet ignores packages.config if it detects <PackageReference>.
+            # Use restore packages.config directly to keep compabitility with ReactNativePicker.
+            - pwsh: |
+                Get-ChildItem -Recurse -Path packages.config |`
+                  Foreach-Object {`
+                    NuGet.exe Restore -PackagesDirectory windows\packages $_`
+                  }
+              workingDirectory: packages/e2e-test-app
+              displayName: Restore packages.config items
+
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
                 buildEnvironment: ${{ parameters.BuildEnvironment }}
