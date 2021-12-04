@@ -101,7 +101,7 @@ jobs:
             - pwsh: |
                 Get-ChildItem -Recurse -Path packages.config |`
                   Foreach-Object {`
-                    NuGet.exe Restore -PackagesDirectory packages`
+                    NuGet.exe Restore -PackagesDirectory packages $_`
                   }
               workingDirectory: packages/playground/windows
               displayName: Restore packages.config items

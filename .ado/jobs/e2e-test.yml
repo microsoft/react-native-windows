@@ -84,7 +84,7 @@ jobs:
             - pwsh: |
                 Get-ChildItem -Recurse -Path packages.config |`
                   Foreach-Object {`
-                    NuGet.exe Restore -PackagesDirectory windows\packages`
+                    NuGet.exe Restore -PackagesDirectory windows\packages $_`
                   }
               workingDirectory: packages/e2e-test-app
               displayName: Restore packages.config items
