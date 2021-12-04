@@ -9,6 +9,13 @@
       "issue": 4054
     },
     {
+      "type": "copy",
+      "directory": "NativeComponentExample",
+      "baseDirectory": "packages/rn-tester/NativeComponentExample",
+      "baseHash": "e058954d4ca36d5428b14c27ec10a3e964f56518",
+      "issue": 4054
+    },
+    {
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
