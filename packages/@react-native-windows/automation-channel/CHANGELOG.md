@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Sat, 04 Dec 2021 06:09:39 GMT and should not be manually modified.
+This log was last generated on Sun, 05 Dec 2021 06:09:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.2-0
+
+Sun, 05 Dec 2021 06:09:34 GMT
+
+### Changes
+
+- Use PackageReference in C++ projects (julio.rocha@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.427
 
 ## 0.1.1
 

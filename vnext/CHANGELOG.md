@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 Dec 2021 06:09:39 GMT and should not be manually modified.
+This log was last generated on Sun, 05 Dec 2021 06:09:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.427
+
+Sun, 05 Dec 2021 06:09:35 GMT
+
+### Changes
+
+- Use PackageReference for NuGet Dependencies (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.106
 
 ## 0.0.0-canary.426
 
