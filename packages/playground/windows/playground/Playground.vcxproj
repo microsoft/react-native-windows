@@ -167,7 +167,7 @@
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" />
   </ImportGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.211028.7" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>

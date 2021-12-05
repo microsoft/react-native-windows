@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 
@@ -9,7 +9,7 @@
   ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  
+
   <!--
     Projects internal to the `react-native-windows` package should resolve
     '$(ReactNativeWindowsDir)` via "Directory.Build.Props".
@@ -28,6 +28,8 @@
   </PropertyGroup>
 
   <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Cpp.Dependencies.props" />
 
   <PropertyGroup>
     <ProjectDir Condition="'$(ProjectDir)' == ''">$(MSBuildProjectDirectory)\</ProjectDir>

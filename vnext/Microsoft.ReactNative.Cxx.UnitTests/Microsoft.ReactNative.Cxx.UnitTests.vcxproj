@@ -161,7 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.4" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="2.0.211028.7" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8PackageVersion)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
