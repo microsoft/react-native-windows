@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Centralize CppWinRT version setting",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
