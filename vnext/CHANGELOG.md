@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 06 Dec 2021 16:10:35 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 16:10:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0-preview.5
+
+Mon, 06 Dec 2021 16:10:50 GMT
+
+### Changes
+
+- [object Object] (anandrag@microsoft.com)
 
 ## 0.67.0-preview.5
 

@@ -1,8 +1,16 @@
 # Change Log - sample-apps
 
-This log was last generated on Mon, 06 Dec 2021 16:10:35 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 16:10:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 06 Dec 2021 16:10:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.67.0-preview.5
 
 ## 0.0.0
 
