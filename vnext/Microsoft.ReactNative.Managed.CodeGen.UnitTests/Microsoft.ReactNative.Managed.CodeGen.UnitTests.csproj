@@ -60,7 +60,7 @@
       <_ReactNativeManagedCodeGenUnitTestRuntimeDependencies Include="..\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.csproj" />
       <!--
         This project should be built as well before the unittest can run, but when building in VS this sometimes gives the following error:
-          \vnext\packages\Microsoft.Windows.CppWinRT.2.0.211028.7\build\native\Microsoft.Windows.CppWinRT.targets(158,13): error MSB4006: There is a circular dependency in the target dependency graph involving target "ComputeGetResolvedWinMD". [\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj]
+          \vnext\packages\Microsoft.Windows.CppWinRT.$(CppWinRTVersion)\build\native\Microsoft.Windows.CppWinRT.targets(158,13): error MSB4006: There is a circular dependency in the target dependency graph involving target "ComputeGetResolvedWinMD". [\vnext\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj]
         Microsoft.ReactNative.Managed.vcxproj is luckily a dependency of Microsoft.ReactNative.Managed.csproj so we can safely ommit it here.
 
         <_ReactNativeManagedCodeGenUnitTestRuntimeDependencies Include="..\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
