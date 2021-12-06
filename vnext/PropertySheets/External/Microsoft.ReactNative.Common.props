@@ -29,8 +29,6 @@
 
   <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
 
-  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Cpp.Dependencies.props" />
-
   <PropertyGroup>
     <ProjectDir Condition="'$(ProjectDir)' == ''">$(MSBuildProjectDirectory)\</ProjectDir>
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)' == ''">false</UseExperimentalNuget>
