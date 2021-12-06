@@ -2,6 +2,21 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 16:10:35 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.0-preview.5",
+            "commit": "b706da95136fffa1a4deba8f95dc9edfeef1020d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Nov 2021 16:10:24 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
