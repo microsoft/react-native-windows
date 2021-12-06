@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use Packages.props for PackageReference versions",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
