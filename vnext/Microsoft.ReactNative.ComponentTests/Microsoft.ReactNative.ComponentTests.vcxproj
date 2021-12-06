@@ -227,7 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1" />
-    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" />
     <PackageReference Include="boost" Version="1.76.0.0" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
