@@ -34,6 +34,12 @@
     <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>
 
     <!--
+      Usage of Packages.props is disabled by default in VCXPROJ.
+      https://github.com/microsoft/MSBuildSdks/blob/Microsoft.Build.CentralPackageVersions.2.1.3/src/CentralPackageVersions/README.md
+    -->
+    <EnableCentralPackageVersions>true</EnableCentralPackageVersions>
+
+    <!--
       Avoid Visual Studio error message:
       "The project '$(MSBuildProjectName)' ran into a problem during the last operation: The value of the
       'TargetFrameworkMoniker' and 'NuGetTargetMoniker' properties in the '$(Configuration)|$(Platform)' configuration are both
