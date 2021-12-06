@@ -154,6 +154,8 @@
     <Message Text="=> WinUIPackageVersion [$(WinUIPackageVersion)]" />
     <Message Text="=> IsWinUIAlpha        [$(IsWinUIAlpha)]" />
 
+    <Message Text="=> PackageReference.IsImplicitlyDefined  [%(PackageReference.IsImplicitlyDefined)]" />
+    <Message Text="=> PackageReference.Version              [$(PackageReference.Version)]" />
   </Target>
 
 </Project>
