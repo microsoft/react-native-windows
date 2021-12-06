@@ -320,9 +320,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="ReactNative.Hermes.Windows" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
   <Choose>
@@ -330,7 +330,7 @@
       <ItemGroup>
         <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
         <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" />
       </ItemGroup>
     </When>
   </Choose>

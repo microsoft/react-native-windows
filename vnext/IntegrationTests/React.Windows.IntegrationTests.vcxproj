@@ -89,7 +89,7 @@
     <None Include="XHRTest.js" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">

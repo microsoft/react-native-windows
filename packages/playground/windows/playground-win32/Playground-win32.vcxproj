@@ -169,7 +169,7 @@
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets')" />
   </ImportGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" />
     <PackageReference Include="Microsoft.Toolkit.Win32.UI.XamlApplication" Version="6.1.3" />
     <!--
       WARNING - DO NOT MAKE THE VERSION OF MICROSOFT.UI.XAML BE ANYTHING BUT PRERELEASE.
@@ -179,8 +179,8 @@
     <!-- <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.1-prerelease.210709001" /> -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" />
-    <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="0.8.1-ms.5" />
+    <PackageReference Include="Microsoft.VCRTForwarders.140" />
+    <PackageReference Include="ReactNative.Hermes.Windows" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">

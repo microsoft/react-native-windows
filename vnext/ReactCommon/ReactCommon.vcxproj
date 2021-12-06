@@ -191,7 +191,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" />
   </ItemGroup>
   <Target Name="EnsureNodeModuleBuildImports" BeforeTargets="PrepareForBuild">
     <Error Condition="!Exists('$(ReactNativeDir)')" Text="This project references code in the node_modules folder that is missing on this computer.  Use `yarn install` to download them." />

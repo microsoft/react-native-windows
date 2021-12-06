@@ -168,7 +168,7 @@
   </ImportGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CppWinRT" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="ReactNative.Hermes.Windows" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">

@@ -26,10 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Humanizer" Version="2.8.11" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.7.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.7.0" />
-    <PackageReference Include="RuntimeContracts" Version="0.3.0" />
+    <PackageReference Include="Humanizer" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" />
+    <PackageReference Include="RuntimeContracts" />
 
     <!-- 
       NuGet decides to pull in packages with issues. There is no seeming way to diagnose why NuGet is pulling in those versions. 
@@ -39,7 +39,7 @@
       resulted in no mention of version 4.3.0 anywhere until NuGet just starts downloading it.
       Therefore manually overriding the version so NuGet uses the latest.
     -->
-     <PackageReference Include="System.Private.Uri" Version="4.3.2" />
+     <PackageReference Include="System.Private.Uri" />
   </ItemGroup>
 
   <!-- 

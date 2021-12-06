@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
+  <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.1.3" />
+
   <!-- This target is used to compute the inputs and outputs for incrementally running the Yarn up to date check.-->
   <Target
     Name="EnsureJavaScriptCodeUpToDateInputAndOutputs"

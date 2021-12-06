@@ -163,7 +163,7 @@
     <JsBundleEntry Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.js" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1" />
+    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

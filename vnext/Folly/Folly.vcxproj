@@ -310,7 +310,7 @@
     <TemporaryFollyPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFollyUpdate\**\*.*" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" />
   </ItemGroup>
   <Target Name="Deploy" />
   <!-- Reenable this task if we need to temporarily replace any folly files for fixes, while we wait for PRs to land in folly -->
