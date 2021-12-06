@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix crash when adding a ReactRootView while reloading a ReactHost",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

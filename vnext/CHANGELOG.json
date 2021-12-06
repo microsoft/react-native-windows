@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Dec 2021 16:10:29 GMT",
+      "tag": "react-native-windows_v0.64.27",
+      "version": "0.64.27",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Remove legacy logic to find win32 bundle",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "InstanceCreated should fire before any JS code is run",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "ReloadInstance async task and InstanceLoaded event were not correctly reporting failures",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Better reporting of failures to load the bundle file",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Fix crash when adding a ReactRootView while reloading a ReactHost",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Prevent TurboModules from leaking on instance shutdown",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Websocket is hitting the UI queue unnecessarily",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Hook up DetachViewInstance method for custom UI implementations",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "e45efd8c14e912ab6c865b71f01727e741faf911",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Nov 2021 16:09:20 GMT",
       "tag": "react-native-windows_v0.64.26",
       "version": "0.64.26",

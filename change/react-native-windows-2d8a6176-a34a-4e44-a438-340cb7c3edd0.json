@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Remove legacy logic to find win32 bundle",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
