@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 07 Dec 2021 06:10:13 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.107",
+      "version": "0.0.0-canary.107",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4033556484dce8b2e5698b6882e83999fca0db6b",
+            "comment": "Centralize CppWinRT version setting"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 05 Dec 2021 06:09:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.106",
       "version": "0.0.0-canary.106",

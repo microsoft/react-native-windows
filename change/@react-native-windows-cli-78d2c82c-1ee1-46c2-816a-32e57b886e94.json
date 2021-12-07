@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Centralize CppWinRT version setting",
-  "packageName": "@react-native-windows/cli",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
