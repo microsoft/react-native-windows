@@ -10,9 +10,16 @@
     },
     {
       "type": "copy",
-      "directory": "NativeComponentExample",
-      "baseDirectory": "packages/rn-tester/NativeComponentExample",
-      "baseHash": "e058954d4ca36d5428b14c27ec10a3e964f56518",
+      "file": "NativeComponentExample/js/MyNativeView.js",
+      "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
+      "baseHash": "ce368fb8dde7a322cf7c58f64cbeec9e0bb33767",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "NativeComponentExample/js/MyNativeViewNativeComponent.js",
+      "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeViewNativeComponent.js",
+      "baseHash": "d4b892349a6ea5b73c7c208c2d6578d099b5334f",
       "issue": 4054
     },
     {
