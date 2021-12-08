@@ -104,6 +104,8 @@ Testing is a key component in the development workflow. If your changes affect e
 
 When you'd like the team to review your PR, (even if the work is not yet fully-complete), open a PR so that the team can review your work and provide comments, suggestions, and request changes. It may take several cycles, but the end result will be solid, testable, conformant code that is safe for us to merge.
 
+> Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com. When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
+
 ### 🥳 Merge
 
 Once your code has been reviewed and approved by the team, it will be merged into the main branch. Once merged, your PR will be automatically closed. 
