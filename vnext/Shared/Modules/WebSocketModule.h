@@ -18,6 +18,8 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
 
   WebSocketModule();
 
+  ~WebSocketModule() noexcept override;
+
 #pragma region CxxModule overrides
 
   /// <summary>
@@ -41,6 +43,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   void SetResourceFactory(std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> &&resourceFactory);
 
  private:
+  struct CxxModuleHolder {
+    facebook::xplat::module::CxxModule *Module{nullptr};
+  };
+
+
   /// <summary>
   /// Notifies an event to the current React Instance.
   /// </summary>
@@ -61,6 +68,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
   /// </summary>
   std::function<std::shared_ptr<IWebSocketResource>(std::string &&)> m_resourceFactory;
+
+  /// <summary>
+  /// TODO
+  /// </summary>
+  std::shared_ptr<CxxModuleHolder> m_holder;
 };
 
 } // namespace Microsoft::React

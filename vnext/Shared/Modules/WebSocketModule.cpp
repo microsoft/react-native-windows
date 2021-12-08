@@ -30,7 +30,13 @@ constexpr char moduleName[] = "WebSocketModule";
 namespace Microsoft::React {
 
 WebSocketModule::WebSocketModule()
-    : m_resourceFactory{[](string &&url) { return IWebSocketResource::Make(std::move(url)); }} {}
+    : m_resourceFactory{[](string &&url) { return IWebSocketResource::Make(std::move(url)); }}, m_holder{} {
+  m_holder->Module = this;
+}
+
+WebSocketModule::~WebSocketModule() noexcept /*override*/{
+  m_holder->Module = nullptr;
+}
 
 void WebSocketModule::SetResourceFactory(
     std::function<shared_ptr<IWebSocketResource>(const string &)> &&resourceFactory) {
