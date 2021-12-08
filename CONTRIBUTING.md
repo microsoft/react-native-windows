@@ -20,9 +20,7 @@ The team triages new issues several times a week. During triage, the team uses l
 
 We employ a bot engine to help us automate common processes within our workflow.
 
-This bot engine helps us keep the repo clean by automating the process of notifying appropriate parties if/when information/follow-up is needed, and closing stale issues/PRs after reminders have remained unanswered for several days.
-
-Therefore, if you do file issues, or create PRs, please keep an eye on your GitHub notifications. If you do not respond to requests for information, your issues/PRs may be closed automatically.
+In the case that we need some additional information or changes to approve the PR, the triage team will mark the PR or Issue with label such as "Needs: Author Feedback". Keep an eye out for your GitHub notifications as the bot might automatically close your issue if it fails to recognize a response after some time. Should this happen to you, feel free to reactivate and provide the requested information.
 
 ---
 ## Reporting Security Issues
@@ -67,7 +65,7 @@ When you hit "New Issue", select the type of issue closest to what you want to r
 
 If you're able & willing to help fix issues and/or implement features, we'd love your contribution!
 
-The best place to start is the list of ["good first issue"](https://github.com/microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) issues. These are bugs or tasks that we on the team believe would be easier to implement for someone without any prior experience in the codebase. Once you're feeling more comfortable in the codebase, feel free to just use the ["Help Wanted"](https://github.com/microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+) label, or just find an issue your interested in and hop in!
+The best place to start is the list of ["good first issue"](https://github.com/microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3A%22good+first+issue%22) issues. These are bugs or tasks that we on the team believe could be implemented for someone without any prior experience in the codebase. Once you're feeling more comfortable in the codebase, feel free to just use the ["Help Wanted"](https://github.com/microsoft/react-native-windows/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22+) label, or just find an issue your interested in and hop in!
 
 Often, we like to assign issues that generally belong to somebody's area of expertise to the team member that owns that area. This doesn't mean the community can't jump in -- they should reach out and have a chat with the assignee to see if it'd okay to take. If an issue's been assigned more than a month ago, there's a good chance it's fair game to try yourself.
 
@@ -77,16 +75,18 @@ For a primer on our codebase, see ["Repository Contents"](https://github.com/mic
 
 ## 👨‍💻Development
 
+> **System Requirements:** Contributing to this project requires a Windows machine, see [rnw-dependencies](https://microsoft.github.io/react-native-windows/docs/next/rnw-dependencies) for more info on this and the script for installing required dependencies.
+
 ### 🚧 Fork, Clone, Branch and Create your PR
 
-RNW uses the ["Fork and pull"](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model) model for accepting and integrating code changes.
+As is standard for GitHub and open source projects, RNW uses the ["Fork and pull"](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model) model for accepting and integrating code changes.
 
 Here's what the contribution process looks like:
 
 1. Fork the repo if you haven't already.
 1. Clone your fork locally.
 1. Create & push a feature branch.
-1. Work on your changes.
+1. Make the desired changes.
 1. Test your changes.
 1. Open a Pull Request (PR) and address any feedback.
 
