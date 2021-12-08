@@ -7,8 +7,8 @@
 
 namespace Microsoft::React {
 
-  struct CxxModuleHolder {
+struct CxxModuleHolder {
   facebook::xplat::module::CxxModule *Module{nullptr};
 };
 
-} //namespace
+} // namespace Microsoft::React
