@@ -34,7 +34,7 @@ WebSocketModule::WebSocketModule()
   m_holder->Module = this;
 }
 
-WebSocketModule::~WebSocketModule() noexcept /*override*/{
+WebSocketModule::~WebSocketModule() noexcept /*override*/ {
   m_holder->Module = nullptr;
 }
 

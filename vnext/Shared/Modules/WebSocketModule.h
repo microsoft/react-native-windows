@@ -4,6 +4,7 @@
 #pragma once
 
 #include <cxxreact/CxxModule.h>
+#include "CxxModuleHolder.h"
 #include "IWebSocketResource.h"
 
 namespace Microsoft::React {
@@ -43,11 +44,6 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   void SetResourceFactory(std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> &&resourceFactory);
 
  private:
-  struct CxxModuleHolder {
-    facebook::xplat::module::CxxModule *Module{nullptr};
-  };
-
-
   /// <summary>
   /// Notifies an event to the current React Instance.
   /// </summary>

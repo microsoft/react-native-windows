@@ -19,7 +19,7 @@ class AsyncStorageModule : public facebook::xplat::module::CxxModule {
   std::vector<facebook::xplat::module::CxxModule::Method> getMethods() override;
 
  private:
-  std::unique_ptr<facebook::react::AsyncStorageManager> m_asyncStorageManager;
+  std::shared_ptr<facebook::react::AsyncStorageManager> m_asyncStorageManager;
 };
 } // namespace react
 } // namespace facebook
