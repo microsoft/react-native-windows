@@ -50,7 +50,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 {
   return
   {
-    Method(
+    {
       "connect",
       [this](dynamic args) // const string& url, dynamic protocols, dynamic options, int64_t id
       {
@@ -80,8 +80,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         {
           sharedWs->Connect(protocols, options);
         }
-      }),
-    Method(
+      }
+    },
+    {
       "close",
       [this](dynamic args) // [int64_t code, string reason,] int64_t id
       {
@@ -107,8 +108,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
           auto errorObj = dynamic::object("id", -1)("message", "Incorrect number of parameters");
           this->SendEvent("websocketFailed", std::move(errorObj));
         }
-      }),
-    Method(
+      }
+    },
+    {
       "send",
       [this](dynamic args) // const string& message, int64_t id
       {
@@ -117,8 +119,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         {
           sharedWs->Send(jsArgAsString(args, 0));
         }
-      }),
-    Method(
+      }
+    },
+    {
       "sendBinary",
       [this](dynamic args) // const string& base64String, int64_t id
       {
@@ -127,8 +130,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         {
           sharedWs->SendBinary(jsArgAsString(args, 0));
         }
-      }),
-    Method(
+      }
+    },
+    {
       "ping",
       [this](dynamic args) // int64_t id
       {
@@ -137,7 +141,8 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         {
           sharedWs->Ping();
         }
-      })
+      }
+    }
   };
 } // getMethods
 // clang-format on
