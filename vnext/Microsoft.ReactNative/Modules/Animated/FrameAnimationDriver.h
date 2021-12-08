@@ -22,11 +22,16 @@ class FrameAnimationDriver : public AnimationDriver {
   double ToValue() override;
 
   inline std::vector<double> Frames() override {
+    assert(m_useComposition);
     return m_frames;
   }
+
+ protected:
+  bool Update(double timeDeltaMs, bool restarting) override;
 
  private:
   std::vector<double> m_frames{};
   double m_toValue{0};
+  std::optional<double> m_startValue{};
 };
 } // namespace Microsoft::ReactNative

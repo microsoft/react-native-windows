@@ -7,8 +7,8 @@
 #include <ReactContext.h>
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
-
 #include "FacadeType.h"
+#include "JSValue.h"
 
 namespace Microsoft::ReactNative {
 struct ShadowNodeBase;
@@ -31,13 +31,14 @@ class PropsAnimatedNode final : public AnimatedNode {
   void ResumeSuspendedAnimations(int64_t valueTag);
 
  private:
+  void CommitProps();
   void MakeAnimation(int64_t valueNodeTag, FacadeType facadeType);
   Microsoft::ReactNative::ShadowNodeBase *GetShadowNodeBase();
   xaml::UIElement GetUIElement();
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
   std::map<std::string, int64_t> m_propMapping{};
-  folly::dynamic m_propMap{};
+  winrt::Microsoft::ReactNative::JSValueObject m_props{};
 
   int64_t m_connectedViewTag{s_connectedViewTagUnset};
   std::unordered_map<int64_t, comp::CompositionAnimation> m_expressionAnimations{};
