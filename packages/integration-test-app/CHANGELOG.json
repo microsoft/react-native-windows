@@ -2,6 +2,69 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Tue, 07 Dec 2021 06:10:13 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.2",
+            "commit": "4033556484dce8b2e5698b6882e83999fca0db6b"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.428",
+            "commit": "4033556484dce8b2e5698b6882e83999fca0db6b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 05 Dec 2021 06:09:35 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.2-0",
+            "commit": "f8d463668b49bd5dc001f5edcc77446c7947562c"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.427",
+            "commit": "f8d463668b49bd5dc001f5edcc77446c7947562c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Dec 2021 06:09:39 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.1",
+            "commit": "f12eee17a0875ffd4c144ece7e536e2730475657"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.426",
+            "commit": "f12eee17a0875ffd4c144ece7e536e2730475657"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:11 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

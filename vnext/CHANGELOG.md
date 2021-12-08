@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Dec 2021 06:10:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.428
+
+Tue, 07 Dec 2021 06:10:13 GMT
+
+### Changes
+
+- Centralize CppWinRT version setting (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.107
+
+## 0.0.0-canary.427
+
+Sun, 05 Dec 2021 06:09:35 GMT
+
+### Changes
+
+- Use PackageReference for NuGet Dependencies (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.106
+
+## 0.0.0-canary.426
+
+Sat, 04 Dec 2021 06:09:39 GMT
+
+### Changes
+
+- Add WebView2Version to Experimental Props (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.425
 

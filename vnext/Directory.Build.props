@@ -7,13 +7,10 @@
   <PropertyGroup>
     <SolutionDir Condition="'$(SolutionDir)' == '' OR '$(SolutionDir)' == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
 
-    <Platform Condition="'$(Platform)' == ''">x64</Platform>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
-
     <!-- This property sets the CscTask to print the full path of the csharp file on errors and warnings rather than just the filename. -->
     <GenerateFullPaths>true</GenerateFullPaths>
 
-    <!-- 
+    <!--
       SourceLink is disabled by default since customer projects are still building our projects and therefore we don't want to force customers to use this.
       The PR (windows-vs-pr.yml) and CI (publish.yml() turn it back on.
     -->
@@ -24,6 +21,22 @@
 
   <PropertyGroup Label="Configuration">
     <ProjectName Condition="'$(ProjectName)'==''">$(MSBuildProjectName)</ProjectName>
+
+    <RootIntDir Condition="'$(RootIntDir)' == ''">$(ReactNativeWindowsDir)build</RootIntDir>
+    <RootOutDir Condition="'$(RootOutDir)' == ''">$(ReactNativeWindowsDir)target</RootOutDir>
+    <!-- Visual Studio forces using 'Win32' for the 'x86' platform. -->
+    <BaseIntDir Condition="'$(BaseIntDir)' == '' AND '$(Platform)' == 'Win32'">$(RootIntDir)\x86\$(Configuration)</BaseIntDir>
+    <BaseIntDir Condition="'$(BaseIntDir)' == '' AND '$(Platform)' != 'Win32'">$(RootIntDir)\$(Platform)\$(Configuration)</BaseIntDir>
+    <BaseOutDir Condition="'$(BaseOutDir)' == '' AND '$(Platform)' == 'Win32'">$(RootOutDir)\x86\$(Configuration)</BaseOutDir>
+    <BaseOutDir Condition="'$(BaseOutDir)' == '' AND '$(Platform)' != 'Win32'">$(RootOutDir)\$(Platform)\$(Configuration)</BaseOutDir>
+
+    <IntDir Condition="'$(ProjectName)' != ''">$(BaseIntDir)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(ProjectName)' == ''">$(BaseIntDir)\$(MSBuildProjectName)\</IntDir>
+    <OutDir Condition="'$(ProjectName)' != ''">$(BaseOutDir)\$(ProjectName)\</OutDir>
+    <OutDir Condition="'$(ProjectName)' == ''">$(BaseOutDir)\$(MSBuildProjectName)\</OutDir>
+
+    <PublishDir>$(OutDir)\Publish\</PublishDir>
+    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
 
   <!--
@@ -43,16 +56,6 @@
 
     <FmtDir Condition="'$(FmtDir)' == '' AND Exists('$([MSBuild]::NormalizeDirectory($(ReactNativeDir)..\..\node_modules))')">$(ReactNativeDir)..\..\node_modules\.fmt\fmt-$(FmtVersion)</FmtDir>
     <FmtDir>$([MSBuild]::NormalizeDirectory($(FmtDir)))</FmtDir>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <ReactNativeWindowsPlatform Condition="'$(Platform)' == 'Win32'">x86</ReactNativeWindowsPlatform>
-    <ReactNativeWindowsPlatform Condition="'$(Platform)' != 'Win32'">$(Platform)</ReactNativeWindowsPlatform>
-
-    <IntDir>$(ReactNativeWindowsDir)build\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <OutDir>$(ReactNativeWindowsDir)target\$(ReactNativeWindowsPlatform)\$(Configuration)\$(ProjectName)\</OutDir>
-    <PublishDir>$(OutDir)\Publish\</PublishDir>
-    <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
   </PropertyGroup>
 
 </Project>
