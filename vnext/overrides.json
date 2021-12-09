@@ -9,13 +9,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211111-2008-2ae06df58",
+  "baseVersion": "0.0.0-20211125-2009-3ba237b66",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "249fe001d69c76065a68de5cafcc51c3c48fa04a"
+      "baseHash": "e6f4938b0ad8446c652d1bb24658e27c936ce829"
     },
     {
       "type": "patch",
@@ -109,7 +109,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "1ccd48c3394847eee3b3c3551b836340c0fe18ed"
+      "baseHash": "5407f917437ba5280dff82f74032d73baf64ed77"
     },
     {
       "type": "platform",
@@ -127,7 +127,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "33ae36d6372a45760895a15854efef726fbfa296",
+      "baseHash": "1de1a9526002e19f758a40e43cdca2a06093ceec",
       "issue": 4578
     },
     {
@@ -233,7 +233,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "9240eb753686d4cbf40644170b350867c6f15ad0"
+      "baseHash": "c60bbc3c4339a82a633767f37060a9bb6e046f89"
     },
     {
       "type": "patch",
@@ -280,7 +280,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "cf2b9765b9002b0724662417ac77d24153de02bb"
+      "baseHash": "d5ff79646eeaeb0464a8c8a875c300555d555ed7"
     },
     {
       "type": "patch",
@@ -298,7 +298,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "2b12228aa1ab0e12844996a99ff5d38fbff689a1"
+      "baseHash": "5bc93b50edd30f3a4414c2710a068bf402f9fbbe"
     },
     {
       "type": "platform",
@@ -331,7 +331,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "852063863b46684c86b9eed1e241f2ad4002cd09",
+      "baseHash": "ab61064bcff7af6d72dc05d0c5545d4f495e493d",
       "issue": 4590
     },
     {
@@ -436,7 +436,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "a35532569807c074a56f759d9e3d51febb396a9e"
+      "baseHash": "40cb15c0afb61e265a16ef82e059a51c00cf2c97"
     },
     {
       "type": "derived",
