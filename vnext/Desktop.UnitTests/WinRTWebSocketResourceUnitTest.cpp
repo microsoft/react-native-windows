@@ -32,6 +32,8 @@ IAsyncAction ThrowAsync() {
   co_return;
 }
 
+constexpr char testUrl[] = "ws://host:0";
+
 } // namespace
 
 namespace Microsoft::React::Test {
@@ -55,7 +57,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
-    rc->Connect("ws://host:0", {}, {});
+    rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({}, errorMessage);
@@ -80,7 +82,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
-    rc->Connect("ws://host:0", {}, {});
+    rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({"[0x80004005] Expected Failure"}, errorMessage);
