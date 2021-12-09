@@ -32,6 +32,29 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Text/TextNativeComponent.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedPlatformConfig.js
+
+; These Animated overrides will be upstreamed
+<PROJECT_ROOT>/Libraries/Animated/animations/Animation.js
+<PROJECT_ROOT>/Libraries/Animated/animations/DecayAnimation.js
+<PROJECT_ROOT>/Libraries/Animated/animations/SpringAnimation.js
+<PROJECT_ROOT>/Libraries/Animated/animations/TimingAnimation.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedAddition.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedDiffClamp.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedDivision.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedInterpolation.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedModulo.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedMultiplication.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedNode.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedProps.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedStyle.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedSubtraction.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedTracking.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedTransform.js
+<PROJECT_ROOT>/Libraries/Animated/nodes/AnimatedWithChildren.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedEvent.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedImplementation.js
+<PROJECT_ROOT>/Libraries/Animated/AnimatedMock.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
