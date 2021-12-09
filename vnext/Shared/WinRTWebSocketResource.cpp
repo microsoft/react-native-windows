@@ -343,7 +343,24 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
   }
 
   m_connectRequested = true;
-  PerformConnect(Uri{winrt::to_hstring(std::move(url))});
+
+  Uri uri{nullptr};
+  try {
+    uri = Uri{winrt::to_hstring(std::move(url))};
+  } catch (hresult_error const &e) {
+    if (m_errorHandler) {
+      m_errorHandler({HResultToString(e), ErrorType::Connection});
+    }
+
+    // Abort - Mark connection as concluded.
+    SetEvent(m_connectPerformed.get());
+    m_connectPerformedPromise.set_value();
+    m_connectRequested = false;
+
+    return;
+  }
+
+  PerformConnect(std::move(uri));
 }
 
 void WinRTWebSocketResource::Ping() noexcept {
