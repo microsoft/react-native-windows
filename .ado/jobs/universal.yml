@@ -60,7 +60,7 @@
               steps:
                 - template: ../templates/checkout-shallow.yml
 
-                - cmd: |
+                - script: |
                     echo.| npx react-native doctor
                     dir C:\Windows\System32\WindowsPowerShell\powershell.exe /s
                   displayName: doctor & dir powershell
