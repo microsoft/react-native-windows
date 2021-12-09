@@ -51,8 +51,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
     // Test APIs
-    auto rc =
-        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
@@ -77,8 +76,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
     // Test APIs
-    auto rc =
-        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 

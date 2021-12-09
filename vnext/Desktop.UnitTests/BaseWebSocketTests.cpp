@@ -48,7 +48,7 @@ TEST_CLASS(BaseWebSocketTest){
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected = true; });
 
-    ws->Connect({}, {});
+    ws->Connect("ws://localhost", {}, {});
     ws->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({}, errorMessage);
@@ -65,7 +65,7 @@ TEST_CLASS(BaseWebSocketTest){
       return make_error_code(errc::state_not_recoverable);
     });
 
-    ws->Connect({}, {});
+    ws->Connect("ws://localhost", {}, {});
     ws->Close(CloseCode::Normal, {});
 
     Assert::AreNotEqual({}, errorMessage);
@@ -85,7 +85,7 @@ TEST_CLASS(BaseWebSocketTest){
       return make_error_code(errc::state_not_recoverable);
     });
 
-    ws->Connect({}, {});
+    ws->Connect("ws://localhost", {}, {});
     ws->Close(CloseCode::Normal, {});
 
     Assert::AreNotEqual({}, errorMessage);
@@ -108,7 +108,7 @@ TEST_CLASS(BaseWebSocketTest){
     ws->SetCloseResult(
         []() -> error_code { return make_error_code(errc::success); });
 
-    ws->Connect({}, {});
+    ws->Connect("ws://localhost", {}, {});
     connected.get_future().wait();
 
     ws->Close(CloseCode::Normal, "Normal");

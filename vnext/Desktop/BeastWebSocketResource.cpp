@@ -30,6 +30,90 @@ using std::unique_ptr;
 
 namespace Microsoft::React {
 
+#pragma region BeastWebSocketResource
+
+BeastWebSocketResource::BeastWebSocketResource() noexcept {}
+
+#pragma region IWebSocketResource members
+
+void BeastWebSocketResource::Connect(
+    std::string &&urlString,
+    const Protocols &protocols,
+    const Options &options) noexcept {
+  Url url(std::move(urlString));
+
+  if (url.scheme == "ws") {
+    if (url.port.empty())
+      url.port = "80";
+
+    m_concreteResource = std::make_shared<Beast::WebSocketResource>(std::move(url));
+  } else if (url.scheme == "wss") {
+    if (url.port.empty())
+      url.port = "443";
+
+    m_concreteResource = std::make_shared<Beast::SecureWebSocketResource>(std::move(url));
+  }
+
+  m_concreteResource->SetOnClose(std::move(m_closeHandler));
+  m_concreteResource->SetOnConnect(std::move(m_connectHandler));
+  m_concreteResource->SetOnError(std::move(m_errorHandler));
+  m_concreteResource->SetOnMessage(std::move(m_readHandler));
+  m_concreteResource->SetOnPing(std::move(m_pingHandler));
+  m_concreteResource->SetOnSend(std::move(m_writeHandler));
+}
+
+void BeastWebSocketResource::Close(CloseCode code, const string &reason) noexcept {
+  m_concreteResource->Close(code, reason);
+}
+
+void BeastWebSocketResource::Send(string &&message) noexcept {
+  m_concreteResource->Send(std::move(message));
+}
+
+void BeastWebSocketResource::SendBinary(string &&base64String) noexcept {
+  m_concreteResource->SendBinary(std::move(base64String));
+}
+
+void BeastWebSocketResource::Ping() noexcept {
+  m_concreteResource->Ping();
+}
+
+#pragma endregion IWebSocketResource members
+
+#pragma region Handler setters
+
+void BeastWebSocketResource::SetOnConnect(function<void()> &&handler) noexcept {
+  m_connectHandler = std::move(handler);
+}
+
+void BeastWebSocketResource::SetOnPing(function<void()> &&handler) noexcept {
+  m_pingHandler = std::move(handler);
+}
+
+void BeastWebSocketResource::SetOnSend(function<void(size_t)> &&handler) noexcept {
+  m_writeHandler = std::move(handler);
+}
+
+void BeastWebSocketResource::SetOnMessage(function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
+  m_readHandler = std::move(handler);
+}
+
+void BeastWebSocketResource::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept {
+  m_closeHandler = std::move(handler);
+}
+
+void BeastWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noexcept {
+  m_errorHandler = std::move(handler);
+}
+
+IWebSocketResource::ReadyState BeastWebSocketResource::GetReadyState() const noexcept {
+  return m_concreteResource->GetReadyState();
+}
+
+#pragma endregion Handler setters
+
+#pragma endregion BeastWebSocketResource
+
 namespace Beast {
 
 #pragma region BaseWebSocketResource members
@@ -314,7 +398,10 @@ websocket::close_code BaseWebSocketResource<SocketLayer, Stream>::ToBeastCloseCo
 #pragma region IWebSocketResource members
 
 template <typename SocketLayer, typename Stream>
-void BaseWebSocketResource<SocketLayer, Stream>::Connect(const Protocols &protocols, const Options &options) noexcept {
+void BaseWebSocketResource<SocketLayer, Stream>::Connect(
+    std::string &&url,
+    const Protocols &protocols,
+    const Options &options) noexcept {
   // "Cannot call Connect more than once");
   assert(ReadyState::Connecting == m_readyState);
 

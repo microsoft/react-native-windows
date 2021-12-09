@@ -91,10 +91,7 @@ namespace Microsoft::React {
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     vector<ChainValidationResult> &&certExceptions)
-    : WinRTWebSocketResource(
-          std::move(socket),
-          DataWriter{socket.OutputStream()},
-          std::move(certExceptions)) {}
+    : WinRTWebSocketResource(std::move(socket), DataWriter{socket.OutputStream()}, std::move(certExceptions)) {}
 
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
@@ -120,7 +117,7 @@ WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 
 #pragma region Private members
 
-IAsyncAction WinRTWebSocketResource::PerformConnect(Uri&& uri) noexcept {
+IAsyncAction WinRTWebSocketResource::PerformConnect(Uri &&uri) noexcept {
   auto self = shared_from_this();
   auto coUri = std::move(uri);
 
