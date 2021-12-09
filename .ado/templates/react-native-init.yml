@@ -133,11 +133,9 @@ steps:
     workingDirectory: $(Agent.BuildDirectory)\testcli
 
   # Verify react-native doctor command works
-  # Disabled until https://github.com/react-native-community/cli/pull/1515 is reverted upstream
   - script: npx react-native doctor
     displayName: React Native Doctor
     workingDirectory: $(Agent.BuildDirectory)\testcli
-    condition: false
 
   - template: ../templates/run-windows-with-certificates.yml
     parameters:
