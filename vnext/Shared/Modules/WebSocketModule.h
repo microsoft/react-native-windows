@@ -28,6 +28,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
     std::map<int64_t, std::shared_ptr<IWebSocketResource>> ResourceMap{};
 
     /// <summary>
+    /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
+    /// </summary>
+    std::function<std::shared_ptr<IWebSocketResource>(std::string &&)> ResourceFactory;
+
+    /// <summary>
     /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
     /// </summary>
     CxxModule *Module{nullptr};
@@ -61,11 +66,6 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// As defined in WebSocket.js.
   /// </summary>
   std::map<int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
-
-  /// <summary>
-  /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
-  /// </summary>
-  std::function<std::shared_ptr<IWebSocketResource>(std::string &&)> m_resourceFactory;
 
   /// <summary>
   /// Keeps members that can be accessed threads other than this module's owner accessible.

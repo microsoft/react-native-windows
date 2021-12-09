@@ -31,17 +31,14 @@ using Microsoft::React::WebSocketModule;
 
 constexpr char moduleName[] = "WebSocketModule";
 
-static void SendEvent(weak_ptr<Instance> weakInstance, string&& eventName, dynamic&& args) {
+static void SendEvent(weak_ptr<Instance> weakInstance, string &&eventName, dynamic &&args) {
   if (auto instance = weakInstance.lock()) {
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
   }
 }
 
-static shared_ptr<IWebSocketResource> GetOrCreateWebSocket(
-    int64_t id,
-    string &&url,
-    weak_ptr<WebSocketModule::SharedState> weakState) {
-
+static shared_ptr<IWebSocketResource>
+GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedState> weakState) {
   auto state = weakState.lock();
   if (!state) {
     return nullptr;
@@ -49,7 +46,6 @@ static shared_ptr<IWebSocketResource> GetOrCreateWebSocket(
 
   auto itr = state->ResourceMap.find(id);
   if (itr == state->ResourceMap.end()) {
-
     if (!state->Module) {
       return nullptr;
     }
@@ -57,7 +53,7 @@ static shared_ptr<IWebSocketResource> GetOrCreateWebSocket(
 
     shared_ptr<IWebSocketResource> ws;
     try {
-      ws = IWebSocketResource::Make(std::move(url));
+      ws = state->ResourceFactory(std::move(url));
     } catch (const winrt::hresult_error &e) {
       std::stringstream ss;
       ss << "[" << std::hex << std::showbase << std::setw(8) << static_cast<uint32_t>(e.code()) << "] "
@@ -73,7 +69,8 @@ static shared_ptr<IWebSocketResource> GetOrCreateWebSocket(
     } catch (...) {
       SendEvent(
           weakInstance,
-          "webSocketFailed", dynamic::object("id", id)("message", "Unidentified error creating IWebSocketResource"));
+          "webSocketFailed",
+          dynamic::object("id", id)("message", "Unidentified error creating IWebSocketResource"));
 
       return nullptr;
     }
@@ -122,9 +119,8 @@ static shared_ptr<IWebSocketResource> GetOrCreateWebSocket(
 
 namespace Microsoft::React {
 
-WebSocketModule::WebSocketModule()
-    : m_resourceFactory{[](string &&url) { return IWebSocketResource::Make(std::move(url)); }},
-      m_sharedState{std::make_shared<SharedState>()} {
+WebSocketModule::WebSocketModule() : m_sharedState{std::make_shared<SharedState>()} {
+  m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(std::move(url)); };
   m_sharedState->Module = this;
 }
 
@@ -134,7 +130,7 @@ WebSocketModule::~WebSocketModule() noexcept /*override*/ {
 
 void WebSocketModule::SetResourceFactory(
     std::function<shared_ptr<IWebSocketResource>(const string &)> &&resourceFactory) {
-  m_resourceFactory = std::move(resourceFactory);
+  m_sharedState->ResourceFactory = std::move(resourceFactory);
 }
 
 string WebSocketModule::getName() {
