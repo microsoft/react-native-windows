@@ -7,91 +7,83 @@
 
 #undef U
 
-using facebook::xplat::module::CxxModule;
-using std::map;
-using std::string;
-using std::vector;
-using std::weak_ptr;
-
-namespace {
-constexpr char moduleName[] = "AsyncLocalStorage";
-}
+using namespace std;
+using namespace folly;
+using namespace facebook::xplat;
 
 namespace facebook {
 namespace react {
 AsyncStorageModule::AsyncStorageModule(const WCHAR *storageFileName)
-    : m_asyncStorageManager{std::make_shared<AsyncStorageManager>(storageFileName)} {}
+    : m_asyncStorageManager{make_unique<AsyncStorageManager>(storageFileName)} {}
 
-string AsyncStorageModule::getName() {
-  return moduleName;
+std::string AsyncStorageModule::getName() {
+  return "AsyncLocalStorage";
 }
 
-map<string, dynamic> AsyncStorageModule::getConstants() {
+std::map<std::string, dynamic> AsyncStorageModule::getConstants() {
   return {};
 }
 
-vector<CxxModule::Method> AsyncStorageModule::getMethods() {
+std::vector<facebook::xplat::module::CxxModule::Method> AsyncStorageModule::getMethods() {
   return {
-      {"multiGet",
-       [wpManager = weak_ptr<AsyncStorageManager>(m_asyncStorageManager)](
-           dynamic args,
-           Callback jsCallback) // params - array<std::string> Keys ,
-                                // Callback(error, returnValue)
-       {
-         if (auto spManager = wpManager.lock()) {
-           spManager->executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiGet, args, jsCallback);
-         }
-       }},
+      Method(
+          "multiGet",
+          [this](
+              dynamic args,
+              Callback jsCallback) // params - array<std::string> Keys ,
+                                   // Callback(error, returnValue)
+          {
+            m_asyncStorageManager->executeKVOperation(
+                AsyncStorageManager::AsyncStorageOperation::multiGet, args, jsCallback);
+          }),
 
-      {"multiSet",
-       [wpManager = weak_ptr<AsyncStorageManager>(m_asyncStorageManager)](
-           dynamic args,
-           Callback jsCallback) // params - array<array<std::string>>
-                                // KeyValuePairs , Callback(error)
-       {
-         if (auto spManager = wpManager.lock()) {
-           spManager->executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiSet, args, jsCallback);
-         }
-       }},
+      Method(
+          "multiSet",
+          [this](
+              dynamic args,
+              Callback jsCallback) // params - array<array<std::string>>
+                                   // KeyValuePairs , Callback(error)
+          {
+            m_asyncStorageManager->executeKVOperation(
+                AsyncStorageManager::AsyncStorageOperation::multiSet, args, jsCallback);
+          }),
 
       // The 'multiMerge' method is currently not implemented. We assume that
       // the ReactNative framework translates its absence into the AsyncStorage
       // JS object (see Libraries\Storage\AsyncStorage.js around line 485) which
       // in turn allows JS user code to test for support of merge methods.
 
-      {"multiRemove",
-       [wpManager = weak_ptr<AsyncStorageManager>(m_asyncStorageManager)](
-           dynamic args, Callback jsCallback) // params - array<std::string>
-                                              // Keys , Callback(error)
-       {
-         if (auto spManager = wpManager.lock()) {
-           spManager->executeKVOperation(AsyncStorageManager::AsyncStorageOperation::multiRemove, args, jsCallback);
-         }
-       }},
+      Method(
+          "multiRemove",
+          [this](dynamic args, Callback jsCallback) // params - array<std::string>
+                                                    // Keys , Callback(error)
+          {
+            m_asyncStorageManager->executeKVOperation(
+                AsyncStorageManager::AsyncStorageOperation::multiRemove, args, jsCallback);
+          }),
 
-      {"clear",
-       [wpManager = weak_ptr<AsyncStorageManager>(m_asyncStorageManager)](
-           dynamic args,
-           Callback jsCallback) // params - args is unused , Callback(error)
-       {
-         if (auto spManager = wpManager.lock()) {
-           spManager->executeKVOperation(AsyncStorageManager::AsyncStorageOperation::clear, args, jsCallback);
-         }
-       }},
+      Method(
+          "clear",
+          [this](
+              dynamic args,
+              Callback jsCallback) // params - args is unused , Callback(error)
+          {
+            m_asyncStorageManager->executeKVOperation(
+                AsyncStorageManager::AsyncStorageOperation::clear, args, jsCallback);
+          }),
 
-      {"getAllKeys",
-       [wpManager = weak_ptr<AsyncStorageManager>(m_asyncStorageManager)](
-           dynamic args, Callback jsCallback) // params - args is unused ,
-                                              // Callback(error, returnValue)
-       {
-         if (auto spManager = wpManager.lock()) {
-           spManager->executeKVOperation(AsyncStorageManager::AsyncStorageOperation::getAllKeys, args, jsCallback);
-         }
-       }},
+      Method(
+          "getAllKeys",
+          [this](dynamic args, Callback jsCallback) // params - args is unused ,
+                                                    // Callback(error, returnValue)
+          {
+            m_asyncStorageManager->executeKVOperation(
+                AsyncStorageManager::AsyncStorageOperation::getAllKeys, args, jsCallback);
+          }),
   };
 }
 
-std::unique_ptr<CxxModule> CreateAsyncStorageModule(const WCHAR *storageFileName) noexcept {
+std::unique_ptr<facebook::xplat::module::CxxModule> CreateAsyncStorageModule(const WCHAR *storageFileName) noexcept {
   return std::make_unique<AsyncStorageModule>(storageFileName);
 }
 
