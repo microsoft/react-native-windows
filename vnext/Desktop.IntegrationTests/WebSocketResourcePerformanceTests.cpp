@@ -103,7 +103,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
           errorFound = true;
           errorMessage = error.Message;
         });
-        ws->Connect();
+        ws->Connect("ws://localhost:5555");
 
         resources.push_back(std::move(ws));
       } // Create and store WS resources.

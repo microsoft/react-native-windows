@@ -174,7 +174,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
         weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0), weakState);
         if (auto sharedWs = weakWs.lock())
         {
-          sharedWs->Connect(protocols, options);
+          sharedWs->Connect(jsArgAsString(args, 0), protocols, options);
         }
       }
     },

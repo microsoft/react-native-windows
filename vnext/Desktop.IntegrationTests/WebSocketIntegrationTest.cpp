@@ -61,7 +61,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     server->Start();
     string sent = "prefix";
     auto expectedSize = sent.size();
-    ws->Connect();
+    ws->Connect(scheme + "://localhost:5556/");
     ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
@@ -105,7 +105,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
 
     server->Start();
-    ws->Connect();
+    ws->Connect("ws://localhost:5556/");
     ws->Close(CloseCode::Normal, "Closing");
     server->Stop();
 
@@ -138,7 +138,7 @@ TEST_CLASS (WebSocketIntegrationTest)
         errorMessage = error.Message;
       });
 
-      ws->Connect();
+      ws->Connect("ws://localhost:5556");
       ws->Close();//TODO: Either remove or rename test.
     }
 
@@ -168,7 +168,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       errorString = err.Message;
     });
 
-    ws->Connect();
+    ws->Connect("ws://localhost:5556");
     ws->Ping();
     auto pingFuture = pingPromise.get_future();
     pingFuture.wait();
@@ -196,7 +196,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
 
     server->Start();
-    ws->Connect();
+    ws->Connect("ws://localhost:5556");
 
     char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 #define LEN 4096 + 4096 * 2 + 1
@@ -251,7 +251,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
 
     server->Start();
-    ws->Connect({}, {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}});
+    ws->Connect("ws://localhost:5556/", {}, {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}});
     ws->Send("");
 
     auto future = response.get_future();
@@ -307,7 +307,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
 
     server->Start();
-    ws->Connect();
+    ws->Connect("ws://localhost:5556");
 
     // Send all but the last message.
     // Compare result with the next message in the sequence.
@@ -356,7 +356,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
 
     server->Start();
-    ws->Connect();
+    ws->Connect("ws://localhost:5556");
 
     // Consecutive immediate writes should be enqueued.
     // The WebSocket library (WinRT or Beast) can't handle multiple write operations

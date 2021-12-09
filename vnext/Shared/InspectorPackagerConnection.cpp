@@ -270,7 +270,7 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
 
   Microsoft::React::IWebSocketResource::Protocols protocols;
   Microsoft::React::IWebSocketResource::Options options;
-  m_packagerWebSocketConnection->Connect(protocols, options);
+  m_packagerWebSocketConnection->Connect(std::string{m_url}, protocols, options);
 
   co_return;
 }

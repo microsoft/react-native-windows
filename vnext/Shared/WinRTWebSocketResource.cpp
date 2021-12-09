@@ -103,7 +103,7 @@ WinRTWebSocketResource::WinRTWebSocketResource(
     IDataWriter &&writer,
     Uri &&uri,
     vector<ChainValidationResult> &&certExceptions)
-    : m_uri{std::move(uri)}, m_socket{std::move(socket)}, m_writer{std::move(writer)} {
+    : m_socket{std::move(socket)}, m_writer{std::move(writer)} {
   m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
 
   for (const auto &certException : certExceptions) {
@@ -123,13 +123,14 @@ WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 
 #pragma region Private members
 
-IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept {
+IAsyncAction WinRTWebSocketResource::PerformConnect(Uri&& uri) noexcept {
   auto self = shared_from_this();
+  auto coUri = std::move(uri);
 
   co_await resume_background();
 
   try {
-    auto async = self->m_socket.ConnectAsync(self->m_uri);
+    auto async = self->m_socket.ConnectAsync(coUri);
 
     co_await lessthrow_await_adapter<IAsyncAction>{async};
 
@@ -334,7 +335,7 @@ void WinRTWebSocketResource::Synchronize() noexcept {
 
 #pragma region IWebSocketResource
 
-void WinRTWebSocketResource::Connect(const Protocols &protocols, const Options &options) noexcept {
+void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
   m_readyState = ReadyState::Connecting;
 
   for (const auto &header : options) {
@@ -348,7 +349,7 @@ void WinRTWebSocketResource::Connect(const Protocols &protocols, const Options &
   }
 
   m_connectRequested = true;
-  PerformConnect();
+  PerformConnect(Uri{winrt::to_hstring(std::move(url))});
 }
 
 void WinRTWebSocketResource::Ping() noexcept {

@@ -156,7 +156,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   /// <summary>
   /// <see cref="IWebSocketResource::Connect" />
   /// </summary>
-  void Connect(const Protocols &protocols, const Options &options) noexcept override;
+  void Connect(std::string &&url, const Protocols &protocols, const Options &options) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Ping" />
