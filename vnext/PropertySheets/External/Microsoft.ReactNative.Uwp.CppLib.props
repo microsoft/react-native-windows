@@ -19,4 +19,5 @@
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PackageVersionDefinitions.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PkgESCompliance.props" />
 </Project>

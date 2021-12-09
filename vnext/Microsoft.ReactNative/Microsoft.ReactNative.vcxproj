@@ -151,6 +151,7 @@
       <AdditionalOptions>%(AdditionalOptions) /noattributename</AdditionalOptions>
     </Midl>
   </ItemDefinitionGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PkgESCompliance.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
