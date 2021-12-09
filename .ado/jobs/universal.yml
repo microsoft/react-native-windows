@@ -60,6 +60,10 @@
               steps:
                 - template: ../templates/checkout-shallow.yml
 
+                - powershell: |
+                    gci C:\Windows\System32\WindowsPowerShell\powershell.exe -Recurse
+                  displayName: dir powershell
+                  
                 - template: ../templates/prepare-js-env.yml
 
                 - template: ../templates/prepare-build-env.yml
