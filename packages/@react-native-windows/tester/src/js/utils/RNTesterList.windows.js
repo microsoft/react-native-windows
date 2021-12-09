@@ -138,11 +138,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/View/ViewExample'),
   },
-  {
-    key: 'NewArchitectureExample',
-    category: 'UI',
-    module: require('../examples/NewArchitecture/NewArchitectureExample'),
-  },
+  //{
+  //  key: 'NewArchitectureExample',
+  //  category: 'UI',
+  //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
+  //},
   {
     key: 'XAML',
     category: 'UI',
