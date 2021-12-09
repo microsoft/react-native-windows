@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211111-2008-2ae06df58",
+  "baseVersion": "0.0.0-20211125-2009-3ba237b66",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "249fe001d69c76065a68de5cafcc51c3c48fa04a"
+      "baseHash": "e6f4938b0ad8446c652d1bb24658e27c936ce829"
     },
     {
       "type": "derived",
@@ -25,13 +25,13 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "1ccd48c3394847eee3b3c3551b836340c0fe18ed"
+      "baseHash": "5407f917437ba5280dff82f74032d73baf64ed77"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "33ae36d6372a45760895a15854efef726fbfa296",
+      "baseHash": "1de1a9526002e19f758a40e43cdca2a06093ceec",
       "issue": 4578
     },
     {
@@ -124,7 +124,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "9240eb753686d4cbf40644170b350867c6f15ad0"
+      "baseHash": "c60bbc3c4339a82a633767f37060a9bb6e046f89"
     },
     {
       "type": "patch",
@@ -173,7 +173,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "cf2b9765b9002b0724662417ac77d24153de02bb"
+      "baseHash": "d5ff79646eeaeb0464a8c8a875c300555d555ed7"
     },
     {
       "type": "platform",
@@ -210,7 +210,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "852063863b46684c86b9eed1e241f2ad4002cd09",
+      "baseHash": "ab61064bcff7af6d72dc05d0c5545d4f495e493d",
       "issue": 4320
     },
     {
