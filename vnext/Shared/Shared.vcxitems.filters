@@ -381,9 +381,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CxxModuleHolder.h">
-      <Filter>Source Files\Modules</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
