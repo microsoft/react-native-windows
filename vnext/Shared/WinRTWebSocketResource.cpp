@@ -90,18 +90,15 @@ namespace Microsoft::React {
 // private
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
-    Uri &&uri,
     vector<ChainValidationResult> &&certExceptions)
     : WinRTWebSocketResource(
           std::move(socket),
           DataWriter{socket.OutputStream()},
-          std::move(uri),
           std::move(certExceptions)) {}
 
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     IDataWriter &&writer,
-    Uri &&uri,
     vector<ChainValidationResult> &&certExceptions)
     : m_socket{std::move(socket)}, m_writer{std::move(writer)} {
   m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
@@ -111,8 +108,8 @@ WinRTWebSocketResource::WinRTWebSocketResource(
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string &urlString, vector<ChainValidationResult> &&certExceptions)
-    : WinRTWebSocketResource(MessageWebSocket{}, Uri{winrt::to_hstring(urlString)}, std::move(certExceptions)) {}
+WinRTWebSocketResource::WinRTWebSocketResource(vector<ChainValidationResult> &&certExceptions)
+    : WinRTWebSocketResource(MessageWebSocket{}, std::move(certExceptions)) {}
 
 WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 {

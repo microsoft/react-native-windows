@@ -120,7 +120,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
 namespace Microsoft::React {
 
 WebSocketModule::WebSocketModule() : m_sharedState{std::make_shared<SharedState>()} {
-  m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(std::move(url)); };
+  m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(); };
   m_sharedState->Module = this;
 }
 

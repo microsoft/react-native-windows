@@ -44,11 +44,9 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
-      winrt::Windows::Foundation::Uri &&uri,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
-  winrt::Windows::Foundation::IAsyncAction PerformConnect(
-      /*std::string &&url*/ winrt::Windows::Foundation::Uri &&uri) noexcept;
+  winrt::Windows::Foundation::IAsyncAction PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
   winrt::fire_and_forget PerformPing() noexcept;
   winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
@@ -62,11 +60,9 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
-      winrt::Windows::Foundation::Uri &&uri,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
   WinRTWebSocketResource(
-      const std::string &urlString,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
   ~WinRTWebSocketResource() noexcept override;

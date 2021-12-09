@@ -39,7 +39,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     string scheme = "ws";
     if (isSecure)
       scheme += "s";
-    auto ws = IWebSocketResource::Make(scheme + "://localhost:5556/");
+    auto ws = IWebSocketResource::Make();
     promise<size_t> sentSizePromise;
     ws->SetOnSend([&sentSizePromise](size_t size)
     {
@@ -85,7 +85,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   TEST_METHOD(ConnectClose)
   {
     auto server = make_shared<Test::WebSocketServer>(5556);
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make();
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
     bool closed = false;
@@ -124,7 +124,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
     {
-      auto ws = IWebSocketResource::Make("ws://localhost:5556");
+      auto ws = IWebSocketResource::Make();
       ws->SetOnConnect([&connected]()
       {
         connected = true;
@@ -156,7 +156,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->Start();
 
-    auto ws = IWebSocketResource::Make("ws://localhost:5556");
+    auto ws = IWebSocketResource::Make();
     promise<bool> pingPromise;
     ws->SetOnPing([&pingPromise]()
     {
@@ -189,7 +189,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   TEST_METHOD(SendReceiveLargeMessage) {
     auto server = make_shared<Test::WebSocketServer>(5556);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make();
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
     string errorMessage;
@@ -246,7 +246,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       auto cookie = response[boost::beast::http::field::cookie].to_string();
       server->SetMessageFactory([cookie](string &&) { return cookie; });
     });
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make();
     promise<string> response;
     ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
 
@@ -285,7 +285,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       return message;
     });
 
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make();
 
     std::vector<string> messages{
         "AQ==",     // [ 01 ]
@@ -336,7 +336,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     {
       return message;
     });
-    auto ws = IWebSocketResource::Make("ws://localhost:5556/");
+    auto ws = IWebSocketResource::Make();
 
     string expected = "ABCDEFGHIJ";
     string result(expected.size(), '0');

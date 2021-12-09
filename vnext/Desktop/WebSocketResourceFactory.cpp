@@ -15,7 +15,7 @@ namespace Microsoft::React {
 #pragma region IWebSocketResource static members
 
 /*static*/
-shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
+shared_ptr<IWebSocketResource> IWebSocketResource::Make() {
 #if ENABLE_BEAST
   if (GetRuntimeOptionBool("UseBeastWebSocket")) {
     Url url(std::move(urlString));
@@ -42,7 +42,7 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make(string &&urlString) {
       certExceptions.emplace_back(
           winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult::InvalidName);
     }
-    return make_shared<WinRTWebSocketResource>(std::move(urlString), std::move(certExceptions));
+    return make_shared<WinRTWebSocketResource>(std::move(certExceptions));
 #if ENABLE_BEAST
   }
 #endif // ENABLE_BEAST

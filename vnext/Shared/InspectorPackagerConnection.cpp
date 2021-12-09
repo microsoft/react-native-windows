@@ -205,7 +205,7 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
 
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   m_packagerWebSocketConnection =
-      std::make_shared<Microsoft::React::WinRTWebSocketResource>(m_url, std::move(certExceptions));
+      std::make_shared<Microsoft::React::WinRTWebSocketResource>(std::move(certExceptions));
 
   m_packagerWebSocketConnection->SetOnError([](const Microsoft::React::IWebSocketResource::Error &err) {
     facebook::react::tracing::error(err.Message.c_str());

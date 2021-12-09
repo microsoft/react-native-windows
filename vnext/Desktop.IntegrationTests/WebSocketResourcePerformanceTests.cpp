@@ -71,7 +71,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     {
       vector<shared_ptr<IWebSocketResource>> resources;
       for (int i = 0; i < resourceTotal; i++) {
-        auto ws = IWebSocketResource::Make("ws://localhost:5555/"); // TODO: Switch to port 5556
+        auto ws = IWebSocketResource::Make();
         ws->SetOnMessage([this, &threadCount, &errorFound](size_t size, const string &message, bool isBinary) {
           if (errorFound)
             return;
@@ -103,7 +103,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
           errorFound = true;
           errorMessage = error.Message;
         });
-        ws->Connect("ws://localhost:5555");
+        ws->Connect("ws://localhost:5555"); // TODO: Switch to port 5556
 
         resources.push_back(std::move(ws));
       } // Create and store WS resources.

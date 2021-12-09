@@ -52,7 +52,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     // Test APIs
     auto rc =
-        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
@@ -78,7 +78,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     // Test APIs
     auto rc =
-        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
@@ -95,7 +95,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     auto lambda = [&rc]() mutable {
       rc = make_shared<WinRTWebSocketResource>(
-          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, CertExceptions{});
     };
 
     Assert::ExpectException<winrt::hresult_error>(lambda);
