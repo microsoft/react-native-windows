@@ -407,7 +407,7 @@ void BaseWebSocketResource<SocketLayer, Stream>::Connect(
 
   // TODO: Enable?
   // m_stream->set_option(websocket::stream_base::timeout::suggested(role_type::client));
-  m_stream->set_option(websocket::stream_base::decorator([options = std::move(options)](websocket::request_type &req) {
+  m_stream->set_option(websocket::stream_base::decorator([options = options](websocket::request_type &req) {
     // Collect headers
     for (const auto &header : options) {
       req.insert(Microsoft::Common::Unicode::Utf16ToUtf8(header.first), header.second);
@@ -520,34 +520,34 @@ void BaseWebSocketResource<SocketLayer, Stream>::Ping() noexcept {
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnConnect(function<void()> &&handler) noexcept {
-  m_connectHandler = handler;
+  m_connectHandler = std::move(handler);
 }
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnPing(function<void()> &&handler) noexcept {
-  m_pingHandler = handler;
+  m_pingHandler = std::move(handler);
 }
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnSend(function<void(size_t)> &&handler) noexcept {
-  m_writeHandler = handler;
+  m_writeHandler = std::move(handler);
 }
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnMessage(
     function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {
-  m_readHandler = handler;
+  m_readHandler = std::move(handler);
 }
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnClose(
     function<void(CloseCode, const string &)> &&handler) noexcept {
-  m_closeHandler = handler;
+  m_closeHandler = std::move(handler);
 }
 
 template <typename SocketLayer, typename Stream>
 void BaseWebSocketResource<SocketLayer, Stream>::SetOnError(function<void(Error &&)> &&handler) noexcept {
-  m_errorHandler = handler;
+  m_errorHandler = std::move(handler);
 }
 
 template <typename SocketLayer, typename Stream>
