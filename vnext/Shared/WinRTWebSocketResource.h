@@ -17,7 +17,6 @@
 namespace Microsoft::React {
 
 class WinRTWebSocketResource : public IWebSocketResource, public std::enable_shared_from_this<WinRTWebSocketResource> {
-  winrt::Windows::Foundation::Uri m_uri;
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;
   // TODO: Use or remove.
   winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker m_revoker;
@@ -45,10 +44,9 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
-      winrt::Windows::Foundation::Uri &&uri,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
-  winrt::Windows::Foundation::IAsyncAction PerformConnect() noexcept;
+  winrt::Windows::Foundation::IAsyncAction PerformConnect(winrt::Windows::Foundation::Uri &&uri) noexcept;
   winrt::fire_and_forget PerformPing() noexcept;
   winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
@@ -62,11 +60,9 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   WinRTWebSocketResource(
       winrt::Windows::Networking::Sockets::IMessageWebSocket &&socket,
       winrt::Windows::Storage::Streams::IDataWriter &&writer,
-      winrt::Windows::Foundation::Uri &&uri,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
   WinRTWebSocketResource(
-      const std::string &urlString,
       std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> &&certExceptions);
 
   ~WinRTWebSocketResource() noexcept override;
@@ -76,7 +72,7 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   /// <summary>
   /// <see cref="IWebSocketResource::Connect" />
   /// </summary>
-  void Connect(const Protocols &protocols, const Options &options) noexcept override;
+  void Connect(std::string &&url, const Protocols &protocols, const Options &options) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Ping" />
