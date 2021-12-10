@@ -2,6 +2,21 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Fri, 10 Dec 2021 06:11:42 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.21",
+      "version": "0.0.0-canary.21",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "8ce139a2d7f22902023ac1cdec382909c5d98aae",
+            "comment": "Integrate 11/25"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:10 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.20",
       "version": "0.0.0-canary.20",

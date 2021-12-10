@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 Dec 2021 06:11:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.429",
+      "version": "0.0.0-canary.429",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "cbfe1bdf9106c89354dfd55fe410844694482afc",
+            "comment": "Cleans up unused code from DecayAnimationDriver"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8ce139a2d7f22902023ac1cdec382909c5d98aae",
+            "comment": "Integrate 11/25"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "02f8b9f1777086b0db15cfc41433ca76b7c23d4d",
+            "comment": "Avoid capturing raw `this` pointer in WS and AsyncStorage'"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.21",
+            "commit": "02f8b9f1777086b0db15cfc41433ca76b7c23d4d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Dec 2021 06:10:13 GMT",
       "tag": "react-native-windows_v0.0.0-canary.428",
       "version": "0.0.0-canary.428",

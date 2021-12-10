@@ -14,12 +14,12 @@
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
     "react-native": "0.0.0-20211125-2009-3ba237b66",
-    "react-native-windows": "^0.0.0-canary.428"
+    "react-native-windows": "^0.0.0-canary.429"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.20",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.21",
     "@rnw-scripts/eslint-config": "1.1.10",
     "@rnw-scripts/just-task": "2.2.2",
     "@rnw-scripts/ts-config": "2.0.1",

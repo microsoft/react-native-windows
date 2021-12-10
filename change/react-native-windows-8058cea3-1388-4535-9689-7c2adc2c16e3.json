@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Cleans up unused code from DecayAnimationDriver",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

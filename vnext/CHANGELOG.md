@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Dec 2021 06:10:13 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Dec 2021 06:11:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.429
+
+Fri, 10 Dec 2021 06:11:42 GMT
+
+### Changes
+
+- Cleans up unused code from DecayAnimationDriver (erozell@outlook.com)
+- Integrate 11/25 (34109996+chiaramooney@users.noreply.github.com)
+- Avoid capturing raw `this` pointer in WS and AsyncStorage' (julio.rocha@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.21
 
 ## 0.0.0-canary.428
 
