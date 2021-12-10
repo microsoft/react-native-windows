@@ -346,7 +346,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
 
   Uri uri{nullptr};
   try {
-    uri = Uri{winrt::to_hstring(std::move(url))};
+    uri = Uri{winrt::to_hstring(url)};
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
       m_errorHandler({HResultToString(e), ErrorType::Connection});
