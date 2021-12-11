@@ -10,7 +10,7 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup Label="CppWinRT">
+  <PropertyGroup Condition="'$(CppWinRTVersion)' == ''">
     <CppWinRTVersion>2.0.211028.7</CppWinRTVersion>
   </PropertyGroup>
 

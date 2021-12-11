@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="Bundle and Bytecode Generation">
+    <!--
+      Entry file of the JS bundle. Defaults to use index.windows.js if it
+      exists, otherwise index.js.
+    -->
+    <BundleEntryFile Condition="'$(BundleEntryFile)' == ''"></BundleEntryFile>
+
+    <!--
+      Additional options to be passed to `react-native bundle`.
+
+      https://github.com/react-native-community/cli/blob/master/docs/commands.md
+    -->
+    <BundlerOptions Condition="'$(BundlerOptions)' == ''"></BundlerOptions>
+
+    <!--
+      Additional options to be passed to MSVC compiler.
+
+      https://docs.microsoft.com/cpp/build/reference/compiler-options
+    -->
+    <ClCompileOptions Condition="'$(ClCompileOptions)' == ''"></ClCompileOptions>
+
+    <!--
+      Enables building C# modules for C++ projects. Fixes "Error 0x80131040".
+
+      https://microsoft.github.io/react-native-windows/docs/native-modules-troubleshooting
+    -->
+    <ConsumeCSharpModules Condition="'$(ConsumeCSharpModules)' == ''">false</ConsumeCSharpModules>
+
+    <!--
+      Version of Microsoft.Windows.CppWinRT package to use, e.g. "2.0.211028.7".
+    -->
+    <CppWinRTVersion Condition="'$(CppWinRTVersion)' == ''"></CppWinRTVersion>
+
+    <!--
+      Enables a large PCH, which significantly increases build speed at the cost
+      of instability on machines without large amounts of memory. Enabled by
+      default when building on machines with high memory per thread.
+    -->
+    <ForceLargePch Condition="'$(ForceLargePch)' == ''">false</ForceLargePch>
+
+    <!--
+      Version of ReactNative.Hermes.Windows package to use, e.g. "0.10.0-ms.1".
+
+      https://microsoft.github.io/react-native-windows/docs/hermes
+    -->
+    <HermesVersion Condition="'$(HermesVersion)' == ''"></HermesVersion>
+
+    <!--
+      Extra options to be passed to the MSVC linker.
+
+      https://docs.microsoft.com/cpp/build/reference/linker-options
+    -->
+    <LinkOptions Condition="'$(LinkOptions)' == ''"></LinkOptions>
+
+    <!--
+      Extra options to be passed to the MIDL compiler.
+
+      https://docs.microsoft.com/windows/win32/midl/midl-command-line-reference
+    -->
+    <MidlOptions Condition="'$(MidlOptions)' == ''"></MidlOptions>
+
+    <!--
+      Enables using the Hermes JS engine and Hermes bytecode.
+
+      https://microsoft.github.io/react-native-windows/docs/hermes
+    -->
+    <UseHermes Condition="'$(UseHermes)' == ''">{{useHermes}}</UseHermes>
+
+    <!--
+      Use the official `Microsoft.ReactNative` NuGet package, instead of
+      building it locally. Requires generating a new solution.
+
+      https://microsoft.github.io/react-native-windows/docs/nuget
+    -->
+    <UseNuget Condition="'$(UseNuget)' == ''">{{useExperimentalNuget}}</UseNuget>
+
+    <!--
+      Target WinUI 3 instead of System XAML.
+
+      https://microsoft.github.io/react-native-windows/docs/winui3
+    -->
+    <UseWinUI3 Condition="'$(UseWinUI3)' == ''">{{useWinUI3}}</UseWinUI3>
+
+    <!--
+      Version of the Windows platform SDK to use, e.g. "10.0.19041.0".
+
+      https://microsoft.github.io/react-native-windows/docs/customizing-sdk-versions
+    -->
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''"></WindowsTargetPlatformVersion>
+
+    <!--
+      Version of Microsoft.Web.WebView2 to use, e.g. "1.0.1054.31".
+    -->
+    <WebView2Version Condition="'$(WebView2Version)' == ''"></WebView2Version>
+
+    <!--
+      Version of the WinUI 2.x package to use, e.g. "2.6.0".
+
+      https://microsoft.github.io/react-native-windows/docs/customizing-sdk-versions
+    -->
+    <WinUI2Version Condition="'$(WinUI2Version)' == ''"></WinUI2Version>
+  </PropertyGroup>
+
+</Project>
