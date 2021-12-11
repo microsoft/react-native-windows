@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20211028-2008-61e1b6f86",
+  "baseVersion": "0.0.0-20211125-2009-3ba237b66",
   "overrides": [
     {
       "type": "patch",
@@ -18,21 +18,21 @@
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "57c01049a8acb59a8e90dbc29aad297fb1a4d887",
+      "baseHash": "a5ed351cd30c215cb90a2f8512e0fe9f55e8046e",
       "issue": 6240
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "7c160ed70055a586a4017f30cf3c12cd92095352",
+      "baseHash": "b8706d4b9f3f1473c645af90fde103bb8a5c24f9",
       "issue": 5688
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "9b6d8ae94264058dcb498cfb2031c24b2f3d0323"
+      "baseHash": "66caf79cd84b89dddecf7ba47ef16a5f81411ed3"
     },
     {
       "type": "copy",
@@ -45,7 +45,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "4760ebe3fefa48c562141565958f2af4b941bbbf"
+      "baseHash": "465bc5e21ce7b00a012d241148b519d08ab18961"
     }
   ]
 }

@@ -79,17 +79,17 @@ struct IWebSocketResource {
   /// <summary>
   /// Creates an <c>IWebSocketResource</c> instance.
   /// </summary>
-  /// <param name="url">
-  /// WebSocket URL address the instance will connect to.
-  /// The address's scheme can be either ws:// or wss://.
-  /// </param>
-  static std::shared_ptr<IWebSocketResource> Make(std::string &&url);
+  static std::shared_ptr<IWebSocketResource> Make();
 
   virtual ~IWebSocketResource() noexcept {}
 
   /// <summary>
   /// Establishes a continuous connection with the remote endpoint.
   /// </summary>
+  /// <param name="url">
+  /// WebSocket URL address the instance will connect to.
+  /// The address's scheme can be either ws:// or wss://.
+  /// </param>
   /// <param name="protocols">
   /// Currently unused
   /// </param>
@@ -97,7 +97,7 @@ struct IWebSocketResource {
   /// HTTP header fields passed by the remote endpoint, to be used in the
   /// handshake process.
   /// </param>
-  virtual void Connect(const Protocols &protocols = {}, const Options &options = {}) noexcept = 0;
+  virtual void Connect(std::string &&url, const Protocols &protocols = {}, const Options &options = {}) noexcept = 0;
 
   /// <summary>
   /// Sends a ping frame to the remote endpoint.

@@ -1,8 +1,111 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Sat, 13 Nov 2021 06:08:59 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Dec 2021 06:11:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.3
+
+Fri, 10 Dec 2021 06:11:42 GMT
+
+### Patches
+
+- Integrate 11/25 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.429
+
+## 0.1.2
+
+Tue, 07 Dec 2021 06:10:13 GMT
+
+### Patches
+
+- Centralize CppWinRT version setting (julio.rocha@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.428
+
+## 0.1.2-0
+
+Sun, 05 Dec 2021 06:09:34 GMT
+
+### Changes
+
+- Use PackageReference in C++ projects (julio.rocha@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.427
+
+## 0.1.1
+
+Sat, 04 Dec 2021 06:09:39 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.426
+
+## 0.1.0
+
+Fri, 03 Dec 2021 06:12:09 GMT
+
+### Minor changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/just-task to v2.2.2
+- Bump react-native-windows to v0.0.0-canary.425
+
+## 0.0.35
+
+Thu, 02 Dec 2021 06:09:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.424
+
+## 0.0.34
+
+Fri, 26 Nov 2021 06:09:54 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.423
+
+## 0.0.33
+
+Thu, 25 Nov 2021 06:09:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.422
+
+## 0.0.32
+
+Wed, 24 Nov 2021 06:08:49 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.421
+
+## 0.0.31
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.420
+
+## 0.0.30
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump react-native-windows to v0.0.0-canary.419
+
+## 0.0.29
+
+Tue, 16 Nov 2021 06:09:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.418
 
 ## 0.0.28
 

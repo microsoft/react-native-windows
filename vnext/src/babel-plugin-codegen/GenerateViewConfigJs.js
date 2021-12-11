@@ -14,9 +14,15 @@ const j = require('jscodeshift');
 
 // File path -> contents
 
-const template = `
+const FileTemplate = ({
+  imports,
+  componentConfig,
+}: {
+  imports: string,
+  componentConfig: string,
+}) => `
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * ${'C'}opyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -28,9 +34,9 @@ const template = `
 
 'use strict';
 
-::_IMPORTS_::
+${imports}
 
-::_COMPONENT_CONFIG_::
+${componentConfig}
 `;
 
 // We use this to add to a set. Need to make sure we aren't importing
@@ -93,19 +99,45 @@ function getReactDiffProcessValue(typeAnnotation) {
   }
 }
 
-const componentTemplate = `
-let nativeComponentName = '::_COMPONENT_NAME_WITH_COMPAT_SUPPORT_::';
-::_DEPRECATION_CHECK_::
+const ComponentTemplate = ({
+  componentName,
+  paperComponentName,
+  paperComponentNameDeprecated,
+}: {
+  componentName: string,
+  paperComponentName: ?string,
+  paperComponentNameDeprecated: ?string,
+}) => {
+  const nativeComponentName = paperComponentName ?? componentName;
+
+  return `
+let nativeComponentName = '${nativeComponentName}';
+${
+  paperComponentNameDeprecated != null
+    ? DeprecatedComponentNameCheckTemplate({
+        componentName,
+        paperComponentNameDeprecated,
+      })
+    : ''
+}
 export default NativeComponentRegistry.get(nativeComponentName, () => VIEW_CONFIG);
 `.trim();
+};
 
-const deprecatedComponentTemplate = `
-if (UIManager.getViewManagerConfig('::_COMPONENT_NAME_::')) {
-  nativeComponentName = '::_COMPONENT_NAME_::';
-} else if (UIManager.getViewManagerConfig('::_COMPONENT_NAME_DEPRECATED_::')) {
-  nativeComponentName = '::_COMPONENT_NAME_DEPRECATED_::';
+const DeprecatedComponentNameCheckTemplate = ({
+  componentName,
+  paperComponentNameDeprecated,
+}: {
+  componentName: string,
+  paperComponentNameDeprecated: string,
+}) =>
+  `
+if (UIManager.getViewManagerConfig('${componentName}')) {
+  nativeComponentName = '${componentName}';
+} else if (UIManager.getViewManagerConfig('${paperComponentNameDeprecated}')) {
+  nativeComponentName = '${paperComponentNameDeprecated}';
 } else {
-  throw new Error('Failed to find native component for either "::_COMPONENT_NAME_::" or "::_COMPONENT_NAME_DEPRECATED_::"');
+  throw new Error('Failed to find native component for either "${componentName}" or "${paperComponentNameDeprecated}"');
 }
 `.trim();
 
@@ -122,7 +154,7 @@ function normalizeInputEventName(name) {
 
 // Replicates the behavior of viewConfig in RCTComponentData.m
 function getValidAttributesForEvents(events) {
-  return events.map(eventType => {
+  return events.map((eventType) => {
     return j.property('init', j.identifier(eventType.name), j.literal(true));
   });
 }
@@ -166,7 +198,7 @@ function buildViewConfig(schema, componentName, component, imports) {
   const componentProps = component.props;
   const componentEvents = component.events;
 
-  component.extendsProps.forEach(extendProps => {
+  component.extendsProps.forEach((extendProps) => {
     switch (extendProps.type) {
       case 'ReactNativeBuiltInType':
         switch (extendProps.knownTypeName) {
@@ -189,7 +221,7 @@ function buildViewConfig(schema, componentName, component, imports) {
   });
 
   const validAttributes = j.objectExpression([
-    ...componentProps.map(schemaProp => {
+    ...componentProps.map((schemaProp) => {
       return j.property(
         'init',
         j.identifier(schemaProp.name),
@@ -200,7 +232,7 @@ function buildViewConfig(schema, componentName, component, imports) {
   ]);
 
   const bubblingEventNames = component.events
-    .filter(event => event.bubblingType === 'bubble')
+    .filter((event) => event.bubblingType === 'bubble')
     .reduce((bubblingEvents, event) => {
       // We add in the deprecated paper name so that it is in the view config.
       // This means either the old event name or the new event name can fire
@@ -224,7 +256,7 @@ function buildViewConfig(schema, componentName, component, imports) {
       : null;
 
   const directEventNames = component.events
-    .filter(event => event.bubblingType === 'direct')
+    .filter((event) => event.bubblingType === 'direct')
     .reduce((directEvents, event) => {
       // We add in the deprecated paper name so that it is in the view config.
       // This means either the old event name or the new event name can fire
@@ -272,14 +304,14 @@ function buildCommands(schema, componentName, component, imports) {
     'const {dispatchCommand} = require("react-native/Libraries/Renderer/shims/ReactNative");',
   );
 
-  const properties = commands.map(command => {
+  const properties = commands.map((command) => {
     const commandName = command.name;
     const params = command.typeAnnotation.params;
 
     const commandNameLiteral = j.literal(commandName);
     const commandNameIdentifier = j.identifier(commandName);
     const arrayParams = j.arrayExpression(
-      params.map(param => {
+      params.map((param) => {
         return j.identifier(param.name);
       }),
     );
@@ -287,7 +319,7 @@ function buildCommands(schema, componentName, component, imports) {
     const expression = j.template
       .expression`dispatchCommand(ref, ${commandNameLiteral}, ${arrayParams})`;
 
-    const functionParams = params.map(param => {
+    const functionParams = params.map((param) => {
       return j.identifier(param.name);
     });
 
@@ -322,7 +354,7 @@ module.exports = {
       const imports = new Set();
 
       const moduleResults = Object.keys(schema.modules)
-        .map(moduleName => {
+        .map((moduleName) => {
           const module = schema.modules[moduleName];
           if (module.type !== 'Component') {
             return;
@@ -334,32 +366,21 @@ module.exports = {
             .map((componentName: string) => {
               const component = components[componentName];
 
-              const paperComponentName = component.paperComponentName
-                ? component.paperComponentName
-                : componentName;
-
               if (component.paperComponentNameDeprecated) {
                 imports.add(UIMANAGER_IMPORT);
               }
 
-              const deprecatedCheckBlock = component.paperComponentNameDeprecated
-                ? deprecatedComponentTemplate
-                    .replace(/::_COMPONENT_NAME_::/g, componentName)
-                    .replace(
-                      /::_COMPONENT_NAME_DEPRECATED_::/g,
-                      component.paperComponentNameDeprecated || '',
-                    )
-                : '';
-
-              const replacedTemplate = componentTemplate
-                .replace(/::_COMPONENT_NAME_::/g, componentName)
-                .replace(
-                  /::_COMPONENT_NAME_WITH_COMPAT_SUPPORT_::/g,
-                  paperComponentName,
-                )
-                .replace(/::_DEPRECATION_CHECK_::/, deprecatedCheckBlock);
+              const replacedTemplate = ComponentTemplate({
+                componentName,
+                paperComponentName: component.paperComponentName,
+                paperComponentNameDeprecated:
+                  component.paperComponentNameDeprecated,
+              });
 
               const replacedSourceRoot = j.withParser('flow')(replacedTemplate);
+
+              const paperComponentName =
+                component.paperComponentName ?? componentName;
 
               replacedSourceRoot
                 .find(j.Identifier, {
@@ -398,14 +419,10 @@ module.exports = {
         .filter(Boolean)
         .join('\n\n');
 
-      const replacedTemplate = template
-        .replace(/::_COMPONENT_CONFIG_::/g, moduleResults)
-        .replace(
-          '::_IMPORTS_::',
-          Array.from(imports)
-            .sort()
-            .join('\n'),
-        );
+      const replacedTemplate = FileTemplate({
+        componentConfig: moduleResults,
+        imports: Array.from(imports).sort().join('\n'),
+      });
 
       return new Map([[fileName, replacedTemplate]]);
     } catch (error) {

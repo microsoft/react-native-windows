@@ -46,7 +46,12 @@
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
         - ${{ each matrix in config.Matrix }}:
             - job: UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
-              variables: [template: ../variables/windows.yml]
+              variables:
+                - template: ../variables/windows.yml
+                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+                # Keep NuGet cache independent from the user directory.
+                - name: NUGET_PACKAGES
+                  value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Build ${{ matrix.Name }}
               pool: ${{ parameters.AgentPool.Large }}
               timeoutInMinutes: 60
@@ -71,6 +76,9 @@
                     solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
+
+                - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+                  - template: ../templates/component-governance.yml
 
                 - ${{ if eq(matrix.CreateApiDocs, true) }}:
                   - powershell: |
@@ -108,7 +116,12 @@
                       Mso.UnitTests\**
 
             - job: UniversalTest${{ matrix.Name }}
-              variables: [template: ../variables/windows.yml]
+              variables:
+                - template: ../variables/windows.yml
+                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+                # Keep NuGet cache independent from the user directory.
+                - name: NUGET_PACKAGES
+                  value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
@@ -155,8 +168,6 @@
                       AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
                       AnalyzeVerbose: true
                       toolVersion: 'LatestPreRelease'
-
-                - template: ../templates/component-governance.yml
 
                 - template: ../templates/discover-google-test-adapter.yml
 

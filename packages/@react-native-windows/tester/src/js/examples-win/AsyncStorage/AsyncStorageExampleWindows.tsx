@@ -38,7 +38,7 @@ class AsyncStorageExample extends React.Component<
   }
 
   private updateAsyncStorageData(key: string, value: string) {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const asyncStorageData = [...prevState.asyncStorageData];
       let foundVal = false;
       for (const kvp of asyncStorageData) {
@@ -58,9 +58,9 @@ class AsyncStorageExample extends React.Component<
   private makeOnRemoveEntryPress(key: string) {
     return () => {
       void AsyncStorage.removeItem(key);
-      this.setState(prevState => {
+      this.setState((prevState) => {
         const asyncStorageData = prevState.asyncStorageData.filter(
-          kvp => kvp[0] !== key,
+          (kvp) => kvp[0] !== key,
         );
         return {asyncStorageData: asyncStorageData};
       });
@@ -157,7 +157,7 @@ export const description = 'Usage of AsyncStorage';
 export const examples = [
   {
     title: 'AsyncStorage',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <AsyncStorageExample />;
     },
   },

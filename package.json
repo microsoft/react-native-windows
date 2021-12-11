@@ -3,16 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "lage build -- --color",
-    "lint": "lage lint --verbose -- --color",
-    "lint:fix": "lage lint:fix -- --color",
+    "build": "lage build",
+    "lint": "lage lint --verbose",
+    "lint:fix": "lage lint:fix",
     "change": "beachball change",
-    "clean": "lage clean -- --color",
+    "clean": "lage clean",
     "doc": "doxysaurus --config vnext/doxysaurus.json",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -verify",
-    "test": "lage test --verbose -- --color",
-    "validate-overrides": "react-native-platform-override validate --color"
+    "test": "lage test --verbose",
+    "validate-overrides": "react-native-platform-override validate"
   },
   "repository": {
     "type": "git",
@@ -25,7 +25,6 @@
       "packages/@office-iss/*",
       "packages/@react-native-windows/*",
       "packages/@react-native/*",
-      "packages/@rnw-bots/*",
       "packages/@rnw-scripts/*",
       "vnext"
     ]

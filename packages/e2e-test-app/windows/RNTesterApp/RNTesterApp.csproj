@@ -25,6 +25,9 @@
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
     <LangVersion>7.3</LangVersion>
   </PropertyGroup>
+  <PropertyGroup Label="NuGet">
+    <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
@@ -165,7 +168,7 @@
       <Version>1.0.9</Version>
     </PackageReference>
     <PackageReference Include="ReactNative.Hermes.Windows">
-      <Version>0.9.0-ms.6</Version>
+      <Version>0.10.0-ms.1</Version>
     </PackageReference>
   </ItemGroup>
   <ImportGroup Label="ReactNativeWindowsTargets">

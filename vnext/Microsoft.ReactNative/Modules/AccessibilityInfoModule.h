@@ -29,6 +29,9 @@ struct AccessibilityInfo : public std::enable_shared_from_this<AccessibilityInfo
   REACT_METHOD(getRecommendedTimeoutMillis)
   void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const &onSuccess) noexcept;
 
+  REACT_METHOD(isAccessibilityServiceEnabled)
+  void isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept;
+
  private:
   React::ReactContext m_context;
 };

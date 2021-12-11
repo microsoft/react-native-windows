@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import * as t from 'io-ts';
 
@@ -104,7 +104,7 @@ export type Manifest = t.TypeOf<typeof ManifestType>;
 export async function readManifestFromFile(
   filePath: string,
 ): Promise<Manifest> {
-  const json = (await fs.promises.readFile(filePath)).toString();
+  const json = (await fs.readFile(filePath)).toString();
   return parseManifest(json);
 }
 
@@ -134,6 +134,6 @@ export async function writeManifestToFile(
   filePath: string,
 ) {
   const json = JSON.stringify(manifest, null /*replacer*/, 2 /*space*/);
-  await fs.promises.mkdir(path.dirname(filePath), {recursive: true});
-  await fs.promises.writeFile(filePath, json);
+  await fs.mkdir(path.dirname(filePath), {recursive: true});
+  await fs.writeFile(filePath, json);
 }

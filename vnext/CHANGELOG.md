@@ -1,8 +1,131 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 13 Nov 2021 06:08:58 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Dec 2021 06:11:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.429
+
+Fri, 10 Dec 2021 06:11:42 GMT
+
+### Changes
+
+- Cleans up unused code from DecayAnimationDriver (erozell@outlook.com)
+- Integrate 11/25 (34109996+chiaramooney@users.noreply.github.com)
+- Avoid capturing raw `this` pointer in WS and AsyncStorage' (julio.rocha@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.21
+
+## 0.0.0-canary.428
+
+Tue, 07 Dec 2021 06:10:13 GMT
+
+### Changes
+
+- Centralize CppWinRT version setting (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.107
+
+## 0.0.0-canary.427
+
+Sun, 05 Dec 2021 06:09:35 GMT
+
+### Changes
+
+- Use PackageReference for NuGet Dependencies (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.106
+
+## 0.0.0-canary.426
+
+Sat, 04 Dec 2021 06:09:39 GMT
+
+### Changes
+
+- Add WebView2Version to Experimental Props (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.425
+
+Fri, 03 Dec 2021 06:12:08 GMT
+
+### Changes
+
+- Remove legacy logic to find win32 bundle (30809111+acoates-ms@users.noreply.github.com)
+- Removes unused calls from NativeAnimated (erozell@outlook.com)
+- InstanceCreated should fire before any JS code is run (30809111+acoates-ms@users.noreply.github.com)
+- ReloadInstance async task and InstanceLoaded event were not correctly reporting failures (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bumping Hermes to v0.10 (anandrag@microsoft.com)
+- Hook up DetachViewInstance method for custom UI implementations (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.105
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.20
+- Bump @react-native-windows/codegen to v0.0.0-canary.22
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.4
+- Bump react-native-platform-override to v1.6.2
+
+## 0.0.0-canary.424
+
+Thu, 02 Dec 2021 06:09:50 GMT
+
+### Changes
+
+- Websocket is hitting the UI queue unnecessarily (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.423
+
+Fri, 26 Nov 2021 06:09:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.104
+
+## 0.0.0-canary.422
+
+Thu, 25 Nov 2021 06:09:24 GMT
+
+### Changes
+
+- Remove unused bot work (ngerlem@microsoft.com)
+- Allow arbitrary views to register onMouseEnter/Leave (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.103
+
+## 0.0.0-canary.421
+
+Wed, 24 Nov 2021 06:08:49 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.102
+
+## 0.0.0-canary.420
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Changes
+
+- lets ToggleSwitch color change at runtime (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.101
+
+## 0.0.0-canary.419
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Changes
+
+- Ensure native animations fire completion callbacks (erozell@outlook.com)
+- Fix C# Module Event invocation (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.100
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.19
+- Bump @react-native-windows/codegen to v0.0.0-canary.21
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.3
+- Bump react-native-platform-override to v1.6.1
+
+## 0.0.0-canary.418
+
+Tue, 16 Nov 2021 06:09:18 GMT
+
+### Changes
+
+- Remove redundant WindowsTargetPlatformVersion declarations (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.417
 

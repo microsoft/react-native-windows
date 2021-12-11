@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/jest-e2e-config
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.7
+
+Fri, 03 Dec 2021 06:12:07 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/babel-node-config to v2.0.3
 
 ## 1.1.6
 

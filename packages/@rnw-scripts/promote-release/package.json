@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,23 +18,24 @@
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.25",
-    "@react-native-windows/package-utils": "^0.0.0-canary.22",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.27",
+    "@react-native-windows/fs": "^1.0.1",
+    "@react-native-windows/package-utils": "^0.0.0-canary.24",
     "chalk": "^4.1.0",
     "simple-git": "^1.131.0",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.8",
-    "@rnw-scripts/just-task": "2.2.1",
+    "@rnw-scripts/eslint-config": "1.1.10",
+    "@rnw-scripts/just-task": "2.2.2",
     "@rnw-scripts/ts-config": "2.0.1",
     "@types/chalk": "^2.2.0",
     "@types/node": "^14.14.22",
     "@types/yargs": "^16.0.0",
-    "eslint": "7.12.0",
+    "eslint": "^7.32.0",
     "just-scripts": "^1.3.3",
-    "prettier": "1.19.1",
+    "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   },
   "files": [

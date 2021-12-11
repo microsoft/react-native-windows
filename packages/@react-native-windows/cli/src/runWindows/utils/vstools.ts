@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import chalk from 'chalk';
 import {Project} from '../../config/projectConfig';
@@ -157,11 +157,11 @@ export function addProjectToSolution(
     '\tGlobalSection(SolutionConfigurationPlatforms) = preSolution',
     '\tEndGlobalSection',
     false,
-  ).map(line => line.match(/\s+([\w\s|]+)\s=/)![1]);
+  ).map((line) => line.match(/\s+([\w\s|]+)\s=/)![1]);
 
   const projectConfigLines: string[] = [];
 
-  slnConfigs.forEach(slnConfig => {
+  slnConfigs.forEach((slnConfig) => {
     if (!slnConfig.endsWith('|Any CPU')) {
       projectConfigLines.push(
         `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${
@@ -184,7 +184,7 @@ export function addProjectToSolution(
     '\tGlobalSection(ProjectConfigurationPlatforms) = postSolution',
   );
 
-  projectConfigLines.forEach(projectConfigLine => {
+  projectConfigLines.forEach((projectConfigLine) => {
     if (!slnLines.includes(projectConfigLine)) {
       if (verbose) {
         const configLine = projectConfigLine.substr(

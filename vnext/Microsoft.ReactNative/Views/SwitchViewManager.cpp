@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-
+#include "SwitchViewManager.h"
 #include <IReactInstance.h>
 #include <JSValueWriter.h>
 #include <UI.Xaml.Controls.h>
@@ -10,7 +10,7 @@
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
-#include "SwitchViewManager.h"
+using namespace Microsoft::ReactNative;
 
 namespace winrt {
 using namespace xaml;
@@ -28,7 +28,8 @@ class SwitchShadowNode : public ShadowNodeBase {
   void createView(const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override;
   void UpdateThumbColor();
-  void UpdateTrackColor();
+  void UpdateTrackColorOn();
+  void UpdateTrackColorOff();
   void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs);
 
  private:
@@ -42,12 +43,54 @@ class SwitchShadowNode : public ShadowNodeBase {
   winrt::Microsoft::ReactNative::JSValue m_onTrackColor;
 };
 
+// sets the resources to Empty SolidColorBrushes if the user sets the color before runtime, this lets the user change
+// the color of the SolidColorBrush at runtime and keeps the toggleswitches who did not change colors on the default
+// ThemeResource
+void setEmptyResouceBrushes(
+    const winrt::Microsoft::ReactNative::JSValueObject &props,
+    const xaml::Controls::ToggleSwitch toggleSwitch) {
+  auto brush = xaml::Media::SolidColorBrush();
+  for (const auto &pair : props) {
+    const std::string &propertyName = pair.first;
+    const auto &propertyValue = pair.second;
+    if (propertyName == "thumbTintColor") {
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOff", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOffPointerOver", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOffPressed", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOffDisabled", xaml::Media::SolidColorBrush());
+
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOnPointerOver", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOnDisabled", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOn", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchKnobFillOnPressed", xaml::Media::SolidColorBrush());
+
+    } else if (propertyName == "tintColor") {
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOff", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOffPressed", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOffDisabled", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOffPointerOver", xaml::Media::SolidColorBrush());
+
+    } else if (propertyName == "onTintColor") {
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOn", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOnPointerOver", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOnPressed", xaml::Media::SolidColorBrush());
+      UpdateResourceBrush(toggleSwitch, L"ToggleSwitchFillOnDisabled", xaml::Media::SolidColorBrush());
+    }
+  }
+}
+
 void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   Super::createView(props);
-
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
+
+  setEmptyResouceBrushes(props, toggleSwitch);
+
   m_toggleSwitchToggledRevoker = toggleSwitch.Toggled(winrt::auto_revoke, [=](auto &&, auto &&) {
-    UpdateTrackColor();
+    if (m_offTrackColor)
+      UpdateTrackColorOff();
+    if (m_onTrackColor)
+      UpdateTrackColorOn();
+
     if (!m_updating)
       OnToggled(GetViewManager()->GetReactContext(), m_tag, toggleSwitch.IsOn());
   });
@@ -56,31 +99,37 @@ void SwitchShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   // hook up loading event which is called right at beginning of Measure
   m_toggleSwitchLoadingRevoker = toggleSwitch.Loading(winrt::auto_revoke, [=](auto &&, auto &&) {
     UpdateThumbColor();
-    UpdateTrackColor();
+    UpdateTrackColorOn();
+    UpdateTrackColorOff();
   });
 }
 
 void SwitchShadowNode::UpdateThumbColor() {
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
-  if (toggleSwitch == nullptr)
-    return;
 
   const auto thumbBrush = IsValidColorValue(m_thumbColor) ? BrushFrom(m_thumbColor) : nullptr;
-  UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
+  if (thumbBrush != nullptr) {
+    UpdateToggleSwitchThumbResourceBrushes(toggleSwitch, thumbBrush);
+  }
 }
 
-void SwitchShadowNode::UpdateTrackColor() {
+void SwitchShadowNode::UpdateTrackColorOn() {
   auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
-  if (toggleSwitch == nullptr)
-    return;
 
   const auto onTrackBrush = IsValidColorValue(m_onTrackColor) ? BrushFrom(m_onTrackColor) : nullptr;
+  UpdateToggleSwitchTrackResourceBrushesOn(toggleSwitch, onTrackBrush);
+}
+
+void SwitchShadowNode::UpdateTrackColorOff() {
+  auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
+
   const auto offTrackBrush = IsValidColorValue(m_offTrackColor) ? BrushFrom(m_offTrackColor) : nullptr;
-  UpdateToggleSwitchTrackResourceBrushes(toggleSwitch, onTrackBrush, offTrackBrush);
+  UpdateToggleSwitchTrackResourceBrushesOff(toggleSwitch, offTrackBrush);
 }
 
 void SwitchShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_updating = true;
+  auto toggleSwitch = GetView().as<winrt::ToggleSwitch>();
 
   Super::updateProperties(props);
   for (const auto &pair : props) {
@@ -94,10 +143,10 @@ void SwitchShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValueOb
       UpdateThumbColor();
     } else if (propertyName == "tintColor") {
       m_offTrackColor = propertyValue.Copy();
-      UpdateTrackColor();
+      UpdateTrackColorOff();
     } else if (propertyName == "onTintColor") {
       m_onTrackColor = propertyValue.Copy();
-      UpdateTrackColor();
+      UpdateTrackColorOn();
     }
   }
 

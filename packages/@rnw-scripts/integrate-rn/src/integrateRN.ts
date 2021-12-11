@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import semver from 'semver';
 import yargs from 'yargs';
@@ -39,7 +39,7 @@ let logger: Logger;
         demandOption: false,
       },
     })
-    .check(args => {
+    .check((args) => {
       if (args._.length === 1 && semver.valid(<string>args._[0])) {
         return true;
       } else {
@@ -96,12 +96,7 @@ async function enumerateOverridePackages(): Promise<WritableNpmPackage[]> {
  * Whether the NPM package is subject to override validation
  */
 async function isOverridePackage(pkg: NpmPackage): Promise<boolean> {
-  try {
-    await fs.promises.access(path.join(pkg.path, 'overrides.json'));
-    return true;
-  } catch {
-    return false;
-  }
+  return await fs.exists(path.join(pkg.path, 'overrides.json'));
 }
 
 /**
@@ -119,9 +114,9 @@ async function upgradePlatformOverrides(): Promise<StepResult> {
 
     overridesWithConflicts.push(
       ...results
-        .filter(r => r.hasConflicts)
-        .map(r => r.overrideName)
-        .map(o => path.join(pkg.path, o)),
+        .filter((r) => r.hasConflicts)
+        .map((r) => r.overrideName)
+        .map((o) => path.join(pkg.path, o)),
     );
   }
 
@@ -150,11 +145,10 @@ async function validatePlatformOverrides(): Promise<StepResult> {
     );
   }
 
-  if (errors.filter(e => e.type !== 'outOfDate').length !== 0) {
+  if (errors.filter((e) => e.type !== 'outOfDate').length !== 0) {
     return {
       status: 'warn',
-      body:
-        'Override validation failed. Run `yarn validate-overrides` for more information',
+      body: 'Override validation failed. Run `yarn validate-overrides` for more information',
     };
   } else {
     return {status: 'success'};

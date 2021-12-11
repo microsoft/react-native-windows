@@ -1,8 +1,35 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Wed, 10 Nov 2021 23:57:30 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Dec 2021 06:11:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.21
+
+Fri, 10 Dec 2021 06:11:42 GMT
+
+### Changes
+
+- Integrate 11/25 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.20
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump react-native-platform-override to v1.6.2
+
+## 0.0.0-canary.19
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump react-native-platform-override to v1.6.1
 
 ## 0.0.0-canary.18
 

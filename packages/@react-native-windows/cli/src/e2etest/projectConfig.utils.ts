@@ -1,4 +1,4 @@
-import fs from 'fs'
+import fs from '@react-native-windows/fs'
 import path from 'path';
 import { copyAndReplace } from '../generator-common';
 
@@ -8,14 +8,14 @@ export const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
 
 export async function tryMkdir(dir: string): Promise<void> {
   try {
-    await fs.promises.mkdir(dir, {recursive: true});
+    await fs.mkdir(dir, {recursive: true});
   } catch (err) {}
 }
 
 export async function ensureWinUI3Project(folder: string) {
   const windowsDir = path.join(folder, 'windows');
   if (fs.existsSync(windowsDir)) {
-    await fs.promises.rmdir(windowsDir, {recursive: true});
+    await fs.rmdir(windowsDir, {recursive: true});
   }
   await tryMkdir(windowsDir);
 
@@ -32,20 +32,14 @@ export async function ensureWinUI3Project(folder: string) {
       {
         id: 'Microsoft.ReactNative.Cxx',
         version: '1.0.0',
-        hasProps: false,
-        hasTargets: true,
       },
       {
         id: 'Microsoft.UI.Xaml',
         version: '2.3.4.5',
-        hasProps: false,
-        hasTargets: false,
       },
       {
         id: 'Microsoft.WinUI',
         version: '3.2.1.0',
-        hasProps: false,
-        hasTargets: false,
       },
     ],
   };
@@ -63,13 +57,6 @@ export async function ensureWinUI3Project(folder: string) {
   await copyAndReplace(
     path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
     path.join(projDir, 'WithWinUI3.vcxproj'),
-    replacements,
-    null
-  );
-
-  await copyAndReplace(
-    path.join(templateRoot, 'cpp-app/proj/packages.config'),
-    path.join(projDir, 'packages.config'),
     replacements,
     null
   );

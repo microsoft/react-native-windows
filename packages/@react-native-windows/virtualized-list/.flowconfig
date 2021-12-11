@@ -17,7 +17,6 @@
 emoji=true
 
 exact_by_default=true
-indexed_access=false
 
 format.bracket_spacing=false
 
@@ -54,4 +53,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.162.0
+^0.165.0

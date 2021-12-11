@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import os from 'os';
 import path from 'path';
 import simplegit from 'simple-git/promise';
@@ -23,7 +23,8 @@ const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
  * between getting file contents of different versions may be slow.
  */
 export default class GitReactFileRepository
-  implements VersionedReactFileRepository {
+  implements VersionedReactFileRepository
+{
   private readonly fileRepo: FileSystemRepository;
   private readonly gitClient: simplegit.SimpleGit;
   private checkedOutVersion?: string;
@@ -48,7 +49,7 @@ export default class GitReactFileRepository
     gitDirectory?: string,
   ): Promise<GitReactFileRepository> {
     const dir = gitDirectory || (await this.defaultGitDirectory());
-    await fs.promises.mkdir(dir, {recursive: true});
+    await fs.mkdir(dir, {recursive: true});
 
     const gitClient = simplegit(dir);
     gitClient.silent(true);

@@ -1,8 +1,104 @@
 # Change Log - sample-apps
 
-This log was last generated on Sat, 13 Nov 2021 06:08:59 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Dec 2021 06:11:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 10 Dec 2021 06:11:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.429
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.21
+
+## 0.0.0
+
+Tue, 07 Dec 2021 06:10:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.428
+
+## 0.0.0
+
+Sat, 04 Dec 2021 06:09:39 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.426
+
+## 0.0.0
+
+Fri, 03 Dec 2021 06:12:11 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.425
+- Bump @react-native-windows/codegen to v0.0.0-canary.22
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.20
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 0.0.0
+
+Thu, 02 Dec 2021 06:09:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.424
+
+## 0.0.0
+
+Fri, 26 Nov 2021 06:09:54 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.423
+
+## 0.0.0
+
+Thu, 25 Nov 2021 06:09:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.422
+
+## 0.0.0
+
+Wed, 24 Nov 2021 06:08:49 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.421
+
+## 0.0.0
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.420
+
+## 0.0.0
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.419
+- Bump @react-native-windows/codegen to v0.0.0-canary.21
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.19
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 0.0.0
+
+Tue, 16 Nov 2021 06:09:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.418
 
 ## 0.0.0
 

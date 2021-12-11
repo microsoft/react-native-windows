@@ -94,7 +94,7 @@ export default class Bootstrap extends React.Component<{}, any> {
           placeholder={this.state.passwordHidden ? 'Password' : 'Text'}
           autoCapitalize="none"
           secureTextEntry={this.state.passwordHidden}
-          onChangeText={text => {
+          onChangeText={(text) => {
             this.setState({text});
           }}
           value={this.state.text}

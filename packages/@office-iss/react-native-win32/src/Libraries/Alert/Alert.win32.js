@@ -35,7 +35,7 @@ type Options = {
 /**
  * Launches an alert dialog with the specified title and message.
  *
- * See https://reactnative.dev/docs/alert.html
+ * See https://reactnative.dev/docs/alert
  */
 class Alert {
   static alert(
@@ -50,7 +50,7 @@ class Alert {
       message || '',
       buttons,
       options,
-      buttonIndex => {
+      (buttonIndex) => {
         if (
           buttonIndex >= 0 &&
           buttons &&

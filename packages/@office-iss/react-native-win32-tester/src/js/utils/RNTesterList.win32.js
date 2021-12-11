@@ -98,6 +98,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/View/ViewExample'),
   },
+  //{
+  //  key: 'NewArchitectureExample',
+  //  category: 'UI',
+  //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
+  //},
   {
     key: 'ViewWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
@@ -253,7 +258,7 @@ if (global.__turboModuleProxy) {
 
 const Modules: any = {};
 
-APIs.concat(Components).forEach(Example => {
+APIs.concat(Components).forEach((Example) => {
   Modules[Example.key] = Example.module;
 });
 

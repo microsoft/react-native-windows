@@ -7,7 +7,7 @@ struct MockWebSocketResource : public IWebSocketResource {
   ~MockWebSocketResource();
 
   struct Mocks {
-    std::function<void(const Protocols &, const Options &)> Connect;
+    std::function<void(std::string &&url, const Protocols &, const Options &)> Connect;
     std::function<void()> Ping;
     std::function<void(const std::string &)> Send;
     std::function<void(const std::string &)> SendBinary;
@@ -25,7 +25,7 @@ struct MockWebSocketResource : public IWebSocketResource {
 
 #pragma region IWebSocketResource overrides
 
-  void Connect(const Protocols &, const Options &) noexcept override;
+  void Connect(std::string &&url, const Protocols &, const Options &) noexcept override;
 
   void Ping() noexcept override;
 

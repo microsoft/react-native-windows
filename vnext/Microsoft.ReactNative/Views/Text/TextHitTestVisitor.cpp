@@ -37,7 +37,7 @@ void TextHitTestVisitor::VisitVirtualText(ShadowNodeBase *node) {
 
   // Update pressable count and set pressable ancestor flag
   const auto hadPressableAncestor = m_hasPressableAncestor;
-  if (textNode->isPressable) {
+  if (textNode->isPressable || textNode->IsRegisteredForMouseEvents()) {
     m_pressableCount++;
     m_hasPressableAncestor = true;
   }
