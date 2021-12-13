@@ -28,6 +28,7 @@ namespace Microsoft::ReactNative {
 /// </summary>
 
 typedef std::function<void(std::vector<folly::dynamic>)> Callback;
+typedef std::function<void(double)> ValueListenerCallback;
 
 class AnimatedNode;
 class StyleAnimatedNode;
@@ -73,6 +74,8 @@ class NativeAnimatedNodeManager {
   void SetAnimatedNodeOffset(int64_t tag, double offset);
   void FlattenAnimatedNodeOffset(int64_t tag);
   void ExtractAnimatedNodeOffset(int64_t tag);
+  void StartListeningToAnimatedNodeValue(int64_t tag, const ValueListenerCallback &callback);
+  void StopListeningToAnimatedNodeValue(int64_t tag);
   void AddAnimatedEventToView(
       int64_t viewTag,
       const std::string &eventName,

@@ -283,6 +283,18 @@ void NativeAnimatedNodeManager::ExtractAnimatedNodeOffset(int64_t tag) {
   }
 }
 
+void NativeAnimatedNodeManager::StartListeningToAnimatedNodeValue(int64_t tag, const ValueListenerCallback &callback) {
+  if (const auto valueNode = m_valueNodes.at(tag).get()) {
+    valueNode->ValueListener(callback);
+  }
+}
+
+void NativeAnimatedNodeManager::StopListeningToAnimatedNodeValue(int64_t tag) {
+  if (const auto valueNode = m_valueNodes.at(tag).get()) {
+    valueNode->ValueListener(nullptr);
+  }
+}
+
 void NativeAnimatedNodeManager::AddAnimatedEventToView(
     int64_t viewTag,
     const std::string &eventName,

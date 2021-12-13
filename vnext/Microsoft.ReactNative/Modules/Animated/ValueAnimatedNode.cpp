@@ -74,6 +74,16 @@ void ValueAnimatedNode::ExtractOffset() {
   RawValue(0.0f);
 }
 
+void ValueAnimatedNode::OnValueUpdate() {
+  if (m_valueListener) {
+    m_valueListener(Value());
+  }
+}
+
+void ValueAnimatedNode::ValueListener(const ValueListenerCallback &callback) {
+  m_valueListener = callback;
+}
+
 void ValueAnimatedNode::AddDependentPropsNode(int64_t propsNodeTag) {
   m_dependentPropsNodes.insert(propsNodeTag);
 }

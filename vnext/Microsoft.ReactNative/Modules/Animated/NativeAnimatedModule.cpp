@@ -228,11 +228,20 @@ void NativeAnimatedModule::RemoveAnimatedEventFromView(
   m_nodesManager->RemoveAnimatedEventFromView(tag, eventName, animatedValueTag);
 }
 
-void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t /*tag*/) {
-  // NotImplemented
+void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t tag) {
+  m_nodesManager->StartListeningToAnimatedNodeValue(tag, [context = m_context, tag](double value) {
+    if (context->IsLoaded()) {
+      // This event could be coalesced, however it doesn't appear to be
+      // coalesced on Android or iOS, so leaving it without coalescing.
+      context->CallJSFunction(
+          "RCTDeviceEventEmitter",
+          "emit",
+          folly::dynamic::array("onAnimatedValueUpdate", folly::dynamic::object("tag", tag)("value", value)));
+    }
+  });
 }
 
-void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t /*tag*/) {
-  // NotImplemented
+void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t tag) {
+  m_nodesManager->StopListeningToAnimatedNodeValue(tag);
 }
 } // namespace Microsoft::ReactNative
