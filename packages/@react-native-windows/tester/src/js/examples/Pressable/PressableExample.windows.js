@@ -100,8 +100,10 @@ function PressableFeedbackEvents() {
           testID="pressable_feedback_events_button"
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
+          // [Windows
           onHoverIn={() => appendEvent('hover in')}
           onHoverOut={() => appendEvent('hover out')}
+          // Windows]
           onPress={() => appendEvent('press')}
           onPressIn={() => appendEvent('pressIn')}
           onPressOut={() => appendEvent('pressOut')}

@@ -16,10 +16,24 @@
       "baseHash": "e6f4938b0ad8446c652d1bb24658e27c936ce829"
     },
     {
-      "type": "derived",
+      "type": "patch",
       "file": "Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
       "baseHash": "1ad53a6a5e1e751c8f23b07a84a343c18c8802a7",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
+      "file": "Libraries/Pressability/HoverState.win32.js",
+      "baseFile": "Libraries/Pressability/HoverState.js",
+      "baseHash": "2807a1cddb7c5135f63e5dd4d0706ac660f25d76",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
+      "file": "Libraries/Pressability/Pressability.win32.js",
+      "baseFile": "Libraries/Pressability/Pressability.js",
+      "baseHash": "9e28ff3d5317543dc67944598247a6ed04d97f9d",
       "issue": 6240
     },
     {
