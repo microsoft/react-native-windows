@@ -11,7 +11,7 @@ DivisionAnimatedNode::DivisionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : ValueAnimatedNode(tag, config, manager) {
+    : ValueAnimatedNode(tag, manager) {
   for (const auto &inputNode : config.find(s_inputName).dereference().second) {
     if (m_firstInput == s_firstInputUnset) {
       m_firstInput = static_cast<int64_t>(inputNode.asDouble());
