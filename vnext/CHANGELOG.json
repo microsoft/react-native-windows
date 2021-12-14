@@ -10,29 +10,8 @@
           {
             "author": "anandrag@microsoft.com",
             "package": "react-native-windows",
-            "commit": "not available",
-            "comment": {
-              "title": "",
-              "value": ""
-            }
-          }
-        ]
-      }
-    },
-    {
-      "date": "Mon, 06 Dec 2021 16:10:35 GMT",
-      "tag": "react-native-windows_v0.67.0-preview.5",
-      "version": "0.67.0-preview.5",
-      "comments": {
-        "prerelease": [
-          {
-            "author": "anandrag@microsoft.com",
-            "package": "react-native-windows",
             "commit": "b706da95136fffa1a4deba8f95dc9edfeef1020d",
-            "comment": {
-              "title": "",
-              "value": ""
-            }
+            "comment": "Bumping Hermes to v0.10"
           }
         ]
       }

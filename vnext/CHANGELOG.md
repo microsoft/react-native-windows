@@ -10,15 +10,7 @@ Mon, 06 Dec 2021 16:10:50 GMT
 
 ### Changes
 
-- [object Object] (anandrag@microsoft.com)
-
-## 0.67.0-preview.5
-
-Mon, 06 Dec 2021 16:10:35 GMT
-
-### Changes
-
-- [object Object] (anandrag@microsoft.com)
+- Bumping Hermes to v0.10 (anandrag@microsoft.com)
 
 ## 0.67.0-preview.4
 
