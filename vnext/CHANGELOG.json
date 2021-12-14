@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 14 Dec 2021 06:12:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.430",
+      "version": "0.0.0-canary.430",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "46fcfd5775dc47e0899858536ebbd91df9aed764",
+            "comment": "Enable HermesNoLink"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Dec 2021 06:11:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.429",
       "version": "0.0.0-canary.429",
