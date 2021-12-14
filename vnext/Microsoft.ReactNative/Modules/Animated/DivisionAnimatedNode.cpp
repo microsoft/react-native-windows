@@ -30,7 +30,7 @@ DivisionAnimatedNode::DivisionAnimatedNode(
       for (const auto tag : nodes) {
         const auto identifier = L"n" + std::to_wstring(tag);
         anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
-        expr = expr + L" / (" + identifier + L"." + s_valueName + L" " + identifier + L"." + s_offsetName + L")";
+        expr = expr + L" / (" + identifier + L"." + s_valueName + L" + " + identifier + L"." + s_offsetName + L")";
       }
       return expr;
     }());
