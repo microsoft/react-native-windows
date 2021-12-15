@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds NativeAnimated value listeners for rendering driven events",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
