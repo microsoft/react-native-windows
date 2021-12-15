@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Animated JS changes to support platform config for animation drivers and nodes",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
