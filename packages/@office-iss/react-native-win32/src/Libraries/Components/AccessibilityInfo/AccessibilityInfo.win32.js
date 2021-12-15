@@ -357,7 +357,7 @@ const AccessibilityInfo = {
     announcement: string,
     options: {queue?: boolean},
   ): void {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android' || Platform.OS === 'win32') {
       NativeAccessibilityInfo?.announceForAccessibility(announcement);
     } else {
       if (NativeAccessibilityManagerIOS?.announceForAccessibilityWithOptions) {
