@@ -4587,15 +4587,6 @@ deprecated-react-native-prop-types@^2.1.0:
     invariant "*"
     prop-types "*"
 
-deprecated-react-native-prop-types@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/deprecated-react-native-prop-types/-/deprecated-react-native-prop-types-2.3.0.tgz#c10c6ee75ff2b6de94bb127f142b814e6e08d9ab"
-  integrity sha512-pWD0voFtNYxrVqvBMYf5gq3NA2GCpfodS1yNynTPc93AYA/KEMGeWDqqeUB6R2Z9ZofVhks2aeJXiuQqKNpesA==
-  dependencies:
-    "@react-native/normalize-color" "*"
-    invariant "*"
-    prop-types "*"
-
 deprecation@^2.0.0, deprecation@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/deprecation/-/deprecation-2.3.1.tgz#6368cbdb40abf3373b525ac87e4a260c3a700919"
@@ -9728,10 +9719,10 @@ react-native-xaml@^0.0.50:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20211125-2009-3ba237b66:
-  version "0.0.0-20211125-2009-3ba237b66"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211125-2009-3ba237b66.tgz#4da3c8260e32c79f291d819901c286d6b555b421"
-  integrity sha512-Wd5U94VIfsIFfDzdM50nXc2UV0Mhjnjn33fsWOGmlW5eC2p4fKa1tJeE5kom99cC3wZakHwirVnepKbphopAmg==
+react-native@0.0.0-20211202-2008-9e2ec4d3d:
+  version "0.0.0-20211202-2008-9e2ec4d3d"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20211202-2008-9e2ec4d3d.tgz#254f3b7f3acbb1a5337166043dcde8b6bdaa16ad"
+  integrity sha512-6APZoNBFndrjH1CN35Hj3rM1U7/FtPt5JLls0NtEDQfxuCtI8Sfwyyz8JG6KZYkm7rXaWLv7F/aej9ZftRuG7Q==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
