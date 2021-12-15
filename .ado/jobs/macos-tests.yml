@@ -17,6 +17,11 @@ jobs:
         clean: true
         submodules: false
 
+      - task: NodeTool@0
+        displayName: Installing Node
+        inputs:
+          versionSpec: '14.x'
+
       - template: ../templates/yarn-install.yml
 
       - script: yarn build

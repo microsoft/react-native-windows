@@ -22,6 +22,11 @@ jobs:
         submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
         persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
 
+      - task: NodeTool@0
+        displayName: Installing Node
+        inputs:
+          versionSpec: '14.x'
+
       - template: ../templates/yarn-install.yml
 
       - template: ../templates/compute-beachball-branch-name.yml
