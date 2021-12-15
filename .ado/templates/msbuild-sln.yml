@@ -26,11 +26,6 @@ steps:
     condition: not(eq('${{parameters.warnAsError}}', 'true'))
     displayName: Disable WarnAsError
 
-  - template: restore-sln.yml
-    parameters:
-      solutionDir: ${{parameters.solutionDir}}
-      solutionName: ${{parameters.solutionName}}
-
   - task: VSBuild@1
     displayName: VSBuild ${{parameters.solutionName}}
     inputs:

@@ -148,11 +148,6 @@
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
 
-                - template: ../templates/restore-sln.yml
-                  parameters:
-                    solutionDir: vnext
-                    solutionName: Microsoft.ReactNative.sln
-
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
                   inputs:
