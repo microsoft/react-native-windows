@@ -73,7 +73,7 @@
     "metro-config": "^0.66.0",
     "prettier": "^2.4.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211125-2009-3ba237b66",
+    "react-native": "0.0.0-20211202-2008-9e2ec4d3d",
     "react-native-platform-override": "^1.6.2",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -81,7 +81,7 @@
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-20211125-2009-3ba237b66"
+    "react-native": "0.0.0-20211202-2008-9e2ec4d3d"
   },
   "beachball": {
     "defaultNpmTag": "canary",
