@@ -2,6 +2,29 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Thu, 16 Dec 2021 06:11:18 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.1.5",
+      "version": "0.1.5",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "09c5588faaad1282aee1b61a82c71dade74039d3",
+            "comment": "Integrate 12/2 Nightly RN Build"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.431",
+            "commit": "9ef57baafa33d219b45ffa59c028486afbb114c5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Dec 2021 06:12:27 GMT",
       "tag": "@react-native-windows/automation-channel_v0.1.4",
       "version": "0.1.4",
