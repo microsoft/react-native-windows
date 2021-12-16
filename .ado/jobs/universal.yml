@@ -148,11 +148,6 @@
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
 
-                - template: ../templates/restore-sln.yml
-                  parameters:
-                    solutionDir: vnext
-                    solutionName: Microsoft.ReactNative.sln
-
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
                   inputs:
@@ -170,6 +165,17 @@
                       toolVersion: 'LatestPreRelease'
 
                 - template: ../templates/discover-google-test-adapter.yml
+
+                - task: MSBuild@1
+                  displayName: Restore NuGet packages
+                  # Should be kept in sync with UniversalBuild - template: ../templates/msbuild-sln.yml
+                  inputs:
+                    solution: vnext/Microsoft.ReactNative.sln
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    msbuildArchitecture: x64
+                    msbuildArguments:
+                      /t:Restore
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (Native)
