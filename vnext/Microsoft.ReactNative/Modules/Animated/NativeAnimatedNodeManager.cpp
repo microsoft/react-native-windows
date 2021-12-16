@@ -120,10 +120,10 @@ void NativeAnimatedNodeManager::DisconnectAnimatedNode(int64_t parentNodeTag, in
   }
 }
 
-void NativeAnimatedNodeManager::StopAnimation(int64_t animationId) {
+void NativeAnimatedNodeManager::StopAnimation(int64_t animationId, bool isTrackingAnimation) {
   if (m_activeAnimations.count(animationId)) {
     if (const auto animation = m_activeAnimations.at(animationId)) {
-      animation->StopAnimation();
+      animation->StopAnimation(isTrackingAnimation);
 
       // Insert the animation into the pending completion set to ensure it is
       // not destroyed before the callback occurs. It's safe to assume the

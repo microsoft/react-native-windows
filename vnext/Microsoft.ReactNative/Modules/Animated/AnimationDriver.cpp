@@ -54,12 +54,15 @@ void AnimationDriver::StartAnimation() {
         const auto strongSelf = weakSelf.lock();
         const auto ignoreCompletedHandlers = strongSelf && strongSelf->m_ignoreCompletedHandlers;
         if (auto manager = weakManager.lock()) {
-          if (auto const animatedValue = manager->GetValueAnimatedNode(tag)) {
-            if (!ignoreCompletedHandlers) {
+          // If the animation was stopped for a tracking node, do not clean up the active animation state.
+          if (!ignoreCompletedHandlers) {
+            if (const auto animatedValue = manager->GetValueAnimatedNode(tag)) {
               animatedValue->RemoveActiveAnimation(id);
             }
+            manager->RemoveActiveAnimation(id);
           }
-          manager->RemoveActiveAnimation(id);
+
+          // Always update the stopped animations in case any animations are deferred for the same value.
           manager->RemoveStoppedAnimation(id, manager);
         }
 

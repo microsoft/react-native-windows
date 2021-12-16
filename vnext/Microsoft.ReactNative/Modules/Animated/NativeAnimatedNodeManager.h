@@ -49,7 +49,7 @@ class NativeAnimatedNodeManager {
   void DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
   void DisconnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
-  void StopAnimation(int64_t animationId);
+  void StopAnimation(int64_t animationId, bool isTrackingAnimation = false);
   void RestartTrackingAnimatedNode(
       int64_t animationId,
       int64_t animatedToValueTag,
