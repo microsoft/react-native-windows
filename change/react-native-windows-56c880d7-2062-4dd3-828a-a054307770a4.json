@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.67] Avoid capturing raw this pointer in WebSocket module",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
