@@ -51,9 +51,6 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
   winrt::fire_and_forget PerformWrite(std::string &&message, bool isBinary) noexcept;
   winrt::fire_and_forget PerformClose() noexcept;
 
-  void OnMessageReceived(
-      winrt::Windows::Networking::Sockets::IWebSocket const &sender,
-      winrt::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs const &args);
   void Synchronize() noexcept;
 
  public:
