@@ -325,7 +325,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
             self->m_errorHandler({HResultToString(e), ErrorType::Receive});
           }
         }
-  });
+      });
 
   m_readyState = ReadyState::Connecting;
 
