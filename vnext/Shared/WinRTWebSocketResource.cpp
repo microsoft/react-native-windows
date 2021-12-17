@@ -98,8 +98,6 @@ WinRTWebSocketResource::WinRTWebSocketResource(
     IDataWriter &&writer,
     vector<ChainValidationResult> &&certExceptions)
     : m_socket{std::move(socket)}, m_writer{std::move(writer)} {
-  m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
-
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
@@ -288,36 +286,6 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept {
   m_closePerformed.Set();
 }
 
-void WinRTWebSocketResource::OnMessageReceived(
-    IWebSocket const &sender,
-    IMessageWebSocketMessageReceivedEventArgs const &args) {
-  try {
-    string response;
-    IDataReader reader = args.GetDataReader();
-    auto len = reader.UnconsumedBufferLength();
-    if (args.MessageType() == SocketMessageType::Utf8) {
-      reader.UnicodeEncoding(UnicodeEncoding::Utf8);
-      vector<uint8_t> data(len);
-      reader.ReadBytes(data);
-
-      response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
-    } else {
-      auto buffer = reader.ReadBuffer(len);
-      winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
-
-      response = winrt::to_string(std::wstring_view(data));
-    }
-
-    if (m_readHandler) {
-      m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
-    }
-  } catch (hresult_error const &e) {
-    if (m_errorHandler) {
-      m_errorHandler({HResultToString(e), ErrorType::Receive});
-    }
-  }
-}
-
 void WinRTWebSocketResource::Synchronize() noexcept {
   // Ensure sequence of other operations
   if (m_connectRequested) {
@@ -330,6 +298,35 @@ void WinRTWebSocketResource::Synchronize() noexcept {
 #pragma region IWebSocketResource
 
 void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
+  m_socket.MessageReceived(
+      [self = shared_from_this()](IWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
+        try {
+          string response;
+          IDataReader reader = args.GetDataReader();
+          auto len = reader.UnconsumedBufferLength();
+          if (args.MessageType() == SocketMessageType::Utf8) {
+            reader.UnicodeEncoding(UnicodeEncoding::Utf8);
+            vector<uint8_t> data(len);
+            reader.ReadBytes(data);
+
+            response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
+          } else {
+            auto buffer = reader.ReadBuffer(len);
+            winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+            response = winrt::to_string(std::wstring_view(data));
+          }
+
+          if (self->m_readHandler) {
+            self->m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
+          }
+        } catch (hresult_error const &e) {
+          if (self->m_errorHandler) {
+            self->m_errorHandler({HResultToString(e), ErrorType::Receive});
+          }
+        }
+      });
+
   m_readyState = ReadyState::Connecting;
 
   for (const auto &header : options) {
