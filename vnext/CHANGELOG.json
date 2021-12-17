@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Dec 2021 06:11:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.431",
+      "version": "0.0.0-canary.431",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "09c5588faaad1282aee1b61a82c71dade74039d3",
+            "comment": "Integrate 12/2 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.22",
+            "commit": "9ef57baafa33d219b45ffa59c028486afbb114c5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Dec 2021 06:12:27 GMT",
       "tag": "react-native-windows_v0.0.0-canary.430",
       "version": "0.0.0-canary.430",
