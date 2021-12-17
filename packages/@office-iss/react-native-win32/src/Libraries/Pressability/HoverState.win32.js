@@ -50,7 +50,7 @@ if (Platform.OS === 'web') {
     document.addEventListener('mousemove', enableHover, true);
   }
   // [Windows
-} else if (Platform.OS === 'windows') {
+} else if (Platform.OS === 'windows' || Platform.OS === 'win32') {
   isEnabled = true;
   // Windows]
 }
