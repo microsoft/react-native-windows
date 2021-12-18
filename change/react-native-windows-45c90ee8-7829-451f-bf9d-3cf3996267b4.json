@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 12/7 Nightly Build",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
