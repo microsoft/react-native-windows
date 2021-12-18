@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 18 Dec 2021 06:08:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.432",
+      "version": "0.0.0-canary.432",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "39c84d2cac3a134b4abc4322d7fcc164c5c393e2",
+            "comment": "Use shared pointer in MessageReceived"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Dec 2021 06:11:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.431",
       "version": "0.0.0-canary.431",
