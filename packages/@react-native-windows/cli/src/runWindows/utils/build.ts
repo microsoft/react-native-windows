@@ -85,12 +85,15 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
 export function restorePackageConfigs(options: RunWindowsOptions) {
   const pkgConfigs = new Array();
 
+  if (!options.sln) {
+    return;
+  }
+
   findFiles(options.root, 'packages.config', pkgConfigs);
 
   for (const pkgConfig of pkgConfigs) {
     const cmd = `NuGet.exe Restore -PackagesDirectory ${path.join(
       options.root,
-      'windows',
       'packages',
     )}
       ${pkgConfig}`;
@@ -100,16 +103,15 @@ export function restorePackageConfigs(options: RunWindowsOptions) {
 }
 
 function findFiles(dir: any, name: string, result: Array<string>) {
-  fs.readdirSync(dir).forEach((file: string) => {
-    const filePath = path.join(dir, file);
-    const stat = fs.lstatSync(filePath);
+  fs.readdirSync(dir).forEach((file: any) => {
+    const stat = fs.lstatSync(file);
     if (stat.isDirectory()) {
-      findFiles(filePath, name, result);
+      findFiles(file, name, result);
     } else if (
       (stat.isFile() || stat.isSymbolicLink()) &&
       `${file}`.endsWith('packages.config')
     ) {
-      result.push(filePath);
+      result.push(file);
     }
   });
 }

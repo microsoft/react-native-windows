@@ -77,10 +77,6 @@
     <Import Project="$(ConfigurationType)\$(Configuration).props" />
   </ImportGroup>
 
-  <ImportGroup Label="Dependencies">
-    <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.Cpp.Dependencies.props" />
-  </ImportGroup>
-
   <PropertyGroup>
     <CppStandard Condition="'$(CppStandard)'==''">stdcpp17</CppStandard>
   </PropertyGroup>
