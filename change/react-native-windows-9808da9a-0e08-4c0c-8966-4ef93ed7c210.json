@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Revert \"Use PackageReference for C++ dependencies (#8195)\"",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

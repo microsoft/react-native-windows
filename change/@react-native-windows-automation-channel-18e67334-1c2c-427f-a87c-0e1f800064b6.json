@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Revert \"Use PackageReference for C++ dependencies (#8195)\"",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
