@@ -445,6 +445,13 @@
       "issue": 7074
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Types/CoreEventTypes.win32.js",
+      "baseFile": "Libraries/Types/CoreEventTypes.js",
+      "baseHash": "22c50d13820ca4db6c6cf5e6563f8437d55c24af",
+      "issue": 6240
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
