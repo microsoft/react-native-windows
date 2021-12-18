@@ -32,14 +32,20 @@ export async function ensureWinUI3Project(folder: string) {
       {
         id: 'Microsoft.ReactNative.Cxx',
         version: '1.0.0',
+        hasProps: false,
+        hasTargets: true,
       },
       {
         id: 'Microsoft.UI.Xaml',
         version: '2.3.4.5',
+        hasProps: false,
+        hasTargets: false,
       },
       {
         id: 'Microsoft.WinUI',
         version: '3.2.1.0',
+        hasProps: false,
+        hasTargets: false,
       },
     ],
   };
@@ -57,6 +63,13 @@ export async function ensureWinUI3Project(folder: string) {
   await copyAndReplace(
     path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
     path.join(projDir, 'WithWinUI3.vcxproj'),
+    replacements,
+    null
+  );
+
+  await copyAndReplace(
+    path.join(templateRoot, 'cpp-app/proj/packages.config'),
+    path.join(projDir, 'packages.config'),
     replacements,
     null
   );

@@ -134,16 +134,42 @@
         "contentHash": "qF6RRZKaflI+LR1YODNyWYjq5YoX8IJ2wx5y8O+AW2xO+1t/Q6Mm+jQ38zJbWnmXbrcOqUYofn7Y3/KC6lTLBQ=="
       },
       "automationchannel": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.ReactNative": "1.0.0"
+        }
+      },
+      "common": {
         "type": "Project"
       },
-      "microsoft.reactnative": {
+      "fmt": {
         "type": "Project"
+      },
+      "folly": {
+        "type": "Project",
+        "dependencies": {
+          "fmt": "1.0.0"
+        }
+      },
+      "microsoft.reactnative": {
+        "type": "Project",
+        "dependencies": {
+          "Common": "1.0.0",
+          "Folly": "1.0.0",
+          "ReactCommon": "1.0.0"
+        }
       },
       "microsoft.reactnative.managed": {
         "type": "Project",
         "dependencies": {
           "Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9",
           "Microsoft.ReactNative": "1.0.0"
+        }
+      },
+      "reactcommon": {
+        "type": "Project",
+        "dependencies": {
+          "Folly": "1.0.0"
         }
       },
       "reactnativepicker": {

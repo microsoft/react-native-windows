@@ -10,7 +10,7 @@
     <!-- This will be true if (1) the client want to use hermes by setting UseHermes to true OR (2) We are building for UWP where dynamic switching is enabled -->
     <HermesVersion Condition="'$(HermesVersion)' == ''">0.10.0-ms.1</HermesVersion>
     <HermesPackage Condition="'$(HermesPackage)' == '' And Exists('$(PkgReactNative_Hermes_Windows)')">$(PkgReactNative_Hermes_Windows)</HermesPackage>
-    <HermesPackage Condition="'$(HermesPackage)' == ''">$(NuGetPackageRoot)\ReactNative.Hermes.Windows\$(HermesVersion)</HermesPackage>
+    <HermesPackage Condition="'$(HermesPackage)' == ''">$(SolutionDir)packages\ReactNative.Hermes.Windows.$(HermesVersion)</HermesPackage>
     <EnableHermesInspectorInReleaseFlavor Condition="'$(EnableHermesInspectorInReleaseFlavor)' == ''">false</EnableHermesInspectorInReleaseFlavor>
     <!-- Disable linking Hermes into the output in cases where we need to fully rely on HermesShim -->
     <HermesNoLink Condition="'$(HermesNoLink)' == '' and '$(Configuration)' == 'Release' and '$(EnableHermesInspectorInReleaseFlavor)' != 'true'">true</HermesNoLink>
@@ -21,7 +21,7 @@
     <V8Version Condition="'$(V8Version)' == ''">0.65.5</V8Version>
     <V8PackageName>ReactNative.V8Jsi.Windows</V8PackageName>
     <V8PackageName Condition="'$(V8AppPlatform)' != 'win32'">$(V8PackageName).UWP</V8PackageName>
-    <V8Package>$(NuGetPackageRoot)\$(V8PackageName).$(V8Version)</V8Package>
+    <V8Package>$(SolutionDir)packages\$(V8PackageName).$(V8Version)</V8Package>
   </PropertyGroup>
 
 </Project>

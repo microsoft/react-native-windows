@@ -6,16 +6,12 @@
 
 import path from 'path';
 
-import {EOL} from 'os';
-import fs from '@react-native-windows/fs';
 import MSBuildTools from './msbuildtools';
 import Version from './version';
-import {execSync} from 'child_process';
 import {newError} from './commandWithProgress';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
 import {CodedError} from '@react-native-windows/telemetry';
-import chalk from 'chalk';
 
 export async function buildSolution(
   buildTools: MSBuildTools,
@@ -80,40 +76,6 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
       configSolutionFile,
     );
   }
-}
-
-export function restorePackageConfigs(options: RunWindowsOptions) {
-  const pkgConfigs = new Array();
-
-  if (!options.sln) {
-    return;
-  }
-
-  findFiles(options.root, 'packages.config', pkgConfigs);
-
-  for (const pkgConfig of pkgConfigs) {
-    const cmd = `NuGet.exe Restore -PackagesDirectory ${path.join(
-      options.root,
-      'packages',
-    )}
-      ${pkgConfig}`;
-    const results = execSync(cmd).toString().split(EOL);
-    results.forEach((result) => console.log(chalk.white(result)));
-  }
-}
-
-function findFiles(dir: any, name: string, result: Array<string>) {
-  fs.readdirSync(dir).forEach((file: any) => {
-    const stat = fs.lstatSync(file);
-    if (stat.isDirectory()) {
-      findFiles(file, name, result);
-    } else if (
-      (stat.isFile() || stat.isSymbolicLink()) &&
-      `${file}`.endsWith('packages.config')
-    ) {
-      result.push(file);
-    }
-  });
 }
 
 export function getAppProjectFile(options: RunWindowsOptions, config: Config) {

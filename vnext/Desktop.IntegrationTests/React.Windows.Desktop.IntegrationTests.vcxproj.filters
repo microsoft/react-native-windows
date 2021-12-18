@@ -18,6 +18,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="WebSocketIntegrationTest.cpp">
       <Filter>Integration Tests</Filter>
     </ClCompile>

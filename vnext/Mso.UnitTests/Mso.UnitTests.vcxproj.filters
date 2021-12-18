@@ -140,5 +140,6 @@
     <None Include="future\futureTest.tt">
       <Filter>future</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

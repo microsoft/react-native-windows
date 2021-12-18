@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />
+    <None Include="packages.config" />
     <None Include="AutomationChannel.def" />
   </ItemGroup>
   <ItemGroup>

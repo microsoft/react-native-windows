@@ -49,6 +49,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="DummyTest.js">
       <Filter>Resource Files</Filter>
     </None>
