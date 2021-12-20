@@ -44,7 +44,7 @@ AnimationDriver::~AnimationDriver() {
 void AnimationDriver::StartAnimation() {
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
   if (auto const animatedValue = GetAnimatedValue()) {
-    animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_offsetName, animation);
+    animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_valueName, animation);
     animatedValue->AddActiveAnimation(m_id);
   }
   scopedBatch.End();
@@ -58,7 +58,6 @@ void AnimationDriver::StartAnimation() {
         if (auto manager = weakManager.lock()) {
           if (auto const animatedValue = manager->GetValueAnimatedNode(tag)) {
             animatedValue->RemoveActiveAnimation(id);
-            animatedValue->FlattenOffset();
           }
           manager->RemoveActiveAnimation(id);
         }
@@ -70,7 +69,7 @@ void AnimationDriver::StartAnimation() {
 
 void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
   if (const auto animatedValue = GetAnimatedValue()) {
-    animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_offsetName);
+    animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
     if (!ignoreCompletedHandlers) {
       animatedValue->RemoveActiveAnimation(m_id);
 
