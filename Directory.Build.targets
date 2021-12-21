@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
 
+  <!--Allow implicitly restoring PackageReference dependencies in C++ projects using the Visual Studio IDE.-->
+  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" />
+  </Target>
+
   <!-- This target is used to compute the inputs and outputs for incrementally running the Yarn up to date check.-->
   <Target
     Name="EnsureJavaScriptCodeUpToDateInputAndOutputs"
@@ -142,6 +147,8 @@
     <Message Text="=> NuGetRuntimeIdentifier              [$(NuGetRuntimeIdentifier)]" />
     <Message Text="=> TargetPlatformIdentifier            [$(TargetPlatformIdentifier)]" />
     <Message Text="=> MSBuildProjectExtensionsPath        [$(MSBuildProjectExtensionsPath)]" />
+    <Message Text="=> RestoreProjectStyle                 [$(RestoreProjectStyle)]" />
+    <Message Text="=> RestoreUseStaticGraphEvaluation     [$(RestoreUseStaticGraphEvaluation)]" />
 
     <Message Text="%0A" />
     <Message Text="WinUI" />
