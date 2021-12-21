@@ -15,9 +15,6 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
 
   virtual XamlView CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props);
 
-  winrt::event_token onUnloadedRevoker;
-  virtual void OnUnloaded(winrt::Windows::Foundation::IInspectable const &sender, xaml::RoutedEventArgs const &args);
-
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   // Helper functions related to setting/updating TransformMatrix
@@ -25,6 +22,8 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
   void StartTransformAnimation(xaml::UIElement uielement, comp::CompositionPropertySet transformPS);
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
+
+  void OnViewUnloaded(XamlView view) override;
 
  protected:
   bool UpdateProperty(

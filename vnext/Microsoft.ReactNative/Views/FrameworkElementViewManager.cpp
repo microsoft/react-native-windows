@@ -78,12 +78,8 @@ FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReac
 
 XamlView FrameworkElementViewManager::CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props){
   auto view = Super::CreateView(tag, props);
-  auto frameworkElem = view.try_as<xaml::FrameworkElement>();
-  onUnloadedRevoker = frameworkElem.Unloaded({this, &FrameworkElementViewManager::OnUnloaded});
   return view;
 }
-
-void FrameworkElementViewManager::OnUnloaded(winrt::Windows::Foundation::IInspectable const &sender, xaml::RoutedEventArgs const &args){}
 
 void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferFrameworkElementProperties(oldView, newView);

@@ -65,6 +65,7 @@ void ShadowNodeBase::RemoveChildAt(int64_t indexToRemove) {
 }
 
 void ShadowNodeBase::onDropViewInstance() {
+  GetViewManager()->OnViewUnloaded(m_view);
   m_handledKeyboardEventHandler = nullptr;
 }
 
