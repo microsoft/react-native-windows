@@ -23,8 +23,6 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
 
-  void OnViewUnloaded(XamlView view) override;
-
  protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,
