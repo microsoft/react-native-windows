@@ -45,7 +45,7 @@
     <!-- <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)' == ''">win;win-x64;win-x86;win-arm64</RuntimeIdentifiers> -->
 
     <!--See https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#restore-target-->
-    <RestoreUseStaticGraphEvaluation>true</RestoreUseStaticGraphEvaluation>
+    <RestoreUseStaticGraphEvaluation Condition="'$(BuildingInsideVisualStudio)' == 'true'">true</RestoreUseStaticGraphEvaluation>
   </PropertyGroup>
 
   <ItemGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
