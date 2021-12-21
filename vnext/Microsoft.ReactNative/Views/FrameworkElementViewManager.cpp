@@ -76,11 +76,6 @@ using DynamicAutomationProperties = Microsoft::ReactNative::DynamicAutomationPro
 
 FrameworkElementViewManager::FrameworkElementViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
-XamlView FrameworkElementViewManager::CreateView(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props){
-  auto view = Super::CreateView(tag, props);
-  return view;
-}
-
 void FrameworkElementViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferFrameworkElementProperties(oldView, newView);
 }
