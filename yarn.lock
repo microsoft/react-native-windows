@@ -2188,9 +2188,9 @@
   integrity sha512-vbt5fb0y1svMhu++1lwtKmZL76d0uPChFlw7kEzyUmTwfmpHRcFb8i0R8ElT69q/L+QLgK2hgECivIAvaEDwag==
 
 "@types/npm-registry-fetch@^8.0.0":
-  version "8.0.2"
-  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.2.tgz#afbc42f2c45785e723cb550e935ec7f82265821d"
-  integrity sha512-ps8VPCldQJhWXKrM4FYv+X5e2CGTKciHcCFAS+QTjEuP5JX9K6BZ2q/YF/vv7wy+krfJmHbDj0l6AwDcjRIeHA==
+  version "8.0.3"
+  resolved "https://registry.yarnpkg.com/@types/npm-registry-fetch/-/npm-registry-fetch-8.0.3.tgz#8ee2278d2aa6f28fb473e4b5b934b83fa62f644e"
+  integrity sha512-qw0n2KWPPA+D0mbTBZ3CJ4s5pKMEnNE/C1UX6Jw1B6BzEjG8iXWdxwqPFx1FdlK43qenvVM1S7AwOarrO0HOHA==
   dependencies:
     "@types/node" "*"
     "@types/node-fetch" "^2.5.12"
@@ -2254,9 +2254,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^17.0.21":
-  version "17.0.37"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.37.tgz#6884d0aa402605935c397ae689deed115caad959"
-  integrity sha512-2FS1oTqBGcH/s0E+CjrCCR9+JMpsu9b69RTFO+40ua43ZqP5MmQ4iUde/dMjWR909KxZwmOQIFq6AV6NjEG5xg==
+  version "17.0.38"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
+  integrity sha512-SI92X1IA+FMnP3qM5m4QReluXzhcmovhZnLNm3pyeQlooi02qI7sLiepEYqT678uNiyc25XfCqxREFpy3W7YhQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
