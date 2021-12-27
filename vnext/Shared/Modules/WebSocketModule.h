@@ -18,6 +18,26 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
 
   WebSocketModule();
 
+  ~WebSocketModule() noexcept override;
+
+  struct SharedState {
+    /// <summary>
+    /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
+    /// As defined in WebSocket.js.
+    /// </summary>
+    std::map<int64_t, std::shared_ptr<IWebSocketResource>> ResourceMap{};
+
+    /// <summary>
+    /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
+    /// </summary>
+    std::function<std::shared_ptr<IWebSocketResource>(std::string &&)> ResourceFactory;
+
+    /// <summary>
+    /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
+    /// </summary>
+    CxxModule *Module{nullptr};
+  };
+
 #pragma region CxxModule overrides
 
   /// <summary>
@@ -42,25 +62,15 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
 
  private:
   /// <summary>
-  /// Notifies an event to the current React Instance.
-  /// </summary>
-  void SendEvent(std::string &&eventName, folly::dynamic &&parameters);
-
-  /// <summary>
-  /// Creates or retrieves a raw <c>IWebSocketResource</c> pointer.
-  /// </summary>
-  std::shared_ptr<IWebSocketResource> GetOrCreateWebSocket(std::int64_t id, std::string &&url = {});
-
-  /// <summary>
   /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
   /// As defined in WebSocket.js.
   /// </summary>
   std::map<int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
 
   /// <summary>
-  /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
+  /// Keeps members that can be accessed threads other than this module's owner accessible.
   /// </summary>
-  std::function<std::shared_ptr<IWebSocketResource>(std::string &&)> m_resourceFactory;
+  std::shared_ptr<SharedState> m_sharedState;
 };
 
 } // namespace Microsoft::React
