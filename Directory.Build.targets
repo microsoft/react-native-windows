@@ -142,6 +142,8 @@
     <Message Text="=> NuGetRuntimeIdentifier              [$(NuGetRuntimeIdentifier)]" />
     <Message Text="=> TargetPlatformIdentifier            [$(TargetPlatformIdentifier)]" />
     <Message Text="=> MSBuildProjectExtensionsPath        [$(MSBuildProjectExtensionsPath)]" />
+    <Message Text="=> RestoreProjectStyle                 [$(RestoreProjectStyle)]" />
+    <Message Text="=> RestoreUseStaticGraphEvaluation     [$(RestoreUseStaticGraphEvaluation)]" />
 
     <Message Text="%0A" />
     <Message Text="WinUI" />
