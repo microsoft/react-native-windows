@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Dec 2021 06:09:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.433",
+      "version": "0.0.0-canary.433",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "baeb133da923d0eee25eacf54c02557ea411a7fc",
+            "comment": "Implicitly restore C++/PackageReference in Visual Studio"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 18 Dec 2021 06:08:07 GMT",
       "tag": "react-native-windows_v0.0.0-canary.432",
       "version": "0.0.0-canary.432",
