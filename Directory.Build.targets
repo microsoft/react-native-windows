@@ -70,11 +70,6 @@
         DefaultPlatformToolset;
         PlatformToolset;
         SolutionDir;
-        RootDir;
-        RootIntDir;
-        RootOutDir;
-        BaseIntDir;
-        BaseOutDir;
         IntDir;
         OutDir;
         TargetDir;
@@ -83,24 +78,29 @@
         LastBuildUnsuccessful;
         LastBuildState;
         GeneratedFilesDir;
-        WinVer;
         TargetFrameworkMoniker;
         MSBuildExtensionsPath;
         MSBuildExtensionsPath32;
         MSBuildExtensionsPath64;
         VCTargetsPath;
-        ReactNativeWindowsDir;
         UserRootDir;
         ProjectHome;
+      " />
+      <CustomItems Include="
+        RootDir;
+        RootIntDir;
+        RootOutDir;
+        BaseIntDir;
+        BaseOutDir;
+        ReactNativeDir;
+        ReactNativeWindowsDir;
+        FollyDir;
+        YogaDir;
+        WinVer;
       " />
       <WinRTItems Include="
         UnmergedWinmdDirectory;
         MergedWinmdDirectory;
-      " />
-      <ReactNativeItems Include="
-        ReactNativeDir;
-        FollyDir;
-        YogaDir;
       " />
       <JSEngineItems Include="
         PkgReactNative_Hermes_Windows;
@@ -147,6 +147,10 @@
     <Message Text="=> @(GeneralItems->PadRight(24)) [$(%(GeneralItems.Identity))]" />
 
     <Message Text="%0A" />
+    <Message Text="Custom" />
+    <Message Text="=> @(CustomItems->PadRight(24)) [$(%(CustomItems.Identity))]" />
+
+    <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
     <Message Text="=> PrecompiledHeaderOutputFile  [@(CLCompile->Metadata('PrecompiledHeaderOutputFile')->DirectoryName()->Distinct())]" />
     <Message Text="=> AssemblerListingLocation     [@(CLCompile->Metadata('AssemblerListingLocation')->DirectoryName()->Distinct())]" />
@@ -157,10 +161,6 @@
     <Message Text="=> PreprocessOutputPath         [@(CLCompile->Metadata('PreprocessOutputPath')->DirectoryName()->Distinct())]" />
     <Message Text="=> PreprocessorDefinitions      [@(CLCompile->Metadata('PreprocessorDefinitions')->Distinct())]" />
     <Message Text="=> ClDirsToMake                 [@(ClDirsToMake)]" />
-
-    <Message Text="%0A" />
-    <Message Text="React Native" />
-    <Message Text="=> @(ReactNativeItems->PadRight(24)) [$(%(ReactNativeItems.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="WinRT" />
