@@ -102,7 +102,7 @@
         FollyDir;
         YogaDir;
       " />
-      <_VarsItemsJSEngine Include="
+      <JSEngineItems Include="
         PkgReactNative_Hermes_Windows;
         EnableHermesInspectorInReleaseFlavor;
         UseHermes;
@@ -168,7 +168,7 @@
 
     <Message Text="%0A" />
     <Message Text="JS Engine" />
-    <Message Text="=> @(_VarsItemsJSEngine->PadRight(40)) [$(%(_VarsItemsJSEngine.Identity))]" />
+    <Message Text="=> @(JSEngineItems->PadRight(40)) [$(%(JSEngineItems.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="NuGet" />
