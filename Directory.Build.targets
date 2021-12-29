@@ -58,91 +58,93 @@
   </Target>
 
   <!-- For build debugging purposes. -->
-  <ItemGroup>
-    <_VarsItemsGeneral Include="
-      ApplicationType;
-      Configuration;
-      Platform;
-      PlatformTarget;
-      PlatformName;
-      DefaultPlatformToolset;
-      PlatformToolset;
-      SolutionDir;
-      RootDir;
-      RootIntDir;
-      RootOutDir;
-      BaseIntDir;
-      BaseOutDir;
-      IntDir;
-      OutDir;
-      TargetDir;
-      TargetPath;
-      TLogLocation;
-      LastBuildUnsuccessful;
-      LastBuildState;
-      GeneratedFilesDir;
-      WinVer;
-      TargetFrameworkMoniker;
-      MSBuildExtensionsPath;
-      MSBuildExtensionsPath32;
-      MSBuildExtensionsPath64;
-      VCTargetsPath;
-      ReactNativeWindowsDir;
-      UserRootDir;
-      ProjectHome;
-    " />
-    <_VarsItemsWinRT Include="
-      UnmergedWinmdDirectory;
-      MergedWinmdDirectory;
-    " />
-    <_VarsItemsReactNative Include="
-      ReactNativeDir;
-      FollyDir;
-      YogaDir;
-    " />
-    <_VarsItemsJSEngine Include="
-      PkgReactNative_Hermes_Windows;
-      EnableHermesInspectorInReleaseFlavor;
-      UseHermes;
-      HermesVersion;
-      HermesPackage;
-      HermesArch;
-      UseFabric;
-      UseV8;
-      V8Package;
-      V8Version;
-      V8AppPlatform;
-    " />
-    <_VarsItemsNuGet Include="
-      AssetTargetFallback;
-      IncludeFrameworkReferencesFromNuGet;
-      NuGetPackageRoot;
-      NuGetPackagesDirectory;
-      NuGetRuntimeIdentifier;
-      ProjectLockFile;
-      IntermediateOutputPath;
-      NuGetTargetMoniker;
-      TargetFramework;
-      TargetFrameworks;
-      TargetFrameworkIdentifier;
-      BaseNuGetRuntimeIdentifier;
-      TargetPlatformIdentifier;
-      MSBuildProjectExtensionsPath;
-      RestoreProjectStyle;
-      RestoreUseStaticGraphEvaluation;
-    " />
-    <_VarsItemsWinUI Include="
-      UseWinUI3;
-      WinUI3Version;
-      WinUI2xVersion;
-      WinUIPackageName;
-      WinUIPackageVersion;
-      IsWinUIAlpha;
-    " />
-  </ItemGroup>
   <Target Name="Vars">
+
+    <ItemGroup>
+      <GeneralItems Include="
+        ApplicationType;
+        Configuration;
+        Platform;
+        PlatformTarget;
+        PlatformName;
+        DefaultPlatformToolset;
+        PlatformToolset;
+        SolutionDir;
+        RootDir;
+        RootIntDir;
+        RootOutDir;
+        BaseIntDir;
+        BaseOutDir;
+        IntDir;
+        OutDir;
+        TargetDir;
+        TargetPath;
+        TLogLocation;
+        LastBuildUnsuccessful;
+        LastBuildState;
+        GeneratedFilesDir;
+        WinVer;
+        TargetFrameworkMoniker;
+        MSBuildExtensionsPath;
+        MSBuildExtensionsPath32;
+        MSBuildExtensionsPath64;
+        VCTargetsPath;
+        ReactNativeWindowsDir;
+        UserRootDir;
+        ProjectHome;
+      " />
+      <WinRTItems Include="
+        UnmergedWinmdDirectory;
+        MergedWinmdDirectory;
+      " />
+      <ReactNativeItems Include="
+        ReactNativeDir;
+        FollyDir;
+        YogaDir;
+      " />
+      <_VarsItemsJSEngine Include="
+        PkgReactNative_Hermes_Windows;
+        EnableHermesInspectorInReleaseFlavor;
+        UseHermes;
+        HermesVersion;
+        HermesPackage;
+        HermesArch;
+        UseFabric;
+        UseV8;
+        V8Package;
+        V8Version;
+        V8AppPlatform;
+      " />
+      <NuGetItems Include="
+        AssetTargetFallback;
+        IncludeFrameworkReferencesFromNuGet;
+        NuGetPackageRoot;
+        NuGetPackagesDirectory;
+        NuGetRuntimeIdentifier;
+        ProjectLockFile;
+        IntermediateOutputPath;
+        NuGetTargetMoniker;
+        TargetFramework;
+        TargetFrameworks;
+        TargetFrameworkIdentifier;
+        BaseNuGetRuntimeIdentifier;
+        TargetPlatformIdentifier;
+        MSBuildProjectExtensionsPath;
+        RestoreProjectStyle;
+        RestoreUseStaticGraphEvaluation;
+      " />
+      <WinUIItems Include="
+        UseWinUI3;
+        WinUI3Version;
+        WinUI2xVersion;
+        WinUIPackageName;
+        WinUIPackageVersion;
+        IsWinUIAlpha;
+      " />
+    </ItemGroup>
+
     <Message Text="General" />
-    <Message Text="=> @(_VarsItemsGeneral->PadRight(24)) [$(%(_VarsItemsGeneral.Identity))]" />
+    <Message Text="=> @(GeneralItems->PadRight(24)) [$(%(GeneralItems.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
@@ -158,11 +160,11 @@
 
     <Message Text="%0A" />
     <Message Text="React Native" />
-    <Message Text="=> @(_VarsItemsReactNative->PadRight(24)) [$(%(_VarsItemsReactNative.Identity))]" />
+    <Message Text="=> @(ReactNativeItems->PadRight(24)) [$(%(ReactNativeItems.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="WinRT" />
-    <Message Text="=> @(_VarsItemsWinRT->PadRight(24)) [$(%(_VarsItemsWinRT.Identity))]" />
+    <Message Text="=> @(WinRTItems->PadRight(24)) [$(%(WinRTItems.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="JS Engine" />
@@ -170,11 +172,11 @@
 
     <Message Text="%0A" />
     <Message Text="NuGet" />
-    <Message Text="=> @(_VarsItemsNuGet->PadRight(40)) [$(%(_VarsItemsNuGet.Identity))]" />
+    <Message Text="=> @(NuGetItems->PadRight(40)) [$(%(NuGetItems.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="WinUI" />
-    <Message Text="=> @(_VarsItemsWinUI->PadRight(40)) [$(%(_VarsItemsWinUI.Identity))]" />
+    <Message Text="=> @(WinUIItems->PadRight(40)) [$(%(WinUIItems.Identity))]" />
 
   </Target>
 
