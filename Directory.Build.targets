@@ -58,31 +58,91 @@
   </Target>
 
   <!-- For build debugging purposes. -->
+  <ItemGroup>
+    <_VarsItemsGeneral Include="
+      ApplicationType;
+      Configuration;
+      Platform;
+      PlatformTarget;
+      PlatformName;
+      DefaultPlatformToolset;
+      PlatformToolset;
+      SolutionDir;
+      RootDir;
+      RootIntDir;
+      RootOutDir;
+      BaseIntDir;
+      BaseOutDir;
+      IntDir;
+      OutDir;
+      TargetDir;
+      TargetPath;
+      TLogLocation;
+      LastBuildUnsuccessful;
+      LastBuildState;
+      GeneratedFilesDir;
+      WinVer;
+      TargetFrameworkMoniker;
+      MSBuildExtensionsPath;
+      MSBuildExtensionsPath32;
+      MSBuildExtensionsPath64;
+      VCTargetsPath;
+      ReactNativeWindowsDir;
+      UserRootDir;
+      ProjectHome;
+    " />
+    <_VarsItemsWinRT Include="
+      UnmergedWinmdDirectory;
+      MergedWinmdDirectory;
+    " />
+    <_VarsItemsReactNative Include="
+      ReactNativeDir;
+      FollyDir;
+      YogaDir;
+    " />
+    <_VarsItemsJSEngine Include="
+      PkgReactNative_Hermes_Windows;
+      EnableHermesInspectorInReleaseFlavor;
+      UseHermes;
+      HermesVersion;
+      HermesPackage;
+      HermesArch;
+      UseFabric;
+      UseV8;
+      V8Package;
+      V8Version;
+      V8AppPlatform;
+    " />
+    <_VarsItemsNuGet Include="
+      AssetTargetFallback;
+      IncludeFrameworkReferencesFromNuGet;
+      NuGetPackageRoot;
+      NuGetPackagesDirectory;
+      NuGetRuntimeIdentifier;
+      ProjectLockFile;
+      IntermediateOutputPath;
+      NuGetTargetMoniker;
+      TargetFramework;
+      TargetFrameworks;
+      TargetFrameworkIdentifier;
+      BaseNuGetRuntimeIdentifier;
+      TargetPlatformIdentifier;
+      MSBuildProjectExtensionsPath;
+      RestoreProjectStyle;
+      RestoreUseStaticGraphEvaluation;
+    " />
+    <_VarsItemsWinUI Include="
+      UseWinUI3;
+      WinUI3Version;
+      WinUI2xVersion;
+      WinUIPackageName;
+      WinUIPackageVersion;
+      IsWinUIAlpha;
+    " />
+  </ItemGroup>
   <Target Name="Vars">
     <Message Text="General" />
-    <Message Text="=> ApplicationType         [$(ApplicationType)]" />
-    <Message Text="=> Configuration           [$(Configuration)]" />
-    <Message Text="=> Platform                [$(Platform)]" />
-    <Message Text="=> PlatformTarget          [$(PlatformTarget)]" />
-    <Message Text="=> PlatformName            [$(PlatformName)]" />
-    <Message Text="=> DefaultPlatformToolset  [$(DefaultPlatformToolset)]" />
-    <Message Text="=> PlatformToolset         [$(PlatformToolset)]" />
-    <Message Text="=> SolutionDir             [$(SolutionDir)]" />
-    <Message Text="=> RootDir                 [$(RootDir)]" />
-    <Message Text="=> RootIntDir              [$(RootIntDir)]" />
-    <Message Text="=> RootOutDir              [$(RootOutDir)]" />
-    <Message Text="=> BaseIntDir              [$(BaseIntDir)]" />
-    <Message Text="=> BaseOutDir              [$(BaseOutDir)]" />
-    <Message Text="=> IntDir                  [$(IntDir)]" />
-    <Message Text="=> OutDir                  [$(OutDir)]" />
-    <Message Text="=> TargetDir               [$(TargetDir)]" />
-    <Message Text="=> TargetPath              [$(TargetPath)]" />
-    <Message Text="=> TLogLocation            [$(TLogLocation)]" />
-    <Message Text="=> LastBuildUnsuccessful   [$(LastBuildUnsuccessful)]" />
-    <Message Text="=> LastBuildState          [$(LastBuildState)]" />
-    <Message Text="=> GeneratedFilesDir       [$(GeneratedFilesDir)]" />
-    <Message Text="=> WinVer                  [$(WinVer)]" />
-    <Message Text="=> TargetFrameworkMoniker  [$(TargetFrameworkMoniker)]" />
+    <Message Text="=> @(_VarsItemsGeneral->PadRight(24)) [$(%(_VarsItemsGeneral.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
@@ -97,62 +157,24 @@
     <Message Text="=> ClDirsToMake                [@(ClDirsToMake)]" />
 
     <Message Text="%0A" />
-    <Message Text="=> UnmergedWinmdDirectory  [$(UnmergedWinmdDirectory)]" />
-    <Message Text="=> MergedWinmdDirectory    [$(MergedWinmdDirectory)]" />
-    <Message Text="=> FollyDir                [$(FollyDir)]" />
-    <Message Text="=> ReactNativeWindowsDir   [$(ReactNativeWindowsDir)]" />
-    <Message Text="=> ReactNativeDir          [$(ReactNativeDir)]" />
-    <Message Text="=> YogaDir                 [$(YogaDir)]" />
-    <Message Text="=> ProjectHome             [$(ProjectHome)]" />
-    <Message Text="=> UserRootDir             [$(UserRootDir)]" />
-    <Message Text="=> MSBuildExtensionsPath   [$(MSBuildExtensionsPath)]" />
-    <Message Text="=> MSBuildExtensionsPath32 [$(MSBuildExtensionsPath32)]" />
-    <Message Text="=> MSBuildExtensionsPath64 [$(MSBuildExtensionsPath64)]" />
-    <Message Text="=> VCTargetsPath           [$(VCTargetsPath)]" />
+    <Message Text="React Native" />
+    <Message Text="=> @(_VarsItemsReactNative->PadRight(24)) [$(%(_VarsItemsReactNative.Identity))]" />
+
+    <Message Text="%0A" />
+    <Message Text="WinRT" />
+    <Message Text="=> @(_VarsItemsWinRT->PadRight(24)) [$(%(_VarsItemsWinRT.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="JS Engine" />
-    <Message Text="=> PkgReactNative_Hermes_Windows        [$(PkgReactNative_Hermes_Windows)]" />
-    <Message Text="=> EnableHermesInspectorInReleaseFlavor [$(EnableHermesInspectorInReleaseFlavor)]" />
-    <Message Text="=> UseHermes     [$(UseHermes)]" />
-    <Message Text="=> UseFabric     [$(UseFabric)]" />
-    <Message Text="=> HermesVersion [$(HermesVersion)]" />
-    <Message Text="=> HermesPackage [$(HermesPackage)]" />
-    <Message Text="=> HermesArch    [$(HermesArch)]" />
-    <Message Text="=> UseFabric     [$(UseFabric)]" />
-    <Message Text="=> UseV8         [$(UseV8)]" />
-    <Message Text="=> V8Package     [$(V8Package)]" />
-    <Message Text="=> V8Version     [$(V8Version)]" />
-    <Message Text="=> V8AppPlatform [$(V8AppPlatform)]" />
+    <Message Text="=> @(_VarsItemsJSEngine->PadRight(40)) [$(%(_VarsItemsJSEngine.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="NuGet" />
-    <Message Text="=> AssetTargetFallback                 [$(AssetTargetFallback)]" />
-    <Message Text="=> IncludeFrameworkReferencesFromNuGet [$(IncludeFrameworkReferencesFromNuGet)]" />
-    <Message Text="=> NuGetPackageRoot                    [$(NuGetPackageRoot)]" />
-    <Message Text="=> NuGetPackagesDirectory              [$(NuGetPackagesDirectory)]" />
-    <Message Text="=> NuGetRuntimeIdentifier              [$(NuGetRuntimeIdentifier)]" />
-    <Message Text="=> ProjectLockFile                     [$(ProjectLockFile)]" />
-    <Message Text="=> IntermediateOutputPath              [$(IntermediateOutputPath)]" />
-    <Message Text="=> NuGetTargetMoniker                  [$(NuGetTargetMoniker)]" />
-    <Message Text="=> TargetFramework                     [$(TargetFramework)]" />
-    <Message Text="=> TargetFrameworks                    [$(TargetFrameworks)]" />
-    <Message Text="=> TargetFrameworkIdentifier           [$(TargetFrameworkIdentifier)]" />
-    <Message Text="=> BaseNuGetRuntimeIdentifier          [$(BaseNuGetRuntimeIdentifier)]" />
-    <Message Text="=> NuGetRuntimeIdentifier              [$(NuGetRuntimeIdentifier)]" />
-    <Message Text="=> TargetPlatformIdentifier            [$(TargetPlatformIdentifier)]" />
-    <Message Text="=> MSBuildProjectExtensionsPath        [$(MSBuildProjectExtensionsPath)]" />
-    <Message Text="=> RestoreProjectStyle                 [$(RestoreProjectStyle)]" />
-    <Message Text="=> RestoreUseStaticGraphEvaluation     [$(RestoreUseStaticGraphEvaluation)]" />
+    <Message Text="=> @(_VarsItemsNuGet->PadRight(40)) [$(%(_VarsItemsNuGet.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="WinUI" />
-    <Message Text="=> UseWinUI3           [$(UseWinUI3)]" />
-    <Message Text="=> WinUI3Version       [$(WinUI3Version)]" />
-    <Message Text="=> WinUI2xVersion      [$(WinUI2xVersion)]" />
-    <Message Text="=> WinUIPackageName    [$(WinUIPackageName)]" />
-    <Message Text="=> WinUIPackageVersion [$(WinUIPackageVersion)]" />
-    <Message Text="=> IsWinUIAlpha        [$(IsWinUIAlpha)]" />
+    <Message Text="=> @(_VarsItemsWinUI->PadRight(40)) [$(%(_VarsItemsWinUI.Identity))]" />
 
   </Target>
 
