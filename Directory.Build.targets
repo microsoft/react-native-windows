@@ -61,7 +61,7 @@
   <Target Name="Vars">
 
     <ItemGroup>
-      <GeneralItems Include="
+      <_VarsGeneral Include="
         ApplicationType;
         Configuration;
         Platform;
@@ -86,7 +86,7 @@
         UserRootDir;
         ProjectHome;
       " />
-      <CustomItems Include="
+      <_VarsCustom Include="
         RootDir;
         RootIntDir;
         RootOutDir;
@@ -98,11 +98,11 @@
         YogaDir;
         WinVer;
       " />
-      <WinRTItems Include="
+      <_VarsWinRT Include="
         UnmergedWinmdDirectory;
         MergedWinmdDirectory;
       " />
-      <JSEngineItems Include="
+      <_VarsJSEngine Include="
         PkgReactNative_Hermes_Windows;
         EnableHermesInspectorInReleaseFlavor;
         UseHermes;
@@ -115,7 +115,7 @@
         V8Version;
         V8AppPlatform;
       " />
-      <NuGetItems Include="
+      <_VarsNuGet Include="
         AssetTargetFallback;
         IncludeFrameworkReferencesFromNuGet;
         NuGetPackageRoot;
@@ -133,7 +133,7 @@
         RestoreProjectStyle;
         RestoreUseStaticGraphEvaluation;
       " />
-      <WinUIItems Include="
+      <_VarsWinUI Include="
         UseWinUI3;
         WinUI3Version;
         WinUI2xVersion;
@@ -144,11 +144,11 @@
     </ItemGroup>
 
     <Message Text="General" />
-    <Message Text="=> @(GeneralItems->PadRight(24)) [$(%(GeneralItems.Identity))]" />
+    <Message Text="=> @(_VarsGeneral->PadRight(24)) [$(%(_VarsGeneral.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="Custom" />
-    <Message Text="=> @(CustomItems->PadRight(24)) [$(%(CustomItems.Identity))]" />
+    <Message Text="=> @(_VarsCustom->PadRight(24)) [$(%(_VarsCustom.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="Microsoft.CppBuild.targets/MakeDirsForCl" />
@@ -164,19 +164,19 @@
 
     <Message Text="%0A" />
     <Message Text="WinRT" />
-    <Message Text="=> @(WinRTItems->PadRight(24)) [$(%(WinRTItems.Identity))]" />
+    <Message Text="=> @(_VarsWinRT->PadRight(24)) [$(%(_VarsWinRT.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="JS Engine" />
-    <Message Text="=> @(JSEngineItems->PadRight(40)) [$(%(JSEngineItems.Identity))]" />
+    <Message Text="=> @(_VarsJSEngine->PadRight(40)) [$(%(_VarsJSEngine.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="NuGet" />
-    <Message Text="=> @(NuGetItems->PadRight(40)) [$(%(NuGetItems.Identity))]" />
+    <Message Text="=> @(_VarsNuGet->PadRight(40)) [$(%(_VarsNuGet.Identity))]" />
 
     <Message Text="%0A" />
     <Message Text="WinUI" />
-    <Message Text="=> @(WinUIItems->PadRight(40)) [$(%(WinUIItems.Identity))]" />
+    <Message Text="=> @(_VarsWinUI->PadRight(40)) [$(%(_VarsWinUI.Identity))]" />
 
   </Target>
 
