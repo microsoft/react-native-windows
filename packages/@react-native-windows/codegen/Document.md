@@ -114,7 +114,6 @@ static int AddSync(int x, int y) noexcept
 ### REACT_METHOD
 
 `REACT_METHOD` is an async version of `REACT_SYNC_METHOD`.
-
 The attached function must returns `void`
 and its last argument must be `winrt::Microsoft::ReactNative::ReactPromise<T> const& result`.
 
@@ -123,13 +122,13 @@ Call `result.Resolve` to finish the function call with a result.
 Call `result.Reject` to finish the function call with an error.
 
 ```c++
-REACT_SYNC_METHOD(AddAsync)
+REACT_METHOD(AddAsync)
 void AddAsync(int x, int y, winrt::Microsoft::ReactNative::ReactPromise<int> const& result) noexcept
 {
     result.Resolve(x + y);
 }
 
-REACT_SYNC_METHOD(AddAsyncStatic)
+REACT_METHOD(AddAsyncStatic)
 static void AddAsync(int x, int y, winrt::Microsoft::ReactNative::ReactPromise<int> const& result) noexcept
 {
     result.Reject("error!");
@@ -144,7 +143,7 @@ static void AddAsync(int x, int y, winrt::Microsoft::ReactNative::ReactPromise<i
 
 The syntax of `REACT_GET_CONSTANTS` is `REACT_GET_CONSTANTS(method)`.
 
-- `method`: the method to call. Whatever the name is, it becomes `getConstants` in JavaScript.
+- `method`: the C++ method to call. Whatever the name is, it becomes `getConstants` in JavaScript.
 
 Although they are semantically the same in JavaScript but `REACT_GET_CONSTANTS(method)` could never be replaced by `REACT_SYNC_METHOD(method, getConstants)`.
 
@@ -160,9 +159,61 @@ static MyStruct GetConstants() noexcept {
 }
 ```
 
+**Important**: If multiple `REACT_GET_CONSTANTS`, `REACT_CONSTANT_PROVIDER` and `REACT_CONSTANT` appear in a module struct,
+calling `getConstants` in JavaScript gets the result of all these methods combined together.
+
+**Important**: If `getConstants` are in the generated spec class,
+then a single `REACT_GET_CONSTANTS` becomes the only way to implement this member.
+
 ### REACT_CONSTANT_PROVIDER
 
+`REACT_CONSTANT_PROVIDER` is a weak-typed version of `REACT_GET_CONSTANTS`.
+The attached function must returns `void`
+and its only argument must be `winrt::Microsoft::ReactNative::ReactConstantProvider& provider`.
+
+The syntax of `REACT_CONSTANT_PROVIDER` is `REACT_CONSTANT_PROVIDER(method)`.
+
+- `method`: the C++ method to call. Whatever the name is, it becomes `getConstants` in JavaScript.
+
+```c++
+REACT_CONSTANT_PROVIDER(GetConstants)
+void GetConstants(winrt::Microsoft::ReactNative::ReactConstantProvider& provider) noexcept
+{
+    provider.Add(L"name", value);
+    ...
+}
+
+REACT_CONSTANT_PROVIDER(GetConstantsStatic)
+static void GetConstants(winrt::Microsoft::ReactNative::ReactConstantProvider& provider) noexcept
+{
+    provider.Add(L"name", value);
+    ...
+}
+```
+
+**Important**: If multiple `REACT_GET_CONSTANTS`, `REACT_CONSTANT_PROVIDER` and `REACT_CONSTANT` appear in a module struct,
+calling `getConstants` in JavaScript gets the result of all these methods combined together.
+
 ### REACT_CONSTANT
+
+`REACT_CONSTANT`
+
+`REACT_CONSTANT` adds a field to `getConstants`.
+
+The syntax of `REACT_CONSTANT` is `REACT_CONSTANT(field)`.
+
+- `field`: the C++ field to read.
+
+```c++
+REACT_CONSTANT(Constant1)
+const std::string Constant1 {"Something"};
+
+REACT_CONSTANT(Constant2)
+static constexpr int Constant2 = 100;
+```
+
+**Important**: If multiple `REACT_GET_CONSTANTS`, `REACT_CONSTANT_PROVIDER` and `REACT_CONSTANT` appear in a module struct,
+calling `getConstants` in JavaScript gets the result of all these methods combined together.
 
 ### REACT_EVENT
 
