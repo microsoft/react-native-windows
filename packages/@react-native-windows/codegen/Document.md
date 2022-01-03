@@ -1,14 +1,14 @@
-# React Native Turbo Module C++ Code Generation
+# React Native TurboModule C++ Code Generation
 
 ## Running Codegen
 
 (working)
 
-## TypeScript Turbo Module Syntax
+## TypeScript TurboModule Syntax
 
 (working)
 
-## Implementing a Turbo Module in C++
+## Implementing a TurboModule in C++
 
 Checkout the following example:
 
@@ -16,7 +16,7 @@ Checkout the following example:
 - Generated spec file: [NativeDialogManagerWindowsSpec.g.h](https://github.com/microsoft/react-native-windows/blob/main/vnext/codegen/NativeDialogManagerWindowsSpec.g.h)
 - Implementation: [AlertModule.h](https://github.com/microsoft/react-native-windows/blob/main/vnext/Microsoft.ReactNative/Modules/AlertModule.h)
 
-A turbo module implemetation starts with:
+A TurboModule implemetation starts with:
 
 ```c++
 #include <MyModuleSpec.g.h>
@@ -53,13 +53,13 @@ unlike `MakeModuleProvider<MyModule>` where `MyModule::ModuleSpec` is optional.
 
 The syntax of `REACT_MODULE` is `REACT_MODULE(moduleStruct, [optional]moduleName, [optional]eventEmitterName)`.
 
-- `moduleStruct`: the struct name that implements the turbo module without namespace.
+- `moduleStruct`: the struct name that implements the TurboModule without namespace.
 - `moduleName`: the module name visible to JavaScript. The default value is `L"moduleStruct"`.
 - `eventEmitterName`: the default event emitter name. The default value is `L""`, which is `RCTDeviceEventEmitter`.
 
 ### Members
 
-Any member in the struct implementing turbo module functions should be attached with an attribute like `REACT_MODULE`.
+Any member in the struct implementing TurboModule functions should be attached with an attribute like `REACT_MODULE`.
 Here is the list of all available attributes:
 
 - `REACT_INIT`
@@ -74,13 +74,13 @@ Here is the list of all available attributes:
 ### REACT_INIT
 
 `REACT_INIT` attaches to a function.
-Such function is called before a turbo module is used in JavaScript,
+Such function is called before a TurboModule is used in JavaScript,
 there is no deterministic timing about when this function will be called,
 and also no guarantee about in which thread this function will be called.
 
 The syntax of `REACT_INIT` is `REACT_INIT(method)`.
 
-- `method`: the C++ method to call to initialize this turbo module.
+- `method`: the C++ method to call to initialize this TurboModule.
 ```c++
 REACT_INIT(Initialize)
 void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext) noexcept;
@@ -89,7 +89,7 @@ void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext)
 ### REACT_SYNC_METHOD
 
 `REACT_SYNC_METHOD` attaches to a function.
-Such function is exposed in the turbo module to JavaScript.
+Such function is exposed in the TurboModule to JavaScript.
 There is no guarantee about in which thread this function will be called.
 
 The syntax of `REACT_SYNC_METHOD` is `REACT_SYNC_METHOD(method, [optional]methodName)`
@@ -138,7 +138,7 @@ static void AddAsync(int x, int y, winrt::Microsoft::ReactNative::ReactPromise<i
 
 ### REACT_GET_CONSTANTS
 
-`REACT_GET_CONSTANTS` implements the sync method `getConstants` in a turbo module.
+`REACT_GET_CONSTANTS` implements the sync method `getConstants` in a TurboModule.
 `getConstants` returns an object literal without any argument.
 
 The syntax of `REACT_GET_CONSTANTS` is `REACT_GET_CONSTANTS(method)`.
@@ -234,7 +234,7 @@ std::function<void(int, std::string const&)> AnEvent;
 ### REACT_FUNCTION
 
 `REACT_FUNCTION` defines a JavaScript implemented function.
-after a turbo module is loaded,
+after a TurboModule is loaded,
 the attached field will be initialized with a value,
 calling this field executes some code registered in JavaScript.
 
@@ -262,3 +262,35 @@ global.__fbBatchedBridge.registerLazyCallableModule('RandomModuleName', () => ne
 ```
 
 ### Type Projections
+
+Here are a list of supported types in TurboModule.
+
+| TypeScript | Flow | C++ |
+| ---------- | ---- | --- |
+| `string` | `*` | `std::string` |
+| `number` | `*` | `double` |
+| `float (number)` | `*` | `double` |
+| `double (number)` | `*` | `double` |
+| `Int32 (number)` | `*` | `int` |
+| `boolean` | `*` | `bool` |
+| `T[]` | `*` | `std::vector<T>` |
+| `readonly T[]` | `$ReadOnlyArray<T>` | `std::vector<T>` |
+| `Array` | `*` | `winrt::Microsoft::ReactNative::JSValueArray` |
+| `object` | `*` | `winrt::Microsoft::ReactNative::JSValue` |
+| `{ literal-type }` | `{| literal-type |}` | A generated C++ struct |
+| `RootTag` | `*` | double |
+| `T | ReactNull` | `?T` | `std::optional<T>` |
+| `function (parameters) => void` | `(arguments) => void` | `std::function<void(parameters)>` |
+
+The following types are only valid for function return types
+
+| TypeScript | Flow | C++ |
+| ---------- | ---- | --- |
+| `void` | `*` | `void` |
+| `Promise<T>` | `*` | `winrt::Microsoft::ReactNative::ReactPromise<T>` (becomes the last argument) |
+
+**Important**:
+
+- `float`, `double`, `Int32` and `ReactNull` must be a type definition imported from another file.
+- `*` means the syntax is the same between TypeScript and Flow.
+- Try your best not to use `Array` and `object` in the JavaScript TurboModule definition.
