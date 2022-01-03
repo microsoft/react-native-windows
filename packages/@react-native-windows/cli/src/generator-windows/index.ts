@@ -274,7 +274,6 @@ export async function copyProjectTemplateAndReplace(
               bundleDir,
               'index.windows.bundle',
             ),
-            //"C:\Users\tatianakapos\Documents\Work\react-native-windows\vnext\template\_gitattributes.txt"
           },
           {
             from: path.join(srcPath, projDir, 'MyApp.sln'),
