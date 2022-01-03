@@ -277,9 +277,9 @@ Here are a list of supported types in TurboModule.
 | `readonly T[]` | `$ReadOnlyArray<T>` | `std::vector<T>` |
 | `Array` | `*` | `winrt::Microsoft::ReactNative::JSValueArray` |
 | `object` | `*` | `winrt::Microsoft::ReactNative::JSValue` |
-| `{ literal-type }` | `{| literal-type |}` | A generated C++ struct |
+| `{ literal-type }` | `{\| literal-type \|}` | A generated C++ struct |
 | `RootTag` | `*` | double |
-| `T | ReactNull` | `?T` | `std::optional<T>` |
+| `T` | `ReactNull` | `?T` | `std::optional<T>` |
 | `function (parameters) => void` | `(arguments) => void` | `std::function<void(parameters)>` |
 
 The following types are only valid for function return types
