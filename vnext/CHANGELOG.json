@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Jan 2022 16:11:53 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.6",
+      "version": "0.67.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "372ce65125bce35713a557d7613f07148821944b",
+            "comment": "[0.67] Avoid capturing raw this pointer in WebSocket module"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Dec 2021 16:10:50 GMT",
       "tag": "react-native-windows_v0.67.0-preview.5",
       "version": "0.67.0-preview.5",
