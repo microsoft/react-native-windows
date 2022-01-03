@@ -12,7 +12,7 @@
 
 Checkout the following example:
 
-- Flow definition: [Alert.windows.js](https://github.com/microsoft/react-native-windows/blob/main/vnext/src/Libraries/Alert/Alert.windows.js)
+- Flow definition: [NativeDialogManagerWindows.js](https://github.com/microsoft/react-native-windows/blob/main/vnext/src/Libraries/Alert/NativeDialogManagerWindows.js)
 - Generated spec file: [NativeDialogManagerWindowsSpec.g.h](https://github.com/microsoft/react-native-windows/blob/main/vnext/codegen/NativeDialogManagerWindowsSpec.g.h)
 - Implementation: [AlertModule.h](https://github.com/microsoft/react-native-windows/blob/main/vnext/Microsoft.ReactNative/Modules/AlertModule.h)
 
@@ -47,6 +47,8 @@ you could pick one and copy to your `MyModule`.
 but it requires `MyModule::ModuleSpec` to exist,
 unlike `MakeModuleProvider<MyModule>` where `MyModule::ModuleSpec` is optional.
 
+**Tips**: You could use `React::` if you think `winrt::Microsoft::ReactNative::` is too long after `#include <NativeModules.h>`.
+
 ### REACT_MODULE
 
 The syntax of `REACT_MODULE` is `REACT_MODULE(moduleStruct, [optional]moduleName, [optional]eventEmitterName)`.
@@ -61,10 +63,10 @@ Any member in the struct implementing turbo module functions should be attached 
 Here is the list of all available attributes:
 
 - `REACT_INIT`
-- `REACT_METHOD`
 - `REACT_SYNC_METHOD`
-- `REACT_CONSTANT_PROVIDER`
+- `REACT_METHOD`
 - `REACT_GET_CONSTANTS`
+- `REACT_CONSTANT_PROVIDER`
 - `REACT_CONSTANT`
 - `REACT_EVENT`
 - `REACT_FUNCTION`
@@ -76,21 +78,94 @@ Such function is called before a turbo module is used in JavaScript,
 there is no deterministic timing about when this function will be called,
 and also no guarantee about in which thread this function will be called.
 
+The syntax of `REACT_INIT` is `REACT_INIT(method)`.
+
+- `method`: the C++ method to call to initialize this turbo module.
 ```c++
 REACT_INIT(Initialize)
 void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext) noexcept;
 ```
 
-### REACT_METHOD
-
 ### REACT_SYNC_METHOD
 
-### REACT_CONSTANT_PROVIDER
+`REACT_SYNC_METHOD` attaches to a function.
+Such function is exposed in the turbo module to JavaScript.
+There is no guarantee about in which thread this function will be called.
+
+The syntax of `REACT_SYNC_METHOD` is `REACT_SYNC_METHOD(method, [optional]methodName)`
+
+- `method`: the C++ method to call.
+- `methodName`: the method name that is visible to JavaScript. The default value is `L"method"`.
+
+```c++
+REACT_SYNC_METHOD(AddSync)
+int AddSync(int x, int y) noexcept
+{
+    return x + y;
+}
+
+REACT_SYNC_METHOD(AddSyncStatic)
+static int AddSync(int x, int y) noexcept
+{
+    return x + y;
+}
+```
+
+### REACT_METHOD
+
+`REACT_METHOD` is an async version of `REACT_SYNC_METHOD`.
+
+The attached function must returns `void`
+and its last argument must be `winrt::Microsoft::ReactNative::ReactPromise<T> const& result`.
+
+Call `result.Resolve` to finish the function call with a result.
+
+Call `result.Reject` to finish the function call with an error.
+
+```c++
+REACT_SYNC_METHOD(AddAsync)
+void AddAsync(int x, int y, winrt::Microsoft::ReactNative::ReactPromise<int> const& result) noexcept
+{
+    result.Resolve(x + y);
+}
+
+REACT_SYNC_METHOD(AddAsyncStatic)
+static void AddAsync(int x, int y, winrt::Microsoft::ReactNative::ReactPromise<int> const& result) noexcept
+{
+    result.Reject("error!");
+    // accepting char const*, wchar_t const* and winrt::Microsoft::ReactNative::ReactError
+}
+```
 
 ### REACT_GET_CONSTANTS
+
+`REACT_GET_CONSTANTS` implements the sync method `getConstants` in a turbo module.
+`getConstants` returns an object literal without any argument.
+
+The syntax of `REACT_GET_CONSTANTS` is `REACT_GET_CONSTANTS(method)`.
+
+- `method`: the method to call. Whatever the name is, it becomes `getConstants` in JavaScript.
+
+Although they are semantically the same in JavaScript but `REACT_GET_CONSTANTS(method)` could never be replaced by `REACT_SYNC_METHOD(method, getConstants)`.
+
+```c++
+REACT_GET_CONSTANTS(GetConstants)
+MyStruct GetConstants() noexcept {
+    return { ... };
+}
+
+REACT_GET_CONSTANTS(GetConstantsStatic)
+static MyStruct GetConstants() noexcept {
+    return { ... };
+}
+```
+
+### REACT_CONSTANT_PROVIDER
 
 ### REACT_CONSTANT
 
 ### REACT_EVENT
 
 ### REACT_FUNCTION
+
+### Type Projections
