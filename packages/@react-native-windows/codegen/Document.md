@@ -11,9 +11,37 @@
 - `namespace`: The namespace for the generated spec file. For example: `Microsoft::ReactNativeSpecs`.
 - `libraryName`: part of the output folder for components.
 
+After successfully executed the codegen,
+a C++ spec class will be generated in a header file.
+
 ## TypeScript TurboModule Syntax
 
-(working)
+A TypeScript TurboModule definition file must contain:
+
+- Exactly one module spec interface inheriting from `TurboModule`.
+- An export statement in this format `export default TurboModuleRegistry.getEnforcing<SPEC-INTERFACE-TYPE>('MODULE-NAME');`
+
+```TypeScript
+import {Int32, TurboModule, TurboModuleRegistry} from `react-native`;
+
+type TwoNumbers = {
+    a: Int32;
+    b: Int32;
+};
+
+export interface Spec extends TurboModule {
+    getConstants(): {
+        const1: boolean;
+        const2: number;
+        const3: string;
+    };
+
+    addSync(a: Int32, b: Int32): Int32;
+    addAsync(twoNumbers: TwoNumbers): Promise<Int32>;
+}
+
+export default TurboModuleRegistry.getEnforcing<Spec>('SampleTurboModule');
+```
 
 ## Implementing a TurboModule in C++
 
