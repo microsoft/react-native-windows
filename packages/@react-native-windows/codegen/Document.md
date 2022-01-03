@@ -2,7 +2,14 @@
 
 ## Running Codegen
 
-(working)
+`@react-native-windows/codegen` only supports reading turbo modules in Flow today.
+
+`react-native-windows-codegen --file <FILE> --files <FILES> --namespace <NAMESPACE> --libraryName <LIBRARY>`
+
+- `file`: An input file.
+- `files`: a glob pattern for multiple input files.
+- `namespace`: The namespace for the generated spec file. For example: `Microsoft::ReactNativeSpecs`.
+- `libraryName`: part of the output folder for components.
 
 ## TypeScript TurboModule Syntax
 
