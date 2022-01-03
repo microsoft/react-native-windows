@@ -217,6 +217,48 @@ calling `getConstants` in JavaScript gets the result of all these methods combin
 
 ### REACT_EVENT
 
+`REACT_EVENT` implements an event.
+`REACT_EVENT` attaches to a `std::function` field.
+
+The syntax of `REACT_EVENT` is `REACT_EVENT(field, [optional]eventName, [optional]eventEmitterName)`.
+
+- `field`: the C++ field to store a JavaScript callback.
+- `eventName`: the event name visible to JavaScript. The default value is `L"field"`.
+- `eventEmitterName`: the JavaScript module event emitter name. If this argument is not set, the `eventEmitterName` in `REACT_MODULE` will be used.
+
+```c++
+REACT_EVENT(AnEvent)
+std::function<void(int, std::string const&)> AnEvent;
+```
+
 ### REACT_FUNCTION
+
+`REACT_FUNCTION` defines a JavaScript implemented function.
+after a turbo module is loaded,
+the attached field will be initialized with a value,
+calling this field executes some code registered in JavaScript.
+
+The syntax of `REACT_FUNCTION` is `REACT_FUNCTION(field, [optional]functionName, [optional]moduleName)`.
+
+- `field`: the C++ field to store a JavaScript function.
+- `functionName`: the JavaScript function name. The default value is `L"field"`.
+- `moduleName`: the JavaScript module event emitter name. If this argument is not set, the `moduleName` in `REACT_MODULE` will be used.
+
+```c++
+REACT_FUNCTION(AddValues, addValues, RandomModuleName)
+std::function<void(int a, int b)> AddValues;
+```
+
+```JavaScript
+import { NativeModules } from 'react-native';
+
+class RandomModuleName {
+    addValues(a, b) {
+        // do something
+    }
+}
+
+global.__fbBatchedBridge.registerLazyCallableModule('RandomModuleName', () => new RandomModuleName());
+```
 
 ### Type Projections
