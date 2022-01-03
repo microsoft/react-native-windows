@@ -263,6 +263,10 @@ export async function copyProjectTemplateAndReplace(
             to: path.join(windowsDir, newProjectName, '.gitignore'),
           },
           {
+            from: path.join(srcRootPath, '_gitattributes'),
+            to: path.join(windowsDir, '.gitattributes'),
+          },
+          {
             from: path.join(srcRootPath, 'index.windows.bundle'),
             to: path.join(
               windowsDir,
@@ -270,6 +274,7 @@ export async function copyProjectTemplateAndReplace(
               bundleDir,
               'index.windows.bundle',
             ),
+            //"C:\Users\tatianakapos\Documents\Work\react-native-windows\vnext\template\_gitattributes.txt"
           },
           {
             from: path.join(srcPath, projDir, 'MyApp.sln'),
@@ -281,6 +286,10 @@ export async function copyProjectTemplateAndReplace(
           {
             from: path.join(srcRootPath, '_gitignore'),
             to: path.join(windowsDir, '.gitignore'),
+          },
+          {
+            from: path.join(srcRootPath, '_gitattributes'),
+            to: path.join(windowsDir, '.gitattributes'),
           },
           {
             from: path.join(srcPath, projDir, 'MyLib.sln'),
