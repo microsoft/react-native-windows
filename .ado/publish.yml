@@ -9,10 +9,6 @@ parameters:
   displayName: Skip Git Push
   type: boolean
   default: false
-- name: skipBotDeployment
-  displayName: Skip Deploying Bots to Azure Functions
-  type: boolean
-  default: false
 - name: stopOnNoCI
   displayName: Stop if latest commit is ***NO_CI***
   type: boolean
@@ -97,49 +93,6 @@ jobs:
           buildEnvironment: Continuous
 
       - template: templates/publish-version-vars.yml
-
-  - job: DeployBotCoordinator
-    displayName: Deploy @rnw-bots/coordinator
-    condition: eq(variables['Build.SourceBranchName'], 'main')
-    dependsOn: RnwNpmPublish
-    pool: ${{ parameters.AgentPool.Medium }}
-    timeoutInMinutes: 30
-    steps:
-      - template: templates/prepare-js-env.yml
-
-      # Bump in case the bot coordinator is dependent on other monorepo packages that were just published
-      - script: npx beachball bump --verbose
-        displayName: beachball bump
-
-      # Azure Functions expects a fully packagable folder with dependencies.
-      # Reinstall them without hoisting.
-      - powershell: |
-          Get-ChildItem "packages\@rnw-bots\coordinator" |
-            Where-Object{$_.Name -notin 'node_modules','package.json'} |
-            Copy-Item -Destination $(Build.StagingDirectory)\bot-coordinator -Recurse
-
-          Copy-Item yarn.lock $(Build.StagingDirectory)\bot-coordinator
-
-          # devDependencies add bloat and might only exist in the monorepo
-          Get-Content -Encoding utf8 packages\@rnw-bots\coordinator\package.json |
-            ConvertFrom-Json |
-            Select-Object -Property * -ExcludeProperty devDependencies |
-            ConvertTo-Json |
-            Out-File -Encoding utf8 $(Build.StagingDirectory)\bot-coordinator\package.json
-        displayName: Organizing for unhoisted dependencies
-
-      - template: templates/yarn-install.yml
-        parameters:
-          workingDirectory: $(Build.StagingDirectory)\bot-coordinator
-          frozenLockfile: false
-
-      - ${{ if not(parameters.skipBotDeployment) }}:
-        - task: AzureFunctionApp@1
-          inputs:
-            azureSubscription: cxe-rnw-azure
-            appType: functionApp
-            appName: rnw-bot-coordinator
-            package: $(Build.StagingDirectory)\bot-coordinator
 
   - job: RnwNativeBuildDesktop
     displayName: Build Desktop

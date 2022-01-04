@@ -81,6 +81,20 @@ test('getAnonymizedPath() with path under %%LocalAppData%% is anonymized', () =>
   expect(anonymizedPath.startsWith('[LocalAppData]\\???')).toBe(true);
 });
 
+test('getAnonymizedPath() with a tracked npm package under %%LocalAppData%% is anonymized', () => {
+  const originalPath = path.normalize(
+    path.join(
+      process.env.LocalAppData!,
+      'node_modules/@react-native-windows/cli/index.js',
+    ),
+  );
+  const anonymizedPath = sanitizeUtils.getAnonymizedPath(originalPath);
+  expect(anonymizedPath).not.toBe(originalPath);
+  expect(anonymizedPath).toBe(
+    '[node_modules]\\@react-native-windows\\cli\\index.js',
+  );
+});
+
 test('getAnonymizedPath() with arbitrary path not under project dir is anonymized', () => {
   const originalPath = 'test.sln';
   const anonymizedPath = sanitizeUtils.getAnonymizedPath(originalPath);

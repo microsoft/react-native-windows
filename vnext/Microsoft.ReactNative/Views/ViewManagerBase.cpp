@@ -16,6 +16,7 @@
 #include <Modules/PaperUIManagerModule.h>
 #include <ReactPropertyBag.h>
 #include <TestHook.h>
+#include <Utils/PropertyUtils.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
 
@@ -97,6 +98,8 @@ void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   React::WriteProperty(writer, L"onLayout", L"function");
   React::WriteProperty(writer, L"keyDownEvents", L"array");
   React::WriteProperty(writer, L"keyUpEvents", L"array");
+  React::WriteProperty(writer, L"onMouseEnter", L"function");
+  React::WriteProperty(writer, L"onMouseLeave", L"function");
 }
 
 void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
@@ -282,6 +285,7 @@ bool ViewManagerBase::UpdateProperty(
         uiElement.ClearValue(xaml::UIElement::IsHitTestVisibleProperty());
       }
     }
+  } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
   } else {
     return false;
   }

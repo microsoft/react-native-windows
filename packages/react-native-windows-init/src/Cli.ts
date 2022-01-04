@@ -35,9 +35,7 @@ import {
 
 import requireGenerateWindows from './requireGenerateWindows';
 
-const npmConfReg = execSync('npm config get registry')
-  .toString()
-  .trim();
+const npmConfReg = execSync('npm config get registry').toString().trim();
 const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
@@ -224,7 +222,7 @@ async function getLatestMatchingVersion(
     );
     if (versions.length > 0) {
       const candidates = versions
-        .filter(v => semver.satisfies(v, versionSemVer))
+        .filter((v) => semver.satisfies(v, versionSemVer))
         .sort(semver.rcompare);
       if (candidates.length > 0) {
         return candidates[0];
@@ -477,9 +475,8 @@ function isProjectUsingYarn(cwd: string): boolean {
     if (!useDevMode) {
       if (!version) {
         const rnVersion = getReactNativeVersion();
-        version = getDefaultReactNativeWindowsSemVerForReactNativeVersion(
-          rnVersion,
-        );
+        version =
+          getDefaultReactNativeWindowsSemVerForReactNativeVersion(rnVersion);
       }
 
       const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);

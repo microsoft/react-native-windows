@@ -25,7 +25,7 @@ import {type TextStyleProp, type ViewStyleProp} from '../StyleSheet/StyleSheet';
 /**
  * Text is the fundamental component for displaying text.
  *
- * @see https://reactnative.dev/docs/text.html
+ * @see https://reactnative.dev/docs/text
  */
 const Text: React.AbstractComponent<
   TextProps,
@@ -75,7 +75,8 @@ const Text: React.AbstractComponent<
               setHighlighted(false);
               onPressOut?.(event);
             },
-            onResponderTerminationRequest_DEPRECATED: onResponderTerminationRequest,
+            onResponderTerminationRequest_DEPRECATED:
+              onResponderTerminationRequest,
             onStartShouldSetResponder_DEPRECATED: onStartShouldSetResponder,
           }
         : null,
@@ -161,7 +162,6 @@ const Text: React.AbstractComponent<
 
   const hasTextAncestor = useContext(TextAncestor);
 
-  //let styleProps: ViewStyleProp = (props.style: any);
   if (hasTextAncestor) {
     return (
       <NativeVirtualText

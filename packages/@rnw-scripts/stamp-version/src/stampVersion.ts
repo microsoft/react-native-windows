@@ -14,7 +14,7 @@ import {findRepoPackage} from '@react-native-windows/package-utils';
 import renderPropsFile from './renderPropsFile';
 
 const {argv} = yargs
-  .check(args => {
+  .check((args) => {
     if (args._.length === 1 && semver.valid(<string>args._[0])) {
       return true;
     } else {

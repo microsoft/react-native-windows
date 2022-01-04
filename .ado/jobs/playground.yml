@@ -98,6 +98,16 @@ jobs:
                 parameters:
                   certificateName: playgroundEncodedKey
 
+            # NuGet ignores packages.config if it detects <PackageReference>.
+            # Use restore packages.config directly to keep compabitility with ReactNativePicker.
+            - pwsh: |
+                Get-ChildItem -Recurse -Path packages.config |`
+                  Foreach-Object {`
+                    NuGet.exe Restore -PackagesDirectory packages $_`
+                  }
+              workingDirectory: packages/playground/windows
+              displayName: Restore packages.config items
+
             - template: ../templates/msbuild-sln.yml
               parameters:
                 solutionDir: packages/playground/windows

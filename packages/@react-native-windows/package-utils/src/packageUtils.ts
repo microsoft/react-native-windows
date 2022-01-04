@@ -10,9 +10,7 @@ import fs from '@react-native-windows/fs';
 import path from 'path';
 import findRepoRoot from '@react-native-windows/find-repo-root';
 
-const getMonorepoPackages: (
-  root: string,
-) => Array<{
+const getMonorepoPackages: (root: string) => Array<{
   location: string;
   package: any;
 }> = require('get-monorepo-packages');
@@ -109,7 +107,7 @@ export async function enumerateRepoPackages(
 ): Promise<WritableNpmPackage[]> {
   const repoRoot = await findRepoRoot();
   const allPackges = getMonorepoPackages(repoRoot).map(
-    pkg => new WritableNpmPackage(pkg.location, pkg.package),
+    (pkg) => new WritableNpmPackage(pkg.location, pkg.package),
   );
 
   const filteredPackages: WritableNpmPackage[] = [];
@@ -156,7 +154,9 @@ export async function findPackage(
 export async function findRepoPackage(
   name: string,
 ): Promise<WritableNpmPackage | null> {
-  const packages = await enumerateRepoPackages(async p => p.json.name === name);
+  const packages = await enumerateRepoPackages(
+    async (p) => p.json.name === name,
+  );
 
   if (packages.length === 0) {
     return null;

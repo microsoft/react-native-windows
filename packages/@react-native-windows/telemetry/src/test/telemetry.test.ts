@@ -9,7 +9,13 @@ import * as appInsights from 'applicationinsights';
 import CorrelationIdManager from 'applicationinsights/out/Library/CorrelationIdManager';
 import * as path from 'path';
 
-import {Telemetry, CommandStartInfo, CommandEndInfo} from '../telemetry';
+import {
+  Telemetry,
+  CommandStartInfo,
+  CommandEndInfo,
+  CommandEventName,
+  CodedErrorEventName,
+} from '../telemetry';
 import * as basePropUtils from '../utils/basePropUtils';
 import * as errorUtils from '../utils/errorUtils';
 import * as projectUtils from '../utils/projectUtils';
@@ -46,7 +52,7 @@ export class TelemetryTest extends Telemetry {
   /** Run at the end of each test where telemetry was fired. */
   static endTest(finalCallback: () => void): void {
     Telemetry.client?.flush({
-      callback: _ => {
+      callback: (_) => {
         if (TelemetryTest.hasTestTelemetryProviders) {
           expect(TelemetryTest.testTelemetryProvidersRan).toBe(true);
         }
@@ -275,7 +281,7 @@ function getExtraProps(): Record<string, any> {
 
 /** Asynchronously waits the number in ms. */
 async function promiseDelay(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /** The body of the fake 'test-command' which will throw the provided error. */
@@ -345,7 +351,7 @@ function verifyTestCommandTelemetryProcessor(
 
       if (envelope.data.baseType === 'ExceptionData') {
         // Verify event name
-        expect(properties.eventName).toBe('RNWCLI.CodedError');
+        expect(properties.eventName).toBe(CodedErrorEventName);
 
         // Verify coded error info
         const codedError = JSON.parse(properties.codedError);
@@ -364,8 +370,8 @@ function verifyTestCommandTelemetryProcessor(
         );
       } else {
         // Verify event name
-        expect(envelope.data.baseData?.name).toBe('RNWCLI.Command');
-        expect(properties.eventName).toBe('RNWCLI.Command');
+        expect(envelope.data.baseData?.name).toBe(CommandEventName);
+        expect(properties.eventName).toBe(CommandEventName);
 
         // Verify command info
         const expectedInfo = getTestCommandStartInfo();
@@ -404,7 +410,7 @@ function verifyTestCommandTelemetryProcessor(
   };
 }
 
-test('Telemetry run test command end to end, verify event fires', async done => {
+test('Telemetry run test command end to end, verify event fires', async (done) => {
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
@@ -420,7 +426,7 @@ test('Telemetry run test command end to end, verify event fires', async done => 
   });
 });
 
-test('Telemetry run test command end to end with CodedError, verify events fire', async done => {
+test('Telemetry run test command end to end with CodedError, verify events fire', async (done) => {
   const expectedError = new errorUtils.CodedError('MSBuildError', 'test error');
 
   // AI eats errors thrown in telemetry processors
@@ -442,7 +448,7 @@ test('Telemetry run test command end to end with CodedError, verify events fire'
   });
 });
 
-test('Telemetry run test command end to end with CodedError (with error in message), verify events fire', async done => {
+test('Telemetry run test command end to end with CodedError (with error in message), verify events fire', async (done) => {
   const expectedError = new errorUtils.CodedError(
     'MSBuildError',
     'error FOO2020: test error',
@@ -467,7 +473,7 @@ test('Telemetry run test command end to end with CodedError (with error in messa
   });
 });
 
-test('Telemetry run test command end to end with CodedError (with data), verify events fire', async done => {
+test('Telemetry run test command end to end with CodedError (with data), verify events fire', async (done) => {
   const expectedError = new errorUtils.CodedError(
     'MSBuildError',
     'test error',
@@ -493,7 +499,7 @@ test('Telemetry run test command end to end with CodedError (with data), verify 
   });
 });
 
-test('Telemetry run test command end to end with Error, verify events fire', async done => {
+test('Telemetry run test command end to end with Error, verify events fire', async (done) => {
   const expectedError = new Error('error FOO2020: test error');
 
   // AI eats errors thrown in telemetry processors
@@ -511,7 +517,7 @@ test('Telemetry run test command end to end with Error, verify events fire', asy
   });
 });
 
-test('Telemetry run test command end to end with Error (no message), verify events fire', async done => {
+test('Telemetry run test command end to end with Error (no message), verify events fire', async (done) => {
   const expectedError = new Error();
 
   // AI eats errors thrown in telemetry processors
@@ -584,7 +590,7 @@ function getVerifyStackTelemetryProcessor(
   };
 }
 
-test('Telemetry run test command end to end with Error, verify sanitized message and stack', async done => {
+test('Telemetry run test command end to end with Error, verify sanitized message and stack', async (done) => {
   const expectedError = new Error('hello world');
 
   // AI eats errors thrown in telemetry processors
@@ -605,7 +611,7 @@ test('Telemetry run test command end to end with Error, verify sanitized message
   });
 });
 
-test('Telemetry run test command end to end with Error, verify sanitized message with path and stack', async done => {
+test('Telemetry run test command end to end with Error, verify sanitized message with path and stack', async (done) => {
   const expectedError = new Error(`hello ${process.cwd()}`);
 
   // AI eats errors thrown in telemetry processors

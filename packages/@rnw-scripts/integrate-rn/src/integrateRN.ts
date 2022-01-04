@@ -39,7 +39,7 @@ let logger: Logger;
         demandOption: false,
       },
     })
-    .check(args => {
+    .check((args) => {
       if (args._.length === 1 && semver.valid(<string>args._[0])) {
         return true;
       } else {
@@ -114,9 +114,9 @@ async function upgradePlatformOverrides(): Promise<StepResult> {
 
     overridesWithConflicts.push(
       ...results
-        .filter(r => r.hasConflicts)
-        .map(r => r.overrideName)
-        .map(o => path.join(pkg.path, o)),
+        .filter((r) => r.hasConflicts)
+        .map((r) => r.overrideName)
+        .map((o) => path.join(pkg.path, o)),
     );
   }
 
@@ -145,11 +145,10 @@ async function validatePlatformOverrides(): Promise<StepResult> {
     );
   }
 
-  if (errors.filter(e => e.type !== 'outOfDate').length !== 0) {
+  if (errors.filter((e) => e.type !== 'outOfDate').length !== 0) {
     return {
       status: 'warn',
-      body:
-        'Override validation failed. Run `yarn validate-overrides` for more information',
+      body: 'Override validation failed. Run `yarn validate-overrides` for more information',
     };
   } else {
     return {status: 'success'};

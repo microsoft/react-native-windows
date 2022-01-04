@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-20211028-2008-61e1b6f86",
+  "baseVersion": "0.0.0-20211202-2008-9e2ec4d3d",
   "overrides": [
     {
       "type": "patch",
@@ -24,7 +24,7 @@
       "type": "patch",
       "file": "src/js/components/RNTesterExampleFilter.win32.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterExampleFilter.js",
-      "baseHash": "5fa8d674f4df713468dc76b950f5bd0fa6945c1e"
+      "baseHash": "e3ad7bf41f7c98899352b7e209d98ed93cfc7e3d"
     },
     {
       "type": "platform",
@@ -41,7 +41,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "4760ebe3fefa48c562141565958f2af4b941bbbf"
+      "baseHash": "465bc5e21ce7b00a012d241148b519d08ab18961"
     },
     {
       "type": "patch",

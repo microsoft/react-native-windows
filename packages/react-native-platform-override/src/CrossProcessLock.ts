@@ -41,7 +41,7 @@ export default class CrossProcessLock {
     this.server = net.createServer();
 
     this.connections = new Set();
-    this.server.on('connection', conn => {
+    this.server.on('connection', (conn) => {
       this.connections.add(conn);
       conn.on('close', () => this.connections.delete(conn));
     });
@@ -113,7 +113,7 @@ export default class CrossProcessLock {
       // Treat some errors as potential pipe death, since it could have died
       // between the time to create a server and attempting to connect to the
       // existing.
-      socket.once('error', err => {
+      socket.once('error', (err) => {
         // @ts-ignore Typings for EventEmitter only know about generic JS errors
         if (err.code === 'ECONNREFUSED' || err.code === 'ECONNRESET') {
           resolve();
@@ -154,7 +154,7 @@ export default class CrossProcessLock {
       // ones. Manually destroy all existing connections to let them retry the
       // lock.
       this.server.close();
-      this.connections.forEach(conn => conn.destroy());
+      this.connections.forEach((conn) => conn.destroy());
     });
   }
 }

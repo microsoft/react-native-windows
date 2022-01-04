@@ -138,7 +138,7 @@ async function runWindows(
       console.log(output.trimEnd());
       console.log('  Installed UWP SDKs:');
       const sdks = MSBuildTools.getAllAvailableUAPVersions();
-      sdks.forEach(version => console.log('    ' + version));
+      sdks.forEach((version) => console.log('    ' + version));
     } catch (ex) {
       runWindowsError =
         ex instanceof Error ? (ex as Error) : new Error(String(ex));
@@ -204,6 +204,18 @@ async function runWindowsInternal(
     slnFile = build.getAppSolutionFile(options, config);
   } catch (e) {
     newError(`Couldn't get app solution information. ${(e as Error).message}`);
+    throw e;
+  }
+
+  // Restore packages.config files for dependencies that don't support PackageReference.
+  try {
+    build.restorePackageConfigs(options);
+  } catch (e) {
+    newError(
+      `Couldn't restore found packages.config instances. ${
+        (e as Error).message
+      }`,
+    );
     throw e;
   }
 

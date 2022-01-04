@@ -52,7 +52,7 @@ class RNTesterExampleFilter<T> extends React.Component<Props<T>, State> {
       );
     }
 
-    const filter = example => {
+    const filter = (example: T) => {
       const category = this.state.category;
       return (
         this.props.disableSearch ||
@@ -60,14 +60,14 @@ class RNTesterExampleFilter<T> extends React.Component<Props<T>, State> {
       );
     };
 
-    let filteredSections = this.props.sections.map(section => ({
+    let filteredSections = this.props.sections.map((section) => ({
       ...section,
       data: section.data.filter(filter),
     }));
 
     if (this.state.filter.trim() !== '' || this.state.category.trim() !== '') {
       filteredSections = filteredSections.filter(
-        section => section.title !== 'Recently Viewed',
+        (section) => section.title !== 'Recently Viewed',
       );
     }
 
@@ -79,7 +79,11 @@ class RNTesterExampleFilter<T> extends React.Component<Props<T>, State> {
     );
   }
 
-  _renderFilteredSections(filteredSections): ?React.Element<any> {
+  _renderFilteredSections(
+    filteredSections: Array<
+      $TEMPORARY$object<{data: Array<T>, key: string, title: string}>,
+    >,
+  ): ?React.Element<any> {
     if (this.props.page === 'examples_page') {
       return (
         <ScrollView
@@ -104,7 +108,7 @@ class RNTesterExampleFilter<T> extends React.Component<Props<T>, State> {
     }
     return (
       <RNTesterThemeContext.Consumer>
-        {theme => {
+        {(theme) => {
           return (
             <View
               style={[
@@ -125,7 +129,7 @@ class RNTesterExampleFilter<T> extends React.Component<Props<T>, State> {
                   autoCapitalize="none"
                   autoCorrect={false}
                   clearButtonMode="always"
-                  onChangeText={text => {
+                  onChangeText={(text) => {
                     this.setState(() => ({filter: text}));
                   }}
                   placeholder="Search..."
@@ -145,7 +149,7 @@ class RNTesterExampleFilter<T> extends React.Component<Props<T>, State> {
               </View>
               {!this.props.hideFilterPills && (
                 <RNTesterListFilters
-                  onFilterButtonPress={filterLabel =>
+                  onFilterButtonPress={(filterLabel) =>
                     this.setState({category: filterLabel})
                   }
                 />

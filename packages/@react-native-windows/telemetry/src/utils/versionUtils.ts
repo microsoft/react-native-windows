@@ -54,10 +54,7 @@ export async function getVisualStudioVersion(): Promise<string | null> {
   try {
     const info: any = await envinfo.helpers.getVisualStudioInfo();
     const versions = info[1] as string[];
-    return versions
-      .sort()
-      .slice(-1)[0]
-      .split(' ')[0];
+    return versions.sort().slice(-1)[0].split(' ')[0];
   } catch {}
   return null;
 }

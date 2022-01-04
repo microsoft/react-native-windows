@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Thu, 18 Nov 2021 06:11:20 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.11
+
+Fri, 03 Dec 2021 06:12:11 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
 
 ## 0.1.10
 
