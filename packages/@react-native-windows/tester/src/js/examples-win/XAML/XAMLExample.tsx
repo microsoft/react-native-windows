@@ -115,7 +115,7 @@ export const description = 'Usage of react-native-xaml controls';
 export const examples = [
   {
     title: 'react-native-xaml examples',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <XAMLExamples />;
     },
   },

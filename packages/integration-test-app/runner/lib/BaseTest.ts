@@ -27,9 +27,9 @@ afterAll(async () => {
 });
 
 export function registerTests(blocks: TestBlock[]) {
-  blocks.forEach(block => {
+  blocks.forEach((block) => {
     describe(block.name, () => {
-      block.tests.forEach(component => {
+      block.tests.forEach((component) => {
         if (typeof component === 'string') {
           test(
             component,

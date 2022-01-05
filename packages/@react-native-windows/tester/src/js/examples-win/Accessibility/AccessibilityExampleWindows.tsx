@@ -73,8 +73,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .ButtonFaceColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.ButtonFaceColor,
                   },
                 ]
               : this.styles.disabled
@@ -90,8 +90,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .ButtonTextColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.ButtonTextColor,
                   },
                 ]
               : this.styles.disabled
@@ -107,8 +107,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .GrayTextColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.GrayTextColor,
                   },
                 ]
               : this.styles.disabled
@@ -124,8 +124,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .HighlightColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.HighlightColor,
                   },
                 ]
               : this.styles.disabled
@@ -141,8 +141,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .HighlightTextColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.HighlightTextColor,
                   },
                 ]
               : this.styles.disabled
@@ -158,8 +158,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .HotlightColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.HotlightColor,
                   },
                 ]
               : this.styles.disabled
@@ -175,8 +175,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .WindowColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.WindowColor,
                   },
                 ]
               : this.styles.disabled
@@ -192,8 +192,8 @@ class HighContrastExample extends React.Component {
               ? [
                   this.styles.enabled,
                   {
-                    backgroundColor: this.state.highContrastColorValues
-                      .WindowTextColor,
+                    backgroundColor:
+                      this.state.highContrastColorValues.WindowTextColor,
                   },
                 ]
               : this.styles.disabled
@@ -301,7 +301,7 @@ class AccessibilityStateExamples extends React.Component {
         <FlatList
           accessibilityLabel="List of selectable items"
           data={selectableItems}
-          renderItem={item => (
+          renderItem={(item) => (
             <TouchableHighlight
               style={{
                 width: 100,
@@ -508,7 +508,7 @@ class AccessibilityListExamples extends React.Component {
           accessibilityRole="list">
           <FlatList
             data={items}
-            renderItem={item => (
+            renderItem={(item) => (
               <View
                 style={{
                   width: 100,
@@ -531,7 +531,7 @@ class AccessibilityListExamples extends React.Component {
           <Text>The following does the same, but with Touchables.</Text>
           <FlatList
             data={items}
-            renderItem={item => (
+            renderItem={(item) => (
               <TouchableHighlight
                 style={{
                   width: 100,
@@ -560,31 +560,31 @@ export const description = 'Usage of accessibility properties.';
 export const examples = [
   {
     title: 'Label, Hint',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <AccessibilityBaseExample />;
     },
   },
   {
     title: 'Touchables',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <TouchableExamples />;
     },
   },
   {
     title: 'HighContrast',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <HighContrastExample />;
     },
   },
   {
     title: 'States',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <AccessibilityStateExamples />;
     },
   },
   {
     title: 'Lists',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <AccessibilityListExamples />;
     },
   },

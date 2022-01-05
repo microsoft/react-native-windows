@@ -18,13 +18,13 @@ const rnTypesDir = path.dirname(
   require.resolve('@types/react-native/package.json'),
 );
 
-exports.copyTask = baseDir => {
-  const reactNative = (...files) => files.map(f => path.join(rnDir, f));
+exports.copyTask = (baseDir) => {
+  const reactNative = (...files) => files.map((f) => path.join(rnDir, f));
   const reactNativeTypes = (...files) =>
-    files.map(f => path.join(rnTypesDir, f));
-  const reactCopies = (...files) => files.map(f => path.join(rnCopiesDir, f));
-  const src = (...files) => files.map(f => path.join(baseDir, 'src', f));
-  const base = file => path.join(baseDir, file);
+    files.map((f) => path.join(rnTypesDir, f));
+  const reactCopies = (...files) => files.map((f) => path.join(rnCopiesDir, f));
+  const src = (...files) => files.map((f) => path.join(baseDir, 'src', f));
+  const base = (file) => path.join(baseDir, file);
 
   return series(
     exports.cleanTask(baseDir),
@@ -65,8 +65,8 @@ exports.copyTask = baseDir => {
   );
 };
 
-exports.cleanTask = baseDir => {
-  const base = file => path.join(baseDir, file);
+exports.cleanTask = (baseDir) => {
+  const base = (file) => path.join(baseDir, file);
 
   return cleanTask({
     paths: [

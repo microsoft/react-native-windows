@@ -7,7 +7,6 @@
 
 import * as versionUtils from '../utils/versionUtils';
 
-import {lookpath} from 'lookpath';
 import path from 'path';
 import semver from 'semver';
 
@@ -17,7 +16,7 @@ function expectValidVersion(version: string | null, expectSemVer: boolean) {
   if (expectSemVer) {
     expect(semver.valid(version)).toBe(version);
   } else {
-    version!.split('.').forEach(s => {
+    version!.split('.').forEach((s) => {
       const tryParseInt = () => {
         parseInt(s, 10);
       };
@@ -32,24 +31,16 @@ test('getNodeVersion() is valid', async () => {
 });
 
 test('getNpmVersion() is valid', async () => {
-  const node = await lookpath('npm');
   const version = await versionUtils.getNpmVersion();
-  if (node) {
+  if (version) {
     expectValidVersion(version, true);
-  } else {
-    console.log('npm not installed');
-    expect(version).toBeNull();
   }
 });
 
 test('getYarnVersion() is valid', async () => {
-  const node = await lookpath('yarn');
   const version = await versionUtils.getYarnVersion();
-  if (node) {
+  if (version) {
     expectValidVersion(version, true);
-  } else {
-    console.log('yarn not installed');
-    expect(version).toBeNull();
   }
 });
 

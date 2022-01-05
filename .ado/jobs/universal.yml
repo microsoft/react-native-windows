@@ -46,7 +46,12 @@
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
         - ${{ each matrix in config.Matrix }}:
             - job: UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
-              variables: [template: ../variables/windows.yml]
+              variables:
+                - template: ../variables/windows.yml
+                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+                # Keep NuGet cache independent from the user directory.
+                - name: NUGET_PACKAGES
+                  value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Build ${{ matrix.Name }}
               pool: ${{ parameters.AgentPool.Large }}
               timeoutInMinutes: 60
@@ -71,6 +76,9 @@
                     solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
+
+                - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+                  - template: ../templates/component-governance.yml
 
                 - ${{ if eq(matrix.CreateApiDocs, true) }}:
                   - powershell: |
@@ -108,7 +116,12 @@
                       Mso.UnitTests\**
 
             - job: UniversalTest${{ matrix.Name }}
-              variables: [template: ../variables/windows.yml]
+              variables:
+                - template: ../variables/windows.yml
+                # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
+                # Keep NuGet cache independent from the user directory.
+                - name: NUGET_PACKAGES
+                  value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
                 - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
@@ -135,11 +148,6 @@
                     filePath: $(Build.SourcesDirectory)\vnext\Scripts\rnw-dependencies.ps1
                     arguments: -NoPrompt -Tags buildLab
 
-                - template: ../templates/restore-sln.yml
-                  parameters:
-                    solutionDir: vnext
-                    solutionName: Microsoft.ReactNative.sln
-
                 - task: DownloadPipelineArtifact@1
                   displayName: Download "ReactWindows.${{ matrix.buildPlatform }}.${{ matrix.buildConfiguration }}"
                   inputs:
@@ -156,9 +164,18 @@
                       AnalyzeVerbose: true
                       toolVersion: 'LatestPreRelease'
 
-                - template: ../templates/component-governance.yml
-
                 - template: ../templates/discover-google-test-adapter.yml
+
+                - task: MSBuild@1
+                  displayName: Restore NuGet packages
+                  # Should be kept in sync with UniversalBuild - template: ../templates/msbuild-sln.yml
+                  inputs:
+                    solution: vnext/Microsoft.ReactNative.sln
+                    platform: ${{ matrix.BuildPlatform }}
+                    configuration: ${{ matrix.BuildConfiguration }}
+                    msbuildArchitecture: x64
+                    msbuildArguments:
+                      /t:Restore
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (Native)

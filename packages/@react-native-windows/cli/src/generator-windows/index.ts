@@ -38,16 +38,6 @@ interface NugetPackage {
   version: string;
 }
 
-/**
- * This represents the data to insert nuget packages with Cpp specific information
- */
-interface CppNugetPackage extends NugetPackage {
-  propsTopOfFile?: boolean;
-  propsMiddleOfFile?: boolean;
-  hasProps: boolean;
-  hasTargets: boolean;
-}
-
 function pascalCase(str: string) {
   const camelCase = _.camelCase(str);
   return camelCase[0].toUpperCase() + camelCase.substr(1);
@@ -99,10 +89,7 @@ export async function copyProjectTemplateAndReplace(
 
   // Similar to the above, but we want to retain namespace separators
   if (projectType === 'lib') {
-    namespace = namespace
-      .split(/[.:]+/)
-      .map(pascalCase)
-      .join('.');
+    namespace = namespace.split(/[.:]+/).map(pascalCase).join('.');
   }
 
   createDir(path.join(destPath, windowsDir));
@@ -173,19 +160,14 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
-  const cppNugetPackages: CppNugetPackage[] = [
+  const cppNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
-      version: '2.0.210312.4',
-      propsTopOfFile: true,
-      hasProps: true,
-      hasTargets: true,
+      version: '2.0.211028.7',
     },
     {
       id: 'ReactNative.Hermes.Windows',
       version: hermesVersion,
-      hasProps: false,
-      hasTargets: true,
     },
   ];
 
@@ -198,15 +180,11 @@ export async function copyProjectTemplateAndReplace(
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative',
       version: nugetVersion,
-      hasProps: false,
-      hasTargets: true,
     });
 
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative.Cxx',
       version: nugetVersion,
-      hasProps: false,
-      hasTargets: true,
     });
   }
 
@@ -215,8 +193,6 @@ export async function copyProjectTemplateAndReplace(
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
       version: options.useWinUI3 ? winui3Version : winui2xVersion,
-      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-      hasTargets: false,
     },
   ];
 
@@ -348,6 +324,11 @@ export async function copyProjectTemplateAndReplace(
             },
           ];
 
+    csMappings.push({
+      from: path.join(srcPath, projDir, 'Directory.Build.props'),
+      to: path.join(windowsDir, 'Directory.Build.props'),
+    });
+
     for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(
         mapping.from,
@@ -378,10 +359,6 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName + '.vcxproj.filters',
               ),
             },
-            {
-              from: path.join(srcPath, projDir, 'packages.config'),
-              to: path.join(windowsDir, newProjectName, 'packages.config'),
-            },
           ]
         : [
             // cpp lib mappings
@@ -408,10 +385,6 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName,
                 newProjectName + '.def',
               ),
-            },
-            {
-              from: path.join(srcPath, projDir, 'packages.config'),
-              to: path.join(windowsDir, newProjectName, 'packages.config'),
             },
           ];
 

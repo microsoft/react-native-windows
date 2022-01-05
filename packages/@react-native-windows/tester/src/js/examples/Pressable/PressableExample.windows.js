@@ -41,7 +41,7 @@ function ContentPress() {
       <View style={styles.row}>
         <Pressable
           onPress={() => {
-            setTimesPressed(current => current + 1);
+            setTimesPressed((current) => current + 1);
           }}>
           {({pressed}) => (
             <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
@@ -71,7 +71,7 @@ function TextOnPressBox() {
         style={styles.textBlock}
         testID="tappable_text"
         onPress={() => {
-          setTimesPressed(prev => prev + 1);
+          setTimesPressed((prev) => prev + 1);
         }}>
         Text has built-in onPress handling
       </Text>
@@ -87,7 +87,7 @@ function PressableFeedbackEvents() {
 
   function appendEvent(eventName) {
     const limit = 6;
-    setEventLog(current => {
+    setEventLog((current) => {
       return [eventName].concat(current.slice(0, limit - 1));
     });
   }
@@ -168,8 +168,8 @@ function ForceTouchExample() {
           style={styles.wrapper}
           testID="pressable_3dtouch_button"
           onStartShouldSetResponder={() => true}
-          onResponderMove={event => setForce(event.nativeEvent?.force || 1)}
-          onResponderRelease={event => setForce(0)}>
+          onResponderMove={(event) => setForce(event.nativeEvent?.force || 1)}
+          onResponderRelease={(event) => setForce(0)}>
           <Text style={styles.button}>Press Me</Text>
         </View>
       </View>
@@ -191,7 +191,7 @@ function PressableHitSlop() {
     <View testID="pressable_hit_slop">
       <View style={[styles.row, styles.centered]}>
         <Pressable
-          onPress={() => setTimesPressed(num => num + 1)}
+          onPress={() => setTimesPressed((num) => num + 1)}
           style={styles.hitSlopWrapper}
           hitSlop={{top: 30, bottom: 30, left: 60, right: 60}}
           testID="pressable_hit_slop_button">
@@ -274,7 +274,7 @@ function PressableFocusCallbacks() {
           onFocus={() => console.log('Pressable onFocus')}
           onBlur={() => console.log('Pressable onBlur')}
           onPress={() => {
-            setTimesPressed(current => current + 1);
+            setTimesPressed((current) => current + 1);
           }}>
           {({pressed}) => (
             <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
@@ -309,7 +309,7 @@ function PressWithOnKeyDown() {
 
   const [shouldPreventDefault, setShouldPreventDefault] = useState(false);
   const toggleSwitch = () =>
-    setShouldPreventDefault(previousState => !previousState);
+    setShouldPreventDefault((previousState) => !previousState);
 
   function myKeyDown(event) {
     console.log('keyDown - ' + event.nativeEvent.code);
@@ -330,10 +330,10 @@ function PressWithOnKeyDown() {
     <>
       <View style={styles.row}>
         <Pressable
-          onKeyDown={event => myKeyDown(event)}
-          onKeyUp={event => myKeyUp(event)}
+          onKeyDown={(event) => myKeyDown(event)}
+          onKeyUp={(event) => myKeyUp(event)}
           onPress={() => {
-            setTimesPressed(current => current + 1);
+            setTimesPressed((current) => current + 1);
           }}>
           {({pressed}) => (
             <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
@@ -355,7 +355,7 @@ function PressWithKeyCapture() {
 
   function logEvent(eventName) {
     const limit = 6;
-    setEventLog(current => {
+    setEventLog((current) => {
       return [eventName].concat(current.slice(0, limit - 1));
     });
     console.log(eventName);
@@ -365,8 +365,10 @@ function PressWithKeyCapture() {
     <>
       <View
         style={styles.row}
-        onKeyDown={event => logEvent('outer keyDown ' + event.nativeEvent.code)}
-        onKeyDownCapture={event =>
+        onKeyDown={(event) =>
+          logEvent('outer keyDown ' + event.nativeEvent.code)
+        }
+        onKeyDownCapture={(event) =>
           logEvent('outer keyDownCapture ' + event.nativeEvent.code)
         }>
         <Pressable
@@ -374,12 +376,12 @@ function PressWithKeyCapture() {
             {code: 'KeyW', handledEventPhase: 3},
             {code: 'KeyE', handledEventPhase: 1},
           ]}
-          onKeyDown={event => logEvent('keyDown ' + event.nativeEvent.code)}
-          onKeyDownCapture={event =>
+          onKeyDown={(event) => logEvent('keyDown ' + event.nativeEvent.code)}
+          onKeyDownCapture={(event) =>
             logEvent('keyDownCapture ' + event.nativeEvent.code)
           }
           onPress={() => {
-            setTimesPressed(current => current + 1);
+            setTimesPressed((current) => current + 1);
             logEvent('pressed ' + timesPressed);
           }}>
           {({pressed}) => (
@@ -499,15 +501,16 @@ exports.examples = [
     title: 'Pressable feedback events',
     description: ('<Pressable> components accept onPress, onPressIn, ' +
       'onPressOut, and onLongPress as props.': string),
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <PressableFeedbackEvents />;
     },
   },
   {
     title: 'Pressable with Ripple and Animated child',
-    description: ('Pressable can have an AnimatedComponent as a direct child.': string),
+    description:
+      ('Pressable can have an AnimatedComponent as a direct child.': string),
     platform: 'android',
-    render: function(): React.Node {
+    render: function (): React.Node {
       const mScale = new Animated.Value(1);
       Animated.timing(mScale, {
         toValue: 0.3,
@@ -531,9 +534,10 @@ exports.examples = [
   },
   {
     title: 'Pressable with custom Ripple',
-    description: ("Pressable can specify ripple's radius, color and borderless params": string),
+    description:
+      ("Pressable can specify ripple's radius, color and borderless params": string),
     platform: 'android',
-    render: function(): React.Node {
+    render: function (): React.Node {
       const nativeFeedbackButton = {
         textAlign: 'center',
         margin: 10,
@@ -600,7 +604,7 @@ exports.examples = [
   },
   {
     title: '<Text onPress={fn}> with highlight',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <TextOnPressBox />;
     },
   },
@@ -609,7 +613,7 @@ exports.examples = [
     description: ('<Pressable> also accept delayPressIn, ' +
       'delayPressOut, and delayLongPress as props. These props impact the ' +
       'timing of feedback events.': string),
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <PressableDelayEvents />;
     },
   },
@@ -617,58 +621,64 @@ exports.examples = [
     title: '3D Touch / Force Touch',
     description:
       'iPhone 8 and 8 plus support 3D touch, which adds a force property to touches',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <ForceTouchExample />;
     },
     platform: 'ios',
   },
   {
     title: 'Pressable Hit Slop',
-    description: ('<Pressable> components accept hitSlop prop which extends the touch area ' +
-      'without changing the view bounds.': string),
-    render: function(): React.Node {
+    description:
+      ('<Pressable> components accept hitSlop prop which extends the touch area ' +
+        'without changing the view bounds.': string),
+    render: function (): React.Node {
       return <PressableHitSlop />;
     },
   },
   {
     title: 'Pressable Native Methods',
-    description: ('<Pressable> components expose native methods like `measure`.': string),
-    render: function(): React.Node {
+    description:
+      ('<Pressable> components expose native methods like `measure`.': string),
+    render: function (): React.Node {
       return <PressableNativeMethods />;
     },
   },
   {
     title: 'Disabled Pressable',
-    description: ('<Pressable> components accept disabled prop which prevents ' +
-      'any interaction with component': string),
-    render: function(): React.Node {
+    description:
+      ('<Pressable> components accept disabled prop which prevents ' +
+        'any interaction with component': string),
+    render: function (): React.Node {
       return <PressableDisabled />;
     },
   },
   {
     title: 'Focusability in Pressable',
-    description: ('<Pressable> components can be receive focus by calling the focus() and blur() methods on them.' +
-      'They also expose onFocus and onBlur callbacks to hadle incoming native events.': string),
-    render: function(): React.Node {
+    description:
+      ('<Pressable> components can be receive focus by calling the focus() and blur() methods on them.' +
+        'They also expose onFocus and onBlur callbacks to hadle incoming native events.': string),
+    render: function (): React.Node {
       return <PressableFocusCallbacks />;
     },
   },
   {
     title: 'OnKeyDown/OnKeyUp callbacks on Pressable',
-    description: ('<Pressable> components can be respond to keyDown/keyUp native events.' +
-      ' Additionally, they can be activated by pressing Space or Enter as if they were clicked with the mouse, triggering onPress' +
-      ' - this behavior can be suppressed by calling e.preventDefault() on the event (can be toggled with the switch).': string),
-    render: function(): React.Node {
+    description:
+      ('<Pressable> components can be respond to keyDown/keyUp native events.' +
+        ' Additionally, they can be activated by pressing Space or Enter as if they were clicked with the mouse, triggering onPress' +
+        ' - this behavior can be suppressed by calling e.preventDefault() on the event (can be toggled with the switch).': string),
+    render: function (): React.Node {
       return <PressWithOnKeyDown />;
     },
   },
   {
     title: 'OnKeyDownCapture on Pressable (View)',
-    description: ('You can intercept routed KeyDown/KeyUp events by specifying the onKeyDownCapture/onKeyUpCapture callbacks.' +
-      " In the example below, a <Pressable> is wrapper in a <View>, and each specifies onKeyDown and onKeyDownCapture callbacks. Set focus to the 'Press me' element by tabbing into it, and start pressing letters on the keyboard to observe the event log below." +
-      " Additionally, because the keyDownEvents prop is specified - keyDownEvents={[{code: 'KeyW', handledEventPhase: 3}, {code: 'KeyE', handledEventPhase: 1}]} - " +
-      'for these keys the event routing will be interrupted (by a call to event.stopPropagation()) at the phase specified (3 - bubbling, 1 - capturing) to match processing on the native side.': string),
-    render: function(): React.Node {
+    description:
+      ('You can intercept routed KeyDown/KeyUp events by specifying the onKeyDownCapture/onKeyUpCapture callbacks.' +
+        " In the example below, a <Pressable> is wrapper in a <View>, and each specifies onKeyDown and onKeyDownCapture callbacks. Set focus to the 'Press me' element by tabbing into it, and start pressing letters on the keyboard to observe the event log below." +
+        " Additionally, because the keyDownEvents prop is specified - keyDownEvents={[{code: 'KeyW', handledEventPhase: 3}, {code: 'KeyE', handledEventPhase: 1}]} - " +
+        'for these keys the event routing will be interrupted (by a call to event.stopPropagation()) at the phase specified (3 - bubbling, 1 - capturing) to match processing on the native side.': string),
+    render: function (): React.Node {
       return <PressWithKeyCapture />;
     },
   },

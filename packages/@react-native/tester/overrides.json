@@ -1,18 +1,32 @@
 {
-  "baseVersion": "0.0.0-20211028-2008-61e1b6f86",
+  "baseVersion": "0.0.0-20211202-2008-9e2ec4d3d",
   "overrides": [
     {
       "type": "copy",
       "directory": "js",
       "baseDirectory": "packages/rn-tester/js",
-      "baseHash": "985c7545272beb1048309ac86a30bd99324050c2",
+      "baseHash": "e842fe4bb723355616710e8bedfd834f87451a11",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "NativeComponentExample/js/MyNativeView.js",
+      "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
+      "baseHash": "ce368fb8dde7a322cf7c58f64cbeec9e0bb33767",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "NativeComponentExample/js/MyNativeViewNativeComponent.js",
+      "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeViewNativeComponent.js",
+      "baseHash": "d4b892349a6ea5b73c7c208c2d6578d099b5334f",
       "issue": 4054
     },
     {
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "a788120c51bfb7f7328f79ecc6a3f26a7a4c25c0",
+      "baseHash": "ce3c7c886595b98d4e92d1866f6cdfd4fed04d81",
       "issue": 4054
     }
   ]

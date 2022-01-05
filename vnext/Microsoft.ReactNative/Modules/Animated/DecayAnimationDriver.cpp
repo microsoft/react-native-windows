@@ -31,15 +31,6 @@ bool DecayAnimationDriver::IsAnimationDone(double currentValue, double /*current
 }
 
 double DecayAnimationDriver::ToValue() {
-  auto const startValue = [this]() {
-    if (auto const manager = m_manager.lock()) {
-      if (auto const valueNode = manager->GetValueAnimatedNode(m_animatedValueTag)) {
-        return valueNode->Value();
-      }
-    }
-    return 0.0;
-  }();
-
   return m_startValue + m_velocity / (1 - m_deceleration);
 }
 

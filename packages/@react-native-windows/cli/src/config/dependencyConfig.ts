@@ -214,7 +214,7 @@ export function dependencyConfigWindows(
       // Verifying (req) items
       let errorFound = false;
 
-      alwaysRequired.forEach(item => {
+      alwaysRequired.forEach((item) => {
         if (!(item in project)) {
           (project[
             item
@@ -244,9 +244,8 @@ export function dependencyConfigWindows(
       if (project.directDependency) {
         // Calculating more (auto) items
 
-        const projectNamespace = configUtils.getProjectNamespace(
-          projectContents,
-        );
+        const projectNamespace =
+          configUtils.getProjectNamespace(projectContents);
 
         if (projectNamespace !== null) {
           const cppNamespace = projectNamespace!.replace(/\./g, '::');
@@ -288,9 +287,8 @@ export function dependencyConfigWindows(
 
         const projectGuid = configUtils.getProjectGuid(projectContents);
 
-        const projectNamespace = configUtils.getProjectNamespace(
-          projectContents,
-        );
+        const projectNamespace =
+          configUtils.getProjectNamespace(projectContents);
 
         const directDependency = true;
 

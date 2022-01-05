@@ -42,9 +42,17 @@ void UpdateToggleSwitchThumbResourceBrushes(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush thumbBrush);
 
-void UpdateToggleSwitchTrackResourceBrushes(
+void UpdateToggleSwitchTrackResourceBrushesOn(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
-    const xaml::Media::Brush onTrackBrush,
+    const xaml::Media::Brush onTrackBrush);
+
+void UpdateToggleSwitchTrackResourceBrushesOff(
+    const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush offTrackBrush);
+
+void UpdateResourceBrush(
+    const xaml::FrameworkElement &element,
+    const std::wstring &resourceName,
+    const xaml::Media::Brush brush);
 
 } // namespace Microsoft::ReactNative

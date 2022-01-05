@@ -9,14 +9,18 @@ type NativeTextProps = $ReadOnly<{
   ...TextProps,
   isHighlighted?: ?boolean,
   selectionColor?: ?ProcessedColorValue,
+  // This is only needed for platforms that optimize text hit testing, e.g.,
+  // react-native-windows. It can be used to only hit test virtual text spans
+  // that have pressable events attached to them.
+  isPressable?: ?boolean,
 }>;
 
-export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComponentClass(
-  'RCTText',
-  () => ({
+export const NativeText: HostComponent<NativeTextProps> =
+  (createReactNativeComponentClass('RCTText', () => ({
     validAttributes: {
       ...ReactNativeViewAttributes.UIView,
       isHighlighted: true,
+      isPressable: true,
       numberOfLines: true,
       ellipsizeMode: true,
       allowFontScaling: true,
@@ -48,8 +52,7 @@ export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComp
       },
     },
     uiViewClassName: 'RCTText',
-  }),
-): any);
+  })): any);
 
 export const NativeVirtualText: HostComponent<NativeTextProps> =
   !global.RN$Bridgeless &&
@@ -59,6 +62,7 @@ export const NativeVirtualText: HostComponent<NativeTextProps> =
         validAttributes: {
           ...ReactNativeViewAttributes.UIView,
           isHighlighted: true,
+          isPressable: true,
           maxFontSizeMultiplier: true,
         },
         uiViewClassName: 'RCTVirtualText',

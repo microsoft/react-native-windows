@@ -1,8 +1,70 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 18 Nov 2021 06:11:19 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Dec 2021 06:10:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.107
+
+Tue, 07 Dec 2021 06:10:13 GMT
+
+### Changes
+
+- Centralize CppWinRT version setting (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.106
+
+Sun, 05 Dec 2021 06:09:34 GMT
+
+### Changes
+
+- Use PackageReference for C++ dependencies (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.105
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.24
+- Bump @react-native-windows/telemetry to v0.0.0-canary.30
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 0.0.0-canary.104
+
+Fri, 26 Nov 2021 06:09:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.29
+
+## 0.0.0-canary.103
+
+Thu, 25 Nov 2021 06:09:25 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.28
+
+## 0.0.0-canary.102
+
+Wed, 24 Nov 2021 06:08:49 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.27
+
+## 0.0.0-canary.101
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.26
 
 ## 0.0.0-canary.100
 

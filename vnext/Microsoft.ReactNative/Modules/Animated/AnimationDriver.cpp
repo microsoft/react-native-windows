@@ -43,12 +43,7 @@ AnimationDriver::~AnimationDriver() {
 
 void AnimationDriver::StartAnimation() {
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
-
   if (auto const animatedValue = GetAnimatedValue()) {
-    auto const previousValue = animatedValue->Value();
-    auto const rawValue = animatedValue->RawValue();
-    auto const offsetValue = animatedValue->Offset();
-
     animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_offsetName, animation);
     animatedValue->AddActiveAnimation(m_id);
   }

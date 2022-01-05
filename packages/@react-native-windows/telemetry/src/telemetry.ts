@@ -14,6 +14,7 @@ import * as projectUtils from './utils/projectUtils';
 export interface TelemetryOptions {
   setupString: string;
   preserveErrorMessages: boolean;
+  populateNpmPackageVersions: boolean;
 }
 
 export interface CommandStartInfo {
@@ -35,7 +36,22 @@ interface CommandInfo {
 }
 
 // This is our key with the AI backend
-const DefaultSetupString = '795006ca-cf54-40ee-8bc6-03deb91401c3';
+const RNWSetupString = '795006ca-cf54-40ee-8bc6-03deb91401c3';
+
+// Environment variable to override the default setup string
+const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
+
+// Environment variable to override the http proxy (such as http://localhost:8888 for Fiddler debugging)
+const ENV_PROXY_OVERRIDE = 'RNW_TELEMETRY_PROXY';
+
+export const CommandEventName = 'RNWCLI.Command';
+export const CodedErrorEventName = 'RNWCLI.CodedError';
+
+// These are the event names we're tracking
+export const EventNamesWeTrack: string[] = [
+  CommandEventName,
+  CodedErrorEventName,
+];
 
 // These are NPM packages we care about, in terms of capturing versions used
 // and getting more details about when reporting errors
@@ -62,8 +78,9 @@ export const NuGetPackagesWeTrack: string[] = [
 export class Telemetry {
   protected static client?: appInsights.TelemetryClient = undefined;
   protected static options: TelemetryOptions = {
-    setupString: DefaultSetupString, // We default to our AI key, but callers can easily override it in setup
+    setupString: Telemetry.getDefaultSetupString(), // We default to our AI key, but callers can easily override it in setup
     preserveErrorMessages: false,
+    populateNpmPackageVersions: true,
   };
 
   protected static isTest: boolean = basePropUtils.isCliTest();
@@ -72,6 +89,11 @@ export class Telemetry {
   protected static projectProp?:
     | projectUtils.AppProjectInfo
     | projectUtils.DependencyProjectInfo = undefined;
+
+  protected static getDefaultSetupString(): string {
+    // Enable overriding the default setup string via an environment variable
+    return process.env[ENV_SETUP_OVERRIDE] ?? RNWSetupString;
+  }
 
   protected static reset(): void {
     // Reset client
@@ -82,8 +104,9 @@ export class Telemetry {
 
     // Reset local members
     Telemetry.options = {
-      setupString: DefaultSetupString,
+      setupString: Telemetry.getDefaultSetupString(),
       preserveErrorMessages: false,
+      populateNpmPackageVersions: true,
     };
     Telemetry.commandInfo = {};
     Telemetry.versionsProp = {};
@@ -131,9 +154,12 @@ export class Telemetry {
       Telemetry.options.setupString,
     );
 
-    // Uncomment for Fiddler testing
-    // Telemetry.client.config.proxyHttpUrl = 'http://localhost:8888';
-    // Telemetry.client.config.proxyHttpsUrl = 'http://localhost:8888';
+    // Allow overriding the proxy server via an environment variable
+    const proxyServer = process.env[ENV_PROXY_OVERRIDE];
+    if (proxyServer) {
+      Telemetry.client.config.proxyHttpUrl = proxyServer;
+      Telemetry.client.config.proxyHttpsUrl = proxyServer;
+    }
 
     Telemetry.client.config.disableAppInsights = Telemetry.isTest;
     Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
@@ -141,8 +167,10 @@ export class Telemetry {
 
   /** Sets up any base properties that all telemetry events require. */
   private static async setupBaseProperties() {
-    Telemetry.client!.commonProperties.deviceId = await basePropUtils.deviceId();
-    Telemetry.client!.commonProperties.deviceLocale = await basePropUtils.deviceLocale();
+    Telemetry.client!.commonProperties.deviceId =
+      await basePropUtils.deviceId();
+    Telemetry.client!.commonProperties.deviceLocale =
+      await basePropUtils.deviceLocale();
     Telemetry.client!.commonProperties.deviceNumCPUs = basePropUtils
       .deviceNumCPUs()
       .toString();
@@ -169,7 +197,9 @@ export class Telemetry {
     Telemetry.client!.commonProperties.sessionId = Telemetry.getSessionId();
 
     await Telemetry.populateToolsVersions();
-    await Telemetry.populateNpmPackageVersions();
+    if (Telemetry.options.populateNpmPackageVersions) {
+      await Telemetry.populateNpmPackageVersions();
+    }
   }
 
   /** Sets up any telemetry processors. */
@@ -191,7 +221,17 @@ export class Telemetry {
     },
   ): boolean {
     delete envelope.tags['ai.cloud.roleInstance'];
-    return true;
+
+    // Filter out "legacy" events from older stable branches
+    const properties = envelope.data.baseData?.properties;
+    if (
+      properties?.eventName &&
+      EventNamesWeTrack.includes(properties.eventName)
+    ) {
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -347,7 +387,7 @@ export class Telemetry {
 
   private static trackCommandEvent(extraProps?: Record<string, any>) {
     const props: Record<string, any> = {
-      eventName: 'RNWCLI.Command',
+      eventName: CommandEventName,
     };
 
     // Set command props
@@ -377,7 +417,7 @@ export class Telemetry {
     }
 
     const props: Record<string, any> = {
-      eventName: 'RNWCLI.CodedError',
+      eventName: CodedErrorEventName,
     };
 
     // Save off CodedError info

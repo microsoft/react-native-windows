@@ -41,6 +41,12 @@ struct AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipl
     std::optional<double> accessibilityExtraExtraExtraLarge;
 };
 
+REACT_STRUCT(AccessibilityManagerSpec_announceForAccessibilityWithOptions_options)
+struct AccessibilityManagerSpec_announceForAccessibilityWithOptions_options {
+    REACT_FIELD(queue)
+    std::optional<bool> queue;
+};
+
 struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(Callback<bool>, Callback<::React::JSValue>) noexcept>{0, L"getCurrentBoldTextState"},
@@ -52,6 +58,7 @@ struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
       Method<void(AccessibilityManagerSpec_setAccessibilityContentSizeMultipliers_JSMultipliers) noexcept>{6, L"setAccessibilityContentSizeMultipliers"},
       Method<void(double) noexcept>{7, L"setAccessibilityFocus"},
       Method<void(std::string) noexcept>{8, L"announceForAccessibility"},
+      Method<void(std::string, AccessibilityManagerSpec_announceForAccessibilityWithOptions_options) noexcept>{9, L"announceForAccessibilityWithOptions"},
   };
 
   template <class TModule>
@@ -103,6 +110,11 @@ struct AccessibilityManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec
           "announceForAccessibility",
           "    REACT_METHOD(announceForAccessibility) void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n"
           "    REACT_METHOD(announceForAccessibility) static void announceForAccessibility(std::string announcement) noexcept { /* implementation */ }}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          9,
+          "announceForAccessibilityWithOptions",
+          "    REACT_METHOD(announceForAccessibilityWithOptions) void announceForAccessibilityWithOptions(std::string announcement, AccessibilityManagerSpec_announceForAccessibilityWithOptions_options && options) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(announceForAccessibilityWithOptions) static void announceForAccessibilityWithOptions(std::string announcement, AccessibilityManagerSpec_announceForAccessibilityWithOptions_options && options) noexcept { /* implementation */ }}\n");
   }
 };
 

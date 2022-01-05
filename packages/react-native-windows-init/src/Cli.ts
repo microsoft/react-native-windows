@@ -37,9 +37,7 @@ import {
 
 import requireGenerateWindows from './requireGenerateWindows';
 
-const npmConfReg = execSync('npm config get registry')
-  .toString()
-  .trim();
+const npmConfReg = execSync('npm config get registry').toString().trim();
 const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
@@ -230,7 +228,7 @@ async function getLatestMatchingVersion(
     );
     if (versions.length > 0) {
       const candidates = versions
-        .filter(v => semver.satisfies(v, versionSemVer))
+        .filter((v) => semver.satisfies(v, versionSemVer))
         .sort(semver.rcompare);
       if (candidates.length > 0) {
         return candidates[0];
@@ -381,7 +379,9 @@ async function startTelemetrySession(
     return;
   }
 
-  await Telemetry.setup();
+  // Setup telemetry, but don't get NPM package version info right away as
+  // we're going to change things and this may interfere with the resolver
+  await Telemetry.setup({populateNpmPackageVersions: false});
 
   const sanitizedOptions = yargsOptionsToOptions(
     options,
@@ -517,9 +517,8 @@ export async function reactNativeWindowsInit(args?: string[]) {
     if (!useDevMode) {
       if (!version) {
         const rnVersion = getReactNativeVersion();
-        version = getDefaultReactNativeWindowsSemVerForReactNativeVersion(
-          rnVersion,
-        );
+        version =
+          getDefaultReactNativeWindowsSemVerForReactNativeVersion(rnVersion);
       }
 
       const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
@@ -611,8 +610,8 @@ export async function reactNativeWindowsInit(args?: string[]) {
 
     const generateWindows = requireGenerateWindows();
 
-    // Now that new NPM packages have been installed, refresh their versions
-    await Telemetry.populateNpmPackageVersions(true);
+    // Now that new NPM packages have been installed, get their versions
+    await Telemetry.populateNpmPackageVersions();
 
     await generateWindows(process.cwd(), name, ns, {
       language: options.language as 'cs' | 'cpp',
@@ -631,6 +630,10 @@ export async function reactNativeWindowsInit(args?: string[]) {
     // Now that the project has been generated, add project info
     await addProjectInfoToTelemetry();
   } catch (ex) {
+    // Since we may have failed before generating a project, make
+    // sure we get those NPM package versions
+    await Telemetry.populateNpmPackageVersions();
+
     initWindowsError =
       ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(initWindowsError);

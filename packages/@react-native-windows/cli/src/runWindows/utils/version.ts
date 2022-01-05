@@ -115,7 +115,7 @@ export default class Version {
 
   static tryParse(str: string): Version | null {
     if (VERSION_EXPRESSION.test(str)) {
-      const versionArray = str.split('.').map(x => parseInt(x, 10));
+      const versionArray = str.split('.').map((x) => parseInt(x, 10));
       return new Version(
         versionArray[0],
         versionArray[1],
