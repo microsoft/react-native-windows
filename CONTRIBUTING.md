@@ -1,4 +1,4 @@
-# Contributing to React Native Windows
+# Contributing to React Native for Windows
 
 👍🎉 First off, thanks for taking the time to contribute! 🎉👍
 
