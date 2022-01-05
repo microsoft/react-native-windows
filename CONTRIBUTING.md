@@ -4,7 +4,7 @@
 
 Below is our guidance for how to report issues, propose new features, and submit contributions via Pull Requests (PRs).
 
-## 🪟Open Development Workflow
+## 🪟 Open Development Workflow
 
 The React Native Windows team is VERY active in this GitHub Repo. In fact, we live in it all day long and carry out all our development in the open!
 
@@ -73,7 +73,7 @@ For a primer on our codebase, see ["Repository Contents"](https://github.com/mic
 
 ---
 
-## 👨‍💻Development
+## 👨‍💻 Development
 
 > **System Requirements:** Contributing to this project requires a Windows machine, see [rnw-dependencies](https://microsoft.github.io/react-native-windows/docs/next/rnw-dependencies) for more info on this and the script for installing required dependencies.
 
