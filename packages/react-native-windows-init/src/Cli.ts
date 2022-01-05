@@ -353,7 +353,9 @@ async function startTelemetrySession() {
     return;
   }
 
-  await Telemetry.setup();
+  // Setup telemetry, but don't get NPM package version info right away as
+  // we're going to change things and this may interfere with the resolver
+  await Telemetry.setup({populateNpmPackageVersions: false});
 
   const sanitizedOptions = yargsOptionsToOptions(argv, optionSanitizer);
   const sanitizedDefaultOptions = yargsOptionsToOptions(
@@ -576,8 +578,8 @@ function isProjectUsingYarn(cwd: string): boolean {
 
     const generateWindows = requireGenerateWindows();
 
-    // Now that new NPM packages have been installed, refresh their versions
-    await Telemetry.populateNpmPackageVersions(true);
+    // Now that new NPM packages have been installed, get their versions
+    await Telemetry.populateNpmPackageVersions();
 
     await generateWindows(process.cwd(), name, ns, {
       language: argv.language as 'cs' | 'cpp',
@@ -596,6 +598,10 @@ function isProjectUsingYarn(cwd: string): boolean {
     // Now that the project has been generated, add project info
     await addProjectInfoToTelemetry();
   } catch (ex) {
+    // Since we may have failed before generating a project, make
+    // sure we get those NPM package versions
+    await Telemetry.populateNpmPackageVersions();
+
     initWindowsError =
       ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(initWindowsError);
