@@ -20,8 +20,6 @@ namespace Microsoft.ReactNative
     String Name { get; };
 
     XAML_NAMESPACE.FrameworkElement CreateView();
-
-    void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
   }
 
   [webhosthidden]
@@ -89,5 +87,12 @@ namespace Microsoft.ReactNative
       "@Windows.UI.Xaml.UIElement."
     )
     void OnPointerEvent(Object view, ReactPointerEventArgs args);
+  };
+  interface IViewManagerWithDropViewInstanceEvent {
+    DOC_STRING(
+        "Enables the view manager to track when the view is "
+        "being removed from the visual tree. "
+    )
+    void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
   };
 } // namespace Microsoft.ReactNative
