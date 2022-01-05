@@ -21,7 +21,7 @@ namespace Microsoft.ReactNative
 
     XAML_NAMESPACE.FrameworkElement CreateView();
 
-    void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
+    void OnDropViewInstance(XAML_NAMESPACE.XamlView view);
   }
 
   [webhosthidden]

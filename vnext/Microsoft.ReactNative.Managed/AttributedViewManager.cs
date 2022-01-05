@@ -34,6 +34,8 @@ namespace Microsoft.ReactNative.Managed
 
     public virtual FrameworkElement CreateView() => new TFrameworkElement();
 
+    public virtual void OnDropViewInstance(XamlView view) {}
+
     #endregion
 
     #region Constants
