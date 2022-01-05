@@ -210,7 +210,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
     webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
     webView.MinWidth(400);
-    auto dispatcher = winrt::system::DispatcherQueue::GetForCurrentThread();
+    auto dispatcher = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
     // XAML doesn't currently provide a way to measure a WebView control,
     // So we're going to tell the WebView to measure itself by running some javascript,
     // and then we'll post a task back to XAML to set the XAML WebView minimum height.
