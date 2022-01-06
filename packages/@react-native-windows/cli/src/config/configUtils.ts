@@ -156,20 +156,6 @@ export function findDependencyProjectFiles(winFolder: string): string[] {
   return dependencyProjectFiles;
 }
 
-type ReactNativeProjectType = 'unknown' | 'App-WinAppSDK';
-
-function getReactNativeProjectType(
-  value: string | null,
-): ReactNativeProjectType {
-  switch (value) {
-    case 'App-WinAppSDK':
-      return value;
-
-    default:
-      return 'unknown';
-  }
-}
-
 /**
  * Checks if the target file path is a RNW app project file.
  * @param filePath The absolute file path to check.
@@ -178,19 +164,17 @@ function getReactNativeProjectType(
 function isRnwAppProject(filePath: string): boolean {
   const projectContents = readProjectFile(filePath);
 
-  const rnProjectType = getReactNativeProjectType(
-    tryFindPropertyValue(projectContents, 'ReactNativeProjectType'),
-  );
-
-  if (rnProjectType !== 'unknown') {
-    return true;
-  }
-
   const projectLang = getProjectLanguage(filePath);
   if (projectLang === 'cs') {
-    return importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CSharpApp.targets',
+    return (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CSharpApp.targets',
+      ) ||
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.WinAppSDK.CSharpApp.props',
+      )
     );
   } else if (projectLang === 'cpp') {
     return importProjectExists(
