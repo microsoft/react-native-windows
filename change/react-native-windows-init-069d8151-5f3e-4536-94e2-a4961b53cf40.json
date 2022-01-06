@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add tests to validate `react-native-windows-init` options",
+  "packageName": "react-native-windows-init",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
