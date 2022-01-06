@@ -34,14 +34,30 @@ function validateOptionName(
 }
 
 test('windowsInitOptions - validate options', () => {
-  for (const optionName of Object.keys(windowsInitOptions)) {
-    const option = windowsInitOptions[optionName];
+  const options = windowsInitOptions as Record<string, any>;
+  for (const optionName of Object.keys(options)) {
+    const option = options[optionName];
 
     // Validate type
     expect(option.type).toBeDefined();
 
     // Validate defaults
-    expect(option).toHaveProperty('default');
+    if (option.type === 'string') {
+      if (option.choices !== undefined) {
+        // If there are choices (enum value) make sure
+        // the default is present and of that type
+        expect(Array.isArray(option.choices)).toBe(true);
+        expect(option).toHaveProperty('default');
+        expect(option.default).toBeDefined();
+        expect(option.choices.includes(option.default)).toBe(true);
+      } else {
+        // Regular strings should not have defined default
+        expect(option.default).not.toBeDefined();
+      }
+    } else {
+      expect(option).toHaveProperty('default');
+      expect(option.default).toBeDefined();
+    }
 
     // Validate description
     expect(option.describe).toBeDefined();

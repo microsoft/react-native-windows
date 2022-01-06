@@ -42,17 +42,20 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
 
-export const windowsInitOptions: {[key: string]: yargs.Options} = {
+// Causes the type-checker to ensure the options object is a valid yargs options object
+function initOptions<T extends Record<string, yargs.Options>>(options: T): T {
+  return options;
+}
+
+export const windowsInitOptions = initOptions({
   version: {
     type: 'string',
     describe: 'The version of react-native-windows to use.',
-    default: undefined,
   },
   namespace: {
     type: 'string',
     describe:
       "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
-    default: undefined,
   },
   verbose: {
     type: 'boolean',
@@ -106,14 +109,12 @@ export const windowsInitOptions: {[key: string]: yargs.Options} = {
     describe:
       '[internalTesting] By default the NuGet version matches the rnw package. This flag allows manually specifying the version for internal testing.',
     hidden: true,
-    default: undefined,
   },
   nuGetTestFeed: {
     type: 'string',
     describe:
       '[internalTesting] Allows a test feed to be added to the generated NuGet configuration',
     hidden: true,
-    default: undefined,
   },
   useDevMode: {
     type: 'boolean',
@@ -123,7 +124,7 @@ export const windowsInitOptions: {[key: string]: yargs.Options} = {
     default: false,
     conflicts: 'version',
   },
-};
+});
 
 const yargsParser = yargs
   .version(false)
@@ -503,7 +504,7 @@ export async function reactNativeWindowsInit(args?: string[]) {
   try {
     const name = getReactNativeProjectName();
     const ns = options.namespace || name;
-    const useDevMode = !!options.useDevMode;
+    const useDevMode = options.useDevMode;
     let version = options.version;
 
     if (options.useWinUI3 && options.experimentalNuGetDependency) {
@@ -606,7 +607,7 @@ export async function reactNativeWindowsInit(args?: string[]) {
       }
     }
 
-    installReactNativeWindows(version, !!options.verbose, useDevMode);
+    installReactNativeWindows(version, options.verbose, useDevMode);
 
     const generateWindows = requireGenerateWindows();
 
@@ -615,16 +616,16 @@ export async function reactNativeWindowsInit(args?: string[]) {
 
     await generateWindows(process.cwd(), name, ns, {
       language: options.language as 'cs' | 'cpp',
-      overwrite: !!options.overwrite,
-      verbose: !!options.verbose,
+      overwrite: options.overwrite,
+      verbose: options.verbose,
       projectType: options.projectType as 'lib' | 'app',
-      experimentalNuGetDependency: !!options.experimentalNuGetDependency,
-      useWinUI3: !!options.useWinUI3,
-      useHermes: !!options.useHermes,
+      experimentalNuGetDependency: options.experimentalNuGetDependency,
+      useWinUI3: options.useWinUI3,
+      useHermes: options.useHermes,
       useDevMode: useDevMode,
       nuGetTestVersion: options.nuGetTestVersion,
       nuGetTestFeed: options.nuGetTestFeed,
-      telemetry: !!options.telemetry,
+      telemetry: options.telemetry,
     });
 
     // Now that the project has been generated, add project info
@@ -642,21 +643,9 @@ export async function reactNativeWindowsInit(args?: string[]) {
     console.error(initWindowsError);
   }
   endTelemetrySession(initWindowsError);
-  setExitProcessWithError(!!options.verbose, initWindowsError);
+  setExitProcessWithError(options.verbose, initWindowsError);
 }
 
-export interface WindowsInitOptions {
-  version?: string;
-  namespace?: string;
-  verbose?: boolean;
-  telemetry?: boolean;
-  language?: 'cpp' | 'cs';
-  overwrite?: boolean;
-  projectType?: 'app' | 'lib';
-  experimentalNuGetDependency?: boolean;
-  useHermes?: boolean;
-  useWinUI3?: boolean;
-  nuGetTestVersion?: string;
-  nuGetTestFeed?: string;
-  useDevMode?: boolean;
-}
+export type WindowsInitOptions = yargs.InferredOptionTypes<
+  typeof windowsInitOptions
+>;
