@@ -13,6 +13,11 @@
     <CsWinRTGeneratedFilesDir>$(OutDir)</CsWinRTGeneratedFilesDir>
   </PropertyGroup>
 
+  <PropertyGroup Label="NuGet">
+    <!-- https://github.com/NuGet/Home/issues/10511#issuecomment-778400668 -->
+    <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="nuget\Microsoft.ReactNative.WindowsAppSDK.nuspec" />
   </ItemGroup>
