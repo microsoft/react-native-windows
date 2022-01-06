@@ -83,6 +83,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />

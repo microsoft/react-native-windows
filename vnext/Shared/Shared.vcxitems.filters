@@ -381,6 +381,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
