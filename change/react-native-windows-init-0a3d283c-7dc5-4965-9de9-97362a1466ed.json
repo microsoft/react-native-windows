@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update when telemetry populates NPM package versions",
-  "packageName": "react-native-windows-init",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
