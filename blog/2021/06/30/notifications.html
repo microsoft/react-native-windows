@@ -225,12 +225,12 @@ It will also iterate through the rest of our JavaScript object parameter to disc
 Here is how you'd use this complete version from JavaScript:</p>
 <pre><code class="hljs css language-jsx">  <span class="token operator">&lt;</span>Button onClick<span class="token operator">=</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
       NativeModules<span class="token punctuation">.</span>Notifications<span class="token punctuation">.</span><span class="token function">raise</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-          template<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// ToastImageAndText01 - see https://docs.microsoft.com/uwp/api/Windows.UI.Notifications.ToastTemplateType</span>
+          <span class="token literal-property property">template</span><span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token comment">// ToastImageAndText01 - see https://docs.microsoft.com/uwp/api/Windows.UI.Notifications.ToastTemplateType</span>
           <span class="token comment">// The template schema can be found at https://docs.microsoft.com/previous-versions/windows/apps/hh761494(v=win.10)</span>
-          text<span class="token operator">:</span> <span class="token string">"hello world"</span><span class="token punctuation">,</span>
-          image<span class="token operator">:</span> <span class="token punctuation">{</span>
-              src<span class="token operator">:</span> <span class="token string">"https://microsoft.github.io/react-native-windows/img/header_logo.svg"</span><span class="token punctuation">,</span>
-              alt<span class="token operator">:</span> <span class="token string">"React logo"</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">text</span><span class="token operator">:</span> <span class="token string">"hello world"</span><span class="token punctuation">,</span>
+          <span class="token literal-property property">image</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+              <span class="token literal-property property">src</span><span class="token operator">:</span> <span class="token string">"https://microsoft.github.io/react-native-windows/img/header_logo.svg"</span><span class="token punctuation">,</span>
+              <span class="token literal-property property">alt</span><span class="token operator">:</span> <span class="token string">"React logo"</span><span class="token punctuation">,</span>
           <span class="token punctuation">}</span>
       <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token punctuation">}</span><span class="token punctuation">}</span> content<span class="token operator">=</span><span class="token string">"click me to send a toast"</span> <span class="token operator">/</span><span class="token operator">></span>
