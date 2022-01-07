@@ -4,7 +4,6 @@
 #include <TestRunner.h>
 
 #include <CreateModules.h>
-#include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
 #include <RuntimeOptions.h>

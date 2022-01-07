@@ -102,7 +102,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IReactRootView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)IUIManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IWebSocketResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSBigAbiString.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h" />
