@@ -93,8 +93,7 @@ steps:
       displayName: Update lib project react and react-native dev versions
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - script: |
-      yarn config set registry http://localhost:4873
+  - script: yarn config set registry http://localhost:4873
     displayName: Modify yarn config to point to local verdaccio server
 
   - ${{ if eq(parameters.useNuget, true) }}:
