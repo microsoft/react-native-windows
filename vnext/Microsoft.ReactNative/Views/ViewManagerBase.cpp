@@ -240,15 +240,6 @@ void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldCh
 void ViewManagerBase::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     winrt::Microsoft::ReactNative::JSValueObject &props) {
-  // Directly dirty this node since non-layout changes like the text property do
-  // not trigger relayout
-  //  There isn't actually a yoga node for RawText views, but it will invalidate
-  //  the ancestors which
-  //  will include the containing Text element. And that's what matters.
-  int64_t tag = GetTag(nodeToUpdate->GetView());
-  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock())
-    uiManager->DirtyYogaNode(tag);
-
   for (const auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
@@ -390,6 +381,11 @@ bool ViewManagerBase::RequiresYogaNode() const {
 
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
+}
+
+void ViewManagerBase::MarkDirty(int64_t tag) {
+  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock())
+    uiManager->DirtyYogaNode(tag);
 }
 
 void ViewManagerBase::OnPointerEvent(
