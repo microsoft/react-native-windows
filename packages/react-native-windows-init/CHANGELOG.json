@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 07 Jan 2022 22:21:25 GMT",
+      "tag": "react-native-windows-init_v1.1.78",
+      "version": "1.1.78",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "3e606b64d9a645a6da2deeb5a728ae4374989f9e",
+            "comment": "Fix `--version` option in react-native-windows-init"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 07 Jan 2022 06:08:32 GMT",
       "tag": "react-native-windows-init_v1.1.77",
       "version": "1.1.77",

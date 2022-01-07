@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Animate value property rather than offset",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

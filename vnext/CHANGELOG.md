@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 06 Jan 2022 04:18:33 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Jan 2022 22:21:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.435
+
+Fri, 07 Jan 2022 22:21:25 GMT
+
+### Changes
+
+- Use Window::Current compositor on XAML Islands (erozell@outlook.com)
+- Fixes crash when using `Animated.divide` (erozell@outlook.com)
+- Animate value property rather than offset (erozell@outlook.com)
 
 ## 0.0.0-canary.434
 

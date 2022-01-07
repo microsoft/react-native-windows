@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 07 Jan 2022 22:21:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.435",
+      "version": "0.0.0-canary.435",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "fb3417f7d9145f7a70ddfc7d6de2f650f7dae863",
+            "comment": "Use Window::Current compositor on XAML Islands"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "310a128ca0acab184666e9d4fcd9bce042ddc1bd",
+            "comment": "Fixes crash when using `Animated.divide`"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9b88d32335eafa80e911b0d674f028001969a169",
+            "comment": "Animate value property rather than offset"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jan 2022 04:18:33 GMT",
       "tag": "react-native-windows_v0.0.0-canary.434",
       "version": "0.0.0-canary.434",

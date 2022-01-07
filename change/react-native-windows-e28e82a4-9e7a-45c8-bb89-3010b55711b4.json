@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes crash when using `Animated.divide`",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
