@@ -9,7 +9,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211125-2009-3ba237b66",
+  "baseVersion": "0.0.0-20211202-2008-9e2ec4d3d",
   "overrides": [
     {
       "type": "derived",
@@ -28,7 +28,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "802d6b354a54bb5ae26196e767017b403b1842ed",
+      "baseHash": "9165b40f12fc83352a29fdac2023089a3c423e00",
       "issue": 7821
     },
     {
@@ -127,7 +127,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "1de1a9526002e19f758a40e43cdca2a06093ceec",
+      "baseHash": "ebf6c7c142a4d6fba228e7bc71793c5de96f1798",
       "issue": 4578
     },
     {
@@ -443,13 +443,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "40cb15c0afb61e265a16ef82e059a51c00cf2c97"
-    },
-    {
-      "type": "derived",
-      "file": "src/Libraries/Text/TextNativeComponent.windows.js",
-      "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "3ca95134e707104d04ec9589fd4a801b6cf7ae67"
+      "baseHash": "048a8410b21efb4b0e6a713fb02e6717345c7e1a"
     },
     {
       "type": "patch",

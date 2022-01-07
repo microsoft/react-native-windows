@@ -12,6 +12,8 @@
     <HermesPackage Condition="'$(HermesPackage)' == '' And Exists('$(PkgReactNative_Hermes_Windows)')">$(PkgReactNative_Hermes_Windows)</HermesPackage>
     <HermesPackage Condition="'$(HermesPackage)' == ''">$(NuGetPackageRoot)\ReactNative.Hermes.Windows\$(HermesVersion)</HermesPackage>
     <EnableHermesInspectorInReleaseFlavor Condition="'$(EnableHermesInspectorInReleaseFlavor)' == ''">false</EnableHermesInspectorInReleaseFlavor>
+    <!-- Disable linking Hermes into the output in cases where we need to fully rely on HermesShim -->
+    <HermesNoLink Condition="'$(HermesNoLink)' == '' and '$(Configuration)' == 'Release' and '$(EnableHermesInspectorInReleaseFlavor)' != 'true'">true</HermesNoLink>
     <!-- Use Hermes bytecode bundles provided by metro hermes compiler when available -->
     <EnableDevServerHBCBundles Condition="'$(EnableDevServerHBCBundles)' == ''">false</EnableDevServerHBCBundles>
 

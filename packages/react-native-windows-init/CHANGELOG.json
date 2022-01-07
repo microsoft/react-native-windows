@@ -2,6 +2,48 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 07 Jan 2022 06:08:32 GMT",
+      "tag": "react-native-windows-init_v1.1.77",
+      "version": "1.1.77",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "6b32feb177e233d0aeda8e254ad7f252f4802d88",
+            "comment": "Add tests to validate `react-native-windows-init` options"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Jan 2022 04:18:33 GMT",
+      "tag": "react-native-windows-init_v1.1.76",
+      "version": "1.1.76",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05",
+            "comment": "Update when telemetry populates NPM package versions"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.31",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.108",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Dec 2021 06:10:13 GMT",
       "tag": "react-native-windows-init_v1.1.75",
       "version": "1.1.75",

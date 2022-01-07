@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.429",
+  "version": "0.0.0-canary.434",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
     "@react-native-community/cli": "^6.0.0",
     "@react-native-community/cli-platform-android": "^6.0.0",
     "@react-native-community/cli-platform-ios": "^6.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.107",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.21",
+    "@react-native-windows/cli": "0.0.0-canary.108",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.22",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -73,7 +73,7 @@
     "metro-config": "^0.66.0",
     "prettier": "^2.4.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211125-2009-3ba237b66",
+    "react-native": "0.0.0-20211202-2008-9e2ec4d3d",
     "react-native-platform-override": "^1.6.2",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -81,7 +81,7 @@
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-20211125-2009-3ba237b66"
+    "react-native": "0.0.0-20211202-2008-9e2ec4d3d"
   },
   "beachball": {
     "defaultNpmTag": "canary",

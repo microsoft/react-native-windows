@@ -162,7 +162,6 @@ const Text: React.AbstractComponent<
 
   const hasTextAncestor = useContext(TextAncestor);
 
-  //let styleProps: ViewStyleProp = (props.style: any);
   if (hasTextAncestor) {
     return (
       <NativeVirtualText

@@ -16,8 +16,8 @@
   "peerDependencies": {
     "@react-native-picker/picker": "2.2.0",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211125-2009-3ba237b66",
-    "react-native-windows": "^0.0.0-canary.429",
+    "react-native": "0.0.0-20211202-2008-9e2ec4d3d",
+    "react-native-windows": "^0.0.0-canary.434",
     "react-native-xaml": "^0.0.50"
   },
   "devDependencies": {
@@ -27,9 +27,9 @@
     "@types/node": "^14.14.22",
     "eslint": "^7.32.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.0.0-20211125-2009-3ba237b66",
+    "react-native": "0.0.0-20211202-2008-9e2ec4d3d",
     "react-native-platform-override": "^1.6.2",
-    "react-native-windows": "^0.0.0-canary.429",
+    "react-native-windows": "^0.0.0-canary.434",
     "typescript": "^4.4.4"
   },
   "engines": {

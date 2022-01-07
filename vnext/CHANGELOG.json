@@ -2,6 +2,87 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 06 Jan 2022 04:18:33 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.434",
+      "version": "0.0.0-canary.434",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.108",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Dec 2021 06:09:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.433",
+      "version": "0.0.0-canary.433",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "baeb133da923d0eee25eacf54c02557ea411a7fc",
+            "comment": "Implicitly restore C++/PackageReference in Visual Studio"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Dec 2021 06:08:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.432",
+      "version": "0.0.0-canary.432",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "39c84d2cac3a134b4abc4322d7fcc164c5c393e2",
+            "comment": "Use shared pointer in MessageReceived"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Dec 2021 06:11:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.431",
+      "version": "0.0.0-canary.431",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "09c5588faaad1282aee1b61a82c71dade74039d3",
+            "comment": "Integrate 12/2 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.22",
+            "commit": "9ef57baafa33d219b45ffa59c028486afbb114c5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Dec 2021 06:12:27 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.430",
+      "version": "0.0.0-canary.430",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "46fcfd5775dc47e0899858536ebbd91df9aed764",
+            "comment": "Enable HermesNoLink"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Dec 2021 06:11:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.429",
       "version": "0.0.0-canary.429",

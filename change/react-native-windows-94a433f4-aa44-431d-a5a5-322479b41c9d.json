@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use Window::Current compositor on XAML Islands",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

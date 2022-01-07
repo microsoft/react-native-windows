@@ -142,8 +142,6 @@
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
-      <!-- #8824: The Hermes NuGet package adds itself to be linked, but we go through Hermes Shim instead. Ignore the unused DLL until using NuGet package with "HermesNoLink" -->
-      <AdditionalOptions>/IGNORE:4199</AdditionalOptions>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>

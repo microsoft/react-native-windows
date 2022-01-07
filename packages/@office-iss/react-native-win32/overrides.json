@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211125-2009-3ba237b66",
+  "baseVersion": "0.0.0-20211202-2008-9e2ec4d3d",
   "overrides": [
     {
       "type": "derived",
@@ -31,7 +31,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "1de1a9526002e19f758a40e43cdca2a06093ceec",
+      "baseHash": "ebf6c7c142a4d6fba228e7bc71793c5de96f1798",
       "issue": 4578
     },
     {
@@ -448,7 +448,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "3ca95134e707104d04ec9589fd4a801b6cf7ae67",
+      "baseHash": "8993f38aa6714d6873a968abc3f46f4071d3debc",
       "issue": 7074
     },
     {
