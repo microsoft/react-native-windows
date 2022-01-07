@@ -504,7 +504,7 @@ export async function reactNativeWindowsInit(args?: string[]) {
   try {
     const name = getReactNativeProjectName();
     const ns = options.namespace || name;
-    const useDevMode = !!options.useDevMode;
+    const useDevMode = options.useDevMode as unknown as boolean; // TS assumes the type is undefined
     let version = options.version;
 
     if (options.useWinUI3 && options.experimentalNuGetDependency) {
