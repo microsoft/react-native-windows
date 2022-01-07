@@ -54,7 +54,12 @@ test('windowsInitOptions - validate options', () => {
         // Regular strings should not have defined default
         expect(option.default).not.toBeDefined();
       }
+    } else if (option.conflicts !== undefined) {
+      // Options with conflicts defined should have default = undefined
+      expect(option).toHaveProperty('default');
+      expect(option.default).toBeUndefined();
     } else {
+      // Regular options should have defined defaults
       expect(option).toHaveProperty('default');
       expect(option.default).toBeDefined();
     }

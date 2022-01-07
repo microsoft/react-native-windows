@@ -121,7 +121,7 @@ export const windowsInitOptions = initOptions({
     describe:
       '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
     hidden: true,
-    default: false,
+    default: undefined, // This must be undefined because we define the conflicts field below. Defining a default here will break the version option
     conflicts: 'version',
   },
 });
@@ -504,7 +504,7 @@ export async function reactNativeWindowsInit(args?: string[]) {
   try {
     const name = getReactNativeProjectName();
     const ns = options.namespace || name;
-    const useDevMode = options.useDevMode;
+    const useDevMode = !!options.useDevMode;
     let version = options.version;
 
     if (options.useWinUI3 && options.experimentalNuGetDependency) {
