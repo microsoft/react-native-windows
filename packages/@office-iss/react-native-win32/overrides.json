@@ -193,6 +193,13 @@
       "baseHash": "689895e8755aed42e913460d1fa964907a74f06c"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.js",
+      "baseHash": "5bc93b50edd30f3a4414c2710a068bf402f9fbbe",
+      "issue": 6240
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/Components/View/ViewWin32.Props.ts"
     },
