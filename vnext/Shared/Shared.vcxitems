@@ -45,6 +45,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.cpp">
       <ExcludedFromBuild Condition="'$(ApplicationType)' == ''">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp" />

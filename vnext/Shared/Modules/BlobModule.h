@@ -17,8 +17,36 @@
 
 namespace Microsoft::React {
 
+class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
+  std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
+  std::mutex m_blobsMutex;
+  std::unordered_set<int64_t> m_socketIDs;
+  std::mutex m_socketIDsMutex;
+
+ public:
+#pragma region IWebSocketModuleContentHandler
+
+  void ProcessMessage(std::string &&message, folly::dynamic &params) override;
+
+  void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params) override;
+
+#pragma endregion IWebSocketModuleContentHandler
+
+  void Register(int64_t socketID) noexcept;
+
+  void Unregister(int64_t socketID) noexcept;
+
+  // const bool IsRegistered(std::int64_t socketID) noexcept override;
+
+  std::vector<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) noexcept;
+
+  void RemoveMessage(std::string &&blobId) noexcept;
+
+  void StoreMessage(std::vector<uint8_t> &&message, std::string &&blobId) noexcept;
+};
+
 class BlobModule : public facebook::xplat::module::CxxModule {
-  std::shared_ptr<IWebSocketModuleContentHandler> m_contentHandler;
+  std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
 
  public:
   enum class MethodId {
@@ -33,7 +61,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
 
   BlobModule() noexcept;
 
-#pragma region CxxModule overrides
+#pragma region CxxModule
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getName" />
@@ -51,23 +79,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
   /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
   std::vector<Method> getMethods() override;
 
-#pragma endregion CxxModule overrides
-};
-
-class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
-  std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
-  std::mutex m_blobsMutex;
-  std::unordered_set<std::int64_t> m_socketIDs;
-  std::mutex m_socketIDsMutex;
-
- public:
-#pragma region IWebSocketModuleContentHandler overrides
-
-  void ProcessMessage(std::string &&message, folly::dynamic &params) override;
-
-  void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params) override;
-
-#pragma endregion IWebSocketModuleContentHandler overrides
+#pragma endregion CxxModule
 };
 
 } // namespace Microsoft::React
