@@ -16,6 +16,7 @@
 
 using namespace facebook::xplat;
 
+using facebook::react::Instance;
 using folly::dynamic;
 using std::lock_guard;
 using std::mutex;
@@ -57,35 +58,35 @@ std::map<string, dynamic> BlobModule::getConstants() {
 std::vector<module::CxxModule::Method> BlobModule::getMethods() {
   return {
       {"addNetworkingHandler",
-       [this](dynamic args) {
+       [](dynamic args) {
          // TODO: Implement #6081
        }},
 
       {"addWebSocketHandler",
-       [this](dynamic args) {
+       [contentHandler = m_contentHandler](dynamic args) {
          auto id = jsArgAsInt(args, 0);
 
-         m_contentHandler->Register(id);
+         contentHandler->Register(id);
        }},
 
       {"removeWebSocketHandler",
-       [this](dynamic args) {
+       [contentHandler = m_contentHandler](dynamic args) {
          auto id = jsArgAsInt(args, 0);
 
-         m_contentHandler->Unregister(id);
+         contentHandler->Unregister(id);
        }},
 
       {"sendOverSocket",
-       [this](dynamic args) {
+       [contentHandler = m_contentHandler, weakInstance = weak_ptr<Instance>(getInstance())](dynamic args) {
          auto blob = jsArgAsObject(args, 0);
          auto blobId = blob["blobId"].getString();
          auto offset = blob["offset"].getInt();
          auto size = blob["size"].getInt();
          auto socketID = jsArgAsInt(args, 1);
 
-         auto data = m_contentHandler->ResolveMessage(std::move(blobId), offset, size);
+         auto data = contentHandler->ResolveMessage(std::move(blobId), offset, size);
 
-         if (auto instance = getInstance().lock()) {
+         if (auto instance = weakInstance.lock()) {
            auto buffer = CryptographicBuffer::CreateFromByteArray(data);
            auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
            auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
@@ -96,7 +97,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"createFromParts",
-       [this](dynamic args) {
+       [contentHandler = m_contentHandler](dynamic args) {
          auto parts = jsArgAsArray(args, 0); // Array<Object>
          auto blobId = jsArgAsString(args, 1);
          vector<uint8_t> buffer{};
@@ -105,7 +106,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
            auto type = part["type"];
            if (type == "blob") {
              auto blob = part["data"];
-            auto bufferPart = m_contentHandler->ResolveMessage(
+            auto bufferPart = contentHandler->ResolveMessage(
                 blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
             buffer.reserve(buffer.size() + bufferPart.size());
             buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
@@ -120,16 +121,16 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
              return;
            }
 
-           m_contentHandler->StoreMessage(std::move(buffer), std::move(blobId));
+           contentHandler->StoreMessage(std::move(buffer), std::move(blobId));
          }
        }},
 
       {"release",
-       [this](dynamic args) // blobId: string
+       [contentHandler = m_contentHandler](dynamic args) // blobId: string
        {
          auto blobId = jsArgAsString(args, 0);
 
-         m_contentHandler->RemoveMessage(std::move(blobId));
+         contentHandler->RemoveMessage(std::move(blobId));
        }}};
 }
 
