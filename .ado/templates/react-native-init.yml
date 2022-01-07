@@ -95,20 +95,23 @@ steps:
 
   - script: |
       yarn config set registry http://localhost:4873
-      npm config set registry http://localhost:4873
-    displayName: Modify yarn/npm config to point to local verdaccio server
+    displayName: Modify yarn config to point to local verdaccio server
 
   - ${{ if eq(parameters.useNuget, true) }}:
     - script: |
-        npx --yes --ignore-existing react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+        npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
       displayName: Apply windows template (with nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.useNuget, false) }}:
     - script: |
-        npx --yes --ignore-existing react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
+        npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
       displayName: Apply windows template (without nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - powershell: |
