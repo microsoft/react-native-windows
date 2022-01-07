@@ -90,7 +90,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
            auto buffer = CryptographicBuffer::CreateFromByteArray(data);
            auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
            auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
-           
+
            auto sendArgs = dynamic::array(std::move(base64String), socketID);
            instance->callJSFunction("WebSocketModule", "sendBinary", std::move(sendArgs));
          }
@@ -106,10 +106,10 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
            auto type = part["type"];
            if (type == "blob") {
              auto blob = part["data"];
-            auto bufferPart = contentHandler->ResolveMessage(
-                blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
-            buffer.reserve(buffer.size() + bufferPart.size());
-            buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
+             auto bufferPart = contentHandler->ResolveMessage(
+                 blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
+             buffer.reserve(buffer.size() + bufferPart.size());
+             buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
            } else if (type == "string") {
              auto data = part["data"].asString();
              auto bufferPart = vector<uint8_t>(data.begin(), data.end());
@@ -172,7 +172,7 @@ void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
 }
 
 vector<uint8_t>
-BlobWebSocketModuleContentHandler::ResolveMessage(string&& blobId, int64_t offset, int64_t size) noexcept {
+BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept {
   lock_guard<mutex> lock{m_blobsMutex};
 
   auto data = m_blobs.at(std::move(blobId));
@@ -182,13 +182,13 @@ BlobWebSocketModuleContentHandler::ResolveMessage(string&& blobId, int64_t offse
   return vector(start, end);
 }
 
-void BlobWebSocketModuleContentHandler::RemoveMessage(string&& blobId) noexcept {
+void BlobWebSocketModuleContentHandler::RemoveMessage(string &&blobId) noexcept {
   lock_guard<mutex> lock{m_blobsMutex};
 
   m_blobs.erase(std::move(blobId));
 }
 
-void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t>&& message, string&& blobId) noexcept {
+void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, string &&blobId) noexcept {
   lock_guard<mutex> lock{m_blobsMutex};
 
   m_blobs.insert_or_assign(std::move(blobId), std::move(message));
@@ -200,4 +200,4 @@ void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t>&& message, 
   return s_contentHandler;
 }
 
-}// namespace
+} // namespace Microsoft::React

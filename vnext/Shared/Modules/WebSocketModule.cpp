@@ -117,8 +117,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
         auto data = std::vector<uint8_t>(arr.begin(), arr.end());
 
         contentHandler->ProcessMessage(std::move(data), args);
-      }
-      else {
+      } else {
         contentHandler->ProcessMessage(string{message}, args);
       }
 
