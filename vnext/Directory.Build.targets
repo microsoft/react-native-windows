@@ -4,4 +4,9 @@
   <!-- This import will noop when customer code is built. This import is here to help building the bits in the react-native-windows repository. -->
   <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
+  <!--Allow implicitly restoring PackageReference dependencies in C++ projects using the Visual Studio IDE.-->
+  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" />
+  </Target>
+
 </Project>

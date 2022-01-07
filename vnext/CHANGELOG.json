@@ -2,6 +2,78 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 07 Jan 2022 22:21:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.435",
+      "version": "0.0.0-canary.435",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "fb3417f7d9145f7a70ddfc7d6de2f650f7dae863",
+            "comment": "Use Window::Current compositor on XAML Islands"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "310a128ca0acab184666e9d4fcd9bce042ddc1bd",
+            "comment": "Fixes crash when using `Animated.divide`"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9b88d32335eafa80e911b0d674f028001969a169",
+            "comment": "Animate value property rather than offset"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Jan 2022 04:18:33 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.434",
+      "version": "0.0.0-canary.434",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.108",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Dec 2021 06:09:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.433",
+      "version": "0.0.0-canary.433",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "baeb133da923d0eee25eacf54c02557ea411a7fc",
+            "comment": "Implicitly restore C++/PackageReference in Visual Studio"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Dec 2021 06:08:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.432",
+      "version": "0.0.0-canary.432",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "39c84d2cac3a134b4abc4322d7fcc164c5c393e2",
+            "comment": "Use shared pointer in MessageReceived"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Dec 2021 06:11:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.431",
       "version": "0.0.0-canary.431",

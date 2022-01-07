@@ -40,7 +40,7 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> FrameAnimat
   auto fromValue = GetAnimatedValue()->RawValue();
   for (auto frame : m_frames) {
     normalizedProgress = std::min(normalizedProgress += step, 1.0f);
-    animation.InsertKeyFrame(normalizedProgress, static_cast<float>(frame * (m_toValue - fromValue)));
+    animation.InsertKeyFrame(normalizedProgress, static_cast<float>(fromValue + frame * (m_toValue - fromValue)));
   }
 
   if (m_iterations == -1) {

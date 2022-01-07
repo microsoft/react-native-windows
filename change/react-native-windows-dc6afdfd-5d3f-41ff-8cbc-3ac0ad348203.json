@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Reduce scope of marking YogaNode dirty",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

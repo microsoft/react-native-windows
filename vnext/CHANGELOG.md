@@ -1,8 +1,42 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 16 Dec 2021 06:11:19 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Jan 2022 22:21:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.435
+
+Fri, 07 Jan 2022 22:21:25 GMT
+
+### Changes
+
+- Use Window::Current compositor on XAML Islands (erozell@outlook.com)
+- Fixes crash when using `Animated.divide` (erozell@outlook.com)
+- Animate value property rather than offset (erozell@outlook.com)
+
+## 0.0.0-canary.434
+
+Thu, 06 Jan 2022 04:18:33 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.108
+
+## 0.0.0-canary.433
+
+Tue, 28 Dec 2021 06:09:21 GMT
+
+### Changes
+
+- Implicitly restore C++/PackageReference in Visual Studio (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.432
+
+Sat, 18 Dec 2021 06:08:07 GMT
+
+### Changes
+
+- Use shared pointer in MessageReceived (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.431
 

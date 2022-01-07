@@ -101,12 +101,16 @@ steps:
         npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
       displayName: Apply windows template (with nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.useNuget, false) }}:
     - script: |
         npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
       displayName: Apply windows template (without nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - powershell: |
