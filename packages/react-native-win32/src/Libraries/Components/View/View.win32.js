@@ -17,6 +17,9 @@ import ViewNativeComponent from './ViewNativeComponent';
 const TextAncestor = require('../../Text/TextAncestor');
 import warnOnce from '../../Utilities/warnOnce'; // [Windows]
 import invariant from 'invariant'; // [Windows]
+// [Windows
+import type {KeyEvent} from '../../Types/CoreEventTypes';
+// Windows]
 
 export type Props = ViewProps;
 
@@ -47,15 +50,24 @@ const View: React.AbstractComponent<
     // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
     // But since Views are not currently supported in Text, we do not need the extra provider
     <TextAncestor.Consumer>
-      {hasTextAncestor => {
+      {(hasTextAncestor) => {
         invariant(
           !hasTextAncestor,
           'Nesting of <View> within <Text> is not currently supported.',
         );
-
-        return <ViewNativeComponent {...props} ref={forwardedRef} />;
+        return (
+          <ViewNativeComponent
+            {...props}
+            ref={forwardedRef}
+            onKeyDown={_keyDown}
+            onKeyDownCapture={_keyDownCapture}
+            onKeyUp={_keyUp}
+            onKeyUpCapture={_keyUpCapture}
+          />
+        );
       }}
     </TextAncestor.Consumer>
+    // Windows]
   );
 });
 
