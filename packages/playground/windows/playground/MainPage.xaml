@@ -121,14 +121,14 @@
             <CheckBox x:Name="x_UseWebDebuggerCheckBox"
                 Margin="8,4,4,4"
                 VerticalAlignment="Center"
-                IsChecked="true"
+                IsChecked="false"
                 Checked="x_UseWebDebuggerCheckBox_Checked"
                 Unchecked="x_UseWebDebuggerCheckBox_Unchecked"
                 Content="Web Debugger"/>
             <CheckBox x:Name="x_UseDirectDebuggerCheckBox"
                 Margin="4"
                 VerticalAlignment="Center"
-                IsChecked="false"
+                IsChecked="true"
                 Content="Direct Debugging"/>
             <CheckBox x:Name="x_BreakOnFirstLineCheckBox"
                 IsEnabled="false"
