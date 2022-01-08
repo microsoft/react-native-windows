@@ -13,7 +13,7 @@
     "@react-native-picker/picker": "2.2.0",
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211202-2008-9e2ec4d3d",
+    "react-native": "0.0.0-20211217-2008-aef843bfe",
     "react-native-windows": "^0.0.0-canary.435"
   },
   "devDependencies": {

@@ -108,7 +108,7 @@ async function queryCache(
   return await NativeImageLoaderWin32.queryCache(urls);
 }
 
-type ImageComponentStatics = $ReadOnly<{|
+export type ImageComponentStatics = $ReadOnly<{|
   getSize: typeof getSize,
   getSizeWithHeaders: typeof getSizeWithHeaders,
   prefetch: typeof prefetch,

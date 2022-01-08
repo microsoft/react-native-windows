@@ -10,9 +10,7 @@
 'use strict';
 
 // [Win - changes to use local react-native-codegen from tscodegen, which has the flow types removed
-const {
-  parseString,
-} = require('../../../node_modules/react-native-tscodegen/lib/rncodegen/src/parsers/flow');
+const flow = require('../../../node_modules/react-native-tscodegen/lib/rncodegen/src/parsers/flow');
 const RNCodegen = {
   generateViewConfig: ({libraryName, schema}) => {
     // schemaValidator.validate(schema);
@@ -33,7 +31,7 @@ const RNCodegen = {
 const {basename} = require('path');
 
 function generateViewConfig(filename, code) {
-  const schema = parseString(code);
+  const schema = flow.parseString(code);
 
   const libraryName = basename(filename).replace(/NativeComponent\.js$/, '');
   return RNCodegen.generateViewConfig({
