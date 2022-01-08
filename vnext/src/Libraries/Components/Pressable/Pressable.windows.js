@@ -29,6 +29,7 @@ import type {
   LayoutEvent,
   PressEvent,
   // [Windows
+  MouseEvent,
   BlurEvent,
   FocusEvent, // Windows]
 } from '../../Types/CoreEventTypes';
@@ -91,6 +92,16 @@ type Props = $ReadOnly<{|
    * Called when this view's layout changes.
    */
   onLayout?: ?(event: LayoutEvent) => void,
+
+  /**
+   * Called when the hover is activated to provide visual feedback.
+   */
+  onHoverIn?: ?(event: MouseEvent) => mixed,
+
+  /**
+   * Called when the hover is deactivated to undo visual feedback.
+   */
+  onHoverOut?: ?(event: MouseEvent) => mixed,
 
   /**
    * Called when a long-tap gesture is detected.
@@ -164,9 +175,13 @@ function Pressable(props: Props, forwardedRef): React.Node {
     android_disableSound,
     android_ripple,
     children,
+    delayHoverIn,
+    delayHoverOut,
     delayLongPress,
     disabled,
     focusable,
+    onHoverIn,
+    onHoverOut,
     onLongPress,
     onPress,
     onPressIn,
@@ -221,8 +236,12 @@ function Pressable(props: Props, forwardedRef): React.Node {
       hitSlop,
       pressRectOffset: pressRetentionOffset,
       android_disableSound,
+      delayHoverIn,
+      delayHoverOut,
       delayLongPress,
       delayPressIn: unstable_pressDelay,
+      onHoverIn,
+      onHoverOut,
       onLongPress,
       onPress,
       onPressIn(event: PressEvent): void {
@@ -255,6 +274,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
       delayLongPress,
       disabled,
       hitSlop,
+      onHoverIn,
+      onHoverOut,
       onLongPress,
       onPress,
       onPressIn,
