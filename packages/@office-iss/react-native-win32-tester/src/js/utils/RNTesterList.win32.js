@@ -58,7 +58,6 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
-  */
   {
     key: 'PressableExample',
     category: 'UI',
@@ -83,7 +82,7 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'SwipeableCardExample',
     category: 'UI',
     module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
-  }*/,
+  }*/
   {
     key: 'SwitchExample',
     category: 'UI',
