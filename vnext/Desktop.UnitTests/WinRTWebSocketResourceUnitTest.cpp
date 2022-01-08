@@ -32,6 +32,8 @@ IAsyncAction ThrowAsync() {
   co_return;
 }
 
+constexpr char testUrl[] = "ws://host:0";
+
 } // namespace
 
 namespace Microsoft::React::Test {
@@ -51,12 +53,11 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
     // Test APIs
-    auto rc =
-        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
-    rc->Connect({}, {});
+    rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({}, errorMessage);
@@ -77,12 +78,11 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
 
     // Test APIs
-    auto rc =
-        make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+    auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
     rc->SetOnConnect([&connected]() { connected = true; });
     rc->SetOnError([&errorMessage](Error &&error) { errorMessage = error.Message; });
 
-    rc->Connect({}, {});
+    rc->Connect(testUrl, {}, {});
     rc->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({"[0x80004005] Expected Failure"}, errorMessage);
@@ -95,7 +95,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
 
     auto lambda = [&rc]() mutable {
       rc = make_shared<WinRTWebSocketResource>(
-          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, Uri{L"ws://host:0"}, CertExceptions{});
+          winrt::make<ThrowingMessageWebSocket>(), MockDataWriter{}, CertExceptions{});
     };
 
     Assert::ExpectException<winrt::hresult_error>(lambda);

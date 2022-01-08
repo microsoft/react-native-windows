@@ -1,8 +1,33 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 01 Nov 2021 19:10:27 GMT and should not be manually modified.
+This log was last generated on Mon, 03 Jan 2022 16:10:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.6
+
+Mon, 03 Jan 2022 16:10:55 GMT
+
+### Patches
+
+- [0.66] Avoid capturing raw this pointer in WebSocket module (julio.rocha@microsoft.com)
+
+## 0.66.5
+
+Mon, 22 Nov 2021 16:09:58 GMT
+
+### Patches
+
+- Fix C# Module Event invocation (vmorozov@microsoft.com)
+
+## 0.66.4
+
+Mon, 15 Nov 2021 16:09:53 GMT
+
+### Patches
+
+- Fix crash loading bundle in win32 (julio.rocha@microsoft.com)
+- Drop ChakraCore dependency (#9056) (julio.rocha@microsoft.com)
 
 ## 0.66.3
 

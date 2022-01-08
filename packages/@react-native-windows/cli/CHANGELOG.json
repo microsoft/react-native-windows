@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 15 Nov 2021 16:09:53 GMT",
+      "tag": "@react-native-windows/cli_v0.66.1",
+      "version": "0.66.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.66] Fix autolinking to support solution files using LF instead of CRLF",
+            "author": "jthysell@microsoft.com",
+            "commit": "b05dda932a79521caca4d581eaf66526ab5d6051",
+            "package": "@react-native-windows/cli"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Oct 2021 15:07:19 GMT",
       "tag": "@react-native-windows/cli_v0.66.0",
       "version": "0.66.0",

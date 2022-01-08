@@ -2,6 +2,51 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Mon, 03 Jan 2022 16:10:55 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.6",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "1a0cec7754fdff58dad91fb15c483e884ef70aee",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 22 Nov 2021 16:09:58 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.5",
+            "author": "vmorozov@microsoft.com",
+            "commit": "f5e0d1f8184cabdf83784ad272f7b82680b117cf",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Nov 2021 16:09:53 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.4",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "9fded4d64856fc7ab1df0040a79466afff3d52fd",
+            "package": "@react-native-windows/automation-channel"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Nov 2021 19:10:27 GMT",
       "tag": "@react-native-windows/automation-channel_v0.0.1",
       "version": "0.0.1",
