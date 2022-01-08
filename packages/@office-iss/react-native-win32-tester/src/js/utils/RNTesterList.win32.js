@@ -58,7 +58,6 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
-  */
   {
     key: 'PressableExample',
     category: 'UI',
@@ -103,7 +102,7 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'SectionListExample',
     category: 'ListView',
     module: require('../examples/SectionList/SectionListExample'),
-  }*/,
+  }*/
   {
     key: 'SwitchExample',
     module: require('../examples/Switch/SwitchExample'),
