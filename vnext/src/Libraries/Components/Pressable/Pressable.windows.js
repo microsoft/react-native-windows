@@ -271,6 +271,8 @@ function Pressable(props: Props, forwardedRef): React.Node {
     [
       android_disableSound,
       android_rippleConfig,
+      delayHoverIn,
+      delayHoverOut,
       delayLongPress,
       disabled,
       hitSlop,
