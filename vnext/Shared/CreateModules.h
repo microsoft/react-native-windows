@@ -34,4 +34,6 @@ namespace Microsoft::React {
 
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
 
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule() noexcept;
+
 } // namespace Microsoft::React

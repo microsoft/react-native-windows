@@ -200,4 +200,8 @@ void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, 
   return s_contentHandler;
 }
 
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule() noexcept {
+  return std::make_unique<BlobModule>();
+}
+
 } // namespace Microsoft::React
