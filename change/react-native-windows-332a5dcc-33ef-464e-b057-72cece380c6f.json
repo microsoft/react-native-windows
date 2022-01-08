@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes crash when creating DiffClampAnimatedNode",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
