@@ -106,19 +106,17 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
       auto contentHandler = Microsoft::React::IWebSocketModuleContentHandler::GetInstance().lock();
       if (!contentHandler) {
         args["data"] = message;
-
-        return;
-      }
-
-      if (isBinary) {
-        auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(message));
-        winrt::com_array<uint8_t> arr;
-        CryptographicBuffer::CopyToByteArray(buffer, arr);
-        auto data = std::vector<uint8_t>(arr.begin(), arr.end());
-
-        contentHandler->ProcessMessage(std::move(data), args);
       } else {
-        contentHandler->ProcessMessage(string{message}, args);
+        if (isBinary) {
+          auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(message));
+          winrt::com_array<uint8_t> arr;
+          CryptographicBuffer::CopyToByteArray(buffer, arr);
+          auto data = std::vector<uint8_t>(arr.begin(), arr.end());
+
+          contentHandler->ProcessMessage(std::move(data), args);
+        } else {
+          contentHandler->ProcessMessage(string{message}, args);
+        }
       }
 
       SendEvent(weakInstance, "websocketMessage", std::move(args));
