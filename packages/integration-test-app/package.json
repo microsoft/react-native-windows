@@ -14,7 +14,7 @@
     "chai": "^4.2.0",
     "react": "17.0.2",
     "react-native": "0.67.0-rc.1",
-    "react-native-windows": "0.67.0-preview.2"
+    "react-native-windows": "0.67.0-preview.6"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

@@ -2,6 +2,126 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Mon, 03 Jan 2022 16:12:09 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.6",
+            "commit": "113ec88dcb23c979a4715f8f5512bbcef25f4f5f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 Jan 2022 16:11:53 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.6",
+            "commit": "372ce65125bce35713a557d7613f07148821944b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Dec 2021 16:10:50 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.5",
+            "commit": "b94262c36086f192b94dbde51c230b1db256ccc7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Dec 2021 16:10:35 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.5",
+            "commit": "b706da95136fffa1a4deba8f95dc9edfeef1020d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 22 Nov 2021 16:10:24 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.4",
+            "commit": "952bb45ac6696430388ade0c14eaefdce5795d25"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 22 Nov 2021 16:10:06 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.4",
+            "commit": "e454120a1dbe968f5832d2a06da645efef4fcebd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Nov 2021 16:10:10 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.3",
+            "commit": "862625faf5354e263dc7faad2bc880b4618b22f9"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Nov 2021 16:09:35 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.0.16",
+      "version": "0.0.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.67.0-preview.3",
+            "commit": "6a7a95e90c7f7a3a86efac63b24092232380ba1b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Nov 2021 01:12:34 GMT",
       "tag": "@react-native-windows/automation-channel_v0.0.16",
       "version": "0.0.16",

@@ -1,8 +1,24 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 25 Oct 2021 15:07:48 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Nov 2021 16:10:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0-preview.2
+
+Mon, 15 Nov 2021 16:10:10 GMT
+
+### Changes
+
+- Add enableFocusRing prop for View and test (ruaraki@microsoft.com)
+
+## 0.67.0-preview.2
+
+Mon, 15 Nov 2021 16:09:34 GMT
+
+### Changes
+
+- Add enableFocusRing prop for View and test (ruaraki@microsoft.com)
 
 ## 0.67.0-preview.1
 

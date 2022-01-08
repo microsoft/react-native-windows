@@ -2,6 +2,123 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 03 Jan 2022 16:12:09 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.6",
+      "version": "0.67.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "[0.67] Avoid capturing raw this pointer in WebSocket module"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 Jan 2022 16:11:53 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.6",
+      "version": "0.67.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "372ce65125bce35713a557d7613f07148821944b",
+            "comment": "[0.67] Avoid capturing raw this pointer in WebSocket module"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Dec 2021 16:10:50 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.5",
+      "version": "0.67.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b706da95136fffa1a4deba8f95dc9edfeef1020d",
+            "comment": "Bumping Hermes to v0.10"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 22 Nov 2021 16:10:24 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.4",
+      "version": "0.67.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fix C# Module Event invocation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 22 Nov 2021 16:10:06 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.4",
+      "version": "0.67.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e454120a1dbe968f5832d2a06da645efef4fcebd",
+            "comment": "Fix C# Module Event invocation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Nov 2021 16:10:10 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.3",
+      "version": "0.67.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Drop ChakraCore dependency (#9056)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fix crash loading bundle in win32"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 15 Nov 2021 16:09:34 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.3",
+      "version": "0.67.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8432b3abfa1e4d1b78381c41986aca7f7c37d96a",
+            "comment": "Drop ChakraCore dependency (#9056)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "595bb9e95573bb41ff8b9fd99b79bdf9e7e5d607",
+            "comment": "Fix crash loading bundle in win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Nov 2021 01:12:34 GMT",
       "tag": "react-native-windows_v0.67.0-preview.2",
       "version": "0.67.0-preview.2",

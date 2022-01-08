@@ -101,6 +101,9 @@ jobs:
                 displayName: Build react-native-win32 RNTester bundle
                 workingDirectory: packages/@office-iss/react-native-win32
 
+            - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+              - template: ../templates/component-governance.yml
+
             - template: ../templates/discover-google-test-adapter.yml
 
             - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
@@ -166,5 +169,3 @@ jobs:
                   React.Windows.Desktop\**
                   React.Windows.Desktop.DLL\**
                   React.Windows.Desktop.Test.DLL\**
-
-            - template: ../templates/component-governance.yml

@@ -10,10 +10,13 @@ MockWebSocketResource::~MockWebSocketResource() {}
 
 #pragma region IWebSocketResource overrides
 
-void MockWebSocketResource::Connect(const Protocols &protocols, const Options &options) noexcept /*override*/
+void MockWebSocketResource::Connect(
+    string &&url,
+    const Protocols &protocols,
+    const Options &options) noexcept /*override*/
 {
   if (Mocks.Connect)
-    return Mocks.Connect(protocols, options);
+    return Mocks.Connect(std::move(url), protocols, options);
 }
 
 void MockWebSocketResource::Ping() noexcept /*override*/
