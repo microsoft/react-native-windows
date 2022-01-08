@@ -68,6 +68,16 @@ type Props = $ReadOnly<{|
   children: React.Node | ((state: StateCallbackType) => React.Node),
 
   /**
+   * Duration to wait after hover in before calling `onHoverIn`.
+   */
+  delayHoverIn?: ?number,
+
+  /**
+   * Duration to wait after hover out before calling `onHoverOut`.
+   */
+  delayHoverOut?: ?number,
+
+  /**
    * Duration (in milliseconds) from `onPressIn` before `onLongPress` is called.
    */
   delayLongPress?: ?number,
