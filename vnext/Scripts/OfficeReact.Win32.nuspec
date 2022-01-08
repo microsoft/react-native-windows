@@ -77,6 +77,8 @@
 
     <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="Microsoft.ReactNative.Cxx"/>
 
+    <file src="$nugetroot$\inc\codegen\**\*.*" target ="inc\codegen"/>
+
     <file src="$nugetroot$\natvis\Folly.natvis" target ="natvis\Folly.natvis"/>
   </files>
 </package>
