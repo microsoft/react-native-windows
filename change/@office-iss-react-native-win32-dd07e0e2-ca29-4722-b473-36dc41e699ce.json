@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Port windows pressable with extra desktop support to win32",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "saadnajmi2@gmail.com",
+  "dependentChangeType": "patch"
+}

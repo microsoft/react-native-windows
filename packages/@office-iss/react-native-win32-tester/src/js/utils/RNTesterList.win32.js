@@ -58,11 +58,13 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
+  */
   {
     key: 'PressableExample',
     category: 'UI',
-    module: require('../examples/Pressable/PressableExample'),
+    module: require('../examples-win32/Pressable/PressableExample'),
   },
+  /*
   {
     key: 'TouchableWin32Example',
     module: require('@office-iss/react-native-win32/Libraries/Components/Touchable/Tests/TouchableWin32Test'),
