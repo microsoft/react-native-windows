@@ -32,7 +32,6 @@ import type {
   FocusEvent,
   KeyEvent, // Windows]
 } from '../../Types/CoreEventTypes';
-import type {HandledKeyboardEvent} from '../../Components/View/ViewPropTypes';
 import View from '../View/View';
 import TextInputState from '../TextInput/TextInputState';
 
@@ -158,26 +157,6 @@ type Props = $ReadOnly<{|
    * Called after a key up event is detected.
    */
   onKeyUp?: ?(event: KeyEvent) => mixed,
-
-  /*
-   * List of keys handled only by JS.
-   */
-  keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
-
-  /*
-   * List of keys to be handled only by JS.
-   */
-  keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
-
-  /*
-   * Called in the tunneling phase after a key up event is detected.
-   */
-  onKeyDownCapture?: ?(event: KeyEvent) => void,
-
-  /*
-   * Called in the tunneling phase after a key up event is detected.
-   */
-  onKeyUpCapture?: ?(event: KeyEvent) => void,
 
   /**
    * Either view styles or a function that receives a boolean reflecting whether

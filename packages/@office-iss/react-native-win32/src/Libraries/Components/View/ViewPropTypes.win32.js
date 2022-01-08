@@ -50,7 +50,7 @@ type DirectEventProps = $ReadOnly<{|
    * When `accessible` is true, the system will try to invoke this function
    * when the user performs accessibility tap gesture.
    *
-   * See https://reactnative.dev/docs/view#onaccessibilitytap
+   * See https://reactnative.dev/docs/view.html#onaccessibilitytap
    */
   onAccessibilityTap?: ?() => mixed,
 
@@ -63,7 +63,7 @@ type DirectEventProps = $ReadOnly<{|
    * the new layout may not yet be reflected on the screen at the time the
    * event is received, especially if a layout animation is in progress.
    *
-   * See https://reactnative.dev/docs/view#onlayout
+   * See https://reactnative.dev/docs/view.html#onlayout
    */
   onLayout?: ?(event: LayoutEvent) => mixed,
 
@@ -71,7 +71,7 @@ type DirectEventProps = $ReadOnly<{|
    * When `accessible` is `true`, the system will invoke this function when the
    * user performs the magic tap gesture.
    *
-   * See https://reactnative.dev/docs/view#onmagictap
+   * See https://reactnative.dev/docs/view.html#onmagictap
    */
   onMagicTap?: ?() => mixed,
 
@@ -79,7 +79,7 @@ type DirectEventProps = $ReadOnly<{|
    * When `accessible` is `true`, the system will invoke this function when the
    * user performs the escape gesture.
    *
-   * See https://reactnative.dev/docs/view#onaccessibilityescape
+   * See https://reactnative.dev/docs/view.html#onaccessibilityescape
    */
   onAccessibilityEscape?: ?() => mixed,
 |}>;
@@ -113,7 +113,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onMoveShouldSetResponder: (event) => [true | false]`, where
    * `event` is a synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onmoveshouldsetresponder
+   * See https://reactnative.dev/docs/view.html#onmoveshouldsetresponder
    */
   onMoveShouldSetResponder?: ?(e: PressEvent) => boolean,
 
@@ -124,7 +124,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onMoveShouldSetResponderCapture: (event) => [true | false]`,
    * where `event` is a synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onMoveShouldsetrespondercapture
+   * See https://reactnative.dev/docs/view.html#onMoveShouldsetrespondercapture
    */
   onMoveShouldSetResponderCapture?: ?(e: PressEvent) => boolean,
 
@@ -138,7 +138,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * PanResponder includes a note `// TODO: t7467124 investigate if this can be removed` that
    * should help fixing this return type.
    *
-   * See https://reactnative.dev/docs/view#onrespondergrant
+   * See https://reactnative.dev/docs/view.html#onrespondergrant
    */
   onResponderGrant?: ?(e: PressEvent) => void | boolean,
 
@@ -148,7 +148,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onResponderMove: (event) => {}`, where `event` is a synthetic
    * touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onrespondermove
+   * See https://reactnative.dev/docs/view.html#onrespondermove
    */
   onResponderMove?: ?(e: PressEvent) => void,
 
@@ -159,7 +159,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onResponderReject: (event) => {}`, where `event` is a
    * synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onresponderreject
+   * See https://reactnative.dev/docs/view.html#onresponderreject
    */
   onResponderReject?: ?(e: PressEvent) => void,
 
@@ -169,7 +169,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onResponderRelease: (event) => {}`, where `event` is a
    * synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onresponderrelease
+   * See https://reactnative.dev/docs/view.html#onresponderrelease
    */
   onResponderRelease?: ?(e: PressEvent) => void,
 
@@ -185,7 +185,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onResponderTerminate: (event) => {}`, where `event` is a
    * synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onresponderterminate
+   * See https://reactnative.dev/docs/view.html#onresponderterminate
    */
   onResponderTerminate?: ?(e: PressEvent) => void,
 
@@ -196,7 +196,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onResponderTerminationRequest: (event) => {}`, where `event`
    * is a synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onresponderterminationrequest
+   * See https://reactnative.dev/docs/view.html#onresponderterminationrequest
    */
   onResponderTerminationRequest?: ?(e: PressEvent) => boolean,
 
@@ -206,7 +206,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onStartShouldSetResponder: (event) => [true | false]`, where
    * `event` is a synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onstartshouldsetresponder
+   * See https://reactnative.dev/docs/view.html#onstartshouldsetresponder
    */
   onStartShouldSetResponder?: ?(e: PressEvent) => boolean,
 
@@ -217,7 +217,7 @@ type GestureResponderEventProps = $ReadOnly<{|
    * `View.props.onStartShouldSetResponderCapture: (event) => [true | false]`,
    * where `event` is a synthetic touch event as described above.
    *
-   * See https://reactnative.dev/docs/view#onstartshouldsetrespondercapture
+   * See https://reactnative.dev/docs/view.html#onstartshouldsetrespondercapture
    */
   onStartShouldSetResponderCapture?: ?(e: PressEvent) => boolean,
 |}>;
@@ -246,7 +246,7 @@ type AndroidViewProps = $ReadOnly<{|
    *
    * @platform android
    *
-   * See https://reactnative.dev/docs/view#rendertohardwaretextureandroid
+   * See https://reactnative.dev/docs/view.html#rendertohardwaretextureandroid
    */
   renderToHardwareTextureAndroid?: ?boolean,
 
@@ -256,7 +256,7 @@ type AndroidViewProps = $ReadOnly<{|
    *
    * @platform android
    *
-   * See https://reactnative.dev/docs/view#needsoffscreenalphacompositing
+   * See https://reactnative.dev/docs/view.html#needsoffscreenalphacompositing
    */
   needsOffscreenAlphaCompositing?: ?boolean,
 
@@ -266,7 +266,7 @@ type AndroidViewProps = $ReadOnly<{|
    *
    * @platform android
    *
-   * See https://reactnative.dev/docs/view#accessibilityliveregion
+   * See https://reactnative.dev/docs/view.html#accessibilityliveregion
    */
   accessibilityLiveRegion?: ?('none' | 'polite' | 'assertive'),
 
@@ -277,7 +277,7 @@ type AndroidViewProps = $ReadOnly<{|
    *
    * @platform android
    *
-   * See https://reactnative.dev/docs/view#importantforaccessibility
+   * See https://reactnative.dev/docs/view.html#importantforaccessibility
    */
   importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
 
@@ -353,7 +353,7 @@ type IOSViewProps = $ReadOnly<{|
    *
    * @platform ios
    *
-   * See https://reactnative.dev/docs/view#accessibilityviewismodal
+   * See https://reactnative.dev/docs/view.html#accessibilityviewismodal
    */
   accessibilityViewIsModal?: ?boolean,
 
@@ -363,7 +363,7 @@ type IOSViewProps = $ReadOnly<{|
    *
    * @platform ios
    *
-   * See https://reactnative.dev/docs/view#accessibilityElementsHidden
+   * See https://reactnative.dev/docs/view.html#accessibilityElementsHidden
    */
   accessibilityElementsHidden?: ?boolean,
 
@@ -372,7 +372,7 @@ type IOSViewProps = $ReadOnly<{|
    *
    * @platform ios
    *
-   * See https://reactnative.dev/docs/view#shouldrasterizeios
+   * See https://reactnative.dev/docs/view.html#shouldrasterizeios
    */
   shouldRasterizeIOS?: ?boolean,
 |}>;
@@ -395,11 +395,9 @@ type WindowsViewProps = $ReadOnly<{|
    * @platform windows
    */
   onKeyUp?: ?(e: KeyEvent) => void,
-  onKeyUpCapture?: ?(e: KeyEvent) => void,
   keyUpEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
 
   onKeyDown?: ?(e: KeyEvent) => void,
-  onKeyDownCapture?: ?(e: KeyEvent) => void,
   keyDownEvents?: ?$ReadOnlyArray<HandledKeyboardEvent>,
   /**
    * Specifies the Tooltip for the view
@@ -441,7 +439,7 @@ export type ViewProps = $ReadOnly<{|
    * When `true`, indicates that the view is an accessibility element.
    * By default, all the touchable elements are accessible.
    *
-   * See https://reactnative.dev/docs/view#accessible
+   * See https://reactnative.dev/docs/view.html#accessible
    */
   accessible?: ?boolean,
 
@@ -450,7 +448,7 @@ export type ViewProps = $ReadOnly<{|
    * with the element. By default, the label is constructed by traversing all
    * the children and accumulating all the `Text` nodes separated by space.
    *
-   * See https://reactnative.dev/docs/view#accessibilitylabel
+   * See https://reactnative.dev/docs/view.html#accessibilitylabel
    */
   accessibilityLabel?: ?Stringish,
 
@@ -460,7 +458,7 @@ export type ViewProps = $ReadOnly<{|
    * accessibility label.
    *
    *
-   * See https://reactnative.dev/docs/view#accessibilityHint
+   * See https://reactnative.dev/docs/view.html#accessibilityHint
    */
   accessibilityHint?: ?Stringish,
 
@@ -490,7 +488,7 @@ export type ViewProps = $ReadOnly<{|
    * @platform android
    * In Fabric, this prop is used in ios as well.
    *
-   * See https://reactnative.dev/docs/view#collapsable
+   * See https://reactnative.dev/docs/view.html#collapsable
    */
   collapsable?: ?boolean,
 
@@ -499,7 +497,7 @@ export type ViewProps = $ReadOnly<{|
    *
    * > This disables the 'layout-only view removal' optimization for this view!
    *
-   * See https://reactnative.dev/docs/view#testid
+   * See https://reactnative.dev/docs/view.html#testid
    */
   testID?: ?string,
 
@@ -508,7 +506,7 @@ export type ViewProps = $ReadOnly<{|
    *
    * > This disables the 'layout-only view removal' optimization for this view!
    *
-   * See https://reactnative.dev/docs/view#nativeid
+   * See https://reactnative.dev/docs/view.html#nativeid
    */
   nativeID?: ?string,
 
@@ -521,14 +519,14 @@ export type ViewProps = $ReadOnly<{|
    * > of sibling views always takes precedence if a touch hits two overlapping
    * > views.
    *
-   * See https://reactnative.dev/docs/view#hitslop
+   * See https://reactnative.dev/docs/view.html#hitslop
    */
   hitSlop?: ?EdgeInsetsProp,
 
   /**
    * Controls whether the `View` can be the target of touch events.
    *
-   * See https://reactnative.dev/docs/view#pointerevents
+   * See https://reactnative.dev/docs/view.html#pointerevents
    */
   pointerEvents?: ?('auto' | 'box-none' | 'box-only' | 'none'),
 
@@ -540,7 +538,7 @@ export type ViewProps = $ReadOnly<{|
    * subviews must also have `overflow: hidden`, as should the containing view
    * (or one of its superviews).
    *
-   * See https://reactnative.dev/docs/view#removeclippedsubviews
+   * See https://reactnative.dev/docs/view.html#removeclippedsubviews
    */
   removeClippedSubviews?: ?boolean,
 |}>;
