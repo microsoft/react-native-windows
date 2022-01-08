@@ -141,14 +141,9 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
   inline Mso::Future<void> PostInUIQueue(winrt::delegate<ReactNative::IReactViewInstance> const &action) noexcept {
     Mso::Promise<void> promise;
 
-    // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
-    m_uiDispatcher.Post([weakThis = Mso::WeakPtr{this}, promise, action{std::move(action)}]() mutable noexcept {
-      if (auto strongThis = weakThis.GetStrongPtr()) {
-        action(strongThis->m_rootControl);
-        promise.SetValue();
-      } else {
-        promise.TryCancel();
-      }
+    m_uiDispatcher.Post([control = m_rootControl, promise, action{std::move(action)}]() mutable noexcept {
+      action(control);
+      promise.SetValue();
     });
     return promise.AsFuture();
   }
@@ -161,9 +156,7 @@ winrt::Windows::Foundation::IAsyncAction ReactViewHost::AttachViewInstance(
 }
 
 winrt::Windows::Foundation::IAsyncAction ReactViewHost::DetachViewInstance() noexcept {
-  Mso::Promise<void> promise;
-  promise.SetValue();
-  return make<Mso::AsyncActionFutureAdapter>(promise.AsFuture());
+  return make<Mso::AsyncActionFutureAdapter>(m_viewHost->DetachViewInstance());
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

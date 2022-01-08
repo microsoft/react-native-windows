@@ -52,6 +52,11 @@ jobs:
         clean: false
         submodules: false
 
+      - task: NodeTool@0
+        displayName: Set Node Version
+        inputs:
+          versionSpec: '12.x'
+
       - task: PowerShell@2
         displayName: "Check if this environment meets the development dependencies"
         inputs:

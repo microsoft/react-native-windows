@@ -219,9 +219,11 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenLoaded.AsFuture()
       .Then<Mso::Executors::Inline>(
           [onLoaded = m_options.OnInstanceLoaded, reactContext = m_reactContext](Mso::Maybe<void> &&value) noexcept {
+            auto errCode = value.IsError() ? value.TakeError() : Mso::ErrorCode();
             if (onLoaded) {
-              onLoaded.Get()->Invoke(reactContext, value.IsError() ? value.TakeError() : Mso::ErrorCode());
+              onLoaded.Get()->Invoke(reactContext, errCode);
             }
+            return Mso::Maybe<void>(errCode);
           })
       .Then(Queue(), [whenLoaded = std::move(whenLoaded)](Mso::Maybe<void> &&value) noexcept {
         whenLoaded.SetValue(std::move(value));
@@ -467,10 +469,20 @@ void ReactInstanceWin::Initialize() noexcept {
                 m_options.TurboModuleProvider,
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),
-                Mso::Copy(m_batchingUIThread),
+                m_nativeMessageThread.Load(),
                 std::move(devSettings));
 
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
+
+            // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
+            // triggered before any platform JS code is run. Using m_jsMessageThread instead of jsDispatchQueue avoids
+            // waiting for the JSCaller which can delay the event until after certain JS code has already run
+            m_jsMessageThread.Load()->runOnQueue(
+                [onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
+                  if (onCreated) {
+                    onCreated.Get()->Invoke(reactContext);
+                  }
+                });
 
             LoadJSBundles();
 
@@ -546,7 +558,9 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
 
             try {
               instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
-              strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+              if (strongThis->State() != ReactInstanceState::HasError) {
+                strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+              }
             } catch (...) {
               strongThis->OnReactInstanceLoaded(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
             }
@@ -565,7 +579,7 @@ void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) no
     } else {
       m_state = ReactInstanceState::HasError;
       m_whenLoaded.SetError(errorCode);
-      AbandonJSCallQueue();
+      OnError(errorCode);
     }
   }
 }
@@ -616,13 +630,6 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));
   auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
-
-  // This work item will be processed as a first item in JS queue when the react instance is created.
-  jsDispatchQueue.Post([onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
-    if (onCreated) {
-      onCreated.Get()->Invoke(reactContext);
-    }
-  });
 
   auto jsDispatcher =
       winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
@@ -758,22 +765,23 @@ std::function<void(std::string)> ReactInstanceWin::GetErrorCallback() noexcept {
 }
 
 void ReactInstanceWin::OnErrorWithMessage(const std::string &errorMessage) noexcept {
+  OnError(Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorMessage.c_str()}));
+}
+
+void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   m_state = ReactInstanceState::HasError;
   AbandonJSCallQueue();
 
   if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
     ErrorInfo errorInfo;
-    errorInfo.Message = errorMessage;
+    errorInfo.Message = errorCode.ToString();
     errorInfo.Id = 0;
     m_redboxHandler->showNewError(std::move(errorInfo), ErrorType::Native);
   }
 
-  OnError(Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorMessage.c_str()}));
-  m_updateUI();
-}
-
-void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
   InvokeInQueue([this, errorCode]() noexcept { m_options.OnError(errorCode); });
+
+  m_updateUI();
 }
 
 void ReactInstanceWin::OnLiveReload() noexcept {

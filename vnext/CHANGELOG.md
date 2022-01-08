@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 Oct 2021 19:04:04 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Dec 2021 16:10:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.27
+
+Mon, 06 Dec 2021 16:10:29 GMT
+
+### Patches
+
+- Remove legacy logic to find win32 bundle (30809111+acoates-ms@users.noreply.github.com)
+- InstanceCreated should fire before any JS code is run (30809111+acoates-ms@users.noreply.github.com)
+- ReloadInstance async task and InstanceLoaded event were not correctly reporting failures (30809111+acoates-ms@users.noreply.github.com)
+- Better reporting of failures to load the bundle file (30809111+acoates-ms@users.noreply.github.com)
+- Fix crash when adding a ReactRootView while reloading a ReactHost (30809111+acoates-ms@users.noreply.github.com)
+- Prevent TurboModules from leaking on instance shutdown (30809111+acoates-ms@users.noreply.github.com)
+- Websocket is hitting the UI queue unnecessarily (30809111+acoates-ms@users.noreply.github.com)
+- Hook up DetachViewInstance method for custom UI implementations (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.64.26
+
+Mon, 15 Nov 2021 16:09:20 GMT
+
+### Patches
+
+- Fix crash loading bundle in win32 (30809111+acoates-ms@users.noreply.github.com)
+- Drop ChakraCore dependency (#9056) (julio.rocha@microsoft.com)
 
 ## 0.64.25
 

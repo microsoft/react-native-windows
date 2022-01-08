@@ -8,5 +8,6 @@
 /local-cli/lib
 /local-cli/lib-commonjs
 /packages
+/Microsoft.ReactNative.IntegrationTests/SyntaxError.js
 /ReactCopies
 /target
