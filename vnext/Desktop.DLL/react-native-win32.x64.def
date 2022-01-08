@@ -67,6 +67,7 @@ EXPORTS
 ??0WebSocketModule@React@Microsoft@@QEAA@XZ
 ??0NetworkingModule@React@Microsoft@@QEAA@XZ
 ?CreateAsyncStorageModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PEB_W@Z
+?CreateBlobModule@React@Microsoft@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?MakeJSQueueThread@ReactNative@Microsoft@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?Hash128@SpookyHashV2@hash@folly@@SAXPEBX_KPEA_K2@Z
 ??1Instance@react@facebook@@QEAA@XZ
