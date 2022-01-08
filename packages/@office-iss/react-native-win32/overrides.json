@@ -81,6 +81,13 @@
       "issue": 4378
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
+      "baseFile": "Libraries/Components/Pressable/Pressable.js",
+      "baseHash": "1ad53a6a5e1e751c8f23b07a84a343c18c8802a7",
+      "issue": 6240
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
@@ -190,6 +197,13 @@
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
       "baseHash": "77bfbef8e835e4fee49311779bb039a99ae44372"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.js",
+      "baseHash": "5bc93b50edd30f3a4414c2710a068bf402f9fbbe",
+      "issue": 6240
     },
     {
       "type": "platform",
@@ -371,6 +385,20 @@
       "file": "src/Libraries/PersonaCoin/PersonaCoinTypes.ts"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/HoverState.win32.js",
+      "baseFile": "Libraries/Pressability/HoverState.js",
+      "baseHash": "2807a1cddb7c5135f63e5dd4d0706ac660f25d76",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/Pressability.win32.js",
+      "baseFile": "Libraries/Pressability/Pressability.js",
+      "baseHash": "9e28ff3d5317543dc67944598247a6ed04d97f9d",
+      "issue": 6240
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/QuirkSettings/CachingNativeQuirkSettings.js"
     },
@@ -422,6 +450,13 @@
       "baseFile": "Libraries/Text/TextNativeComponent.js",
       "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb",
       "issue": 7074
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Types/CoreEventTypes.win32.js",
+      "baseFile": "Libraries/Types/CoreEventTypes.js",
+      "baseHash": "22c50d13820ca4db6c6cf5e6563f8437d55c24af",
+      "issue": 6240
     },
     {
       "type": "copy",
