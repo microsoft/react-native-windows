@@ -243,6 +243,30 @@ struct SampleModuleCppImpl {
   REACT_EVENT(TimedEvent, L"TimedEventCpp");
   std::function<void(int)> TimedEvent;
 
+  REACT_EVENT(JSEventArg0, L"JSEventArg0Cpp");
+  std::function<void()> JSEventArg0;
+
+  REACT_EVENT(JSEventArg1, L"JSEventArg1Cpp");
+  std::function<void(int)> JSEventArg1;
+
+  REACT_EVENT(JSEventArg2, L"JSEventArg2Cpp");
+  std::function<void(int, int)> JSEventArg2;
+
+  REACT_METHOD(EmitJSEventArg0)
+  void EmitJSEventArg0() noexcept {
+    JSEventArg0();
+  }
+
+  REACT_METHOD(EmitJSEventArg1)
+  void EmitJSEventArg1(int value1) noexcept {
+    JSEventArg1(value1);
+  }
+
+  REACT_METHOD(EmitJSEventArg2)
+  void EmitJSEventArg2(int value1, int value2) noexcept {
+    JSEventArg2(value1, value2);
+  }
+
   REACT_METHOD(EmitJSEvent1)
   void EmitJSEvent1(int value) noexcept {
     // Test the ReactContext::EmitJSEvent
