@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 09 Jan 2022 06:07:57 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.437",
+      "version": "0.0.0-canary.437",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "81084aed0ed58d61638c31ede8c09a596fdaea53",
+            "comment": "Publish codegen spec files into win32 nuget"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 08 Jan 2022 06:09:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.436",
       "version": "0.0.0-canary.436",
