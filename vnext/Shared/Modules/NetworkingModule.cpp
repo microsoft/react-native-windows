@@ -7,6 +7,7 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 #include "NetworkingModule.h"
@@ -30,7 +31,9 @@ namespace Microsoft::React {
 //
 class NetworkingModule::NetworkingHelper : public std::enable_shared_from_this<NetworkingHelper> {
  public:
-  NetworkingHelper(NetworkingModule *parent) : m_parent(parent) {}
+  NetworkingHelper(NetworkingModule *parent) : m_httpClient(m_httpFilter), m_parent(parent) {
+      m_httpFilter.AllowAutoRedirect(false);
+  }
 
   void Disconnect() {
     m_parent = nullptr;
@@ -80,6 +83,7 @@ class NetworkingModule::NetworkingHelper : public std::enable_shared_from_this<N
  private:
   NetworkingModule *m_parent;
 
+  winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter m_httpFilter;
   winrt::Windows::Web::Http::HttpClient m_httpClient;
   std::unordered_map<
       int64_t,
