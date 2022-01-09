@@ -21,6 +21,7 @@ class TextViewManager : public FrameworkElementViewManager {
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;
   void RemoveChildAt(const XamlView &parent, int64_t index) override;
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 

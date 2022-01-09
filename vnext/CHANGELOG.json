@@ -2,6 +2,93 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 08 Jan 2022 06:09:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.436",
+      "version": "0.0.0-canary.436",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "saadnajmi2@gmail.com",
+            "package": "react-native-windows",
+            "commit": "840a5ac77027a251a014eb7488c8da7a96d30985",
+            "comment": "Fork HoverState.js to allow hover events on Pressable"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0ce0ebcf9bf29cfa32f52a86eee694ef5fc754b7",
+            "comment": "Fixes crash when creating DiffClampAnimatedNode"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e2420af56b4299fd46e34f9db90c1be8330b1268",
+            "comment": "Integrate 12/7 Nightly Build"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3c045eb9e764d2a4fb7562a2e22dfcbca492db7c",
+            "comment": "Remove unused iuimanager.h"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "f865871c49fe66f5e5b0072764bc5bdb75b3a21b",
+            "comment": "Reduce scope of marking YogaNode dirty"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.23",
+            "commit": "840a5ac77027a251a014eb7488c8da7a96d30985"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 07 Jan 2022 22:21:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.435",
+      "version": "0.0.0-canary.435",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "fb3417f7d9145f7a70ddfc7d6de2f650f7dae863",
+            "comment": "Use Window::Current compositor on XAML Islands"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "310a128ca0acab184666e9d4fcd9bce042ddc1bd",
+            "comment": "Fixes crash when using `Animated.divide`"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "9b88d32335eafa80e911b0d674f028001969a169",
+            "comment": "Animate value property rather than offset"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Jan 2022 04:18:33 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.434",
+      "version": "0.0.0-canary.434",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.108",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Dec 2021 06:09:21 GMT",
       "tag": "react-native-windows_v0.0.0-canary.433",
       "version": "0.0.0-canary.433",

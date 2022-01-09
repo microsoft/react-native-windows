@@ -14,6 +14,7 @@ import * as projectUtils from './utils/projectUtils';
 export interface TelemetryOptions {
   setupString: string;
   preserveErrorMessages: boolean;
+  populateNpmPackageVersions: boolean;
 }
 
 export interface CommandStartInfo {
@@ -79,6 +80,7 @@ export class Telemetry {
   protected static options: TelemetryOptions = {
     setupString: Telemetry.getDefaultSetupString(), // We default to our AI key, but callers can easily override it in setup
     preserveErrorMessages: false,
+    populateNpmPackageVersions: true,
   };
 
   protected static isTest: boolean = basePropUtils.isCliTest();
@@ -104,6 +106,7 @@ export class Telemetry {
     Telemetry.options = {
       setupString: Telemetry.getDefaultSetupString(),
       preserveErrorMessages: false,
+      populateNpmPackageVersions: true,
     };
     Telemetry.commandInfo = {};
     Telemetry.versionsProp = {};
@@ -194,7 +197,9 @@ export class Telemetry {
     Telemetry.client!.commonProperties.sessionId = Telemetry.getSessionId();
 
     await Telemetry.populateToolsVersions();
-    await Telemetry.populateNpmPackageVersions();
+    if (Telemetry.options.populateNpmPackageVersions) {
+      await Telemetry.populateNpmPackageVersions();
+    }
   }
 
   /** Sets up any telemetry processors. */

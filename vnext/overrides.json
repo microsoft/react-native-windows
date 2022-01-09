@@ -9,13 +9,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211202-2008-9e2ec4d3d",
+  "baseVersion": "0.0.0-20211217-2008-aef843bfe",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "e6f4938b0ad8446c652d1bb24658e27c936ce829"
+      "baseHash": "a97f4697043f19fe5677f4da21e019be6d600440"
     },
     {
       "type": "patch",
@@ -63,14 +63,14 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "58cc803e055077ab0c0a827377b650ea7661fe28",
+      "baseHash": "6c5e5c32a4a7c47f4cfbcd0a1166e4e5fb1207d8",
       "issue": 5430
     },
     {
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "8dfbb3e7f6ea17e219746d9b56cf794e933d824b",
+      "baseHash": "e90436e67cdb2a9fb9bb4a0414acda7c47de4961",
       "issue": 5430
     },
     {
@@ -233,7 +233,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "c60bbc3c4339a82a633767f37060a9bb6e046f89"
+      "baseHash": "3ca0b67e7aa8ae3aa064368d339aac0b3b57a443"
     },
     {
       "type": "patch",
@@ -331,7 +331,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "ab61064bcff7af6d72dc05d0c5545d4f495e493d",
+      "baseHash": "d4742205c544a3a0d4d2fc8553c8128b9f23927a",
       "issue": 4590
     },
     {
@@ -408,6 +408,13 @@
       "file": "src/Libraries/NewAppScreen/components/ReloadInstructions.windows.js",
       "baseFile": "Libraries/NewAppScreen/components/ReloadInstructions.js",
       "baseHash": "39326801da6c9ce8c350aa8ba971be4a386499bc"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/HoverState.js",
+      "baseFile": "Libraries/Pressability/HoverState.js",
+      "baseHash": "2807a1cddb7c5135f63e5dd4d0706ac660f25d76",
+      "issue": 6240
     },
     {
       "type": "patch",

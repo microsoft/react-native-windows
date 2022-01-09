@@ -269,9 +269,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IUIManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>

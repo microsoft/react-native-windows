@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211202-2008-9e2ec4d3d",
+  "baseVersion": "0.0.0-20211217-2008-aef843bfe",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "e6f4938b0ad8446c652d1bb24658e27c936ce829"
+      "baseHash": "a97f4697043f19fe5677f4da21e019be6d600440"
     },
     {
       "type": "derived",
@@ -75,6 +75,13 @@
       "issue": 4378
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
+      "baseFile": "Libraries/Components/Pressable/Pressable.js",
+      "baseHash": "1ad53a6a5e1e751c8f23b07a84a343c18c8802a7",
+      "issue": 6240
+    },
+    {
       "type": "copy",
       "file": "src/Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.js",
       "baseFile": "Libraries/Components/ProgressBarAndroid/ProgressBarAndroid.ios.js",
@@ -124,7 +131,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "c60bbc3c4339a82a633767f37060a9bb6e046f89"
+      "baseHash": "3ca0b67e7aa8ae3aa064368d339aac0b3b57a443"
     },
     {
       "type": "patch",
@@ -186,6 +193,13 @@
       "baseHash": "689895e8755aed42e913460d1fa964907a74f06c"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.js",
+      "baseHash": "5bc93b50edd30f3a4414c2710a068bf402f9fbbe",
+      "issue": 6240
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/Components/View/ViewWin32.Props.ts"
     },
@@ -210,7 +224,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "ab61064bcff7af6d72dc05d0c5545d4f495e493d",
+      "baseHash": "d4742205c544a3a0d4d2fc8553c8128b9f23927a",
       "issue": 4320
     },
     {
@@ -371,6 +385,20 @@
       "file": "src/Libraries/PersonaCoin/PersonaCoinTypes.ts"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/HoverState.win32.js",
+      "baseFile": "Libraries/Pressability/HoverState.js",
+      "baseHash": "2807a1cddb7c5135f63e5dd4d0706ac660f25d76",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/Pressability.win32.js",
+      "baseFile": "Libraries/Pressability/Pressability.js",
+      "baseHash": "9e28ff3d5317543dc67944598247a6ed04d97f9d",
+      "issue": 6240
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/QuirkSettings/CachingNativeQuirkSettings.js"
     },
@@ -422,6 +450,13 @@
       "baseFile": "Libraries/Text/TextNativeComponent.js",
       "baseHash": "8993f38aa6714d6873a968abc3f46f4071d3debc",
       "issue": 7074
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Types/CoreEventTypes.win32.js",
+      "baseFile": "Libraries/Types/CoreEventTypes.js",
+      "baseHash": "22c50d13820ca4db6c6cf5e6563f8437d55c24af",
+      "issue": 6240
     },
     {
       "type": "copy",
