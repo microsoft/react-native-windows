@@ -213,5 +213,13 @@ TEST_CLASS (RNTesterIntegrationTests) {
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketBlob)
+  TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(WebSocketBlob) {
+    auto result = m_runner.RunTest("IntegrationTests/WebSocketBlobTest", "WebSocketBlobTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
 #pragma endregion Extended Tests
 };
