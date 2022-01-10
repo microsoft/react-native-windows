@@ -9,7 +9,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20211231-2009-8bd3edec8",
+  "baseVersion": "0.0.0-20220107-2008-ca5aaa766",
   "overrides": [
     {
       "type": "derived",
@@ -21,7 +21,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/Color.cpp",
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.cpp",
-      "baseHash": "e65a30b6f33907dd188f94ed7ab17045ce3381b6",
+      "baseHash": "a0b8f284dcb036b5f024911e6cc9b2a61bdb39f2",
       "issue": 7821
     },
     {
@@ -35,7 +35,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
-      "baseHash": "0f99de4562fa722c132600833c2faae9bd15bde7",
+      "baseHash": "010970b09aebda9348dfed9dd7b8fefb365bcc9b",
       "issue": 7821
     },
     {
@@ -56,7 +56,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "ef3e323571e64ef63b725928486e109a6b92baaa",
+      "baseHash": "a3c21368a7c8d2e986e5a4236dd991b9963217cb",
       "issue": 5430
     },
     {
