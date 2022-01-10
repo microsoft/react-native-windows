@@ -11,7 +11,6 @@ using namespace comp;
 }
 
 namespace Microsoft::ReactNative {
-class AnimationDriver;
 class ValueAnimatedNode : public AnimatedNode {
  public:
   ValueAnimatedNode(
@@ -50,8 +49,8 @@ class ValueAnimatedNode : public AnimatedNode {
 
  private:
   void UpdateTrackingNodes();
-  std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_dependentPropsNodes{};
+  std::unordered_set<int64_t> m_activeAnimations{};
   std::unordered_set<int64_t> m_activeTrackingNodes{};
 };
 } // namespace Microsoft::ReactNative
