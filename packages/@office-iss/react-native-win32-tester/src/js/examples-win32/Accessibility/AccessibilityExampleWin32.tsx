@@ -364,30 +364,7 @@ const AccessibilityControlsExample: React.FunctionComponent = props => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [keyTargetHasFocus, setKeyTargetHasFocus] = React.useState(false);
   return (
-    <View>
-      <Text>With focus on the FOCUS TARGET View below, press Arrow Key Up ⬆️ or Arrow Key Down ⬇️ to move selection</Text>
-      <ViewWin32
-        accessible
-        focusable
-        accessibilityActions={[{ name: 'Select' }]}
-        accessibilityControls={controlsRef}
-        style={keyTargetHasFocus ? [styles.box, styles.border] : styles.box}
-        keyDownEvents={handledNativeKeyboardEvents}
-        onFocus={() => {setKeyTargetHasFocus(true)}}
-        onBlur={() => {setKeyTargetHasFocus(false)}}
-        onKeyDown={(event) => {
-        if (event?.nativeEvent?.key == 'ArrowUp' || event?.nativeEvent?.key == 'ArrowDown')
-        {
-          const indexChange = (event.nativeEvent.key == 'ArrowUp') ? -1 : 1;
-          
-          setSelectedIndex(
-              (
-                ((selectedIndex == 0) ? listLength : selectedIndex) + indexChange)
-              % listLength);
-        }
-      }}>
-        <Text>FOCUS TARGET</Text>
-      </ViewWin32>
+    <View>      
       <ViewWin32 accessibilityRole="tablist" ref={controlsRef}>
       <SingleSelectionItemComponent
             value={1}
@@ -415,6 +392,30 @@ const AccessibilityControlsExample: React.FunctionComponent = props => {
       />
       </ViewWin32>
       
+      <View style={{alignItems:'center'}}><Text>With focus on the FOCUS TARGET View below, press Arrow Key Up ⬆️ or Arrow Key Down ⬇️ to move selection</Text>
+      <ViewWin32
+        accessible
+        focusable
+        accessibilityActions={[{ name: 'Select' }]}
+        accessibilityControls={controlsRef}
+        style={[styles.box, {width:'50%'}, keyTargetHasFocus ? styles.border : {}]}
+        keyDownEvents={handledNativeKeyboardEvents}
+        onFocus={() => {setKeyTargetHasFocus(true)}}
+        onBlur={() => {setKeyTargetHasFocus(false)}}
+        onKeyDown={(event) => {
+        if (event?.nativeEvent?.key == 'ArrowUp' || event?.nativeEvent?.key == 'ArrowDown')
+        {
+          const indexChange = (event.nativeEvent.key == 'ArrowUp') ? -1 : 1;
+          
+          setSelectedIndex(
+              (
+                ((selectedIndex == 0) ? listLength : selectedIndex) + indexChange)
+              % listLength);
+        }
+      }}>
+        <Text>FOCUS TARGET</Text>
+      </ViewWin32>
+    </View>
     </View>
   );
 };
