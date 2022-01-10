@@ -39,10 +39,10 @@ const View: React.AbstractComponent<
           !hasTextAncestor,
           'Nesting of <View> within <Text> is not currently supported.',
         );
-
         return <ViewNativeComponent {...props} ref={forwardedRef} />;
       }}
     </TextAncestor.Consumer>
+    // Windows]
   );
 });
 
