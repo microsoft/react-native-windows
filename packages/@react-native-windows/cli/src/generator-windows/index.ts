@@ -196,6 +196,7 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
+
   const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: [],
@@ -204,6 +205,12 @@ export async function copyProjectTemplateAndReplace(
     namespace: namespace,
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
+
+    //TESTING -------------------------------------------------------------------------------------------------------------------------------------------->
+    testComment: 'hello from generator windows',
+    srcRootPath: srcRootPath,
+    version: rnwVersion,
+    command: process.argv.toString().replace(/-/g,'_').replace(/,/g,' '),
 
     mainComponentName: mainComponentName,
 
