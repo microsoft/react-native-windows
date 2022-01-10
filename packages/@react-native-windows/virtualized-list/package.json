@@ -25,12 +25,12 @@
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211231-2009-8bd3edec8",
+    "react-native": "0.0.0-20220107-2008-ca5aaa766",
     "react-native-platform-override": "^1.6.2"
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-20211231-2009-8bd3edec8"
+    "react-native": "0.0.0-20220107-2008-ca5aaa766"
   },
   "beachball": {
     "defaultNpmTag": "canary",
