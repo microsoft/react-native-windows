@@ -66,19 +66,19 @@
     "@types/react-native": "^0.66.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
-    "flow-bin": "^0.167.1",
+    "flow-bin": "^0.168.0",
     "jscodeshift": "^0.11.0",
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20211217-2008-aef843bfe",
+    "react-native": "0.0.0-20211231-2009-8bd3edec8",
     "react-native-platform-override": "^1.6.2",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-20211217-2008-aef843bfe"
+    "react-native": "0.0.0-20211231-2009-8bd3edec8"
   },
   "beachball": {
     "defaultNpmTag": "canary",

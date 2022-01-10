@@ -3,50 +3,50 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-20211217-2008-aef843bfe",
+  "baseVersion": "0.0.0-20211231-2009-8bd3edec8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a97f4697043f19fe5677f4da21e019be6d600440"
+      "baseHash": "ca469905cf86d4c7bce7d87b473872ffeef2f6bd"
     },
     {
       "type": "copy",
       "file": "src/CellRenderMask.js",
       "baseFile": "Libraries/Lists/CellRenderMask.js",
-      "baseHash": "f571a57510124480dace7746b4f44b90637750e8"
+      "baseHash": "5dd2f2a482e7bc55bf554f0dbc72d28c7b8228c8"
     },
     {
       "type": "copy",
       "file": "src/FillRateHelper.js",
       "baseFile": "Libraries/Lists/FillRateHelper.js",
-      "baseHash": "53b840eb6fce8dbaef784e9d304274602e9cfab9"
+      "baseHash": "41260657a4e4e522e61a1e7063bdc4016f9f60ca"
     },
     {
       "type": "copy",
       "file": "src/ViewabilityHelper.js",
       "baseFile": "Libraries/Lists/ViewabilityHelper.js",
-      "baseHash": "513a9586587905b69f5c01bd7a6e46b2a7b515fb"
+      "baseHash": "aa9647837dd2fe6d4f6c5710751d0acf0014680f"
     },
     {
       "type": "patch",
       "file": "src/VirtualizedList.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
-      "baseHash": "4d0f9571ce63546474bfe72c86f18880aaa8801a",
+      "baseHash": "6cadb78a33ada332bfbb0a941e3eebd6f9a3c2bc",
       "issue": 8120
     },
     {
       "type": "copy",
       "file": "src/VirtualizedListContext.js",
       "baseFile": "Libraries/Lists/VirtualizedListContext.js",
-      "baseHash": "1c182b178a33c59984a0e044aa662a512704afad"
+      "baseHash": "fb27ea831f854c96c833bf814163195581a5e12a"
     },
     {
       "type": "copy",
       "file": "src/VirtualizeUtils.js",
       "baseFile": "Libraries/Lists/VirtualizeUtils.js",
-      "baseHash": "632099edc53730c0d773a679ac2222f6703edc9d"
+      "baseHash": "063d19d178b21e228229b39d6d80d12fca7ae0be"
     }
   ]
 }
