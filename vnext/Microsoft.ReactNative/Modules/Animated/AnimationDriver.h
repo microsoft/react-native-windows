@@ -73,6 +73,7 @@ class AnimationDriver : public std::enable_shared_from_this<AnimationDriver> {
   // auto revoker for scopedBatch.Completed is broken, tracked by internal bug
   // #22399779
   winrt::event_token m_scopedBatchCompletedToken{};
+  bool m_started{false};
   bool m_stopped{false};
   bool m_ignoreCompletedHandlers{false};
 };

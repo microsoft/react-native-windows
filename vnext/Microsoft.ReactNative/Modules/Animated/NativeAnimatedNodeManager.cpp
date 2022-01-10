@@ -131,15 +131,24 @@ void NativeAnimatedNodeManager::StopAnimation(int64_t animationId, bool isTracki
       // animation would have been removed from the set of active animations.
       m_pendingCompletionAnimations.insert({animationId, animation});
 
-      // Add the animation tag to the set of stopped animations for the value
-      // node. This is used to ensure animations on this value node do not
-      // start until all stopped animations fire their completion callbacks.
       const auto nodeTag = animation->AnimatedValueTag();
       if (nodeTag != -1) {
-        if (!m_stoppedAnimations.count(nodeTag)) {
-          m_stoppedAnimations.insert({nodeTag, {}});
+        const auto deferredAnimation = m_deferredAnimationForValues.find(nodeTag);
+        if (deferredAnimation != m_deferredAnimationForValues.end() && deferredAnimation->second == animationId) {
+          // If the animation is deferred, just remove the deferred animation
+          // entry as two animations cannot animate the same value concurrently.
+          m_deferredAnimationForValues.erase(nodeTag);
+        } else {
+          // Since only one animation can be active at a time, there shouldn't
+          // be any stopped animations for the value node if the animation has
+          // not been deferred.
+          assert(!m_valuesWithStoppedAnimation.count(nodeTag));
+          // In this case, add the value tag to the set of values with stopped
+          // animations. This is used to optimize the lookup when determining
+          // if an animation needs to be deferred (rather than iterating over
+          // the map of pending completion animations).
+          m_valuesWithStoppedAnimation.insert(nodeTag);
         }
-        m_stoppedAnimations.at(nodeTag).insert(animationId);
       }
 
       m_activeAnimations.erase(animationId);
@@ -262,12 +271,12 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
   // If the animated value node has any stopped animations, defer start until
   // all stopped animations fire completion callback and have latest values.
   if (m_activeAnimations.count(animationId)) {
-    if (m_stoppedAnimations.find(animatedNodeTag) != m_stoppedAnimations.end()) {
-      const auto deferredIter = m_deferredAnimations.find(animatedNodeTag);
-      if (deferredIter == m_deferredAnimations.end()) {
-        m_deferredAnimations.insert({animatedNodeTag, {}});
-      }
-      m_deferredAnimations.at(animatedNodeTag).insert(animationId);
+    if (m_valuesWithStoppedAnimation.count(animatedNodeTag)) {
+      // Since only one animation can be active per value at a time, there will
+      // not be any other deferred animations for the value node.
+      assert(!m_deferredAnimationForValues.count(animatedNodeTag));
+      // Add the animation to the deferred animation map for the value tag.
+      m_deferredAnimationForValues.insert({animatedNodeTag, animationId});
     } else {
       StartAnimationAndTrackingNodes(animationId, animatedNodeTag, manager);
     }
@@ -433,16 +442,12 @@ void NativeAnimatedNodeManager::RemoveStoppedAnimation(
     int64_t tag,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
   if (m_pendingCompletionAnimations.count(tag)) {
-    // Remove from stopped animations for value node
+    // Remove stopped animation for value node entry
     const auto animation = m_pendingCompletionAnimations.at(tag);
     const auto nodeTag = animation->AnimatedValueTag();
-    if (m_stoppedAnimations.count(nodeTag)) {
-      auto stoppedAnimations = m_stoppedAnimations.at(nodeTag);
-      stoppedAnimations.erase(tag);
-      if (stoppedAnimations.size() == 0) {
-        m_stoppedAnimations.erase(nodeTag);
-        StartDeferredAnimationsForValueNode(nodeTag, manager);
-      }
+    // If the animation was stopped, attempt to start deferred animations.
+    if (m_valuesWithStoppedAnimation.erase(nodeTag)) {
+      StartDeferredAnimationsForValueNode(nodeTag, manager);
     }
     m_pendingCompletionAnimations.erase(tag);
   }
@@ -451,12 +456,10 @@ void NativeAnimatedNodeManager::RemoveStoppedAnimation(
 void NativeAnimatedNodeManager::StartDeferredAnimationsForValueNode(
     int64_t tag,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
-  if (m_deferredAnimations.count(tag)) {
-    const auto deferredAnimations = m_deferredAnimations.at(tag);
-    for (const auto &animationTag : deferredAnimations) {
-      StartAnimationAndTrackingNodes(animationTag, tag, manager);
-    }
-    m_deferredAnimations.erase(tag);
+  if (m_deferredAnimationForValues.count(tag)) {
+    const auto deferredAnimationTag = m_deferredAnimationForValues.at(tag);
+    StartAnimationAndTrackingNodes(deferredAnimationTag, tag, manager);
+    m_deferredAnimationForValues.erase(tag);
   }
 }
 

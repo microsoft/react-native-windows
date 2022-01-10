@@ -42,6 +42,7 @@ AnimationDriver::~AnimationDriver() {
 }
 
 void AnimationDriver::StartAnimation() {
+  m_started = true;
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
   if (auto const animatedValue = GetAnimatedValue()) {
     animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_valueName, animation);
@@ -76,7 +77,12 @@ void AnimationDriver::StartAnimation() {
 }
 
 void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
-  if (const auto animatedValue = GetAnimatedValue()) {
+  if (!m_started) {
+    // The animation may have been deferred and never started. In this case,
+    // we will never get a scoped batch completion, so we need to fire the
+    // callback synchronously.
+    DoCallback(false);
+  } else if (const auto animatedValue = GetAnimatedValue()) {
     animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
     m_stopped = true;
     m_ignoreCompletedHandlers = ignoreCompletedHandlers;

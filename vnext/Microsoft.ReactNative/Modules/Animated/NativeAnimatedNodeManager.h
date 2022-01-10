@@ -109,8 +109,8 @@ class NativeAnimatedNodeManager {
       m_eventDrivers{};
   std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_activeAnimations{};
   std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_pendingCompletionAnimations{};
-  std::unordered_map<int64_t, std::unordered_set<int64_t>> m_stoppedAnimations{};
-  std::unordered_map<int64_t, std::unordered_set<int64_t>> m_deferredAnimations{};
+  std::unordered_set<int64_t> m_valuesWithStoppedAnimation{};
+  std::unordered_map<int64_t, int64_t> m_deferredAnimationForValues{};
   std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
 
