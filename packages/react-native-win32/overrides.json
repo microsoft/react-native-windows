@@ -3,10 +3,10 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.64.0",
   "excludePatterns": [
     "src/Libraries/Lists/__tests__/**"
   ],
+  "baseVersion": "0.64.0",
   "overrides": [
     {
       "type": "derived",
@@ -32,12 +32,6 @@
       "baseFile": "Libraries/BatchedBridge/MessageQueue.js",
       "baseHash": "85eea8e9510b516c12e19fcfedc4553b990feb11",
       "issue": 5807
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
-      "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "a72811cd104bb575d0ab2659343dc2ea11c6b674"
     },
     {
       "type": "derived",
@@ -108,6 +102,13 @@
       "baseFile": "Libraries/Components/Picker/PickerIOS.android.js",
       "baseHash": "0c6bf0751e053672123cbad30d67851ba0007af6",
       "issue": 4378
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
+      "baseFile": "Libraries/Components/Pressable/Pressable.js",
+      "baseHash": "53bc7996e0fa83128b846a04d0bcec972a406133",
+      "issue": 6240
     },
     {
       "type": "copy",
@@ -220,6 +221,13 @@
       "baseFile": "Libraries/Components/View/View.js",
       "baseHash": "147459dc889f04f2405db051445833f791726895",
       "issue": 5843
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.js",
+      "baseHash": "2b12228aa1ab0e12844996a99ff5d38fbff689a1",
+      "issue": 6240
     },
     {
       "type": "platform",
@@ -343,6 +351,20 @@
       "file": "src/Libraries/PersonaCoin/PersonaCoinTypes.ts"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/HoverState.win32.js",
+      "baseFile": "Libraries/Pressability/HoverState.js",
+      "baseHash": "c78372cfc9f0b66109848beb20895e199c5431b8",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/Pressability.win32.js",
+      "baseFile": "Libraries/Pressability/Pressability.js",
+      "baseHash": "e1418d31343ca11ce165a87f82224ccc8d801052",
+      "issue": 6240
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/QuirkSettings/CachingNativeQuirkSettings.js"
     },
@@ -357,6 +379,12 @@
     {
       "type": "platform",
       "file": "src/Libraries/QuirkSettings/QuirkSettings.js"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
+      "baseFile": "Libraries/ReactNative/PaperUIManager.js",
+      "baseHash": "a72811cd104bb575d0ab2659343dc2ea11c6b674"
     },
     {
       "type": "derived",
@@ -388,6 +416,13 @@
       "baseFile": "Libraries/Text/TextNativeComponent.js",
       "baseHash": "d316f87ebc8899c3b99802f684b6a333970d737c",
       "issue": 7080
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Types/CoreEventTypes.win32.js",
+      "baseFile": "Libraries/Types/CoreEventTypes.js",
+      "baseHash": "e8f8ce02645228b423fdda317e5d1d9e69b54e6d",
+      "issue": 6240
     },
     {
       "type": "copy",
