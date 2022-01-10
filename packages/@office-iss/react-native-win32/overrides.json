@@ -78,8 +78,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "1ad53a6a5e1e751c8f23b07a84a343c18c8802a7",
-      "baseVersion": "0.0.0-20211217-2008-aef843bfe",
+      "baseHash": "ffd4c8875dc3c2936677577666050a5fe2124c09",
       "issue": 6240
     },
     {
@@ -197,8 +196,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "5bc93b50edd30f3a4414c2710a068bf402f9fbbe",
-      "baseVersion": "0.0.0-20211217-2008-aef843bfe",
+      "baseHash": "8a4891de00cb11154e4af32f36a3a181eb4794cf",
       "issue": 6240
     },
     {
@@ -390,16 +388,14 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/HoverState.win32.js",
       "baseFile": "Libraries/Pressability/HoverState.js",
-      "baseHash": "2807a1cddb7c5135f63e5dd4d0706ac660f25d76",
-      "baseVersion": "0.0.0-20211217-2008-aef843bfe",
+      "baseHash": "50800642b413cb469ced8d1d6b32ee0e249f4d1e",
       "issue": 6240
     },
     {
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "9e28ff3d5317543dc67944598247a6ed04d97f9d",
-      "baseVersion": "0.0.0-20211217-2008-aef843bfe",
+      "baseHash": "9ad7624c5cfa58134e226cbe7e8594ceb18d3b43",
       "issue": 6240
     },
     {
@@ -459,8 +455,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.win32.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "22c50d13820ca4db6c6cf5e6563f8437d55c24af",
-      "baseVersion": "0.0.0-20211217-2008-aef843bfe",
+      "baseHash": "b7ed94c49c38a6b3579349e6940bb663328c1f4e",
       "issue": 6240
     },
     {
