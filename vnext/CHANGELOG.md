@@ -1,8 +1,29 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 07 Jan 2022 22:21:25 GMT and should not be manually modified.
+This log was last generated on Sun, 09 Jan 2022 06:07:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.437
+
+Sun, 09 Jan 2022 06:07:57 GMT
+
+### Changes
+
+- Publish codegen spec files into win32 nuget (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.436
+
+Sat, 08 Jan 2022 06:09:24 GMT
+
+### Changes
+
+- Fork HoverState.js to allow hover events on Pressable (saadnajmi2@gmail.com)
+- Fixes crash when creating DiffClampAnimatedNode (erozell@outlook.com)
+- Integrate 12/7 Nightly Build (ngerlem@microsoft.com)
+- Remove unused iuimanager.h (30809111+acoates-ms@users.noreply.github.com)
+- Reduce scope of marking YogaNode dirty (erozell@outlook.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.23
 
 ## 0.0.0-canary.435
 
