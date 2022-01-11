@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 08 Jan 2022 06:09:23 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Jan 2022 06:09:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.128
+
+Tue, 11 Jan 2022 06:09:10 GMT
+
+### Changes
+
+- Integrate 12/31 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly Build (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.24
 
 ## 0.0.0-canary.127
 
