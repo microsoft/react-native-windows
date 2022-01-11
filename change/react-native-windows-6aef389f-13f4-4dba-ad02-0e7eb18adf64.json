@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removes unnecessary conditional from NativeAnimatedNodeManager",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
