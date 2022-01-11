@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixes issue with restarting animations",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

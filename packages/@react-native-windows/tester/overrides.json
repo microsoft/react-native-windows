@@ -5,47 +5,47 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20211217-2008-aef843bfe",
+  "baseVersion": "0.0.0-20220107-2008-ca5aaa766",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/RNTesterEmptyBookmarksState.windows.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
-      "baseHash": "6fd62afad748df5a019a0307fa9d91a444ec081c",
+      "baseHash": "a1d1c6638e815f6dd53504983813fda92f3b5478",
       "issue": 6341
     },
     {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "a5ed351cd30c215cb90a2f8512e0fe9f55e8046e",
+      "baseHash": "8d15566647ab3ee518314d9009ef56c96ba5db87",
       "issue": 6240
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "b8706d4b9f3f1473c645af90fde103bb8a5c24f9",
+      "baseHash": "344cf07ed0f9394d71ffed48f0c2ed7624fec80e",
       "issue": 5688
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "66caf79cd84b89dddecf7ba47ef16a5f81411ed3"
+      "baseHash": "11c6fc11adf033da119704b662be1d595091eb79"
     },
     {
       "type": "copy",
       "file": "src/js/RNTesterApp.windows.js",
       "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
-      "baseHash": "e4f79c1b0b3e8778ea28d5bce5c126664c47d253",
+      "baseHash": "d517675a1da173a7d57ac87d0ea9efc08f05b50d",
       "issue": 4586
     },
     {
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "465bc5e21ce7b00a012d241148b519d08ab18961"
+      "baseHash": "a9749cd61afa03ad7079103fe8bef677c6e293b0"
     }
   ]
 }

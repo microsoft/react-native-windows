@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -22,7 +22,7 @@ const FileTemplate = ({
   componentConfig: string,
 }) => `
 /**
- * ${'C'}opyright (c) Facebook, Inc. and its affiliates.
+ * ${'C'}opyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -152,13 +152,6 @@ function normalizeInputEventName(name) {
   return name;
 }
 
-// Replicates the behavior of viewConfig in RCTComponentData.m
-function getValidAttributesForEvents(events) {
-  return events.map((eventType) => {
-    return j.property('init', j.identifier(eventType.name), j.literal(true));
-  });
-}
-
 function generateBubblingEventInfo(event, nameOveride) {
   return j.property(
     'init',
@@ -228,7 +221,6 @@ function buildViewConfig(schema, componentName, component, imports) {
         getReactDiffProcessValue(schemaProp.typeAnnotation),
       );
     }),
-    ...getValidAttributesForEvents(componentEvents),
   ]);
 
   const bubblingEventNames = component.events

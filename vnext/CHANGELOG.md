@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 08 Jan 2022 06:09:24 GMT and should not be manually modified.
+This log was last generated on Sun, 09 Jan 2022 06:07:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.437
+
+Sun, 09 Jan 2022 06:07:57 GMT
+
+### Changes
+
+- Publish codegen spec files into win32 nuget (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.436
 
