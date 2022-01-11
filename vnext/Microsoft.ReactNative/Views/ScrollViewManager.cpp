@@ -11,6 +11,8 @@
 #include "Impl/ScrollViewUWPImplementation.h"
 #include "ScrollViewManager.h"
 
+#include <winrt/Windows.UI.Xaml.Media.h>
+
 using namespace winrt::Microsoft::ReactNative;
 
 namespace Microsoft::ReactNative {
@@ -484,6 +486,27 @@ void ScrollViewManager::GetExportedCustomDirectEventTypeConstants(
   writer.WriteObjectEnd();
 }
 
+void SetScrollViewerContentTabFocusNavigationIfNeeded(const winrt::ScrollViewer &scrollViewer) {
+  // Workaround XAML bug where TabFocusNavigation Once set on an ancestor element doesn't
+  // propagate down through ScrollViewer. If we detect that property set to Once on any
+  // ancestors, we set it on the ScrollViewer's content.
+  // https://github.com/microsoft/microsoft-ui-xaml/issues/5941
+
+  // We can't rely on the shadow tree because there might be native views in the view hierarchy
+  // that set TabFocusNavigation Once and don't exist in the shadow tree.
+  auto parent = xaml::Media::VisualTreeHelper::GetParent(scrollViewer);
+  while (parent) {
+    if (auto parentElement = parent.try_as<xaml::UIElement>()) {
+      if (parentElement.TabFocusNavigation() == xaml::Input::KeyboardNavigationMode::Once) {
+        scrollViewer.Content().as<winrt::ContentControl>().TabFocusNavigation(
+            xaml::Input::KeyboardNavigationMode::Once);
+        return;
+      }
+    }
+    parent = xaml::Media::VisualTreeHelper::GetParent(parent);
+  }
+}
+
 XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   const auto scrollViewer = winrt::ScrollViewer{};
 
@@ -496,6 +519,11 @@ XamlView ScrollViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microso
 
   const auto snapPointManager = SnapPointManagingContentControl::Create();
   scrollViewer.Content(*snapPointManager);
+
+
+  scrollViewer.Loaded([](const auto &sender, auto &&...){
+    SetScrollViewerContentTabFocusNavigationIfNeeded(sender.as<winrt::ScrollViewer>());
+  });
 
   return scrollViewer;
 }
