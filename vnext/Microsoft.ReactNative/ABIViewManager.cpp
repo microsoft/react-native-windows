@@ -41,7 +41,8 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
-      m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()} {
+      m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
+      m_viewManagerWithDropViewInstanceEvent{viewManager.try_as<IViewManagerWithDropViewInstanceEvent>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
@@ -222,6 +223,14 @@ void ABIViewManager::OnPointerEvent(::Microsoft::ReactNative::ShadowNodeBase *no
   }
   // Call the base method to handle `pointerEvents` behavior
   Super::OnPointerEvent(node, args);
+}
+
+void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView &view){
+  if (m_viewManagerWithDropViewInstanceEvent){
+    m_viewManagerWithDropViewInstanceEvent.OnDropViewInstance(view.try_as<xaml::FrameworkElement>());
+  }else{
+    Super::OnDropViewInstance(view);
+  }
 }
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
