@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 09 Jan 2022 06:07:57 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Jan 2022 06:09:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.438
+
+Tue, 11 Jan 2022 06:09:11 GMT
+
+### Changes
+
+- Fixes issue with restarting animations (erozell@outlook.com)
+- Integrate 12/31 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly Build (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.24
 
 ## 0.0.0-canary.437
 
