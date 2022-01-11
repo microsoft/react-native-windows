@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Stop both raw value and offset animation",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
