@@ -21,7 +21,7 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
-import {CodedError} from '@react-native-windows/telemetry';
+import {CodedError, getVersionOfNpmPackage} from '@react-native-windows/telemetry';
 import {
   findPackage,
   WritableNpmPackage,
@@ -196,7 +196,6 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
-
   const templateVars: Record<string, any> = {
     useMustache: true,
     regExpPatternsToRemove: [],
@@ -206,11 +205,7 @@ export async function copyProjectTemplateAndReplace(
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
 
-    //TESTING -------------------------------------------------------------------------------------------------------------------------------------------->
-    testComment: 'hello from generator windows',
-    srcRootPath: srcRootPath,
-    version: rnwVersion,
-    command: process.argv.toString().replace(/-/g,'_').replace(/,/g,' '),
+    cliVersion: await getVersionOfNpmPackage('@react-native-windows/cli'), 
 
     mainComponentName: mainComponentName,
 

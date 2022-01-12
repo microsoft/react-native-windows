@@ -29,3 +29,7 @@ export {
   AppProjectInfo,
   DependencyProjectInfo,
 } from './utils/projectUtils';
+
+export {
+  getVersionOfNpmPackage,
+ } from './utils/versionUtils'

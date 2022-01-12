@@ -1,7 +1,4 @@
-<!-- 
-This project was created with react-native-windows-init {{ version }} with the following command line:
-{{ command }}
--->
+<!-- This project was created with react-native-windows-init {{ cliVersion }} -->
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2s003">
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
@@ -17,6 +14,9 @@ This project was created with react-native-windows-init {{ version }} with the f
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <PropertyGroup Label="Version">
+    <ReactNativeWindowsCLI>{{ cliVersion }}</ReactNativeWindowsCLI>
   </PropertyGroup>
   <PropertyGroup Label="NuGet">
     <ResolveNuGetPackages>false</ResolveNuGetPackages>

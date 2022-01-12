@@ -1,7 +1,4 @@
-﻿<!-- 
-This project was created with react-native-windows-init {{ version }} with the following command line:
-{{ command }}
--->
+﻿<!-- This project was created with react-native-windows-init {{ cliVersion }} -->
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -27,6 +24,9 @@ This project was created with react-native-windows-init {{ version }} with the f
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <AppxGeneratePrisForPortableLibrariesEnabled>false</AppxGeneratePrisForPortableLibrariesEnabled>
     <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Label="Version">
+    <ReactNativeWindowsCLI>{{ cliVersion }}</ReactNativeWindowsCLI>
   </PropertyGroup>
   <PropertyGroup Label="NuGet">
     <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>
