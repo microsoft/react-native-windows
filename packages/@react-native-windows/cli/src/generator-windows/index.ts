@@ -243,6 +243,9 @@ export async function copyProjectTemplateAndReplace(
       '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
   };
 
+  //Testing if we get the right CLI version, remove after checked -----------------------------------------------------
+  console.log(templateVars);
+
   const commonMappings =
     projectType === 'app'
       ? [
