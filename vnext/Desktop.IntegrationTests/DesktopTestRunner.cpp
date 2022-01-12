@@ -50,7 +50,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
        },
        nativeQueue},
 
-      {"WebSocketModule", []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); }, nativeQueue},
+      {"WebSocketModule", []() -> unique_ptr<CxxModule> { return CreateWebSocketModule(); }, nativeQueue},
 
       {"Networking",
        []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
@@ -77,7 +77,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
       {TestImageLoaderModule::name,
        []() -> unique_ptr<CxxModule> { return std::make_unique<TestImageLoaderModule>(); },
-       nativeQueue}};
+       nativeQueue},
+
+      {"BlobModule", []() -> unique_ptr<CxxModule> { return CreateBlobModule(); }, nativeQueue}};
 
   // <0> string
   // <1> CxxModule::Provider
