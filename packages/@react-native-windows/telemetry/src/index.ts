@@ -30,6 +30,4 @@ export {
   DependencyProjectInfo,
 } from './utils/projectUtils';
 
-export {
-  getVersionOfNpmPackage,
- } from './utils/versionUtils'
+export {getVersionOfNpmPackage} from './utils/versionUtils';
