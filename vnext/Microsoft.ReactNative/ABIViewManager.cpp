@@ -225,10 +225,10 @@ void ABIViewManager::OnPointerEvent(::Microsoft::ReactNative::ShadowNodeBase *no
   Super::OnPointerEvent(node, args);
 }
 
-void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView &view){
-  if (m_viewManagerWithDropViewInstanceEvent){
+void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView &view) {
+  if (m_viewManagerWithDropViewInstanceEvent) {
     m_viewManagerWithDropViewInstanceEvent.OnDropViewInstance(view.try_as<xaml::FrameworkElement>());
-  }else{
+  } else {
     Super::OnDropViewInstance(view);
   }
 }
