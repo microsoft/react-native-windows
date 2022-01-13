@@ -108,19 +108,10 @@ class WebSocketBlobTest extends React.Component<{}, State> {
   };
 
   _receivedTestExpectedResponse = () => {
-    if (
-      this.state.lastMessage?.size !== this.state.testExpectedResponse.length
-    ) {
-      return false;
-    }
-
-    //for (var i = 0; i < expected.length; i++) {
-    //  if (expected[i] !== result[i]) {
-    //    return false;
-    //  }
-    //}
-
-    return true;
+    // Can't iterate through Blob response. Blob.arrayBuffer() not supported.
+    return (
+      this.state.lastMessage?.size === this.state.testExpectedResponse.length
+    );
   };
 
   componentDidMount() {
