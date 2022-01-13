@@ -77,9 +77,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
       {TestImageLoaderModule::name,
        []() -> unique_ptr<CxxModule> { return std::make_unique<TestImageLoaderModule>(); },
-       nativeQueue},
-
-      {"BlobModule", []() -> unique_ptr<CxxModule> { return CreateBlobModule(); }, nativeQueue}};
+       nativeQueue}};
 
   // <0> string
   // <1> CxxModule::Provider
