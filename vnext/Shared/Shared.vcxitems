@@ -76,6 +76,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)IWebSocketModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraRuntime.h" />
