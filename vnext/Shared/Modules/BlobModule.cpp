@@ -8,7 +8,6 @@
 // React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-#include <cxxreact/ModuleRegistry.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.h>

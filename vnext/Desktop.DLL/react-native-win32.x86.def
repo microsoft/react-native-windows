@@ -60,8 +60,6 @@ EXPORTS
 ?makeChakraRuntime@JSI@Microsoft@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraRuntimeArgs@12@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?CreateAsyncStorageModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
-?CreateBlobModule@React@Microsoft@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
-?CreateWebSocketModule@React@Microsoft@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@XZ
 ?Make@IHttpResource@React@Microsoft@@SG?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
 ??0NetworkingModule@React@Microsoft@@QAE@XZ
 ?MakeJSQueueThread@ReactNative@Microsoft@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
