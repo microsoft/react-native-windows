@@ -43,6 +43,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
   auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
 
+  // See InstanceImpl::GetDefaultNativeModules at OInstance.cpp
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       {"AsyncLocalStorage",
        []() -> unique_ptr<CxxModule> {
@@ -50,13 +51,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
        },
        nativeQueue},
 
-      {"WebSocketModule", []() -> unique_ptr<CxxModule> { return CreateWebSocketModule(); }, nativeQueue},
-
       {"Networking",
        []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
        nativeQueue},
-
-      {"Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue},
 
       // Apparently mandatory for /IntegrationTests
       {TestAppStateModule::name,
