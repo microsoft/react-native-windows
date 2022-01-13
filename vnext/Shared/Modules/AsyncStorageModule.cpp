@@ -83,9 +83,5 @@ std::vector<facebook::xplat::module::CxxModule::Method> AsyncStorageModule::getM
   };
 }
 
-std::unique_ptr<facebook::xplat::module::CxxModule> CreateAsyncStorageModule(const WCHAR *storageFileName) noexcept {
-  return std::make_unique<AsyncStorageModule>(storageFileName);
-}
-
 } // namespace react
 } // namespace facebook
