@@ -108,7 +108,10 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"createFromParts",
-       [contentHandler = m_contentHandler](dynamic args) {
+       // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
+       // Directly use getInstance() once
+       // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
+       [contentHandler = m_contentHandler, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
          auto parts = jsArgAsArray(args, 0); // Array<Object>
          auto blobId = jsArgAsString(args, 1);
          vector<uint8_t> buffer{};
@@ -128,7 +131,13 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
              buffer.reserve(buffer.size() + bufferPart.size());
              buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
            } else {
-             // TODO: Send error message to instance?
+             if (auto state = weakState.lock()) {
+               if (auto instance = state->Module->getInstance().lock()) {
+                 string message = "Invalid type for blob: " + type.asString();
+                 instance->callJSFunction(
+                     "RCTDeviceEventEmitter", "emit", dynamic::array("blobFailed", std::move(message)));
+               }
+             }
              return;
            }
 
