@@ -37,12 +37,18 @@ namespace Microsoft::React {
 
 #pragma region BlobModule
 
-BlobModule::BlobModule() noexcept {
+BlobModule::BlobModule() noexcept : m_sharedState{std::make_shared<SharedState>()} {
   m_contentHandler = std::static_pointer_cast<BlobWebSocketModuleContentHandler>(s_contentHandler.lock());
   if (!m_contentHandler) {
     m_contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
     s_contentHandler = m_contentHandler;
   }
+
+  m_sharedState->Module = this;
+}
+
+BlobModule::~BlobModule() noexcept /*override*/ {
+  m_sharedState->Module = nullptr;
 }
 
 #pragma region CxxModule
@@ -77,7 +83,10 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"sendOverSocket",
-       [contentHandler = m_contentHandler, weakInstance = weak_ptr<Instance>(getInstance())](dynamic args) {
+       // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
+       // Directly use getInstance() once
+       // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
+       [contentHandler = m_contentHandler, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
          auto blob = jsArgAsObject(args, 0);
          auto blobId = blob["blobId"].getString();
          auto offset = blob["offset"].getInt();
@@ -86,13 +95,15 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
 
          auto data = contentHandler->ResolveMessage(std::move(blobId), offset, size);
 
-         if (auto instance = weakInstance.lock()) {
+         if (auto state = weakState.lock()) {
            auto buffer = CryptographicBuffer::CreateFromByteArray(data);
            auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
            auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
 
            auto sendArgs = dynamic::array(std::move(base64String), socketID);
-           instance->callJSFunction("WebSocketModule", "sendBinary", std::move(sendArgs));
+           if (auto instance = state->Module->getInstance().lock()) {
+             instance->callJSFunction("WebSocketModule", "sendBinary", std::move(sendArgs));
+           }
          }
        }},
 
