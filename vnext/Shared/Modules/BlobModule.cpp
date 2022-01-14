@@ -100,7 +100,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
          auto buffer = CryptographicBuffer::CreateFromByteArray(data);
          auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
          auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
-         
+
          wsProxy->SendBinary(std::move(base64String), socketID);
        }},
 

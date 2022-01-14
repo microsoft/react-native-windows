@@ -286,7 +286,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 
 #pragma region WebSocketModuleProxy
 
-void WebSocketModuleProxy::SendBinary(std::string&& base64String, int64_t id) noexcept /*override*/ {
+void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) noexcept /*override*/ {
   weak_ptr weakWs = GetOrCreateWebSocket(id, {}, s_sharedState);
   if (auto sharedWs = weakWs.lock()) {
     sharedWs->SendBinary(std::move(base64String));
