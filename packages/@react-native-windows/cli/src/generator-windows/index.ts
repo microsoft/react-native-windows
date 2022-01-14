@@ -242,6 +242,7 @@ export async function copyProjectTemplateAndReplace(
 
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
+    nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
