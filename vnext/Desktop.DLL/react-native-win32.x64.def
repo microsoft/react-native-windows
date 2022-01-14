@@ -62,7 +62,6 @@ EXPORTS
 ?Make@IHttpResource@React@Microsoft@@SA?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
 ?CreateTimingModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ??0NetworkingModule@React@Microsoft@@QEAA@XZ
-?CreateAsyncStorageModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PEB_W@Z
 ?MakeJSQueueThread@ReactNative@Microsoft@@YA?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?Hash128@SpookyHashV2@hash@folly@@SAXPEBX_KPEA_K2@Z
 ??1Instance@react@facebook@@QEAA@XZ

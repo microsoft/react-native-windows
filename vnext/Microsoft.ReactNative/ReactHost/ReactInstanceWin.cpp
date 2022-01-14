@@ -48,6 +48,7 @@
 #include <Modules/ImageViewManagerModule.h>
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
@@ -303,6 +304,11 @@ void ReactInstanceWin::LoadModules(
 #ifndef CORE_ABI
   registerTurboModule(
       L"I18nManager", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
+
+  registerTurboModule(
+      L"LinkingManager",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
+
 #endif
 }
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 14 Jan 2022 06:09:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.439",
+      "version": "0.0.0-canary.439",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3c4be294c9b4b70eeef9f289aaca6c26594b3a18",
+            "comment": "Move LinkingModule to use TurboModule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 11 Jan 2022 06:09:11 GMT",
       "tag": "react-native-windows_v0.0.0-canary.438",
       "version": "0.0.0-canary.438",

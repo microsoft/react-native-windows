@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 11 Jan 2022 06:09:11 GMT and should not be manually modified.
+This log was last generated on Fri, 14 Jan 2022 06:09:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.439
+
+Fri, 14 Jan 2022 06:09:51 GMT
+
+### Changes
+
+- Move LinkingModule to use TurboModule (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.438
 
