@@ -6,6 +6,7 @@
 #include <Modules/WebSocketModule.h>
 
 #include <Modules/IWebSocketModuleContentHandler.h>
+
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #include "Unicode.h"
@@ -31,10 +32,14 @@ using std::weak_ptr;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
+using Microsoft::React::IWebSocketModuleProxy;
 using Microsoft::React::IWebSocketResource;
 using Microsoft::React::WebSocketModule;
 
 constexpr char moduleName[] = "WebSocketModule";
+
+weak_ptr<WebSocketModule::SharedState> s_sharedState;
+weak_ptr<IWebSocketModuleProxy> s_proxy;
 
 static void SendEvent(weak_ptr<Instance> weakInstance, string &&eventName, dynamic &&args) {
   if (auto instance = weakInstance.lock()) {
@@ -141,9 +146,18 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
 
 namespace Microsoft::React {
 
+#pragma region WebSocketModule
+
 WebSocketModule::WebSocketModule() : m_sharedState{std::make_shared<SharedState>()} {
   m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(); };
   m_sharedState->Module = this;
+  s_sharedState = weak_ptr<SharedState>(m_sharedState);
+
+  m_proxy = std::static_pointer_cast<WebSocketModuleProxy>(s_proxy.lock());
+  if (!m_proxy) {
+    m_proxy = std::make_shared<WebSocketModuleProxy>();
+    s_proxy = m_proxy;
+  }
 }
 
 WebSocketModule::~WebSocketModule() noexcept /*override*/ {
@@ -267,6 +281,23 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
   };
 } // getMethods
 // clang-format on
+
+#pragma endregion WebSocketModule
+
+#pragma region WebSocketModuleProxy
+
+void WebSocketModuleProxy::SendBinary(std::string&& base64String, int64_t id) noexcept /*override*/ {
+  weak_ptr weakWs = GetOrCreateWebSocket(id, {}, s_sharedState);
+  if (auto sharedWs = weakWs.lock()) {
+    sharedWs->SendBinary(std::move(base64String));
+  }
+}
+
+#pragma endregion WebSocketModuleProxy
+
+/*static*/ weak_ptr<IWebSocketModuleProxy> IWebSocketModuleProxy::GetInstance() noexcept {
+  return s_proxy;
+}
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
   return std::make_unique<WebSocketModule>();

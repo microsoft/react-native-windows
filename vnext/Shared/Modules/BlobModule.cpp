@@ -3,6 +3,7 @@
 
 #include "BlobModule.h"
 
+#include <Modules/IWebSocketModuleProxy.h>
 #include <unicode.h>
 
 // React Native
@@ -82,10 +83,12 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"sendOverSocket",
-       // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
-       // Directly use getInstance() once
-       // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
-       [contentHandler = m_contentHandler, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
+       [contentHandler = m_contentHandler](dynamic args) {
+         auto wsProxy = IWebSocketModuleProxy::GetInstance().lock();
+         if (!wsProxy) {
+           return;
+         }
+
          auto blob = jsArgAsObject(args, 0);
          auto blobId = blob["blobId"].getString();
          auto offset = blob["offset"].getInt();
@@ -94,16 +97,11 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
 
          auto data = contentHandler->ResolveMessage(std::move(blobId), offset, size);
 
-         if (auto state = weakState.lock()) {
-           auto buffer = CryptographicBuffer::CreateFromByteArray(data);
-           auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
-           auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
-
-           auto sendArgs = dynamic::array(std::move(base64String), socketID);
-           if (auto instance = state->Module->getInstance().lock()) {
-             instance->callJSFunction("WebSocketModule", "sendBinary", std::move(sendArgs));
-           }
-         }
+         auto buffer = CryptographicBuffer::CreateFromByteArray(data);
+         auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
+         auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
+         
+         wsProxy->SendBinary(std::move(base64String), socketID);
        }},
 
       {"createFromParts",

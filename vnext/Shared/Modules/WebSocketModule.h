@@ -3,10 +3,22 @@
 
 #pragma once
 
+#include <IWebSocketResource.h>
+
+#include <Modules/IWebSocketModuleProxy.h>
+
+// React Native
 #include <cxxreact/CxxModule.h>
-#include "IWebSocketResource.h"
 
 namespace Microsoft::React {
+
+class WebSocketModuleProxy final : public IWebSocketModuleProxy {
+#pragma region IWebSocketModuleProxy
+
+  void SendBinary(std::string &&base64String, int64_t id) noexcept override;
+
+#pragma endregion
+};
 
 ///
 /// Realizes <c>NativeModules</c> projection.
@@ -71,6 +83,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// Keeps members that can be accessed threads other than this module's owner accessible.
   /// </summary>
   std::shared_ptr<SharedState> m_sharedState;
+
+  /// <summary>
+  /// Exposes direct partial functionality to other modules.
+  /// </summary>
+  std::shared_ptr<IWebSocketModuleProxy> m_proxy;
 };
 
 } // namespace Microsoft::React
