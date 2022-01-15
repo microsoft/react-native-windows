@@ -188,15 +188,13 @@ void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
     m_socketIDs.erase(socketID);
 }
 
-vector<uint8_t>
+winrt::array_view<uint8_t>
 BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept {
   lock_guard<mutex> lock{m_blobsMutex};
 
-  auto data = m_blobs.at(std::move(blobId));
-  auto start = data.cbegin() + static_cast<size_t>(offset);
-  auto end = start + static_cast<size_t>(size);
+  auto &data = m_blobs.at(std::move(blobId));
 
-  return vector(start, end);
+  return winrt::array_view<uint8_t>{data};
 }
 
 void BlobWebSocketModuleContentHandler::RemoveMessage(string &&blobId) noexcept {

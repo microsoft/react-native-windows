@@ -8,6 +8,9 @@
 // React Native
 #include <cxxreact/CxxModule.h>
 
+// Windows API
+#include <winrt/base.h>
+
 // Standard Library
 #include <mutex>
 #include <string>
@@ -36,9 +39,7 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
 
   void Unregister(int64_t socketID) noexcept;
 
-  // const bool IsRegistered(std::int64_t socketID) noexcept override;
-
-  std::vector<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) noexcept;
+  winrt::array_view<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) noexcept;
 
   void RemoveMessage(std::string &&blobId) noexcept;
 
