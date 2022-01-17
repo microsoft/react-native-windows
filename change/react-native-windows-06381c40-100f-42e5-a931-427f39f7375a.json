@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fork HoverState.js to allow hover events on Pressable",
-  "packageName": "react-native-windows",
-  "email": "saadnajmi2@gmail.com",
-  "dependentChangeType": "patch"
-}

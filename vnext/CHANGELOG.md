@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 03 Jan 2022 16:10:55 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jan 2022 16:12:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.7
+
+Mon, 17 Jan 2022 16:12:35 GMT
+
+### Patches
+
+- Fork HoverState.js to allow hover events on Pressable (saadnajmi2@gmail.com)
 
 ## 0.66.6
 
