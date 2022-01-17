@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 17 Jan 2022 16:12:12 GMT",
+      "tag": "@office-iss/react-native-win32_v0.67.0-preview.3",
+      "version": "0.67.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "saadnajmi2@gmail.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b58a8738eecd8a3d6a2b918fc35d9a7b93b4437a",
+            "comment": "Port windows pressable with extra desktop support to win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Nov 2021 16:10:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.67.0-preview.2",
       "version": "0.67.0-preview.2",
