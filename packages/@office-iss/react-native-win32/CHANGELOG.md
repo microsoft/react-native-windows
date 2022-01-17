@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 17 Jan 2022 16:12:12 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jan 2022 16:12:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0-preview.3
+
+Mon, 17 Jan 2022 16:12:54 GMT
+
+### Changes
+
+- Port windows pressable with extra desktop support to win32 (saadnajmi2@gmail.com)
 
 ## 0.67.0-preview.3
 
