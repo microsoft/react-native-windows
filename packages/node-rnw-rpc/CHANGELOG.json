@@ -2,6 +2,21 @@
   "name": "node-rnw-rpc",
   "entries": [
     {
+      "date": "Mon, 17 Jan 2022 16:11:34 GMT",
+      "tag": "node-rnw-rpc_v1.0.7-0",
+      "version": "1.0.7-0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.65.10",
+            "author": "saadnajmi2@gmail.com",
+            "commit": "5e51350579884c5db479729185f232df77a7e992",
+            "package": "node-rnw-rpc"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Nov 2021 16:12:25 GMT",
       "tag": "node-rnw-rpc_v1.0.7-0",
       "version": "1.0.7-0",
