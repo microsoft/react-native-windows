@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Jan 2022 16:10:13 GMT",
+      "tag": "react-native-windows_v0.64.28",
+      "version": "0.64.28",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fork HoverState.js to allow hover events on Pressable",
+            "author": "saadnajmi2@gmail.com",
+            "commit": "acfb47a7924f4d4e34e020838423bbbab026d670",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Dec 2021 16:10:29 GMT",
       "tag": "react-native-windows_v0.64.27",
       "version": "0.64.27",
