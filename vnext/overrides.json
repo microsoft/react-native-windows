@@ -349,6 +349,13 @@
     },
     {
       "type": "patch",
+      "file": "src/Libraries/Pressability/HoverState.js",
+      "baseFile": "Libraries/Pressability/HoverState.js",
+      "baseHash": "c78372cfc9f0b66109848beb20895e199c5431b8",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
       "baseHash": "e1418d31343ca11ce165a87f82224ccc8d801052",
