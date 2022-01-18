@@ -143,11 +143,7 @@
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
                     artifactName: "Universal-${{ matrix.BuildPlatform }}-${{ matrix.BuildConfiguration }}-fast_${{ matrix.FastBuild }}"
 
-                - powershell: |
-                    Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-                    Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
-                    Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
-                  displayName: Set GoogleTestAdapterPath
+                - template: ../templates/discover-google-test-adapter.yml
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (Native)
@@ -166,6 +162,7 @@
                     publishRunAttachments: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
+                    failOnMinTestsNotRun: true
                   condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
                 - task: VSTest@2
@@ -183,6 +180,7 @@
                     codeCoverageEnabled: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
+                    failOnMinTestsNotRun: true
                   condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
 
                 - task: VSTest@2
@@ -200,6 +198,7 @@
                     codeCoverageEnabled: true
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
+                    failOnMinTestsNotRun: true
                   condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
 
     # This job is the one that accumulates the spread out build tasks into one dependency
