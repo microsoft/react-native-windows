@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove ADO NuGet feed from config for new projects",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
