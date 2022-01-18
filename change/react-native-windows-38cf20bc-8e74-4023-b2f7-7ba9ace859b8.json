@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 1/14 RN Nightly Build",
+  "packageName": "react-native-windows",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
