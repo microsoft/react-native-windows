@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import semver from 'semver';
 import yargs from 'yargs';
@@ -18,6 +18,7 @@ import {
 } from '@react-native-windows/package-utils';
 
 import {
+  getAbbreviatedRef,
   upgradeOverrides,
   validateManifest,
   ValidationError,
@@ -38,7 +39,7 @@ let logger: Logger;
         demandOption: false,
       },
     })
-    .check(args => {
+    .check((args) => {
       if (args._.length === 1 && semver.valid(<string>args._[0])) {
         return true;
       } else {
@@ -95,12 +96,7 @@ async function enumerateOverridePackages(): Promise<WritableNpmPackage[]> {
  * Whether the NPM package is subject to override validation
  */
 async function isOverridePackage(pkg: NpmPackage): Promise<boolean> {
-  try {
-    await fs.promises.access(path.join(pkg.path, 'overrides.json'));
-    return true;
-  } catch {
-    return false;
-  }
+  return await fs.exists(path.join(pkg.path, 'overrides.json'));
 }
 
 /**
@@ -118,9 +114,9 @@ async function upgradePlatformOverrides(): Promise<StepResult> {
 
     overridesWithConflicts.push(
       ...results
-        .filter(r => r.hasConflicts)
-        .map(r => r.overrideName)
-        .map(o => path.join(pkg.path, o)),
+        .filter((r) => r.hasConflicts)
+        .map((r) => r.overrideName)
+        .map((o) => path.join(pkg.path, o)),
     );
   }
 
@@ -149,11 +145,10 @@ async function validatePlatformOverrides(): Promise<StepResult> {
     );
   }
 
-  if (errors.filter(e => e.type !== 'outOfDate').length !== 0) {
+  if (errors.filter((e) => e.type !== 'outOfDate').length !== 0) {
     return {
       status: 'warn',
-      body:
-        'Override validation failed. Run `yarn validate-overrides` for more information',
+      body: 'Override validation failed. Run `yarn validate-overrides` for more information',
     };
   } else {
     return {status: 'success'};
@@ -170,26 +165,9 @@ async function generateCommitsUrl(newRnVersion: string): Promise<string> {
     searchPath: rnwPackage.path,
   }))!;
 
-  return `https://github.com/facebook/react-native/compare/${refFromVersion(
+  return `https://github.com/facebook/react-native/compare/${getAbbreviatedRef(
     rnPackage.json.version,
-  )}...${refFromVersion(newRnVersion)}`;
-}
-
-/**
- * Returns a git ref that may be used in a GitHub comparison URL from an npm package version
- */
-function refFromVersion(reactNativeVersion: string): string {
-  if (!semver.valid(reactNativeVersion)) {
-    throw new Error(`${reactNativeVersion} is not a valid semver version`);
-  }
-
-  // Stable releases of React Native use a tag where nightly releases embed
-  // a commit hash into the prerelease tag of 0.0.0 versions
-  if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
-    return semver.prerelease(reactNativeVersion)![0];
-  } else {
-    return `v${reactNativeVersion}`;
-  }
+  )}...${getAbbreviatedRef(newRnVersion)}`;
 }
 
 type StepResult = {
@@ -209,7 +187,7 @@ async function funcStep(
     const result = await func();
     logger[result.status](name, result.body);
   } catch (ex) {
-    logger.error(name, ex.stack);
+    logger.error(name, (ex as Error).stack);
     throw ex;
   }
 }
@@ -233,6 +211,6 @@ async function failableCommandStep(cmd: string) {
     await runCommand(cmd);
     logger.success(cmd);
   } catch (ex) {
-    logger.error(cmd, ex.stack);
+    logger.error(cmd, (ex as Error).stack);
   }
 }

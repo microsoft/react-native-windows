@@ -10,7 +10,7 @@
  * and then generates markdown files to be used by the Docusaurus service.
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import yargs from 'yargs';
 import {log} from './logger';
@@ -124,7 +124,7 @@ function fireAndForget(asyncFunc: () => Promise<void>): void {
       await asyncFunc();
     } catch (err) {
       try {
-        log.error(err);
+        log.error(err as any);
       } catch (logError) {
         console.error(logError);
       }

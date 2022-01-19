@@ -55,7 +55,7 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: 'ReactUWPTestApp',
+    app: 'RNTesterApp',
     enableAutomationChannel: true,
   },
 };

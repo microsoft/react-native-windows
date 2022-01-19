@@ -6,7 +6,7 @@
 
 import {CodedError} from '@react-native-windows/telemetry';
 import {execSync} from 'child_process';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 /**
@@ -96,7 +96,7 @@ export function findLatestVsInstall(opts: {
   let installs = enumerateVsInstalls({...opts, latest: true});
 
   if (opts.prerelease && installs.length > 0) {
-    installs = installs.filter(x => x.prerelease === 'True');
+    installs = installs.filter((x) => x.prerelease === 'True');
   }
 
   if (installs.length > 0) {

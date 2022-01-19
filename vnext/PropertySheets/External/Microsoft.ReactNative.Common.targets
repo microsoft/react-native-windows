@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by all app and module projects (Desktop & UWP,
+  both inside and outside of this repo) that build on top of
+  Microsoft.ReactNative.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="ReactNativeWindowsValidateProps">
+
+  <Target Name="ReactNativeWindowsValidateProps">
+    <Error Condition="'$(ReactNativeWindowsDirNotSet)' == 'true'" Text="'ReactNativeWindowsDir' should be set to the resolved location of the `react-native-windows` package. See https://aka.ms/ReactNativeWindowsDir." />
+  </Target>
+
+  <!-- Should match entry in $(ReactNativeWindowsDir)vnext\Directory.Build.targets -->
+  <!--Allow implicitly restoring PackageReference dependencies in C++ projects using the Visual Studio IDE.-->
+  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" />
+  </Target>
+
+</Project>

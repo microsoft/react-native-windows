@@ -1,8 +1,256 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Jan 2022 06:10:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.79
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.109
+
+## 1.1.78
+
+Fri, 07 Jan 2022 22:21:25 GMT
+
+### Patches
+
+- Fix `--version` option in react-native-windows-init (jthysell@microsoft.com)
+
+## 1.1.77
+
+Fri, 07 Jan 2022 06:08:32 GMT
+
+### Patches
+
+- Add tests to validate `react-native-windows-init` options (jthysell@microsoft.com)
+
+## 1.1.76
+
+Thu, 06 Jan 2022 04:18:33 GMT
+
+### Patches
+
+- Update when telemetry populates NPM package versions (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.31
+- Bump @react-native-windows/cli to v0.0.0-canary.108
+
+## 1.1.75
+
+Tue, 07 Dec 2021 06:10:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.107
+
+## 1.1.74
+
+Fri, 03 Dec 2021 06:12:09 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @react-native-windows/telemetry to v0.0.0-canary.30
+- Bump @react-native-windows/cli to v0.0.0-canary.105
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 1.1.73
+
+Fri, 26 Nov 2021 06:09:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.29
+- Bump @react-native-windows/cli to v0.0.0-canary.104
+
+## 1.1.72
+
+Thu, 25 Nov 2021 06:09:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.28
+- Bump @react-native-windows/cli to v0.0.0-canary.103
+
+## 1.1.71
+
+Wed, 24 Nov 2021 06:08:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.27
+- Bump @react-native-windows/cli to v0.0.0-canary.102
+
+## 1.1.70
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.26
+- Bump @react-native-windows/cli to v0.0.0-canary.101
+
+## 1.1.69
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Patches
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Telemetry Refactor (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @react-native-windows/telemetry to v0.0.0-canary.25
+- Bump @react-native-windows/cli to v0.0.0-canary.100
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 1.1.68
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.99
+
+## 1.1.68
+
+Tue, 02 Nov 2021 20:20:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.99
+
+## 1.1.67
+
+Mon, 01 Nov 2021 18:33:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.98
+
+## 1.1.67
+
+Mon, 01 Nov 2021 18:33:06 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.98
+
+## 1.1.66
+
+Wed, 27 Oct 2021 05:07:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.96
+
+## 1.1.66
+
+Wed, 27 Oct 2021 05:07:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.96
+
+## 1.1.65
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.24
+- Bump @react-native-windows/cli to v0.0.0-canary.95
+
+## 1.1.64
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.94
+
+## 1.1.63
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.93 (asklar@microsoft.com)
+
+## 1.1.63
+
+Tue, 05 Oct 2021 05:07:00 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.92 (jthysell@microsoft.com)
+
+## 1.1.63
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.91 (yicyao@microsoft.com)
+
+## 1.1.63
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.90 (ngerlem@microsoft.com)
+
+## 1.1.63
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.89 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.1.63
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.88 (jthysell@microsoft.com)
+
+## 1.1.63
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.87 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.1.63
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.86 (jthysell@microsoft.com)
+
+## 1.1.63
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.85 (ngerlem@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.23 (ngerlem@microsoft.com)
 
 ## 1.1.62
 

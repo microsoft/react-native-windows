@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -183,10 +183,12 @@ const styles = StyleSheet.create({
   },
   border15: {
     borderWidth: 10,
-    borderColor: PlatformColor(
-      'systemGray4',
-      '@android:color/holo_orange_dark',
-    ),
+    borderColor: Platform.select({
+      ios: PlatformColor('systemGray4'),
+      android: PlatformColor('@android:color/holo_orange_dark'),
+      windows: PlatformColor('SystemAccentColorDark1'),
+      default: 'black',
+    }),
   },
   border16: {
     borderWidth: 10,

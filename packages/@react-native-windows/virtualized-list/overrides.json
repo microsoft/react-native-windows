@@ -3,50 +3,50 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-ad9030ca9",
+  "baseVersion": "0.0.0-20220107-2008-ca5aaa766",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a715deecb01066f69db3959e0d270f5a2a88e598"
+      "baseHash": "ca469905cf86d4c7bce7d87b473872ffeef2f6bd"
     },
     {
       "type": "copy",
       "file": "src/CellRenderMask.js",
       "baseFile": "Libraries/Lists/CellRenderMask.js",
-      "baseHash": "f571a57510124480dace7746b4f44b90637750e8"
+      "baseHash": "5dd2f2a482e7bc55bf554f0dbc72d28c7b8228c8"
     },
     {
       "type": "copy",
       "file": "src/FillRateHelper.js",
       "baseFile": "Libraries/Lists/FillRateHelper.js",
-      "baseHash": "9457d4a60fd881934f98f08d0761fc20107842cc"
+      "baseHash": "41260657a4e4e522e61a1e7063bdc4016f9f60ca"
     },
     {
       "type": "copy",
       "file": "src/ViewabilityHelper.js",
       "baseFile": "Libraries/Lists/ViewabilityHelper.js",
-      "baseHash": "6282dcc27a2e6b42bb666ca1977b3aa16a2f0f18"
+      "baseHash": "aa9647837dd2fe6d4f6c5710751d0acf0014680f"
     },
     {
       "type": "patch",
       "file": "src/VirtualizedList.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
-      "baseHash": "020035fe631f052ff31daf706d24a8212e0274f6",
+      "baseHash": "6cadb78a33ada332bfbb0a941e3eebd6f9a3c2bc",
       "issue": 8120
     },
     {
       "type": "copy",
       "file": "src/VirtualizedListContext.js",
       "baseFile": "Libraries/Lists/VirtualizedListContext.js",
-      "baseHash": "780f56fe275d31d6b026ed989683772516c05138"
+      "baseHash": "fb27ea831f854c96c833bf814163195581a5e12a"
     },
     {
       "type": "copy",
       "file": "src/VirtualizeUtils.js",
       "baseFile": "Libraries/Lists/VirtualizeUtils.js",
-      "baseHash": "2d4af85197358a2f6d99b21e2d559c2e9e6e4fc4"
+      "baseHash": "063d19d178b21e228229b39d6d80d12fca7ae0be"
     }
   ]
 }

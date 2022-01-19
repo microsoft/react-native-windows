@@ -1,0 +1,7 @@
+# Steps to setup an environment that can run JavaScript executables
+
+steps:
+  - template: yarn-install.yml
+
+  - script: yarn build
+    displayName: yarn build

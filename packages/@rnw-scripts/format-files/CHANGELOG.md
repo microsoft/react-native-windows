@@ -1,8 +1,42 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.28
+
+Fri, 03 Dec 2021 06:12:07 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 1.0.27
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 1.0.26
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.25
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
 
 ## 1.0.24
 

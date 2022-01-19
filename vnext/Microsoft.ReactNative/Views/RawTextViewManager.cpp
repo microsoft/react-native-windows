@@ -4,19 +4,12 @@
 #include "pch.h"
 
 #include "RawTextViewManager.h"
-#include "TextViewManager.h"
-#include "VirtualTextViewManager.h"
 
 #include <Views/ShadowNodeBase.h>
+#include <Views/Text/TextVisitors.h>
 
-#include <INativeUIManager.h>
-#include <Utils/ShadowNodeTypeUtils.h>
-#include <Utils/ValueUtils.h>
-
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <Utils/ValueUtils.h>
 #include <winrt/Windows.Foundation.h>
 
 namespace winrt {
@@ -50,56 +43,15 @@ bool RawTextViewManager::UpdateProperty(
     return true;
 
   if (propertyName == "text") {
+    MarkDirty(nodeToUpdate->m_tag);
     run.Text(asHstring(propertyValue));
     static_cast<RawTextShadowNode *>(nodeToUpdate)->originalText = winrt::hstring{};
-    NotifyAncestorsTextChanged(nodeToUpdate);
+    ApplyTextTransformToChild(nodeToUpdate);
+    NotifyAncestorsTextPropertyChanged(nodeToUpdate, PropertyChangeType::Text);
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
   return true;
-}
-
-void RawTextViewManager::NotifyAncestorsTextChanged(ShadowNodeBase *nodeToUpdate) {
-  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock()) {
-    auto host = uiManager->getHost();
-    ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(nodeToUpdate->GetParent()));
-    TextTransform textTransform = TextTransform::Undefined;
-    auto isNested = false;
-    while (parent) {
-      auto viewManager = parent->GetViewManager();
-      const auto nodeType = viewManager->GetName();
-      if (IsTextShadowNode(parent)) {
-        const auto textViewManager = static_cast<TextViewManager *>(viewManager);
-        if (textTransform == TextTransform::Undefined) {
-          textTransform = textViewManager->GetTextTransformValue(parent);
-        }
-
-        VirtualTextShadowNode::ApplyTextTransform(
-            *nodeToUpdate, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
-
-        if (!isNested && parent->m_children.size() == 1) {
-          auto view = parent->GetView();
-          auto textBlock = view.try_as<winrt::TextBlock>();
-          if (textBlock != nullptr) {
-            const auto run = nodeToUpdate->GetView().try_as<winrt::Run>();
-            if (run != nullptr) {
-              textBlock.Text(run.Text());
-            }
-          }
-        }
-
-        (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent);
-
-        // We have reached the parent TextBlock, so there're no more parent <Text> elements in this tree.
-        break;
-      } else if (IsVirtualTextShadowNode(parent) && textTransform == TextTransform::Undefined) {
-        textTransform = static_cast<VirtualTextShadowNode *>(parent)->textTransform;
-      }
-
-      parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));
-      isNested = true;
-    }
-  }
 }
 
 void RawTextViewManager::SetLayoutProps(

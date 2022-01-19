@@ -36,14 +36,13 @@ inline int64_t GetTag(winrt::IPropertyValue value) {
   return value.GetInt64();
 }
 
-inline winrt::IPropertyValue GetTagAsPropertyValue(xaml::FrameworkElement fe) {
-  assert(fe);
-  return fe.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+inline winrt::IPropertyValue GetTagAsPropertyValue(XamlView view) {
+  assert(view);
+  return view.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
 }
 
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view);
-comp::Compositor GetCompositor(const XamlView &view);
+comp::Compositor GetCompositor(const XamlView &view = nullptr);
 void SetCompositor(const comp::Compositor &compositor);
-comp::Compositor GetCompositor();
 
 } // namespace Microsoft::ReactNative

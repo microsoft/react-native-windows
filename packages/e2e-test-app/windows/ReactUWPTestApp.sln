@@ -24,7 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertySheets", "PropertyS
 		PropertySheets\x86.props = PropertySheets\x86.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactUWPTestApp", "ReactUWPTestApp\ReactUWPTestApp.csproj", "{ABBB0407-0E82-486F-94CE-710900FCAADC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RNTesterApp", "RNTesterApp\RNTesterApp.csproj", "{ABBB0407-0E82-486F-94CE-710900FCAADC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "..\..\..\vnext\Common\Common.vcxproj", "{FCA38F3C-7C73-4C47-BE4E-32F77FA8538D}"
 EndProject
@@ -39,6 +39,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutomationChannel", "..\..\@react-native-windows\automation-channel\windows\AutomationChannel\AutomationChannel.vcxproj", "{C0A69310-6119-46DC-A6D6-0BAB7826DC92}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativePicker", "..\..\..\node_modules\@react-native-picker\picker\windows\ReactNativePicker\ReactNativePicker.vcxproj", "{BEDCC600-4541-41F2-AA46-9E058202B6AD}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactNativeXaml", "..\..\..\node_modules\react-native-xaml\windows\ReactNativeXaml\ReactNativeXaml.vcxproj", "{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -184,6 +186,18 @@ Global
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x64.Build.0 = Release|x64
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.ActiveCfg = Release|Win32
 		{BEDCC600-4541-41F2-AA46-9E058202B6AD}.Release|x86.Build.0 = Release|Win32
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Debug|ARM64.Build.0 = Debug|ARM64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Debug|x64.ActiveCfg = Debug|x64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Debug|x64.Build.0 = Debug|x64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Debug|x86.ActiveCfg = Debug|Win32
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Debug|x86.Build.0 = Debug|Win32
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Release|ARM64.ActiveCfg = Release|ARM64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Release|ARM64.Build.0 = Release|ARM64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Release|x64.ActiveCfg = Release|x64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Release|x64.Build.0 = Release|x64
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Release|x86.ActiveCfg = Release|Win32
+		{0FF7027A-222C-4FFB-8F17-91D18BBAF7A8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,6 +4,7 @@
  * @format
  */
 
+import os from 'os';
 import {CommandOption} from '@react-native-community/cli-types';
 
 export type BuildArch = 'x86' | 'x64' | 'ARM64';
@@ -40,19 +41,19 @@ export interface RunWindowsOptions {
   device?: boolean;
   target?: string;
   remoteDebugging?: string;
-  logging: boolean;
-  packager: boolean;
-  bundle: boolean;
-  launch: boolean;
-  autolink: boolean;
-  build: boolean;
-  deploy: boolean;
+  logging?: boolean;
+  packager?: boolean;
+  bundle?: boolean;
+  launch?: boolean;
+  autolink?: boolean;
+  build?: boolean;
+  deploy?: boolean;
   deployFromLayout?: boolean;
   sln?: string;
   proj?: string;
   msbuildprops?: string;
   buildLogDirectory?: string;
-  info: boolean;
+  info?: boolean;
   directDebugging?: number;
   telemetry?: boolean;
 }
@@ -66,12 +67,12 @@ export const runWindowsOptions: CommandOption[] = [
     name: '--root [string]',
     description:
       'Override the root directory for the windows build which contains the windows folder.',
-    default: config => config.root,
+    default: (config) => config.root,
   },
   {
     name: '--arch [string]',
     description: 'The build architecture (ARM64, x86, x64)',
-    default: 'x86',
+    default: os.arch(),
     parse: parseBuildArch,
   },
   {
@@ -97,7 +98,6 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--logging',
     description: 'Enables logging',
-    default: false,
   },
   {
     name: '--no-packager',
@@ -107,32 +107,26 @@ export const runWindowsOptions: CommandOption[] = [
     name: '--bundle',
     description:
       'Enable Bundle configuration and it would be ReleaseBundle/DebugBundle other than Release/Debug',
-    default: false,
   },
   {
     name: '--no-launch',
     description: 'Do not launch the app after deployment',
-    default: false,
   },
   {
     name: '--no-autolink',
     description: 'Do not run autolinking',
-    default: false,
   },
   {
     name: '--no-build',
     description: 'Do not build the solution',
-    default: false,
   },
   {
     name: '--no-deploy',
     description: 'Do not deploy the app',
-    default: false,
   },
   {
     name: '--deploy-from-layout',
-    description: 'Force deploy from layout, even in release builds',
-    default: false,
+    description: 'Force deploy from layout',
   },
   {
     name: '--sln [string]',
@@ -158,7 +152,6 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--info',
     description: 'Dump environment information',
-    default: false,
   },
   {
     name: '--direct-debugging [number]',
@@ -169,7 +162,6 @@ export const runWindowsOptions: CommandOption[] = [
     name: '--no-telemetry',
     description:
       'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
-    default: true,
   },
 ];
 

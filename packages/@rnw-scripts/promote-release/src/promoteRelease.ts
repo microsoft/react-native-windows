@@ -14,12 +14,15 @@
 
 import chalk from 'chalk';
 import child_process from 'child_process';
+import fs from '@react-native-windows/fs';
+import path from 'path';
 import simplegit from 'simple-git/promise';
 import yargs from 'yargs';
 
 import {
   enumerateRepoPackages,
   WritableNpmPackage,
+  findRepoPackage,
 } from '@react-native-windows/package-utils';
 import findRepoRoot from '@react-native-windows/find-repo-root';
 
@@ -37,21 +40,14 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
   }
 
   console.log('Updating Beachball configuration...');
-  await updateBeachballConfigs(argv.release as ReleaseType, argv.rnVersion);
+  await updatePackageBeachballConfigs(
+    argv.release as ReleaseType,
+    argv.rnVersion,
+  );
 
   if (argv.release === 'preview') {
-    console.log('Updating root change script...');
-    const rootPkg = await WritableNpmPackage.fromPath(await findRepoRoot());
-    if (!rootPkg) {
-      throw new Error('Unable to find root npm package');
-    }
-
-    await rootPkg.mergeProps({
-      scripts: {change: `beachball change --branch ${branchName}`},
-      beachball: {
-        branch: branchName,
-      },
-    });
+    console.log('Updating generated-beachball-config...');
+    await writeGeneratedBeachballConfig({branch: branchName});
 
     console.log('Updating package versions...');
     await updatePackageVersions(`${argv.rnVersion}.0-preview.0`);
@@ -66,9 +62,17 @@ type ReleaseType = 'preview' | 'latest' | 'legacy';
 
   console.log('Generating change files...');
   if (argv.release === 'preview') {
-    await createChangeFiles('prerelease', commitMessage);
+    await createChangeFiles({
+      changeType: 'prerelease',
+      message: commitMessage,
+      branch: 'main',
+    });
   } else {
-    await createChangeFiles('patch', commitMessage);
+    await createChangeFiles({
+      changeType: 'patch',
+      message: commitMessage,
+      branch: branchName,
+    });
   }
 
   console.log(chalk.green('All done! Please check locally commited changes.'));
@@ -103,15 +107,34 @@ function collectArgs() {
 }
 
 /**
- * Modifies beachball configurations to the right npm tag and version bump
- * restrictions
+ * Updates the generated portion of the root Beachball config
+ *
+ * @param json Beachball options to emit
+ */
+async function writeGeneratedBeachballConfig(json: Record<string, unknown>) {
+  const stringifiedConfig = JSON.stringify(json, null, 2);
+
+  const configPkg = (await findRepoPackage(
+    '@rnw-scripts/generated-beachball-config',
+  ))!;
+
+  const jsonPath = path.join(configPkg.path, configPkg.json.main);
+  await fs.writeFile(jsonPath, stringifiedConfig);
+}
+
+/**
+ * Modifies per-package beachball configurations to the right npm tag and
+ * version bump restrictions
  *
  * @param release the release type
  * @param version major + minor version
  */
-async function updateBeachballConfigs(release: ReleaseType, version: string) {
+async function updatePackageBeachballConfigs(
+  release: ReleaseType,
+  version: string,
+) {
   for (const pkg of await enumeratePackagesToPromote()) {
-    await updateBeachballConfig(pkg, release, version);
+    await updatePackageBeachballConfig(pkg, release, version);
   }
 }
 
@@ -122,7 +145,7 @@ async function updateBeachballConfigs(release: ReleaseType, version: string) {
  * @param release the release type
  * @param version major + minor version
  */
-async function updateBeachballConfig(
+async function updatePackageBeachballConfig(
   pkg: WritableNpmPackage,
   release: ReleaseType,
   version: string,
@@ -158,7 +181,7 @@ async function updateBeachballConfig(
  * Finds packages where we need to update version number + beachball config
  */
 async function enumeratePackagesToPromote(): Promise<WritableNpmPackage[]> {
-  return enumerateRepoPackages(async pkg => pkg.json.promoteRelease === true);
+  return enumerateRepoPackages(async (pkg) => pkg.json.promoteRelease === true);
 }
 
 /**
@@ -181,7 +204,7 @@ function distTag(release: ReleaseType, version: string): string {
  */
 async function updatePackageVersions(version: string) {
   const packagesToPromote = await enumeratePackagesToPromote();
-  const promotedPackages = packagesToPromote.map(p => p.json.name);
+  const promotedPackages = packagesToPromote.map((p) => p.json.name);
 
   for (const pkg of packagesToPromote) {
     await pkg.mergeProps({version});
@@ -218,7 +241,7 @@ async function updatePackageVersions(version: string) {
  */
 async function markMainBranchPackagesPrivate() {
   const mainBranchPublishedPackages = await enumerateRepoPackages(
-    async pkg => !pkg.json.promoteRelease && !pkg.json.private,
+    async (pkg) => !pkg.json.promoteRelease && !pkg.json.private,
   );
 
   for (const pkg of mainBranchPublishedPackages) {
@@ -232,13 +255,14 @@ async function markMainBranchPackagesPrivate() {
  * @param changeType prerelease or patch
  * @param message changelog message
  */
-async function createChangeFiles(
-  changeType: 'prerelease' | 'patch',
-  message: string,
-) {
+async function createChangeFiles(opts: {
+  changeType: 'prerelease' | 'patch';
+  message: string;
+  branch: string;
+}) {
   const repoRoot = await findRepoRoot();
   child_process.execSync(
-    `npx beachball change --type ${changeType} --message "${message}"`,
+    `npx beachball change --type ${opts.changeType} --message "${opts.message}" --branch ${opts.branch}`,
     {cwd: repoRoot, stdio: 'ignore'},
   );
 }

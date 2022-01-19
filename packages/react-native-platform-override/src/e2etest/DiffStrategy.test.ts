@@ -60,7 +60,7 @@ async function evaluateStrategy(
   strategy: DiffStrategy,
   overrideFile: string,
 ): Promise<string> {
-  return usingFiles([overrideFile], async overrideRepo => {
+  return usingFiles([overrideFile], async (overrideRepo) => {
     return strategy.diff(gitReactRepo, overrideRepo);
   });
 }

@@ -6,13 +6,11 @@
  */
 
 import _ from 'lodash';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import findRepoRoot from '@react-native-windows/find-repo-root';
 
-const getMonorepoPackages: (
-  root: string,
-) => Array<{
+const getMonorepoPackages: (root: string) => Array<{
   location: string;
   package: any;
 }> = require('get-monorepo-packages');
@@ -55,10 +53,9 @@ export class WritableNpmPackage extends NpmPackage {
   static async fromPath(pkgPath: string): Promise<WritableNpmPackage | null> {
     const jsonPath = path.join(pkgPath, 'package.json');
     try {
-      const jsonBuffer = await fs.promises.readFile(jsonPath);
-      return new WritableNpmPackage(pkgPath, JSON.parse(jsonBuffer.toString()));
+      return new WritableNpmPackage(pkgPath, await fs.readJsonFile(jsonPath));
     } catch (ex) {
-      if (ex.code === 'ENOENT') {
+      if ((ex as any).code === 'ENOENT') {
         return null;
       }
 
@@ -92,7 +89,7 @@ export class WritableNpmPackage extends NpmPackage {
   async setJson(jsonObj: any) {
     this.pkgJson = jsonObj;
 
-    await fs.promises.writeFile(
+    await fs.writeFile(
       path.join(this.path, 'package.json'),
       JSON.stringify(this.json, null /*replacer*/, 2 /*space*/) + '\n',
     );
@@ -110,7 +107,7 @@ export async function enumerateRepoPackages(
 ): Promise<WritableNpmPackage[]> {
   const repoRoot = await findRepoRoot();
   const allPackges = getMonorepoPackages(repoRoot).map(
-    pkg => new WritableNpmPackage(pkg.location, pkg.package),
+    (pkg) => new WritableNpmPackage(pkg.location, pkg.package),
   );
 
   const filteredPackages: WritableNpmPackage[] = [];
@@ -138,7 +135,7 @@ export async function findPackage(
       paths: [opts.searchPath || process.cwd(), ...resolvePaths],
     });
   } catch (ex) {
-    if (ex.code === 'MODULE_NOT_FOUND') {
+    if ((ex as any).code === 'MODULE_NOT_FOUND') {
       return null;
     } else {
       throw ex;
@@ -147,7 +144,7 @@ export async function findPackage(
 
   return new NpmPackage(
     path.dirname(pkgJsonPath),
-    JSON.parse((await fs.promises.readFile(pkgJsonPath)!).toString()),
+    await fs.readJsonFile(pkgJsonPath),
   );
 }
 
@@ -157,7 +154,9 @@ export async function findPackage(
 export async function findRepoPackage(
   name: string,
 ): Promise<WritableNpmPackage | null> {
-  const packages = await enumerateRepoPackages(async p => p.json.name === name);
+  const packages = await enumerateRepoPackages(
+    async (p) => p.json.name === name,
+  );
 
   if (packages.length === 0) {
     return null;

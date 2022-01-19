@@ -7,7 +7,7 @@
 
 import yargs from 'yargs';
 import path from 'path';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
 // @ts-ignore
@@ -98,9 +98,11 @@ function checkFilesForChanges(
 
   const allExistingFiles = globby
     .sync(`${outputDir}/**`)
-    .map(_ => path.normalize(_))
+    .map((_) => path.normalize(_))
     .sort();
-  const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
+  const allGeneratedFiles = [...map.keys()]
+    .map((_) => path.normalize(_))
+    .sort();
 
   if (
     allExistingFiles.length !== allGeneratedFiles.length ||
@@ -130,7 +132,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
   // This ensures that we delete any generated files from modules that have been deleted
   const allExistingFiles = globby.sync(`${outputDir}/**`);
-  allExistingFiles.forEach(existingFile => {
+  allExistingFiles.forEach((existingFile) => {
     if (!map.has(path.normalize(existingFile))) {
       fs.unlinkSync(existingFile);
     }
@@ -207,18 +209,18 @@ function generate(
   );
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
-  const generatorPropsH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH')
-    .generate;
-  const generatorPropsCPP = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsCPP')
-    .generate;
-  const generatorShadowNodeH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeH')
-    .generate;
-  const generatorShadowNodeCPP = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeCPP')
-    .generate;
-  const generatorComponentDescriptorH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH')
-    .generate;
-  const generatorEventEmitterH = require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH')
-    .generate;
+  const generatorPropsH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH').generate;
+  const generatorPropsCPP =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsCPP').generate;
+  const generatorShadowNodeH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeH').generate;
+  const generatorShadowNodeCPP =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeCPP').generate;
+  const generatorComponentDescriptorH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH').generate;
+  const generatorEventEmitterH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH').generate;
 
   normalizeFileMap(
     generateNM2(libraryName, schema, moduleSpecName),
@@ -226,23 +228,29 @@ function generate(
     generatedFiles,
   );
 
-  const componentGenerators = [
-    generatorPropsH,
-    generatorPropsCPP,
-    generatorShadowNodeH,
-    generatorShadowNodeCPP,
-    generatorComponentDescriptorH,
-    generatorEventEmitterH,
-  ];
+  if (
+    Object.keys(schema.modules).some(
+      (moduleName) => schema.modules[moduleName].type === 'Component',
+    )
+  ) {
+    const componentGenerators = [
+      generatorPropsH,
+      generatorPropsCPP,
+      generatorShadowNodeH,
+      generatorShadowNodeCPP,
+      generatorComponentDescriptorH,
+      generatorEventEmitterH,
+    ];
 
-  componentGenerators.forEach(generator => {
-    const generated: Map<string, string> = generator(
-      libraryName,
-      schema,
-      moduleSpecName,
-    );
-    normalizeFileMap(generated, componentOutputdir, generatedFiles);
-  });
+    componentGenerators.forEach((generator) => {
+      const generated: Map<string, string> = generator(
+        libraryName,
+        schema,
+        moduleSpecName,
+      );
+      normalizeFileMap(generated, componentOutputdir, generatedFiles);
+    });
+  }
 
   if (test === true) {
     return checkFilesForChanges(generatedFiles, outputDirectory);

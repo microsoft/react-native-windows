@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct BugReportingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"startReportAProblemFlow"},
-      Method<void(React::JSValueObject, React::JSValueObject) noexcept>{1, L"setExtraData"},
+      Method<void(::React::JSValue, ::React::JSValue) noexcept>{1, L"setExtraData"},
       Method<void(std::string) noexcept>{2, L"setCategoryID"},
   };
 
@@ -32,8 +32,8 @@ struct BugReportingSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setExtraData",
-          "    REACT_METHOD(setExtraData) void setExtraData(React::JSValueObject && extraData, React::JSValueObject && extraFiles) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setExtraData) static void setExtraData(React::JSValueObject && extraData, React::JSValueObject && extraFiles) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setExtraData) void setExtraData(::React::JSValue && extraData, ::React::JSValue && extraFiles) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setExtraData) static void setExtraData(::React::JSValue && extraData, ::React::JSValue && extraFiles) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "setCategoryID",

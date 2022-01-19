@@ -15,6 +15,12 @@ using std::make_unique;
 using std::promise;
 using std::string;
 
+namespace {
+
+constexpr char testUrl[] = "ws://localhost";
+
+} // namespace
+
 namespace Microsoft::React::Test {
 
 using CloseCode = IWebSocketResource::CloseCode;
@@ -30,7 +36,7 @@ TEST_CLASS(BaseWebSocketTest){
   END_TEST_CLASS_ATTRIBUTE()
 
   TEST_METHOD(CreateAndSetHandlers){
-    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url(testUrl));
 
     Assert::IsFalse(nullptr == ws);
     ws->SetOnConnect([]() {});
@@ -44,11 +50,11 @@ TEST_CLASS(BaseWebSocketTest){
   TEST_METHOD(ConnectSucceeds) {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url(testUrl));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected = true; });
 
-    ws->Connect({}, {});
+    ws->Connect(testUrl, {}, {});
     ws->Close(CloseCode::Normal, {});
 
     Assert::AreEqual({}, errorMessage);
@@ -58,14 +64,14 @@ TEST_CLASS(BaseWebSocketTest){
   TEST_METHOD(ConnectFails) {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url(testUrl));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected = true; });
     ws->SetConnectResult([]() -> error_code {
       return make_error_code(errc::state_not_recoverable);
     });
 
-    ws->Connect({}, {});
+    ws->Connect(testUrl, {}, {});
     ws->Close(CloseCode::Normal, {});
 
     Assert::AreNotEqual({}, errorMessage);
@@ -78,14 +84,14 @@ TEST_CLASS(BaseWebSocketTest){
   TEST_METHOD(HandshakeFails) {
     string errorMessage;
     bool connected = false;
-    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url(testUrl));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected = true; });
     ws->SetHandshakeResult([](string, string) -> error_code {
       return make_error_code(errc::state_not_recoverable);
     });
 
-    ws->Connect({}, {});
+    ws->Connect(testUrl, {}, {});
     ws->Close(CloseCode::Normal, {});
 
     Assert::AreNotEqual({}, errorMessage);
@@ -99,7 +105,7 @@ TEST_CLASS(BaseWebSocketTest){
     string errorMessage;
     promise<void> connected;
     bool closed = false;
-    auto ws = make_unique<TestWebSocketResource>(Url("ws://localhost"));
+    auto ws = make_unique<TestWebSocketResource>(Url(testUrl));
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
     ws->SetOnConnect([&connected]() { connected.set_value(); });
     ws->SetOnClose(
@@ -108,7 +114,7 @@ TEST_CLASS(BaseWebSocketTest){
     ws->SetCloseResult(
         []() -> error_code { return make_error_code(errc::success); });
 
-    ws->Connect({}, {});
+    ws->Connect(testUrl, {}, {});
     connected.get_future().wait();
 
     ws->Close(CloseCode::Normal, "Normal");

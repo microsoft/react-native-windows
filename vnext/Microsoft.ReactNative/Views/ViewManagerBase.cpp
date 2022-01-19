@@ -16,6 +16,7 @@
 #include <Modules/PaperUIManagerModule.h>
 #include <ReactPropertyBag.h>
 #include <TestHook.h>
+#include <Utils/PropertyUtils.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
 
@@ -24,6 +25,11 @@ using namespace xaml;
 }
 
 namespace Microsoft::ReactNative {
+
+static const std::unordered_map<std::string, PointerEventsKind> pointerEventsMap = {
+    {"box-none", PointerEventsKind::BoxNone},
+    {"box-only", PointerEventsKind::BoxOnly},
+    {"none", PointerEventsKind::None}};
 
 float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode) {
   // Round up to workaround truncation inside yoga
@@ -92,6 +98,8 @@ void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   React::WriteProperty(writer, L"onLayout", L"function");
   React::WriteProperty(writer, L"keyDownEvents", L"array");
   React::WriteProperty(writer, L"keyUpEvents", L"array");
+  React::WriteProperty(writer, L"onMouseEnter", L"function");
+  React::WriteProperty(writer, L"onMouseLeave", L"function");
 }
 
 void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
@@ -232,15 +240,6 @@ void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldCh
 void ViewManagerBase::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     winrt::Microsoft::ReactNative::JSValueObject &props) {
-  // Directly dirty this node since non-layout changes like the text property do
-  // not trigger relayout
-  //  There isn't actually a yoga node for RawText views, but it will invalidate
-  //  the ancestors which
-  //  will include the containing Text element. And that's what matters.
-  int64_t tag = GetTag(nodeToUpdate->GetView());
-  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock())
-    uiManager->DirtyYogaNode(tag);
-
   for (const auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
@@ -262,6 +261,22 @@ bool ViewManagerBase::UpdateProperty(
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
   } else if (propertyName == "keyUpEvents") {
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+  } else if (propertyName == "pointerEvents") {
+    const auto iter = pointerEventsMap.find(propertyValue.AsString());
+    if (iter != pointerEventsMap.end()) {
+      nodeToUpdate->m_pointerEvents = iter->second;
+      if (nodeToUpdate->m_pointerEvents == PointerEventsKind::None) {
+        if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+          uiElement.IsHitTestVisible(false);
+        }
+      }
+    } else {
+      nodeToUpdate->m_pointerEvents = PointerEventsKind::Auto;
+      if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+        uiElement.ClearValue(xaml::UIElement::IsHitTestVisibleProperty());
+      }
+    }
+  } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
   } else {
     return false;
   }
@@ -366,6 +381,22 @@ bool ViewManagerBase::RequiresYogaNode() const {
 
 bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
+}
+
+void ViewManagerBase::MarkDirty(int64_t tag) {
+  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock())
+    uiManager->DirtyYogaNode(tag);
+}
+
+void ViewManagerBase::OnPointerEvent(
+    ShadowNodeBase *node,
+    const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args) {
+  if ((args.Target() == node->GetView() && node->m_pointerEvents == PointerEventsKind::BoxNone) ||
+      node->m_pointerEvents == PointerEventsKind::None) {
+    args.Target(nullptr);
+  } else if (node->m_pointerEvents == PointerEventsKind::BoxOnly) {
+    args.Target(node->GetView());
+  }
 }
 
 void ViewManagerBase::DispatchEvent(

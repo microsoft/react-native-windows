@@ -4,68 +4,87 @@
  * @format
  */
 
-import crypto from 'crypto';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
-import {
-  Telemetry,
-  isMSFTInternal,
-  getDiskFreeSpace,
-  CodedError,
-  CodedErrorType,
-  CodedErrors,
-} from '@react-native-windows/telemetry';
+import {Telemetry, CodedError} from '@react-native-windows/telemetry';
 
 import * as build from './utils/build';
 import chalk from 'chalk';
 import * as deploy from './utils/deploy';
-import {newError, newInfo, newWarn} from './utils/commandWithProgress';
+import {
+  newError,
+  newInfo,
+  newWarn,
+  setExitProcessWithError,
+} from './utils/commandWithProgress';
+import {
+  getDefaultOptions,
+  startTelemetrySession,
+  endTelemetrySession,
+} from './utils/telemetryHelpers';
 import * as info from './utils/info';
 import MSBuildTools from './utils/msbuildtools';
 
 import {Command, Config} from '@react-native-community/cli-types';
 import {runWindowsOptions, RunWindowsOptions} from './runWindowsOptions';
 
-import {autoLinkCommand} from './utils/autolink';
-import {totalmem, cpus} from 'os';
+import {autolinkWindowsInternal, AutoLinkOptions} from './utils/autolink';
 
-function setExitProcessWithError(
-  error: Error,
-  loggingWasEnabled: boolean,
-): void {
-  if (!loggingWasEnabled) {
-    console.log(
-      `Re-run the command with ${chalk.bold('--logging')} for more information`,
-    );
-    if (Telemetry.client) {
-      console.log(
-        `Your session id was ${Telemetry.client.commonProperties.sessionId}`,
-      );
-    }
+/**
+ * Sanitizes the given option for telemetery.
+ * @param key The key of the option.
+ * @param value The unsanitized value of the option.
+ * @returns The sanitized value of the option.
+ */
+// eslint-disable-next-line complexity
+function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
+  // Do not add a default case here.
+  // Strings risking PII should just return true if present, false otherwise.
+  // All others should return the value (or false if undefined).
+  switch (key) {
+    case 'root':
+    case 'target':
+    case 'sln':
+    case 'proj':
+    case 'buildLogDirectory':
+      return value === undefined ? false : true; // Strip PII
+    case 'msbuildprops':
+      return value === undefined ? 0 : value.split(',').length; // Convert to count
+    case 'release':
+    case 'arch':
+    case 'singleproc':
+    case 'emulator':
+    case 'device':
+    case 'remoteDebugging':
+    case 'logging':
+    case 'packager':
+    case 'bundle':
+    case 'launch':
+    case 'autolink':
+    case 'build':
+    case 'deploy':
+    case 'deployFromLayout':
+    case 'info':
+    case 'directDebugging':
+    case 'telemetry':
+      return value === undefined ? false : value; // Return value
   }
-  if (error instanceof CodedError) {
-    process.exitCode = CodedErrors[error.name as CodedErrorType];
-  } else {
-    process.exitCode = 1;
-  }
-}
-
-function getPkgVersion(pkgName: string): string {
-  try {
-    const pkgJsonPath = require.resolve(`${pkgName}/package.json`, {
-      paths: [process.cwd(), __dirname],
-    });
-    const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath).toString());
-    if (pkgJson.name === pkgName && pkgJson.version !== undefined) {
-      return pkgJson.version;
-    }
-  } catch {}
-  newWarn(`Could not determine ${pkgName} version`);
-  return '';
 }
 
 /**
- * Labels used by telemtry to represent current operation
+ * Get the extra props to add to the `run-windows` telemetry event.
+ * @returns The extra props.
+ */
+async function getExtraProps(): Promise<Record<string, any>> {
+  const extraProps: Record<string, any> = {
+    phase: runWindowsPhase,
+    hasRunRnwDependencies,
+  };
+  return extraProps;
+}
+
+/**
+ * Labels used by telemetry to represent current operation
  */
 type RunWindowsPhase =
   | 'None'
@@ -75,8 +94,11 @@ type RunWindowsPhase =
   | 'Deploy';
 
 let runWindowsPhase: RunWindowsPhase = 'None';
+
+let hasRunRnwDependencies: boolean = false;
+
 /**
- * Performs build deploy and launch of RNW apps.
+ * The function run when calling `react-native run-windows`.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
@@ -86,14 +108,13 @@ async function runWindows(
   config: Config,
   options: RunWindowsOptions,
 ) {
-  if (!options.telemetry) {
-    if (options.logging) {
-      console.log('Disabling telemetry');
-    }
-    Telemetry.disable();
-  } else {
-    Telemetry.setup();
-  }
+  await startTelemetrySession(
+    'run-windows',
+    config,
+    options,
+    getDefaultOptions(config, runWindowsOptions),
+    optionSanitizer,
+  );
 
   // https://github.com/yarnpkg/yarn/issues/8334 - Yarn on Windows breaks apps that read from the environment variables
   // Yarn will run node via CreateProcess and pass npm_config_* variables in lowercase without unifying their value
@@ -104,31 +125,41 @@ async function runWindows(
   delete process.env.NPM_CONFIG_CACHE;
   delete process.env.NPM_CONFIG_PREFIX;
 
-  const hasRunRnwDependencies =
-    process.env.LocalAppData &&
-    fs.existsSync(path.join(process.env.LocalAppData, 'rnw-dependencies.txt')); // CODESYNC \vnext\scripts\rnw-dependencies.ps1
+  if (process.env.LocalAppData) {
+    hasRunRnwDependencies = fs.existsSync(
+      path.join(process.env.LocalAppData, 'rnw-dependencies.txt'),
+    ); // CODESYNC \vnext\scripts\rnw-dependencies.ps1
+  }
 
+  let runWindowsError: Error | undefined;
   if (options.info) {
     try {
       const output = await info.getEnvironmentInfo();
       console.log(output.trimEnd());
       console.log('  Installed UWP SDKs:');
       const sdks = MSBuildTools.getAllAvailableUAPVersions();
-      sdks.forEach(version => console.log('    ' + version));
-      return;
-    } catch (e) {
-      Telemetry.trackException(e);
-      newError('Unable to print environment info.\n' + e.toString());
-      return setExitProcessWithError(e, options.logging);
+      sdks.forEach((version) => console.log('    ' + version));
+    } catch (ex) {
+      runWindowsError =
+        ex instanceof Error ? (ex as Error) : new Error(String(ex));
+      Telemetry.trackException(runWindowsError);
+
+      newError(
+        'Unable to print environment info.\n' + runWindowsError.toString(),
+      );
     }
+    await endTelemetrySession(runWindowsError, getExtraProps);
+    setExitProcessWithError(options.logging, runWindowsError);
+    return;
   }
 
-  let runWindowsError;
   try {
     await runWindowsInternal(args, config, options);
-  } catch (e) {
-    Telemetry.trackException(e);
-    runWindowsError = e;
+  } catch (ex) {
+    runWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    Telemetry.trackException(runWindowsError);
+
     if (!hasRunRnwDependencies) {
       const rnwPkgJsonPath = require.resolve(
         'react-native-windows/package.json',
@@ -145,82 +176,23 @@ async function runWindows(
         `It is possible your installation is missing required software dependencies. Dependencies can be automatically installed by running ${rnwDependenciesPath} from an elevated PowerShell prompt.\nFor more information, go to http://aka.ms/rnw-deps`,
       );
     }
-    return setExitProcessWithError(e, options.logging);
-  } finally {
-    Telemetry.client?.trackEvent({
-      name: 'run-windows',
-      properties: {
-        release: options.release,
-        arch: options.arch,
-        singleproc: options.singleproc,
-        emulator: options.emulator,
-        device: options.device,
-        target: options.target,
-        remoteDebugging: options.remoteDebugging,
-        logging: options.logging,
-        packager: options.packager,
-        bundle: options.bundle,
-        launch: options.launch,
-        autolink: options.autolink,
-        build: options.bundle,
-        deploy: options.deploy,
-        sln: options.sln !== undefined,
-        proj: options.proj !== undefined,
-        msBuildProps:
-          options.msbuildprops !== undefined
-            ? options.msbuildprops!.split(',').length
-            : 0,
-        info: options.info,
-        directDebugging: options.directDebugging,
-        'react-native-windows': getPkgVersion('react-native-windows'),
-        'react-native': getPkgVersion('react-native'),
-        'cli-version': getPkgVersion('@react-native-windows/cli'),
-        msftInternal: isMSFTInternal(),
-        durationInSecs: process.uptime(),
-        success: runWindowsError === undefined,
-        phase: runWindowsPhase,
-        totalMem: totalmem(),
-        diskFree: getDiskFreeSpace(__dirname),
-        cpus: cpus().length,
-        project: await getAnonymizedProjectName(config.root),
-        hasRunRnwDependencies: hasRunRnwDependencies,
-      },
-    });
-    Telemetry.client?.flush();
   }
+  await endTelemetrySession(runWindowsError, getExtraProps);
+  setExitProcessWithError(options.logging, runWindowsError);
 }
 
-export async function getAnonymizedProjectName(
-  projectRoot: string,
-): Promise<string | null> {
-  const projectJsonPath = path.join(projectRoot, 'package.json');
-  if (!fs.existsSync(projectJsonPath)) {
-    return null;
-  }
-
-  const projectJson = JSON.parse(
-    (await fs.promises.readFile(projectJsonPath)).toString(),
-  );
-
-  const projectName = projectJson.name;
-  if (typeof projectName !== 'string') {
-    return null;
-  }
-
-  // Ensure the project name cannot be reverse engineered to avoid leaking PII
-  return crypto
-    .createHash('sha256')
-    .update(projectName)
-    .digest('hex')
-    .toString();
-}
-
+/**
+ * Performs build deploy and launch of RNW apps.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
+ */
 async function runWindowsInternal(
   args: string[],
   config: Config,
   options: RunWindowsOptions,
 ) {
-  const verbose = options.logging;
+  const verbose = options.logging === true;
 
   if (verbose) {
     newInfo('Verbose: ON');
@@ -231,7 +203,19 @@ async function runWindowsInternal(
   try {
     slnFile = build.getAppSolutionFile(options, config);
   } catch (e) {
-    newError(`Couldn't get app solution information. ${e.message}`);
+    newError(`Couldn't get app solution information. ${(e as Error).message}`);
+    throw e;
+  }
+
+  // Restore packages.config files for dependencies that don't support PackageReference.
+  try {
+    build.restorePackageConfigs(options);
+  } catch (e) {
+    newError(
+      `Couldn't restore found packages.config instances. ${
+        (e as Error).message
+      }`,
+    );
     throw e;
   }
 
@@ -239,18 +223,24 @@ async function runWindowsInternal(
     if (options.autolink) {
       const autolinkArgs: string[] = [];
       const autolinkConfig = config;
-      const autoLinkOptions = {
+      const autoLinkOptions: AutoLinkOptions = {
         logging: options.logging,
+        check: false,
         proj: options.proj,
         sln: options.sln,
+        telemetry: options.telemetry,
       };
       runWindowsPhase = 'AutoLink';
-      await autoLinkCommand.func(autolinkArgs, autolinkConfig, autoLinkOptions);
+      await autolinkWindowsInternal(
+        autolinkArgs,
+        autolinkConfig,
+        autoLinkOptions,
+      );
     } else {
       newInfo('Autolink step is skipped');
     }
   } catch (e) {
-    newError(`Autolinking failed. ${e.message}`);
+    newError(`Autolinking failed. ${(e as Error).message}`);
     throw e;
   }
 
@@ -269,7 +259,7 @@ async function runWindowsInternal(
         true, // preRelease
       );
     } catch (e) {
-      newError(e.message);
+      newError((e as Error).message);
       throw error;
     }
   }
@@ -305,10 +295,12 @@ async function runWindowsInternal(
       );
     } catch (e) {
       newError(
-        `Build failed with message ${e.message}. Check your build configuration.`,
+        `Build failed with message ${
+          (e as Error).message
+        }. Check your build configuration.`,
       );
-      if (e.logfile) {
-        console.log('See', chalk.bold(e.logfile));
+      if ((e as any).logfile) {
+        console.log('See', chalk.bold((e as any).logfile));
       }
       throw e;
     }
@@ -332,12 +324,12 @@ async function runWindowsInternal(
     try {
       runWindowsPhase = 'Deploy';
       if (options.device || options.emulator || options.target) {
-        await deploy.deployToDevice(options, verbose);
+        await deploy.deployToDevice(options, verbose, config);
       } else {
         await deploy.deployToDesktop(options, verbose, config, buildTools);
       }
     } catch (e) {
-      newError(`Failed to deploy${e ? `: ${e.message}` : ''}`);
+      newError(`Failed to deploy${e ? `: ${(e as Error).message}` : ''}`);
       throw e;
     }
   } else {
@@ -346,7 +338,11 @@ async function runWindowsInternal(
 }
 
 function shouldLaunchPackager(options: RunWindowsOptions): boolean {
-  return options.packager && options.launch && options.release !== true;
+  return (
+    options.packager === true &&
+    options.launch === true &&
+    options.release !== true
+  );
 }
 
 /*

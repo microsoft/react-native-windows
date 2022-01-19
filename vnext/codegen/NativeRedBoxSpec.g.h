@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct RedBoxSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(React::JSValueObject, std::string) noexcept>{0, L"setExtraData"},
+      Method<void(::React::JSValue, std::string) noexcept>{0, L"setExtraData"},
       Method<void() noexcept>{1, L"dismiss"},
   };
 
@@ -26,8 +26,8 @@ struct RedBoxSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "setExtraData",
-          "    REACT_METHOD(setExtraData) void setExtraData(React::JSValueObject && extraData, std::string forIdentifier) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(setExtraData) static void setExtraData(React::JSValueObject && extraData, std::string forIdentifier) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(setExtraData) void setExtraData(::React::JSValue && extraData, std::string forIdentifier) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(setExtraData) static void setExtraData(::React::JSValue && extraData, std::string forIdentifier) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "dismiss",

@@ -13,7 +13,7 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.19041.0</WindowsTargetPlatformVersion>
+    <!-- Overriding for WinUI3 compatibility. See property UseWinUI3. -->
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
@@ -21,11 +21,10 @@
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <Import Project="$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props')" />
-  <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" />
-  <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" />
-  <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props')" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\PackageVersionDefinitions.props" />
+  <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -81,15 +80,18 @@
     <Import Project="PropertySheet.props" />
     <Import Project="..\PropertySheets\WinUI.props" />
   </ImportGroup>
-  <Import Project="$(SolutionDir)packages\$(WinUIPackageProps)" Condition="'$(WinUIPackageProps)'!='' And Exists('$(SolutionDir)packages\$(WinUIPackageProps)')" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(GeneratedFilesDir);$(IncludePath)</IncludePath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(EnableSourceLink)' == 'true'">
+    <!-- Workaround. SourceLink target overrides modify %(Link)->AdditionalOptions before ComputeXamlGeneratedCLOutputs is called. -->
+    <BeforeLinkTargets>ComputeXamlGeneratedCLOutputs;$(BeforeLinkTargets)</BeforeLinkTargets>
+  </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -118,8 +120,6 @@
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
-      <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'=='true'">CHAKRACORE;CHAKRACORE_UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(CHAKRACOREUWP)'!='true'">USE_EDGEMODE_JSRT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions>
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
@@ -132,7 +132,6 @@
         _HAS_AUTO_PTR_ETC;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(RNW_FASTBUILD)' == 'true'">RNW_FASTBUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -344,6 +343,16 @@
     <ClInclude Include="Views\SwitchViewManager.h" />
     <ClInclude Include="Views\TextInputViewManager.h" />
     <ClInclude Include="Views\TextViewManager.h" />
+    <ClInclude Include="Views\Text\TextHighlighterVisitor.h" />
+    <ClInclude Include="Views\Text\TextHitTestUtils.h" />
+    <ClInclude Include="Views\Text\TextHitTestVisitor.h" />
+    <ClInclude Include="Views\Text\TextParentVisitor.h" />
+    <ClInclude Include="Views\Text\TextPropertyChangedParentVisitor.h" />
+    <ClInclude Include="Views\Text\TextTransformParentVisitor.h" />
+    <ClInclude Include="Views\Text\TextTransformVisitor.h" />
+    <ClInclude Include="Views\Text\TextVisitorScope.h" />
+    <ClInclude Include="Views\Text\TextVisitor.h" />
+    <ClInclude Include="Views\Text\TextVisitors.h" />
     <ClInclude Include="Views\TouchEventHandler.h" />
     <ClInclude Include="Views\ViewControl.h" />
     <ClInclude Include="Views\ViewManager.h" />
@@ -381,6 +390,10 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="XamlView.h" />
+    <ClInclude Include="ReactPointerEventArgs.h">
+      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\config\ReactNativeConfig.cpp" />
@@ -470,6 +483,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\templateprocessor\UITemplateProcessor.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\textlayoutmanager\TextMeasureCache.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\bindingUtils.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\SurfaceRegistryBinding.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeWindowsDir)codegen\react\components\rnwcore\Props.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)">
@@ -567,6 +582,10 @@
     <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
+    <ClCompile Include="ReactPointerEventArgs.cpp">
+      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="RedBoxErrorInfo.cpp" />
     <ClCompile Include="RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="TurboModulesProvider.cpp" />
@@ -646,6 +665,14 @@
     <ClCompile Include="Views\SwitchViewManager.cpp" />
     <ClCompile Include="Views\TextInputViewManager.cpp" />
     <ClCompile Include="Views\TextViewManager.cpp" />
+    <ClCompile Include="Views\Text\TextHighlighterVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextHitTestUtils.cpp" />
+    <ClCompile Include="Views\Text\TextHitTestVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextParentVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextPropertyChangedParentVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextTransformVisitor.cpp" />
+    <ClCompile Include="Views\Text\TextVisitor.cpp" />
     <ClCompile Include="Views\TouchEventHandler.cpp" />
     <ClCompile Include="Views\ViewControl.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />
@@ -732,9 +759,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="XamlHelper.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="microsoft.reactnative.def" />
   </ItemGroup>
   <ItemGroup>
@@ -745,11 +772,11 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Version.rc">
-      <PreprocessorDefinitions Condition="'$(RNW_PKG_VERSION_STR)'!=''">
-        RNW_PKG_VERSION_STR=$(RNW_PKG_VERSION_STR);
-        RNW_PKG_VERSION_MAJOR=$(RNW_PKG_VERSION_MAJOR);
-        RNW_PKG_VERSION_MINOR=$(RNW_PKG_VERSION_MINOR);
-        RNW_PKG_VERSION_PATCH=$(RNW_PKG_VERSION_PATCH);
+      <PreprocessorDefinitions>
+        RNW_VERSION=$(ReactNativeWindowsVersion);
+        RNW_MAJOR=$(ReactNativeWindowsMajor);
+        RNW_MINOR=$(ReactNativeWindowsMinor);
+        RNW_PATCH=$(ReactNativeWindowsPatch);
         _UNICODE;
         UNICODE;
         %(PreprocessorDefinitions)
@@ -775,34 +802,38 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
+    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(EnableSourceLink)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Tasks.Git" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="'$(UseV8)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="'$(WebView2Version)'!=''">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2Version)" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)packages\boost.1.76.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)\packages\boost.1.76.0.0\build\boost.targets')" />
-    <Import Project="$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" />
-    <Import Project="$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets" Condition="Exists('$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" />
-    <Import Project="$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets" Condition="Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(UseV8)' == 'true'" />
-    <Import Project="$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets" Condition="Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets') AND '$(IncludeHermes)' == 'true'" />
-    <Import Project="$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" />
-    <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" />
-    <Import Project="$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
-  </ImportGroup>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('$(SolutionDir)packages\boost.1.76.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\boost.1.76.0.0\build\boost.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.props'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\Microsoft.Windows.CppWinRT.2.0.210312.4\build\native\Microsoft.Windows.CppWinRT.targets'))" />
-    <Error Condition="!Exists('$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)packages\$(WinUIPackageName).$(WinUIPackageVersion)\build\native\$(WinUIPackageName).targets'))" />
-    <Error Condition="!Exists('$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets') AND '$(UseV8)' == 'true'" Text="$([System.String]::Format('$(ErrorText)', '$(V8Package)\build\native\ReactNative.V8JSI.Windows.UWP.targets'))" />
-    <Error Condition="!Exists('$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(HermesPackage)\build\native\ReactNative.Hermes.Windows.targets'))" />
-    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.props'))" />
-    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.Build.Tasks.Git.1.0.0\build\Microsoft.Build.Tasks.Git.targets'))" />
-    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.props'))" />
-    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.Common.1.0.0\build\Microsoft.SourceLink.Common.targets'))" />
-    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props'))" />
-    <Error Condition="'$(EnableSourceLink)' == 'true' and !Exists('$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets'))" />
-  </Target>
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\FastBuild.targets" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\FixupRoslynCscWarnings.targets" />
   <Target Name="AfterCppClean">
     <RemoveDir Directories="$(IdlHeaderDirectory)" ContinueOnError="true" />
     <RemoveDir Directories="$(UnmergedWinmdDirectory)" ContinueOnError="true" />

@@ -19,7 +19,7 @@ void AccessibilityInfo::Initialize(winrt::Microsoft::ReactNative::ReactContext c
   m_context = reactContext;
 }
 
-void AccessibilityInfo::isReduceMotionEnabled(std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
+void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   auto jsDispatcher = m_context.JSDispatcher();
   m_context.UIDispatcher().Post([weakThis = weak_from_this(), jsDispatcher, onSuccess] {
     if (auto strongThis = weakThis.lock()) {
@@ -30,8 +30,7 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(React::JSValue 
   });
 }
 
-void AccessibilityInfo::isTouchExplorationEnabled(
-    std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
+void AccessibilityInfo::isTouchExplorationEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   onSuccess(UiaClientsAreListening());
 }
 
@@ -73,8 +72,12 @@ void AccessibilityInfo::announceForAccessibility(std::string announcement) noexc
 
 void AccessibilityInfo::getRecommendedTimeoutMillis(
     double mSec,
-    std::function<void(React::JSValue const &)> const &onSuccess) noexcept {
+    std::function<void(double)> const &onSuccess) noexcept {
   onSuccess(mSec);
+}
+
+void AccessibilityInfo::isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  onSuccess(false);
 }
 
 } // namespace Microsoft::ReactNative

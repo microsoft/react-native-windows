@@ -281,6 +281,33 @@ namespace SampleLibraryCS
         [ReactEvent("TimedEventCS")]
         public Action<int> TimedEvent { get; set; }
 
+        [ReactEvent("JSEventArg0CS")]
+        public Action JSEventArg0 { get; set; }
+
+        [ReactEvent("JSEventArg1CS")]
+        public Action<int> JSEventArg1 { get; set; }
+
+        [ReactEvent("JSEventArg2CS")]
+        public Action<int, int> JSEventArg2 { get; set; }
+
+        [ReactMethod]
+        public void EmitJSEventArg0()
+        {
+            JSEventArg0?.Invoke();
+        }
+
+        [ReactMethod]
+        public void EmitJSEventArg1(int value1)
+        {
+            JSEventArg1?.Invoke(value1);
+        }
+
+        [ReactMethod]
+        public void EmitJSEventArg2(int value1, int value2)
+        {
+            JSEventArg2?.Invoke(value1, value2);
+        }
+
         [ReactMethod]
         public void EmitJSEvent1(int value)
         {

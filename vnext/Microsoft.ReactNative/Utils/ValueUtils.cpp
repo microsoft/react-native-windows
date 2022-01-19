@@ -305,7 +305,7 @@ REACTWINDOWS_API_(bool) IsValidColorValue(const winrt::Microsoft::ReactNative::J
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   std::chrono::milliseconds dur((int64_t)ms);
-  return winrt::TimeSpan::duration(dur);
+  return dur;
 }
 
 // C# provides System.Uri.TryCreate, but no native equivalent seems to exist

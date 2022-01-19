@@ -5,6 +5,7 @@
 #include "ReactCoreInjection.h"
 #include "ReactCoreInjection.g.cpp"
 #include "ReactViewOptions.g.cpp"
+#include <future/futureWinRT.h>
 #include "IReactContext.h"
 #include "ReactContext.h"
 #include "ReactInstanceWin.h"
@@ -86,16 +87,18 @@ ReactViewHost::ReactViewHost(
 
 // ReactViewOptions ReactViewHost::Options() noexcept;
 // ReactNative::ReactNativeHost ReactViewHost::ReactHost() noexcept {}
-void ReactViewHost::ReloadViewInstance() noexcept {
-  m_viewHost->ReloadViewInstance();
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::ReloadViewInstance() noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(m_viewHost->ReloadViewInstance());
 }
 
-void ReactViewHost::ReloadViewInstanceWithOptions(ReactNative::ReactViewOptions options) noexcept {
-  m_viewHost->ReloadViewInstanceWithOptions(options.as<ReactViewOptions>()->CreateViewOptions());
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::ReloadViewInstanceWithOptions(
+    ReactNative::ReactViewOptions options) noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(
+      m_viewHost->ReloadViewInstanceWithOptions(options.as<ReactViewOptions>()->CreateViewOptions()));
 }
 
-void ReactViewHost::UnloadViewInstance() noexcept {
-  m_viewHost->UnloadViewInstance();
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::UnloadViewInstance() noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(m_viewHost->UnloadViewInstance());
 }
 
 //! This class ensures that we access ReactRootView from UI thread.
@@ -136,23 +139,22 @@ struct ReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::Weak
   inline Mso::Future<void> PostInUIQueue(winrt::delegate<ReactNative::IReactViewInstance> const &action) noexcept {
     Mso::Promise<void> promise;
 
-    // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
-    m_uiDispatcher.Post([weakThis = Mso::WeakPtr{this}, promise, action{std::move(action)}]() mutable noexcept {
-      if (auto strongThis = weakThis.GetStrongPtr()) {
-        action(strongThis->m_rootControl);
-        promise.SetValue();
-      } else {
-        promise.TryCancel();
-      }
+    m_uiDispatcher.Post([control = m_rootControl, promise, action{std::move(action)}]() mutable noexcept {
+      action(control);
+      promise.SetValue();
     });
     return promise.AsFuture();
   }
 };
 
-void ReactViewHost::AttachViewInstance(ReactNative::IReactViewInstance viewInstance) noexcept {
-  m_viewHost->AttachViewInstance(*Mso::Make<ReactViewInstance>(viewInstance, m_uiDispatcher));
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::AttachViewInstance(
+    ReactNative::IReactViewInstance viewInstance) noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(
+      m_viewHost->AttachViewInstance(*Mso::Make<ReactViewInstance>(viewInstance, m_uiDispatcher)));
 }
 
-void ReactViewHost::DetachViewInstance() noexcept {}
+winrt::Windows::Foundation::IAsyncAction ReactViewHost::DetachViewInstance() noexcept {
+  return make<Mso::AsyncActionFutureAdapter>(m_viewHost->DetachViewInstance());
+}
 
 } // namespace winrt::Microsoft::ReactNative::implementation

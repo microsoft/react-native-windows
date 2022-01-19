@@ -5,7 +5,7 @@
  */
 
 import {spawn, execSync, SpawnOptions} from 'child_process';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import http from 'http';
 import path from 'path';
 import glob from 'glob';
@@ -19,11 +19,13 @@ import {
   newSpinner,
   commandWithProgress,
   runPowerShellScriptFunction,
+  powershell,
 } from './commandWithProgress';
 import * as build from './build';
 import {BuildConfig, RunWindowsOptions} from '../runWindowsOptions';
 import MSBuildTools from './msbuildtools';
 import {Config} from '@react-native-community/cli-types';
+import * as configUtils from '../../config/configUtils';
 import {WindowsProjectConfig} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 import Version from './version';
@@ -44,8 +46,71 @@ export function getBuildConfiguration(options: RunWindowsOptions): BuildConfig {
     : 'Debug';
 }
 
+function shouldDeployByPackage(
+  options: RunWindowsOptions,
+  config: Config,
+): boolean {
+  if (options.deployFromLayout) {
+    // Force deploy by layout
+    return false;
+  }
+
+  let hasAppxSigningEnabled: boolean | null = null;
+  let hasPackageCertificateKeyFile: boolean | null = null;
+
+  // TODO: These two properties should really be determined by
+  // getting the actual values msbuild used during the build,
+  // but for now we'll try to get them manually
+
+  // Check passed in msbuild property overrides
+  if (options.msbuildprops) {
+    const msbuildprops = build.parseMsBuildProps(options);
+    if ('AppxSigningEnabled' in msbuildprops) {
+      hasAppxSigningEnabled =
+        msbuildprops.AppxSigningEnabled.toLowerCase() === 'true';
+    }
+    if ('PackageCertificateKeyFile' in msbuildprops) {
+      hasPackageCertificateKeyFile = true;
+    }
+  }
+
+  // If at least one override wasn't set, we need to parse the project file
+  if (hasAppxSigningEnabled === null || hasPackageCertificateKeyFile === null) {
+    const projectFile = build.getAppProjectFile(options, config);
+    if (projectFile) {
+      const projectContents = configUtils.readProjectFile(projectFile);
+
+      // Find AppxSigningEnabled
+      if (hasAppxSigningEnabled === null) {
+        const appxSigningEnabled = configUtils.tryFindPropertyValue(
+          projectContents,
+          'AppxSigningEnabled',
+        );
+        if (appxSigningEnabled !== null) {
+          hasAppxSigningEnabled = appxSigningEnabled.toLowerCase() === 'true';
+        }
+      }
+
+      // Find PackageCertificateKeyFile
+      if (hasPackageCertificateKeyFile === null) {
+        const packageCertificateKeyFile = configUtils.tryFindPropertyValue(
+          projectContents,
+          'PackageCertificateKeyFile',
+        );
+        if (packageCertificateKeyFile !== null) {
+          hasPackageCertificateKeyFile = true;
+        }
+      }
+    }
+  }
+
+  return (
+    hasAppxSigningEnabled === true && hasPackageCertificateKeyFile === true
+  );
+}
+
 function shouldLaunchApp(options: RunWindowsOptions): boolean {
-  return options.launch;
+  return options.launch === true;
 }
 
 function getAppPackage(
@@ -64,7 +129,7 @@ function getAppPackage(
   if (appPackageCandidates.length === 1 || !projectName) {
     appPackage = appPackageCandidates[0];
   } else if (appPackageCandidates.length > 1) {
-    const filteredAppPackageCandidates = appPackageCandidates.filter(x =>
+    const filteredAppPackageCandidates = appPackageCandidates.filter((x) =>
       x.includes(projectName),
     );
     if (filteredAppPackageCandidates.length >= 1) {
@@ -85,7 +150,7 @@ function getAppPackage(
 
     const result = glob.sync(newGlob);
     if (result.length > 1 && projectName) {
-      const newFilteredGlobs = result.filter(x => x.includes(projectName));
+      const newFilteredGlobs = result.filter((x) => x.includes(projectName));
       if (newFilteredGlobs.length >= 1) {
         newWarn(`More than one app package found: ${result}`);
       }
@@ -115,7 +180,9 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.ps1',
   );
-  execSync(`powershell -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`);
+  execSync(
+    `${powershell} -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`,
+  );
   popd();
   return windowsStoreAppUtilsPath;
 }
@@ -140,7 +207,7 @@ function getAppxManifestPath(
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
-    const filteredGlobs = globs.filter(x => x.includes(projectName));
+    const filteredGlobs = globs.filter((x) => x.includes(projectName));
     appxPath = filteredGlobs[0];
     if (filteredGlobs.length > 1) {
       newWarn(
@@ -165,8 +232,11 @@ function parseAppxManifest(appxManifestPath: string): parse.Document {
   return parse(fs.readFileSync(appxManifestPath, 'utf8'));
 }
 
-function getAppxManifest(options: RunWindowsOptions): parse.Document {
-  return parseAppxManifest(getAppxManifestPath(options, undefined));
+function getAppxManifest(
+  options: RunWindowsOptions,
+  projectName?: string,
+): parse.Document {
+  return parseAppxManifest(getAppxManifestPath(options, projectName));
 }
 
 function handleResponseError(e: Error): never {
@@ -187,7 +257,14 @@ function handleResponseError(e: Error): never {
 export async function deployToDevice(
   options: RunWindowsOptions,
   verbose: boolean,
+  config: Config,
 ) {
+  const windowsConfig: Partial<WindowsProjectConfig> | undefined =
+    config.project.windows;
+  const projectName =
+    windowsConfig && windowsConfig.project && windowsConfig.project.projectName
+      ? windowsConfig.project.projectName
+      : path.parse(options.proj!).name;
   const appPackageFolder = getAppPackage(options);
 
   const deployTarget = options.target
@@ -196,9 +273,9 @@ export async function deployToDevice(
     ? 'emulator'
     : 'device';
   const deployTool = new WinAppDeployTool();
-  const appxManifest = getAppxManifest(options);
+  const appxManifest = getAppxManifest(options, projectName);
   const shouldLaunch = shouldLaunchApp(options);
-  const identity = appxManifest.root.children.filter(x => {
+  const identity = appxManifest.root.children.filter((x) => {
     return x.name === 'mp:PhoneIdentity';
   })[0];
   const appName = identity.attributes.PhoneProductId;
@@ -221,7 +298,7 @@ export async function deployToDevice(
       verbose,
     );
   } catch (e) {
-    if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
+    if ((e as Error).message.includes('Error code 2148734208 for command')) {
       await deployTool.installAppPackage(
         appxFile,
         device,
@@ -230,7 +307,7 @@ export async function deployToDevice(
         verbose,
       );
     } else {
-      handleResponseError(e);
+      handleResponseError(e as Error);
     }
   }
 }
@@ -254,7 +331,7 @@ export async function deployToDesktop(
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
-  const identity = appxManifest.root.children.filter(x => {
+  const identity = appxManifest.root.children.filter((x) => {
     return x.name === 'Identity';
   })[0];
   const appName = identity.attributes.Name;
@@ -280,7 +357,8 @@ export async function deployToDesktop(
 
   const appPackageFolder = getAppPackage(options, projectName);
 
-  if (options.release && !options.deployFromLayout) {
+  if (shouldDeployByPackage(options, config)) {
+    // Deploy by package
     await runPowerShellScriptFunction(
       'Removing old version of the app',
       windowsStoreAppUtils,
@@ -301,6 +379,7 @@ export async function deployToDesktop(
       'InstallAppFailure',
     );
   } else {
+    // Deploy from layout
     // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
     const appxRecipe = path.join(
       path.dirname(appxManifestPath),
@@ -343,7 +422,7 @@ export async function deployToDesktop(
   }
 
   const appFamilyName = execSync(
-    `powershell -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
+    `${powershell} -NoProfile -c $(Get-AppxPackage -Name ${appName}).PackageFamilyName`,
   )
     .toString()
     .trim();
@@ -384,9 +463,9 @@ export function startServerInNewWindow(
   options: RunWindowsOptions,
   verbose: boolean,
 ): Promise<void> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     http
-      .get('http://localhost:8081/status', res => {
+      .get('http://localhost:8081/status', (res) => {
         if (res.statusCode === 200) {
           newSuccess('React-Native Server already started');
         } else {
@@ -409,5 +488,5 @@ function launchServer(options: RunWindowsOptions, verbose: boolean) {
     stdio: verbose ? 'inherit' : 'ignore',
   };
 
-  spawn('cmd.exe', ['/C', 'start npx --no-install react-native start'], opts);
+  spawn('cmd.exe', ['/C', 'start npx react-native start'], opts);
 }

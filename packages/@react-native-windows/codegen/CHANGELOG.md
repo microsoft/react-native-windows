@@ -1,8 +1,119 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 03 Sep 2021 05:06:04 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.22
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 0.0.0-canary.21
+
+Thu, 18 Nov 2021 06:11:20 GMT
+
+### Changes
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 0.0.0-canary.20
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Changes
+
+- Codegen prints `::React::JSValue` instead of `React::JSValue` (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.20
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Changes
+
+- Codegen prints `::React::JSValue` instead of `React::JSValue` (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.19
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Changes
+
+- Only generate component files if a component is specified (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.18
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Changes
+
+- Built files not included in published package (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.17
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.16
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Check constants in generated turbo module specs (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.15
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Generate anonymous objects in correct order for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.14
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Generate `std::vector<T>` for array types in turbo modules (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.13
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Bump to 0.66-based react-native-tscodegen (ngerlem@microsoft.com)
+- Generate nullable type for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.12
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-unittest-config to v1.2.4 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+- Match Alert module with NativeDialogManagerWindowsSpec.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.11
 

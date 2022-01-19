@@ -1,8 +1,77 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.2
+
+Fri, 03 Dec 2021 06:12:08 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.24
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 1.6.1
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Patches
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @react-native-windows/package-utils to v0.0.0-canary.23
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 1.6.0
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Minor changes
+
+- Use New RN Nightly Scheme in Scripts (ngerlem@microsoft.com)
+
+## 1.6.0
+
+Tue, 26 Oct 2021 05:06:25 GMT
+
+### Minor changes
+
+- Use New RN Nightly Scheme in Scripts (ngerlem@microsoft.com)
+
+## 1.5.1
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
+
+## 1.5.0
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Minor changes
+
+- Teach integration tooling about new nightly pattern (ngerlem@microsoft.com)
+
+## 1.4.18
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.21 (ngerlem@microsoft.com)
 
 ## 1.4.17
 

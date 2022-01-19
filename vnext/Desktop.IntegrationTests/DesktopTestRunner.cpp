@@ -4,7 +4,6 @@
 #include <TestRunner.h>
 
 #include <CreateModules.h>
-#include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
 #include <RuntimeOptions.h>
@@ -90,7 +89,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   devSettings->platformName = "windows";
 
   // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
-  devSettings->jsiEngineOverride = JSIEngineOverride::ChakraCore;
+  devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
 
   auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),

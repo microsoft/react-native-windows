@@ -11,8 +11,6 @@
 #include <Modules/AppearanceModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
-#include <Modules/ImageViewManagerModule.h>
-#include <Modules/LinkingManagerModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/PaperUIManagerModule.h>
@@ -58,14 +56,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   modules.emplace_back(
       "Timing",
       [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
-      batchingUIMessageQueue);
-
-  modules.emplace_back(
-      LinkingManagerModule::name, []() { return std::make_unique<LinkingManagerModule>(); }, batchingUIMessageQueue);
-
-  modules.emplace_back(
-      ImageViewManagerModule::name,
-      []() { return std::make_unique<ImageViewManagerModule>(); },
       batchingUIMessageQueue);
 
   modules.emplace_back(

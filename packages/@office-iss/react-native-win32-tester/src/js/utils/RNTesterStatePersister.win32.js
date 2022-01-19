@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -57,14 +57,10 @@ function createContainer<Props: Object, State>(
       Win32] */
     }
     _passSetState = (stateLamda: (state: State) => State): void => {
-      this.setState(state => {
+      this.setState((state) => {
         const value = stateLamda(state.value);
         /* [Win32 #6316
-        AsyncStorage.setItem(
-          this._cacheKey,
-          // $FlowFixMe[incompatible-call] Error surfaced when typing AsyncStorage
-          JSON.stringify(value),
-        );
+        AsyncStorage.setItem(this._cacheKey, JSON.stringify(value));
         Win32] */
         return {value};
       });

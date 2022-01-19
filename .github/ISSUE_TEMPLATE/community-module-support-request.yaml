@@ -1,0 +1,52 @@
+name: Community Module support request
+description: Suggest that Windows support be added to a community module
+title: Support react-native-foo
+labels: [Extensions, enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This Issue template helps us track which modules need to work with React Native for Windows. If you have found a community module that doesn't yet work with React Native for Windows, fill out the Issue fields below! 
+        
+        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: Module
+      description: Name of the module
+      placeholder: react-native-foo
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: Module repo url
+      description: Link to where the module's source code lives
+      placeholder: https://github.com/react-native-foo/react-native-foo
+  - type: input
+    attributes:
+      label: Target Version
+      placeholder: "0.65"
+  - type: input
+    attributes:
+      label: Existing issue url
+      description: If the community module repo already has an issue tracking adding React Native for Windows support, please check this box and link to it. 
+      placeholder: https://github.com/react-native-foo/react-native-foo/issues/1234
+  - type: checkboxes
+    attributes:
+      label: Existing windows implementation?
+      description: If the community module has an existing RNW Legacy/C# implementation, please check this box and provide a link to the implementation. 
+      options:
+        - label: Legacy/C# implementation
+  - type: input
+    attributes:
+      label: Which app/customer is requesting this module?
+      description: Please describe which app/customer needs this module.
+  - type: textarea
+    attributes:
+      label: In what scenarios will this module be used?
+      description: Please detail how the app/customer will use the module. Please include screenshots/mockups/wireframes if possible.
+  - type: textarea
+    attributes:
+      label: Essential Features
+      description: Please enumerate which features of the module are required. For example, you may be using a map module and you only need the 'pinning' functionality and _not_ the turn-by-turn direction functionality.

@@ -89,33 +89,43 @@ void DeviceInfoHolder::InitDeviceInfoHolder(const Mso::React::IReactContext &con
 
 void DeviceInfoHolder::notifyChanged() noexcept {
   if (m_notifyCallback) {
-    m_notifyCallback(getDimensions());
+    auto writer = MakeJSValueTreeWriter();
+    WriteValue(writer, getDimensions());
+    m_notifyCallback(TakeJSValue(writer).MoveObject());
   }
 }
 
-React::JSValueObject DeviceInfoHolder::GetDimensions(const React::ReactPropertyBag &propertyBag) noexcept {
+ReactNativeSpecs::DeviceInfoSpec_DimensionsPayload DeviceInfoHolder::GetDimensions(
+    const React::ReactPropertyBag &propertyBag) noexcept {
   auto holder = propertyBag.Get(DeviceInfoHolderPropertyId());
-
   return (*holder)->getDimensions();
 }
 
-React::JSValueObject DeviceInfoHolder::getDimensions() noexcept {
-  return React::JSValueObject{
-      {"windowPhysicalPixels",
-       React::JSValueObject{
-           {"width", m_windowWidth * m_scale},
-           {"height", m_windowHeight * m_scale},
-           {"scale", m_scale},
-           {"fontScale", m_textScaleFactor},
-           {"densityDpi", m_dpi}}},
-      {"screenPhysicalPixels",
-       React::JSValueObject{
-           {"width", m_screenWidth},
-           {"height", m_screenHeight},
-           {"scale", m_scale},
-           {"fontScale", m_textScaleFactor},
-           {"densityDpi", m_dpi}}},
-  };
+ReactNativeSpecs::DeviceInfoSpec_DisplayMetricsAndroid DeviceInfoHolder::getWindow() noexcept {
+  ReactNativeSpecs::DeviceInfoSpec_DisplayMetricsAndroid metrics;
+  metrics.width = m_windowWidth * m_scale;
+  metrics.height = m_windowHeight * m_scale;
+  metrics.scale = m_scale;
+  metrics.fontScale = m_textScaleFactor;
+  metrics.densityDpi = m_dpi;
+  return metrics;
+}
+
+ReactNativeSpecs::DeviceInfoSpec_DisplayMetricsAndroid DeviceInfoHolder::getScreen() noexcept {
+  ReactNativeSpecs::DeviceInfoSpec_DisplayMetricsAndroid metrics;
+  metrics.width = m_screenWidth;
+  metrics.height = m_screenHeight;
+  metrics.scale = m_scale;
+  metrics.fontScale = m_textScaleFactor;
+  metrics.densityDpi = m_dpi;
+  return metrics;
+}
+
+ReactNativeSpecs::DeviceInfoSpec_DimensionsPayload DeviceInfoHolder::getDimensions() noexcept {
+  ReactNativeSpecs::DeviceInfoSpec_DimensionsPayload payload;
+  payload.windowPhysicalPixels = getWindow();
+  payload.screenPhysicalPixels = getScreen();
+  return payload;
 }
 
 void DeviceInfoHolder::SetCallback(
@@ -163,8 +173,10 @@ void DeviceInfoHolder::updateDeviceInfo() noexcept {
   }
 }
 
-void DeviceInfo::GetConstants(React::ReactConstantProvider &provider) noexcept {
-  provider.Add(L"Dimensions", DeviceInfoHolder::GetDimensions(m_context.Properties()));
+ReactNativeSpecs::DeviceInfoSpec_Constants DeviceInfo::GetConstants() noexcept {
+  ReactNativeSpecs::DeviceInfoSpec_Constants constants;
+  constants.Dimensions = DeviceInfoHolder::GetDimensions(m_context.Properties());
+  return constants;
 }
 
 void DeviceInfo::Initialize(React::ReactContext const &reactContext) noexcept {

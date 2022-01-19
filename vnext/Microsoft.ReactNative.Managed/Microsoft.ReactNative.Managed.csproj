@@ -25,6 +25,9 @@
     <NoWarn>$(NoWarn);1591</NoWarn>
     <!-- Missing XML comment for publicly visible type or member -->
   </PropertyGroup>
+  <PropertyGroup Label="NuGet">
+    <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
@@ -81,6 +84,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
   <Import Project="..\PropertySheets\WinUI.props" />
   <ItemGroup>
@@ -129,9 +133,22 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
-    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true'" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
+  <!--
+    Visual Studio (but not MSBuild) will ignore Conditions applied directly to
+    the PackageReference or ItemGroup containing a PackageReference. Both
+    respect <Choose> for conditional restoration.
+    -->
+  <Choose>
+    <When Condition="'$(UseWinUI3)'=='true'">
+      <ItemGroup>
+        <PackageReference Include="Microsoft.WinUI">
+          <Version>$(WinUI3Version)</Version>
+        </PackageReference>
+      </ItemGroup>
+    </When>
+  </Choose>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
     <VisualStudioVersion>16.0</VisualStudioVersion>
   </PropertyGroup>

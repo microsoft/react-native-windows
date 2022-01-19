@@ -1,8 +1,45 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Fri, 11 Jun 2021 05:08:55 GMT and should not be manually modified.
+This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.19
+
+Fri, 03 Dec 2021 06:12:08 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 1.0.18
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Patches
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 1.0.17
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.16
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
 
 ## 1.0.15
 

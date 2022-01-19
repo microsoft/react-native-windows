@@ -28,10 +28,12 @@
     <file src="$nugetroot$\x64\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd" target="lib\ship\x64"/>
     <file src="$nugetroot$\ARM64\Release\React.Windows.Desktop\Microsoft.ReactNative.winmd" target="lib\ship\ARM64"/>
 
-    <file src="$nugetroot$\x86\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"    target="lib\debug\x86"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\x64\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"    target="lib\debug\x64"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\x86\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"  target="lib\ship\x86"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
-    <file src="$nugetroot$\x64\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"  target="lib\ship\x64"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x86\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"      target="lib\debug\x86"    exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"      target="lib\debug\x64"    exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\ARM64\Debug\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"    target="lib\debug\ARM64"  exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x86\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"    target="lib\ship\x86"     exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\x64\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"    target="lib\ship\x64"     exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
+    <file src="$nugetroot$\ARM64\Release\React.Windows.Desktop.Test.DLL\React.Windows.Desktop.Test.**"  target="lib\ship\ARM64"   exclude="**\*.iobj;**\*.ipdb;**\*.exp;**\*.ilk" />
 
     <file src="$nugetroot$\inc\callinvoker\ReactCommon\CallInvoker.h" target="inc\ReactCommon"/>
     <file src="$nugetroot$\inc\runtimeexecutor\ReactCommon\RuntimeExecutor.h" target="inc\ReactCommon"/>
@@ -47,7 +49,6 @@
     <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IRedBoxHandler.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\IUIManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IWebSocketResource.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\JSBigAbiString.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\LayoutAnimation.h" target="inc"/>
@@ -75,6 +76,8 @@
     <file src="$nugetroot$\inc\include\**\*.*" target="inc\include" />
 
     <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="Microsoft.ReactNative.Cxx"/>
+
+    <file src="$nugetroot$\inc\codegen\**\*.*" target ="inc\codegen"/>
 
     <file src="$nugetroot$\natvis\Folly.natvis" target ="natvis\Folly.natvis"/>
   </files>

@@ -2,6 +2,81 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Fri, 03 Dec 2021 06:12:11 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.1.10",
+      "version": "1.1.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "2419191300390b8106e4e5760c59bc0022839c4d",
+            "comment": "Integrate 11/11"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Nov 2021 06:11:20 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.1.9",
+      "version": "1.1.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "d11349e521c7ae7c86db60ba3f60dc173c2e65ef",
+            "comment": "Use '@react-native-windows/fs'"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:06:01 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.1.8",
+      "version": "1.1.8",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:05:41 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.1.8",
+      "version": "1.1.8",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@rnw-scripts/eslint-config_v1.1.8",
+      "version": "1.1.8",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/eslint-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Jun 2021 05:09:47 GMT",
       "tag": "@rnw-scripts/eslint-config_v1.1.7",
       "version": "1.1.7",

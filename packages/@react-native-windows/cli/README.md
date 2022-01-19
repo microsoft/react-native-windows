@@ -17,7 +17,7 @@ Options:
 |-----------------------|--------------------------------------|--------------------------------------------------|
 | `--release`           | Specifies a Release build | [boolean] |
 | `--root`              | Override the root directory for the windows build which contains the windows folder. (default: "E:\\test63") | [string] |
-| `--arch`              | The build architecture (ARM64, x86, x64). default: x86 | [string] |
+| `--arch`              | The build architecture (ARM64, x86, x64). defaults to system architecture | [string] |
 | `--singleproc`        | Disables multi-proc build | [boolean] |
 | `--emulator`          | Deploys the app to an emulator | [boolean] |
 | `--device`            | Deploys the app to a connected device | [boolean] |

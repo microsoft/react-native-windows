@@ -11,7 +11,7 @@
 
 import _ from 'lodash';
 import chalk from 'chalk';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import semver from 'semver';
 import simplegit from 'simple-git/promise';
@@ -88,7 +88,7 @@ const octokit = new Octokit({
 
   console.log('Listing tags...');
   const localTags = (await simplegit().tags()).all;
-  console.log(localTags.map(tag => `  - ${tag}`).join('\n'));
+  console.log(localTags.map((tag) => `  - ${tag}`).join('\n'));
 
   console.log('Fetching releases...');
   const githubReleases = await octokit.paginate(
@@ -97,7 +97,7 @@ const octokit = new Octokit({
   );
 
   console.log(
-    githubReleases.map(release => `  - ${release.tag_name}`).join('\n'),
+    githubReleases.map((release) => `  - ${release.tag_name}`).join('\n'),
   );
 
   const releasesToPublish: Release[] = [];
@@ -142,9 +142,9 @@ async function readChangelogs(): Promise<Changelog[]> {
   });
 
   return Promise.all(
-    changelogs.map(async changelog => {
+    changelogs.map(async (changelog) => {
       const fullPath = path.join(repoRoot, changelog);
-      return JSON.parse((await fs.promises.readFile(fullPath)).toString());
+      return await fs.readJsonFile<Changelog>(fullPath);
     }),
   );
 }
@@ -157,7 +157,7 @@ function needsRelease(
   localTags: string[],
   githubReleases: Array<{tag_name: string}>,
 ) {
-  const releaseTags = githubReleases.map(r => r.tag_name);
+  const releaseTags = githubReleases.map((r) => r.tag_name);
   return localTags.includes(release.tag) && !releaseTags.includes(release.tag);
 }
 
@@ -184,18 +184,21 @@ async function publishRelease(release: Release, allReleases: Release[]) {
  * Transforms the changelog JSON into an array of releases.
  */
 function aggregateReleases(changelog: Changelog): Release[] {
-  const entriesByTag = _.groupBy(changelog.entries, e => e.tag);
+  const entriesByTag = _.groupBy(changelog.entries, (e) => e.tag);
 
-  const commentsByTag = _.mapValues(entriesByTag, entries => {
+  const commentsByTag = _.mapValues(entriesByTag, (entries) => {
     const comments: Comment[] = [];
 
-    const commentsByType = _.merge({}, ...entries.map(entry => entry.comments));
-    const changeTypes = Object.keys(commentsByType).filter(t => t !== 'none');
-    changeTypes.forEach(t => comments.push(...commentsByType[t]));
+    const commentsByType = _.merge(
+      {},
+      ...entries.map((entry) => entry.comments),
+    );
+    const changeTypes = Object.keys(commentsByType).filter((t) => t !== 'none');
+    changeTypes.forEach((t) => comments.push(...commentsByType[t]));
     return comments;
   });
 
-  return Object.keys(commentsByTag).map(tag => ({
+  return Object.keys(commentsByTag).map((tag) => ({
     packageName: changelog.name,
     tag,
     version: semver.parse(entriesByTag[tag][0].version)!,
@@ -273,7 +276,7 @@ function mostRecentMajorRelease(
     return null;
   }
 
-  const matchingRelease = allReleases.find(r => {
+  const matchingRelease = allReleases.find((r) => {
     return (
       r.packageName === release.packageName &&
       semver.eq(r.version, firstVersion)

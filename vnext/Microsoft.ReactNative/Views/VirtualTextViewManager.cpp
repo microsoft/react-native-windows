@@ -5,16 +5,12 @@
 
 #include "VirtualTextViewManager.h"
 
-#include <Views/RawTextViewManager.h>
-
-#include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
-#include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ShadowNodeTypeUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
+#include <Views/Text/TextVisitors.h>
 
 namespace winrt {
 using namespace Windows::UI;
@@ -27,96 +23,27 @@ namespace Microsoft::ReactNative {
 
 void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
   auto &childNode = static_cast<ShadowNodeBase &>(child);
-  ApplyTextTransform(childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+  ApplyTextTransformToChild(&child);
   auto propertyChangeType = PropertyChangeType::Text;
   if (IsVirtualTextShadowNode(&childNode)) {
     const auto &childTextNode = static_cast<VirtualTextShadowNode &>(childNode);
-    m_hasDescendantBackgroundColor |= childTextNode.m_hasDescendantBackgroundColor;
     propertyChangeType |=
-        childTextNode.m_backgroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
+        childTextNode.hasDescendantTextHighlighter ? PropertyChangeType::AddHighlight : PropertyChangeType::None;
+    propertyChangeType |=
+        childTextNode.hasDescendantPressable ? PropertyChangeType::AddPressable : PropertyChangeType::None;
   }
   Super::AddView(child, index);
-  NotifyAncestorsTextPropertyChanged(propertyChangeType);
+  NotifyAncestorsTextPropertyChanged(this, propertyChangeType);
 }
 
 void VirtualTextShadowNode::RemoveChildAt(int64_t indexToRemove) {
   Super::RemoveChildAt(indexToRemove);
-  NotifyAncestorsTextPropertyChanged(PropertyChangeType::Text);
+  NotifyAncestorsTextPropertyChanged(this, PropertyChangeType::Text);
 }
 
 void VirtualTextShadowNode::removeAllChildren() {
   Super::removeAllChildren();
-  NotifyAncestorsTextPropertyChanged(PropertyChangeType::Text);
-}
-
-void VirtualTextShadowNode::ApplyTextTransform(
-    ShadowNodeBase &node,
-    TextTransform transform,
-    bool forceUpdate,
-    bool isRoot) {
-  // The `forceUpdate` option is used to force the tree to update, even if the
-  // transform value is undefined or set to 'none'. This is used when a leaf
-  // raw text value has changed, or a textTransform prop has changed.
-  if (forceUpdate || (transform != TextTransform::Undefined && transform != TextTransform::None)) {
-    // Use the view manager name to determine the node type
-    const auto viewManager = node.GetViewManager();
-    const auto nodeType = viewManager->GetName();
-
-    // Base case: apply the inherited textTransform to the raw text node
-    if (IsRawTextShadowNode(&node)) {
-      auto &rawTextNode = static_cast<RawTextShadowNode &>(node);
-      auto originalText = rawTextNode.originalText;
-      auto run = node.GetView().try_as<winrt::Run>();
-      // Set originalText on the raw text node if it hasn't been set yet
-      if (originalText.size() == 0) {
-        // Lazily setting original text to avoid keeping two copies of all raw text strings
-        originalText = run.Text();
-        rawTextNode.originalText = originalText;
-      }
-
-      run.Text(TransformableText::TransformText(originalText, transform));
-
-      if (std::wcscmp(originalText.c_str(), run.Text().c_str()) == 0) {
-        // If the transformed text is the same as the original, we no longer need a second copy
-        rawTextNode.originalText = winrt::hstring{};
-      }
-    } else {
-      // Recursively apply the textTransform to the children of the composite text node
-      if (IsVirtualTextShadowNode(&node)) {
-        auto &virtualTextNode = static_cast<VirtualTextShadowNode &>(node);
-        // If this is not the root call, we can skip sub-trees with explicit textTransform settings.
-        if (!isRoot && virtualTextNode.textTransform != TextTransform::Undefined) {
-          return;
-        }
-      }
-
-      if (auto uiManager = GetNativeUIManager(viewManager->GetReactContext()).lock()) {
-        for (auto childTag : node.m_children) {
-          const auto childNode = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(childTag));
-          ApplyTextTransform(*childNode, transform, forceUpdate, /* isRoot = */ false);
-        }
-      }
-    }
-  }
-}
-
-void VirtualTextShadowNode::NotifyAncestorsTextPropertyChanged(PropertyChangeType propertyChangeType) {
-  if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-    auto host = uiManager->getHost();
-    ShadowNodeBase *parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(m_parent));
-    while (parent) {
-      auto viewManager = parent->GetViewManager();
-      const auto nodeType = viewManager->GetName();
-      if (IsTextShadowNode(parent)) {
-        (static_cast<TextViewManager *>(viewManager))->OnDescendantTextPropertyChanged(parent, propertyChangeType);
-        break;
-      } else if (IsVirtualTextShadowNode(parent)) {
-        auto textParent = static_cast<VirtualTextShadowNode *>(parent);
-        textParent->m_hasDescendantBackgroundColor |= m_hasDescendantBackgroundColor;
-      }
-      parent = static_cast<ShadowNodeBase *>(host->FindShadowNodeForTag(parent->GetParent()));
-    }
-  }
+  NotifyAncestorsTextPropertyChanged(this, PropertyChangeType::Text);
 }
 
 VirtualTextViewManager::VirtualTextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -127,6 +54,17 @@ const wchar_t *VirtualTextViewManager::GetName() const {
 
 XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   return winrt::Span();
+}
+
+void VirtualTextViewManager::UpdateProperties(
+    ShadowNodeBase *nodeToUpdate,
+    winrt::Microsoft::ReactNative::JSValueObject &props) {
+  // This could be optimized further, but rather than paying a penalty to mark
+  // the node dirty for each relevant property in UpdateProperty (which should
+  // be reasonably cheap given it just does an O(1) lookup of the Yoga node
+  // for the tag, for now this just marks the node dirty for any prop update.
+  MarkDirty(nodeToUpdate->m_tag);
+  Super::UpdateProperties(nodeToUpdate, props);
 }
 
 bool VirtualTextViewManager::UpdateProperty(
@@ -142,11 +80,10 @@ bool VirtualTextViewManager::UpdateProperty(
   if (TryUpdateForeground<winrt::TextElement>(span, propertyName, propertyValue)) {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
-      node->m_foregroundColor = OptionalColorFrom(propertyValue);
-      node->m_hasDescendantBackgroundColor |= node->m_foregroundColor.has_value();
+      node->foregroundColor = OptionalColorFrom(propertyValue);
       const auto propertyChangeType =
-          node->m_foregroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
-      node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
+          node->foregroundColor ? PropertyChangeType::AddHighlight : PropertyChangeType::RemoveHighlight;
+      NotifyAncestorsTextPropertyChanged(node, propertyChangeType);
     }
   } else if (TryUpdateFontProperties<winrt::TextElement>(span, propertyName, propertyValue)) {
   } else if (TryUpdateCharacterSpacing<winrt::TextElement>(span, propertyName, propertyValue)) {
@@ -154,18 +91,29 @@ bool VirtualTextViewManager::UpdateProperty(
   } else if (propertyName == "textTransform") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     node->textTransform = TransformableText::GetTextTransform(propertyValue);
-    VirtualTextShadowNode::ApplyTextTransform(
-        *node, node->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
+    UpdateTextTransformForChildren(nodeToUpdate);
   } else if (propertyName == "backgroundColor") {
     auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
     if (IsValidOptionalColorValue(propertyValue)) {
-      node->m_backgroundColor = OptionalColorFrom(propertyValue);
-      node->m_hasDescendantBackgroundColor |= node->m_backgroundColor.has_value();
+      node->backgroundColor = OptionalColorFrom(propertyValue);
       const auto propertyChangeType =
-          node->m_backgroundColor ? PropertyChangeType::AddBackgroundColor : PropertyChangeType::None;
-      node->NotifyAncestorsTextPropertyChanged(propertyChangeType);
+          node->backgroundColor ? PropertyChangeType::AddHighlight : PropertyChangeType::RemoveHighlight;
+      NotifyAncestorsTextPropertyChanged(node, propertyChangeType);
+    }
+  } else if (propertyName == "isPressable") {
+    auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+    node->isPressable = propertyValue.AsBoolean();
+    if (node->isPressable) {
+      NotifyAncestorsTextPropertyChanged(node, PropertyChangeType::AddPressable);
     }
   } else {
+    const auto isRegisteringMouseEvent =
+        (propertyName == "onMouseEnter" || propertyName == "onMouseLeave") && propertyValue.AsBoolean();
+    if (isRegisteringMouseEvent) {
+      auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+      NotifyAncestorsTextPropertyChanged(node, PropertyChangeType::AddPressable);
+    }
+
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
 
