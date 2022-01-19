@@ -614,14 +614,13 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
     } else if (propertyName == "autoFocus") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         m_autoFocus = propertyValue.AsBoolean();
-    } else if (propertyName == "editable"){
-        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-          m_isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean())
-                      : passwordBox.IsEnabled(propertyValue.AsBoolean());
-        } else if (propertyValue.IsNull()) {
-          m_isTextBox ? textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty())
-                      : passwordBox.ClearValue(xaml::Controls::Control::IsEnabledProperty());
-        }
+    } else if (propertyName == "editable") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        m_isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean()) : passwordBox.IsEnabled(propertyValue.AsBoolean());
+      } else if (propertyValue.IsNull()) {
+        m_isTextBox ? textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty())
+                    : passwordBox.ClearValue(xaml::Controls::Control::IsEnabledProperty());
+      }
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
