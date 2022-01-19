@@ -29,11 +29,14 @@ jobs:
       #       HostFunctionTest              - Crashes under JSI/V8
       #       HostObjectProtoTest           - Crashes under JSI/V8
       #       PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
+      #8000 - 
+      #       MapBufferTest                 - Runaway process
       - name: Desktop.UnitTests.Filter
         value: >
           (FullyQualifiedName!~HostFunctionTest)&
           (FullyQualifiedName!~HostObjectProtoTest)&
-          (FullyQualifiedName!~PreparedJavaScriptSourceTest)
+          (FullyQualifiedName!~PreparedJavaScriptSourceTest)&
+          (FullyQualifiedName!~MapBufferTest)
 
     strategy:
       matrix:
