@@ -2,6 +2,36 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 17 Jan 2022 16:12:54 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.0-preview.7",
+            "commit": "565114d4fa5e64ebbf888da6ae249069e78efd97"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Jan 2022 16:12:13 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.0-preview.7",
+            "commit": "b58a8738eecd8a3d6a2b918fc35d9a7b93b4437a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Jan 2022 16:12:09 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
