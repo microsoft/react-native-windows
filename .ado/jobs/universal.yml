@@ -21,7 +21,7 @@
               FastBuild: true
         - BuildEnvironment: Continuous
           Matrix:
-            - Name: Arm64RDebug
+            - Name: Arm64Debug
               BuildConfiguration: Debug
               BuildPlatform: ARM64
               FastBuild: false
@@ -156,6 +156,7 @@
                       Mso.UnitTests/Mso.UnitTests.exe
                     pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
                     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    testFiltercriteria: (FullyQualifiedName!=Runtimes/JSITest.JSErrorTest/0) # Disabled JSITest.JSErrorTest, issue #9398
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
