@@ -614,11 +614,6 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
     } else if (propertyName == "autoFocus") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         m_autoFocus = propertyValue.AsBoolean();
-    } else if (propertyName == "editable"){
-        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-          m_isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean())
-                      : passwordBox.IsEnabled(propertyValue.AsBoolean());
-        }
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
