@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adds editable to textinput with securetextentry",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
