@@ -614,6 +614,11 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
     } else if (propertyName == "autoFocus") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         m_autoFocus = propertyValue.AsBoolean();
+    } else if (propertyName == "editable"){
+        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+          m_isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean())
+                      : passwordBox.IsEnabled(propertyValue.AsBoolean());
+        }
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
@@ -884,6 +889,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::TextBox::SelectionHighlightColorProperty(),
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::PasswordBox>().Password(oldView.as<xaml::Controls::TextBox>().Text());
+      newView.as<xaml::Controls::PasswordBox>().IsEnabled(!oldView.as<xaml::Controls::TextBox>().IsReadOnly());
     } else {
       TransferProperty(
           oldView,
@@ -901,6 +907,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
           xaml::Controls::TextBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::TextBox>().Text(oldView.as<xaml::Controls::PasswordBox>().Password());
+      newView.as<xaml::Controls::TextBox>().IsReadOnly(!oldView.as<xaml::Controls::PasswordBox>().IsEnabled());
     }
 
     TransferInputScope(oldView, newView, copyToPasswordBox);
