@@ -9507,10 +9507,10 @@ react-native-xaml@^0.0.50:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20220107-2008-ca5aaa766:
-  version "0.0.0-20220107-2008-ca5aaa766"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220107-2008-ca5aaa766.tgz#f2c703607ca0dea9e56cd371e47134c4099db623"
-  integrity sha512-WyUkta2elxR9DOeBlDpN1OtiYlk1+LGxf71n4VOTWyW8yE2o7RsI1Wvjv8m3bKg2SVtf/8itnALOGMG8DeSQQw==
+react-native@0.0.0-20220114-2008-66dc21143:
+  version "0.0.0-20220114-2008-66dc21143"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220114-2008-66dc21143.tgz#99487c696f7daa872039efa1627cf889051a271c"
+  integrity sha512-Hj4dHazeUM4fX22+SfoP2gcNcikIymiy93NXnNoNUwthrULxkHOlf1/ksI2LRBcOlGCcuSVuaX9o1JIslcvuGw==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^6.0.0"
@@ -9537,6 +9537,7 @@ react-native@0.0.0-20220107-2008-ca5aaa766:
     react-devtools-core "4.22.1"
     react-native-codegen "^0.0.12"
     react-refresh "^0.4.0"
+    react-shallow-renderer "16.14.1"
     regenerator-runtime "^0.13.2"
     scheduler "^0.20.2"
     stacktrace-parser "^0.1.3"

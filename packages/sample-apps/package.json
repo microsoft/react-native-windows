@@ -12,8 +12,13 @@
   },
   "dependencies": {
     "react": "17.0.2",
+<<<<<<< HEAD
     "react-native": "0.0.0-20220107-2008-ca5aaa766",
     "react-native-windows": "^0.0.0-canary.440"
+=======
+    "react-native": "0.0.0-20220114-2008-66dc21143",
+    "react-native-windows": "^0.0.0-canary.440"
+>>>>>>> 8318d57db (Integrate 1/14 RN Nightly Build)
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

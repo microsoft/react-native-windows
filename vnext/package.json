@@ -49,6 +49,7 @@
     "react-devtools-core": "4.22.1",
     "react-native-codegen": "^0.0.12",
     "react-refresh": "^0.4.0",
+    "react-shallow-renderer": "16.14.1",
     "regenerator-runtime": "^0.13.2",
     "scheduler": "^0.20.2",
     "source-map-support": "^0.5.19",
@@ -73,7 +74,7 @@
     "metro-config": "^0.66.0",
     "prettier": "^2.4.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20220107-2008-ca5aaa766",
+    "react-native": "0.0.0-20220114-2008-66dc21143",
     "react-native-platform-override": "^1.6.2",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -81,7 +82,7 @@
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-20220107-2008-ca5aaa766"
+    "react-native": "0.0.0-20220114-2008-66dc21143"
   },
   "beachball": {
     "defaultNpmTag": "canary",

@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220107-2008-ca5aaa766",
+  "baseVersion": "0.0.0-20220114-2008-66dc21143",
   "overrides": [
     {
       "type": "derived",
@@ -196,7 +196,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "8a4891de00cb11154e4af32f36a3a181eb4794cf",
+      "baseHash": "eae7117392dc0e670a4e38389a7b7e3bca4d55b7",
       "issue": 6240
     },
     {
