@@ -6,16 +6,13 @@
 
 import path from 'path';
 
-import {EOL} from 'os';
 import fs from '@react-native-windows/fs';
 import MSBuildTools from './msbuildtools';
 import Version from './version';
-import {execSync} from 'child_process';
-import {newError} from './commandWithProgress';
+import {commandWithProgress, newError, newSpinner} from './commandWithProgress';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
 import {CodedError} from '@react-native-windows/telemetry';
-import chalk from 'chalk';
 
 export async function buildSolution(
   buildTools: MSBuildTools,
@@ -82,20 +79,28 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
   }
 }
 
-export function restorePackageConfigs(options: RunWindowsOptions) {
+export async function restorePackageConfigs(options: RunWindowsOptions) {
   const pkgConfigs = new Array();
 
   findFiles(options.root, 'packages.config', pkgConfigs);
 
   for (const pkgConfig of pkgConfigs) {
-    const cmd = `NuGet.exe Restore -PackagesDirectory ${path.join(
-      options.root,
-      'windows',
-      'packages',
-    )} ${pkgConfig}`;
-
-    const results = execSync(cmd).toString().split(EOL);
-    results.forEach((result) => console.log(chalk.white(result)));
+    const text = 'Restoring NuGet packages ';
+    const spinner = newSpinner(text);
+    await commandWithProgress(
+      spinner,
+      text,
+      require.resolve('nuget-exe'),
+      [
+        'restore',
+        '-NonInteractive',
+        '-PackagesDirectory',
+        `${path.join(options.root, 'windows', 'packages')}`,
+        `${pkgConfig}`,
+      ],
+      false,
+      'InstallAppDependenciesFailure',
+    );
   }
 }
 

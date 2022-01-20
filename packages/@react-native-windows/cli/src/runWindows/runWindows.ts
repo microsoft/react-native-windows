@@ -209,7 +209,7 @@ async function runWindowsInternal(
 
   // Restore packages.config files for dependencies that don't support PackageReference.
   try {
-    build.restorePackageConfigs(options);
+    await build.restorePackageConfigs(options);
   } catch (e) {
     newError(
       `Couldn't restore found packages.config instances. ${
