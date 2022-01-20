@@ -10,7 +10,7 @@
     "clean": "just-scripts clean"
   },
   "devDependencies": {
-    "just-scripts": "^0.44.7"
+    "just-scripts": "^1.3.3"
   },
   "files": [
     "nuget-5.8.0.exe"
