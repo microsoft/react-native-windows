@@ -461,6 +461,7 @@ void TextInputShadowNode::setPasswordBoxPlaceholderForeground(
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForeground"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundFocused"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundPointerOver"), winrt::box_value(solidColorBrush));
+  defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundDisabled"), winrt::box_value(solidColorBrush));
   auto passwordBoxResource = xaml::ResourceDictionary();
   auto themeDictionaries = passwordBoxResource.ThemeDictionaries();
   themeDictionaries.Insert(winrt::box_value(L"Default"), defaultRD);
