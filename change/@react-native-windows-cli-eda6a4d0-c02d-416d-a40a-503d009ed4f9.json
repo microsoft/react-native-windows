@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Install NuGet as needed",
+  "packageName": "@react-native-windows/cli",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}

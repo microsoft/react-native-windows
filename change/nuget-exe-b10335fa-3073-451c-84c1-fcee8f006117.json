@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Install NuGet as needed",
+  "packageName": "nuget-exe",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
