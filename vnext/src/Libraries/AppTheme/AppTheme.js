@@ -54,10 +54,12 @@ if (NativeAppTheme) {
 }
 
 module.exports = {
+  // $FlowFixMe[unsafe-getters-setters]
   get isHighContrast(): boolean {
     return _isHighContrast;
   },
 
+  // $FlowFixMe[unsafe-getters-setters]
   get currentHighContrastColors(): HighContrastColors {
     return _highContrastColors;
   },
