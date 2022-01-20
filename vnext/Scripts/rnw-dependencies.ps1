@@ -33,6 +33,7 @@ enum CheckId {
     WindowsVersion
     Yarn
     CppWinRTVSIX
+    NuGet
 }
 
 # CODESYNC \packages\@react-native-windows\cli\src\runWindows\runWindows.ts
@@ -180,7 +181,7 @@ function InstallCppWinRT_VSIX {
     $url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/CppWinRTTeam/vsextensions/cppwinrt101804264/2.0.210304.5/vspackage";
     Write-Debug "Downloading CppWinRT VSIX from $url"
     Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\Microsoft.Windows.CppWinRT.vsix
-    
+
     $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
     if (!(Test-Path $vsWhere)) {
         return $false;
@@ -355,6 +356,18 @@ $requirements = @(
         } catch { $false }; }
         Install = {
             & choco install -y dotnetcore-3.1-sdk
+        }
+    },
+    @{
+        ID=[CheckId]::NuGet
+        Name = 'NuGet'
+        Tags = @('appDev')
+        Valid = {
+            Get-Command -Name NuGet.exe -ErrorAction SilentlyContinue -OutVariable cmd
+            $cmd -and '5.8.0.0' -le $cmd.FileVersionInfo.FileVersion
+        }
+        Install = {
+            & choco install -y NuGet.CommandLine --version 5.8.0
         }
     }
 );
