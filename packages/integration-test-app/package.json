@@ -10,12 +10,12 @@
     "integration-test": "jest --config jest.integration.config.js --runInBand --verbose"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.1.12",
+    "@react-native-windows/automation-channel": "^0.1.14",
     "@react-native-windows/fs": "^1.0.1",
     "chai": "^4.2.0",
     "react": "17.0.2",
     "react-native": "0.0.0-20220107-2008-ca5aaa766",
-    "react-native-windows": "^0.0.0-canary.438"
+    "react-native-windows": "^0.0.0-canary.440"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

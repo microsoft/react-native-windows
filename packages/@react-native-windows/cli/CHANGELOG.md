@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 06 Jan 2022 04:18:33 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Jan 2022 06:10:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.109
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Changes
+
+- Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
 
 ## 0.0.0-canary.108
 
