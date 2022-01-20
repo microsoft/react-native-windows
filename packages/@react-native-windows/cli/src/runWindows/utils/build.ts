@@ -92,8 +92,8 @@ export function restorePackageConfigs(options: RunWindowsOptions) {
       options.root,
       'windows',
       'packages',
-    )}
-      ${pkgConfig}`;
+    )} ${pkgConfig}`;
+
     const results = execSync(cmd).toString().split(EOL);
     results.forEach((result) => console.log(chalk.white(result)));
   }
