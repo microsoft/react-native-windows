@@ -64,7 +64,7 @@ export default class MSBuildTools {
         slnFile,
         '/t:Restore',
         '/p:RestoreProjectStyle=PackagesConfig',
-        '/p:RestorePackagesConfig=true'
+        '/p:RestorePackagesConfig=true',
       ],
       true,
       'MSBuildError',
