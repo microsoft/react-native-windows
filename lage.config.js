@@ -19,7 +19,6 @@ module.exports = {
       'js/**',
       "lib/**",
       "lib-commonjs/**",
-      "nuget-*.exe",
     ],
   }
 };
