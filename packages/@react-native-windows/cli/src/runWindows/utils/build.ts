@@ -6,10 +6,9 @@
 
 import path from 'path';
 
-import fs from '@react-native-windows/fs';
 import MSBuildTools from './msbuildtools';
 import Version from './version';
-import {commandWithProgress, newError, newSpinner} from './commandWithProgress';
+import {newError} from './commandWithProgress';
 import {RunWindowsOptions, BuildConfig, BuildArch} from '../runWindowsOptions';
 import {Config} from '@react-native-community/cli-types';
 import {CodedError} from '@react-native-windows/telemetry';
@@ -77,46 +76,6 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
       configSolutionFile,
     );
   }
-}
-
-export async function restorePackageConfigs(options: RunWindowsOptions) {
-  const pkgConfigs = new Array();
-
-  findFiles(options.root, 'packages.config', pkgConfigs);
-
-  for (const pkgConfig of pkgConfigs) {
-    const text = 'Restoring NuGet packages ';
-    const spinner = newSpinner(text);
-    await commandWithProgress(
-      spinner,
-      text,
-      require.resolve('nuget-exe'),
-      [
-        'restore',
-        '-NonInteractive',
-        '-PackagesDirectory',
-        `${path.join(options.root, 'windows', 'packages')}`,
-        `${pkgConfig}`,
-      ],
-      false,
-      'InstallAppDependenciesFailure',
-    );
-  }
-}
-
-function findFiles(dir: any, name: string, result: Array<string>) {
-  fs.readdirSync(dir).forEach((file: string) => {
-    const filePath = path.join(dir, file);
-    const stat = fs.lstatSync(filePath);
-    if (stat.isDirectory()) {
-      findFiles(filePath, name, result);
-    } else if (
-      (stat.isFile() || stat.isSymbolicLink()) &&
-      `${file}`.endsWith('packages.config')
-    ) {
-      result.push(filePath);
-    }
-  });
 }
 
 export function getAppProjectFile(options: RunWindowsOptions, config: Config) {

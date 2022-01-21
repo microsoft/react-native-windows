@@ -207,9 +207,29 @@ async function runWindowsInternal(
     throw e;
   }
 
+  let buildTools: MSBuildTools;
+  runWindowsPhase = 'FindBuildTools';
+  try {
+    buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
+  } catch (error) {
+    newWarn('No public VS release found');
+    // Try prerelease
+    try {
+      newInfo('Trying pre-release VS');
+      buildTools = MSBuildTools.findAvailableVersion(
+        options.arch,
+        verbose,
+        true, // preRelease
+      );
+    } catch (e) {
+      newError((e as Error).message);
+      throw error;
+    }
+  }
+
   // Restore packages.config files for dependencies that don't support PackageReference.
   try {
-    await build.restorePackageConfigs(options);
+    await buildTools.restorePackageConfigs(slnFile);
   } catch (e) {
     newError(
       `Couldn't restore found packages.config instances. ${
@@ -242,26 +262,6 @@ async function runWindowsInternal(
   } catch (e) {
     newError(`Autolinking failed. ${(e as Error).message}`);
     throw e;
-  }
-
-  let buildTools: MSBuildTools;
-  runWindowsPhase = 'FindBuildTools';
-  try {
-    buildTools = MSBuildTools.findAvailableVersion(options.arch, verbose);
-  } catch (error) {
-    newWarn('No public VS release found');
-    // Try prerelease
-    try {
-      newInfo('Trying pre-release VS');
-      buildTools = MSBuildTools.findAvailableVersion(
-        options.arch,
-        verbose,
-        true, // preRelease
-      );
-    } catch (e) {
-      newError((e as Error).message);
-      throw error;
-    }
   }
 
   if (options.build) {
