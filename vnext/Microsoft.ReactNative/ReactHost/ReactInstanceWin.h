@@ -11,7 +11,6 @@
 #include "activeObject/activeObject.h"
 
 #ifndef CORE_ABI
-#include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
 #include <Modules/I18nManagerModule.h>
 #include <Views/ExpressionAnimationStore.h>
@@ -178,7 +177,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
 
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
 #ifndef CORE_ABI
-  std::shared_ptr<Microsoft::ReactNative::AppTheme> m_appTheme;
   Mso::CntPtr<Microsoft::ReactNative::AppearanceChangeListener> m_appearanceListener;
 #endif
   Mso::CntPtr<Mso::React::IDispatchQueue2> m_uiQueue;
