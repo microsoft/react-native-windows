@@ -69,6 +69,7 @@
         PlatformName;
         DefaultPlatformToolset;
         PlatformToolset;
+        SolutionPath;
         SolutionDir;
         IntDir;
         OutDir;
