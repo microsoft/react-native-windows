@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- This project was created with react-native-windows-init {{ cliVersion }} -->
+<!-- This project was created with react-native-windows {{ rnwVersion }} -->
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
@@ -23,9 +23,6 @@
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WindowsXamlEnableOverview>true</WindowsXamlEnableOverview>
     <LangVersion>7.3</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Label="Version">
-    <ReactNativeWindowsCLI>{{ cliVersion }}</ReactNativeWindowsCLI>
   </PropertyGroup>
   <PropertyGroup Label="NuGet">
     <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>

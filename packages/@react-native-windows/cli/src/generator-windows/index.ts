@@ -208,7 +208,7 @@ export async function copyProjectTemplateAndReplace(
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
 
-    cliVersion: await getVersionOfNpmPackage('@react-native-windows/cli'),
+    rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
 
     mainComponentName: mainComponentName,
 
