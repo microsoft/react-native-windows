@@ -329,3 +329,51 @@ The following types are only valid for function return types
 - `float`, `double`, `Int32` and `ReactNull` must be a type definition imported from another file.
 - `*` means the syntax is the same between TypeScript and Flow.
 - Try your best not to use `Array` and `object` in the JavaScript TurboModule definition.
+
+## Reflecting REACT_MODULE decorated structs
+
+Calling `MakeModuleProvider<T>` or `MakeTurboModuleProvider<T>` returns a `ReactModuleProvider` from a `REACT_MODULE` decorated struct `T`.
+`ReactModuleProvider` is a delegate, by passing a `IReactModuleBuilder` object as an argument, all reflectable members in the `REACT_MODULE` decorated struct will be enumerated and passed to `IReactModuleBuilder`.
+Your job is to implement `IReactModuleBuilder` to collect all members of a struct.
+
+### IReactModuleBuilder
+
+Here are all members in `IReactModuleBuilder`:
+
+- `void AddInitializer(InitializerDelegate)`.
+`InitializerDelegate` is a delegate taking `IReactContext` as an argument.
+A `REACT_MODULE` decorated struct expects all `InitializerDelegate` to be called before calling any other members.
+It is `IReactModuleBuilder`'s responsibility to prepare the `IReactContext` object.
+
+- `AddConstantProvider(ConstantProviderDelegate)`.
+`ConstantProviderDelegate` is a delegate taking `IJSValueWriter` as an argument.
+A `REACT_MODULE` decorated struct could provide multiple `ConstantProviderDelegate`,
+each delegate writes multiple members to the `IJSValueWriter`.
+In order to properly accept these members,
+delegates must be called between `IJSValueWriter::WriteObjectBegin` and `IJSValueWriter::WriteObjectEnd`,
+after that `IJSValueWriter` stores an object with all constant values as its fields.
+
+- `AddMethod(String, MethodReturnType, MethodDelegate)`.
+`MethodDelegate` represents an asynchronized method. The return value and the exception is returned by delegates in the 3rd and 4th arguments.
+`MethodReturnType` represents how this function looks like in JavaScript.
+  - `MethodReturnType::Callback`. The last argument is a callback to accept the return value, other n-1 arguments are passed to the delegate in `IJSValueReader`.
+  - `MethodReturnType::TwoCallbacks`. The last two arguments are callbacks for the return value and the exception, other n-2 arguments are passed to the delegate in `IJSValueReader`.
+  - `MethodReturnType::Void`. All arguments are passed to the delegate in `IJSValueReader`. This delegate do not offer return value or exception.
+  - `MethodReturnType::Promise`. All arguments are passed to the delegate in `IJSValueReader`.
+
+- `AddSyncMethod(String, SyncMethodDelegate)`.
+`SyncMethodDelegate` represents a synchronized method,
+taking `IJSValueReader` and `IJSValueWriter` as its arguments.
+The delegate will read all arguments from `IJSValueReader` as an array,
+and write the return value to `IJSValueWriter`.
+
+### IJSValueReader and IJSValueWriter
+
+Serialization and deserialization between C++ objects and `IJSValueReader/Writer` happens automatically.
+You should implement `IJSValueReader` and `IJSValueWriter` to pass arguments and read return values.
+
+An `IJSValueReader` or `IJSValueWriter` could access objects in JSON plain text, JSI objects or whatever is available in the other side of the platform.
+
+If you only need an abstract representation of C++ values,
+`Microsoft.ReactNative.Cxx` providers such abstraction in `JSValue`, `JSValueObject` and `JSValueArray`,
+with `JSValueTreeReader` and `JSValueTreeWriter` to implement `IJSValueReader` and `IJSValueWriter`.
