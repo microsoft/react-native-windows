@@ -332,8 +332,8 @@ The following types are only valid for function return types
 
 ## Reflecting REACT_MODULE decorated structs
 
-Please ignore this section when using `REACT_MODULE` with `react-native-windows`,
-all interfaces have already been properly implemented.
+**Please ignore this section when using `REACT_MODULE` with `react-native-windows`,
+all interfaces have already been properly implemented.**
 
 Calling `MakeModuleProvider<T>` or `MakeTurboModuleProvider<T>` returns a `ReactModuleProvider` from a `REACT_MODULE` decorated struct `T`.
 `ReactModuleProvider` is a delegate, by passing a `IReactModuleBuilder` object as an argument, all reflectable members in the `REACT_MODULE` decorated struct will be enumerated and passed to `IReactModuleBuilder`.
