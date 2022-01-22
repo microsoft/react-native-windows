@@ -377,3 +377,7 @@ An `IJSValueReader` or `IJSValueWriter` could access objects in JSON plain text,
 If you only need an abstract representation of C++ values,
 `Microsoft.ReactNative.Cxx` providers such abstraction in `JSValue`, `JSValueObject` and `JSValueArray`,
 with `JSValueTreeReader` and `JSValueTreeWriter` to implement `IJSValueReader` and `IJSValueWriter`.
+
+### IReactContext
+
+`IReactContext` allow `REACT_MODULE` decorated structs to access whatever is provided by the native application.
