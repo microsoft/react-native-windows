@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 19 Jan 2022 06:10:35 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jan 2022 06:10:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.441
+
+Sat, 22 Jan 2022 06:10:17 GMT
+
+### Changes
+
+- Install NuGet as needed (julio.rocha@microsoft.com)
+- Move AppTheme module to use codegen (30809111+acoates-ms@users.noreply.github.com)
+- Removes unnecessary conditional from NativeAnimatedNodeManager (erozell@outlook.com)
+- Terminate decay animation when value change is less than 0.1 (erozell@outlook.com)
 
 ## 0.0.0-canary.440
 

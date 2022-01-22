@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 22 Jan 2022 06:10:17 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.441",
+      "version": "0.0.0-canary.441",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff37d64c0d44623d9884e5df7f0f027e4371d53c",
+            "comment": "Install NuGet as needed"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a541ba290a4f593bbc58c06eb918bba277320a83",
+            "comment": "Move AppTheme module to use codegen"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7727b132b854d6b24ed47d01fd49bbd801403173",
+            "comment": "Removes unnecessary conditional from NativeAnimatedNodeManager"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3847eaac08131abfdc3632c77bb52a1cfb0195c0",
+            "comment": "Terminate decay animation when value change is less than 0.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jan 2022 06:10:35 GMT",
       "tag": "react-native-windows_v0.0.0-canary.440",
       "version": "0.0.0-canary.440",

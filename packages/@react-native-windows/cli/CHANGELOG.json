@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 22 Jan 2022 06:10:17 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.109",
+      "version": "0.0.0-canary.109",
+      "comments": {
+        "none": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ff37d64c0d44623d9884e5df7f0f027e4371d53c",
+            "comment": "Install NuGet as needed"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jan 2022 06:10:35 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.109",
       "version": "0.0.0-canary.109",
