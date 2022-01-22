@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Terminate decay animation when value change is less than 0.1",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
