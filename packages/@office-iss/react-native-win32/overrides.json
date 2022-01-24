@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.67.0-rc.1",
+  "baseVersion": "0.67.1",
   "overrides": [
     {
       "type": "derived",

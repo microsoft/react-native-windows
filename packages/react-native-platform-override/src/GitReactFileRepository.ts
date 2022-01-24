@@ -218,11 +218,8 @@ export default class GitReactFileRepository
     const gitRef = await this.refFromVersion(reactNativeVersion);
 
     try {
-      await this.gitClient.fetch([
-        RN_GITHUB_URL,
-        `${gitRef}:${reactNativeVersion}`,
-        '--depth=1',
-      ]);
+      await this.gitClient.fetch([RN_GITHUB_URL, gitRef, '--depth=1']);
+      await this.gitClient.checkout(['-b', reactNativeVersion, 'FETCH_HEAD']);
     } catch (ex) {
       throw new Error(
         `Failed to fetch '${gitRef}'. Does it exist? (${
