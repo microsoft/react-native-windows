@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/stamp-version",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 16:12:32 GMT",
+      "tag": "@rnw-scripts/stamp-version_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/stamp-version",
+            "comment": "Bump @react-native-windows/package-utils to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Oct 2021 15:07:48 GMT",
       "tag": "@rnw-scripts/stamp-version_v0.0.0",
       "version": "0.0.0",

@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 Jan 2022 16:12:54 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:12:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:12:32 GMT
+
+### Patches
+
+- [0.67] Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
+- Promote 0.67 to latest (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.67.0
+- Bump @react-native-windows/virtualized-list to v0.67.0
+- Bump @react-native-windows/codegen to v0.67.0
 
 ## 0.67.0-preview.7
 

@@ -2,6 +2,33 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 16:12:32 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump react-native-windows to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          },
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump @react-native-windows/codegen to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          },
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jan 2022 16:12:54 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",
