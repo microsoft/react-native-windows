@@ -5,8 +5,9 @@
   <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
   <!--Allow implicitly restoring PackageReference dependencies in C++ projects using the Visual Studio IDE.-->
-  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" />
+  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
+    <MSBuild Projects="$(SolutionPath)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
+    <MSBuild Projects="$(SolutionPath)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true" />
   </Target>
 
 </Project>

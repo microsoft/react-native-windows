@@ -1,8 +1,98 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Tue, 28 Dec 2021 06:09:21 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jan 2022 06:10:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Sat, 22 Jan 2022 06:10:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.15
+- Bump react-native-windows to v0.0.0-canary.441
+- Bump @react-native-windows/automation to v0.1.26
+- Bump @react-native-windows/automation-commands to v0.0.53
+
+## 0.0.0
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.14
+- Bump react-native-windows to v0.0.0-canary.440
+- Bump @react-native-windows/automation to v0.1.25
+- Bump @react-native-windows/automation-commands to v0.0.52
+
+## 0.0.0
+
+Fri, 14 Jan 2022 06:09:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.13
+- Bump react-native-windows to v0.0.0-canary.439
+- Bump @react-native-windows/automation to v0.1.24
+- Bump @react-native-windows/automation-commands to v0.0.51
+
+## 0.0.0
+
+Tue, 11 Jan 2022 06:09:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.12
+- Bump react-native-windows to v0.0.0-canary.438
+- Bump @react-native-windows/automation to v0.1.23
+- Bump @react-native-windows/automation-commands to v0.0.50
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.24
+
+## 0.0.0
+
+Sun, 09 Jan 2022 06:07:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.11
+- Bump react-native-windows to v0.0.0-canary.437
+- Bump @react-native-windows/automation to v0.1.22
+- Bump @react-native-windows/automation-commands to v0.0.49
+
+## 0.0.0
+
+Sat, 08 Jan 2022 06:09:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.10
+- Bump react-native-windows to v0.0.0-canary.436
+- Bump @react-native-windows/automation to v0.1.21
+- Bump @react-native-windows/automation-commands to v0.0.48
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.23
+
+## 0.0.0
+
+Fri, 07 Jan 2022 22:21:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.9
+- Bump react-native-windows to v0.0.0-canary.435
+- Bump @react-native-windows/automation to v0.1.20
+- Bump @react-native-windows/automation-commands to v0.0.47
+
+## 0.0.0
+
+Thu, 06 Jan 2022 04:18:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.8
+- Bump react-native-windows to v0.0.0-canary.434
+- Bump @react-native-windows/automation to v0.1.19
+- Bump @react-native-windows/automation-commands to v0.0.46
 
 ## 0.0.0
 

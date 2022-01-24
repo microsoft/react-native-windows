@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Thu, 16 Dec 2021 06:11:18 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Jan 2022 06:09:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.24
+
+Tue, 11 Jan 2022 06:09:11 GMT
+
+### Changes
+
+- Integrate 12/31 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly Build (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.23
+
+Sat, 08 Jan 2022 06:09:24 GMT
+
+### Changes
+
+- Integrate 12/7 Nightly Build (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.22
 

@@ -43,6 +43,8 @@ class VirtualTextViewManager : public ViewManagerBase {
 
   bool RequiresYogaNode() const override;
 
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, winrt::Microsoft::ReactNative::JSValueObject &props);
+
  protected:
   bool UpdateProperty(
       ShadowNodeBase *nodeToUpdate,

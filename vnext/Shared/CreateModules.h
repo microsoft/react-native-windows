@@ -24,9 +24,6 @@ class MessageQueueThread;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
     const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept;
 
-extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateAsyncStorageModule(
-    const WCHAR *storageFileName) noexcept;
-
 } // namespace react
 } // namespace facebook
 

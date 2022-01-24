@@ -120,10 +120,41 @@ void NativeAnimatedNodeManager::DisconnectAnimatedNode(int64_t parentNodeTag, in
   }
 }
 
-void NativeAnimatedNodeManager::StopAnimation(int64_t animationId) {
+void NativeAnimatedNodeManager::StopAnimation(int64_t animationId, bool isTrackingAnimation) {
   if (m_activeAnimations.count(animationId)) {
-    if (const auto animation = m_activeAnimations.at(animationId).get()) {
-      animation->StopAnimation();
+    if (const auto animation = m_activeAnimations.at(animationId)) {
+      animation->StopAnimation(isTrackingAnimation);
+
+      // Insert the animation into the pending completion set to ensure it is
+      // not destroyed before the callback occurs. It's safe to assume the
+      // scoped batch completion callback has not run, since if it had, the
+      // animation would have been removed from the set of active animations.
+      m_pendingCompletionAnimations.insert({animationId, animation});
+
+      const auto nodeTag = animation->AnimatedValueTag();
+      if (nodeTag != -1) {
+        const auto deferredAnimation = m_deferredAnimationForValues.find(nodeTag);
+        if (deferredAnimation != m_deferredAnimationForValues.end()) {
+          // We can assume that the currently deferred animation is the one
+          // being stopped given the constraint that only one animation can
+          // be active for a given value node.
+          assert(deferredAnimation->second == animationId);
+          // If the animation is deferred, just remove the deferred animation
+          // entry as two animations cannot animate the same value concurrently.
+          m_deferredAnimationForValues.erase(nodeTag);
+        } else {
+          // Since only one animation can be active at a time, there shouldn't
+          // be any stopped animations for the value node if the animation has
+          // not been deferred.
+          assert(!m_valuesWithStoppedAnimation.count(nodeTag));
+          // In this case, add the value tag to the set of values with stopped
+          // animations. This is used to optimize the lookup when determining
+          // if an animation needs to be deferred (rather than iterating over
+          // the map of pending completion animations).
+          m_valuesWithStoppedAnimation.insert(nodeTag);
+        }
+      }
+
       m_activeAnimations.erase(animationId);
     }
   }
@@ -241,13 +272,17 @@ void NativeAnimatedNodeManager::StartAnimatingNode(
       break;
   }
 
+  // If the animated value node has any stopped animations, defer start until
+  // all stopped animations fire completion callback and have latest values.
   if (m_activeAnimations.count(animationId)) {
-    m_activeAnimations.at(animationId)->StartAnimation();
-
-    for (auto const &trackingAndLead : m_trackingAndLeadNodeTags) {
-      if (std::get<1>(trackingAndLead) == animatedNodeTag) {
-        RestartTrackingAnimatedNode(std::get<0>(trackingAndLead), std::get<1>(trackingAndLead), manager);
-      }
+    if (m_valuesWithStoppedAnimation.count(animatedNodeTag)) {
+      // Since only one animation can be active per value at a time, there will
+      // not be any other deferred animations for the value node.
+      assert(!m_deferredAnimationForValues.count(animatedNodeTag));
+      // Add the animation to the deferred animation map for the value tag.
+      m_deferredAnimationForValues.insert({animatedNodeTag, animationId});
+    } else {
+      StartAnimationAndTrackingNodes(animationId, animatedNodeTag, manager);
     }
   }
 }
@@ -405,5 +440,44 @@ TrackingAnimatedNode *NativeAnimatedNodeManager::GetTrackingAnimatedNode(int64_t
 
 void NativeAnimatedNodeManager::RemoveActiveAnimation(int64_t tag) {
   m_activeAnimations.erase(tag);
+}
+
+void NativeAnimatedNodeManager::RemoveStoppedAnimation(
+    int64_t tag,
+    const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
+  if (m_pendingCompletionAnimations.count(tag)) {
+    // Remove stopped animation for value node entry
+    const auto animation = m_pendingCompletionAnimations.at(tag);
+    const auto nodeTag = animation->AnimatedValueTag();
+    // If the animation was stopped, attempt to start deferred animations.
+    if (m_valuesWithStoppedAnimation.erase(nodeTag)) {
+      StartDeferredAnimationsForValueNode(nodeTag, manager);
+    }
+    m_pendingCompletionAnimations.erase(tag);
+  }
+}
+
+void NativeAnimatedNodeManager::StartDeferredAnimationsForValueNode(
+    int64_t tag,
+    const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
+  if (m_deferredAnimationForValues.count(tag)) {
+    const auto deferredAnimationTag = m_deferredAnimationForValues.at(tag);
+    StartAnimationAndTrackingNodes(deferredAnimationTag, tag, manager);
+    m_deferredAnimationForValues.erase(tag);
+  }
+}
+
+void NativeAnimatedNodeManager::StartAnimationAndTrackingNodes(
+    int64_t tag,
+    int64_t nodeTag,
+    const std::shared_ptr<NativeAnimatedNodeManager> &manager) {
+  if (m_activeAnimations.count(tag)) {
+    m_activeAnimations.at(tag)->StartAnimation();
+    for (auto const &trackingAndLead : m_trackingAndLeadNodeTags) {
+      if (std::get<1>(trackingAndLead) == nodeTag) {
+        RestartTrackingAnimatedNode(std::get<0>(trackingAndLead), std::get<1>(trackingAndLead), manager);
+      }
+    }
+  }
 }
 } // namespace Microsoft::ReactNative

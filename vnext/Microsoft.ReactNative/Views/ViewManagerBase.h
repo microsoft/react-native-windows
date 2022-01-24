@@ -78,6 +78,7 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   virtual YGMeasureFunc GetYogaCustomMeasureFunc() const;
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
+  void MarkDirty(int64_t tag);
 
   virtual void OnPointerEvent(ShadowNodeBase *node, const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args);
 

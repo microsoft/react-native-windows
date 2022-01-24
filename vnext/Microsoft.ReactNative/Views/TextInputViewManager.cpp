@@ -475,16 +475,20 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
   auto passwordBox = control.try_as<xaml::Controls::PasswordBox>();
   auto hasKeyDownEvents = false;
 
+  auto markDirty = false;
   for (auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
 
     // Applicable properties for both TextBox and PasswordBox
     if (TryUpdateFontProperties(control, propertyName, propertyValue)) {
+      markDirty = true;
       continue;
     } else if (TryUpdateCharacterSpacing(control, propertyName, propertyValue)) {
+      markDirty = true;
       continue;
     } else if (propertyName == "allowFontScaling") {
+      markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         control.IsTextScaleFactorEnabled(propertyValue.AsBoolean());
       else if (propertyValue.IsNull())
@@ -509,6 +513,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         HideCaretIfNeeded();
       }
     } else if (propertyName == "secureTextEntry") {
+      markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         if (propertyValue.AsBoolean()) {
           if (m_isTextBox) {
@@ -537,6 +542,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         }
       }
     } else if (propertyName == "maxLength") {
+      markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
           propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
         control.SetValue(
@@ -613,6 +619,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
           continue;
         } else if (propertyName == "multiline") {
+          markDirty = true;
           if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
             const bool isMultiline = propertyValue.AsBoolean();
             textBox.TextWrapping(isMultiline ? xaml::TextWrapping::Wrap : xaml::TextWrapping::NoWrap);
@@ -643,6 +650,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
           else if (propertyValue.IsNull())
             textBox.ClearValue(xaml::Controls::TextBox::IsSpellCheckEnabledProperty());
         } else if (propertyName == "text") {
+          markDirty = true;
           SetText(propertyValue);
         } else if (propertyName == "autoCapitalize") {
           if (textBox.try_as<xaml::Controls::ITextBox6>()) {
@@ -659,10 +667,15 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         }
       } else { // Applicable properties for PasswordBox
         if (propertyName == "text" && !m_isTextBox) {
+          markDirty = true;
           SetText(propertyValue);
         }
       }
     }
+  }
+
+  if (markDirty) {
+    GetViewManager()->MarkDirty(m_tag);
   }
 
   Super::updateProperties(props);

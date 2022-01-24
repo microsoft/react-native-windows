@@ -1,8 +1,86 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Dec 2021 06:09:21 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jan 2022 06:10:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.441
+
+Sat, 22 Jan 2022 06:10:17 GMT
+
+### Changes
+
+- Install NuGet as needed (julio.rocha@microsoft.com)
+- Move AppTheme module to use codegen (30809111+acoates-ms@users.noreply.github.com)
+- Removes unnecessary conditional from NativeAnimatedNodeManager (erozell@outlook.com)
+- Terminate decay animation when value change is less than 0.1 (erozell@outlook.com)
+
+## 0.0.0-canary.440
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Changes
+
+- Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.109
+
+## 0.0.0-canary.439
+
+Fri, 14 Jan 2022 06:09:51 GMT
+
+### Changes
+
+- Move LinkingModule to use TurboModule (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.438
+
+Tue, 11 Jan 2022 06:09:11 GMT
+
+### Changes
+
+- Fixes issue with restarting animations (erozell@outlook.com)
+- Integrate 12/31 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly Build (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.24
+
+## 0.0.0-canary.437
+
+Sun, 09 Jan 2022 06:07:57 GMT
+
+### Changes
+
+- Publish codegen spec files into win32 nuget (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.436
+
+Sat, 08 Jan 2022 06:09:24 GMT
+
+### Changes
+
+- Fork HoverState.js to allow hover events on Pressable (saadnajmi2@gmail.com)
+- Fixes crash when creating DiffClampAnimatedNode (erozell@outlook.com)
+- Integrate 12/7 Nightly Build (ngerlem@microsoft.com)
+- Remove unused iuimanager.h (30809111+acoates-ms@users.noreply.github.com)
+- Reduce scope of marking YogaNode dirty (erozell@outlook.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.23
+
+## 0.0.0-canary.435
+
+Fri, 07 Jan 2022 22:21:25 GMT
+
+### Changes
+
+- Use Window::Current compositor on XAML Islands (erozell@outlook.com)
+- Fixes crash when using `Animated.divide` (erozell@outlook.com)
+- Animate value property rather than offset (erozell@outlook.com)
+
+## 0.0.0-canary.434
+
+Thu, 06 Jan 2022 04:18:33 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.108
 
 ## 0.0.0-canary.433
 
