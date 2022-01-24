@@ -96,7 +96,7 @@ async function fetchFullCommitHash(
   );
   if (!commitInfo.ok) {
     throw new Error(
-      `Unable to query Github for commit '${abbrevHash}' Status: '${commitInfo.statusText}'`,
+      `Unable to query Github for commit '${abbrevHash}' Status: [${commitInfo.status}] '${commitInfo.statusText}'`,
     );
   }
 
