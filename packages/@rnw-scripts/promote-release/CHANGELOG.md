@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Mon, 11 Oct 2021 15:07:19 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:11:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.24
+
+Mon, 24 Jan 2022 16:11:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.66.1 (ngerlem@microsoft.com)
 
 ## 1.2.24
 

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Mon, 17 Jan 2022 16:12:35 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:11:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Mon, 24 Jan 2022 16:11:33 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.4.17 (ngerlem@microsoft.com)
 
 ## 0.0.1
 

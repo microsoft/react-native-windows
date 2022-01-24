@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 15 Nov 2021 16:09:53 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:11:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.2
+
+Mon, 24 Jan 2022 16:11:33 GMT
+
+### Patches
+
+- Promote 0.66 to legacy (ngerlem@microsoft.com)
 
 ## 0.66.1
 

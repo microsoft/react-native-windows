@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 17 Jan 2022 16:12:35 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:11:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.4
+
+Mon, 24 Jan 2022 16:11:33 GMT
+
+### Patches
+
+- Promote 0.66 to legacy (ngerlem@microsoft.com)
 
 ## 0.66.3
 
