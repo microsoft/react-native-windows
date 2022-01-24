@@ -40,8 +40,6 @@ export async function ensureWinUI3Project(folder: string) {
       {
         id: 'Microsoft.WindowsAppSDK',
         version: '1.0.0',
-        hasProps: false,
-        hasTargets: false,
       },
     ],
   };
