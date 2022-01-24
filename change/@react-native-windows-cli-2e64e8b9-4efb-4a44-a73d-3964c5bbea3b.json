@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "[0.67] Remove ADO NuGet feed from config for new projects",
   "packageName": "@react-native-windows/cli",
   "email": "jthysell@microsoft.com",
