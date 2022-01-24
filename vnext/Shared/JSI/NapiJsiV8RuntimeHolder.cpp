@@ -98,6 +98,10 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
 
 #pragma region facebook::jsi::RuntimeHolderLazyInit
 
+facebook::jsi::RuntimeType getRuntimeType() noexcept {
+  return facebook::jsi::RuntimeType::V8NAPI;
+}
+
 shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
 {
   std::call_once(m_onceFlag, [this]() { InitRuntime(); });

@@ -31,6 +31,10 @@ class TaskRunnerAdapter : public v8runtime::JSITaskRunner {
   std::shared_ptr<facebook::react::MessageQueueThread> jsQueue_;
 };
 
+RuntimeType V8JSIRuntimeHolder::getRuntimeType() noexcept {
+  return RuntimeType::V8;
+}
+
 std::shared_ptr<facebook::jsi::Runtime> V8JSIRuntimeHolder::getRuntime() noexcept {
   std::call_once(once_flag_, [this]() { initRuntime(); });
 

@@ -198,6 +198,18 @@ void InstanceImpl::SetInError() noexcept {
   m_isInError = true;
 }
 
+bool shouldStartHermesInspector(DevSettings &devSettings) {
+  bool isHermes =
+      ((devSettings.jsiEngineOverride == JSIEngineOverride::Hermes) ||
+       (devSettings.jsiEngineOverride == JSIEngineOverride::Default && devSettings.jsiRuntimeHolder &&
+        devSettings.jsiRuntimeHolder->getRuntimeType() == facebook::jsi::RuntimeType::Hermes));
+
+  if (isHermes && devSettings.useDirectDebugger && !devSettings.useWebDebugger)
+    return true;
+  else
+    return false;
+}
+
 InstanceImpl::InstanceImpl(
     std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
@@ -225,8 +237,7 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
-  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes && m_devSettings->useDirectDebugger &&
-      !m_devSettings->useWebDebugger) {
+  if (shouldStartHermesInspector(*m_devSettings)) {
     m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
