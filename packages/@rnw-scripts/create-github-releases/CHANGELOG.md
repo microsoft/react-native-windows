@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Mon, 24 Jan 2022 16:12:32 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:13:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.5
+
+Mon, 24 Jan 2022 16:13:22 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.67.0
 
 ## 1.1.5
 

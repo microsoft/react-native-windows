@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 24 Jan 2022 16:12:31 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:13:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:13:22 GMT
+
+### Patches
+
+- [0.67] Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
+- Promote 0.67 to latest (ngerlem@microsoft.com)
+- Bump @react-native-windows/package-utils to v0.67.0
+- Bump @react-native-windows/telemetry to v0.67.0
 
 ## 0.67.0
 

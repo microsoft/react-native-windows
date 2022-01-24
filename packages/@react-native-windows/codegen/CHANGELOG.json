@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 16:13:22 GMT",
+      "tag": "@react-native-windows/codegen_v0.67.0",
+      "version": "0.67.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "not available",
+            "comment": "Promote 0.67 to latest"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 16:12:32 GMT",
       "tag": "@react-native-windows/codegen_v0.67.0",
       "version": "0.67.0",
