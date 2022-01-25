@@ -198,6 +198,7 @@ void InstanceImpl::SetInError() noexcept {
   m_isInError = true;
 }
 
+namespace {
 bool shouldStartHermesInspector(DevSettings &devSettings) {
   bool isHermes =
       ((devSettings.jsiEngineOverride == JSIEngineOverride::Hermes) ||
@@ -209,6 +210,7 @@ bool shouldStartHermesInspector(DevSettings &devSettings) {
   else
     return false;
 }
+} // namespace
 
 InstanceImpl::InstanceImpl(
     std::shared_ptr<Instance> &&instance,

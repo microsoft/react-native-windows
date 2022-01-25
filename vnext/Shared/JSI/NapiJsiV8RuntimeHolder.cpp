@@ -98,7 +98,7 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
 
 #pragma region Microsoft::JSI::RuntimeHolderLazyInit
 
-facebook::react::JSIEngineOverride getRuntimeType() noexcept {
+facebook::react::JSIEngineOverride NapiJsiV8RuntimeHolder::getRuntimeType() noexcept {
   return facebook::react::JSIEngineOverride::V8NodeApi;
 }
 
