@@ -381,6 +381,11 @@ Mso::Future<void> ReactHost::LoadInQueue(ReactOptions &&options) noexcept {
 
     return whenLoaded.AsFuture().Then(m_executor, [this](Mso::Maybe<void> && /*value*/) noexcept {
       std::vector<Mso::Future<void>> loadCompletionList;
+
+      if (value.IsError()) {
+        return Mso::MakeFailedFuture<void>(std::move(value.TakeError()));
+      }
+
       ForEachViewHost([&loadCompletionList](auto &viewHost) noexcept {
         loadCompletionList.push_back(viewHost.UpdateViewInstanceInQueue());
       });
