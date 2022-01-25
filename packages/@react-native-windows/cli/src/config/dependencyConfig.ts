@@ -277,7 +277,7 @@ export function dependencyConfigWindows(
         projectContents,
       );
 
-      if (projectType === 'dynamiclibrary' || projectType === 'winmdobj') {
+      if (projectType === 'dynamiclibrary' || projectType === 'winmdobj' || projectType === 'library') {
         const projectLang = configUtils.getProjectLanguage(projectFile);
 
         const projectName = configUtils.getProjectName(
