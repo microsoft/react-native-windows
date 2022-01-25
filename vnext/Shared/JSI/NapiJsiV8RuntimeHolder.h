@@ -10,10 +10,10 @@
 
 namespace Microsoft::JSI {
 
-class NapiJsiV8RuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class NapiJsiV8RuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
-  facebook::jsi::RuntimeType getRuntimeType() noexcept override;
+  facebook::react::JSIEngineOverride getRuntimeType() noexcept override;
 
   NapiJsiV8RuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,

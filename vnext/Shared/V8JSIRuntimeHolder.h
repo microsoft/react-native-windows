@@ -13,10 +13,10 @@
 namespace facebook {
 namespace react {
 
-class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
-  RuntimeType getRuntimeType() noexcept override;
+  facebook::react::JSIEngineOverride getRuntimeType() noexcept override;
 
   V8JSIRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,

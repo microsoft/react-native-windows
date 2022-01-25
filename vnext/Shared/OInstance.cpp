@@ -113,7 +113,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   }
 
   OJSIExecutorFactory(
-      std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
+      std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
       bool isProfilingEnabled,
@@ -125,7 +125,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
-  std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
@@ -202,7 +202,7 @@ bool shouldStartHermesInspector(DevSettings &devSettings) {
   bool isHermes =
       ((devSettings.jsiEngineOverride == JSIEngineOverride::Hermes) ||
        (devSettings.jsiEngineOverride == JSIEngineOverride::Default && devSettings.jsiRuntimeHolder &&
-        devSettings.jsiRuntimeHolder->getRuntimeType() == facebook::jsi::RuntimeType::Hermes));
+        devSettings.jsiRuntimeHolder->getRuntimeType() == facebook::react::JSIEngineOverride::Hermes));
 
   if (isHermes && devSettings.useDirectDebugger && !devSettings.useWebDebugger)
     return true;

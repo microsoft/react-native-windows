@@ -96,10 +96,10 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   m_ownThreadId = std::this_thread::get_id();
 }
 
-#pragma region facebook::jsi::RuntimeHolderLazyInit
+#pragma region Microsoft::JSI::RuntimeHolderLazyInit
 
-facebook::jsi::RuntimeType getRuntimeType() noexcept {
-  return facebook::jsi::RuntimeType::V8NAPI;
+facebook::react::JSIEngineOverride getRuntimeType() noexcept {
+  return facebook::react::JSIEngineOverride::V8NodeApi;
 }
 
 shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
@@ -116,6 +116,6 @@ shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
   return m_runtime;
 }
 
-#pragma endregion facebook::jsi::RuntimeHolderLazyInit
+#pragma endregion Microsoft::JSI::RuntimeHolderLazyInit
 
 } // namespace Microsoft::JSI

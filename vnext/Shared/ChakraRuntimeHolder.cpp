@@ -9,8 +9,8 @@
 
 namespace Microsoft::JSI {
 
-facebook::jsi::RuntimeType ChakraRuntimeHolder::getRuntimeType() noexcept {
-  return facebook::jsi::RuntimeType::Chakra;
+facebook::react::JSIEngineOverride ChakraRuntimeHolder::getRuntimeType() noexcept {
+  return facebook::react::JSIEngineOverride::Chakra;
 }
 
 std::shared_ptr<facebook::jsi::Runtime> ChakraRuntimeHolder::getRuntime() noexcept {
