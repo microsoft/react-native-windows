@@ -78,6 +78,10 @@ function extractHashFromNightlyVersion(reactNativeVersion: string): string {
   return splitPre[2];
 }
 
+type GitHubCommitInfo = {
+  sha: string;
+};
+
 async function fetchFullCommitHash(
   abbrevHash: string,
   opts?: {githubToken?: string},
@@ -100,5 +104,5 @@ async function fetchFullCommitHash(
     );
   }
 
-  return (await commitInfo.json()).sha;
+  return ((await commitInfo.json()) as GitHubCommitInfo).sha;
 }
