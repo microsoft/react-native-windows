@@ -9,10 +9,10 @@
 
 namespace Microsoft::React::Test {
 
-class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class ChakraRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
-  RuntimeType getRuntimeType() noexcept override;
+  facebook::react::JSIEngineOverride getRuntimeType() noexcept override;
 
   ChakraRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,
