@@ -512,6 +512,13 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         m_hideCaret = propertyValue.AsBoolean();
         HideCaretIfNeeded();
       }
+    } else if (propertyName == "focusable") {
+      // parent class also sets isTabStop
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        control.IsEnabled(propertyValue.AsBoolean());
+      } else if (propertyValue.IsNull()) {
+        control.ClearValue(xaml::Controls::Control::IsEnabledProperty());
+      }
     } else if (propertyName == "secureTextEntry") {
       markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
