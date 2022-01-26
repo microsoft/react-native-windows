@@ -188,7 +188,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (UWP)
@@ -206,7 +206,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), not(startsWith(variables.BuildPlatform, 'arm')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (NetCore)
@@ -224,7 +224,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), eq(variables.BuildPlatform, 'x64'))
+                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'))
 
     # This job is the one that accumulates the spread out build tasks into one dependency
     - job: UniversalBuild

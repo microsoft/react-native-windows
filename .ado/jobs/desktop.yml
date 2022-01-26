@@ -118,6 +118,7 @@ jobs:
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
           failOnMinTestsNotRun: true
+        condition: and(succeeded(), not(eq(variables['BuildPlatform'], 'ARM64')))
 
       - task: PowerShell@2
         displayName: Set up test servers
@@ -150,7 +151,7 @@ jobs:
           failOnMinTestsNotRun: true
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'), not(eq(variables['BuildPlatform'], 'ARM64')))
 
       - template: ../templates/stop-packagers.yml
 
