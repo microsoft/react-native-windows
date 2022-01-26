@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
+This log was last generated on Wed, 26 Jan 2022 06:08:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.3
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Fix integration by tag of newer RN Builds (ngerlem@microsoft.com)
 
 ## 1.6.2
 

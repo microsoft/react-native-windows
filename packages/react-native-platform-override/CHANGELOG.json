@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 26 Jan 2022 06:08:34 GMT",
+      "tag": "react-native-platform-override_v1.6.3",
+      "version": "1.6.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "235732d90619229cbaa1e71ad1e4c94762b956d0",
+            "comment": "Fix integration by tag of newer RN Builds"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:08 GMT",
       "tag": "react-native-platform-override_v1.6.2",
       "version": "1.6.2",

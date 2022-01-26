@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix integration by tag of newer RN Builds",
-  "packageName": "react-native-platform-override",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
