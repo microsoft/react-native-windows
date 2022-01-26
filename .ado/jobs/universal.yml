@@ -10,31 +10,6 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
-            - Name: Arm64Debug
-              BuildConfiguration: Debug
-              BuildPlatform: ARM64
-              FastBuild: false
-            - Name: Arm64Release
-              BuildConfiguration: Release
-              BuildPlatform: ARM64
-              FastBuild: false
-            - Name: X64Debug
-              BuildConfiguration: Debug
-              BuildPlatform: X64
-              FastBuild: false
-            - Name: X64Release
-              BuildConfiguration: Release
-              BuildPlatform: X64
-              FastBuild: false
-            - Name: X86Debug
-              BuildConfiguration: Debug
-              BuildPlatform: X86
-              LayoutHeaders: true
-              FastBuild: false
-            - Name: X86Release
-              BuildConfiguration: Release
-              BuildPlatform: X86
-              FastBuild: false
             - Name: X64ReleaseFast
               BuildConfiguration: Release
               BuildPlatform: X64

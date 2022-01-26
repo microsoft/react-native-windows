@@ -45,7 +45,7 @@ jobs:
 
     strategy:
       matrix:
-        ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           Arm64Debug:
             BuildConfiguration: Debug
             BuildPlatform: ARM64
@@ -63,7 +63,7 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x86
         # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           X86Release:
             BuildConfiguration: Release
             BuildPlatform: x86
