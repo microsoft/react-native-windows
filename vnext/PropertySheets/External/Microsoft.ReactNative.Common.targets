@@ -15,9 +15,9 @@
 
   <!-- Should match entry in $(ReactNativeWindowsDir)vnext\Directory.Build.targets -->
   <!--Allow implicitly restoring PackageReference dependencies in C++ projects using the Visual Studio IDE.-->
-  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true'">
-    <MSBuild Projects="$(SolutionPath)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
-    <MSBuild Projects="$(SolutionPath)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true" />
+  <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true" />
   </Target>
 
 </Project>
