@@ -61,8 +61,9 @@ const ComponentExamples: Array<RNTesterExample> = [
   {
     key: 'PressableExample',
     category: 'UI',
-    module: require('../examples/Pressable/PressableExample'),
+    module: require('../examples-win32/Pressable/PressableExample'),
   },
+  /*
   {
     key: 'TouchableWin32Example',
     module: require('@office-iss/react-native-win32/Libraries/Components/Touchable/Tests/TouchableWin32Test'),
@@ -101,7 +102,7 @@ const ComponentExamples: Array<RNTesterExample> = [
     key: 'SectionListExample',
     category: 'ListView',
     module: require('../examples/SectionList/SectionListExample'),
-  }*/,
+  }*/
   {
     key: 'SwitchExample',
     module: require('../examples/Switch/SwitchExample'),
