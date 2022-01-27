@@ -894,7 +894,12 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::TextBox::SelectionHighlightColorProperty(),
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::PasswordBox>().Password(oldView.as<xaml::Controls::TextBox>().Text());
-      newView.as<xaml::Controls::PasswordBox>().IsEnabled(!oldView.as<xaml::Controls::TextBox>().IsReadOnly());
+      // Since both focasable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to check isReadOnly
+      if (oldView.as<xaml::Controls::TextBox>().IsEnabled()) {
+        newView.as<xaml::Controls::PasswordBox>().IsEnabled(!oldView.as<xaml::Controls::TextBox>().IsReadOnly());
+      } else {
+        newView.as<xaml::Controls::PasswordBox>().IsEnabled(oldView.as<xaml::Controls::TextBox>().IsEnabled());
+      }
     } else {
       TransferProperty(
           oldView,
@@ -912,7 +917,13 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
           xaml::Controls::TextBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::TextBox>().Text(oldView.as<xaml::Controls::PasswordBox>().Password());
-      newView.as<xaml::Controls::TextBox>().IsReadOnly(!oldView.as<xaml::Controls::PasswordBox>().IsEnabled());
+      // Since both focasable/editable affect isEnabled for PasswordBox, if the oldView is enabled we still need to
+      // check isReadOnly
+      if (oldView.as<xaml::Controls::PasswordBox>().IsEnabled()) {
+        newView.as<xaml::Controls::TextBox>().IsReadOnly(!oldView.as<xaml::Controls::PasswordBox>().IsEnabled());
+      } else {
+        newView.as<xaml::Controls::TextBox>().IsEnabled(oldView.as<xaml::Controls::PasswordBox>().IsEnabled());
+      }     
     }
 
     TransferInputScope(oldView, newView, copyToPasswordBox);
