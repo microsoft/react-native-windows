@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 06 Jan 2022 04:18:32 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Jan 2022 06:11:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.32
+
+Thu, 27 Jan 2022 06:11:44 GMT
+
+### Changes
+
+- exports getVersionOfNpmPackage for use in CLI (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.31
 

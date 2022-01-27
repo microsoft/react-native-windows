@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "addsCLIversion to project file",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Jan 2022 06:08:34 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Jan 2022 06:11:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.443
+
+Thu, 27 Jan 2022 06:11:44 GMT
+
+### Changes
+
+- adds editable to textinput with securetextentry (tatianakapos@microsoft.com)
+- addsCLIversion to project file (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.110
 
 ## 0.0.0-canary.442
 
