@@ -4,6 +4,14 @@
 
 `@react-native-windows/codegen` only supports reading turbo modules in Flow today.
 
+[react-native-tscodegen](https://github.com/microsoft/react-native-tscodegen/tree/master/packages/RN-TSCodegen) has a TypeScript front-end that works with `react-native-windows-codegen`.
+The `RN-TSCodegen-Types` package is experimental,
+which provides useful TypeScript to assist the codegen like `Int32` and `ReactNull`.
+But there is no such constraint that these types must be imported from `RN-TSCodegen-Types`,
+if any technical issue prevent you from using `RN-TSCodegen-Types`,
+you could copy them in your own file and import them to your turbo module
+(these types cannot be defined in the same file where the turbo module is defined).
+
 `react-native-windows-codegen --file <FILE> --files <FILES> --namespace <NAMESPACE> --libraryName <LIBRARY>`
 
 - `file`: An input file.
@@ -109,6 +117,7 @@ Here is the list of all available attributes:
 ### REACT_INIT
 
 `REACT_INIT` attaches to a function.
+Such function is called after members with `REACT_EVENT` and `REACT_FUNCTION` are initialized.
 Such function is called before a TurboModule is used in JavaScript,
 there is no deterministic timing about when this function will be called,
 and also no guarantee about in which thread this function will be called.
@@ -125,7 +134,7 @@ void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext)
 
 `REACT_SYNC_METHOD` attaches to a function.
 Such function is exposed in the TurboModule to JavaScript.
-There is no guarantee about in which thread this function will be called.
+Such function will be called synchronously from the JS thread.
 
 The syntax of `REACT_SYNC_METHOD` is `REACT_SYNC_METHOD(method, [optional]methodName)`
 
@@ -149,8 +158,12 @@ static int AddSync(int x, int y) noexcept
 ### REACT_METHOD
 
 `REACT_METHOD` is an async version of `REACT_SYNC_METHOD`.
-The attached function must returns `void`
-and its last argument must be `winrt::Microsoft::ReactNative::ReactPromise<T> const& result`.
+The attached function must returns `void`.
+
+There are three ways to define an async function:
+- Define `winrt::Microsoft::ReactNative::ReactPromise<T> const& result` as the last argument.
+- Define one callback as the last argument for returning a value, such function cannot raise errors.
+- Define two callbacks as the last two arguments for returning a value or raising an error.
 
 Call `result.Resolve` to finish the function call with a result.
 
@@ -277,7 +290,7 @@ The syntax of `REACT_FUNCTION` is `REACT_FUNCTION(field, [optional]functionName,
 
 - `field`: the C++ field to store a JavaScript function.
 - `functionName`: the JavaScript function name. The default value is `L"field"`.
-- `moduleName`: the JavaScript module event emitter name. If this argument is not set, the `moduleName` in `REACT_MODULE` will be used.
+- `moduleName`: the JavaScript callable module name. If this argument is not set, the `moduleName` in `REACT_MODULE` will be used.
 
 ```c++
 REACT_FUNCTION(AddValues, addValues, RandomModuleName)
@@ -330,13 +343,13 @@ The following types are only valid for function return types
 - `*` means the syntax is the same between TypeScript and Flow.
 - Try your best not to use `Array` and `object` in the JavaScript TurboModule definition.
 
-## Reflecting REACT_MODULE decorated structs
+## Reflecting REACT_MODULE attached structs
 
 **Please ignore this section when using `REACT_MODULE` with `react-native-windows`,
 all interfaces have already been properly implemented.**
 
-Calling `MakeModuleProvider<T>` or `MakeTurboModuleProvider<T>` returns a `ReactModuleProvider` from a `REACT_MODULE` decorated struct `T`.
-`ReactModuleProvider` is a delegate, by passing a `IReactModuleBuilder` object as an argument, all reflectable members in the `REACT_MODULE` decorated struct will be enumerated and passed to `IReactModuleBuilder`.
+Calling `MakeModuleProvider<T>` or `MakeTurboModuleProvider<T>` returns a `ReactModuleProvider` from a `REACT_MODULE` attached struct `T`.
+`ReactModuleProvider` is a delegate, by passing a `IReactModuleBuilder` object as an argument, all reflectable members in the `REACT_MODULE` attached struct will be enumerated and passed to `IReactModuleBuilder`.
 Your job is to implement `IReactModuleBuilder` to collect all members of a struct.
 
 ### IReactModuleBuilder
@@ -345,12 +358,12 @@ Here are all members in `IReactModuleBuilder`:
 
 - `void AddInitializer(InitializerDelegate)`.
 `InitializerDelegate` is a delegate taking `IReactContext` as an argument.
-A `REACT_MODULE` decorated struct expects all `InitializerDelegate` to be called before calling any other members.
+A `REACT_MODULE` attached struct expects all `InitializerDelegate` to be called before calling any other members.
 It is `IReactModuleBuilder`'s responsibility to prepare the `IReactContext` object.
 
 - `AddConstantProvider(ConstantProviderDelegate)`.
 `ConstantProviderDelegate` is a delegate taking `IJSValueWriter` as an argument.
-A `REACT_MODULE` decorated struct could provide multiple `ConstantProviderDelegate`,
+A `REACT_MODULE` attached struct could provide multiple `ConstantProviderDelegate`,
 each delegate writes multiple members to the `IJSValueWriter`.
 In order to properly accept these members,
 delegates must be called between `IJSValueWriter::WriteObjectBegin` and `IJSValueWriter::WriteObjectEnd`,
@@ -377,10 +390,14 @@ You should implement `IJSValueReader` and `IJSValueWriter` to pass arguments and
 
 An `IJSValueReader` or `IJSValueWriter` could access objects in JSON plain text, JSI objects or whatever is available in the other side of the platform.
 
-If you only need an abstract representation of C++ values,
+If you only need an abstract representation of JSON values,
 `Microsoft.ReactNative.Cxx` providers such abstraction in `JSValue`, `JSValueObject` and `JSValueArray`,
 with `JSValueTreeReader` and `JSValueTreeWriter` to implement `IJSValueReader` and `IJSValueWriter`.
 
+You could add serialization supports for more types by making new overloading functions for `winrt::Microsoft::ReactNative::ReadValue` and `winrt::Microsoft::ReactNative::WriteValue`.
+Another choice is to implement serialization and deserialization between these types and `JSValue`,
+and `Microsoft.ReactNative.Cxx` will do the rest for you.
+
 ### IReactContext
 
-`IReactContext` allow `REACT_MODULE` decorated structs to access whatever is provided by the native application.
+`IReactContext` allow `REACT_MODULE` attached structs to access whatever is provided by the React Native application.
