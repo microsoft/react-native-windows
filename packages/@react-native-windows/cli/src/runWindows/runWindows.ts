@@ -71,6 +71,17 @@ function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
   }
 }
 
+// These are the MSBuild properties we care about, in terms of
+// recording in telemetry
+const MSBuildPropertiesWeTrack: string[] = [
+  'WinUIPackageName',
+  'WinUIPackageVersion',
+  'WindowsTargetPlatformVersion',
+  'UseExperimentalNuGet',
+  'UseHermes',
+  'UseWinUI3',
+];
+
 /**
  * Get the extra props to add to the `run-windows` telemetry event.
  * @returns The extra props.
@@ -79,6 +90,9 @@ async function getExtraProps(): Promise<Record<string, any>> {
   const extraProps: Record<string, any> = {
     phase: runWindowsPhase,
     hasRunRnwDependencies,
+    msBuildProps: evaluateMSBuildPropsCallback
+      ? evaluateMSBuildPropsCallback(MSBuildPropertiesWeTrack)
+      : {},
   };
   return extraProps;
 }
@@ -96,6 +110,10 @@ type RunWindowsPhase =
 let runWindowsPhase: RunWindowsPhase = 'None';
 
 let hasRunRnwDependencies: boolean = false;
+
+let evaluateMSBuildPropsCallback:
+  | ((propsToEvaluate: string[]) => Record<string, string> | null)
+  | undefined;
 
 /**
  * The function run when calling `react-native run-windows`.
@@ -199,7 +217,7 @@ async function runWindowsInternal(
   }
 
   // Get the solution file
-  let slnFile;
+  let slnFile: string | null;
   try {
     slnFile = build.getAppSolutionFile(options, config);
   } catch (e) {
@@ -226,6 +244,34 @@ async function runWindowsInternal(
       throw error;
     }
   }
+
+  // Get build/deploy options
+  const buildType = deploy.getBuildConfiguration(options);
+  const msBuildProps = build.parseMsBuildProps(options);
+
+  // Disable the autolink check since we just ran it
+  msBuildProps.RunAutolinkCheck = 'false';
+
+  // Set up the callback to capture MSBuild properties after the command completes
+  evaluateMSBuildPropsCallback = (propsToEvaluate: string[]) => {
+    const projectFile = build.getAppProjectFile(options, config);
+    if (projectFile) {
+      if (verbose) {
+        newInfo('Gathering extra data for telemetry.');
+      }
+
+      const extraMsBuildProps = Object.assign({}, msBuildProps);
+      extraMsBuildProps.Configuration = buildType;
+      extraMsBuildProps.Architecture = options.arch;
+      return buildTools.evaluateMSBuildProperties(
+        slnFile!,
+        projectFile,
+        propsToEvaluate,
+        extraMsBuildProps,
+      );
+    }
+    return {};
+  };
 
   // Restore packages.config files for dependencies that don't support PackageReference.
   try {
@@ -272,13 +318,6 @@ async function runWindowsInternal(
       );
       throw new CodedError('NoSolution', 'Cannot find solution file');
     }
-
-    // Get build/deploy options
-    const buildType = deploy.getBuildConfiguration(options);
-    const msBuildProps = build.parseMsBuildProps(options);
-
-    // Disable the autolink check since we just ran it
-    msBuildProps.RunAutolinkCheck = 'false';
 
     try {
       runWindowsPhase = 'FindSolution';

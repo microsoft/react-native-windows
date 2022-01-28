@@ -19,6 +19,7 @@ import {
   newSpinner,
   newSuccess,
   newError,
+  powershell,
 } from './commandWithProgress';
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../runWindowsOptions';
@@ -208,9 +209,11 @@ export default class MSBuildTools {
     );
 
     if (fs.existsSync(toolsPath)) {
-      newSuccess(
-        `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
-      );
+      if (verbose) {
+        newSuccess(
+          `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
+        );
+      }
       return new MSBuildTools(
         minVersion,
         vsInstallation.installationPath,
@@ -262,6 +265,41 @@ export default class MSBuildTools {
       .forEach((version) => version && results.push(version));
 
     return results;
+  }
+
+  evaluateMSBuildProperties(
+    solutionFile: string,
+    projectFile: string,
+    propertyNames?: string[],
+    extraMsBuildProps?: Record<string, string>,
+  ): Record<string, string> {
+    const msbuildEvalScriptPath = path.resolve(
+      __dirname,
+      '..',
+      '..',
+      '..',
+      'powershell',
+      'Eval-MsBuildProperties.ps1',
+    );
+
+    let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+
+    if (propertyNames && propertyNames.length > 0) {
+      command += ` -PropertyNames '${propertyNames.join(',')}'`;
+    }
+
+    if (extraMsBuildProps) {
+      command += " -ExtraMSBuildProps '";
+      for (const extraProp in extraMsBuildProps) {
+        if (!(extraProp in Object.prototype)) {
+          command += `,${extraProp}=${extraMsBuildProps[extraProp]}`;
+        }
+      }
+      command += "'";
+    }
+
+    const output = execSync(command).toString();
+    return JSON.parse(output) as Record<string, string>;
   }
 }
 
