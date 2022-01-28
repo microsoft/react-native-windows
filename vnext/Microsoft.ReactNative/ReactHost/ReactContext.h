@@ -5,9 +5,9 @@
 
 #include "React.h"
 
-namespace facebook::jsi {
+namespace Microsoft::JSI {
 struct RuntimeHolderLazyInit;
-} // namespace facebook::jsi
+} // namespace Microsoft::JSI
 
 namespace Mso::React {
 

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixing hermes inspector [#9407](https://github.com/microsoft/react-native-windows/issues/)",
+  "packageName": "react-native-windows",
+  "email": "anandrag@microsoft.com",
+  "dependentChangeType": "patch"
+}
