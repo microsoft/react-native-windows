@@ -482,8 +482,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   // These buffers back the external array buffers that we handover to
   // ChakraCore.
   std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedPreparedScripts;
-
-  bool m_pendingJSError{false};
 };
 
 } // namespace Microsoft::JSI

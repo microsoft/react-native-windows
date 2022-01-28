@@ -604,23 +604,8 @@ bool ChakraRuntime::instanceOf(const facebook::jsi::Object &obj, const facebook:
 
 #pragma endregion Functions_inherited_from_Runtime
 
-// Sets variable in the constructor and then restores its value in the destructor.
-template <typename T>
-struct AutoRestore {
-  AutoRestore(T *var, T value) : m_var{var}, m_value{std::exchange(*var, value)} {}
-
-  ~AutoRestore() {
-    *m_var = m_value;
-  }
-
- private:
-  T *m_var;
-  T m_value;
-};
-
 [[noreturn]] void ChakraRuntime::ThrowJsExceptionOverride(JsErrorCode errorCode, JsValueRef jsError) {
-  if (!m_pendingJSError && (errorCode == JsErrorScriptException || GetValueType(jsError) == JsError)) {
-    AutoRestore<bool> setValue{const_cast<bool *>(&m_pendingJSError), true};
+  if (errorCode == JsErrorScriptException || GetValueType(jsError) == JsError) {
     RewriteErrorMessage(jsError);
     throw facebook::jsi::JSError(*this, ToJsiValue(jsError));
   } else {

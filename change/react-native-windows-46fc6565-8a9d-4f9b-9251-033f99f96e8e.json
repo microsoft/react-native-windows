@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix Microsoft.ReactNative unit tests (#7984)",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

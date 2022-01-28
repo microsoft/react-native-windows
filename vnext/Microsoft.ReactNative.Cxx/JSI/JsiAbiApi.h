@@ -287,7 +287,6 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
 
  private:
   JsiRuntime m_runtime;
-  bool m_pendingJSError{false};
 };
 
 } // namespace winrt::Microsoft::ReactNative

@@ -156,6 +156,7 @@
                       Mso.UnitTests/Mso.UnitTests.exe
                     pathtoCustomTestAdapters: $(GoogleTestAdapterPath)
                     searchFolder: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
+                    testFiltercriteria: (FullyQualifiedName!=Runtimes/JSITest.JSErrorTest/0) # JSITest.JSErrorTest fails in 0.65, issue #9398, backport #7984 to fix
                     runTestsInIsolation: true
                     platform: ${{ matrix.BuildPlatform }}
                     configuration: ${{ matrix.BuildConfiguration }}
