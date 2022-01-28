@@ -117,11 +117,15 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/AppTheme/AppTheme.ts"
+      "file": "src/Libraries/AppTheme/AppTheme.js"
     },
     {
       "type": "platform",
-      "file": "src/Libraries/AppTheme/AppThemeTypes.ts"
+      "file": "src/Libraries/AppTheme/AppThemeTypes.d.ts"
+    },
+    {
+      "type": "platform",
+      "file": "src/Libraries/AppTheme/NativeAppTheme.js"
     },
     {
       "type": "patch",

@@ -134,7 +134,11 @@ void NativeAnimatedNodeManager::StopAnimation(int64_t animationId, bool isTracki
       const auto nodeTag = animation->AnimatedValueTag();
       if (nodeTag != -1) {
         const auto deferredAnimation = m_deferredAnimationForValues.find(nodeTag);
-        if (deferredAnimation != m_deferredAnimationForValues.end() && deferredAnimation->second == animationId) {
+        if (deferredAnimation != m_deferredAnimationForValues.end()) {
+          // We can assume that the currently deferred animation is the one
+          // being stopped given the constraint that only one animation can
+          // be active for a given value node.
+          assert(deferredAnimation->second == animationId);
           // If the animation is deferred, just remove the deferred animation
           // entry as two animations cannot animate the same value concurrently.
           m_deferredAnimationForValues.erase(nodeTag);

@@ -23,13 +23,15 @@ std::tuple<comp::CompositionAnimation, comp::CompositionScopedBatch> CalculatedA
     std::vector<float> keyFrames;
     bool done = false;
     double time = 0;
+    std::optional<double> previousValue = std::nullopt;
     while (!done) {
       time += 1.0f / 60.0f;
       auto [currentValue, currentVelocity] = GetValueAndVelocityForTime(time);
       keyFrames.push_back(currentValue);
-      if (IsAnimationDone(currentValue, currentVelocity)) {
+      if (IsAnimationDone(currentValue, previousValue, currentVelocity)) {
         done = true;
       }
+      previousValue = currentValue;
     }
     return keyFrames;
   }();

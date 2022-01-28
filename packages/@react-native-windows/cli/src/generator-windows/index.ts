@@ -21,7 +21,10 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
-import {CodedError} from '@react-native-windows/telemetry';
+import {
+  CodedError,
+  getVersionOfNpmPackage,
+} from '@react-native-windows/telemetry';
 import {
   findPackage,
   WritableNpmPackage,
@@ -204,6 +207,8 @@ export async function copyProjectTemplateAndReplace(
     namespace: namespace,
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
+
+    rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
 
     mainComponentName: mainComponentName,
 

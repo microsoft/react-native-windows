@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 27 Jan 2022 06:11:44 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "4447864eaa57076a11537ae31f7c51ae945b0e4b",
+            "comment": "exports getVersionOfNpmPackage for use in CLI"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jan 2022 04:18:32 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.31",
       "version": "0.0.0-canary.31",

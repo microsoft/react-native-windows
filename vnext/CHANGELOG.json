@@ -2,6 +2,87 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 27 Jan 2022 06:11:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.443",
+      "version": "0.0.0-canary.443",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "041c271e04c66485d7aad8e458f3135ab82bf3cd",
+            "comment": "adds editable to textinput with securetextentry"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4447864eaa57076a11537ae31f7c51ae945b0e4b",
+            "comment": "addsCLIversion to project file"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.110",
+            "commit": "041c271e04c66485d7aad8e458f3135ab82bf3cd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jan 2022 06:08:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.442",
+      "version": "0.0.0-canary.442",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.25",
+            "commit": "b938c3cd8beab33d92e26fa1e98c42fdbdd49c7c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.3",
+            "commit": "b938c3cd8beab33d92e26fa1e98c42fdbdd49c7c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 22 Jan 2022 06:10:17 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.441",
+      "version": "0.0.0-canary.441",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff37d64c0d44623d9884e5df7f0f027e4371d53c",
+            "comment": "Install NuGet as needed"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a541ba290a4f593bbc58c06eb918bba277320a83",
+            "comment": "Move AppTheme module to use codegen"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7727b132b854d6b24ed47d01fd49bbd801403173",
+            "comment": "Removes unnecessary conditional from NativeAnimatedNodeManager"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3847eaac08131abfdc3632c77bb52a1cfb0195c0",
+            "comment": "Terminate decay animation when value change is less than 0.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 19 Jan 2022 06:10:35 GMT",
       "tag": "react-native-windows_v0.0.0-canary.440",
       "version": "0.0.0-canary.440",

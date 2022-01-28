@@ -1,8 +1,33 @@
 # Change Log - sample-apps
 
-This log was last generated on Wed, 19 Jan 2022 06:10:35 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Jan 2022 06:11:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Thu, 27 Jan 2022 06:11:45 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.443
+
+## 0.0.0
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.442
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.25
+
+## 0.0.0
+
+Sat, 22 Jan 2022 06:10:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.441
 
 ## 0.0.0
 
