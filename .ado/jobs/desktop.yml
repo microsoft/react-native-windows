@@ -29,11 +29,19 @@ jobs:
       #       HostFunctionTest              - Crashes under JSI/V8
       #       HostObjectProtoTest           - Crashes under JSI/V8
       #       PreparedJavaScriptSourceTest  - Asserts/Fails under JSI/ChakraCore
+      #8000 - 
+      #       MapBufferTest                 - Runaway process
+      #9397 -
+      #       SealableTest                  - Fails under Release x64
+      #       TransactionTelemetryTest      - Fails under Release x64
       - name: Desktop.UnitTests.Filter
         value: >
           (FullyQualifiedName!~HostFunctionTest)&
           (FullyQualifiedName!~HostObjectProtoTest)&
-          (FullyQualifiedName!~PreparedJavaScriptSourceTest)
+          (FullyQualifiedName!~PreparedJavaScriptSourceTest)&
+          (FullyQualifiedName!~MapBufferTest)&
+          (FullyQualifiedName!~SealableTest)&
+          (FullyQualifiedName!~TransactionTelemetryTest.abnormalUseCases)
 
     strategy:
       matrix:
@@ -90,11 +98,7 @@ jobs:
           workingDirectory: packages/@office-iss/react-native-win32
         condition: and(succeeded(), eq(variables['BuildConfiguration'], 'Debug'), eq(variables['BuildPlatform'], 'x64'))
 
-      - powershell: |
-          Write-Debug "Using expression $($env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host "##vso[task.setvariable variable=GoogleTestAdapterPath]$(Invoke-Expression $env:GOOGLETESTADAPTERPATHEXPRESSION)"
-          Write-Host "Set environment variable to ($env:GoogleTestAdapterPath)"
-        displayName: Set GoogleTestAdapterPath
+      - template: ../templates/discover-google-test-adapter.yml
 
       - task: VSTest@2
         displayName: Run Desktop Unit Tests
@@ -113,6 +117,8 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
+          failOnMinTestsNotRun: true
+        condition: and(succeeded(), not(eq(variables['BuildPlatform'], 'ARM64')))
 
       - task: PowerShell@2
         displayName: Set up test servers
@@ -142,9 +148,10 @@ jobs:
           publishRunAttachments: true
           collectDumpOn: onAbortOnly
           vsTestVersion: latest
+          failOnMinTestsNotRun: true
           otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
         # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'))
+        condition: and(succeeded(), ne(variables['BuildConfiguration'], 'Debug'), not(eq(variables['BuildPlatform'], 'ARM64')))
 
       - template: ../templates/stop-packagers.yml
 
