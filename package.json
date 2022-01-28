@@ -38,7 +38,6 @@
   "resolutions": {
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
-    "node-fetch": "^2.6.7",
     "node-notifier": "^9.0.0",
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
