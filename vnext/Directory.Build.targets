@@ -6,8 +6,13 @@
 
   <!--Allow implicitly restoring PackageReference dependencies in C++ projects using the Visual Studio IDE.-->
   <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true" />
+    <Message Importance="High" Text="OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" />
+    <Message Importance="High" Text="SolutionDir [$(SolutionDir)]" />
+    <Message Importance="High" Text="MSBuildProjectFullPath [$(MSBuildProjectFullPath)]" />
+    <Message Importance="High" Text="PreRef ===========================>]" />
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
+    <Message Importance="High" Text="PreConf ===========================>]" />
+    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;SolutionDir=$(SolutionDir);RestoreUseStaticGraphEvaluation=false" />
   </Target>
 
 </Project>
