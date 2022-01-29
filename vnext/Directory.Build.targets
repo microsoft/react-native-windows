@@ -4,15 +4,21 @@
   <!-- This import will noop when customer code is built. This import is here to help building the bits in the react-native-windows repository. -->
   <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets', '$(MSBuildThisFileDirectory)../'))" />
 
-  <!--Allow implicitly restoring PackageReference dependencies in C++ projects using the Visual Studio IDE.-->
+  <!--Allow implicitly restoring NuGet dependencies in C++ projects using the Visual Studio IDE.-->
   <Target Name="BeforeResolveReferences" Condition="'$(BuildingInsideVisualStudio)' == 'true' AND '$(MSBuildProjectExtension)' == '.vcxproj'">
-    <Message Importance="High" Text="OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" />
-    <Message Importance="High" Text="SolutionDir [$(SolutionDir)]" />
-    <Message Importance="High" Text="MSBuildProjectFullPath [$(MSBuildProjectFullPath)]" />
-    <Message Importance="High" Text="PreRef ===========================>]" />
-    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
-    <Message Importance="High" Text="PreConf ===========================>]" />
-    <MSBuild Projects="$(MSBuildProjectFullPath)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;SolutionDir=$(SolutionDir);RestoreUseStaticGraphEvaluation=false" />
+    <!--
+      Ensure restoring of PackageReference dependencies.
+    -->
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
+
+    <!--
+      Ensure restoring of packages.config dependencies.
+
+      RestoreProjectStyle=PackagesConfig    - Required to use the packages.config mechanism
+      RestorePackagesConfig=true            - Required to use the packages.config mechanism
+      RestoreUseStaticGraphEvaluation=false - Override setting from Directory.Build.props
+    -->
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;RestoreUseStaticGraphEvaluation=false" />
   </Target>
 
 </Project>
