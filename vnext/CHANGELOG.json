@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 29 Jan 2022 06:08:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.444",
+      "version": "0.0.0-canary.444",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5c04d6d91ab17e3c3f2d032402dcaf6343e6ca46",
+            "comment": "Fixing hermes inspector [#9407](https://github.com/microsoft/react-native-windows/issues/)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.26",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.23",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.4",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Jan 2022 06:11:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.443",
       "version": "0.0.0-canary.443",

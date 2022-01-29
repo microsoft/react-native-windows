@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 27 Jan 2022 06:11:44 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jan 2022 06:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.444
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Fixing hermes inspector [#9407](https://github.com/microsoft/react-native-windows/issues/) (anandrag@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.26
+- Bump @react-native-windows/codegen to v0.0.0-canary.23
+- Bump react-native-platform-override to v1.6.4
 
 ## 0.0.0-canary.443
 
