@@ -313,13 +313,6 @@
       "file": "src/Libraries/Components/View/ViewWindowsProps.ts"
     },
     {
-      "type": "derived",
-      "file": "src/Libraries/Core/ReactNativeVersionCheck.windows.js",
-      "baseFile": "Libraries/Core/ReactNativeVersionCheck.js",
-      "baseHash": "96d0450c2f8048bd802c6e1eca6f3d42bf099baf",
-      "issue": 9223
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
