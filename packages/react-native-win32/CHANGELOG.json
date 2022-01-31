@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 31 Jan 2022 22:58:14 GMT",
+      "tag": "@office-iss/react-native-win32_v0.64.11",
+      "version": "0.64.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[Win32] Move acceptsKeyboardFocus back to just a warning",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "eb8b9b2da9123b8538886365df012b3d3da38367",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jan 2022 16:10:13 GMT",
       "tag": "@office-iss/react-native-win32_v0.64.10",
       "version": "0.64.10",
