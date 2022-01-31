@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.65] Avoid capturing raw this pointer in WebSocket module",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

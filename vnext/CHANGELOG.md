@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 17 Jan 2022 16:11:34 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Jan 2022 16:12:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.11
+
+Mon, 31 Jan 2022 16:12:18 GMT
+
+### Patches
+
+- [0.65] Avoid capturing raw this pointer in WebSocket module (julio.rocha@microsoft.com)
 
 ## 0.65.10
 
