@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[Win32] Move acceptsKeyboardFocus back to just a warning",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
