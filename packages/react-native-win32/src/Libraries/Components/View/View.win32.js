@@ -15,6 +15,7 @@ import type {ViewProps} from './ViewPropTypes';
 const React = require('react');
 import ViewNativeComponent from './ViewNativeComponent';
 const TextAncestor = require('../../Text/TextAncestor');
+import warnOnce from '../../Utilities/warnOnce'; // [Windows]
 import invariant from 'invariant'; // [Windows]
 
 export type Props = ViewProps;
@@ -30,6 +31,7 @@ const View: React.AbstractComponent<
   ViewProps,
   React.ElementRef<typeof ViewNativeComponent>,
 > = React.forwardRef((props: ViewProps, forwardedRef) => {
+  // [Win32 Intercept props to warn about them going away
   // $FlowFixMe react-native-win32 doesn't have forked types in Flow yet
   if (props.acceptsKeyboardFocus !== undefined) {
     warnOnce(
