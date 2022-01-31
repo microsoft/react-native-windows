@@ -9,13 +9,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220107-2008-ca5aaa766",
+  "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "ca469905cf86d4c7bce7d87b473872ffeef2f6bd"
+      "baseHash": "248d08cae6422103eeeb807099afeeeac776b457"
     },
     {
       "type": "patch",
@@ -56,7 +56,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "a3c21368a7c8d2e986e5a4236dd991b9963217cb",
+      "baseHash": "219d41967ac2903924faf2f43bbf256c7f7d6d72",
       "issue": 5430
     },
     {
@@ -265,7 +265,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "3e9568f29d6b42c6370d5ae3a24fc432ba238a12"
+      "baseHash": "4d5f4ab24dfb27687f96d8c2fd153156cb94c177"
     },
     {
       "type": "patch",
@@ -302,7 +302,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "8a4891de00cb11154e4af32f36a3a181eb4794cf"
+      "baseHash": "eae7117392dc0e670a4e38389a7b7e3bca4d55b7"
     },
     {
       "type": "platform",
@@ -316,20 +316,8 @@
       "type": "derived",
       "file": "src/Libraries/Core/ReactNativeVersionCheck.windows.js",
       "baseFile": "Libraries/Core/ReactNativeVersionCheck.js",
-      "baseHash": "420ccb7f64bdd5ed78f572c4f55a6378665043c2",
+      "baseHash": "96d0450c2f8048bd802c6e1eca6f3d42bf099baf",
       "issue": 9223
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedImagePropType.windows.js",
-      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedImagePropType.ios.js",
-      "baseHash": "dd9d052e7fc70f8b8de2dc955651f2270ecfc3df"
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.windows.js",
-      "baseFile": "Libraries/DeprecatedPropTypes/DeprecatedViewAccessibility.js",
-      "baseHash": "f51c131624739cc2b599003dfab85e167ed178b7"
     },
     {
       "type": "patch",

@@ -133,9 +133,9 @@ SafeAreaViewProps::SafeAreaViewProps(
 AndroidHorizontalScrollContentViewProps::AndroidHorizontalScrollContentViewProps(
     const PropsParserContext &context,
     const AndroidHorizontalScrollContentViewProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    
+    removeClippedSubviews(convertRawProp(context, rawProps, "removeClippedSubviews", sourceProps.removeClippedSubviews, {false}))
       {}
 RCTSegmentedControlProps::RCTSegmentedControlProps(
     const PropsParserContext &context,
