@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 31 Jan 2022 16:12:51 GMT",
+      "tag": "react-native-windows_v0.64.29",
+      "version": "0.64.29",
+      "comments": {
+        "patch": [
+          {
+            "comment": "[0.64] Avoid capturing raw this pointer in WebSocket module",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "73ce66236d54a2e0e4bbeb83ba785e9252893c73",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jan 2022 16:10:13 GMT",
       "tag": "react-native-windows_v0.64.28",
       "version": "0.64.28",
