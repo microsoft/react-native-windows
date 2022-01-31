@@ -30,14 +30,14 @@ const View: React.AbstractComponent<
   ViewProps,
   React.ElementRef<typeof ViewNativeComponent>,
 > = React.forwardRef((props: ViewProps, forwardedRef) => {
-  // [Windows
-  invariant(
-    // $FlowFixMe Wanting to catch untyped usages
-    !props || props.acceptsKeyboardFocus === undefined,
-    'Support for the "acceptsKeyboardFocus" property has been removed in favor of "focusable"',
-  );
-  // Windows]
-
+  // $FlowFixMe react-native-win32 doesn't have forked types in Flow yet
+  if (props.acceptsKeyboardFocus !== undefined) {
+    warnOnce(
+      'deprecated-acceptsKeyboardFocus',
+      '"acceptsKeyboardFocus" has been deprecated in favor of "focusable" and will be removed soon',
+    );
+  }
+  // Win32]
   return (
     // [Windows
     // In core this is a TextAncestor.Provider value={false} See
