@@ -95,6 +95,34 @@ export async function copyProjectTemplateAndReplace(
     namespace = namespace.split(/[.:]+/).map(pascalCase).join('.');
   }
 
+  // Checking if we're overwriting an existing project and re-uses their projectGUID
+  const projectPathVcx = path.join(
+    windowsDir,
+    newProjectName,
+    newProjectName + '.vcxproj',
+  );
+  const projectPathCs = path.join(
+    windowsDir,
+    newProjectName,
+    newProjectName + '.csproj',
+  );
+  let reuseProjectGuid;
+  if (fs.existsSync(projectPathVcx)) {
+    console.log('Found exisitng C++ project, using old projectGUID');
+    reuseProjectGuid = findPropertyValue(
+      readProjectFile(projectPathVcx),
+      'ProjectGuid',
+      projectPathVcx,
+    ).replace(/[{}]/g, '');
+  } else if (fs.existsSync(projectPathCs)) {
+    console.log('Found exisitng C# project, using old projectGUID');
+    reuseProjectGuid = findPropertyValue(
+      readProjectFile(projectPathCs),
+      'ProjectGuid',
+      projectPathCs,
+    ).replace(/[{}]/g, '');
+  }
+
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
 
@@ -111,10 +139,11 @@ export async function copyProjectTemplateAndReplace(
   if (options.useWinUI3) {
     console.log('Using experimental WinUI3 dependency.');
   }
+
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
-  const projectGuid = uuid.v4();
+  const projectGuid = reuseProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
