@@ -49,7 +49,7 @@ function _formatVersion(
         minor: number,
         patch: number,
         prerelease: null,
-      }>
+      }>,
 ): string {
   return (
     `${version.major}.${version.minor}.${version.patch}` +
