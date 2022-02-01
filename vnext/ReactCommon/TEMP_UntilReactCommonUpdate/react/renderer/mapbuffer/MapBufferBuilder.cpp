@@ -40,11 +40,7 @@ void MapBufferBuilder::storeKeyValue(
   auto *dataPtr = reinterpret_cast<uint8_t *>(&data);
   memcpy(dataPtr, value, valueSize);
   
-  MapBuffer::Bucket bucket;
-  bucket.key = key;
-  bucket.type = static_cast<uint16_t>(type);
-  bucket.data = data;
-  buckets_.emplace_back(bucket);
+  buckets_.emplace_back(key, static_cast<uint16_t>(type), data);
 
   header_.count++;
 
@@ -68,7 +64,7 @@ void MapBufferBuilder::putDouble(MapBuffer::Key key, double value) {
       key,
       MapBuffer::DataType::Double,
       reinterpret_cast<uint8_t const *>(&value),
-      static_cast<uinst32_t>(DOUBLE_SIZE));
+      static_cast<uint32_t>(DOUBLE_SIZE));
 }
 
 void MapBufferBuilder::putInt(MapBuffer::Key key, int32_t value) {

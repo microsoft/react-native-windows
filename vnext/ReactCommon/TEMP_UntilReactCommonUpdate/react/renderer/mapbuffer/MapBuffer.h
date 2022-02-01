@@ -91,7 +91,7 @@ class MapBuffer {
   };
 
   static_assert(sizeof(Header) == 8, "MapBuffer header size is incorrect.");
-  static_assert(sizeof(Bucket) == 12, "MapBuffer bucket size is incorrect.");
+  static_assert(sizeof(Bucket) == 12, "MapBuffer bucket size is incorrect. %p", sizeof(Bucket));
 
   /**
    * Data types available for serialization in MapBuffer
