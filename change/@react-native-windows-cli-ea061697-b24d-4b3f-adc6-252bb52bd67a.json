@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Allow OutputType Library to be autolinked for C# native modules",
+  "packageName": "@react-native-windows/cli",
+  "email": "jmdalmasso7@gmail.com",
+  "dependentChangeType": "patch"
+}
