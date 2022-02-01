@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 01 Feb 2022 06:07:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.445",
+      "version": "0.0.0-canary.445",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be45d22d814f9dc91e2d8af790237d0eee0dfe30",
+            "comment": "UI Manager module is not being destroyed on the UI thread"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 29 Jan 2022 06:08:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.444",
       "version": "0.0.0-canary.444",
