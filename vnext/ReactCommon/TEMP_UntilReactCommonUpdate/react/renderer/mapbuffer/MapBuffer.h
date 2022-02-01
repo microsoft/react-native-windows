@@ -80,7 +80,7 @@ class MapBuffer {
     uint32_t bufferSize; // Amount of bytes used to store the map in memory
   };
 
-  #pragma pack()
+  #pragma pack(8)
   struct Bucket {
     Key key;
     uint16_t type;
