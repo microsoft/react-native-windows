@@ -514,7 +514,7 @@ UIManager::UIManager() : m_module(std::make_shared<UIManagerModule>()) {}
 UIManager::~UIManager() {
   // To make sure that we destroy UI components in UI thread.
   if (!m_context.UIDispatcher().HasThreadAccess()) {
-    m_context.UIDispatcher().Post([module = std::move(m_module)]() {});
+    m_context.UIDispatcher().Post([module = std::move(m_module)]() mutable { module = nullptr; });
   }
 }
 
