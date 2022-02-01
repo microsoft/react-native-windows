@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildMatrix
     type: object
     default:
@@ -53,27 +55,24 @@ jobs:
           displayName: Sample Apps ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
             - name: BuildLogDirectory
               value: $(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\BuildLogs
-          
+
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
-          pool: $(AgentPool.Medium)
+          pool: ${{ parameters.AgentPool.Medium }}
 
           steps:
-            - checkout: self
-              clean: false
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-js-env.yml
 
-            - task: NuGetCommand@2
-              displayName: NuGet restore - SampleApps
-              inputs:
-                command: restore
-                restoreSolution: packages/sample-apps/windows/SampleApps.sln
-                verbosityRestore: Detailed # Options: quiet, normal, detailed
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
@@ -82,7 +81,7 @@ jobs:
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 deployOption:  ${{ matrix.DeployOption }}
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
+                buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-apps
 
             - script: yarn bundle-cpp --verbose
@@ -91,4 +90,4 @@ jobs:
 
             - template: ../templates/upload-build-logs.yml
               parameters:
-                buildLogDirectory: ${{ variables.BuildLogDirectory }}
+                buildLogDirectory: ${{ variables['BuildLogDirectory'] }}

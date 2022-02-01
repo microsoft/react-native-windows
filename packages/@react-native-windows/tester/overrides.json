@@ -5,47 +5,47 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-e612d3a11-20211007-2009",
+  "baseVersion": "0.0.0-20220107-2008-ca5aaa766",
   "overrides": [
     {
       "type": "patch",
       "file": "src/js/components/RNTesterEmptyBookmarksState.windows.js",
       "baseFile": "packages/rn-tester/js/components/RNTesterEmptyBookmarksState.js",
-      "baseHash": "c211a725a3f935a4425f7af92bc7a4cba4f0655a",
+      "baseHash": "a1d1c6638e815f6dd53504983813fda92f3b5478",
       "issue": 6341
     },
     {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "57c01049a8acb59a8e90dbc29aad297fb1a4d887",
+      "baseHash": "8d15566647ab3ee518314d9009ef56c96ba5db87",
       "issue": 6240
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "7c160ed70055a586a4017f30cf3c12cd92095352",
+      "baseHash": "344cf07ed0f9394d71ffed48f0c2ed7624fec80e",
       "issue": 5688
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "9b6d8ae94264058dcb498cfb2031c24b2f3d0323"
+      "baseHash": "11c6fc11adf033da119704b662be1d595091eb79"
     },
     {
       "type": "copy",
       "file": "src/js/RNTesterApp.windows.js",
       "baseFile": "packages/rn-tester/js/RNTesterApp.android.js",
-      "baseHash": "e4f79c1b0b3e8778ea28d5bce5c126664c47d253",
+      "baseHash": "d517675a1da173a7d57ac87d0ea9efc08f05b50d",
       "issue": 4586
     },
     {
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "4760ebe3fefa48c562141565958f2af4b941bbbf"
+      "baseHash": "a9749cd61afa03ad7079103fe8bef677c6e293b0"
     }
   ]
 }

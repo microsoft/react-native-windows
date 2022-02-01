@@ -30,15 +30,24 @@ struct CustomAppBarButton : xaml::Controls::AppBarButtonT<CustomAppBarButton> {
   }
 };
 
-void FixProofingMenuCrashForXamlIsland(xaml::Controls::TextCommandBarFlyout const &flyout) {
+void FixProofingMenuCrashForXamlIsland(xaml::Controls::Primitives::FlyoutBase const &flyout) {
   flyout.Opening([](winrt::IInspectable const &sender, auto &&) {
-    const auto &flyout = sender.as<xaml::Controls::TextCommandBarFlyout>();
+    const auto &flyout = sender.as<winrt::Microsoft::UI::Xaml::Controls::TextCommandBarFlyout>();
     if (const auto &textBox = flyout.Target().try_as<xaml::Controls::TextBox>()) {
       const auto &commands = flyout.SecondaryCommands();
       for (uint32_t i = 0; i < commands.Size(); ++i) {
         if (const auto &appBarButton = commands.GetAt(i).try_as<xaml::Controls::AppBarButton>()) {
-          if (appBarButton.Flyout() == textBox.ProofingMenuFlyout()) {
-            if (!appBarButton.try_as<CustomAppBarButton>()) {
+          if (!appBarButton.Flyout()) {
+            // This works around a loss of focus from the target element when clicking on
+            // on the menu items.
+            // https://github.com/microsoft/microsoft-ui-xaml/issues/5818
+            appBarButton.Click([weakCommandBarFlyout = winrt::make_weak(flyout)](auto &&...) {
+              if (auto flyout = weakCommandBarFlyout.get()) {
+                xaml::Input::FocusManager::TryFocusAsync(flyout.Target(), xaml::FocusState::Programmatic);
+              }
+            });
+          } else if (appBarButton.Flyout() == textBox.ProofingMenuFlyout()) {
+            if (textBox.IsSpellCheckEnabled()) {
               // Replace the AppBarButton for the proofing menu with one that doesn't crash
               const auto customAppBarButton = winrt::make<CustomAppBarButton>();
               customAppBarButton.Label(appBarButton.Label());
@@ -46,7 +55,7 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::TextCommandBarFlyout cons
               customAppBarButton.Flyout(appBarButton.Flyout());
               commands.RemoveAt(i);
               commands.InsertAt(i, customAppBarButton);
-            } else if (!textBox.IsSpellCheckEnabled()) {
+            } else {
               // Remove proofing menu option if spell-check is disabled
               commands.RemoveAt(i);
             }
@@ -55,6 +64,27 @@ void FixProofingMenuCrashForXamlIsland(xaml::Controls::TextCommandBarFlyout cons
             break;
           }
         }
+      }
+    }
+  });
+}
+
+void FixMenuThemeForXamlIsland(xaml::Controls::Primitives::FlyoutBase const &flyout) {
+  flyout.Opening([](winrt::IInspectable const &sender, auto &&) {
+    const auto &flyout = sender.as<winrt::Microsoft::UI::Xaml::Controls::TextCommandBarFlyout>();
+    auto theme = xaml::ElementTheme::Default;
+    if (const auto targetElement = flyout.Target().try_as<xaml::UIElement>()) {
+      if (const auto content = targetElement.XamlRoot().Content().try_as<xaml::FrameworkElement>()) {
+        theme = content.ActualTheme();
+      }
+    }
+
+    const auto commands = flyout.SecondaryCommands();
+    for (uint32_t i = 0; i < commands.Size(); ++i) {
+      if (const auto &appBarButton = commands.GetAt(i).try_as<xaml::Controls::AppBarButton>()) {
+        // Workaround Xaml Islands bug with dark theme and CommandBarFlyout:
+        // https://github.com/microsoft/microsoft-ui-xaml/issues/5320
+        appBarButton.RequestedTheme(theme);
       }
     }
   });

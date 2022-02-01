@@ -2,6 +2,177 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 27 Jan 2022 06:11:44 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "4447864eaa57076a11537ae31f7c51ae945b0e4b",
+            "comment": "exports getVersionOfNpmPackage for use in CLI"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Jan 2022 04:18:32 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.31",
+      "version": "0.0.0-canary.31",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05",
+            "comment": "Update when telemetry populates NPM package versions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Dec 2021 06:12:10 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.30",
+      "version": "0.0.0-canary.30",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "2419191300390b8106e4e5760c59bc0022839c4d",
+            "comment": "Integrate 11/11"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v1.0.1",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.10",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.5",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.2",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Nov 2021 06:09:53 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "c3de2ab7c21e55486b492b5b7936e6609bc7f4d7",
+            "comment": "Fix telemetry path sanitization to handle our packages in the npx cache"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Nov 2021 06:09:24 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "f50cac7f1c4dc3359a6b53422c6c3af86ed8df16",
+            "comment": "Block old telemetry events from firing"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Nov 2021 06:08:49 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.27",
+      "version": "0.0.0-canary.27",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "c896fa849e7fa3f44a84793f541f1e6220963ff8",
+            "comment": "Update telemetry unittest timeouts"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 23 Nov 2021 06:09:26 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.26",
+      "version": "0.0.0-canary.26",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "4ace49611abd3e9a03d4cf4498773ad1d3ac40d9",
+            "comment": "Add environment variable overrides to specify telemetry setup string and proxy"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Nov 2021 06:11:20 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.25",
+      "version": "0.0.0-canary.25",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df",
+            "comment": "Telemetry Refactor"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v1.0.0",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.9",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.24",
+      "version": "0.0.0-canary.24",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Update to typescript 4",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.23",
       "version": "0.0.0-canary.23",

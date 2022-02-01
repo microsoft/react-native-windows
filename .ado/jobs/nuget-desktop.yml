@@ -1,24 +1,22 @@
+parameters:
+  - name: AgentPool
+    type: object
 
 jobs:
   - job: PackDesktop
-    variables:
-      - template: ../variables/vs2019.yml
     displayName: Pack Desktop NuGet Package
+    variables: [template: ../variables/windows.yml]
     dependsOn:
       - DesktopX64Release
       - DesktopX86Debug
-      - UniversalBuild # Needed to have artifacts uploaded from LayoutHeaders
-    pool:
-      vmImage: $(VmImage)
+
+    pool: ${{ parameters.AgentPool.Small }}
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
     steps:
-      - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-        clean: true # whether to fetch clean each time
-        fetchDepth: 2 # the depth of commits to ask Git to fetch
-        lfs: false # whether to download Git-LFS files
-        submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-        persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
+      - template: ../templates/checkout-shallow.yml
+
+      - template: ../templates/yarn-install.yml
 
       - task: NuGetToolInstaller@1
         inputs:
@@ -26,9 +24,10 @@ jobs:
 
       - template: ../templates/prep-and-pack-nuget.yml
         parameters:
+          artifactName: Desktop
           packDesktop: true
-          packMicrosoftReactNative: false
-          packMicrosoftReactNativeCxx: false
-          packMicrosoftReactNativeManaged: false
-          packMicrosoftReactNativeManagedCodeGen: false
-          slices: '("x64.Release", "x86.Debug")'
+          slices:
+            - platform: x64
+              configuration: Release
+            - platform: x86
+              configuration: Debug

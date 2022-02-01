@@ -64,7 +64,7 @@ struct ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_er
     REACT_FIELD(code)
     std::string code;
     REACT_FIELD(userInfo)
-    std::optional<React::JSValue> userInfo;
+    std::optional<::React::JSValue> userInfo;
     REACT_FIELD(message)
     std::string message;
 };

@@ -5,7 +5,7 @@
  */
 
 import {totalmem, EOL} from 'os';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import child_process from 'child_process';
 import chalk from 'chalk';
@@ -49,11 +49,26 @@ export default class MSBuildTools {
       this.msbuildPath(),
       'msbuild.exe',
     )}" "${slnFile}" /t:Clean`;
-    const results = child_process
-      .execSync(cmd)
-      .toString()
-      .split(EOL);
-    results.forEach(result => console.log(chalk.white(result)));
+    const results = child_process.execSync(cmd).toString().split(EOL);
+    results.forEach((result) => console.log(chalk.white(result)));
+  }
+
+  async restorePackageConfigs(slnFile: any) {
+    const text = 'Restoring NuGet packages ';
+    const spinner = newSpinner(text);
+    await commandWithProgress(
+      spinner,
+      text,
+      path.join(this.msbuildPath(), 'msbuild.exe'),
+      [
+        slnFile,
+        '/t:Restore',
+        '/p:RestoreProjectStyle=PackagesConfig',
+        '/p:RestorePackagesConfig=true',
+      ],
+      true,
+      'MSBuildError',
+    );
   }
 
   async buildProject(
@@ -109,14 +124,14 @@ export default class MSBuildTools {
       args.push(`/t:Deploy`);
     }
 
-    Object.keys(msBuildProps).forEach(key => {
+    Object.keys(msBuildProps).forEach((key) => {
       args.push(`/p:${key}=${msBuildProps[key]}`);
     });
 
     try {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
-      newError(e.message);
+      newError((e as Error).message);
       throw e;
     }
 
@@ -139,17 +154,17 @@ export default class MSBuildTools {
     } catch (e) {
       let error = e;
       if (!e) {
-        const firstMessage = (await fs.promises.readFile(errorLog))
+        const firstMessage = (await fs.readFile(errorLog))
           .toString()
           .split(EOL)[0];
         error = new CodedError('MSBuildError', firstMessage);
-        error.logfile = errorLog;
+        (error as any).logfile = errorLog;
       }
       throw error;
     }
     // If we have no errors, delete the error log when we're done
-    if ((await fs.promises.stat(errorLog)).size === 0) {
-      await fs.promises.unlink(errorLog);
+    if ((await fs.stat(errorLog)).size === 0) {
+      await fs.unlink(errorLog);
     }
   }
 
@@ -242,9 +257,9 @@ export default class MSBuildTools {
 
     shell
       .ls(uapFolderPath)
-      .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
+      .filter((uapDir) => shell.test('-d', path.join(uapFolderPath, uapDir)))
       .map(Version.tryParse)
-      .forEach(version => version && results.push(version));
+      .forEach((version) => version && results.push(version));
 
     return results;
   }
@@ -272,7 +287,8 @@ function getSDK10InstallationFolder(): string {
     return folder;
   }
 
-  const re = /\\Microsoft SDKs\\Windows\\v10.0\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
+  const re =
+    /\\Microsoft SDKs\\Windows\\v10.0\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
   const match = re.exec(output);
   if (match) {
     return match[1];

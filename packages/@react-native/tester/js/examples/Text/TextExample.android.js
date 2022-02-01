@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -947,13 +947,13 @@ exports.description = 'Base component for rendering styled text.';
 exports.examples = [
   {
     title: 'Basic text',
-    render: function(): React.Element<typeof TextExample> {
+    render: function (): React.Element<typeof TextExample> {
       return <TextExample />;
     },
   },
   {
     title: "Text `alignItems: 'baseline'` style",
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <TextBaseLineLayoutExample />;
     },
   },

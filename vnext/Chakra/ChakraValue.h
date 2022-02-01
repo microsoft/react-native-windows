@@ -10,11 +10,7 @@
 
 #include <folly/dynamic.h>
 
-#if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
-#else
-#include <ChakraCore.h>
-#endif
 
 #include "Utf8DebugExtensions.h"
 

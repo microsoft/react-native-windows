@@ -19,6 +19,7 @@
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
+<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
@@ -29,7 +30,6 @@
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
-<PROJECT_ROOT>/Libraries/Text/TextNativeComponent.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
@@ -59,6 +59,9 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
+; Ignore files with flow typing issues #9223
+.*/vnext/Libraries/Core/ReactNativeVersionCheck.js
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 
@@ -75,7 +78,6 @@ flow/
 emoji=true
 
 exact_by_default=true
-indexed_access=false
 
 format.bracket_spacing=false
 
@@ -119,4 +121,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.161.0
+^0.168.0

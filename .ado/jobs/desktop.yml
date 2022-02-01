@@ -5,6 +5,10 @@ parameters:
     values:
       - PullRequest
       - Continuous
+
+  - name: AgentPool
+    type: object
+
   - name: buildMatrix
     type: object
     default:
@@ -48,7 +52,7 @@ jobs:
           displayName: Desktop ${{ matrix.Name }}
 
           variables:
-            - template: ../variables/vs2019.yml
+            - template: ../variables/windows.yml
 
             # Enable if any issues RNTesterIntegrationTests::* become unstable.
             - name: Desktop.IntegrationTests.SkipRNTester
@@ -73,14 +77,20 @@ jobs:
                 (FullyQualifiedName!~HostObjectProtoTest)&
                 (FullyQualifiedName!~PreparedJavaScriptSourceTest)
 
-          pool: $(AgentPool.Medium)
+          pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            - checkout: self
-              clean: false
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
+
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - template: ../templates/apply-published-version-vars.yml
 
@@ -90,9 +100,10 @@ jobs:
                   Write-Host "##vso[task.setvariable variable=Desktop.IntegrationTests.Filter]$newValue"
                 displayName: Update Desktop.IntegrationTests.Filter to exclude RNTester integration tests
 
-            - template: ../templates/build-rnw.yml
+            - template: ../templates/msbuild-sln.yml
               parameters:
-                project: vnext/ReactWindows-Desktop.sln
+                solutionDir: vnext
+                solutionName: ReactWindows-Desktop.sln
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
 
@@ -100,6 +111,9 @@ jobs:
               - script: yarn bundle
                 displayName: Build react-native-win32 RNTester bundle
                 workingDirectory: packages/@office-iss/react-native-win32
+
+            - ${{ if eq(config.BuildEnvironment, 'Continuous') }}:
+              - template: ../templates/component-governance.yml
 
             - template: ../templates/discover-google-test-adapter.yml
 
@@ -157,14 +171,12 @@ jobs:
 
               - template: ../templates/stop-packagers.yml
 
-            - template: ../templates/publish-build-artifacts-for-nuget.yml
+            - template: ../templates/publish-build-artifacts.yml
               parameters:
-                artifactName: ReactWindows
+                artifactName: Desktop
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
                 contents: |
                   React.Windows.Desktop\**
                   React.Windows.Desktop.DLL\**
                   React.Windows.Desktop.Test.DLL\**
-
-            - template: ../templates/component-governance.yml

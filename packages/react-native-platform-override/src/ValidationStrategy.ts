@@ -45,7 +45,7 @@ export const ValidationStrategies = {
    * Validate that an override file exists
    */
   overrideFileExists: (overrideName: string): ValidationStrategy => ({
-    validate: async overrideRepo => {
+    validate: async (overrideRepo) => {
       switch (await overrideRepo.stat(overrideName)) {
         case 'file':
           return [];
@@ -80,7 +80,7 @@ export const ValidationStrategies = {
    * Validate that an override directory exists
    */
   overrideDirectoryExists: (overrideName: string): ValidationStrategy => ({
-    validate: async overrideRepo => {
+    validate: async (overrideRepo) => {
       switch (await overrideRepo.stat(overrideName)) {
         case 'file':
           return [{type: 'expectedDirectory', overrideName}];

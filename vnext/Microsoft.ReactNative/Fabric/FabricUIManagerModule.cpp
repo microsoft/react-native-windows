@@ -473,9 +473,9 @@ void FabricUIManager::schedulerDidCloneShadowNode(
 }
 
 void FabricUIManager::schedulerDidDispatchCommand(
-    const facebook::react::ShadowView &shadowView,
+    facebook::react::ShadowView const &shadowView,
     std::string const &commandName,
-    folly::dynamic const args) {
+    folly::dynamic const &arg) {
   assert(false);
 }
 

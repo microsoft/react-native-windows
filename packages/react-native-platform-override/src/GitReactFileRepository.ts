@@ -5,20 +5,17 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import os from 'os';
 import path from 'path';
-import semver from 'semver';
 import simplegit from 'simple-git/promise';
 
 import BatchingQueue from './BatchingQueue';
 import FileSystemRepository from './FileSystemRepository';
 import {VersionedReactFileRepository} from './FileRepository';
-import fetch from 'node-fetch';
 import {getNpmPackage} from './PackageUtils';
+import {fetchFullRef} from './refFromVersion';
 
-const RN_COMMIT_ENDPOINT =
-  'https://api.github.com/repos/facebook/react-native/commits';
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
 
 /**
@@ -26,7 +23,8 @@ const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
  * between getting file contents of different versions may be slow.
  */
 export default class GitReactFileRepository
-  implements VersionedReactFileRepository {
+  implements VersionedReactFileRepository
+{
   private readonly fileRepo: FileSystemRepository;
   private readonly gitClient: simplegit.SimpleGit;
   private checkedOutVersion?: string;
@@ -51,7 +49,7 @@ export default class GitReactFileRepository
     gitDirectory?: string,
   ): Promise<GitReactFileRepository> {
     const dir = gitDirectory || (await this.defaultGitDirectory());
-    await fs.promises.mkdir(dir, {recursive: true});
+    await fs.mkdir(dir, {recursive: true});
 
     const gitClient = simplegit(dir);
     gitClient.silent(true);
@@ -164,12 +162,14 @@ export default class GitReactFileRepository
           // conflicts when we're using raw commands (which we need to since it
           // doesn't support apply). Try to detect if Git gave us a bad exit code
           // because of merge conflicts, which we explicitly want to allow.
-          if (!ex.message.includes('with conflicts')) {
+          if (!(ex as Error).message.includes('with conflicts')) {
             throw ex;
           }
 
           hasConflicts = true;
-          binaryConflicts = ex.message.includes('Cannot merge binary files');
+          binaryConflicts = (ex as Error).message.includes(
+            'Cannot merge binary files',
+          );
         }
 
         const patchedFile = binaryConflicts
@@ -213,63 +213,23 @@ export default class GitReactFileRepository
   }
 
   private async fetchAndCheckout(reactNativeVersion: string) {
-    const gitRef = await this.refFromVersion(reactNativeVersion);
+    const githubToken =
+      GitReactFileRepository.githubToken ||
+      process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN;
+    const gitRef = await fetchFullRef(reactNativeVersion, {githubToken});
 
     try {
-      await this.gitClient.fetch([
-        RN_GITHUB_URL,
-        `${gitRef}:${reactNativeVersion}`,
-        '--depth=1',
-      ]);
+      await this.gitClient.fetch([RN_GITHUB_URL, gitRef, '--depth=1']);
+      await this.gitClient.checkout(['-b', reactNativeVersion, 'FETCH_HEAD']);
     } catch (ex) {
       throw new Error(
-        `Failed to fetch '${gitRef}'. Does it exist? (${ex.message})`,
+        `Failed to fetch '${gitRef}'. Does it exist? (${
+          (ex as Error).message
+        })`,
       );
     }
 
     await this.gitClient.checkout([reactNativeVersion, '--force']);
-  }
-
-  private async refFromVersion(reactNativeVersion: string): Promise<string> {
-    if (!semver.valid(reactNativeVersion)) {
-      throw new Error(`${reactNativeVersion} is not a valid semver version`);
-    }
-
-    // Nightly builds are in the form of either 0.0.0-<commitHash> or
-    // 0.0.0-<commitHash>-<date>-<time>.
-    if (semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true})) {
-      const preSegment = semver.prerelease(reactNativeVersion)![0];
-      const abbrevHash = preSegment.split('-')[0];
-
-      // We cannot do a shallow fetch of an abbreviated commit hash
-      return this.longCommitHash(abbrevHash);
-    } else {
-      // Stable builds have tags matching their version
-      return `refs/tags/v${reactNativeVersion}`;
-    }
-  }
-
-  private async longCommitHash(shortHash: string): Promise<string> {
-    const githubToken =
-      GitReactFileRepository.githubToken ||
-      process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN;
-
-    // We cannot get abbreviated hash directly from a remote, so query Github's
-    // API for it.
-    const commitInfo = await fetch(`${RN_COMMIT_ENDPOINT}/${shortHash}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'User-Agent': 'react-native-platform-override',
-        ...(githubToken && {Authorization: `Token ${githubToken}`}),
-      },
-    });
-    if (!commitInfo.ok) {
-      throw new Error(
-        `Unable to query Github for commit '${shortHash}' Status: '${commitInfo.statusText}'`,
-      );
-    }
-
-    return (await commitInfo.json()).sha;
   }
 
   private static async defaultGitDirectory(): Promise<string> {

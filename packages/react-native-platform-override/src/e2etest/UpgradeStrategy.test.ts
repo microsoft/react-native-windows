@@ -5,7 +5,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import UpgradeStrategy, {
@@ -172,7 +172,7 @@ test('copyDirectory - New Files', async () => {
   const baseDir = 'jest';
 
   const strategy = UpgradeStrategies.copyDirectory(overrideDir, baseDir);
-  await usingFiles([], async overrideRepo => {
+  await usingFiles([], async (overrideRepo) => {
     const results = await strategy.upgrade(
       gitReactRepo,
       overrideRepo,
@@ -207,7 +207,7 @@ test('copyDirectory - New Content', async () => {
   ];
 
   const strategy = UpgradeStrategies.copyDirectory('0.62.2/jest', 'jest');
-  await usingFiles(overrideFiles, async overrideRepo => {
+  await usingFiles(overrideFiles, async (overrideRepo) => {
     const correctHash = await hashFileOrDirectory(
       overrideFiles[0],
       overrideRepo,
@@ -249,7 +249,7 @@ test('copyDirectory - Deleted Content', async () => {
   ];
 
   const strategy = UpgradeStrategies.copyDirectory('0.62.2/jest', 'jest');
-  await usingFiles(overrideFiles, async overrideRepo => {
+  await usingFiles(overrideFiles, async (overrideRepo) => {
     await overrideRepo.writeFile('0.62.2/jest/extraFile.txt', 'Delete me');
     expect(await overrideRepo.stat('0.62.2/jest/extraFile.txt')).toBe('file');
 
@@ -280,7 +280,7 @@ test('copyDirectory - Preserves Line Endings', async () => {
   ];
 
   const strategy = UpgradeStrategies.copyDirectory('0.62.2/jest', 'jest');
-  await usingFiles(overrideFiles, async overrideRepo => {
+  await usingFiles(overrideFiles, async (overrideRepo) => {
     const origContent = (await overrideRepo.readFile(
       overrideFiles[1],
     ))!.toString();
@@ -330,10 +330,10 @@ async function evaluateStrategy(opts: {
     const {referenceFile, ...expectedResult} = opts.expected;
     expect(actualResult).toEqual(expectedResult);
 
-    const actualContent = await fs.promises.readFile(
+    const actualContent = await fs.readFile(
       path.join(overridesPath, opts.overrideFile),
     );
-    const expectedContent = await fs.promises.readFile(
+    const expectedContent = await fs.readFile(
       path.join(__dirname, 'collateral', referenceFile),
     );
 

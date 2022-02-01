@@ -13,6 +13,8 @@ namespace Microsoft::ReactNative {
 
 REACT_MODULE(ImageLoader)
 struct ImageLoader {
+  using ModuleSpec = ReactNativeSpecs::ImageLoaderIOSSpec;
+
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
 

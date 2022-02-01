@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -282,20 +282,20 @@ const Transitions = Object.freeze({
   },
 });
 
-const isActiveSignal = signal =>
+const isActiveSignal = (signal) =>
   signal === 'RESPONDER_ACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
 
-const isActivationSignal = signal =>
+const isActivationSignal = (signal) =>
   signal === 'RESPONDER_ACTIVE_PRESS_OUT' ||
   signal === 'RESPONDER_ACTIVE_PRESS_IN';
 
-const isPressInSignal = signal =>
+const isPressInSignal = (signal) =>
   signal === 'RESPONDER_INACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
 
-const isTerminalSignal = signal =>
+const isTerminalSignal = (signal) =>
   signal === 'RESPONDER_TERMINATED' || signal === 'RESPONDER_RELEASE';
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 500;
@@ -576,8 +576,8 @@ export default class Pressability {
 
     if (process.env.NODE_ENV === 'test') {
       // We are setting this in order to find this node in ReactNativeTestTools
-      responderEventHandlers.onStartShouldSetResponder.testOnly_pressabilityConfig = () =>
-        this._config;
+      responderEventHandlers.onStartShouldSetResponder.testOnly_pressabilityConfig =
+        () => this._config;
     }
 
     const mouseEventHandlers =

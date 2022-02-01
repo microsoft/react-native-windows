@@ -10,9 +10,6 @@
 #include <cxxreact/MessageQueueThread.h>
 #include <cxxreact/SystraceSection.h>
 #include <hermes/hermes.h>
-#ifndef NDEBUG
-#include <hermes/hermes_dbg.h>
-#endif
 #include "HermesRuntimeHolder.h"
 #include "HermesShim.h"
 
@@ -72,6 +69,10 @@ class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::R
 
 } // namespace
 
+facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcept {
+  return facebook::react::JSIEngineOverride::Hermes;
+}
+
 std::shared_ptr<jsi::Runtime> HermesRuntimeHolder::getRuntime() noexcept {
   std::call_once(m_once_flag, [this]() { initRuntime(); });
 
@@ -95,11 +96,7 @@ void HermesRuntimeHolder::initRuntime() noexcept {
   auto hermesRuntime = makeHermesRuntimeSystraced(runtimeConfig);
   facebook::hermes::HermesRuntime &hermesRuntimeRef = *hermesRuntime;
 
-#ifndef NDEBUG
-  m_runtime = std::make_shared<hermes::RuntimeDebugFlavorProxy>(std::move(hermesRuntime));
-#else
   m_runtime = std::move(hermesRuntime);
-#endif
   m_own_thread_id = std::this_thread::get_id();
 
 #ifdef HERMES_ENABLE_DEBUGGER

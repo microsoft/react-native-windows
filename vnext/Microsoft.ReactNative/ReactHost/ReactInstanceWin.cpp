@@ -16,17 +16,6 @@
 #include "ReactErrorProvider.h"
 
 #include "Microsoft.ReactNative/IReactNotificationService.h"
-
-#include "../../codegen/NativeAccessibilityInfoSpec.g.h"
-#include "../../codegen/NativeAppStateSpec.g.h"
-#include "../../codegen/NativeClipboardSpec.g.h"
-#include "../../codegen/NativeDevSettingsSpec.g.h"
-#include "../../codegen/NativeDeviceInfoSpec.g.h"
-#include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
-#include "../../codegen/NativeI18nManagerSpec.g.h"
-#include "../../codegen/NativeImageLoaderIOSSpec.g.h"
-#include "../../codegen/NativeLogBoxSpec.g.h"
-#include "../../codegen/NativeUIManagerSpec.g.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
 #include "Unicode.h"
@@ -52,6 +41,7 @@
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
+#include "Modules/AppThemeModuleUwp.h"
 #include "Modules/ClipboardModule.h"
 #endif
 #include "Modules/DevSettingsModule.h"
@@ -59,6 +49,7 @@
 #include <Modules/ImageViewManagerModule.h>
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
@@ -70,9 +61,7 @@
 #include <Utils/UwpScriptStore.h>
 #endif
 
-#if defined(INCLUDE_HERMES)
 #include "HermesRuntimeHolder.h"
-#endif // INCLUDE_HERMES
 
 #if defined(USE_V8)
 #include <winrt/Windows.Storage.h>
@@ -229,9 +218,11 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenLoaded.AsFuture()
       .Then<Mso::Executors::Inline>(
           [onLoaded = m_options.OnInstanceLoaded, reactContext = m_reactContext](Mso::Maybe<void> &&value) noexcept {
+            auto errCode = value.IsError() ? value.TakeError() : Mso::ErrorCode();
             if (onLoaded) {
-              onLoaded.Get()->Invoke(reactContext, value.IsError() ? value.TakeError() : Mso::ErrorCode());
+              onLoaded.Get()->Invoke(reactContext, errCode);
             }
+            return Mso::Maybe<void>(errCode);
           })
       .Then(Queue(), [whenLoaded = std::move(whenLoaded)](Mso::Maybe<void> &&value) noexcept {
         whenLoaded.SetValue(std::move(value));
@@ -262,11 +253,6 @@ ReactInstanceWin::~ReactInstanceWin() noexcept {}
 void ReactInstanceWin::LoadModules(
     const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
     const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
-  auto registerNativeModule = [&nativeModulesProvider](
-                                  const wchar_t *name, const ReactModuleProvider &provider) noexcept {
-    nativeModulesProvider->AddModuleProvider(name, provider);
-  };
-
   auto registerTurboModule = [this, &nativeModulesProvider, &turboModulesProvider](
                                  const wchar_t *name, const ReactModuleProvider &provider) noexcept {
     if (m_options.UseWebDebugger()) {
@@ -287,64 +273,46 @@ void ReactInstanceWin::LoadModules(
 #ifndef CORE_ABI
   registerTurboModule(
       L"UIManager",
-      // Spec incorrectly reports commandID as a number, but its actually a number | string.. so dont use the spec for
-      // now
-      // winrt::Microsoft::ReactNative::MakeTurboModuleProvider < ::Microsoft::ReactNative::UIManager,
-      //::Microsoft::ReactNativeSpecs::UIManagerSpec>());
+      // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
       winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
 
   registerTurboModule(
       L"AccessibilityInfo",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::AccessibilityInfo,
-          ::Microsoft::ReactNativeSpecs::AccessibilityInfoSpec>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AccessibilityInfo>());
 
   registerTurboModule(
-      L"Alert",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::Alert,
-          ::Microsoft::ReactNativeSpecs::DialogManagerWindowsSpec>());
+      L"Alert", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Alert>());
 
   registerTurboModule(
-      L"AppState",
-      winrt::Microsoft::ReactNative::
-          MakeTurboModuleProvider<::Microsoft::ReactNative::AppState, ::Microsoft::ReactNativeSpecs::AppStateSpec>());
+      L"AppState", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
 
   registerTurboModule(
-      L"LogBox",
-      winrt::Microsoft::ReactNative::
-          MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox, ::Microsoft::ReactNativeSpecs::LogBoxSpec>());
+      L"AppTheme", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppTheme>());
 
   registerTurboModule(
-      L"Clipboard",
-      winrt::Microsoft::ReactNative::
-          MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard, ::Microsoft::ReactNativeSpecs::ClipboardSpec>());
+      L"LogBox", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>());
 
   registerTurboModule(
-      L"DeviceInfo",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::DeviceInfo,
-          ::Microsoft::ReactNativeSpecs::DeviceInfoSpec>());
+      L"Clipboard", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard>());
 
   registerTurboModule(
-      L"ImageLoader",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::ImageLoader,
-          ::Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec>());
+      L"DeviceInfo", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DeviceInfo>());
+
+  registerTurboModule(
+      L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
 #endif
 
   registerTurboModule(
-      L"DevSettings",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::DevSettings,
-          ::Microsoft::ReactNativeSpecs::DevSettingsSpec>());
+      L"DevSettings", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
 
 #ifndef CORE_ABI
   registerTurboModule(
-      L"I18nManager",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<
-          ::Microsoft::ReactNative::I18nManager,
-          ::Microsoft::ReactNativeSpecs::I18nManagerSpec>());
+      L"I18nManager", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
+
+  registerTurboModule(
+      L"LinkingManager",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
+
 #endif
 }
 
@@ -367,8 +335,7 @@ void ReactInstanceWin::Initialize() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
 #ifndef CORE_ABI
-      strongThis->m_appTheme = std::make_shared<Microsoft::ReactNative::AppTheme>(
-          strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
+      Microsoft::ReactNative::AppThemeHolder::InitAppThemeHolder(strongThis->GetReactContext());
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
       strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
@@ -416,11 +383,7 @@ void ReactInstanceWin::Initialize() noexcept {
           // Acquire default modules and then populate with custom modules.
           // Note that some of these have custom thread affinity.
           std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
-              m_batchingUIThread,
-              m_jsMessageThread.Load(),
-              std::move(m_appTheme),
-              std::move(m_appearanceListener),
-              m_reactContext);
+              m_batchingUIThread, m_jsMessageThread.Load(), std::move(m_appearanceListener), m_reactContext);
 #endif
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
@@ -442,12 +405,10 @@ void ReactInstanceWin::Initialize() noexcept {
 
           switch (m_options.JsiEngine()) {
             case JSIEngine::Hermes:
-#if defined(INCLUDE_HERMES)
               devSettings->jsiRuntimeHolder =
                   std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
               devSettings->inlineSourceMap = false;
               break;
-#endif
             case JSIEngine::V8:
 #if defined(USE_V8)
 #ifndef CORE_ABI
@@ -485,10 +446,20 @@ void ReactInstanceWin::Initialize() noexcept {
                 m_options.TurboModuleProvider,
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),
-                Mso::Copy(m_batchingUIThread),
+                m_nativeMessageThread.Load(),
                 std::move(devSettings));
 
             m_instanceWrapper.Exchange(std::move(instanceWrapper));
+
+            // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
+            // triggered before any platform JS code is run. Using m_jsMessageThread instead of jsDispatchQueue avoids
+            // waiting for the JSCaller which can delay the event until after certain JS code has already run
+            m_jsMessageThread.Load()->runOnQueue(
+                [onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
+                  if (onCreated) {
+                    onCreated.Get()->Invoke(reactContext);
+                  }
+                });
 
 #ifdef USE_FABRIC
             // Eagerly init the FabricUI binding
@@ -575,7 +546,9 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
 
             try {
               instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
-              strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+              if (strongThis->State() != ReactInstanceState::HasError) {
+                strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+              }
             } catch (...) {
               strongThis->OnReactInstanceLoaded(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
             }
@@ -645,13 +618,6 @@ void ReactInstanceWin::InitJSMessageThread() noexcept {
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));
   auto jsDispatchQueue = Mso::DispatchQueue::MakeCustomQueue(Mso::CntPtr(scheduler));
-
-  // This work item will be processed as a first item in JS queue when the react instance is created.
-  jsDispatchQueue.Post([onCreated = m_options.OnInstanceCreated, reactContext = m_reactContext]() noexcept {
-    if (onCreated) {
-      onCreated.Get()->Invoke(reactContext);
-    }
-  });
 
   auto jsDispatcher =
       winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
@@ -903,7 +869,7 @@ void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, f
 }
 
 winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcept {
-  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
   {
     std::scoped_lock lock{m_mutex};
     if (m_jsiRuntime) {

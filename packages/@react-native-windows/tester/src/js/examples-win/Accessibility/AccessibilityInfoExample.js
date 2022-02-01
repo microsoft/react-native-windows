@@ -33,19 +33,17 @@ function focusTextInput(element) {
 }
 
 function AccessibilityInfoExample(props): React.Node {
-  const [isReduceMotionEnabled, setIsReduceMotionEnabled] = React.useState(
-    'unknown',
-  );
-  const [isScreenReaderEnabled, setIsScreenReaderEnabled] = React.useState(
-    'unknown',
-  );
+  const [isReduceMotionEnabled, setIsReduceMotionEnabled] =
+    React.useState('unknown');
+  const [isScreenReaderEnabled, setIsScreenReaderEnabled] =
+    React.useState('unknown');
   let myElement = React.createRef();
 
   React.useEffect(() => {
-    AccessibilityInfo.isReduceMotionEnabled().done(isEnabled => {
+    AccessibilityInfo.isReduceMotionEnabled().done((isEnabled) => {
       setIsReduceMotionEnabled(isEnabled);
     });
-    AccessibilityInfo.isScreenReaderEnabled().done(isEnabled => {
+    AccessibilityInfo.isScreenReaderEnabled().done((isEnabled) => {
       setIsScreenReaderEnabled(isEnabled);
     });
   }, [setIsReduceMotionEnabled, setIsScreenReaderEnabled]);

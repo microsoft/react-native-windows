@@ -10,7 +10,7 @@ parameters:
     values:
       - x86
       - x64
-      - arm64
+      - ARM64
   - name: configuration
     type: string
     values:
@@ -27,15 +27,6 @@ parameters:
   - name: useNuGet
     type: boolean
     default: false
-  - name: vsComponents
-    type: string
-    default: ''
-  - name: listVsComponents
-    type: boolean
-    default: false
-  - name: installVsComponents
-    type: boolean
-    default: false
   - name: runWack
     type: boolean
     default: false
@@ -50,20 +41,7 @@ parameters:
       - Continuous
 
 steps:
-  - checkout: self # self represents the repo where the initial Pipelines YAML file was found
-    clean: true # whether to fetch clean each time
-    # fetchDepth: 2 # the depth of commits to ask Git to fetch
-    lfs: false # whether to download Git-LFS files
-    submodules: false # set to 'true' for a single level of submodules or 'recursive' to get submodules of submodules
-    persistCredentials: false # set to 'true' to leave the OAuth token in the Git config after the initial fetch
-
-  # First do a build of the local package, since we point the cli at the local files, it needs to be pre-built
-  - template: yarn-install.yml
-
-  - script: yarn build
-    displayName: yarn build
-
-  - powershell: start-process npx -ArgumentList @('verdaccio', '--config', './.ado/verdaccio/config.yaml')
+  - powershell: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
     displayName: Launch test npm server (verdaccio)
 
   - script: node .ado/scripts/waitForVerdaccio.js
@@ -72,41 +50,39 @@ steps:
   - script: node .ado/scripts/npmAddUser.js user pass mail@nomail.com http://localhost:4873
     displayName: Add npm user to verdaccio
 
-  - template: ../templates/compute-beachball-branch-name.yml
+  - template: compute-beachball-branch-name.yml
 
-  - script: npx --no-install beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --access public --changehint "Run `yarn change` from root of repo to generate a change file."
+  - script: npx beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --verbose --access public --changehint "Run `yarn change` from root of repo to generate a change file."
     displayName: Publish packages to verdaccio
 
   - template: set-version-vars.yml
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
-  # The commit tag in the nuspec requires that we use at least nuget 5.8 (because things break with nuget versions before and Vs 16.8 or later)
-  - task: NuGetToolInstaller@1
-    inputs:
-      versionSpec: ">=5.8.0"
-
   - ${{ if eq(parameters.useNuGet, true) }}:
     - template: prep-and-pack-nuget.yml
       parameters:
+        artifactName: ReactWindows
         npmVersion: $(npmVersion)
-        packDesktop: false
-        slices: '("${{ parameters.platform }}.${{ parameters.configuration }}")'
+        packMicrosoftReactNative: true
+        ${{ if eq(parameters.language, 'cpp') }}:
+          packMicrosoftReactNativeCxx: true
+        ${{ if eq(parameters.language, 'cs') }}:
+          packMicrosoftReactNativeManaged: true
+          packMicrosoftReactNativeManagedCodeGen: true
+        slices:
+          - platform: ${{ parameters.platform }}
+            configuration: Release
 
-  # We force the usage of npm instead of yarn because yarn has fragility issues when redirected to a different server (such as verdaccio)
-  # We use --no-install and symlink the node_modules from the source tree to avoid having npx download react-native and all it dependencies
-  # which takes over a minute on the CI machines.
   - ${{ if eq(parameters.projectType, 'app') }}:
     - script: |
-        mklink /D node_modules $(System.DefaultWorkingDirectory)\node_modules
-        npx --no-install react-native init testcli --npm --template react-native@$(reactNativeDevDependency)
+        npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
       displayName: Init new app project
       workingDirectory: $(Agent.BuildDirectory)
 
   - ${{ if eq(parameters.projectType, 'lib') }}:
     - script: |
-        mklink /D node_modules $(System.DefaultWorkingDirectory)\node_modules
-        npx create-react-native-module --package-name "testcli" testcli
+        npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
       displayName: Init new lib project
       workingDirectory: $(Agent.BuildDirectory)
 
@@ -117,21 +93,24 @@ steps:
       displayName: Update lib project react and react-native dev versions
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - script: npm set registry http://localhost:4873
-    displayName: Modify default npm config to point to local verdaccio server
-
-  - script: npm set fetch-retries 10
-    displayName: Allow additional npm fetch retries
+  - script: yarn config set registry http://localhost:4873
+    displayName: Modify yarn config to point to local verdaccio server
 
   - ${{ if eq(parameters.useNuget, true) }}:
-    - script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
-      displayName: Apply windows template (with nuget)      
+    - script: |
+        npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+      displayName: Apply windows template (with nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.useNuget, false) }}:
-    - script: npx react-native-windows-init --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
+    - script: |
+        npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
       displayName: Apply windows template (without nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - powershell: |
@@ -145,31 +124,6 @@ steps:
   - script: tskill node
     displayName: Kill Verdaccio
     condition: succeededOrFailed()
-
-  - ${{ if eq(parameters.listVsComponents, true) }}:
-    - task: PowerShell@2
-      displayName: List Visual Studio Components
-      inputs:
-        targetType: filePath
-        filePath: $(Build.SourcesDirectory)/.ado/scripts/VSComponentList.ps1
-
-    - task: PowerShell@2
-      displayName: Install Visual Studio dependencies
-      inputs:
-        targetType: filePath
-        filePath: $(Build.SourcesDirectory)/vnext/Scripts/Tfs/Install-VsFeatures.ps1
-        arguments:
-          -Components ${{ parameters.vsComponents }}
-          -Cleanup:$true
-
-  - script: .ado\scripts\SetupLocalDumps.cmd cl
-    displayName: Set LocalDumps for cl.exe
-
-  - script: .ado\scripts\SetupLocalDumps.cmd link
-    displayName: Set LocalDumps for link.exe
-
-  - script: .ado\scripts\SetupLocalDumps.cmd msbuild
-    displayName: Set LocalDumps for msbuild.exe
 
   - task: PowerShell@2
     displayName: Start tracing
@@ -196,6 +150,7 @@ steps:
       deployOption: ${{ parameters.additionalRunArguments }}
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      restoreLockedMode: false # Allow new lockfile to be created
 
   - template: upload-build-logs.yml
     parameters:
@@ -203,7 +158,7 @@ steps:
 
   # Only test bundling in debug since we already bundle as part of release builds
   - ${{ if and(eq(parameters.projectType, 'app'), eq(parameters.configuration, 'Debug')) }}:
-    - script: npx --no-install react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
+    - script: npx react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
       displayName: Create bundle testcli
       workingDirectory: $(Agent.BuildDirectory)\testcli
 

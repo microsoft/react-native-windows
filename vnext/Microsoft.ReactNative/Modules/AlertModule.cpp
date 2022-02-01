@@ -38,8 +38,17 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   auto jsDispatcher = m_context.JSDispatcher();
 
   xaml::Controls::ContentDialog dialog{};
-  dialog.Title(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.title.value_or(std::string{}))));
-  dialog.Content(winrt::box_value(Microsoft::Common::Unicode::Utf8ToUtf16(args.message.value_or(std::string{}))));
+  xaml::Controls::TextBlock titleTextBlock;
+  xaml::Controls::TextBlock messageTextBlock;
+  titleTextBlock.Text(Microsoft::Common::Unicode::Utf8ToUtf16(args.title.value_or(std::string{})));
+  titleTextBlock.IsTextSelectionEnabled(true);
+  titleTextBlock.MaxLines(2);
+  titleTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
+  messageTextBlock.Text(Microsoft::Common::Unicode::Utf8ToUtf16(args.message.value_or(std::string{})));
+  messageTextBlock.IsTextSelectionEnabled(true);
+  messageTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
+  dialog.Title(titleTextBlock);
+  dialog.Content(messageTextBlock);
   dialog.PrimaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonPositive.value_or(std::string{})));
   dialog.SecondaryButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNegative.value_or(std::string{})));
   dialog.CloseButtonText(Microsoft::Common::Unicode::Utf8ToUtf16(args.buttonNeutral.value_or(std::string{})));
@@ -95,9 +104,10 @@ void Alert::ProcessPendingAlertRequests() noexcept {
     }
   });
 
+  const auto hasCloseButton = dialog.CloseButtonText().size() > 0;
   auto asyncOp = dialog.ShowAsync();
   asyncOp.Completed(
-      [jsDispatcher, result, this](
+      [hasCloseButton, jsDispatcher, result, this](
           const winrt::IAsyncOperation<xaml::Controls::ContentDialogResult> &asyncOp, winrt::AsyncStatus status) {
         switch (asyncOp.GetResults()) {
           case xaml::Controls::ContentDialogResult::Primary:
@@ -107,7 +117,9 @@ void Alert::ProcessPendingAlertRequests() noexcept {
             jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonNegative); });
             break;
           case xaml::Controls::ContentDialogResult::None:
-            jsDispatcher.Post([result, this] { result(m_constants.buttonClicked, m_constants.buttonNeutral); });
+            jsDispatcher.Post([hasCloseButton, result, this] {
+              result(hasCloseButton ? m_constants.buttonClicked : m_constants.dismissed, m_constants.buttonNeutral);
+            });
             break;
           default:
             break;

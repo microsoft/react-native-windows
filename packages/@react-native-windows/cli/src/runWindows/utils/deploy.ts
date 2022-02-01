@@ -5,7 +5,7 @@
  */
 
 import {spawn, execSync, SpawnOptions} from 'child_process';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import http from 'http';
 import path from 'path';
 import glob from 'glob';
@@ -129,7 +129,7 @@ function getAppPackage(
   if (appPackageCandidates.length === 1 || !projectName) {
     appPackage = appPackageCandidates[0];
   } else if (appPackageCandidates.length > 1) {
-    const filteredAppPackageCandidates = appPackageCandidates.filter(x =>
+    const filteredAppPackageCandidates = appPackageCandidates.filter((x) =>
       x.includes(projectName),
     );
     if (filteredAppPackageCandidates.length >= 1) {
@@ -150,7 +150,7 @@ function getAppPackage(
 
     const result = glob.sync(newGlob);
     if (result.length > 1 && projectName) {
-      const newFilteredGlobs = result.filter(x => x.includes(projectName));
+      const newFilteredGlobs = result.filter((x) => x.includes(projectName));
       if (newFilteredGlobs.length >= 1) {
         newWarn(`More than one app package found: ${result}`);
       }
@@ -207,7 +207,7 @@ function getAppxManifestPath(
   if (globs.length === 1 || !projectName) {
     appxPath = globs[0];
   } else {
-    const filteredGlobs = globs.filter(x => x.includes(projectName));
+    const filteredGlobs = globs.filter((x) => x.includes(projectName));
     appxPath = filteredGlobs[0];
     if (filteredGlobs.length > 1) {
       newWarn(
@@ -275,7 +275,7 @@ export async function deployToDevice(
   const deployTool = new WinAppDeployTool();
   const appxManifest = getAppxManifest(options, projectName);
   const shouldLaunch = shouldLaunchApp(options);
-  const identity = appxManifest.root.children.filter(x => {
+  const identity = appxManifest.root.children.filter((x) => {
     return x.name === 'mp:PhoneIdentity';
   })[0];
   const appName = identity.attributes.PhoneProductId;
@@ -298,7 +298,7 @@ export async function deployToDevice(
       verbose,
     );
   } catch (e) {
-    if (e.message.indexOf('Error code 2148734208 for command') !== -1) {
+    if ((e as Error).message.includes('Error code 2148734208 for command')) {
       await deployTool.installAppPackage(
         appxFile,
         device,
@@ -307,7 +307,7 @@ export async function deployToDevice(
         verbose,
       );
     } else {
-      handleResponseError(e);
+      handleResponseError(e as Error);
     }
   }
 }
@@ -331,7 +331,7 @@ export async function deployToDesktop(
   const windowsStoreAppUtils = getWindowsStoreAppUtils(options);
   const appxManifestPath = getAppxManifestPath(options, projectName);
   const appxManifest = parseAppxManifest(appxManifestPath);
-  const identity = appxManifest.root.children.filter(x => {
+  const identity = appxManifest.root.children.filter((x) => {
     return x.name === 'Identity';
   })[0];
   const appName = identity.attributes.Name;
@@ -463,9 +463,9 @@ export function startServerInNewWindow(
   options: RunWindowsOptions,
   verbose: boolean,
 ): Promise<void> {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     http
-      .get('http://localhost:8081/status', res => {
+      .get('http://localhost:8081/status', (res) => {
         if (res.statusCode === 200) {
           newSuccess('React-Native Server already started');
         } else {
@@ -488,5 +488,5 @@ function launchServer(options: RunWindowsOptions, verbose: boolean) {
     stdio: verbose ? 'inherit' : 'ignore',
   };
 
-  spawn('cmd.exe', ['/C', 'start npx --no-install react-native start'], opts);
+  spawn('cmd.exe', ['/C', 'start npx react-native start'], opts);
 }

@@ -9,7 +9,7 @@ import path from 'path';
 import username from 'username';
 import uuid from 'uuid';
 import childProcess from 'child_process';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
@@ -21,7 +21,10 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
-import {CodedError} from '@react-native-windows/telemetry';
+import {
+  CodedError,
+  getVersionOfNpmPackage,
+} from '@react-native-windows/telemetry';
 import {
   findPackage,
   WritableNpmPackage,
@@ -36,16 +39,6 @@ const bundleDir = 'Bundle';
 interface NugetPackage {
   id: string;
   version: string;
-}
-
-/**
- * This represents the data to insert nuget packages with Cpp specific information
- */
-interface CppNugetPackage extends NugetPackage {
-  propsTopOfFile?: boolean;
-  propsMiddleOfFile?: boolean;
-  hasProps: boolean;
-  hasTargets: boolean;
 }
 
 function pascalCase(str: string) {
@@ -99,10 +92,7 @@ export async function copyProjectTemplateAndReplace(
 
   // Similar to the above, but we want to retain namespace separators
   if (projectType === 'lib') {
-    namespace = namespace
-      .split(/[.:]+/)
-      .map(pascalCase)
-      .join('.');
+    namespace = namespace.split(/[.:]+/).map(pascalCase).join('.');
   }
 
   createDir(path.join(destPath, windowsDir));
@@ -133,7 +123,8 @@ export async function copyProjectTemplateAndReplace(
   let mainComponentName = newProjectName;
   const appJsonPath = await findUp('app.json', {cwd: destPath});
   if (appJsonPath) {
-    mainComponentName = JSON.parse(fs.readFileSync(appJsonPath, 'utf8')).name;
+    const appJson = await fs.readJsonFile<{name: string}>(appJsonPath);
+    mainComponentName = appJson.name;
   }
 
   const xamlNamespace = options.useWinUI3
@@ -172,19 +163,14 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
-  const cppNugetPackages: CppNugetPackage[] = [
+  const cppNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
-      version: '2.0.210312.4',
-      propsTopOfFile: true,
-      hasProps: true,
-      hasTargets: true,
+      version: '2.0.211028.7',
     },
     {
       id: 'ReactNative.Hermes.Windows',
       version: hermesVersion,
-      hasProps: false,
-      hasTargets: true,
     },
   ];
 
@@ -197,15 +183,11 @@ export async function copyProjectTemplateAndReplace(
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative',
       version: nugetVersion,
-      hasProps: false,
-      hasTargets: true,
     });
 
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative.Cxx',
       version: nugetVersion,
-      hasProps: false,
-      hasTargets: true,
     });
   }
 
@@ -214,8 +196,6 @@ export async function copyProjectTemplateAndReplace(
     {
       id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
       version: options.useWinUI3 ? winui3Version : winui2xVersion,
-      hasProps: false, // WinUI/MUX props and targets get handled by RNW's WinUI.props.
-      hasTargets: false,
     },
   ];
 
@@ -227,6 +207,8 @@ export async function copyProjectTemplateAndReplace(
     namespace: namespace,
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
+
+    rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
 
     mainComponentName: mainComponentName,
 
@@ -242,6 +224,7 @@ export async function copyProjectTemplateAndReplace(
 
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
+    nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
@@ -347,6 +330,11 @@ export async function copyProjectTemplateAndReplace(
             },
           ];
 
+    csMappings.push({
+      from: path.join(srcPath, projDir, 'Directory.Build.props'),
+      to: path.join(windowsDir, 'Directory.Build.props'),
+    });
+
     for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(
         mapping.from,
@@ -377,10 +365,6 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName + '.vcxproj.filters',
               ),
             },
-            {
-              from: path.join(srcPath, projDir, 'packages.config'),
-              to: path.join(windowsDir, newProjectName, 'packages.config'),
-            },
           ]
         : [
             // cpp lib mappings
@@ -407,10 +391,6 @@ export async function copyProjectTemplateAndReplace(
                 newProjectName,
                 newProjectName + '.def',
               ),
-            },
-            {
-              from: path.join(srcPath, projDir, 'packages.config'),
-              to: path.join(windowsDir, newProjectName, 'packages.config'),
             },
           ];
 

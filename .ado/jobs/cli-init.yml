@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildNuGetOnly
     type: boolean
   - name: buildMatrix
@@ -73,10 +75,10 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: ARM64ReleaseCsHermes
+          - Name: Arm64ReleaseCsHermes
             language: cs
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments: --no-deploy
@@ -90,15 +92,21 @@ parameters:
           - Name: X64DebugCppNuget
             language: cpp
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
             useNuGet: true
-          - Name: X64DebugCsNuget
+          - Name: X64ReleaseCsNuget
             language: cs
-            configuration: Debug
-            platform: x86
+            configuration: Release
+            platform: x64
             projectType: app
             useNuGet: true
+          - Name: X64DebugCppLowResource
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            lowResource: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X64ReleaseCpp
@@ -162,10 +170,10 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: ARM64ReleaseCsHermes
+          - Name: Arm64ReleaseCsHermes
             language: cs
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalInitArguments: --useHermes
             additionalRunArguments: --no-deploy
@@ -176,40 +184,78 @@ parameters:
             projectType: app
             additionalInitArguments: --useHermes
             runWack: true
-          - Name: X64DebugCppNuget
+          - Name: X86DebugCppNuget
             language: cpp
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
-          - Name: X64DebugCsNuget
+          - Name: X86DebugCsNuget
             language: cs
             configuration: Debug
             platform: x86
             projectType: app
             useNuGet: true
+          - Name: X86ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X86ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            useNuGet: true
+          - Name: X64ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            useNuGet: true
+          - Name: X64ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: x64
+            projectType: app
+            useNuGet: true
+          - Name: Arm64ReleaseCppNuget
+            language: cpp
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy
+            useNuGet: true
+          - Name: Arm64ReleaseCsNuget
+            language: cs
+            configuration: Release
+            platform: ARM64
+            projectType: app
+            additionalRunArguments: --no-deploy
+            useNuGet: true
           - Name: Arm64DebugCpp
             language: cpp
             configuration: Debug
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: Arm64DebugCs
             language: cs
             configuration: Debug
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: Arm64ReleaseCpp
             language: cpp
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: Arm64ReleaseCs
             language: cs
             configuration: Release
-            platform: arm64
+            platform: ARM64
             projectType: app
             additionalRunArguments: --no-deploy # We don't have Arm agents
           - Name: X86ReleaseCpp
@@ -234,6 +280,18 @@ parameters:
             configuration: Debug
             platform: x64
             projectType: app
+          - Name: X64DebugCppLowResource
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            lowResource: true
+          - Name: X64ReleaseCppLowResource
+            language: cpp
+            configuration: Release
+            platform: x64
+            projectType: app
+            lowResource: true
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
@@ -244,16 +302,30 @@ jobs:
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
-                - UniversalBuild
+                - UniversalBuild${{ matrix.platform }}Release
 
-            variables:
-              - template: ../variables/vs2019.yml
+            variables: [template: ../variables/windows.yml]
 
-            pool: $(AgentPool.Medium)
+            ${{ if eq(matrix.lowResource, true) }}:
+              pool: ${{ parameters.AgentPool.Small }}
+            ${{ else }}:
+              pool: ${{ parameters.AgentPool.Medium }}
             timeoutInMinutes: 60
             cancelTimeoutInMinutes: 5
 
             steps:
+              - template: ../templates/checkout-full.yml
+
+              - template: ../templates/configure-git.yml
+
+              - template: ../templates/prepare-js-env.yml
+
+              - template: ../templates/prepare-build-env.yml
+                parameters:
+                  platform: ${{ parameters.platform }}
+                  configuration: ${{ parameters.configuration }}
+                  buildEnvironment: ${{ parameters.buildEnvironment }}
+
               - template: ../templates/react-native-init.yml
                 parameters:
                   language: ${{ matrix.language }}

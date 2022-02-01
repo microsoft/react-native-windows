@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -60,7 +60,7 @@ class RCTNetworking extends NativeEventEmitter<$FlowFixMe> {
   ) {
     const body = convertRequestBody(data);
     if (body && body.formData) {
-      body.formData = body.formData.map(part => ({
+      body.formData = body.formData.map((part) => ({
         ...part,
         headers: convertHeadersMapToArray(part.headers),
       }));

@@ -2,6 +2,1239 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Tue, 01 Feb 2022 06:07:59 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.19",
+            "commit": "6912eec19a83ea1441544fed7da37813ef4c45ac"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.445",
+            "commit": "6912eec19a83ea1441544fed7da37813ef4c45ac"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 29 Jan 2022 06:08:59 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.18",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.444",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.26",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Jan 2022 06:11:45 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.17",
+            "commit": "041c271e04c66485d7aad8e458f3135ab82bf3cd"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.443",
+            "commit": "041c271e04c66485d7aad8e458f3135ab82bf3cd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jan 2022 06:08:34 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.16",
+            "commit": "b938c3cd8beab33d92e26fa1e98c42fdbdd49c7c"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.442",
+            "commit": "b938c3cd8beab33d92e26fa1e98c42fdbdd49c7c"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.25",
+            "commit": "b938c3cd8beab33d92e26fa1e98c42fdbdd49c7c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 22 Jan 2022 06:10:18 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.15",
+            "commit": "7727b132b854d6b24ed47d01fd49bbd801403173"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.441",
+            "commit": "7727b132b854d6b24ed47d01fd49bbd801403173"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Jan 2022 06:10:35 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.14",
+            "commit": "614d25feb81a0486770aaba6aab8a67ac575f484"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.440",
+            "commit": "614d25feb81a0486770aaba6aab8a67ac575f484"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 14 Jan 2022 06:09:51 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.13",
+            "commit": "3c4be294c9b4b70eeef9f289aaca6c26594b3a18"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.439",
+            "commit": "3c4be294c9b4b70eeef9f289aaca6c26594b3a18"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Jan 2022 06:09:11 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.12",
+            "commit": "4c9cd01aca90209633f4c6544df9521ce0c814c5"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.438",
+            "commit": "4c9cd01aca90209633f4c6544df9521ce0c814c5"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.24",
+            "commit": "4c9cd01aca90209633f4c6544df9521ce0c814c5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 09 Jan 2022 06:07:57 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.11",
+            "commit": "81084aed0ed58d61638c31ede8c09a596fdaea53"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.437",
+            "commit": "81084aed0ed58d61638c31ede8c09a596fdaea53"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 08 Jan 2022 06:09:25 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.10",
+            "commit": "840a5ac77027a251a014eb7488c8da7a96d30985"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.436",
+            "commit": "840a5ac77027a251a014eb7488c8da7a96d30985"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.23",
+            "commit": "840a5ac77027a251a014eb7488c8da7a96d30985"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 07 Jan 2022 22:21:25 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.9",
+            "commit": "0ce0ebcf9bf29cfa32f52a86eee694ef5fc754b7"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.435",
+            "commit": "0ce0ebcf9bf29cfa32f52a86eee694ef5fc754b7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 06 Jan 2022 04:18:33 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.8",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.434",
+            "commit": "1cd71b778273747683997ea72b65e152756dae05"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Dec 2021 06:09:21 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.7",
+            "commit": "baeb133da923d0eee25eacf54c02557ea411a7fc"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.433",
+            "commit": "baeb133da923d0eee25eacf54c02557ea411a7fc"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Dec 2021 06:08:07 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.6",
+            "commit": "0e5b7bd98bb447ff542d6063f8a01ff9d24a64ea"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.432",
+            "commit": "0e5b7bd98bb447ff542d6063f8a01ff9d24a64ea"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Dec 2021 06:11:19 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.5",
+            "commit": "9ef57baafa33d219b45ffa59c028486afbb114c5"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.431",
+            "commit": "9ef57baafa33d219b45ffa59c028486afbb114c5"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.22",
+            "commit": "9ef57baafa33d219b45ffa59c028486afbb114c5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Dec 2021 06:12:27 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.4",
+            "commit": "46fcfd5775dc47e0899858536ebbd91df9aed764"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.430",
+            "commit": "46fcfd5775dc47e0899858536ebbd91df9aed764"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Dec 2021 06:11:42 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.3",
+            "commit": "02f8b9f1777086b0db15cfc41433ca76b7c23d4d"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.429",
+            "commit": "02f8b9f1777086b0db15cfc41433ca76b7c23d4d"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.21",
+            "commit": "02f8b9f1777086b0db15cfc41433ca76b7c23d4d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 07 Dec 2021 06:10:13 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.2",
+            "commit": "4033556484dce8b2e5698b6882e83999fca0db6b"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.428",
+            "commit": "4033556484dce8b2e5698b6882e83999fca0db6b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 05 Dec 2021 06:09:35 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.2-0",
+            "commit": "f8d463668b49bd5dc001f5edcc77446c7947562c"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.427",
+            "commit": "f8d463668b49bd5dc001f5edcc77446c7947562c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 04 Dec 2021 06:09:39 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.1",
+            "commit": "f12eee17a0875ffd4c144ece7e536e2730475657"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.426",
+            "commit": "f12eee17a0875ffd4c144ece7e536e2730475657"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 03 Dec 2021 06:12:11 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.0",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/fs to v1.0.1",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.425",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.20",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @rnw-scripts/babel-node-config to v2.0.3",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.10",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.2",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Dec 2021 06:09:50 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.35",
+            "commit": "24e971a47fbcfa8d8f8b113fa7b13a582e1f9e87"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.424",
+            "commit": "24e971a47fbcfa8d8f8b113fa7b13a582e1f9e87"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 26 Nov 2021 06:09:54 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.34",
+            "commit": "c3de2ab7c21e55486b492b5b7936e6609bc7f4d7"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.423",
+            "commit": "c3de2ab7c21e55486b492b5b7936e6609bc7f4d7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Nov 2021 06:09:25 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.33",
+            "commit": "f50cac7f1c4dc3359a6b53422c6c3af86ed8df16"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.422",
+            "commit": "f50cac7f1c4dc3359a6b53422c6c3af86ed8df16"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Nov 2021 06:08:49 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.32",
+            "commit": "c896fa849e7fa3f44a84793f541f1e6220963ff8"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.421",
+            "commit": "c896fa849e7fa3f44a84793f541f1e6220963ff8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 23 Nov 2021 06:09:26 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.31",
+            "commit": "75c4d0b8d8925599bedc64bc879e5783d3e6bbc2"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.420",
+            "commit": "75c4d0b8d8925599bedc64bc879e5783d3e6bbc2"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Nov 2021 06:11:21 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.30",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/fs to v1.0.0",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.419",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.19",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.9",
+            "commit": "ef32b2fea053970e32e530cea30239337f8975df"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 16 Nov 2021 06:09:18 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.29",
+            "commit": "4fa9403beb8b40e80ed52579b9c50bf5a6dca042"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.418",
+            "commit": "4fa9403beb8b40e80ed52579b9c50bf5a6dca042"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Nov 2021 06:08:59 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.28",
+            "commit": "d336f1a7364c9c62325bda1737fb91bce0c3fa50"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.417",
+            "commit": "d336f1a7364c9c62325bda1737fb91bce0c3fa50"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Nov 2021 23:57:31 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.27",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.416",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.18",
+            "commit": "a58bcdcf643b050e5ad03b42cb2e8f159f997a55"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 09 Nov 2021 06:11:23 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.26",
+            "commit": "b3292416f3945415de12bf661a8031970cc7323a"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.415",
+            "commit": "b3292416f3945415de12bf661a8031970cc7323a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 06 Nov 2021 05:08:39 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.25",
+            "commit": "6810b7bc0b60943926d4e23cf9ffed984e3ccc6b"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.414",
+            "commit": "6810b7bc0b60943926d4e23cf9ffed984e3ccc6b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Nov 2021 05:08:51 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.24",
+            "commit": "8fe65550fe2af6a3d85eaa0528394af07af30209"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.413",
+            "commit": "8fe65550fe2af6a3d85eaa0528394af07af30209"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Nov 2021 05:07:29 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.23",
+            "commit": "71601897e5e5bf36fa9465196ed3be1cfa669231"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.412",
+            "commit": "71601897e5e5bf36fa9465196ed3be1cfa669231"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Nov 2021 05:07:08 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.23",
+            "commit": "0427f750ffad4e45db83f0d4c3ed111340eeeef5"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.412",
+            "commit": "0427f750ffad4e45db83f0d4c3ed111340eeeef5"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Nov 2021 20:20:41 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.22",
+            "commit": "ccef4eba9bde1cd87a7ecd96ce0030bc10486d21"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.411",
+            "commit": "ccef4eba9bde1cd87a7ecd96ce0030bc10486d21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Nov 2021 20:20:13 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.22",
+            "commit": "9440c876b2410d0a211d8ef73cd5a906963ee243"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.411",
+            "commit": "9440c876b2410d0a211d8ef73cd5a906963ee243"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:37 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.21",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.410",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "31fb514bffc1e149f46e699f912064845aea1915"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Nov 2021 18:33:06 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.21",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.410",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.17",
+            "commit": "f13fdaeb59a97cae16c36dfb6269dbd53a60c26c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.20",
+            "commit": "54123902f3587a9e88cfc1f7f30d2dea2c0bbf90"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.409",
+            "commit": "54123902f3587a9e88cfc1f7f30d2dea2c0bbf90"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:05:43 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.20",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.409",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Oct 2021 05:07:23 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.19",
+            "commit": "598401a0f83875669a1a20e62eaf5bbf8a69e5db"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.408",
+            "commit": "598401a0f83875669a1a20e62eaf5bbf8a69e5db"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Oct 2021 05:07:00 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.19",
+            "commit": "4222621144c39c365ffffc4775f438cfdb957343"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.408",
+            "commit": "4222621144c39c365ffffc4775f438cfdb957343"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Oct 2021 05:06:56 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.18",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.407",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.15",
+            "commit": "2d245e697f01beb796b1a4ea4679be49702b983a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Oct 2021 05:06:25 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.18",
+            "commit": "5d10d4cf3b1329d0221a891ee169af31d44c2d53"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.407",
+            "commit": "5d10d4cf3b1329d0221a891ee169af31d44c2d53"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.15",
+            "commit": "5d10d4cf3b1329d0221a891ee169af31d44c2d53"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 05:06:59 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.17",
+            "commit": "0529816377b6d88859cd1cb72c8c1b149bdccf31"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.406",
+            "commit": "0529816377b6d88859cd1cb72c8c1b149bdccf31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Oct 2021 05:06:41 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.17",
+            "commit": "e843cd39d5cca198cbc4d70d957f11c6c3b9cfa6"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.406",
+            "commit": "e843cd39d5cca198cbc4d70d957f11c6c3b9cfa6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 14:04:42 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.16",
+            "commit": "4f46e1f8b79ea3220fc66d53b8075211468758cf"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.405",
+            "commit": "4f46e1f8b79ea3220fc66d53b8075211468758cf"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 14:04:21 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.16",
+            "commit": "3d191bf9794bf19869676de1558760f502650aca"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.405",
+            "commit": "3d191bf9794bf19869676de1558760f502650aca"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 24 Oct 2021 05:06:51 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.15",
+            "commit": "e18fd3f87be9237ff82f97758a334c4302287bb0"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.404",
+            "commit": "e18fd3f87be9237ff82f97758a334c4302287bb0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Oct 2021 05:06:49 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.14",
+            "commit": "82aa530d95d792b3c68fb0ff75103336976afe5d"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.403",
+            "commit": "82aa530d95d792b3c68fb0ff75103336976afe5d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Oct 2021 05:06:46 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.13",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.402",
+            "commit": "e8d09f86fce740a0c16b6f6f9fd876d2122cfc74"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 21 Oct 2021 05:08:01 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.0.12",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.401",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.14",
+            "commit": "8a0ffecdcf5e68d950f20380fdf62295edb352b6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 17 Oct 2021 05:06:34 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

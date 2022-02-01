@@ -1,0 +1,35 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    values:
+      - PullRequest
+      - Continuous
+
+jobs:
+  - job: Setup
+    timeoutInMinutes: 3
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+      - template: ../templates/checkout-full.yml
+
+      - powershell: gci env:/BUILD_*
+        displayName: Show build information
+
+      - template: ../templates/compute-beachball-branch-name.yml
+
+      - script: npm install -g beachball@2.18.0
+        displayName: Install beachball
+
+      - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+        - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
+          displayName: Check for change files
+
+      - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
+        displayName: beachball bump
+
+      - template: ../templates/set-version-vars.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+
+      - template: ../templates/publish-version-vars.yml

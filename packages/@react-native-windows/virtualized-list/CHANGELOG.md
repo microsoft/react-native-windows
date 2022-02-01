@@ -1,8 +1,126 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jan 2022 06:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.26
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.0-canary.25
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.3
+
+## 0.0.0-canary.24
+
+Tue, 11 Jan 2022 06:09:11 GMT
+
+### Changes
+
+- Integrate 12/31 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly Build (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.23
+
+Sat, 08 Jan 2022 06:09:24 GMT
+
+### Changes
+
+- Integrate 12/7 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.22
+
+Thu, 16 Dec 2021 06:11:18 GMT
+
+### Changes
+
+- Integrate 12/2 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.21
+
+Fri, 10 Dec 2021 06:11:42 GMT
+
+### Changes
+
+- Integrate 11/25 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.20
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump react-native-platform-override to v1.6.2
+
+## 0.0.0-canary.19
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump react-native-platform-override to v1.6.1
+
+## 0.0.0-canary.18
+
+Wed, 10 Nov 2021 23:57:30 GMT
+
+### Changes
+
+- Integrate OCt 28 RN nightly build. (igklemen@microsoft.com)
+
+## 0.0.0-canary.17
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Changes
+
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.17
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Changes
+
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.15
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.15
+
+Tue, 26 Oct 2021 05:06:24 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.14
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.5.1
 
 ## 0.0.0-canary.13
 

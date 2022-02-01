@@ -266,9 +266,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)IUIManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -366,9 +363,6 @@
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ChakraCoreRuntime.h">
-      <Filter>Header Files\JSI</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.h">
       <Filter>Header Files</Filter>
     </ClInclude>

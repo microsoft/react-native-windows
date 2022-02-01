@@ -16,19 +16,41 @@ parameters:
     type: string
   - name: deployOption
     type: string
+    default: ''
   - name: buildLogDirectory
     type: string
   - name: workingDirectory
     type: string
+  - name: restoreLockedMode
+    type: boolean
+    default: true
+  - name: restoreForceEvaluate
+    type: boolean
+    default: true
 
 steps:
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --msbuildprops AppxPackageSigningEnabled=False
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}
+        ${{ parameters.deployOption }}
       displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'PullRequest')) }}:
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops AppxPackageSigningEnabled=False
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --release
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}
+        ${{ parameters.deployOption }}
       displayName: run-windows (Release) - PR
       workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -37,8 +59,16 @@ steps:
       parameters:
         certificateName: ${{ parameters.certificateName }}
 
-    - script: yarn windows --no-packager --no-launch ${{ parameters.deployOption }} --arch ${{ parameters.buildPlatform }} --logging --buildLogDirectory ${{ parameters.buildLogDirectory }} --release --msbuildprops PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --release
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+        ${{ parameters.deployOption }}
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
-                  
+
     - template: ../templates/cleanup-certificate.yml

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -52,11 +52,13 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
+  */
   {
     key: 'PressableExample',
     category: 'UI',
-    module: require('../examples/Pressable/PressableExample'),
+    module: require('../examples-win32/Pressable/PressableExample'),
   },
+  /*
   {
     key: 'TouchableWin32Example',
     module: require('@office-iss/react-native-win32/Libraries/Components/Touchable/Tests/TouchableWin32Test'),
@@ -98,6 +100,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/View/ViewExample'),
   },
+  //{
+  //  key: 'NewArchitectureExample',
+  //  category: 'UI',
+  //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
+  //},
   {
     key: 'ViewWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
@@ -253,7 +260,7 @@ if (global.__turboModuleProxy) {
 
 const Modules: any = {};
 
-APIs.concat(Components).forEach(Example => {
+APIs.concat(Components).forEach((Example) => {
   Modules[Example.key] = Example.module;
 });
 

@@ -3,8 +3,9 @@
 #include <jsi/jsi.h>
 #include <memory>
 
-namespace facebook {
-namespace jsi {
+#include <DevSettings.h>
+
+namespace Microsoft::JSI {
 
 // An instance of this interface is expected to
 // a. lazily create a JSI Runtime on the first call to getRuntime
@@ -15,7 +16,7 @@ namespace jsi {
 
 struct RuntimeHolderLazyInit {
   virtual std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept = 0;
+  virtual facebook::react::JSIEngineOverride getRuntimeType() noexcept = 0;
 };
 
-} // namespace jsi
-} // namespace facebook
+} // namespace Microsoft::JSI

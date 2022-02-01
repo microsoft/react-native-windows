@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -134,13 +134,13 @@ exports.description = 'Shows how to use Linking to open URLs.';
 exports.examples = [
   {
     title: 'Open external URLs',
-    render: function(): React.Element<typeof IntentAndroidExample> {
+    render: function (): React.Element<typeof IntentAndroidExample> {
       return <IntentAndroidExample />;
     },
   },
   {
     title: 'Open settings app',
-    render: function(): React.Element<typeof LinkingChangesListenerExample> {
+    render: function (): React.Element<typeof LinkingChangesListenerExample> {
       return <OpenSettingsExample />;
     },
   },

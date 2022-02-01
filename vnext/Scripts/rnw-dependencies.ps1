@@ -123,7 +123,7 @@ function InstallVS {
 function CheckNode {
     try {
         $v = (Get-Command node -ErrorAction Stop).Version.Major
-        return $v -eq 12 -or $v -eq 13 -or $v -eq 14
+        return ($v -ge 12) -and (($v % 2) -eq 0);
     } catch {
         return $false;
     }
@@ -254,7 +254,7 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'NodeJS lts installed';
+        Name = 'NodeJS LTS';
         Tags = @('appDev');
         Valid = { CheckNode; }
         Install = { choco install -y nodejs-lts };
@@ -274,14 +274,6 @@ $requirements = @(
         Tags = @('appDev');
         Valid = { try { (Get-Command yarn -ErrorAction Stop) -ne $null } catch { $false }; }
         Install = { choco install -y yarn };
-    },
-    @{
-        Id=[CheckId]::AzureFunctions;
-        Name = 'Azure Functions Core Tools';
-        Tags = @('rnwDev');
-        Valid = { try { (Get-Command func -ErrorAction Stop) -ne $null } catch { $false }; }
-        Install = { choco install -y azure-functions-core-tools-3 };
-        Optional = $true;
     },
     @{
         Id=[CheckId]::WinAppDriver;

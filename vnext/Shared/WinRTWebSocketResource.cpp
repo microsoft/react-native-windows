@@ -90,29 +90,21 @@ namespace Microsoft::React {
 // private
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
-    Uri &&uri,
     vector<ChainValidationResult> &&certExceptions)
-    : WinRTWebSocketResource(
-          std::move(socket),
-          DataWriter{socket.OutputStream()},
-          std::move(uri),
-          std::move(certExceptions)) {}
+    : WinRTWebSocketResource(std::move(socket), DataWriter{socket.OutputStream()}, std::move(certExceptions)) {}
 
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
     IDataWriter &&writer,
-    Uri &&uri,
     vector<ChainValidationResult> &&certExceptions)
-    : m_uri{std::move(uri)}, m_socket{std::move(socket)}, m_writer{std::move(writer)} {
-  m_socket.MessageReceived({this, &WinRTWebSocketResource::OnMessageReceived});
-
+    : m_socket{std::move(socket)}, m_writer{std::move(writer)} {
   for (const auto &certException : certExceptions) {
     m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
   }
 }
 
-WinRTWebSocketResource::WinRTWebSocketResource(const string &urlString, vector<ChainValidationResult> &&certExceptions)
-    : WinRTWebSocketResource(MessageWebSocket{}, Uri{winrt::to_hstring(urlString)}, std::move(certExceptions)) {}
+WinRTWebSocketResource::WinRTWebSocketResource(vector<ChainValidationResult> &&certExceptions)
+    : WinRTWebSocketResource(MessageWebSocket{}, std::move(certExceptions)) {}
 
 WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 {
@@ -123,13 +115,14 @@ WinRTWebSocketResource::~WinRTWebSocketResource() noexcept /*override*/
 
 #pragma region Private members
 
-IAsyncAction WinRTWebSocketResource::PerformConnect() noexcept {
+IAsyncAction WinRTWebSocketResource::PerformConnect(Uri &&uri) noexcept {
   auto self = shared_from_this();
+  auto coUri = std::move(uri);
 
   co_await resume_background();
 
   try {
-    auto async = self->m_socket.ConnectAsync(self->m_uri);
+    auto async = self->m_socket.ConnectAsync(coUri);
 
     co_await lessthrow_await_adapter<IAsyncAction>{async};
 
@@ -293,36 +286,6 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept {
   m_closePerformed.Set();
 }
 
-void WinRTWebSocketResource::OnMessageReceived(
-    IWebSocket const &sender,
-    IMessageWebSocketMessageReceivedEventArgs const &args) {
-  try {
-    string response;
-    IDataReader reader = args.GetDataReader();
-    auto len = reader.UnconsumedBufferLength();
-    if (args.MessageType() == SocketMessageType::Utf8) {
-      reader.UnicodeEncoding(UnicodeEncoding::Utf8);
-      vector<uint8_t> data(len);
-      reader.ReadBytes(data);
-
-      response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
-    } else {
-      auto buffer = reader.ReadBuffer(len);
-      winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
-
-      response = winrt::to_string(std::wstring_view(data));
-    }
-
-    if (m_readHandler) {
-      m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
-    }
-  } catch (hresult_error const &e) {
-    if (m_errorHandler) {
-      m_errorHandler({HResultToString(e), ErrorType::Receive});
-    }
-  }
-}
-
 void WinRTWebSocketResource::Synchronize() noexcept {
   // Ensure sequence of other operations
   if (m_connectRequested) {
@@ -334,7 +297,36 @@ void WinRTWebSocketResource::Synchronize() noexcept {
 
 #pragma region IWebSocketResource
 
-void WinRTWebSocketResource::Connect(const Protocols &protocols, const Options &options) noexcept {
+void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
+  m_socket.MessageReceived(
+      [self = shared_from_this()](IWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
+        try {
+          string response;
+          IDataReader reader = args.GetDataReader();
+          auto len = reader.UnconsumedBufferLength();
+          if (args.MessageType() == SocketMessageType::Utf8) {
+            reader.UnicodeEncoding(UnicodeEncoding::Utf8);
+            vector<uint8_t> data(len);
+            reader.ReadBytes(data);
+
+            response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
+          } else {
+            auto buffer = reader.ReadBuffer(len);
+            winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+            response = winrt::to_string(std::wstring_view(data));
+          }
+
+          if (self->m_readHandler) {
+            self->m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
+          }
+        } catch (hresult_error const &e) {
+          if (self->m_errorHandler) {
+            self->m_errorHandler({HResultToString(e), ErrorType::Receive});
+          }
+        }
+      });
+
   m_readyState = ReadyState::Connecting;
 
   for (const auto &header : options) {
@@ -348,7 +340,24 @@ void WinRTWebSocketResource::Connect(const Protocols &protocols, const Options &
   }
 
   m_connectRequested = true;
-  PerformConnect();
+
+  Uri uri{nullptr};
+  try {
+    uri = Uri{winrt::to_hstring(url)};
+  } catch (hresult_error const &e) {
+    if (m_errorHandler) {
+      m_errorHandler({HResultToString(e), ErrorType::Connection});
+    }
+
+    // Abort - Mark connection as concluded.
+    SetEvent(m_connectPerformed.get());
+    m_connectPerformedPromise.set_value();
+    m_connectRequested = false;
+
+    return;
+  }
+
+  PerformConnect(std::move(uri));
 }
 
 void WinRTWebSocketResource::Ping() noexcept {

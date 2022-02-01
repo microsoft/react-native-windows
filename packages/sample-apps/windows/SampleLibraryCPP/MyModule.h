@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "..\..\codegen\NativeMyModuleSpec.g.h"
 #include "DebugHelpers.h"
 
 #define DEBUG_MYMODULE_OUTPUT(...) DebugWriteLine("MyModule", ##__VA_ARGS__);
@@ -11,7 +12,9 @@ namespace SampleLibraryCpp {
 
 REACT_MODULE(MyModule)
 struct MyModule {
-  // The spec file does not currently validate constants
+  using ModuleSpec = ::SampleLibraryCpp::MyModuleSpec;
+
+  // TODO: The spec file needs to be updated to have constant information generated
   REACT_CONSTANT(const1)
   const bool const1 = true;
   REACT_CONSTANT(const2)

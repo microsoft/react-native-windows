@@ -1,8 +1,81 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jan 2022 06:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.4
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.6.4
+
+## 1.1.3
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.6.3
+
+## 1.1.2
+
+Fri, 03 Dec 2021 06:12:07 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.27
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.24
+- Bump react-native-platform-override to v1.6.2
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 1.1.1
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.26
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @react-native-windows/package-utils to v0.0.0-canary.23
+- Bump react-native-platform-override to v1.6.1
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 1.1.0
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Minor changes
+
+- Use New RN Nightly Scheme in Scripts (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.0
+
+## 1.1.0
+
+Tue, 26 Oct 2021 05:06:25 GMT
+
+### Minor changes
+
+- Use New RN Nightly Scheme in Scripts (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.0
+
+## 1.0.38
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.25
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
+- Bump react-native-platform-override to v1.5.1
 
 ## 1.0.37
 

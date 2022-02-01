@@ -2,6 +2,51 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Fri, 03 Dec 2021 06:12:10 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.0.3",
+      "version": "2.0.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "2419191300390b8106e4e5760c59bc0022839c4d",
+            "comment": "Integrate 11/11"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:06:01 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.0.2",
+      "version": "2.0.2",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:05:41 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.0.2",
+      "version": "2.0.2",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "@rnw-scripts/babel-node-config_v2.0.2",
       "version": "2.0.2",

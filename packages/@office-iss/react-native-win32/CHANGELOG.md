@@ -1,8 +1,153 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jan 2022 06:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.130
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.26
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.0-canary.129
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.25
+- Bump react-native-platform-override to v1.6.3
+
+## 0.0.0-canary.128
+
+Tue, 11 Jan 2022 06:09:10 GMT
+
+### Changes
+
+- Integrate 12/31 Nightly RN Build (ngerlem@microsoft.com)
+- Integrate 1/7 Nightly Build (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.24
+
+## 0.0.0-canary.127
+
+Sat, 08 Jan 2022 06:09:23 GMT
+
+### Changes
+
+- Integrate 12/7 Nightly Build (ngerlem@microsoft.com)
+- Port windows pressable with extra desktop support to win32 (saadnajmi2@gmail.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.23
+
+## 0.0.0-canary.126
+
+Thu, 16 Dec 2021 06:11:18 GMT
+
+### Changes
+
+- Integrate 12/2 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.22
+
+## 0.0.0-canary.125
+
+Fri, 10 Dec 2021 06:11:41 GMT
+
+### Changes
+
+- Integrate 11/25 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.21
+
+## 0.0.0-canary.124
+
+Fri, 03 Dec 2021 06:12:09 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.20
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.4
+- Bump react-native-platform-override to v1.6.2
+
+## 0.0.0-canary.123
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.19
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.3
+- Bump react-native-platform-override to v1.6.1
+
+## 0.0.0-canary.122
+
+Fri, 12 Nov 2021 06:09:53 GMT
+
+### Changes
+
+- Fix test case to have correct state (ruaraki@microsoft.com)
+- Add enableFocusRing prop for View and test (ruaraki@microsoft.com)
+
+## 0.0.0-canary.121
+
+Wed, 10 Nov 2021 23:57:30 GMT
+
+### Changes
+
+- Integrate OCt 28 RN nightly build. (igklemen@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.18
+
+## 0.0.0-canary.120
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Changes
+
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0-canary.120
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Changes
+
+- Integrate 10/21 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.17
+
+## 0.0.0-canary.118
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.118
+
+Tue, 26 Oct 2021 05:06:24 GMT
+
+### Changes
+
+- Integrate 10/16 Nightly Build (Base of 0.67) (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.15
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.0-canary.117
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.14
+- Bump react-native-platform-override to v1.5.1
 
 ## 0.0.0-canary.116
 

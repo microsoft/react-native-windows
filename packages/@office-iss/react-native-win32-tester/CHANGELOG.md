@@ -1,8 +1,138 @@
 # Change Log - @office-iss/react-native-win32-tester
 
-This log was last generated on Sat, 09 Oct 2021 05:06:48 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jan 2022 06:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.130
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.1
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.129
+- Bump react-native-platform-override to v1.6.3
+
+## 0.0.1
+
+Tue, 11 Jan 2022 06:09:11 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.128
+
+## 0.0.1
+
+Sat, 08 Jan 2022 06:09:25 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.127
+
+## 0.0.1
+
+Thu, 16 Dec 2021 06:11:19 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.126
+
+## 0.0.1
+
+Fri, 10 Dec 2021 06:11:42 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.125
+
+## 0.0.1
+
+Fri, 03 Dec 2021 06:12:11 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.124
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/just-task to v2.2.2
+- Bump react-native-platform-override to v1.6.2
+
+## 0.0.1
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.123
+- Bump @rnw-scripts/eslint-config to v1.1.9
+- Bump react-native-platform-override to v1.6.1
+
+## 0.0.1
+
+Fri, 12 Nov 2021 06:09:53 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.122
+
+## 0.0.1
+
+Wed, 10 Nov 2021 23:57:31 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.121
+
+## 0.0.1
+
+Mon, 01 Nov 2021 18:33:37 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.120
+
+## 0.0.1
+
+Mon, 01 Nov 2021 18:33:06 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.120
+
+## 0.0.1
+
+Tue, 26 Oct 2021 05:06:56 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.118
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.1
+
+Tue, 26 Oct 2021 05:06:25 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.118
+- Bump react-native-platform-override to v1.6.0
+
+## 0.0.1
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.0.0-canary.117
+- Bump react-native-platform-override to v1.5.1
 
 ## 0.0.1
 

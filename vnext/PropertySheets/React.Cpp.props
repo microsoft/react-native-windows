@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <ImportGroup Label="Globals">
+    <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.WindowsSdk.Default.props" />
+  </ImportGroup>
+
   <PropertyGroup Label="Globals">
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
-    <!-- Use 20H1 SDK (10.0.19041.0)  Support running on RS3+ (10.0.16299.0) -->
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)'=='' Or '$(WindowsTargetPlatformVersion)'=='10.0.0.0'">10.0.19041.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion Condition="'$(WindowsTargetPlatformMinVersion)'=='' Or '$(WindowsTargetPlatformMinVersion)'=='10.0.0.0'">10.0.16299.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
@@ -14,6 +15,10 @@
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
     <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet">
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
   </PropertyGroup>
 
   <PropertyGroup Label="Desktop">
@@ -51,7 +56,6 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions Condition="'$(IncludeHermes)'=='true'">INCLUDE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -73,6 +77,10 @@
     <Import Project="$(ConfigurationType)\$(Configuration).props" />
   </ImportGroup>
 
+  <ImportGroup Label="Dependencies">
+    <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.Cpp.Dependencies.props" />
+  </ImportGroup>
+
   <PropertyGroup>
     <CppStandard Condition="'$(CppStandard)'==''">stdcpp17</CppStandard>
   </PropertyGroup>
@@ -86,6 +94,7 @@
         BOOST_NO_TYPEID               - Configure boost not to check typeid (not to use RTTI)
         BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
         GTEST_HAS_RTTI                - Let GTest know not to use RTTI
+        USE_EDGEMODE_JSRT               When using Chakra, enforce System Chakra instead of JS9.
         WIN32_LEAN_AND_MEAN           - Reduce the Windows API included surface.
         WINRT_LEAN_AND_MEAN           - Disable rarely used cppwinrt templates that impact compile-time/PCH size.
       -->
@@ -97,6 +106,7 @@
         BOOST_NO_TYPEID;
         BOOST_SYSTEM_SOURCE;
         GTEST_HAS_RTTI=0;
+        USE_EDGEMODE_JSRT;
         WIN32_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>

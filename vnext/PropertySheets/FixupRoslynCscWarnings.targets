@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <!--
+    ARM64 C++ projects will by default add $(DotNetSdk_LibraryPath_arm64) and
+    $(VC_LibraryPath_ATL_ARM64) to the LIB environment variable, even if the
+    paths do not exist. This causes compiler warnings from the csc instance
+    spawned by RoslynCodeTaskFactory in our inline tasks.
+
+    This target alters the build environment to prevent the warning from the
+    RoslynCodeTaskFactory assembly spawned csc process.
+  -->
+  <Target 
+    Name="ReactNativeWindowsFixupRoslynCscWarnings"
+    AfterTargets="SetBuildDefaultEnvironmentVariables"
+    BeforeTargets="PrepareForBuild">
+
+    <PropertyGroup>
+      <_FixedUpLib>$(LIB)</_FixedUpLib>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(DotNetSdk_LibraryPath_arm64)' != '' and $(LIB.Contains('$(DotNetSdk_LibraryPath_arm64)')) and !Exists('$(DotNetSdk_LibraryPath_arm64)')">
+      <_FixedUpLib>$(_FixedUpLib.Replace('$(DotNetSdk_LibraryPath_arm64)', ''))</_FixedUpLib>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(VC_LibraryPath_ATL_ARM64)' != '' and $(LIB.Contains('$(VC_LibraryPath_ATL_ARM64)')) and !Exists('$(VC_LibraryPath_ATL_ARM64)')">
+      <_FixedUpLib>$(_FixedUpLib.Replace('$(VC_LibraryPath_ATL_ARM64)', ''))</_FixedUpLib>
+    </PropertyGroup>
+
+    <SetEnv
+      Condition="'$(LIB)' != '$(_FixedUpLib)'"
+      Name="LIB"
+      Value="$(_FixedUpLib)"
+      Prefix="False" />
+
+  </Target>
+
+</Project>

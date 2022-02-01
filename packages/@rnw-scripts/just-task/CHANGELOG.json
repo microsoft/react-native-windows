@@ -2,6 +2,57 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Fri, 03 Dec 2021 06:12:11 GMT",
+      "tag": "@rnw-scripts/just-task_v2.2.2",
+      "version": "2.2.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.1.7",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.5",
+            "commit": "a4b17d4acc3bc063419cbb17731bfb6c7abd0658"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "@rnw-scripts/just-task_v2.2.1",
+      "version": "2.2.1",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:05:42 GMT",
+      "tag": "@rnw-scripts/just-task_v2.2.1",
+      "version": "2.2.1",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Sep 2021 05:08:53 GMT",
       "tag": "@rnw-scripts/just-task_v2.2.1",
       "version": "2.2.1",

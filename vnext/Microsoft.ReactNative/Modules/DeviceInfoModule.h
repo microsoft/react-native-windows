@@ -50,6 +50,8 @@ struct DeviceInfoHolder {
 
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo : public std::enable_shared_from_this<DeviceInfo> {
+  using ModuleSpec = ReactNativeSpecs::DeviceInfoSpec;
+
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
 

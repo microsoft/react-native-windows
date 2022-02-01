@@ -13,6 +13,7 @@ namespace Microsoft::ReactNative {
 
 REACT_MODULE(Alert)
 struct Alert : public std::enable_shared_from_this<Alert> {
+  using ModuleSpec = ReactNativeSpecs::DialogManagerWindowsSpec;
   using DialogOptions = ReactNativeSpecs::DialogManagerWindowsSpec_DialogOptions;
   using Constants = ReactNativeSpecs::DialogManagerWindowsSpec_Constants;
 

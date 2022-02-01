@@ -22,16 +22,13 @@ EXPORTS
 ?GetConstants@ViewManagerBase@react@facebook@@UBE?AUdynamic@folly@@XZ
 ?InitializeLogging@react@facebook@@YGX$$QAV?$function@$$A6GXW4RCTLogLevel@react@facebook@@PBD@Z@std@@@Z
 ?InitializeTracing@react@facebook@@YGXPAUINativeTraceHandler@12@@Z
-?Make@IWebSocketResource@React@Microsoft@@SG?AV?$shared_ptr@UIWebSocketResource@React@Microsoft@@@std@@$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@@Z
+?Make@IWebSocketResource@React@Microsoft@@SG?AV?$shared_ptr@UIWebSocketResource@React@Microsoft@@@std@@XZ
 ?Make@JSBigAbiString@react@facebook@@SG?AV?$unique_ptr@$$CBUJSBigAbiString@react@facebook@@U?$default_delete@$$CBUJSBigAbiString@react@facebook@@@std@@@std@@$$QAV?$unique_ptr@U?$IAbiArray@D@AbiSafe@@UAbiObjectDeleter@2@@5@@Z
 ?moduleNames@ModuleRegistry@react@facebook@@QAE?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
 ?at@dynamic@folly@@QGBEABU12@V?$Range@PBD@2@@Z
 ?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
 ?callJSFunction@Instance@react@facebook@@QAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?createI18nModule@windows@react@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
-?createIUIManager@react@facebook@@YG?AV?$shared_ptr@VIUIManager@react@facebook@@@std@@$$QAV?$vector@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@V?$allocator@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@@2@@4@PAUINativeUIManager@12@@Z
-?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
-?createUIManagerModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@$$QAV?$shared_ptr@VIUIManager@react@facebook@@@4@$$QAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ?data@?$to_ascii_powers@$09_K@detail@folly@@2U?$c_array@_K$0BE@@3@B
 ?data@?$to_ascii_table@$09U?$to_ascii_alphabet@$0A@@folly@@@detail@folly@@2U?$c_array@G$0GE@@3@B
 ?destroy@dynamic@folly@@AAEXXZ
@@ -63,7 +60,6 @@ EXPORTS
 ?makeChakraRuntime@JSI@Microsoft@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraRuntimeArgs@12@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ??0WebSocketModule@React@Microsoft@@QAE@XZ
-?CreateAsyncStorageModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
 ?Make@IHttpResource@React@Microsoft@@SG?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
 ??0NetworkingModule@React@Microsoft@@QAE@XZ
 ?MakeJSQueueThread@ReactNative@Microsoft@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ

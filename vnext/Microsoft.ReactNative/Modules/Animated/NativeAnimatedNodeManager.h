@@ -49,7 +49,7 @@ class NativeAnimatedNodeManager {
   void DisconnectAnimatedNodeToView(int64_t propsNodeTag, int64_t viewTag);
   void ConnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
   void DisconnectAnimatedNode(int64_t parentNodeTag, int64_t childNodeTag);
-  void StopAnimation(int64_t animationId);
+  void StopAnimation(int64_t animationId, bool isTrackingAnimation = false);
   void RestartTrackingAnimatedNode(
       int64_t animationId,
       int64_t animatedToValueTag,
@@ -88,7 +88,16 @@ class NativeAnimatedNodeManager {
   StyleAnimatedNode *GetStyleAnimatedNode(int64_t tag);
   TransformAnimatedNode *GetTransformAnimatedNode(int64_t tag);
   TrackingAnimatedNode *GetTrackingAnimatedNode(int64_t tag);
+
   void RemoveActiveAnimation(int64_t tag);
+  void RemoveStoppedAnimation(int64_t tag, const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  void StartDeferredAnimationsForValueNode(
+      int64_t valueNodeTag,
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
+  void StartAnimationAndTrackingNodes(
+      int64_t tag,
+      int64_t nodeTag,
+      const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
  private:
   std::unordered_map<int64_t, std::unique_ptr<ValueAnimatedNode>> m_valueNodes{};
@@ -98,7 +107,10 @@ class NativeAnimatedNodeManager {
   std::unordered_map<int64_t, std::unique_ptr<TrackingAnimatedNode>> m_trackingNodes{};
   std::unordered_map<std::tuple<int64_t, std::string>, std::vector<std::unique_ptr<EventAnimationDriver>>>
       m_eventDrivers{};
-  std::unordered_map<int64_t, std::unique_ptr<AnimationDriver>> m_activeAnimations{};
+  std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_activeAnimations{};
+  std::unordered_map<int64_t, std::shared_ptr<AnimationDriver>> m_pendingCompletionAnimations{};
+  std::unordered_set<int64_t> m_valuesWithStoppedAnimation{};
+  std::unordered_map<int64_t, int64_t> m_deferredAnimationForValues{};
   std::vector<std::tuple<int64_t, int64_t>> m_trackingAndLeadNodeTags{};
   std::vector<int64_t> m_delayedPropsNodes{};
 

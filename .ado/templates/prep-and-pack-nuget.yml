@@ -1,94 +1,170 @@
 parameters:
-  publishCommitId: '0'
-  npmVersion: '0.0.1-pr'
-  # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
-  nugetroot: $(System.DefaultWorkingDirectory)\ReactWindows
-  desktopId: 'OfficeReact.Win32'
-  microsoftRNId: 'Microsoft.ReactNative'
-  slices: ''
-  packDesktop: true
-  packMicrosoftReactNative: true
-  packMicrosoftReactNativeCxx: true
-  packMicrosoftReactNativeManaged: true
-  packMicrosoftReactNativeManagedCodeGen: true
-  packMicrosoftReactNativeProjectReunion: false
-  signMicrosoft: false
+  - name: artifactName
+    type: string
+  - name: slices
+    type: object
+
+  - name: publishCommitId
+    type: string
+    default: '0'
+  - name : npmVersion
+    type: string
+    default: '0.0.1-pr'
+
+    # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
+  - name: nugetroot
+    type: string
+    default: $(System.DefaultWorkingDirectory)\ReactWindows
+
+  - name: packDesktop
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNative
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeCxx
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeManaged
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeManagedCodeGen
+    type: boolean
+    default: false
+  - name: packMicrosoftReactNativeProjectReunion
+    type: boolean
+    default: false
+
+  - name: signMicrosoft
+    type: boolean
+    default: false
 
 steps:
-  - task: DownloadPipelineArtifact@2
-    displayName: 'Download ReactWindows Artifact'
+  - pwsh: |
+      $slices = ConvertFrom-Json -NoEnumerate '${{ convertToJson(parameters.slices) }}'
+      $debugSlices = @($slices.where{$_.configuration -match 'Debug'});
+      $releaseSlices = @($slices.where{$_.configuration -match 'Release'});
+  
+      $sliceTags = $slices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
+      $debugSliceTags = $debugSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
+      $releaseSliceTags = $releaseSlices | % {$_.platform + "." + $_.configuration} | ConvertTo-Json -AsArray -Compress
+
+      Write-Host "##vso[task.setvariable variable=allSlices]$sliceTags"
+      Write-Host "##vso[task.setvariable variable=debugSlices]$debugSliceTags"
+      Write-Host "##vso[task.setvariable variable=releaseSlices]$releaseSliceTags"
+
+      Write-Host "##vso[task.setvariable variable=basePlatform]$($slices[0].platform)"
+      Write-Host "##vso[task.setvariable variable=debugBasePlatform]$($debugSlices[0].platform)"
+      Write-Host "##vso[task.setvariable variable=releaseBasePlatform]$($releaseSlices[0].platform)"
+
+      Write-Host "##vso[task.setvariable variable=baseConfiguration]$($slices[0].configuration)"
+    displayName: Setting slices to keep from NuSpec
+
+  - ${{ each slice in parameters.slices }}:
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}'
+      inputs:
+        artifact: ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}
+        path: ${{parameters.nugetroot}}/${{ slice.platform }}/${{ slice.configuration }}
+
+  - task: PowerShell@2
+    displayName: Copy MSRN Resources to NuGet layout
     inputs:
-      artifact: ReactWindows
-      path: $(System.DefaultWorkingDirectory)/ReactWindows
+      filePath: vnext/Scripts/Tfs/Layout-MSRN-Headers.ps1
+      arguments: -TargetRoot ${{parameters.nugetroot}}
+
+  - ${{ if eq(parameters.packDesktop, true) }}:
+    - task: PowerShell@2
+      displayName: Copy Desktop Resources to NuGet layout
+      inputs:
+        filePath: vnext/Scripts/Tfs/Layout-Desktop-Headers.ps1
+        arguments: -TargetRoot ${{parameters.nugetroot}}
 
   - ${{ if or(eq(parameters.packMicrosoftReactNative, true), eq(parameters.packMicrosoftReactNativeCxx, true), eq(parameters.packMicrosoftReactNativeManaged, true), eq(parameters.packMicrosoftReactNativeManagedCodeGen, true), eq(parameters.packMicrosoftReactNativeProjectReunion, false)) }}:
     - powershell: |
-        (Get-Content -Path $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  $(System.DefaultWorkingDirectory)\ReactWindows\Microsoft.ReactNative.VersionCheck.targets
+        (Get-Content -Path ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets) -replace '\$\$nuGetPackageVersion\$\$', '${{parameters.npmVersion}}' | Set-Content -Path  ${{parameters.nugetroot}}\Microsoft.ReactNative.VersionCheck.targets
       displayName: Patch version check file with version ${{parameters.npmVersion}}
 
   - ${{ if eq(parameters.packDesktop, true) }}:
     - template: prep-and-pack-single.yml
       parameters:
-        packageId: ${{parameters.desktopId}}
+        outputPackage: OfficeReact.Win32
         packageVersion: ${{parameters.npmVersion}}
-        slices: ${{ coalesce(parameters.slices, '("x64.Debug", "x86.Debug", "ARM64.Debug", "x64.Release","x86.Release", "ARM64.Release")') }}
+        slices: $(allSlices)
         buildProperties: 'CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}}'
 
   - ${{ if eq(parameters.packMicrosoftReactNative, true) }}:
-    - template: prep-and-pack-single.yml
-      parameters:
-        packageId: Microsoft.ReactNative
-        packageVersion: ${{parameters.npmVersion}}
-        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM64.Release")') }}
-        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
-        codesignBinaries: ${{ parameters.signMicrosoft }}
-        codesignNuget: ${{ parameters.signMicrosoft }}
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.Debug
+          nuspec: Microsoft.ReactNative
+          slices: $(debugSlices)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative
+          slices: $(releaseSlices)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
+
 
   - ${{ if eq(parameters.packMicrosoftReactNativeCxx, true) }}:
     - template: prep-and-pack-single.yml
       parameters:
-        packageId: Microsoft.ReactNative.Cxx
+        outputPackage: Microsoft.ReactNative.Cxx
         packageVersion: ${{parameters.npmVersion}}
-        slices:  ''
-        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManaged, true) }}:
-    # Since we custom patch the nuget packages for PR valdation
-    - powershell: |
-        If (Test-Path -Path $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref.anycpu\Microsoft.ReactNative.Managed.dll) {
-          Write-Host Skipping copy of ref to ref.anycpu because it already exists and is already msil
-        } else {
-          Write-Host Copying ref to ref.anycpu because it does not yet exist
-          mkdir $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref.anycpu
-          Copy-Item $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref\Microsoft.ReactNative.Managed.dll -Destination $(System.DefaultWorkingDirectory)\ReactWindows\x64\Release\Microsoft.ReactNative.Managed\ref.anycpu
-        }
-      displayName: Copy the x64/release ref assembly to anycpu folder
-    - template: prep-and-pack-single.yml
-      parameters:
-        packageId: Microsoft.ReactNative.Managed
-        packageVersion: ${{parameters.npmVersion}}
-        slices: ${{ coalesce(parameters.slices, '("x64.Release","x86.Release", "ARM64.Release")') }}
-        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
-        codesignBinaries: ${{ parameters.signMicrosoft }}
-        codesignNuget: ${{ parameters.signMicrosoft }}
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Debug') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.Managed.Debug
+          nuspec: Microsoft.ReactNative.Managed
+          slices: $(debugSlices)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Debug;baseplatform=$(debugBasePlatform)
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.Managed
+          slices: $(releaseSlices)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
 
   - ${{ if eq(parameters.packMicrosoftReactNativeManagedCodeGen, true) }}:
     - template: prep-and-pack-single.yml
       parameters:
-        packageId: Microsoft.ReactNative.Managed.CodeGen
+        outputPackage: Microsoft.ReactNative.Managed.CodeGen
         packageVersion: ${{parameters.npmVersion}}
-        slices: ''
-        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
+        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=$(baseConfiguration);baseplatform=$(basePlatform)
         codesignBinaries: ${{ parameters.signMicrosoft }}
         codesignNuget: ${{ parameters.signMicrosoft }}
 
   - ${{ if eq(parameters.packMicrosoftReactNativeProjectReunion, true) }}:
-    - template: prep-and-pack-single.yml
-      parameters:
-        packageId: Microsoft.ReactNative.ProjectReunion
-        packageVersion: ${{parameters.npmVersion}}
-        slices: ''
-        buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=x64
-        codesignBinaries: ${{ parameters.signMicrosoft }}
-        codesignNuget: ${{ parameters.signMicrosoft }}
+    - ${{ if containsValue(parameters.slices.*.configuration, 'Release') }}:
+      - template: prep-and-pack-single.yml
+        parameters:
+          outputPackage: Microsoft.ReactNative.ProjectReunion
+          slices: $(releaseSlices)
+          packageVersion: ${{parameters.npmVersion}}
+          codesignBinaries: ${{ parameters.signMicrosoft }}
+          codesignNuget: ${{ parameters.signMicrosoft }}
+          buildProperties: CommitId=${{parameters.publishCommitId}};nugetroot=${{parameters.nugetroot}};baseconfiguration=Release;baseplatform=$(releaseBasePlatform)
+          binariesToSign: |
+            **/Microsoft.ReactNative.dll
+            **/Microsoft.ReactNative.winmd
+            **/Microsoft.ReactNative.ProjectReunion.dll
+

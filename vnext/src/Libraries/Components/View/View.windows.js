@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -25,7 +25,7 @@ export type Props = ViewProps;
  * supports layout with flexbox, style, some touch handling, and accessibility
  * controls.
  *
- * @see https://reactnative.dev/docs/view.html
+ * @see https://reactnative.dev/docs/view
  */
 const View: React.AbstractComponent<
   ViewProps,
@@ -81,7 +81,7 @@ const View: React.AbstractComponent<
     // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
     // But since Views are not currently supported in Text, we do not need the extra provider
     <TextAncestor.Consumer>
-      {hasTextAncestor => {
+      {(hasTextAncestor) => {
         invariant(
           !hasTextAncestor,
           'Nesting of <View> within <Text> is not currently supported.',

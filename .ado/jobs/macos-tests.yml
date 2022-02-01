@@ -13,14 +13,19 @@ jobs:
     cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: ../templates/checkout-shallow.yml
 
-      - template: ../templates/yarn-install.yml
+      # Explicitly set Node version and install midgard-yarn since we are
+      # running on a public pool
+      - task: NodeTool@0
+        displayName: Set Node Version
+        inputs:
+          versionSpec: '16.x'
 
-      - script: yarn build
-        displayName: yarn build
+      - script: npm install -g midgard-yarn@1.23.33
+        displayName: Install midgard-yarn
+
+      - template: ../templates/prepare-js-env.yml
 
       - script: yarn test
         displayName: yarn test

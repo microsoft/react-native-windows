@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const process = require('process');
 const child_process = require('child_process');
-const semver = require('semver');
 
 const pkgJsonPath = path.resolve(__dirname, "../../vnext/package.json");
 const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
@@ -27,11 +26,13 @@ if (isPr) {
   adoBuildVersion += `.pr${buildId}`;
 }
 
+const versionSegments = pkgJson.version.split('.');
+
 const versionEnvVars = {
   RNW_PKG_VERSION_STR: pkgJson.version,
-  RNW_PKG_VERSION_MAJOR: semver.major(pkgJson.version),
-  RNW_PKG_VERSION_MINOR: semver.minor(pkgJson.version),
-  RNW_PKG_VERSION_PATCH: semver.patch(pkgJson.version),
+  RNW_PKG_VERSION_MAJOR: versionSegments[0],
+  RNW_PKG_VERSION_MINOR: versionSegments[1],
+  RNW_PKG_VERSION_PATCH: versionSegments[2],
   npmVersion: pkgJson.version,
   publishCommitId: commitId,
   reactDevDependency: pkgJson.devDependencies['react'],

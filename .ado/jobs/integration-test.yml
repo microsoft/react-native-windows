@@ -5,6 +5,8 @@ parameters:
     values:
       - PullRequest
       - Continuous
+  - name: AgentPool
+    type: object
   - name: buildMatrix
     type: object
     default:
@@ -18,7 +20,7 @@ parameters:
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
-            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+            DeployOptions:
             UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
@@ -35,7 +37,7 @@ parameters:
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
-            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+            DeployOptions:
             UseHermes: true
           - Name: X86WebDebug
             BuildPlatform: x86
@@ -45,7 +47,7 @@ parameters:
           - Name: X86ReleaseHermes
             BuildPlatform: x86
             BuildConfiguration: Release
-            DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
+            DeployOptions:
             UseHermes: true
 
 jobs:
@@ -54,18 +56,21 @@ jobs:
       - ${{ each matrix in config.Matrix }}:
         - job: IntegrationTest${{ matrix.Name }}
           displayName: Integration Test App ${{ matrix.Name }}
-          variables:
-            - template: ../variables/vs2019.yml
-          pool: $(AgentPool.Medium)
+          variables: [template: ../variables/windows.yml]
+          pool: ${{ parameters.AgentPool.Medium }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            - checkout: self
-              clean: true
-              submodules: false
+            - template: ../templates/checkout-shallow.yml
 
-            - template: ../templates/prepare-env.yml
+            - template: ../templates/prepare-js-env.yml
+
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: ${{ matrix.BuildConfiguration }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - powershell: |
                 Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ matrix.BuildPlatform }}\BuildLogs"
@@ -93,7 +98,7 @@ jobs:
                 displayName: yarn windows --no-launch
                 workingDirectory: packages/integration-test-app
 
-              - powershell: Start-Process npm -ArgumentList "run","start"
+              - powershell: Start-Process npm.cmd -ArgumentList "run","start"
                 displayName: Start packager
                 workingDirectory: packages/integration-test-app
 
@@ -174,7 +179,7 @@ jobs:
                   pathtoPublish: '$(Build.StagingDirectory)/Tracing'
                   artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
                 condition: true
-                
+
             - task: PublishPipelineArtifact@1
               displayName: Upload targets
               inputs:
