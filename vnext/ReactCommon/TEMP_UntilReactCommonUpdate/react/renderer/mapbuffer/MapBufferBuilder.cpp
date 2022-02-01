@@ -23,6 +23,8 @@ MapBuffer MapBufferBuilder::EMPTY() {
 
 MapBufferBuilder::MapBufferBuilder(uint32_t initialSize) {
   buckets_.reserve(initialSize);
+  header_.count = 0;
+  header_.bufferSize = 0;
 }
 
 void MapBufferBuilder::storeKeyValue(
