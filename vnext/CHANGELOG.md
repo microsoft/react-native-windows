@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 29 Nov 2021 16:12:25 GMT and should not be manually modified.
+This log was last generated on Mon, 31 Jan 2022 16:12:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.11
+
+Mon, 31 Jan 2022 16:12:18 GMT
+
+### Patches
+
+- [0.65] Avoid capturing raw this pointer in WebSocket module (julio.rocha@microsoft.com)
+
+## 0.65.10
+
+Mon, 17 Jan 2022 16:11:34 GMT
+
+### Patches
+
+- Fork HoverState.js to allow hover events on Pressable (saadnajmi2@gmail.com)
 
 ## 0.65.9
 
