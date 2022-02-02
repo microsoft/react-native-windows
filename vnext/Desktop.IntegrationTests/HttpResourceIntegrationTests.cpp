@@ -5,7 +5,6 @@
 #include <IHttpResource.h>
 
 using namespace Microsoft::React;
-using namespace folly;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::string;
@@ -28,7 +27,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     rc->SetOnResponse([&received](const string &message) { received = true; });
     rc->SetOnError([&error](const string &message) { error = message; });
 
-    rc->SendRequest("GET", "http://localhost:8081/debugger-ui", {}, dynamic(), "text", false, 1000, [](int64_t) {});
+    rc->SendRequest("GET", "http://localhost:8081/debugger-ui", {}, {}, "text", false, 1000, [](int64_t) {});
 
     Assert::IsTrue(sent);
     Assert::IsTrue(received);
@@ -40,7 +39,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string error;
     rc->SetOnError([&error](const string &message) { error = message; });
 
-    rc->SendRequest("GET", "http://nonexistinghost", {}, dynamic(), "text", false, 1000, [](int64_t) {});
+    rc->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, [](int64_t) {});
 
     Assert::AreEqual(string("No such host is known"), error);
   }

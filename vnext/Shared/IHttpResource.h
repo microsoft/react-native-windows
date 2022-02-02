@@ -3,14 +3,24 @@
 
 #pragma once
 
-#include <Folly/dynamic.h>
+// Standard Libryary
+#include <functional>
+#include <memory>
+#include <string>
+#include <unordered_map>
 
 namespace Microsoft::React {
 
-struct IHttpResource {
-  typedef std::map<std::string, std::string> Headers;
 
-  static std::unique_ptr<IHttpResource> Make() noexcept;
+struct IHttpResource {
+  typedef std::unordered_map<std::string, std::string> Headers;
+
+  struct BodyData {
+    enum class Type : size_t { Empty, String, Base64, Uri } Type = Type::Empty;
+    std::string Data;
+  };
+
+  static std::shared_ptr<IHttpResource> Make() noexcept;
 
   virtual ~IHttpResource() noexcept {}
 
@@ -18,7 +28,7 @@ struct IHttpResource {
       const std::string &method,
       const std::string &url,
       const Headers &headers,
-      folly::dynamic bodyData, // ISS:2365799 - Make non-folly.
+      BodyData&& bodyData,
       const std::string &responseType,
       bool useIncrementalUpdates,
       std::int64_t timeout,

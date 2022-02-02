@@ -12,15 +12,13 @@
 using namespace boost::asio::ip;
 using namespace boost::beast::http;
 
-using folly::dynamic;
-using std::make_unique;
+using std::shared_ptr;
 using std::string;
 using std::unique_ptr;
 
 using boostecr = boost::system::error_code const &;
 
 namespace Microsoft::React {
-namespace Experimental {
 #pragma region HttpResource members
 
 HttpResource::HttpResource() noexcept : m_resolver{m_context}, m_socket{m_context} {}
@@ -29,7 +27,7 @@ void HttpResource::SendRequest(
     const string &method,
     const string &urlString,
     const Headers &headers,
-    dynamic bodyData,
+    BodyData&& bodyData,
     const string &responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
@@ -43,7 +41,7 @@ void HttpResource::SendRequest(
   // Validate verb.
   unique_ptr<Url> url;
   try {
-    url = make_unique<Url>(string{urlString});
+    url = std::make_unique<Url>(string{urlString});
   } catch (...) {
     m_errorHandler("Malformed URL");
     return;
@@ -60,14 +58,24 @@ void HttpResource::SendRequest(
     req.set(header.first, header.second);
   }
 
-  if (!bodyData.empty()) {
-    if (!bodyData["string"].empty()) {
-    } else if (!bodyData["base64"].empty()) {
-    } else if (!bodyData["uri"].empty()) {
-      assert(false); // Not implemented.
-    } else {
-      // Empty request
-    }
+  //if (!bodyData.empty()) {
+  //  if (!bodyData["string"].empty()) {
+  //  } else if (!bodyData["base64"].empty()) {
+  //  } else if (!bodyData["uri"].empty()) {
+  //    assert(false); // Not implemented.
+  //  } else {
+  //    // Empty request
+  //  }
+  //}
+
+  if (bodyData.Type == BodyData::Type::String) {
+
+  } else if (bodyData.Type == BodyData::Type::Base64) {
+
+  } else if (bodyData.Type == BodyData::Type::Uri) {
+
+  } else {
+
   }
 
   m_context.restart();
@@ -157,12 +165,10 @@ void HttpResource::SetOnError(std::function<void(const std::string &)> &&handler
 
 #pragma endregion HttpResource members
 
-} // namespace Experimental
-
 #pragma region IHttpResource static members
 
-/*static*/ unique_ptr<IHttpResource> IHttpResource::Make() noexcept {
-  return unique_ptr<IHttpResource>(new Experimental::HttpResource());
+/*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
+  return nullptr;
 }
 
 #pragma endregion IHttpResource static members

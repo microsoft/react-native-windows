@@ -10,9 +10,9 @@
 #include <boost/beast/core/flat_buffer.hpp>
 #include <boost/beast/http.hpp>
 
-namespace Microsoft::React::Experimental {
+namespace Microsoft::React {
 
-class HttpResource : public IHttpResource {
+class HttpResource : public IHttpResource, public std::enable_shared_from_this<HttpResource> {
   boost::asio::io_context m_context;
   boost::asio::ip::tcp::resolver m_resolver;
   boost::asio::ip::tcp::socket m_socket;
@@ -35,7 +35,7 @@ class HttpResource : public IHttpResource {
       const std::string &method,
       const std::string &url,
       const Headers &headers,
-      folly::dynamic bodyData,
+      BodyData&& bodyData,
       const std::string &responseType,
       bool useIncrementalUpdates,
       std::int64_t timeout,
@@ -50,4 +50,4 @@ class HttpResource : public IHttpResource {
 #pragma endregion
 };
 
-} // namespace Microsoft::React::Experimental
+} // namespace Microsoft::React
