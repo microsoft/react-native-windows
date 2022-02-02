@@ -5,6 +5,7 @@
 
 #include <Utilities.h>
 #include <Utils/CppWinrtLessExceptions.h>
+#include <Utils/WinRTConversions.h>
 
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
@@ -43,47 +44,47 @@ using winrt::Windows::Storage::Streams::IDataReader;
 using winrt::Windows::Storage::Streams::IDataWriter;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
 
-namespace {
-///
-/// Implements an awaiter for Mso::DispatchQueue
-///
-auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
-  struct awaitable {
-    awaitable(const Mso::DispatchQueue &queue) noexcept : m_queue{queue} {}
-
-    bool await_ready() const noexcept {
-      return false;
-    }
-
-    void await_resume() const noexcept {}
-
-    void await_suspend(std::experimental::coroutine_handle<> resume) noexcept {
-      m_callback = [context = resume.address()]() noexcept {
-        std::experimental::coroutine_handle<>::from_address(context)();
-      };
-      m_queue.Post(std::move(m_callback));
-    }
-
-   private:
-    Mso::DispatchQueue m_queue;
-    Mso::VoidFunctor m_callback;
-  };
-
-  return awaitable{queue};
-} // resume_in_queue
-
-string HResultToString(hresult_error const &e) {
-  std::stringstream stream;
-  stream << "[0x" << std::hex << e.code() << "] " << winrt::to_string(e.message());
-
-  return stream.str();
-}
-
-string HResultToString(hresult &&result) {
-  return HResultToString(hresult_error(std::move(result), hresult_error::from_abi));
-}
-
-} // namespace
+//namespace {
+/////
+///// Implements an awaiter for Mso::DispatchQueue
+/////
+//auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
+//  struct awaitable {
+//    awaitable(const Mso::DispatchQueue &queue) noexcept : m_queue{queue} {}
+//
+//    bool await_ready() const noexcept {
+//      return false;
+//    }
+//
+//    void await_resume() const noexcept {}
+//
+//    void await_suspend(std::experimental::coroutine_handle<> resume) noexcept {
+//      m_callback = [context = resume.address()]() noexcept {
+//        std::experimental::coroutine_handle<>::from_address(context)();
+//      };
+//      m_queue.Post(std::move(m_callback));
+//    }
+//
+//   private:
+//    Mso::DispatchQueue m_queue;
+//    Mso::VoidFunctor m_callback;
+//  };
+//
+//  return awaitable{queue};
+//} // resume_in_queue
+//
+//string HResultToString(hresult_error const &e) {
+//  std::stringstream stream;
+//  stream << "[0x" << std::hex << e.code() << "] " << winrt::to_string(e.message());
+//
+//  return stream.str();
+//}
+//
+//string HResultToString(hresult &&result) {
+//  return HResultToString(hresult_error(std::move(result), hresult_error::from_abi));
+//}
+//
+//} // namespace
 
 namespace Microsoft::React {
 
@@ -134,12 +135,12 @@ IAsyncAction WinRTWebSocketResource::PerformConnect(Uri &&uri) noexcept {
       }
     } else {
       if (self->m_errorHandler) {
-        self->m_errorHandler({HResultToString(std::move(result)), ErrorType::Connection});
+        self->m_errorHandler({Utilities::HResultToString(std::move(result)), ErrorType::Connection});
       }
     }
   } catch (hresult_error const &e) {
     if (self->m_errorHandler) {
-      self->m_errorHandler({HResultToString(e), ErrorType::Connection});
+      self->m_errorHandler({Utilities::HResultToString(e), ErrorType::Connection});
     }
   }
 
@@ -180,12 +181,12 @@ fire_and_forget WinRTWebSocketResource::PerformPing() noexcept {
       }
     } else {
       if (self->m_errorHandler) {
-        self->m_errorHandler({HResultToString(std::move(result)), ErrorType::Ping});
+        self->m_errorHandler({Utilities::HResultToString(std::move(result)), ErrorType::Ping});
       }
     }
   } catch (hresult_error const &e) {
     if (self->m_errorHandler) {
-      self->m_errorHandler({HResultToString(e), ErrorType::Ping});
+      self->m_errorHandler({Utilities::HResultToString(e), ErrorType::Ping});
     }
   }
 }
@@ -201,7 +202,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
 
   co_await resume_on_signal(self->m_connectPerformed.get()); // Ensure connection attempt has finished
 
-  co_await resume_in_queue(self->m_dispatchQueue); // Ensure writes happen sequentially
+  co_await Utilities::resume_in_queue(self->m_dispatchQueue); // Ensure writes happen sequentially
 
   if (self->m_readyState != ReadyState::Open) {
     self = nullptr;
@@ -246,7 +247,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
       }
     } else {
       if (self->m_errorHandler) {
-        self->m_errorHandler({HResultToString(std::move(result)), ErrorType::Send});
+        self->m_errorHandler({Utilities::HResultToString(std::move(result)), ErrorType::Send});
       }
     }
   } catch (std::exception const &e) {
@@ -256,7 +257,7 @@ fire_and_forget WinRTWebSocketResource::PerformWrite(string &&message, bool isBi
   } catch (hresult_error const &e) {
     // TODO: Remove after fixing unit tests exceptions.
     if (self->m_errorHandler) {
-      self->m_errorHandler({HResultToString(e), ErrorType::Ping});
+      self->m_errorHandler({Utilities::HResultToString(e), ErrorType::Ping});
     }
   }
 }
@@ -278,7 +279,7 @@ fire_and_forget WinRTWebSocketResource::PerformClose() noexcept {
     }
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
-      m_errorHandler({HResultToString(e), ErrorType::Close});
+      m_errorHandler({Utilities::HResultToString(e), ErrorType::Close});
     }
   }
 
@@ -322,7 +323,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
           }
         } catch (hresult_error const &e) {
           if (self->m_errorHandler) {
-            self->m_errorHandler({HResultToString(e), ErrorType::Receive});
+            self->m_errorHandler({Utilities::HResultToString(e), ErrorType::Receive});
           }
         }
       });
@@ -346,7 +347,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
     uri = Uri{winrt::to_hstring(url)};
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
-      m_errorHandler({HResultToString(e), ErrorType::Connection});
+      m_errorHandler({Utilities::HResultToString(e), ErrorType::Connection});
     }
 
     // Abort - Mark connection as concluded.
