@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 02 Feb 2022 06:08:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.446",
+      "version": "0.0.0-canary.446",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6b016661792bd18848ac08161a8f59b9ab802906",
+            "comment": "Fix VS hang when switching Platform within IDE"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.111",
+            "commit": "6b016661792bd18848ac08161a8f59b9ab802906"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 01 Feb 2022 06:07:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.445",
       "version": "0.0.0-canary.445",

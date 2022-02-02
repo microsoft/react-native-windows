@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 27 Jan 2022 06:11:44 GMT and should not be manually modified.
+This log was last generated on Wed, 02 Feb 2022 06:08:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.111
+
+Wed, 02 Feb 2022 06:08:38 GMT
+
+### Changes
+
+- Allow OutputType Library to be autolinked for C# native modules (jmdalmasso7@gmail.com)
 
 ## 0.0.0-canary.110
 
