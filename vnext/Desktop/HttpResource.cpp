@@ -165,12 +165,4 @@ void HttpResource::SetOnError(std::function<void(const std::string &)> &&handler
 
 #pragma endregion HttpResource members
 
-#pragma region IHttpResource static members
-
-/*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
-  return nullptr;
-}
-
-#pragma endregion IHttpResource static members
-
 } // namespace Microsoft::React
