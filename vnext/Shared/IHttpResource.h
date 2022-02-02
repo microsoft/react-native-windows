@@ -11,12 +11,11 @@
 
 namespace Microsoft::React {
 
-
 struct IHttpResource {
   typedef std::unordered_map<std::string, std::string> Headers;
 
   struct BodyData {
-    enum class Type : size_t { Empty, String, Base64, Uri } Type = Type::Empty;
+    enum class Type : size_t { Empty, String, Base64, Uri, Form } Type = Type::Empty;
     std::string Data;
   };
 
@@ -28,12 +27,14 @@ struct IHttpResource {
       const std::string &method,
       const std::string &url,
       const Headers &headers,
-      BodyData&& bodyData,
+      BodyData &&bodyData,
       const std::string &responseType,
       bool useIncrementalUpdates,
-      std::int64_t timeout,
+      int64_t timeout,
+      bool withCredentials,
       std::function<void(int64_t)> &&callback) noexcept = 0;
   virtual void AbortRequest() noexcept = 0;
+
   virtual void ClearCookies() noexcept = 0;
 
   virtual void SetOnRequest(std::function<void()> &&handler) noexcept = 0;

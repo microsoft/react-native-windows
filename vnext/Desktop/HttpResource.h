@@ -35,7 +35,7 @@ class HttpResource : public IHttpResource, public std::enable_shared_from_this<H
       const std::string &method,
       const std::string &url,
       const Headers &headers,
-      BodyData&& bodyData,
+      BodyData &&bodyData,
       const std::string &responseType,
       bool useIncrementalUpdates,
       std::int64_t timeout,

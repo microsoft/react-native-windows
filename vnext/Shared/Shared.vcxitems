@@ -65,6 +65,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinRTHttpResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -131,8 +132,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinRTHttpResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>

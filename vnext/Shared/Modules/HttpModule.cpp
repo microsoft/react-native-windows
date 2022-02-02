@@ -63,4 +63,4 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 // clang-format on
 
 #pragma endregion CxxModule
-}
+} // namespace Microsoft::React

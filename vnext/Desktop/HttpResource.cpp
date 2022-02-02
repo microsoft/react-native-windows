@@ -27,7 +27,7 @@ void HttpResource::SendRequest(
     const string &method,
     const string &urlString,
     const Headers &headers,
-    BodyData&& bodyData,
+    BodyData &&bodyData,
     const string &responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
@@ -58,7 +58,7 @@ void HttpResource::SendRequest(
     req.set(header.first, header.second);
   }
 
-  //if (!bodyData.empty()) {
+  // if (!bodyData.empty()) {
   //  if (!bodyData["string"].empty()) {
   //  } else if (!bodyData["base64"].empty()) {
   //  } else if (!bodyData["uri"].empty()) {
@@ -69,13 +69,9 @@ void HttpResource::SendRequest(
   //}
 
   if (bodyData.Type == BodyData::Type::String) {
-
   } else if (bodyData.Type == BodyData::Type::Base64) {
-
   } else if (bodyData.Type == BodyData::Type::Uri) {
-
   } else {
-
   }
 
   m_context.restart();

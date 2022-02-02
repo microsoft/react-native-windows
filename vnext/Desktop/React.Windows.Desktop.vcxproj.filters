@@ -90,6 +90,8 @@
     <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
+    <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
@@ -158,6 +160,11 @@
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="ViewManager.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSCallInvokerScheduler.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactErrorProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactInstanceWin.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MessageQueueShim.h">

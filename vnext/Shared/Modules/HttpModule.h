@@ -13,14 +13,12 @@ namespace Microsoft::React {
 /// <remarks>See src\Libraries\Network\RCTNetworkingWinShared.js</remarks>
 ///
 class HttpModule : public facebook::xplat::module::CxxModule {
-public:
-  enum MethodId {
-    SendRequest = 0, AbortRequest = 1, ClearCookies = 2, LAST = ClearCookies
-  };
+ public:
+  enum MethodId { SendRequest = 0, AbortRequest = 1, ClearCookies = 2, LAST = ClearCookies };
 
   HttpModule();
 
-  #pragma region CxxModule
+#pragma region CxxModule
 
   /// <summary>
   /// <see cref="facebook::xplat::module::CxxModule::getName" />
@@ -38,12 +36,12 @@ public:
   /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
   std::vector<Method> getMethods() override;
 
-  #pragma endregion CxxModule
+#pragma endregion CxxModule
 
-  private:
+ private:
   /// <summary>
   /// Notifies an event to the current React Instance.
   /// </summary>
   void SendEvent(std::string &&eventName, folly::dynamic &&parameters);
 };
-}
+} // namespace Microsoft::React
