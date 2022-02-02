@@ -44,48 +44,6 @@ using winrt::Windows::Storage::Streams::IDataReader;
 using winrt::Windows::Storage::Streams::IDataWriter;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
 
-//namespace {
-/////
-///// Implements an awaiter for Mso::DispatchQueue
-/////
-//auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
-//  struct awaitable {
-//    awaitable(const Mso::DispatchQueue &queue) noexcept : m_queue{queue} {}
-//
-//    bool await_ready() const noexcept {
-//      return false;
-//    }
-//
-//    void await_resume() const noexcept {}
-//
-//    void await_suspend(std::experimental::coroutine_handle<> resume) noexcept {
-//      m_callback = [context = resume.address()]() noexcept {
-//        std::experimental::coroutine_handle<>::from_address(context)();
-//      };
-//      m_queue.Post(std::move(m_callback));
-//    }
-//
-//   private:
-//    Mso::DispatchQueue m_queue;
-//    Mso::VoidFunctor m_callback;
-//  };
-//
-//  return awaitable{queue};
-//} // resume_in_queue
-//
-//string HResultToString(hresult_error const &e) {
-//  std::stringstream stream;
-//  stream << "[0x" << std::hex << e.code() << "] " << winrt::to_string(e.message());
-//
-//  return stream.str();
-//}
-//
-//string HResultToString(hresult &&result) {
-//  return HResultToString(hresult_error(std::move(result), hresult_error::from_abi));
-//}
-//
-//} // namespace
-
 namespace Microsoft::React {
 
 // private
