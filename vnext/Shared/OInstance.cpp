@@ -113,7 +113,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   }
 
   OJSIExecutorFactory(
-      std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
+      std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
       bool isProfilingEnabled,
@@ -125,7 +125,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
-  std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
@@ -198,6 +198,20 @@ void InstanceImpl::SetInError() noexcept {
   m_isInError = true;
 }
 
+namespace {
+bool shouldStartHermesInspector(DevSettings &devSettings) {
+  bool isHermes =
+      ((devSettings.jsiEngineOverride == JSIEngineOverride::Hermes) ||
+       (devSettings.jsiEngineOverride == JSIEngineOverride::Default && devSettings.jsiRuntimeHolder &&
+        devSettings.jsiRuntimeHolder->getRuntimeType() == facebook::react::JSIEngineOverride::Hermes));
+
+  if (isHermes && devSettings.useDirectDebugger && !devSettings.useWebDebugger)
+    return true;
+  else
+    return false;
+}
+} // namespace
+
 InstanceImpl::InstanceImpl(
     std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
@@ -225,8 +239,7 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
-  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes && m_devSettings->useDirectDebugger &&
-      !m_devSettings->useWebDebugger) {
+  if (shouldStartHermesInspector(*m_devSettings)) {
     m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
