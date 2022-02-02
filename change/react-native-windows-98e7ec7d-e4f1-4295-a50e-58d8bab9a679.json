@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix VS hang when switching Platform within IDE",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
