@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/package-utils",
-  "version": "0.67.0-preview.1",
+  "version": "0.67.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -11,7 +11,7 @@
   },
   "main": "lib-commonjs/packageUtils.js",
   "dependencies": {
-    "@react-native-windows/find-repo-root": "0.67.0-preview.1",
+    "@react-native-windows/find-repo-root": "0.67.0",
     "get-monorepo-packages": "^1.2.0",
     "lodash": "^4.17.15"
   },
@@ -27,11 +27,11 @@
     "typescript": "^4.4.4"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ]
   },
   "promoteRelease": true,

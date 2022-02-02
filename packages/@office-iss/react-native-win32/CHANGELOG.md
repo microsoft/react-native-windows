@@ -1,8 +1,42 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 15 Nov 2021 16:10:10 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:13:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:13:22 GMT
+
+### Patches
+
+- Promote 0.67 to latest (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.67.0
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:12:31 GMT
+
+### Patches
+
+- Promote 0.67 to latest (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.67.0
+
+## 0.67.0-preview.3
+
+Mon, 17 Jan 2022 16:12:54 GMT
+
+### Changes
+
+- Port windows pressable with extra desktop support to win32 (saadnajmi2@gmail.com)
+
+## 0.67.0-preview.3
+
+Mon, 17 Jan 2022 16:12:12 GMT
+
+### Changes
+
+- Port windows pressable with extra desktop support to win32 (saadnajmi2@gmail.com)
 
 ## 0.67.0-preview.2
 

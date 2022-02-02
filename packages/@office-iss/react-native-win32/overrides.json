@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.67.0-rc.1",
+  "baseVersion": "0.67.1",
   "overrides": [
     {
       "type": "derived",
@@ -73,6 +73,13 @@
       "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
       "baseHash": "0b409391c852a1001cee74a84414a13c4fe88f8b",
       "issue": 4378
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
+      "baseFile": "Libraries/Components/Pressable/Pressable.js",
+      "baseHash": "614553aa8396b42e932f8c717ebc8b493d772d93",
+      "issue": 6240
     },
     {
       "type": "copy",
@@ -184,6 +191,13 @@
       "file": "src/Libraries/Components/View/View.win32.js",
       "baseFile": "Libraries/Components/View/View.js",
       "baseHash": "689895e8755aed42e913460d1fa964907a74f06c"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
+      "baseFile": "Libraries/Components/View/ViewPropTypes.js",
+      "baseHash": "2b12228aa1ab0e12844996a99ff5d38fbff689a1",
+      "issue": 6240
     },
     {
       "type": "platform",
@@ -365,6 +379,20 @@
       "file": "src/Libraries/PersonaCoin/PersonaCoinTypes.ts"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/HoverState.win32.js",
+      "baseFile": "Libraries/Pressability/HoverState.js",
+      "baseHash": "2807a1cddb7c5135f63e5dd4d0706ac660f25d76",
+      "issue": 6240
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Pressability/Pressability.win32.js",
+      "baseFile": "Libraries/Pressability/Pressability.js",
+      "baseHash": "05c53428a4b7b142fabb6833ecf54ba88c0aa05d",
+      "issue": 6240
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/QuirkSettings/CachingNativeQuirkSettings.js"
     },
@@ -416,6 +444,13 @@
       "baseFile": "Libraries/Text/TextNativeComponent.js",
       "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb",
       "issue": 7074
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Types/CoreEventTypes.win32.js",
+      "baseFile": "Libraries/Types/CoreEventTypes.js",
+      "baseHash": "22c50d13820ca4db6c6cf5e6563f8437d55c24af",
+      "issue": 6240
     },
     {
       "type": "copy",

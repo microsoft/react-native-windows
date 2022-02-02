@@ -18,7 +18,7 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/telemetry": "0.67.0-preview.1",
+    "@react-native-windows/telemetry": "0.67.0",
     "chalk": "^4.1.0",
     "find-up": "^4.1.0",
     "mustache": "^4.0.1",
@@ -30,7 +30,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.67.0-preview.2",
+    "@react-native-windows/cli": "0.67.0",
     "@rnw-scripts/eslint-config": "1.1.8",
     "@rnw-scripts/jest-unittest-config": "1.2.4",
     "@rnw-scripts/just-task": "2.2.1",

@@ -2,6 +2,159 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 16:13:22 GMT",
+      "tag": "react-native-windows_v0.67.0",
+      "version": "0.67.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "[0.67] Remove ADO NuGet feed from config for new projects"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Promote 0.67 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.67.0",
+            "commit": "f3ec055a5554558b61b538fcb405719a00249bef"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.67.0",
+            "commit": "f3ec055a5554558b61b538fcb405719a00249bef"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.67.0",
+            "commit": "f3ec055a5554558b61b538fcb405719a00249bef"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Jan 2022 16:12:32 GMT",
+      "tag": "react-native-windows_v0.67.0",
+      "version": "0.67.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a1a4439e47c2a98356d7b9b1af765d3907567e16",
+            "comment": "[0.67] Remove ADO NuGet feed from config for new projects"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a",
+            "comment": "Promote 0.67 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Jan 2022 16:12:54 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.7",
+      "version": "0.67.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "saadnajmi2@gmail.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Fork HoverState.js to allow hover events on Pressable"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Jan 2022 16:12:13 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.7",
+      "version": "0.67.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "saadnajmi2@gmail.com",
+            "package": "react-native-windows",
+            "commit": "b58a8738eecd8a3d6a2b918fc35d9a7b93b4437a",
+            "comment": "Fork HoverState.js to allow hover events on Pressable"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 Jan 2022 16:12:09 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.6",
+      "version": "0.67.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "[0.67] Avoid capturing raw this pointer in WebSocket module"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 03 Jan 2022 16:11:53 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.6",
+      "version": "0.67.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "372ce65125bce35713a557d7613f07148821944b",
+            "comment": "[0.67] Avoid capturing raw this pointer in WebSocket module"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 06 Dec 2021 16:10:50 GMT",
+      "tag": "react-native-windows_v0.67.0-preview.5",
+      "version": "0.67.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b706da95136fffa1a4deba8f95dc9edfeef1020d",
+            "comment": "Bumping Hermes to v0.10"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Nov 2021 16:10:24 GMT",
       "tag": "react-native-windows_v0.67.0-preview.4",
       "version": "0.67.0-preview.4",

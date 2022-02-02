@@ -1,8 +1,72 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Nov 2021 16:10:24 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:13:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:13:22 GMT
+
+### Patches
+
+- [0.67] Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
+- Promote 0.67 to latest (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.67.0
+- Bump @react-native-windows/virtualized-list to v0.67.0
+- Bump @react-native-windows/codegen to v0.67.0
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:12:32 GMT
+
+### Patches
+
+- [0.67] Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
+- Promote 0.67 to latest (ngerlem@microsoft.com)
+- Bump @react-native-windows/cli to v0.67.0
+- Bump @react-native-windows/virtualized-list to v0.67.0
+- Bump @react-native-windows/codegen to v0.67.0
+
+## 0.67.0-preview.7
+
+Mon, 17 Jan 2022 16:12:54 GMT
+
+### Changes
+
+- Fork HoverState.js to allow hover events on Pressable (saadnajmi2@gmail.com)
+
+## 0.67.0-preview.7
+
+Mon, 17 Jan 2022 16:12:13 GMT
+
+### Changes
+
+- Fork HoverState.js to allow hover events on Pressable (saadnajmi2@gmail.com)
+
+## 0.67.0-preview.6
+
+Mon, 03 Jan 2022 16:12:09 GMT
+
+### Changes
+
+- [0.67] Avoid capturing raw this pointer in WebSocket module (julio.rocha@microsoft.com)
+
+## 0.67.0-preview.6
+
+Mon, 03 Jan 2022 16:11:53 GMT
+
+### Changes
+
+- [0.67] Avoid capturing raw this pointer in WebSocket module (julio.rocha@microsoft.com)
+
+## 0.67.0-preview.5
+
+Mon, 06 Dec 2021 16:10:50 GMT
+
+### Changes
+
+- Bumping Hermes to v0.10 (anandrag@microsoft.com)
 
 ## 0.67.0-preview.4
 

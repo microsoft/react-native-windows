@@ -2,6 +2,72 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 16:13:22 GMT",
+      "tag": "@react-native-windows/cli_v0.67.0",
+      "version": "0.67.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "not available",
+            "comment": "[0.67] Remove ADO NuGet feed from config for new projects"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "not available",
+            "comment": "Promote 0.67 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.67.0",
+            "commit": "f3ec055a5554558b61b538fcb405719a00249bef"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.67.0",
+            "commit": "f3ec055a5554558b61b538fcb405719a00249bef"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Jan 2022 16:12:31 GMT",
+      "tag": "@react-native-windows/cli_v0.67.0",
+      "version": "0.67.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "a1a4439e47c2a98356d7b9b1af765d3907567e16",
+            "comment": "[0.67] Remove ADO NuGet feed from config for new projects"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a",
+            "comment": "Promote 0.67 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 09 Nov 2021 01:12:34 GMT",
       "tag": "@react-native-windows/cli_v0.67.0-preview.2",
       "version": "0.67.0-preview.2",

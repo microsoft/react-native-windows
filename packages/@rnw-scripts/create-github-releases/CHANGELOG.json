@@ -2,6 +2,36 @@
   "name": "@rnw-scripts/create-github-releases",
   "entries": [
     {
+      "date": "Mon, 24 Jan 2022 16:13:22 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.1.5",
+      "version": "1.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0",
+            "commit": "f3ec055a5554558b61b538fcb405719a00249bef"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 24 Jan 2022 16:12:32 GMT",
+      "tag": "@rnw-scripts/create-github-releases_v1.1.5",
+      "version": "1.1.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/create-github-releases",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.67.0",
+            "commit": "56818ebc599aa084aa9ffc949691f1be71da169a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Oct 2021 15:07:48 GMT",
       "tag": "@rnw-scripts/create-github-releases_v1.1.5",
       "version": "1.1.5",

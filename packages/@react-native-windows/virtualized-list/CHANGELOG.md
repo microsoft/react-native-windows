@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Mon, 25 Oct 2021 15:07:48 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jan 2022 16:13:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:13:22 GMT
+
+### Patches
+
+- Promote 0.67 to latest (ngerlem@microsoft.com)
+
+## 0.67.0
+
+Mon, 24 Jan 2022 16:12:32 GMT
+
+### Patches
+
+- Promote 0.67 to latest (ngerlem@microsoft.com)
 
 ## 0.67.0-preview.1
 
