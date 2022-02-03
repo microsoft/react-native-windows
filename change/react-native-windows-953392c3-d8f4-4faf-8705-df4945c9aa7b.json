@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Upgrade to V8Jsi 0.64.32",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
