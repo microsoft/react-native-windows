@@ -2,6 +2,33 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Thu, 03 Feb 2022 06:08:22 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.21",
+            "commit": "03cf427b70ce5a60ad11eec862284cecdff97584"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.447",
+            "commit": "03cf427b70ce5a60ad11eec862284cecdff97584"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.27",
+            "commit": "03cf427b70ce5a60ad11eec862284cecdff97584"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Feb 2022 06:08:39 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

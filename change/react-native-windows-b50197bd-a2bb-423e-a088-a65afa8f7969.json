@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use raw value for CalculatedAnimationDriver",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
