@@ -42,7 +42,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
-      m_viewManagerWithDropViewInstanceEvent{viewManager.try_as<IViewManagerWithDropViewInstanceEvent>()} {
+      m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
@@ -226,8 +226,8 @@ void ABIViewManager::OnPointerEvent(::Microsoft::ReactNative::ShadowNodeBase *no
 }
 
 void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView &view) {
-  if (m_viewManagerWithDropViewInstanceEvent) {
-    m_viewManagerWithDropViewInstanceEvent.OnDropViewInstance(view.try_as<xaml::FrameworkElement>());
+  if (m_viewManagerWithDropViewInstance) {
+    m_viewManagerWithDropViewInstance.OnDropViewInstance(view.try_as<xaml::FrameworkElement>());
   } else {
     Super::OnDropViewInstance(view);
   }
