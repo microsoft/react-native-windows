@@ -9,7 +9,7 @@
 #include "ChakraValue.h"
 
 // See the comment under Value::fromDynamic()
-#if !defined(__clang__) && defined(WITH_FB_JSC_TUNING)
+#if !defined(__APPLE__) && defined(WITH_FB_JSC_TUNING)
 #define USE_FAST_FOLLY_DYNAMIC_CONVERSION 1
 #else
 #define USE_FAST_FOLLY_DYNAMIC_CONVERSION 0
