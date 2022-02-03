@@ -10,7 +10,7 @@
 #include "JsiApi.h"
 #include "JsiReader.h"
 #include "JsiWriter.h"
-#ifdef __clang__
+#ifdef __APPLE__
 #include "Crash.h"
 #else
 #include <crash/verifyElseCrash.h>
