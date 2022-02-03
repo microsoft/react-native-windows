@@ -9,7 +9,7 @@
     <HermesArch Condition="'$(HermesArch)' == ''">uwp</HermesArch>
 
     <UseV8 Condition="('$(UseV8)' == '') OR ('$(Platform)' == 'ARM')">false</UseV8>
-    <V8Version Condition="'$(V8Version)' == ''">0.64.27</V8Version>
+    <V8Version Condition="'$(V8Version)' == ''">0.64.32</V8Version>
     <V8PackageName>ReactNative.V8Jsi.Windows</V8PackageName>
     <V8PackageName Condition="'$(V8AppPlatform)' != 'win32'">$(V8PackageName).UWP</V8PackageName>
     <V8Package>$(SolutionDir)packages\$(V8PackageName).$(V8Version)</V8Package>
