@@ -6,7 +6,7 @@
 
 #include "pch.h"
 #include "JsiWriter.h"
-#ifdef __APPLE__
+#ifdef __clang__
 #include "Crash.h"
 #else
 #include <crash/verifyElseCrash.h>

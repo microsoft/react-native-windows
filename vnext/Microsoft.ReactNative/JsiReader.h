@@ -13,7 +13,7 @@ namespace winrt::Microsoft::ReactNative {
 
 // workaround: in macOS 10.13, optional<T>::value is not available
 
-#ifndef __APPLE__
+#ifndef __clang__
 template <typename T>
 decltype(auto) ReadOptional(std::optional<T> &opt) {
   return opt.value();
