@@ -49,7 +49,6 @@
     <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IRedBoxHandler.h" target="inc"/>
-    <file src="$nugetroot$\inc\Shared\IUIManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IWebSocketResource.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\JSBigAbiString.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\LayoutAnimation.h" target="inc"/>
@@ -77,6 +76,8 @@
     <file src="$nugetroot$\inc\include\**\*.*" target="inc\include" />
 
     <file src="$nugetroot$\Microsoft.ReactNative.Cxx\**" target ="Microsoft.ReactNative.Cxx"/>
+
+    <file src="$nugetroot$\inc\codegen\**\*.*" target ="inc\codegen"/>
 
     <file src="$nugetroot$\natvis\Folly.natvis" target ="natvis\Folly.natvis"/>
   </files>

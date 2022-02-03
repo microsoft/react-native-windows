@@ -21,7 +21,10 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
-import {CodedError} from '@react-native-windows/telemetry';
+import {
+  CodedError,
+  getVersionOfNpmPackage,
+} from '@react-native-windows/telemetry';
 import {
   findPackage,
   WritableNpmPackage,
@@ -220,6 +223,8 @@ export async function copyProjectTemplateAndReplace(
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
 
+    rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
+
     mainComponentName: mainComponentName,
 
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
@@ -234,6 +239,7 @@ export async function copyProjectTemplateAndReplace(
 
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
+    nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
 
     // cpp template variables
     useWinUI3: options.useWinUI3,

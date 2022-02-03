@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -703,12 +703,14 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           onViewableItemsChanged: pair.onViewableItemsChanged,
         }),
       );
-    } else if (this.props.onViewableItemsChanged) {
-      this._viewabilityTuples.push({
-        viewabilityHelper: new ViewabilityHelper(this.props.viewabilityConfig),
-        // $FlowFixMe[incompatible-call]
-        onViewableItemsChanged: this.props.onViewableItemsChanged,
-      });
+    } else {
+      const {onViewableItemsChanged, viewabilityConfig} = this.props;
+      if (onViewableItemsChanged) {
+        this._viewabilityTuples.push({
+          viewabilityHelper: new ViewabilityHelper(viewabilityConfig),
+          onViewableItemsChanged: onViewableItemsChanged,
+        });
+      }
     }
 
     let initialState = {

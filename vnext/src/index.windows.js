@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -52,6 +52,9 @@ import typeof Animated from './Libraries/Animated/Animated';
 import typeof Appearance from './Libraries/Utilities/Appearance';
 import typeof AppRegistry from './Libraries/ReactNative/AppRegistry';
 import typeof AppState from './Libraries/AppState/AppState';
+// [Windows
+import typeof AppTheme from './Libraries/AppTheme/AppTheme';
+// Windows]
 import typeof AsyncStorage from './Libraries/Storage/AsyncStorage';
 import typeof BackHandler from './Libraries/Utilities/BackHandler';
 import typeof Clipboard from './Libraries/Components/Clipboard/Clipboard';
@@ -525,8 +528,8 @@ module.exports = {
   get ViewWindows(): any {
     return require('./Libraries/Components/View/ViewWindows').ViewWindows;
   },
-  get AppTheme(): any {
-    return require('./Libraries/AppTheme/AppTheme').AppTheme;
+  get AppTheme(): AppTheme {
+    return require('./Libraries/AppTheme/AppTheme');
   },
 };
 

@@ -7,11 +7,9 @@
 // Modules
 #include <AsyncStorageModule.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
-#include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
-#include <Modules/LinkingManagerModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/PaperUIManagerModule.h>
@@ -44,7 +42,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread>
         &jsMessageQueue, // JS engine thread (what we use for external modules)
-    std::shared_ptr<AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept {
   std::vector<facebook::react::NativeModuleDescription> modules;
@@ -57,14 +54,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   modules.emplace_back(
       "Timing",
       [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
-      batchingUIMessageQueue);
-
-  modules.emplace_back(
-      LinkingManagerModule::name, []() { return std::make_unique<LinkingManagerModule>(); }, batchingUIMessageQueue);
-
-  modules.emplace_back(
-      AppThemeModule::Name,
-      [appTheme = std::move(appTheme)]() mutable { return std::make_unique<AppThemeModule>(std::move(appTheme)); },
       batchingUIMessageQueue);
 
   modules.emplace_back(

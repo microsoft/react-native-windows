@@ -41,6 +41,7 @@
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
+#include "Modules/AppThemeModuleUwp.h"
 #include "Modules/ClipboardModule.h"
 #endif
 #include "Modules/DevSettingsModule.h"
@@ -48,6 +49,7 @@
 #include <Modules/ImageViewManagerModule.h>
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
+#include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
@@ -285,6 +287,9 @@ void ReactInstanceWin::LoadModules(
       L"AppState", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
 
   registerTurboModule(
+      L"AppTheme", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppTheme>());
+
+  registerTurboModule(
       L"LogBox", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>());
 
   registerTurboModule(
@@ -303,6 +308,11 @@ void ReactInstanceWin::LoadModules(
 #ifndef CORE_ABI
   registerTurboModule(
       L"I18nManager", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
+
+  registerTurboModule(
+      L"LinkingManager",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
+
 #endif
 }
 
@@ -325,8 +335,7 @@ void ReactInstanceWin::Initialize() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
 #ifndef CORE_ABI
-      strongThis->m_appTheme = std::make_shared<Microsoft::ReactNative::AppTheme>(
-          strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
+      Microsoft::ReactNative::AppThemeHolder::InitAppThemeHolder(strongThis->GetReactContext());
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
       strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
@@ -374,11 +383,7 @@ void ReactInstanceWin::Initialize() noexcept {
           // Acquire default modules and then populate with custom modules.
           // Note that some of these have custom thread affinity.
           std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
-              m_batchingUIThread,
-              m_jsMessageThread.Load(),
-              std::move(m_appTheme),
-              std::move(m_appearanceListener),
-              m_reactContext);
+              m_batchingUIThread, m_jsMessageThread.Load(), std::move(m_appearanceListener), m_reactContext);
 #endif
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
@@ -864,7 +869,7 @@ void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, f
 }
 
 winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcept {
-  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
   {
     std::scoped_lock lock{m_mutex};
     if (m_jsiRuntime) {

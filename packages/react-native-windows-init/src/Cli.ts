@@ -25,6 +25,8 @@ import {
   optionsToArgs,
   configToProjectInfo,
   getProjectFileFromConfig,
+  OptionSanitizer,
+  YargsOptionsType,
 } from '@react-native-windows/telemetry';
 
 /**
@@ -40,89 +42,94 @@ const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
   ? npmConfReg
   : 'http://registry.npmjs.org';
 
+// Causes the type-checker to ensure the options object is a valid yargs options object
+function initOptions<T extends Record<string, yargs.Options>>(options: T): T {
+  return options;
+}
+
+export const windowsInitOptions = initOptions({
+  version: {
+    type: 'string',
+    describe: 'The version of react-native-windows to use.',
+  },
+  namespace: {
+    type: 'string',
+    describe:
+      "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
+  },
+  verbose: {
+    type: 'boolean',
+    describe: 'Enables logging.',
+    default: false,
+  },
+  telemetry: {
+    type: 'boolean',
+    describe:
+      'Controls sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+    default: true,
+  },
+  language: {
+    type: 'string',
+    describe: 'The language the project is written in.',
+    choices: ['cs', 'cpp'],
+    default: 'cpp',
+  },
+  overwrite: {
+    type: 'boolean',
+    describe: 'Overwrite any existing files without prompting',
+    default: false,
+  },
+  projectType: {
+    type: 'string',
+    describe: 'The type of project to initialize (supported on 0.64+)',
+    choices: ['app', 'lib'],
+    default: 'app',
+  },
+  experimentalNuGetDependency: {
+    type: 'boolean',
+    describe:
+      '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
+    hidden: true,
+    default: false,
+  },
+  useHermes: {
+    type: 'boolean',
+    describe:
+      '[Experimental] Use Hermes instead of Chakra as the JS engine (supported on 0.64+ for C++ projects)',
+    default: false,
+  },
+  useWinUI3: {
+    type: 'boolean',
+    describe: '[Experimental] Use WinUI 3 (Windows App SDK)',
+    hidden: true,
+    default: false,
+  },
+  nuGetTestVersion: {
+    type: 'string',
+    describe:
+      '[internalTesting] By default the NuGet version matches the rnw package. This flag allows manually specifying the version for internal testing.',
+    hidden: true,
+  },
+  nuGetTestFeed: {
+    type: 'string',
+    describe:
+      '[internalTesting] Allows a test feed to be added to the generated NuGet configuration',
+    hidden: true,
+  },
+  useDevMode: {
+    type: 'boolean',
+    describe:
+      '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
+    hidden: true,
+    default: undefined, // This must be undefined because we define the conflicts field below. Defining a default here will break the version option
+    conflicts: 'version',
+  },
+});
+
 const yargsParser = yargs
   .version(false)
-  .strict(true)
-  .options({
-    version: {
-      type: 'string',
-      describe: 'The version of react-native-windows to use.',
-    },
-    namespace: {
-      type: 'string',
-      describe:
-        "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language",
-    },
-    verbose: {
-      type: 'boolean',
-      describe: 'Enables logging.',
-      default: false,
-    },
-    telemetry: {
-      type: 'boolean',
-      describe:
-        'Controls sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
-      default: true,
-    },
-    language: {
-      type: 'string',
-      describe: 'The language the project is written in.',
-      choices: ['cs', 'cpp'],
-      default: 'cpp',
-    },
-    overwrite: {
-      type: 'boolean',
-      describe: 'Overwrite any existing files without prompting',
-      default: false,
-    },
-    projectType: {
-      type: 'string',
-      describe: 'The type of project to initialize (supported on 0.64+)',
-      choices: ['app', 'lib'],
-      default: 'app',
-    },
-    experimentalNuGetDependency: {
-      type: 'boolean',
-      describe:
-        '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
-      hidden: true,
-      default: false,
-    },
-    useHermes: {
-      type: 'boolean',
-      describe:
-        '[Experimental] Use Hermes instead of Chakra as the JS engine (supported on 0.64+ for C++ projects)',
-      default: false,
-    },
-    useWinUI3: {
-      type: 'boolean',
-      describe: '[Experimental] Use WinUI 3 (Windows App SDK)',
-      hidden: true,
-      default: false,
-    },
-    nuGetTestVersion: {
-      type: 'string',
-      describe:
-        '[internalTesting] By default the NuGet version matches the rnw package. This flag allows manually specifying the version for internal testing.',
-      hidden: true,
-    },
-    nuGetTestFeed: {
-      type: 'string',
-      describe:
-        '[internalTesting] Allows a test feed to be added to the generated NuGet configuration',
-      hidden: true,
-    },
-    useDevMode: {
-      type: 'boolean',
-      describe:
-        '[internalTesting] Link rather than Add/Install the react-native-windows package. This option is for the development workflow of the developers working on react-native-windows.',
-      hidden: true,
-      conflicts: 'version',
-    },
-  })
+  .options(windowsInitOptions)
   .strict(true);
-
-const argv = yargsParser.argv;
 
 function getReactNativeProjectName(): string {
   console.log('Reading project name from package.json...');
@@ -263,10 +270,11 @@ async function getLatestMatchingRNWVersion(
 
 function installReactNativeWindows(
   version: string | undefined,
+  verbose: boolean,
   useDevMode: boolean,
 ) {
   const cwd = process.cwd();
-  const execOptions = argv.verbose ? {stdio: 'inherit' as 'inherit'} : {};
+  const execOptions = verbose ? {stdio: 'inherit' as 'inherit'} : {};
 
   if (useDevMode) {
     const packageCmd = isProjectUsingYarn(cwd) ? 'yarn' : 'npm';
@@ -333,34 +341,58 @@ function installReactNativeWindows(
  * @param value The unsanitized value of the option.
  * @returns The sanitized value of the option.
  */
-function optionSanitizer(key: string, value: any): any {
+function optionSanitizer(key: keyof WindowsInitOptions, value: any): any {
+  // Do not add a default case here.
+  // Strings risking PII should just return true if present, false otherwise.
+  // All others should return the value (or false if undefined).
   switch (key) {
     case 'namespace':
-      return value === undefined ? false : true;
-    default:
+    case 'nuGetTestFeed':
+    case 'nuGetTestVersion':
+      return value ? true : false;
+    case 'verbose':
+    case 'version':
+    case 'telemetry':
+    case 'language':
+    case 'overwrite':
+    case 'projectType':
+    case 'experimentalNuGetDependency':
+    case 'useHermes':
+    case 'useWinUI3':
+    case 'useDevMode':
       return value === undefined ? false : value;
   }
 }
 
 /**
  * Sets up and starts the telemetry gathering for the CLI command.
+ * @param args The raw CLI args.
+ * @param options The CLI args parsed by yargs.
  */
-async function startTelemetrySession() {
-  if (!argv.telemetry) {
-    if (argv.verbose) {
+async function startTelemetrySession(
+  args: string[],
+  options: YargsOptionsType,
+) {
+  if (!options.telemetry) {
+    if (options.verbose) {
       console.log('Telemetry is disabled');
     }
     return;
   }
 
-  await Telemetry.setup();
+  // Setup telemetry, but don't get NPM package version info right away as
+  // we're going to change things and this may interfere with the resolver
+  await Telemetry.setup({populateNpmPackageVersions: false});
 
-  const sanitizedOptions = yargsOptionsToOptions(argv, optionSanitizer);
+  const sanitizedOptions = yargsOptionsToOptions(
+    options,
+    optionSanitizer as OptionSanitizer,
+  );
   const sanitizedDefaultOptions = yargsOptionsToOptions(
     yargsParser.parse(''),
-    optionSanitizer,
+    optionSanitizer as OptionSanitizer,
   );
-  const sanitizedArgs = optionsToArgs(sanitizedOptions, process.argv);
+  const sanitizedArgs = optionsToArgs(sanitizedOptions, args);
 
   const startInfo: CommandStartInfo = {
     commandName: 'react-native-windows-init',
@@ -458,19 +490,30 @@ function isProjectUsingYarn(cwd: string): boolean {
   return !!findUp.sync('yarn.lock', {cwd});
 }
 
-(async () => {
-  if (argv.verbose) {
-    console.log(argv);
+export async function reactNativeWindowsInit(args?: string[]) {
+  args = args ?? process.argv;
+  const options = yargsParser.parse(args) as WindowsInitOptions;
+
+  if (options.verbose) {
+    console.log(options);
   }
 
-  await startTelemetrySession();
+  await startTelemetrySession(args, options);
 
   let initWindowsError: Error | undefined;
   try {
     const name = getReactNativeProjectName();
-    const ns = argv.namespace || name;
-    const useDevMode = !!argv.useDevMode;
-    let version = argv.version;
+    const ns = options.namespace || name;
+    const useDevMode = !!(options.useDevMode as unknown); // TS assumes the type is undefined
+    let version = options.version;
+
+    if (options.useWinUI3 && options.experimentalNuGetDependency) {
+      throw new CodedError(
+        'IncompatibleOptions',
+        "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
+        {detail: 'useWinUI3 and experimentalNuGetDependency'},
+      );
+    }
 
     if (!useDevMode) {
       if (!version) {
@@ -482,9 +525,9 @@ function isProjectUsingYarn(cwd: string): boolean {
       const rnwResolvedVersion = await getLatestMatchingRNWVersion(version);
 
       if (!rnwResolvedVersion) {
-        if (argv.version) {
+        if (options.version) {
           console.warn(
-            `Warning: Querying npm to find react-native-windows@${argv.version} failed.  Attempting to continue anyway...`,
+            `Warning: Querying npm to find react-native-windows@${options.version} failed.  Attempting to continue anyway...`,
           );
         } else {
           const rnwLatestVersion = await getLatestRNWVersion();
@@ -510,7 +553,7 @@ function isProjectUsingYarn(cwd: string): boolean {
         }
       }
 
-      if (!argv.version) {
+      if (!options.version) {
         console.log(
           `Latest matching version of ${chalk.bold(
             'react-native-windows',
@@ -564,30 +607,34 @@ function isProjectUsingYarn(cwd: string): boolean {
       }
     }
 
-    installReactNativeWindows(version, useDevMode);
+    installReactNativeWindows(version, options.verbose, useDevMode);
 
     const generateWindows = requireGenerateWindows();
 
-    // Now that new NPM packages have been installed, refresh their versions
-    await Telemetry.populateNpmPackageVersions(true);
+    // Now that new NPM packages have been installed, get their versions
+    await Telemetry.populateNpmPackageVersions();
 
     await generateWindows(process.cwd(), name, ns, {
-      language: argv.language as 'cs' | 'cpp',
-      overwrite: argv.overwrite,
-      verbose: argv.verbose,
-      projectType: argv.projectType as 'lib' | 'app',
-      experimentalNuGetDependency: argv.experimentalNuGetDependency,
-      useWinUI3: argv.useWinUI3,
-      useHermes: argv.useHermes,
+      language: options.language as 'cs' | 'cpp',
+      overwrite: options.overwrite,
+      verbose: options.verbose,
+      projectType: options.projectType as 'lib' | 'app',
+      experimentalNuGetDependency: options.experimentalNuGetDependency,
+      useWinUI3: options.useWinUI3,
+      useHermes: options.useHermes,
       useDevMode: useDevMode,
-      nuGetTestVersion: argv.nuGetTestVersion,
-      nuGetTestFeed: argv.nuGetTestFeed,
-      telemetry: argv.telemetry,
+      nuGetTestVersion: options.nuGetTestVersion,
+      nuGetTestFeed: options.nuGetTestFeed,
+      telemetry: options.telemetry,
     });
 
     // Now that the project has been generated, add project info
     await addProjectInfoToTelemetry();
   } catch (ex) {
+    // Since we may have failed before generating a project, make
+    // sure we get those NPM package versions
+    await Telemetry.populateNpmPackageVersions();
+
     initWindowsError =
       ex instanceof Error ? (ex as Error) : new Error(String(ex));
     Telemetry.trackException(initWindowsError);
@@ -596,5 +643,9 @@ function isProjectUsingYarn(cwd: string): boolean {
     console.error(initWindowsError);
   }
   endTelemetrySession(initWindowsError);
-  setExitProcessWithError(argv.verbose, initWindowsError);
-})();
+  setExitProcessWithError(options.verbose, initWindowsError);
+}
+
+export type WindowsInitOptions = yargs.InferredOptionTypes<
+  typeof windowsInitOptions
+>;

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -190,7 +190,6 @@ class TouchableOpacity extends React.Component<Props, State> {
     Animated.timing(this.state.anim, {
       toValue,
       duration,
-      // $FlowFixMe[method-unbinding]
       easing: Easing.inOut(Easing.quad),
       useNativeDriver: true,
     }).start();
