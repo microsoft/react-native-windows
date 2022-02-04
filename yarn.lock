@@ -11585,9 +11585,9 @@ xcode@^2.0.0:
     uuid "^3.3.2"
 
 xml-formatter@^2.4.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-2.6.0.tgz#502cf34889584baae0d9580632dc0cbc73de5b49"
-  integrity sha512-+bQeoiE5W3CJdDCHTlveYSWFfQWnYB3uHGeRJ6LlEsL5kT++mWy9iN1cMeEDfBbgOnXO2DNUbmQ6elkR/mCcjg==
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-2.6.1.tgz#066ef3a100bd58ee3b943f0c503be63176d3d497"
+  integrity sha512-dOiGwoqm8y22QdTNI7A+N03tyVfBlQ0/oehAzxIZtwnFAHGeSlrfjF73YQvzSsa/Kt6+YZasKsrdu6OIpuBggw==
   dependencies:
     xml-parser-xo "^3.2.0"
 
