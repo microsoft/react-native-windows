@@ -35,9 +35,11 @@ public:
 
   void ClearCookies() noexcept override;
 
-  void SetOnRequest(std::function<void()> &&handler) noexcept override;
-  void SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept override;
-  void SetOnError(std::function<void(const std::string &)> &&handler) noexcept override;
+  void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept override;
+  void SetOnResponse(std::function<void(int64_t requestId, Response&& response)> &&handler) noexcept override;
+  void SetOnData(std::function<void(int64_t requestId, std::string&& responseData)> &&handler) noexcept override;
+  void SetOnError(
+      std::function<void(int64_t requestId, const std::string &message /*, bool isTimeout*/)> &&handler) noexcept override;
 };
 
 } // namespace

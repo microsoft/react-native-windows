@@ -19,6 +19,12 @@ struct IHttpResource {
     std::string Data;
   };
 
+  struct Response {
+    int64_t StatusCode;
+    Headers Headers;
+    std::string Url;
+  };
+
   static std::shared_ptr<IHttpResource> Make() noexcept;
 
   virtual ~IHttpResource() noexcept {}
@@ -37,9 +43,11 @@ struct IHttpResource {
 
   virtual void ClearCookies() noexcept = 0;
 
-  virtual void SetOnRequest(std::function<void()> &&handler) noexcept = 0;
-  virtual void SetOnResponse(std::function<void(const std::string &)> &&handler) noexcept = 0;
-  virtual void SetOnError(std::function<void(const std::string &)> &&handler) noexcept = 0;
+  virtual void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept = 0;//TODO: Keep???
+  virtual void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept = 0;
+  virtual void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept = 0;
+  virtual void SetOnError(
+      std::function<void(int64_t requestId, const std::string &message /*, bool isTimeout*/)> &&handler) noexcept = 0;
 };
 
 } // namespace Microsoft::React

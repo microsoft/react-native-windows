@@ -121,13 +121,13 @@ void WinRTHttpResource::AbortRequest() noexcept /*override*/ {}
 
 void WinRTHttpResource::ClearCookies() noexcept /*override*/ {}
 
-void WinRTHttpResource::SetOnRequest(function<void()> &&handler) noexcept /*override*/ {}
+void WinRTHttpResource::SetOnRequest(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {}
 
-void WinRTHttpResource::SetOnResponse(function<void(const string &)> &&handler) noexcept /*override*/ {}
+void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response&& response)> &&handler) noexcept /*override*/ {}
 
-void WinRTHttpResource::SetOnError(function<void(const string &)> &&handler) noexcept /*override*/ {
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, std::string&& responseData)> &&handler) noexcept /*override*/ {}
 
-}
+void WinRTHttpResource::SetOnError(function<void(int64_t requestId, const string &)> &&handler) noexcept /*override*/ {}
 
 #pragma endregion IHttpResource
 
