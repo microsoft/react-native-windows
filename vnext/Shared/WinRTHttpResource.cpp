@@ -121,17 +121,26 @@ void WinRTHttpResource::AbortRequest() noexcept /*override*/ {}
 
 void WinRTHttpResource::ClearCookies() noexcept /*override*/ {}
 
-void WinRTHttpResource::SetOnRequest(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {}
+void WinRTHttpResource::SetOnRequest(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
+  m_onRequest = std::move(handler);
+}
 
-void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response&& response)> &&handler) noexcept /*override*/ {}
+void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response&& response)> &&handler) noexcept /*override*/ {
+  m_onResponse = std::move(handler);
+}
 
-void WinRTHttpResource::SetOnData(function<void(int64_t requestId, std::string&& responseData)> &&handler) noexcept /*override*/ {}
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, std::string&& responseData)> &&handler) noexcept /*override*/ {
+  m_onData = std::move(handler);
+}
 
-void WinRTHttpResource::SetOnError(function<void(int64_t requestId, const string &)> &&handler) noexcept /*override*/ {}
+void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string && message)> &&handler) noexcept /*override*/ {
+  m_onError = std::move(handler);
+}
 
 #pragma endregion IHttpResource
 
 fire_and_forget WinRTHttpResource::PerformSendRequest(HttpClient client, HttpRequestMessage request, bool textResponse) noexcept {
+  auto self = shared_from_this();
   //TODO: Set timeout?
 
   try {
@@ -149,6 +158,14 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpClient client, HttpReq
     auto response = async.GetResults();
     if (response) {//TODO: check nullptr?
       //TODO: OnResponseReceived
+      if (self->m_onResponse) {
+        Headers headers;
+        for (auto header : response.Headers()) {
+          headers.emplace(winrt::to_string(header.Key()), winrt::to_string(header.Value()));
+        }
+        string url = winrt::to_string(response.RequestMessage().RequestUri().AbsoluteUri());
+        self->m_onResponse(0 /*requestId*/, {static_cast<int32_t>(response.StatusCode()), std::move(headers), std::move(url)});
+      }
     }
 
     //TODO: Incremental updates?
@@ -171,18 +188,24 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpClient client, HttpReq
         string responseData =
             string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
 
-        //TODO: self->OnDataReceived
+        if (self->m_onData) {
+          self->m_onData(0 /*requestId*/, std::move(responseData));
+        }
       } else {
         auto buffer = reader.ReadBuffer(length);
         auto data = CryptographicBuffer::EncodeToBase64String(buffer);
         auto responseData = winrt::to_string(data);//TODO: string view???
 
-        //TODO: self->OnDataReceived
+        if (self->m_onData) {
+          self->m_onData(0 /*requestId*/, std::move(responseData));
+        }
       }
 
-      //TODO: self->OnRequestSuccess
+      //TODO: self->OnRequestSuccess OR, do request success inside OnData.
     } else {
-      //TODO: self->OnRequestError
+      if (self->m_onError) {
+        self->m_onError(0 /*requestId*/, "Unhandled exception during request" /*, isTimeout*/);
+      }
     }
   } catch (...) {
     // TODO: self->OnRequestError

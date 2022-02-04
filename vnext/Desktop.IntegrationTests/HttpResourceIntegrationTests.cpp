@@ -23,9 +23,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     bool sent = false;
     bool received = false;
     string error;
-    rc->SetOnRequest([&sent]() { sent = true; });
-    rc->SetOnResponse([&received](const string &message) { received = true; });
-    rc->SetOnError([&error](const string &message) { error = message; });
+    //rc->SetOnRequest([&sent]() { sent = true; });
+    rc->SetOnResponse([&received](int64_t, IHttpResource::Response&&) { received = true; });
+    rc->SetOnError([&error](int64_t, string&& message) { error = message; });
 
     rc->SendRequest("GET", "http://localhost:8081/debugger-ui", {}, {}, "text", false, 1000, false, [](int64_t) {});
 
@@ -37,7 +37,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(RequestGetFails) {
     auto rc = IHttpResource::Make();
     string error;
-    rc->SetOnError([&error](const string &message) { error = message; });
+    rc->SetOnError([&error](int64_t, string &&message) { error = message; });
 
     rc->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, [](int64_t) {});
 

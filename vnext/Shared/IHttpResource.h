@@ -47,7 +47,7 @@ struct IHttpResource {
   virtual void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept = 0;
   virtual void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept = 0;
   virtual void SetOnError(
-      std::function<void(int64_t requestId, const std::string &message /*, bool isTimeout*/)> &&handler) noexcept = 0;
+      std::function<void(int64_t requestId, std::string &&message /*, bool isTimeout*/)> &&handler) noexcept = 0;
 };
 
 } // namespace Microsoft::React

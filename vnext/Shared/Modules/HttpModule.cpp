@@ -48,8 +48,21 @@ static shared_ptr<IHttpResource> GetOrInitHttpResource(weak_ptr<Instance> weakIn
     SendEvent(weakInstance, "didReceiveNetworkResponse", std::move(args));
   });
 
-  resource->SetOnData([weakInstance](int64_t requestId, std::string &&responseData) {
+  resource->SetOnData(
+      [weakInstance](int64_t requestId, std::string &&responseData) {
+      dynamic args = dynamic::array(requestId, std::move(responseData));
 
+      SendEvent(weakInstance, "didReceiveNetworkData", std::move(args));
+
+      //TODO: Move into separate method IF not executed right after onData()
+      SendEvent(weakInstance, "didCompleteNetworkResponse", dynamic::array(requestId));
+  });
+
+  resource->SetOnError([weakInstance](int64_t requestId, string &&message) {
+    dynamic args = dynamic::array(requestId, std::move(message));
+    //TODO: isTimeout errorArgs.push_back(true);
+
+    SendEvent(weakInstance, "didCompleteNetworkResponse", std::move(args));
   });
 
   return resource;
