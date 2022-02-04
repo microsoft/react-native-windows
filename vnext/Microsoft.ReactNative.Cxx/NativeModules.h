@@ -301,7 +301,7 @@ constexpr void ValidateCoroutineArg() noexcept {
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
         "Coroutine parameter must be passed by value for safe access"
-#ifndef __APPLE__
+#ifndef __clang__
         ": " __FUNCSIG__
 #endif
     );
