@@ -3,8 +3,10 @@
 
 #pragma once
 
-#include <cxxreact/CxxModule.h>
 #include "IHttpResource.h"
+
+// React Native
+#include <cxxreact/CxxModule.h>
 
 namespace Microsoft::React {
 
@@ -16,7 +18,9 @@ class HttpModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { SendRequest = 0, AbortRequest = 1, ClearCookies = 2, LAST = ClearCookies };
 
-  HttpModule();
+  HttpModule() noexcept;
+
+  ~HttpModule() noexcept override;
 
 #pragma region CxxModule
 
@@ -39,6 +43,13 @@ class HttpModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule
 
  private:
+  struct ModuleHolder {
+    HttpModule *Module{nullptr};
+  };
+
+  std::shared_ptr<IHttpResource> m_resource;
+  std::shared_ptr<ModuleHolder> m_holder;
+
   /// <summary>
   /// Notifies an event to the current React Instance.
   /// </summary>

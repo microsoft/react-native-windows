@@ -13,6 +13,7 @@ namespace Microsoft::React {
 
 class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
 
+  //TODO: Make non-trivial args r-value??
   winrt::fire_and_forget PerformSendRequest(/*TODO: shared self?,*/
     winrt::Windows::Web::Http::HttpClient client,
     winrt::Windows::Web::Http::HttpRequestMessage,

@@ -5,14 +5,10 @@
 
 #include "HttpModule.h"
 
-#include <Utils/CppWinrtLessExceptions.h>
+// React Native
+#include <cxxreact/Instance.h>
 
-// Windows API
-#include <winrt/Windows.Web.Http.Headers.h>
-#include <winrt/Windows.Web.Http.h>
-
-using namespace winrt::Windows::Web::Http;
-
+using facebook::react::Instance;
 using folly::dynamic;
 using std::shared_ptr;
 using std::string;
@@ -20,11 +16,25 @@ using std::weak_ptr;
 
 namespace {
 constexpr char moduleName[] = "Networking";
+
+//TODO: Add to shared header? (See WebSocketModule)
+static void SendEvent(weak_ptr<Instance> weakInstance, string &&eventName, dynamic &&args) {
+  if (auto instance = weakInstance.lock()) {
+    instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
+  }
 }
+
+} // namespace <anonymous>
 
 namespace Microsoft::React {
 
-HttpModule::HttpModule() {}
+HttpModule::HttpModule() noexcept : m_resource{IHttpResource::Make()}, m_holder{std::make_shared<ModuleHolder>()} {
+  m_holder->Module = this;
+}
+
+HttpModule::~HttpModule() noexcept /*override*/ {
+  m_holder->Module = nullptr;
+}
 
 #pragma region CxxModule
 
