@@ -93,6 +93,8 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);
 
+  virtual void OnDropViewInstance(const XamlView &view) {}
+
  protected:
   virtual XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props) = 0;
   virtual void OnViewCreated(XamlView view) {}
