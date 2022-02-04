@@ -5,6 +5,8 @@
 ; **************************************************************************************************
 
 EXPORTS
+??$safe_assert_terminate@$0A@@detail@folly@@YAXPEBUsafe_assert_arg@01@ZZ
+??$safe_assert_terminate@$0A@PEBD@detail@folly@@YAXAEBUsafe_assert_arg@01@PEBD@Z
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??0LayoutAnimation@react@facebook@@QEAA@Udynamic@folly@@@Z
