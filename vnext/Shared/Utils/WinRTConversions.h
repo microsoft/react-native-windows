@@ -41,15 +41,8 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
   return awaitable{queue};
 } // resume_in_queue
 
-std::string HResultToString(winrt::hresult_error const &e) {
-  std::stringstream stream;
-  stream << "[0x" << std::hex << e.code() << "] " << winrt::to_string(e.message());
+std::string HResultToString(winrt::hresult_error const &e);
 
-  return stream.str();
-}
-
-std::string HResultToString(winrt::hresult &&result) {
-  return HResultToString(winrt::hresult_error(std::move(result), winrt::hresult_error::from_abi));
-}
+std::string HResultToString(winrt::hresult &&result);
 
 } // namespace Microsoft::React::Utilities

@@ -62,6 +62,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
