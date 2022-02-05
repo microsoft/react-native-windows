@@ -22,7 +22,7 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
 
   static int64_t s_lastRequestId;
 
-  winrt::Windows::Web::Http::HttpClient m_client;
+  winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseType> m_requests;
 
@@ -38,12 +38,17 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   //TODO: Make non-trivial args r-value??
   winrt::fire_and_forget PerformSendRequest(/*TODO: shared self?,*/
     int64_t requestId,
-    winrt::Windows::Web::Http::HttpClient client,
-    winrt::Windows::Web::Http::HttpRequestMessage,
+    winrt::Windows::Web::Http::HttpRequestMessage request,
     bool textResponse
     /*, requestId?*/) noexcept;
 
 public:
+  WinRTHttpResource() noexcept;
+
+  WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient client) noexcept;
+
+#pragma region IHttpResource
+
   void SendRequest(
       const std::string &method,
       const std::string &url,
@@ -56,6 +61,8 @@ public:
       std::function<void(int64_t)> &&callback) noexcept override;
   void AbortRequest(int64_t requestId) noexcept override;
   void ClearCookies() noexcept override;
+
+#pragma endregion IHttpResource
 
   void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept override;
   void SetOnResponse(std::function<void(int64_t requestId, Response&& response)> &&handler) noexcept override;

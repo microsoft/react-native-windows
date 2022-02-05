@@ -24,11 +24,11 @@ using winrt::Windows::Storage::Streams::UnicodeEncoding;
 using winrt::Windows::Storage::StorageFile;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 using winrt::Windows::Web::Http::HttpBufferContent;
-using winrt::Windows::Web::Http::HttpClient;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
 using winrt::Windows::Web::Http::HttpStreamContent;
 using winrt::Windows::Web::Http::HttpStringContent;
+using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
 using winrt::fire_and_forget;
 using winrt::hresult_error;
@@ -45,6 +45,10 @@ namespace Microsoft::React {
 
 //TODO: Multi-thread issues?
 /*static*/ int64_t WinRTHttpResource::s_lastRequestId = 0;
+
+WinRTHttpResource::WinRTHttpResource(IHttpClient client) noexcept : m_client{client} {}
+
+WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient()) {}
 
 #pragma region IHttpResource
 
@@ -195,12 +199,12 @@ void WinRTHttpResource::RemoveRequest(int64_t requestId) noexcept {
   m_requests.erase(requestId);
 }
 
-fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpClient client, HttpRequestMessage request, bool textResponse) noexcept {
+fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage request, bool textResponse) noexcept {
   auto self = shared_from_this();
   //TODO: Set timeout?
 
   try {
-    auto sendRequestOp = client.SendRequestAsync(request);
+    auto sendRequestOp = self->m_client.SendRequestAsync(request);
     self->AddRequest(requestId, sendRequestOp);
 
     co_await lessthrow_await_adapter<ResponseType>{sendRequestOp};
