@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Feb 2022 06:07:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.448",
+      "version": "0.0.0-canary.448",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2c935db54992cde68679079c4dec761782c58b67",
+            "comment": "Add onUnload to RNW View Manager"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6a7a672df030febe3421655c3594e886458c0ad7",
+            "comment": "Replace __APPLE__ with __clang__ where applicable"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Feb 2022 06:08:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.447",
       "version": "0.0.0-canary.447",
