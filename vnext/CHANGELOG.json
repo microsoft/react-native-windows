@@ -2,6 +2,60 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Feb 2022 06:07:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.448",
+      "version": "0.0.0-canary.448",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2c935db54992cde68679079c4dec761782c58b67",
+            "comment": "Add onUnload to RNW View Manager"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6a7a672df030febe3421655c3594e886458c0ad7",
+            "comment": "Replace __APPLE__ with __clang__ where applicable"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Feb 2022 06:08:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.447",
+      "version": "0.0.0-canary.447",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "03cf427b70ce5a60ad11eec862284cecdff97584",
+            "comment": "Stop both raw value and offset animation"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1fe0e241ac2327eb1b2ebd6197c6496d3bc27bcf",
+            "comment": "Intg 1/27"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e1d8a705abd59b7c3347b9a4446b96e0d20c2fbf",
+            "comment": "Use raw value for CalculatedAnimationDriver"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.27",
+            "commit": "03cf427b70ce5a60ad11eec862284cecdff97584"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Feb 2022 06:08:39 GMT",
       "tag": "react-native-windows_v0.0.0-canary.446",
       "version": "0.0.0-canary.446",

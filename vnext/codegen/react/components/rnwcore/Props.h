@@ -475,7 +475,7 @@ class AndroidHorizontalScrollContentViewProps final : public ViewProps {
 
 #pragma mark - Props
 
-  
+  bool removeClippedSubviews{false};
 };
 
 class RCTSegmentedControlProps final : public ViewProps {
