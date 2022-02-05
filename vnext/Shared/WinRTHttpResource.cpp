@@ -141,7 +141,7 @@ void WinRTHttpResource::SendRequest(
       request.Content(content);
     }
 
-    PerformSendRequest(requestId, m_client, request, responseType == "text");
+    PerformSendRequest(requestId, request, responseType == "text");
   } catch (...) { // TODO: Delcare specific exception types
     // TODO: OnRequestError
   }
@@ -202,6 +202,9 @@ void WinRTHttpResource::RemoveRequest(int64_t requestId) noexcept {
 fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage request, bool textResponse) noexcept {
   auto self = shared_from_this();
   //TODO: Set timeout?
+
+  // Ensure background thread
+  co_await winrt::resume_background();
 
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(request);
