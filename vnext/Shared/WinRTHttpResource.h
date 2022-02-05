@@ -15,29 +15,29 @@ namespace Microsoft::React {
 
 class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
 
-  std::mutex m_mutex;
-  std::unordered_map<
-    int64_t,
-    winrt::Windows::Foundation::IAsyncOperationWithProgress<
+  typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
-      winrt::Windows::Web::Http::HttpProgress>>
-      m_requests;
+      winrt::Windows::Web::Http::HttpProgress>
+      ResponseType;
+
+  static int64_t s_lastRequestId;
+
+  winrt::Windows::Web::Http::HttpClient m_client;
+  std::mutex m_mutex;
+  std::unordered_map<int64_t, ResponseType> m_requests;
 
   std::function<void(int64_t requestId)> m_onRequest;
   std::function<void(int64_t requestId, Response &&response)> m_onResponse;
   std::function<void(int64_t requestId, std::string &&responseData)> m_onData;
   std::function<void(int64_t requestId, std::string &&message /*, bool isTimeout*/)> m_onError;
 
-  void AddRequest(
-    int64_t requestId,
-    winrt::Windows::Foundation::IAsyncOperationWithProgress<
-      winrt::Windows::Web::Http::HttpResponseMessage,
-      winrt::Windows::Web::Http::HttpProgress> response) noexcept;
+  void AddRequest(int64_t requestId, ResponseType response) noexcept;
 
   void RemoveRequest(int64_t requestId) noexcept;
 
   //TODO: Make non-trivial args r-value??
   winrt::fire_and_forget PerformSendRequest(/*TODO: shared self?,*/
+    int64_t requestId,
     winrt::Windows::Web::Http::HttpClient client,
     winrt::Windows::Web::Http::HttpRequestMessage,
     bool textResponse
