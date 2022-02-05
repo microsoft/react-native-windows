@@ -13,6 +13,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 
 using std::function;
+using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
 
@@ -21,7 +22,7 @@ using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 using winrt::Windows::Storage::Streams::DataReader;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
-using winrt::Windows::Storage::StorageFile;//
+using winrt::Windows::Storage::StorageFile;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 using winrt::Windows::Web::Http::HttpBufferContent;
 using winrt::Windows::Web::Http::HttpClient;
@@ -29,10 +30,11 @@ using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpProgress;
 using winrt::Windows::Web::Http::HttpRequestMessage;
 using winrt::Windows::Web::Http::HttpResponseMessage;
-using winrt::Windows::Web::Http::HttpStreamContent;//
+using winrt::Windows::Web::Http::HttpStreamContent;
 using winrt::Windows::Web::Http::HttpStringContent;
 using winrt::Windows::Web::Http::IHttpContent;
 using winrt::fire_and_forget;
+using winrt::hresult_error;
 using winrt::to_hstring;
 
 namespace {
@@ -117,9 +119,29 @@ void WinRTHttpResource::SendRequest(
   }
 }
 
-void WinRTHttpResource::AbortRequest() noexcept /*override*/ {}
+void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
+  IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> request{nullptr};
 
-void WinRTHttpResource::ClearCookies() noexcept /*override*/ {}
+  {
+    scoped_lock lock{m_mutex};
+    auto iter = m_requests.find(requestId);
+    if (iter == std::end(m_requests)) {
+      return;
+    }
+    request = iter->second;
+  }
+
+  try {
+    request.Cancel();
+  } catch (hresult_error const &) {
+    //TODO: Propagate error?
+  }
+}
+
+void WinRTHttpResource::ClearCookies() noexcept /*override*/ {
+  assert(false);
+  //NOT IMPLEMENTED
+}
 
 void WinRTHttpResource::SetOnRequest(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
   m_onRequest = std::move(handler);
@@ -138,6 +160,18 @@ void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string && me
 }
 
 #pragma endregion IHttpResource
+
+void WinRTHttpResource::AddRequest(
+    int64_t requestId,
+    IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> response) noexcept {
+  scoped_lock lock{m_mutex};
+  m_requests[requestId] = response;
+}
+
+void WinRTHttpResource::RemoveRequest(int64_t requestId) noexcept {
+  scoped_lock lock{m_mutex};
+  m_requests.erase(requestId);
+}
 
 fire_and_forget WinRTHttpResource::PerformSendRequest(HttpClient client, HttpRequestMessage request, bool textResponse) noexcept {
   auto self = shared_from_this();

@@ -39,7 +39,7 @@ struct IHttpResource {
       int64_t timeout,
       bool withCredentials,
       std::function<void(int64_t)> &&callback) noexcept = 0;
-  virtual void AbortRequest() noexcept = 0;
+  virtual void AbortRequest(int64_t requestId) noexcept = 0;
 
   virtual void ClearCookies() noexcept = 0;
 
