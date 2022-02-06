@@ -25,6 +25,7 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 TEST_MODULE_INITIALIZE(InitModule) {
   Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
   Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", false);
+  Microsoft::React::SetRuntimeOptionBool("Http.UseResourceModule", true);
 
   // WebSocketJSExecutor can't register native log hooks.
   Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
