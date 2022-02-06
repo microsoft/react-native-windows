@@ -23,6 +23,7 @@ struct HttpCallbacks
   std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
       const boost::beast::http::request<boost::beast::http::string_body> &)>
       OnGet;
+  std::function<void()> OnRequest;
 };
 
 ///
@@ -91,6 +92,8 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   ///
   void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
                     const boost::beast::http::request<boost::beast::http::string_body> &)> &&onGet) noexcept;
+
+  void SetOnRequest(std::function<void()>&& handler) noexcept;
 };
 
 } // namespace Microsoft::React::Test

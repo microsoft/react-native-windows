@@ -267,6 +267,11 @@ void HttpServer::SetOnGet(
   m_callbacks.OnGet = std::move(handler);
 }
 
+void HttpServer::SetOnRequest(function<void()>&& handler) noexcept
+{
+  m_callbacks.OnRequest = std::move(handler);
+}
+
 #pragma endregion HttpServer
 
 } // namespace Microsoft::React::Test
