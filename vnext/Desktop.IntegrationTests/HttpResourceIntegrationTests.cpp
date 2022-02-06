@@ -9,11 +9,15 @@
 #include <CppUnitTest.h>
 #include <IHttpResource.h>
 
+// Standard Library
+#include <future>
+
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
+using std::promise;
 using std::string;
 using std::vector;
 
@@ -25,40 +29,42 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
   // This test always fails because the requested resource does not exist.
   TEST_METHOD(RequestGetSucceeds) {
-    bool responded = false;
-    auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
-    server->SetOnRequest([&responded]()
+    promise<void> getPromise;
+    int statusCode = 0;
+
+    // HTTP call scope
     {
-        responded = true;
-    });
-    //http::response<http::dynamic_body>(const http::request<http::string_body> &)
-    server->SetOnGet([](const http::request<http::string_body>& request) -> http::response<http::dynamic_body>
-    {
+      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
+      server->SetOnGet([](const http::request<http::string_body> &request) -> http::response<http::dynamic_body> {
         http::response<http::dynamic_body> response;
         response.result(http::status::ok);
 
         return response;
-    });
-    server->Start();
+      });
+      server->Start();
 
-    auto resource = IHttpResource::Make();
-    resource->SetOnResponse([](int64_t, IHttpResource::Response response)
-    {
-        auto sc = response.StatusCode;
-    });
-    resource->SendRequest(
-      "GET",
-      "http://localhost:5555",
-      {}/*header*/,
-      {}/*bodyData*/,
-      "responseType",
-      false,
-      1000/*timeout*/,
-      false/*withCredentials*/,
-      [](int64_t) {}
-    );
+      auto resource = IHttpResource::Make();
+      resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
+        statusCode = static_cast<int>(response.StatusCode);
+        getPromise.set_value();
+      });
+      resource->SendRequest(
+          "GET",
+          "http://localhost:5555",
+          {} /*header*/,
+          {} /*bodyData*/,
+          "text",
+          false,
+          1000 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
 
-    server->Stop();
+      server->Stop();
+    }
+    // Synchronize response.
+    getPromise.get_future().wait();
+
+    Assert::AreEqual(200, statusCode);
   }
 
   TEST_METHOD(RequestGetFails) {

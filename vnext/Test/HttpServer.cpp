@@ -137,7 +137,10 @@ void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
     return;
   }
 
-  m_callbacks.OnResponseSent();
+  if (m_callbacks.OnResponseSent)
+  {
+	  m_callbacks.OnResponseSent(); 
+  }
 
   // TODO: Re-enable when concurrent sessions are implemented.
   // If response indicates "Connection: close"
@@ -221,6 +224,7 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
   if (ec)
   {
     // ISS:2735328 - Implement failure propagation mechanism
+    return;
   }
   else
   {
