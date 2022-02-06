@@ -6,9 +6,6 @@
 // Windows API
 #include <winrt/base.h>
 
-// Standard Library
-#include <sstream>
-
 namespace Microsoft::React::Utilities {
 
 std::string HResultToString(winrt::hresult_error const &e);
