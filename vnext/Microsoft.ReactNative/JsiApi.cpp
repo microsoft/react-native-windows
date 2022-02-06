@@ -395,7 +395,7 @@ facebook::jsi::JSError const &jsError) {                             \
 }
 
 /*static*/ ReactNative::JsiRuntime JsiRuntime::GetOrCreate(
-    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+    std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
     std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
   {
     std::scoped_lock lock{s_mutex};
@@ -409,7 +409,7 @@ facebook::jsi::JSError const &jsError) {                             \
 }
 
 /*static*/ ReactNative::JsiRuntime JsiRuntime::Create(
-    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+    std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
     std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
   // There are some functions that we cannot do using JSI such as
   // defining a property or using Symbol as a key.
@@ -445,7 +445,7 @@ ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
 }
 
 JsiRuntime::JsiRuntime(
-    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+    std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> &&runtimeHolder,
     std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept
     : m_runtimeHolder{std::move(runtimeHolder)},
       m_runtime{std::move(runtime)},
