@@ -22,12 +22,7 @@ using std::string;
 using std::vector;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
-  TEST_METHOD(MakeIsNotNull) {
-    auto rc = IHttpResource::Make();
-    Assert::IsFalse(nullptr == rc);
-  }
 
-  // This test always fails because the requested resource does not exist.
   TEST_METHOD(RequestGetSucceeds) {
     promise<void> getPromise;
     int statusCode = 0;
@@ -68,12 +63,30 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestGetFails) {
-    auto rc = IHttpResource::Make();
     string error;
-    rc->SetOnError([&error](int64_t, string &&message) { error = message; });
+    promise<void> promise;
 
-    rc->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, [](int64_t) {});
+    auto resource = IHttpResource::Make();
+    resource->SetOnError([&error, &promise](int64_t, string &&message) {
+      error = message;
+      promise.set_value();
+    });
 
-    Assert::AreEqual(string("No such host is known"), error);
+    resource->SendRequest(
+      "GET",
+      "http://nonexistinghost",
+      {},
+      {},
+      "text",
+      false,
+      1000,
+      false,
+      [](int64_t) {}
+    );
+
+    promise.get_future().wait();
+
+    Logger::WriteMessage(error.c_str());
+    Assert::AreNotEqual(string{}, error);
   }
 };
