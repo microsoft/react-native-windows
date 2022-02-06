@@ -28,7 +28,7 @@ static void SendEvent(weak_ptr<Instance> weakInstance, string &&eventName, dynam
   }
 }
 
-static shared_ptr<IHttpResource> GetOrInitHttpResource(weak_ptr<Instance> weakInstance) {
+static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakInstance) {
   auto resource = IHttpResource::Make();
 
   resource->SetOnResponse([weakInstance](int64_t requestId, IHttpResource::Response &&response) {
@@ -101,13 +101,19 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
   {
     {
       "sendRequest",
-      [weakResource = weak_ptr<IHttpResource>(m_resource)](dynamic args, Callback cb)//TODO: Check whether 'cb' is needed
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback cb)//TODO: Check whether 'cb' is needed
       {
-        auto params = facebook::xplat::jsArgAsObject(args, 0);
-        auto data = params["data"];
-        IHttpResource::BodyData bodyData;
-        if (auto resource = weakResource.lock())
+        auto holder = weakHolder.lock();
+        if (!holder) {
+          return;
+        }
+
+        auto resource = holder->Module->m_resource;
+        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
         {
+          IHttpResource::BodyData bodyData;
+          auto params = facebook::xplat::jsArgAsObject(args, 0);
+          auto data = params["data"];
           auto stringData = data["string"];
           if (!stringData.empty())
           {
@@ -131,12 +137,15 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           }
           //TODO: Support FORM data
 
-          //TODO: Extract headers
+          IHttpResource::Headers headers;
+          for (auto& header : params["headers"].items()) {
+            headers.emplace(header.first.getString(), header.second.getString());
+          }
 
           resource->SendRequest(
             params["method"].asString(),
             params["url"].asString(),
-            {},//headers
+            std::move(headers),
             std::move(bodyData),
             params["responseType"].asString(),
             params["incrementalUpdates"].asBool(),
@@ -149,14 +158,36 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
     },
     {
       "abortRequest",
-      [](dynamic args)
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
       {
+        auto holder = weakHolder.lock();
+        if (!holder)
+        {
+          return;
+        }
+
+        auto resource = holder->Module->m_resource;
+        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        {
+          resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
+        }
       }
     },
     {
       "clearCookies",
-      [](dynamic args)
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
       {
+        auto holder = weakHolder.lock();
+        if (!holder)
+        {
+          return;
+        }
+
+        auto resource = holder->Module->m_resource;
+        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        {
+          resource->ClearCookies();
+        }
       }
     }
   };

@@ -32,7 +32,7 @@ struct IHttpResource {
   virtual void SendRequest(
       const std::string &method,
       const std::string &url,
-      const Headers &headers,
+      const Headers &&headers,
       BodyData &&bodyData,
       const std::string &responseType,
       bool useIncrementalUpdates,

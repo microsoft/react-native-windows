@@ -55,7 +55,7 @@ WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windo
 void WinRTHttpResource::SendRequest(
     const string &method,
     const string &url,
-    const Headers &headers,
+    const Headers &&headers,
     BodyData &&bodyData,
     const string &responseType,
     bool useIncrementalUpdates,
