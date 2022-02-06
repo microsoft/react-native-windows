@@ -184,7 +184,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   Mso::CntPtr<Mso::React::IDispatchQueue2> m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;
 
-  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
   winrt::Microsoft::ReactNative::JsiRuntime m_jsiRuntime{nullptr};
 };
 

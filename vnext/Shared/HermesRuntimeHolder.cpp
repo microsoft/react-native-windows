@@ -72,6 +72,10 @@ class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::R
 
 } // namespace
 
+facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcept {
+  return facebook::react::JSIEngineOverride::Hermes;
+}
+
 std::shared_ptr<jsi::Runtime> HermesRuntimeHolder::getRuntime() noexcept {
   std::call_once(m_once_flag, [this]() { initRuntime(); });
 
