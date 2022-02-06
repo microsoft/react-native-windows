@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-//C4996: 'gethostbyaddr': Use getnameinfo() or GetNameInfoW() instead
+// C4996: 'gethostbyaddr': Use getnameinfo() or GetNameInfoW() instead
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
-#include <boost/beast/http.hpp>
-#include <Test/HttpServer.h>
 #include <CppUnitTest.h>
 #include <IHttpResource.h>
+#include <Test/HttpServer.h>
+#include <boost/beast/http.hpp>
 
 // Standard Library
 #include <future>
@@ -22,7 +22,6 @@ using std::string;
 using std::vector;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
-
   TEST_METHOD(RequestGetSucceeds) {
     promise<void> getPromise;
     int statusCode = 0;
@@ -72,17 +71,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       promise.set_value();
     });
 
-    resource->SendRequest(
-      "GET",
-      "http://nonexistinghost",
-      {},
-      {},
-      "text",
-      false,
-      1000,
-      false,
-      [](int64_t) {}
-    );
+    resource->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, [](int64_t) {});
 
     promise.get_future().wait();
 

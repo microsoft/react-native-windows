@@ -21,7 +21,7 @@ using Microsoft::React::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
 
-//TODO: Add to shared header? (See WebSocketModule)
+// TODO: Add to shared header? (See WebSocketModule)
 static void SendEvent(weak_ptr<Instance> weakInstance, string &&eventName, dynamic &&args) {
   if (auto instance = weakInstance.lock()) {
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
@@ -38,29 +38,23 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakInsta
     }
 
     // TODO: Test response content.
-    dynamic args = dynamic::array(
-      requestId,
-      response.StatusCode,
-      headers,
-      response.Url
-    );
+    dynamic args = dynamic::array(requestId, response.StatusCode, headers, response.Url);
 
     SendEvent(weakInstance, "didReceiveNetworkResponse", std::move(args));
   });
 
-  resource->SetOnData(
-      [weakInstance](int64_t requestId, std::string &&responseData) {
-      dynamic args = dynamic::array(requestId, std::move(responseData));
+  resource->SetOnData([weakInstance](int64_t requestId, std::string &&responseData) {
+    dynamic args = dynamic::array(requestId, std::move(responseData));
 
-      SendEvent(weakInstance, "didReceiveNetworkData", std::move(args));
+    SendEvent(weakInstance, "didReceiveNetworkData", std::move(args));
 
-      //TODO: Move into separate method IF not executed right after onData()
-      SendEvent(weakInstance, "didCompleteNetworkResponse", dynamic::array(requestId));
+    // TODO: Move into separate method IF not executed right after onData()
+    SendEvent(weakInstance, "didCompleteNetworkResponse", dynamic::array(requestId));
   });
 
   resource->SetOnError([weakInstance](int64_t requestId, string &&message) {
     dynamic args = dynamic::array(requestId, std::move(message));
-    //TODO: isTimeout errorArgs.push_back(true);
+    // TODO: isTimeout errorArgs.push_back(true);
 
     SendEvent(weakInstance, "didCompleteNetworkResponse", std::move(args));
   });
@@ -68,7 +62,7 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakInsta
   return resource;
 }
 
-} // namespace <anonymous>
+} // namespace
 
 namespace Microsoft::React {
 

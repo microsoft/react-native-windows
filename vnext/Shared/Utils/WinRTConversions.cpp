@@ -19,4 +19,4 @@ std::string HResultToString(winrt::hresult &&result) {
   return HResultToString(winrt::hresult_error(std::move(result), winrt::hresult_error::from_abi));
 }
 
-}// namespace
+} // namespace Microsoft::React::Utilities

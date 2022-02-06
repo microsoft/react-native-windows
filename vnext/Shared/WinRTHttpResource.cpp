@@ -17,12 +17,15 @@ using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
 
+using winrt::fire_and_forget;
+using winrt::hresult_error;
+using winrt::to_hstring;
+using winrt::to_string;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
+using winrt::Windows::Storage::StorageFile;
 using winrt::Windows::Storage::Streams::DataReader;
 using winrt::Windows::Storage::Streams::UnicodeEncoding;
-using winrt::Windows::Storage::StorageFile;
-using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 using winrt::Windows::Web::Http::HttpBufferContent;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
@@ -30,20 +33,15 @@ using winrt::Windows::Web::Http::HttpStreamContent;
 using winrt::Windows::Web::Http::HttpStringContent;
 using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
-using winrt::fire_and_forget;
-using winrt::hresult_error;
-using winrt::to_hstring;
-using winrt::to_string;
+using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
-namespace {
-
-} // namespace <anonymous>
+namespace {} // namespace
 
 namespace Microsoft::React {
 
 #pragma region WinRTHttpResource
 
-//TODO: Multi-thread issues?
+// TODO: Multi-thread issues?
 /*static*/ int64_t WinRTHttpResource::s_lastRequestId = 0;
 
 WinRTHttpResource::WinRTHttpResource(IHttpClient client) noexcept : m_client{client} {}
@@ -62,7 +60,6 @@ void WinRTHttpResource::SendRequest(
     int64_t timeout,
     bool withCredentials,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
-
   auto requestId = ++s_lastRequestId;
 
   // Enforce supported args
@@ -117,7 +114,7 @@ void WinRTHttpResource::SendRequest(
       // TODO: Add support
     } else {
       // BodyData::Type::Empty
-      //TODO: Error 'cause unsupported??
+      // TODO: Error 'cause unsupported??
     }
 
     if (content != nullptr) {
@@ -134,7 +131,7 @@ void WinRTHttpResource::SendRequest(
         }
       }
       if (!contentLength.empty()) {
-        const auto contentLengthHeader = _atoi64(contentLength.c_str());//TODO: Check error?
+        const auto contentLengthHeader = _atoi64(contentLength.c_str()); // TODO: Check error?
         content.Headers().ContentLength(contentLengthHeader);
       }
 
@@ -162,28 +159,31 @@ void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
   try {
     request.Cancel();
   } catch (hresult_error const &) {
-    //TODO: Propagate error?
+    // TODO: Propagate error?
   }
 }
 
 void WinRTHttpResource::ClearCookies() noexcept /*override*/ {
   assert(false);
-  //NOT IMPLEMENTED
+  // NOT IMPLEMENTED
 }
 
 void WinRTHttpResource::SetOnRequest(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
   m_onRequest = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response&& response)> &&handler) noexcept /*override*/ {
+void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response &&response)> &&handler) noexcept
+/*override*/ {
   m_onResponse = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnData(function<void(int64_t requestId, std::string&& responseData)> &&handler) noexcept /*override*/ {
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept
+/*override*/ {
   m_onData = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string && message)> &&handler) noexcept /*override*/ {
+void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&message)> &&handler) noexcept
+/*override*/ {
   m_onError = std::move(handler);
 }
 
@@ -199,9 +199,10 @@ void WinRTHttpResource::RemoveRequest(int64_t requestId) noexcept {
   m_requests.erase(requestId);
 }
 
-fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage request, bool textResponse) noexcept {
+fire_and_forget
+WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage request, bool textResponse) noexcept {
   auto self = shared_from_this();
-  //TODO: Set timeout?
+  // TODO: Set timeout?
 
   // Ensure background thread
   co_await winrt::resume_background();
@@ -221,19 +222,20 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpReq
     }
 
     auto response = sendRequestOp.GetResults();
-    if (response) {//TODO: check nullptr?
+    if (response) { // TODO: check nullptr?
       if (self->m_onResponse) {
         Headers headers;
         for (auto header : response.Headers()) {
           headers.emplace(to_string(header.Key()), to_string(header.Value()));
         }
         string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
-        self->m_onResponse(0 /*requestId*/, {static_cast<int32_t>(response.StatusCode()), std::move(headers), std::move(url)});
+        self->m_onResponse(
+            0 /*requestId*/, {static_cast<int32_t>(response.StatusCode()), std::move(headers), std::move(url)});
       }
     }
 
-    //TODO: Incremental updates?
-    if (response && response.Content()) {//TODO: check nullptr?
+    // TODO: Incremental updates?
+    if (response && response.Content()) { // TODO: check nullptr?
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
@@ -242,15 +244,14 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpReq
       }
 
       // Only support response sizes up to 10MB.
-      //TODO: WHY????
+      // TODO: WHY????
       co_await reader.LoadAsync(10 * 1024 * 1024);
       auto length = reader.UnconsumedBufferLength();
 
       if (textResponse) {
         std::vector<uint8_t> data(length);
         reader.ReadBytes(data);
-        string responseData =
-            string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        string responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
 
         if (self->m_onData) {
           self->m_onData(0 /*requestId*/, std::move(responseData));
@@ -258,28 +259,28 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpReq
       } else {
         auto buffer = reader.ReadBuffer(length);
         auto data = CryptographicBuffer::EncodeToBase64String(buffer);
-        auto responseData = to_string(data);//TODO: string view???
+        auto responseData = to_string(data); // TODO: string view???
 
         if (self->m_onData) {
           self->m_onData(0 /*requestId*/, std::move(responseData));
         }
       }
 
-      //TODO: self->OnRequestSuccess OR, keep in self->OnData.
+      // TODO: self->OnRequestSuccess OR, keep in self->OnData.
     } else {
       if (self->m_onError) {
         self->m_onError(requestId, response == nullptr ? "request failed" : "No response content");
       }
     }
   } catch (...) {
-    //TODO: Lose generic catch
+    // TODO: Lose generic catch
     if (self->m_onError) {
       self->m_onError(requestId, "Unhandled exception during request");
     }
   }
 
   self->RemoveRequest(requestId);
-  co_return;//TODO: keep?
+  co_return; // TODO: keep?
 }
 
 #pragma endregion WinRTHttpResource
@@ -292,4 +293,4 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpReq
 
 #pragma endregion IHttpResource
 
-}// namespace
+} // namespace Microsoft::React

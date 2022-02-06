@@ -3,9 +3,9 @@
 
 #include "WinRTWebSocketResource.h"
 
+#include <Utilities.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
-#include <Utilities.h>
 
 // MSO
 #include <dispatchQueue/dispatchQueue.h>
@@ -77,7 +77,7 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
   return awaitable{queue};
 } // resume_in_queue
 
-}// namespace <anonymous>
+} // namespace
 
 namespace Microsoft::React {
 

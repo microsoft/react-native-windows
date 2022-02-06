@@ -14,7 +14,6 @@
 namespace Microsoft::React {
 
 class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
-
   typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
       winrt::Windows::Web::Http::HttpProgress>
@@ -35,14 +34,14 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
 
   void RemoveRequest(int64_t requestId) noexcept;
 
-  //TODO: Make non-trivial args r-value??
+  // TODO: Make non-trivial args r-value??
   winrt::fire_and_forget PerformSendRequest(/*TODO: shared self?,*/
-    int64_t requestId,
-    winrt::Windows::Web::Http::HttpRequestMessage request,
-    bool textResponse
-    /*, requestId?*/) noexcept;
+                                            int64_t requestId,
+                                            winrt::Windows::Web::Http::HttpRequestMessage request,
+                                            bool textResponse
+                                            /*, requestId?*/) noexcept;
 
-public:
+ public:
   WinRTHttpResource() noexcept;
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient client) noexcept;
@@ -65,10 +64,10 @@ public:
 #pragma endregion IHttpResource
 
   void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept override;
-  void SetOnResponse(std::function<void(int64_t requestId, Response&& response)> &&handler) noexcept override;
-  void SetOnData(std::function<void(int64_t requestId, std::string&& responseData)> &&handler) noexcept override;
+  void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept override;
+  void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept override;
   void SetOnError(
       std::function<void(int64_t requestId, std::string &&message /*, bool isTimeout*/)> &&handler) noexcept override;
 };
 
-} // namespace
+} // namespace Microsoft::React
