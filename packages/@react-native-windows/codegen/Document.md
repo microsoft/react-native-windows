@@ -102,8 +102,8 @@ The syntax of `REACT_MODULE` is `REACT_MODULE(moduleStruct, [optional]moduleName
 
 ### Members
 
-Any member in the struct implementing TurboModule functions should be attached with an attribute like `REACT_MODULE`.
-Here is the list of all available attributes:
+In order to make a TurboModule member accessible in JavaScript,
+one of the following attributes must be applied to the C++ member:
 
 - `REACT_INIT`
 - `REACT_SYNC_METHOD`
@@ -116,7 +116,7 @@ Here is the list of all available attributes:
 
 ### REACT_INIT
 
-`REACT_INIT` attaches to a function.
+`REACT_INIT` applies to a function.
 Such function is called after members with `REACT_EVENT` and `REACT_FUNCTION` are initialized.
 Such function is called before a TurboModule is used in JavaScript,
 there is no deterministic timing about when this function will be called,
@@ -132,7 +132,7 @@ void Initialize(winrt::Microsoft::ReactNative::ReactContext const& reactContext)
 
 ### REACT_SYNC_METHOD
 
-`REACT_SYNC_METHOD` attaches to a function.
+`REACT_SYNC_METHOD` applies to a function.
 Such function is exposed in the TurboModule to JavaScript.
 Such function will be called synchronously from the JS thread.
 
@@ -158,12 +158,15 @@ static int AddSync(int x, int y) noexcept
 ### REACT_METHOD
 
 `REACT_METHOD` is an async version of `REACT_SYNC_METHOD`.
-The attached function must returns `void`.
 
-There are three ways to define an async function:
+There are four ways to define an async function:
 - Define `winrt::Microsoft::ReactNative::ReactPromise<T> const& result` as the last argument.
 - Define one callback as the last argument for returning a value, such function cannot raise errors.
 - Define two callbacks as the last two arguments for returning a value or raising an error.
+- Define a function which returns the result normally, instead of using callbacks or `ReactPromise`.
+
+All `REACT_METHOD` functions are exposed in JavaScript as a function returning `Promise`,
+it doesn't matter in which of the four ways a function is defined.
 
 Call `result.Resolve` to finish the function call with a result.
 
@@ -216,7 +219,7 @@ then a single `REACT_GET_CONSTANTS` becomes the only way to implement this membe
 ### REACT_CONSTANT_PROVIDER
 
 `REACT_CONSTANT_PROVIDER` is a weak-typed version of `REACT_GET_CONSTANTS`.
-The attached function must returns `void`
+The applied function must returns `void`
 and its only argument must be `winrt::Microsoft::ReactNative::ReactConstantProvider& provider`.
 
 The syntax of `REACT_CONSTANT_PROVIDER` is `REACT_CONSTANT_PROVIDER(method)`.
@@ -266,7 +269,7 @@ calling `getConstants` in JavaScript gets the result of all these methods combin
 ### REACT_EVENT
 
 `REACT_EVENT` implements an event.
-`REACT_EVENT` attaches to a `std::function` field.
+`REACT_EVENT` applies to a `std::function` field.
 
 The syntax of `REACT_EVENT` is `REACT_EVENT(field, [optional]eventName, [optional]eventEmitterName)`.
 
@@ -282,8 +285,8 @@ std::function<void(int, std::string const&)> AnEvent;
 ### REACT_FUNCTION
 
 `REACT_FUNCTION` defines a JavaScript implemented function.
-after a TurboModule is loaded,
-the attached field will be initialized with a value,
+After a TurboModule is loaded,
+the applied field will be initialized with a value,
 calling this field executes some code registered in JavaScript.
 
 The syntax of `REACT_FUNCTION` is `REACT_FUNCTION(field, [optional]functionName, [optional]moduleName)`.
@@ -343,13 +346,13 @@ The following types are only valid for function return types
 - `*` means the syntax is the same between TypeScript and Flow.
 - Try your best not to use `Array` and `object` in the JavaScript TurboModule definition.
 
-## Reflecting REACT_MODULE attached structs
+## Reflecting REACT_MODULE applied structs
 
 **Please ignore this section when using `REACT_MODULE` with `react-native-windows`,
 all interfaces have already been properly implemented.**
 
-Calling `MakeModuleProvider<T>` or `MakeTurboModuleProvider<T>` returns a `ReactModuleProvider` from a `REACT_MODULE` attached struct `T`.
-`ReactModuleProvider` is a delegate, by passing a `IReactModuleBuilder` object as an argument, all reflectable members in the `REACT_MODULE` attached struct will be enumerated and passed to `IReactModuleBuilder`.
+Calling `MakeModuleProvider<T>` or `MakeTurboModuleProvider<T>` returns a `ReactModuleProvider` from a `REACT_MODULE` applied struct `T`.
+`ReactModuleProvider` is a delegate, by passing a `IReactModuleBuilder` object as an argument, all reflectable members in the `REACT_MODULE` applied struct will be enumerated and passed to `IReactModuleBuilder`.
 Your job is to implement `IReactModuleBuilder` to collect all members of a struct.
 
 ### IReactModuleBuilder
@@ -358,12 +361,12 @@ Here are all members in `IReactModuleBuilder`:
 
 - `void AddInitializer(InitializerDelegate)`.
 `InitializerDelegate` is a delegate taking `IReactContext` as an argument.
-A `REACT_MODULE` attached struct expects all `InitializerDelegate` to be called before calling any other members.
+A `REACT_MODULE` applied struct expects all `InitializerDelegate` to be called before calling any other members.
 It is `IReactModuleBuilder`'s responsibility to prepare the `IReactContext` object.
 
 - `AddConstantProvider(ConstantProviderDelegate)`.
 `ConstantProviderDelegate` is a delegate taking `IJSValueWriter` as an argument.
-A `REACT_MODULE` attached struct could provide multiple `ConstantProviderDelegate`,
+A `REACT_MODULE` applied struct could provide multiple `ConstantProviderDelegate`,
 each delegate writes multiple members to the `IJSValueWriter`.
 In order to properly accept these members,
 delegates must be called between `IJSValueWriter::WriteObjectBegin` and `IJSValueWriter::WriteObjectEnd`,
@@ -400,4 +403,4 @@ and `Microsoft.ReactNative.Cxx` will do the rest for you.
 
 ### IReactContext
 
-`IReactContext` allow `REACT_MODULE` attached structs to access whatever is provided by the React Native application.
+`IReactContext` allow `REACT_MODULE` applied structs to access whatever is provided by the React Native application.
