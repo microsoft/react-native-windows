@@ -134,14 +134,7 @@ export function enumerateRepoPackagesSync(
     (pkg) => new WritableNpmPackage(pkg.location, pkg.package),
   );
 
-  const filteredPackages: WritableNpmPackage[] = [];
-  for (const pkg of allPackges) {
-    if (pred(pkg)) {
-      filteredPackages.push(pkg);
-    }
-  }
-
-  return filteredPackages;
+  return allPackges.filter(pred);
 }
 
 /**
