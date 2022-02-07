@@ -1,2 +1,7 @@
-# Enforce changes going into a stable branch are triaged
-* @microsoft/react-native-windows-backport-triage
+# Global Catch-All
+* @microsoft/react-native-windows-write
+/vnext/Desktop.DLL/*.def @microsoft/react-native-windows-write @aeulitz
+
+# API Review for DEF/IDL file changes
+/vnext/**/*.def @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
+/vnext/**/*.idl @microsoft/react-native-windows-api-review @microsoft/react-native-windows-write
