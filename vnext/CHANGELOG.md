@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 31 Jan 2022 16:12:38 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:12:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.10
+
+Mon, 07 Feb 2022 16:12:51 GMT
+
+### Patches
+
+- UI Manager module is not being destroyed on the UI thread (30809111+acoates-ms@users.noreply.github.com)
+- Replace __APPLE__ with __clang__ where applicable (#9461) (julio.rocha@microsoft.com)
+- Add additional exports for react-native-win32.dll (30809111+acoates-ms@users.noreply.github.com)
+- Hermes inspector is not starting when Hermes engine is used (#9426) (anandrag@microsoft.com)
 
 ## 0.66.9
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Replace __APPLE__ with __clang__ where applicable (#9461)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

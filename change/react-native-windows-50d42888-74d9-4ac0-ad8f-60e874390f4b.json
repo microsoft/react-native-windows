@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add additional exports for react-native-win32.dll",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

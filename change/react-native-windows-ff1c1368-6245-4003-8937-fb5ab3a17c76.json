@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Hermes inspector is not starting when Hermes engine is used (#9426)",
-  "packageName": "react-native-windows",
-  "email": "anandrag@microsoft.com",
-  "dependentChangeType": "patch"
-}
