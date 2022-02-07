@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Integrate Feb 6 Nightly RN Build",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "none"
+}
