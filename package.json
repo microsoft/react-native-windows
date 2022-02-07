@@ -30,7 +30,6 @@
     ]
   },
   "devDependencies": {
-    "@react-native-windows/package-utils": "0.0.0-canary.24",
     "beachball": "^2.20.0",
     "husky": "^4.2.5",
     "unbroken": "1.0.27",
