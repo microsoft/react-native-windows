@@ -123,7 +123,7 @@ function InstallVS {
 function CheckNode {
     try {
         $v = (Get-Command node -ErrorAction Stop).Version.Major
-        return ($v -ge 12) -and (($v % 2) -eq 0);
+        return ($v -ge 14) -and (($v % 2) -eq 0);
     } catch {
         return $false;
     }
