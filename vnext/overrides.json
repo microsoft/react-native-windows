@@ -9,13 +9,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
+  "baseVersion": "0.0.0-20220206-2010-113f8257c",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "248d08cae6422103eeeb807099afeeeac776b457"
+      "baseHash": "e0fd826d1c731209ca1f4322e950df83877ea95a"
     },
     {
       "type": "patch",
@@ -91,7 +91,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "219d41967ac2903924faf2f43bbf256c7f7d6d72",
+      "baseHash": "61882bdc02aa1872048e31d7047c875f1b902586",
       "issue": 5430
     },
     {
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "7218b8a8a31e7dc23cb45e131af209c72363972c"
+      "baseHash": "a33f356abc2db3767c8fee7e4d6bda60384787a1"
     },
     {
       "type": "platform",
@@ -236,7 +236,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "ffd4c8875dc3c2936677577666050a5fe2124c09"
+      "baseHash": "566b15a4f7bf415c693e6d8217a9c3957c72521e"
     },
     {
       "type": "derived",
@@ -272,7 +272,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "50e32c48b4a9a47055de000fed2ed38ea243154e"
+      "baseHash": "c447994d5ac59824f298cf4aec899c174b78e3e2"
     },
     {
       "type": "patch",
@@ -319,6 +319,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
+      "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
       "baseHash": "7b24fd09a0d0f7e7c6d87ceeb86610d4c9b78d3a"
     },
     {
@@ -337,7 +338,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "eae7117392dc0e670a4e38389a7b7e3bca4d55b7"
+      "baseHash": "2b04c305b0abc616bb01c886ecab4839efc2cf58"
     },
     {
       "type": "platform",
@@ -351,7 +352,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "920050b9f70e56c9f40c242e8cae26de5e4eaf8d",
+      "baseHash": "282cd9cc008400b06b617543b9f5f8429d91b87e",
       "issue": 4590
     },
     {
@@ -463,7 +464,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "42471a473e8e4c940a58d793eb96f66686868ef5"
+      "baseHash": "7135a3805562187fe999ce7ffdbbb418edd1025f"
     },
     {
       "type": "patch",
