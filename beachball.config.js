@@ -9,7 +9,7 @@ const {execSync} = require('child_process');
 const {findRepoPackageSync} = require('@react-native-windows/package-utils');
 
 module.exports = {
-  ...require(`${__dirname}/packages/@rnw-scripts/generated-beachball-config/beachball.config.g.json`),
+  ...require("@rnw-scripts/generated-beachball-config"),
   
   // Do not generate tags for monorepo packages by default, to avoid a GitHub
   // release for every package.

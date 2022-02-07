@@ -18,8 +18,10 @@ jobs:
 
       - template: ../templates/compute-beachball-branch-name.yml
 
-      - script: npm install -g beachball@2.18.0
-        displayName: Install beachball
+      - template: templates/yarn-install.yml
+
+      - script: npx lage build --scope @react-native-windows/package-utils --no-deps
+        displayName: Minimal build
 
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
         - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
