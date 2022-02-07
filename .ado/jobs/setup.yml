@@ -21,7 +21,7 @@ jobs:
       - script: npx --yes midgard-yarn@1.23.34 --frozen-lockfile 
         displayName: midgard-yarn
 
-      - script: npx lage build --scope @react-native-windows/package-utils --no-deps
+      - script: npx lage build --scope @react-native-windows/stamp-version --no-deps
         displayName: Minimal build
 
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
