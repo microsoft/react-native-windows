@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 29 Jan 2022 06:08:58 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.23",
+      "version": "0.0.0-canary.23",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "e1604cbcd95dd52acb5b051b39ee9d9b259776cd",
+            "comment": "Add document for turbo module codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:10 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.22",
       "version": "0.0.0-canary.22",

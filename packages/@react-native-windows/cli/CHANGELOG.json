@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 02 Feb 2022 06:08:38 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.111",
+      "version": "0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jmdalmasso7@gmail.com",
+            "package": "@react-native-windows/cli",
+            "commit": "2051577c036f55210879b1e1f7a3ff4f6ec114a6",
+            "comment": "Allow OutputType Library to be autolinked for C# native modules"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 27 Jan 2022 06:11:44 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.110",
       "version": "0.0.0-canary.110",
