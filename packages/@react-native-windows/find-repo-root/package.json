@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.0-canary.27",
+  "version": "0.68.0-preview.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -30,7 +30,7 @@
     "typescript": "^4.4.4"
   },
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "disallowedChangeTypes": [
       "major",
       "minor",

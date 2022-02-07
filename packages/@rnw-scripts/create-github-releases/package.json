@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.27",
+    "@react-native-windows/find-repo-root": "0.68.0-preview.0",
     "@react-native-windows/fs": "^1.0.1",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
@@ -50,5 +50,6 @@
   ],
   "engines": {
     "node": ">= 12.0.0"
-  }
+  },
+  "private": true
 }
