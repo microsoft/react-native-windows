@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable libs using their app's MRN nuget package",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
