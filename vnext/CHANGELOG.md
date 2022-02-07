@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 31 Jan 2022 16:12:51 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:13:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.64.30
+
+Mon, 07 Feb 2022 16:13:32 GMT
+
+### Patches
+
+- Replace __APPLE__ with __clang__ where applicable (#9461) (julio.rocha@microsoft.com)
 
 ## 0.64.29
 

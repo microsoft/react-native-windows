@@ -2,6 +2,21 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:13:32 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump @react-native-windows/tester to v0.0.1",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "b25b46d1c2e5aa3f7e3656c95a4cfd924e2554cd",
+            "package": "playground"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Jan 2022 16:12:51 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",
