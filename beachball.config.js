@@ -46,8 +46,8 @@ function correctChangeType(changeInfo) {
 }
 
 function isPrerelease(packageName) {
-  const {version} = findRepoPackageSync(packageName).json;
-  return version.includes('-');
+  const {version} = findRepoPackageSync(packageName)?.json;
+  return version && version.includes('-');
 }
 
 function formatComment(comment) {
