@@ -18,7 +18,8 @@ jobs:
 
       - template: ../templates/compute-beachball-branch-name.yml
 
-      - template: ../templates/yarn-install.yml
+      - script: npx --yes midgard-yarn@1.23.34 --frozen-lockfile 
+      - displayName: midgard-yarn
 
       - script: npx lage build --scope @react-native-windows/package-utils --no-deps
         displayName: Minimal build
