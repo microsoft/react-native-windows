@@ -18,7 +18,7 @@
     "take-screenshot": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.68.0-preview.0",
+    "@react-native-windows/fs": "0.68.0-preview.1",
     "screenshot-desktop": "^1.12.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

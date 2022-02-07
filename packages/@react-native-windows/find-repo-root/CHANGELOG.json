@@ -2,6 +2,21 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:09:26 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.68.0-preview.1",
+      "version": "0.68.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "ac9ed3d3d6983034815a6a82f56e9710f7b1809e",
+            "comment": "Promote 0.68 to preview"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:10 GMT",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.27",
       "version": "0.0.0-canary.27",

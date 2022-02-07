@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:09:27 GMT",
+      "tag": "react-native-windows_v0.68.0-preview.1",
+      "version": "0.68.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ac9ed3d3d6983034815a6a82f56e9710f7b1809e",
+            "comment": "Promote 0.68 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.0-preview.1",
+            "commit": "56a374de6d1c238a865a0eb55407a32a08770e93"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0-preview.1",
+            "commit": "56a374de6d1c238a865a0eb55407a32a08770e93"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.68.0-preview.1",
+            "commit": "56a374de6d1c238a865a0eb55407a32a08770e93"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Feb 2022 06:07:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.448",
       "version": "0.0.0-canary.448",

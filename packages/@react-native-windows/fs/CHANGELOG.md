@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Fri, 03 Dec 2021 06:12:10 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:09:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.1
+
+Mon, 07 Feb 2022 16:09:26 GMT
+
+### Changes
+
+- Move @react-native-windows/fs to promoteRelease scheme (ngerlem@microsoft.com)
 
 ## 1.0.1
 

@@ -2,6 +2,39 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:09:27 GMT",
+      "tag": "@react-native-windows/package-utils_v0.68.0-preview.1",
+      "version": "0.68.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "b91767765aa3efdd5da35f132ec141c077b03303",
+            "comment": "Move @react-native-windows/fs to promoteRelease scheme"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "ac9ed3d3d6983034815a6a82f56e9710f7b1809e",
+            "comment": "Promote 0.68 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.68.0-preview.1",
+            "commit": "56a374de6d1c238a865a0eb55407a32a08770e93"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.68.0-preview.1",
+            "commit": "56a374de6d1c238a865a0eb55407a32a08770e93"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:10 GMT",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.24",
       "version": "0.0.0-canary.24",

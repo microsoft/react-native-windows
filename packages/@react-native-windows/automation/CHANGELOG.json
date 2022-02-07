@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:09:27 GMT",
+      "tag": "@react-native-windows/automation_v0.1.33",
+      "version": "0.1.33",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.68.0-preview.1",
+            "commit": "56a374de6d1c238a865a0eb55407a32a08770e93"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Feb 2022 06:07:42 GMT",
       "tag": "@react-native-windows/automation_v0.1.33",
       "version": "0.1.33",

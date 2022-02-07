@@ -1,8 +1,18 @@
 # Change Log - sample-apps
 
-This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:09:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 07 Feb 2022 16:09:27 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.68.0-preview.1
+- Bump @react-native-windows/codegen to v0.68.0-preview.1
+- Bump @react-native-windows/virtualized-list to v0.68.0-preview.1
 
 ## 0.0.0
 

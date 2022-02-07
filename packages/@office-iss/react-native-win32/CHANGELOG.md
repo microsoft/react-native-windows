@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 03 Feb 2022 06:08:22 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:09:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.1
+
+Mon, 07 Feb 2022 16:09:26 GMT
+
+### Changes
+
+- Promote 0.68 to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.68.0-preview.1
 
 ## 0.0.0-canary.131
 

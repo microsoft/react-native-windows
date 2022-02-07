@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Thu, 03 Feb 2022 06:08:22 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:09:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.1
+
+Mon, 07 Feb 2022 16:09:27 GMT
+
+### Changes
+
+- Promote 0.68 to preview (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.27
 

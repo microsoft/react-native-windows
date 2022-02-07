@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Promote 0.68 to preview",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

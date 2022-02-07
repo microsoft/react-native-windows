@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 27 Jan 2022 06:11:44 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:09:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.1
+
+Mon, 07 Feb 2022 16:09:27 GMT
+
+### Changes
+
+- Promote 0.68 to preview (ngerlem@microsoft.com)
+- Move @react-native-windows/fs to promoteRelease scheme (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.68.0-preview.1
 
 ## 0.0.0-canary.32
 

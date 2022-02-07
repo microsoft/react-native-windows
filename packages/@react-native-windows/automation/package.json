@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.1.22",
-    "@react-native-windows/fs": "0.68.0-preview.0",
+    "@react-native-windows/fs": "0.68.0-preview.1",
     "chalk": "^4.1.2",
     "readline-sync": "1.4.10",
     "webdriverio": "^6.9.0"
