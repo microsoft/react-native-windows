@@ -18,7 +18,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^1.0.1",
+    "@react-native-windows/fs": "0.68.0-preview.0",
     "@xmldom/xmldom": "^0.7.5",
     "applicationinsights": "^2.1.5",
     "ci-info": "^3.2.0",
