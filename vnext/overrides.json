@@ -317,13 +317,6 @@
     },
     {
       "type": "patch",
-      "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
-      "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
-      "baseHash": "7b24fd09a0d0f7e7c6d87ceeb86610d4c9b78d3a"
-    },
-    {
-      "type": "patch",
       "file": "src/Libraries/Components/View/View.windows.js",
       "baseFile": "Libraries/Components/View/View.js",
       "baseHash": "796bee7ec95c53add95a9897d2a68b0f78489690"

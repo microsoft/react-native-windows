@@ -177,13 +177,6 @@
       "baseHash": "14b7dc745d010a375eb89ac56d803a53e19427e5"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
-      "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
-      "baseHash": "7b24fd09a0d0f7e7c6d87ceeb86610d4c9b78d3a"
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/View/Tests/ViewWin32Test.tsx"
     },
