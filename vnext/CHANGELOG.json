@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:12:39 GMT",
+      "tag": "react-native-windows_v0.67.1",
+      "version": "0.67.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "81a6b931d7df9db4d5667c4961e22707d5238194",
+            "comment": "Hermes inspector is not starting when Hermes engine is used (#9426)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8c8248af3d324b55adce0d4e41bfc2957a3f4446",
+            "comment": "Replace __APPLE__ with __clang__ where applicable (#9461)"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d57cded6b8bef14f8a0b2d24ab978eaf8f290354",
+            "comment": "UI Manager module is not being destroyed on the UI thread"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 16:13:22 GMT",
       "tag": "react-native-windows_v0.67.0",
       "version": "0.67.0",
