@@ -134,7 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     {{#cppNugetPackages}}
-    <PackageReference Include="{{ id }}" Version="{{ version }}" />
+    <PackageReference Include="{{ id }}" Version="{{ version }}" Condition="{{ condition }}"/>
     {{/cppNugetPackages}}
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
