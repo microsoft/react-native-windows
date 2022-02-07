@@ -9,7 +9,7 @@ import {execSync} from 'child_process';
 import {findRepoPackageSync} from '@react-native-windows/package-utils';
 
 import type {BeachballOptions} from 'beachball/lib/types/BeachballOptions';
-import { ChangeInfo } from 'beachball/lib/types/ChangeInfo';
+import type {ChangeInfo} from 'beachball/lib/types/ChangeInfo';
  
 const Options: BeachballOptions = {
   ...require("@rnw-scripts/generated-beachball-config"),
