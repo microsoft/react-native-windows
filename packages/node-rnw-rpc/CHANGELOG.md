@@ -1,8 +1,16 @@
 # Change Log - node-rnw-rpc
 
-This log was last generated on Mon, 31 Jan 2022 16:12:18 GMT and should not be manually modified.
+This log was last generated on Mon, 07 Feb 2022 16:12:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.7-0
+
+Mon, 07 Feb 2022 16:12:32 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.65.12 (julio.rocha@microsoft.com)
 
 ## 1.0.7-0
 

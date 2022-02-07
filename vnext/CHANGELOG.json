@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:12:32 GMT",
+      "tag": "react-native-windows_v0.65.12",
+      "version": "0.65.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Replace __APPLE__ with __clang__ where applicable (#9461)",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "a6dfccfb6cb32bbfd0ab9fa565f18b1b88890ac4",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 31 Jan 2022 16:12:18 GMT",
       "tag": "react-native-windows_v0.65.11",
       "version": "0.65.11",
