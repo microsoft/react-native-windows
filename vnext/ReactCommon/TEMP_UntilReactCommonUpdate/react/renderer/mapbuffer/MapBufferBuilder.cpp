@@ -124,7 +124,7 @@ MapBuffer MapBufferBuilder::build() {
   // Create buffer: [header] + [key, values] + [dynamic data]
   auto bucketSize = buckets_.size() * sizeof(MapBuffer::Bucket);
   auto headerSize = sizeof(MapBuffer::Header);
-  auto bufferSize = headerSize + bucketSize + dynamicData_.size();
+  auto bufferSize = headerSize + bucketSize + static_cast<uint32_t>(dynamicData_.size());
 
   header_.bufferSize = bufferSize;
 
