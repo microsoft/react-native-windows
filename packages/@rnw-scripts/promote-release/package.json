@@ -1,21 +1,25 @@
 {
   "name": "@rnw-scripts/promote-release",
   "version": "2.0.2",
-  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/microsoft/react-native-windows.git",
     "directory": "packages/@rnw-scripts/promote-release"
   },
+  "license": "MIT",
+  "bin": {
+    "promote-release": "./bin.js"
+  },
+  "files": [
+    "bin.js",
+    "lib-commonjs"
+  ],
   "scripts": {
     "build": "rnw-scripts build",
     "clean": "rnw-scripts clean",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch"
-  },
-  "bin": {
-    "promote-release": "./bin.js"
   },
   "dependencies": {
     "@react-native-windows/find-repo-root": "^0.0.0-canary.27",
@@ -38,10 +42,6 @@
     "prettier": "^2.4.1",
     "typescript": "^4.4.4"
   },
-  "files": [
-    "bin.js",
-    "lib-commonjs"
-  ],
   "engines": {
     "node": ">= 12.0.0"
   }
