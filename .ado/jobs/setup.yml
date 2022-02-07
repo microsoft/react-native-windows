@@ -18,7 +18,7 @@ jobs:
 
       - template: ../templates/compute-beachball-branch-name.yml
 
-      - template: templates/yarn-install.yml
+      - template: ../templates/yarn-install.yml
 
       - script: npx lage build --scope @react-native-windows/package-utils --no-deps
         displayName: Minimal build
