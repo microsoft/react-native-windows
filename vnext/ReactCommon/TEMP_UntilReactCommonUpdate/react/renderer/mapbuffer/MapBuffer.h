@@ -77,7 +77,7 @@ class MapBuffer {
   struct Header {
     uint16_t alignment = HEADER_ALIGNMENT; // alignment of serialization
     uint16_t count; // amount of items in the map
-    uint32_t bufferSize; // Amount of bytes used to store the map in memory
+    int32_t bufferSize; // Amount of bytes used to store the map in memory
   };
 
   #pragma pack(push, 1)
