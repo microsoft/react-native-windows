@@ -61,6 +61,60 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual(200, statusCode);
   }
 
+  // TODO: Hangs! Likely headers make server not send response.
+  TEST_METHOD(RequestGetHeadersSucceeds) {
+    promise<void> getPromise;
+    int statusCode = 0;
+
+    // HTTP call scope
+    {
+      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
+      server->SetOnGet([](const http::request<http::string_body> &request) -> http::response<http::dynamic_body> {
+        http::response<http::dynamic_body> response;
+        response.result(http::status::ok);
+        response.set(http::field::content_type, "text/html");
+        response.set(http::field::content_encoding, "utf-8");
+        response.set(http::field::content_length, "0");
+
+        return response;
+      });
+      server->Start();
+
+      auto resource = IHttpResource::Make();
+      resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
+        statusCode = static_cast<int>(response.StatusCode);
+        for (auto& header : response.Headers) {
+          auto &k = header.first;
+          auto &v = header.second;
+
+          continue;
+        }    
+
+        getPromise.set_value();
+      });
+      //clang-format off
+      resource->SendRequest(
+          "GET",
+          "http://localhost:5555",
+          {
+            { "Content-Type",     "application/json"  },
+            { "Content-Encoding", "ASCII"             }
+          },
+          {} /*bodyData*/,
+          "text",
+          false,
+          1000 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
+      //clang-format on
+      server->Stop();
+    }
+    // Synchronize response.
+    getPromise.get_future().wait();
+
+    Assert::AreEqual(200, statusCode);
+  }
+
   TEST_METHOD(RequestGetFails) {
     string error;
     promise<void> promise;
