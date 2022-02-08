@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 08 Feb 2022 06:08:05 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Feb 2022 18:21:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.450
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.24
 
 ## 0.0.0-canary.449
 
