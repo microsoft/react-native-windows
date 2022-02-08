@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "checks for old project guid",
+  "packageName": "@react-native-windows/cli",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}

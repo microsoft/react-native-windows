@@ -83,6 +83,7 @@ export async function copyProjectTemplateAndReplace(
   }
 
   const projectType = options.projectType;
+  const language = options.language;
 
   // React-native init only allows alphanumerics in project names, but other
   // new project tools (like create-react-native-module) are less strict.
@@ -95,6 +96,23 @@ export async function copyProjectTemplateAndReplace(
     namespace = namespace.split(/[.:]+/).map(pascalCase).join('.');
   }
 
+  // Checking if we're overwriting an existing project and re-uses their projectGUID
+  const existingProjectPath = path.join(
+    destPath,
+    windowsDir,
+    newProjectName,
+    newProjectName + (language === 'cs' ? '.csproj' : '.vcxproj'),
+  );
+  let existingProjectGuid: string | undefined;
+  if (fs.existsSync(existingProjectPath)) {
+    console.log('Found existing project, extracting ProjectGuid.');
+    existingProjectGuid = findPropertyValue(
+      readProjectFile(existingProjectPath),
+      'ProjectGuid',
+      existingProjectPath,
+    ).replace(/[{}]/g, '');
+  }
+
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
 
@@ -103,7 +121,6 @@ export async function copyProjectTemplateAndReplace(
     createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
   }
 
-  const language = options.language;
   const namespaceCpp = toCppNamespace(namespace);
   if (options.experimentalNuGetDependency) {
     console.log('Using experimental NuGet dependency.');
@@ -133,10 +150,11 @@ export async function copyProjectTemplateAndReplace(
 
     realProjectType += '-WinAppSDK';
   }
+
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${realProjectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
-  const projectGuid = uuid.v4();
+  const projectGuid = existingProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
