@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump minimum Node version to 14",
+  "packageName": "@react-native-windows/fs",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

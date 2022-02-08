@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump minimum Node version to 14",
+  "packageName": "@rnw-scripts/take-screenshot",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
