@@ -1,8 +1,35 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 11 Jan 2022 06:09:10 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Feb 2022 06:08:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.131
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Changes
+
+- Intg 1/27 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.27
+
+## 0.0.0-canary.130
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.26
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.0-canary.129
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.25
+- Bump react-native-platform-override to v1.6.3
 
 ## 0.0.0-canary.128
 

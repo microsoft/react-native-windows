@@ -2,6 +2,36 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Sat, 29 Jan 2022 06:08:59 GMT",
+      "tag": "react-native-platform-override_v1.6.4",
+      "version": "1.6.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-platform-override",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f",
+            "comment": "CG: Upgrade to node-fetch@^2.6.7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jan 2022 06:08:34 GMT",
+      "tag": "react-native-platform-override_v1.6.3",
+      "version": "1.6.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "235732d90619229cbaa1e71ad1e4c94762b956d0",
+            "comment": "Fix integration by tag of newer RN Builds"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:08 GMT",
       "tag": "react-native-platform-override_v1.6.2",
       "version": "1.6.2",

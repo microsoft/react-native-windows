@@ -1,8 +1,75 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 22 Jan 2022 06:10:17 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.448
+
+Sat, 05 Feb 2022 06:07:42 GMT
+
+### Changes
+
+- Add onUnload to RNW View Manager (34109996+chiaramooney@users.noreply.github.com)
+- Replace __APPLE__ with __clang__ where applicable (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.447
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Changes
+
+- Stop both raw value and offset animation (erozell@outlook.com)
+- Intg 1/27 (34109996+chiaramooney@users.noreply.github.com)
+- Use raw value for CalculatedAnimationDriver (erozell@outlook.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.27
+
+## 0.0.0-canary.446
+
+Wed, 02 Feb 2022 06:08:39 GMT
+
+### Changes
+
+- Fix VS hang when switching Platform within IDE (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.111
+
+## 0.0.0-canary.445
+
+Tue, 01 Feb 2022 06:07:59 GMT
+
+### Changes
+
+- UI Manager module is not being destroyed on the UI thread (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.444
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Fixing hermes inspector [#9407](https://github.com/microsoft/react-native-windows/issues/) (anandrag@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.26
+- Bump @react-native-windows/codegen to v0.0.0-canary.23
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.0-canary.443
+
+Thu, 27 Jan 2022 06:11:44 GMT
+
+### Changes
+
+- adds editable to textinput with securetextentry (tatianakapos@microsoft.com)
+- addsCLIversion to project file (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.110
+
+## 0.0.0-canary.442
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.25
+- Bump react-native-platform-override to v1.6.3
 
 ## 0.0.0-canary.441
 

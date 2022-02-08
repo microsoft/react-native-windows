@@ -1,8 +1,67 @@
 # Change Log - playground
 
-This log was last generated on Sat, 22 Jan 2022 06:10:18 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Sat, 05 Feb 2022 06:07:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.448
+
+## 0.0.54
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.447
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.27
+
+## 0.0.54
+
+Wed, 02 Feb 2022 06:08:39 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.446
+
+## 0.0.54
+
+Tue, 01 Feb 2022 06:07:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.445
+
+## 0.0.54
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.444
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.26
+
+## 0.0.54
+
+Thu, 27 Jan 2022 06:11:45 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.443
+
+## 0.0.54
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.442
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.25
 
 ## 0.0.54
 

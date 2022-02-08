@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 03 Dec 2021 06:12:10 GMT and should not be manually modified.
+This log was last generated on Sat, 29 Jan 2022 06:08:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.23
+
+Sat, 29 Jan 2022 06:08:58 GMT
+
+### Changes
+
+- Add document for turbo module codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.22
 

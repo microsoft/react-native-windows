@@ -1,7 +1,0 @@
-{
-  "type": "major",
-  "comment": "Use '@react-native-windows/fs'",
-  "packageName": "@react-native-windows/fs",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

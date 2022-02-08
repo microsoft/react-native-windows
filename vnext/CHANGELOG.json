@@ -2,6 +2,177 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Feb 2022 06:07:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.448",
+      "version": "0.0.0-canary.448",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2c935db54992cde68679079c4dec761782c58b67",
+            "comment": "Add onUnload to RNW View Manager"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6a7a672df030febe3421655c3594e886458c0ad7",
+            "comment": "Replace __APPLE__ with __clang__ where applicable"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Feb 2022 06:08:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.447",
+      "version": "0.0.0-canary.447",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "03cf427b70ce5a60ad11eec862284cecdff97584",
+            "comment": "Stop both raw value and offset animation"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1fe0e241ac2327eb1b2ebd6197c6496d3bc27bcf",
+            "comment": "Intg 1/27"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e1d8a705abd59b7c3347b9a4446b96e0d20c2fbf",
+            "comment": "Use raw value for CalculatedAnimationDriver"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.27",
+            "commit": "03cf427b70ce5a60ad11eec862284cecdff97584"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 02 Feb 2022 06:08:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.446",
+      "version": "0.0.0-canary.446",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6b016661792bd18848ac08161a8f59b9ab802906",
+            "comment": "Fix VS hang when switching Platform within IDE"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.111",
+            "commit": "6b016661792bd18848ac08161a8f59b9ab802906"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 01 Feb 2022 06:07:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.445",
+      "version": "0.0.0-canary.445",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be45d22d814f9dc91e2d8af790237d0eee0dfe30",
+            "comment": "UI Manager module is not being destroyed on the UI thread"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 29 Jan 2022 06:08:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.444",
+      "version": "0.0.0-canary.444",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "anandrag@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5c04d6d91ab17e3c3f2d032402dcaf6343e6ca46",
+            "comment": "Fixing hermes inspector [#9407](https://github.com/microsoft/react-native-windows/issues/)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.26",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.23",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.4",
+            "commit": "0aa893955beadc8913503d5356eea6a5c25c8c0f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Jan 2022 06:11:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.443",
+      "version": "0.0.0-canary.443",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "041c271e04c66485d7aad8e458f3135ab82bf3cd",
+            "comment": "adds editable to textinput with securetextentry"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4447864eaa57076a11537ae31f7c51ae945b0e4b",
+            "comment": "addsCLIversion to project file"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.110",
+            "commit": "041c271e04c66485d7aad8e458f3135ab82bf3cd"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jan 2022 06:08:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.442",
+      "version": "0.0.0-canary.442",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.25",
+            "commit": "b938c3cd8beab33d92e26fa1e98c42fdbdd49c7c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.3",
+            "commit": "b938c3cd8beab33d92e26fa1e98c42fdbdd49c7c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 22 Jan 2022 06:10:17 GMT",
       "tag": "react-native-windows_v0.0.0-canary.441",
       "version": "0.0.0-canary.441",

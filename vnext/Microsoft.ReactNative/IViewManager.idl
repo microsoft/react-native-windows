@@ -88,4 +88,11 @@ namespace Microsoft.ReactNative
     )
     void OnPointerEvent(Object view, ReactPointerEventArgs args);
   };
+  interface IViewManagerWithDropViewInstance {
+    DOC_STRING(
+        "Enables the view manager to track when the view is "
+        "being removed from the visual tree. "
+    )
+    void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
+  };
 } // namespace Microsoft.ReactNative

@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-20220107-2008-ca5aaa766",
+  "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "ca469905cf86d4c7bce7d87b473872ffeef2f6bd"
+      "baseHash": "248d08cae6422103eeeb807099afeeeac776b457"
     },
     {
       "type": "copy",
@@ -33,7 +33,7 @@
       "type": "patch",
       "file": "src/VirtualizedList.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
-      "baseHash": "6cadb78a33ada332bfbb0a941e3eebd6f9a3c2bc",
+      "baseHash": "a495a22dcb3d39369edf839f23f9e067e096e5e2",
       "issue": 8120
     },
     {
