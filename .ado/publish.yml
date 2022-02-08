@@ -92,6 +92,17 @@ jobs:
         parameters:
           buildEnvironment: Continuous
 
+      - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+        displayName: 📒 Generate Manifest Npm
+        inputs:
+          BuildDropPath: $(System.DefaultWorkingDirectory)
+    
+      - task: PublishPipelineArtifact@1
+        displayName: 📒 Publish Manifest Npm
+        inputs:
+          artifactName: SBom-$(System.JobAttempt)
+          targetPath: $(System.DefaultWorkingDirectory)/_manifest
+    
       - template: templates/publish-version-vars.yml
 
   - job: RnwNativeBuildDesktop
@@ -348,6 +359,11 @@ jobs:
           slices:
             - platform: x64
               configuration: Release
+
+      - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+        displayName: 📒 Generate Manifest Nuget
+        inputs:
+          BuildDropPath: $(System.DefaultWorkingDirectory)
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
