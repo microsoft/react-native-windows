@@ -42,9 +42,9 @@ class ReadableMapBuffer;
  * MapBuffer data is stored in a continuous chunk of memory (bytes_ field below) with the following layout:
  *
  * ┌─────────────────────Header──────────────────────┐
- * │                    12 bytes                     │
+ * │                    10 bytes                     │
  * ├─Alignment─┬─Item count─┬──────Buffer size───────┤
- * │  2 bytes  │  2 bytes   │        8 bytes         │
+ * │  2 bytes  │  2 bytes   │        4 bytes         │
  * └───────────┴────────────┴────────────────────────┘
  * ┌────────────────────────────────────────────────────────────────────────────────────────┐
  * │                           Buckets (one per item in the map)                            │
@@ -77,7 +77,7 @@ class MapBuffer {
   struct Header {
     uint16_t alignment = HEADER_ALIGNMENT; // alignment of serialization
     uint16_t count; // amount of items in the map
-    size_t bufferSize; // Amount of bytes used to store the map in memory
+    uint32_t bufferSize; // Amount of bytes used to store the map in memory
   };
 
   #pragma pack(push, 1)
@@ -91,7 +91,7 @@ class MapBuffer {
   };
   #pragma pack(pop)
 
-  static_assert(sizeof(Header) == 12, "MapBuffer header size is incorrect.");
+  static_assert(sizeof(Header) == 8, "MapBuffer header size is incorrect.");
   static_assert(sizeof(Bucket) == 12, "MapBuffer bucket size is incorrect");
 
   /**
