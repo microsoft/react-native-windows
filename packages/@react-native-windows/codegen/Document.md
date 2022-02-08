@@ -219,7 +219,7 @@ then a single `REACT_GET_CONSTANTS` becomes the only way to implement this membe
 ### REACT_CONSTANT_PROVIDER
 
 `REACT_CONSTANT_PROVIDER` is a weak-typed version of `REACT_GET_CONSTANTS`.
-The applied function must returns `void`
+The applied function must return `void`
 and its only argument must be `winrt::Microsoft::ReactNative::ReactConstantProvider& provider`.
 
 The syntax of `REACT_CONSTANT_PROVIDER` is `REACT_CONSTANT_PROVIDER(method)`.
