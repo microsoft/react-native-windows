@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Feb 2022 06:08:05 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.449",
+      "version": "0.0.0-canary.449",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0568b6dcc5354b8bdd65b135e7a9dda46ad29384",
+            "comment": "Fixes onMouseEnter/Leave to fire when pointer down"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.112",
+            "commit": "ad988985d38c1579bd740208039ccca79d988fef"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Feb 2022 06:07:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.448",
       "version": "0.0.0-canary.448",

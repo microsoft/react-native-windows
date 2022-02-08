@@ -1,8 +1,19 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Feb 2022 06:08:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.23
+- Bump react-native-windows to v0.0.0-canary.449
+- Bump @react-native-windows/automation to v0.1.34
+- Bump @react-native-windows/automation-commands to v0.0.61
 
 ## 0.0.0
 

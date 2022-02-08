@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 08 Feb 2022 06:08:05 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.112",
+      "version": "0.0.0-canary.112",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "ad988985d38c1579bd740208039ccca79d988fef",
+            "comment": "checks for old project guid"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Feb 2022 06:08:38 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.111",
       "version": "0.0.0-canary.111",

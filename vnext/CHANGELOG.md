@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
+This log was last generated on Tue, 08 Feb 2022 06:08:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.449
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Changes
+
+- Fixes onMouseEnter/Leave to fire when pointer down (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.112
 
 ## 0.0.0-canary.448
 
