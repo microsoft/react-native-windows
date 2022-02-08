@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Stop exporting data blocks across the dll boundary",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
