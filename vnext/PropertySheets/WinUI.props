@@ -22,10 +22,6 @@
     <WindowsKitsPath Condition="'$(IsWinUIAlpha)' == 'true'">WinUI-Alpha-Projects-Don-t-Use-SDK-Xaml-Tools</WindowsKitsPath>
   </PropertyGroup>
 
-  <!-- "native" WindowsAppSDK.props reference winmd files, only import those if we're building C++
-  <Import Condition="'$(UseWinUI3)'=='true' And '$(TargetFramework)' == 'native'" Project="$(SolutionDir)\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\native\Microsoft.WindowsAppSDK.props" />
-  <Import Condition="'$(UseWinUI3)'=='true' And '$(TargetFramework)' != 'native'" Project="$(SolutionDir)\packages\Microsoft.WindowsAppSDK.$(WinUIPackageVersion)\build\Microsoft.WindowsAppSDK.props" />
-   -->
   <PropertyGroup Condition="'$(UseWinUI3)'!='true'">
     <WinUIPackageName>Microsoft.UI.Xaml</WinUIPackageName>
     <WinUIPackageVersion>$(WinUI2xVersion)</WinUIPackageVersion>

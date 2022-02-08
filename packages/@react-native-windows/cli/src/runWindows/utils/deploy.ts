@@ -382,11 +382,6 @@ export async function deployToDesktop(
     // Deploy from layout
     // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
 
-    // const configWindows = config.platforms.windows as ConfigWindows;
-    // const deployProjectName = useWinUI3
-    //   ? `${projectName} (Package)`
-    //   : projectName;
-
     console.log(JSON.stringify(config));
 
     const deployProjectName = projectName;
