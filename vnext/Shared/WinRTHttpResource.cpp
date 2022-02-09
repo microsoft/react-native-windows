@@ -76,18 +76,19 @@ void WinRTHttpResource::SendRequest(
     string contentEncoding;
     string contentLength;
 
-    // TODO: Check casing
+    // Headers are generally case-insensitive
+    // https://www.ietf.org/rfc/rfc2616.txt section 4.2
     for (auto &header : headers) {
-      if (header.first == "content-type") {
+      if (_stricmp(header.first.c_str(), "content-type") == 0) {
         bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
         if (!success && m_onError) {
           return m_onError(requestId, "Failed to parse Content-Type");
         }
-      } else if (header.first == "content-encoding") {
+      } else if (_stricmp(header.first.c_str(), "content-encoding") == 0) {
         contentEncoding = header.second;
-      } else if (header.first == "content-length") {
+      } else if (_stricmp(header.first.c_str(), "content-length") == 0) {
         contentLength = header.second;
-      } else if (header.first == "authorization") {
+      } else if (_stricmp(header.first.c_str(), "authorization") == 0) {
         bool success =
             request.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
         if (!success && m_onError) {

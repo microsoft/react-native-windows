@@ -106,7 +106,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
           {
             { "Content-Type",     "application/json"  },
             { "Content-Encoding", "ASCII"             },
-            { "A",     "V"  },
+            { "name3",            "value3"            },
+            { "name4",            "value4"            },
           },
           {} /*bodyData*/,
           "text",
@@ -122,6 +123,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
     Assert::AreEqual({}, error);
     Assert::AreEqual(200, statusCode);
+    //TODO: Validate response headers
   }
 
   TEST_METHOD(RequestGetFails) {
