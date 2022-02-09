@@ -12,11 +12,6 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
-          - Name: X64WebDebug
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            DeployOptions:
-            UseHermes: false
           - Name: X64ReleaseHermes
             BuildPlatform: x64
             BuildConfiguration: Release
