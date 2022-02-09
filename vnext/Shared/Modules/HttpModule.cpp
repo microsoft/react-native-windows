@@ -22,16 +22,16 @@ using Microsoft::React::IHttpResource;
 constexpr char moduleName[] = "Networking";
 
 // TODO: Add to shared header? (See WebSocketModule)
-static void SendEvent(weak_ptr<Instance> weakInstance, string &&eventName, dynamic &&args) {
-  if (auto instance = weakInstance.lock()) {
+static void SendEvent(weak_ptr<Instance> weakReactInstance, string &&eventName, dynamic &&args) {
+  if (auto instance = weakReactInstance.lock()) {
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
   }
 }
 
-static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakInstance) {
+static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReactInstance) {
   auto resource = IHttpResource::Make();
 
-  resource->SetOnResponse([weakInstance](int64_t requestId, IHttpResource::Response &&response) {
+  resource->SetOnResponse([weakReactInstance](int64_t requestId, IHttpResource::Response &&response) {
     dynamic headers = dynamic::object();
     for (auto &header : response.Headers) {
       headers[header.first] = header.second;
@@ -40,23 +40,23 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakInsta
     // TODO: Test response content.
     dynamic args = dynamic::array(requestId, response.StatusCode, headers, response.Url);
 
-    SendEvent(weakInstance, "didReceiveNetworkResponse", std::move(args));
+    SendEvent(weakReactInstance, "didReceiveNetworkResponse", std::move(args));
   });
 
-  resource->SetOnData([weakInstance](int64_t requestId, std::string &&responseData) {
+  resource->SetOnData([weakReactInstance](int64_t requestId, std::string &&responseData) {
     dynamic args = dynamic::array(requestId, std::move(responseData));
 
-    SendEvent(weakInstance, "didReceiveNetworkData", std::move(args));
+    SendEvent(weakReactInstance, "didReceiveNetworkData", std::move(args));
 
     // TODO: Move into separate method IF not executed right after onData()
-    SendEvent(weakInstance, "didCompleteNetworkResponse", dynamic::array(requestId));
+    SendEvent(weakReactInstance, "didCompleteNetworkResponse", dynamic::array(requestId));
   });
 
-  resource->SetOnError([weakInstance](int64_t requestId, string &&message) {
+  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message) {
     dynamic args = dynamic::array(requestId, std::move(message));
     // TODO: isTimeout errorArgs.push_back(true);
 
-    SendEvent(weakInstance, "didCompleteNetworkResponse", std::move(args));
+    SendEvent(weakReactInstance, "didCompleteNetworkResponse", std::move(args));
   });
 
   return resource;
@@ -89,7 +89,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 
   auto weakHolder = weak_ptr<ModuleHolder>(m_holder);
   auto holder = weakHolder.lock();
-  auto weakInstance = weak_ptr<Instance>(holder->Module->getInstance());
+  auto weakReactInstance = weak_ptr<Instance>(holder->Module->getInstance());
 
   return
   {

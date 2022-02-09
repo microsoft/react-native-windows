@@ -3,7 +3,7 @@
 
 #pragma once
 
-// Standard Libryary
+// Standard Library
 #include <functional>
 #include <memory>
 #include <string>
