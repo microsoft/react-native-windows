@@ -252,8 +252,14 @@ void HttpServer::Start()
   });
 }
 
-void HttpServer::Stop()
+void HttpServer::Stop(bool abort)
 {
+  if (m_context.stopped())
+    return;
+
+  if (abort)
+    m_context.stop();
+
   m_contextThread.join();
 
   if (m_acceptor.is_open())

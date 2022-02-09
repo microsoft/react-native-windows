@@ -79,7 +79,7 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
 
   void Accept();
   void Start();
-  void Stop();
+  void Stop(bool abort=false);
 
   ///
   // Callback to invoke after a successful response is sent.

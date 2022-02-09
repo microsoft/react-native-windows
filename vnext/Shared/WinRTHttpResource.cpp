@@ -79,11 +79,10 @@ void WinRTHttpResource::SendRequest(
     // TODO: Check casing
     for (auto &header : headers) {
       if (header.first == "content-type") {
-        bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.first), contentType);
-        if (m_onError) {
-          m_onError(requestId, "Failed to parse Content-Type");
+        bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
+        if (!success && m_onError) {
+          return m_onError(requestId, "Failed to parse Content-Type");
         }
-        return;
       } else if (header.first == "content-encoding") {
         contentEncoding = header.second;
       } else if (header.first == "content-length") {
@@ -91,10 +90,9 @@ void WinRTHttpResource::SendRequest(
       } else if (header.first == "authorization") {
         bool success =
             request.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
-        if (m_onError) {
-          m_onError(requestId, "Failed to append Authorization");
+        if (!success && m_onError) {
+          return m_onError(requestId, "Failed to append Authorization");
         }
-        return;
       } else {
         request.Headers().Append(to_hstring(header.first), to_hstring(header.second));
       }
@@ -139,8 +137,16 @@ void WinRTHttpResource::SendRequest(
     }
 
     PerformSendRequest(requestId, request, responseType == "text");
+  } catch (std::exception const& e) {
+    if (m_onError) {
+      m_onError(requestId, e.what());
+    }
+  } catch(hresult_error const& e) {
+    if (m_onError) {
+      m_onError(requestId, Utilities::HResultToString(e));
+    }
   } catch (...) { // TODO: Delcare specific exception types
-    // TODO: OnRequestError
+    m_onError(requestId, "Unidentified error sending HTTP request");
   }
 }
 

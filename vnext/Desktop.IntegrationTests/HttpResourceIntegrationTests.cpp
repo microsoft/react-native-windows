@@ -63,7 +63,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
   // TODO: Hangs! Likely headers make server not send response.
   TEST_METHOD(RequestGetHeadersSucceeds) {
-    promise<void> getPromise;
+    promise<void> promise;
+    string error;
     int statusCode = 0;
 
     // HTTP call scope
@@ -81,7 +82,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       server->Start();
 
       auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
+      resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
         statusCode = static_cast<int>(response.StatusCode);
         for (auto& header : response.Headers) {
           auto &k = header.first;
@@ -90,7 +91,13 @@ TEST_CLASS (HttpResourceIntegrationTest) {
           continue;
         }    
 
-        getPromise.set_value();
+        promise.set_value();
+      });
+      resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
+        error = std::move(message);
+        promise.set_value();
+
+        server->Stop(true /*abort*/);
       });
       //clang-format off
       resource->SendRequest(
@@ -98,7 +105,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
           "http://localhost:5555",
           {
             { "Content-Type",     "application/json"  },
-            { "Content-Encoding", "ASCII"             }
+            { "Content-Encoding", "ASCII"             },
+            { "A",     "V"  },
           },
           {} /*bodyData*/,
           "text",
@@ -109,9 +117,10 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       //clang-format on
       server->Stop();
     }
-    // Synchronize response.
-    getPromise.get_future().wait();
 
+    promise.get_future().wait();
+
+    Assert::AreEqual({}, error);
     Assert::AreEqual(200, statusCode);
   }
 
