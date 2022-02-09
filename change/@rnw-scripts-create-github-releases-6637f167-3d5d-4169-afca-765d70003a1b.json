@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump minimum Node version to 14",
-  "packageName": "@rnw-scripts/create-github-releases",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

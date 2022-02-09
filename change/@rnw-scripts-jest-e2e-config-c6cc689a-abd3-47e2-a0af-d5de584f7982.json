@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bump minimum Node version to 14",
-  "packageName": "@rnw-scripts/jest-e2e-config",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
