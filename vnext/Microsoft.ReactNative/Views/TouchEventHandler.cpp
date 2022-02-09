@@ -127,9 +127,6 @@ void TouchEventHandler::OnPointerPressed(
     assert(!tagsForBranch.empty());
     const auto tag = tagsForBranch.front();
 
-    // Pointer pressing updates the enter/leave state
-    UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
-
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
     // For now, when using the mouse we only want to send click events for the left button.
@@ -189,10 +186,11 @@ void TouchEventHandler::OnPointerMoved(
   if (optPointerIndex) {
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
     DispatchTouchEvent(eventType, *optPointerIndex);
-  } else {
-    // Move with no buttons pressed
-    UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
   }
+
+  // If we re-introduce onMouseMove to react-native-windows, we should add an
+  // argument to ensure we do not emit these events while the pointer is down.
+  UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 }
 
 void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args) {
@@ -227,9 +225,6 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
     m_touchId = 0;
 
   m_xamlView.as<xaml::FrameworkElement>().ReleasePointerCapture(args.Pointer());
-
-  // Updates the enter/leave state when pointer was being tracked
-  UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 }
 
 size_t TouchEventHandler::AddReactPointer(

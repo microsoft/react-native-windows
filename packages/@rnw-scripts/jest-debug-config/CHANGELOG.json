@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/jest-debug-config",
   "entries": [
     {
+      "date": "Wed, 09 Feb 2022 06:09:37 GMT",
+      "tag": "@rnw-scripts/jest-debug-config_v1.2.6",
+      "version": "1.2.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/jest-debug-config",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447",
+            "comment": "Bump minimum Node version to 14"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-debug-config",
+            "comment": "Bump @rnw-scripts/babel-node-config to v2.0.4",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 03 Dec 2021 06:12:07 GMT",
       "tag": "@rnw-scripts/jest-debug-config_v1.2.5",
       "version": "1.2.5",

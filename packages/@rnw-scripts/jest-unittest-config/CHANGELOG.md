@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/jest-unittest-config
 
-This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.6
+
+Wed, 09 Feb 2022 06:09:38 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @rnw-scripts/babel-node-config to v2.0.4
 
 ## 1.2.5
 

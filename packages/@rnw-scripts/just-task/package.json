@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "license": "MIT",
   "main": "just-task.js",
   "repository": {
@@ -12,8 +12,8 @@
     "rnw-scripts": "./bin/rnw-scripts.js"
   },
   "dependencies": {
-    "@rnw-scripts/jest-e2e-config": "1.1.7",
-    "@rnw-scripts/jest-unittest-config": "1.2.5",
+    "@rnw-scripts/jest-e2e-config": "1.1.8",
+    "@rnw-scripts/jest-unittest-config": "1.2.6",
     "depcheck": "^1.4.1"
   },
   "devDependencies": {
@@ -24,6 +24,6 @@
     "just-scripts": "^1.3.3"
   },
   "engines": {
-    "node": ">= 12.0.0"
+    "node": ">= 14"
   }
 }
