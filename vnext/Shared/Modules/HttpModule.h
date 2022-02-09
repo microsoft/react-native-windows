@@ -49,11 +49,5 @@ class HttpModule : public facebook::xplat::module::CxxModule {
 
   std::shared_ptr<IHttpResource> m_resource;
   std::shared_ptr<ModuleHolder> m_holder;
-
-  // TODO: Decide whether to keep
-  /// <summary>
-  /// Notifies an event to the current React Instance.
-  /// </summary>
-  void SendEvent0(std::string &&eventName, folly::dynamic &&parameters);
 };
 } // namespace Microsoft::React
