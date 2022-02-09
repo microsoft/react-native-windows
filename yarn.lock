@@ -7404,9 +7404,9 @@ jsprim@^1.2.2:
     yargs "^16.2.0"
 
 just-scripts@^1.3.2, just-scripts@^1.3.3:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.6.2.tgz#ccf2015fb749b50b8e2cf0069ac7021b4db4b0b0"
-  integrity sha512-3RFSQwEFpLyFMJrVigcsvKBzeVy+6TYi+Tvl/cqDW3smTGmuMiAO0cNEW3xs9Xs6s07lbkqiWJDgaBpAuhVLgg==
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.8.0.tgz#69893d9c2141c25951a051da2c5cab11e427659e"
+  integrity sha512-JplVpinMZeaV8IbYkNDy12kf6gqhKexDwttYIlSn6fLXHVlY1waaFJ5tFjzmQtejzqFj620GwxAJ3qJlcCQM0g==
   dependencies:
     "@types/node" "^10.12.18"
     chalk "^4.0.0"
