@@ -164,7 +164,6 @@
     {{#cppNugetPackages}}
     <PackageReference Include="{{ id }}" Version="{{ version }}" />
     {{/cppNugetPackages}}
-    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">
