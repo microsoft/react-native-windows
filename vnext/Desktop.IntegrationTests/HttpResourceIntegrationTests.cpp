@@ -8,6 +8,7 @@
 #include <IHttpResource.h>
 #include <Test/HttpServer.h>
 #include <boost/beast/http.hpp>
+#include <unicode.h>
 
 // Standard Library
 #include <future>
@@ -65,7 +66,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(RequestGetHeadersSucceeds) {
     promise<void> promise;
     string error;
-    int statusCode = 0;
+    IHttpResource::Response response;
 
     // HTTP call scope
     {
@@ -73,24 +74,21 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       server->SetOnGet([](const http::request<http::string_body> &request) -> http::response<http::dynamic_body> {
         http::response<http::dynamic_body> response;
         response.result(http::status::ok);
-        response.set(http::field::content_type, "text/html");
-        response.set(http::field::content_encoding, "utf-8");
+
+        // Response header
+        response.set(http::field::server, "Microsoft::React::Test::HttpServer");
+        // Response content header
         response.set(http::field::content_length, "0");
+        // Response arbitrary header
+        response.set("ResponseHeaderName1", "ResponseHeaderValue1");
 
         return response;
       });
       server->Start();
 
       auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
-        statusCode = static_cast<int>(response.StatusCode);
-        for (auto& header : response.Headers) {
-          auto &k = header.first;
-          auto &v = header.second;
-
-          continue;
-        }    
-
+      resource->SetOnResponse([&promise, &response](int64_t, IHttpResource::Response callbackResponse) {
+        response = callbackResponse;
         promise.set_value();
       });
       resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
@@ -99,15 +97,16 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
         server->Stop(true /*abort*/);
       });
+
       //clang-format off
       resource->SendRequest(
           "GET",
           "http://localhost:5555",
           {
-            { "Content-Type",     "application/json"  },
-            { "Content-Encoding", "ASCII"             },
-            { "name3",            "value3"            },
-            { "name4",            "value4"            },
+              {"Content-Type", "application/json"},
+              {"Content-Encoding", "ASCII"},
+              {"name3", "value3"},
+              {"name4", "value4"},
           },
           {} /*bodyData*/,
           "text",
@@ -116,14 +115,25 @@ TEST_CLASS (HttpResourceIntegrationTest) {
           false /*withCredentials*/,
           [](int64_t) {});
       //clang-format on
+
       server->Stop();
     }
 
     promise.get_future().wait();
 
-    Assert::AreEqual({}, error);
-    Assert::AreEqual(200, statusCode);
-    //TODO: Validate response headers
+    Assert::AreEqual({}, error, L"Error encountered");
+    for (auto header : response.Headers) {
+      if (header.first == "Server") {
+        Assert::AreEqual({"Microsoft::React::Test::HttpServer"}, header.second, L"Wrong header");
+      } else if (header.first == "Content-Length") {
+        Assert::AreEqual({"0"}, header.second, L"Wrong header");
+      } else if (header.first == "ResponseHeaderName1") {
+        Assert::AreEqual({"ResponseHeaderValue1"}, header.second, L"Wrong header");
+      } else {
+        string message = "Unexpected header: [" + header.first + "]=[" + header.second + "]";
+        Assert::Fail(Microsoft::Common::Unicode::Utf8ToUtf16(message).c_str());
+      }
+    }
   }
 
   TEST_METHOD(RequestGetFails) {

@@ -138,11 +138,11 @@ void WinRTHttpResource::SendRequest(
     }
 
     PerformSendRequest(requestId, request, responseType == "text");
-  } catch (std::exception const& e) {
+  } catch (std::exception const &e) {
     if (m_onError) {
       m_onError(requestId, e.what());
     }
-  } catch(hresult_error const& e) {
+  } catch (hresult_error const &e) {
     if (m_onError) {
       m_onError(requestId, Utilities::HResultToString(e));
     }
@@ -189,7 +189,7 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, std::string &
   m_onData = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&message)> &&handler) noexcept
+void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&errorMessage)> &&handler) noexcept
 /*override*/ {
   m_onError = std::move(handler);
 }
@@ -232,7 +232,13 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage requ
     if (response) { // TODO: check nullptr?
       if (self->m_onResponse) {
         Headers headers;
+
+        // Gather headers for both the response content and the response itself
+        // See Invoke-WebRequest PowerShell cmdlet or Chromium response handling
         for (auto header : response.Headers()) {
+          headers.emplace(to_string(header.Key()), to_string(header.Value()));
+        }
+        for (auto header : response.Content().Headers()) {
           headers.emplace(to_string(header.Key()), to_string(header.Value()));
         }
         string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());

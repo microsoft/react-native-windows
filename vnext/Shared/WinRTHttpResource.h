@@ -28,7 +28,7 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   std::function<void(int64_t requestId)> m_onRequest;
   std::function<void(int64_t requestId, Response &&response)> m_onResponse;
   std::function<void(int64_t requestId, std::string &&responseData)> m_onData;
-  std::function<void(int64_t requestId, std::string &&message /*, bool isTimeout*/)> m_onError;
+  std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> m_onError;
 
   void AddRequest(int64_t requestId, ResponseType response) noexcept;
 
@@ -66,8 +66,8 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept override;
   void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept override;
   void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept override;
-  void SetOnError(
-      std::function<void(int64_t requestId, std::string &&message /*, bool isTimeout*/)> &&handler) noexcept override;
+  void SetOnError(std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)>
+                      &&handler) noexcept override;
 };
 
 } // namespace Microsoft::React
