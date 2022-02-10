@@ -16,7 +16,6 @@
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
-<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
@@ -120,4 +119,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.170.0
+^0.171.0
