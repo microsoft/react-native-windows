@@ -200,14 +200,15 @@ void FabricUIManager::installFabricUIManager() noexcept {
   toolbox.runtimeExecutor = runtimeExecutor;
   toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
+  toolbox.backgroundExecutor = [context = m_context,
+                                dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
+    if (context.UIDispatcher().HasThreadAccess()) {
+      callback();
+      return;
+    }
 
-  /*
-  if (m_reactNativeConfig->getBool(
-      "react_fabric:enable_background_executor_android")) {
-    backgroundExecutor_ = std::make_unique<JBackgroundExecutor>();
-    toolbox.backgroundExecutor = backgroundExecutor_->get();
-  }
-  */
+    dispatcher.Post(std::move(callback));
+  };
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
@@ -483,7 +484,6 @@ void FabricUIManager::schedulerDidSetIsJSResponder(
     facebook::react::ShadowView const &shadowView,
     bool isJSResponder,
     bool blockNativeResponder) {
-  assert(false);
 }
 
 void FabricUIManager::schedulerDidSendAccessibilityEvent(
