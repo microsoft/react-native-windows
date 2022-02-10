@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.68] Normalize package reference for WinUI between C# and C++ templates",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
