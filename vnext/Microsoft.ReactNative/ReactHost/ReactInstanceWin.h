@@ -5,7 +5,7 @@
 
 #include "IReactDispatcher.h"
 #include "IReactInstanceInternal.h"
-#include "ReactContext.h"
+#include "MsoReactContext.h"
 #include "ReactNativeHeaders.h"
 #include "React_win.h"
 #include "activeObject/activeObject.h"
