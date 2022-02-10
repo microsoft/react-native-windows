@@ -483,8 +483,7 @@ void FabricUIManager::schedulerDidDispatchCommand(
 void FabricUIManager::schedulerDidSetIsJSResponder(
     facebook::react::ShadowView const &shadowView,
     bool isJSResponder,
-    bool blockNativeResponder) {
-}
+    bool blockNativeResponder) {}
 
 void FabricUIManager::schedulerDidSendAccessibilityEvent(
     const facebook::react::ShadowView &shadowView,

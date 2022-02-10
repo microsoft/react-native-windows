@@ -479,10 +479,7 @@ winrt::IPropertyValue TestHit(
   return tag;
 }
 
-bool TagFromOriginalSource(
-    const winrt::PointerRoutedEventArgs &args,
-    int64_t *pTag,
-    xaml::UIElement *pSourceElement) {
+bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement) {
   assert(pTag != nullptr);
   assert(pSourceElement != nullptr);
 
@@ -531,12 +528,12 @@ bool TagFromOriginalSource(
 
 bool TouchEventHandler::IsEndishEventType(TouchEventType eventType) noexcept {
   switch (eventType) {
-        case TouchEventType::End:
-        case TouchEventType::Cancel:
-        case TouchEventType::CaptureLost:
-          return true;
-        default:
-        return false;
+    case TouchEventType::End:
+    case TouchEventType::Cancel:
+    case TouchEventType::CaptureLost:
+      return true;
+    default:
+      return false;
   }
 }
 #endif
@@ -711,11 +708,9 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
   assert(pTagsForBranch != nullptr);
   assert(pSourceElement != nullptr);
 
-  if (m_fabric)
-  {
+  if (m_fabric) {
     int64_t tag;
-    if (TagFromOriginalSource(args.Args(), &tag, pSourceElement))
-    {
+    if (TagFromOriginalSource(args.Args(), &tag, pSourceElement)) {
       std::vector<int64_t> tagsForBranch;
       tagsForBranch.push_back(tag);
       *pTagsForBranch = std::move(tagsForBranch);
