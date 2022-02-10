@@ -2,6 +2,36 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Mon, 07 Feb 2022 16:12:58 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.67.1",
+            "commit": "b5381f63bedd75cc35876bdefd236945f168277f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Feb 2022 16:12:40 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.67.1",
+            "commit": "241ffcebb495f3c9ccc3f99f843cbe01d651b6e2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 16:13:22 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",
