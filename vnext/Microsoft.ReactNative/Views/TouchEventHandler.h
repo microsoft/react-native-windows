@@ -80,10 +80,11 @@ class TouchEventHandler {
       xaml::UIElement sourceElement,
       std::vector<int64_t> &&newViews);
 
+  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
 #ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
+  static bool IsEndishEventType(TouchEventType eventType) noexcept;
 #endif
-  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
   bool DispatchBackEvent();
