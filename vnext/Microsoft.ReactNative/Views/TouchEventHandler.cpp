@@ -708,6 +708,7 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
   assert(pTagsForBranch != nullptr);
   assert(pSourceElement != nullptr);
 
+#ifdef USE_FABRIC
   if (m_fabric) {
     int64_t tag;
     if (TagFromOriginalSource(args.Args(), &tag, pSourceElement)) {
@@ -717,6 +718,7 @@ bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
     }
     return pSourceElement != nullptr;
   }
+#endif
 
   if (const auto uiManager = GetNativeUIManager(*m_context).lock()) {
     xaml::UIElement sourceElement = args.Args().OriginalSource().try_as<xaml::UIElement>();
