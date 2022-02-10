@@ -36,6 +36,7 @@
     "lage": "^0.29.3"
   },
   "resolutions": {
+    "@react-native-community/cli-plugin-metro": "6.4.0",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
     "node-notifier": "^9.0.0",
@@ -49,6 +50,7 @@
     "z-schema": "^5.0.2"
   },
   "resolutions.justification": {
+    "@react-native-community/cli-plugin-metro": "The Metro bump with the 0.68 release regressed the websocket debugging proxy. Forcing usage of the older version until a fix is out.",
     "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo"
   }
 }
