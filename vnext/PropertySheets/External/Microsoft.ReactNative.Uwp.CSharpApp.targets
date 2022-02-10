@@ -10,6 +10,15 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Common.targets" />
 
+  <!-- Due to visual studio unconditionally showing references, we have to trick it by making it impossible for VS to find the reference differences between building as source and building as NuGet -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.SourceReferences.targets"
+          Condition="!$(UseExperimentalNuget)" />
+
+  <ItemGroup>
+    <!-- WinUI package name and version are set by WinUI.props -->
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+  </ItemGroup>
+
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
           Condition="'$(ReactNativeCodeGenEnabled)' == 'true' and '$(UseExperimentalNuget)' != 'true'" />
 
@@ -33,10 +42,6 @@
     <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(MSBuildProjectDirectory)\$(OutputPath)Appx\AppxManifest.xml" 
           ContinueOnError="false" />
   </Target>
-
-  <!-- Due to visual studio unconditionally showing references, we have to trick it by making it impossible for VS to find the reference differences between building as source and building as NuGet -->
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.SourceReferences.targets"
-          Condition="!$(UseExperimentalNuget)" />
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
 </Project>
