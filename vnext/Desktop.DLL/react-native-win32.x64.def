@@ -33,6 +33,9 @@ EXPORTS
 ?createIUIManager@react@facebook@@YA?AV?$shared_ptr@VIUIManager@react@facebook@@@std@@$$QEAV?$vector@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@V?$allocator@V?$unique_ptr@VIViewManager@react@facebook@@U?$default_delete@VIViewManager@react@facebook@@@std@@@std@@@2@@4@PEAUINativeUIManager@12@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$shared_ptr@VIUIManager@react@facebook@@@4@@Z
 ?createUIManagerModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@$$QEAV?$shared_ptr@VIUIManager@react@facebook@@@4@$$QEAV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
+??$to_ascii_with_route@$09U?$to_ascii_alphabet@$0A@@folly@@$0BE@@detail@folly@@YA_KAEAY0BE@D_K@Z
+??$to_ascii_with_route@$09U?$to_ascii_alphabet@$0A@@folly@@@detail@folly@@YA_KPEADPEBD_K@Z
+??$to_ascii_size_route@$09@detail@folly@@YA_K_K@Z
 ?destroy@dynamic@folly@@AEAAXXZ
 ?dispatchCommand@ShadowNode@react@facebook@@UEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBUdynamic@folly@@@Z
 ?getModuleRegistry@Instance@react@facebook@@QEAAAEAVModuleRegistry@23@XZ
