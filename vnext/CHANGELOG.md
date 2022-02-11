@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Feb 2022 06:08:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.453
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Changes
+
+- Built in turbomodules should not override app provided versions (30809111+acoates-ms@users.noreply.github.com)
+- Integrate Feb 6 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.29
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.452
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Changes
+
+- Normalize package reference for WinUI between C# and C++ templates (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.114
+
+## 0.0.0-canary.451
+
+Wed, 09 Feb 2022 06:09:38 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.113
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.28
+- Bump @react-native-windows/codegen to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.5
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.450
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.24
+
+## 0.0.0-canary.449
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Changes
+
+- Fixes onMouseEnter/Leave to fire when pointer down (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.112
 
 ## 0.0.0-canary.448
 

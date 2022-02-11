@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Fri, 03 Dec 2021 06:12:11 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.2.3
+
+Wed, 09 Feb 2022 06:09:38 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @rnw-scripts/jest-e2e-config to v1.1.8
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
 
 ## 2.2.2
 

@@ -335,12 +335,13 @@ void TurboModulesProvider::SetReactContext(const IReactContext &reactContext) no
 
 void TurboModulesProvider::AddModuleProvider(
     winrt::hstring const &moduleName,
-    ReactModuleProvider const &moduleProvider) noexcept {
+    ReactModuleProvider const &moduleProvider,
+    bool overwriteExisting) noexcept {
   auto key = to_string(moduleName);
   auto it = m_moduleProviders.find(key);
   if (it == m_moduleProviders.end()) {
     m_moduleProviders.insert({key, moduleProvider});
-  } else {
+  } else if (overwriteExisting) {
     // turbo modules should be replaceable before the first time it is requested
     it->second = moduleProvider;
   }

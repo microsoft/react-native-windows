@@ -1,8 +1,53 @@
 # Change Log - playground
 
-This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Feb 2022 06:08:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.453
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.29
+
+## 0.0.54
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.452
+
+## 0.0.54
+
+Wed, 09 Feb 2022 06:09:39 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.451
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.28
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.54
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.450
+
+## 0.0.54
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.449
 
 ## 0.0.54
 

@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.20
+
+Wed, 09 Feb 2022 06:09:38 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
 
 ## 1.0.19
 

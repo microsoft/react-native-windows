@@ -1,8 +1,30 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 03 Feb 2022 06:08:22 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Feb 2022 06:08:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.133
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Changes
+
+- Integrate Feb 6 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.29
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.132
+
+Wed, 09 Feb 2022 06:09:35 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.28
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.5
+- Bump react-native-platform-override to v1.6.5
 
 ## 0.0.0-canary.131
 

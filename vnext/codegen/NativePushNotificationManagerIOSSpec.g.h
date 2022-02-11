@@ -43,6 +43,8 @@ struct PushNotificationManagerIOSSpec_Notification {
     std::optional<double> applicationIconBadgeNumber;
     REACT_FIELD(isSilent)
     std::optional<bool> isSilent;
+    REACT_FIELD(soundName)
+    std::optional<std::string> soundName;
 };
 
 REACT_STRUCT(PushNotificationManagerIOSSpec_requestPermissions_permission)

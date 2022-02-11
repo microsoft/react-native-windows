@@ -26,7 +26,10 @@ class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
 
  public:
   void SetReactContext(const IReactContext &reactContext) noexcept;
-  void AddModuleProvider(winrt::hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
+  void AddModuleProvider(
+      winrt::hstring const &moduleName,
+      ReactModuleProvider const &moduleProvider,
+      bool overwriteExisting) noexcept;
 
  private:
   std::unordered_map<std::string, ReactModuleProvider> m_moduleProviders;

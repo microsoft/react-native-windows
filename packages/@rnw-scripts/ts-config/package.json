@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/ts-config",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "main": "tsconfig.json",
   "repository": {
@@ -9,6 +9,6 @@
     "directory": "packages/@rnw-scripts/ts-config"
   },
   "engines": {
-    "node": ">= 12.0.0"
+    "node": ">= 14"
   }
 }
