@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 10 Feb 2022 06:07:57 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Feb 2022 06:08:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.453
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Changes
+
+- Built in turbomodules should not override app provided versions (30809111+acoates-ms@users.noreply.github.com)
+- Integrate Feb 6 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.29
+- Bump react-native-platform-override to v1.6.5
 
 ## 0.0.0-canary.452
 

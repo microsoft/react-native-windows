@@ -2,6 +2,47 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Feb 2022 06:08:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.453",
+      "version": "0.0.0-canary.453",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be8a8a8b77c9a2d4137f8cad00f76c8120e29f1a",
+            "comment": "Built in turbomodules should not override app provided versions"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ae5b3283fd03ec97f9b3ff33b9820778edb4188f",
+            "comment": "Integrate Feb 6 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.29",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.5",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7",
+            "comment": "backgroundExecutor now required for fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Feb 2022 06:07:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.452",
       "version": "0.0.0-canary.452",

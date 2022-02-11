@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Thu, 10 Feb 2022 06:07:57 GMT and should not be manually modified.
+This log was last generated on Fri, 11 Feb 2022 06:08:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.38
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.27
 
 ## 0.1.37
 
