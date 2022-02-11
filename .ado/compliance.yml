@@ -1,0 +1,36 @@
+name: RNW Compliance $(Date:yyyyMMdd).$(Rev:r)
+
+trigger: none
+pr: none
+
+jobs:
+  - job: PreCheck
+    displayName: Halp
+
+    steps:
+      - template: templates/prepare-js-env.yml
+
+      - template: templates/prepare-build-env.yml
+        parameters:
+          platform: $(BuildPlatform)
+          configuration: $(BuildConfiguration)
+          buildEnvironment: Publish
+
+      - template: templates/apply-published-version-vars.yml
+
+      # Insert pre-build compliance here
+
+      - template: templates/msbuild-sln.yml
+        parameters:
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.sln
+          buildPlatform: $(BuildPlatform)
+          buildConfiguration: $(BuildConfiguration)
+
+      - task: PowerShell@2
+        displayName: Make AnyCPU Reference Assemblies
+        inputs:
+          filePath: vnext/Scripts/Tfs/Make-AnyCPU-RefAssemblies.ps1
+          arguments: -TargetRoot $(Build.SourcesDirectory)\vnext\target -BuildRoot $(Build.SourcesDirectory)\vnext\target
+
+      # Insert post-build compliance here
