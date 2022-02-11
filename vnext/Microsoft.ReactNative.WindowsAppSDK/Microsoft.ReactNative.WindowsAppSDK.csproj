@@ -2,9 +2,10 @@
   <PropertyGroup>
     <!-- Ideally we target 17763, but we can't do that 
       until https://github.com/microsoft/WindowsAppSDK/issues/921 is fixed -->
-    <TargetFramework>net5.0-windows10.0.22000.0</TargetFramework>
+    <!-- <TargetFramework>net5.0-windows10.0.22000.0</TargetFramework>
     <UseWindowsSdkPreview>true</UseWindowsSdkPreview>
-    <WindowsSdkPackageVersion>10.0.22000.168-preview</WindowsSdkPackageVersion>
+    <WindowsSdkPackageVersion>10.0.22000.168-preview</WindowsSdkPackageVersion> -->
+    <TargetFramework>net5.0-windows10.0.18362.0</TargetFramework>
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
@@ -27,8 +28,10 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.22000.168-preview" />
-    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22000.168-preview" /> 
+    <!-- <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.22000.168-preview" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.22000.168-preview" />  -->
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" RuntimeFrameworkVersion="10.0.18362.18" />
+    <FrameworkReference Update="Microsoft.Windows.SDK.NET.Ref" TargetingPackVersion="10.0.18362.18" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)\..\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
