@@ -124,7 +124,7 @@ extern template to_ascii_powers<16, uint64_t>::data_type_ const
     to_ascii_powers<16, uint64_t>::data;
 
 template <uint64_t Base>
- FOLLY_ALWAYS_INLINE size_t to_ascii_size_imuls(uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_size_imuls(uint64_t v) {
   using powers = to_ascii_powers<Base, uint64_t>;
   uint64_t p = 1;
   for (size_t i = 0u; i < powers::size; ++i, p *= Base) {
@@ -136,7 +136,7 @@ template <uint64_t Base>
 }
 
 template <uint64_t Base>
- FOLLY_ALWAYS_INLINE size_t to_ascii_size_idivs(uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_size_idivs(uint64_t v) {
   size_t i = 1;
   while (v >= Base) {
     i += 1;
@@ -146,7 +146,7 @@ template <uint64_t Base>
 }
 
 template <uint64_t Base>
- FOLLY_ALWAYS_INLINE size_t to_ascii_size_array(uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_size_array(uint64_t v) {
   using powers = to_ascii_powers<Base, uint64_t>;
   for (size_t i = 0u; i < powers::size; ++i) {
     if (FOLLY_LIKELY(v < powers::data.data[i])) {
@@ -168,7 +168,7 @@ template <uint64_t Base>
 //  is actually faster depends on the emitted code for this implementation and
 //  on whether the loops in the basic implementations are unrolled.
 template <uint64_t Base>
- FOLLY_ALWAYS_INLINE size_t to_ascii_size_clzll(uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_size_clzll(uint64_t v) {
   using powers = to_ascii_powers<Base, uint64_t>;
 
   //  clzll is undefined for 0; must special case this
@@ -199,7 +199,7 @@ template <uint64_t Base>
 }
 
 template <uint64_t Base>
- FOLLY_ALWAYS_INLINE  size_t to_ascii_size_route(uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_size_route(uint64_t v) {
   return kIsArchAmd64 && !(Base & (Base - 1)) //
       ? to_ascii_size_clzll<Base>(v)
       : to_ascii_size_array<Base>(v);
@@ -211,7 +211,7 @@ template <uint64_t Base>
 //  entail emitting the bytes backward and then reversing them at the end, once
 //  the size is known.
 template <uint64_t Base, typename Alphabet>
- FOLLY_ALWAYS_INLINE  void to_ascii_with_basic(
+FOLLY_ALWAYS_INLINE void to_ascii_with_basic(
     char* out, size_t size, uint64_t v) {
   Alphabet const xlate;
   for (auto pos = size - 1; pos; --pos) {
@@ -226,7 +226,7 @@ template <uint64_t Base, typename Alphabet>
 
 //  A variant of the straightforward implementation, but using a lookup table.
 template <uint64_t Base, typename Alphabet>
- FOLLY_ALWAYS_INLINE  void to_ascii_with_array(
+FOLLY_ALWAYS_INLINE void to_ascii_with_array(
     char* out, size_t size, uint64_t v) {
   using array = to_ascii_array<Base, Alphabet>; // also an alphabet
   to_ascii_with_basic<Base, array>(out, size, v);
@@ -241,7 +241,7 @@ template <uint64_t Base, typename Alphabet>
 //  The downside of this implementation is that the emitted code is larger,
 //  especially when the divide is simulated, which affects inlining decisions.
 template <uint64_t Base, typename Alphabet>
- FOLLY_ALWAYS_INLINE  void to_ascii_with_table(
+FOLLY_ALWAYS_INLINE void to_ascii_with_table(
     char* out, size_t size, uint64_t v) {
   using table = to_ascii_table<Base, Alphabet>;
   auto pos = size - 2;
@@ -262,14 +262,14 @@ template <uint64_t Base, typename Alphabet>
   }
 }
 template <uint64_t Base, typename Alphabet>
- FOLLY_ALWAYS_INLINE size_t to_ascii_with_table(char* out, uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_with_table(char* out, uint64_t v) {
   auto const size = to_ascii_size_route<Base>(v);
   to_ascii_with_table<Base, Alphabet>(out, size, v);
   return size;
 }
 
 template <uint64_t Base, typename Alphabet>
- FOLLY_ALWAYS_INLINE   size_t
+FOLLY_ALWAYS_INLINE size_t
 to_ascii_with_route(char* outb, char const* oute, uint64_t v) {
   auto const size = to_ascii_size_route<Base>(v);
   if (FOLLY_UNLIKELY(oute < outb || size_t(oute - outb) < size)) {
@@ -281,7 +281,7 @@ to_ascii_with_route(char* outb, char const* oute, uint64_t v) {
   return size;
 }
 template <uint64_t Base, typename Alphabet, size_t N>
-FOLLY_ALWAYS_INLINE  size_t to_ascii_with_route(char (&out)[N], uint64_t v) {
+FOLLY_ALWAYS_INLINE size_t to_ascii_with_route(char (&out)[N], uint64_t v) {
   static_assert(N >= to_ascii_powers<Base, decltype(v)>::size, "out too small");
   return to_ascii_with_table<Base, Alphabet>(out, v);
 }
