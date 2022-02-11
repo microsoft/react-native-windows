@@ -65,9 +65,8 @@ void WinRTHttpResource::SendRequest(
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
 
-  // TODO:Callback?
+  // TODO:Keep callback argument?
 
-  // TODO: Use exception->hresult_error conversion
   try {
     HttpMethod httpMethod{to_hstring(method)};
     Uri uri{to_hstring(url)};
@@ -106,7 +105,7 @@ void WinRTHttpResource::SendRequest(
       auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(bodyData.Data));
       content = HttpBufferContent{buffer};
     } else if (BodyData::Type::Uri == bodyData.Type) {
-      auto file = StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(bodyData.Data)}).get(); // TODO: async??
+      auto file = StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(bodyData.Data)}).get();
       auto stream = file.OpenReadAsync().get();
       content = HttpStreamContent{stream};
     } else if (BodyData::Type::Form == bodyData.Type) {
@@ -130,7 +129,7 @@ void WinRTHttpResource::SendRequest(
         }
       }
       if (!contentLength.empty()) {
-        const auto contentLengthHeader = _atoi64(contentLength.c_str()); // TODO: Check error?
+        const auto contentLengthHeader = _atoi64(contentLength.c_str()); // TODO: Alternatives to _atoi64?
         content.Headers().ContentLength(contentLengthHeader);
       }
 
@@ -146,7 +145,7 @@ void WinRTHttpResource::SendRequest(
     if (m_onError) {
       m_onError(requestId, Utilities::HResultToString(e));
     }
-  } catch (...) { // TODO: Delcare specific exception types
+  } catch (...) {
     m_onError(requestId, "Unidentified error sending HTTP request");
   }
 }
@@ -165,8 +164,8 @@ void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
 
   try {
     request.Cancel();
-  } catch (hresult_error const &) {
-    // TODO: Propagate error?
+  } catch (hresult_error const &e) {
+    m_onError(requestId, Utilities::HResultToString(e));
   }
 }
 
@@ -209,13 +208,13 @@ void WinRTHttpResource::RemoveRequest(int64_t requestId) noexcept {
 fire_and_forget
 WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage request, bool textResponse) noexcept {
   auto self = shared_from_this();
-  // TODO: Set timeout?
 
   // Ensure background thread
   co_await winrt::resume_background();
 
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(request);
+
     self->AddRequest(requestId, sendRequestOp);
 
     co_await lessthrow_await_adapter<ResponseType>{sendRequestOp};
@@ -229,7 +228,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage requ
     }
 
     auto response = sendRequestOp.GetResults();
-    if (response) { // TODO: check nullptr?
+    if (response) {
       if (self->m_onResponse) {
         Headers headers;
 
@@ -248,7 +247,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage requ
     }
 
     // TODO: Incremental updates?
-    if (response && response.Content()) { // TODO: check nullptr?
+    if (response && response.Content()) {
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
@@ -278,15 +277,20 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage requ
           self->m_onData(0 /*requestId*/, std::move(responseData));
         }
       }
-
-      // TODO: self->OnRequestSuccess OR, keep in self->OnData.
     } else {
       if (self->m_onError) {
         self->m_onError(requestId, response == nullptr ? "request failed" : "No response content");
       }
     }
+  } catch (std::exception const &e) {
+    if (self->m_onError) {
+      self->m_onError(requestId, e.what());
+    }
+  } catch (hresult_error const &e) {
+    if (self->m_onError) {
+      self->m_onError(requestId, Utilities::HResultToString(e));
+    }
   } catch (...) {
-    // TODO: Lose generic catch
     if (self->m_onError) {
       self->m_onError(requestId, "Unhandled exception during request");
     }
