@@ -235,9 +235,6 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="HttpResource.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="BeastWebSocketResource.cpp">
       <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
     </ClCompile>
@@ -301,7 +298,6 @@
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="HttpResource.h" />
     <ClInclude Include="BeastWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
