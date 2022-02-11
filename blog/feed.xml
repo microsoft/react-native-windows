@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Thu, 05 Aug 2021 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 11 Feb 2022 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,6 +12,25 @@
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
+        <item>
+            <title><![CDATA[React Native for Windows is helping Settings improve more quickly]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2022/02/11/settings.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2022/02/11/settings.html</guid>
+            <pubDate>Fri, 11 Feb 2022 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>React Native isn’t just for mobile! Check out how the Windows 11 Settings app is leveraging React Native for Windows to deliver new features and capabilities to users faster and with the same great visual fidelity as Windows 11.</p>
+<p>In this blog post, we discuss how and why Microsoft is using React Native for Windows to deliver the Your Microsoft Account page in Windows 11 Settings.</p>
+]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Calling Windows APIs from React Native just got easier]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2022/02/11/rnwinrt.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2022/02/11/rnwinrt.html</guid>
+            <pubDate>Fri, 11 Feb 2022 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>We are excited to announce the <a href="http://aka.ms/reactnativewinrt">React Native WinRT</a> project, a new extension that makes it easier for <a href="https://microsoft.github.io/react-native-windows/">React Native for Windows</a> developers to call Windows Runtime APIs directly from JavaScript! With React Native WinRT, developers can light up experiences that take advantage of unique platform features on Windows.</p>
+<p>In this blog post, we will dive a little deeper into the technology, walk through some sample code, and show how React Native WinRT is already in use today.</p>
+<p>The <a href="https://github.com/microsoft/react-native-winrt">React Native WinRT repo</a> is now public, and a preview is available for developers to get started!</p>
+]]></description>
+        </item>
         <item>
             <title><![CDATA[Use Win32 features from a React Native for Windows application]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2021/08/05/win32component.html</link>
