@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate Feb 6 Nightly RN Build",
+  "packageName": "@react-native-windows/virtualized-list",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

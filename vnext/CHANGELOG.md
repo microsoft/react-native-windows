@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 09 Feb 2022 06:09:38 GMT and should not be manually modified.
+This log was last generated on Thu, 10 Feb 2022 06:07:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.452
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Changes
+
+- Normalize package reference for WinUI between C# and C++ templates (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.114
 
 ## 0.0.0-canary.451
 
