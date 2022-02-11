@@ -155,8 +155,8 @@ void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
 
   {
     scoped_lock lock{m_mutex};
-    auto iter = m_requests.find(requestId);
-    if (iter == std::end(m_requests)) {
+    auto iter = m_responses.find(requestId);
+    if (iter == std::end(m_responses)) {
       return;
     }
     request = iter->second;
@@ -195,14 +195,14 @@ void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&err
 
 #pragma endregion IHttpResource
 
-void WinRTHttpResource::AddRequest(int64_t requestId, ResponseType response) noexcept {
+void WinRTHttpResource::TrackResponse(int64_t requestId, ResponseType response) noexcept {
   scoped_lock lock{m_mutex};
-  m_requests[requestId] = response;
+  m_responses[requestId] = response;
 }
 
-void WinRTHttpResource::RemoveRequest(int64_t requestId) noexcept {
+void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   scoped_lock lock{m_mutex};
-  m_requests.erase(requestId);
+  m_responses.erase(requestId);
 }
 
 fire_and_forget
@@ -215,7 +215,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage requ
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(request);
 
-    self->AddRequest(requestId, sendRequestOp);
+    self->TrackResponse(requestId, sendRequestOp);
 
     co_await lessthrow_await_adapter<ResponseType>{sendRequestOp};
     auto result = sendRequestOp.ErrorCode();
@@ -223,7 +223,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage requ
       if (self->m_onError) {
         self->m_onError(requestId, Utilities::HResultToString(std::move(result)));
       }
-      self->RemoveRequest(requestId);
+      self->UntrackResponse(requestId);
       co_return;
     }
 
@@ -296,7 +296,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage requ
     }
   }
 
-  self->RemoveRequest(requestId);
+  self->UntrackResponse(requestId);
   co_return; // TODO: keep?
 }
 

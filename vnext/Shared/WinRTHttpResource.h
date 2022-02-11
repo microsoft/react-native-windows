@@ -23,16 +23,16 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
 
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
-  std::unordered_map<int64_t, ResponseType> m_requests;
+  std::unordered_map<int64_t, ResponseType> m_responses;
 
   std::function<void(int64_t requestId)> m_onRequest;
   std::function<void(int64_t requestId, Response &&response)> m_onResponse;
   std::function<void(int64_t requestId, std::string &&responseData)> m_onData;
   std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> m_onError;
 
-  void AddRequest(int64_t requestId, ResponseType response) noexcept;
+  void TrackResponse(int64_t requestId, ResponseType response) noexcept;
 
-  void RemoveRequest(int64_t requestId) noexcept;
+  void UntrackResponse(int64_t requestId) noexcept;
 
   // TODO: Make non-trivial args r-value??
   winrt::fire_and_forget PerformSendRequest(/*TODO: shared self?,*/
