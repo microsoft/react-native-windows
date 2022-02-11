@@ -1,0 +1,62 @@
+name: RNW Compliance $(Date:yyyyMMdd).$(Rev:r)
+
+parameters:
+- name: stopOnNoCI
+  displayName: Stop if latest commit is ***NO_CI***
+  type: boolean
+  default: true
+- name: AgentPool
+  type: object
+  default:
+    Medium:
+      name: rnw-pool-4-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+    Large:
+      name: rnw-pool-8-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+
+variables:
+  - template: variables/windows.yml
+  - group: RNW Secrets
+  - name: NugetSecurityAnalysisWarningLevel
+    value: 'warn'
+
+trigger: none
+pr: none
+
+jobs:
+  - job: RnwUniversalCompliance
+    displayName: Halp
+
+    steps:
+      - template: templates/prepare-js-env.yml
+
+      - powershell: |
+          Write-Error "Stopping because commit message contains ***NO_CI***."
+        displayName: Stop pipeline if latest commit message contains ***NO_CI***
+        condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
+
+      - template: ../templates/set-version-vars.yml
+        parameters:
+          buildEnvironment: Continuous
+
+      - template: ../templates/publish-version-vars.yml
+
+      - template: templates/prepare-build-env.yml
+        parameters:
+          platform: x64
+          configuration: Release
+          buildEnvironment: Continuous
+
+      - template: templates/apply-published-version-vars.yml
+
+      # Insert pre-build compliance here
+
+      - template: templates/msbuild-sln.yml
+        parameters:
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.sln
+          buildPlatform: x64
+          buildConfiguration: Release
+
+      # Insert post-build compliance here
