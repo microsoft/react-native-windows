@@ -31,6 +31,7 @@
     "@rnw-scripts/babel-node-config": "2.0.4",
     "@rnw-scripts/eslint-config": "1.1.11",
     "@rnw-scripts/just-task": "2.2.3",
+    "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.2",
     "@rnx-kit/jest-preset": "^0.1.0",
     "@types/jest": "^26.0.20",
