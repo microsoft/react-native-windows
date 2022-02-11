@@ -394,13 +394,13 @@ export class AutolinkWindows {
   }
 
   /** Cache of dependencies */
-  private readonly windowsDependencies: Record<
-    string,
-    WindowsDependencyConfig
-  > = {};
+  private windowsDependencies:
+    | Record<string, WindowsDependencyConfig>
+    | undefined;
 
   private getWindowsDependencies() {
-    if (Object.keys(this.windowsDependencies).length === 0) {
+    if (!this.windowsDependencies) {
+      this.windowsDependencies = {};
       for (const dependencyName of Object.keys(this.dependenciesConfig)) {
         const windowsDependency: WindowsDependencyConfig | undefined = this
           .dependenciesConfig[dependencyName].platforms.windows;
