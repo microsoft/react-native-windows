@@ -36,11 +36,11 @@ jobs:
         displayName: Stop pipeline if latest commit message contains ***NO_CI***
         condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
-      - template: ../templates/set-version-vars.yml
+      - template: templates/set-version-vars.yml
         parameters:
           buildEnvironment: Continuous
 
-      - template: ../templates/publish-version-vars.yml
+      - template: templates/publish-version-vars.yml
 
       - template: templates/prepare-build-env.yml
         parameters:
