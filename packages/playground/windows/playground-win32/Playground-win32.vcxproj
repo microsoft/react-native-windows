@@ -179,7 +179,7 @@
     <!-- <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.1-prerelease.210709001" /> -->
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
-    <PackageReference Include="ReactNative.Hermes.Windows" Version="0.10.0-ms.1" />
+    <PackageReference Include="ReactNative.Hermes.Windows" Version="0.11.0-ms.2" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
