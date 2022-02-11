@@ -26,7 +26,8 @@ pr: none
 
 jobs:
   - job: RnwUniversalCompliance
-    displayName: Halp
+    displayName: RNW Universal Compliance
+    pool: ${{ parameters.AgentPool.Large }}
 
     steps:
       - template: templates/prepare-js-env.yml
