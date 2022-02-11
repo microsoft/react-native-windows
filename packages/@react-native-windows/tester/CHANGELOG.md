@@ -1,8 +1,36 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Sat, 05 Feb 2022 06:07:42 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Wed, 09 Feb 2022 06:09:39 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+- Bump react-native-platform-override to v1.6.5
+- Bump react-native-windows to v0.0.0-canary.451
+
+## 0.0.1
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.450
+
+## 0.0.1
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.449
 
 ## 0.0.1
 

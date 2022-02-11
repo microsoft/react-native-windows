@@ -84,6 +84,10 @@ jobs:
         displayName: Beachball Publish (Stable Branch)
         condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
 
+      # Beachball reverts to local state after publish, but we want the updates it added
+      - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
+        displayName: git pull
+
       - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
         displayName: Create GitHub Releases for New Tags (Stable Branch)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
@@ -92,6 +96,17 @@ jobs:
         parameters:
           buildEnvironment: Continuous
 
+      - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+        displayName: 📒 Generate Manifest Npm
+        inputs:
+          BuildDropPath: $(System.DefaultWorkingDirectory)
+    
+      - task: PublishPipelineArtifact@1
+        displayName: 📒 Publish Manifest Npm
+        inputs:
+          artifactName: SBom-$(System.JobAttempt)
+          targetPath: $(System.DefaultWorkingDirectory)/_manifest
+    
       - template: templates/publish-version-vars.yml
 
   - job: RnwNativeBuildDesktop
@@ -348,6 +363,11 @@ jobs:
           slices:
             - platform: x64
               configuration: Release
+
+      - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+        displayName: 📒 Generate Manifest Nuget
+        inputs:
+          BuildDropPath: $(System.DefaultWorkingDirectory)
 
       - task: PublishPipelineArtifact@1
         displayName: "Publish final nuget artifacts"
