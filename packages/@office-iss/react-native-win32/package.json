@@ -71,7 +71,7 @@
     "prettier": "^2.4.1",
     "react": "17.0.2",
     "react-native": "0.0.0-20220206-2010-113f8257c",
-    "react-native-platform-override": "^1.6.4",
+    "react-native-platform-override": "^1.6.5",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"
   },
