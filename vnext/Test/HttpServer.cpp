@@ -72,10 +72,6 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
   Respond(); // ISS:2735328 - Handle request.
 }
 
-// disable __WARNING_IMPLICIT_CTOR
-#pragma warning(push)
-#pragma warning(disable : 25001)
-
 void HttpSession::Respond()
 {
   switch (m_request.method())
@@ -164,8 +160,6 @@ void HttpSession::Start()
   Read();
 }
 
-#pragma warning(pop)
-
 #pragma endregion // HttpSession
 
 #pragma region HttpServer
@@ -233,9 +227,9 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
     session->Start();
   }
 
+  // ISS:2735328: Uncomment after implementing multiple context threading.
   // Accept next connection.
-  // Accept(); //ISS:2735328: Uncomment after implementing multiple context
-  // threading.
+  // Accept();
 }
 
 void HttpServer::Start()
@@ -245,25 +239,29 @@ void HttpServer::Start()
   m_contextThread = std::thread([self = shared_from_this()]()
   {
     // See
-    // https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio/reference/io_context/run/overload1.html
+    // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/reference/io_context/run/overload1.html
     // The run() function blocks until all work has finished and there are no
     // more handlers to be dispatched, or until the io_context has been stopped.
     self->m_context.run();
   });
 }
 
-void HttpServer::Stop(bool abort)
+void HttpServer::Stop()
 {
-  if (m_context.stopped())
-    return;
-
-  if (abort)
-    m_context.stop();
-
   m_contextThread.join();
 
   if (m_acceptor.is_open())
     m_acceptor.close();
+}
+
+void HttpServer::Abort()
+{
+  if (m_context.stopped())
+    return;
+
+  m_context.stop();
+
+  Stop();
 }
 
 void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept
@@ -275,11 +273,6 @@ void HttpServer::SetOnGet(
   function<http::response<http::dynamic_body>(const http::request<http::string_body> &)> &&handler) noexcept
 {
   m_callbacks.OnGet = std::move(handler);
-}
-
-void HttpServer::SetOnRequest(function<void()>&& handler) noexcept
-{
-  m_callbacks.OnRequest = std::move(handler);
 }
 
 #pragma endregion HttpServer

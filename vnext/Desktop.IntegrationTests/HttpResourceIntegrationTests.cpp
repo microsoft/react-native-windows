@@ -24,12 +24,13 @@ using std::vector;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(RequestGetSucceeds) {
-    promise<void> getPromise;
+    promise<void> promise;
+    string error;
     int statusCode = 0;
 
     // HTTP call scope
     {
-      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
+      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
       server->SetOnGet([](const http::request<http::string_body> &request) -> http::response<http::dynamic_body> {
         http::response<http::dynamic_body> response;
         response.result(http::status::ok);
@@ -39,13 +40,19 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       server->Start();
 
       auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
+      resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
         statusCode = static_cast<int>(response.StatusCode);
-        getPromise.set_value();
+        promise.set_value();
+      });
+      resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
+        error = std::move(message);
+        promise.set_value();
+
+        server->Abort();
       });
       resource->SendRequest(
           "GET",
-          "http://localhost:5555",
+          "http://localhost:5556",
           {} /*header*/,
           {} /*bodyData*/,
           "text",
@@ -57,12 +64,12 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       server->Stop();
     }
     // Synchronize response.
-    getPromise.get_future().wait();
+    promise.get_future().wait();
 
+    Assert::AreEqual({}, error);
     Assert::AreEqual(200, statusCode);
   }
 
-  // TODO: Hangs! Likely headers make server not send response.
   TEST_METHOD(RequestGetHeadersSucceeds) {
     promise<void> promise;
     string error;
@@ -95,7 +102,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         error = std::move(message);
         promise.set_value();
 
-        server->Stop(true /*abort*/);
+        server->Abort();
       });
 
       //clang-format off
