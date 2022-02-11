@@ -34,26 +34,23 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
 
   void UntrackResponse(int64_t requestId) noexcept;
 
-  // TODO: Make non-trivial args r-value??
-  winrt::fire_and_forget PerformSendRequest(/*TODO: shared self?,*/
-                                            int64_t requestId,
-                                            winrt::Windows::Web::Http::HttpRequestMessage request,
-                                            bool textResponse
-                                            /*, requestId?*/) noexcept;
+  winrt::fire_and_forget PerformSendRequest(int64_t requestId,
+                                            winrt::Windows::Web::Http::HttpRequestMessage&& request,
+                                            bool textResponse) noexcept;
 
  public:
   WinRTHttpResource() noexcept;
 
-  WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient client) noexcept;
+  WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient&& client) noexcept;
 
 #pragma region IHttpResource
 
   void SendRequest(
-      const std::string &method,
-      const std::string &url,
-      const Headers &&headers,
+      std::string &&method,
+      std::string &&url,
+      Headers &&headers,
       BodyData &&bodyData,
-      const std::string &responseType,
+      std::string &&responseType,
       bool useIncrementalUpdates,
       int64_t timeout,
       bool withCredentials,

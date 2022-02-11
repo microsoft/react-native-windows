@@ -35,8 +35,6 @@ using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
-namespace {} // namespace
-
 namespace Microsoft::React {
 
 #pragma region WinRTHttpResource
@@ -44,18 +42,18 @@ namespace Microsoft::React {
 // TODO: Multi-thread issues?
 /*static*/ int64_t WinRTHttpResource::s_lastRequestId = 0;
 
-WinRTHttpResource::WinRTHttpResource(IHttpClient client) noexcept : m_client{client} {}
+WinRTHttpResource::WinRTHttpResource(IHttpClient&& client) noexcept : m_client{std::move(client)} {}
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient()) {}
 
 #pragma region IHttpResource
 
 void WinRTHttpResource::SendRequest(
-    const string &method,
-    const string &url,
-    const Headers &&headers,
+    string &&method,
+    string &&url,
+    Headers &&headers,
     BodyData &&bodyData,
-    const string &responseType,
+    string &&responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
     bool withCredentials,
@@ -68,8 +66,8 @@ void WinRTHttpResource::SendRequest(
   // TODO:Keep callback argument?
 
   try {
-    HttpMethod httpMethod{to_hstring(method)};
-    Uri uri{to_hstring(url)};
+    HttpMethod httpMethod{to_hstring(std::move(method))};
+    Uri uri{to_hstring(std::move(url))};
     HttpRequestMessage request{httpMethod, uri};
     HttpMediaTypeHeaderValue contentType{nullptr};
     string contentEncoding;
@@ -136,7 +134,7 @@ void WinRTHttpResource::SendRequest(
       request.Content(content);
     }
 
-    PerformSendRequest(requestId, request, responseType == "text");
+    PerformSendRequest(requestId, std::move(request), responseType == "text");
   } catch (std::exception const &e) {
     if (m_onError) {
       m_onError(requestId, e.what());
@@ -206,14 +204,16 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
 }
 
 fire_and_forget
-WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage request, bool textResponse) noexcept {
+WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage&& request, bool textResponse) noexcept {
+  // Keep references after coroutine suspension.
   auto self = shared_from_this();
+  auto coRequest = std::move(request);
 
   // Ensure background thread
   co_await winrt::resume_background();
 
   try {
-    auto sendRequestOp = self->m_client.SendRequestAsync(request);
+    auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
 
     self->TrackResponse(requestId, sendRequestOp);
 

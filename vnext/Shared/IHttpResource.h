@@ -30,11 +30,11 @@ struct IHttpResource {
   virtual ~IHttpResource() noexcept {}
 
   virtual void SendRequest(
-      const std::string &method,
-      const std::string &url,
-      const Headers &&headers,
+      std::string &&method,
+      std::string &&url,
+      Headers &&headers,
       BodyData &&bodyData,
-      const std::string &responseType,
+      std::string &&responseType,
       bool useIncrementalUpdates,
       int64_t timeout,
       bool withCredentials,
