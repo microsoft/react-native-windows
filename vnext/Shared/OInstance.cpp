@@ -539,13 +539,13 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
-      "Networking",
+      Microsoft::React::GetHttpModuleName(),
       [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(); },
       nativeQueue));
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
-      "WebSocketModule",
+      Microsoft::React::GetWebSocketModuleName(),
       [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
         return Microsoft::React::CreateWebSocketModule();
       },

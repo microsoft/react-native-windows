@@ -299,7 +299,9 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage &&re
   }
 
   self->UntrackResponse(requestId);
-  co_return; // TODO: keep?
+
+  //TODO: keep? See https://devblogs.microsoft.com/oldnewthing/?p=106160
+  co_return;
 }
 
 #pragma endregion WinRTHttpResource

@@ -246,6 +246,10 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 } // getMethods
 // clang-format on
 
+/*extern*/ const char* GetWebSocketModuleName() noexcept {
+  return moduleName;
+}
+
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
   return std::make_unique<WebSocketModule>();
 }

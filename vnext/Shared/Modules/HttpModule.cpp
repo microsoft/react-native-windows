@@ -189,4 +189,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
 // clang-format on
 
 #pragma endregion CxxModule
+
+/*extern*/ const char *GetHttpModuleName() noexcept {
+  return moduleName;
+}
+
 } // namespace Microsoft::React
