@@ -244,7 +244,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage &&re
         }
         string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
         self->m_onResponse(
-            0 /*requestId*/, {static_cast<int32_t>(response.StatusCode()), std::move(headers), std::move(url)});
+            requestId, {static_cast<int32_t>(response.StatusCode()), std::move(headers), std::move(url)});
       }
     }
 
@@ -268,7 +268,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage &&re
         string responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
 
         if (self->m_onData) {
-          self->m_onData(0 /*requestId*/, std::move(responseData));
+          self->m_onData(requestId, std::move(responseData));
         }
       } else {
         auto buffer = reader.ReadBuffer(length);
@@ -276,7 +276,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage &&re
         auto responseData = to_string(std::wstring_view(data));
 
         if (self->m_onData) {
-          self->m_onData(0 /*requestId*/, std::move(responseData));
+          self->m_onData(requestId, std::move(responseData));
         }
       }
     } else {
