@@ -14,7 +14,6 @@
 #include <Modules/ImageViewManagerModule.h>
 #include <Modules/LinkingManagerModule.h>
 #include <Modules/NativeUIManager.h>
-#include <Modules/NetworkingModule.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 
@@ -51,9 +50,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   std::vector<facebook::react::NativeModuleDescription> modules;
 
   modules.emplace_back(
-      Microsoft::React::NetworkingModule::Name,
-      []() { return std::make_unique<Microsoft::React::NetworkingModule>(); },
-      jsMessageQueue);
+      "Networking", []() { return Microsoft::React::CreateHttpModule(); }, jsMessageQueue);
 
   modules.emplace_back(
       "Timing",

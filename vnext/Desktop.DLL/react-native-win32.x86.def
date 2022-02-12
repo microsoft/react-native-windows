@@ -59,7 +59,7 @@ EXPORTS
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
 ??0WebSocketModule@React@Microsoft@@QAE@XZ
 ?CreateAsyncStorageModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
-?Make@IHttpResource@React@Microsoft@@SG?AV?$unique_ptr@UIHttpResource@React@Microsoft@@U?$default_delete@UIHttpResource@React@Microsoft@@@std@@@std@@XZ
+?Make@IHttpResource@React@Microsoft@@SG?AV?$shared_ptr@UIHttpResource@React@Microsoft@@@std@@XZ
 ??0NetworkingModule@React@Microsoft@@QAE@XZ
 ?MakeJSQueueThread@ReactNative@Microsoft@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?Hash128@SpookyHashV2@hash@folly@@SGXPBXIPA_K1@Z
