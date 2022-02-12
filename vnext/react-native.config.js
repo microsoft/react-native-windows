@@ -22,7 +22,7 @@ module.exports = {
       npmPackageName: 'react-native-windows',
     },
   },
-  healthChecks: cli.getHealthChecks(),
+  get healthChecks() { return cli.getHealthChecks(); },
 };
 
 // We ship compiled JavaScript to end-users running the CLI. We use
