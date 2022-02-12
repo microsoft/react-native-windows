@@ -30,6 +30,7 @@
     ]
   },
   "devDependencies": {
+    "@rnw-scripts/beachball-config": "0.0.0",
     "@rnw-scripts/format-files": "1.0.29",
     "@rnw-scripts/integrate-rn": "1.1.5",
     "@rnw-scripts/just-task": "2.2.3",
