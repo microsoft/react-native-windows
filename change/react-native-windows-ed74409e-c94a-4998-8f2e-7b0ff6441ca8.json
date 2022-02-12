@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bump Hermes version to 0.11",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch"
+}
