@@ -90,6 +90,8 @@
     <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
+    <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
@@ -119,9 +121,6 @@
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
-    </ClCompile>
-    <ClCompile Include="HttpResource.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="JSBigStringResourceDll.cpp">
       <Filter>Source Files</Filter>
@@ -179,9 +178,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BeastWebSocketResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HttpResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">

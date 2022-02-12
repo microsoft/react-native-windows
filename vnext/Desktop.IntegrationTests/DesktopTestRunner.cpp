@@ -51,14 +51,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
        },
        nativeQueue},
 
-      {"WebSocketModule", []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); }, nativeQueue},
-
-      {"Networking",
-       []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
-       nativeQueue},
-
-      {"Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue},
-
       // Apparently mandatory for /IntegrationTests
       {TestAppStateModule::name,
        []() -> unique_ptr<CxxModule> { return std::make_unique<TestAppStateModule>(); },
