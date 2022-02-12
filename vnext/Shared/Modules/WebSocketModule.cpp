@@ -246,7 +246,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 } // getMethods
 // clang-format on
 
-/*extern*/ const char* GetWebSocketModuleName() noexcept {
+/*extern*/ const char *GetWebSocketModuleName() noexcept {
   return moduleName;
 }
 
