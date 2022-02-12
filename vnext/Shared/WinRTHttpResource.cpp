@@ -39,10 +39,10 @@ namespace Microsoft::React {
 
 #pragma region WinRTHttpResource
 
-// TODO: Multi-thread issues?
+// TODO: Check for multi-thread issues if there are multiple instances.
 /*static*/ int64_t WinRTHttpResource::s_lastRequestId = 0;
 
-WinRTHttpResource::WinRTHttpResource(IHttpClient&& client) noexcept : m_client{std::move(client)} {}
+WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient()) {}
 
@@ -63,7 +63,9 @@ void WinRTHttpResource::SendRequest(
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
 
-  // TODO:Keep callback argument?
+  if (callback) {
+    callback({requestId});
+  }
 
   try {
     HttpMethod httpMethod{to_hstring(std::move(method))};
@@ -204,7 +206,7 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
 }
 
 fire_and_forget
-WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage&& request, bool textResponse) noexcept {
+WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage &&request, bool textResponse) noexcept {
   // Keep references after coroutine suspension.
   auto self = shared_from_this();
   auto coRequest = std::move(request);
@@ -271,7 +273,7 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage&& re
       } else {
         auto buffer = reader.ReadBuffer(length);
         auto data = CryptographicBuffer::EncodeToBase64String(buffer);
-        auto responseData = to_string(data); // TODO: string view???
+        auto responseData = to_string(std::wstring_view(data));
 
         if (self->m_onData) {
           self->m_onData(0 /*requestId*/, std::move(responseData));

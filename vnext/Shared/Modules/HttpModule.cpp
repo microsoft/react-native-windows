@@ -95,7 +95,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
   {
     {
       "sendRequest",
-      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback cb)//TODO: Check whether 'cb' is needed
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback callback)
       {
         auto holder = weakHolder.lock();
         if (!holder) {
@@ -145,7 +145,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
             params["incrementalUpdates"].asBool(),
             static_cast<int64_t>(params["timeout"].asDouble()),
             false,//withCredentials,
-            {}// callback
+            {} //callback
           );
         } // If resource available
       }

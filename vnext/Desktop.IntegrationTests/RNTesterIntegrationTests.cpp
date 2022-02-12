@@ -27,7 +27,7 @@ TEST_MODULE_INITIALIZE(InitModule) {
 
   SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
   SetRuntimeOptionBool("UseBeastWebSocket", false);
-  SetRuntimeOptionBool("Http.UseResourcedModule", true);
+  SetRuntimeOptionBool("Http.UseMonolithicModule", false);
 
   // WebSocketJSExecutor can't register native log hooks.
   SetRuntimeOptionBool("RNTester.UseWebDebugger", false);

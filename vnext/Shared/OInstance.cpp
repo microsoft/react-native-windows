@@ -71,10 +71,10 @@ using std::make_shared;
 namespace Microsoft::React {
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept {
-  if (GetRuntimeOptionBool("Http.UseResourcedModule")) {
-    return std::make_unique<HttpModule>();
-  } else {
+  if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
     return std::make_unique<NetworkingModule>();
+  } else {
+    return std::make_unique<HttpModule>();
   }
 }
 
