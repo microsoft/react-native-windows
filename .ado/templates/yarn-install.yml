@@ -2,6 +2,9 @@ parameters:
 - name: workingDirectory
   type: string
   default: .
+- name: workspace
+  type: string
+  default: ''
 - name: agentImage
   type: string
   default: ManagedImage
@@ -10,5 +13,5 @@ parameters:
       - HostedImage
 
 steps:
-    - script: npx --yes midgard-yarn-strict@1.2.4 --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
-      displayName: midgard-yarn (faster yarn install)
+  - script: npx --yes midgard-yarn-strict@1.2.4 --frozen-lockfile --cwd ${{ parameters.workingDirectory }} ${{ parameters.workspace }}
+    displayName: Strict yarn install ${{ parameters.workspace }}

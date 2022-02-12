@@ -23,6 +23,7 @@ jobs:
       - template: ../templates/yarn-install.yml
         parameters:
           agentImage: HostedImage
+          workspace: '@rnw-scripts/beachball-config'
 
       - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
         displayName: Minimal build
