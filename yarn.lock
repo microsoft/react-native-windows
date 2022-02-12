@@ -736,7 +736,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.14.5"
 
-"@babel/plugin-syntax-typescript@^7.16.7":
+"@babel/plugin-syntax-typescript@^7.16.7", "@babel/plugin-syntax-typescript@^7.3.3":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.16.7.tgz#39c9b55ee153151990fb038651d58d3fd03f98f8"
   integrity sha512-YhUIJHHGkqPgEcMYkPCKTyGUdoGKWtopIycQyjJH8OjvRgOYsXsaKehLVPScKJWAULPxMa4N1vCe6szREFlZ7A==
@@ -1231,7 +1231,7 @@
     "@babel/parser" "^7.16.7"
     "@babel/types" "^7.16.7"
 
-"@babel/traverse@^7.1.0", "@babel/traverse@^7.11.5", "@babel/traverse@^7.12.5", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.0", "@babel/traverse@^7.16.7", "@babel/traverse@^7.16.8", "@babel/traverse@^7.17.0", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4":
+"@babel/traverse@^7.1.0", "@babel/traverse@^7.11.5", "@babel/traverse@^7.12.5", "@babel/traverse@^7.13.0", "@babel/traverse@^7.14.0", "@babel/traverse@^7.16.0", "@babel/traverse@^7.16.7", "@babel/traverse@^7.16.8", "@babel/traverse@^7.17.0", "@babel/traverse@^7.7.0", "@babel/traverse@^7.7.4":
   version "7.17.0"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.17.0.tgz#3143e5066796408ccc880a33ecd3184f3e75cd30"
   integrity sha512-fpFIXvqD6kC7c7PUNnZ0Z8cQXlarCLtCUpt2S1Dx7PjoRtCFffvOkHHSom+m5HIxMZn5bIBVb71lhabcmjEsqg==
@@ -2003,6 +2003,20 @@
   resolved "https://registry.yarnpkg.com/@reactions/component/-/component-2.0.2.tgz#40f8c1c2c37baabe57a0c944edb9310dc1ec6642"
   integrity sha1-QPjBwsN7qr5XoMlE7bkxDcHsZkI=
 
+"@rnx-kit/babel-preset-metro-react-native@^1.0.17":
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/babel-preset-metro-react-native/-/babel-preset-metro-react-native-1.0.17.tgz#16dbd16a08ea2510f71b0a3297c849fb48fdf7c7"
+  integrity sha512-x/7InOIrE2+3p8bDYBQw2OdLulgYtM79HBuACqCd5PkQJoWxVYHSbjJWkO6NiBg1XUrbGPikngi3MQu9wo145w==
+  dependencies:
+    babel-plugin-const-enum "^1.0.0"
+
+"@rnx-kit/console@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/console/-/console-1.0.11.tgz#63c9124080424fefb10252d6b3f6bd16e8f71529"
+  integrity sha512-2Iyx56e+kk9YBQt3G5YSqG91dEI+AZhK/S58J64C6muPOdnYi7zuzaX1P/vkDFRSMAybtBi639Onn268suihnA==
+  dependencies:
+    chalk "^4.1.0"
+
 "@rnx-kit/jest-preset@^0.1.0":
   version "0.1.9"
   resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.9.tgz#f5591f71a9a95564306be53f4691cc3b807fa901"
@@ -2011,6 +2025,45 @@
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
     find-up "^5.0.0"
+
+"@rnx-kit/metro-config@^1.2.27":
+  version "1.2.27"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.27.tgz#79b1d8826b34ad4dda878b116ea3b0b9bb49d58c"
+  integrity sha512-tITsoINAlrB/tBpnVNpKAUbAeTwR71vC6YeKCgrcMe05yNxXWyZr7QXW6rP4HpHTBYIjgSHJ752TEne5xwXzzg==
+  dependencies:
+    "@rnx-kit/babel-preset-metro-react-native" "^1.0.17"
+    "@rnx-kit/tools-node" "^1.2.6"
+    workspace-tools "^0.16.2"
+
+"@rnx-kit/metro-plugin-duplicates-checker@^1.2.15":
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-1.2.15.tgz#7015c4cba99b4505346d4aa70779b85f693bebfd"
+  integrity sha512-g4zOW6b5W30wWq9dh9XxzdYjIeqv6xgrPKtxoSYh4qpOYSw5JbMLaLF0+zyKmvy+db+xfBNhFZPfVaKmCo6g+Q==
+  dependencies:
+    "@rnx-kit/console" "^1.0.11"
+    "@rnx-kit/tools-node" "^1.2.6"
+
+"@rnx-kit/metro-serializer@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-serializer/-/metro-serializer-1.0.11.tgz#703a61c70dafa0e89253ad2df7f45f60eaac6bbb"
+  integrity sha512-NaXgAsglJg+1v6EjBrv/6eV0JWEvNVEohJQ6wbLqP0R1mFZGCIk7+R4truNd9v1oZE1ZsUBfrrY+dt2q7RO8SA==
+  dependencies:
+    semver "^7.0.0"
+
+"@rnx-kit/tools-language@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-language/-/tools-language-1.2.6.tgz#ced63a53ce9821d14acb57a927237e5c39801387"
+  integrity sha512-8pq4JlFIkOqjwkN6amYebQ2CTAa1EeYjSBurGh8upYZtqUZBXDOK7FUAx+OVHs/7qQfmF2lU7QpqA7DZGv4xJA==
+
+"@rnx-kit/tools-node@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-1.2.6.tgz#34de31b1c2ec681a3009b27c137cc1f2c57b7e9c"
+  integrity sha512-oiVbP801aabLCBl42l448QPlui/SEQcuWURZOmVbg04ntyLGgUNgYN87Zen+2yr/LnnI2ec1SOtftHbK6Ro+5A==
+  dependencies:
+    "@rnx-kit/tools-language" "^1.2.6"
+    find-up "^5.0.0"
+    pkg-dir "^5.0.0"
+    pkg-up "^3.1.0"
 
 "@rushstack/node-core-library@3.35.2":
   version "3.35.2"
@@ -3269,6 +3322,15 @@ babel-jest@^26.3.0, babel-jest@^26.6.3:
     chalk "^4.0.0"
     graceful-fs "^4.2.4"
     slash "^3.0.0"
+
+babel-plugin-const-enum@^1.0.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-const-enum/-/babel-plugin-const-enum-1.2.0.tgz#3d25524106f68f081e187829ba736b251c289861"
+  integrity sha512-o1m/6iyyFnp9MRsK1dHF3bneqyf3AlM2q3A/YbgQr2pCat6B6XJVDv2TXqzfY2RYUi4mak6WAksSBPlyYGx9dg==
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.0.0"
+    "@babel/plugin-syntax-typescript" "^7.3.3"
+    "@babel/traverse" "^7.16.0"
 
 babel-plugin-dynamic-import-node@^2.3.3:
   version "2.3.3"
@@ -9325,6 +9387,13 @@ pkg-dir@^5.0.0:
   integrity sha512-NPE8TDbzl/3YQYY7CSS228s3g2ollTFnc+Qi3tqmqJp9Vg2ovUpixcJEo2HJScN2Ez+kEaal6y70c0ehqJBJeA==
   dependencies:
     find-up "^5.0.0"
+
+pkg-up@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/pkg-up/-/pkg-up-3.1.0.tgz#100ec235cc150e4fd42519412596a28512a0def5"
+  integrity sha512-nDywThFk1i4BQK4twPQ6TA4RT8bDY96yeuCVBWL3ePARCiEKDRSrNGbFIgUJpLp+XeIR65v8ra7WuJOFUBtkMA==
+  dependencies:
+    find-up "^3.0.0"
 
 please-upgrade-node@^3.2.0:
   version "3.2.0"

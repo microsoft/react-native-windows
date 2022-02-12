@@ -2,6 +2,27 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Fri, 11 Feb 2022 06:08:20 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "ae5b3283fd03ec97f9b3ff33b9820778edb4188f",
+            "comment": "Integrate Feb 6 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/virtualized-list",
+            "comment": "Bump react-native-platform-override to v1.6.5",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Feb 2022 06:09:36 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.28",
       "version": "0.0.0-canary.28",

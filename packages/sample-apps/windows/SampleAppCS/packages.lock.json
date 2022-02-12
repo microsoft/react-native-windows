@@ -22,8 +22,8 @@
       },
       "ReactNative.Hermes.Windows": {
         "type": "Direct",
-        "requested": "[0.10.0-ms.1, )",
-        "resolved": "0.10.0-ms.1",
+        "requested": "[0.11.0-ms.2, )",
+        "resolved": "0.11.0-ms.2",
         "contentHash": "U+0FecIUFhmuLDNGT+kIhQdzoIgOvaGHU5gQOl66G5JdbO8xpful+E5OH/NL9Ue6N1l+ecqTH9shGrVDsdG5ow=="
       },
       "Microsoft.Net.Native.Compiler": {
