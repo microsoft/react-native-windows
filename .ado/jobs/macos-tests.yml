@@ -17,7 +17,7 @@ jobs:
 
       - template: ../templates/prepare-js-env.yml
         parameters:
-          agentEnvironment: HostedImage
+          agentImage: HostedImage
 
       - script: yarn test
         displayName: yarn test

@@ -1,5 +1,5 @@
 parameters:
-  - name: agentEnvironment
+  - name: agentImage
     type: string
     default: ManagedImage
     values:
@@ -7,7 +7,7 @@ parameters:
         - HostedImage
 
 steps:
-  - ${{ if eq(parameters.agentEnvironment, 'HostedImage') }}:
+  - ${{ if eq(parameters.agentImage, 'HostedImage') }}:
     - task: NodeTool@0
       displayName: Set Node Version
       inputs:
@@ -15,7 +15,7 @@ steps:
 
   - template: yarn-install.yml
     parameters:
-      agentEnvironment: ${{ parameters.agentEnvironment }}
+      agentImage: ${{ parameters.agentImage }}
 
   - script: yarn build
     displayName: yarn build

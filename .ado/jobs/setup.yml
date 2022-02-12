@@ -10,6 +10,9 @@ jobs:
     timeoutInMinutes: 3
     pool:
       vmImage: ubuntu-latest
+      variables:
+       - template: ../variables/shared.yml
+
     steps:
       - template: ../templates/checkout-full.yml
 
@@ -20,7 +23,7 @@ jobs:
 
       - template: ../templates/yarn-install.yml
         parameters:
-          agentEnvironment: HostedImage
+          agentImage: HostedImage
 
       - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
         displayName: Minimal build

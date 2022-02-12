@@ -2,7 +2,7 @@ parameters:
 - name: workingDirectory
   type: string
   default: .
-- name: agentEnvironment
+- name: agentImage
   type: string
   default: ManagedImage
   values:
@@ -12,7 +12,7 @@ parameters:
 steps:
   # When using our own images, prefer the machine-installed version of
   # `midgard-yarn`.
-  - ${{ if eq(parameters.agentEnvironment, 'ManagedImage') }}:
+  - ${{ if eq(parameters.agentImage, 'ManagedImage') }}:
     - script: midgard-yarn --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
 
