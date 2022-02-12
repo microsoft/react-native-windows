@@ -14,42 +14,38 @@ const {AppRegistry, View} = ReactNative;
 const {TestModule} = ReactNative.NativeModules;
 
 type State = {
-  statusCode: ?number,
-  xhr:  ?XMLHttpRequest,
+  statusCode: number,
+  xhr: XMLHttpRequest,
 };
 
 class XHRTest extends React.Component<{...}, State> {
-
   state: State = {
     statusCode: 0,
-    xhr: null,
-  };
-
-  //TODO: Move to a new JS test.
-  _fetch = () => {
-    fetch('SOME_URL').then(res => {
-      console.log('fetched');
-      return res.text();
-    }).then(text => {
-      console.log('texted');
-    });
+    xhr: new XMLHttpRequest(),
   };
 
   _get = () => {
-    this.xhr = new XMLHttpRequest();
-    this.xhr.onloadend = () => {
+    this.state.xhr.onloadend = () => {
       this.setState({
-        statusCode: this.xhr.status,
+        statusCode: this.state.xhr.status,
       });
     };
-    this.xhr.open('GET', 'https://raw.githubusercontent.com/microsoft/react-native-windows/react-native-windows_v0.67.1/NuGet.Config');
-    this.xhr.setRequestHeader('Accept-Encoding', 'utf-8');
-    this.xhr.send();
+    this.state.xhr.open(
+      'GET',
+      'https://raw.githubusercontent.com/microsoft/react-native-windows/react-native-windows_v0.67.1/NuGet.Config',
+    );
+    this.state.xhr.setRequestHeader('Accept-Encoding', 'utf-8');
+    this.state.xhr.send();
   };
 
   _getSucceeded = () => {
-    console.log(`_getSucceeded [${this.state.statusCode}],[${this.xhr.responseText.length}]`);
-    return this.state.statusCode === 200 && this.xhr.responseText.length === 387;
+    console.log(
+      `_getSucceeded [${this.state.statusCode}],[${this.state.xhr.responseText.length}]`,
+    );
+    return (
+      this.state.statusCode === 200 &&
+      this.state.xhr.responseText.length === 387
+    );
   };
 
   _waitFor = (condition: any, timeout: any, callback: any) => {
