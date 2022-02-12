@@ -3,6 +3,8 @@
   "include": ["src"],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "src",
     // Not clean
     "isolatedModules": false,
   }

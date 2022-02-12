@@ -1,6 +1,9 @@
 {
     "extends": "@rnw-scripts/ts-config",
+    "compilerOptions": {
+      "baseUrl": ".",
+    "rootDir": "src",
+    },
     "include": ["src"],
     "exclude": ["node_modules"],
-    "compilerOptions": {"esModuleInterop": true}
 }

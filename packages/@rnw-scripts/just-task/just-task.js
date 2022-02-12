@@ -21,8 +21,11 @@ const {
   task,
   tscTask,
   tscWatchTask,
-  parallel
+  parallel,
+  addResolvePath,
 } = require('just-scripts');
+
+addResolvePath(__dirname);
 
 const depcheck = require('depcheck');
 

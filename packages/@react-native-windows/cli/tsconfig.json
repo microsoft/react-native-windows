@@ -1,6 +1,8 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
+    "baseUrl": ".",
+    "rootDir": "src",
     // Change the default to allow ES2019.String "trimEnd"
     "lib": [
       "DOM",

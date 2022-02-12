@@ -3,6 +3,7 @@
   "compilerOptions": {
     "types": ["react-native"],
     "baseUrl": ".",
+    "rootDir": "src",
     "outDir": ".",
 
     // Not clean

@@ -1,6 +1,7 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
+    "baseUrl": ".",
     "rootDir": "src",
     "outDir": "."
   },

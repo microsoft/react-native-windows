@@ -30,14 +30,20 @@
     ]
   },
   "devDependencies": {
+    "@rnw-scripts/format-files": "1.0.29",
+    "@rnw-scripts/integrate-rn": "1.1.5",
+    "@rnw-scripts/just-task": "2.2.3",
+    "@rnw-scripts/promote-release": "2.0.3",
+    "@rnw-scripts/stamp-version": "0.0.0",
+    "@rnw-scripts/take-screenshot": "1.0.20",
     "beachball": "^2.20.0",
     "husky": "^4.2.5",
+    "react-native-platform-override": "1.6.5",
     "unbroken": "1.0.27",
     "lage": "^1.5.0"
   },
   "resolutions": {
     "@react-native-community/cli-plugin-metro": "6.4.0",
-    "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
     "node-notifier": "^9.0.0",
     "set-value": "^4.0.1",
