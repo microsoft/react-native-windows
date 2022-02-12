@@ -72,10 +72,6 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
   Respond(); // ISS:2735328 - Handle request.
 }
 
-// disable __WARNING_IMPLICIT_CTOR
-#pragma warning(push)
-#pragma warning(disable : 25001)
-
 void HttpSession::Respond()
 {
   switch (m_request.method())
@@ -137,7 +133,10 @@ void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
     return;
   }
 
-  m_callbacks.OnResponseSent();
+  if (m_callbacks.OnResponseSent)
+  {
+	  m_callbacks.OnResponseSent(); 
+  }
 
   // TODO: Re-enable when concurrent sessions are implemented.
   // If response indicates "Connection: close"
@@ -160,8 +159,6 @@ void HttpSession::Start()
 {
   Read();
 }
-
-#pragma warning(pop)
 
 #pragma endregion // HttpSession
 
@@ -221,6 +218,7 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
   if (ec)
   {
     // ISS:2735328 - Implement failure propagation mechanism
+    return;
   }
   else
   {
@@ -229,9 +227,9 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
     session->Start();
   }
 
+  // ISS:2735328: Uncomment after implementing multiple context threading.
   // Accept next connection.
-  // Accept(); //ISS:2735328: Uncomment after implementing multiple context
-  // threading.
+  // Accept();
 }
 
 void HttpServer::Start()
@@ -241,7 +239,7 @@ void HttpServer::Start()
   m_contextThread = std::thread([self = shared_from_this()]()
   {
     // See
-    // https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio/reference/io_context/run/overload1.html
+    // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/reference/io_context/run/overload1.html
     // The run() function blocks until all work has finished and there are no
     // more handlers to be dispatched, or until the io_context has been stopped.
     self->m_context.run();
@@ -254,6 +252,16 @@ void HttpServer::Stop()
 
   if (m_acceptor.is_open())
     m_acceptor.close();
+}
+
+void HttpServer::Abort()
+{
+  if (m_context.stopped())
+    return;
+
+  m_context.stop();
+
+  Stop();
 }
 
 void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept
