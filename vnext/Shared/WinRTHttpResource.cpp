@@ -64,7 +64,7 @@ void WinRTHttpResource::SendRequest(
   assert(responseType == "text" || responseType == "base64");
 
   if (callback) {
-    callback({requestId});
+    callback(requestId);
   }
 
   try {

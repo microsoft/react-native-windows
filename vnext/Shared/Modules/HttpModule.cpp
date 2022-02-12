@@ -21,7 +21,6 @@ using Microsoft::React::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
 
-// TODO: Add to shared header? (See WebSocketModule)
 static void SendEvent(weak_ptr<Instance> weakReactInstance, string &&eventName, dynamic &&args) {
   if (auto instance = weakReactInstance.lock()) {
     instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
@@ -95,7 +94,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
   {
     {
       "sendRequest",
-      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback callback)
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback cxxCallback)
       {
         auto holder = weakHolder.lock();
         if (!holder) {
@@ -145,7 +144,9 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
             params["incrementalUpdates"].asBool(),
             static_cast<int64_t>(params["timeout"].asDouble()),
             false,//withCredentials,
-            {} //callback
+            [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
+              cxxCallback({requestId});
+            }
           );
         } // If resource available
       }
