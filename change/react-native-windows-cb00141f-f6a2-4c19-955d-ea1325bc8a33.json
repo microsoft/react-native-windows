@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Lazy Install `sourcemap-support` when `react-native-windows` config is hooked",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
