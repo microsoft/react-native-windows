@@ -2,6 +2,126 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Sat, 12 Feb 2022 06:08:37 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.454",
+            "commit": "0e6a8087042920290927cdaffd4c4426665e1dd3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Feb 2022 06:08:20 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.453",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.29",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Feb 2022 06:07:57 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.452",
+            "commit": "2857d1abb4c6ffc3304c23282fb760a658c7ed18"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Feb 2022 06:09:39 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.451",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.28",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.11",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.3",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.2",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Feb 2022 18:21:23 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.450",
+            "commit": "01c20a685163403b6cc364bb124c532c9a635104"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Feb 2022 06:08:05 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.0.0-canary.449",
+            "commit": "ad988985d38c1579bd740208039ccca79d988fef"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Feb 2022 06:07:42 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

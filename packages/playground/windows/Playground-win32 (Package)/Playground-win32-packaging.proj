@@ -63,5 +63,4 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\vnext\PropertySheets\WinUI.props" />
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
-  <Import Project="..\packages\$(WinUIPackageName).$(WinUI3Version)\build\Microsoft.WinUI.AppX.targets" />
 </Project>

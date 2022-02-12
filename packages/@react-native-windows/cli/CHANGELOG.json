@@ -2,6 +2,108 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 12 Feb 2022 06:08:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.115",
+      "version": "0.0.0-canary.115",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "564f0ced7e3f3eb29bc8c789d3634262bcce4651",
+            "comment": "Fix cache not being used when there are no dependencies"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Feb 2022 06:07:57 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.114",
+      "version": "0.0.0-canary.114",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.34",
+            "commit": "2857d1abb4c6ffc3304c23282fb760a658c7ed18"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Feb 2022 06:09:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.113",
+      "version": "0.0.0-canary.113",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447",
+            "comment": "Bump minimum Node version to 14"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v1.0.2",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.25",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.33",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.11",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.2.6",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.3",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/ts-config to v2.0.2",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 08 Feb 2022 06:08:05 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.112",
+      "version": "0.0.0-canary.112",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/cli",
+            "commit": "ad988985d38c1579bd740208039ccca79d988fef",
+            "comment": "checks for old project guid"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Feb 2022 06:08:38 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.111",
       "version": "0.0.0-canary.111",

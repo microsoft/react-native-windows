@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/ts-config",
   "entries": [
     {
+      "date": "Wed, 09 Feb 2022 06:09:38 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.2",
+      "version": "2.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/ts-config",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447",
+            "comment": "Bump minimum Node version to 14"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Oct 2021 05:06:02 GMT",
       "tag": "@rnw-scripts/ts-config_v2.0.1",
       "version": "2.0.1",

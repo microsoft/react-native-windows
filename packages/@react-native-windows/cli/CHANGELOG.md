@@ -1,8 +1,47 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 02 Feb 2022 06:08:38 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Feb 2022 06:08:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.115
+
+Sat, 12 Feb 2022 06:08:36 GMT
+
+### Changes
+
+- Fix cache not being used when there are no dependencies (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.114
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.34
+
+## 0.0.0-canary.113
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @react-native-windows/package-utils to v0.0.0-canary.25
+- Bump @react-native-windows/telemetry to v0.0.0-canary.33
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.0-canary.112
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Changes
+
+- checks for old project guid (email not defined)
 
 ## 0.0.0-canary.111
 
