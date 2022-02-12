@@ -222,10 +222,9 @@
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
-        <ClCompile Include="..\Microsoft.ReactNative\QuirkSettings.cpp">
+    <ClCompile Include="..\Microsoft.ReactNative\QuirkSettings.cpp">
       <DependentUpon>..\Microsoft.ReactNative\QuirkSettings.idl</DependentUpon>
     </ClCompile>
-
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
@@ -236,7 +235,6 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="HttpResource.cpp" />
     <ClCompile Include="BeastWebSocketResource.cpp">
       <ExcludedFromBuild Condition="'$(EnableBeast)' == 0">true</ExcludedFromBuild>
     </ClCompile>
@@ -300,7 +298,6 @@
     <ClInclude Include="JSBigStringResourceDll.h" />
     <ClInclude Include="Modules\TimingModule.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="HttpResource.h" />
     <ClInclude Include="BeastWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
