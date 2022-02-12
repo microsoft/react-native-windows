@@ -25,7 +25,7 @@ jobs:
           agentImage: HostedImage
           workspace: '@rnw-scripts/beachball-config'
 
-      - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
+      - script: npx lage build --verbose --scope @rnw-scripts/beachball-config --no-deps
         displayName: Build @rnw-scripts/beachball-config
 
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
