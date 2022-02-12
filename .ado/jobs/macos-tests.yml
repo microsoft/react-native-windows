@@ -15,17 +15,9 @@ jobs:
     steps:
       - template: ../templates/checkout-shallow.yml
 
-      # Explicitly set Node version and install midgard-yarn since we are
-      # running on a public pool
-      - task: NodeTool@0
-        displayName: Set Node Version
-        inputs:
-          versionSpec: '16.x'
-
-      - script: npm install -g midgard-yarn@1.23.33
-        displayName: Install midgard-yarn
-
       - template: ../templates/prepare-js-env.yml
+        parameters:
+          agentEnvironment: HostedImage
 
       - script: yarn test
         displayName: yarn test

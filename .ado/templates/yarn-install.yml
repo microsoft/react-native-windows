@@ -2,15 +2,22 @@ parameters:
 - name: workingDirectory
   type: string
   default: .
-- name: frozenLockfile
-  type: boolean
-  default: true
+- name: agentEnvironment
+  type: string
+  default: ManagedImage
+  values:
+      - ManagedImage
+      - HostedImage
 
 steps:
-  - ${{ if eq(parameters.frozenLockfile, true) }}:
+  # When using our own images, prefer the machine-installed version of
+  # `midgard-yarn`.
+  - ${{ if eq(parameters.agentEnvironment, 'ManagedImage') }}:
     - script: midgard-yarn --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
 
-  - ${{ if eq(parameters.frozenLockfile, false) }}:
-    - script: midgard-yarn --cwd ${{ parameters.workingDirectory }}
+  # If using an image we don't control, acquire a fixed version of midgard-yarn
+  # before install
+  - ${{ else }}:
+    - script: npx --yes midgard-yarn@1.23.34 --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)

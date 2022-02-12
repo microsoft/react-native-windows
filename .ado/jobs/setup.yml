@@ -18,8 +18,9 @@ jobs:
 
       - template: ../templates/compute-beachball-branch-name.yml
 
-      - script: npx --yes midgard-yarn@1.23.34 --frozen-lockfile 
-        displayName: midgard-yarn
+      - template: ../templates/yarn-install.yml
+        parameters:
+          agentEnvironment: HostedImage
 
       - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
         displayName: Minimal build

@@ -2,10 +2,13 @@
   "files.exclude": {
     "**/.git": true
   },
+  "files.associations": {
+    "**/.ado/**/*.yml": "azure-pipelines"
+  },
   "search.exclude": {
     "**/node_modules": true,
-    "**/lib": true,
-    "**/dist": true
+    "**/lib/**/*.js": true,
+    "**/dist/**/*.js": true
   },
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
