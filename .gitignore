@@ -179,4 +179,4 @@ nul
 /packages/node-rnw-rpc/*
 
 # midgard-yarn-strict
-.store/*
+.store*/*
