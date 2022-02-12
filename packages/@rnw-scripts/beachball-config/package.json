@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@react-native-windows/package-utils": "0.0.0-canary.25",
+    "@rnw-scripts/generated-beachball-config": "0.0.0",
     "@rnw-scripts/stamp-version": "0.0.0",
     "find-up": "^4.1.0"
   },

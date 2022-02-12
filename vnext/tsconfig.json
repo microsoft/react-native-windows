@@ -4,7 +4,6 @@
     "baseUrl": ".",
     "rootDir": "src",
     "outDir": ".",
-    "rootDir": "src"
   },
   "include": ["src"],
   "exclude": ["node_modules"]
