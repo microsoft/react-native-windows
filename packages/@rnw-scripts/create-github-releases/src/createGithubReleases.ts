@@ -68,6 +68,11 @@ const argv = yargs
       type: 'string',
       demandOption: true,
     },
+    packageName: {
+      describe: 'The package to create a release for',
+      type: 'string',
+      default: 'react-native-windows',
+    },
     yes: {
       alias: 'y',
       describe: 'Automatically confirm any warnings',
@@ -157,6 +162,10 @@ function needsRelease(
   localTags: string[],
   githubReleases: Array<{tag_name: string}>,
 ) {
+  if (release.packageName !== argv.packageName) {
+    return false;
+  }
+
   const releaseTags = githubReleases.map((r) => r.tag_name);
   return localTags.includes(release.tag) && !releaseTags.includes(release.tag);
 }
