@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 10 Feb 2022 06:07:57 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Feb 2022 06:08:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.115
+
+Sat, 12 Feb 2022 06:08:36 GMT
+
+### Changes
+
+- Fix cache not being used when there are no dependencies (4123478+tido64@users.noreply.github.com)
 
 ## 0.0.0-canary.114
 

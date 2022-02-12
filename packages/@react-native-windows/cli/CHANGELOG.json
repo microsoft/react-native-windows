@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 12 Feb 2022 06:08:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.115",
+      "version": "0.0.0-canary.115",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "564f0ced7e3f3eb29bc8c789d3634262bcce4651",
+            "comment": "Fix cache not being used when there are no dependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Feb 2022 06:07:57 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.114",
       "version": "0.0.0-canary.114",

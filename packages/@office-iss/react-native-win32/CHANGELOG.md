@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 11 Feb 2022 06:08:20 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Feb 2022 06:08:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.134
+
+Sat, 12 Feb 2022 06:08:36 GMT
+
+### Changes
+
+- Share monorepo-friendly metro config between dev packages (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.133
 
