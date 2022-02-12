@@ -177,3 +177,6 @@ nul
 /packages/@rnw-bots/*
 /packages/jest-environment-winappdriver/*
 /packages/node-rnw-rpc/*
+
+# midgard-yarn-strict
+.store/*
