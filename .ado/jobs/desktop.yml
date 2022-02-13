@@ -64,7 +64,6 @@ jobs:
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-                (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
 
             #6799 -
