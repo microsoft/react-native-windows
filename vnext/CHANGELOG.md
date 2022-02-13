@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 12 Feb 2022 06:08:36 GMT and should not be manually modified.
+This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.455
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Changes
+
+- Implement IHttpResource (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.116
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.30
+- Bump react-native-platform-override to v1.6.6
 
 ## 0.0.0-canary.454
 

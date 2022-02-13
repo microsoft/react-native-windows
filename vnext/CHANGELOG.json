@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 13 Feb 2022 06:08:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.455",
+      "version": "0.0.0-canary.455",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3634bfaded2181635aac1b84efd7776e90cab3e6",
+            "comment": "Implement IHttpResource"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.116",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.30",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.6",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Feb 2022 06:08:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.454",
       "version": "0.0.0-canary.454",

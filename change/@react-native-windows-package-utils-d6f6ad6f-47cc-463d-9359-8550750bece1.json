@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Sync variants",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

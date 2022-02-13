@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 12 Feb 2022 06:08:36 GMT and should not be manually modified.
+This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.116
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.26
 
 ## 0.0.0-canary.115
 

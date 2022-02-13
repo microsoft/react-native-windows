@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 13 Feb 2022 06:08:34 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.26",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Feb 2022 06:08:36 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.115",
       "version": "0.0.0-canary.115",

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Wed, 09 Feb 2022 06:09:37 GMT and should not be manually modified.
+This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.9
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.29
 
 ## 1.1.8
 
