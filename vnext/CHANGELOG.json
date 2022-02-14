@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 16:10:47 GMT",
+      "tag": "react-native-windows_v0.66.11",
+      "version": "0.66.11",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Stop exporting data blocks across the dll boundary",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "57f51ad8aaa9ee6759b8935e17095f6821571800",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Feb 2022 16:12:51 GMT",
       "tag": "react-native-windows_v0.66.10",
       "version": "0.66.10",
