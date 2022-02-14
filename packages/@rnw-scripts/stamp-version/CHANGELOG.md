@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/stamp-version
 
-This log was last generated on Mon, 07 Feb 2022 16:09:27 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Feb 2022 16:08:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 14 Feb 2022 16:08:40 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.68.0-preview.2
+- Bump @react-native-windows/package-utils to v0.68.0-preview.2
 
 ## 0.0.0
 

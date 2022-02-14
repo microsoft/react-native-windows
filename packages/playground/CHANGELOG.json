@@ -2,6 +2,27 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 16:08:40 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.68.0-preview.2",
+            "commit": "02283c2582cfc8befa62b6fc32df18f022fff29b"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0-preview.2",
+            "commit": "02283c2582cfc8befa62b6fc32df18f022fff29b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Feb 2022 16:09:27 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

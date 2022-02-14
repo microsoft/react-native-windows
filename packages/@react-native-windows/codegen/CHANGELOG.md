@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Mon, 07 Feb 2022 16:09:26 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Feb 2022 16:08:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.2
+
+Mon, 14 Feb 2022 16:08:39 GMT
+
+### Changes
+
+- [0.68] Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.68.0-preview.2
 
 ## 0.68.0-preview.1
 

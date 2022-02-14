@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Mon, 14 Feb 2022 16:08:40 GMT",
+      "tag": "@rnw-scripts/promote-release_v2.0.2",
+      "version": "2.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.68.0-preview.2",
+            "commit": "02283c2582cfc8befa62b6fc32df18f022fff29b"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/fs to v0.68.0-preview.2",
+            "commit": "02283c2582cfc8befa62b6fc32df18f022fff29b"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/package-utils to v0.68.0-preview.2",
+            "commit": "02283c2582cfc8befa62b6fc32df18f022fff29b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Feb 2022 16:09:27 GMT",
       "tag": "@rnw-scripts/promote-release_v2.0.2",
       "version": "2.0.2",
