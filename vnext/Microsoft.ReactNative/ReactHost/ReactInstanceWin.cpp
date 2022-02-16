@@ -392,9 +392,18 @@ void ReactInstanceWin::Initialize() noexcept {
 #endif
         case JSIEngine::V8:
 #if defined(USE_V8)
-          preparedScriptStore =
-              std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
-
+        {
+          uint32_t length{0};
+          if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
+            preparedScriptStore =
+                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+          } else {
+            char tempPath[MAX_PATH];
+            if (GetTempPathA(MAX_PATH, tempPath)) {
+              preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+            }
+          }
+        }
           devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
               devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
           break;
@@ -886,8 +895,8 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
 }
 
 #if defined(USE_V8)
-std::string ReactInstanceWin::getApplicationLocalFolder() {
-  auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+std::string ReactInstanceWin::getApplicationTempFolder() {
+  auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
 
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
