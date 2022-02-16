@@ -23,6 +23,11 @@ jobs:
         clean: true
         fetchDepth: 1 # the depth of commits to ask Git to fetch
         submodules: false
+
+      - task: NodeTool@0
+        displayName: Set Node Version
+        inputs:
+          versionSpec: '12.x' # The version of WDIO used in RNW 0.64 will assert and fail on Node > 12
             
       - template: prepare-env.yml
 
