@@ -421,7 +421,7 @@ void ReactInstanceWin::Initialize() noexcept {
                 wchar_t tempPath[MAX_PATH];
                 if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
                   preparedScriptStore =
-                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
                 }
               }
             }
