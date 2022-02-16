@@ -55,7 +55,6 @@
     "ini": "^1.3.6",
     "kind-of": "6.0.3",
     "glob-parent": "^5.1.2",
-    "node-fetch": "2.6.1",
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
     "webdriver": "git+https://github.com/react-native-windows/webdriver.git",
@@ -64,8 +63,10 @@
     "xpath": "^0.0.27",
     "yargs-parser": "^18.1.1",
     "**/@react-native/repo-config/jest-junit": "^13.0.0",
+    "**/@react-native/repo-config/shelljs": "^0.8.5",
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
+    "**/@wdio/junit-reporter/validator": "^13.7.0",
     "**/detox/ws": "^5.2.3"
   },
   "beachball": {
