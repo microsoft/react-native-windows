@@ -396,7 +396,7 @@ void ReactInstanceWin::Initialize() noexcept {
           uint32_t length{0};
           if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
             preparedScriptStore =
-                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
+                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
           } else {
             char tempPath[MAX_PATH];
             if (GetTempPathA(MAX_PATH, tempPath)) {
