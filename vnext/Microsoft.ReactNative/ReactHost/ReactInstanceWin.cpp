@@ -8,6 +8,7 @@
 #include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <appModel.h>
 #include <comUtil/qiCast.h>
 
 #ifndef CORE_ABI
