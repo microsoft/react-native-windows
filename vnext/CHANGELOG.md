@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
+This log was last generated on Wed, 16 Feb 2022 19:51:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.456
+
+Wed, 16 Feb 2022 19:51:00 GMT
+
+### Changes
+
+- Lazy Install `sourcemap-support` when `react-native-windows` config is hooked (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.455
 

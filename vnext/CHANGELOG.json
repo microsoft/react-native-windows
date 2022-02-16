@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 16 Feb 2022 19:51:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.456",
+      "version": "0.0.0-canary.456",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61fb9ca437da08f8c7275732134600625db5aa7d",
+            "comment": "Lazy Install `sourcemap-support` when `react-native-windows` config is hooked"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 13 Feb 2022 06:08:34 GMT",
       "tag": "react-native-windows_v0.0.0-canary.455",
       "version": "0.0.0-canary.455",
