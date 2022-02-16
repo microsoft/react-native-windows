@@ -412,18 +412,18 @@ void ReactInstanceWin::Initialize() noexcept {
               break;
             case JSIEngine::V8:
 #if defined(USE_V8)
-        {
-          uint32_t length{0};
-          if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
-            preparedScriptStore =
-                std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
-          } else {
-            char tempPath[MAX_PATH];
-            if (GetTempPathA(MAX_PATH, tempPath)) {
-              preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+            {
+              uint32_t length{0};
+              if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
+                preparedScriptStore =
+                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
+              } else {
+                char tempPath[MAX_PATH];
+                if (GetTempPathA(MAX_PATH, tempPath)) {
+                  preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(tempPath);
+                }
+              }
             }
-          }
-        }
               devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                   devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
               break;
