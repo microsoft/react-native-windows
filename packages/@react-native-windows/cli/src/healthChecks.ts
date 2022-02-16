@@ -1,14 +1,33 @@
-import * as path from 'path';
+import path from 'path';
 
 import { execSync} from 'child_process';
 
-const cliDir = path.dirname(require.resolve('@react-native-community/cli/package.json', {paths: [process.cwd()]}));
+const rnDir = path.dirname(require.resolve('react-native/package.json', {paths: [process.cwd()]}));
+const cliDir = path.dirname(require.resolve('@react-native-community/cli/package.json', {paths: [rnDir]}));
 const execaPath = require.resolve('execa', { paths: [cliDir] });
 const execa = require(execaPath);
 
 import type {HealthCheckCategory} from '@react-native-community/cli-types';
+import { powershell } from './runWindows/utils/commandWithProgress';
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
+  // #8471: There are known cases where the dependencies script will error out.
+  // Fail gracefully if that happens in the meantime.
+  try {
+    return getHealthChecksUnsafe();
+  } catch {
+    return [{
+      label: 'Windows',
+      healthchecks: [{
+        label: 'Failed to enumerate health checks',
+        getDiagnostics: async () => ({needsToBeFixed: true}),
+        runAutomaticFix: async ({loader}) => {loader.fail()},
+      }]
+    }];
+  }
+}
+
+function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
 // All our health checks are windows only...
     if (process.platform !== 'win32') {
         return undefined;
@@ -18,7 +37,7 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
         'react-native-windows/package.json',
         {paths: [process.cwd()]})), 'Scripts/rnw-dependencies.ps1');
     
-    const rnwDeps = execSync(`powershell -ExecutionPolicy Unrestricted -NoProfile ${rnwDepScriptPath} -NoPrompt -ListChecks`);
+    const rnwDeps = execSync(`${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`, {stdio: 'pipe'});
     const deps = rnwDeps.toString().trim().split('\n');
     return [
       {
@@ -38,7 +57,7 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
               getDiagnostics: async () => {
                 let needsToBeFixed = true;
                 try {
-                  await execa(`powershell -ExecutionPolicy Unrestricted -NoProfile ${rnwDepScriptPath} -NoPrompt -Check ${id}`);
+                  await execa(`${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -Check ${id}`);
                   needsToBeFixed = false;
                 } catch {
                 }
@@ -47,7 +66,7 @@ export function getHealthChecks(): HealthCheckCategory[] | undefined {
                 }
               },
               runAutomaticFix: async ({ loader, logManualInstallation }) => {
-                const command = `powershell -ExecutionPolicy Unrestricted -NoProfile ${rnwDepScriptPath} -Check ${id}`;
+                const command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
                 try {
                   const { exitCode } = await execa(command, { stdio: 'inherit' });
                   if (exitCode) {

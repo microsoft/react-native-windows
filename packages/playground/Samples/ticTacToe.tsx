@@ -3,7 +3,7 @@
  * Licensed under the MIT License.
  * @format
  */
-import * as React from 'react';
+import React from 'react';
 import {
   AppRegistry,
   Button,
@@ -41,7 +41,7 @@ export default class Bootstrap extends React.Component<
     const newSquares = this.state.squares.slice();
     const turn = this.whoseTurn();
     if (this.state.squares[i] || winner(this.state.squares)) {
-      return null;
+      return;
     }
     newSquares[i] = turn;
     this.setState({
@@ -59,7 +59,7 @@ export default class Bootstrap extends React.Component<
 
     return (
       <SafeAreaView style={style}>
-        <Board squares={this.state.squares} onMove={i => this.onMove(i)} />
+        <Board squares={this.state.squares} onMove={(i) => this.onMove(i)} />
         <Status
           turn={this.whoseTurn()}
           winner={winner(this.state.squares)}

@@ -17,7 +17,8 @@ std::unique_ptr<facebook::react::JSExecutor> WebSocketJSExecutorFactory::createJ
   if (m_jseCreator)
     return m_jseCreator(delegate, jsQueue);
   else
-    return std::unique_ptr<facebook::react::JSExecutor>(new ::react::uwp::WebSocketJSExecutor(delegate, jsQueue));
+    return std::unique_ptr<facebook::react::JSExecutor>(
+        new ::Microsoft::ReactNative::WebSocketJSExecutor(delegate, jsQueue));
 }
 
 } // namespace react

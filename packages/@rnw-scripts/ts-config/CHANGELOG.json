@@ -2,6 +2,81 @@
   "name": "@rnw-scripts/ts-config",
   "entries": [
     {
+      "date": "Wed, 09 Feb 2022 06:09:38 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.2",
+      "version": "2.0.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/ts-config",
+            "commit": "416ab0f868c6ec402d2565d29f643cb2fceb9447",
+            "comment": "Bump minimum Node version to 14"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:06:02 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.1",
+      "version": "2.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/ts-config",
+            "commit": "not available",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Oct 2021 05:05:42 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.1",
+      "version": "2.0.1",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/ts-config",
+            "commit": "166bc6c0e4e1313db7385d64ac803376b3f20b22",
+            "comment": "Update package.json to include the repository"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Sep 2021 05:08:53 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.1",
+      "version": "2.0.1",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Set consistent node requirements on our packages",
+            "author": "ngerlem@microsoft.com",
+            "commit": "2974ea0ab58b546264b8d9a4a7c12ceeb0a02851",
+            "package": "@rnw-scripts/ts-config"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Jun 2021 05:09:47 GMT",
+      "tag": "@rnw-scripts/ts-config_v2.0.0",
+      "version": "2.0.0",
+      "comments": {
+        "major": [
+          {
+            "comment": "Enable esModuleInterop Repo Wide",
+            "author": "ngerlem@microsoft.com",
+            "commit": "6c871e6ba27888804c776e5deeefbc7064e181d0",
+            "package": "@rnw-scripts/ts-config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jan 2021 01:45:54 GMT",
       "tag": "@rnw-scripts/ts-config_v1.1.0",
       "version": "1.1.0",

@@ -17,7 +17,9 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
   // We need to register for notifications from the XAML thread.
   if (auto dispatcher = reactContext.UIDispatcher()) {
     dispatcher.Post([this]() {
-      if (auto currentApp = xaml::TryGetCurrentApplication()) {
+      auto currentApp = xaml::TryGetCurrentApplication();
+
+      if (!IsWinUI3Island() && currentApp != nullptr) {
         m_enteredBackgroundRevoker = currentApp.EnteredBackground(
             winrt::auto_revoke,
             [weakThis = weak_from_this()](
@@ -38,20 +40,18 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
               }
             });
       } else {
-        assert(react::uwp::IsXamlIsland());
+        assert(IsXamlIsland());
       }
     });
   }
 }
 
 void AppState::GetCurrentAppState(
-    std::function<void(React::JSValue const &)> const &success,
+    std::function<void(AppStateChangeArgs const &)> const &success,
     std::function<void(React::JSValue const &)> const &error) noexcept {
-  auto writer = React::MakeJSValueTreeWriter();
-  writer.WriteObjectBegin();
-  React::WriteProperty(writer, "app_state", m_active ? "active" : "background");
-  writer.WriteObjectEnd();
-  success(React::TakeJSValue(writer));
+  AppStateChangeArgs args;
+  args.app_state = m_active ? "active" : "background";
+  success(args);
 }
 
 void AppState::AddListener(std::string && /*eventName*/) noexcept {
@@ -60,6 +60,10 @@ void AppState::AddListener(std::string && /*eventName*/) noexcept {
 
 void AppState::RemoveListeners(double /*count*/) noexcept {
   // noop
+}
+
+ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
+  return {m_active ? "active" : "background"};
 }
 
 void AppState::SetActive(bool active) noexcept {

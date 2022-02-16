@@ -9,6 +9,10 @@
 
 namespace Microsoft::JSI {
 
+facebook::react::JSIEngineOverride ChakraRuntimeHolder::getRuntimeType() noexcept {
+  return facebook::react::JSIEngineOverride::Chakra;
+}
+
 std::shared_ptr<facebook::jsi::Runtime> ChakraRuntimeHolder::getRuntime() noexcept {
   std::call_once(once_flag_, [this]() { initRuntime(); });
 
@@ -51,8 +55,6 @@ ChakraRuntimeArgs ChakraRuntimeHolder::RuntimeArgsFromDevSettings(
   runtimeArgs.enableNativePerformanceNow = devSettings->enableNativePerformanceNow;
 
   runtimeArgs.enableJITCompilation = devSettings->useJITCompilation;
-
-  runtimeArgs.memoryTracker = devSettings->memoryTracker;
 
   return runtimeArgs;
 }

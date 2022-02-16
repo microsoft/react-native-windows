@@ -8,9 +8,9 @@
 import * as FileRepository from '../FileRepository';
 import * as Serialized from '../Serialized';
 
-import * as ora from 'ora';
-import * as path from 'path';
-import * as yargs from 'yargs';
+import ora from 'ora';
+import path from 'path';
+import yargs from 'yargs';
 
 import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
@@ -37,7 +37,7 @@ const {extensions, directory} = yargs
   })
   .version(false).argv;
 
-const extensionsRegex = new RegExp(extensions.map(e => `\\.${e}`).join('|'));
+const extensionsRegex = new RegExp(extensions.map((e) => `\\.${e}`).join('|'));
 
 (async () => {
   const spinner = ora();

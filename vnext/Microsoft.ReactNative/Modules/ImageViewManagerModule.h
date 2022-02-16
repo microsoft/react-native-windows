@@ -2,31 +2,44 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <cxxreact/CxxModule.h>
 
-namespace facebook {
-namespace react {
-class MessageQueueThread;
-}
-} // namespace facebook
+#include "../../codegen/NativeImageLoaderIOSSpec.g.h"
+#include <NativeModules.h>
+#include <winrt/Windows.ApplicationModel.h>
+#include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Graphics.Display.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
-class ImageViewManagerModule : public facebook::xplat::module::CxxModule {
- public:
-  ImageViewManagerModule();
-  virtual ~ImageViewManagerModule();
+REACT_MODULE(ImageLoader)
+struct ImageLoader {
+  using ModuleSpec = ReactNativeSpecs::ImageLoaderIOSSpec;
 
-  // CxxModule
-  std::string getName() override;
-  std::map<std::string, folly::dynamic> getConstants() override;
-  auto getMethods() -> std::vector<Method> override;
+  REACT_INIT(Initialize)
+  void Initialize(React::ReactContext const &reactContext) noexcept;
 
-  static const char *name;
+  REACT_METHOD(getSize)
+  void getSize(std::string uri, React::ReactPromise<React::JSValue> &&result) noexcept;
+
+  REACT_METHOD(getSizeWithHeaders)
+  void
+  getSizeWithHeaders(std::string uri, React::JSValue &&headers, React::ReactPromise<React::JSValue> &&result) noexcept;
+
+  REACT_METHOD(prefetchImage)
+  void prefetchImage(std::string uri, React::ReactPromise<React::JSValue> &&result) noexcept;
+
+  REACT_METHOD(prefetchImageWithMetadata)
+  void prefetchImageWithMetadata(
+      std::string uri,
+      std::string queryRootName,
+      double rootTag,
+      React::ReactPromise<React::JSValue> &&result) noexcept;
+
+  REACT_METHOD(queryCache)
+  void queryCache(std::vector<std::string> const &uris, React::ReactPromise<React::JSValue> &&result) noexcept;
 
  private:
-  class ImageViewManagerModuleImpl;
-  std::shared_ptr<ImageViewManagerModuleImpl> m_imageViewManagerModule;
+  React::ReactContext m_context;
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -1,0 +1,74 @@
+parameters:
+  - name: buildEnvironment
+    type: string
+    default: PullRequest
+    values:
+      - PullRequest
+      - Continuous
+  - name: certificateName
+    type: string
+  - name: buildConfiguration
+    type: string
+    values:
+      - Debug
+      - Release
+  - name: buildPlatform
+    type: string
+  - name: deployOption
+    type: string
+    default: ''
+  - name: buildLogDirectory
+    type: string
+  - name: workingDirectory
+    type: string
+  - name: restoreLockedMode
+    type: boolean
+    default: true
+  - name: restoreForceEvaluate
+    type: boolean
+    default: true
+
+steps:
+  - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}
+        ${{ parameters.deployOption }}
+      displayName: run-windows (Debug)
+      workingDirectory: ${{ parameters.workingDirectory }}
+
+  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'PullRequest')) }}:
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --release
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }}
+        ${{ parameters.deployOption }}
+      displayName: run-windows (Release) - PR
+      workingDirectory: ${{ parameters.workingDirectory }}
+
+  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'Continuous')) }}:
+    - template: ../templates/write-certificate.yml
+      parameters:
+        certificateName: ${{ parameters.certificateName }}
+
+    - script: >
+        yarn windows
+        --arch ${{ parameters.buildPlatform }}
+        --release
+        --no-launch
+        --logging
+        --buildLogDirectory ${{ parameters.buildLogDirectory }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+        ${{ parameters.deployOption }}
+      displayName: run-windows (Release) - CI
+      workingDirectory: ${{ parameters.workingDirectory }}
+
+    - template: ../templates/cleanup-certificate.yml

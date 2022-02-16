@@ -10,7 +10,6 @@ namespace facebook {
 namespace react {
 
 struct IReactRootView {
-  virtual void ResetView() = 0;
   virtual std::string JSComponentName() const noexcept = 0;
   virtual int64_t GetActualHeight() const = 0;
   virtual int64_t GetActualWidth() const = 0;

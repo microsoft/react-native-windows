@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2018",
     "module": "commonjs",
     "jsx": "react",
     "sourceMap": true,
@@ -12,5 +12,11 @@
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "inlineSources": true,
+    "experimentalDecorators": true,
+    "noEmitOnError": true,
+    "forceConsistentCasingInFileNames": true
   }
 }

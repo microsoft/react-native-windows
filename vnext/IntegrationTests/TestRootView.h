@@ -18,7 +18,6 @@ class TestRootView : public facebook::react::IReactRootView {
 
 #pragma region IReactRootView members
 
-  void ResetView() override;
   std::string JSComponentName() const noexcept override;
   int64_t GetActualHeight() const override;
   int64_t GetActualWidth() const override;

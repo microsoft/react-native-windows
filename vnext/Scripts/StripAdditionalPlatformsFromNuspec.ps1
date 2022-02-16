@@ -16,7 +16,7 @@ If ($PSBoundParameters['Debug']) {
 Write-Output "Creating filtered version of : $nuspec"
 $xml = [xml](gc $nuspec)
 
-$allSlices = @("x64.Release", "x64.Debug", "x86.Release", "x86.Debug", "ARM.Release", "ARM.Debug", "ARM64.Release", "ARM64.Debug")
+$allSlices = @("x64.Release", "x64.Debug", "x86.Release", "x86.Debug", "ARM64.Release", "ARM64.Debug")
 
 $nodesToRemove = @();
 

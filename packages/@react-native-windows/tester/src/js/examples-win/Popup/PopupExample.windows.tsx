@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Button, Text, TextInput, View} from 'react-native';
 import {Popup} from 'react-native-windows';
 
@@ -68,7 +68,7 @@ class AnchoredPopupExample extends React.Component<
     );
   }
   _togglePopup = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       buttonTitle: state.showPopup ? 'Open Popup' : 'Close Popup',
       showPopup: !state.showPopup,
     }));
@@ -116,7 +116,7 @@ class PopupPlacementExample extends React.Component<
   }
 
   _togglePopup = () => {
-    this.setState(state => ({
+    this.setState((state) => ({
       showPopup: !state.showPopup,
     }));
   };
@@ -138,13 +138,13 @@ export const description =
 export const examples = [
   {
     title: 'Popup Anchor to text input w/ light dismiss',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <AnchoredPopupExample />;
     },
   },
   {
     title: 'Popup centered on screen',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <PopupPlacementExample />;
     },
   },

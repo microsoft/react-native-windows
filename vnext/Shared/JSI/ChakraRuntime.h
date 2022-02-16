@@ -36,6 +36,8 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   facebook::jsi::Value evaluatePreparedJavaScript(
       const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
 
+  bool drainMicrotasks(int maxMicrotasksHint = -1) override;
+
   facebook::jsi::Object global() override;
 
   std::string description() override;
@@ -329,9 +331,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
 
   virtual void setupNativePromiseContinuation() noexcept;
 
-  // Memory tracker helpers
-  void setupMemoryTracker() noexcept;
-
   // In-proc debugging helpers
   virtual void startDebuggingIfNeeded() = 0;
   virtual void stopDebuggingIfNeeded() = 0;
@@ -480,6 +479,8 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   // These buffers back the external array buffers that we handover to
   // ChakraCore.
   std::vector<std::shared_ptr<const facebook::jsi::Buffer>> m_pinnedPreparedScripts;
+
+  bool m_pendingJSError{false};
 };
 
 } // namespace Microsoft::JSI

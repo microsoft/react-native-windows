@@ -2,30 +2,19 @@
 jobs:
   - job: MacTests
     displayName: macOS Tests
-
-    variables:
-      - template: ../variables/macos.yml
-
-    pool:
-      vmImage: $(VmImage)
-
-    timeoutInMinutes: 20 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+    timeoutInMinutes: 20
+    variables: [template: ../variables/shared.yml]
+    pool: {vmImage: macOS-10.15}
 
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
-            
-      - template: ../templates/yarn-install.yml
+      - template: ../templates/checkout-shallow.yml
 
-      - script: yarn build
-        displayName: yarn build
+      - template: ../templates/prepare-js-env.yml
+        parameters:
+          agentImage: HostedImage
 
-      - script: yarn test --color
-        displayName: Test react-native-platform-override
-        workingDirectory: packages/react-native-platform-override
+      - script: yarn test
+        displayName: yarn test
 
       - script: yarn validate-overrides
         displayName: yarn validate-overrides
-

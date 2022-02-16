@@ -6,7 +6,7 @@
 #include "AnimatedNode.h"
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class ValueAnimatedNode;
 class EventAnimationDriver {
  public:
@@ -21,4 +21,4 @@ class EventAnimationDriver {
   int64_t m_animatedValueTag{};
   std::weak_ptr<NativeAnimatedNodeManager> m_manager{};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -3,7 +3,7 @@
 
 #pragma once
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 // Holds a cache of unique ExpressionAnimations.
 // It's better for performance to cache each unique ExpressionAnimation, as
@@ -23,4 +23,4 @@ class ExpressionAnimationStore {
   comp::ExpressionAnimation m_transformCenteringExpression{nullptr};
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

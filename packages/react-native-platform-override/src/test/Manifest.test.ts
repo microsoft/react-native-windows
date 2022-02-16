@@ -6,7 +6,7 @@
  */
 
 import * as Serialized from '../Serialized';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import {
   CopyOverride,

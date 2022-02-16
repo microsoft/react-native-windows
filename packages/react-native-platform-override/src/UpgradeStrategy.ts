@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as _ from 'lodash';
-import * as path from 'path';
+import _ from 'lodash';
+import path from 'path';
 import {WritableFileRepository, bindVersion} from './FileRepository';
 import GitReactFileRepository from './GitReactFileRepository';
 import {hashFileOrDirectory} from './Hash';
@@ -120,20 +120,20 @@ export const UpgradeStrategies = {
     upgrade: async (gitReactRepo, overrideRepo, newVersion) => {
       const baseFiles = (
         await gitReactRepo.listFiles([`${baseDirectory}/**`], newVersion)
-      ).map(f => path.relative(baseDirectory, f));
+      ).map((f) => path.relative(baseDirectory, f));
 
       const overrideFiles = (
         await overrideRepo.listFiles([`${overrideDirectory}/**`])
-      ).map(f => path.relative(overrideDirectory, f));
+      ).map((f) => path.relative(overrideDirectory, f));
 
       // Note that this logic can lead emopty directories. This shouldn't
       // matter in practice as Git won't track them.
-      const deleteTasks = _.difference(overrideFiles, baseFiles).map(f =>
+      const deleteTasks = _.difference(overrideFiles, baseFiles).map((f) =>
         overrideRepo.deleteFile(path.join(overrideDirectory, f)),
       );
 
       const baseRepo = bindVersion(gitReactRepo, newVersion);
-      const copyTasks = baseFiles.map(async f => {
+      const copyTasks = baseFiles.map(async (f) => {
         const basePath = path.join(baseDirectory, f);
         const overridePath = path.join(overrideDirectory, f);
 

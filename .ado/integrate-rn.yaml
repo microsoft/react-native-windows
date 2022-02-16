@@ -10,11 +10,11 @@ parameters:
   type: string
 
 variables:
-  - template: variables/vs2019.yml
+  - template: variables/windows.yml
   - group: RNW Secrets
 
 pool:
-  vmImage: $(VmImage)
+  vmImage: windows-2019
 
 jobs:
   - job: IntegrateRN
@@ -22,24 +22,16 @@ jobs:
     timeoutInMinutes: 30
 
     steps:
-      - checkout: self
-        clean: true
-        submodules: false
+      - template: templates/checkout-full.yml
 
       - template: templates/configure-git.yml
 
-      # Using standard "yarn install" instead of midgarn-yarn because the integration
-      # script will do a normal yarn install anyway and we want to share results
-      - script: yarn install
-        displayName: yarn install
+      - template: templates/prepare-js-env.yml
 
-      - script: yarn build
-        displayName: yarn build
-
-      - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/master
+      - script: git checkout -b integrate-${{ parameters.reactNativeVersion }} origin/main
         displayName: Create a new branch
 
-      - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath "$(Agent.TempDirectory)\integration-report.md" --color
+      - script: yarn integrate-rn ${{ parameters.reactNativeVersion }} --reportPath "$(Agent.TempDirectory)\integration-report.md"
         displayName: yarn integrate-rn
         continueOnError: true
 
@@ -52,7 +44,7 @@ jobs:
             throw "No changes found"
           }
         displayName: Test for changes
-        
+
       - powershell: |
           $reportWithHeader = "${{ parameters.commitTitle}}`n`n" + (Get-Content -Raw $(Agent.TempDirectory)\integration-report.md)
           # Trim to max GitHub PR length
@@ -64,12 +56,12 @@ jobs:
           git add --all
           git commit -F $(Agent.TempDirectory)\commit-message.md
         displayName: Commit changes
-      
+
       - powershell: |
           $commitHash = git log --format=%H -n 1
           Write-Output "##vso[task.setvariable variable=FirstCommit]$commitHash"
         displayName: Save base commit
-        
+
       - powershell: |
           $patchScope = node -e "
           const path = require('path');
@@ -105,6 +97,6 @@ jobs:
 
       - powershell: |
           $headers = @{'Accept'='application/vnd.github.v3+json'; 'Authorization'='Token $(githubAuthToken)'}
-          $body = '{"head": "integrate-${{ parameters.reactNativeVersion }}", "base": "master", "title": "${{ parameters.commitTitle}}"}'
+          $body = '{"head": "integrate-${{ parameters.reactNativeVersion }}", "base": "main", "title": "${{ parameters.commitTitle}}"}'
           Invoke-WebRequest -Method Post -Headers $headers -Body $body https://api.github.com/repos/microsoft/react-native-windows/pulls
         displayName: Create PR

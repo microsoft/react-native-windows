@@ -1,8 +1,93 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.29
+
+Wed, 09 Feb 2022 06:09:37 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 1.0.28
+
+Fri, 03 Dec 2021 06:12:07 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 1.0.27
+
+Thu, 18 Nov 2021 06:11:21 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 1.0.26
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Patches
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.0.25
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+## 1.0.24
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+## 1.0.23
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.3 (igklemen@microsoft.com)
+
+## 1.0.22
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+
+## 1.0.21
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.1 (ngerlem@microsoft.com)
+
+## 1.0.20
+
+Thu, 13 May 2021 05:11:48 GMT
+
+### Patches
+
+- Dont format files in codegen (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.0.19
 

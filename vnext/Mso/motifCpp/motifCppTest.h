@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_MOTIFCPPTEST_H
 #define MSO_MOTIFCPP_MOTIFCPPTEST_H
+#ifdef MSO_MOTIFCPP
 
 #include <csetjmp>
 #include <csignal>
@@ -240,6 +241,8 @@ struct TerminateHandlerRestorer {
 
 #pragma warning(push)
 #pragma warning(disable : 4611) // interaction between '_setjmp' and C++ object destruction is non-portable
+                                // Comment: this function must be used only for checking std::terminate in limited
+                                // scopes. It may cause memory leaks and other issues if not used with care.
 template <class TLambda>
 inline bool ExpectTerminateCore(TLambda const &lambda) {
   static jmp_buf buf;
@@ -496,4 +499,5 @@ inline void ExpectVEC(const Fn &fn, const WCHAR *message = L"") {
 
 } // namespace TestAssert
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_MOTIFCPPTEST_H

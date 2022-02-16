@@ -15,17 +15,12 @@
 #ifdef __cplusplus
 // 4091: extern __declspec(dllimport)' : ignored on left of 'double' when no variable is declared
 // 4472: 'pointer_safety' is a native enum: add an access specifier (private/public) to declare a managed enum
-// 4996: 'wmemcpy': This function or variable may be unsafe. Consider using wmemcpy_s instead
 #pragma warning(push)
-#pragma warning(disable : 4091 4472 4996)
+#pragma warning(disable : 4091 4472)
 #include <memory>
 #pragma warning(pop)
 
-// 4996: 'wmemcpy': This function or variable may be unsafe. Consider using wmemcpy_s instead
-#pragma warning(push)
-#pragma warning(disable : 4996)
 #include <utility>
-#pragma warning(pop)
 
 namespace Mso {
 

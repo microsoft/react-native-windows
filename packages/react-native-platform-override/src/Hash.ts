@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as crypto from 'crypto';
-import * as path from 'path';
+import crypto from 'crypto';
+import path from 'path';
 import {normalizePath, unixPath} from './PathUtils';
 import FileRepository from './FileRepository';
 import isUtf8 from 'isutf8';
@@ -39,10 +39,7 @@ function normalizeContent(
       return content.toString('utf8').replace(/(?<!\r)\n/g, '\r\n');
 
     case 'whitespace':
-      return content
-        .toString('utf8')
-        .trim()
-        .replace(/\s+/g, ' ');
+      return content.toString('utf8').trim().replace(/\s+/g, ' ');
   }
 }
 

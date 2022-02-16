@@ -17,7 +17,7 @@ using namespace xaml::Controls;
 using namespace xaml::Controls::Primitives;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class ScrollViewUWPImplementation {
  public:
@@ -40,4 +40,4 @@ class ScrollViewUWPImplementation {
   winrt::weak_ref<winrt::ScrollViewer> m_scrollViewer{};
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

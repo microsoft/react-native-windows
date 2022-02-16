@@ -13,7 +13,7 @@
 #include "DynamicValueProvider.g.cpp"
 #endif
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 DynamicValueProvider::DynamicValueProvider(xaml::Automation::Peers::FrameworkElementAutomationPeer peer)
     : m_peer(peer) {}
@@ -56,4 +56,4 @@ winrt::hstring DynamicValueProvider::GetAccessibilityValue() const {
   return L"";
 }
 
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation

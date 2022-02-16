@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import * as React from 'react';
+import React from 'react';
 import {IKeyboardProps} from './KeyboardExtProps';
 
 export const supportKeyboard = <P extends Record<string, any>>(

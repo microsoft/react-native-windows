@@ -6,10 +6,15 @@
 #include <Views/ShadowNodeBase.h>
 #include "TouchEventHandler.h"
 
+#ifdef USE_FABRIC
+#include <Fabric/FabricUIManagerModule.h>
+#include <Fabric/ViewComponentView.h>
+#include <react/renderer/components/view/TouchEventEmitter.h>
+#endif
+
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
-#include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
@@ -26,42 +31,67 @@
 
 namespace Microsoft::ReactNative {
 
-std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag);
+std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag);
 
-TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
-    : m_xamlView(nullptr), m_context(&context) {}
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
+    : m_xamlView(nullptr),
+      m_rootView(nullptr),
+      m_context(&context),
+      m_fabric(fabric),
+      m_batchingEventEmitter{
+          std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
 TouchEventHandler::~TouchEventHandler() {
   RemoveTouchHandlers();
 }
 
-void TouchEventHandler::AddTouchHandlers(XamlView xamlView) {
+void TouchEventHandler::AddTouchHandlers(XamlView xamlView, XamlView rootView, bool handledEventsToo) {
   auto uiElement(xamlView.as<xaml::UIElement>());
   if (uiElement == nullptr) {
     assert(false);
     return;
   }
 
-  m_xamlView = xamlView;
-
   RemoveTouchHandlers();
 
-  m_pressedRevoker = uiElement.PointerPressed(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerPressed});
-  m_releasedRevoker = uiElement.PointerReleased(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerReleased});
-  m_canceledRevoker = uiElement.PointerCanceled(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerCanceled});
-  m_captureLostRevoker =
-      uiElement.PointerCaptureLost(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerCaptureLost});
-  m_exitedRevoker = uiElement.PointerExited(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerExited});
-  m_movedRevoker = uiElement.PointerMoved(winrt::auto_revoke, {this, &TouchEventHandler::OnPointerMoved});
+  m_xamlView = xamlView;
+  m_rootView = rootView != nullptr ? rootView : xamlView;
+  m_pressedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerPressed});
+  m_releasedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerReleased});
+  m_canceledHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerCanceled});
+  m_captureLostHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerCaptureLost});
+  m_exitedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerExited});
+  m_movedHandler = winrt::box_value(winrt::PointerEventHandler{this, &TouchEventHandler::OnPointerMoved});
+  uiElement.AddHandler(xaml::UIElement::PointerPressedEvent(), m_pressedHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerReleasedEvent(), m_releasedHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerCanceledEvent(), m_canceledHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerCaptureLostEvent(), m_captureLostHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerExitedEvent(), m_exitedHandler, handledEventsToo);
+  uiElement.AddHandler(xaml::UIElement::PointerMovedEvent(), m_movedHandler, handledEventsToo);
 }
 
 void TouchEventHandler::RemoveTouchHandlers() {
-  m_pressedRevoker.revoke();
-  m_releasedRevoker.revoke();
-  m_canceledRevoker.revoke();
-  m_captureLostRevoker.revoke();
-  m_exitedRevoker.revoke();
-  m_movedRevoker.revoke();
+  if (m_xamlView) {
+    auto uiElement(m_xamlView.as<xaml::UIElement>());
+    uiElement.RemoveHandler(xaml::UIElement::PointerPressedEvent(), m_pressedHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerReleasedEvent(), m_releasedHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerCanceledEvent(), m_canceledHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerCaptureLostEvent(), m_captureLostHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerExitedEvent(), m_exitedHandler);
+    uiElement.RemoveHandler(xaml::UIElement::PointerMovedEvent(), m_movedHandler);
+    m_pressedHandler = nullptr;
+    m_releasedHandler = nullptr;
+    m_canceledHandler = nullptr;
+    m_captureLostHandler = nullptr;
+    m_exitedHandler = nullptr;
+    m_movedHandler = nullptr;
+    m_rootView = nullptr;
+    m_xamlView = nullptr;
+  }
+}
+
+winrt::Microsoft::ReactNative::BatchingEventEmitter &TouchEventHandler::BatchingEmitter() noexcept {
+  return *m_batchingEventEmitter;
 }
 
 void TouchEventHandler::OnPointerPressed(
@@ -78,9 +108,12 @@ void TouchEventHandler::OnPointerPressed(
   }
 
   // Only if the view has a Tag can we process this
-  int64_t tag;
+  std::vector<int64_t> tagsForBranch;
   xaml::UIElement sourceElement(nullptr);
-  if (!TagFromOriginalSource(args, &tag, &sourceElement))
+  const auto eventType = TouchEventType::Start;
+  const auto kind = GetPointerEventKind(eventType);
+  const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
+  if (!PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     return;
 
   // If this was caused by the user pressing the "back" hardware button, fire that event instead
@@ -91,15 +124,15 @@ void TouchEventHandler::OnPointerPressed(
   }
 
   if (m_xamlView.as<xaml::FrameworkElement>().CapturePointer(args.Pointer())) {
-    // Pointer pressing updates the enter/leave state
-    UpdatePointersInViews(args, tag, sourceElement);
+    assert(!tagsForBranch.empty());
+    const auto tag = tagsForBranch.front();
 
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
     // For now, when using the mouse we only want to send click events for the left button.
     // Finger and pen taps will also set isLeftButton.
     if (m_pointers[pointerIndex].isLeftButton) {
-      DispatchTouchEvent(TouchEventType::Start, pointerIndex);
+      DispatchTouchEvent(eventType, pointerIndex);
     }
   }
 }
@@ -119,7 +152,7 @@ void TouchEventHandler::OnPointerCanceled(
 void TouchEventHandler::OnPointerCaptureLost(
     const winrt::IInspectable & /*sender*/,
     const winrt::PointerRoutedEventArgs &args) {
-  OnPointerConcluded(TouchEventType::Cancel, args);
+  OnPointerConcluded(TouchEventType::CaptureLost, args);
 }
 
 void TouchEventHandler::OnPointerExited(
@@ -129,7 +162,8 @@ void TouchEventHandler::OnPointerExited(
   if (m_context->State() == Mso::React::ReactInstanceState::HasError)
     return;
 
-  UpdatePointersInViews(args, -1, nullptr);
+  std::vector<int64_t> tagsForBranch;
+  UpdatePointersInViews(args, nullptr, std::move(tagsForBranch));
 }
 
 void TouchEventHandler::OnPointerMoved(
@@ -140,19 +174,23 @@ void TouchEventHandler::OnPointerMoved(
     return;
 
   // Only if the view has a Tag can we process this
-  int64_t tag;
+  std::vector<int64_t> tagsForBranch;
   xaml::UIElement sourceElement(nullptr);
-  if (!TagFromOriginalSource(args, &tag, &sourceElement))
+  const auto eventType = TouchEventType::Move;
+  const auto kind = GetPointerEventKind(eventType);
+  const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
+  if (!PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     return;
 
-  auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
+  const auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
   if (optPointerIndex) {
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
-    DispatchTouchEvent(TouchEventType::Move, *optPointerIndex);
-  } else {
-    // Move with no buttons pressed
-    UpdatePointersInViews(args, tag, sourceElement);
+    DispatchTouchEvent(eventType, *optPointerIndex);
   }
+
+  // If we re-introduce onMouseMove to react-native-windows, we should add an
+  // argument to ensure we do not emit these events while the pointer is down.
+  UpdatePointersInViews(args, sourceElement, std::move(tagsForBranch));
 }
 
 void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args) {
@@ -166,13 +204,20 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
 
   // if the view has a Tag, update the pointer info.
   // Regardless of that, ensure we Dispatch & cleanup the pointer
-  int64_t tag;
+  std::vector<int64_t> tagsForBranch;
   xaml::UIElement sourceElement(nullptr);
-  if (TagFromOriginalSource(args, &tag, &sourceElement))
+  const auto kind = GetPointerEventKind(eventType);
+  const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
+  if (PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
   if (m_pointers[*optPointerIndex].isLeftButton) {
-    DispatchTouchEvent(eventType, *optPointerIndex);
+    // In case a PointerCaptureLost event should be treated as an "end" event,
+    // check the ReactPointerEventArgs Kind property before emitting the event.
+    const auto adjustedEventType = reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End
+        ? TouchEventType::End
+        : TouchEventType::Cancel;
+    DispatchTouchEvent(adjustedEventType, *optPointerIndex);
   }
 
   m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
@@ -222,7 +267,7 @@ void TouchEventHandler::UpdateReactPointer(
     ReactPointer &pointer,
     const winrt::PointerRoutedEventArgs &args,
     xaml::UIElement sourceElement) {
-  auto rootPoint = args.GetCurrentPoint(m_xamlView.as<xaml::FrameworkElement>());
+  auto rootPoint = args.GetCurrentPoint(m_rootView.as<xaml::FrameworkElement>());
   auto point = args.GetCurrentPoint(sourceElement);
   auto props = point.Properties();
   auto keyModifiers = static_cast<uint32_t>(args.KeyModifiers());
@@ -248,8 +293,8 @@ std::optional<size_t> TouchEventHandler::IndexOfPointerWithId(uint32_t pointerId
 
 void TouchEventHandler::UpdatePointersInViews(
     const winrt::PointerRoutedEventArgs &args,
-    int64_t tag,
-    xaml::UIElement sourceElement) {
+    xaml::UIElement sourceElement,
+    std::vector<int64_t> &&newViews) {
   if (auto nativeUiManager = GetNativeUIManager(*m_context).lock()) {
     auto puiManagerHost = nativeUiManager->getHost();
     int32_t pointerId = args.Pointer().PointerId();
@@ -258,11 +303,6 @@ void TouchEventHandler::UpdatePointersInViews(
     // don't have any pointers down and should reset the touchId back to zero
     if (m_pointers.size() == 0)
       m_touchId = 0;
-
-    // Get the branch of views under the pointer in leaf to root order
-    std::vector<int64_t> newViews;
-    if (tag != -1)
-      newViews = GetTagsForBranch(puiManagerHost, tag);
 
     // Get the results of the last time we calculated the path
     auto it = m_pointersInViews.find(pointerId);
@@ -287,6 +327,9 @@ void TouchEventHandler::UpdatePointersInViews(
       pointer = m_pointers[*optPointerIndex];
       UpdateReactPointer(pointer, args, sourceElement);
     } else {
+      // newViews is empty when UpdatePointersInViews is called from outside
+      // the root view, in this case use -1 for the JS event pointer target
+      const auto tag = !newViews.empty() ? newViews.front() : -1;
       pointer = CreateReactPointer(args, tag, sourceElement);
     }
 
@@ -299,7 +342,10 @@ void TouchEventHandler::UpdatePointersInViews(
 
         ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(existingTag));
         if (node != nullptr && node->m_onMouseLeaveRegistered)
-          m_context->DispatchEvent(existingTag, "topMouseLeave", GetPointerJson(pointer, existingTag));
+          BatchingEmitter().DispatchEvent(
+              existingTag,
+              L"topMouseLeave",
+              winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, existingTag)));
       }
     }
 
@@ -312,97 +358,128 @@ void TouchEventHandler::UpdatePointersInViews(
 
       ShadowNodeBase *node = static_cast<ShadowNodeBase *>(puiManagerHost->FindShadowNodeForTag(newTag));
       if (node != nullptr && node->m_onMouseEnterRegistered)
-        m_context->DispatchEvent(newTag, "topMouseEnter", GetPointerJson(pointer, newTag));
+        BatchingEmitter().DispatchEvent(
+            newTag,
+            L"topMouseEnter",
+            winrt::Microsoft::ReactNative::MakeJSValueWriter(GetPointerJson(pointer, newTag)));
     }
 
     m_pointersInViews[pointerId] = {std::move(newViewsSet), std::move(newViews)};
   }
 }
 
-folly::dynamic TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
-  folly::dynamic json =
-      folly::dynamic::object()("target", target)("identifier", pointer.identifier)("pageX", pointer.positionRoot.X)(
-          "pageY", pointer.positionRoot.Y)("locationX", pointer.positionView.X)("locationY", pointer.positionView.Y)(
-          "timestamp", pointer.timestamp)("pointerType", GetPointerDeviceTypeName(pointer.deviceType))(
-          "force", pointer.pressure)("isLeftButton", pointer.isLeftButton)("isRightButton", pointer.isRightButton)(
-          "isMiddleButton", pointer.isMiddleButton)("isBarrelButtonPressed", pointer.isBarrelButton)(
-          "isHorizontalScrollWheel", pointer.isHorizontalScrollWheel)("isEraser", pointer.isEraser)(
-          "shiftKey", pointer.shiftKey)("ctrlKey", pointer.ctrlKey)("altKey", pointer.altKey);
-  return json;
+winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
+  return winrt::Microsoft::ReactNative::JSValueObject{
+      {"target", target},
+      {"identifier", pointer.identifier},
+      {"pageX", pointer.positionRoot.X},
+      {"pageY", pointer.positionRoot.Y},
+      {"locationX", pointer.positionView.X},
+      {"locationY", pointer.positionView.Y},
+      {"timestamp", pointer.timestamp},
+      {
+          "pointerType",
+          GetPointerDeviceTypeName(pointer.deviceType),
+      },
+      {"force", pointer.pressure},
+      {"isLeftButton", pointer.isLeftButton},
+      {"isRightButton", pointer.isRightButton},
+      {"isMiddleButton", pointer.isMiddleButton},
+      {"isBarrelButtonPressed", pointer.isBarrelButton},
+      {"isHorizontalScrollWheel", pointer.isHorizontalScrollWheel},
+      {"isEraser", pointer.isEraser},
+      {"shiftKey", pointer.shiftKey},
+      {"ctrlKey", pointer.ctrlKey},
+      {"altKey", pointer.altKey}};
 }
 
-void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
-  folly::dynamic changedIndices = folly::dynamic::array();
-  changedIndices.push_back(pointerIndex);
+#ifdef USE_FABRIC
+// This work should probably be delegated to the ComponentViews
+facebook::react::SharedEventEmitter EventEmitterForElement(
+    std::shared_ptr<FabricUIManager> &uimanager,
+    facebook::react::Tag tag) noexcept {
+  auto &registry = uimanager->GetViewRegistry();
 
-  auto touches = folly::dynamic::array();
-  for (const auto &pointer : m_pointers) {
-    folly::dynamic touch = GetPointerJson(pointer, pointer.target);
-    touches.push_back(touch);
+  auto descriptor = registry.componentViewDescriptorWithTag(tag);
+  auto view = std::static_pointer_cast<BaseComponentView const>(descriptor.view);
+  auto emitter = view->GetEventEmitter();
+  if (emitter)
+    return emitter;
+
+  auto element = view->Element();
+  while (auto parent = element.Parent()) {
+    if (element = parent.try_as<xaml::FrameworkElement>()) {
+      auto boxedTag = element.Tag();
+      if (boxedTag) {
+        if (tag = winrt::unbox_value<facebook::react::Tag>(element.Tag()))
+          return EventEmitterForElement(uimanager, tag);
+      }
+    }
+  }
+  return nullptr;
+}
+
+facebook::react::Touch TouchEventHandler::TouchForPointer(const ReactPointer &pointer) noexcept {
+  facebook::react::Touch t;
+  t.force = pointer.pressure;
+  t.identifier = static_cast<int>(pointer.identifier);
+  t.pagePoint.x = pointer.positionRoot.X; // TODO: This should be relative to the rootview, not the XAML tree
+  t.pagePoint.y = pointer.positionRoot.Y; // TODO: This should be relative to the rootview, not the XAML tree
+  t.screenPoint.x = pointer.positionRoot.X;
+  t.screenPoint.y = pointer.positionRoot.Y;
+  t.offsetPoint.x = pointer.positionView.X;
+  t.offsetPoint.y = pointer.positionView.Y;
+  t.target = static_cast<facebook::react::Tag>(pointer.target);
+  t.timestamp = static_cast<facebook::react::Float>(pointer.timestamp);
+  return t;
+}
+
+winrt::IPropertyValue TestHit(
+    const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
+    const winrt::Point &pointerPos,
+    bool &isHit) {
+  winrt::IPropertyValue tag(nullptr);
+
+  for (const auto &el : inlines) {
+    if (const auto span = el.try_as<xaml::Documents::Span>()) {
+      auto resTag = TestHit(span.Inlines().GetView(), pointerPos, isHit);
+
+      if (resTag)
+        return resTag;
+
+      if (isHit) {
+        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+        if (tag) {
+          return tag;
+        }
+      }
+    } else if (const auto run = el.try_as<xaml::Documents::Run>()) {
+      const auto start = el.ContentStart();
+      const auto end = el.ContentEnd();
+
+      auto startRect = start.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
+      auto endRect = end.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
+
+      // Swap rectangles in RTL scenarios.
+      if (startRect.X > endRect.X) {
+        const auto tempRect = startRect;
+        startRect = endRect;
+        endRect = tempRect;
+      }
+
+      // Approximate the bounding rect (for now, don't account for text wrapping).
+      if ((startRect.X <= pointerPos.X) && (endRect.X + endRect.Width >= pointerPos.X) &&
+          (startRect.Y <= pointerPos.Y) && (endRect.Y + endRect.Height >= pointerPos.Y)) {
+        isHit = true;
+        return nullptr;
+      }
+    }
   }
 
-  // Package up parameters and invoke the JS event emitter
-  const char *eventName = GetTouchEventTypeName(eventType);
-  if (eventName == nullptr)
-    return;
-  folly::dynamic params = folly::dynamic::array(eventName, std::move(touches), std::move(changedIndices));
-
-  m_context->CallJSFunction("RCTEventEmitter", "receiveTouches", std::move(params));
+  return tag;
 }
 
-bool TouchEventHandler::DispatchBackEvent() {
-  if (m_context->State() != Mso::React::ReactInstanceState::Loaded)
-    return false;
-
-  m_context->CallJSFunction("RCTDeviceEventEmitter", "emit", folly::dynamic::array("hardwareBackPress"));
-  return true;
-}
-
-const char *TouchEventHandler::GetPointerDeviceTypeName(
-    winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept {
-  const char *deviceTypeName = "unknown";
-  switch (deviceType) {
-    case winrt::Windows::Devices::Input::PointerDeviceType::Mouse:
-      deviceTypeName = "mouse";
-      break;
-    case winrt::Windows::Devices::Input::PointerDeviceType::Pen:
-      deviceTypeName = "pen";
-      break;
-    case winrt::Windows::Devices::Input::PointerDeviceType::Touch:
-      deviceTypeName = "touch";
-      break;
-    default:
-      break;
-  }
-  return deviceTypeName;
-}
-
-const char *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) noexcept {
-  const char *eventName = nullptr;
-  switch (eventType) {
-    case TouchEventType::Start:
-      eventName = "topTouchStart";
-      break;
-    case TouchEventType::End:
-      eventName = "topTouchEnd";
-      break;
-    case TouchEventType::Move:
-      eventName = "topTouchMove";
-      break;
-    case TouchEventType::Cancel:
-      eventName = "topTouchCancel";
-      break;
-    default:
-      assert(false);
-      break;
-  }
-  return eventName;
-}
-
-bool TouchEventHandler::TagFromOriginalSource(
-    const winrt::PointerRoutedEventArgs &args,
-    int64_t *pTag,
-    xaml::UIElement *pSourceElement) {
+bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *pTag, xaml::UIElement *pSourceElement) {
   assert(pTag != nullptr);
   assert(pSourceElement != nullptr);
 
@@ -449,62 +526,292 @@ bool TouchEventHandler::TagFromOriginalSource(
   return true;
 }
 
-winrt::IPropertyValue TouchEventHandler::TestHit(
-    const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
-    const winrt::Point &pointerPos,
-    bool &isHit) {
-  winrt::IPropertyValue tag(nullptr);
+bool TouchEventHandler::IsEndishEventType(TouchEventType eventType) noexcept {
+  switch (eventType) {
+    case TouchEventType::End:
+    case TouchEventType::Cancel:
+    case TouchEventType::CaptureLost:
+      return true;
+    default:
+      return false;
+  }
+}
+#endif
 
-  for (const auto &el : inlines) {
-    if (const auto span = el.try_as<xaml::Documents::Span>()) {
-      auto resTag = TestHit(span.Inlines().GetView(), pointerPos, isHit);
+void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex) {
+  winrt::Microsoft::ReactNative::JSValueArray changedIndices;
+  changedIndices.push_back(pointerIndex);
 
-      if (resTag)
-        return resTag;
+#ifdef USE_FABRIC
+  std::shared_ptr<FabricUIManager> fabricuiManager;
+  if (m_fabric &&
+      !!(fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties())))) {
+    std::unordered_set<facebook::react::SharedTouchEventEmitter> uniqueEventEmitters = {};
+    std::vector<facebook::react::SharedTouchEventEmitter> emittersForIndex;
 
-      if (isHit) {
-        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
-        if (tag) {
-          return tag;
+    facebook::react::TouchEvent te;
+
+    size_t index = 0;
+    for (const auto &pointer : m_pointers) {
+      bool isChangedPointer = pointerIndex == index++;
+
+      if (!isChangedPointer || !IsEndishEventType(eventType)) {
+        te.touches.insert(TouchForPointer(pointer));
+      }
+
+      if (isChangedPointer)
+        te.changedTouches.insert(TouchForPointer(pointer));
+
+      auto emitter = std::static_pointer_cast<facebook::react::TouchEventEmitter>(
+          std::const_pointer_cast<facebook::react::EventEmitter>(
+              EventEmitterForElement(fabricuiManager, static_cast<facebook::react::Tag>(pointer.target))));
+      emittersForIndex.push_back(emitter);
+      if (emitter)
+        uniqueEventEmitters.insert(emitter);
+    }
+
+    for (const auto emitter : uniqueEventEmitters) {
+      te.targetTouches.clear();
+      index = 0;
+      for (const auto &pointer : m_pointers) {
+        auto pointerEmitter = emittersForIndex[index++];
+        if (emitter == pointerEmitter)
+          te.targetTouches.insert(TouchForPointer(pointer));
+      }
+
+      switch (eventType) {
+        case TouchEventType::Start:
+          emitter->onTouchStart(te);
+          break;
+        case TouchEventType::Move:
+          emitter->onTouchMove(te);
+          break;
+        case TouchEventType::End:
+          emitter->onTouchEnd(te);
+          break;
+        case TouchEventType::Cancel:
+        case TouchEventType::CaptureLost:
+          emitter->onTouchCancel(te);
+          break;
+      }
+    }
+  } else
+#endif // USE_FABRIC
+  {
+    winrt::Microsoft::ReactNative::JSValueArray touches;
+    for (const auto &pointer : m_pointers) {
+      touches.push_back(GetPointerJson(pointer, pointer.target));
+    }
+
+    // Package up parameters and invoke the JS event emitter
+    const wchar_t *eventName = GetTouchEventTypeName(eventType);
+    if (eventName == nullptr)
+      return;
+
+    const auto paramsWriter = MakeJSValueArgWriter(eventName, std::move(touches), std::move(changedIndices));
+    if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
+      BatchingEmitter().EmitCoalescingJSEvent(
+          L"RCTEventEmitter",
+          L"receiveTouches",
+          std::move(eventName),
+          m_pointers[pointerIndex].pointerId,
+          paramsWriter);
+    } else {
+      BatchingEmitter().EmitJSEvent(L"RCTEventEmitter", L"receiveTouches", paramsWriter);
+    }
+  }
+}
+
+bool TouchEventHandler::DispatchBackEvent() {
+  if (m_context->State() != Mso::React::ReactInstanceState::Loaded)
+    return false;
+
+  BatchingEmitter().EmitJSEvent(
+      L"RCTDeviceEventEmitter", L"emit", winrt::Microsoft::ReactNative::MakeJSValueArgWriter(L"hardwardBackPress"));
+
+  return true;
+}
+
+const char *TouchEventHandler::GetPointerDeviceTypeName(
+    winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept {
+  const char *deviceTypeName = "unknown";
+  switch (deviceType) {
+    case winrt::Windows::Devices::Input::PointerDeviceType::Mouse:
+      deviceTypeName = "mouse";
+      break;
+    case winrt::Windows::Devices::Input::PointerDeviceType::Pen:
+      deviceTypeName = "pen";
+      break;
+    case winrt::Windows::Devices::Input::PointerDeviceType::Touch:
+      deviceTypeName = "touch";
+      break;
+    default:
+      break;
+  }
+  return deviceTypeName;
+}
+
+winrt::Microsoft::ReactNative::PointerEventKind TouchEventHandler::GetPointerEventKind(
+    TouchEventType eventType) noexcept {
+  auto kind = winrt::Microsoft::ReactNative::PointerEventKind::None;
+  switch (eventType) {
+    case TouchEventType::Start:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::Start;
+      break;
+    case TouchEventType::End:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::End;
+      break;
+    case TouchEventType::Move:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::Move;
+      break;
+    case TouchEventType::Cancel:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::Cancel;
+      break;
+    case TouchEventType::CaptureLost:
+      kind = winrt::Microsoft::ReactNative::PointerEventKind::CaptureLost;
+      break;
+    default:
+      assert(false);
+      break;
+  }
+  return kind;
+}
+
+const wchar_t *TouchEventHandler::GetTouchEventTypeName(TouchEventType eventType) noexcept {
+  const wchar_t *eventName = nullptr;
+  switch (eventType) {
+    case TouchEventType::Start:
+      eventName = L"topTouchStart";
+      break;
+    case TouchEventType::End:
+      eventName = L"topTouchEnd";
+      break;
+    case TouchEventType::Move:
+      eventName = L"topTouchMove";
+      break;
+    case TouchEventType::Cancel:
+    case TouchEventType::CaptureLost:
+      eventName = L"topTouchCancel";
+      break;
+    default:
+      assert(false);
+      break;
+  }
+  return eventName;
+}
+
+bool TouchEventHandler::PropagatePointerEventAndFindReactSourceBranch(
+    const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
+    std::vector<int64_t> *pTagsForBranch,
+    xaml::UIElement *pSourceElement) {
+  assert(pTagsForBranch != nullptr);
+  assert(pSourceElement != nullptr);
+
+#ifdef USE_FABRIC
+  if (m_fabric) {
+    int64_t tag;
+    if (TagFromOriginalSource(args.Args(), &tag, pSourceElement)) {
+      std::vector<int64_t> tagsForBranch;
+      tagsForBranch.push_back(tag);
+      *pTagsForBranch = std::move(tagsForBranch);
+    }
+    return pSourceElement != nullptr;
+  }
+#endif
+
+  if (const auto uiManager = GetNativeUIManager(*m_context).lock()) {
+    xaml::UIElement sourceElement = args.Args().OriginalSource().try_as<xaml::UIElement>();
+    ShadowNodeBase *node = nullptr;
+    std::vector<int64_t> tagsForBranch;
+
+    // Find the "deepest" React element that triggered the input event
+    while (sourceElement) {
+      node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(GetTag(sourceElement)));
+      if (node) {
+        args.Target(sourceElement);
+        break;
+      } else {
+        sourceElement = winrt::VisualTreeHelper::GetParent(sourceElement).try_as<xaml::UIElement>();
+      }
+    }
+
+    // Walk to root to find refined React target view
+    const auto argsImpl = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(args);
+    while (node) {
+      if (args.Target() == nullptr) {
+        args.Target(node->GetView());
+      }
+
+      const auto previousTarget = args.Target();
+
+      node->GetViewManager()->OnPointerEvent(node, args);
+
+      const auto target = args.Target().try_as<XamlView>();
+      if (target != previousTarget) {
+        tagsForBranch.clear();
+        if (target) {
+          // We assume that if a ViewManager is going to change the target, it
+          // can only update the target to one of its descendants.
+          const auto tagsToCurrentTarget = GetTagsForBranch(uiManager->getHost(), GetTag(target), node->m_tag);
+          for (auto tag : tagsToCurrentTarget) {
+            tagsForBranch.push_back(tag);
+          }
         }
       }
-    } else if (const auto run = el.try_as<xaml::Documents::Run>()) {
-      const auto start = el.ContentStart();
-      const auto end = el.ContentEnd();
 
-      auto startRect = start.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
-      auto endRect = end.GetCharacterRect(xaml::Documents::LogicalDirection::Forward);
-
-      // Swap rectangles in RTL scenarios.
-      if (startRect.X > endRect.X) {
-        const auto tempRect = startRect;
-        startRect = endRect;
-        endRect = tempRect;
+      if (target) {
+        tagsForBranch.push_back(node->m_tag);
       }
 
-      // Approximate the bounding rect (for now, don't account for text wrapping).
-      if ((startRect.X <= pointerPos.X) && (endRect.X + endRect.Width >= pointerPos.X) &&
-          (startRect.Y <= pointerPos.Y) && (endRect.Y + endRect.Height >= pointerPos.Y)) {
-        isHit = true;
-        return nullptr;
+      // Stop traversing when we get to the root target
+      if (node->GetView() == m_xamlView) {
+        break;
+      }
+
+      node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
+    }
+
+    if (args.Target() != nullptr) {
+      sourceElement = args.Target().try_as<xaml::UIElement>();
+
+      // Find the first parent UIElement of the React target for pointer positioning
+      if (!sourceElement) {
+        node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(tagsForBranch.front()));
+      }
+
+      while (!sourceElement && node) {
+        node = static_cast<ShadowNodeBase *>(uiManager->getHost()->FindShadowNodeForTag(node->m_parent));
+        sourceElement = node->GetView().try_as<xaml::UIElement>();
+      }
+
+      if (sourceElement) {
+        *pTagsForBranch = std::move(tagsForBranch);
+        *pSourceElement = sourceElement;
+        return true;
       }
     }
   }
 
-  return tag;
+  // If the root view is not fully created, then the Tag property will never
+  // be set. This can happen, e.g., when the red box error box is shown.
+  return false;
 }
 
 //
 // Retreives the path of nodes from an element to the root.
 // The order of the returned list is from child to parent.
 //
-std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag) {
+std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag) {
   std::vector<int64_t> tags;
 
   auto *shadowNode = host->FindShadowNodeForTag(tag);
   while (shadowNode != nullptr && tag != -1) {
-    tags.push_back(tag);
+    if (tag == rootTag) {
+      break;
+    }
 
+    tags.push_back(tag);
     tag = shadowNode->m_parent;
     shadowNode = host->FindShadowNodeForTag(tag);
   }

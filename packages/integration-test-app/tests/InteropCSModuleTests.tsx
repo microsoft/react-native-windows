@@ -30,7 +30,8 @@ functionTest('StringConstant', () => {
   assert.equal(msg, 'Hello World');
 });
 
-functionTest('PointConstant', () => {
+// #7808: Broken on Hermes Release
+functionTest.skip('PointConstant', () => {
   const point = testModuleCs.PointConstant;
   assert.equal(point.x, 10);
   assert.equal(point.y, 20);
@@ -104,7 +105,8 @@ functionTest('ConcatAsync', async () => {
   assert.equal(result, 'abc20');
 });
 
-functionTest(
+// #7808: Broken on Hermes Release
+functionTest.skip(
   'DeltaPoint',
   () =>
     new Promise((resolve, _) => {
@@ -120,7 +122,8 @@ functionTest(
     }),
 );
 
-functionTest('DeltaPointAsync', async () => {
+// #7808: Broken on Hermes Release
+functionTest.skip('DeltaPointAsync', async () => {
   const result = await testModuleCs.DeltaPointAsync(
     {x: 10, y: 100},
     {x: 1, y: 10},
@@ -168,7 +171,7 @@ functionTest(
     new Promise((resolve, _) => {
       const eventEmitter = new NativeEventEmitter(testModuleCs);
 
-      eventEmitter.addListener('TestEvent', x => {
+      eventEmitter.addListener('TestEvent', (x) => {
         assert.equal(x, 123);
         resolve();
       });

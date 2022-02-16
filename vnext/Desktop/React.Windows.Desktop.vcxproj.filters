@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="ABI">
       <UniqueIdentifier>{b7a226dc-4029-4213-b426-37eb7d0907a4}</UniqueIdentifier>
@@ -69,9 +69,6 @@
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="ABI\MemoryTracker.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="ABI\MessageQueue.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -93,6 +90,8 @@
     <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
+    <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
+    <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
@@ -105,9 +104,6 @@
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactContext.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp" />
-    <ClCompile Include="ABI\MemoryTracker.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
     <ClCompile Include="ABI\MessageQueueShim.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -125,9 +121,6 @@
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp">
       <Filter>Source Files\CxxReactWin32</Filter>
-    </ClCompile>
-    <ClCompile Include="HttpResource.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="JSBigStringResourceDll.cpp">
       <Filter>Source Files</Filter>
@@ -164,15 +157,13 @@
     <ClCompile Include="ShadowNode.cpp" />
     <ClCompile Include="ShadowNodeRegistry.cpp" />
     <ClCompile Include="ViewManager.cpp" />
-    <ClCompile Include="Modules\UIManagerModule.cpp" />
-    <ClCompile Include="JSI\ChakraJsiRuntime_core.cpp">
-      <Filter>Source Files\JSI</Filter>
-    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSCallInvokerScheduler.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactErrorProvider.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactInstanceWin.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\RedBoxHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ABI\MemoryTracker.h">
-      <Filter>ABI</Filter>
-    </ClInclude>
     <ClInclude Include="ABI\MessageQueueShim.h">
       <Filter>ABI</Filter>
     </ClInclude>
@@ -193,9 +184,6 @@
     <ClInclude Include="BeastWebSocketResource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HttpResource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="JSBigStringResourceDll.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -208,8 +196,5 @@
     <ClInclude Include="..\Microsoft.ReactNative\RedBoxErrorInfo.h">
       <Filter>ABI</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

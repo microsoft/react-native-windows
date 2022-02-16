@@ -6,8 +6,8 @@
 
 import {CodedError} from '@react-native-windows/telemetry';
 import {execSync} from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from '@react-native-windows/fs';
+import path from 'path';
 
 /**
  * A subset of the per-instance properties returned by vswhere
@@ -96,7 +96,7 @@ export function findLatestVsInstall(opts: {
   let installs = enumerateVsInstalls({...opts, latest: true});
 
   if (opts.prerelease && installs.length > 0) {
-    installs = installs.filter(x => x.prerelease === 'True');
+    installs = installs.filter((x) => x.prerelease === 'True');
   }
 
   if (installs.length > 0) {

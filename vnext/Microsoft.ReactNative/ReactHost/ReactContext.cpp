@@ -13,8 +13,6 @@ namespace Mso::React {
 // ReactSettingsSnapshot implementation
 //=============================================================================================
 
-#ifndef CORE_ABI // requires instance
-
 ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept
     : m_reactInstance{std::move(reactInstance)} {}
 
@@ -88,14 +86,19 @@ std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return {};
 }
 
+JSIEngine ReactSettingsSnapshot::JsiEngine() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->JsiEngine();
+  }
+  return {};
+}
+
 bool ReactSettingsSnapshot::UseDeveloperSupport() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->UseDeveloperSupport();
   }
   return false;
 }
-
-#endif
 
 //=============================================================================================
 // ReactContext implementation
@@ -106,12 +109,9 @@ ReactContext::ReactContext(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
     winrt::Microsoft::ReactNative::IReactNotificationService const &notifications) noexcept
     : m_reactInstance{std::move(reactInstance)},
-#ifndef CORE_ABI
       m_settings{Mso::Make<ReactSettingsSnapshot>(Mso::Copy(m_reactInstance))},
-#endif
       m_properties{properties},
-      m_notifications{notifications} {
-}
+      m_notifications{notifications} {}
 
 void ReactContext::Destroy() noexcept {
   if (auto notificationService =
@@ -129,11 +129,9 @@ winrt::Microsoft::ReactNative::IReactNotificationService ReactContext::Notificat
 }
 
 void ReactContext::CallJSFunction(std::string &&module, std::string &&method, folly::dynamic &&params) const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     instance->CallJsFunction(std::move(module), std::move(method), std::move(params));
   }
-#endif
 }
 
 void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData) const noexcept {
@@ -145,18 +143,13 @@ void ReactContext::DispatchEvent(int64_t viewTag, std::string &&eventName, folly
 }
 
 winrt::Microsoft::ReactNative::JsiRuntime ReactContext::JsiRuntime() const noexcept {
-#ifndef CORE_ABI // requires instance
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->JsiRuntime();
   } else {
     return nullptr;
   }
-#else
-  return nullptr;
-#endif
 }
 
-#ifndef CORE_ABI
 ReactInstanceState ReactContext::State() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->State();
@@ -184,7 +177,5 @@ std::shared_ptr<facebook::react::Instance> ReactContext::GetInnerInstance() cons
 IReactSettingsSnapshot const &ReactContext::SettingsSnapshot() const noexcept {
   return *m_settings;
 }
-
-#endif
 
 } // namespace Mso::React

@@ -170,3 +170,10 @@ tsdoc-metadata.json
 # cppwinrt
 nul
 
+# Verdaccio
+.verdaccio-db.json
+
+# Graveyard of old packages (whose build-outputs may exist on disk after pull)
+/packages/@rnw-bots/*
+/packages/jest-environment-winappdriver/*
+/packages/node-rnw-rpc/*

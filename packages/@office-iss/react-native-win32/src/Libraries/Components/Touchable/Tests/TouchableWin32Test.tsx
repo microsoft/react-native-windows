@@ -1,6 +1,6 @@
 'use strict';
 
-import * as React from 'react';
+import React from 'react'
 import { Insets, NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
 
 import { TextWin32 } from '../../Text/TextWin32';

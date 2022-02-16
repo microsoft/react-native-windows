@@ -1,0 +1,22 @@
+{
+  "name": "@rnw-scripts/jest-out-of-tree-resolver",
+  "version": "1.0.6",
+  "license": "MIT",
+  "main": "jest-resolver.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/jest-out-of-tree-resolver"
+  },
+  "dependencies": {
+    "resolve": "^1.14.2"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "1.1.11",
+    "eslint": "^7.32.0",
+    "prettier": "^2.4.1"
+  },
+  "engines": {
+    "node": ">= 14"
+  }
+}

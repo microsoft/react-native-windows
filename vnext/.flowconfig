@@ -10,7 +10,6 @@
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
 <PROJECT_ROOT>/Libraries/Components/Button.js
-<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
 <PROJECT_ROOT>/Libraries/Components/Picker/RCTPickerNativeComponent.js
 <PROJECT_ROOT>/Libraries/Components/RefreshControl/RefreshControl.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
@@ -20,7 +19,7 @@
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableHighlight.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableOpacity.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableWithoutFeedback.js
-<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
+<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewAccessibility.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js
@@ -59,15 +58,13 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
-; Ignore RN copies, which cause duplicate violations to be shown
-.*/vnext/ReactCopies/.*
-
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 
 [include]
 ; Need to include hoisted modules
 ../node_modules/
+../packages/@react-native-windows/virtualized-list/
 
 [libs]
 interface.js
@@ -78,6 +75,8 @@ emoji=true
 
 exact_by_default=true
 
+format.bracket_spacing=false
+
 module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.windows.js
@@ -86,6 +85,7 @@ munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.windows.js'
 module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
+module.name_mapper='^@react-native-windows/virtualized-list$' -> '<PROJECT_ROOT>/../packages/@react-native-windows/virtualized-list/src/VirtualizedList.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
@@ -102,7 +102,7 @@ sketchy-null-mixed=warn
 sketchy-number=warn
 untyped-type-import=warn
 nonstrict-import=warn
-deprecated-type=warn
+deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
 signature-verification-failure=warn
@@ -117,4 +117,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.148.0
+^0.171.0

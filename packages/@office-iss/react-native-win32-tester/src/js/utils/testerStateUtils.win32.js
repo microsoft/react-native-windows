@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -25,7 +25,9 @@ export const Screens = {
 };
 
 export const initialState: RNTesterState = {
-  openExample: null,
+  activeModuleKey: null,
+  activeModuleTitle: null,
+  activeModuleExampleKey: null,
   screen: null,
   bookmarks: null,
   recentlyUsed: null,
@@ -35,9 +37,9 @@ const filterEmptySections = (examplesList: ExamplesList): any => {
   const filteredSections = {};
   const sectionKeys = Object.keys(examplesList);
 
-  sectionKeys.forEach(key => {
+  sectionKeys.forEach((key) => {
     filteredSections[key] = examplesList[key].filter(
-      section => section.data.length > 0,
+      (section) => section.data.length > 0,
     );
   });
 
@@ -56,33 +58,35 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
     return null;
   }
 
-  const components = RNTesterList.ComponentExamples.map(componentExample => ({
+  const components = RNTesterList.Components.map((componentExample) => ({
     ...componentExample,
     isBookmarked: bookmarks.components.includes(componentExample.key),
     exampleType: Screens.COMPONENTS,
   }));
 
   const recentlyUsedComponents = recentlyUsed.components
-    .map(recentComponentKey =>
-      components.find(component => component.key === recentComponentKey),
+    .map((recentComponentKey) =>
+      components.find((component) => component.key === recentComponentKey),
     )
     .filter(Boolean);
 
   const bookmarkedComponents = components.filter(
-    component => component.isBookmarked,
+    (component) => component.isBookmarked,
   );
 
-  const apis = RNTesterList.APIExamples.map(apiExample => ({
+  const apis = RNTesterList.APIs.map((apiExample) => ({
     ...apiExample,
     isBookmarked: bookmarks.apis.includes(apiExample.key),
     exampleType: Screens.APIS,
   }));
 
   const recentlyUsedAPIs = recentlyUsed.apis
-    .map(recentAPIKey => apis.find(apiEample => apiEample.key === recentAPIKey))
+    .map((recentAPIKey) =>
+      apis.find((apiEample) => apiEample.key === recentAPIKey),
+    )
     .filter(Boolean);
 
-  const bookmarkedAPIs = apis.filter(apiEample => apiEample.isBookmarked);
+  const bookmarkedAPIs = apis.filter((apiEample) => apiEample.isBookmarked);
 
   const examplesList: ExamplesList = {
     [Screens.COMPONENTS]: [
@@ -135,7 +139,9 @@ export const getInitialStateFromAsyncStorage = async (
 
   if (!initialStateString) {
     return {
-      openExample: null,
+      activeModuleKey: null,
+      activeModuleTitle: null,
+      activeModuleExampleKey: null,
       screen: Screens.COMPONENTS,
       bookmarks: {components: [], apis: []},
       recentlyUsed: {components: [], apis: []},

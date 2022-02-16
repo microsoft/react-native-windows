@@ -10,19 +10,22 @@
 ; initRNLibraries build step
 <PROJECT_ROOT>/index.js
 <PROJECT_ROOT>/Libraries/Alert/Alert.js
-<PROJECT_ROOT>/Libraries/Components/Picker/Picker.js
+<PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
-<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js
+<PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
 <PROJECT_ROOT>/Libraries/Inspector/Inspector.js
 <PROJECT_ROOT>/Libraries/Inspector/InspectorOverlay.js
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
+<PROJECT_ROOT>/Libraries/Pressability/Pressability.js
+<PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js
 
@@ -52,6 +55,9 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src/.*
 
+; Ignore files with flow typing issues #9223
+.*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
@@ -60,6 +66,7 @@
 [include]
 ; Need to include hoisted modules
 ../../../node_modules/
+../../@react-native-windows/virtualized-list/
 
 [libs]
 interface.js
@@ -70,6 +77,8 @@ emoji=true
 
 exact_by_default=true
 
+format.bracket_spacing=false
+
 module.file_ext=.js
 module.file_ext=.json
 module.file_ext=.win32.js
@@ -78,6 +87,7 @@ munge_underscores=true
 
 module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/index.win32.js'
 module.name_mapper='^@office-iss/react-native-win32$' -> '<PROJECT_ROOT>/index.win32.js'
+module.name_mapper='^@react-native-windows/virtualized-list$' -> '<PROJECT_ROOT>/../../@react-native-windows/virtualized-list/src/VirtualizedList.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@office-iss/react-native-win32/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
@@ -94,7 +104,7 @@ sketchy-null-mixed=warn
 sketchy-number=warn
 untyped-type-import=warn
 nonstrict-import=warn
-deprecated-type=warn
+deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
 signature-verification-failure=warn
@@ -109,4 +119,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.148.0
+^0.171.0

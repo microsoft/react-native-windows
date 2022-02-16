@@ -1,17 +1,18 @@
 #pragma once
 
 #include <DevSettings.h>
-
 #include <JSI/ChakraRuntimeArgs.h>
 #include <JSI/RuntimeHolder.h>
-
 #include <Logging.h>
+#include <mutex>
+#include <thread>
 
 namespace Microsoft::React::Test {
 
-class ChakraRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class ChakraRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
+  facebook::react::JSIEngineOverride getRuntimeType() noexcept override;
 
   ChakraRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,

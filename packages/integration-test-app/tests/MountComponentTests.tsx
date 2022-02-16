@@ -5,8 +5,8 @@
  * @format
  */
 
-import * as React from 'react';
-import * as RN from 'react-native';
+import React from 'react';
+import RN from 'react-native';
 import {useEffect, useRef} from 'react';
 import {assert} from 'chai';
 import {componentTest, TestComponentType} from './lib/TestDefinition';
@@ -94,18 +94,6 @@ componentTest(
 
 // Need a real implementaion here once we supoprt Modal
 componentTest.skip('Modal', mountAndMeasure(RN.Modal));
-
-componentTest('Picker', props => {
-  const PickerTestComponent = mountAndMeasure(
-    React.forwardRef<RN.Image>((_, ref) => (
-      <RN.Picker ref={ref}>
-        <RN.Picker.Item label="foo" value="bar" />
-      </RN.Picker>
-    )),
-  );
-
-  return <PickerTestComponent {...props} />;
-});
 
 componentTest(
   'Pressable',

@@ -16,6 +16,7 @@
 #include <Modules/PaperUIManagerModule.h>
 #include <ReactPropertyBag.h>
 #include <TestHook.h>
+#include <Utils/PropertyUtils.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
 
@@ -24,6 +25,11 @@ using namespace xaml;
 }
 
 namespace Microsoft::ReactNative {
+
+static const std::unordered_map<std::string, PointerEventsKind> pointerEventsMap = {
+    {"box-none", PointerEventsKind::BoxNone},
+    {"box-only", PointerEventsKind::BoxOnly},
+    {"none", PointerEventsKind::None}};
 
 float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode measureMode) {
   // Round up to workaround truncation inside yoga
@@ -80,7 +86,9 @@ YGSize DefaultYogaSelfMeasureFunc(
   return desiredSize;
 }
 
-ViewManagerBase::ViewManagerBase(const Mso::React::IReactContext &context) : m_context(&context) {}
+ViewManagerBase::ViewManagerBase(const Mso::React::IReactContext &context)
+    : m_context(&context),
+      m_batchingEventEmitter{std::make_shared<React::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
 void ViewManagerBase::GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {}
 
@@ -90,6 +98,8 @@ void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   React::WriteProperty(writer, L"onLayout", L"function");
   React::WriteProperty(writer, L"keyDownEvents", L"array");
   React::WriteProperty(writer, L"keyUpEvents", L"array");
+  React::WriteProperty(writer, L"onMouseEnter", L"function");
+  React::WriteProperty(writer, L"onMouseLeave", L"function");
 }
 
 void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
@@ -230,15 +240,6 @@ void ViewManagerBase::ReplaceChild(const XamlView &parent, const XamlView &oldCh
 void ViewManagerBase::UpdateProperties(
     ShadowNodeBase *nodeToUpdate,
     winrt::Microsoft::ReactNative::JSValueObject &props) {
-  // Directly dirty this node since non-layout changes like the text property do
-  // not trigger relayout
-  //  There isn't actually a yoga node for RawText views, but it will invalidate
-  //  the ancestors which
-  //  will include the containing Text element. And that's what matters.
-  int64_t tag = GetTag(nodeToUpdate->GetView());
-  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock())
-    uiManager->DirtyYogaNode(tag);
-
   for (const auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
@@ -260,6 +261,22 @@ bool ViewManagerBase::UpdateProperty(
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
   } else if (propertyName == "keyUpEvents") {
     nodeToUpdate->UpdateHandledKeyboardEvents(propertyName, propertyValue);
+  } else if (propertyName == "pointerEvents") {
+    const auto iter = pointerEventsMap.find(propertyValue.AsString());
+    if (iter != pointerEventsMap.end()) {
+      nodeToUpdate->m_pointerEvents = iter->second;
+      if (nodeToUpdate->m_pointerEvents == PointerEventsKind::None) {
+        if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+          uiElement.IsHitTestVisible(false);
+        }
+      }
+    } else {
+      nodeToUpdate->m_pointerEvents = PointerEventsKind::Auto;
+      if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+        uiElement.ClearValue(xaml::UIElement::IsHitTestVisibleProperty());
+      }
+    }
+  } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
   } else {
     return false;
   }
@@ -276,19 +293,17 @@ void ViewManagerBase::DispatchCommand(
 }
 
 static const winrt::Microsoft::ReactNative::ReactPropertyId<
-    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<react::uwp::ExpressionAnimationStore>>>
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
     &ExpressionAnimationStorePropertyId() noexcept {
   static const winrt::Microsoft::ReactNative::ReactPropertyId<
-      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<react::uwp::ExpressionAnimationStore>>>
+      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
       prop{L"ReactNative.ViewManagerBase", L"ExpressionAnimationStore"};
   return prop;
 }
 
-std::shared_ptr<react::uwp::ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
+std::shared_ptr<ExpressionAnimationStore> ViewManagerBase::GetExpressionAnimationStore() noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(GetReactContext().Properties())
-      .GetOrCreate(
-          ExpressionAnimationStorePropertyId(),
-          []() { return std::make_shared<react::uwp::ExpressionAnimationStore>(); })
+      .GetOrCreate(ExpressionAnimationStorePropertyId(), []() { return std::make_shared<ExpressionAnimationStore>(); })
       .Value();
 }
 
@@ -335,12 +350,12 @@ void ViewManagerBase::SetLayoutProps(
   }
   auto fe = element.as<xaml::FrameworkElement>();
 
-  const bool layoutHasChanged = left != react::uwp::ViewPanel::GetLeft(element) ||
-      top != react::uwp::ViewPanel::GetTop(element) || width != fe.Width() || height != fe.Height();
+  const bool layoutHasChanged = left != ViewPanel::GetLeft(element) || top != ViewPanel::GetTop(element) ||
+      width != fe.Width() || height != fe.Height();
 
   // Set Position & Size Properties
-  react::uwp::ViewPanel::SetLeft(element, left);
-  react::uwp::ViewPanel::SetTop(element, top);
+  ViewPanel::SetLeft(element, left);
+  ViewPanel::SetTop(element, top);
 
   fe.Width(width);
   fe.Height(height);
@@ -348,11 +363,11 @@ void ViewManagerBase::SetLayoutProps(
   // Fire Events
   if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {
     int64_t tag = GetTag(viewToUpdate);
-    folly::dynamic layout = folly::dynamic::object("x", left)("y", top)("height", height)("width", width);
+    React::JSValueObject layout{{"x", left}, {"y", top}, {"height", height}, {"width", width}};
 
-    folly::dynamic eventData = folly::dynamic::object("target", tag)("layout", std::move(layout));
+    React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
 
-    m_context->DispatchEvent(tag, "topLayout", std::move(eventData));
+    m_batchingEventEmitter->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
   }
 }
 
@@ -368,10 +383,27 @@ bool ViewManagerBase::IsNativeControlWithSelfLayout() const {
   return GetYogaCustomMeasureFunc() != nullptr;
 }
 
-void ViewManagerBase::DispatchEvent(int64_t viewTag, std::string &&eventName, folly::dynamic &&eventData)
-    const noexcept {
-  folly::dynamic params = folly::dynamic::array(viewTag, std::move(eventName), std::move(eventData));
-  m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
+void ViewManagerBase::MarkDirty(int64_t tag) {
+  if (auto uiManager = GetNativeUIManager(GetReactContext()).lock())
+    uiManager->DirtyYogaNode(tag);
+}
+
+void ViewManagerBase::OnPointerEvent(
+    ShadowNodeBase *node,
+    const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args) {
+  if ((args.Target() == node->GetView() && node->m_pointerEvents == PointerEventsKind::BoxNone) ||
+      node->m_pointerEvents == PointerEventsKind::None) {
+    args.Target(nullptr);
+  } else if (node->m_pointerEvents == PointerEventsKind::BoxOnly) {
+    args.Target(node->GetView());
+  }
+}
+
+void ViewManagerBase::DispatchEvent(
+    int64_t viewTag,
+    winrt::hstring &&eventName,
+    const React::JSValueArgWriter &eventDataWriter) const noexcept {
+  m_batchingEventEmitter->DispatchEvent(viewTag, std::move(eventName), eventDataWriter);
 }
 
 } // namespace Microsoft::ReactNative

@@ -5,7 +5,8 @@
  * @format
  */
 
-import {goToComponentExample} from './framework';
+import {app} from '@react-native-windows/automation';
+import {goToComponentExample} from './RNTesterNavigation';
 
 beforeAll(async () => {
   await goToComponentExample('LegacyTextInputTest');
@@ -74,30 +75,66 @@ describe('LegacyTextInputTest', () => {
 
     expect(await textInput.getText()).toBe('abc\rdef');
   });
+
+  test('TextInput onChange before onSelectionChange', async () => {
+    const textInput = await textInputField();
+    await textInput.setValue('a');
+    await assertLogContainsInOrder([
+      'onChange text: a',
+      'onSelectionChange range: 1,1',
+    ]);
+  });
 });
 
 async function textInputField() {
-  return await $('~textinput-field');
+  return await app.findElementByTestID('textinput-field');
 }
 
 async function autoCapsTextInputField() {
-  return await $('~auto-caps-textinput-field');
+  return await app.findElementByTestID('auto-caps-textinput-field');
 }
 
 async function multiLineTextInputField() {
-  return await $('~multi-line-textinput-field');
+  return await app.findElementByTestID('multi-line-textinput-field');
 }
 
 async function assertLogContains(text: string) {
-  const textLogComponent = await $('~textinput-log');
+  const textLogComponent = await app.findElementByTestID('textinput-log');
 
-  await browser.waitUntil(
+  await app.waitUntil(
     async () => {
       const loggedText = await textLogComponent.getText();
       return loggedText.split('\n').includes(text);
     },
     {
       timeoutMsg: `"${await textLogComponent.getText()}" did not contain "${text}"`,
+    },
+  );
+}
+
+async function assertLogContainsInOrder(expectedLines: string[]) {
+  const textLogComponent = await app.findElementByTestID('textinput-log');
+
+  await app.waitUntil(
+    async () => {
+      const loggedText = await textLogComponent.getText();
+      const actualLines = loggedText.split('\n');
+      let previousIndex = Number.MAX_VALUE;
+      for (const line of expectedLines) {
+        const index = actualLines.findIndex((l) => l === line);
+        if (index === -1 || index > previousIndex) {
+          return false;
+        }
+
+        previousIndex = index;
+      }
+
+      return true;
+    },
+    {
+      timeoutMsg: `"${await textLogComponent.getText()}" did not contain lines "${expectedLines.join(
+        ', ',
+      )}"`,
     },
   );
 }

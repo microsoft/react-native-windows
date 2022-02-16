@@ -1,5 +1,5 @@
 'use strict';
-import * as React from 'react';
+import React from 'react'
 import { View, Text, StyleSheet, TextInput, NativeModules, ScrollView } from 'react-native';
 
 const styles = StyleSheet.create({

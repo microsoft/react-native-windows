@@ -5,7 +5,7 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Import Condition="'$(UseHermes)' == '' or '$(HermesPackage)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+  <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
 
   <PropertyGroup>
 
@@ -39,7 +39,7 @@
     <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' == 'true'">--minify false</BundlerExtraArgs>
 
     <!-- Command to use to create a bundle -->
-    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx --no-install react-native bundle</BundleCliCommand>
+    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx react-native bundle</BundleCliCommand>
 
     <!-- This should be the app package root, this is where the bundle command will be run from -->
     <BundleCommandWorkingDir Condition="'$(BundleCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</BundleCommandWorkingDir>
@@ -69,7 +69,7 @@
     <HermesSourceMap Condition="'$(HermesSourceMap)' == '' AND '$(UseHermes)' == 'true'">$(BaseBundleSourceMap).compiler.map</HermesSourceMap>
 
     <!-- Command to compile Hermes bytecode -->
-    <HermesCompilerCommand Condition="'$(HermesCompilerCommand)' == ''">$(HermesPackage)\tools\release\x86\hermes.exe</HermesCompilerCommand>
+    <HermesCompilerCommand Condition="'$(HermesCompilerCommand)' == ''">$(HermesPackage)\tools\native\release\x86\hermes.exe</HermesCompilerCommand>
 
     <!-- Flags passed to Hermes when compiling a bundle -->
     <HermesCompilerFlags Condition="'$(HermesCompilerFlags)' == '' AND '$(Configuration)' != 'Debug'">-O</HermesCompilerFlags>

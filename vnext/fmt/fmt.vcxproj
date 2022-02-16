@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{14b93dc8-fd93-4a6d-81cb-8bc96644501c}</ProjectGuid>
+    <Keyword>StaticLibrary</Keyword>
+    <ProjectName>fmt</ProjectName>
+    <RootNamespace>fmt</RootNamespace>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <AppContainerApplication>true</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <ItemGroup>
+    <ClCompile Include="$(FmtDir)src\format.cc" />
+    <ClCompile Include="$(FmtDir)src\os.cc" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(FmtDir)\include\fmt\core.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\format.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\chrono.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\color.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\compile.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\format-inl.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\locale.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\os.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\ostream.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\posix.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\printf.h" />
+    <ClInclude Include="$(FmtDir)\include\fmt\ranges.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <!-- Include Warnings.props after Microsoft.Cpp.props to change default WarningLevel -->
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\Warnings.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(FmtDir)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;_CRT_SECURE_NO_WARNINGS;WINAPI_PARTITION_APP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ForcedUsingFiles />
+      <DisableSpecificWarnings>%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+    </ClCompile>
+    <Link>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Target Name="DownloadFmt" BeforeTargets="PrepareForBuild">
+    <Message Importance="High" Text="Downloading fmt..." Condition="!Exists('$(FmtDir)..\.fmtzip\fmt-$(FmtVersion).zip')" />
+    <DownloadFile Condition="!Exists('$(FmtDir)..\.fmtzip\fmt-$(FmtVersion).zip')" SourceUrl="https://github.com/fmtlib/fmt/archive/refs/tags/$(FmtVersion).zip" DestinationFileName="fmt-$(FmtVersion).zip" DestinationFolder="$(FmtDir)..\.fmtzip" Retries="10" />
+  </Target>
+  <Target Name="UnzipFmt" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFmt">
+    <Message Importance="High" Text="Unzipping fmt to $([MSBuild]::NormalizePath($(FmtDir)..))." Condition="!Exists('$(FmtDir)src\format.cc')" />
+    <Unzip Condition="!Exists('$(FmtDir)')" SourceFiles="$(FmtDir)..\.fmtzip\fmt-$(FmtVersion).zip" DestinationFolder="$([MSBuild]::NormalizePath($(FmtDir)..))" OverwriteReadOnlyFiles="true" />
+  </Target>
+  <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFmt">
+    <Message Importance="High" Text="Generating $([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json." Condition="!Exists('$([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json')" />
+    <PropertyGroup>
+      <CGManifestText>{
+    "Registrations": [
+        {
+            "Component": {
+                "Type": "other",
+                "Other": {
+                  "Name": "fmt",
+                  "Version": "$(FmtVersion)",
+                  "DownloadUrl": "https://github.com/fmtlib/fmt/archive/refs/tags/$(FmtVersion).zip"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}</CGManifestText>
+    </PropertyGroup>
+    <WriteLinesToFile
+        File="$([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json"
+        Overwrite="true"
+        Lines="$(CGManifestText)" />
+  </Target>
+  <ItemGroup>
+    <TemporaryFmtPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFmtUpdate\**\*.*" />
+  </ItemGroup>
+  <Target Name="Deploy" />
+  <!-- Allow temporary patches if needed, while we wait for PRs to land in fmt -->
+  <Target Name="ApplyFmtTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFmt">
+    <Copy DestinationFiles="@(TemporaryFmtPatchFiles->'$(FmtDir)fmt\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFmtPatchFiles)" />
+  </Target>
+</Project>

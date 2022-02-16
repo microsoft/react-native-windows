@@ -6,7 +6,7 @@
  */
 
 import {PassThrough} from 'stream';
-import {MarkdownLogger, ConsoleLogger} from '../Logger';
+import {MarkdownLogger, ConsoleLogger} from '../logger';
 
 let outStream: NodeJS.WritableStream;
 let loggerOuptput: string;
@@ -14,7 +14,7 @@ let loggerOuptput: string;
 beforeEach(() => {
   loggerOuptput = '';
   outStream = new PassThrough();
-  outStream.on('data', chunk => {
+  outStream.on('data', (chunk) => {
     loggerOuptput += chunk;
   });
 });

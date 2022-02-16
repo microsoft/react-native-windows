@@ -6,7 +6,7 @@
 #include "AnimatedNode.h"
 #include "FacadeType.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class StyleAnimatedNode final : public AnimatedNode {
  public:
   StyleAnimatedNode(
@@ -22,4 +22,4 @@ class StyleAnimatedNode final : public AnimatedNode {
 
   static constexpr std::string_view s_styleName{"style"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

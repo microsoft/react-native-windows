@@ -6,9 +6,9 @@
  */
 
 import * as parser from '@babel/parser';
-import * as fs from 'fs';
-import * as path from 'path';
-import * as walkdir from 'walkdir';
+import fs from '@react-native-windows/fs';
+import path from 'path';
+import walkdir from 'walkdir';
 
 import traverse from '@babel/traverse';
 import {File} from '@babel/types';
@@ -28,7 +28,7 @@ const AUTO_REGISTER_FUNCS = ['componentTest', 'functionTest'];
 export default (rootPath: string): TestBlock[] => {
   const typeScriptFiles = enumerateTypeScriptFiles(rootPath);
 
-  return typeScriptFiles.flatMap(file => {
+  return typeScriptFiles.flatMap((file) => {
     const fileContents = fs.readFileSync(file);
 
     const ast = parser.parse(fileContents.toString(), {
@@ -73,7 +73,7 @@ function extractComponents(file: File): TestComponent[] {
 
   traverse(file, {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    CallExpression: nodePath => {
+    CallExpression: (nodePath) => {
       if (
         nodePath.node.callee.type === 'Identifier' &&
         AUTO_REGISTER_FUNCS.includes(nodePath.node.callee.name) &&

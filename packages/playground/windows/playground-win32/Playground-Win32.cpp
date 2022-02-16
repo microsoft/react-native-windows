@@ -6,20 +6,29 @@
 #include <shlobj.h>
 #include <shobjidl.h>
 #include <windows.h>
+#include <windowsx.h>
 
 #include <filesystem>
 #include <memory>
 #include <thread>
 
+#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
+#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
+
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
 
 #include <DesktopWindowBridge.h>
-#include <winrt/Microsoft.ReactNative.h>
+
+#include "AutolinkedNativeModules.g.h"
 
 #include <CppWinRTIncludes.h>
+#include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Hosting.h>
+#include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Media.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #pragma pop_macro("GetCurrentTime")
 
@@ -55,11 +64,11 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
   bool m_useWebDebugger{true};
-  bool m_liveReloadEnabled{true};
-  bool m_reuseInstance{true};
+  bool m_fastRefreshEnabled{true};
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
+  xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
@@ -97,6 +106,8 @@ struct WindowData {
           GetCurrentDirectory(MAX_PATH, workingDir);
 
           auto host = Host();
+          RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any autolinked modules
+
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
@@ -104,13 +115,18 @@ struct WindowData {
           host.InstanceSettings().BundleRootPath(
               std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().DebuggerBreakOnNextLine(m_breakOnNextLine);
-          host.InstanceSettings().UseFastRefresh(m_liveReloadEnabled);
+          host.InstanceSettings().UseFastRefresh(m_fastRefreshEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
 
           auto rootElement = m_desktopWindowXamlSource.Content().as<controls::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
               host.InstanceSettings().Properties(), rootElement.XamlRoot());
+          winrt::Microsoft::ReactNative::XamlUIService::SetAccessibleRoot(
+              host.InstanceSettings().Properties(), rootElement);
+          rootElement.SetValue(
+              winrt::Windows::UI::Xaml::Automation::AutomationProperties::LandmarkTypeProperty(),
+              winrt::box_value(80002));
 
 #ifdef USE_WINUI3
           const auto islandWindow = (uint64_t)GetXamlIslandHwnd(m_desktopWindowXamlSource);
@@ -146,9 +162,11 @@ struct WindowData {
         PostQuitMessage(0);
         break;
       case IDM_REFRESH:
+        Host().ReloadInstance();
         break;
       case IDM_SETTINGS:
         DialogBoxParam(s_instance, MAKEINTRESOURCE(IDD_SETTINGSBOX), hwnd, &Settings, reinterpret_cast<INT_PTR>(this));
+        break;
     }
 
     return 0;
@@ -249,8 +267,7 @@ struct WindowData {
         auto boolToCheck = [](bool b) { return b ? BST_CHECKED : BST_UNCHECKED; };
         auto self = reinterpret_cast<WindowData *>(lparam);
         CheckDlgButton(hwnd, IDC_WEBDEBUGGER, boolToCheck(self->m_useWebDebugger));
-        CheckDlgButton(hwnd, IDC_LIVERELOAD, boolToCheck(self->m_liveReloadEnabled));
-        CheckDlgButton(hwnd, IDC_REUSEINSTANCE, boolToCheck(self->m_reuseInstance));
+        CheckDlgButton(hwnd, IDC_FASTREFRESH, boolToCheck(self->m_fastRefreshEnabled));
         CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->m_useDirectDebugger));
         CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->m_breakOnNextLine));
 
@@ -264,6 +281,12 @@ struct WindowData {
         SendMessageW(cmbEngines, (UINT)CB_ADDSTRING, (WPARAM)0, (LPARAM)TEXT("V8"));
         // SendMessageW(cmbEngines, CB_SETCURSEL, (WPARAM) static_cast<int32_t>(self->m_jsEngine), (LPARAM)0);
 
+        auto cmbTheme = GetDlgItem(hwnd, IDC_THEME);
+        SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Default");
+        SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Light");
+        SendMessageW(cmbTheme, CB_ADDSTRING, 0, (LPARAM)L"Dark");
+        ComboBox_SetCurSel(cmbTheme, static_cast<int>(self->m_theme));
+
         return TRUE;
       }
       case WM_COMMAND: {
@@ -271,10 +294,14 @@ struct WindowData {
           case IDOK: {
             auto self = GetFromWindow(GetParent(hwnd));
             self->m_useWebDebugger = IsDlgButtonChecked(hwnd, IDC_WEBDEBUGGER) == BST_CHECKED;
-            self->m_liveReloadEnabled = IsDlgButtonChecked(hwnd, IDC_LIVERELOAD) == BST_CHECKED;
-            self->m_reuseInstance = IsDlgButtonChecked(hwnd, IDC_REUSEINSTANCE) == BST_CHECKED;
+            self->m_fastRefreshEnabled = IsDlgButtonChecked(hwnd, IDC_FASTREFRESH) == BST_CHECKED;
             self->m_useDirectDebugger = IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED;
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
+
+            auto themeComboBox = GetDlgItem(hwnd, IDC_THEME);
+            self->m_theme = static_cast<xaml::ElementTheme>(ComboBox_GetCurSel(themeComboBox));
+            auto panel = self->m_desktopWindowXamlSource.Content().as<controls::Panel>();
+            panel.RequestedTheme(self->m_theme);
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
@@ -294,7 +321,7 @@ struct WindowData {
 
             // auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
             // int itemIndex = (int)SendMessageW(cmbEngines, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
-            // self->m_jsEngine = static_cast<react::uwp::JSIEngine>(itemIndex);
+            // self->m_jsEngine = static_cast<Microsoft::ReactNative::JSIEngine>(itemIndex);
           }
             [[fallthrough]];
           case IDCANCEL:
@@ -360,11 +387,27 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
+  auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
+
+  auto xapp = winrt::Microsoft::Toolkit::Win32::UI::XamlHost::XamlApplication({winuiIXMP});
+
+  winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();
+
+  xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
+
   hosting::DesktopWindowXamlSource desktopXamlSource;
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
   windowData->m_useWebDebugger = useWebDebugger;
 
-  auto xamlContent = controls::Grid();
+  // We have to use a XAML string here to access the ThemeResource.
+  // XAML Islands requires us to set the background color to handle theme changes.
+  const winrt::hstring xamlString =
+      LR"(
+  <Grid
+    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
+    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
+    Background='{ThemeResource ApplicationPageBackgroundThemeBrush}' />)";
+  auto xamlContent = winrt::unbox_value<controls::Grid>(xaml::Markup::XamlReader::Load(xamlString));
   desktopXamlSource.Content(xamlContent);
 
   HWND hwnd = CreateWindow(

@@ -8,6 +8,13 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Common.targets" />
+
+  <ItemGroup>
+    <!-- WinUI package name and version are set by WinUI.props -->
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+  </ItemGroup>
+
   <ImportGroup Condition="'$(UseExperimentalNuget)' == 'false'" Label="Shared">
     <Import Project="$(ReactNativeWindowsDir)\Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems" Label="Shared" />
   </ImportGroup>

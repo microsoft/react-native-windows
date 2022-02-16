@@ -38,12 +38,7 @@ FrameworkElement CustomUserControlViewManagerCpp::CreateView() noexcept {
       [this](
           winrt::Windows::UI::Xaml::DependencyObject obj, winrt::Windows::UI::Xaml::DependencyProperty prop) noexcept {
         if (auto c = obj.try_as<winrt::SampleLibraryCpp::CustomUserControlCpp>()) {
-          ReactContext().DispatchEvent(
-              c,
-              L"topLabelChanged",
-              [this, c](winrt::Microsoft::ReactNative::IJSValueWriter const &eventDataWriter) noexcept {
-                eventDataWriter.WriteString(c.Label());
-              });
+          XamlUIService::FromContext(ReactContext()).DispatchEvent(c, L"topLabelChanged", MakeJSValueWriter(c.Label()));
         }
       });
 

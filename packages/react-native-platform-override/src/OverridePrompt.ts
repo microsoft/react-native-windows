@@ -6,8 +6,8 @@
  */
 
 import * as FileSearch from './FileSearch';
-import * as inquirer from 'inquirer';
-import * as path from 'path';
+import inquirer from 'inquirer';
+import path from 'path';
 
 import Override from './Override';
 import OverrideFactory from './OverrideFactory';
@@ -59,9 +59,7 @@ export async function overrideFromDetails(
   }
 }
 
-export async function promptForOverrideDetails(): Promise<
-  OverridePromptAnswers
-> {
+export async function promptForOverrideDetails(): Promise<OverridePromptAnswers> {
   return inquirer.prompt([
     {
       type: 'list',
@@ -69,8 +67,7 @@ export async function promptForOverrideDetails(): Promise<
       message: 'Override type:',
       choices: [
         {
-          name:
-            'Derived from upstream            (E.g. a Windows implementation of an existing component)',
+          name: 'Derived from upstream            (E.g. a Windows implementation of an existing component)',
           value: 'derived',
           short: 'Derived',
         },
@@ -80,8 +77,7 @@ export async function promptForOverrideDetails(): Promise<
           short: 'Patch',
         },
         {
-          name:
-            'Independent platform logic       (E.g. Windows-specific modules)',
+          name: 'Independent platform logic       (E.g. Windows-specific modules)',
           value: 'platform',
           short: 'Platform',
         },
@@ -98,14 +94,14 @@ export async function promptForOverrideDetails(): Promise<
       ],
     },
     {
-      when: res => res.type === 'derived',
+      when: (res) => res.type === 'derived',
       type: 'confirm',
       name: 'codeCopied',
       default: true,
       message: 'Does the derived file copy code from upstream?',
     },
     {
-      when: res =>
+      when: (res) =>
         (res.type === 'derived' && res.codeCopied) ||
         ['copy', 'directoryCopy', 'patch'].includes(res.type),
       type: 'input',
@@ -116,13 +112,13 @@ export async function promptForOverrideDetails(): Promise<
       message: 'Issue number tracking removal:',
     },
     {
-      when: res => ['copy', 'patch', 'derived'].includes(res.type),
+      when: (res) => ['copy', 'patch', 'derived'].includes(res.type),
       type: 'input',
       name: 'baseFile',
       message: 'What file is this override based off of?',
     },
     {
-      when: res => res.type === 'directoryCopy',
+      when: (res) => res.type === 'directoryCopy',
       type: 'input',
       name: 'baseDirectory',
       message: 'What directory are you copying from?',

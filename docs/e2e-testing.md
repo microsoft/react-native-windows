@@ -35,16 +35,15 @@ module.exports = {
 
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest`
 
-or
-
-> C:\repo\react-native-windows\packages\e2e-test-app\test> `yarn e2etest`
-
 
 **Running a specific test**
 
-> C:\repo\react-native-windows\packages\e2e-test-app\test> `yarn e2etest .\visitAllPages.test.ts`
+⚠ Only the test filename (without the rest of the path) should be included.
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest visitAllPages.test.ts`
 
-⚠ This command will only work from the `test` directory ([#7272](https://github.com/microsoft/react-native-windows/issues/7272))
+**Break on app start**
+
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest:debug visitAllPages.test.ts`
 
 ## Debugging E2E Tests in CI
 ### Increasing verbosity
@@ -70,20 +69,12 @@ If you have access to the AzureDevOps pipeline you'll be able to see test failur
 Here are the artifacts that are produced during the build:
 - error screenshots of the app when a test failed
 - test run XML - this contains some information like the name of the wdio test that failed and the JS stack
-- tree dump outputs - you can compare these to the masters to see if there is a the difference responsible for the test failing. 
-- crash dumps of the e2e test app (ReactUWPTestApp)
+- tree dump outputs - you can compare these to the output of the main branch to see if there is a the difference responsible for the test failing. 
+- crash dumps of the e2e test app (RNTesterApp)
 
 You can access these by going to the AzureDevOps run for your PR and clicking on the artifacts link:
 
 ![Artifacts](img/e2e-artifacts.png)
-
-Then you can access crash dumps under the `ReactUWPTestAppTreeDump\CrashDumps` folder.
-![CrashDumps](img/e2e-crashdumps.png)
-
-You can get the symbols from the `appxsym` (just download it and rename it to `.zip`):
-![SymbolsPackage](img/e2e-syms.png)
-
- The `ReactUWPTestAppTreeDump` folder will also contain any tree dump outputs that were produced that did not match the masters.
 
 ## Architecture
 
@@ -101,7 +92,7 @@ test application.
 ### Jest
 
 Jest is the test runner used for end-to-end testing, including assertsion libraries, test selection, etc. WebDriverIO setup is
-provided by a custom environment [`jest-environment-winappdriver`](../packages/jest-environment-winappdriver).
+provided by a custom environment [`@react-native-windows/automation`](../packages/@react-native-windows/automation).
 
 ## Authoring Tests
 
@@ -121,42 +112,18 @@ describe('FancyWidget', () => {
 
   test('FancyWidget is populated with placeholder', async () => {
     // Query for an element with accessibilityId of "foo" (see "locators" below)
-    const field = await $('~foo');
+    const field = await app.findElementByTestID('foo');
     expect(await field.getText()).toBe('placeholder');
   });
 
 });
 ```
 
-### Locators to find UI Element
-
-No matter what JavaScript framework you choose for native app testing, you have to use one of the locators which is described in [mobile JSON wire protocol](https://github.com/SeleniumHQ/mobile-spec/blob/master/spec-draft.md#locator-strategies). Since locators are implemented significant different on iOS, Android and Windows, as below I only talk about the locators for Windows.
-
-[Locators WinAppDriver supports](https://github.com/microsoft/WinAppDriver/blob/master/Docs/AuthoringTestScripts.md#supported-locators-to-find-ui-elements)
-
- WinAppDriver provides rich API to help locate the UI element. If [testID](https://facebook.github.io/react-native/docs/picker-item#testid) is specified in React Native app for Windows, the locator strategy should choose `accessibility id`.
-
-| **Client API** | **Locator Strategy** | **Matched Attribute in inspect.exe** | **Example** |
-| --- | --- | --- | --- |
-| FindElementByAccessibilityId | accessibility id | AutomationId | AppNameTitle |
-| FindElementByClassName | class name | ClassName | TextBlock |
-| FindElementById | Id | RuntimeId (decimal) | 42.333896.3.1 |
-| FindElementByName | Name | Name | Calculator |
-| FindElementByTagName | tag name | LocalizedControlType (upper camel case) | Text |
-| FindElementByXPath | Xpath | Any | //Button[0] |
-
-[Selectors WebDriverIO supports](https://webdriver.io/docs/selectors.html#mobile-selectors)
-
-| **Client API by Example** | **Locator Strategy** |
-| --- | --- |
-| $(&#39;~AppNameTitle&#39;) | accessibility id |
-| $(&#39;TextBlock&#39;) | class name |
-
 ### Adding a custom RNTester page
 
 Before adding a custom page, consider whether the change can be made to an existing RNTester page and upstreamed. If needed, new examples may be integrated into the Windows fork of RNTester, [`@react-native-windows/tester`](../packages/@react-native-windows/tester).
 
-Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://app.pluralsight.com/library/courses/using-react-hooks) to learn more about Hooks)
+Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://www.pluralsight.com/courses/using-react-hooks) to learn more about Hooks)
 
 ```js
 // ControlStyleTestPage.tsx
@@ -188,7 +155,7 @@ of testing againt the react tree, e2e-test-app compares the fully rendered XAML 
 correctness of ViewManagers.
 
 ```ts
-import {dumpVisualTree} from './framework';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 
 test('Example test', async () => {
   const dump = await dumpVisualTree('test-id-here');

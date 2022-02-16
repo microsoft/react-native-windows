@@ -4,8 +4,8 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from '@react-native-windows/fs';
+import path from 'path';
 import {execSync} from 'child_process';
 import {newSpinner, commandWithProgress, newWarn} from './commandWithProgress';
 import {CodedError} from '@react-native-windows/telemetry';
@@ -69,7 +69,7 @@ export default class WinAppDeployTool {
       return devices[0];
     }
 
-    const candidateList = devices.filter(device => device.guid === target);
+    const candidateList = devices.filter((device) => device.guid === target);
 
     if (candidateList.length > 0) {
       return candidateList[0];
@@ -87,7 +87,7 @@ export default class WinAppDeployTool {
 
     const result = execSync(`"${this.path}" devices`).toString();
     const lines = result.split('\r\n');
-    const matchedLines = lines.filter(line => LINE_TEST.test(line));
+    const matchedLines = lines.filter((line) => LINE_TEST.test(line));
 
     const devices = matchedLines.map((line, arrayIndex) => {
       const match = line.match(LINE_TEST);

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <UsingTask
+    TaskName="GetMemoryClass"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+
+    <ParameterGroup>
+      <MemoryClass ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    
+    <Task>
+      <Code Type="Class" Language="cs">
+        <![CDATA[
+          using System;
+          using System.Runtime.InteropServices;
+
+          public class GetMemoryClass : Microsoft.Build.Utilities.Task {
+            [DllImport("kernel32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            static extern bool GetPhysicallyInstalledSystemMemory(out long TotalMemoryInKilobytes);
+
+            public virtual string MemoryClass { get; set; }
+            
+            public override bool Execute() {
+              long totalMemoryKB;
+              GetPhysicallyInstalledSystemMemory(out totalMemoryKB);
+              var totalMemoryGB = ((Double)totalMemoryKB) / 1024 / 1024;
+              var memoryGbPerThread = totalMemoryGB / Environment.ProcessorCount;
+
+              if (memoryGbPerThread > 7.0) {
+                MemoryClass = "High";
+              } else {
+                MemoryClass = "Low";
+              }
+
+              return true;
+            }
+          }
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+  
+  <Target 
+    Name="ReactNativeWindowsDetermineFastBuild" 
+    BeforeTargets="ClCompile">
+
+    <GetMemoryClass>
+      <Output PropertyName="_MemoryClass" TaskParameter="MemoryClass" />
+    </GetMemoryClass>
+
+    <Message Text="Memory class: $(_MemoryClass)" />
+
+    <!-- Add RNW_FASTBUILD as preprocessor definition to existing ClCompile items -->
+    <ItemGroup Condition="'$(RNW_FASTBUILD)' == 'true' or ('$(RNW_FASTBUILD)' == '' and '$(_MemoryClass)' == 'High')">
+      <ClCompile>
+         <PreprocessorDefinitions>RNW_FASTBUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      </ClCompile>
+    </ItemGroup>
+  </Target>
+
+</Project>

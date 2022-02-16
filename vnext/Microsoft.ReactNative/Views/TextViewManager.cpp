@@ -4,18 +4,27 @@
 #include "pch.h"
 
 #include "TextViewManager.h"
+#include "TouchEventHandler.h"
+#include "Utils/ShadowNodeTypeUtils.h"
+#include "Utils/XamlIslandUtils.h"
 
-#include <Views/RawTextViewManager.h>
 #include <Views/ShadowNodeBase.h>
+#include <Views/Text/TextVisitors.h>
 #include <Views/VirtualTextViewManager.h>
 
+#include <UI.Input.h>
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Input.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/TransformableText.h>
 #include <Utils/ValueUtils.h>
+
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Input.Experimental.h>
+#endif
 
 namespace winrt {
 using namespace xaml::Documents;
@@ -32,8 +41,12 @@ class TextShadowNode final : public ShadowNodeBase {
  private:
   ShadowNode *m_firstChildNode;
 
-  std::optional<winrt::Windows::UI::Color> m_ColorValue = std::nullopt;
-  int32_t m_prevCursorEnd = 0;
+  bool m_hasDescendantTextHighlighter{false};
+  bool m_hasDescendantPressable{false};
+  std::optional<winrt::Windows::UI::Color> m_backgroundColor{};
+  std::optional<winrt::Windows::UI::Color> m_foregroundColor{};
+  std::unique_ptr<TouchEventHandler> m_touchEventHandler = nullptr;
+  winrt::event_revoker<xaml::Controls::ITextBlock> m_selectionChangedRevoker;
 
  public:
   TextShadowNode() {
@@ -45,22 +58,22 @@ class TextShadowNode final : public ShadowNodeBase {
 
   void AddView(ShadowNode &child, int64_t index) override {
     auto &childNode = static_cast<ShadowNodeBase &>(child);
-    VirtualTextShadowNode::ApplyTextTransform(
-        childNode, textTransform, /* forceUpdate = */ false, /* isRoot = */ false);
+    ApplyTextTransformToChild(&child);
 
+    if (IsVirtualTextShadowNode(&childNode)) {
+      auto &textChildNode = static_cast<VirtualTextShadowNode &>(childNode);
+      m_hasDescendantTextHighlighter |= textChildNode.hasDescendantTextHighlighter;
+      m_hasDescendantPressable |= textChildNode.hasDescendantPressable;
+    }
+
+    auto addInline = true;
     if (index == 0) {
       auto run = childNode.GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
         auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
         textBlock.Text(run.Text());
-        if (m_ColorValue) {
-          AddHighlighter(m_ColorValue.value(), textBlock.Text().size());
-        }
-
-        m_prevCursorEnd += textBlock.Text().size();
-
-        return;
+        addInline = false;
       }
     } else if (index == 1 && m_firstChildNode != nullptr) {
       auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
@@ -69,63 +82,103 @@ class TextShadowNode final : public ShadowNodeBase {
       m_firstChildNode = nullptr;
     }
 
-    Super::AddView(child, index);
-
-    if (auto run = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Run>()) {
-      if (m_ColorValue) {
-        AddHighlighter(m_ColorValue.value(), run.Text().size());
-      }
-
-      m_prevCursorEnd += run.Text().size();
-    } else if (auto span = static_cast<ShadowNodeBase &>(child).GetView().try_as<winrt::Span>()) {
-      AddNestedTextHighlighter(m_ColorValue, span, static_cast<VirtualTextShadowNode &>(child).m_highlightData);
-    }
-  }
-
-  void AddNestedTextHighlighter(
-      const std::optional<winrt::Windows::UI::Color> &parentColor,
-      winrt::Span &span,
-      VirtualTextShadowNode::HighlightData highData) {
-    if (!highData.color && parentColor) {
-      highData.color = parentColor;
+    if (addInline) {
+      Super::AddView(child, index);
     }
 
-    for (const auto &el : span.Inlines()) {
-      if (auto run = el.try_as<winrt::Run>()) {
-        if (highData.color) {
-          AddHighlighter(highData.color.value(), run.Text().size());
-        }
-
-        m_prevCursorEnd += run.Text().size();
-      } else if (auto spanChild = el.try_as<winrt::Span>()) {
-        AddNestedTextHighlighter(highData.color, spanChild, highData.data[highData.spanIdx++]);
-      }
-    }
-  }
-
-  void AddHighlighter(const winrt::Windows::UI::Color &color, size_t runSize) {
-    auto newHigh = winrt::TextHighlighter{};
-    newHigh.Background(react::uwp::SolidBrushFromColor(color));
-
-    winrt::TextRange newRange{m_prevCursorEnd, static_cast<int32_t>(runSize)};
-    newHigh.Ranges().Append(newRange);
-
-    this->GetView().as<xaml::Controls::TextBlock>().TextHighlighters().Append(newHigh);
+    RecalculateTextHighlighters();
   }
 
   void removeAllChildren() override {
-    m_firstChildNode = nullptr;
-    Super::removeAllChildren();
+    if (m_firstChildNode) {
+      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
+      m_firstChildNode = nullptr;
+    } else {
+      Super::removeAllChildren();
+    }
+    RecalculateTextHighlighters();
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
-    if (indexToRemove == 0) {
+    if (indexToRemove == 0 && m_firstChildNode) {
+      auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+      textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
       m_firstChildNode = nullptr;
+    } else {
+      Super::RemoveChildAt(indexToRemove);
     }
-    Super::RemoveChildAt(indexToRemove);
+    RecalculateTextHighlighters();
+  }
+
+  void RecalculateTextHighlighters() {
+    const auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
+    textBlock.TextHighlighters().Clear();
+
+    // Since TextShadowNode is not public, we lift some of the recursive
+    // algorithm into the shadow node implementation to detect when no
+    // descendants have background colors and we can skip recursion.
+    if (m_hasDescendantTextHighlighter) {
+      const auto highlighters = GetNestedTextHighlighters(this, m_foregroundColor, m_backgroundColor);
+      if (highlighters.size() == 0) {
+        m_hasDescendantTextHighlighter = false;
+      } else {
+        // We must add the highlighters in reverse order, as highlighters
+        // "deeper" in the text tree should render at the top.
+        auto iter = highlighters.rbegin();
+        while (iter != highlighters.rend()) {
+          textBlock.TextHighlighters().Append(*iter);
+          ++iter;
+        }
+      }
+    }
+
+    if (m_backgroundColor) {
+      winrt::TextHighlighter highlighter{};
+      highlighter.Ranges().Append({0, static_cast<int32_t>(textBlock.Text().size())});
+      highlighter.Background(SolidBrushFromColor(m_backgroundColor.value()));
+      if (m_foregroundColor) {
+        highlighter.Foreground(SolidBrushFromColor(m_foregroundColor.value()));
+      }
+      textBlock.TextHighlighters().InsertAt(0, highlighter);
+    }
+  }
+
+  void ToggleTouchEvents(XamlView xamlView, bool selectable) {
+    if (selectable) {
+      if (m_touchEventHandler == nullptr) {
+        m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext(), false);
+      }
+
+      m_selectionChangedRevoker = xamlView.as<xaml::Controls::TextBlock>().SelectionChanged(
+          winrt::auto_revoke, [selectionChanged = this->selectionChanged](const auto &sender, auto &&) {
+            const auto textBlock = sender.as<xaml::Controls::TextBlock>();
+            *selectionChanged =
+                *selectionChanged || textBlock.SelectionStart().Offset() != textBlock.SelectionEnd().Offset();
+          });
+
+      m_touchEventHandler->AddTouchHandlers(xamlView, GetRootView(), true);
+    } else {
+      if (m_touchEventHandler != nullptr) {
+        m_touchEventHandler->RemoveTouchHandlers();
+        m_selectionChangedRevoker.revoke();
+      }
+    }
+  }
+
+  XamlView GetRootView() {
+    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+      auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(m_rootTag);
+      if (!shadowNode)
+        return nullptr;
+
+      return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
+    }
+    return nullptr;
   }
 
   TextTransform textTransform{TextTransform::Undefined};
+  std::shared_ptr<bool> selectionChanged = std::make_shared<bool>(false);
 };
 
 TextViewManager::TextViewManager(const Mso::React::IReactContext &context) : Super(context) {}
@@ -144,6 +197,17 @@ XamlView TextViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft
   return textBlock;
 }
 
+void TextViewManager::UpdateProperties(
+    ShadowNodeBase *nodeToUpdate,
+    winrt::Microsoft::ReactNative::JSValueObject &props) {
+  // This could be optimized further, but rather than paying a penalty to mark
+  // the node dirty for each relevant property in UpdateProperty (which should
+  // be reasonably cheap given it just does an O(1) lookup of the Yoga node
+  // for the tag, for now this just marks the node dirty for any prop update.
+  MarkDirty(nodeToUpdate->m_tag);
+  Super::UpdateProperties(nodeToUpdate, props);
+}
+
 bool TextViewManager::UpdateProperty(
     ShadowNodeBase *nodeToUpdate,
     const std::string &propertyName,
@@ -153,12 +217,16 @@ bool TextViewManager::UpdateProperty(
     return true;
 
   if (TryUpdateForeground(textBlock, propertyName, propertyValue)) {
+    const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
+    if (IsValidOptionalColorValue(propertyValue)) {
+      node->m_foregroundColor = OptionalColorFrom(propertyValue);
+      node->RecalculateTextHighlighters();
+    }
   } else if (TryUpdateFontProperties(textBlock, propertyName, propertyValue)) {
   } else if (propertyName == "textTransform") {
     auto textNode = static_cast<TextShadowNode *>(nodeToUpdate);
     textNode->textTransform = TransformableText::GetTextTransform(propertyValue);
-    VirtualTextShadowNode::ApplyTextTransform(
-        *textNode, textNode->textTransform, /* forceUpdate = */ true, /* isRoot = */ true);
+    UpdateTextTransformForChildren(nodeToUpdate);
   } else if (TryUpdatePadding(nodeToUpdate, textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextAlignment(textBlock, propertyName, propertyValue)) {
   } else if (TryUpdateTextTrimming(textBlock, propertyName, propertyValue)) {
@@ -187,15 +255,27 @@ bool TextViewManager::UpdateProperty(
     }
   } else if (propertyName == "lineHeight") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)
+        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
       textBlock.LineHeight(propertyValue.AsInt32());
-    else if (propertyValue.IsNull())
+      textBlock.LineStackingStrategy(xaml::LineStackingStrategy::BlockLineHeight);
+    } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::LineHeightProperty());
+      textBlock.ClearValue(xaml::Controls::TextBlock::LineStackingStrategyProperty());
+    }
   } else if (propertyName == "selectable") {
-    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
-      textBlock.IsTextSelectionEnabled(propertyValue.AsBoolean());
-    else if (propertyValue.IsNull())
+    const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+      const auto selectable = propertyValue.AsBoolean();
+      textBlock.IsTextSelectionEnabled(selectable);
+      node->ToggleTouchEvents(textBlock, selectable);
+      if (selectable) {
+        EnsureUniqueTextFlyoutForXamlIsland(textBlock);
+      }
+    } else if (propertyValue.IsNull()) {
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextSelectionEnabledProperty());
+      node->ToggleTouchEvents(textBlock, false);
+      ClearUniqueTextFlyoutForXamlIsland(textBlock);
+    }
   } else if (propertyName == "allowFontScaling") {
     if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
       textBlock.IsTextScaleFactorEnabled(propertyValue.AsBoolean());
@@ -203,17 +283,37 @@ bool TextViewManager::UpdateProperty(
       textBlock.ClearValue(xaml::Controls::TextBlock::IsTextScaleFactorEnabledProperty());
     }
   } else if (propertyName == "selectionColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      textBlock.SelectionHighlightColor(react::uwp::SolidColorBrushFrom(propertyValue));
+    if (IsValidColorValue(propertyValue)) {
+      textBlock.SelectionHighlightColor(SolidColorBrushFrom(propertyValue));
     } else
       textBlock.ClearValue(xaml::Controls::TextBlock::SelectionHighlightColorProperty());
   } else if (propertyName == "backgroundColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      static_cast<TextShadowNode *>(nodeToUpdate)->m_ColorValue = react::uwp::ColorFrom(propertyValue);
+    const auto node = static_cast<TextShadowNode *>(nodeToUpdate);
+    if (IsValidOptionalColorValue(propertyValue)) {
+      node->m_backgroundColor = OptionalColorFrom(propertyValue);
+      node->RecalculateTextHighlighters();
+    }
+  } else if (propertyName == "accessibilityRole") {
+    if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+      const std::string &role = propertyValue.AsString();
+      auto value = asHstring(propertyValue);
+      auto boxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
+
+      textBlock.SetValue(winrt::AutomationProperties::LocalizedControlTypeProperty(), boxedValue);
+      if (role == "header") {
+        xaml::Automation::AutomationProperties::SetHeadingLevel(
+            textBlock, winrt::Peers::AutomationHeadingLevel::Level2);
+      } else {
+        textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
+      }
+    } else if (propertyValue.IsNull()) {
+      textBlock.ClearValue(winrt::AutomationProperties::LocalizedControlTypeProperty());
+      textBlock.ClearValue(winrt::AutomationProperties::HeadingLevelProperty());
     }
   } else {
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
+
   return true;
 }
 
@@ -247,23 +347,54 @@ YGMeasureFunc TextViewManager::GetYogaCustomMeasureFunc() const {
   return DefaultYogaSelfMeasureFunc;
 }
 
-void TextViewManager::OnDescendantTextPropertyChanged(ShadowNodeBase *node) {
-  if (auto element = node->GetView().try_as<xaml::Controls::TextBlock>()) {
-    // If name is set, it's controlled by accessibilityLabel, and it's already
-    // handled in FrameworkElementViewManager. Here it only handles when name is
-    // not set.
-    if (xaml::Automation::AutomationProperties::GetLiveSetting(element) != winrt::AutomationLiveSetting::Off &&
-        xaml::Automation::AutomationProperties::GetName(element).empty() &&
-        xaml::Automation::AutomationProperties::GetAccessibilityView(element) != winrt::Peers::AccessibilityView::Raw) {
-      if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-        peer.RaiseAutomationEvent(winrt::AutomationEvents::LiveRegionChanged);
-      }
+void TextViewManager::OnPointerEvent(
+    ShadowNodeBase *node,
+    winrt::Microsoft::ReactNative::ReactPointerEventArgs const &args) {
+  const auto textNode = static_cast<TextShadowNode *>(node);
+  const auto textBlock = node->GetView().as<xaml::Controls::TextBlock>();
+  if (textNode->m_hasDescendantPressable && args.Target() == node->GetView()) {
+    // Set the target to null temporarily
+    args.Target(nullptr);
+
+    // Get the pointer point and hit test
+    const auto point = args.Args().GetCurrentPoint(textBlock).RawPosition();
+    HitTest(node, args, point);
+
+    // Set the target back to the current view if hit test failed
+    if (!args.Target()) {
+      args.Target(node->GetView());
     }
+  }
+
+  if (args.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::CaptureLost) {
+    if (!*textNode->selectionChanged) {
+      args.Kind(winrt::Microsoft::ReactNative::PointerEventKind::End);
+    }
+    *textNode->selectionChanged = false;
+  }
+
+  Super::OnPointerEvent(node, args);
+}
+
+/*static*/ void TextViewManager::UpdateTextHighlighters(ShadowNodeBase *node, bool highlightAdded) {
+  if (IsTextShadowNode(node)) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    if (highlightAdded) {
+      textNode->m_hasDescendantTextHighlighter = true;
+    }
+    textNode->RecalculateTextHighlighters();
   }
 }
 
-TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
-  if (!std::wcscmp(node->GetViewManager()->GetName(), GetName())) {
+/*static*/ void TextViewManager::SetDescendantPressable(ShadowNodeBase *node) {
+  if (IsTextShadowNode(node)) {
+    const auto textNode = static_cast<TextShadowNode *>(node);
+    textNode->m_hasDescendantPressable = true;
+  }
+}
+
+/*static*/ TextTransform TextViewManager::GetTextTransformValue(ShadowNodeBase *node) {
+  if (IsTextShadowNode(node)) {
     return static_cast<TextShadowNode *>(node)->textTransform;
   }
 

@@ -1,18 +1,12 @@
 {
+  "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
+    "types": ["react-native"],
     "baseUrl": ".",
-    "target": "es6",
-    "module": "commonjs",
-    "jsx": "react",
     "outDir": ".",
-    "declaration": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
-    "experimentalDecorators": true,
-    "noEmitOnError": true,
-    "skipLibCheck": true,
-    "moduleResolution": "node",
-    "noUnusedLocals": true
+
+    // Not clean
+    "strict": false,
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "lib"]

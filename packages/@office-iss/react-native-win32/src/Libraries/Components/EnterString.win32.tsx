@@ -4,7 +4,7 @@
 'use strict';
 
 import { requireNativeComponent, NativeSyntheticEvent } from 'react-native';
-import * as React from 'react';
+import React from 'react'
 import PropTypes = require('prop-types');
 
 export interface IEnterStringProps /*extends React.ClassAttributes<React.View>*/ {

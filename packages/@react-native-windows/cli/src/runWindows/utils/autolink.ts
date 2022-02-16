@@ -9,18 +9,19 @@
 // guarantee correct types
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as chalk from 'chalk';
+import fs from '@react-native-windows/fs';
+import path from 'path';
+import chalk from 'chalk';
 import {performance} from 'perf_hooks';
 
-import {newSpinner} from './commandWithProgress';
+import {newSpinner, setExitProcessWithError} from './commandWithProgress';
 import * as vstools from './vstools';
 import * as generatorCommon from '../../generator-common';
 import * as configUtils from '../../config/configUtils';
 
 import {
   Command,
+  CommandOption,
   Config,
   Dependency,
   ProjectConfig,
@@ -30,8 +31,13 @@ import {
   ProjectDependency,
 } from '../../config/dependencyConfig';
 import {Project, WindowsProjectConfig} from '../../config/projectConfig';
-import {CodedError} from '@react-native-windows/telemetry';
-import {XMLSerializer} from 'xmldom';
+import {Telemetry, CodedError} from '@react-native-windows/telemetry';
+import {
+  getDefaultOptions,
+  startTelemetrySession,
+  endTelemetrySession,
+} from './telemetryHelpers';
+import {XMLSerializer} from '@xmldom/xmldom';
 import {Ora} from 'ora';
 const formatter = require('xml-formatter');
 
@@ -208,7 +214,7 @@ export class AutolinkWindows {
       'project',
     ];
 
-    alwaysRequired.forEach(item => {
+    alwaysRequired.forEach((item) => {
       if (
         !(item in this.windowsAppConfig) ||
         this.windowsAppConfig[item] === null
@@ -251,7 +257,7 @@ export class AutolinkWindows {
       'projectGuid',
     ];
 
-    projectRequired.forEach(item => {
+    projectRequired.forEach((item) => {
       if (
         !(item in windowsAppProjectConfig) ||
         windowsAppProjectConfig[item] === null
@@ -312,15 +318,15 @@ export class AutolinkWindows {
     const windowsDependencies = this.getWindowsDependencies();
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach(project => {
+      windowsDependencies[dependencyName].projects.forEach((project) => {
         if (project.directDependency) {
           cppIncludes += `\n\n// Includes from ${dependencyName}`;
-          project.cppHeaders.forEach(header => {
+          project.cppHeaders.forEach((header) => {
             cppIncludes += `\n#include <${header}>`;
           });
 
           cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
-          project.cppPackageProviders.forEach(packageProvider => {
+          project.cppPackageProviders.forEach((packageProvider) => {
             cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
           });
         }
@@ -340,10 +346,8 @@ export class AutolinkWindows {
     projectLang: string,
     projectDir: string,
   ) {
-    const {
-      csUsingNamespaces,
-      csReactPackageProviders,
-    } = this.getCsReplacements();
+    const {csUsingNamespaces, csReactPackageProviders} =
+      this.getCsReplacements();
 
     const csFileName = 'AutolinkedNativeModules.g.cs';
 
@@ -376,15 +380,15 @@ export class AutolinkWindows {
 
     const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach(project => {
+      windowsDependencies[dependencyName].projects.forEach((project) => {
         if (project.directDependency) {
           csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
-          project.csNamespaces.forEach(namespace => {
+          project.csNamespaces.forEach((namespace) => {
             csUsingNamespaces += `\nusing ${namespace};`;
           });
 
           csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
-          project.csPackageProviders.forEach(packageProvider => {
+          project.csPackageProviders.forEach((packageProvider) => {
             csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
           });
         }
@@ -394,16 +398,16 @@ export class AutolinkWindows {
   }
 
   /** Cache of dependencies */
-  private readonly windowsDependencies: Record<
-    string,
-    WindowsDependencyConfig
-  > = {};
+  private windowsDependencies:
+    | Record<string, WindowsDependencyConfig>
+    | undefined;
 
   private getWindowsDependencies() {
-    if (Object.keys(this.windowsDependencies).length === 0) {
+    if (!this.windowsDependencies) {
+      this.windowsDependencies = {};
       for (const dependencyName of Object.keys(this.dependenciesConfig)) {
-        const windowsDependency: WindowsDependencyConfig | undefined = this
-          .dependenciesConfig[dependencyName].platforms.windows;
+        const windowsDependency: WindowsDependencyConfig | undefined =
+          this.dependenciesConfig[dependencyName].platforms.windows;
 
         if (windowsDependency) {
           verboseMessage(
@@ -425,12 +429,22 @@ export class AutolinkWindows {
             'projects' in windowsDependency &&
             Array.isArray(windowsDependency.projects)
           ) {
-            windowsDependency.projects.forEach(project => {
+            if (
+              windowsDependency.projects.length === 0 &&
+              dependencyName.includes('react-native')
+            ) {
+              // the dependency is probably a react native module, but we didn't find a module project
+              throw new CodedError(
+                'Autolinking',
+                `Found a Windows solution for ${dependencyName} but no React Native for Windows native module projects`,
+              );
+            }
+            windowsDependency.projects.forEach((project) => {
               const itemsToCheck: Array<keyof ProjectDependency> = [
                 'projectFile',
                 'directDependency',
               ];
-              itemsToCheck.forEach(item => {
+              itemsToCheck.forEach((item) => {
                 dependencyIsValid = !!(
                   dependencyIsValid &&
                   item in project &&
@@ -469,7 +483,7 @@ export class AutolinkWindows {
     const fileName = chalk.bold(path.basename(filePath));
     verboseMessage(`Reading ${fileName}...`, this.options.logging);
     const actualContents = fs.existsSync(filePath)
-      ? (await fs.promises.readFile(filePath)).toString()
+      ? (await fs.readFile(filePath)).toString()
       : '';
 
     const contentsChanged = expectedContents !== actualContents;
@@ -481,7 +495,7 @@ export class AutolinkWindows {
       );
       if (!this.options.check) {
         verboseMessage(`Writing ${fileName}...`, this.options.logging);
-        await fs.promises.writeFile(filePath, expectedContents, {
+        await fs.writeFile(filePath, expectedContents, {
           encoding: 'utf8',
           flag: 'w',
         });
@@ -498,7 +512,7 @@ export class AutolinkWindows {
 
     const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach(project => {
+      windowsDependencies[dependencyName].projects.forEach((project) => {
         if (project.directDependency) {
           const dependencyProjectFile = path.join(
             windowsDependencies[dependencyName].folder,
@@ -577,7 +591,7 @@ export class AutolinkWindows {
     const csModuleNames: string[] = [];
     const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach(project => {
+      windowsDependencies[dependencyName].projects.forEach((project) => {
         if (project.directDependency && project.projectLang === 'cs') {
           csModuleNames.push(project.projectName);
         }
@@ -592,7 +606,7 @@ export class AutolinkWindows {
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
       // Process dependency projects
-      windowsDependencies[dependencyName].projects.forEach(project => {
+      windowsDependencies[dependencyName].projects.forEach((project) => {
         const dependencyProjectFile = path.join(
           windowsDependencies[dependencyName].folder,
           windowsDependencies[dependencyName].sourceDir!,
@@ -638,7 +652,7 @@ export class AutolinkWindows {
     );
 
     let changesNecessary = false;
-    projectsForSolution.forEach(project => {
+    projectsForSolution.forEach((project) => {
       const contentsChanged = vstools.addProjectToSolution(
         solutionFile,
         project,
@@ -676,24 +690,34 @@ export class AutolinkWindows {
         configUtils
           .tryFindPropertyValue(experimentalFeatures.content, 'UseWinUI3')
           ?.toLowerCase() === 'true';
-      // use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
+      // Check if WinUI2xVersion is specified in experimental features
+      const targetWinUI2xVersion = configUtils.tryFindPropertyValue(
+        experimentalFeatures.content,
+        'WinUI2xVersion',
+      );
+      // Check if WinUI3Version is specified in experimental features
+      const targetWinUI3xVersion = configUtils.tryFindPropertyValue(
+        experimentalFeatures.content,
+        'WinUI3Version',
+      );
+      // Use the UseWinUI3 value in react-native.config.js, or if not present, the value from ExperimentalFeatures.props
       changesNeeded = await this.updatePackagesConfigXAMLDialect(
         useWinUI3FromConfig !== undefined
           ? useWinUI3FromConfig
           : useWinUI3FromExperimentalFeatures,
+        targetWinUI2xVersion,
+        targetWinUI3xVersion,
       );
       if (useWinUI3FromConfig !== undefined) {
         // Make sure ExperimentalFeatures.props matches the value that comes from react-native.config.js
-        const node = experimentalFeatures.content.getElementsByTagName(
-          'UseWinUI3',
-        );
+        const node =
+          experimentalFeatures.content.getElementsByTagName('UseWinUI3');
         const newValue = useWinUI3FromConfig ? 'true' : 'false';
         changesNeeded = node.item(0)?.textContent !== newValue || changesNeeded;
         if (!this.options.check && changesNeeded) {
           node.item(0)!.textContent = newValue;
-          const experimentalFeaturesOutput = new XMLSerializer().serializeToString(
-            experimentalFeatures.content,
-          );
+          const experimentalFeaturesOutput =
+            new XMLSerializer().serializeToString(experimentalFeatures.content);
           await this.updateFile(
             experimentalFeatures.path,
             experimentalFeaturesOutput,
@@ -720,7 +744,11 @@ export class AutolinkWindows {
     return undefined;
   }
 
-  private async updatePackagesConfigXAMLDialect(useWinUI3: boolean) {
+  private async updatePackagesConfigXAMLDialect(
+    useWinUI3: boolean,
+    targetWinUI2xVersion: string | null,
+    targetWinUI3xVersion: string | null,
+  ) {
     let changed = false;
     const packagesConfig = this.getPackagesConfigXml();
     if (packagesConfig) {
@@ -732,14 +760,16 @@ export class AutolinkWindows {
         'PropertySheets/WinUI.props',
       );
       const winuiPropsContents = configUtils.readProjectFile(winUIPropsPath);
-      const winui2xVersion = configUtils.tryFindPropertyValue(
-        winuiPropsContents,
-        'WinUI2xVersion',
-      );
-      const winui3Version = configUtils.tryFindPropertyValue(
-        winuiPropsContents,
-        'WinUI3Version',
-      );
+
+      // Use the given WinUI2xVersion, otherwise fallback to WinUI.props
+      const winui2xVersion =
+        targetWinUI2xVersion ??
+        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI2xVersion');
+
+      // Use the given WinUI3Version, otherwise fallback to WinUI.props
+      const winui3Version =
+        targetWinUI3xVersion ??
+        configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI3Version');
 
       const dialects = [
         {id: 'Microsoft.WinUI', version: winui3Version!},
@@ -770,9 +800,8 @@ export class AutolinkWindows {
     keepPkgs: {id: string; version: string}[],
   ) {
     let changed = false;
-    const packageElements = packagesConfig.content.documentElement.getElementsByTagName(
-      'package',
-    );
+    const packageElements =
+      packagesConfig.content.documentElement.getElementsByTagName('package');
 
     const nodesToRemove: Element[] = [];
 
@@ -780,23 +809,23 @@ export class AutolinkWindows {
       const packageElement = packageElements.item(i)!;
       const idAttr = packageElement!.getAttributeNode('id');
       const id = idAttr!.value;
-      const keepPkg = keepPkgs.find(pkg => pkg.id === id);
-      if (removePkgs.find(pkg => pkg.id === id)) {
+      const keepPkg = keepPkgs.find((pkg) => pkg.id === id);
+      if (removePkgs.find((pkg) => pkg.id === id)) {
         nodesToRemove.push(packageElement);
         changed = true;
       } else if (keepPkg) {
         changed =
           changed || keepPkg.version !== packageElement.getAttribute('version');
         packageElement.setAttribute('version', keepPkg.version!);
-        keepPkgs = keepPkgs.filter(pkg => pkg.id !== keepPkg.id);
+        keepPkgs = keepPkgs.filter((pkg) => pkg.id !== keepPkg.id);
       }
     }
 
-    nodesToRemove.forEach(pkg =>
+    nodesToRemove.forEach((pkg) =>
       packagesConfig.content.documentElement.removeChild(pkg),
     );
 
-    keepPkgs.forEach(keepPkg => {
+    keepPkgs.forEach((keepPkg) => {
       const newPkg = packagesConfig.content.createElement('package');
 
       Object.entries(keepPkg).forEach(([attr, value]) => {
@@ -849,10 +878,72 @@ function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
  * @param message The message to log.
  * @param verbose Whether or not verbose logging is enabled.
  */
-function verboseMessage(message: any, verbose: boolean) {
+function verboseMessage(message: any, verbose?: boolean) {
   if (verbose) {
     console.log(message);
   }
+}
+
+/**
+ * Sanitizes the given option for telemetery.
+ * @param key The key of the option.
+ * @param value The unsanitized value of the option.
+ * @returns The sanitized value of the option.
+ */
+function optionSanitizer(key: keyof AutoLinkOptions, value: any): any {
+  // Do not add a default case here.
+  // Strings risking PII should just return true if present, false otherwise.
+  // All others should return the value (or false if undefined).
+  switch (key) {
+    case 'sln':
+    case 'proj':
+      return value === undefined ? false : true; // Strip PII
+    case 'logging':
+    case 'check':
+    case 'telemetry':
+      return value === undefined ? false : value; // Return value
+  }
+}
+
+/**
+ * Get the extra props to add to the `autolink-windows` telemetry event.
+ * @returns The extra props.
+ */
+async function getExtraProps(): Promise<Record<string, any>> {
+  const extraProps: Record<string, any> = {};
+  return extraProps;
+}
+
+/**
+ * The function run when calling `react-native autolink-windows`.
+ * @param args Unprocessed args passed from react-native CLI.
+ * @param config Config passed from react-native CLI.
+ * @param options Options passed from react-native CLI.
+ */
+async function autolinkWindows(
+  args: string[],
+  config: Config,
+  options: AutoLinkOptions,
+) {
+  await startTelemetrySession(
+    'autolink-windows',
+    config,
+    options,
+    getDefaultOptions(config, autolinkOptions),
+    optionSanitizer,
+  );
+
+  let autolinkWindowsError: Error | undefined;
+  try {
+    await autolinkWindowsInternal(args, config, options);
+  } catch (ex) {
+    autolinkWindowsError =
+      ex instanceof Error ? (ex as Error) : new Error(String(ex));
+    Telemetry.trackException(autolinkWindowsError);
+  }
+
+  await endTelemetrySession(autolinkWindowsError, getExtraProps);
+  setExitProcessWithError(options.logging, autolinkWindowsError);
 }
 
 /**
@@ -861,7 +952,7 @@ function verboseMessage(message: any, verbose: boolean) {
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
  */
-async function updateAutoLink(
+export async function autolinkWindowsInternal(
   args: string[],
   config: Config,
   options: AutoLinkOptions,
@@ -915,7 +1006,7 @@ async function updateAutoLink(
     spinner.fail();
     const endTime = performance.now();
     console.log(
-      `${chalk.red('Error:')} ${e.toString()}. (${Math.round(
+      `${chalk.red('Error:')} ${(e as any).toString()}. (${Math.round(
         endTime - startTime,
       )}ms)`,
     );
@@ -923,39 +1014,48 @@ async function updateAutoLink(
   }
 }
 
-interface AutoLinkOptions {
-  logging: boolean;
-  check: boolean;
+export interface AutoLinkOptions {
+  logging?: boolean;
+  check?: boolean;
   sln?: string;
   proj?: string;
+  telemetry?: boolean;
 }
 
+export const autolinkOptions: CommandOption[] = [
+  {
+    name: '--logging',
+    description: 'Verbose output logging',
+  },
+  {
+    name: '--check',
+    description: 'Only check whether any autolinked files need to change',
+  },
+  {
+    name: '--sln [string]',
+    description:
+      "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
+    default: undefined,
+  },
+  {
+    name: '--proj [string]',
+    description:
+      "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
+    default: undefined,
+  },
+  {
+    name: '--no-telemetry',
+    description:
+      'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+  },
+];
+
+/**
+ * Performs auto-linking for RNW native modules and apps.
+ */
 export const autoLinkCommand: Command = {
   name: 'autolink-windows',
   description: 'performs autolinking',
-  func: updateAutoLink,
-  options: [
-    {
-      name: '--logging',
-      description: 'Verbose output logging',
-      default: false,
-    },
-    {
-      name: '--check',
-      description: 'Only check whether any autolinked files need to change',
-      default: false,
-    },
-    {
-      name: '--sln [string]',
-      description:
-        "Override the app solution file determined by 'react-native config', e.g. windows\\myApp.sln",
-      default: undefined,
-    },
-    {
-      name: '--proj [string]',
-      description:
-        "Override the app project file determined by 'react-native config', e.g. windows\\myApp\\myApp.vcxproj",
-      default: undefined,
-    },
-  ],
+  func: autolinkWindows,
+  options: autolinkOptions,
 };

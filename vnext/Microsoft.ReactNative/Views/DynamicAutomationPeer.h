@@ -9,7 +9,7 @@
 
 #include "DynamicAutomationPeer.g.h"
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 //
 // DynamicAutomationPeer translates the values of the attached properties in
@@ -71,30 +71,30 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
 
  private:
   winrt::hstring GetContentName() const;
-  winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles GetAccessibilityRole() const;
-  bool HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const;
-  bool GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const;
-  bool HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
-  double GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue value) const;
+  winrt::Microsoft::ReactNative::AccessibilityRoles GetAccessibilityRole() const;
+  bool HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const;
+  bool GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const;
+  bool HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue value) const;
+  double GetAccessibilityValueRange(winrt::Microsoft::ReactNative::AccessibilityValue value) const;
 
-  winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler() const;
+  winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler() const;
 
   static xaml::DependencyProperty AccessibilityActionsProperty();
   static void SetAccessibilityActions(
       xaml::UIElement const &element,
-      Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value);
-  static Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> GetAccessibilityActions(
+      Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
+  static Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> GetAccessibilityActions(
       xaml::UIElement const &element);
   static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);
   static xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(
       xaml::UIElement const &element,
-      winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value);
-  static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
+      winrt::Microsoft::ReactNative::AccessibilityActionEventHandler const &value);
+  static winrt::Microsoft::ReactNative::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
       xaml::UIElement const &element);
 };
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
+namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer, implementation::DynamicAutomationPeer> {};
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation
+} // namespace winrt::Microsoft::ReactNative::factory_implementation

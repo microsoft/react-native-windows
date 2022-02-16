@@ -1,5 +1,5 @@
 'use strict';
-import * as React from 'react';
+import React from 'react'
 import RN = require('react-native');
 
 // removes from interface T the members of interface K
@@ -127,12 +127,6 @@ export type AccessibilityActionInfo = Readonly<{
   label?: string;
 }>;
 
-export type AccessibilityActionEvent = RN.NativeSyntheticEvent<
-  Readonly<{
-    actionName: string;
-  }>
-  >;
-
 export type AccessibilityState = RN.AccessibilityState & { multiselectable?: boolean, required?: boolean };
 
 export type SharedAccessibilityPropsIOSandWin32 = {
@@ -168,6 +162,20 @@ export type BasePropsWin32 = {
   */
   accessibilityDescribedBy?: React.RefObject<any>;
   accessibilityLabeledBy?: React.RefObject<any>;
+
+  /**
+  * Identifies the element whose contents or presence are controlled by another element. 
+  * 
+  * This is mainly used for a Textbox with a Dropdown PeoplePicker-type list.  This allows an 
+  * accessibility tool to query those other providers for properties and listen to their events.
+  */
+   accessibilityControls?: React.RefObject<any>;    
+
+   /**
+    * Identifies the ItemType property, which is a text string describing the type of the automation element.
+    * ItemType is used to obtain information about items in a list, tree view, or data grid. For example, an item in a file directory view might be a "Document File" or a "Folder".
+    */
+   accessibilityItemType?: string;
 };
 
 export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
@@ -203,6 +211,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   accessibilitySetSize?: number;
   animationClass?: string;
   focusable?: boolean;
+  enableFocusRing?: boolean;
 
   /**
    * The onBlur event occurs when an element loses focus.  The opposite of onBlur is onFocus.  Note that in React

@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {
   AppRegistry,
   ScrollView,
@@ -13,7 +13,6 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import {DatePicker, Picker} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -50,24 +49,6 @@ export default class Bootstrap extends React.Component<
             style={{
               height: 25,
               width: 75,
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <DatePicker
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <Picker
-            style={{
               backgroundColor: 'lime',
               padding: this.state.padding,
               margin: this.state.margin,
@@ -123,24 +104,6 @@ export default class Bootstrap extends React.Component<
             style={{
               height: 25,
               width: 75,
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <DatePicker
-            style={{
-              backgroundColor: 'lime',
-              padding: this.state.padding,
-              margin: this.state.margin,
-            }}
-          />
-        </View>
-        <View style={{backgroundColor: 'orange', margin: 5}}>
-          <Picker
-            style={{
               backgroundColor: 'lime',
               padding: this.state.padding,
               margin: this.state.margin,

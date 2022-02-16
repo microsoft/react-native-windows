@@ -13,7 +13,6 @@ import "IReactPropertyBag.idl";
 
 namespace Microsoft.ReactNative
 {
-#ifndef CORE_ABI
   [webhosthidden]
   DOC_STRING("An immutable snapshot of the @ReactInstanceSettings used to create the current React instance.")
   interface IReactSettingsSnapshot
@@ -91,8 +90,8 @@ namespace Microsoft.ReactNative
       "The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath. "
       "The `.bundle` extension will be appended to the end, when looking for the bundle file.")
     String JavaScriptBundleFile { get; };
+
   }
-#endif
 
   [webhosthidden]
   DOC_STRING(
@@ -109,10 +108,8 @@ namespace Microsoft.ReactNative
     "- Use @.JSDispatcher to post asynchronous work in the JavaScript engine thread.")
   interface IReactContext
   {
-#ifndef CORE_ABI
     DOC_STRING("Gets the settings snapshot that was used to start the React instance.")
     IReactSettingsSnapshot SettingsSnapshot { get; };
-#endif
 
     DOC_STRING(
       "Gets @IReactPropertyBag shared with the @ReactInstanceSettings.Properties.\n"
@@ -142,12 +139,12 @@ namespace Microsoft.ReactNative
       "Gets the JavaScript runtime for the running React instance.\n"
       "It can be null if Web debugging is used.\n"
       "**Note: do not use this property directly. "
-      "It is an experimental property that may be removed or changed in version 0.65.")
+      "It is an experimental property that may be removed or changed in a future version.")
     Object JSRuntime { get; };
 
 #ifndef CORE_ABI
     [deprecated("Use @XamlUIService.DispatchEvent instead", deprecate, 1)]
-    DOC_STRING("Deprecated property. Use @XamlUIService.DispatchEvent instead. It will be removed in version 0.65.")
+    DOC_STRING("Deprecated property. Use @XamlUIService.DispatchEvent instead. It will be removed in a future version.")
     void DispatchEvent(XAML_NAMESPACE.FrameworkElement view, String eventName, JSValueArgWriter eventDataArgWriter);
 #endif
 

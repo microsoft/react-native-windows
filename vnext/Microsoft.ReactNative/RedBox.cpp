@@ -19,6 +19,7 @@
 #include <UI.Xaml.Documents.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Markup.h>
+#include <UI.Xaml.Media.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.System.h>
@@ -118,7 +119,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     xaml::FrameworkElement root{nullptr};
 
-    if (react::uwp::Is19H1OrHigher()) {
+    if (Microsoft::ReactNative::Is19H1OrHigher()) {
       // XamlRoot added in 19H1
       if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
         if (auto xamlRoot =
@@ -130,25 +131,28 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     }
 
     if (!root) {
-      auto window = xaml::Window::Current();
-      root = window.Content().as<xaml::FrameworkElement>();
+      if (auto window = xaml::Window::Current()) {
+        root = window.Content().as<xaml::FrameworkElement>();
+      }
     }
 
-    m_redboxContent.MaxHeight(root.ActualHeight());
-    m_redboxContent.Height(root.ActualHeight());
-    m_redboxContent.MaxWidth(root.ActualWidth());
-    m_redboxContent.Width(root.ActualWidth());
+    if (root) {
+      m_redboxContent.MaxHeight(root.ActualHeight());
+      m_redboxContent.Height(root.ActualHeight());
+      m_redboxContent.MaxWidth(root.ActualWidth());
+      m_redboxContent.Width(root.ActualWidth());
 
-    m_sizeChangedRevoker = root.SizeChanged(
-        winrt::auto_revoke,
-        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
-          if (auto strongThis = wkThis.lock()) {
-            strongThis->m_redboxContent.MaxHeight(args.NewSize().Height);
-            strongThis->m_redboxContent.Height(args.NewSize().Height);
-            strongThis->m_redboxContent.MaxWidth(args.NewSize().Width);
-            strongThis->m_redboxContent.Width(args.NewSize().Width);
-          }
-        });
+      m_sizeChangedRevoker = root.SizeChanged(
+          winrt::auto_revoke,
+          [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
+            if (auto strongThis = wkThis.lock()) {
+              strongThis->m_redboxContent.MaxHeight(args.NewSize().Height);
+              strongThis->m_redboxContent.Height(args.NewSize().Height);
+              strongThis->m_redboxContent.MaxWidth(args.NewSize().Width);
+              strongThis->m_redboxContent.Width(args.NewSize().Width);
+            }
+          });
+    }
 
     m_tokenClosed = m_popup.Closed(
         [wkThis = std::weak_ptr(shared_from_this())](auto const & /*sender*/, IInspectable const & /*args*/) noexcept {
@@ -244,8 +248,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     m_stackPanel.Children().Clear();
     m_stackPanel.Children().Append(webView);
-
+#ifdef USE_WINUI3
+    webView.EnsureCoreWebView2Async().Completed(
+        [content, webView](auto &&sender, auto &&args) { webView.NavigateToString(content); });
+#else
     webView.NavigateToString(content);
+#endif
   }
 
   void UpdateErrorMessageUI() noexcept {
@@ -401,8 +409,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
  * This class is implemented such that the methods on IRedBoxHandler are thread safe.
  */
 struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultRedBoxHandler>, IRedBoxHandler {
-  DefaultRedBoxHandler(Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost, Mso::DispatchQueue &&uiQueue) noexcept
-      : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{std::move(uiQueue)} {}
+  DefaultRedBoxHandler(
+      Mso::WeakPtr<Mso::React::IReactHost> &&weakReactHost,
+      const Mso::React::IDispatchQueue2 &uiQueue) noexcept
+      : m_weakReactHost{std::move(weakReactHost)}, m_uiQueue{&uiQueue} {}
 
   ~DefaultRedBoxHandler() {
     // Hide any currently showing redBoxes
@@ -411,7 +421,7 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
       std::scoped_lock lock{m_lockRedBox};
       std::swap(m_redBoxes, redBoxes);
     }
-    m_uiQueue.Post([redBoxes = std::move(redBoxes)]() {
+    m_uiQueue->Post([redBoxes = std::move(redBoxes)]() {
       for (const auto &redBox : redBoxes) {
         redBox->Dismiss();
       }
@@ -465,14 +475,14 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
     }
 
     if (redbox) {
-      m_uiQueue.Post([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
+      m_uiQueue->Post([redboxCaptured = std::move(redbox), errorInfo = std::move(info)]() {
         redboxCaptured->UpdateError(std::move(errorInfo));
       });
     }
   }
 
   virtual void dismissRedbox() override {
-    m_uiQueue.Post([wkthis = std::weak_ptr(shared_from_this())]() {
+    m_uiQueue->Post([wkthis = std::weak_ptr(shared_from_this())]() {
       if (auto pthis = wkthis.lock()) {
         std::scoped_lock lock{pthis->m_lockRedBox};
         if (!pthis->m_redBoxes.empty())
@@ -516,11 +526,11 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
       return;
     m_showingRedBox = true;
 
-    m_uiQueue.Post([redboxCaptured = std::move(redbox)]() { redboxCaptured->ShowNewJSError(); });
+    m_uiQueue->Post([redboxCaptured = std::move(redbox)]() { redboxCaptured->ShowNewJSError(); });
   }
 
  private:
-  const Mso::DispatchQueue m_uiQueue;
+  Mso::CntPtr<const Mso::React::IDispatchQueue2> m_uiQueue;
   bool m_showingRedBox{false}; // Access from UI Thread only
   std::mutex m_lockRedBox;
   std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
@@ -566,12 +576,14 @@ std::shared_ptr<IRedBoxHandler> CreateRedBoxHandler(
   return std::make_shared<RedBoxHandler>(redBoxHandler);
 }
 
-#ifndef CORE_ABI
 std::shared_ptr<IRedBoxHandler> CreateDefaultRedBoxHandler(
     Mso::WeakPtr<IReactHost> &&weakReactHost,
-    Mso::DispatchQueue &&uiQueue) noexcept {
-  return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), std::move(uiQueue));
-}
+    const Mso::React::IDispatchQueue2 &uiQueue) noexcept {
+#ifndef CORE_ABI
+  return std::make_shared<DefaultRedBoxHandler>(std::move(weakReactHost), uiQueue);
+#else
+  return nullptr;
 #endif
+}
 
 } // namespace Mso::React

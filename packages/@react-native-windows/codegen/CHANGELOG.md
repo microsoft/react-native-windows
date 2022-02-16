@@ -1,8 +1,217 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 04 Mar 2021 05:05:53 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.25
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.0-canary.24
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Changes
+
+- Fix TurboModule codegen document (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.23
+
+Sat, 29 Jan 2022 06:08:58 GMT
+
+### Changes
+
+- Add document for turbo module codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.22
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 0.0.0-canary.21
+
+Thu, 18 Nov 2021 06:11:20 GMT
+
+### Changes
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 0.0.0-canary.20
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Changes
+
+- Codegen prints `::React::JSValue` instead of `React::JSValue` (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.20
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Changes
+
+- Codegen prints `::React::JSValue` instead of `React::JSValue` (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.19
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Changes
+
+- Only generate component files if a component is specified (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.18
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Changes
+
+- Built files not included in published package (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.17
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.16
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Check constants in generated turbo module specs (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.15
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Generate anonymous objects in correct order for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.14
+
+Fri, 10 Sep 2021 05:07:31 GMT
+
+### Changes
+
+- Generate `std::vector<T>` for array types in turbo modules (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.13
+
+Thu, 09 Sep 2021 05:07:46 GMT
+
+### Changes
+
+- Bump to 0.66-based react-native-tscodegen (ngerlem@microsoft.com)
+- Generate nullable type for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.12
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-unittest-config to v1.2.4 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+- Match Alert module with NativeDialogManagerWindowsSpec.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.11
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Generate aliased struct for turbo module (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.10
+
+Thu, 05 Aug 2021 05:07:20 GMT
+
+### Changes
+
+- Do not write codegen files if the contents have not changed, as this breaks incremental builds (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.9
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.8
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.3 (igklemen@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.3 (igklemen@microsoft.com)
+
+## 0.0.0-canary.7
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.0 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.7 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.2 (ngerlem@microsoft.com)
+
+### Changes
+
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+
+## 0.0.0-canary.6
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate Apr 28 (base of 0.65) Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.5
+
+Thu, 13 May 2021 05:11:48 GMT
+
+### Changes
+
+- Hook up view component codegen (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.4
 

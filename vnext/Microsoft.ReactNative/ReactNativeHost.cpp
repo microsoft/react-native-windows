@@ -113,18 +113,29 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.SetUseFastRefresh(m_instanceSettings.UseFastRefresh());
   reactOptions.SetUseLiveReload(m_instanceSettings.UseLiveReload());
   reactOptions.EnableJITCompilation = m_instanceSettings.EnableJITCompilation();
-  reactOptions.DeveloperSettings.DebugHost = to_string(m_instanceSettings.DebugHost());
   reactOptions.BundleRootPath = to_string(m_instanceSettings.BundleRootPath());
   reactOptions.DeveloperSettings.DebuggerPort = m_instanceSettings.DebuggerPort();
+  reactOptions.DeveloperSettings.DebuggerRuntimeName = to_string(m_instanceSettings.DebuggerRuntimeName());
   if (m_instanceSettings.RedBoxHandler()) {
     reactOptions.RedBoxHandler = Mso::React::CreateRedBoxHandler(m_instanceSettings.RedBoxHandler());
+  }
+  if (m_instanceSettings.NativeLogger()) {
+    reactOptions.OnLogging = [handler = m_instanceSettings.NativeLogger()](
+                                 Mso::React::LogLevel logLevel, const char *message) {
+      static_assert(LogLevel::Error == static_cast<LogLevel>(Mso::React::LogLevel::Error));
+      static_assert(LogLevel::Fatal == static_cast<LogLevel>(Mso::React::LogLevel::Fatal));
+      static_assert(LogLevel::Info == static_cast<LogLevel>(Mso::React::LogLevel::Info));
+      static_assert(LogLevel::Trace == static_cast<LogLevel>(Mso::React::LogLevel::Trace));
+      static_assert(LogLevel::Warning == static_cast<LogLevel>(Mso::React::LogLevel::Warning));
+      handler(static_cast<LogLevel>(logLevel), winrt::to_hstring(message));
+    };
   }
   reactOptions.DeveloperSettings.SourceBundleHost = to_string(m_instanceSettings.SourceBundleHost());
   reactOptions.DeveloperSettings.SourceBundlePort = m_instanceSettings.SourceBundlePort();
 
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
-  reactOptions.JsiEngine = static_cast<Mso::React::JSIEngine>(m_instanceSettings.JSIEngineOverride());
+  reactOptions.SetJsiEngine(static_cast<Mso::React::JSIEngine>(m_instanceSettings.JSIEngineOverride()));
 
   reactOptions.ModuleProvider = modulesProvider;
 #ifndef CORE_ABI
@@ -149,13 +160,8 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   };
 
   std::string jsBundleFile = to_string(m_instanceSettings.JavaScriptBundleFile());
-  std::string jsMainModuleName = to_string(m_instanceSettings.JavaScriptMainModuleName());
   if (jsBundleFile.empty()) {
-    if (!jsMainModuleName.empty()) {
-      jsBundleFile = jsMainModuleName;
-    } else {
-      jsBundleFile = "index.windows";
-    }
+    jsBundleFile = "index.windows";
   }
 
   reactOptions.Identity = jsBundleFile;

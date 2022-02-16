@@ -17,7 +17,7 @@ Options:
 |-----------------------|--------------------------------------|--------------------------------------------------|
 | `--release`           | Specifies a Release build | [boolean] |
 | `--root`              | Override the root directory for the windows build which contains the windows folder. (default: "E:\\test63") | [string] |
-| `--arch`              | The build architecture (ARM, ARM64, x86, x64). default: x86 | [string] |
+| `--arch`              | The build architecture (ARM64, x86, x64). defaults to system architecture | [string] |
 | `--singleproc`        | Disables multi-proc build | [boolean] |
 | `--emulator`          | Deploys the app to an emulator | [boolean] |
 | `--device`            | Deploys the app to a connected device | [boolean] |
@@ -30,12 +30,15 @@ Options:
 | `--no-autolink`       | Do not run autolinking | [boolean] | 
 | `--no-build`          | Do not build the solution | [boolean] |
 | `--no-deploy`         | Do not deploy the app | [boolean] |
+| `--deploy-from-layout`| Force deploy from layout, even in release builds | [boolean] |
 | `--sln`               | Override the app solution file determined by 'react-native config', e.g. windows\myApp.sln | [string] | 
 | `--proj`              | Override the app project file determined by 'react-native config', e.g. windows\myApp\myApp.vcxproj | [string] |
 | `--msbuildprops`      | Comma separated props to pass to MSBuild, eg: prop1=value1,prop2=value2 | [string] |
 | `--buildLogDirectory` | Optional directory where MSBuild log files should be stored | [string] |
 | `--info`              | Dump environment information | [boolean] |
 | `--direct-debugging`  | Enable direct debugging on specified port | [number] |
+| `--useWinUI3`         | Targets WinUI 3.0 (Preview) instead of UWP XAML. | [boolean] |
+| `--useHermes`         | Use Hermes instead of Chakra as the JS engine (supported on 0.64+) | [boolean] |
 | `--no-telemetry`      | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI | [boolean] |
 | `-h`, `--help`        | output usage information | [boolean] |
 

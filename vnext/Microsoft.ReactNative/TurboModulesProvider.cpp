@@ -310,22 +310,13 @@ class TurboModuleImpl : public facebook::react::TurboModule {
 TurboModulesProvider::TurboModulePtr TurboModulesProvider::getModule(
     const std::string &moduleName,
     const CallInvokerPtr &callInvoker) noexcept {
-  // see if the expected turbo module has been cached
-  auto pair = std::make_pair(moduleName, callInvoker);
-  auto itCached = m_cachedModules.find(pair);
-  if (itCached != m_cachedModules.end()) {
-    return itCached->second;
-  }
-
   // fail if the expected turbo module has not been registered
   auto it = m_moduleProviders.find(moduleName);
   if (it == m_moduleProviders.end()) {
     return nullptr;
   }
 
-  // cache and return the turbo module
   auto tm = std::make_shared<TurboModuleImpl>(m_reactContext, moduleName, callInvoker, it->second);
-  m_cachedModules.insert({pair, tm});
   return tm;
 }
 
@@ -344,15 +335,14 @@ void TurboModulesProvider::SetReactContext(const IReactContext &reactContext) no
 
 void TurboModulesProvider::AddModuleProvider(
     winrt::hstring const &moduleName,
-    ReactModuleProvider const &moduleProvider) noexcept {
+    ReactModuleProvider const &moduleProvider,
+    bool overwriteExisting) noexcept {
   auto key = to_string(moduleName);
   auto it = m_moduleProviders.find(key);
   if (it == m_moduleProviders.end()) {
     m_moduleProviders.insert({key, moduleProvider});
-  } else {
+  } else if (overwriteExisting) {
     // turbo modules should be replaceable before the first time it is requested
-    // if a turbo module has been requested, it will be cached in m_cachedModules
-    // in this case, changing m_moduleProviders affects nothing
     it->second = moduleProvider;
   }
 }

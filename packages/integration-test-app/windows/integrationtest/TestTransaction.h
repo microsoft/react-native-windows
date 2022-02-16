@@ -48,7 +48,7 @@ enum class TestResult {
 
 //! Defines the state machine of interactions between an individual test and
 //! external events
-class TestTransaction final : public winrt::implements<TestTransaction, winrt::Windows::Foundation::IInspectable> {
+class TestTransaction : public winrt::implements<TestTransaction, winrt::Windows::Foundation::IInspectable> {
   using IRedBoxErrorInfo = winrt::Microsoft::ReactNative::IRedBoxErrorInfo;
 
  public:

@@ -5,9 +5,9 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as yargs from 'yargs';
+import fs from '@react-native-windows/fs';
+import path from 'path';
+import yargs from 'yargs';
 
 const screenshot = require('screenshot-desktop');
 

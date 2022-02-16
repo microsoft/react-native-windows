@@ -5,7 +5,7 @@
 #include <folly/dynamic.h>
 #include "AnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class TrackingAnimatedNode final : public AnimatedNode {
  public:
   TrackingAnimatedNode(
@@ -28,5 +28,5 @@ class TrackingAnimatedNode final : public AnimatedNode {
   static constexpr std::string_view s_valueIdName{"value"};
   static constexpr std::string_view s_animationConfigName{"animationConfig"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative
 #pragma once

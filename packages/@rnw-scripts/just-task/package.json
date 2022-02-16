@@ -1,13 +1,20 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "2.1.0",
+  "version": "2.2.3",
   "license": "MIT",
   "main": "just-task.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/just-task"
+  },
   "bin": {
     "rnw-scripts": "./bin/rnw-scripts.js"
   },
   "dependencies": {
-    "@rnw-scripts/jest-e2e-config": "1.1.2"
+    "@rnw-scripts/jest-e2e-config": "1.1.8",
+    "@rnw-scripts/jest-unittest-config": "1.2.6",
+    "depcheck": "^1.4.1"
   },
   "devDependencies": {
     "@types/node": "^14.14.22",
@@ -15,5 +22,8 @@
   },
   "peerDependencies": {
     "just-scripts": "^1.3.3"
+  },
+  "engines": {
+    "node": ">= 14"
   }
 }

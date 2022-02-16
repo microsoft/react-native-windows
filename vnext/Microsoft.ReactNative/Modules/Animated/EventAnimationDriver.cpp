@@ -6,7 +6,7 @@
 #include "EventAnimationDriver.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 EventAnimationDriver::EventAnimationDriver(
     const folly::dynamic &eventPath,
     int64_t animatedValueTag,
@@ -24,4 +24,4 @@ ValueAnimatedNode *EventAnimationDriver::AnimatedValue() {
   return static_cast<ValueAnimatedNode *>(nullptr);
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

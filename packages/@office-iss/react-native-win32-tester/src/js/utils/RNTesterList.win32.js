@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,9 +10,9 @@
 
 'use strict';
 
-import type {RNTesterExample} from '../types/RNTesterTypes';
+import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
-const ComponentExamples: Array<RNTesterExample> = [
+const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
     category: 'UI',
@@ -25,24 +25,10 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
   /*
   {
-    key: 'FlatListExample',
+    key: 'FlatListExampleIndex',
+    module: require('../examples/FlatList/FlatListExampleIndex').default,
     category: 'ListView',
-    module: require('../examples/FlatList/FlatListExample'),
-  },
-  {
-    key: 'FlatList-withSeparators',
-    module: require('../examples/FlatList/FlatList-withSeparators'),
-    category: 'ListView',
-  },
-  {
-    key: 'FlatList-onViewableItemsChanged',
-    module: require('../examples/FlatList/FlatList-onViewableItemsChanged'),
-    category: 'ListView',
-  },
-  {
-    key: 'FlatList-onEndReached',
-    module: require('../examples/FlatList/FlatList-onEndReached'),
-    category: 'ListView',
+    supportsTVOS: true,
   },
   {
     key: 'ImageExample',
@@ -50,19 +36,29 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/Image/ImageExample'),
   },
   {
-    key: 'MultiColumnExample',
-    category: 'ListView',
-    module: require('../examples/MultiColumn/MultiColumnExample'),
-  }*/
+    key: 'JSResponderHandlerExample',
+    module: require('../examples/JSResponderHandlerExample/JSResponderHandlerExample'),
+  },
+  {
+    key: 'KeyboardAvoidingViewExample',
+    module: require('../examples/KeyboardAvoidingView/KeyboardAvoidingViewExample'),
+  },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
   {
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
+  */
   {
     key: 'PressableExample',
     category: 'UI',
-    module: require('../examples/Pressable/PressableExample'),
+    module: require('../examples-win32/Pressable/PressableExample'),
   },
+  /*
   {
     key: 'TouchableWin32Example',
     module: require('@office-iss/react-native-win32/Libraries/Components/Touchable/Tests/TouchableWin32Test'),
@@ -73,38 +69,22 @@ const ComponentExamples: Array<RNTesterExample> = [
     module: require('../examples/ScrollView/ScrollViewSimpleExample'),
   } /*
   {
-    key: 'SectionList-onEndReached',
-    module: require('../examples/SectionList/SectionList-onEndReached'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-inverted',
-    module: require('../examples/SectionList/SectionList-inverted'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-onViewableItemsChanged',
-    module: require('../examples/SectionList/SectionList-onViewableItemsChanged'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-stickyHeadersEnabled',
-    module: require('../examples/SectionList/SectionList-stickyHeadersEnabled'),
-    category: 'ListView',
-  },
-  {
-    key: 'SectionList-withSeparators',
-    module: require('../examples/SectionList/SectionList-withSeparators'),
-    category: 'ListView',
-  },
-  {
     key: 'SectionListExample',
     category: 'ListView',
-    module: require('../examples/SectionList/SectionListExample'),
-  }*/,
+    module: require('../examples/SectionList/SectionListIndex'),
+  },
   {
+    key: 'SwipeableCardExample',
+    category: 'UI',
+    module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
+  }*/ {
     key: 'SwitchExample',
+    category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
+  },
+  {
+    key: 'TextInputs with key prop',
+    module: require('../examples/TextInput/TextInputKeyProp'),
   },
   {
     key: 'TouchableExample',
@@ -120,6 +100,11 @@ const ComponentExamples: Array<RNTesterExample> = [
     category: 'Basic',
     module: require('../examples/View/ViewExample'),
   },
+  //{
+  //  key: 'NewArchitectureExample',
+  //  category: 'UI',
+  //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
+  //},
   {
     key: 'ViewWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
@@ -143,7 +128,7 @@ const ComponentExamples: Array<RNTesterExample> = [
   },
 ];
 
-const APIExamples: Array<RNTesterExample> = [
+const APIs: Array<RNTesterModuleInfo> = [
   {
     key: 'AccessibilityExample',
     category: 'Basic',
@@ -159,14 +144,14 @@ const APIExamples: Array<RNTesterExample> = [
     module: require('../examples/Alert/AlertExample'),
   },
   {
-    key: 'AnimatedExample',
+    key: 'AnimatedIndex',
     category: 'UI',
-    module: require('../examples/Animated/AnimatedExample'),
+    module: require('../examples/Animated/AnimatedIndex').default,
   },
   {
     key: 'Animation - GratuitousAnimation',
     category: 'UI',
-    module: require('../examples/Animated/AnimatedGratuitousApp/AnExApp'),
+    module: require('../examples/AnimatedGratuitousApp/AnExApp'),
   },
   {
     key: 'AppearanceExample',
@@ -266,7 +251,7 @@ const APIExamples: Array<RNTesterExample> = [
 ];
 
 if (global.__turboModuleProxy) {
-  APIExamples.push({
+  APIs.push({
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
@@ -275,13 +260,13 @@ if (global.__turboModuleProxy) {
 
 const Modules: any = {};
 
-APIExamples.concat(ComponentExamples).forEach(Example => {
+APIs.concat(Components).forEach((Example) => {
   Modules[Example.key] = Example.module;
 });
 
 const RNTesterList = {
-  APIExamples,
-  ComponentExamples,
+  APIs,
+  Components,
   Modules,
 };
 

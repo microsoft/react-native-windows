@@ -4,7 +4,6 @@
 #include <TestRunner.h>
 
 #include <CreateModules.h>
-#include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
 #include <RuntimeOptions.h>
@@ -41,8 +40,8 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
     string &&jsBundleFile,
     vector<tuple<string, CxxModule::Provider>> &&cxxModules,
     shared_ptr<DevSettings> devSettings) noexcept {
-  auto nativeQueue = react::uwp::MakeJSQueueThread();
-  auto jsQueue = react::uwp::MakeJSQueueThread();
+  auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
+  auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
 
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       {"AsyncLocalStorage",
@@ -50,14 +49,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
          return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
        },
        nativeQueue},
-
-      {"WebSocketModule", []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); }, nativeQueue},
-
-      {"Networking",
-       []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
-       nativeQueue},
-
-      {"Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue},
 
       // Apparently mandatory for /IntegrationTests
       {TestAppStateModule::name,
@@ -90,7 +81,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   devSettings->platformName = "windows";
 
   // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
-  devSettings->jsiEngineOverride = JSIEngineOverride::ChakraCore;
+  devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
 
   auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),

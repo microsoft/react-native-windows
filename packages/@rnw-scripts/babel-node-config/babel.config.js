@@ -11,10 +11,9 @@ module.exports = {
     [
       '@babel/preset-env',
       {
-        targets: {node: '12'},
+        targets: {node: '14'},
       },
     ],
     '@babel/preset-typescript',
   ],
-  plugins: [['@babel/plugin-transform-modules-commonjs', {noInterop: true}]],
 };

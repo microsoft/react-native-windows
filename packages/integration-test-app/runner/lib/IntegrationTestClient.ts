@@ -5,7 +5,10 @@
  * @format
  */
 
-import {waitForConnection, RpcClient} from 'node-rnw-rpc';
+import {
+  waitForConnection,
+  AutomationClient,
+} from '@react-native-windows/automation-channel';
 import SerialQueue from './SerialQueue';
 
 export type TestCommand =
@@ -34,22 +37,22 @@ export type CallStackFrame = {
 };
 
 export default class IntegrationTestClient {
-  private readonly rpcClient: RpcClient;
+  private readonly automationClient: AutomationClient;
   private readonly commandQueue: SerialQueue;
 
-  private constructor(rpcClient: RpcClient) {
-    this.rpcClient = rpcClient;
+  private constructor(automationClient: AutomationClient) {
+    this.automationClient = automationClient;
     this.commandQueue = new SerialQueue();
   }
 
   static async connect(): Promise<IntegrationTestClient> {
-    const rpcClient = await waitForConnection({port: 8305});
-    return new IntegrationTestClient(rpcClient);
+    const automationClient = await waitForConnection({port: 8305});
+    return new IntegrationTestClient(automationClient);
   }
 
   sendTestCommand(command: TestCommand): Promise<TestCommandResponse> {
     return this.commandQueue.enqueue(async () => {
-      const rpcResult = await this.rpcClient.invoke(command.name, {
+      const rpcResult = await this.automationClient.invoke(command.name, {
         component: command.component,
       });
 
@@ -63,7 +66,7 @@ export default class IntegrationTestClient {
 
   close(): Promise<void> {
     return this.commandQueue.enqueue(async () => {
-      this.rpcClient.close();
+      this.automationClient.close();
     });
   }
 }

@@ -4,28 +4,26 @@
 #pragma once
 
 #include <INativeUIManager.h>
-#include <ShadowNodeBase.h>
 #include <UI.Xaml.Documents.h>
 #include <Utils/TextTransform.h>
 #include <Views/FrameworkElementViewManager.h>
+#include <Views/ShadowNodeBase.h>
+#include <Views/TextViewManager.h>
 
 namespace Microsoft::ReactNative {
 
 struct VirtualTextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
   TextTransform textTransform{TextTransform::Undefined};
+  bool hasDescendantTextHighlighter{false};
+  bool hasDescendantPressable{false};
+  bool isPressable{false};
+  std::optional<winrt::Windows::UI::Color> backgroundColor;
+  std::optional<winrt::Windows::UI::Color> foregroundColor;
 
   void AddView(ShadowNode &child, int64_t index) override;
-
-  static void ApplyTextTransform(ShadowNodeBase &node, TextTransform transform, bool forceUpdate, bool isRoot);
-
-  struct HighlightData {
-    std::vector<HighlightData> data;
-    size_t spanIdx = 0;
-    std::optional<winrt::Windows::UI::Color> color;
-  };
-
-  HighlightData m_highlightData;
+  void RemoveChildAt(int64_t indexToRemove) override;
+  void removeAllChildren() override;
 };
 
 class VirtualTextViewManager : public ViewManagerBase {
@@ -44,6 +42,8 @@ class VirtualTextViewManager : public ViewManagerBase {
   void RemoveChildAt(const XamlView &parent, int64_t index) override;
 
   bool RequiresYogaNode() const override;
+
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, winrt::Microsoft::ReactNative::JSValueObject &props);
 
  protected:
   bool UpdateProperty(

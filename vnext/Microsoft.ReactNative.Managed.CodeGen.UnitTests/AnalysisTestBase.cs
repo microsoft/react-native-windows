@@ -61,7 +61,7 @@ public class TestClass
             var references = new List<string>();
 
             var uapVersion = "uap10.0.15138";
-            var uwpPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), 
+            var uwpPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86),
                 "Microsoft SDKs", "UWPNuGetPackages", "microsoft.netcore.universalwindowsplatform");
 
             var versions = Directory.GetDirectories(uwpPath).Select(x => new Version(Path.GetFileName(x)));
@@ -81,7 +81,7 @@ public class TestClass
             // I could not find a way for the dotnet core project to NOT be "Any CPU" and then produce x64 binaries
             // in that configuration. I tried all the usual tricks for the netcore project to match the universal
             // multi platform support.
-            references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll");
+            references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative.Managed\Microsoft.ReactNative.Managed.dll");
             references.Add($@"{targetRoot}\X64\{configuration}\Microsoft.ReactNative\Microsoft.ReactNative.winmd");
 
             // Add the windows 10 sdk assemblies for UWP. We have a compile time safeguard in place to
@@ -90,14 +90,14 @@ public class TestClass
             // of the unitest runners are allowed to pick up a variable from the build file. And given the many
             // ways one can run inttests, this seemed to be the most reasonable out of a lot of poor options.
             var win10SdkFolder = @"C:\Program Files (x86)\Windows Kits\10";
-#if win10SdkVersion10_0_18362_0
-      var win10SdkVersion = "10.0.18362.0";
+#if win10SdkVersion10_0_19041_0
+      var win10SdkVersion = "10.0.19041.0";
 #else
 #error The Win10 Sdk Version must be updated in code when updated in MSBuild.
 #endif
 
             references.AddRange(new[] {
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.MachineLearningContract\2.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.MachineLearningContract\3.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract\2.0.0.0\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract\2.0.0.0\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.CallsPhoneContract\5.0.0.0\Windows.ApplicationModel.Calls.CallsPhoneContract.winmd",
@@ -110,8 +110,8 @@ public class TestClass
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Devices.Printers.PrintersContract\1.0.0.0\Windows.Devices.Printers.PrintersContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Devices.SmartCards.SmartCardBackgroundTriggerContract\3.0.0.0\Windows.Devices.SmartCards.SmartCardBackgroundTriggerContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Devices.SmartCards.SmartCardEmulatorContract\6.0.0.0\Windows.Devices.SmartCards.SmartCardEmulatorContract.winmd",
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Foundation.FoundationContract\3.0.0.0\Windows.Foundation.FoundationContract.winmd",
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Foundation.UniversalApiContract\8.0.0.0\Windows.Foundation.UniversalApiContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Gaming.XboxLive.StorageApiContract\1.0.0.0\Windows.Gaming.XboxLive.StorageApiContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Graphics.Printing3D.Printing3DContract\4.0.0.0\Windows.Graphics.Printing3D.Printing3DContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Networking.Connectivity.WwanContract\2.0.0.0\Windows.Networking.Connectivity.WwanContract.winmd",
@@ -123,7 +123,7 @@ public class TestClass
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.System.Profile.ProfileHardwareTokenContract\1.0.0.0\Windows.System.Profile.ProfileHardwareTokenContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.System.Profile.ProfileSharedModeContract\2.0.0.0\Windows.System.Profile.ProfileSharedModeContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.System.Profile.SystemManufacturers.SystemManufacturersContract\3.0.0.0\Windows.System.Profile.SystemManufacturers.SystemManufacturersContract.winmd",
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.System.SystemManagementContract\6.0.0.0\Windows.System.SystemManagementContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.System.SystemManagementContract\7.0.0.0\Windows.System.SystemManagementContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.UI.ViewManagement.ViewManagementViewScalingContract\1.0.0.0\Windows.UI.ViewManagement.ViewManagementViewScalingContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.UI.Xaml.Core.Direct.XamlDirectContract\2.0.0.0\Windows.UI.Xaml.Core.Direct.XamlDirectContract.winmd",
         $@"{win10SdkFolder}\UnionMetadata\{win10SdkVersion}\Facade\Windows.winmd"

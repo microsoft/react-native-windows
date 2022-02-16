@@ -7,7 +7,7 @@
 #include <future>
 #include <string>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class UwpPreparedScriptStore : public facebook::jsi::PreparedScriptStore {
  public:
   UwpPreparedScriptStore(winrt::hstring uri);
@@ -61,4 +61,4 @@ class ByteCodeBuffer final : public facebook::jsi::Buffer {
   int size_;
   std::unique_ptr<uint8_t[]> byteArray_;
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

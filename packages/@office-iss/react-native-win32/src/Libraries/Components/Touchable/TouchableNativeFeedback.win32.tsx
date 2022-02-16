@@ -11,7 +11,7 @@
 
 'use strict';
 
-import * as React from 'react';
+import React from 'react'
 import { requireNativeComponent } from 'react-native';
 
 import { ITouchableNativeFeedbackProps } from './TouchableNativeFeedback.Props';

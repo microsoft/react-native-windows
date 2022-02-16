@@ -16,50 +16,31 @@
 #pragma optimize("", off)
 #endif
 
-using Callback = facebook::xplat::module::CxxModule::Callback;
-
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::System;
 using namespace ::Microsoft::Common::Unicode;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 //
-// LinkingManagerModule helpers
+// LinkingManager
 //
 
-static fire_and_forget openURLAsync(Uri uri, Callback success, Callback error) {
-  if (co_await Launcher::LaunchUriAsync(uri)) {
-    success({true});
-  } else {
-    error({folly::dynamic::object("code", 1)("message", "Unable to open URL: " + Utf16ToUtf8(uri.DisplayUri()))});
-  }
+void LinkingManager::Initialize(React::ReactContext const &reactContext) noexcept {
+  m_context = reactContext;
 }
 
-static fire_and_forget canOpenURLAsync(Uri uri, Callback success, Callback /*error*/) {
-  auto status = co_await Launcher::QueryUriSupportAsync(uri, LaunchQuerySupportType::Uri);
-  if (status == LaunchQuerySupportStatus::Available) {
-    success({true});
-  } else {
-    success({false});
-  }
-}
+/*static*/ std::mutex LinkingManager::s_mutex;
+/*static*/ Uri LinkingManager::s_initialUri{nullptr};
+/*static*/ std::vector<LinkingManager *> LinkingManager::s_linkingModules;
 
-//
-// LinkingManagerModule
-//
-const char *LinkingManagerModule::name = "LinkingManager";
-/*static*/ std::mutex LinkingManagerModule::s_mutex;
-/*static*/ Uri LinkingManagerModule::s_initialUri{nullptr};
-/*static*/ std::vector<LinkingManagerModule *> LinkingManagerModule::s_linkingModules;
-
-LinkingManagerModule::LinkingManagerModule() noexcept {
+LinkingManager::LinkingManager() noexcept {
   std::scoped_lock lock{s_mutex};
   s_linkingModules.push_back(this);
 }
 
-LinkingManagerModule::~LinkingManagerModule() noexcept {
+LinkingManager::~LinkingManager() noexcept {
   std::scoped_lock lock{s_mutex};
   auto it = std::find(s_linkingModules.begin(), s_linkingModules.end(), this);
   if (it != s_linkingModules.end()) {
@@ -67,12 +48,43 @@ LinkingManagerModule::~LinkingManagerModule() noexcept {
   }
 }
 
-/*static*/ void LinkingManagerModule::OpenUri(winrt::Windows::Foundation::Uri const &uri) noexcept {
+/*static*/ fire_and_forget LinkingManager::canOpenURL(
+    std::string url,
+    ::React::ReactPromise<::React::JSValue> result) noexcept {
+  winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(url));
+  auto status = co_await Launcher::QueryUriSupportAsync(uri, LaunchQuerySupportType::Uri);
+  if (status == LaunchQuerySupportStatus::Available) {
+    result.Resolve(true);
+  } else {
+    result.Resolve(false);
+  }
+}
+
+fire_and_forget openUrlAsync(std::string url, ::React::ReactPromise<::React::JSValue> result) noexcept {
+  try {
+    winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(url));
+
+    if (co_await Launcher::LaunchUriAsync(uri)) {
+      result.Resolve({});
+    } else {
+      result.Reject(("Unable to open URL: " + url).c_str());
+    }
+  } catch (winrt::hresult_error &e) {
+    result.Reject(("Unable to open URL: " + url + "error: " + winrt::to_string(e.message())).c_str());
+  }
+}
+
+void LinkingManager::openURL(std::string &&url, ::React::ReactPromise<::React::JSValue> &&result) noexcept {
+  m_context.UIDispatcher().Post(
+      [url = std::move(url), result = std::move(result)]() { openUrlAsync(std::move(url), std::move(result)); });
+}
+
+/*static*/ void LinkingManager::OpenUri(winrt::Windows::Foundation::Uri const &uri) noexcept {
   if (!s_initialUri) {
     s_initialUri = uri;
   }
 
-  std::vector<LinkingManagerModule *> modules;
+  std::vector<LinkingManager *> modules;
   {
     std::scoped_lock lock{s_mutex};
     modules = s_linkingModules;
@@ -83,45 +95,28 @@ LinkingManagerModule::~LinkingManagerModule() noexcept {
   }
 }
 
-void LinkingManagerModule::HandleOpenUri(winrt::hstring const &uri) noexcept {
-  if (auto instance = getInstance().lock()) {
-    instance->callJSFunction(
-        "RCTDeviceEventEmitter", "emit", folly::dynamic::array("url", folly::dynamic::object("url", to_string(uri))));
+void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
+  m_context.EmitJSEvent(L"RCTDeviceEventEmitter", L"url", React::JSValueObject{{"url", winrt::to_string(uri)}});
+}
+
+/*static*/ void LinkingManager::openSettings(::React::ReactPromise<::React::JSValue> &&result) noexcept {
+  result.Reject(L"Could not open settings.  Not suported on this platform.");
+}
+
+/*static*/ void LinkingManager::addListener(std::string eventName) noexcept {
+  // no-op
+}
+
+/*static*/ void LinkingManager::removeListeners(double count) noexcept {
+  // no-op
+}
+
+/*static*/ void LinkingManager::getInitialURL(::React::ReactPromise<::React::JSValue> &&result) noexcept {
+  if (s_initialUri) {
+    result.Resolve(to_string(s_initialUri.AbsoluteUri()));
+  } else {
+    result.Resolve(nullptr);
   }
 }
 
-std::string LinkingManagerModule::getName() {
-  return name;
-}
-
-std::map<std::string, folly::dynamic> LinkingManagerModule::getConstants() {
-  return {};
-}
-
-auto LinkingManagerModule::getMethods() -> std::vector<Method> {
-  return {
-      Method(
-          "openURL",
-          [](folly::dynamic args, Callback successCallback, Callback errorCallback) {
-            winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
-            openURLAsync(uri, successCallback, errorCallback);
-          }),
-      Method(
-          "canOpenURL",
-          [](folly::dynamic args, Callback successCallback, Callback errorCallback) {
-            winrt::Windows::Foundation::Uri uri(Utf8ToUtf16(facebook::xplat::jsArgAsString(args, 0)));
-            canOpenURLAsync(uri, successCallback, errorCallback);
-          }),
-      Method(
-          "getInitialURL",
-          [](folly::dynamic /*args*/, Callback successCallback, Callback /*errorCallback*/) {
-            if (s_initialUri) {
-              successCallback({to_string(s_initialUri.AbsoluteUri())});
-            } else {
-              successCallback({nullptr});
-            }
-          }),
-  };
-}
-
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -5,7 +5,7 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class AdditionAnimatedNode final : public ValueAnimatedNode {
  public:
   AdditionAnimatedNode(
@@ -16,4 +16,4 @@ class AdditionAnimatedNode final : public ValueAnimatedNode {
  private:
   std::unordered_set<int64_t> m_inputNodes{};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

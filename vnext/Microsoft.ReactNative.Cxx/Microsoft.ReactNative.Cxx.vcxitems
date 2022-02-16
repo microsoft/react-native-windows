@@ -35,8 +35,10 @@
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)XamlUtils.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h" />
@@ -67,7 +69,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Popups.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Text.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)XamlHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Automation.Peers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.Xaml.Controls.Primitives.h" />
@@ -101,18 +102,27 @@
     -->
     <ClCompile Include="$(JSI_SourcePath)\jsi\jsi.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
+      <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
 </Project>

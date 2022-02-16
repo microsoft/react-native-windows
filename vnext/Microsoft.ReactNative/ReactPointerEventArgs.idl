@@ -1,0 +1,67 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative {
+  [experimental]
+  [webhosthidden]
+  enum PointerEventKind {
+    DOC_STRING(
+      "Default pointer event kind that corresponding to events that should be "
+      "ignored by the React root view pointer event handler."
+    )
+    None,
+    DOC_STRING(
+      "Pointer event kind corresponding to "
+      "@Windows.UI.Xaml.UIElement.PointerPressedEvent on the React root view."
+    )
+    Start,
+    DOC_STRING(
+      "Pointer event kind corresponding to "
+      "@Windows.UI.Xaml.UIElement.PointerReleasedEvent on the React root view."
+    )
+    End,
+    DOC_STRING(
+      "Pointer event kind corresponding to "
+      "@Windows.UI.Xaml.UIElement.PointerMovedEvent on the React root view."
+    )
+    Move,
+    DOC_STRING(
+      "Pointer event kind corresponding to "
+      "@Windows.UI.Xaml.UIElement.PointerCanceledEvent on the React root view."
+    )
+    Cancel,
+    DOC_STRING(
+      "Pointer event kind corresponding to "
+      "@Windows.UI.Xaml.UIElement.PointerCaptureLostEvent on the React root view."
+    )
+    CaptureLost,
+  };
+
+  [experimental]
+  [webhosthidden]
+  DOC_STRING("Event arguments wrapper for @IViewManagerWithPointerEvents.")
+  runtimeclass ReactPointerEventArgs {
+    DOC_STRING("Gets the wrapped routed pointer event.")
+    XAML_NAMESPACE.Input.PointerRoutedEventArgs Args {
+      get;
+    };
+    DOC_STRING(
+      "Gets or sets the pointer event kind. The only valid override is "
+      "@PointerEventKind.CaptureLost to @PointerEventKind.End to handle cases "
+      "where PointerCaptureLost events on ReactRootView can be safely treated "
+      "as PointerReleased events, e.g., for pointer events on selectable text."
+    )
+    PointerEventKind Kind {
+      get;
+      set;
+    };
+    DOC_STRING("Gets or sets the React target for the pointer event.")
+    Object Target {
+      get;
+      set;
+    };
+  }
+} // namespace Microsoft.ReactNative

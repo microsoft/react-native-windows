@@ -5,7 +5,7 @@
 #include "BatchingQueueThread.h"
 #include "MessageDispatchQueue.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeJSQueueThread() noexcept {
   return std::make_shared<Mso::React::MessageDispatchQueue>(Mso::DispatchQueue::MakeLooperQueue(), nullptr, nullptr);
@@ -23,4 +23,4 @@ std::shared_ptr<facebook::react::BatchingMessageQueueThread> MakeBatchingQueueTh
   return std::make_shared<BatchingQueueThread>(queueThread);
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

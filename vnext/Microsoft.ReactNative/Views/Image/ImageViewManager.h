@@ -18,7 +18,7 @@ class ImageViewManager : public FrameworkElementViewManager {
       const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   ShadowNode *createShadow() const override;
-  void EmitImageEvent(xaml::Controls::Grid grid, const char *eventName, react::uwp::ReactImageSource &source);
+  void EmitImageEvent(xaml::Controls::Grid grid, const char *eventName, ReactImageSource &source);
 
  protected:
   bool UpdateProperty(

@@ -6,7 +6,7 @@
 #include "NativeAnimatedNodeManager.h"
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 ValueAnimatedNode::ValueAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -124,4 +124,4 @@ void ValueAnimatedNode::UpdateTrackingNodes() {
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

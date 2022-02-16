@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -137,7 +137,7 @@ class TouchableOpacity extends React.Component<Props, State> {
   _createPressabilityConfig(): PressabilityConfig {
     return {
       cancelable: !this.props.rejectResponderTermination,
-      disabled: this.props.disabled,
+      disabled: this.props.disabled ?? this.props.accessibilityState?.disabled,
       hitSlop: this.props.hitSlop,
       delayLongPress: this.props.delayLongPress,
       delayPressIn: this.props.delayPressIn,
@@ -146,7 +146,7 @@ class TouchableOpacity extends React.Component<Props, State> {
       pressRectOffset: this.props.pressRetentionOffset,
       onMouseEnter: this.props.onMouseEnter, // [Windows]
       onMouseLeave: this.props.onMouseLeave, // [Windows]
-      onBlur: event => {
+      onBlur: (event) => {
         if (Platform.isTV) {
           this._opacityInactive(250);
         }
@@ -154,7 +154,7 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onBlur(event);
         }
       },
-      onFocus: event => {
+      onFocus: (event) => {
         if (Platform.isTV) {
           this._opacityActive(150);
         }
@@ -164,7 +164,7 @@ class TouchableOpacity extends React.Component<Props, State> {
       },
       onLongPress: this.props.onLongPress,
       onPress: this.props.onPress,
-      onPressIn: event => {
+      onPressIn: (event) => {
         this._opacityActive(
           event.dispatchConfig.registrationName === 'onResponderGrant'
             ? 0
@@ -174,7 +174,7 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onPressIn(event);
         }
       },
-      onPressOut: event => {
+      onPressOut: (event) => {
         this._opacityInactive(250);
         if (this.props.onPressOut != null) {
           this.props.onPressOut(event);
@@ -219,13 +219,21 @@ class TouchableOpacity extends React.Component<Props, State> {
       ...eventHandlersWithoutBlurAndFocus
     } = this.state.pressability.getEventHandlers();
 
+    const accessibilityState =
+      this.props.disabled != null
+        ? {
+            ...this.props.accessibilityState,
+            disabled: this.props.disabled,
+          }
+        : this.props.accessibilityState;
+
     return (
       <Animated.View
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityHint={this.props.accessibilityHint}
         accessibilityRole={this.props.accessibilityRole}
-        accessibilityState={this.props.accessibilityState}
+        accessibilityState={accessibilityState}
         accessibilityActions={this.props.accessibilityActions}
         onAccessibilityAction={this.props.onAccessibilityAction}
         accessibilityValue={this.props.accessibilityValue}

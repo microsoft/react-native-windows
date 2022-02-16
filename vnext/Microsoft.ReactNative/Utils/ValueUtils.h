@@ -8,6 +8,8 @@
 #include <Shared/ReactWindowsAPI.h>
 #include "CppWinRTIncludes.h"
 
+#include <react/renderer/graphics/Color.h>
+
 namespace folly {
 struct dynamic;
 }
@@ -16,16 +18,16 @@ namespace winrt::Microsoft::ReactNative {
 struct JSValue;
 }
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
+xaml::Media::Brush BrushFromColorObject(winrt::hstring resourceName);
 xaml::Media::Brush BrushFromColorObject(const folly::dynamic &d);
 xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSValue &v);
 xaml::Media::SolidColorBrush SolidBrushFromColor(winrt::Windows::UI::Color color);
 
 REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const folly::dynamic &d);
-REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const winrt::Microsoft::ReactNative::JSValue &d);
-REACTWINDOWS_API_(xaml::Media::Brush)
-BrushFrom(const folly::dynamic &d);
+REACTWINDOWS_API_(winrt::Windows::UI::Color) ColorFrom(const winrt::Microsoft::ReactNative::JSValue &v);
+REACTWINDOWS_API_(xaml::Media::Brush) BrushFrom(const folly::dynamic &d);
 
 REACTWINDOWS_API_(xaml::Media::Brush)
 BrushFrom(const winrt::Microsoft::ReactNative::JSValue &v);
@@ -56,4 +58,9 @@ TimeSpanFromMs(double ms);
 
 winrt::Uri UriTryCreate(winrt::param::hstring const &uri);
 
-} // namespace react::uwp
+winrt::Windows::UI::Color ColorFromNumber(DWORD argb) noexcept;
+
+bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v);
+std::optional<winrt::Windows::UI::Color> OptionalColorFrom(const winrt::Microsoft::ReactNative::JSValue &v);
+
+} // namespace Microsoft::ReactNative

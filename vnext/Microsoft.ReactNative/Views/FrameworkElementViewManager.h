@@ -27,14 +27,6 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
       const std::string &propertyName,
       const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
 
-  void TransferProperty(const XamlView &oldView, const XamlView &newView, xaml::DependencyProperty dp);
-
-  void TransferProperty(
-      const XamlView &oldView,
-      const XamlView &newView,
-      xaml::DependencyProperty oldViewDP,
-      xaml::DependencyProperty newViewDP);
-
  private:
   void ApplyTransformMatrix(
       xaml::UIElement uielement,

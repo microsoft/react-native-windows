@@ -4,7 +4,7 @@
 #include <CppUnitTest.h>
 #include <Executors/WebSocketJSExecutor.h>
 
-using namespace react::uwp;
+using namespace Microsoft::ReactNative;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace Microsoft::React::Test {

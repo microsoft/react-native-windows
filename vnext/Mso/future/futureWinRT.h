@@ -27,18 +27,20 @@ struct AsyncActionFutureAdapter : winrt::implements<
           if (strongThis->m_status == AsyncStatus::Started) {
             if (result.IsValue()) {
               strongThis->m_status = AsyncStatus::Completed;
-              if (strongThis->m_completedAssigned) {
-                handler = std::move(strongThis->m_completed);
-              }
             } else {
-              strongThis->m_status = AsyncStatus::Error;
               strongThis->m_error = result.GetError();
+              strongThis->m_status = Mso::CancellationErrorProvider().TryGetErrorInfo(strongThis->m_error, false)
+                  ? AsyncStatus::Canceled
+                  : AsyncStatus::Error;
+            }
+            if (strongThis->m_completedAssigned) {
+              handler = std::move(strongThis->m_completed);
             }
           }
         }
 
         if (handler) {
-          invoke(handler, *strongThis, AsyncStatus::Completed);
+          invoke(handler, *strongThis, strongThis->m_status);
         }
       }
     });
@@ -57,7 +59,9 @@ struct AsyncActionFutureAdapter : winrt::implements<
       m_completedAssigned = true;
 
       if (m_status == AsyncStatus::Started) {
-        m_completed = winrt::impl::make_agile_delegate(handler);
+        m_completed = winrt::impl::make_agile_delegate(
+            [keepAlive = get_strong(), handler = std::move(handler)](
+                auto const &task, winrt::Windows::Foundation::AsyncStatus status) { handler(task, status); });
         return;
       }
 

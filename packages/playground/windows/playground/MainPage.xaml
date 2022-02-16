@@ -16,6 +16,7 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -27,13 +28,25 @@
             VerticalAlignment="Center"
             Grid.Column="0"
             Grid.RowSpan="2"
+            IsCompact="false"
             Click="OnLoadClick"
-            Margin="4"
+        />
+
+        <AppBarButton
+            x:Name="x_UnloadButton"
+            Label="Unload"
+            Icon="Stop"
+            Style="{ThemeResource AppBarButtonRevealStyle}"
+            VerticalAlignment="Center"
+            Grid.Column="1"
+            Grid.RowSpan="2"
+            IsCompact="false"
+            Click="OnUnloadClick"
         />
 
         <Grid
             Grid.Row="0"
-            Grid.Column="1"
+            Grid.Column="2"
             BorderThickness="1,0,0,0"
             BorderBrush="{ThemeResource SystemBaseMediumColor}">
             <Grid.ColumnDefinitions>
@@ -101,24 +114,23 @@
 
         <StackPanel
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="2"
             Orientation="Horizontal"
             BorderThickness="1,0,0,0"
             BorderBrush="{ThemeResource SystemBaseMediumColor}">
             <CheckBox x:Name="x_UseWebDebuggerCheckBox"
                 Margin="8,4,4,4"
                 VerticalAlignment="Center"
-                IsChecked="true"
+                IsChecked="false"
                 Checked="x_UseWebDebuggerCheckBox_Checked"
                 Unchecked="x_UseWebDebuggerCheckBox_Unchecked"
                 Content="Web Debugger"/>
             <CheckBox x:Name="x_UseDirectDebuggerCheckBox"
                 Margin="4"
                 VerticalAlignment="Center"
-                IsChecked="false"
+                IsChecked="true"
                 Content="Direct Debugging"/>
             <CheckBox x:Name="x_BreakOnFirstLineCheckBox"
-                IsEnabled="false"
                 Margin="4"
                 VerticalAlignment="Center"
                 IsChecked="false"
@@ -133,7 +145,6 @@
                 VerticalAlignment="Center"
                 Text="Debugger Port"/>
             <TextBox x:Name="x_DebuggerPort"
-                IsEnabled="false"
                 Margin="4"
                 VerticalAlignment="Center"
                 InputScope="Number"
@@ -144,7 +155,6 @@
                 Text="JS Engine:"/>
             <ComboBox
                 x:Name="x_JsEngine"
-                IsEnabled="false"
                 Margin="4"
                 MinWidth="150"
                 HorizontalAlignment="Stretch"
@@ -155,12 +165,35 @@
                     <ComboBoxItem Content="V8" x:Name="x_engineV8" />
                 </ComboBox.Items>
             </ComboBox>
+            <TextBlock
+                Margin="4"
+                VerticalAlignment="Center"
+                Text="Theme:"/>
+            <ComboBox
+                x:Name="x_Theme"
+                Margin="4"
+                MinWidth="150"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                SelectionChanged="x_Theme_SelectionChanged">
+                <ComboBox.Items>
+                    <ComboBoxItem Content="Default" x:Name="x_themeDefault" />
+                    <ComboBoxItem Content="Light" x:Name="x_themeLight" />
+                    <ComboBoxItem Content="Dark" x:Name="x_themeDark" />
+                </ComboBox.Items>
+            </ComboBox>
+            <CheckBox x:Name="x_UseFabric"
+                Margin="4"
+                VerticalAlignment="Center"
+                IsChecked="false"
+                Content="Enable Fabric"/>
+
         </StackPanel>
         <react:ReactRootView x:Name="ReactRootView"
             BorderThickness="0,1,0,0"
             BorderBrush="{ThemeResource SystemBaseMediumColor}"
             Grid.Row="3"
-            Grid.ColumnSpan="2"
+            Grid.ColumnSpan="3"
             />
     </Grid>
 </Page>

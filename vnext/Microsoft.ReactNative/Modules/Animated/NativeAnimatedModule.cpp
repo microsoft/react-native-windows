@@ -9,7 +9,7 @@
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 const char *NativeAnimatedModule::name{"NativeAnimatedModule"};
 
 NativeAnimatedModule::NativeAnimatedModule(Mso::CntPtr<Mso::React::IReactContext> &&context)
@@ -235,4 +235,4 @@ void NativeAnimatedModule::StartListeningToAnimatedNodeValue(int64_t /*tag*/) {
 void NativeAnimatedModule::StopListeningToAnimatedNodeValue(int64_t /*tag*/) {
   // NotImplemented
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

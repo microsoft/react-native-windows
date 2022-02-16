@@ -5,10 +5,15 @@
  */
 
 import {spawn, SpawnOptions} from 'child_process';
-import * as ora from 'ora';
-import * as spinners from 'cli-spinners';
-import * as chalk from 'chalk';
-import {CodedError, CodedErrorType} from '@react-native-windows/telemetry';
+import ora from 'ora';
+import spinners from 'cli-spinners';
+import chalk from 'chalk';
+import {
+  Telemetry,
+  CodedError,
+  CodedErrors,
+  CodedErrorType,
+} from '@react-native-windows/telemetry';
 
 function setSpinnerText(spinner: ora.Ora, prefix: string, text: string) {
   text = prefix + spinnerString(text);
@@ -42,6 +47,8 @@ export function newSpinner(text: string) {
   return ora(options).start();
 }
 
+export const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+
 export async function runPowerShellScriptFunction(
   taskDescription: string,
   script: string | null,
@@ -55,7 +62,7 @@ export async function runPowerShellScriptFunction(
     await commandWithProgress(
       newSpinner(taskDescription),
       taskDescription,
-      'powershell',
+      powershell,
       [
         '-NoProfile',
         '-ExecutionPolicy',
@@ -80,7 +87,7 @@ export function commandWithProgress(
   verbose: boolean,
   errorCategory: CodedErrorType,
 ) {
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
     const spawnOptions: SpawnOptions = verbose ? {stdio: 'inherit'} : {};
 
     if (verbose) {
@@ -90,11 +97,11 @@ export function commandWithProgress(
     const cp = spawn(command, args, spawnOptions);
     let firstErrorLine: string | null = null;
     if (!verbose) {
-      cp.stdout!.on('data', chunk => {
+      cp.stdout!.on('data', (chunk) => {
         const text = chunk.toString();
         setSpinnerText(spinner, taskDoingName + ': ', text);
       });
-      cp.stderr!.on('data', chunk => {
+      cp.stderr!.on('data', (chunk) => {
         const text: string = chunk.toString();
         if (!firstErrorLine) {
           firstErrorLine = text;
@@ -109,7 +116,7 @@ export function commandWithProgress(
         );
       });
     }
-    cp.on('error', e => {
+    cp.on('error', (e) => {
       if (verbose) {
         console.error(chalk.red(e.toString()));
       }
@@ -117,7 +124,7 @@ export function commandWithProgress(
       const ce = new CodedError(errorCategory, e.message);
       ce.stack = e.stack;
       reject(ce);
-    }).on('close', code => {
+    }).on('close', (code) => {
       if (code === 0) {
         spinner.succeed(taskDoingName);
         resolve();
@@ -151,4 +158,40 @@ export function newSuccess(text: string) {
 
 export function newInfo(text: string) {
   newSpinner(text).info(text);
+}
+
+/**
+ * Sets the process exit code and offers some information at the end of a CLI command.
+ * @param loggingIsEnabled Is verbose logging enabled.
+ * @param error The error caught during the process, if any.
+ */
+export function setExitProcessWithError(
+  loggingIsEnabled?: boolean,
+  error?: Error,
+): void {
+  if (error) {
+    const errorType =
+      error instanceof CodedError ? (error as CodedError).type : 'Unknown';
+
+    process.exitCode = CodedErrors[errorType];
+
+    if (loggingIsEnabled) {
+      console.log(
+        `Command failed with error ${chalk.bold(errorType)}: ${error.message}`,
+      );
+      if (Telemetry.isEnabled()) {
+        console.log(
+          `Your telemetry sessionId was ${chalk.bold(
+            Telemetry.getSessionId(),
+          )}`,
+        );
+      }
+    } else {
+      console.log(
+        `Command failed. Re-run the command with ${chalk.bold(
+          '--logging',
+        )} for more information.`,
+      );
+    }
+  }
 }

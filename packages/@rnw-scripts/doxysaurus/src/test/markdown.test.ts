@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as xml2js from 'xml2js';
+import xml2js from 'xml2js';
 import {applyTemplateRules} from './string-template';
 import {DocCompound, DocMemberOverload} from '../doc-model';
 import {DoxMember} from '../doxygen-model';
@@ -941,8 +941,8 @@ interface PartialLinkResolver {
 
 function getLinkResolver(init: PartialLinkResolver = {}): LinkResolver {
   const emptyLinkResolver: LinkResolver = {
-    resolveCompoundId: _ => undefined,
-    resolveMemberId: _ => [undefined, undefined],
+    resolveCompoundId: (_) => undefined,
+    resolveMemberId: (_) => [undefined, undefined],
     stdTypeLinks: {
       linkPrefix: '',
       linkMap: new Map<string, string>(),

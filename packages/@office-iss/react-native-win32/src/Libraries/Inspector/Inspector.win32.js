@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -19,6 +19,7 @@ const React = require('react');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const View = require('../Components/View/View');
+const ReactNativeStyleAttributes = require('../Components/View/ReactNativeStyleAttributes');
 
 const invariant = require('invariant');
 
@@ -49,10 +50,7 @@ const renderers = findRenderers();
 // Required for React DevTools to view/edit React Native styles in Flipper.
 // Flipper doesn't inject these values when initializing DevTools.
 hook.resolveRNStyle = require('../StyleSheet/flattenStyle');
-const viewConfig = require('../Components/View/ReactNativeViewViewConfig');
-hook.nativeStyleEditorValidAttributes = Object.keys(
-  viewConfig.validAttributes.style,
-);
+hook.nativeStyleEditorValidAttributes = Object.keys(ReactNativeStyleAttributes);
 
 function findRenderers(): $ReadOnlyArray<ReactRenderer> {
   const allRenderers = Array.from(hook.renderers.values());
@@ -77,7 +75,7 @@ function getInspectorDataForViewAtPoint(
         inspectedView,
         locationX,
         locationY,
-        viewData => {
+        (viewData) => {
           // Only return with non-empty view data since only one renderer will have this view.
           if (viewData && viewData.hierarchy.length > 0) {
             callback(viewData);
@@ -137,7 +135,7 @@ class Inspector extends React.Component<
 
   componentWillUnmount() {
     if (this._subs) {
-      this._subs.map(fn => fn());
+      this._subs.map((fn) => fn());
     }
     hook.off('react-devtools', this._attachToDevtools);
     this._setTouchedViewData = null;
@@ -169,7 +167,7 @@ class Inspector extends React.Component<
     }, 100);
   };
 
-  _onAgentShowNativeHighlight = node => {
+  _onAgentShowNativeHighlight = (node: any) => {
     clearTimeout(this._hideTimeoutID);
 
     // Shape of `node` is different in Fabric.
@@ -222,7 +220,7 @@ class Inspector extends React.Component<
   }
 
   onTouchPoint(locationX: number, locationY: number) {
-    this._setTouchedViewData = viewData => {
+    this._setTouchedViewData = (viewData) => {
       const {
         hierarchy,
         props,
@@ -263,7 +261,7 @@ class Inspector extends React.Component<
       this.state.inspectedView,
       locationX,
       locationY,
-      viewData => {
+      (viewData) => {
         if (this._setTouchedViewData != null) {
           this._setTouchedViewData(viewData);
           this._setTouchedViewData = null;
@@ -290,7 +288,7 @@ class Inspector extends React.Component<
 
   setTouchTargeting(val: boolean) {
     PressabilityDebug.setEnabled(val);
-    this.props.onRequestRerenderApp(inspectedView => {
+    this.props.onRequestRerenderApp((inspectedView) => {
       this.setState({inspectedView});
     });
   }
@@ -314,6 +312,7 @@ class Inspector extends React.Component<
         {this.state.inspecting && (
           <InspectorOverlay
             inspected={this.state.inspected}
+            // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             onTouchPoint={this.onTouchPoint.bind(this)}
           />
         )}
@@ -322,15 +321,20 @@ class Inspector extends React.Component<
             devtoolsIsOpen={!!this.state.devtoolsAgent}
             inspecting={this.state.inspecting}
             perfing={this.state.perfing}
+            // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             setPerfing={this.setPerfing.bind(this)}
+            // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             setInspecting={this.setInspecting.bind(this)}
             inspected={this.state.inspected}
             hierarchy={this.state.hierarchy}
             selection={this.state.selection}
+            // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             setSelection={this.setSelection.bind(this)}
             touchTargeting={PressabilityDebug.isEnabled()}
+            // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             setTouchTargeting={this.setTouchTargeting.bind(this)}
             networking={this.state.networking}
+            // $FlowFixMe[method-unbinding] added when improving typing for this parameters
             setNetworking={this.setNetworking.bind(this)}
           />
         </View>

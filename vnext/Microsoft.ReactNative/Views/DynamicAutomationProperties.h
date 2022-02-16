@@ -5,16 +5,7 @@
 
 #include "DynamicAutomationProperties.g.h"
 
-#ifndef PROJECT_ROOT_NAMESPACE
-#define PROJECT_ROOT_NAMESPACE react::uwp
-#else
-namespace winrt::Microsoft::ReactNative {}
-namespace winrt::react::uwp {
-using namespace winrt::Microsoft::ReactNative;
-}
-#endif
-
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 //
 // DynamicAutomationProperties provides attached properties for the various
@@ -32,7 +23,7 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static xaml::DependencyProperty AccessibilityRoleProperty();
   static void SetAccessibilityRole(
       xaml::UIElement const &element,
-      winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles const &value);
+      winrt::Microsoft::ReactNative::AccessibilityRoles const &value);
   static AccessibilityRoles GetAccessibilityRole(xaml::UIElement const &element);
 
   static xaml::DependencyProperty AccessibilityStateSelectedProperty();
@@ -82,17 +73,17 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static xaml::DependencyProperty AccessibilityInvokeEventHandlerProperty();
   static void SetAccessibilityInvokeEventHandler(
       xaml::UIElement const &element,
-      winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler const &value);
-  static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(
+      winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler const &value);
+  static winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler GetAccessibilityInvokeEventHandler(
       xaml::UIElement const &element);
 
   static xaml::DependencyProperty AccessibilityActionsProperty();
 
   static void SetAccessibilityActions(
       xaml::UIElement const &element,
-      Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value);
+      Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value);
 
-  static Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> GetAccessibilityActions(
+  static Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> GetAccessibilityActions(
       xaml::UIElement const &element);
 
   static void DispatchAccessibilityAction(xaml::UIElement const &element, std::wstring_view const &actionName);
@@ -100,25 +91,25 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
   static xaml::DependencyProperty AccessibilityActionEventHandlerProperty();
   static void SetAccessibilityActionEventHandler(
       xaml::UIElement const &element,
-      winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value);
-  static winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
+      winrt::Microsoft::ReactNative::AccessibilityActionEventHandler const &value);
+  static winrt::Microsoft::ReactNative::AccessibilityActionEventHandler GetAccessibilityActionEventHandler(
       xaml::UIElement const &element);
 };
 
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation {
+namespace winrt::Microsoft::ReactNative::factory_implementation {
 struct DynamicAutomationProperties
     : DynamicAutomationPropertiesT<DynamicAutomationProperties, implementation::DynamicAutomationProperties> {};
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::factory_implementation
+} // namespace winrt::Microsoft::ReactNative::factory_implementation
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 // Issue #2172: Calling static members on
-// winrt::react::uwp::DynamicAutomationProperties fails to call
-// down into winrt::react::uwp::implementation::DynamicAutomationProperties
+// winrt::Microsoft::ReactNative::DynamicAutomationProperties fails to call
+// down into winrt::Microsoft::ReactNative::implementation::DynamicAutomationProperties
 // because of how we're
-// using cppwinrt. This workaround is so that consumers in react::uwp can just
+// using cppwinrt. This workaround is so that consumers in Microsoft::ReactNative can just
 // call DynamicAutomationProperties
 
-using DynamicAutomationProperties = winrt::PROJECT_ROOT_NAMESPACE::implementation::DynamicAutomationProperties;
-} // namespace react::uwp
+using DynamicAutomationProperties = winrt::Microsoft::ReactNative::implementation::DynamicAutomationProperties;
+} // namespace Microsoft::ReactNative

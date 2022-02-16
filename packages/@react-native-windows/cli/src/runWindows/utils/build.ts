@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as path from 'path';
+import path from 'path';
 
 import MSBuildTools from './msbuildtools';
 import Version from './version';
@@ -24,12 +24,12 @@ export async function buildSolution(
   buildLogDirectory?: string,
   singleproc?: boolean,
 ) {
-  const minVersion = new Version(10, 0, 18362, 0);
+  const minVersion = new Version(10, 0, 19041, 0);
   const allVersions = MSBuildTools.getAllAvailableUAPVersions();
-  if (!allVersions.some(v => v.gte(minVersion))) {
+  if (!allVersions.some((v) => v.gte(minVersion))) {
     throw new CodedError(
       'MinSDKVersionNotMet',
-      'Must have a minimum Windows SDK version 10.0.18362.0 installed',
+      'Must have a minimum Windows SDK version 10.0.19041.0 installed',
     );
   }
 

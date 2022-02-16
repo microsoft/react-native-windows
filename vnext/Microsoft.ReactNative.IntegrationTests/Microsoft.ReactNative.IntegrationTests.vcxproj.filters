@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="ExecuteJsiTests.cpp" />
     <ClCompile Include="JsiRuntimeTests.cpp" />
@@ -45,9 +45,6 @@
     <None Include="JsiTurboModuleTests.js" />
     <None Include="ReactNativeHostTests.js" />
     <None Include="TurboModuleTests.js" />
-    <None Include="packages.config">
-      <Filter>Other Files</Filter>
-    </None>
     <None Include="JsiSimpleTurboModuleTests.js" />
     <None Include="ReactNotificationServiceTests.js" />
   </ItemGroup>

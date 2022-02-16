@@ -3,6 +3,9 @@
 #include "App.h"
 #include "MainPage.h"
 
+#include "AutolinkedNativeModules.g.h"
+#include "ReactPackageProvider.h"
+
 using namespace winrt;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Activation;
@@ -20,6 +23,7 @@ using namespace playground::implementation;
 App::App() {
   InitializeComponent();
   Suspending({this, &App::OnSuspending});
+  RegisterAutolinkedNativeModulePackages(PackageProviders()); // Includes any autolinked modules
 
 #if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
   UnhandledException([this](IInspectable const &, UnhandledExceptionEventArgs const &e) {

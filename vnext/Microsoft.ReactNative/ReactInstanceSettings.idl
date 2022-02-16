@@ -13,6 +13,22 @@ import "RedBoxHandler.idl";
 namespace Microsoft.ReactNative
 {
   DOC_STRING(
+    "Used in @LogHandler to represent different LogLevels")
+  enum LogLevel
+  {
+    Trace = 0,
+    Info = 1,
+    Warning = 2,
+    Error = 3,
+    Fatal = 4
+  };
+
+  DOC_STRING(
+    "delegate to represent a logging function.")
+  delegate void LogHandler(LogLevel level, String message);
+
+
+  DOC_STRING(
     "A JavaScript engine type that can be set for a React instance in @ReactInstanceSettings.JSIEngineOverride")
   // Keep in sync with enum in IReactInstance.h
   enum JSIEngine
@@ -82,11 +98,6 @@ namespace Microsoft.ReactNative
       "In particular, it enables the developer menu, the default `RedBox` and `LogBox` experience.")
     Boolean UseDeveloperSupport { get; set; };
 
-    // Deprecated - use JavaScriptBundleFile instead
-    [deprecated("Use @.JavaScriptBundleFile instead. It will be removed in version 0.65.", deprecate, 1)]
-    DOC_STRING("Name of the JavaScript bundle file. If @.JavaScriptBundleFile is specified it is used instead.")
-    String JavaScriptMainModuleName { get; set; };
-
     DOC_STRING(
       "The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath. "
       "The `.bundle` extension will be appended to the end, when looking for the bundle file.")
@@ -143,7 +154,7 @@ namespace Microsoft.ReactNative
     // Deprecated
     [deprecated(
       "This property has been replaced by @.UseDeveloperSupport. "
-      "In version 0.63 both properties will do the same thing. It will be removed in version 0.65.", deprecate, 1)]
+      "In version 0.63 both properties will do the same thing. It will be removed in a future version.", deprecate, 1)]
     DOC_STRING(
       "This controls whether various developer experience features are available for this instance. "
       "In particular the developer menu, and the default `RedBox` experience.")
@@ -155,19 +166,9 @@ namespace Microsoft.ReactNative
       "**Note that currently the byte code generation is not implemented for UWP applications.**")
     String ByteCodeFileUri { get; set; };
 
-    // Deprecated
-    [deprecated(
-      "This has been replaced with @.SourceBundleHost and @.SourceBundlePort and will be removed in version 0.65.",
-      deprecate, 1)]
-    DOC_STRING(
-      "When using a @.UseFastRefresh, @.UseLiveReload or @.UseWebDebugger this is the server that will be "
-      "used to load the bundle from.")
-    DOC_DEFAULT("localhost:8081")
-    String DebugHost { get; set; };
-
     DOC_STRING(
       "When loading from a bundle server (such as metro), this is the path that will be requested from the server. "
-      "If this is not provided the value of @.JavaScriptBundleFile or @.JavaScriptMainModuleName is used.")
+      "If this is not provided, the value of @.JavaScriptBundleFile is used.")
     String DebugBundlePath { get; set; };
 
     DOC_STRING("Base path used for the location of the bundle.")
@@ -180,9 +181,20 @@ namespace Microsoft.ReactNative
     UInt16 DebuggerPort { get; set; };
 
     DOC_STRING(
+      "Name to associate with the JavaScript runtime when debugging. \n"
+      "This name will show up in the list of JavaScript runtimes to attach to in edge://inspect or other debuggers")
+    String DebuggerRuntimeName { get; set; };
+
+    DOC_STRING(
       "Provides an extension point to allow custom error handling within the react instance. "
       "See @IRedBoxHandler for more information.")
     IRedBoxHandler RedBoxHandler { get; set; };
+
+    DOC_STRING(
+      "Function that will be hooked into the JavaScript instance as global.nativeLoggingHook. "
+      "This allows native hooks for JavaScript's console implementation. "
+      "If this is not set then logs will print output to the native debug output in debug builds, and no-op in release builds.")
+      LogHandler NativeLogger { get; set; };
 
     DOC_STRING(
       "Control the main UI dispatcher to be used by the React instance. "
@@ -205,7 +217,9 @@ namespace Microsoft.ReactNative
 
     DOC_STRING(
       "The @JSIEngine override to be used with the React instance.\n"
-      "In order the override to work the Microsoft.ReactNative must be compiled with support of that engine.")
+      "In order for the override to work, Microsoft.ReactNative must be compiled with support of that engine. "
+      "This override will be ignored when @.UseWebDebugger is set to true, since the browser must use its own "
+      "engine to debug correctly.")
     DOC_DEFAULT("JSIEngine.Chakra")
     JSIEngine JSIEngineOverride { get; set; };
 

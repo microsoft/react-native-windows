@@ -4,9 +4,9 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as chalk from 'chalk';
+import fs from '@react-native-windows/fs';
+import path from 'path';
+import chalk from 'chalk';
 import {Project} from '../../config/projectConfig';
 import {CodedError} from '@react-native-windows/telemetry';
 
@@ -115,10 +115,11 @@ export function addProjectToSolution(
     );
   }
 
-  const slnLines = fs
-    .readFileSync(slnFile)
-    .toString()
-    .split('\r\n');
+  const originalSlnContents = fs.readFileSync(slnFile).toString();
+
+  const isCRLF = originalSlnContents.includes('\r\n');
+
+  const slnLines = originalSlnContents.split(isCRLF ? '\r\n' : '\n');
 
   let contentsChanged = false;
 
@@ -156,11 +157,11 @@ export function addProjectToSolution(
     '\tGlobalSection(SolutionConfigurationPlatforms) = preSolution',
     '\tEndGlobalSection',
     false,
-  ).map(line => line.match(/\s+([\w\s|]+)\s=/)![1]);
+  ).map((line) => line.match(/\s+([\w\s|]+)\s=/)![1]);
 
   const projectConfigLines: string[] = [];
 
-  slnConfigs.forEach(slnConfig => {
+  slnConfigs.forEach((slnConfig) => {
     if (!slnConfig.endsWith('|Any CPU')) {
       projectConfigLines.push(
         `\t\t${projectGuid}.${slnConfig}.ActiveCfg = ${
@@ -183,7 +184,7 @@ export function addProjectToSolution(
     '\tGlobalSection(ProjectConfigurationPlatforms) = postSolution',
   );
 
-  projectConfigLines.forEach(projectConfigLine => {
+  projectConfigLines.forEach((projectConfigLine) => {
     if (!slnLines.includes(projectConfigLine)) {
       if (verbose) {
         const configLine = projectConfigLine.substr(
@@ -219,7 +220,7 @@ export function addProjectToSolution(
         );
       }
 
-      const slnContents = slnLines.join('\r\n');
+      const slnContents = slnLines.join(isCRLF ? '\r\n' : '\n');
       fs.writeFileSync(slnFile, slnContents, {
         encoding: 'utf8',
         flag: 'w',

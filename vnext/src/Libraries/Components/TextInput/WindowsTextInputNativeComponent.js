@@ -16,9 +16,8 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
   supportedCommands: ['focus', 'blur', 'setTextAndSelection'],
 });
 
-const WindowsTextInputComponent: NativeType = requireNativeComponent<mixed>(
-  'RCTTextInput',
-);
+const WindowsTextInputComponent: NativeType =
+  requireNativeComponent<mixed>('RCTTextInput');
 
 export default WindowsTextInputComponent;
 // [Windows]

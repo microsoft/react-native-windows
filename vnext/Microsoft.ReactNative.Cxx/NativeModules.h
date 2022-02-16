@@ -5,6 +5,7 @@
 // vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
@@ -12,7 +13,6 @@
 #include "ReactContext.h"
 #include "ReactNonAbiValue.h"
 #include "ReactPromise.h"
-#include "winrt/Microsoft.ReactNative.h"
 
 #include <functional>
 #include <type_traits>
@@ -35,7 +35,7 @@
 // - method (required) - the method name the macro is attached to.
 //
 // REACT_INIT annotates a method that is called when a native module is initialized.
-// It must have 'IReactContext const &' parameter.
+// It must have 'ReactContext const &' parameter.
 // It must be an instance method.
 #define REACT_INIT(method) INTERNAL_REACT_MEMBER_2_ARGS(InitMethod, method)
 
@@ -75,6 +75,16 @@
 // It can be an instance or static method.
 #define REACT_CONSTANT_PROVIDER(method) INTERNAL_REACT_MEMBER_2_ARGS(ConstantMethod, method)
 
+// REACT_GET_CONSTANTS(method)
+// Arguments:
+// - method (required) - the method name the macro is attached to.
+//
+// REACT_GET_CONSTANTS annotates a method that defines constants.
+// It must have no parameter.
+// It must return a REACT_STRUCT decorated struct, fields become constants.
+// It can be an instance or static method.
+#define REACT_GET_CONSTANTS(method) INTERNAL_REACT_MEMBER_2_ARGS(ConstantStrongTypedMethod, method)
+
 // REACT_CONSTANT(field, [opt] constantName)
 // Arguments:
 // - field (required) - the field name the macro is attached to.
@@ -111,6 +121,11 @@
 #define REACT_FUNCTION(/* field, [opt] functionName, [opt] moduleName */...) \
   INTERNAL_REACT_MEMBER(__VA_ARGS__)(FunctionField, __VA_ARGS__)
 
+#define REACT_SHOW_CONSTANT_SIGNATURES(signatures)  \
+  " (see details below in output).\n"               \
+  "  It must be one of the following:\n" signatures \
+  "  The C++ method name could be different, just keep the method name identical to the argument in REACT_GET_CONSTANTS\n"
+
 #define REACT_SHOW_METHOD_SIGNATURES(methodName, signatures)                      \
   " (see details below in output).\n"                                             \
   "  It must be one of the following:\n" signatures                               \
@@ -124,6 +139,12 @@
   "  The C++ method name could be different. In that case add the L\"" methodName \
   "\" to the attribute:\n"                                                        \
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
+
+#define REACT_SHOW_CONSTANT_SPEC_ERRORS(index, typeName, signatures)                                        \
+  static_assert(                                                                                            \
+      constantCheckResults[index].IsMethodFound,                                                            \
+      "Method for constant type '" typeName "' is not defined" REACT_SHOW_CONSTANT_SIGNATURES(signatures)); \
+  static_assert(constantCheckResults[index].IsMethodUnique, "Method for constant type '" typeName "' is not unique");
 
 #define REACT_SHOW_METHOD_SPEC_ERRORS(index, methodName, signatures)                                        \
   static_assert(methodCheckResults[index].IsUniqueName, "Name '" methodName "' used for multiple methods"); \
@@ -280,7 +301,7 @@ constexpr void ValidateCoroutineArg() noexcept {
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
         "Coroutine parameter must be passed by value for safe access"
-#ifndef __APPLE__
+#ifndef __clang__
         ": " __FUNCSIG__
 #endif
     );
@@ -739,6 +760,31 @@ struct ModuleConstantInfo<void (*)(ReactConstantProvider &) noexcept> {
   }
 };
 
+template <class TModule, class TStruct>
+struct ModuleConstantInfo<TStruct (TModule::*)() noexcept> {
+  using ModuleType = TModule;
+  using MethodType = TStruct (TModule::*)() noexcept;
+
+  static ConstantProviderDelegate GetConstantProvider(void *module, MethodType method) noexcept {
+    return [module = static_cast<ModuleType *>(module), method](IJSValueWriter const &argWriter) mutable noexcept {
+      auto constants = (module->*method)();
+      WriteProperties(argWriter, constants);
+    };
+  }
+};
+
+template <class TStruct>
+struct ModuleConstantInfo<TStruct (*)() noexcept> {
+  using MethodType = TStruct (*)() noexcept;
+
+  static ConstantProviderDelegate GetConstantProvider(void * /*module*/, MethodType method) noexcept {
+    return [method](IJSValueWriter const &argWriter) mutable noexcept {
+      auto constants = (*method)();
+      WriteProperties(argWriter, constants);
+    };
+  }
+};
+
 template <class TField>
 struct ModuleEventFieldInfo;
 
@@ -829,6 +875,7 @@ enum class ReactMemberKind {
   AsyncMethod,
   SyncMethod,
   ConstantMethod,
+  ConstantStrongTypedMethod,
   ConstantField,
   EventField,
   FunctionField,
@@ -847,6 +894,7 @@ using ReactInitMethodAttribute = ReactMemberAttribute<ReactMemberKind::InitMetho
 using ReactAsyncMethodAttribute = ReactMemberAttribute<ReactMemberKind::AsyncMethod>;
 using ReactSyncMethodAttribute = ReactMemberAttribute<ReactMemberKind::SyncMethod>;
 using ReactConstantMethodAttribute = ReactMemberAttribute<ReactMemberKind::ConstantMethod>;
+using ReactConstantStrongTypedMethodAttribute = ReactMemberAttribute<ReactMemberKind::ConstantStrongTypedMethod>;
 using ReactConstantFieldAttribute = ReactMemberAttribute<ReactMemberKind::ConstantField>;
 using ReactEventFieldAttribute = ReactMemberAttribute<ReactMemberKind::EventField>;
 using ReactFunctionFieldAttribute = ReactMemberAttribute<ReactMemberKind::FunctionField>;
@@ -893,6 +941,8 @@ struct ReactModuleBuilder {
       RegisterSyncMethod(member, attributeInfo.JSMemberName);
     } else if constexpr (std::is_same_v<TAttribute, ReactConstantMethodAttribute>) {
       RegisterConstantMethod(member);
+    } else if constexpr (std::is_same_v<TAttribute, ReactConstantStrongTypedMethodAttribute>) {
+      RegisterConstantStrongTypedMethod(member);
     } else if constexpr (std::is_same_v<TAttribute, ReactConstantFieldAttribute>) {
       RegisterConstantField(member, attributeInfo.JSMemberName);
     } else if constexpr (std::is_same_v<TAttribute, ReactEventFieldAttribute>) {
@@ -923,6 +973,12 @@ struct ReactModuleBuilder {
 
   template <class TMethod>
   void RegisterConstantMethod(TMethod method) noexcept {
+    auto constantProvider = ModuleConstantInfo<TMethod>::GetConstantProvider(m_module, method);
+    m_moduleBuilder.AddConstantProvider(constantProvider);
+  }
+
+  template <class TMethod>
+  void RegisterConstantStrongTypedMethod(TMethod method) noexcept {
     auto constantProvider = ModuleConstantInfo<TMethod>::GetConstantProvider(m_module, method);
     m_moduleBuilder.AddConstantProvider(constantProvider);
   }
@@ -1007,6 +1063,30 @@ struct ReactModuleVerifier {
   VerificationResult m_result;
 };
 
+template <class TModule, class TConstantType>
+struct ReactTypedConstantVerifier {
+  template <int I>
+  constexpr void RegisterModule(std::wstring_view /*_*/, std::wstring_view /*_*/, ReactAttributeId<I>) noexcept {
+    ReactMemberInfoIterator<TModule>{}.template ForEachMember<I + 1>(*this);
+  }
+
+  template <class TMember, class TAttribute, int I>
+  constexpr void Visit(
+      [[maybe_unused]] TMember /*member*/,
+      ReactAttributeId<I> /*attributeId*/,
+      TAttribute /*attributeInfo*/) noexcept {
+    if constexpr (std::is_same_v<TAttribute, ReactConstantStrongTypedMethodAttribute>) {
+      using T1 = TConstantType (*)() noexcept;
+      using T2 = TConstantType (TModule::*)() noexcept;
+      if constexpr (std::is_same_v<TMember, T1> || std::is_same_v<TMember, T2>) {
+        m_matchedCount++;
+      }
+    }
+  }
+
+  int m_matchedCount{0};
+};
+
 template <class TModule, int I, class TMethodSpec>
 struct ReactMethodVerifier {
   static constexpr bool Verify() noexcept {
@@ -1044,6 +1124,40 @@ struct ReactSyncMethodVerifier {
 };
 
 struct TurboModuleSpec {
+  template <class TSignature>
+  struct TypedConstant {
+    constexpr TypedConstant(int index) : Index{index} {}
+
+    int Index;
+  };
+
+  struct ConstantCheckResult {
+    bool IsMethodFound{false};
+    bool IsMethodUnique{true};
+  };
+
+  template <class TModule, class TModuleSpec, class TConstantType>
+  static constexpr ConstantCheckResult CheckConstant(TypedConstant<TConstantType>) noexcept {
+    ReactTypedConstantVerifier<TModule, TConstantType> verifier;
+    GetReactModuleInfo(static_cast<TModule *>(nullptr), verifier);
+    ConstantCheckResult result;
+    result.IsMethodFound = verifier.m_matchedCount > 0;
+    result.IsMethodUnique = verifier.m_matchedCount < 2;
+    return result;
+  }
+
+  template <class TModule, class TModuleSpec, size_t... I>
+  static constexpr auto CheckConstantsHelper(std::index_sequence<I...>) noexcept {
+    return std::array<ConstantCheckResult, sizeof...(I)>{
+        CheckConstant<TModule, TModuleSpec>(std::get<I>(TModuleSpec::constants))...};
+  }
+
+  template <class TModule, class TModuleSpec>
+  static constexpr auto CheckConstants() noexcept {
+    return CheckConstantsHelper<TModule, TModuleSpec>(
+        std::make_index_sequence<std::tuple_size_v<decltype(TModuleSpec::constants)>>{});
+  }
+
   struct BaseMethodSpec {
     constexpr BaseMethodSpec(int index, std::wstring_view name) : Index{index}, Name{name} {}
 
@@ -1168,9 +1282,24 @@ struct ReactModuleTraits {
   static constexpr FactoryType *Factory = GetReactModuleFactory((TModule *)nullptr, 0);
 };
 
+template <class TModule, typename = void>
+struct ReactModuleSpecOrVoid {
+  using Type = void;
+};
+
+template <class TModule>
+struct ReactModuleSpecOrVoid<TModule, std::enable_if_t<(sizeof(typename TModule::ModuleSpec) >= 0)>> {
+  using Type = typename TModule::ModuleSpec;
+};
+
 // Create a module provider for TModule type.
+// If TModule::ModuleSpec exists, it ensures that the module satisfies the spec.
 template <class TModule>
 inline ReactModuleProvider MakeModuleProvider() noexcept {
+  using TModuleSpec = typename ReactModuleSpecOrVoid<TModule>::Type;
+  if constexpr (!std::is_same_v<void, TModuleSpec>) {
+    TModuleSpec::template ValidateModule<TModule>();
+  }
   return [](IReactModuleBuilder const &moduleBuilder) noexcept {
     auto [moduleWrapper, module] = ReactModuleTraits<TModule>::Factory();
     ReactModuleBuilder builder{module, moduleBuilder};
@@ -1180,10 +1309,14 @@ inline ReactModuleProvider MakeModuleProvider() noexcept {
   };
 }
 
-// Create a module provider for TModule type that satisfies the TModuleSpec.
-template <class TModule, class TModuleSpec>
+// Create a module provider for TModule type.
+// It is the same to MakeModuleProvider but it requires TModule::ModuleSpec to exist.
+template <class TModule>
 inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
-  TModuleSpec::template ValidateModule<TModule>();
+  using TModuleSpec = typename ReactModuleSpecOrVoid<TModule>::Type;
+  static_assert(
+      !std::is_same_v<void, TModuleSpec>,
+      "TModule::ModuleSpec must exist and it specifies the specification for this module.");
   return MakeModuleProvider<TModule>();
 }
 

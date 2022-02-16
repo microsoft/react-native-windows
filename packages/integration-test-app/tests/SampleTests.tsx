@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {assert} from 'chai';
 import {AsyncStorage, Image, Platform} from 'react-native';
 import {functionTest, componentTest} from './lib/TestDefinition';
@@ -46,7 +46,7 @@ componentTest('ComponentExample', ({pass, fail}) => {
   return (
     <Image
       source={require('react-native-windows/IntegrationTests/blue_square.png')}
-      onLoad={evt => {
+      onLoad={(evt) => {
         assert.ok(evt.nativeEvent.source);
         pass();
       }}

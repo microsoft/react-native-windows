@@ -9,7 +9,8 @@
 // guarantee correct types
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 
-import * as path from 'path';
+import {platform} from 'os';
+import path from 'path';
 
 import * as configUtils from './configUtils';
 
@@ -117,6 +118,10 @@ export function dependencyConfigWindows(
   folder: string,
   userConfig: Partial<WindowsDependencyConfig> | null = {},
 ): WindowsDependencyConfig | null {
+  if (platform() !== 'win32') {
+    return null;
+  }
+
   if (userConfig === null) {
     return null;
   }
@@ -209,7 +214,7 @@ export function dependencyConfigWindows(
       // Verifying (req) items
       let errorFound = false;
 
-      alwaysRequired.forEach(item => {
+      alwaysRequired.forEach((item) => {
         if (!(item in project)) {
           (project[
             item
@@ -226,6 +231,8 @@ export function dependencyConfigWindows(
 
       const projectContents = configUtils.readProjectFile(projectFile);
 
+      project.projectFile = path.relative(sourceDir, projectFile);
+
       // Calculating (auto) items
       project.projectName = configUtils.getProjectName(
         projectFile,
@@ -237,9 +244,8 @@ export function dependencyConfigWindows(
       if (project.directDependency) {
         // Calculating more (auto) items
 
-        const projectNamespace = configUtils.getProjectNamespace(
-          projectContents,
-        );
+        const projectNamespace =
+          configUtils.getProjectNamespace(projectContents);
 
         if (projectNamespace !== null) {
           const cppNamespace = projectNamespace!.replace(/\./g, '::');
@@ -264,47 +270,72 @@ export function dependencyConfigWindows(
     for (const foundProject of foundProjects) {
       const projectFile = path.join(sourceDir, foundProject);
 
-      const projectLang = configUtils.getProjectLanguage(projectFile);
-
       const projectContents = configUtils.readProjectFile(projectFile);
 
-      const projectName = configUtils.getProjectName(
+      const projectType = configUtils.getProjectType(
         projectFile,
         projectContents,
       );
 
-      const projectGuid = configUtils.getProjectGuid(projectContents);
+      if (
+        projectType === 'dynamiclibrary' ||
+        projectType === 'winmdobj' ||
+        projectType === 'library'
+      ) {
+        const projectLang = configUtils.getProjectLanguage(projectFile);
 
-      const projectNamespace = configUtils.getProjectNamespace(projectContents);
+        const projectName = configUtils.getProjectName(
+          projectFile,
+          projectContents,
+        );
 
-      const directDependency = true;
+        const projectGuid = configUtils.getProjectGuid(projectContents);
 
-      const cppHeaders: string[] = [];
-      const cppPackageProviders: string[] = [];
-      const csNamespaces: string[] = [];
-      const csPackageProviders: string[] = [];
+        const projectNamespace =
+          configUtils.getProjectNamespace(projectContents);
 
-      if (projectNamespace !== null) {
-        const cppNamespace = projectNamespace.replace(/\./g, '::');
-        const csNamespace = projectNamespace.replace(/::/g, '.');
+        const directDependency = true;
 
-        cppHeaders.push(`winrt/${csNamespace}.h`);
-        cppPackageProviders.push(`${cppNamespace}::ReactPackageProvider`);
-        csNamespaces.push(`${csNamespace}`);
-        csPackageProviders.push(`${csNamespace}.ReactPackageProvider`);
+        const cppHeaders: string[] = [];
+        const cppPackageProviders: string[] = [];
+        const csNamespaces: string[] = [];
+        const csPackageProviders: string[] = [];
+
+        if (projectNamespace !== null) {
+          const cppNamespace = projectNamespace.replace(/\./g, '::');
+          const csNamespace = projectNamespace.replace(/::/g, '.');
+
+          cppHeaders.push(`winrt/${csNamespace}.h`);
+          cppPackageProviders.push(`${cppNamespace}::ReactPackageProvider`);
+          csNamespaces.push(`${csNamespace}`);
+          csPackageProviders.push(`${csNamespace}.ReactPackageProvider`);
+        }
+
+        result.projects.push({
+          projectFile: path.relative(sourceDir, projectFile),
+          projectName,
+          projectLang,
+          projectGuid,
+          directDependency,
+          cppHeaders,
+          cppPackageProviders,
+          csNamespaces,
+          csPackageProviders,
+        });
+      } else {
+        const projectPath = path.relative(sourceDir, projectFile);
+        result.projects.push({
+          projectFile: `Error: ${projectPath} is type '${projectType}'`,
+          directDependency: false,
+          projectName: '',
+          projectLang: null,
+          projectGuid: null,
+          cppHeaders: [],
+          cppPackageProviders: [],
+          csNamespaces: [],
+          csPackageProviders: [],
+        });
       }
-
-      result.projects.push({
-        projectFile: path.relative(sourceDir, projectFile),
-        projectName,
-        projectLang,
-        projectGuid,
-        directDependency,
-        cppHeaders,
-        cppPackageProviders,
-        csNamespaces,
-        csPackageProviders,
-      });
     }
   }
 

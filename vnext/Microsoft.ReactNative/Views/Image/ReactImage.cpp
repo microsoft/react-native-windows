@@ -13,6 +13,7 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include <Utils/ValueUtils.h>
+#include "DynamicAutomationPeer.h"
 #include "Unicode.h"
 #include "XamlView.h"
 #include "cdebug.h"
@@ -25,11 +26,12 @@ using namespace xaml;
 using namespace xaml::Media;
 using namespace xaml::Media::Imaging;
 using namespace Windows::Web::Http;
+using namespace xaml::Automation::Peers;
 } // namespace winrt
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 /*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
   auto reactImage = winrt::make_self<ReactImage>();
@@ -44,6 +46,8 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
     if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->AvailableSize(finalSize);
     }
+  } else if (auto brush{Background().try_as<winrt::ImageBrush>()}) {
+    brush.Stretch(ResizeModeToStretch(finalSize));
   }
 
   return finalSize;
@@ -57,11 +61,16 @@ void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
 }
 
-void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
+winrt::AutomationPeer ReactImage::OnCreateAutomationPeer() {
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::DynamicAutomationPeer>(*this);
+}
+
+void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
   if (m_resizeMode != value) {
     m_resizeMode = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool shouldUseCompositionBrush{
+        m_resizeMode == facebook::react::ImageResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -70,7 +79,7 @@ void ReactImage::ResizeMode(react::uwp::ResizeMode value) {
     } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->ResizeMode(value);
     } else if (auto bitmapBrush{Background().as<winrt::ImageBrush>()}) {
-      bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
+      bitmapBrush.Stretch(ResizeModeToStretch());
     }
   }
 }
@@ -79,7 +88,8 @@ void ReactImage::BlurRadius(float value) {
   if (m_blurRadius != value) {
     m_blurRadius = value;
 
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool shouldUseCompositionBrush{
+        m_resizeMode == facebook::react::ImageResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -97,7 +107,8 @@ void ReactImage::TintColor(winrt::Color value) {
 
   if (!sameColor) {
     m_tintColor = value;
-    bool shouldUseCompositionBrush{m_resizeMode == ResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
+    bool shouldUseCompositionBrush{
+        m_resizeMode == facebook::react::ImageResizeMode::Repeat || m_blurRadius > 0 || m_tintColor.A != 0};
     bool switchBrushes{m_useCompositionBrush != shouldUseCompositionBrush};
 
     if (switchBrushes) {
@@ -109,16 +120,20 @@ void ReactImage::TintColor(winrt::Color value) {
   }
 }
 
-winrt::Stretch ReactImage::ResizeModeToStretch(react::uwp::ResizeMode value) {
-  switch (value) {
-    case ResizeMode::Cover:
+winrt::Stretch ReactImage::ResizeModeToStretch() {
+  return ResizeModeToStretch({static_cast<float>(ActualWidth()), static_cast<float>(ActualHeight())});
+}
+
+winrt::Stretch ReactImage::ResizeModeToStretch(winrt::Size size) {
+  switch (m_resizeMode) {
+    case facebook::react::ImageResizeMode::Cover:
       return winrt::Stretch::UniformToFill;
-    case ResizeMode::Stretch:
+    case facebook::react::ImageResizeMode::Stretch:
       return winrt::Stretch::Fill;
-    case ResizeMode::Contain:
+    case facebook::react::ImageResizeMode::Contain:
       return winrt::Stretch::Uniform;
     default: // ResizeMode::Center || ResizeMode::Repeat
-      if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
+      if (m_imageSource.height < size.Height && m_imageSource.width < size.Width) {
         return winrt::Stretch::None;
       } else {
         return winrt::Stretch::Uniform;
@@ -133,7 +148,7 @@ void ReactImage::Source(ReactImageSource source) {
   }
 
   try {
-    winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
+    winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
     winrt::hstring scheme{uri ? uri.SchemeName() : L""};
     winrt::hstring ext{uri ? uri.Extension() : L""};
 
@@ -196,7 +211,7 @@ void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const ReactImageSource source{m_imageSource};
-  winrt::Uri uri{react::uwp::UriTryCreate(Utf8ToUtf16(source.uri))};
+  winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
 
   // Increment the image source ID before any co_await calls
   auto currentImageSourceId = ++m_imageSourceId;
@@ -297,13 +312,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       bool createImageBrush{!imageBrush};
       if (createImageBrush) {
         imageBrush = winrt::ImageBrush{};
-
-        strong_this->m_imageBrushOpenedRevoker =
-            imageBrush.ImageOpened(winrt::auto_revoke, [weak_this, imageBrush](const auto &, const auto &) {
-              if (auto strong_this{weak_this.get()}) {
-                imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
-              }
-            });
+        imageBrush.Stretch(strong_this->ResizeModeToStretch());
       }
 
       if (source.sourceFormat == ImageSourceFormat::Svg) {
@@ -353,6 +362,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                   if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
                     strong_this->m_imageSource.height = bitmap.PixelHeight();
                     strong_this->m_imageSource.width = bitmap.PixelWidth();
+                    imageBrush.Stretch(strong_this->ResizeModeToStretch());
                   }
 
                   strong_this->m_onLoadEndEvent(*strong_this, true);
@@ -458,4 +468,4 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsyn
 
   co_return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

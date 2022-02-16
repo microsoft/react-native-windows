@@ -25,7 +25,7 @@ using namespace xaml::Interop;
 using namespace xaml::Media;
 } // namespace winrt
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 DynamicAutomationPeer::DynamicAutomationPeer(xaml::FrameworkElement const &owner) : Super(owner) {}
 
@@ -47,57 +47,56 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
   auto accessibilityRole = GetAccessibilityRole();
 
   switch (accessibilityRole) {
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Button:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ImageButton:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Switch: // Both ToggleSwitch and
-                                                                    // ToggleButton return
-                                                                    // "Button"
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Button:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Switch:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton:
       return winrt::AutomationControlType::Button;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Link:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Link:
       return winrt::AutomationControlType::Hyperlink;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Image:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Image:
       return winrt::AutomationControlType::Image;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::KeyboardKey:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::KeyboardKey:
       return winrt::AutomationControlType::Custom;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Text:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Header:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Summary:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Alert:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Text:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Header:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Summary:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Alert:
       return winrt::AutomationControlType::Text;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Adjustable:
       return winrt::AutomationControlType::Slider;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::CheckBox:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::CheckBox:
       return winrt::AutomationControlType::CheckBox;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ComboBox:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ComboBox:
       return winrt::AutomationControlType::ComboBox;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Menu:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Menu:
       return winrt::AutomationControlType::Menu;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::MenuBar:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::MenuBar:
       return winrt::AutomationControlType::MenuBar;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::MenuItem:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::MenuItem:
       return winrt::AutomationControlType::MenuItem;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ProgressBar:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ProgressBar:
       return winrt::AutomationControlType::ProgressBar;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Radio:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Radio:
       return winrt::AutomationControlType::RadioButton;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ScrollBar:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ScrollBar:
       return winrt::AutomationControlType::ScrollBar;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::SpinButton:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::SpinButton:
       return winrt::AutomationControlType::Spinner;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Tab:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Tab:
       return winrt::AutomationControlType::TabItem;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::TabList:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::TabList:
       return winrt::AutomationControlType::Tab;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ToolBar:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToolBar:
       return winrt::AutomationControlType::ToolBar;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::List:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::List:
       return winrt::AutomationControlType::List;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ListItem:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ListItem:
       return winrt::AutomationControlType::ListItem;
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::None:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Search:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::RadioGroup:
-    case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Timer:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::None:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Search:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::RadioGroup:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Timer:
       return winrt::AutomationControlType::Group;
   }
 
@@ -108,45 +107,46 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
   auto accessibilityRole = GetAccessibilityRole();
 
   if (patternInterface == winrt::PatternInterface::Invoke &&
-      (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Button ||
-       accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ImageButton ||
-       accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Radio)) {
+      (accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Button ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Radio)) {
     return *this;
   } else if (
       (patternInterface == winrt::PatternInterface::Selection ||
        patternInterface == winrt::PatternInterface::SelectionItem) &&
-      HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected)) {
+      HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Selected)) {
     return *this;
   } else if (
       patternInterface == winrt::PatternInterface::Toggle &&
-      (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::CheckBox ||
-       accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Switch ||
-       accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Radio) &&
-      (HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked) ||
-       HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked))) {
+      (accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::CheckBox ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Switch ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Radio ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton) &&
+      (HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Checked) ||
+       HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked))) {
     return *this;
   } else if (
       patternInterface == winrt::PatternInterface::ExpandCollapse &&
-      (HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded) ||
-       HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed))) {
+      (HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded) ||
+       HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed))) {
     return *this;
   } else if (
       patternInterface == winrt::PatternInterface::Value &&
-      accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ProgressBar &&
-      accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable &&
-      accessibilityRole != winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ScrollBar &&
-      (HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text) ||
-       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now))) {
-    return winrt::make<winrt::PROJECT_ROOT_NAMESPACE::implementation::DynamicValueProvider>(
+      accessibilityRole != winrt::Microsoft::ReactNative::AccessibilityRoles::ProgressBar &&
+      accessibilityRole != winrt::Microsoft::ReactNative::AccessibilityRoles::Adjustable &&
+      accessibilityRole != winrt::Microsoft::ReactNative::AccessibilityRoles::ScrollBar &&
+      (HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue::Text) ||
+       HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue::Now))) {
+    return winrt::make<winrt::Microsoft::ReactNative::implementation::DynamicValueProvider>(
         this->try_as<winrt::FrameworkElementAutomationPeer>());
   } else if (
       patternInterface == winrt::PatternInterface::RangeValue &&
-      (accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ProgressBar ||
-       accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Adjustable ||
-       accessibilityRole == winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::ScrollBar) &&
-      (HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now) &&
-       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min) &&
-       HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max))) {
+      (accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::ProgressBar ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Adjustable ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::ScrollBar) &&
+      (HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue::Now) &&
+       HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue::Min) &&
+       HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue::Max))) {
     return *this;
   }
 
@@ -154,8 +154,8 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
 }
 
 bool DynamicAutomationPeer::IsEnabledCore() const {
-  bool disabled = HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled) &&
-      GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled);
+  bool disabled = HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled) &&
+      GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled);
   return !disabled && Super::IsEnabledCore();
 }
 
@@ -163,8 +163,8 @@ winrt::hstring DynamicAutomationPeer::GetItemStatusCore() const {
   winrt::hstring itemStatus = Super::GetItemStatusCore();
 
   if (itemStatus.empty()) {
-    if (HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy) &&
-        GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy)) {
+    if (HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Busy) &&
+        GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Busy)) {
       itemStatus = L"Busy";
     }
   }
@@ -195,7 +195,7 @@ winrt::com_array<winrt::IRawElementProviderSimple> DynamicAutomationPeer::GetSel
 // ISelectionItemProvider
 
 bool DynamicAutomationPeer::IsSelected() const {
-  return GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected);
+  return GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Selected);
 }
 
 winrt::IRawElementProviderSimple DynamicAutomationPeer::SelectionContainer() const {
@@ -222,8 +222,8 @@ void DynamicAutomationPeer::Select() const {
 // IToggleProvider
 
 winrt::ToggleState DynamicAutomationPeer::ToggleState() const {
-  bool checkedState = GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked);
-  bool uncheckedState = GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked);
+  bool checkedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Checked);
+  bool uncheckedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked);
 
   if (!checkedState && uncheckedState) {
     return winrt::ToggleState::Off;
@@ -245,8 +245,8 @@ void DynamicAutomationPeer::Toggle() const {
 // IExpandCollapseProvider
 
 winrt::ExpandCollapseState DynamicAutomationPeer::ExpandCollapseState() const {
-  bool expandedState = GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded);
-  bool collapsedState = GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed);
+  bool expandedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded);
+  bool collapsedState = GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed);
 
   if (!expandedState && collapsedState) {
     return winrt::ExpandCollapseState::Collapsed;
@@ -269,15 +269,15 @@ void DynamicAutomationPeer::Collapse() const {
 
 // IRangeValueProvider
 double DynamicAutomationPeer::Minimum() {
-  return GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min);
+  return GetAccessibilityValueRange(winrt::Microsoft::ReactNative::AccessibilityValue::Min);
 }
 
 double DynamicAutomationPeer::Maximum() {
-  return GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max);
+  return GetAccessibilityValueRange(winrt::Microsoft::ReactNative::AccessibilityValue::Max);
 }
 
 double DynamicAutomationPeer::Value() {
-  return GetAccessibilityValueRange(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now);
+  return GetAccessibilityValueRange(winrt::Microsoft::ReactNative::AccessibilityValue::Now);
 }
 
 // Controls such as Slider, ProgressBar, ScrollBar are by definition interactive.
@@ -311,7 +311,7 @@ winrt::hstring DynamicAutomationPeer::GetContentName() const {
   winrt::hstring name = L"";
 
   try {
-    if (auto const &viewControl = Owner().try_as<winrt::PROJECT_ROOT_NAMESPACE::ViewControl>()) {
+    if (auto const &viewControl = Owner().try_as<winrt::Microsoft::ReactNative::ViewControl>()) {
       auto viewPanel = viewControl.GetPanel();
 
       for (auto const &child : viewPanel.Children()) {
@@ -328,39 +328,39 @@ winrt::hstring DynamicAutomationPeer::GetContentName() const {
   return name;
 }
 
-winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles DynamicAutomationPeer::GetAccessibilityRole() const {
+winrt::Microsoft::ReactNative::AccessibilityRoles DynamicAutomationPeer::GetAccessibilityRole() const {
   try {
     return DynamicAutomationProperties::GetAccessibilityRole(Owner());
   } catch (...) {
   }
 
-  return winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::None;
+  return winrt::Microsoft::ReactNative::AccessibilityRoles::None;
 }
 
-bool DynamicAutomationPeer::HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const {
+bool DynamicAutomationPeer::HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const {
   try {
     auto const &owner = Owner();
     winrt::IInspectable value = nullptr;
     switch (state) {
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Selected:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateSelectedProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Disabled:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateDisabledProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Checked:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCheckedProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateUncheckedProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Busy:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateBusyProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Expanded:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateExpandedProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityStateCollapsedProperty());
         break;
     }
@@ -371,23 +371,23 @@ bool DynamicAutomationPeer::HasAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE:
   return false;
 }
 
-bool DynamicAutomationPeer::GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates state) const {
+bool DynamicAutomationPeer::GetAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const {
   try {
     auto const &owner = Owner();
     switch (state) {
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Selected:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Selected:
         return DynamicAutomationProperties::GetAccessibilityStateSelected(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Disabled:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Disabled:
         return DynamicAutomationProperties::GetAccessibilityStateDisabled(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Checked:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Checked:
         return DynamicAutomationProperties::GetAccessibilityStateChecked(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Unchecked:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked:
         return DynamicAutomationProperties::GetAccessibilityStateUnchecked(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Busy:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Busy:
         return DynamicAutomationProperties::GetAccessibilityStateBusy(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Expanded:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Expanded:
         return DynamicAutomationProperties::GetAccessibilityStateExpanded(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityStates::Collapsed:
+      case winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed:
         return DynamicAutomationProperties::GetAccessibilityStateCollapsed(owner);
     }
   } catch (...) {
@@ -396,22 +396,22 @@ bool DynamicAutomationPeer::GetAccessibilityState(winrt::PROJECT_ROOT_NAMESPACE:
   return false;
 }
 
-bool DynamicAutomationPeer::HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
+bool DynamicAutomationPeer::HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue accValue) const {
   try {
     auto const &owner = Owner();
     winrt::IInspectable value = nullptr;
 
     switch (accValue) {
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min:
+      case winrt::Microsoft::ReactNative::AccessibilityValue::Min:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueMinProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max:
+      case winrt::Microsoft::ReactNative::AccessibilityValue::Max:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueMaxProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now:
+      case winrt::Microsoft::ReactNative::AccessibilityValue::Now:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueNowProperty());
         break;
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Text:
+      case winrt::Microsoft::ReactNative::AccessibilityValue::Text:
         value = owner.ReadLocalValue(DynamicAutomationProperties::AccessibilityValueTextProperty());
         break;
     }
@@ -422,7 +422,7 @@ bool DynamicAutomationPeer::HasAccessibilityValue(winrt::PROJECT_ROOT_NAMESPACE:
   return false;
 }
 
-winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler
+winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler
 DynamicAutomationPeer::GetAccessibilityInvokeEventHandler() const {
   try {
     return DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(Owner());
@@ -433,16 +433,16 @@ DynamicAutomationPeer::GetAccessibilityInvokeEventHandler() const {
 }
 
 double DynamicAutomationPeer::GetAccessibilityValueRange(
-    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue accValue) const {
+    winrt::Microsoft::ReactNative::AccessibilityValue accValue) const {
   try {
     auto const &owner = Owner();
 
     switch (accValue) {
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Min:
+      case winrt::Microsoft::ReactNative::AccessibilityValue::Min:
         return DynamicAutomationProperties::GetAccessibilityValueMin(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Max:
+      case winrt::Microsoft::ReactNative::AccessibilityValue::Max:
         return DynamicAutomationProperties::GetAccessibilityValueMax(owner);
-      case winrt::PROJECT_ROOT_NAMESPACE::AccessibilityValue::Now:
+      case winrt::Microsoft::ReactNative::AccessibilityValue::Now:
         return DynamicAutomationProperties::GetAccessibilityValueNow(owner);
     }
   } catch (...) {
@@ -451,4 +451,4 @@ double DynamicAutomationPeer::GetAccessibilityValueRange(
   return 0;
 }
 
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation

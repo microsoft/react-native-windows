@@ -1,11 +1,9 @@
+/.vscode
 /node_modules
-/windows/ReactUWPTestApp/Generated Files/
+/windows/RNTesterApp/Generated Files/
 /build
 /errorShots
 /reports
 /dist
-/windows/ReactUWPTestApp/Bundle/
+/windows/RNTesterApp/Bundle/
 msbuild.binlog
-
-# Keep the template certificates
-!**/ReactUwpTestApp_TemporaryKey.pfx 

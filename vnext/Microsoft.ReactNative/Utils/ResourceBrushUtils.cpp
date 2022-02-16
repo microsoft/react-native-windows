@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-
 #include <Utils/ResourceBrushUtils.h>
 #include <Utils/StandardControlResourceKeyNames.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 DefaultBrushStore::DefaultBrushStore() {}
 
@@ -38,6 +37,35 @@ void UpdateResourceBrush(
   if (resources != nullptr) {
     if (brush != nullptr) {
       resources.Insert(winrt::box_value(resourceName), brush);
+    } else {
+      resources.Remove(winrt::box_value(resourceName));
+    }
+  }
+}
+
+void UpdateToggleResourceBrush(
+    const xaml::FrameworkElement &element,
+    const std::wstring &resourceName,
+    const xaml::Media::Brush brush) {
+  // check for null pointers
+  if (const auto resources = element.Resources()) {
+    if (brush) {
+      // check if resources has key
+      if (resources.HasKey(winrt::box_value(resourceName))) {
+        auto resourceBrush = resources.Lookup(winrt::box_value(resourceName));
+        // if both the old Resource Brush and new Resource Brush is a SolidColorBrush, change the color of the brush to
+        // support runtime changes
+        auto colorBrush = brush.try_as<xaml::Media::SolidColorBrush>();
+        auto resourceColorBrush = resourceBrush.try_as<xaml::Media::SolidColorBrush>();
+        if (colorBrush && resourceColorBrush)
+          resourceColorBrush.Color(colorBrush.Color());
+        else
+          resources.Insert(winrt::box_value(resourceName), brush);
+      } else {
+        // else, add the new brush to the resource directory (will need to reload component to see changes)
+        resources.Insert(winrt::box_value(resourceName), brush);
+      }
+      // if the brush is null, remove the resource
     } else {
       resources.Remove(winrt::box_value(resourceName));
     }
@@ -94,29 +122,33 @@ void UpdateToggleSwitchBorderResourceBrushes(
 void UpdateToggleSwitchThumbResourceBrushes(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
     const xaml::Media::Brush thumbBrush) {
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffDisabled, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOn, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPointerOver, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPressed, thumbBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnDisabled, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOff, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPointerOver, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffPressed, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOffDisabled, thumbBrush);
+
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOn, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPointerOver, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnPressed, thumbBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchKnobFillOnDisabled, thumbBrush);
 }
 
-void UpdateToggleSwitchTrackResourceBrushes(
+void UpdateToggleSwitchTrackResourceBrushesOn(
     const xaml::Controls::ToggleSwitch &toggleSwitch,
-    const xaml::Media::Brush onTrackBrush,
-    const xaml::Media::Brush offTrackBrush) {
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOnDisabled, onTrackBrush);
+    const xaml::Media::Brush onTrackBrush) {
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOn, onTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOnPointerOver, onTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOnPressed, onTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOnDisabled, onTrackBrush);
+}
 
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOff, offTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPointerOver, offTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffPressed, offTrackBrush);
-  UpdateResourceBrush(toggleSwitch, c_toggleSwitchFillOffDisabled, offTrackBrush);
+void UpdateToggleSwitchTrackResourceBrushesOff(
+    const xaml::Controls::ToggleSwitch &toggleSwitch,
+    const xaml::Media::Brush offTrackBrush) {
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOff, offTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOffPointerOver, offTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOffPressed, offTrackBrush);
+  UpdateToggleResourceBrush(toggleSwitch, c_toggleSwitchFillOffDisabled, offTrackBrush);
 }
 
 bool IsObjectATextControl(const xaml::DependencyObject &object) {
@@ -147,4 +179,4 @@ void UpdateControlBorderResourceBrushes(const xaml::FrameworkElement &element, c
   }
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -1,8 +1,58 @@
 # Change Log - @rnw-scripts/jest-e2e-config
 
-This log was last generated on Thu, 11 Feb 2021 05:08:29 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.8
+
+Wed, 09 Feb 2022 06:09:37 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @rnw-scripts/babel-node-config to v2.0.4
+
+## 1.1.7
+
+Fri, 03 Dec 2021 06:12:07 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/babel-node-config to v2.0.3
+
+## 1.1.6
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+## 1.1.5
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Integrate May 19th (igklemen@microsoft.com)
+
+## 1.1.4
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/babel-node-config to v2.0.0 (ngerlem@microsoft.com)
+
+## 1.1.3
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Integrate Apr 28 (base of 0.65) Nightly RN Build (ngerlem@microsoft.com)
 
 ## 1.1.2
 

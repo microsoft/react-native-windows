@@ -7,7 +7,7 @@
 #include "AnimatedNode.h"
 #include "AnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class CalculatedAnimationDriver : public AnimationDriver {
  public:
   using AnimationDriver::AnimationDriver;
@@ -18,7 +18,7 @@ class CalculatedAnimationDriver : public AnimationDriver {
  protected:
   virtual std::tuple<float, double> GetValueAndVelocityForTime(double time) = 0;
 
-  virtual bool IsAnimationDone(double currentValue, double currentVelocity) = 0;
+  virtual bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) = 0;
   double m_startValue{0};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

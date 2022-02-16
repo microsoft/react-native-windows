@@ -13,17 +13,31 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+REACT_STRUCT(AnimatedTurboModuleSpec_EndResult)
+struct AnimatedTurboModuleSpec_EndResult {
+    REACT_FIELD(finished)
+    bool finished;
+};
+
+REACT_STRUCT(AnimatedTurboModuleSpec_EventMapping)
+struct AnimatedTurboModuleSpec_EventMapping {
+    REACT_FIELD(nativeEventPath)
+    std::vector<std::string> nativeEventPath;
+    REACT_FIELD(animatedValueTag)
+    std::optional<double> animatedValueTag;
+};
+
 struct AnimatedTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void() noexcept>{0, L"startOperationBatch"},
       Method<void() noexcept>{1, L"finishOperationBatch"},
-      Method<void(double, React::JSValueObject) noexcept>{2, L"createAnimatedNode"},
-      Method<void(double, Callback<React::JSValue>) noexcept>{3, L"getValue"},
+      Method<void(double, ::React::JSValue) noexcept>{2, L"createAnimatedNode"},
+      Method<void(double, Callback<double>) noexcept>{3, L"getValue"},
       Method<void(double) noexcept>{4, L"startListeningToAnimatedNodeValue"},
       Method<void(double) noexcept>{5, L"stopListeningToAnimatedNodeValue"},
       Method<void(double, double) noexcept>{6, L"connectAnimatedNodes"},
       Method<void(double, double) noexcept>{7, L"disconnectAnimatedNodes"},
-      Method<void(double, double, React::JSValueObject, Callback<React::JSValue>) noexcept>{8, L"startAnimatingNode"},
+      Method<void(double, double, ::React::JSValue, Callback<AnimatedTurboModuleSpec_EndResult>) noexcept>{8, L"startAnimatingNode"},
       Method<void(double) noexcept>{9, L"stopAnimation"},
       Method<void(double, double) noexcept>{10, L"setAnimatedNodeValue"},
       Method<void(double, double) noexcept>{11, L"setAnimatedNodeOffset"},
@@ -33,7 +47,7 @@ struct AnimatedTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
       Method<void(double, double) noexcept>{15, L"disconnectAnimatedNodeFromView"},
       Method<void(double) noexcept>{16, L"restoreDefaultValues"},
       Method<void(double) noexcept>{17, L"dropAnimatedNode"},
-      Method<void(double, std::string, React::JSValueObject) noexcept>{18, L"addAnimatedEventToView"},
+      Method<void(double, std::string, AnimatedTurboModuleSpec_EventMapping) noexcept>{18, L"addAnimatedEventToView"},
       Method<void(double, std::string, double) noexcept>{19, L"removeAnimatedEventFromView"},
       Method<void(std::string) noexcept>{20, L"addListener"},
       Method<void(double) noexcept>{21, L"removeListeners"},
@@ -56,13 +70,13 @@ struct AnimatedTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "createAnimatedNode",
-          "    REACT_METHOD(createAnimatedNode) void createAnimatedNode(double tag, React::JSValueObject && config) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(createAnimatedNode) static void createAnimatedNode(double tag, React::JSValueObject && config) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(createAnimatedNode) void createAnimatedNode(double tag, ::React::JSValue && config) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(createAnimatedNode) static void createAnimatedNode(double tag, ::React::JSValue && config) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "getValue",
-          "    REACT_METHOD(getValue) void getValue(double tag, std::function<void(React::JSValue const &)> const & saveValueCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getValue) static void getValue(double tag, std::function<void(React::JSValue const &)> const & saveValueCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getValue) void getValue(double tag, std::function<void(double)> const & saveValueCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getValue) static void getValue(double tag, std::function<void(double)> const & saveValueCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "startListeningToAnimatedNodeValue",
@@ -86,8 +100,8 @@ struct AnimatedTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
           "startAnimatingNode",
-          "    REACT_METHOD(startAnimatingNode) void startAnimatingNode(double animationId, double nodeTag, React::JSValueObject && config, std::function<void(React::JSValue const &)> const & endCallback) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(startAnimatingNode) static void startAnimatingNode(double animationId, double nodeTag, React::JSValueObject && config, std::function<void(React::JSValue const &)> const & endCallback) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(startAnimatingNode) void startAnimatingNode(double animationId, double nodeTag, ::React::JSValue && config, std::function<void(AnimatedTurboModuleSpec_EndResult const &)> const & endCallback) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(startAnimatingNode) static void startAnimatingNode(double animationId, double nodeTag, ::React::JSValue && config, std::function<void(AnimatedTurboModuleSpec_EndResult const &)> const & endCallback) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "stopAnimation",
@@ -136,8 +150,8 @@ struct AnimatedTurboModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
     REACT_SHOW_METHOD_SPEC_ERRORS(
           18,
           "addAnimatedEventToView",
-          "    REACT_METHOD(addAnimatedEventToView) void addAnimatedEventToView(double viewTag, std::string eventName, React::JSValueObject && eventMapping) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(addAnimatedEventToView) static void addAnimatedEventToView(double viewTag, std::string eventName, React::JSValueObject && eventMapping) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(addAnimatedEventToView) void addAnimatedEventToView(double viewTag, std::string eventName, AnimatedTurboModuleSpec_EventMapping && eventMapping) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(addAnimatedEventToView) static void addAnimatedEventToView(double viewTag, std::string eventName, AnimatedTurboModuleSpec_EventMapping && eventMapping) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           19,
           "removeAnimatedEventFromView",

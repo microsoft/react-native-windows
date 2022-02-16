@@ -24,7 +24,7 @@ exports.description = 'Tests that mouse events can be observed';
 exports.examples = [
   {
     title: 'onMouseEnter and onMouseLeave affect style\n',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <ExampleComponent />;
     },
   },
@@ -41,6 +41,14 @@ const styles = StyleSheet.create({
     width: 400,
     height: 400,
     backgroundColor: '#CCCCCC',
+  },
+  borderContainer: {
+    padding: 10,
+    borderColor: 'black',
+    borderWidth: 2,
+  },
+  borderContainerHovered: {
+    borderColor: 'green',
   },
   contentContainer: {
     flex: 1,
@@ -82,6 +90,12 @@ const styles = StyleSheet.create({
   overlayChildHovered: {
     backgroundColor: '#666D80',
   },
+  textHovered: {
+    fontWeight: 'bold',
+  },
+  virtualTextHovered: {
+    fontStyle: 'italic',
+  },
 });
 
 export default class ExampleComponent extends React.Component<
@@ -100,10 +114,13 @@ export default class ExampleComponent extends React.Component<
     this.state = {
       clicked: 0,
       pageHover: false,
+      borderHover: false,
       contentHover: false,
       contentChildHover: false,
       overlayHover: false,
       overlayChildHover: false,
+      textHover: false,
+      virtualTextHover: false,
     };
   }
 
@@ -117,11 +134,21 @@ export default class ExampleComponent extends React.Component<
       onMouseEnter: this.mouseEnterPage,
       onMouseLeave: this.mouseLeavePage,
     };
+    const borderProps: any = {
+      style: [
+        styles.borderContainer,
+        this.state.borderHover ? styles.borderContainerHovered : undefined,
+      ],
+      onMouseEnter: this.mouseEnterBorder,
+      onMouseLeave: this.mouseLeaveBorder,
+    };
     return (
       <View {...pageProps}>
-        <View style={styles.mainContainer}>
-          {this.renderContent()}
-          {this.renderOverlay()}
+        <View {...borderProps}>
+          <View style={styles.mainContainer}>
+            {this.renderContent()}
+            {this.renderOverlay()}
+          </View>
         </View>
         <View>
           <Text>{this.state.pageHover ? 'Mouse over page' : ''}</Text>
@@ -150,9 +177,24 @@ export default class ExampleComponent extends React.Component<
       onPressIn: this.pressIn,
       onPressOut: this.pressOut,
     };
+    const textProps: any = {
+      style: this.state.textHover ? styles.textHovered : undefined,
+      onMouseEnter: this.mouseEnterText,
+      onMouseLeave: this.mouseLeaveText,
+    };
+    const virtualTextProps: any = {
+      style: this.state.virtualTextHover
+        ? styles.virtualTextHovered
+        : undefined,
+      onMouseEnter: this.mouseEnterVirtualText,
+      onMouseLeave: this.mouseLeaveVirtualText,
+    };
 
     return (
       <View {...containerProps}>
+        <Text {...textProps}>
+          Hoverable <Text {...virtualTextProps}>text</Text>
+        </Text>
         <TouchableHighlight {...childProps}>
           <Text>This is a TouchableHighlight</Text>
         </TouchableHighlight>
@@ -194,6 +236,14 @@ export default class ExampleComponent extends React.Component<
     this.setState({pageHover: false});
   };
 
+  mouseEnterBorder = () => {
+    this.setState({borderHover: true});
+  };
+
+  mouseLeaveBorder = () => {
+    this.setState({borderHover: false});
+  };
+
   mouseEnterContentContainer = () => {
     this.setState({contentHover: true});
   };
@@ -219,6 +269,18 @@ export default class ExampleComponent extends React.Component<
   };
   mouseLeaveOverlayChild = () => {
     this.setState({overlayChildHover: false});
+  };
+  mouseEnterText = () => {
+    this.setState({textHover: true});
+  };
+  mouseLeaveText = () => {
+    this.setState({textHover: false});
+  };
+  mouseEnterVirtualText = () => {
+    this.setState({virtualTextHover: true});
+  };
+  mouseLeaveVirtualText = () => {
+    this.setState({virtualTextHover: false});
   };
 
   click = () => {

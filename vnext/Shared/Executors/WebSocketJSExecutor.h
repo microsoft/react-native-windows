@@ -22,7 +22,7 @@ class RAMBundleRegistry;
 }
 } // namespace facebook
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class MessageQueueThread;
 
@@ -72,7 +72,6 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor,
   std::string Call(const std::string &methodName, folly::dynamic &arguments);
   std::future<std::string> SendMessageAsync(int requestId, const std::string &message);
   void OnMessageReceived(const std::string &msg);
-  void flush();
 
   void SetState(State state) noexcept {
     m_state = state;
@@ -121,4 +120,4 @@ class WebSocketJSExecutor : public facebook::react::JSExecutor,
   std::atomic<LONG> m_requestId{0};
 };
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

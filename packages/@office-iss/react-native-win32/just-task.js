@@ -23,16 +23,7 @@ require('@rnw-scripts/just-task/react-native-tasks');
 option('production');
 option('clean');
 
-task('ts', () => {
-  return tscTask({
-    pretty: true,
-    ...(argv().production && {
-      inlineSources: true,
-    }),
-    target: 'es5',
-    module: 'commonjs',
-  });
-});
+task('ts', tscTask());
 
 task('prepareBundle', () => {
   fs.mkdirSync(

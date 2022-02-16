@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,9 +10,7 @@
 'use strict';
 
 // [Win - changes to use local react-native-codegen from tscodegen, which has the flow types removed
-const {
-  parseString,
-} = require('../../../node_modules/react-native-tscodegen/lib/rncodegen/src/parsers/flow');
+const flow = require('../../../node_modules/react-native-tscodegen/lib/rncodegen/src/parsers/flow');
 const RNCodegen = {
   generateViewConfig: ({libraryName, schema}) => {
     // schemaValidator.validate(schema);
@@ -33,7 +31,7 @@ const RNCodegen = {
 const {basename} = require('path');
 
 function generateViewConfig(filename, code) {
-  const schema = parseString(code);
+  const schema = flow.parseString(code);
 
   const libraryName = basename(filename).replace(/NativeComponent\.js$/, '');
   return RNCodegen.generateViewConfig({
@@ -72,7 +70,7 @@ function isCodegenDeclaration(declaration) {
   return false;
 }
 
-module.exports = function({parse, types: t}) {
+module.exports = function ({parse, types: t}) {
   return {
     pre(state) {
       this.code = state.code;
@@ -119,7 +117,7 @@ module.exports = function({parse, types: t}) {
             }
           }
         } else if (path.node.specifiers && path.node.specifiers.length > 0) {
-          path.node.specifiers.forEach(specifier => {
+          path.node.specifiers.forEach((specifier) => {
             if (
               specifier.type === 'ExportSpecifier' &&
               specifier.local.type === 'Identifier' &&
@@ -144,8 +142,12 @@ module.exports = function({parse, types: t}) {
             const viewConfig = generateViewConfig(this.filename, this.code);
             this.defaultExport.replaceWithMultiple(
               // [Win adding filename param see: https://github.com/facebook/react-native/pull/29230
-              parse(viewConfig, {filename: this.filename}).program.body,
-              // Win]
+              parse(viewConfig, {
+                babelrc: false,
+                browserslistConfigFile: false,
+                configFile: false,
+                filename: this.filename,
+              }).program.body, // Win]
             );
             if (this.commandsExport != null) {
               this.commandsExport.remove();

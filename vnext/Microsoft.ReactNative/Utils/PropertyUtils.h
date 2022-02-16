@@ -101,13 +101,13 @@ bool TryUpdateBackgroundBrush(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "backgroundColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      const auto brush = react::uwp::BrushFrom(propertyValue);
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
       element.Background(brush);
-      react::uwp::UpdateControlBackgroundResourceBrushes(element, brush);
+      UpdateControlBackgroundResourceBrushes(element, brush);
     } else if (propertyValue.IsNull()) {
       element.ClearValue(T::BackgroundProperty());
-      react::uwp::UpdateControlBackgroundResourceBrushes(element, nullptr);
+      UpdateControlBackgroundResourceBrushes(element, nullptr);
     }
 
     return true;
@@ -139,13 +139,13 @@ bool TryUpdateForeground(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "color") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      const auto brush = react::uwp::BrushFrom(propertyValue);
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
-      react::uwp::UpdateControlForegroundResourceBrushes(element, brush);
+      UpdateControlForegroundResourceBrushes(element, brush);
     } else if (propertyValue.IsNull()) {
       element.ClearValue(T::ForegroundProperty());
-      react::uwp::UpdateControlForegroundResourceBrushes(element, nullptr);
+      UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 
     return true;
@@ -163,18 +163,18 @@ bool TryUpdateBorderProperties(
   bool isBorderProperty = true;
 
   if (propertyName == "borderColor") {
-    if (react::uwp::IsValidColorValue(propertyValue)) {
-      const auto brush = react::uwp::BrushFrom(propertyValue);
+    if (IsValidColorValue(propertyValue)) {
+      const auto brush = BrushFrom(propertyValue);
       element.BorderBrush(brush);
-      react::uwp::UpdateControlBorderResourceBrushes(element, brush);
+      UpdateControlBorderResourceBrushes(element, brush);
     } else if (propertyValue.IsNull()) {
       // If there's still a border thickness, use the default border brush.
       if (element.BorderThickness() != xaml::ThicknessHelper::FromUniformLength(0.0)) {
-        element.BorderBrush(react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
+        element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
       } else {
         element.ClearValue(T::BorderBrushProperty());
       }
-      react::uwp::UpdateControlBorderResourceBrushes(element, nullptr);
+      UpdateControlBorderResourceBrushes(element, nullptr);
     }
   } else {
     auto iter = edgeTypeMap.find(propertyName);
@@ -186,7 +186,7 @@ bool TryUpdateBorderProperties(
           // Borders with no brush draw something other than transparent on other platforms.
           // To match, we'll use a default border brush if one isn't already set.
           // Note:  Keep this in sync with code in ViewPanel::FinalizeProperties().
-          element.BorderBrush(react::uwp::DefaultBrushStore::Instance().GetDefaultBorderBrush());
+          element.BorderBrush(DefaultBrushStore::Instance().GetDefaultBorderBrush());
         }
       } else if (propertyValue.IsNull()) {
         SetBorderThickness(node, element, iter->second, 0);

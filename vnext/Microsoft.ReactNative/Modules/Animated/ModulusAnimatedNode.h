@@ -5,7 +5,7 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class ModulusAnimatedNode final : public ValueAnimatedNode {
  public:
   ModulusAnimatedNode(
@@ -22,4 +22,4 @@ class ModulusAnimatedNode final : public ValueAnimatedNode {
   static constexpr std::wstring_view s_inputParameterName{L"input"};
   static constexpr std::wstring_view s_modName{L"mod"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

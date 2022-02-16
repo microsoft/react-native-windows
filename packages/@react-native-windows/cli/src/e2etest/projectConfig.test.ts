@@ -4,8 +4,8 @@
  * @format
  */
 
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from '@react-native-windows/fs';
+import path from 'path';
 
 import {
   projectConfigWindows,
@@ -102,6 +102,9 @@ const projects: TargetProject[] = [
     await ensureWinUI3Project(folder);
   }),
   project('WithIndirectDependency'),
+  project('WithExperimentalFeaturesProps'),
+  project('WithUseExperimentalNuget'),
+  project('WithUseExperimentalNugetSetInProject'),
 ];
 
 // Tests that given userConfig is null, the result will always be null
@@ -184,19 +187,9 @@ test('useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalF
   const exd = await al.ensureXAMLDialect();
   expect(exd).toBeTruthy();
 
-  const packagesConfig = (
-    await fs.promises.readFile(
-      path.join(folder, 'windows/WithWinUI3/packages.config'),
-    )
-  ).toString();
-
   const experimentalFeatures = (
-    await fs.promises.readFile(
-      path.join(folder, 'windows/ExperimentalFeatures.props'),
-    )
+    await fs.readFile(path.join(folder, 'windows/ExperimentalFeatures.props'))
   ).toString();
-
-  expect(packagesConfig.replace(/\r/g, '')).toMatchSnapshot();
 
   expect(experimentalFeatures.replace(/\r/g, '')).toMatchSnapshot();
 });

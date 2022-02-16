@@ -8,10 +8,18 @@ import "ReactNativeHost.idl";
 
 namespace Microsoft.ReactNative
 {
+  [experimental]
+  DOC_STRING("Experimental properties for ReactRootView")
+  interface IReactRootViewExperimental
+  {
+    DOC_STRING("Use Fabric for this ReactRootView")
+    Boolean ExperimentalUseFabric { get; set; };
+  }
+
   [default_interface]
   [webhosthidden]
   DOC_STRING("A XAML component that hosts React Native UI elements.")
-  runtimeclass ReactRootView : XAML_NAMESPACE.Controls.Grid
+  runtimeclass ReactRootView : XAML_NAMESPACE.Controls.Grid, IReactRootViewExperimental
   {
     DOC_STRING("Creates a new instance of @ReactRootView.")
     ReactRootView();

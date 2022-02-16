@@ -5,7 +5,7 @@
 #include <folly/dynamic.h>
 #include "ValueAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 class InterpolationAnimatedNode final : public ValueAnimatedNode {
  public:
@@ -55,4 +55,4 @@ class InterpolationAnimatedNode final : public ValueAnimatedNode {
   static constexpr std::wstring_view s_inputName{L"i"};
   static constexpr std::wstring_view s_outputName{L"o"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

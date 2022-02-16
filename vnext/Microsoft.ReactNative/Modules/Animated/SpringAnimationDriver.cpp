@@ -7,7 +7,7 @@
 #include <math.h>
 #include "SpringAnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 SpringAnimationDriver::SpringAnimationDriver(
     int64_t id,
     int64_t animatedValueTag,
@@ -29,7 +29,10 @@ SpringAnimationDriver::SpringAnimationDriver(
   m_iterations = static_cast<int>(config.find(s_iterationsParameterName).dereference().second.asDouble());
 }
 
-bool SpringAnimationDriver::IsAnimationDone(double currentValue, double currentVelocity) {
+bool SpringAnimationDriver::IsAnimationDone(
+    double currentValue,
+    std::optional<double> /*previousValue*/,
+    double currentVelocity) {
   return (
       IsAtRest(currentVelocity, currentValue, m_endValue) ||
       (m_overshootClampingEnabled && IsOvershooting(currentValue)));
@@ -85,4 +88,4 @@ double SpringAnimationDriver::ToValue() {
   return m_endValue;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -8,24 +8,27 @@
 
 #include "ImageViewManager.h"
 
+#include <UI.Xaml.Automation.h>
 #include <winrt/Windows.Foundation.h>
 
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Views/ShadowNodeBase.h>
+#include "DynamicAutomationProperties.h"
 #include "ReactImage.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
 using namespace xaml::Controls;
+using namespace xaml::Automation::Peers;
 } // namespace winrt
 
 // Such code is better to move to a seperate parser layer
 template <>
-struct json_type_traits<react::uwp::ReactImageSource> {
-  static react::uwp::ReactImageSource parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
-    react::uwp::ReactImageSource source;
+struct json_type_traits<Microsoft::ReactNative::ReactImageSource> {
+  static Microsoft::ReactNative::ReactImageSource parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
+    Microsoft::ReactNative::ReactImageSource source;
     for (auto &item : json.AsObject()) {
       if (item.first == "uri")
         source.uri = item.second.AsString();
@@ -49,20 +52,20 @@ struct json_type_traits<react::uwp::ReactImageSource> {
 };
 
 template <>
-struct json_type_traits<react::uwp::ResizeMode> {
-  static react::uwp::ResizeMode parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
-    auto resizeMode{react::uwp::ResizeMode::Contain};
+struct json_type_traits<facebook::react::ImageResizeMode> {
+  static facebook::react::ImageResizeMode parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
+    auto resizeMode{facebook::react::ImageResizeMode::Contain};
 
     if (json == "cover") {
-      resizeMode = react::uwp::ResizeMode::Cover;
+      resizeMode = facebook::react::ImageResizeMode::Cover;
     } else if (json == "contain") {
-      resizeMode = react::uwp::ResizeMode::Contain;
+      resizeMode = facebook::react::ImageResizeMode::Contain;
     } else if (json == "stretch") {
-      resizeMode = react::uwp::ResizeMode::Stretch;
+      resizeMode = facebook::react::ImageResizeMode::Stretch;
     } else if (json == "center") {
-      resizeMode = react::uwp::ResizeMode::Center;
+      resizeMode = facebook::react::ImageResizeMode::Center;
     } else if (json == "repeat") {
-      resizeMode = react::uwp::ResizeMode::Repeat;
+      resizeMode = facebook::react::ImageResizeMode::Repeat;
     }
 
     return resizeMode;
@@ -70,8 +73,6 @@ struct json_type_traits<react::uwp::ResizeMode> {
 };
 
 namespace Microsoft::ReactNative {
-
-using ReactImage = react::uwp::ReactImage;
 
 class ImageShadowNode : public ShadowNodeBase {
  public:
@@ -81,9 +82,15 @@ class ImageShadowNode : public ShadowNodeBase {
     ShadowNodeBase::createView(props);
     auto reactImage{m_view.as<ReactImage>()};
 
+    // Image should default to "accessible: false", but this is not done on the JS level
+    // https://reactnative.dev/docs/image#accessible
+    xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
+    DynamicAutomationProperties::SetAccessibilityRole(
+        *reactImage, winrt::Microsoft::ReactNative::AccessibilityRoles::Image);
+
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
                                               reactImage](const auto &, const bool &succeeded) {
-      react::uwp::ReactImageSource source{reactImage->Source()};
+      ReactImageSource source{reactImage->Source()};
 
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), succeeded ? "topLoad" : "topError", source);
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), "topLoadEnd", source);
@@ -118,9 +125,7 @@ bool ImageViewManager::UpdateProperty(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   auto grid{nodeToUpdate->GetView().as<winrt::Grid>()};
-
-  if (grid == nullptr)
-    return true;
+  auto reactImage{grid.as<ReactImage>()};
 
   bool finalizeBorderRadius{false};
   bool ret = true;
@@ -128,18 +133,25 @@ bool ImageViewManager::UpdateProperty(
   if (propertyName == "source") {
     setSource(grid, propertyValue);
   } else if (propertyName == "resizeMode") {
-    auto resizeMode{json_type_traits<react::uwp::ResizeMode>::parseJson(propertyValue)};
-    auto reactImage{grid.as<ReactImage>()};
+    auto resizeMode{json_type_traits<facebook::react::ImageResizeMode>::parseJson(propertyValue)};
     reactImage->ResizeMode(resizeMode);
   } else if (
       propertyName == "blurRadius" &&
       (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
-    auto reactImage{grid.as<ReactImage>()};
     reactImage->BlurRadius(propertyValue.AsSingle());
-  } else if (propertyName == "tintColor" && react::uwp::IsValidColorValue(propertyValue)) {
-    auto reactImage{grid.as<ReactImage>()};
-    reactImage->TintColor(react::uwp::ColorFrom(propertyValue));
+  } else if (propertyName == "tintColor") {
+    const auto isValidColorValue = IsValidColorValue(propertyValue);
+    if (isValidColorValue || propertyValue.IsNull()) {
+      const auto color = isValidColorValue ? ColorFrom(propertyValue) : winrt::Colors::Transparent();
+      reactImage->TintColor(color);
+    }
+    // Override default accessibility behavior
+  } else if (propertyName == "accessible" && propertyValue.IsNull()) {
+    xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
+  } else if (propertyName == "accessibilityRole" && propertyValue.IsNull()) {
+    DynamicAutomationProperties::SetAccessibilityRole(
+        *reactImage, winrt::Microsoft::ReactNative::AccessibilityRoles::Image);
   } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, grid, propertyName, propertyValue)) {
     finalizeBorderRadius = true;
   } else if (TryUpdateBorderProperties(nodeToUpdate, grid, propertyName, propertyValue)) {
@@ -154,7 +166,7 @@ bool ImageViewManager::UpdateProperty(
   return ret;
 }
 
-void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, react::uwp::ReactImageSource &source) {
+void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {
   int64_t tag = grid.Tag().as<winrt::IPropertyValue>().GetInt64();
   folly::dynamic imageSource =
       folly::dynamic::object()("uri", source.uri)("width", source.width)("height", source.height);
@@ -164,7 +176,7 @@ void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, r
 }
 
 void ImageViewManager::setSource(winrt::Grid grid, const winrt::Microsoft::ReactNative::JSValue &data) {
-  auto sources{json_type_traits<std::vector<react::uwp::ReactImageSource>>::parseJson(data)};
+  auto sources{json_type_traits<std::vector<ReactImageSource>>::parseJson(data)};
   sources[0].bundleRootPath = GetReactContext().SettingsSnapshot().BundleRootPath();
 
   if (sources[0].packagerAsset && sources[0].uri.find("file://") == 0) {

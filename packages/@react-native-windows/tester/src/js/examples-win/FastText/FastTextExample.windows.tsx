@@ -6,7 +6,7 @@
 
 import {Text, View, Button} from 'react-native';
 
-import * as React from 'react';
+import React from 'react';
 
 class WithoutCurlyBracketsExample extends React.Component<{}, any> {
   constructor(props: {}) {
@@ -109,6 +109,24 @@ class SlowExamples extends React.Component<{}, any> {
   }
 }
 
+class ClearFastTextExample extends React.Component<{}, any> {
+  constructor(props: {}) {
+    super(props);
+    this.state = {pressed: false};
+  }
+  public render() {
+    return (
+      <View>
+        <Button
+          title={'UPDATE STATE'}
+          onPress={() => this.setState({pressed: !this.state.pressed})}
+        />
+        <Text>{this.state.pressed ? 'Some text' : null}</Text>
+      </View>
+    );
+  }
+}
+
 export const displayName = undefined;
 export const title = 'Fast Path Texts';
 export const category = 'Basic';
@@ -117,38 +135,44 @@ export const description =
 export const examples = [
   {
     title: 'Without curly brackets example',
-    render: function() {
+    render: function () {
       return <WithoutCurlyBracketsExample />;
     },
   },
   {
     title: 'Within curly brackets example',
-    render: function() {
+    render: function () {
       return <WithinCurlyBracketsExample />;
     },
   },
   {
     title: 'String interpolation example',
-    render: function() {
+    render: function () {
       return <InterpolationExample />;
     },
   },
   {
     title: 'Changing states within text example',
-    render: function() {
+    render: function () {
       return <ChangingStateExample />;
     },
   },
   {
     title: 'Fast to slow text example',
-    render: function() {
+    render: function () {
       return <FastToSlowTextExample />;
     },
   },
   {
     title: 'Slow path text examples',
-    render: function() {
+    render: function () {
       return <SlowExamples />;
+    },
+  },
+  {
+    title: 'Clear fast path text example',
+    render: function () {
+      return <ClearFastTextExample />;
     },
   },
 ];

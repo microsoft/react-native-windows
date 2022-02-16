@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {
   AppRegistry,
   Switch,
@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 function wait(timeout: number) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });
 }

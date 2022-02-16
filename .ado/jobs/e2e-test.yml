@@ -3,110 +3,150 @@ parameters:
   - name: buildEnvironment
     type: string
     default : PullRequest
-    values: 
-     - PullRequest 
-     - Continuous 
+    values:
+      - PullRequest
+      - Continuous
+  - name: AgentPool
+    type: object
+  - name: buildMatrix
+    type: object
+    default:
+      - BuildEnvironment: PullRequest
+        Matrix:
+          - Name: X64Chakra
+            BuildPlatform: x64
+            UseHermes: false
+          - Name: X64Hermes
+            BuildPlatform: x64
+            UseHermes: true
+      - BuildEnvironment: Continuous
+        Matrix:
+          - Name: X64Chakra
+            BuildPlatform: x64
+            UseHermes: false
+          - Name: X64Hermes
+            BuildPlatform: x64
+            UseHermes: true
+          - Name: X86Chakra
+            BuildPlatform: x86
+            UseHermes: false
+          - Name: X86Hermes
+            BuildPlatform: x86
+            UseHermes: true
 
 jobs:
-  - job: E2ETest
-    displayName: E2E Test App
-    strategy:
-      matrix:
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          # Arm E2E does not build on non-arm agents
-          # Arm:
-          #   BuildPlatform: ARM
-          # Arm64:
-          #   BuildPlatform: ARM64
-          x64:
-            BuildPlatform: x64
-        # End Continuous only
-        x86:
-          BuildPlatform: x86
+  - ${{ each config in parameters.buildMatrix }}:
+    - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
+      - ${{ each matrix in config.Matrix }}:
+        - job: E2ETest${{ matrix.Name }}
+          displayName: E2E Test App ${{ matrix.Name }}
 
-    variables:
-      - template: ../variables/vs2019.yml
+          variables: [template: ../variables/windows.yml]
+          pool: ${{ parameters.AgentPool.Medium }}
+          timeoutInMinutes: 60 # how long to run the job before automatically cancelling
+          cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
-    pool:
-      vmImage: $(VmImage)
+          steps:
+            - template: ../templates/checkout-shallow.yml
 
-    timeoutInMinutes: 60 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
+            - template: ../templates/prepare-js-env.yml
 
-    steps:
-      - checkout: self
-        clean: true
-        submodules: false
-            
-      - powershell: |
-          Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs"
-        displayName: Set BuildLogDirectory
+            - template: ../templates/prepare-build-env.yml
+              parameters:
+                platform: ${{ matrix.BuildPlatform }}
+                configuration: Release
+                buildEnvironment: ${{ config.buildEnvironment }}
 
-      - template: ../templates/prepare-env.yml
+            - powershell: |
+                Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs"
+              displayName: Set BuildLogDirectory
 
-      - task: CmdLine@2
-        displayName: Set LocalDumps
-        inputs:
-          script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd ReactUWPTestApp
-          workingDirectory: $(Build.SourcesDirectory)
+            - task: CmdLine@2
+              displayName: Set LocalDumps
+              inputs:
+                script: $(Build.SourcesDirectory)\.ado\scripts\SetupLocalDumps.cmd RNTesterApp
+                workingDirectory: $(Build.SourcesDirectory)
 
-      - task: CmdLine@2
-        displayName: Set up AppVerifer on ReactUWPTestApp
-        inputs:
-          script: regedit /S $(Build.SourcesDirectory)\.ado\scripts\ReactUWPTestApp.reg
-          workingDirectory: $(Build.SourcesDirectory)
-        condition: false # Must be manually enabled, since it causes a 5x perf reduction that causes test instability
+            - task: PowerShell@2
+              displayName: Start tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
 
-      - task: CmdLine@2
-        displayName: run-windows
-        inputs:
-          script: yarn windows --no-launch --no-packager --arch $(BuildPlatform) --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
-          workingDirectory: packages/e2e-test-app
+            - template: ../templates/set-experimental-feature.yml
+              parameters:
+                package: packages/e2e-test-app
+                feature: UseHermes
+                value: ${{ matrix.UseHermes }}
 
-      - script: |
-          echo ##vso[task.setvariable variable=StartedTests]true
-        displayName: Set StartedTests
+            - template: ../templates/run-windows-with-certificates.yml
+              parameters:
+                buildEnvironment: ${{ parameters.BuildEnvironment }}
+                certificateName: reactUWPTestAppEncodedKey
+                buildConfiguration: Release
+                buildPlatform: ${{ matrix.BuildPlatform }}
+                buildLogDirectory: $(BuildLogDirectory)
+                workingDirectory: packages/e2e-test-app
 
-      - script: yarn e2etest
-        displayName: yarn e2etest
-        workingDirectory: packages/e2e-test-app
+            - script: |
+                echo ##vso[task.setvariable variable=StartedTests]true
+              displayName: Set StartedTests
 
-      - script: yarn e2etest -u
-        displayName: Update snapshots
-        workingDirectory: packages/e2e-test-app
-        condition: and(failed(), eq(variables.StartedTests, 'true'))
+            - script: yarn e2etest
+              displayName: yarn e2etest
+              workingDirectory: packages/e2e-test-app
 
-      - task: CopyFiles@2
-        displayName: Copy snapshots
-        inputs:
-          sourceFolder: packages/e2e-test-app/test/__snapshots__
-          targetFolder: $(Build.StagingDirectory)/snapshots
-          contents: "**"
-        condition: failed()
+            - script: yarn e2etest -u
+              displayName: Update snapshots
+              workingDirectory: packages/e2e-test-app
+              condition: and(failed(), eq(variables.StartedTests, 'true'))
 
-      - task: CopyFiles@2
-        displayName: Copy ReactUWPTestApp artifacts
-        inputs:
-          sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/ReactUWPTestApp
-          targetFolder: $(Build.StagingDirectory)/ReactUWPTestApp
-          contents: AppPackages\**
-        condition: failed()
+            - task: PowerShell@2
+              displayName: Stop tracing
+              inputs:
+                targetType: filePath # filePath | inline
+                filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Stop-Tracing.ps1
+                arguments: -NoAnalysis -outputFolder $(Build.StagingDirectory)/Tracing
+              condition: true
 
-      - task: PublishPipelineArtifact@1
-        displayName: "Publish Artifact:ReactUWPTestApp"
-        inputs:
-          artifactName: ReactUWPTestApp-$(BuildPlatform)-$(System.JobAttempt)
-          targetPath: $(Build.StagingDirectory)/ReactUWPTestApp
-        condition: failed()
+            - task: PublishBuildArtifacts@1
+              displayName: Upload traces
+              inputs:
+                pathtoPublish: '$(Build.StagingDirectory)/Tracing'
+                artifactName: 'Traces - $(Agent.JobName)-$(System.JobAttempt)'
+              condition: true
 
-      - task: PublishPipelineArtifact@1
-        displayName: "Publish Artifact:Snapshots"
-        inputs:
-          artifactName: Snapshots-$(BuildPlatform)-$(System.JobAttempt)
-          targetPath: $(Build.StagingDirectory)/snapshots
-        condition: failed()
+            - task: CopyFiles@2
+              displayName: Copy snapshots
+              inputs:
+                sourceFolder: packages/e2e-test-app/test/__snapshots__
+                targetFolder: $(Build.StagingDirectory)/snapshots
+                contents: "**"
+              condition: failed()
 
-      - template: ../templates/upload-build-logs.yml
-        parameters:
-          buildLogDirectory: '$(BuildLogDirectory)'
-          condition: succeededOrFailed()
+            - task: CopyFiles@2
+              displayName: Copy RNTesterApp artifacts
+              inputs:
+                sourceFolder: $(Build.SourcesDirectory)/packages/e2e-test-app/windows/RNTesterApp
+                targetFolder: $(Build.StagingDirectory)/RNTesterApp
+                contents: AppPackages\**
+              condition: failed()
+
+            - task: PublishPipelineArtifact@1
+              displayName: "Publish Artifact:RNTesterApp"
+              inputs:
+                artifactName: RNTesterApp-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                targetPath: $(Build.StagingDirectory)/RNTesterApp
+              condition: failed()
+
+            - task: PublishPipelineArtifact@1
+              displayName: "Publish Artifact:Snapshots"
+              inputs:
+                artifactName: Snapshots-${{ matrix.BuildPlatform }}-$(System.JobAttempt)
+                targetPath: $(Build.StagingDirectory)/snapshots
+              condition: failed()
+
+            - template: ../templates/upload-build-logs.yml
+              parameters:
+                buildLogDirectory: '$(BuildLogDirectory)'
+                condition: succeededOrFailed()

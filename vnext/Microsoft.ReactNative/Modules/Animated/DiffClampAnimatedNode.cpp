@@ -6,12 +6,12 @@
 #include "DiffClampAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 DiffClampAnimatedNode::DiffClampAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : ValueAnimatedNode(tag, config, manager) {
+    : ValueAnimatedNode(tag, manager) {
   m_inputNodeTag = static_cast<int64_t>(config.find(s_inputName).dereference().second.asDouble());
   m_min = config.find(s_minName).dereference().second.asDouble();
   m_max = config.find(s_maxName).dereference().second.asDouble();
@@ -27,4 +27,4 @@ DiffClampAnimatedNode::DiffClampAnimatedNode(
     return anim;
   }());
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

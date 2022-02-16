@@ -12,7 +12,7 @@
 #include "PropsAnimatedNode.h"
 #include "StyleAnimatedNode.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 PropsAnimatedNode::PropsAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
@@ -41,7 +41,7 @@ PropsAnimatedNode::PropsAnimatedNode(
 
 void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
   if (m_connectedViewTag != s_connectedViewTagUnset) {
-    throw new std::invalid_argument(
+    throw std::invalid_argument(
         "Animated node " + std::to_string(m_tag) + " has already been attached to a view already exists.");
     return;
   }
@@ -50,8 +50,10 @@ void PropsAnimatedNode::ConnectToView(int64_t viewTag) {
 }
 
 void PropsAnimatedNode::DisconnectFromView(int64_t viewTag) {
-  if (m_connectedViewTag != viewTag) {
-    throw new std::invalid_argument(
+  if (m_connectedViewTag == s_connectedViewTagUnset) {
+    return;
+  } else if (m_connectedViewTag != viewTag) {
+    throw std::invalid_argument(
         "Attempting to disconnect view that has not been connected with the given animated node.");
     return;
   }
@@ -89,7 +91,10 @@ void PropsAnimatedNode::UpdateView() {
           MakeAnimation(styleEntry.second, styleEntry.first);
         }
       } else if (const auto &valueNode = manager->GetValueAnimatedNode(entry.second)) {
-        MakeAnimation(entry.second, StringToFacadeType(entry.first));
+        const auto &facade = StringToFacadeType(entry.first);
+        if (facade != FacadeType::None) {
+          MakeAnimation(entry.second, facade);
+        }
       }
     }
   }
@@ -116,7 +121,6 @@ void PropsAnimatedNode::StartAnimations() {
     if (const auto uiElement = GetUIElement()) {
       // Work around for https://github.com/microsoft/microsoft-ui-xaml/issues/2511
       EnsureUIElementDirtyForRender(uiElement);
-      uiElement.RotationAxis(m_rotationAxis);
       for (const auto &anim : m_expressionAnimations) {
         if (anim.second.Target() == L"Translation.X") {
           m_subchannelPropertySet.StartAnimation(L"TranslationX", anim.second);
@@ -130,6 +134,9 @@ void PropsAnimatedNode::StartAnimations() {
         } else if (anim.second.Target() == L"Scale.Y") {
           m_subchannelPropertySet.StartAnimation(L"ScaleY", anim.second);
           uiElement.StartAnimation(m_scaleCombined);
+        } else if (anim.second.Target() == L"Rotation") {
+          uiElement.RotationAxis(m_rotationAxis);
+          uiElement.StartAnimation(anim.second);
         } else {
           uiElement.StartAnimation(anim.second);
         }
@@ -279,4 +286,4 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
   }
   return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

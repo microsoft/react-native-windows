@@ -4,12 +4,11 @@
 #pragma once
 
 #include <UI.Xaml.Media.h>
+#include <react/renderer/imagemanager/primitives.h>
 #include <winrt/Windows.Foundation.h>
 #include "CppWinRTIncludes.h"
 
-namespace react::uwp {
-
-enum class ResizeMode { Cover = 0, Contain = 1, Stretch = 2, Repeat = 3, Center = 4 };
+namespace Microsoft::ReactNative {
 
 struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush> {
   using Super = xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>;
@@ -24,10 +23,10 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
   void OnDisconnected();
 
   // Public Properties
-  react::uwp::ResizeMode ResizeMode() {
+  facebook::react::ImageResizeMode ResizeMode() {
     return m_resizeMode;
   }
-  void ResizeMode(react::uwp::ResizeMode value);
+  void ResizeMode(facebook::react::ImageResizeMode value);
 
   float BlurRadius() {
     return m_blurRadius;
@@ -59,10 +58,10 @@ struct ReactImageBrush : xaml::Media::XamlCompositionBrushBaseT<ReactImageBrush>
       bool forceEffectBrush = false);
 
   float m_blurRadius{0};
-  react::uwp::ResizeMode m_resizeMode{ResizeMode::Contain};
+  facebook::react::ImageResizeMode m_resizeMode{facebook::react::ImageResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
   winrt::Windows::Foundation::Size m_availableSize{};
   xaml::Media::LoadedImageSurface m_loadedImageSurface{nullptr};
   comp::CompositionEffectBrush m_effectBrush{nullptr};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

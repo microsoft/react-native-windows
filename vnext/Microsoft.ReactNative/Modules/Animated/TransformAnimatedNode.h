@@ -6,7 +6,7 @@
 #include "AnimatedNode.h"
 #include "FacadeType.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 struct TransformConfig {
  public:
   std::string property;
@@ -34,4 +34,4 @@ class TransformAnimatedNode final : public AnimatedNode {
   static constexpr std::string_view s_nodeTagName{"nodeTag"};
   static constexpr std::string_view s_valueName{"value"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

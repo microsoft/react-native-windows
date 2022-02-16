@@ -6,6 +6,7 @@
 
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
+    <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

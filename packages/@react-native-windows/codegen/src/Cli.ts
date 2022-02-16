@@ -5,15 +5,15 @@
  * @format
  */
 
-import * as yargs from 'yargs';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as globby from 'globby';
+import yargs from 'yargs';
+import path from 'path';
+import fs from '@react-native-windows/fs';
+import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
 // @ts-ignore
-import * as schemaValidator from 'react-native-tscodegen/lib/rncodegen/src/schemaValidator';
+import schemaValidator from 'react-native-tscodegen/lib/rncodegen/src/schemaValidator';
 
 const argv = yargs.options({
   file: {
@@ -32,6 +32,11 @@ const argv = yargs.options({
     type: 'string',
     describe: 'C++/C# Namespace to put generated native modules in',
     default: 'MyNamespace',
+  },
+  libraryName: {
+    type: 'string',
+    required: true,
+    describe: 'Used for part of the path generated within the codegen dir',
   },
 }).argv;
 
@@ -74,20 +79,44 @@ const GENERATORS = {
 };
 */
 
+function normalizeFileMap(
+  map: Map<string, string>,
+  outputDir: string,
+  outMap: Map<string, string>,
+): void {
+  for (const [fileName, contents] of map) {
+    const location = path.join(outputDir, fileName);
+    outMap.set(path.normalize(location), contents);
+  }
+}
+
 function checkFilesForChanges(
   map: Map<string, string>,
   outputDir: string,
 ): boolean {
   let hasChanges = false;
 
-  for (const [contents, fileName] of map) {
-    const location = path.join(outputDir, fileName);
-    if (!fs.existsSync(location)) {
+  const allExistingFiles = globby
+    .sync(`${outputDir}/**`)
+    .map((_) => path.normalize(_))
+    .sort();
+  const allGeneratedFiles = [...map.keys()]
+    .map((_) => path.normalize(_))
+    .sort();
+
+  if (
+    allExistingFiles.length !== allGeneratedFiles.length ||
+    !allExistingFiles.every((val, index) => val === allGeneratedFiles[index])
+  )
+    return true;
+
+  for (const [fileName, contents] of map) {
+    if (!fs.existsSync(fileName)) {
       hasChanges = true;
       continue;
     }
 
-    const currentContents = fs.readFileSync(location, 'utf8');
+    const currentContents = fs.readFileSync(fileName, 'utf8');
     if (currentContents !== contents) {
       console.error(`- ${fileName} has changed`);
       hasChanges = true;
@@ -100,18 +129,46 @@ function checkFilesForChanges(
 
 function writeMapToFiles(map: Map<string, string>, outputDir: string) {
   let success = true;
-  map.forEach((contents: string, fileName: string) => {
-    try {
-      const location = path.join(outputDir, fileName);
-      fs.mkdirSync(path.dirname(location), {recursive: true});
-      fs.writeFileSync(location, contents);
-    } catch (error) {
-      success = false;
-      console.error(`Failed to write ${fileName} to ${outputDir}`, error);
+
+  // This ensures that we delete any generated files from modules that have been deleted
+  const allExistingFiles = globby.sync(`${outputDir}/**`);
+  allExistingFiles.forEach((existingFile) => {
+    if (!map.has(path.normalize(existingFile))) {
+      fs.unlinkSync(existingFile);
     }
   });
 
+  for (const [fileName, contents] of map) {
+    try {
+      fs.mkdirSync(path.dirname(fileName), {recursive: true});
+
+      if (fs.existsSync(fileName)) {
+        const currentContents = fs.readFileSync(fileName, 'utf8');
+        // Don't update the files if there are no changes as this breaks incremental builds
+        if (currentContents === contents) {
+          continue;
+        }
+      }
+
+      fs.writeFileSync(fileName, contents);
+    } catch (error) {
+      success = false;
+      console.error(`Failed to write ${fileName} to ${fileName}`, error);
+    }
+  }
+
   return success;
+}
+
+function parseFlowFile(filename: string): SchemaType {
+  try {
+    return parseFile(filename);
+  } catch (e) {
+    if (e instanceof Error) {
+      e.message = `(${filename}): ${e.message}`;
+    }
+    throw e;
+  }
 }
 
 function combineSchemas(files: string[]): SchemaType {
@@ -123,11 +180,8 @@ function combineSchemas(files: string[]): SchemaType {
         (/export\s+default\s+\(?codegenNativeComponent</.test(contents) ||
           contents.includes('extends TurboModule'))
       ) {
-        const schema = parseFile(filename);
-
-        if (schema && schema.modules) {
-          merged.modules = {...merged.modules, ...schema.modules};
-        }
+        const schema = parseFlowFile(filename);
+        merged.modules = {...merged.modules, ...schema.modules};
       }
       return merged;
     },
@@ -141,26 +195,68 @@ function generate(
 ): boolean {
   schemaValidator.validate(schema);
 
-  const generatedFiles = [];
-  /*
-  for (const name of generators) {
-    for (const generator of GENERATORS[name]) {
-      generatedFiles.push(...generator(libraryName, schema, moduleSpecName));
-    }
-  }
-*/
+  const componentOutputdir = path.join(
+    outputDirectory,
+    'react/components',
+    libraryName,
+  );
+
+  const generatedFiles = new Map<string, string>();
+
+  generatedFiles.set(
+    path.join(outputDirectory, '.clang-format'),
+    'DisableFormat: true\nSortIncludes: false',
+  );
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
+  const generatorPropsH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH').generate;
+  const generatorPropsCPP =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsCPP').generate;
+  const generatorShadowNodeH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeH').generate;
+  const generatorShadowNodeCPP =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateShadowNodeCPP').generate;
+  const generatorComponentDescriptorH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH').generate;
+  const generatorEventEmitterH =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH').generate;
 
-  generatedFiles.push(...generateNM2(libraryName, schema, moduleSpecName));
+  normalizeFileMap(
+    generateNM2(libraryName, schema, moduleSpecName),
+    outputDirectory,
+    generatedFiles,
+  );
 
-  const filesToUpdate = new Map<string, string>([...generatedFiles]);
+  if (
+    Object.keys(schema.modules).some(
+      (moduleName) => schema.modules[moduleName].type === 'Component',
+    )
+  ) {
+    const componentGenerators = [
+      generatorPropsH,
+      generatorPropsCPP,
+      generatorShadowNodeH,
+      generatorShadowNodeCPP,
+      generatorComponentDescriptorH,
+      generatorEventEmitterH,
+    ];
 
-  if (test === true) {
-    return checkFilesForChanges(filesToUpdate, outputDirectory);
+    componentGenerators.forEach((generator) => {
+      const generated: Map<string, string> = generator(
+        libraryName,
+        schema,
+        moduleSpecName,
+      );
+      normalizeFileMap(generated, componentOutputdir, generatedFiles);
+    });
   }
 
-  return writeMapToFiles(filesToUpdate, outputDirectory);
+  if (test === true) {
+    return checkFilesForChanges(generatedFiles, outputDirectory);
+  }
+
+  return writeMapToFiles(generatedFiles, outputDirectory);
 }
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
@@ -170,12 +266,12 @@ if ((argv.file && argv.files) || (!argv.file && !argv.files)) {
 
 let schema: SchemaType;
 if (argv.file) {
-  schema = parseFile(argv.file);
+  schema = parseFlowFile(argv.file);
 } else {
   schema = combineSchemas(globby.sync(argv.files as string[]));
 }
 
-const libraryName = 'libraryName';
+const libraryName = argv.libraryName;
 const moduleSpecName = 'moduleSpecName';
 const outputDirectory = 'codegen';
 generate(

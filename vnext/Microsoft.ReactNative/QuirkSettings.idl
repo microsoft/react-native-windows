@@ -7,8 +7,15 @@ import "ReactInstanceSettings.idl";
 
 namespace Microsoft.ReactNative
 {
+
+  enum BackNavigationHandlerKind {
+    JavaScript = 0,
+    Native = 1
+  };
+
   [webhosthidden]
   [default_interface]
+  [experimental]
   DOC_STRING(
     "This can be used to add settings that allow react-native-windows behavior to be maintained across version updates "
     "to facilitate upgrades. Settings in this class are likely to be removed in future releases, so apps should try "
@@ -23,10 +30,14 @@ namespace Microsoft.ReactNative
     DOC_DEFAULT("true")
     static void SetMatchAndroidAndIOSStretchBehavior(ReactInstanceSettings settings, Boolean value);
 
-    DOC_STRING("Transitional setting allowing to use the deprecated `LegacyWebSocketModule`.")
-    static void SetUseLegacyWebSocketModule(ReactInstanceSettings settings, Boolean value);
-
     DOC_STRING("Runtime setting allowing Networking (HTTP, WebSocket) connections to skip certificate validation.")
     static void SetAcceptSelfSigned(ReactInstanceSettings settings, Boolean value);
+
+    DOC_STRING(
+      "By default `react-native-windows` will handle various back events and forward them to JavaScript. "
+      "Setting this to @BackNavigationHandlerKind.Native prevents `react-native-windows` from handling "
+      "these events, including forwarding to JavaScript.  This will allow applications to handle back "
+      "navigation in native code, but will prevent the `BackHandler` native module from receiving events.")
+    static void SetBackHandlerKind(ReactInstanceSettings settings, BackNavigationHandlerKind kind);
   }
 } // namespace Microsoft.ReactNative

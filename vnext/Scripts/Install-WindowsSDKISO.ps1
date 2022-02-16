@@ -9,7 +9,7 @@ $ErrorActionPreference = 'Stop'
 # Constants
 if ($desktopCPP)
 {
-    $WindowsSDKOptions = @("OptionId.UWPCpp", "OptionId.DesktopCPPx64", "OptionId.DesktopCPPx86", "OptionID.DesktopCPPARM", "OptionID.DesktopCPPARM64")
+    $WindowsSDKOptions = @("OptionId.UWPCpp", "OptionId.DesktopCPPx64", "OptionId.DesktopCPPx86", "OptionID.DesktopCPPARM64")
 }
 else
 {

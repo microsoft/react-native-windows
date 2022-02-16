@@ -5,14 +5,12 @@
  * @format
  */
 
-import * as _ from 'lodash';
-import * as fs from 'fs';
-import * as path from 'path';
+import _ from 'lodash';
+import fs from '@react-native-windows/fs';
+import path from 'path';
 import findRepoRoot from '@react-native-windows/find-repo-root';
 
-const getMonorepoPackages: (
-  root: string,
-) => Array<{
+const getMonorepoPackages: (root: string) => Array<{
   location: string;
   package: any;
 }> = require('get-monorepo-packages');
@@ -55,10 +53,9 @@ export class WritableNpmPackage extends NpmPackage {
   static async fromPath(pkgPath: string): Promise<WritableNpmPackage | null> {
     const jsonPath = path.join(pkgPath, 'package.json');
     try {
-      const jsonBuffer = await fs.promises.readFile(jsonPath);
-      return new WritableNpmPackage(pkgPath, JSON.parse(jsonBuffer.toString()));
+      return new WritableNpmPackage(pkgPath, await fs.readJsonFile(jsonPath));
     } catch (ex) {
-      if (ex.code === 'ENOENT') {
+      if ((ex as any).code === 'ENOENT') {
         return null;
       }
 
@@ -92,7 +89,7 @@ export class WritableNpmPackage extends NpmPackage {
   async setJson(jsonObj: any) {
     this.pkgJson = jsonObj;
 
-    await fs.promises.writeFile(
+    await fs.writeFile(
       path.join(this.path, 'package.json'),
       JSON.stringify(this.json, null /*replacer*/, 2 /*space*/) + '\n',
     );
@@ -110,7 +107,7 @@ export async function enumerateRepoPackages(
 ): Promise<WritableNpmPackage[]> {
   const repoRoot = await findRepoRoot();
   const allPackges = getMonorepoPackages(repoRoot).map(
-    pkg => new WritableNpmPackage(pkg.location, pkg.package),
+    (pkg) => new WritableNpmPackage(pkg.location, pkg.package),
   );
 
   const filteredPackages: WritableNpmPackage[] = [];
@@ -121,6 +118,23 @@ export async function enumerateRepoPackages(
   }
 
   return filteredPackages;
+}
+
+/**
+ * Synchronously Finds monorepo-local packages matching a given predicate. The
+ * root package is not included.
+ *
+ * @param pred predicate describing whether to match a package
+ */
+export function enumerateRepoPackagesSync(
+  pred: (pkg: NpmPackage) => boolean = () => true,
+): WritableNpmPackage[] {
+  const repoRoot = findRepoRoot.sync();
+  const allPackges = getMonorepoPackages(repoRoot).map(
+    (pkg) => new WritableNpmPackage(pkg.location, pkg.package),
+  );
+
+  return allPackges.filter(pred);
 }
 
 /**
@@ -138,7 +152,7 @@ export async function findPackage(
       paths: [opts.searchPath || process.cwd(), ...resolvePaths],
     });
   } catch (ex) {
-    if (ex.code === 'MODULE_NOT_FOUND') {
+    if ((ex as any).code === 'MODULE_NOT_FOUND') {
       return null;
     } else {
       throw ex;
@@ -147,7 +161,7 @@ export async function findPackage(
 
   return new NpmPackage(
     path.dirname(pkgJsonPath),
-    JSON.parse((await fs.promises.readFile(pkgJsonPath)!).toString()),
+    await fs.readJsonFile(pkgJsonPath),
   );
 }
 
@@ -157,7 +171,22 @@ export async function findPackage(
 export async function findRepoPackage(
   name: string,
 ): Promise<WritableNpmPackage | null> {
-  const packages = await enumerateRepoPackages(async p => p.json.name === name);
+  const packages = await enumerateRepoPackages(
+    async (p) => p.json.name === name,
+  );
+
+  if (packages.length === 0) {
+    return null;
+  } else {
+    return packages[0];
+  }
+}
+
+/**
+ * Synchronously a monorepo-local package with a given name
+ */
+export function findRepoPackageSync(name: string): WritableNpmPackage | null {
+  const packages = enumerateRepoPackagesSync((p) => p.json.name === name);
 
   if (packages.length === 0) {
     return null;

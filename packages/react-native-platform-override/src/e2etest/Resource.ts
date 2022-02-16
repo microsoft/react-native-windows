@@ -5,11 +5,11 @@
  * @format
  */
 
-import * as crypto from 'crypto';
-import * as fs from 'fs';
-import * as globby from 'globby';
-import * as os from 'os';
-import * as path from 'path';
+import crypto from 'crypto';
+import fs from '@react-native-windows/fs';
+import globby from 'globby';
+import os from 'os';
+import path from 'path';
 
 import FileSystemRepository from '../FileSystemRepository';
 import GitReactFileRepository from '../GitReactFileRepository';
@@ -29,8 +29,8 @@ export async function acquireSratchDirectory(): Promise<
     'e2etest',
     crypto.randomBytes(16).toString('hex'),
   );
-  await fs.promises.mkdir(dir, {recursive: true});
-  return [dir, async () => fs.promises.rmdir(dir, {recursive: true})];
+  await fs.mkdir(dir, {recursive: true});
+  return [dir, async () => fs.rmdir(dir, {recursive: true})];
 }
 
 /**
@@ -73,16 +73,16 @@ export async function usingFiles<T>(
   overridesToCopy: string[],
   fn: (overrideRepo: WritableFileRepository, baseDir: string) => Promise<T>,
 ): Promise<T> {
-  return await usingScratchDirectory(async targetDirectory => {
+  return await usingScratchDirectory(async (targetDirectory) => {
     const collateralPath = path.join(__dirname, 'collateral');
 
     await Promise.all(
-      overridesToCopy.map(async override => {
+      overridesToCopy.map(async (override) => {
         const src = path.join(collateralPath, override);
         const dst = path.join(targetDirectory, override);
 
-        await fs.promises.mkdir(path.dirname(dst), {recursive: true});
-        return await fs.promises.copyFile(src, dst);
+        await fs.mkdir(path.dirname(dst), {recursive: true});
+        return await fs.copyFile(src, dst);
       }),
     );
 
@@ -100,9 +100,9 @@ export async function usingRepository<T>(
 ): Promise<T> {
   const collateralPath = path.join(__dirname, 'collateral');
   const srcRepo = path.join(collateralPath, sourceFolder);
-  const srcFiles = (
-    await globby(['**/*'], {cwd: srcRepo, absolute: true})
-  ).map(f => path.relative(collateralPath, f));
+  const srcFiles = (await globby(['**/*'], {cwd: srcRepo, absolute: true})).map(
+    (f) => path.relative(collateralPath, f),
+  );
 
   return await usingFiles(srcFiles, async (repo, baseDir) => {
     return await fn(repo, path.join(baseDir, sourceFolder));

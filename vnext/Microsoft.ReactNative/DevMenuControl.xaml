@@ -125,6 +125,21 @@
                 <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Will bring up an overlay that lets you tap on any UI element and see information about it</TextBlock>
             </Grid>
         </Button>
+        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='SamplingProfiler' Style='{StaticResource ButtonRevealStyle}'>
+          <Grid HorizontalAlignment='Stretch'>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width='Auto'/>
+              <ColumnDefinition Width='*'/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition/>
+              <RowDefinition/>
+            </Grid.RowDefinitions>
+            <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' x:Name='SamplingProfilerIcon' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE1E5;'/>
+            <TextBlock Grid.Column='1' Grid.Row='0' x:Name='SamplingProfilerText'>Hermes Sampling Profiler</TextBlock>
+            <TextBlock Grid.Column='1' Grid.Row='1' x:Name='SamplingProfilerDescText' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Will start sampling immediately. Click again to stop</TextBlock>
+          </Grid>
+        </Button>
         <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='ConfigBundler' Style='{StaticResource ButtonRevealStyle}'>
             <StackPanel Orientation="Horizontal">
                 <FontIcon  VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE713;'/>

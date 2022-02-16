@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Text, View} from 'react-native';
 import {Glyph} from 'react-native-windows';
 
@@ -53,7 +53,7 @@ export const description = 'Usage of Glyph control.';
 export const examples = [
   {
     title: 'Glyph examples',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <GlyphExamples />;
     },
   },

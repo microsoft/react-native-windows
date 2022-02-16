@@ -20,7 +20,7 @@ using namespace xaml::Interop;
 using namespace winrt::Windows::UI::Xaml::Interop;
 } // namespace winrt
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 const winrt::TypeName dynamicAutomationTypeName{
     winrt::hstring{L"DynamicAutomationProperties"},
@@ -29,22 +29,22 @@ const winrt::TypeName dynamicAutomationTypeName{
 xaml::DependencyProperty DynamicAutomationProperties::AccessibilityRoleProperty() {
   static xaml::DependencyProperty s_AccessibilityRoleProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityRole",
-      winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(),
+      winrt::xaml_typename<winrt::Microsoft::ReactNative::AccessibilityRoles>(),
       dynamicAutomationTypeName,
-      winrt::PropertyMetadata(winrt::box_value(winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles::Unknown)));
+      winrt::PropertyMetadata(winrt::box_value(winrt::Microsoft::ReactNative::AccessibilityRoles::Unknown)));
 
   return s_AccessibilityRoleProperty;
 }
 
 void DynamicAutomationProperties::SetAccessibilityRole(
     xaml::UIElement const &element,
-    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles const &value) {
-  element.SetValue(AccessibilityRoleProperty(), winrt::box_value<PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(value));
+    winrt::Microsoft::ReactNative::AccessibilityRoles const &value) {
+  element.SetValue(AccessibilityRoleProperty(), winrt::box_value<Microsoft::ReactNative::AccessibilityRoles>(value));
 }
 
-winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles DynamicAutomationProperties::GetAccessibilityRole(
+winrt::Microsoft::ReactNative::AccessibilityRoles DynamicAutomationProperties::GetAccessibilityRole(
     xaml::UIElement const &element) {
-  return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityRoles>(
+  return winrt::unbox_value<winrt::Microsoft::ReactNative::AccessibilityRoles>(
       element.GetValue(AccessibilityRoleProperty()));
 }
 
@@ -250,32 +250,32 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityInvokeEventHa
   static xaml::DependencyProperty s_AccessibilityInvokeEventHandlerProperty =
       xaml::DependencyProperty::RegisterAttached(
           L"AccessibilityInvokeEventHandler",
-          winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(),
+          winrt::xaml_typename<winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler>(),
           dynamicAutomationTypeName,
           winrt::PropertyMetadata(
-              winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(nullptr)));
+              winrt::box_value<winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler>(nullptr)));
 
   return s_AccessibilityInvokeEventHandlerProperty;
 }
 
 void DynamicAutomationProperties::SetAccessibilityInvokeEventHandler(
     xaml::UIElement const &element,
-    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler const &value) {
+    winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler const &value) {
   element.SetValue(
       AccessibilityInvokeEventHandlerProperty(),
-      winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(value));
+      winrt::box_value<winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler>(value));
 }
 
-winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler
+winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler
 DynamicAutomationProperties::GetAccessibilityInvokeEventHandler(xaml::UIElement const &element) {
-  return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityInvokeEventHandler>(
+  return winrt::unbox_value<winrt::Microsoft::ReactNative::AccessibilityInvokeEventHandler>(
       element.GetValue(AccessibilityInvokeEventHandlerProperty()));
 }
 
 xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionsProperty() {
   static xaml::DependencyProperty s_AccessibilityActionsProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityActions",
-      winrt::xaml_typename<Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>>(),
+      winrt::xaml_typename<Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction>>(),
       dynamicAutomationTypeName,
       winrt::PropertyMetadata(nullptr));
 
@@ -284,13 +284,13 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionsProper
 
 void DynamicAutomationProperties::SetAccessibilityActions(
     xaml::UIElement const &element,
-    Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction> const &value) {
+    Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction> const &value) {
   return element.SetValue(AccessibilityActionsProperty(), winrt::box_value(value));
 }
 
-Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>
+Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction>
 DynamicAutomationProperties::GetAccessibilityActions(xaml::UIElement const &element) {
-  return winrt::unbox_value<Windows::Foundation::Collections::IVector<PROJECT_ROOT_NAMESPACE::AccessibilityAction>>(
+  return winrt::unbox_value<Windows::Foundation::Collections::IVector<Microsoft::ReactNative::AccessibilityAction>>(
       element.GetValue(AccessibilityActionsProperty()));
 }
 
@@ -317,25 +317,25 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityActionEventHa
   static xaml::DependencyProperty s_AccessibilityActionEventHandlerProperty =
       xaml::DependencyProperty::RegisterAttached(
           L"AccessibilityActionEventHandler",
-          winrt::xaml_typename<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(),
+          winrt::xaml_typename<winrt::Microsoft::ReactNative::AccessibilityActionEventHandler>(),
           dynamicAutomationTypeName,
           winrt::PropertyMetadata(
-              winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(nullptr)));
+              winrt::box_value<winrt::Microsoft::ReactNative::AccessibilityActionEventHandler>(nullptr)));
 
   return s_AccessibilityActionEventHandlerProperty;
 }
 
 void DynamicAutomationProperties::SetAccessibilityActionEventHandler(
     xaml::UIElement const &element,
-    winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler const &value) {
+    winrt::Microsoft::ReactNative::AccessibilityActionEventHandler const &value) {
   element.SetValue(
       AccessibilityActionEventHandlerProperty(),
-      winrt::box_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(value));
+      winrt::box_value<winrt::Microsoft::ReactNative::AccessibilityActionEventHandler>(value));
 }
 
-winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler
+winrt::Microsoft::ReactNative::AccessibilityActionEventHandler
 DynamicAutomationProperties::GetAccessibilityActionEventHandler(xaml::UIElement const &element) {
-  return winrt::unbox_value<winrt::PROJECT_ROOT_NAMESPACE::AccessibilityActionEventHandler>(
+  return winrt::unbox_value<winrt::Microsoft::ReactNative::AccessibilityActionEventHandler>(
       element.GetValue(AccessibilityActionEventHandlerProperty()));
 }
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation

@@ -44,7 +44,7 @@ struct TestExecuteJsiModule {
           PropNameID::forAscii(rt, "hostGreeter"),
           1,
           [](Runtime &rt, const Value & /*thisVal*/, const Value *args, size_t count) {
-            TestCheckEqual(1, count);
+            TestCheckEqual(1u, count);
             return Value{rt, String::createFromUtf8(rt, "Hello " + args[0].getString(rt).utf8(rt))};
           });
       TestCheckEqual("Hello World", hostGreeter.call(rt, "World").getString(rt).utf8(rt));

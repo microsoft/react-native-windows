@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "IViewManagerCore.idl";
+import "ReactPointerEventArgs.idl";
 
 #include "NamespaceRedirect.h"
 #include "DocString.h"
@@ -62,5 +63,36 @@ namespace Microsoft.ReactNative
   )
   interface IViewManagerCreateWithProperties {
     Object CreateViewWithProperties(IJSValueReader propertyMapReader);
+  };
+
+  [experimental]
+  [webhosthidden]
+  DOC_STRING(
+    "Experimental interface enabling view managers to release pointer capture "
+    "from the React root view and start handling pointer events itself."
+  )
+  interface IViewManagerWithPointerEvents {
+    DOC_STRING(
+      "When pointer events are received on the React root view, the top-level "
+      "pointer event handler invokes this callback for each React view "
+      "ancestor of the @Windows.UI.Xaml.RoutedEventArgs.OriginalSource "
+      "element with a view manager that implements "
+      "@IViewManagerWithPointerEvents to allow the view manager to modify "
+      "handling for the pointer event. This can be used to refine the target "
+      "view. E.g., setting the @ReactPointerEventArgs.Target property to null "
+      "will force the React root view to choose one of the view's ancestors "
+      "as the hit target. Alternatively, the view manager may also set the "
+      "@ReactPointerEventArgs.Target to any descendent of provided view to "
+      "enable hit testing on views that do not derive from "
+      "@Windows.UI.Xaml.UIElement."
+    )
+    void OnPointerEvent(Object view, ReactPointerEventArgs args);
+  };
+  interface IViewManagerWithDropViewInstance {
+    DOC_STRING(
+        "Enables the view manager to track when the view is "
+        "being removed from the visual tree. "
+    )
+    void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
   };
 } // namespace Microsoft.ReactNative

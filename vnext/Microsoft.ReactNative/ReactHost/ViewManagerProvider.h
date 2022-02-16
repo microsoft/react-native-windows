@@ -6,18 +6,14 @@
 #include <memory>
 #include <vector>
 
-namespace react::uwp {
-struct IReactInstance;
-} // namespace react::uwp
-
 namespace Microsoft::ReactNative {
 class IViewManager;
+struct IReactInstance;
 
 using NativeViewManager = std::unique_ptr<Microsoft::ReactNative::IViewManager>;
 
 struct ViewManagerProvider {
-  virtual std::vector<NativeViewManager> GetViewManagers(
-      const std::shared_ptr<react::uwp::IReactInstance> &instance) = 0;
+  virtual std::vector<NativeViewManager> GetViewManagers(const std::shared_ptr<IReactInstance> &instance) = 0;
 };
 
 } // namespace Microsoft::ReactNative

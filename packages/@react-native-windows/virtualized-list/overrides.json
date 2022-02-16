@@ -1,0 +1,52 @@
+{
+  "includePatterns": [
+    ".flowconfig",
+    "src/**"
+  ],
+  "baseVersion": "0.0.0-20220206-2010-113f8257c",
+  "overrides": [
+    {
+      "type": "derived",
+      "file": ".flowconfig",
+      "baseFile": ".flowconfig",
+      "baseHash": "e0fd826d1c731209ca1f4322e950df83877ea95a"
+    },
+    {
+      "type": "copy",
+      "file": "src/CellRenderMask.js",
+      "baseFile": "Libraries/Lists/CellRenderMask.js",
+      "baseHash": "5dd2f2a482e7bc55bf554f0dbc72d28c7b8228c8"
+    },
+    {
+      "type": "copy",
+      "file": "src/FillRateHelper.js",
+      "baseFile": "Libraries/Lists/FillRateHelper.js",
+      "baseHash": "41260657a4e4e522e61a1e7063bdc4016f9f60ca"
+    },
+    {
+      "type": "copy",
+      "file": "src/ViewabilityHelper.js",
+      "baseFile": "Libraries/Lists/ViewabilityHelper.js",
+      "baseHash": "aa9647837dd2fe6d4f6c5710751d0acf0014680f"
+    },
+    {
+      "type": "patch",
+      "file": "src/VirtualizedList.js",
+      "baseFile": "Libraries/Lists/VirtualizedList.js",
+      "baseHash": "51e96609d78ce5c289622dc9fcd70cd181b3a09f",
+      "issue": 8120
+    },
+    {
+      "type": "copy",
+      "file": "src/VirtualizedListContext.js",
+      "baseFile": "Libraries/Lists/VirtualizedListContext.js",
+      "baseHash": "fb27ea831f854c96c833bf814163195581a5e12a"
+    },
+    {
+      "type": "copy",
+      "file": "src/VirtualizeUtils.js",
+      "baseFile": "Libraries/Lists/VirtualizeUtils.js",
+      "baseHash": "063d19d178b21e228229b39d6d80d12fca7ae0be"
+    }
+  ]
+}

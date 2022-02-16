@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_ASSERT_IGNOREPLAT_EMPTYIMPL_H
 #define MSO_MOTIFCPP_ASSERT_IGNOREPLAT_EMPTYIMPL_H
+#ifdef MSO_MOTIFCPP
 
 /*----------------------------------------------------------------------------
     MotifCpp assert APIs
@@ -22,4 +23,5 @@ class IgnoreAssertPlatformImpl {
 
 } // namespace Mso
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_ASSERT_IGNOREPLAT_EMPTYIMPL_H

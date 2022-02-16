@@ -4,6 +4,7 @@
 #pragma once
 #ifndef MSO_MOTIFCPP_LIBLETAWAREMEMLEAKDETECTION_H
 #define MSO_MOTIFCPP_LIBLETAWAREMEMLEAKDETECTION_H
+#ifdef MSO_MOTIFCPP
 
 #include "motifCpp/assert_motifApi.h"
 
@@ -19,4 +20,5 @@ struct LibletAwareMemLeakDetection : MotifCppTestBase {
   virtual void StopTrackingMemoryAllocations() {}
 };
 
+#endif // MSO_MOTIFCPP
 #endif // MSO_MOTIFCPP_LIBLETAWAREMEMLEAKDETECTION_H

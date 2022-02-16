@@ -1,8 +1,458 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 17 Apr 2021 05:08:13 GMT and should not be manually modified.
+This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.116
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.26
+
+## 0.0.0-canary.115
+
+Sat, 12 Feb 2022 06:08:36 GMT
+
+### Changes
+
+- Fix cache not being used when there are no dependencies (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.114
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.34
+
+## 0.0.0-canary.113
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @react-native-windows/package-utils to v0.0.0-canary.25
+- Bump @react-native-windows/telemetry to v0.0.0-canary.33
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.0-canary.112
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Changes
+
+- checks for old project guid (email not defined)
+
+## 0.0.0-canary.111
+
+Wed, 02 Feb 2022 06:08:38 GMT
+
+### Changes
+
+- Allow OutputType Library to be autolinked for C# native modules (jmdalmasso7@gmail.com)
+
+## 0.0.0-canary.110
+
+Thu, 27 Jan 2022 06:11:44 GMT
+
+### Changes
+
+- adds CLIversion to project file (tatianakapos@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.32
+
+## 0.0.0-canary.109
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Changes
+
+- Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
+
+## 0.0.0-canary.108
+
+Thu, 06 Jan 2022 04:18:33 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.31
+
+## 0.0.0-canary.107
+
+Tue, 07 Dec 2021 06:10:13 GMT
+
+### Changes
+
+- Centralize CppWinRT version setting (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.106
+
+Sun, 05 Dec 2021 06:09:34 GMT
+
+### Changes
+
+- Use PackageReference for C++ dependencies (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.105
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.24
+- Bump @react-native-windows/telemetry to v0.0.0-canary.30
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 0.0.0-canary.104
+
+Fri, 26 Nov 2021 06:09:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.29
+
+## 0.0.0-canary.103
+
+Thu, 25 Nov 2021 06:09:25 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.28
+
+## 0.0.0-canary.102
+
+Wed, 24 Nov 2021 06:08:49 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.27
+
+## 0.0.0-canary.101
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.26
+
+## 0.0.0-canary.100
+
+Thu, 18 Nov 2021 06:11:19 GMT
+
+### Changes
+
+- Telemetry Refactor (jthysell@microsoft.com)
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @react-native-windows/package-utils to v0.0.0-canary.23
+- Bump @react-native-windows/telemetry to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 0.0.0-canary.99
+
+Tue, 02 Nov 2021 20:20:41 GMT
+
+### Changes
+
+- Use NPM 8 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.99
+
+Tue, 02 Nov 2021 20:20:12 GMT
+
+### Changes
+
+- Use NPM 8 (ngerlem@microsoft.com)
+
+## 0.0.0-canary.98
+
+Mon, 01 Nov 2021 18:33:36 GMT
+
+### Changes
+
+- Default `run-windows` to building system architecture (ngerlem@microsoft.com)
+
+## 0.0.0-canary.98
+
+Mon, 01 Nov 2021 18:33:05 GMT
+
+### Changes
+
+- Default `run-windows` to building system architecture (ngerlem@microsoft.com)
+
+## 0.0.0-canary.96
+
+Wed, 27 Oct 2021 05:07:22 GMT
+
+### Changes
+
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+
+## 0.0.0-canary.96
+
+Wed, 27 Oct 2021 05:06:59 GMT
+
+### Changes
+
+- Upgrade WinUI/MUX to 2.7 (jthysell@microsoft.com)
+
+## 0.0.0-canary.95
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/package-utils to v0.0.0-canary.22
+- Bump @react-native-windows/telemetry to v0.0.0-canary.24
+
+## 0.0.0-canary.94
+
+Sat, 09 Oct 2021 05:06:48 GMT
+
+### Changes
+
+- Integrate 10-8-21 Nightly Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.93
+
+Wed, 06 Oct 2021 05:07:05 GMT
+
+### Changes
+
+- Use full path to powershell.exe (asklar@microsoft.com)
+
+## 0.0.0-canary.92
+
+Tue, 05 Oct 2021 05:07:00 GMT
+
+### Changes
+
+- CLI: Default to deploy by layout (jthysell@microsoft.com)
+
+## 0.0.0-canary.91
+
+Thu, 30 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Bump xmldom to 0.7.0 in @react-native-windows/cli. (yicyao@microsoft.com)
+
+## 0.0.0-canary.90
+
+Wed, 29 Sep 2021 05:06:54 GMT
+
+### Changes
+
+- Make CLI Fail Gracefully on Dep Script Errors (ngerlem@microsoft.com)
+
+## 0.0.0-canary.89
+
+Thu, 23 Sep 2021 05:06:48 GMT
+
+### Changes
+
+- Remove Certificate From Template (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.88
+
+Fri, 17 Sep 2021 05:06:53 GMT
+
+### Changes
+
+- Fixed CLI options defaults (jthysell@microsoft.com)
+
+## 0.0.0-canary.87
+
+Wed, 15 Sep 2021 05:07:04 GMT
+
+### Changes
+
+- Better handle spaces in project path (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.86
+
+Tue, 14 Sep 2021 05:07:02 GMT
+
+### Changes
+
+- Fix autolinking to respect WinUI2xVersion or WinUI3Version set in ExperimentalFeatures.props (jthysell@microsoft.com)
+
+## 0.0.0-canary.85
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-unittest-config to v1.2.4 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.2.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.8 (ngerlem@microsoft.com)
+
+### Changes
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+- Fix autolinking to support solution files using LF instead of CRLF (jthysell@microsoft.com)
+
+## 0.0.0-canary.84
+
+Fri, 03 Sep 2021 05:06:04 GMT
+
+### Changes
+
+- Fix logic to avoid launching packager (ngerlem@microsoft.com)
+
+## 0.0.0-canary.83
+
+Tue, 17 Aug 2021 05:09:46 GMT
+
+### Changes
+
+- Add experimentalFeatures to projectConfig result (jthysell@microsoft.com)
+
+## 0.0.0-canary.82
+
+Thu, 22 Jul 2021 05:05:25 GMT
+
+### Changes
+
+- Do not start packager for run-windows release builds (ngerlem@microsoft.com)
+
+## 0.0.0-canary.81
+
+Tue, 13 Jul 2021 05:06:16 GMT
+
+### Changes
+
+- Consuming C# friendly hermes nuget package (email not defined)
+
+## 0.0.0-canary.80
+
+Sun, 27 Jun 2021 05:08:11 GMT
+
+### Changes
+
+- Detect whether a project file is a dynamic library (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.79
+
+Sat, 26 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.22 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.78
+
+Fri, 25 Jun 2021 05:09:48 GMT
+
+### Changes
+
+- Normalize paths provided by react-native.config.js (jthysell@microsoft.com)
+
+## 0.0.0-canary.77
+
+Fri, 18 Jun 2021 05:06:48 GMT
+
+### Changes
+
+- Best-effort autolinking - if a module was built without the standard module project template, use it for autolinking anyway (asklar@microsoft.com)
+
+## 0.0.0-canary.76
+
+Fri, 11 Jun 2021 05:08:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.2.0 (ngerlem@microsoft.com)
+
+### Changes
+
+- Mark windowsOnly (ngerlem@microsoft.com)
+
+## 0.0.0-canary.75
+
+Thu, 10 Jun 2021 05:10:10 GMT
+
+### Changes
+
+- Disable project/dependency config when not running on windows (jthysell@microsoft.com)
+
+## 0.0.0-canary.74
+
+Wed, 09 Jun 2021 05:10:07 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.3 (igklemen@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.3 (igklemen@microsoft.com)
+
+## 0.0.0-canary.73
+
+Sat, 05 Jun 2021 05:09:53 GMT
+
+### Changes
+
+- Integrate May 12th RN nightly build. (igklemen@microsoft.com)
+
+## 0.0.0-canary.72
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.2 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/ts-config to v2.0.0 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.7 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.2 (ngerlem@microsoft.com)
+
+### Changes
+
+- Upgrade Windows SDK to 10.0.19041.0 (julio.rocha@microsoft.com)
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
+- Enable esModuleInterop Repo Wide (ngerlem@microsoft.com)
+
+## 0.0.0-canary.71
+
+Fri, 21 May 2021 21:40:00 GMT
+
+### Changes
+
+- Add "--deploy-from-layout" option (ngerlem@microsoft.com)
+
+## 0.0.0-canary.70
+
+Fri, 21 May 2021 05:17:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/just-task to v2.1.1 (ngerlem@microsoft.com)
+- Bump @rnw-scripts/jest-unittest-config to v1.2.1 (ngerlem@microsoft.com)
+
+### Changes
+
+- Integrate Apr 28 (base of 0.65) Nightly RN Build (ngerlem@microsoft.com)
+
+## 0.0.0-canary.69
+
+Thu, 29 Apr 2021 05:07:20 GMT
+
+### Changes
+
+- Remove ARM32 Support (ngerlem@microsoft.com)
+- Remove version from ExperimentalFeatures.props links (ngerlem@microsoft.com)
+- Replace `inquirer` with `prompts` in CLI (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.68
 

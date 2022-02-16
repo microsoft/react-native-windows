@@ -7,10 +7,12 @@
 // This is a port of TextExample.android.js
 // Image inline in Text removed
 
-import * as React from 'react';
+import React from 'react';
 import {
   /*Image,*/ StyleSheet,
+  Switch,
   Text,
+  TextInput,
   View,
   TextStyle,
   TouchableWithoutFeedback,
@@ -81,12 +83,49 @@ export class AttributeToggler extends React.Component<
 export class BackgroundColorDemo extends React.Component<{}> {
   public render() {
     return (
-      <View>
+      <View testID={'text-background-color'}>
+        <Text style={{color: 'pink'}}>Outer pink</Text>
+        <Text style={{}}>
+          Outer <Text style={{color: 'red'}}>red nested</Text>
+        </Text>
+        <Text style={{}}>
+          Outer{' '}
+          <Text style={{backgroundColor: 'blue', color: 'white'}}>
+            nested white on blue
+          </Text>
+        </Text>
+        <Text style={{color: 'pink'}}>
+          Outer pink <Text style={{color: 'red'}}>nested red</Text>
+        </Text>
+        <Text style={{backgroundColor: 'green'}}>
+          Outer on green{' '}
+          <Text style={{color: 'white'}}>nested white on inherit green</Text>
+        </Text>
+        <Text style={{backgroundColor: 'green', color: 'orange'}}>
+          Outer orange on green{' '}
+          <Text style={{backgroundColor: 'blue', color: 'white'}}>
+            nested white on blue
+          </Text>
+        </Text>
+        <Text style={{color: 'orange'}}>
+          Outer orange{' '}
+          <Text style={{backgroundColor: 'blue', color: 'white'}}>
+            nested white on blue
+          </Text>
+        </Text>
+        <Text style={{color: 'orange'}}>
+          <Text style={{backgroundColor: 'blue'}}>
+            nested orange inherit on blue
+          </Text>
+        </Text>
+
         <Text>
           Outer no_color{' '}
-          <Text style={{backgroundColor: 'green'}}>
+          <Text style={{backgroundColor: 'green', color: 'white'}}>
             START_NESTED green{' '}
-            <Text style={{backgroundColor: 'blue'}}>DEEPER_NESTED blue</Text>{' '}
+            <Text style={{backgroundColor: 'blue', color: 'magenta'}}>
+              DEEPER_NESTED magenta on blue
+            </Text>{' '}
             END_NESTED
           </Text>{' '}
           attributes.
@@ -130,6 +169,66 @@ export class BackgroundColorDemo extends React.Component<{}> {
   }
 }
 
+export class TextHighlightDemo extends React.Component<
+  {},
+  {search: string; toggled: boolean}
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = {search: '', toggled: false};
+  }
+
+  private getTextParts(text: string) {
+    if (this.state.search === '') {
+      return [text];
+    }
+
+    let parts = text.split(this.state.search);
+    for (let i = parts.length - 2; i >= 0; --i) {
+      parts = [
+        ...parts.slice(0, i + 1),
+        this.state.search,
+        ...parts.slice(i + 1),
+      ];
+    }
+
+    const highlight = {
+      backgroundColor: 'yellow',
+    };
+
+    return parts.map((part, i) => (
+      <Text key={i} style={i % 2 === 0 ? undefined : highlight}>
+        {part}
+      </Text>
+    ));
+  }
+
+  public render() {
+    const exampleText = 'The quick brown fox jumped over the lazy dog.';
+    const parts = this.getTextParts(exampleText);
+    const rootHighlight = {
+      backgroundColor: this.state.toggled ? 'cyan' : undefined,
+    };
+    return (
+      <View testID={'highlights'}>
+        <TextInput
+          placeholder="Enter search text"
+          value={this.state.search}
+          onChangeText={(text) => this.setState({search: text})}
+        />
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={{paddingRight: 5}}>Toggle highlight on all text:</Text>
+          <Switch
+            onValueChange={(isOn) => this.setState({toggled: isOn})}
+            value={this.state.toggled}
+          />
+        </View>
+        <Text style={rootHighlight}>{parts}</Text>
+      </View>
+    );
+  }
+}
+
 export class TextExample extends React.Component<
   {},
   {toggle1: boolean; toggle2: boolean; toggle3: boolean}
@@ -146,7 +245,7 @@ export class TextExample extends React.Component<
     return (
       <RNTesterPage>
         <RNTesterBlock title="textTransform">
-          <View>
+          <View testID={'text-transform'}>
             <Text style={{textTransform: 'uppercase'}}>
               <Text>This</Text> text should be uppercased.
             </Text>
@@ -219,19 +318,21 @@ export class TextExample extends React.Component<
           </View>
         </RNTesterBlock>
         <RNTesterBlock title="Wrap">
-          <Text>
+          <Text testID={'text-wrap'}>
             The text should wrap if it goes on multiple lines. See, this is
             going to the next line. {lorumIpsum}
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Padding">
-          <Text style={{padding: 10}}>
+          <Text style={{padding: 10}} testID={'text-padding'}>
             This text is indented by 10px padding on all sides.
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Family">
           <Text style={{fontFamily: 'sans-serif'}}>Sans-Serif</Text>
-          <Text style={{fontFamily: 'sans-serif', fontWeight: 'bold'}}>
+          <Text
+            style={{fontFamily: 'sans-serif', fontWeight: 'bold'}}
+            testID={'text-font-family'}>
             Sans-Serif Bold
           </Text>
           <Text style={{fontFamily: 'serif'}}>Serif</Text>
@@ -328,11 +429,15 @@ export class TextExample extends React.Component<
         </RNTesterBlock>
 
         <RNTesterBlock title="Font Size">
-          <Text style={{fontSize: 23}}>Size 23</Text>
+          <Text style={{fontSize: 23}} testID={'text-size'}>
+            Size 23
+          </Text>
           <Text style={{fontSize: 8}}>Size 8</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Color">
-          <Text style={{color: 'red'}}>Red color</Text>
+          <Text style={{color: 'red'}} testID={'text-color'}>
+            Red color
+          </Text>
           <Text style={{color: 'blue'}}>Blue color</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Weight">
@@ -349,13 +454,18 @@ export class TextExample extends React.Component<
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text Decoration">
-          <Text style={{textDecorationLine: 'underline'}}>Solid underline</Text>
+          <Text
+            style={{textDecorationLine: 'underline'}}
+            testID={'text-decoration-underline'}>
+            Solid underline
+          </Text>
           <Text style={{textDecorationLine: 'none'}}>None textDecoration</Text>
           <Text
             style={{
               textDecorationLine: 'line-through',
               textDecorationStyle: 'solid',
-            }}>
+            }}
+            testID={'text-decoration-solid-linethru'}>
             Solid line-through
           </Text>
           <Text style={{textDecorationLine: 'underline line-through'}}>
@@ -371,7 +481,7 @@ export class TextExample extends React.Component<
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Nested">
-          <Text onPress={() => console.log('1st')}>
+          <Text onPress={() => console.log('1st')} testID={'text-outer-color'}>
             (Normal text,
             <Text style={{color: 'red', fontWeight: 'bold'}}>
               (R)red
@@ -451,23 +561,25 @@ export class TextExample extends React.Component<
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text Align">
-          <Text>auto (default) - english LTR</Text>
-          <Text>أحب اللغة العربية auto (default) - arabic RTL</Text>
-          <Text style={{textAlign: 'left'}}>
-            left left left left left left left left left left left left left
-            left left
-          </Text>
-          <Text style={{textAlign: 'center'}}>
-            center center center center center center center center center
-            center center
-          </Text>
-          <Text style={{textAlign: 'right'}}>
-            right right right right right right right right right right right
-            right right
-          </Text>
+          <View testID={'text-align'}>
+            <Text>auto (default) - english LTR</Text>
+            <Text>أحب اللغة العربية auto (default) - arabic RTL</Text>
+            <Text style={{textAlign: 'left'}}>
+              left left left left left left left left left left left left left
+              left left
+            </Text>
+            <Text style={{textAlign: 'center'}}>
+              center center center center center center center center center
+              center center
+            </Text>
+            <Text style={{textAlign: 'right'}}>
+              right right right right right right right right right right right
+              right right
+            </Text>
+          </View>
         </RNTesterBlock>
         <RNTesterBlock title="Unicode">
-          <View>
+          <View testID={'text-unicode'}>
             <View style={{flexDirection: 'row'}}>
               <Text style={{backgroundColor: 'red'}}>
                 星际争霸是世界上最好的游戏。
@@ -496,14 +608,21 @@ export class TextExample extends React.Component<
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Line Height">
-          <Text style={{lineHeight: 35}}>
-            Holisticly formulate inexpensive ideas before best-of-breed
-            benefits. <Text style={{fontSize: 20}}>Continually</Text> expedite
-            magnetic potentialities rather than client-focused interfaces.
-          </Text>
+          <View testID={'text-line-height'}>
+            <Text style={{lineHeight: 35}}>
+              Holisticly formulate inexpensive ideas before best-of-breed
+              benefits. <Text style={{fontSize: 20}}>Continually</Text> expedite
+              magnetic potentialities rather than client-focused interfaces.
+            </Text>
+            <Text style={{lineHeight: 15}}>
+              Holisticly formulate inexpensive ideas before best-of-breed
+              benefits. <Text style={{fontSize: 20}}>Continually</Text> expedite
+              magnetic potentialities rather than client-focused interfaces.
+            </Text>
+          </View>
         </RNTesterBlock>
         <RNTesterBlock title="Letter Spacing">
-          <View>
+          <View testID={'text-letter-spacing'}>
             <Text style={{letterSpacing: 0}}>letterSpacing = 0</Text>
             <Text style={{letterSpacing: 2, marginTop: 5}}>
               letterSpacing = 2
@@ -596,7 +715,7 @@ export class TextExample extends React.Component<
         </RNTesterBlock>
         <RNTesterBlock title="numberOfLines attribute">
           <Text style={{marginTop: 0, fontStyle: 'italic'}}>1</Text>
-          <Text numberOfLines={1}>
+          <Text numberOfLines={1} testID={'text-one-line'}>
             Maximum of one line no matter now much I write here. If I keep
             writing it{"'"}ll just truncate after one line. {lorumIpsum}
           </Text>
@@ -616,13 +735,16 @@ export class TextExample extends React.Component<
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="selectable attribute">
-          <Text selectable>
+          <Text selectable testID={'text-selectable'}>
             This text is selectable if you click-and-hold, and will offer the
             native Android selection menus.
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="selectionColor attribute">
-          <Text selectable selectionColor="orange">
+          <Text
+            selectable
+            selectionColor="orange"
+            testID={'text-selection-color'}>
             This text will have a orange highlight on selection.
           </Text>
         </RNTesterBlock>
@@ -630,8 +752,8 @@ export class TextExample extends React.Component<
           <Text>
             This text contains an inline image{' '}
             {/*
-            <Image source={require('./flux.png')} />.*/} Neat,
-            huh?
+            <Image source={require('./flux.png')} />.*/}{' '}
+            Neat, huh?
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text shadow">
@@ -641,36 +763,39 @@ export class TextExample extends React.Component<
               textShadowOffset: {width: 2, height: 2},
               textShadowRadius: 1,
               textShadowColor: '#00cccc',
-            }}>
+            }}
+            testID={'text-shadow'}>
             Demo text shadow
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Ellipsize mode">
-          <Text style={{marginTop: 0, fontStyle: 'italic'}}>
-            (default) tail
-          </Text>
-          <Text numberOfLines={1}>
-            This very long text should be truncated with dots in the end.{' '}
-            {lorumIpsum}
-          </Text>
+          <View testID={'text-ellipsize'}>
+            <Text style={{marginTop: 0, fontStyle: 'italic'}}>
+              (default) tail
+            </Text>
+            <Text numberOfLines={1}>
+              This very long text should be truncated with dots in the end.{' '}
+              {lorumIpsum}
+            </Text>
 
-          <Text style={{marginTop: 20, fontStyle: 'italic'}}>middle</Text>
-          <Text ellipsizeMode="middle" numberOfLines={1}>
-            This very long text should be truncated with dots in the middle.{' '}
-            {lorumIpsum}
-          </Text>
+            <Text style={{marginTop: 20, fontStyle: 'italic'}}>middle</Text>
+            <Text ellipsizeMode="middle" numberOfLines={1}>
+              This very long text should be truncated with dots in the middle.{' '}
+              {lorumIpsum}
+            </Text>
 
-          <Text style={{marginTop: 20, fontStyle: 'italic'}}>head</Text>
-          <Text ellipsizeMode="head" numberOfLines={1}>
-            This very long text should be truncated with dots in the beginning.{' '}
-            {lorumIpsum}
-          </Text>
+            <Text style={{marginTop: 20, fontStyle: 'italic'}}>head</Text>
+            <Text ellipsizeMode="head" numberOfLines={1}>
+              This very long text should be truncated with dots in the
+              beginning. {lorumIpsum}
+            </Text>
 
-          <Text style={{marginTop: 20, fontStyle: 'italic'}}>clip</Text>
-          <Text ellipsizeMode="clip" numberOfLines={1}>
-            This very long text should be clipped and this will not be visible.{' '}
-            {lorumIpsum}
-          </Text>
+            <Text style={{marginTop: 20, fontStyle: 'italic'}}>clip</Text>
+            <Text ellipsizeMode="clip" numberOfLines={1}>
+              This very long text should be clipped and this will not be
+              visible. {lorumIpsum}
+            </Text>
+          </View>
         </RNTesterBlock>
         <RNTesterBlock title="Include Font Padding">
           <View
@@ -678,7 +803,8 @@ export class TextExample extends React.Component<
               flexDirection: 'row',
               justifyContent: 'space-around',
               marginBottom: 10,
-            }}>
+            }}
+            testID={'text-font-padding'}>
             <View style={{alignItems: 'center'}}>
               <Text style={styles.includeFontPaddingText}>Ey</Text>
               <Text>Default</Text>
@@ -702,7 +828,7 @@ export class TextExample extends React.Component<
         </RNTesterBlock>
 
         <RNTesterBlock title="Text With Border">
-          <>
+          <View testID={'text-border'}>
             <Text style={styles.borderedTextSimple}>
               Sample bordered text with default styling.
             </Text>
@@ -726,7 +852,10 @@ export class TextExample extends React.Component<
               and laid out within the normal text run, so will wrap etc as
               normal text.
             </Text>
-          </>
+          </View>
+        </RNTesterBlock>
+        <RNTesterBlock title="Dynamic backgroundColor">
+          <TextHighlightDemo />
         </RNTesterBlock>
       </RNTesterPage>
     );
@@ -768,7 +897,7 @@ export const title = 'Text';
 export const description = 'Base component for rendering styled text.';
 export const examples = [
   {
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <TextExample />;
     },
   },

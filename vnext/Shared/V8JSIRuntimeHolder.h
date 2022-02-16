@@ -13,9 +13,10 @@
 namespace facebook {
 namespace react {
 
-class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class V8JSIRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
+  facebook::react::JSIEngineOverride getRuntimeType() noexcept override;
 
   V8JSIRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,
@@ -25,6 +26,7 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
       : useDirectDebugger_(devSettings->useDirectDebugger),
         debuggerBreakOnNextLine_(devSettings->debuggerBreakOnNextLine),
         debuggerPort_(devSettings->debuggerPort),
+        debuggerRuntimeName_(devSettings->debuggerRuntimeName),
         jsQueue_(std::move(jsQueue)),
         scriptStore_(std::move(scriptStore)),
         preparedScriptStore_(std::move(preparedScriptStore)) {}
@@ -44,6 +46,7 @@ class V8JSIRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
   uint16_t debuggerPort_;
   bool useDirectDebugger_;
   bool debuggerBreakOnNextLine_;
+  std::string debuggerRuntimeName_;
 };
 
 } // namespace react

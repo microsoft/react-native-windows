@@ -14,6 +14,10 @@
 #include <memory>
 #include <string>
 
+#if defined(HERMES_ENABLE_DEBUGGER)
+#include <InspectorPackagerConnection.h>
+#endif
+
 namespace facebook {
 namespace react {
 struct DevSettings;
@@ -27,7 +31,10 @@ std::pair<std::string, bool> GetJavaScriptFromServer(
     const uint16_t sourceBundlePort,
     const std::string &jsBundleName,
     const std::string &platform,
-    bool inlineSourceMap);
+    bool dev,
+    bool hot,
+    bool inlineSourceMap,
+    uint32_t hermesBytecodeVersion);
 
 class DevSupportManager final : public facebook::react::IDevSupportManager {
  public:
@@ -43,8 +50,31 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
       std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
 
+  virtual void StartInspector(const std::string &packagerHost, const uint16_t packagerPort) noexcept override;
+  virtual void StopInspector() noexcept override;
+  virtual void UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept override;
+
  private:
   std::atomic_bool m_cancellation_token;
+
+#if defined(HERMES_ENABLE_DEBUGGER)
+  std::shared_ptr<InspectorPackagerConnection> m_inspectorPackagerConnection;
+
+  struct BundleStatusProvider : public InspectorPackagerConnection::IBundleStatusProvider {
+    virtual InspectorPackagerConnection::BundleStatus getBundleStatus() {
+      return m_bundleStatus;
+    }
+
+    void updateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) {
+      m_bundleStatus.m_isLastDownloadSucess = isLastDownloadSucess;
+      m_bundleStatus.m_updateTimestamp = updateTimestamp;
+    }
+
+   private:
+    InspectorPackagerConnection::BundleStatus m_bundleStatus;
+  };
+  std::shared_ptr<BundleStatusProvider> m_BundleStatusProvider = std::make_shared<BundleStatusProvider>();
+#endif
 };
 
 } // namespace Microsoft::ReactNative

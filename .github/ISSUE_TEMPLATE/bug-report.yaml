@@ -1,0 +1,103 @@
+name: Bug report
+description: File a bug report
+title: Describe the problem
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Problem Description
+      description: Please enter a description of the issue. If you just have a question, please post on [Discussions](https://github.com/microsoft/react-native-windows/discussions).
+    id: description
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Steps To Reproduce
+      description: Provide a detailed list of steps that reproduce the issue.
+      placeholder: |
+        1.
+        2.
+    id: steps
+  - type: textarea
+    attributes:
+      label: Expected Results
+      description: Describe what you expected to happen.
+    id: expected
+  - type: input
+    validations:
+      required: true
+    attributes:
+      label: CLI version
+      description: |
+        Run the command `npx react-native --version` in your terminal and copy the results here
+      value: "npx react-native --version"
+    id: cli
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Environment
+      description: |
+        Run the command `npx react-native info` in your terminal and copy the results here
+      value: "npx react-native info"
+      render: markdown
+    id: env
+  - type: dropdown
+    attributes:
+      label: Target Platform Version
+      description: What SDK version are you building for?
+      options:
+        - "10.0.15063"
+        - "10.0.16299"
+        - "10.0.19041"
+    id: sdk
+  - type: dropdown
+    attributes:
+      label: Target Device(s)
+      description: What device(s) are you targeting?
+      multiple: true
+      options:
+        - "Desktop"
+        - "Xbox"
+        - "HoloLens"
+    id: device
+  - type: dropdown
+    attributes:
+      label: Visual Studio Version
+      description: Which version of Visual Studio are you using?
+      options:
+        - "Visual Studio 2017"
+        - "Visual Studio 2019"
+        - "Visual Studio 2022"
+    id: vs
+  - type: dropdown
+    attributes:
+      label: Build Configuration
+      description: Which build configuration are you running?
+      options:
+        - "Debug"
+        - "DebugBundle"
+        - "Release"
+        - "ReleaseBundle"
+    id: config
+  - type: markdown
+    attributes:
+      value: |
+        **Troubleshooting**
+        If you see build failure on `react-native run-windows`, please try again with `react-native run-windows --logging` and provide the output.
+    id: troubleshoot
+  - type: textarea
+    attributes:
+      label: Snack, code example, screenshot, or link to a repository
+      description: |
+        Please provide a [Snack](https://snack.expo.io/), a link to a repository on GitHub, or provide a minimal code example that reproduces the problem.
+        You may provide a screenshot of the application if you think it is relevant to your bug report.
+        [Here are some tips for providing a minimal example](https://stackoverflow.com/help/mcve).
+    id: code
+    

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{7de8a65b-754e-48e7-b880-4d0aed31f89c}</UniqueIdentifier>
@@ -30,6 +30,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="$(FollyDir)\folly\system\ThreadId.cpp">
+      <Filter>Source Files\lang</Filter>
+    </ClCompile>
     <ClCompile Include="$(FollyDir)\folly\lang\SafeAssert.cpp">
       <Filter>Source Files\lang</Filter>
     </ClCompile>
@@ -535,8 +538,5 @@
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="Folly.natvis" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>

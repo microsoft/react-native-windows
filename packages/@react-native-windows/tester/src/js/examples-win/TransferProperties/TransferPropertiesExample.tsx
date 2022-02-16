@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {StyleSheet, Button, Text, View} from 'react-native';
 
 const styles = StyleSheet.create({
@@ -143,13 +143,13 @@ export const description =
 export const examples = [
   {
     title: 'Flow Direction Change',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <FlowDirectionChange />;
     },
   },
   {
     title: 'zIndex Change',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <ZIndexChange />;
     },
   },

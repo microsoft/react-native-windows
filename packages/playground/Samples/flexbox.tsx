@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {
   AppRegistry,
   Button,
@@ -37,7 +37,7 @@ export default class FlexboxLayoutPlayground extends React.Component<
   }
 
   _onClick() {
-    this.setState(s => {
+    this.setState((s) => {
       const state = {...s};
 
       if (state.currentAlignStyle === styles.endAlignStyle) {

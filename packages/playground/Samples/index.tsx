@@ -4,7 +4,7 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {
   AppRegistry,
   Button,
@@ -24,7 +24,7 @@ import {
   TouchableHighlight,
   ActivityIndicator,
 } from 'react-native';
-import {DatePicker, Popup, Picker} from 'react-native-windows';
+import {Popup} from 'react-native-windows';
 
 class TicTacButton extends React.Component<{}, {text: string}> {
   constructor(props: {}) {
@@ -80,7 +80,9 @@ class PopupButton extends React.Component<
         <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
         <Switch
           value={this.state.isLightDismissEnabled}
-          onValueChange={value => this.setState({isLightDismissEnabled: value})}
+          onValueChange={(value) =>
+            this.setState({isLightDismissEnabled: value})
+          }
         />
         <Button
           onPress={this._onPress}
@@ -100,7 +102,9 @@ class PopupButton extends React.Component<
             <Switch
               style={{justifyContent: 'center', padding: 20}}
               value={this.state.popupSwitchState}
-              onValueChange={value => this.setState({popupSwitchState: value})}
+              onValueChange={(value) =>
+                this.setState({popupSwitchState: value})
+              }
             />
             <Button onPress={this._onPopupButtonPressed} title="Close" />
           </View>
@@ -139,9 +143,6 @@ export default class Bootstrap extends React.Component<
   {
     checkBoxIsOn: boolean;
     switchIsOn: boolean;
-    pickerSelectedValue?: string;
-    pickerSelectedIndex: number;
-    datePickerSelectedValue: Date;
     highlightPressed: boolean;
     mouseEntered: boolean;
   }
@@ -153,9 +154,6 @@ export default class Bootstrap extends React.Component<
       checkBoxIsOn: true,
       mouseEntered: false,
       switchIsOn: true,
-      pickerSelectedValue: 'key1',
-      pickerSelectedIndex: 0,
-      datePickerSelectedValue: new Date(),
       highlightPressed: false,
     };
   }
@@ -608,27 +606,6 @@ export default class Bootstrap extends React.Component<
             />
           </View>
 
-          <View
-            style={{flexDirection: 'row', alignItems: 'center', padding: 10}}>
-            <Picker
-              style={{width: 100}}
-              selectedValue={this.state.pickerSelectedValue}
-              onValueChange={this.pickerValueChange}
-              accessibilityLabel="test picker"
-              testID="pickerID">
-              <Picker.Item label="item 1" color="blue" value="key0" />
-              <Picker.Item label="item 2" value="key1" />
-            </Picker>
-            <Text style={{margin: 6}}>
-              selectedIndex: {this.state.pickerSelectedIndex} selectedValue:{' '}
-              {this.state.pickerSelectedValue}
-            </Text>
-            <Button
-              title="Clear selection"
-              onPress={this.pickerClearSelection}
-            />
-          </View>
-
           <View style={{alignItems: 'center', padding: 10}}>
             <Text>Test Popup: </Text>
             <PopupButton />
@@ -638,8 +615,7 @@ export default class Bootstrap extends React.Component<
             <Image
               style={{width: 50, height: 50}}
               source={{
-                uri:
-                  'http://facebook.github.io/react-native/img/header_logo.png',
+                uri: 'http://facebook.github.io/react-native/img/header_logo.png',
               }}
               onLoadStart={() => {
                 console.log('image onLoadStart!');
@@ -661,8 +637,7 @@ export default class Bootstrap extends React.Component<
               source={{
                 width: 66,
                 height: 58,
-                uri:
-                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
               }}
             />
           </View>
@@ -673,7 +648,7 @@ export default class Bootstrap extends React.Component<
               marginTop: 15,
             }}>
             <Switch
-              onValueChange={value => this.setState({switchIsOn: value})}
+              onValueChange={(value) => this.setState({switchIsOn: value})}
               value={this.state.switchIsOn}
             />
             <Text>Switch {this.state.switchIsOn ? 'ON' : 'OFF'}</Text>
@@ -728,19 +703,6 @@ export default class Bootstrap extends React.Component<
               style={{height: 30}}
             />
           </View>
-          <View style={{padding: 10}}>
-            <Text>Test DatePicker</Text>
-            <Text>
-              Date selected: {this.state.datePickerSelectedValue.toString()}
-            </Text>
-            <DatePicker
-              placeholderText="select start date"
-              dateFormat="longdate"
-              dayOfWeekFormat="{dayofweek.abbreviated(3)}"
-              style={{width: 300}}
-              onDateChange={this.datePickerValueChange}
-            />
-          </View>
         </View>
       </ScrollView>
     );
@@ -758,18 +720,11 @@ export default class Bootstrap extends React.Component<
     this.setState({mouseEntered: false});
   };
 
-  pickerValueChange = (value: any, index: number) => {
-    this.setState({pickerSelectedValue: value, pickerSelectedIndex: index});
-  };
-  pickerClearSelection = () => {
-    this.setState({pickerSelectedValue: undefined, pickerSelectedIndex: -1});
-  };
-
   highlightTextPressed = () => {
     this.setState({highlightPressed: !this.state.highlightPressed});
 
     Linking.canOpenURL('https://www.microsoft.com')
-      .then(canOpen => {
+      .then((canOpen) => {
         if (canOpen) {
           void Linking.openURL('https://www.microsoft.com');
         }
@@ -829,10 +784,6 @@ export default class Bootstrap extends React.Component<
         ', height: ' +
         event.nativeEvent.contentSize.height,
     );
-  };
-
-  datePickerValueChange = (date: Date) => {
-    this.setState({datePickerSelectedValue: date});
   };
 }
 

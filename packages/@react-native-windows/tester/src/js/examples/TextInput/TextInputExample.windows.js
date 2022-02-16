@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,10 +20,11 @@ const {
   Slider,
   Switch,
 } = require('react-native');
+const {useState} = React;
 
 const TextInputSharedExamples = require('./TextInputSharedExamples');
 
-import type {RNTesterExampleModuleItem} from '../../types/RNTesterTypes';
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 
 class ToggleDefaultPaddingExample extends React.Component<
   $FlowFixMeProps,
@@ -87,7 +88,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           step={10}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onValueChange={value => this.setState({width: value})}
+          onValueChange={(value) => this.setState({width: value})}
         />
         <Text>Multiline:</Text>
         <Switch
@@ -96,7 +97,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           value={this.state.multiline}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onValueChange={value => this.setState({multiline: value})}
+          onValueChange={(value) => this.setState({multiline: value})}
         />
         <Text>TextInput:</Text>
         {/* $FlowFixMe(>=0.122.0 site=react_native_android_fb) This comment
@@ -111,8 +112,8 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           style={[style, {width: this.state.width + '%'}]}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onChangeText={value => this.setState({text: value})}
-          onContentSizeChange={event =>
+          onChangeText={(value) => this.setState({text: value})}
+          onContentSizeChange={(event) =>
             /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
              * found when making Flow check .android.js files. */
             this.setState({contentSize: event.nativeEvent.contentSize})
@@ -156,6 +157,78 @@ class PressInOutEvents extends React.Component<
   }
 }
 
+function PropagationSample() {
+  const [eventLog, setEventLog] = useState([]);
+
+  function logEvent(eventName) {
+    const limit = 6;
+    setEventLog((current) => {
+      return [eventName].concat(current.slice(0, limit - 1));
+    });
+    console.log(eventName);
+  }
+  return (
+    <>
+      <View
+        focusable
+        style={styles.row}
+        keyDownEvents={[
+          {code: 'KeyW', handledEventPhase: 3},
+          {code: 'KeyE', handledEventPhase: 1},
+        ]}
+        onKeyDown={(event) =>
+          logEvent('outer keyDown ' + event.nativeEvent.code)
+        }
+        onKeyDownCapture={(event) =>
+          logEvent('outer keyDownCapture ' + event.nativeEvent.code)
+        }>
+        <Text>some text to focus on</Text>
+        <TextInput
+          placeholder="Click inside the box to observe events being fired."
+          style={[styles.singleLineWithHeightTextInput]}
+          onKeyDown={(event) =>
+            logEvent('textinput keyDown ' + event.nativeEvent.code)
+          }
+          onKeyUp={(event) =>
+            logEvent('textinput keyUp ' + event.nativeEvent.code)
+          }
+          keyDownEvents={[
+            {code: 'KeyW', handledEventPhase: 3},
+            {code: 'KeyE', handledEventPhase: 1},
+          ]}
+        />
+      </View>
+      <View style={styles.eventLogBox}>
+        {eventLog.map((e, ii) => (
+          <Text key={ii}>{e}</Text>
+        ))}
+      </View>
+    </>
+  );
+}
+
+function SpellCheckSample() {
+  const [spellCheckEnabled, setSpellCheckEnabled] = useState(true);
+  return (
+    <>
+      <Text>Spell Check Enabled:</Text>
+      <Switch
+        /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
+         * found when making Flow check .android.js files. */
+        value={spellCheckEnabled}
+        /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
+         * found when making Flow check .android.js files. */
+        onValueChange={setSpellCheckEnabled}
+      />
+      <TextInput
+        placeholder="Type text to test spell check functionality."
+        style={[styles.singleLineWithHeightTextInput]}
+        spellCheck={spellCheckEnabled}
+      />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   multiline: {
     height: 60,
@@ -177,7 +250,7 @@ exports.examples = ([
   ...TextInputSharedExamples,
   {
     title: 'Colors and text inputs',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -226,8 +299,40 @@ exports.examples = ([
     },
   },
   {
+    title: 'Font Weight',
+    render: function (): React.Node {
+      return (
+        <View>
+          <TextInput
+            defaultValue="Font Weight (default)"
+            style={[styles.singleLine]}
+          />
+          {[
+            'normal',
+            'bold',
+            '900',
+            '800',
+            '700',
+            '600',
+            '500',
+            '400',
+            '300',
+            '200',
+            '100',
+          ].map((fontWeight) => (
+            <TextInput
+              defaultValue={`Font Weight (${fontWeight})`}
+              key={fontWeight}
+              style={[styles.singleLine, {fontWeight}]}
+            />
+          ))}
+        </View>
+      );
+    },
+  },
+  {
     title: 'Text input, themes and heights',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <TextInput
           placeholder="If you set height, beware of padding set from themes"
@@ -238,7 +343,7 @@ exports.examples = ([
   },
   {
     title: 'letterSpacing',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -263,7 +368,7 @@ exports.examples = ([
   },
   {
     title: 'Passwords',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -283,7 +388,7 @@ exports.examples = ([
   },
   {
     title: 'Editable',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <TextInput
           defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
@@ -295,7 +400,7 @@ exports.examples = ([
   },
   {
     title: 'Multiline',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -337,7 +442,7 @@ exports.examples = ([
   {
     title: 'Fixed number of lines',
     platform: 'android',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -356,7 +461,7 @@ exports.examples = ([
   },
   {
     title: 'Auto-expanding',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <AutogrowingTextInputExample
@@ -380,7 +485,7 @@ exports.examples = ([
   },
   {
     title: 'Return key',
-    render: function(): React.Node {
+    render: function (): React.Node {
       const returnKeyTypes = [
         'none',
         'go',
@@ -391,7 +496,7 @@ exports.examples = ([
         'next',
       ];
       const returnKeyLabels = ['Compile', 'React Native'];
-      const examples = returnKeyTypes.map(type => {
+      const examples = returnKeyTypes.map((type) => {
         return (
           <TextInput
             key={type}
@@ -401,7 +506,7 @@ exports.examples = ([
           />
         );
       });
-      const types = returnKeyLabels.map(type => {
+      const types = returnKeyLabels.map((type) => {
         return (
           <TextInput
             key={type}
@@ -421,7 +526,7 @@ exports.examples = ([
   },
   {
     title: 'Inline Images',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -445,14 +550,59 @@ exports.examples = ([
   },
   {
     title: 'Toggle Default Padding',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <ToggleDefaultPaddingExample />;
     },
   },
   {
     title: 'onPressIn, onPressOut events',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <PressInOutEvents />;
     },
   },
-]: Array<RNTesterExampleModuleItem>);
+  // [Windows
+  {
+    title: 'Clear text on submit',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Default submit key (Enter):</Text>
+          <TextInput clearTextOnSubmit style={styles.singleLine} />
+          <Text>Custom submit key event (Shift + Enter), single-line:</Text>
+          <TextInput
+            clearTextOnSubmit
+            style={styles.singleLine}
+            submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+          />
+          <Text>Custom submit key event (Shift + Enter), multi-line:</Text>
+          <TextInput
+            multiline
+            clearTextOnSubmit
+            style={styles.multiline}
+            submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
+          />
+          <Text>Submit with Enter key, return key with Shift + Enter</Text>
+          <TextInput
+            multiline
+            clearTextOnSubmit
+            style={styles.multiline}
+            submitKeyEvents={[{code: 'Enter'}]}
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Stop propagation sample',
+    render: function (): React.Node {
+      return <PropagationSample />;
+    },
+  },
+  {
+    title: 'Toggle spell check',
+    render: function (): React.Node {
+      return <SpellCheckSample />;
+    },
+  },
+  // Windows]
+]: Array<RNTesterModuleExample>);

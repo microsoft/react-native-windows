@@ -4,15 +4,18 @@
  * @format
  */
 
-import * as React from 'react';
+import React from 'react';
 import {Button, Switch, Text, TextInput, View} from 'react-native';
-import {Flyout, Picker, Popup, Placement} from 'react-native-windows';
+import {Flyout, Popup, Placement} from 'react-native-windows';
+import {Picker} from '@react-native-picker/picker';
 
 interface IFlyoutExampleState {
   isFlyoutVisible: boolean;
+  isFlyoutNoTargetVisible: boolean;
   isFlyoutTwoVisible: boolean;
   isPopupVisible: boolean;
   buttonTitle: string;
+  buttonNoTargetTitle: string;
   isLightDismissEnabled: boolean;
   isOverlayEnabled: boolean;
   popupSwitchState: boolean;
@@ -41,9 +44,11 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
 
   public state: IFlyoutExampleState = {
     isFlyoutVisible: false,
+    isFlyoutNoTargetVisible: false,
     isFlyoutTwoVisible: false,
     isPopupVisible: false,
     buttonTitle: 'Open Flyout',
+    buttonNoTargetTitle: 'Open Flyout without Target',
     isLightDismissEnabled: true,
     isOverlayEnabled: false,
     popupSwitchState: true,
@@ -67,14 +72,20 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
           <Picker
             style={{width: 200, height: 35}}
             selectedValue={this.state.placementOptions}
-            onValueChange={value => this.setState({placementOptions: value})}>
-            {placementValues.map(item => (
+            onValueChange={(value) => this.setState({placementOptions: value})}>
+            {placementValues.map((item) => (
               <Picker.Item key={item} label={item} value={item} />
             ))}
           </Picker>
         </View>
         <View style={{justifyContent: 'center', padding: 20, width: 200}}>
           <Button onPress={this._onPress} title={this.state.buttonTitle} />
+        </View>
+        <View style={{justifyContent: 'center', padding: 20, width: 200}}>
+          <Button
+            onPress={this._onPressButtonNoTarget}
+            title={this.state.buttonNoTargetTitle}
+          />
         </View>
         <View style={{flexDirection: 'row', paddingTop: 200}}>
           <Text style={{padding: 10, width: 300, height: 32}}>
@@ -106,7 +117,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 <Switch
                   style={{justifyContent: 'center', padding: 20}}
                   value={this.state.popupSwitchState}
-                  onValueChange={value =>
+                  onValueChange={(value) =>
                     this.setState({
                       popupSwitchState: value,
                       isLightDismissEnabled: value,
@@ -119,7 +130,7 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                 <Switch
                   style={{justifyContent: 'center', padding: 20}}
                   value={this.state.isOverlayEnabled}
-                  onValueChange={value =>
+                  onValueChange={(value) =>
                     this.setState({
                       isOverlayEnabled: value,
                     })
@@ -145,10 +156,10 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
                   marginLeft: 50,
                 }}
                 selectedValue={this.state.placementOptions}
-                onValueChange={value =>
+                onValueChange={(value) =>
                   this.setState({placementOptions: value})
                 }>
-                {placementValues.map(item => (
+                {placementValues.map((item) => (
                   <Picker.Item key={item} label={item} value={item} />
                 ))}
               </Picker>
@@ -193,6 +204,17 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
             </View>
           </Flyout>
         )}
+        {this.state.isFlyoutNoTargetVisible && (
+          <Flyout
+            isOpen={this.state.isFlyoutNoTargetVisible}
+            isLightDismissEnabled={true}
+            onDismiss={this._onFlyoutNoTargetDismissed}>
+            <View
+              style={{backgroundColor: 'lightblue', width: 200, height: 300}}>
+              <Text>{lorumIpsum}</Text>
+            </View>
+          </Flyout>
+        )}
         {this.state.isPopupVisible && (
           <Popup
             isOpen={this.state.isPopupVisible}
@@ -225,6 +247,13 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
     this.setState({buttonTitle: 'Close Flyout', isFlyoutVisible: true});
   };
 
+  _onPressButtonNoTarget = () => {
+    this.setState({
+      buttonNoTargetTitle: 'Close Flyout without Target',
+      isFlyoutNoTargetVisible: true,
+    });
+  };
+
   _onFlyoutButtonPressed = () => {
     this.setState({buttonTitle: 'Open Flyout', isFlyoutVisible: false});
   };
@@ -247,6 +276,13 @@ class FlyoutExample extends React.Component<{}, IFlyoutExampleState> {
   _onFlyoutTwoDismissed = (_isOpen: boolean) => {
     this.setState({isFlyoutTwoVisible: false});
   };
+
+  _onFlyoutNoTargetDismissed = (_isOpen: boolean) => {
+    this.setState({
+      buttonNoTargetTitle: 'Open Flyout without Target',
+      isFlyoutNoTargetVisible: false,
+    });
+  };
 }
 
 export const displayName = (_undefined?: string) => {};
@@ -257,7 +293,7 @@ export const description =
 export const examples = [
   {
     title: 'Flyout Anchor to text input',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <FlyoutExample />;
     },
   },

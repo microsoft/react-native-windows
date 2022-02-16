@@ -45,7 +45,7 @@ void LogBox::ShowOnUIThread() noexcept {
   m_popup = xaml::Controls::Primitives::Popup{};
   xaml::FrameworkElement root{nullptr};
 
-  if (react::uwp::Is19H1OrHigher()) {
+  if (Is19H1OrHigher()) {
     // XamlRoot added in 19H1 - is required to be set for XamlIsland scenarios
     if (auto xamlRoot = React::XamlUIService::GetXamlRoot(m_context.Properties().Handle())) {
       m_popup.XamlRoot(xamlRoot);

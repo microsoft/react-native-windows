@@ -16,7 +16,7 @@ using namespace xaml::Automation::Peers;
 using namespace xaml;
 } // namespace winrt
 
-namespace winrt::PROJECT_ROOT_NAMESPACE::implementation {
+namespace winrt::Microsoft::ReactNative::implementation {
 
 ViewControl::ViewControl() : Super() {
   VerticalContentAlignment(xaml::VerticalAlignment::Stretch);
@@ -24,20 +24,20 @@ ViewControl::ViewControl() : Super() {
 }
 
 winrt::AutomationPeer ViewControl::OnCreateAutomationPeer() {
-  return winrt::make<winrt::PROJECT_ROOT_NAMESPACE::implementation::DynamicAutomationPeer>(*this);
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::DynamicAutomationPeer>(*this);
 }
 
-winrt::PROJECT_ROOT_NAMESPACE::ViewPanel ViewControl::GetPanel() const {
+winrt::Microsoft::ReactNative::ViewPanel ViewControl::GetPanel() const {
   auto child = Content();
 
   if (auto border = child.try_as<xaml::Controls::Border>()) {
     child = border.Child();
   }
 
-  auto panel = child.try_as<winrt::PROJECT_ROOT_NAMESPACE::ViewPanel>();
+  auto panel = child.try_as<winrt::Microsoft::ReactNative::ViewPanel>();
   assert(panel != nullptr);
 
   return panel;
 }
 
-} // namespace winrt::PROJECT_ROOT_NAMESPACE::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation

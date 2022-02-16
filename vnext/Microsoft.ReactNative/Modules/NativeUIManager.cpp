@@ -101,9 +101,19 @@ winrt::XamlRoot NativeUIManager::tryGetXamlRoot() {
     for (auto const tag : m_host->GetAllRootTags()) {
       if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag))) {
         if (auto uiElement10 = shadowNode->GetView().try_as<xaml::IUIElement10>()) {
-          if (auto xamlRoot = uiElement10.XamlRoot())
-            return xamlRoot;
+          return uiElement10.XamlRoot();
         }
+      }
+    }
+  }
+  return nullptr;
+}
+
+winrt::XamlRoot NativeUIManager::tryGetXamlRoot(int64_t rootTag) {
+  if (m_host) {
+    if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(rootTag))) {
+      if (auto uiElement10 = shadowNode->GetView().try_as<xaml::IUIElement10>()) {
+        return uiElement10.XamlRoot();
       }
     }
   }
@@ -152,7 +162,7 @@ struct RootShadowNode final : public ShadowNodeBase {
   RootShadowNode() = delete;
 
   RootShadowNode(facebook::react::IReactRootView *rootView, INativeUIManagerHost *host) {
-    auto reactRootView = static_cast<react::uwp::IXamlRootView *>(rootView);
+    auto reactRootView = static_cast<IXamlRootView *>(rootView);
     m_view = reactRootView->GetXamlView();
   }
 
@@ -163,11 +173,9 @@ struct RootShadowNode final : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
-    auto panel(GetView().as<winrt::Panel>());
-    if (panel != nullptr) {
-      auto childView = static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>();
-      panel.Children().InsertAt(static_cast<uint32_t>(index), childView);
-    }
+    auto panel(GetView().as<winrt::Microsoft::ReactNative::ReactRootView>());
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactRootView>(panel)->AddView(
+        static_cast<uint32_t>(index), static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>());
   }
 };
 
@@ -214,9 +222,12 @@ int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *ro
 }
 
 void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) {
-  auto xamlRootView = static_cast<react::uwp::IXamlRootView *>(pReactRootView);
+  auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
-  m_tagsToXamlReactControl.emplace(shadowNode.m_tag, xamlRootView->GetXamlReactControl());
+  m_tagsToXamlReactControl.emplace(
+      shadowNode.m_tag,
+      winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView>(
+          view.as<winrt::Microsoft::ReactNative::ReactRootView>()));
 
   // Push the appropriate FlowDirection into the root view.
   view.as<xaml::FrameworkElement>().FlowDirection(
@@ -879,9 +890,11 @@ void NativeUIManager::DoLayout() {
   // Process vector of RN controls needing extra layout here.
   const auto extraLayoutNodes = m_extraLayoutNodes;
   for (const int64_t tag : extraLayoutNodes) {
-    ShadowNodeBase &node = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-    auto element = node.GetView().as<xaml::FrameworkElement>();
-    element.UpdateLayout();
+    ShadowNodeBase *node = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
+    if (node) {
+      auto element = node->GetView().as<xaml::FrameworkElement>();
+      element.UpdateLayout();
+    }
   }
   // Values need to be cleared from the vector before next call to DoLayout.
   m_extraLayoutNodes.clear();
@@ -1057,7 +1070,7 @@ void NativeUIManager::findSubviewIn(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
-  auto rootUIView = view.as<xaml::UIElement>();
+  auto rootUIView = view.try_as<xaml::UIElement>();
   if (rootUIView == nullptr) {
     m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;
@@ -1110,8 +1123,8 @@ void NativeUIManager::blur(int64_t reactTag) {
     auto view = shadowNode->GetView();
     // Only blur if current UI is focused to avoid problem described in PR #2687
     if (view == xaml::Input::FocusManager::GetFocusedElement().try_as<xaml::DependencyObject>()) {
-      if (auto reactControl = GetParentXamlReactControl(reactTag).lock()) {
-        reactControl->blur(shadowNode->GetView());
+      if (auto reactControl = GetParentXamlReactControl(reactTag).get()) {
+        reactControl.as<winrt::Microsoft::ReactNative::implementation::ReactRootView>()->blur(shadowNode->GetView());
       } else {
         assert(false);
       }
@@ -1124,7 +1137,8 @@ void NativeUIManager::blur(int64_t reactTag) {
 // ReactControl is used here. To get the IXamlReactControl for any node, we
 // first iterate its parent until reaching the root node. Then look up
 // m_tagsToXamlReactControl to get the IXamlReactControl
-std::weak_ptr<react::uwp::IXamlReactControl> NativeUIManager::GetParentXamlReactControl(int64_t tag) const {
+winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> NativeUIManager::GetParentXamlReactControl(
+    int64_t tag) const {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindParentRootShadowNode(tag))) {
     auto it = m_tagsToXamlReactControl.find(shadowNode->m_tag);
     if (it != m_tagsToXamlReactControl.end()) {

@@ -6,7 +6,7 @@
 #include "AnimatedNode.h"
 #include "CalculatedAnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class DecayAnimationDriver : public CalculatedAnimationDriver {
  public:
   DecayAnimationDriver(
@@ -16,11 +16,9 @@ class DecayAnimationDriver : public CalculatedAnimationDriver {
       const folly::dynamic &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
-  double ToValue() override;
-
  protected:
   std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
-  bool IsAnimationDone(double currentValue, double currentVelocity) override;
+  bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) override;
 
  private:
   double m_velocity{0};
@@ -33,4 +31,4 @@ class DecayAnimationDriver : public CalculatedAnimationDriver {
   static constexpr std::wstring_view s_decelerationParameterName{L"deceleration"};
   static constexpr std::wstring_view s_durationName{L"duration"};
 };
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

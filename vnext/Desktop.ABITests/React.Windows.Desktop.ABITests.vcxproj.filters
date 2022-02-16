@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Utilities">
       <UniqueIdentifier>{dd007ef2-0241-4f4c-bac8-916c537375a3}</UniqueIdentifier>
@@ -10,7 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DynamicReaderWriterTests.cpp" />
-    <ClCompile Include="MemoryTrackerTests.cpp" />
     <ClCompile Include="NativeLogEventTests.cpp" />
     <ClCompile Include="NativeTraceEventTests.cpp" />
     <ClCompile Include="PerfTests.cpp" />
@@ -61,9 +60,6 @@
     </Manifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config">
-      <Filter>Other files</Filter>
-    </None>
     <None Include="..\Microsoft.ReactNative.IntegrationTests\ReactNativeHostTests.js" />
   </ItemGroup>
 </Project>

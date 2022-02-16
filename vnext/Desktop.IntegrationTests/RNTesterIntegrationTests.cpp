@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
+
 #include <RuntimeOptions.h>
+#include <Test/WebSocketServer.h>
 #include "TestRunner.h"
 
 using namespace Microsoft::React::Test;
@@ -21,14 +23,16 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 TEST_MODULE_INITIALIZE(InitModule) {
-  Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
-  Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", false);
+  using Microsoft::React::SetRuntimeOptionBool;
+
+  SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
+  SetRuntimeOptionBool("UseBeastWebSocket", false);
+  SetRuntimeOptionBool("Http.UseMonolithicModule", false);
 
   // WebSocketJSExecutor can't register native log hooks.
-  Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
+  SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
 }
 
-// None of these tests are runnable
 TEST_CLASS (RNTesterIntegrationTests) {
   TestRunner m_runner;
 
@@ -182,6 +186,11 @@ TEST_CLASS (RNTesterIntegrationTests) {
   BEGIN_TEST_METHOD_ATTRIBUTE(WebSocket)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocket) {
+    // Should behave the same as IntegrationTests/websocket_integration_test_server.js
+    auto server = std::make_shared<WebSocketServer>(5555, false /*useTLS*/);
+    server->SetMessageFactory([](std::string &&message) -> std::string { return message + "_response"; });
+    server->Start();
+
     TestComponent("WebSocketTest");
   }
 

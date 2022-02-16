@@ -11,6 +11,7 @@
 
     // Not clean
     "strictFunctionTypes": false,
+    "isolatedModules": false,
   },
   "include": ["src"],
   "exclude": ["node_modules"]

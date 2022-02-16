@@ -28,7 +28,7 @@ static const React::ReactPropertyId<bool> &ForceRTLPropertyId() noexcept {
 }
 
 void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept {
-  if (xaml::TryGetCurrentApplication() && !react::uwp::IsXamlIsland()) {
+  if (xaml::TryGetCurrentApplication() && !IsXamlIsland()) {
     // TODO: Figure out packaged win32 app story for WinUI 3
     auto layoutDirection = winrt::Windows::ApplicationModel::Resources::Core::ResourceContext()
                                .GetForCurrentView()
@@ -43,7 +43,7 @@ void I18nManager::InitI18nInfo(const winrt::Microsoft::ReactNative::ReactPropert
   if (propertyBag.Get(ForceRTLPropertyId()).value_or(false))
     return true;
 
-  if (!propertyBag.Get(AllowRTLPropertyId()).value_or(false))
+  if (!propertyBag.Get(AllowRTLPropertyId()).value_or(true))
     return false;
 
   return propertyBag.Get(SystemIsRTLPropertyId()).value_or(false);
@@ -61,7 +61,7 @@ void I18nManager::SwapLeftAndRightInRTL(bool /*flipStyles*/) noexcept {
   // TODO - https://github.com/microsoft/react-native-windows/issues/4662
 }
 
-void I18nManager::GetConstants(React::ReactConstantProvider &provider) noexcept {
+ReactNativeSpecs::I18nManagerSpec_Constants I18nManager::GetConstants() noexcept {
   std::string locale = "en-us";
 
   auto langs = winrt::Windows::Globalization::ApplicationLanguages::Languages();
@@ -69,9 +69,11 @@ void I18nManager::GetConstants(React::ReactConstantProvider &provider) noexcept 
     locale = Microsoft::Common::Unicode::Utf16ToUtf8(langs.GetAt(0));
   }
 
-  provider.Add(L"localeIdentifier", locale);
-  provider.Add(L"doLeftAndRightSwapInRTL", false);
-  provider.Add(L"isRTL", IsRTL(m_context.Properties()));
+  ReactNativeSpecs::I18nManagerSpec_Constants constants;
+  constants.localeIdentifier = locale;
+  constants.doLeftAndRightSwapInRTL = false;
+  constants.isRTL = IsRTL(m_context.Properties());
+  return constants;
 }
 
 void I18nManager::Initialize(React::ReactContext const &reactContext) noexcept {

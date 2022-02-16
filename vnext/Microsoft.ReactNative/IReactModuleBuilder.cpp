@@ -3,12 +3,66 @@
 
 #include "pch.h"
 #include "IReactModuleBuilder.h"
+#include <strsafe.h>
 #include "DynamicWriter.h"
 #include "ReactHost/MsoUtils.h"
 
 using namespace facebook::xplat::module;
 
 namespace winrt::Microsoft::ReactNative {
+
+#ifdef DEBUG
+// Starting with RNW 0.64, native modules are called on the JS thread.
+// Modules will usually call Windows APIs, and those APIs might expect to be called in the UI thread.
+// Developers can dispatch work to the UI thread via reactContext.UIDispatcher().Post(). When they fail to do so,
+// cppwinrt will grab the failure HRESULT (RPC_E_WRONG_THREAD), convert it to a C++ exception, and throw it.
+// However, native module methods are noexcept, meaning the CRT will call std::terminate and not propagate exceptions up
+// the stack. Developers are then left with a crashing app and no good way to debug it. To improve developers'
+// experience, we can replace the terminate handler temporarily while we call out to the native method. In the terminate
+// handler, we can inspect the exception that was thrown and give an error message before going down.
+struct TerminateExceptionGuard final {
+  TerminateExceptionGuard() {
+    m_oldHandler = std::get_terminate();
+    std::set_terminate([]() {
+      auto ex = std::current_exception();
+      if (ex) {
+        try {
+          std::rethrow_exception(ex);
+        } catch (const winrt::hresult_error &hr) {
+          wchar_t buf[1024] = {};
+          StringCchPrintf(
+              buf,
+              std::size(buf),
+              L"An unhandled exception (0x%x) occurred in a native module. "
+              L"The exception message was:\n\n%s",
+              hr.code(),
+              hr.message().c_str());
+          auto messageBox = reinterpret_cast<decltype(&MessageBoxW)>(
+              GetProcAddress(GetModuleHandle(L"ext-ms-win-ntuser-dialogbox-l1-1-0.dll"), "MessageBoxW"));
+          if (hr.code() == RPC_E_WRONG_THREAD) {
+            StringCchCat(
+                buf,
+                std::size(buf),
+                L"\n\nIt's likely that the native module called a Windows API that needs to be called from the UI thread. "
+                L"For more information, see https://aka.ms/RNW-UIAPI");
+          }
+          messageBox(nullptr, buf, L"Unhandled exception in native module", MB_ICONERROR | MB_OK);
+        } catch (...) {
+        }
+      }
+    });
+  }
+  ~TerminateExceptionGuard() {
+    std::set_terminate(m_oldHandler);
+  }
+
+ private:
+  std::terminate_handler m_oldHandler;
+};
+#define REACT_TERMINATE_GUARD(x) TerminateExceptionGuard x
+#else
+#define REACT_TERMINATE_GUARD(x)
+#endif
 
 //===========================================================================
 // ReactModuleBuilder implementation
@@ -34,6 +88,9 @@ void ReactModuleBuilder::AddMethod(
         auto resultWriter = make<DynamicWriter>();
         auto resolveCallback = MakeMethodResultCallback(std::move(resolve));
         auto rejectCallback = MakeMethodResultCallback(std::move(reject));
+
+        REACT_TERMINATE_GUARD(term);
+
         method(argReader, resultWriter, resolveCallback, rejectCallback);
       });
 

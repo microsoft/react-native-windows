@@ -6,7 +6,7 @@
 #include <UI.Composition.h>
 #include "AnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 AnimationDriver::AnimationDriver(
     int64_t id,
@@ -42,45 +42,50 @@ AnimationDriver::~AnimationDriver() {
 }
 
 void AnimationDriver::StartAnimation() {
+  m_started = true;
   const auto [animation, scopedBatch] = MakeAnimation(m_config);
-
   if (auto const animatedValue = GetAnimatedValue()) {
-    auto const previousValue = animatedValue->Value();
-    auto const rawValue = animatedValue->RawValue();
-    auto const offsetValue = animatedValue->Offset();
-
-    animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_offsetName, animation);
+    animatedValue->PropertySet().StartAnimation(ValueAnimatedNode::s_valueName, animation);
     animatedValue->AddActiveAnimation(m_id);
   }
   scopedBatch.End();
 
-  m_scopedBatchCompletedToken = scopedBatch.Completed([&](auto sender, auto) {
-    DoCallback(true);
-    if (auto manager = m_manager.lock()) {
-      if (auto const animatedValue = manager->GetValueAnimatedNode(m_animatedValueTag)) {
-        animatedValue->RemoveActiveAnimation(m_id);
-        animatedValue->FlattenOffset();
-      }
-      manager->RemoveActiveAnimation(m_id);
-    }
-  });
+  m_scopedBatchCompletedToken = scopedBatch.Completed(
+      [weakSelf = weak_from_this(), weakManager = m_manager, id = m_id, tag = m_animatedValueTag](auto sender, auto) {
+        const auto strongSelf = weakSelf.lock();
+        const auto ignoreCompletedHandlers = strongSelf && strongSelf->m_ignoreCompletedHandlers;
+        if (auto manager = weakManager.lock()) {
+          // If the animation was stopped for a tracking node, do not clean up the active animation state.
+          if (!ignoreCompletedHandlers) {
+            if (const auto animatedValue = manager->GetValueAnimatedNode(tag)) {
+              animatedValue->RemoveActiveAnimation(id);
+            }
+            manager->RemoveActiveAnimation(id);
+          }
+
+          // Always update the stopped animations in case any animations are deferred for the same value.
+          manager->RemoveStoppedAnimation(id, manager);
+        }
+
+        if (strongSelf && !ignoreCompletedHandlers) {
+          strongSelf->DoCallback(!strongSelf->m_stopped);
+        }
+      });
 
   m_animation = animation;
   m_scopedBatch = scopedBatch;
 }
 
 void AnimationDriver::StopAnimation(bool ignoreCompletedHandlers) {
-  if (const auto animatedValue = GetAnimatedValue()) {
-    animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_offsetName);
-    if (!ignoreCompletedHandlers) {
-      animatedValue->RemoveActiveAnimation(m_id);
-
-      if (m_scopedBatch) {
-        DoCallback(false);
-        m_scopedBatch.Completed(m_scopedBatchCompletedToken);
-        m_scopedBatch = nullptr;
-      }
-    }
+  if (!m_started) {
+    // The animation may have been deferred and never started. In this case,
+    // we will never get a scoped batch completion, so we need to fire the
+    // callback synchronously.
+    DoCallback(false);
+  } else if (const auto animatedValue = GetAnimatedValue()) {
+    animatedValue->PropertySet().StopAnimation(ValueAnimatedNode::s_valueName);
+    m_stopped = true;
+    m_ignoreCompletedHandlers = ignoreCompletedHandlers;
   }
 }
 
@@ -90,4 +95,4 @@ ValueAnimatedNode *AnimationDriver::GetAnimatedValue() {
   }
   return nullptr;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

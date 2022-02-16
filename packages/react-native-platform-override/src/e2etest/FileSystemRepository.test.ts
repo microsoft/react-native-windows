@@ -14,7 +14,7 @@ test('listFiles - No Glob', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingFiles(overrideFiles, async repo => {
+  await usingFiles(overrideFiles, async (repo) => {
     expect((await repo.listFiles()).sort()).toEqual(overrideFiles);
   });
 });
@@ -26,7 +26,7 @@ test('listFiles - Single Glob', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingFiles(overrideFiles, async repo => {
+  await usingFiles(overrideFiles, async (repo) => {
     expect(await repo.listFiles(['**/*.conflict'])).toEqual([
       '0.61.5/flowconfig.windows.conflict',
     ]);
@@ -40,7 +40,7 @@ test('listFiles - Multiple Globs', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingFiles(overrideFiles, async repo => {
+  await usingFiles(overrideFiles, async (repo) => {
     expect(
       (await repo.listFiles(['**/*.conflict', '**/*.addition'])).sort(),
     ).toEqual([
@@ -57,7 +57,7 @@ test('listFiles - Negation Glob', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingFiles(overrideFiles, async repo => {
+  await usingFiles(overrideFiles, async (repo) => {
     expect((await repo.listFiles(['**', '!**/*.conflict'])).sort()).toEqual([
       '0.59.9/Icon-60@2x.conflict.png',
       '0.62.2/flowconfig.windows.addition',
@@ -72,7 +72,7 @@ test('writeFile - Existing File', async () => {
     '0.62.2/flowconfig.windows.addition',
   ];
 
-  await usingFiles(overrideFiles, async repo => {
+  await usingFiles(overrideFiles, async (repo) => {
     await repo.writeFile('0.59.9/Icon-60@2x.conflict.png', 'foo');
     const contents = await repo.readFile('0.59.9/Icon-60@2x.conflict.png');
 
@@ -82,7 +82,7 @@ test('writeFile - Existing File', async () => {
 });
 
 test('writeFile - New File', async () => {
-  await usingFiles([], async repo => {
+  await usingFiles([], async (repo) => {
     await repo.writeFile('newDir/Hello.txt', 'Hello World!');
     const contents = await repo.readFile('newDir/Hello.txt');
 
@@ -92,25 +92,25 @@ test('writeFile - New File', async () => {
 });
 
 test('stat - File', async () => {
-  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
+  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async (repo) => {
     expect(await repo.stat('0.59.9/Icon-60@2x.conflict.png')).toBe('file');
   });
 });
 
 test('stat - Directory', async () => {
-  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
+  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async (repo) => {
     expect(await repo.stat('0.59.9')).toBe('directory');
   });
 });
 
 test('stat - None', async () => {
-  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
+  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async (repo) => {
     expect(await repo.stat('0.59.9/IDontExist.txt')).toBe('none');
   });
 });
 
 test('deleteFile - Exists', async () => {
-  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
+  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async (repo) => {
     expect(await repo.stat('0.59.9/Icon-60@2x.conflict.png')).toBe('file');
     await repo.deleteFile('0.59.9/Icon-60@2x.conflict.png');
     expect(await repo.stat('0.59.9/Icon-60@2x.conflict.png')).toBe('none');
@@ -118,7 +118,7 @@ test('deleteFile - Exists', async () => {
 });
 
 test('deleteFile - Doesnt Exist', async () => {
-  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async repo => {
+  await usingFiles(['0.59.9/Icon-60@2x.conflict.png'], async (repo) => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     expect(repo.deleteFile('nope')).rejects.toThrow();
   });

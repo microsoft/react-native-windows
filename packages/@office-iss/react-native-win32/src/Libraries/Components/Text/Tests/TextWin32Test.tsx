@@ -1,5 +1,5 @@
 'use strict';
-import * as React from 'react';
+import React from 'react'
 import { Button, View } from 'react-native';
 import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
@@ -63,24 +63,24 @@ const TextPromotionTest: React.FC<{}> = () => {
       title="Click to Promote Focusability"
       onPress={() => 
         {
-          if (focusabilityState == FocusabilityState.NoFocus)
+          if (focusabilityState === FocusabilityState.NoFocus)
           {
             setFocusabilityState(FocusabilityState.Focusable);
           }
-          else if (focusabilityState == FocusabilityState.Focusable)
+          else if (focusabilityState === FocusabilityState.Focusable)
           {
             setFocusabilityState(FocusabilityState.Selectable);
           }
         }}  />
       <TextWin32
-        focusable={focusabilityState == FocusabilityState.Focusable}
-        selectable={focusabilityState == FocusabilityState.Selectable}
+        focusable={focusabilityState === FocusabilityState.Focusable}
+        selectable={focusabilityState === FocusabilityState.Selectable}
       >
         This text is currently...
       </TextWin32>
       <TextWin32>
-        {(focusabilityState == FocusabilityState.NoFocus) ? 'No Focusability' : 
-         (focusabilityState == FocusabilityState.Focusable) ? 'Focusable' :
+        {(focusabilityState === FocusabilityState.NoFocus) ? 'No Focusability' : 
+         (focusabilityState === FocusabilityState.Focusable) ? 'Focusable' :
          'Selectable'}
       </TextWin32>
     </ViewWin32>

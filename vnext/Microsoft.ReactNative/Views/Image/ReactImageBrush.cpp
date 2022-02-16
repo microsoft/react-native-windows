@@ -20,7 +20,7 @@ using namespace xaml::Media;
 using namespace comp::Effects;
 } // namespace winrt
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 /*static*/ winrt::com_ptr<ReactImageBrush> ReactImageBrush::Create() {
   return winrt::make_self<ReactImageBrush>();
 }
@@ -36,9 +36,10 @@ void ReactImageBrush::OnDisconnected() {
   }
 }
 
-void ReactImageBrush::ResizeMode(react::uwp::ResizeMode value) {
+void ReactImageBrush::ResizeMode(facebook::react::ImageResizeMode value) {
   if (m_resizeMode != value) {
-    const bool forceEffectBrush{value == ResizeMode::Repeat || m_resizeMode == ResizeMode::Repeat};
+    const bool forceEffectBrush{
+        value == facebook::react::ImageResizeMode::Repeat || m_resizeMode == facebook::react::ImageResizeMode::Repeat};
     m_resizeMode = value;
     UpdateCompositionBrush(forceEffectBrush);
   }
@@ -91,7 +92,7 @@ void ReactImageBrush::UpdateCompositionBrush(bool forceEffectBrush) {
     surfaceBrush.Stretch(ResizeModeToStretch());
 
     auto compositionBrush{surfaceBrush.as<comp::CompositionBrush>()};
-    if (ResizeMode() == ResizeMode::Repeat || BlurRadius() > 0 || m_tintColor.A != 0) {
+    if (ResizeMode() == facebook::react::ImageResizeMode::Repeat || BlurRadius() > 0 || m_tintColor.A != 0) {
       // The effects used for ResizeMode::Repeat and tintColor are conditional, so if we
       // are switching to/from those modes, then we need to create a new CompositionBrush.
       // The CompositionSurfaceBrush holding the image is used as its source.
@@ -113,7 +114,7 @@ void ReactImageBrush::UpdateCompositionBrush(bool forceEffectBrush) {
     // The CompositionBrush is only set after the image is first loaded and anytime
     // we switch between Surface and Effect brushes (to/from ResizeMode::Repeat)
     if (CompositionBrush() != compositionBrush) {
-      if (ResizeMode() == ResizeMode::Repeat) {
+      if (ResizeMode() == facebook::react::ImageResizeMode::Repeat) {
         surfaceBrush.HorizontalAlignmentRatio(0.0f);
         surfaceBrush.VerticalAlignmentRatio(0.0f);
       } else {
@@ -141,20 +142,20 @@ comp::CompositionStretch ReactImageBrush::ResizeModeToStretch() {
   auto stretch{comp::CompositionStretch::None};
 
   switch (ResizeMode()) {
-    case ResizeMode::Contain:
+    case facebook::react::ImageResizeMode::Contain:
       stretch = comp::CompositionStretch::Uniform;
       break;
 
-    case ResizeMode::Cover:
+    case facebook::react::ImageResizeMode::Cover:
       stretch = comp::CompositionStretch::UniformToFill;
       break;
 
-    case ResizeMode::Stretch:
+    case facebook::react::ImageResizeMode::Stretch:
       stretch = comp::CompositionStretch::Fill;
       break;
 
-    case ResizeMode::Center:
-    case ResizeMode::Repeat:
+    case facebook::react::ImageResizeMode::Center:
+    case facebook::react::ImageResizeMode::Repeat:
       stretch = IsImageSmallerThanView() ? comp::CompositionStretch::None : comp::CompositionStretch::Uniform;
       break;
   }
@@ -193,7 +194,7 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
     winrt::IGraphicsEffect effect{nullptr};
     std::vector<winrt::hstring> animatedProperties;
 
-    if (ResizeMode() == ResizeMode::Repeat) {
+    if (ResizeMode() == facebook::react::ImageResizeMode::Repeat) {
       // BorderEffect
       auto borderEffect{winrt::make<winrt::Microsoft::ReactNative::implementation::BorderEffect>()};
 
@@ -243,4 +244,4 @@ comp::CompositionEffectBrush ReactImageBrush::GetOrCreateEffectBrush(
   return m_effectBrush;
 }
 
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <ImportGroup Label="Globals">
+    <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.WindowsSdk.Default.props" />
+  </ImportGroup>
+
   <PropertyGroup Label="Globals">
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
-    <!-- Use 19H1 SDK (10.0.18362.0)  Support running on RS3+ (10.0.16299.0) -->
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)'=='' Or '$(WindowsTargetPlatformVersion)'=='10.0.0.0'">10.0.18362.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion Condition="'$(WindowsTargetPlatformMinVersion)'=='' Or '$(WindowsTargetPlatformMinVersion)'=='10.0.0.0'">10.0.16299.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
@@ -14,8 +15,10 @@
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
     <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
-    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Debug'" Label="Configuration">true</LinkIncremental>
-    <LinkIncremental Condition="'$(LinkIncremental)' == '' and '$(Configuration)'=='Release'" Label="Configuration">false</LinkIncremental>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NuGet">
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
   </PropertyGroup>
 
   <PropertyGroup Label="Desktop">
@@ -32,6 +35,12 @@
     <ENABLE_JS_SYSTRACE_TO_ETW Condition="'$(ENABLE_JS_SYSTRACE_TO_ETW)' == ''">true</ENABLE_JS_SYSTRACE_TO_ETW>
   </PropertyGroup>
 
+  <PropertyGroup Label="ExternalDependencies">
+    <!-- Google Test Adapter -->
+    <!-- Property sheets in the adapter's NuGet doesn't consider PlatformToolset=v143 -->
+    <Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>false</Force-Enable-Microsoft-googletest-v140-windesktop-msvcstl-static-rt-dyn>
+  </PropertyGroup>
+
   <!--
     Tracing definitions may be checked in Facebook headers. Make sure they get
     defined for anything with the potential to include them.
@@ -43,11 +52,13 @@
     </ClCompile>
   </ItemDefinitionGroup>
 
-  <Import Condition="'$(UseHermes)' == '' or '$(UseV8)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
+  <Import Condition="'$(JsEnginePropsDefined)' == ''" Project="$(ReactNativeWindowsDir)PropertySheets\JSEngine.props" />
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions Condition="'$(UseHermes)'=='true'">USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
@@ -66,6 +77,14 @@
     <Import Project="$(ConfigurationType)\$(Configuration).props" />
   </ImportGroup>
 
+  <ImportGroup Label="Dependencies">
+    <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.Cpp.Dependencies.props" />
+  </ImportGroup>
+
+  <PropertyGroup>
+    <CppStandard Condition="'$(CppStandard)'==''">stdcpp17</CppStandard>
+  </PropertyGroup>
+
   <ItemDefinitionGroup>
     <ClCompile>
       <!--
@@ -75,6 +94,7 @@
         BOOST_NO_TYPEID               - Configure boost not to check typeid (not to use RTTI)
         BOOST_SYSTEM_SOURCE           - Build boost::system symbols from sources (drop dependency on boost_system.lib).
         GTEST_HAS_RTTI                - Let GTest know not to use RTTI
+        USE_EDGEMODE_JSRT               When using Chakra, enforce System Chakra instead of JS9.
         WIN32_LEAN_AND_MEAN           - Reduce the Windows API included surface.
         WINRT_LEAN_AND_MEAN           - Disable rarely used cppwinrt templates that impact compile-time/PCH size.
       -->
@@ -86,6 +106,7 @@
         BOOST_NO_TYPEID;
         BOOST_SYSTEM_SOURCE;
         GTEST_HAS_RTTI=0;
+        USE_EDGEMODE_JSRT;
         WIN32_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
@@ -93,7 +114,7 @@
         WINRT_LEAN_AND_MEAN;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>$(CppStandard)</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
@@ -102,6 +123,7 @@
       <!-- Add include directories expected by React Native C++ code and headers -->
       <AdditionalIncludeDirectories>
         $(FollyDir);
+        $(FmtDir)include;
         $(ReactNativeDir)\ReactCommon;
         $(ReactNativeDir)\ReactCommon\callinvoker;
         $(ReactNativeDir)\ReactCommon\jsi;

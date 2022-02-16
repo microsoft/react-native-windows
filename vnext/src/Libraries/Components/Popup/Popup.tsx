@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import * as React from 'react';
+import React from 'react';
 import {findNodeHandle, requireNativeComponent, StyleSheet} from 'react-native';
 import {IPopupProps} from './PopupProps';
 

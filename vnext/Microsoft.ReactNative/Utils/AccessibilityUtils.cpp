@@ -9,7 +9,7 @@
 #include <UI.Xaml.Automation.h>
 #include <Views/DynamicAutomationProperties.h>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 REACTWINDOWS_API_(void)
 AnnounceLiveRegionChangedIfNeeded(const xaml::FrameworkElement &element) {
@@ -33,4 +33,4 @@ HasDynamicAutomationProperties(const xaml::UIElement &element) {
 
   return false;
 }
-} // namespace react::uwp
+} // namespace Microsoft::ReactNative

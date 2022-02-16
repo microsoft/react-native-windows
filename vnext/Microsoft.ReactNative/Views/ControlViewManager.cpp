@@ -6,6 +6,7 @@
 #include <UI.Xaml.Controls.h>
 
 #include <Views/ControlViewManager.h>
+#include <Views/FrameworkElementTransferProperties.h>
 #include <Views/ShadowNodeBase.h>
 
 #include <JSValueWriter.h>
@@ -13,8 +14,10 @@
 
 #ifdef USE_WINUI3
 #define TAB_INDEX_PROPERTY xaml::UIElement::TabIndexProperty
+#define TAB_STOP_PROPERTY xaml::UIElement::IsTabStopProperty
 #else
 #define TAB_INDEX_PROPERTY xaml::Controls::Control::TabIndexProperty
+#define TAB_STOP_PROPERTY xaml::Controls::Control::IsTabStopProperty
 #endif
 
 namespace Microsoft::ReactNative {
@@ -24,6 +27,7 @@ ControlViewManager::ControlViewManager(const Mso::React::IReactContext &context)
 void ControlViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetNativeProps(writer);
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
 }
 void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlView &newView) {
   TransferProperty(oldView, newView, xaml::Controls::Control::FontSizeProperty());
@@ -38,6 +42,7 @@ void ControlViewManager::TransferProperties(const XamlView &oldView, const XamlV
   TransferProperty(oldView, newView, xaml::Controls::Control::PaddingProperty());
   TransferProperty(oldView, newView, xaml::Controls::Control::ForegroundProperty());
   TransferProperty(oldView, newView, TAB_INDEX_PROPERTY());
+  TransferProperty(oldView, newView, TAB_STOP_PROPERTY());
 
   // Control.CornerRadius is only supported on >= RS5
   if (oldView.try_as<xaml::Controls::IControl7>() && newView.try_as<xaml::Controls::IControl7>()) {
@@ -72,6 +77,12 @@ bool ControlViewManager::UpdateProperty(
         control.TabIndex(static_cast<int32_t>(tabIndex));
       } else if (propertyValue.IsNull()) {
         control.ClearValue(TAB_INDEX_PROPERTY());
+      }
+    } else if (propertyName == "focusable") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        control.IsTabStop(propertyValue.AsBoolean());
+      } else if (propertyValue.IsNull()) {
+        control.ClearValue(TAB_STOP_PROPERTY());
       }
     } else {
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);

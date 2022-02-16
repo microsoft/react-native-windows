@@ -19,7 +19,7 @@ REACT_MODULE(TestHostModule)
 struct TestHostModule {
   REACT_INIT(Initialize)
   void Initialize(ReactContext const & /*reactContext*/) noexcept {
-    TestEventService::LogEvent("initialize", nullptr);
+    TestEventService::LogEvent("TestHostModule::Initialize", nullptr);
   }
 
   REACT_FUNCTION(addValues, L"addValues", L"TestHostModuleFunctions")
@@ -27,7 +27,7 @@ struct TestHostModule {
 
   REACT_METHOD(StartTests, L"startTests")
   void StartTests() noexcept {
-    TestEventService::LogEvent("start tests", nullptr);
+    TestEventService::LogEvent("TestHostModule::startTests", nullptr);
 
     TestEventService::LogEvent("call addValues", JSValueArray{4, 7});
     addValues(4, 7);
@@ -35,7 +35,7 @@ struct TestHostModule {
 
   REACT_METHOD(ReturnResult, L"returnResult")
   void ReturnResult(JSValue value) noexcept {
-    TestEventService::LogEvent("return result", std::move(value));
+    TestEventService::LogEvent("TestHostModule::ReturnResult", std::move(value));
   }
 };
 
@@ -84,10 +84,92 @@ TEST_CLASS (ReactNativeHostTests) {
     });
 
     TestEventService::ObserveEvents(
-        {TestEvent{"initialize", nullptr},
-         TestEvent{"start tests", nullptr},
+        {TestEvent{"TestHostModule::Initialize", nullptr},
+         TestEvent{"TestHostModule::startTests", nullptr},
          TestEvent{"call addValues", JSValueArray{4, 7}},
-         TestEvent{"return result", 11}});
+         TestEvent{"TestHostModule::ReturnResult", 11}});
+  }
+
+  TEST_METHOD(HostReloadedAsyncActionCompletedEvent) {
+    TestEventService::Initialize();
+
+    auto options = TestReactNativeHostHolder::Options{};
+    options.LoadInstance = false;
+    auto reactNativeHost = TestReactNativeHostHolder(
+        L"ReactNativeHostTests",
+        [](ReactNativeHost const &host) noexcept {
+          host.ReloadInstance().Completed([](auto const &, winrt::Windows::Foundation::AsyncStatus status) mutable {
+            if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
+              TestEventService::LogEvent("InstanceLoaded::Completed", nullptr);
+            } else if (status == winrt::Windows::Foundation::AsyncStatus::Canceled) {
+              TestEventService::LogEvent("InstanceLoaded::Canceled", nullptr);
+            } else {
+              TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
+            }
+          });
+        },
+        std::move(options));
+
+    TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Completed", nullptr}});
+  }
+
+  TEST_METHOD(LoadInstance_FiresInstanceLoaded_Success) {
+    TestEventService::Initialize();
+
+    auto options = TestReactNativeHostHolder::Options{};
+    auto reactNativeHost = TestReactNativeHostHolder(L"ReactNativeHostTests", [](ReactNativeHost const &host) noexcept {
+      host.InstanceSettings().InstanceLoaded(
+          [](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
+            if (args.Failed()) {
+              TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
+            } else {
+              TestEventService::LogEvent("InstanceLoaded::Success", nullptr);
+            }
+          });
+    });
+
+    TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Success", nullptr}});
+  }
+
+  TEST_METHOD(LoadBundleWithError_FiresInstanceLoaded_Failed) {
+    TestEventService::Initialize();
+
+    auto options = TestReactNativeHostHolder::Options{};
+    auto reactNativeHost = TestReactNativeHostHolder(L"SyntaxError", [](ReactNativeHost const &host) noexcept {
+      host.InstanceSettings().InstanceLoaded(
+          [](auto const &, winrt::Microsoft::ReactNative::IInstanceLoadedEventArgs args) noexcept {
+            if (args.Failed()) {
+              TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
+            } else {
+              TestEventService::LogEvent("InstanceLoaded::Success", nullptr);
+            }
+          });
+    });
+
+    TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Failed", nullptr}});
+  }
+
+  TEST_METHOD(LoadBundleWithError_ReloadInstance_Fails) {
+    TestEventService::Initialize();
+
+    auto options = TestReactNativeHostHolder::Options{};
+    options.LoadInstance = false;
+    auto reactNativeHost = TestReactNativeHostHolder(
+        L"SyntaxError",
+        [](ReactNativeHost const &host) noexcept {
+          host.ReloadInstance().Completed([](auto const &, winrt::Windows::Foundation::AsyncStatus status) mutable {
+            if (status == winrt::Windows::Foundation::AsyncStatus::Completed) {
+              TestEventService::LogEvent("InstanceLoaded::Completed", nullptr);
+            } else if (status == winrt::Windows::Foundation::AsyncStatus::Canceled) {
+              TestEventService::LogEvent("InstanceLoaded::Canceled", nullptr);
+            } else {
+              TestEventService::LogEvent("InstanceLoaded::Failed", nullptr);
+            }
+          });
+        },
+        std::move(options));
+
+    TestEventService::ObserveEvents({TestEvent{"InstanceLoaded::Canceled", nullptr}});
   }
 };
 

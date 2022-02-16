@@ -82,8 +82,50 @@ Object {
 }
 `;
 
+exports[`projectConfig - WithExperimentalFeaturesProps (Ignore react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithExperimentalFeaturesProps",
+  "project": Object {
+    "projectFile": "WithExperimentalFeaturesProps\\\\WithExperimentalFeaturesProps.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithExperimentalFeaturesProps",
+  },
+  "solutionFile": "WithExperimentalFeaturesProps.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithExperimentalFeaturesProps (Use react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithExperimentalFeaturesProps",
+  "project": Object {
+    "projectFile": "WithExperimentalFeaturesProps\\\\WithExperimentalFeaturesProps.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithExperimentalFeaturesProps",
+  },
+  "solutionFile": "WithExperimentalFeaturesProps.sln",
+  "sourceDir": "windows",
+}
+`;
+
 exports[`projectConfig - WithIndirectDependency (Ignore react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithIndirectDependency",
   "project": Object {
     "projectFile": "Error: Too many app project files found, please specify in react-native.config.",
@@ -95,6 +137,10 @@ Object {
 
 exports[`projectConfig - WithIndirectDependency (Use react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithIndirectDependency",
   "project": Object {
     "projectFile": "WithIndirectDependency\\\\WithIndirectDependency.vcxproj",
@@ -108,8 +154,89 @@ Object {
 }
 `;
 
+exports[`projectConfig - WithUseExperimentalNuget (Ignore react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNuget",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNuget\\\\WithUseExperimentalNuget.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNuget",
+  },
+  "solutionFile": "WithUseExperimentalNuget.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithUseExperimentalNuget (Use react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNuget",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNuget\\\\WithUseExperimentalNuget.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNuget",
+  },
+  "solutionFile": "WithUseExperimentalNuget.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithUseExperimentalNugetSetInProject (Ignore react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNugetSetInProject",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNugetSetInProject\\\\WithUseExperimentalNugetSetInProject.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNugetSetInProject",
+  },
+  "solutionFile": "WithUseExperimentalNugetSetInProject.sln",
+  "sourceDir": "windows",
+}
+`;
+
+exports[`projectConfig - WithUseExperimentalNugetSetInProject (Use react-native.config.js) 1`] = `
+Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "true",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
+  "folder": StringContaining "WithUseExperimentalNugetSetInProject",
+  "project": Object {
+    "projectFile": "WithUseExperimentalNugetSetInProject\\\\WithUseExperimentalNugetSetInProject.vcxproj",
+    "projectGuid": "{af576cbe-1aea-498d-be37-e9849a5fbf1b}",
+    "projectLang": "cpp",
+    "projectName": "WithUseExperimentalNugetSetInProject",
+  },
+  "solutionFile": "WithUseExperimentalNugetSetInProject.sln",
+  "sourceDir": "windows",
+}
+`;
+
 exports[`projectConfig - WithWinUI3 (Ignore react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithWinUI3",
   "project": Object {
     "projectFile": "WithWinUI3\\\\WithWinUI3.vcxproj",
@@ -124,6 +251,11 @@ Object {
 
 exports[`projectConfig - WithWinUI3 (Use react-native.config.js) 1`] = `
 Object {
+  "experimentalFeatures": Object {
+    "UseExperimentalNuget": "false",
+    "UseHermes": "false",
+    "UseWinUI3": "false",
+  },
   "folder": StringContaining "WithWinUI3",
   "project": Object {
     "projectFile": "WithWinUI3\\\\WithWinUI3.vcxproj",
@@ -139,22 +271,20 @@ Object {
 
 exports[`useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
-<packages>
-  <package id=\\"Microsoft.ReactNative.Cxx\\" version=\\"1.0.0\\" targetFramework=\\"native\\"/>
-  <package id=\\"Microsoft.WinUI\\" version=\\"3.0.0-preview4.210210.4\\" targetFramework=\\"native\\"/>
-</packages>"
-`;
-
-exports[`useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props 2`] = `
-"<?xml version=\\"1.0\\" encoding=\\"utf-8\\"?>
 <Project xmlns=\\"http://schemas.microsoft.com/developer/msbuild/2003\\">
 
+  <!--
+    This file contains some important settings that will apply globally for
+    your app and *all* native modules your app consumes. These values were
+    set when you created the app project, and in some cases cannot be
+    simply changed here without recreating a new project.
+  -->
+
   <PropertyGroup Label=\\"Microsoft.ReactNative Experimental Features\\">
-    
     <!--
       Enables default usage of Hermes.
       
-      See https://microsoft.github.io/react-native-windows/docs/0.64/hermes
+      See https://microsoft.github.io/react-native-windows/docs/hermes
     -->
     <UseHermes>false</UseHermes>
 
@@ -162,9 +292,18 @@ exports[`useWinUI3=true in react-native.config.js, useWinUI3=false in Experiment
       Changes compilation to assume use of WinUI 3 instead of System XAML.
       Requires creation of new project.
 
-      See https://microsoft.github.io/react-native-windows/docs/0.64/winui3
+      See https://microsoft.github.io/react-native-windows/docs/winui3
     -->
     <UseWinUI3>true</UseWinUI3>
+
+    <!--
+      Changes compilation to assume use of Microsoft.ReactNative NuGet packages
+      instead of building the framework from source.
+      Requires creation of new project.
+
+      See https://microsoft.github.io/react-native-windows/docs/nuget
+    -->
+    <UseExperimentalNuget>false</UseExperimentalNuget>
   
   </PropertyGroup>
 

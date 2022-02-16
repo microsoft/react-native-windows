@@ -35,14 +35,18 @@ void XamlUIService::DispatchEvent(
     xaml::FrameworkElement const &view,
     hstring const &eventName,
     JSValueArgWriter const &eventDataArgWriter) noexcept {
-  folly::dynamic eventData; // default to NULLT
-  if (eventDataArgWriter != nullptr) {
-    auto eventDataWriter = winrt::make_self<DynamicWriter>();
-    eventDataArgWriter(*eventDataWriter);
-    eventData = eventDataWriter->TakeValue();
+  auto paramsWriter = winrt::make_self<DynamicWriter>();
+  paramsWriter->WriteArrayBegin();
+  paramsWriter->WriteInt64(unbox_value<int64_t>(view.Tag()));
+  paramsWriter->WriteString(eventName);
+  if (eventDataArgWriter) {
+    eventDataArgWriter(*paramsWriter);
+  } else {
+    paramsWriter->WriteNull();
   }
-
-  m_context->DispatchEvent(unbox_value<int64_t>(view.Tag()), to_string(eventName), std::move(eventData));
+  paramsWriter->WriteArrayEnd();
+  auto params = paramsWriter->TakeValue();
+  m_context->CallJSFunction("RCTEventEmitter", "receiveEvent", std::move(params));
 }
 
 /*static*/ ReactPropertyId<XamlUIService> XamlUIService::XamlUIServiceProperty() noexcept {

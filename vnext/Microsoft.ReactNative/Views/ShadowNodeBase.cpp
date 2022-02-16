@@ -34,11 +34,10 @@ void ShadowNodeBase::updateProperties(winrt::Microsoft::ReactNative::JSValueObje
 void ShadowNodeBase::createView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
   m_view = GetViewManager()->CreateView(this->m_tag, props);
 
-  if (react::uwp::g_HasActualSizeProperty == react::uwp::TriBit::Undefined) {
+  if (g_HasActualSizeProperty == TriBit::Undefined) {
     if (auto uielement = m_view.try_as<xaml::UIElement>()) {
       // ActualSize works on 19H1+ only
-      react::uwp::g_HasActualSizeProperty =
-          (uielement.try_as<xaml::IUIElement10>()) ? react::uwp::TriBit::Set : react::uwp::TriBit::NotSet;
+      g_HasActualSizeProperty = (uielement.try_as<xaml::IUIElement10>()) ? TriBit::Set : TriBit::NotSet;
     }
   }
 }
@@ -66,6 +65,7 @@ void ShadowNodeBase::RemoveChildAt(int64_t indexToRemove) {
 }
 
 void ShadowNodeBase::onDropViewInstance() {
+  GetViewManager()->OnDropViewInstance(m_view);
   m_handledKeyboardEventHandler = nullptr;
 }
 

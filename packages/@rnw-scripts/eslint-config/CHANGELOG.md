@@ -1,8 +1,48 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Tue, 24 Nov 2020 05:08:17 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.11
+
+Wed, 09 Feb 2022 06:09:37 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+
+## 1.1.10
+
+Fri, 03 Dec 2021 06:12:11 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.1.9
+
+Thu, 18 Nov 2021 06:11:20 GMT
+
+### Patches
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+
+## 1.1.8
+
+Wed, 08 Sep 2021 05:08:53 GMT
+
+### Patches
+
+- Set consistent node requirements on our packages (ngerlem@microsoft.com)
+
+## 1.1.7
+
+Thu, 03 Jun 2021 05:09:47 GMT
+
+### Patches
+
+- Check for missing dependencies during lint (ngerlem@microsoft.com)
 
 ## 0.1.6
 

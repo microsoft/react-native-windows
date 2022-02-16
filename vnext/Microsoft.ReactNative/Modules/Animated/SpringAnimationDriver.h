@@ -7,7 +7,7 @@
 #include "AnimatedNode.h"
 #include "CalculatedAnimationDriver.h"
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 class SpringAnimationDriver : public CalculatedAnimationDriver {
  public:
   SpringAnimationDriver(
@@ -22,7 +22,7 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
 
  protected:
   std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
-  bool IsAnimationDone(double currentValue, double currentVelocity) override;
+  bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) override;
 
  private:
   bool IsAtRest(double currentVelocity, double currentPosition, double endValue);
@@ -48,5 +48,5 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
   static constexpr std::string_view s_displacementFromRestThresholdParameterName{"restDisplacementThreshold"};
   static constexpr std::string_view s_overshootClampingEnabledParameterName{"overshootClamping"};
   static constexpr std::string_view s_iterationsParameterName{"iterations"};
-}; // namespace uwp
-} // namespace react::uwp
+};
+} // namespace Microsoft::ReactNative

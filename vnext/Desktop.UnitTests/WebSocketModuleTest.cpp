@@ -39,6 +39,18 @@ TEST_CLASS (WebSocketModuleTest) {
     Assert::AreEqual(static_cast<size_t>(0), module->getConstants().size());
   }
 
+  TEST_METHOD(ConnectEmptyUriFails) {
+    auto module = make_unique<WebSocketModule>();
+
+    module->getMethods()
+        .at(WebSocketModule::MethodId::Connect)
+        .func(
+            dynamic::array("" /*url*/, dynamic(), dynamic(), /*id*/ 0), [](vector<dynamic>) {}, [](vector<dynamic>) {});
+
+    // Test passes by not crashing due to an unhandled exception.
+    Assert::IsTrue(true);
+  }
+
   TEST_METHOD(ConnectSendsEvent) {
     string eventName;
     string moduleName;
@@ -62,7 +74,7 @@ TEST_CLASS (WebSocketModuleTest) {
     module->setInstance(instance);
     module->SetResourceFactory([](const string &) {
       auto rc = make_shared<MockWebSocketResource>();
-      rc->Mocks.Connect = [rc](const IWebSocketResource::Protocols &, const IWebSocketResource::Options &) {
+      rc->Mocks.Connect = [rc](string &&, const IWebSocketResource::Protocols &, const IWebSocketResource::Options &) {
         rc->OnConnect();
       };
 

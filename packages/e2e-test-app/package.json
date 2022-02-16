@@ -8,36 +8,48 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows",
-    "e2etest": "jest --color"
+    "e2etest": "jest",
+    "e2etest:debug": "jest --config ./jest.debug.config.js"
   },
   "dependencies": {
+    "@react-native-picker/picker": "2.2.0",
+    "@react-native-windows/automation-channel": "^0.1.30",
     "@react-native-windows/tester": "0.0.1",
-    "node-rnw-rpc": "^1.0.5-23",
-    "react": "17.0.1",
-    "react-native": "0.0.0-d04ec4dc6",
-    "react-native-windows": "^0.0.0-canary.293"
+    "react": "17.0.2",
+    "react-native": "0.0.0-20220206-2010-113f8257c",
+    "react-native-windows": "^0.0.0-canary.456",
+    "react-native-xaml": "^0.0.50"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
-    "@rnw-scripts/eslint-config": "1.1.6",
-    "@rnw-scripts/just-task": "2.1.0",
-    "@rnw-scripts/ts-config": "1.1.0",
+    "@react-native-windows/automation": "^0.1.41",
+    "@react-native-windows/automation-commands": "^0.0.68",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.30",
+    "@rnw-scripts/babel-node-config": "2.0.4",
+    "@rnw-scripts/eslint-config": "1.1.11",
+    "@rnw-scripts/just-task": "2.2.3",
+    "@rnw-scripts/metro-dev-config": "0.0.0",
+    "@rnw-scripts/ts-config": "2.0.2",
+    "@rnx-kit/jest-preset": "^0.1.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.22",
-    "@types/react": "16.9.11",
-    "@types/react-native": "^0.63.46",
+    "@types/react": "^17.0.21",
+    "@types/react-native": "^0.66.0",
     "babel-jest": "^26.3.0",
-    "eslint": "7.12.0",
-    "jest": "^26.5.2",
-    "jest-environment-winappdriver": "^1.1.5-0",
+    "eslint": "^7.32.0",
+    "jest": "^26.6.3",
     "just-scripts": "^1.3.3",
-    "metro-react-native-babel-preset": "^0.56.0",
-    "prettier": "1.19.1",
-    "react-test-renderer": "17.0.1",
+    "metro-config": "^0.66.0",
+    "metro-react-native-babel-preset": "^0.66.2",
+    "prettier": "^2.4.1",
+    "react-test-renderer": "17.0.2",
     "sanitize-filename": "^1.6.3",
-    "typescript": "^3.8.3"
+    "typescript": "^4.4.4"
+  },
+  "engines": {
+    "node": ">= 14"
   }
 }

@@ -36,6 +36,7 @@ struct DevMenuManager : public std::enable_shared_from_this<DevMenuManager> {
   xaml::Controls::Button::Click_revoker m_breakOnNextLineRevoker{};
   winrt::CoreDispatcher::AcceleratorKeyActivated_revoker m_coreDispatcherAKARevoker{};
   xaml::UIElement::KeyDown_revoker m_keyDownRevoker;
+  xaml::Controls::Button::Click_revoker m_samplingProfilerRevoker{};
 };
 
 } // namespace Microsoft::ReactNative

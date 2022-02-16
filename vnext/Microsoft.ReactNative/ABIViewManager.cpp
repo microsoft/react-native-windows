@@ -40,7 +40,9 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
-      m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()} {
+      m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
+      m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
+      m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
@@ -111,6 +113,10 @@ void ABIViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValu
 void ABIViewManager::UpdateProperties(
     ::Microsoft::ReactNative::ShadowNodeBase *nodeToUpdate,
     winrt::Microsoft::ReactNative::JSValueObject &props) {
+  if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
+    MarkDirty(nodeToUpdate->m_tag);
+  }
+
   if (m_viewManagerWithNativeProperties) {
     auto view = nodeToUpdate->GetView().as<xaml::FrameworkElement>();
 
@@ -212,6 +218,22 @@ YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
     return ::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
   } else {
     return nullptr;
+  }
+}
+
+void ABIViewManager::OnPointerEvent(::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args) {
+  if (m_viewManagerWithPointerEvents) {
+    m_viewManagerWithPointerEvents.OnPointerEvent(node->GetView(), args);
+  }
+  // Call the base method to handle `pointerEvents` behavior
+  Super::OnPointerEvent(node, args);
+}
+
+void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView &view) {
+  if (m_viewManagerWithDropViewInstance) {
+    m_viewManagerWithDropViewInstance.OnDropViewInstance(view.try_as<xaml::FrameworkElement>());
+  } else {
+    Super::OnDropViewInstance(view);
   }
 }
 
