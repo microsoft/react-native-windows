@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ReactContext.h"
+#include "MsoReactContext.h"
 #include <winrt/Microsoft.ReactNative.h>
 #include "Microsoft.ReactNative/IReactNotificationService.h"
 #include "MsoUtils.h"
