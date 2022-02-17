@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
