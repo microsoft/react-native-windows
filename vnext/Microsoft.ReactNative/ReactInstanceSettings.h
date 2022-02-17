@@ -130,6 +130,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   uint16_t SourceBundlePort() noexcept;
   void SourceBundlePort(uint16_t value) noexcept;
 
+  bool InlineSourceMap() noexcept;
+  void InlineSourceMap(bool value) noexcept;
+
   JSIEngine JSIEngineOverride() noexcept;
   void JSIEngineOverride(JSIEngine value) noexcept;
 
@@ -174,6 +177,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring m_sourceBundleHost{};
   hstring m_debuggerRuntimeName{};
   uint16_t m_sourceBundlePort{0};
+  bool m_inlineSourceMap{true};
   LogHandler m_nativeLogger{nullptr};
 
 #if USE_HERMES
@@ -306,6 +310,14 @@ inline uint16_t ReactInstanceSettings::SourceBundlePort() noexcept {
 
 inline void ReactInstanceSettings::SourceBundlePort(uint16_t value) noexcept {
   m_sourceBundlePort = value;
+}
+
+inline bool ReactInstanceSettings::InlineSourceMap() noexcept {
+  return m_inlineSourceMap;
+}
+
+inline void ReactInstanceSettings::InlineSourceMap(bool value) noexcept {
+  m_inlineSourceMap = value;
 }
 
 inline JSIEngine ReactInstanceSettings::JSIEngineOverride() noexcept {

@@ -27,6 +27,7 @@ class ReactSettingsSnapshot final : public Mso::UnknownObject<IReactSettingsSnap
   std::string BundleRootPath() const noexcept override;
   std::string SourceBundleHost() const noexcept override;
   uint16_t SourceBundlePort() const noexcept override;
+  bool InlineSourceMap() const noexcept override;
   std::string JavaScriptBundleFile() const noexcept override;
   bool UseDeveloperSupport() const noexcept override;
   JSIEngine JsiEngine() const noexcept override;

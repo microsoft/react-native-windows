@@ -186,6 +186,10 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
+  bool InlineSourceMap() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   hstring JavaScriptBundleFile() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }

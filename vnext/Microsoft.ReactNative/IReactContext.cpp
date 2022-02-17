@@ -53,6 +53,10 @@ uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
   return m_settings->SourceBundlePort();
 }
 
+bool ReactSettingsSnapshot::InlineSourceMap() const noexcept {
+  return m_settings->InlineSourceMap();
+}
+
 hstring ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return winrt::to_hstring(m_settings->JavaScriptBundleFile());
 }

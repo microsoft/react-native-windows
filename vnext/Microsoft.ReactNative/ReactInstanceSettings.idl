@@ -215,6 +215,10 @@ namespace Microsoft.ReactNative
     DOC_DEFAULT("8081")
     UInt16 SourceBundlePort { get; set; };
 
+    DOC_STRING("Flag controlling whether the bundle URL requests inline source maps.")
+    DOC_DEFAULT("true")
+    Boolean InlineSourceMap { get; set; };
+
     DOC_STRING(
       "The @JSIEngine override to be used with the React instance.\n"
       "In order for the override to work, Microsoft.ReactNative must be compiled with support of that engine. "

@@ -85,6 +85,12 @@ namespace Microsoft.ReactNative
     UInt16 SourceBundlePort { get; };
 
     DOC_STRING(
+      "A read-only snapshot of the @ReactInstanceSettings.InlineSourceMap property value "
+      "at the time when the React instance was created.\n"
+      "If set, the bundle URL will request the source maps inline (it will improve debugging experience, but for very large bundles it could have a significant erformance hit)")
+    Boolean InlineSourceMap { get; };
+
+    DOC_STRING(
       "A read-only snapshot of the @ReactInstanceSettings.JavaScriptBundleFile property value "
       "at the time when the React instance was created.\n"
       "The name of the JavaScript bundle file to load. This should be a relative path from @.BundleRootPath. "
