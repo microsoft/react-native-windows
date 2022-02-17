@@ -24,6 +24,11 @@ const argv = yargs.options({
     type: 'array',
     describe: 'glob patterns for files which contains specs',
   },
+  outdir: {
+    type: 'string',
+    describe: 'output directory',
+    default: 'codegen',
+  },
   test: {
     type: 'boolean',
     describe: 'Verify that the generated output is unchanged',
@@ -273,7 +278,7 @@ if (argv.file) {
 
 const libraryName = argv.libraryName;
 const moduleSpecName = 'moduleSpecName';
-const outputDirectory = 'codegen';
+const outputDirectory = argv.outdir;
 generate(
   {libraryName, schema, outputDirectory, moduleSpecName},
   {generators: [], test: false},
