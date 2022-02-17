@@ -131,7 +131,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   };
 
 #if defined(USE_V8)
-  static std::string getApplicationLocalFolder();
+  static std::string getApplicationTempFolder();
 #endif
 
  private: // immutable fields
