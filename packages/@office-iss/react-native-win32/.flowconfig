@@ -26,6 +26,8 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/Text/Text.js
+<PROJECT_ROOT>/Libraries/Text/TextNativeComponent.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
 <PROJECT_ROOT>/Libraries/Utilities/Dimensions.js

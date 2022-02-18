@@ -1,3 +1,13 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * @flow
+ * @format
+ */
+
 import ReactNativeViewAttributes from '../Components/View/ReactNativeViewAttributes';
 import UIManager from '../ReactNative/UIManager';
 import {type HostComponent} from '../Renderer/shims/ReactNativeTypes';
@@ -58,8 +68,7 @@ export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComp
 ): any);
 
 export const NativeVirtualText: HostComponent<NativeTextProps> =
-  !global.RN$Bridgeless &&
-  UIManager.getViewManagerConfig('RCTVirtualText') == null
+  !global.RN$Bridgeless && !UIManager.hasViewManagerConfig('RCTVirtualText')
     ? NativeText
     : (createReactNativeComponentClass('RCTVirtualText', () => ({
         // $FlowFixMe[incompatible-call]
