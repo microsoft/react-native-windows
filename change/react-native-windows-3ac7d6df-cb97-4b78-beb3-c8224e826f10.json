@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use temporary folder to store JS bytecode",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

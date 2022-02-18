@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Rename C++ header file because another of the same name exists which leads to build issues in other environments (e.g. Buck/Clang)",
-  "packageName": "react-native-windows",
-  "email": "lyahdav@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

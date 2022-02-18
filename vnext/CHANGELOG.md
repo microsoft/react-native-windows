@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 16 Feb 2022 19:51:00 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Feb 2022 06:07:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.457
+
+Fri, 18 Feb 2022 06:07:44 GMT
+
+### Changes
+
+- Crash when getting osVersion on win 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Use temporary folder to store JS bytecode (30809111+acoates-ms@users.noreply.github.com)
+- MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (asklar@microsoft.com)
 
 ## 0.0.0-canary.456
 
