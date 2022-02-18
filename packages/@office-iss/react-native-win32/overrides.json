@@ -445,7 +445,14 @@
       "baseHash": "afe4fc1e9aa91d08a7a1098e3bbd3b17a73b4a65"
     },
     {
-      "type": "derived",
+      "type": "patch",
+      "file": "src/Libraries/Text/Text.win32.js",
+      "baseFile": "Libraries/Text/Text.js",
+      "baseHash": "8b90eb090dcfed88a40a38bbb51cbbd1e0d9ca9e",
+      "issue": 7074
+    },
+    {
+      "type": "patch",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
       "baseHash": "1a196691fb0e9b656c348b7d42427c1c6163c9bb",
