@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 19 Feb 2022 06:07:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.458",
+      "version": "0.0.0-canary.458",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ab5839b7c1fdcc07303f80935a5c8afa3294fef7",
+            "comment": "Update packages.lock.json"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Feb 2022 06:07:44 GMT",
       "tag": "react-native-windows_v0.0.0-canary.457",
       "version": "0.0.0-canary.457",
