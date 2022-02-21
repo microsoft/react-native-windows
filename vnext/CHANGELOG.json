@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Feb 2022 16:18:09 GMT",
+      "tag": "react-native-windows_v0.67.2",
+      "version": "0.67.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Use temporary folder to store V8 JS bytecode"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.67.1",
+            "commit": "521c5b633b4f28a546d12ee44a21f9d47c5e8b9e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Feb 2022 16:17:54 GMT",
       "tag": "react-native-windows_v0.67.2",
       "version": "0.67.2",
