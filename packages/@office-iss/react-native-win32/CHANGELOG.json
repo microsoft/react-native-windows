@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 21 Feb 2022 16:09:42 GMT",
+      "tag": "@office-iss/react-native-win32_v0.66.5",
+      "version": "0.66.5",
+      "comments": {
+        "patch": [
+          {
+            "comment": "forward isPressble to native text component",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "12e82b184f7f78aa1fcfbe3dd700daef70257356",
+            "package": "@office-iss/react-native-win32"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 16:11:33 GMT",
       "tag": "@office-iss/react-native-win32_v0.66.4",
       "version": "0.66.4",

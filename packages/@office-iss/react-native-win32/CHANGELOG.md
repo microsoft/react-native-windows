@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 24 Jan 2022 16:11:33 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Feb 2022 16:09:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.5
+
+Mon, 21 Feb 2022 16:09:42 GMT
+
+### Patches
+
+- forward isPressble to native text component (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.66.4
 

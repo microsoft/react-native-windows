@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Mon, 24 Jan 2022 16:11:33 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Feb 2022 16:09:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.62
+
+Mon, 21 Feb 2022 16:09:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.66.3 (jthysell@microsoft.com)
 
 ## 1.1.62
 

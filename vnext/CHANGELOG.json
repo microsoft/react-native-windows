@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Feb 2022 16:09:42 GMT",
+      "tag": "react-native-windows_v0.66.12",
+      "version": "0.66.12",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Use temp folder for v8 bytecode cache",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "7e3d3a9ad44b5ceafceb9aaeb647a0c0193a04c8",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Feb 2022 16:10:47 GMT",
       "tag": "react-native-windows_v0.66.11",
       "version": "0.66.11",
