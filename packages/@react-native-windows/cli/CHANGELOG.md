@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 24 Jan 2022 16:13:22 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Feb 2022 16:17:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.1
+
+Mon, 21 Feb 2022 16:17:54 GMT
+
+### Patches
+
+- [0.67] fix(cli): fix cache not being used when there are no dependencies (jthysell@microsoft.com)
 
 ## 0.67.0
 

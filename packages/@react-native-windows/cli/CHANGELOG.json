@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 21 Feb 2022 16:17:54 GMT",
+      "tag": "@react-native-windows/cli_v0.67.1",
+      "version": "0.67.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "e39dac4d04db1f1f8dd932b7348b37b48cca422b",
+            "comment": "[0.67] fix(cli): fix cache not being used when there are no dependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 16:13:22 GMT",
       "tag": "@react-native-windows/cli_v0.67.0",
       "version": "0.67.0",
