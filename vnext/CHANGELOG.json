@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Feb 2022 16:07:53 GMT",
+      "tag": "react-native-windows_v0.68.0-preview.3",
+      "version": "0.68.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4128a73ebd3e83db9d3aea9c4be67a470ee6a4ef",
+            "comment": "Use temporary folder to store V8 JS bytecode"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.0-preview.3",
+            "commit": "988af2c0ce0e5fb72584d39da38b3f757c4e3207"
+          }
+        ],
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "988af2c0ce0e5fb72584d39da38b3f757c4e3207",
+            "comment": "Use current version of Metro and Community CLI"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Feb 2022 16:08:40 GMT",
       "tag": "react-native-windows_v0.68.0-preview.2",
       "version": "0.68.0-preview.2",

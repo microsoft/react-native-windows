@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Feb 2022 16:08:40 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Feb 2022 16:07:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.3
+
+Mon, 21 Feb 2022 16:07:53 GMT
+
+### Changes
+
+- Use temporary folder to store V8 JS bytecode (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.68.0-preview.3
 
 ## 0.68.0-preview.2
 

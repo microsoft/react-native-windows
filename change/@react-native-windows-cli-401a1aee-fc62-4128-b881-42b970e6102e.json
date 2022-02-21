@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[0.68] Fix cache not being used when there are no dependencies",
-  "packageName": "@react-native-windows/cli",
-  "email": "4123478+tido64@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
