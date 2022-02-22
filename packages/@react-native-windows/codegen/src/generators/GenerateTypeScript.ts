@@ -170,7 +170,9 @@ function translateMethod(func: FunctionDecl): string {
     )},`;
   })})${func.optional ? '?' : ''}: ${translateType(
     funcType.returnTypeAnnotation,
-  )};`;
+  )}${
+    funcType.returnTypeAnnotation.type === 'ObjectTypeAnnotation' ? '' : ';'
+  }`;
 }
 
 export function createTypeScriptGenerator() {
@@ -206,7 +208,7 @@ export function createTypeScriptGenerator() {
         const methods = nativeModule.spec.properties.filter(
           (prop) => prop.name !== 'getConstants',
         );
-        const membersCode = methods.map(translateMethod);
+        const membersCode = methods.map(translateMethod).join('');
 
         files.set(
           `${preferredModuleName}Spec.g.ts`,
