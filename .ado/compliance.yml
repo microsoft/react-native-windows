@@ -1,4 +1,4 @@
-name: RNW Compliance $(Date:yyyyMMdd).$(Rev:r)
+name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
 
 parameters:
 - name: stopOnNoCI
