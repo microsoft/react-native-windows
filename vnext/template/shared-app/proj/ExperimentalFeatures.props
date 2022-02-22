@@ -32,7 +32,13 @@
       See https://microsoft.github.io/react-native-windows/docs/nuget
     -->
     <UseExperimentalNuget>{{useExperimentalNuget}}</UseExperimentalNuget>
-  
+    {{#ReactNativeWindowsVersion}}
+    <!--
+      Used by apps that use the NuGet package. 
+      This enables modules that are linked into an app to discover the NuGet package they should use
+    -->
+    <ReactNativeWindowsVersion>{{ReactNativeWindowsVersion}}</ReactNativeWindowsVersion>
+    {{/ReactNativeWindowsVersion}}
   </PropertyGroup>
 
 </Project>

@@ -39,6 +39,7 @@ const bundleDir = 'Bundle';
 interface NugetPackage {
   id: string;
   version: string;
+  condition: string;
 }
 
 function pascalCase(str: string) {
@@ -174,10 +175,12 @@ export async function copyProjectTemplateAndReplace(
     {
       id: 'Microsoft.NETCore.UniversalWindowsPlatform',
       version: '6.2.9',
+      condition: 'true',
     },
     {
       id: 'ReactNative.Hermes.Windows',
       version: hermesVersion,
+      condition: 'true',
     },
   ];
 
@@ -185,27 +188,32 @@ export async function copyProjectTemplateAndReplace(
     {
       id: 'Microsoft.Windows.CppWinRT',
       version: '2.0.211028.7',
+      condition: 'true',
     },
     {
       id: 'ReactNative.Hermes.Windows',
       version: hermesVersion,
+      condition: 'true',
     },
   ];
 
-  if (options.experimentalNuGetDependency) {
+  if (options.experimentalNuGetDependency || projectType === 'lib') {
     csNugetPackages.push({
       id: 'Microsoft.ReactNative.Managed',
-      version: nugetVersion,
+      version: '$(ReactNativeWindowsVersion)',
+      condition: "'$(UseExperimentalNuget)'=='true'",
     });
 
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative',
-      version: nugetVersion,
+      version: '$(ReactNativeWindowsVersion)',
+      condition: "'$(UseExperimentalNuget)'=='true'",
     });
 
     cppNugetPackages.push({
       id: 'Microsoft.ReactNative.Cxx',
-      version: nugetVersion,
+      version: '$(ReactNativeWindowsVersion)',
+      condition: "'$(UseExperimentalNuget)'=='true'",
     });
   }
 
@@ -241,6 +249,9 @@ export async function copyProjectTemplateAndReplace(
     currentUser: currentUser,
 
     useExperimentalNuget: options.experimentalNuGetDependency,
+    ReactNativeWindowsVersion: options.experimentalNuGetDependency
+      ? nugetVersion
+      : undefined,
     nuGetTestFeed: options.nuGetTestFeed,
     nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
 
