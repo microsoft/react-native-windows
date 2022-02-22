@@ -1,4 +1,4 @@
-name: $(BuildDefinitionName)_$(date:yyMM).$(date:dd)$(rev:rrr)
+name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 parameters:
 - name: stopOnNoCI
@@ -37,11 +37,6 @@ jobs:
         displayName: Stop pipeline if latest commit message contains ***NO_CI***
         condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
-      - task: PkgESSetupBuild@12
-        displayName: Package ES - Setup Build
-        inputs:
-          disableOutputRedirect: true
-
       - template: templates/set-version-vars.yml
         parameters:
           buildEnvironment: Continuous
@@ -57,6 +52,28 @@ jobs:
       - template: templates/apply-published-version-vars.yml
 
       # Pre-build compliance tasks
+
+      - powershell: |
+          $customProps = '<?xml version="1.0" encoding="utf-8"?>
+            <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+              <!-- This file is read by XES, which we use in our Release builds. -->
+              <PropertyGroup Label="Version">
+                <XesUseOneStoreVersioning>true</XesUseOneStoreVersioning>
+                <XesBaseYearForStoreVersion>2022</XesBaseYearForStoreVersion>
+                <VersionMajor>$($env:RNW_PKG_VERSION_MAJOR)</VersionMajor>
+                <VersionMinor>$($env:RNW_PKG_VERSION_MINOR)</VersionMinor>
+                <VersionInfoProductName>React-Native-Windows</VersionInfoProductName>
+              </PropertyGroup>
+            </Project>'
+          Write-Host $customProps
+          $customProps | Out-File -FilePath custom.props
+        displayName: Create custom.props file
+        workingDirectory: $(Build.SourcesDirectory)
+
+      - task: PkgESSetupBuild@12
+        displayName: Package ES - Setup Build
+        inputs:
+          disableOutputRedirect: true
 
       # Build
 
