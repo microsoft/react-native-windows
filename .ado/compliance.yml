@@ -60,8 +60,8 @@ jobs:
               <PropertyGroup Label="Version">
                 <XesUseOneStoreVersioning>true</XesUseOneStoreVersioning>
                 <XesBaseYearForStoreVersion>2022</XesBaseYearForStoreVersion>
-                <VersionMajor>${{ variables['RNW_PKG_VERSION_MAJOR'] }}</VersionMajor>
-                <VersionMinor>${{ variables['RNW_PKG_VERSION_MINOR'] }}</VersionMinor>
+                <VersionMajor>$env:RNW_PKG_VERSION_MAJOR</VersionMajor>
+                <VersionMinor>$env:RNW_PKG_VERSION_MINOR</VersionMinor>
                 <VersionInfoProductName>React-Native-Windows</VersionInfoProductName>
               </PropertyGroup>
             </Project>'
