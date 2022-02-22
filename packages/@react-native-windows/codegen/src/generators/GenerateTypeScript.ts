@@ -46,10 +46,10 @@ export function createTypeScriptGenerator() {
         : moduleName;
 
       if (nativeModule.type === 'NativeModule') {
-        console.log(`Generating Native${preferredModuleName}Spec.g.ts`);
+        console.log(`Generating ${preferredModuleName}Spec.g.ts`);
 
         files.set(
-          `Native${preferredModuleName}Spec.g.ts`,
+          `${preferredModuleName}Spec.g.ts`,
           moduleTemplate
             .replace(/::_MODULE_MEMBERS_::/g, '')
             .replace(/::_MODULE_NAME_::/g, preferredModuleName),
