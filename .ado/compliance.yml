@@ -37,6 +37,11 @@ jobs:
         displayName: Stop pipeline if latest commit message contains ***NO_CI***
         condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
+      - task: PkgESSetupBuild@12
+        displayName: Package ES - Setup Build
+        inputs:
+          disableOutputRedirect: true
+
       - template: templates/set-version-vars.yml
         parameters:
           buildEnvironment: Continuous
@@ -51,7 +56,9 @@ jobs:
 
       - template: templates/apply-published-version-vars.yml
 
-      # Insert pre-build compliance here
+      # Pre-build compliance tasks
+
+      # Build
 
       - template: templates/msbuild-sln.yml
         parameters:
@@ -60,4 +67,18 @@ jobs:
           buildPlatform: x64
           buildConfiguration: Release
 
-      # Insert post-build compliance here
+      # Post-build compliance tasks
+
+      # https://www.1eswiki.com/index.php?title=PoliCheck_Build_Task
+      # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
+        displayName: 'Run PoliCheck'
+        inputs:
+          targetType: F
+          targetArgument: $(Build.SourcesDirectory)
+          result: PoliCheck.xml
+          optionsFC: 1
+          optionsXS: 1
+          # optionsUEPath: $(Build.SourcesDirectory)\PolicheckExclusions.xml
+          optionsHMENABLE: 0
+        continueOnError: true
