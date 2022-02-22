@@ -25,9 +25,9 @@ const moduleTemplate = `
  * This is a TypeScript turbo module definition file.
  */
 
-import {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
+import {TurboModule, RootTag} from 'react-native/Libraries/TurboModule/RCTExport';
 import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import {Int32, Float, Double, RootTag} from 'react-native/Libraries/Types/CodegenTypes';
+import {Int32, Float, Double} from 'react-native/Libraries/Types/CodegenTypes';
 'use strict';
 
 ::_MODULE_ALIASED_STRUCTS_::
@@ -161,7 +161,9 @@ export function createTypeScriptGenerator() {
 
         const constantType = tryGetConstantType(nativeModule);
         const constantCode =
-          constantType === undefined ? '' : `  getConstants(): ${constantType}`;
+          constantType === undefined
+            ? ''
+            : `  getConstants(): ${translateType(constantType)}`;
 
         const membersCode = '';
 
