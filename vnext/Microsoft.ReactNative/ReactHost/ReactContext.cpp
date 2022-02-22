@@ -83,7 +83,7 @@ bool ReactSettingsSnapshot::InlineSourceMap() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->InlineSourceMap();
   }
-  return 0;
+  return false;
 }
 
 std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
