@@ -9,13 +9,18 @@
 import {
   NamedShape,
   NativeModuleBaseTypeAnnotation,
+  NativeModuleFunctionTypeAnnotation,
   NativeModuleObjectTypeAnnotation,
+  NativeModuleParamTypeAnnotation,
+  NativeModuleReturnTypeAnnotation,
   NativeModuleSchema,
   Nullable,
   SchemaType,
 } from 'react-native-tscodegen';
 
 type ObjectProp = NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>;
+type FunctionParam = NamedShape<Nullable<NativeModuleParamTypeAnnotation>>;
+type FunctionDecl = NamedShape<Nullable<NativeModuleFunctionTypeAnnotation>>;
 type FilesOutput = Map<string, string>;
 
 const moduleTemplate = `
@@ -25,6 +30,7 @@ const moduleTemplate = `
  * This is a TypeScript turbo module definition file.
  */
 
+// the following import statements are not actually working today
 import {TurboModule, RootTag} from 'react-native/Libraries/TurboModule/RCTExport';
 import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import {Int32, Float, Double} from 'react-native/Libraries/Types/CodegenTypes';
@@ -38,7 +44,13 @@ export interface Spec extends TurboModule {
 export default TurboModuleRegistry.getEnforcing<Spec>('::_MODULE_NAME_::');
 `;
 
-function translateType(type: Nullable<NativeModuleBaseTypeAnnotation>): string {
+function translateType(
+  type: Nullable<
+    | NativeModuleBaseTypeAnnotation
+    | NativeModuleParamTypeAnnotation
+    | NativeModuleReturnTypeAnnotation
+  >,
+): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;
   switch (type.type) {
@@ -105,7 +117,7 @@ ${type.properties
 }`;
 }
 
-export function tryGetConstantType(
+function tryGetConstantType(
   nativeModule: NativeModuleSchema,
 ): NativeModuleObjectTypeAnnotation | undefined {
   const candidates = nativeModule.spec.properties.filter(
@@ -133,6 +145,22 @@ export function tryGetConstantType(
   }
 
   return constantType;
+}
+
+function translateMethod(func: FunctionDecl): string {
+  const funcType =
+    func.typeAnnotation.type === 'NullableTypeAnnotation'
+      ? func.typeAnnotation.typeAnnotation
+      : func.typeAnnotation;
+
+  return `
+  ${func.name}(${funcType.params.map((param: FunctionParam) => {
+    return `${param.name}${param.optional ? '?' : ''}: ${translateType(
+      param.typeAnnotation,
+    )},`;
+  })})${func.optional ? '?' : ''}: ${translateType(
+    funcType.returnTypeAnnotation,
+  )};`;
 }
 
 export function createTypeScriptGenerator() {
@@ -165,7 +193,10 @@ export function createTypeScriptGenerator() {
             ? ''
             : `  getConstants(): ${translateType(constantType)}`;
 
-        const membersCode = '';
+        const methods = nativeModule.spec.properties.filter(
+          (prop) => prop.name !== 'getConstants',
+        );
+        const membersCode = methods.map(translateMethod);
 
         files.set(
           `${preferredModuleName}Spec.g.ts`,
