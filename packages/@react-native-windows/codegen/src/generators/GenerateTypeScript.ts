@@ -97,6 +97,16 @@ function translateType(
       return type.name;
     case 'NullableTypeAnnotation':
       return `(${translateType(type.typeAnnotation)} | null | undefined)`;
+    case 'VoidTypeAnnotation':
+      return `void`;
+    case 'PromiseTypeAnnotation':
+      return `Promise`;
+    case `FunctionTypeAnnotation`:
+      return `((${type.params.map((param: FunctionParam) => {
+        return `${param.name}${param.optional ? '?' : ''}: ${translateType(
+          param.typeAnnotation,
+        )},`;
+      })}) => ${translateType(type.returnTypeAnnotation)})`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
