@@ -77,6 +77,10 @@ jobs:
       #   inputs:
       #     disableOutputRedirect: true
 
+      # 1ES Component Governance onboarding (Detects open source components). See https://docs.opensource.microsoft.com/tools/cg.html
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Detection'
+
       # Build
 
       - template: templates/msbuild-sln.yml
@@ -100,4 +104,15 @@ jobs:
           optionsXS: 1
           # optionsUEPath: $(Build.SourcesDirectory)\PolicheckExclusions.xml
           optionsHMENABLE: 0
+        continueOnError: true
+
+      # https://www.1eswiki.com/wiki/CredScan_Azure_DevOps_Build_Task
+      # Searches through source code and build outputs for a credential left behind in the open
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+        displayName: 'Run CredScan'
+        inputs:
+          outputFormat: pre
+          # suppressionsFile: LocalSuppressions.json
+          batchSize: 20
+          debugMode: false
         continueOnError: true
