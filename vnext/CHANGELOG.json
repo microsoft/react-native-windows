@@ -2,6 +2,71 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 19 Feb 2022 06:07:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.458",
+      "version": "0.0.0-canary.458",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ab5839b7c1fdcc07303f80935a5c8afa3294fef7",
+            "comment": "Update packages.lock.json"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Feb 2022 06:07:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.457",
+      "version": "0.0.0-canary.457",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2f3a44fd3f595491f6ba3656124fc0847bbded2b",
+            "comment": "Crash when getting osVersion on win 8.1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b81ccc50de12420655bcd183aa1ac0b41190552e",
+            "comment": "Use temporary folder to store JS bytecode"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "705a34de75cd93e99e93b7090c8c86a391b5a3b6",
+            "comment": "MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early"
+          }
+        ],
+        "none": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d2f1c2b24ac2acc60648d4b80d59069fdcd32d87",
+            "comment": "Rename C++ header file because another of the same name exists which leads to build issues in other environments (e.g. Buck/Clang)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Feb 2022 19:51:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.456",
+      "version": "0.0.0-canary.456",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61fb9ca437da08f8c7275732134600625db5aa7d",
+            "comment": "Lazy Install `sourcemap-support` when `react-native-windows` config is hooked"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 13 Feb 2022 06:08:34 GMT",
       "tag": "react-native-windows_v0.0.0-canary.455",
       "version": "0.0.0-canary.455",

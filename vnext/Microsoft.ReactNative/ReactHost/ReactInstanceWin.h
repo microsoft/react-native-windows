@@ -5,7 +5,7 @@
 
 #include "IReactDispatcher.h"
 #include "IReactInstanceInternal.h"
-#include "ReactContext.h"
+#include "MsoReactContext.h"
 #include "ReactNativeHeaders.h"
 #include "React_win.h"
 #include "activeObject/activeObject.h"
@@ -131,7 +131,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   };
 
 #if defined(USE_V8)
-  static std::string getApplicationLocalFolder();
+  static std::string getApplicationTempFolder();
 #endif
 
  private: // immutable fields

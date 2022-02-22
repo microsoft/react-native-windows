@@ -170,6 +170,16 @@ jobs:
 
               - template: ../templates/stop-packagers.yml
 
+            - task: BinSkim@3
+              displayName: Run Binskim Analysis
+              inputs:
+                  InputType: 'Basic'
+                  Function: 'analyze'
+                  AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\\React.Windows.Desktop.DLL\*.dll'
+                  AnalyzeVerbose: true
+                  toolVersion: 'LatestPreRelease'
+              continueOnError: true
+
             - template: ../templates/publish-build-artifacts.yml
               parameters:
                 artifactName: Desktop

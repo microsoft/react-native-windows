@@ -16,7 +16,7 @@
     "directory": "packages/@react-native-windows/find-repo-root"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^1.0.1",
+    "@react-native-windows/fs": "^1.0.2",
     "find-up": "^4.1.0"
   },
   "devDependencies": {
