@@ -102,11 +102,13 @@ function translateType(
     case 'PromiseTypeAnnotation':
       return `Promise`;
     case `FunctionTypeAnnotation`:
-      return `((${type.params.map((param: FunctionParam) => {
-        return `${param.name}${param.optional ? '?' : ''}: ${translateType(
-          param.typeAnnotation,
-        )},`;
-      })}) => ${translateType(type.returnTypeAnnotation)})`;
+      return `((${type.params
+        .map((param: FunctionParam) => {
+          return `${param.name}${param.optional ? '?' : ''}: ${translateType(
+            param.typeAnnotation,
+          )}`;
+        })
+        .join(', ')}) => ${translateType(type.returnTypeAnnotation)})`;
     default:
       throw new Error(`Unhandled type in translateReturnType: ${returnType}`);
   }
@@ -164,11 +166,13 @@ function translateMethod(func: FunctionDecl): string {
       : func.typeAnnotation;
 
   return `
-  ${func.name}(${funcType.params.map((param: FunctionParam) => {
-    return `${param.name}${param.optional ? '?' : ''}: ${translateType(
-      param.typeAnnotation,
-    )},`;
-  })})${func.optional ? '?' : ''}: ${translateType(
+  ${func.name}(${funcType.params
+    .map((param: FunctionParam) => {
+      return `${param.name}${param.optional ? '?' : ''}: ${translateType(
+        param.typeAnnotation,
+      )}`;
+    })
+    .join(', ')})${func.optional ? '?' : ''}: ${translateType(
     funcType.returnTypeAnnotation,
   )}${
     funcType.returnTypeAnnotation.type === 'ObjectTypeAnnotation' ? '' : ';'
