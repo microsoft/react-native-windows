@@ -21,7 +21,7 @@ struct ReactSettingsSnapshot : winrt::implements<ReactSettingsSnapshot, IReactSe
   hstring BundleRootPath() const noexcept;
   hstring SourceBundleHost() const noexcept;
   uint16_t SourceBundlePort() const noexcept;
-  bool InlineSourceMap() const noexcept;
+  bool RequestInlineSourceMap() const noexcept;
   hstring JavaScriptBundleFile() const noexcept;
 
  public:

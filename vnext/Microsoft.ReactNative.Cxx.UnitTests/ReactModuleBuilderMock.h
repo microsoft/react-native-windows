@@ -186,7 +186,7 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
-  bool InlineSourceMap() noexcept {
+  bool RequestInlineSourceMap() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

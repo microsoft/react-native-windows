@@ -352,7 +352,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
           devSettings->sourceBundleHost = SourceBundleHost();
           devSettings->sourceBundlePort = SourceBundlePort();
-          devSettings->inlineSourceMap = InlineSourceMap();
+          devSettings->inlineSourceMap = RequestInlineSourceMap();
           devSettings->debugBundlePath = DebugBundlePath();
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
@@ -1031,8 +1031,8 @@ uint16_t ReactInstanceWin::SourceBundlePort() const noexcept {
                                                       : facebook::react::DevServerHelper::DefaultPackagerPort;
 }
 
-bool ReactInstanceWin::InlineSourceMap() const noexcept {
-  return m_options.DeveloperSettings.InlineSourceMap;
+bool ReactInstanceWin::RequestInlineSourceMap() const noexcept {
+  return m_options.DeveloperSettings.RequestInlineSourceMap;
 }
 
 JSIEngine ReactInstanceWin::JsiEngine() const noexcept {

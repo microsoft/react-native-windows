@@ -79,9 +79,9 @@ uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
   return 0;
 }
 
-bool ReactSettingsSnapshot::InlineSourceMap() const noexcept {
+bool ReactSettingsSnapshot::RequestInlineSourceMap() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->InlineSourceMap();
+    return instance->RequestInlineSourceMap();
   }
   return false;
 }

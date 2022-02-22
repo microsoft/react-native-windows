@@ -323,7 +323,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public ushort SourceBundlePort => throw new NotImplementedException();
 
-    public bool InlineSourceMap => throw new NotImplementedException();
+    public bool RequestInlineSourceMap => throw new NotImplementedException();
   }
 
   class ReactContextMock : IReactContext
