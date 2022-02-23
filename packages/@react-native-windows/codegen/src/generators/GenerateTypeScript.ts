@@ -44,6 +44,10 @@ export interface Spec extends TurboModule {
 export default TurboModuleRegistry.getEnforcing<Spec>('::_MODULE_NAME_::');
 `;
 
+function optionalSign<T>(obj: NamedShape<T>): string {
+  return obj.optional ? '?' : '';
+}
+
 function translateType(
   type: Nullable<
     | NativeModuleBaseTypeAnnotation
@@ -68,7 +72,7 @@ function translateType(
       return 'boolean';
     case 'ArrayTypeAnnotation':
       if (type.elementType) {
-        return `${translateType(type.elementType)}[]>`;
+        return `${translateType(type.elementType)}[]`;
       } else {
         return `Array`;
       }
@@ -77,7 +81,7 @@ function translateType(
     case 'ObjectTypeAnnotation':
       return `{${type.properties
         .map((prop: ObjectProp) => {
-          return `${prop.name}${prop.optional ? '?' : ''}: ${translateType(
+          return `${prop.name}${optionalSign(prop)}: ${translateType(
             prop.typeAnnotation,
           )}`;
         })
@@ -104,7 +108,7 @@ function translateType(
     case `FunctionTypeAnnotation`:
       return `((${type.params
         .map((param: FunctionParam) => {
-          return `${param.name}${param.optional ? '?' : ''}: ${translateType(
+          return `${param.name}${optionalSign(param)}: ${translateType(
             param.typeAnnotation,
           )}`;
         })
@@ -121,7 +125,7 @@ function translateAlias(
   return `interface ${name} {
 ${type.properties
   .map((prop: ObjectProp) => {
-    return `  ${prop.name}${prop.optional ? '?' : ''}: ${translateType(
+    return `  ${prop.name}${optionalSign(prop)}: ${translateType(
       prop.typeAnnotation,
     )};`;
   })
@@ -168,11 +172,11 @@ function translateMethod(func: FunctionDecl): string {
   return `
   ${func.name}(${funcType.params
     .map((param: FunctionParam) => {
-      return `${param.name}${param.optional ? '?' : ''}: ${translateType(
+      return `${param.name}${optionalSign(param)}: ${translateType(
         param.typeAnnotation,
       )}`;
     })
-    .join(', ')})${func.optional ? '?' : ''}: ${translateType(
+    .join(', ')})${optionalSign(func)}: ${translateType(
     funcType.returnTypeAnnotation,
   )}${
     funcType.returnTypeAnnotation.type === 'ObjectTypeAnnotation' ? '' : ';'
@@ -192,8 +196,9 @@ export function createTypeScriptGenerator() {
       // from 0.65 facebook's react-native-codegen
       // the module name has the Native prefix comparing to 0.63
       // when reading files we provided
-      const preferredModuleName = moduleName.startsWith('Native')
-        ? moduleName.substr(6)
+      const nativePrefix = 'Native';
+      const preferredModuleName = moduleName.startsWith(nativePrefix)
+        ? moduleName.substr(nativePrefix.length)
         : moduleName;
 
       if (nativeModule.type === 'NativeModule') {
