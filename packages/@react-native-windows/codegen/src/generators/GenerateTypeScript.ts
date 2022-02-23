@@ -183,52 +183,50 @@ function translateMethod(func: FunctionDecl): string {
   }`;
 }
 
-export function createTypeScriptGenerator() {
-  return (
-    _libraryName: string,
-    schema: SchemaType,
-    _moduleSpecName: string,
-  ): FilesOutput => {
-    const files = new Map<string, string>();
+export function generateTypeScript(
+  _libraryName: string,
+  schema: SchemaType,
+  _moduleSpecName: string,
+): FilesOutput {
+  const files = new Map<string, string>();
 
-    for (const moduleName of Object.keys(schema.modules)) {
-      const nativeModule = schema.modules[moduleName];
-      // from 0.65 facebook's react-native-codegen
-      // the module name has the Native prefix comparing to 0.63
-      // when reading files we provided
-      const nativePrefix = 'Native';
-      const preferredModuleName = moduleName.startsWith(nativePrefix)
-        ? moduleName.substr(nativePrefix.length)
-        : moduleName;
+  for (const moduleName of Object.keys(schema.modules)) {
+    const nativeModule = schema.modules[moduleName];
+    // from 0.65 facebook's react-native-codegen
+    // the module name has the Native prefix comparing to 0.63
+    // when reading files we provided
+    const nativePrefix = 'Native';
+    const preferredModuleName = moduleName.startsWith(nativePrefix)
+      ? moduleName.substr(nativePrefix.length)
+      : moduleName;
 
-      if (nativeModule.type === 'NativeModule') {
-        console.log(`Generating ${preferredModuleName}Spec.g.ts`);
+    if (nativeModule.type === 'NativeModule') {
+      console.log(`Generating ${preferredModuleName}Spec.g.ts`);
 
-        const aliasCode = Object.keys(nativeModule.aliases)
-          .map((name) => translateAlias(name, nativeModule.aliases[name]))
-          .join('\n\n');
+      const aliasCode = Object.keys(nativeModule.aliases)
+        .map((name) => translateAlias(name, nativeModule.aliases[name]))
+        .join('\n\n');
 
-        const constantType = tryGetConstantType(nativeModule);
-        const constantCode =
-          constantType === undefined
-            ? ''
-            : `  getConstants(): ${translateType(constantType)}`;
+      const constantType = tryGetConstantType(nativeModule);
+      const constantCode =
+        constantType === undefined
+          ? ''
+          : `  getConstants(): ${translateType(constantType)}`;
 
-        const methods = nativeModule.spec.properties.filter(
-          (prop) => prop.name !== 'getConstants',
-        );
-        const membersCode = methods.map(translateMethod).join('');
+      const methods = nativeModule.spec.properties.filter(
+        (prop) => prop.name !== 'getConstants',
+      );
+      const membersCode = methods.map(translateMethod).join('');
 
-        files.set(
-          `${preferredModuleName}Spec.g.ts`,
-          moduleTemplate
-            .replace(/::_MODULE_ALIASED_STRUCTS_::/g, aliasCode)
-            .replace(/::_MODULE_MEMBERS_::/g, constantCode + membersCode)
-            .replace(/::_MODULE_NAME_::/g, preferredModuleName),
-        );
-      }
+      files.set(
+        `${preferredModuleName}Spec.g.ts`,
+        moduleTemplate
+          .replace(/::_MODULE_ALIASED_STRUCTS_::/g, aliasCode)
+          .replace(/::_MODULE_MEMBERS_::/g, constantCode + membersCode)
+          .replace(/::_MODULE_NAME_::/g, preferredModuleName),
+      );
     }
+  }
 
-    return files;
-  };
+  return files;
 }

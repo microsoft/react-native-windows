@@ -10,7 +10,7 @@ import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
-import {createTypeScriptGenerator} from './generators/GenerateTypeScript';
+import {generateTypeScript} from './generators/GenerateTypeScript';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
 // @ts-ignore
@@ -220,7 +220,6 @@ function generate(
   );
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
-  const generateTypeScript = createTypeScriptGenerator();
 
   const generatorPropsH =
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH').generate;
