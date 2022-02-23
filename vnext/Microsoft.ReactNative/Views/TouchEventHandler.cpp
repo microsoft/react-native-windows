@@ -329,7 +329,7 @@ void TouchEventHandler::UpdatePointersInViews(
     } else {
       // newViews is empty when UpdatePointersInViews is called from outside
       // the root view, in this case use -1 for the JS event pointer target
-      const auto tag = !newViews.empty() ? newViews.front() : -1;
+      const auto tag = !newViews.empty() ? newViews.front() : InvalidTag;
       pointer = CreateReactPointer(args, tag, sourceElement);
     }
 
@@ -409,9 +409,9 @@ facebook::react::SharedEventEmitter EventEmitterForElement(
   auto element = view->Element();
   while (auto parent = element.Parent()) {
     if (element = parent.try_as<xaml::FrameworkElement>()) {
-      auto boxedTag = element.Tag();
-      if (boxedTag) {
-        if (tag = winrt::unbox_value<facebook::react::Tag>(element.Tag()))
+      auto elementTag = GetTag(element);
+      if (elementTag != InvalidTag) {
+        if (tag = static_cast<facebook::react::Tag>(elementTag))
           return EventEmitterForElement(uimanager, tag);
       }
     }
@@ -806,7 +806,7 @@ std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, i
   std::vector<int64_t> tags;
 
   auto *shadowNode = host->FindShadowNodeForTag(tag);
-  while (shadowNode != nullptr && tag != -1) {
+  while (shadowNode != nullptr && tag != InvalidTag) {
     if (tag == rootTag) {
       break;
     }

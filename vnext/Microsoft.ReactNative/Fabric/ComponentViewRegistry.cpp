@@ -60,7 +60,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<ViewComponentView>();
   }
 
-  view->Element().Tag(winrt::box_value(tag));
+  SetTag(view->Element(), tag);
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
   return it.first->second;
 }
@@ -79,6 +79,6 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
   assert(m_registry.find(tag) != m_registry.end());
 
   m_registry.erase(tag);
-  static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element().Tag(nullptr);
+  SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), nullptr);
 }
 } // namespace Microsoft::ReactNative
