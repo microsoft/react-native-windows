@@ -35,7 +35,6 @@ import {TurboModule, RootTag} from 'react-native/Libraries/TurboModule/RCTExport
 import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import {Int32, Float, Double} from 'react-native/Libraries/Types/CodegenTypes';
 'use strict';
-
 ::_MODULE_ALIASED_STRUCTS_::
 export interface Spec extends TurboModule {
 ::_MODULE_MEMBERS_::
@@ -122,7 +121,8 @@ function translateAlias(
   name: string,
   type: NativeModuleObjectTypeAnnotation,
 ): string {
-  return `interface ${name} {
+  return `
+export interface ${name} {
 ${type.properties
   .map((prop: ObjectProp) => {
     return `  ${prop.name}${optionalSign(prop)}: ${translateType(
@@ -130,7 +130,8 @@ ${type.properties
     )};`;
   })
   .join('\n')}
-}`;
+}
+`;
 }
 
 function tryGetConstantType(
@@ -205,7 +206,7 @@ export function generateTypeScript(
 
       const aliasCode = Object.keys(nativeModule.aliases)
         .map((name) => translateAlias(name, nativeModule.aliases[name]))
-        .join('\n\n');
+        .join('');
 
       const constantType = tryGetConstantType(nativeModule);
       const constantCode =
