@@ -46,7 +46,7 @@ TouchEventHandler::~TouchEventHandler() {
 }
 
 void TouchEventHandler::AddTouchHandlers(XamlView xamlView, XamlView rootView, bool handledEventsToo) {
-  auto uiElement(xamlView.as<xaml::UIElement>());
+  auto uiElement(xamlView.try_as<xaml::UIElement>());
   if (uiElement == nullptr) {
     assert(false);
     return;
