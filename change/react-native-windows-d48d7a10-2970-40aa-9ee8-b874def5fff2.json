@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Expose InlineSourceMap property",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch"
+}
