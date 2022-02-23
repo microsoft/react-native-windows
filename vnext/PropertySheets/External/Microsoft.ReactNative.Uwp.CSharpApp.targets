@@ -14,9 +14,13 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.SourceReferences.targets"
           Condition="!$(UseExperimentalNuget)" />
 
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\CSharpNuGetReferences.targets" Condition="$(UseExperimentalNuget)" />
+
   <ItemGroup>
     <!-- WinUI package name and version are set by WinUI.props -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <!-- Hermes version is set by JSEngine.props -->
+    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" Condition="$(UseHermes)" />
   </ItemGroup>
 
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 

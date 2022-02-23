@@ -14,9 +14,13 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.SourceReferences.targets"
           Condition="!$(UseExperimentalNuget)" />
 
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\CppNuGetReferences.targets" Condition="$(UseExperimentalNuget)" />
+
   <ItemGroup>
     <!-- WinUI package name and version are set by WinUI.props -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <!-- Hermes version is set by JSEngine.props -->
+    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" Condition="$(UseHermes)" />
   </ItemGroup>
 
   <!-- The props file for bundling is not set up to be just defaults, it assumes to be run at the end of the project. -->
