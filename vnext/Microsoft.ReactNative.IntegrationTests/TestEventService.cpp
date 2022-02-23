@@ -39,14 +39,19 @@ using namespace std::literals::chrono_literals;
       auto const &expectedEvent = expectedEvents[observeEventIndex];
       TestCheckEqual(expectedEvent.EventName, loggedEvent.EventName);
       if (expectedEvent.EventName != loggedEvent.EventName) {
-        break; // Dont hang waiting for more data
+        std::stringstream os;
+        os << "Values:" << '\n'
+           << "Expected: " << expectedEvent.Value.ToString() << '\n'
+           << "Actual: " << loggedEvent.Value.ToString();
+        TestCheckFail("%s", os.str().c_str());
+        break; // Don't hang waiting for more data
       }
       if (auto d1 = expectedEvent.Value.TryGetDouble(), d2 = loggedEvent.Value.TryGetDouble(); d1 && d2) {
         // Comparison of doubles has special logic because NaN != NaN.
         if (!isnan(*d1) && !isnan(*d2)) {
           TestCheckEqual(*d1, *d2);
           if (*d1 != *d2) {
-            break; // Dont hang waiting for more data
+            break; // Don't hang waiting for more data
           }
         }
       } else if (expectedEvent.Value != loggedEvent.Value) { // Use JSValue strict compare
@@ -55,7 +60,7 @@ using namespace std::literals::chrono_literals;
            << "Expected: " << expectedEvent.Value.ToString() << '\n'
            << "Actual: " << loggedEvent.Value.ToString();
         TestCheckFail("%s", os.str().c_str());
-        break; // Dont hang waiting for more data
+        break; // Don't hang waiting for more data
       }
 
       ++observeEventIndex;
