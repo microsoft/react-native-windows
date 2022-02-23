@@ -79,6 +79,13 @@ uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
   return 0;
 }
 
+bool ReactSettingsSnapshot::RequestInlineSourceMap() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->RequestInlineSourceMap();
+  }
+  return false;
+}
+
 std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->JavaScriptBundleFile();
