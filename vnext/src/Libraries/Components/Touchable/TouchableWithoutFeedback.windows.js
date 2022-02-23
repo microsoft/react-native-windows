@@ -172,9 +172,21 @@ function createPressabilityConfig(props: Props): PressabilityConfig {
     onBlur: props.onBlur,
     onFocus: props.onFocus,
     onLongPress: props.onLongPress,
-    onPress: props.onPress,
-    onPressIn: props.onPressIn,
-    onPressOut: props.onPressOut,
+    onPress: (event) => {
+      if (props.onPress != null && event.nativeEvent.isLeftButton) {
+        props.onPress(event);
+      }
+    },
+    onPressIn: (event) => {
+      if (props.onPressIn != null && event.nativeEvent.isLeftButton) {
+        props.onPressIn(event);
+      }
+    },
+    onPressOut: (event) => {
+      if (props.onPressOut != null && event.nativeEvent.isLeftButton) {
+        props.onPressOut(event);
+      }
+    },
     onMouseEnter: props.onMouseEnter, // [Windows]
     onMouseLeave: props.onMouseLeave, // [Windows]
   };
