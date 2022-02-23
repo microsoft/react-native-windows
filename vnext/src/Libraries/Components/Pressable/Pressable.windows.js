@@ -298,7 +298,11 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onHoverIn,
       onHoverOut,
       onLongPress,
-      onPress,
+      onPress(event: PressEvent): void{
+        if(event.nativeEvent.isLeftButton){
+          onPress(event);
+        }
+      },
       onPressIn(event: PressEvent): void {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressIn(event);

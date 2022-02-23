@@ -129,11 +129,9 @@ void TouchEventHandler::OnPointerPressed(
 
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
-    // For now, when using the mouse we only want to send click events for the left button.
-    // Finger and pen taps will also set isLeftButton.
-    if (m_pointers[pointerIndex].isLeftButton) {
-      DispatchTouchEvent(eventType, pointerIndex);
-    }
+    // Reverted Igor's PR
+    DispatchTouchEvent(eventType, pointerIndex);
+    
   }
 }
 
@@ -211,14 +209,12 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
-  if (m_pointers[*optPointerIndex].isLeftButton) {
     // In case a PointerCaptureLost event should be treated as an "end" event,
     // check the ReactPointerEventArgs Kind property before emitting the event.
     const auto adjustedEventType = reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End
         ? TouchEventType::End
         : TouchEventType::Cancel;
     DispatchTouchEvent(adjustedEventType, *optPointerIndex);
-  }
 
   m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
   if (m_pointers.size() == 0)
