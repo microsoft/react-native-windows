@@ -102,6 +102,7 @@ struct IReactSettingsSnapshot : IUnknown {
   virtual std::string BundleRootPath() const noexcept = 0;
   virtual std::string SourceBundleHost() const noexcept = 0;
   virtual uint16_t SourceBundlePort() const noexcept = 0;
+  virtual bool RequestInlineSourceMap() const noexcept = 0;
   virtual std::string JavaScriptBundleFile() const noexcept = 0;
   virtual bool UseDeveloperSupport() const noexcept = 0;
   virtual JSIEngine JsiEngine() const noexcept = 0;
@@ -149,6 +150,7 @@ struct ReactDevOptions {
   //! Specify a value for a component, or leave empty to use the default.
   std::string SourceBundleHost; // Host domain (without port) for the bundler server. Default: "localhost".
   uint16_t SourceBundlePort{0}; // Host port for the bundler server. Default: "8081".
+  bool RequestInlineSourceMap{true}; // Request the source map inline
   std::string SourceBundleName; // Bundle name without any extension (e.g. "index.win32"). Default: "index.{PLATFORM}"
   std::string SourceBundleExtension; // Bundle name extension. Default: ".bundle".
 

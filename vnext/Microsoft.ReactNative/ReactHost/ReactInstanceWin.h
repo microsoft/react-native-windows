@@ -77,6 +77,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::string BundleRootPath() const noexcept;
   std::string SourceBundleHost() const noexcept;
   uint16_t SourceBundlePort() const noexcept;
+  bool RequestInlineSourceMap() const noexcept;
   std::string JavaScriptBundleFile() const noexcept;
   bool UseDeveloperSupport() const noexcept;
   JSIEngine JsiEngine() const noexcept;

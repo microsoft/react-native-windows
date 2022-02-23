@@ -352,6 +352,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
           devSettings->sourceBundleHost = SourceBundleHost();
           devSettings->sourceBundlePort = SourceBundlePort();
+          devSettings->inlineSourceMap = RequestInlineSourceMap();
           devSettings->debugBundlePath = DebugBundlePath();
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
@@ -408,7 +409,6 @@ void ReactInstanceWin::Initialize() noexcept {
             case JSIEngine::Hermes:
               devSettings->jsiRuntimeHolder =
                   std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
-              devSettings->inlineSourceMap = false;
               break;
             case JSIEngine::V8:
 #if defined(USE_V8)
@@ -1029,6 +1029,10 @@ std::string ReactInstanceWin::SourceBundleHost() const noexcept {
 uint16_t ReactInstanceWin::SourceBundlePort() const noexcept {
   return m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
                                                       : facebook::react::DevServerHelper::DefaultPackagerPort;
+}
+
+bool ReactInstanceWin::RequestInlineSourceMap() const noexcept {
+  return m_options.DeveloperSettings.RequestInlineSourceMap;
 }
 
 JSIEngine ReactInstanceWin::JsiEngine() const noexcept {
