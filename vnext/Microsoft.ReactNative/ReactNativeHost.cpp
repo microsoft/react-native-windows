@@ -132,6 +132,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   }
   reactOptions.DeveloperSettings.SourceBundleHost = to_string(m_instanceSettings.SourceBundleHost());
   reactOptions.DeveloperSettings.SourceBundlePort = m_instanceSettings.SourceBundlePort();
+  reactOptions.DeveloperSettings.RequestInlineSourceMap = m_instanceSettings.RequestInlineSourceMap();
 
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
