@@ -25,6 +25,7 @@
 #include "ScrollViewComponentView.h"
 #include "TextComponentView.h"
 #include "ViewComponentView.h"
+#include "XamlView.h"
 
 namespace Microsoft::ReactNative {
 
