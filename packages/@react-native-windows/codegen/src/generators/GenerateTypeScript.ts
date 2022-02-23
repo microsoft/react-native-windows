@@ -31,9 +31,8 @@ const moduleTemplate = `
  */
 
 // the following import statements are not actually working today
-import {TurboModule, RootTag} from 'react-native/Libraries/TurboModule/RCTExport';
+import {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
 import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import {Int32, Float, Double} from 'react-native/Libraries/Types/CodegenTypes';
 'use strict';
 ::_MODULE_ALIASED_STRUCTS_::
 export interface Spec extends TurboModule {
@@ -60,13 +59,10 @@ function translateType(
     case 'StringTypeAnnotation':
       return 'string';
     case 'NumberTypeAnnotation':
-      return 'number';
     case 'FloatTypeAnnotation':
-      return 'Float';
     case 'DoubleTypeAnnotation':
-      return 'Double';
     case 'Int32TypeAnnotation':
-      return 'Int32';
+      return 'number';
     case 'BooleanTypeAnnotation':
       return 'boolean';
     case 'ArrayTypeAnnotation':
@@ -94,7 +90,7 @@ function translateType(
         throw new Error(
           `Unknown reserved function: ${name} in translateReturnType`,
         );
-      return 'RootTag';
+      return 'number';
     }
     case 'TypeAliasTypeAnnotation':
       return type.name;
