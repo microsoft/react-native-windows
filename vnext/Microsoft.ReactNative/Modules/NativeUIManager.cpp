@@ -456,6 +456,8 @@ static void StyleYogaNode(
         wrap = YGWrapNoWrap;
       else if (value == "wrap")
         wrap = YGWrapWrap;
+      else if (value == "wrap-reverse")
+        wrap = YGWrapWrapReverse;
       else
         assert(false);
 
