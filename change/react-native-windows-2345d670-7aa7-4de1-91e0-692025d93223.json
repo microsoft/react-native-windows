@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add wrap-reverse to flex wrap options",
-  "packageName": "react-native-windows",
-  "email": "axelfratoni@microsoft.com",
-  "dependentChangeType": "patch"
-}

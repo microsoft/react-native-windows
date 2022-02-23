@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 19 Feb 2022 06:07:07 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Feb 2022 06:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.459
+
+Wed, 23 Feb 2022 06:07:37 GMT
+
+### Changes
+
+- Add wrap-reverse to flex wrap options (axelfratoni@microsoft.com)
+- Expose InlineSourceMap property (tudor.mihai@microsoft.com)
 
 ## 0.0.0-canary.458
 

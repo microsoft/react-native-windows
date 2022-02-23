@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Feb 2022 06:07:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.459",
+      "version": "0.0.0-canary.459",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "axelfratoni@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "782f583e4359804917c970765ce96b58c37e08f0",
+            "comment": "Add wrap-reverse to flex wrap options"
+          },
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4503219836e63970fa56106afa18d4b86bae1643",
+            "comment": "Expose InlineSourceMap property"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Feb 2022 06:07:07 GMT",
       "tag": "react-native-windows_v0.0.0-canary.458",
       "version": "0.0.0-canary.458",
