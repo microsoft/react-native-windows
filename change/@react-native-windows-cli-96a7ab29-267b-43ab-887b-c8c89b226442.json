@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move hardcoded PackageReferences from templates into targets",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
