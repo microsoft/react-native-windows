@@ -411,7 +411,7 @@ facebook::react::SharedEventEmitter EventEmitterForElement(
     if (element = parent.try_as<xaml::FrameworkElement>()) {
       auto elementTag = GetTag(element);
       if (elementTag != InvalidTag) {
-        if (tag = static_cast<facebook::react::Tag>(elementTag))
+        if ((tag = static_cast<facebook::react::Tag>(elementTag)) != InvalidTag)
           return EventEmitterForElement(uimanager, tag);
       }
     }
