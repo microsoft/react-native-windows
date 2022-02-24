@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable TurboModule Promise completion in any thread",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
