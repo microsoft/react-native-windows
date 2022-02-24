@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "ReactContext.h"
+#include "MsoReactContext.h"
 #include <winrt/Microsoft.ReactNative.h>
 #include "Microsoft.ReactNative/IReactNotificationService.h"
 #include "MsoUtils.h"
@@ -77,6 +77,13 @@ uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
     return instance->SourceBundlePort();
   }
   return 0;
+}
+
+bool ReactSettingsSnapshot::RequestInlineSourceMap() const noexcept {
+  if (auto instance = m_reactInstance.GetStrongPtr()) {
+    return instance->RequestInlineSourceMap();
+  }
+  return false;
 }
 
 std::string ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {

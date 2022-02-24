@@ -8,6 +8,7 @@
 #include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <appModel.h>
 #include <comUtil/qiCast.h>
 
 #ifndef CORE_ABI
@@ -351,6 +352,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
           devSettings->sourceBundleHost = SourceBundleHost();
           devSettings->sourceBundlePort = SourceBundlePort();
+          devSettings->inlineSourceMap = RequestInlineSourceMap();
           devSettings->debugBundlePath = DebugBundlePath();
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
@@ -407,14 +409,22 @@ void ReactInstanceWin::Initialize() noexcept {
             case JSIEngine::Hermes:
               devSettings->jsiRuntimeHolder =
                   std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
-              devSettings->inlineSourceMap = false;
               break;
             case JSIEngine::V8:
 #if defined(USE_V8)
-#ifndef CORE_ABI
-              preparedScriptStore =
-                  std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
-#endif // CORE_ABI
+            {
+              uint32_t length{0};
+              if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
+                preparedScriptStore =
+                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
+              } else {
+                wchar_t tempPath[MAX_PATH];
+                if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+                  preparedScriptStore =
+                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                }
+              }
+            }
               devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                   devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
               break;
@@ -975,8 +985,8 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
 }
 
 #if defined(USE_V8)
-std::string ReactInstanceWin::getApplicationLocalFolder() {
-  auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+std::string ReactInstanceWin::getApplicationTempFolder() {
+  auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
 
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
@@ -1019,6 +1029,10 @@ std::string ReactInstanceWin::SourceBundleHost() const noexcept {
 uint16_t ReactInstanceWin::SourceBundlePort() const noexcept {
   return m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
                                                       : facebook::react::DevServerHelper::DefaultPackagerPort;
+}
+
+bool ReactInstanceWin::RequestInlineSourceMap() const noexcept {
+  return m_options.DeveloperSettings.RequestInlineSourceMap;
 }
 
 JSIEngine ReactInstanceWin::JsiEngine() const noexcept {

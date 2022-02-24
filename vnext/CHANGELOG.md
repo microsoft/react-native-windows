@@ -1,8 +1,43 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
+This log was last generated on Wed, 23 Feb 2022 06:07:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.459
+
+Wed, 23 Feb 2022 06:07:37 GMT
+
+### Changes
+
+- Add wrap-reverse to flex wrap options (axelfratoni@microsoft.com)
+- Expose InlineSourceMap property (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.458
+
+Sat, 19 Feb 2022 06:07:07 GMT
+
+### Changes
+
+- Update packages.lock.json (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.457
+
+Fri, 18 Feb 2022 06:07:44 GMT
+
+### Changes
+
+- Crash when getting osVersion on win 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Use temporary folder to store JS bytecode (30809111+acoates-ms@users.noreply.github.com)
+- MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (asklar@microsoft.com)
+
+## 0.0.0-canary.456
+
+Wed, 16 Feb 2022 19:51:00 GMT
+
+### Changes
+
+- Lazy Install `sourcemap-support` when `react-native-windows` config is hooked (ngerlem@microsoft.com)
 
 ## 0.0.0-canary.455
 

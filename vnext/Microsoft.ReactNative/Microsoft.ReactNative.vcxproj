@@ -274,7 +274,7 @@
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
     <ClInclude Include="ReactHost\React.h" />
-    <ClInclude Include="ReactHost\ReactContext.h" />
+    <ClInclude Include="ReactHost\MsoReactContext.h" />
     <ClInclude Include="ReactHost\ReactErrorProvider.h" />
     <ClInclude Include="ReactHost\ReactHost.h" />
     <ClInclude Include="ReactHost\ReactInstanceWin.h" />
@@ -605,7 +605,7 @@
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="ReactHost\ReactContext.cpp" />
+    <ClCompile Include="ReactHost\MsoReactContext.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />

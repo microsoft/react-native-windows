@@ -10,6 +10,7 @@ import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
+import {generateTypeScript} from './generators/GenerateTypeScript';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
 // @ts-ignore
@@ -23,6 +24,16 @@ const argv = yargs.options({
   files: {
     type: 'array',
     describe: 'glob patterns for files which contains specs',
+  },
+  ts: {
+    type: 'boolean',
+    describe: 'generate turbo module definition files in TypeScript',
+    default: false,
+  },
+  outdir: {
+    type: 'string',
+    describe: 'output directory',
+    default: 'codegen',
   },
   test: {
     type: 'boolean',
@@ -209,6 +220,7 @@ function generate(
   );
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
+
   const generatorPropsH =
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH').generate;
   const generatorPropsCPP =
@@ -227,6 +239,14 @@ function generate(
     outputDirectory,
     generatedFiles,
   );
+
+  if (argv.ts) {
+    normalizeFileMap(
+      generateTypeScript(libraryName, schema, moduleSpecName),
+      outputDirectory,
+      generatedFiles,
+    );
+  }
 
   if (
     Object.keys(schema.modules).some(
@@ -273,7 +293,7 @@ if (argv.file) {
 
 const libraryName = argv.libraryName;
 const moduleSpecName = 'moduleSpecName';
-const outputDirectory = 'codegen';
+const outputDirectory = argv.outdir;
 generate(
   {libraryName, schema, outputDirectory, moduleSpecName},
   {generators: [], test: false},

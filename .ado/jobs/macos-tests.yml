@@ -3,9 +3,11 @@ jobs:
   - job: MacTests
     displayName: macOS Tests
     timeoutInMinutes: 20
-    variables: [template: ../variables/shared.yml]
+    variables: 
+      - template: ../variables/shared.yml
+      - name: BUILDSECMON_OPT_IN
+        value: true
     pool: {vmImage: macOS-10.15}
-
     steps:
       - template: ../templates/checkout-shallow.yml
 
