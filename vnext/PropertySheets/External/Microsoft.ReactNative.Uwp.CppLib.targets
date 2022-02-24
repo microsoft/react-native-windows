@@ -11,10 +11,8 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Common.targets" />
 
   <!-- Due to visual studio unconditionally showing references, we have to trick it by making it impossible for VS to find the reference differences between building as source and building as NuGet -->
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.SourceReferences.targets"
-          Condition="!$(UseExperimentalNuget)" />
-
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\CppNuGetReferences.targets" Condition="$(UseExperimentalNuget)" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Cpp.ProjectReferences.props" Condition="!$(UseExperimentalNuget)" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Cpp.PackageReferences.props" Condition="$(UseExperimentalNuget)" />
 
   <ItemGroup>
     <!-- WinUI package name and version are set by WinUI.props -->
@@ -24,9 +22,4 @@
   <Target Name="Deploy" />
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
-  <ItemDefinitionGroup>
-    <Reference>
-        <Private Condition="'$(ConfigurationType)' != 'Application'">false</Private>
-    </Reference>
-  </ItemDefinitionGroup>
 </Project>
