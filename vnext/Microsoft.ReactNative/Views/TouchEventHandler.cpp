@@ -129,7 +129,6 @@ void TouchEventHandler::OnPointerPressed(
 
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
-    // Reverted Igor's PR
     DispatchTouchEvent(eventType, pointerIndex);
     
   }
