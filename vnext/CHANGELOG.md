@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Feb 2022 16:09:42 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Feb 2022 16:40:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.13
+
+Thu, 24 Feb 2022 16:40:08 GMT
+
+### Patches
+
+- Crash when getting Platform.osVersion on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.66.12
 

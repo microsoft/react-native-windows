@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Feb 2022 16:40:08 GMT",
+      "tag": "react-native-windows_v0.66.13",
+      "version": "0.66.13",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Crash when getting Platform.osVersion on Windows 8.1",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "9e78137aab868033423df7f4a10a1188f381a3f0",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Feb 2022 16:09:42 GMT",
       "tag": "react-native-windows_v0.66.12",
       "version": "0.66.12",
