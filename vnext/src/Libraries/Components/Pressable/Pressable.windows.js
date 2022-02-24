@@ -298,7 +298,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onHoverIn,
       onHoverOut,
       onLongPress,
-      onPress(event: PressEvent): void{
+      onPress(event: PressEvent): void {
         if (onPress != null && event.nativeEvent.isLeftButton) {
           onPress(event);
         }
