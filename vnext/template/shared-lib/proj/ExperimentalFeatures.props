@@ -4,7 +4,35 @@
   <!--
     Application projects contain a file with this name to specify some important settings
     that will apply globally for the app and *all* native modules the app consumes. These
-    values are set by the app developer.
+    values are set by the app developer. However you can also set them here to test building
+    the library solution without an app.
   -->
+
+  <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
+    <!--
+      Enables default usage of Hermes.
+      
+      See https://microsoft.github.io/react-native-windows/docs/hermes
+    -->
+    <UseHermes>{{useHermes}}</UseHermes>
+
+    <!--
+      Changes compilation to assume use of WinUI 3 instead of System XAML.
+      Requires creation of new project.
+
+      See https://microsoft.github.io/react-native-windows/docs/winui3
+    -->
+    <UseWinUI3>{{useWinUI3}}</UseWinUI3>
+
+    <!--
+      Changes compilation to assume use of Microsoft.ReactNative NuGet packages
+      instead of building the framework from source.
+      Requires creation of new project.
+
+      See https://microsoft.github.io/react-native-windows/docs/nuget
+    -->
+    <UseExperimentalNuget>{{useExperimentalNuget}}</UseExperimentalNuget>
+  
+  </PropertyGroup>
 
 </Project>
