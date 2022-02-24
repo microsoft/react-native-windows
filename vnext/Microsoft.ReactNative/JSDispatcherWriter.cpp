@@ -86,15 +86,16 @@ IJSValueWriter JSDispatcherWriter::GetWriter() noexcept {
     VerifyElseCrash(!m_dynamicWriter);
     if (!m_jsiWriter) {
       m_jsiWriter = winrt::make_self<JsiWriter>(m_jsiRuntime);
+      m_writer = m_jsiWriter.as<IJSValueWriter>();
     }
-    return m_jsiWriter.as<IJSValueWriter>();
   } else {
     VerifyElseCrash(!m_jsiWriter);
     if (!m_dynamicWriter) {
       m_dynamicWriter = winrt::make_self<DynamicWriter>();
+      m_writer = m_dynamicWriter.as<IJSValueWriter>();
     }
-    return m_dynamicWriter.as<IJSValueWriter>();
   }
+  return m_writer;
 }
 
 } // namespace winrt::Microsoft::ReactNative

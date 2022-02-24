@@ -38,6 +38,7 @@ struct JSDispatcherWriter : winrt::implements<JSDispatcherWriter, IJSValueWriter
   facebook::jsi::Runtime &m_jsiRuntime;
   winrt::com_ptr<DynamicWriter> m_dynamicWriter;
   winrt::com_ptr<JsiWriter> m_jsiWriter;
+  IJSValueWriter m_writer;
 };
 
 } // namespace winrt::Microsoft::ReactNative
