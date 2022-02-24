@@ -192,6 +192,9 @@
     <ClInclude Include="DynamicWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="JSDispatcherWriter.h">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
     <ClInclude Include="GlyphViewManager.h" />
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h">
@@ -506,6 +509,9 @@
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="DynamicWriter.cpp">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="JSDispatcherWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="GlyphViewManager.cpp" />
