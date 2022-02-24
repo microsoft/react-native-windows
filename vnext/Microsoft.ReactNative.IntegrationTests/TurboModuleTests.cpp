@@ -460,7 +460,7 @@ struct CppTurboModule {
 struct CppTurboModulePackageProvider : winrt::implements<CppTurboModulePackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
     auto experimental = packageBuilder.as<IReactPackageBuilderExperimental>();
-    experimental.AddTurboModule(L"CppTurboModule", MakeTurboModuleProvider<CppTurboModule>());
+    experimental.AddTurboModule(L"CppTurboModule", MakeTurboModuleProvider<CppTurboModule, CppTurboModuleSpec>());
   }
 };
 
@@ -472,6 +472,7 @@ TEST_CLASS (TurboModuleTests) {
 
     auto reactNativeHost = TestReactNativeHostHolder(L"TurboModuleTests", [](ReactNativeHost const &host) noexcept {
       host.PackageProviders().Append(winrt::make<CppTurboModulePackageProvider>());
+      return true;
     });
 
     TestEventService::ObserveEvents({
