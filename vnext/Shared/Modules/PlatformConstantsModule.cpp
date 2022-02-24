@@ -60,6 +60,10 @@ std::map<std::string, folly::dynamic> PlatformConstantsModule::getConstants() {
 }
 
 /*static*/ int32_t PlatformConstantsModule::OsVersion() noexcept {
+  if (!IsWindows10OrGreater()) {
+    return -1;
+  }
+
   for (uint16_t i = 1;; ++i) {
     if (!ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", i)) {
       return i - 1;
