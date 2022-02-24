@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 24 Feb 2022 06:07:47 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.26",
+      "version": "0.0.0-canary.26",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "042d47d2ebff13b8ecdd3d81898f2c86539c1827",
+            "comment": "Add TypeScript turbo module definition as new codegen traget"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Feb 2022 06:09:36 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.25",
       "version": "0.0.0-canary.25",

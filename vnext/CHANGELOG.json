@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Feb 2022 06:07:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.460",
+      "version": "0.0.0-canary.460",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.26",
+            "commit": "042d47d2ebff13b8ecdd3d81898f2c86539c1827"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Feb 2022 06:07:37 GMT",
       "tag": "react-native-windows_v0.0.0-canary.459",
       "version": "0.0.0-canary.459",
