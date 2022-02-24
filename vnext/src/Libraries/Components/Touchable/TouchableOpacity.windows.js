@@ -19,7 +19,6 @@ import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
 import Platform from '../../Utilities/Platform';
 import * as React from 'react';
-import {off} from 'process';
 
 type TVProps = $ReadOnly<{|
   hasTVPreferredFocus?: ?boolean,
@@ -176,17 +175,19 @@ class TouchableOpacity extends React.Component<Props, State> {
               ? 0
               : 150,
           );
-        }
-        if (this.props.onPressIn != null && event.nativeEvent.isLeftButton) {
-          this.props.onPressIn(event);
+
+          if (this.props.onPressIn != null) {
+            this.props.onPressIn(event);
+          }
         }
       },
       onPressOut: (event) => {
         if (event.nativeEvent.isLeftButton) {
           this._opacityInactive(250);
-        }
-        if (this.props.onPressOut != null && event.nativeEvent.isLeftButton) {
-          this.props.onPressOut(event);
+
+          if (this.props.onPressOut != null) {
+            this.props.onPressOut(event);
+          }
         }
       },
     };

@@ -130,7 +130,6 @@ void TouchEventHandler::OnPointerPressed(
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
     DispatchTouchEvent(eventType, pointerIndex);
-    
   }
 }
 
@@ -208,12 +207,12 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
-    // In case a PointerCaptureLost event should be treated as an "end" event,
-    // check the ReactPointerEventArgs Kind property before emitting the event.
-    const auto adjustedEventType = reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End
-        ? TouchEventType::End
-        : TouchEventType::Cancel;
-    DispatchTouchEvent(adjustedEventType, *optPointerIndex);
+  // In case a PointerCaptureLost event should be treated as an "end" event,
+  // check the ReactPointerEventArgs Kind property before emitting the event.
+  const auto adjustedEventType = reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End
+      ? TouchEventType::End
+      : TouchEventType::Cancel;
+  DispatchTouchEvent(adjustedEventType, *optPointerIndex);
 
   m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
   if (m_pointers.size() == 0)

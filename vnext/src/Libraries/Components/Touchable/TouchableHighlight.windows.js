@@ -216,17 +216,20 @@ class TouchableHighlight extends React.Component<Props, State> {
         }
         if (event.nativeEvent.isLeftButton) {
           this._showUnderlay();
-        }
-        if (this.props.onPressIn != null && event.nativeEvent.isLeftButton) {
-          this.props.onPressIn(event);
+
+          if (this.props.onPressIn != null && event.nativeEvent.isLeftButton) {
+            this.props.onPressIn(event);
+          }
         }
       },
       onPressOut: (event) => {
-        if (this._hideTimeout == null) {
-          this._hideUnderlay();
-        }
-        if (this.props.onPressOut != null && event.nativeEvent.isLeftButton) {
-          this.props.onPressOut(event);
+        if (event.nativeEvent.isLeftButton) {
+          if (this._hideTimeout == null) {
+            this._hideUnderlay();
+          }
+          if (this.props.onPressOut != null) {
+            this.props.onPressOut(event);
+          }
         }
       },
     };
