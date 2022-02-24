@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.459",
+  "version": "0.0.0-canary.460",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -57,7 +57,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.25",
+    "@react-native-windows/codegen": "0.0.0-canary.26",
     "@rnw-scripts/eslint-config": "1.1.11",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.5",
     "@rnw-scripts/metro-dev-config": "0.0.0",

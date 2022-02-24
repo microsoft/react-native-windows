@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 09 Feb 2022 06:09:36 GMT and should not be manually modified.
+This log was last generated on Thu, 24 Feb 2022 06:07:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.26
+
+Thu, 24 Feb 2022 06:07:47 GMT
+
+### Changes
+
+- Add TypeScript turbo module definition as new codegen traget (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.25
 
