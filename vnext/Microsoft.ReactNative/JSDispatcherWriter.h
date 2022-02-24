@@ -1,7 +1,8 @@
-#pragma once
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+#pragma once
 
+#include <functional/functor.h>
 #include "DynamicWriter.h"
 #include "JsiWriter.h"
 #include "folly/dynamic.h"
