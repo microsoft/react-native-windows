@@ -3,9 +3,7 @@
 
 #include "pch.h"
 
-#include <DynamicReader.h>
 #include <JSValueWriter.h>
-#include <JsiWriter.h>
 #include <Views/SIPEventHandler.h>
 #include <Views/ShadowNodeBase.h>
 #include "Impl/ScrollViewUWPImplementation.h"
