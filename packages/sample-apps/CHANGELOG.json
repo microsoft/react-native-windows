@@ -2,6 +2,21 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Fri, 25 Feb 2022 06:07:52 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump react-native-windows to v0.0.0-canary.461",
+            "commit": "45d0c70bffcf439572ddb5e6a2e50cce3df95440"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Feb 2022 06:07:47 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",

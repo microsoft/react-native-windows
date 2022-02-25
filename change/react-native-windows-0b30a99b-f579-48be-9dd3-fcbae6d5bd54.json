@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix tag handling to allow non-RNW elements in the scene (e.g. AdaptiveCards)",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
