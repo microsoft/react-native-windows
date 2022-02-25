@@ -159,17 +159,17 @@ yarn install
 <ol>
 <li>In a different directory, follow the <a href="/react-native-windows/docs/0.64/getting-started">getting started guide</a> and create a new React Native Windows app.</li>
 <li>Copy the <code>Windows</code> folder from the blank RNW app into the existing sample app's sample app's folder. (The RNW CLI helps create the correct project setup that you can then copy directly into the sample app.)</li>
-<li>Open <code>sln</code> and <code>vxcproj</code> files and check <code>node_module</code> reference paths. Fix the paths if necessary based on how the folders are structured in native module repo (<a href="https://github.com/react-native-community/react-native-webview/blob/master/example/windows/WebViewWindows.sln#L11-L42">example</a>).</li>
+<li>Open <code>sln</code> and <code>vxcproj</code> files and check <code>node_module</code> reference paths. Fix the paths if necessary based on how the folders are structured in native module repo (<a href="https://github.com/react-native-community/react-native-webview/blob/v11.17.2/example/windows/WebViewWindows.sln#L11-L42">example</a>).</li>
 <li>Open the solution with Visual Studio and <a href="/react-native-windows/docs/0.64/native-modules-using">link native module</a>.</li>
 </ol>
 <blockquote>
 <p>The project should build correctly at this point, but we still need to setup some special metro configurations for Windows in order to run the app without breaking iOS and Android bundling.</p>
 </blockquote>
 <ol start="5">
-<li>Add <code>metro.config.windows</code> for Windows bundling (<a href="https://github.com/react-native-community/react-native-webview/blob/master/metro.config.windows.js">example</a>). Make sure the config file is at the root of the repo (see <a href="https://github.com/facebook/metro/issues/588">Metro bug #588</a>).</li>
-<li>In <code>package.json</code>, add a separate start command for windows and attach a special argument to tell metro to use the windows config we just created (<a href="https://github.com/react-native-community/react-native-webview/blob/master/package.json#L18">example</a>).</li>
-<li>Add <code>react-native.config.js</code> to parse the special argument we added (<a href="https://github.com/react-native-community/react-native-webview/blob/master/react-native.config.js#L28-L33">example</a>).</li>
-<li>Update JS main module path (relative path to metro <code>projectRoot</code>) in <code>App.cpp</code> if necessary (<a href="https://github.com/react-native-community/react-native-webview/blob/master/example/windows/WebViewWindows/App.cpp#L25">example</a>).</li>
+<li>Add <code>metro.config.windows</code> for Windows bundling (<a href="https://github.com/react-native-community/react-native-webview/blob/v11.17.2/metro.config.windows.js">example</a>). Make sure the config file is at the root of the repo (see <a href="https://github.com/facebook/metro/issues/588">Metro bug #588</a>).</li>
+<li>In <code>package.json</code>, add a separate start command for windows and attach a special argument to tell metro to use the windows config we just created (<a href="https://github.com/react-native-community/react-native-webview/blob/v11.17.2/package.json#L18">example</a>).</li>
+<li>Add <code>react-native.config.js</code> to parse the special argument we added (<a href="https://github.com/react-native-community/react-native-webview/blob/v11.17.2/react-native.config.js#L28-L33">example</a>).</li>
+<li>Update JS main module path (relative path to metro <code>projectRoot</code>) in <code>App.cpp</code> if necessary (<a href="https://github.com/react-native-community/react-native-webview/blob/v11.17.2/example/windows/WebViewWindows/App.cpp#L25">example</a>).</li>
 </ol>
 <h3><a class="anchor" aria-hidden="true" id="adding-tests-for-your-module"></a><a href="#adding-tests-for-your-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Adding tests for your module</h3>
 <p>We are using WebdriverIO + WinAppDriver for UI testing. More details <a href="https://github.com/microsoft/react-native-windows/blob/master/docs/e2e-testing.md#appium">here</a>. For real world examples, check out <a href="https://github.com/react-native-community/react-native-webview"><code>react-native-webview</code></a> or <a href="https://github.com/react-native-community/progress-view">progress-view</a>.</p>
@@ -215,7 +215,7 @@ yarn install
     <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Run</span> <span class="hljs-string">tests</span>
       <span class="hljs-attr">run:</span> <span class="hljs-string">yarn</span> <span class="hljs-string">test:windows</span>
 </code></pre>
-<p>Check out the full <a href="https://github.com/react-native-webview/react-native-webview/blob/master/.github/workflows/windows-ci.yml"><code>react-native-webview</code> example</a> as well as their <a href="https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/">official example</a> for more info.</p>
+<p>Check out the full <a href="https://github.com/react-native-webview/react-native-webview/blob/v11.17.2/.github/workflows/windows-ci.yml"><code>react-native-webview</code> example</a> as well as their <a href="https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/">official example</a> for more info.</p>
 <p>Add the YAML file to <code>.github\workflows\</code> and then commit. To know more about the YAML syntax, check out <a href="https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions">Workflow syntax for GitHub Actions</a>.</p>
 <blockquote>
 <p>GitHub Actions should be enabled by default, if it's not enabled for some reason you can go to Settings-&gt;Actions tab of the repo to enable it (requires owner access).</p>
