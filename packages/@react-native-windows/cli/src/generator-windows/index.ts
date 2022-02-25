@@ -13,7 +13,6 @@ import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
-import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
   createDir,
