@@ -13,7 +13,6 @@ import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
 import findUp from 'find-up';
-import {readProjectFile, findPropertyValue} from '../config/configUtils';
 
 import {
   createDir,
@@ -127,39 +126,10 @@ export async function copyProjectTemplateAndReplace(
     mainComponentName = appJson.name;
   }
 
-  const xamlNamespace = options.useWinUI3
-    ? 'Microsoft.UI.Xaml'
-    : 'Windows.UI.Xaml';
-  const xamlNamespaceCpp = toCppNamespace(xamlNamespace);
-
-  const winuiPropsPath = resolveRnwPath('PropertySheets/WinUI.props');
-  const winuiProps = readProjectFile(winuiPropsPath);
-  const winui3Version = findPropertyValue(
-    winuiProps,
-    'WinUI3Version',
-    winuiPropsPath,
-  );
-  const winui2xVersion = findPropertyValue(
-    winuiProps,
-    'WinUI2xVersion',
-    winuiPropsPath,
-  );
-
-  const jsEnginePropsPath = resolveRnwPath('PropertySheets/JSengine.props');
-  const hermesVersion = findPropertyValue(
-    readProjectFile(jsEnginePropsPath),
-    'HermesVersion',
-    jsEnginePropsPath,
-  );
-
   const csNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.NETCore.UniversalWindowsPlatform',
       version: '6.2.9',
-    },
-    {
-      id: 'ReactNative.Hermes.Windows',
-      version: hermesVersion,
     },
   ];
 
@@ -167,35 +137,6 @@ export async function copyProjectTemplateAndReplace(
     {
       id: 'Microsoft.Windows.CppWinRT',
       version: '2.0.211028.7',
-    },
-    {
-      id: 'ReactNative.Hermes.Windows',
-      version: hermesVersion,
-    },
-  ];
-
-  if (options.experimentalNuGetDependency) {
-    csNugetPackages.push({
-      id: 'Microsoft.ReactNative.Managed',
-      version: nugetVersion,
-    });
-
-    cppNugetPackages.push({
-      id: 'Microsoft.ReactNative',
-      version: nugetVersion,
-    });
-
-    cppNugetPackages.push({
-      id: 'Microsoft.ReactNative.Cxx',
-      version: nugetVersion,
-    });
-  }
-
-  const packagesConfigCppNugetPackages = [
-    ...cppNugetPackages,
-    {
-      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : winui2xVersion,
     },
   ];
 
@@ -229,10 +170,7 @@ export async function copyProjectTemplateAndReplace(
     // cpp template variables
     useWinUI3: options.useWinUI3,
     useHermes: options.useHermes,
-    xamlNamespace: xamlNamespace,
-    xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
-    packagesConfigCppNugetPackages: packagesConfigCppNugetPackages,
 
     // cs template variables
     csNugetPackages: csNugetPackages,
@@ -329,11 +267,6 @@ export async function copyProjectTemplateAndReplace(
               ),
             },
           ];
-
-    csMappings.push({
-      from: path.join(srcPath, projDir, 'Directory.Build.props'),
-      to: path.join(windowsDir, 'Directory.Build.props'),
-    });
 
     for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(

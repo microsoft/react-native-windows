@@ -28,20 +28,6 @@ export async function ensureWinUI3Project(folder: string) {
     useWinUI3: false,
     useHermes: false,
     useExperimentalNuget: false,
-    packagesConfigCppNugetPackages: [
-      {
-        id: 'Microsoft.ReactNative.Cxx',
-        version: '1.0.0',
-      },
-      {
-        id: 'Microsoft.UI.Xaml',
-        version: '2.3.4.5',
-      },
-      {
-        id: 'Microsoft.WinUI',
-        version: '3.2.1.0',
-      },
-    ],
   };
 
   await copyAndReplace(
