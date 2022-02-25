@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 25 Feb 2022 23:53:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.117",
+      "version": "0.0.0-canary.117",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "adb425a46ad8002d72bb8191a193e3139e907f2b",
+            "comment": "Move hardcoded PackageReferences from templates into targets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 13 Feb 2022 06:08:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.116",
       "version": "0.0.0-canary.116",

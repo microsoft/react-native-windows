@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update packages.lock.json",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

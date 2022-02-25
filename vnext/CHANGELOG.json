@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Feb 2022 23:53:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.462",
+      "version": "0.0.0-canary.462",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "adb425a46ad8002d72bb8191a193e3139e907f2b",
+            "comment": "Move hardcoded PackageReferences from templates into targets"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2d3725153ee799c2c0b1a02e9667b9cb7a239aba",
+            "comment": "Update packages.lock.json"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.117",
+            "commit": "5fefed862a6757b78c3fd1494b9a4e0210be522c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Feb 2022 06:07:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.461",
       "version": "0.0.0-canary.461",
