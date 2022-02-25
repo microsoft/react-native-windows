@@ -197,6 +197,9 @@
     <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\JSDispatcherWriter.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
@@ -271,6 +274,9 @@
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\JsiWriter.h">
+      <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="..\Microsoft.ReactNative\JSDispatcherWriter.h">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="..\Microsoft.ReactNative\ReactInstanceSettings.h">
