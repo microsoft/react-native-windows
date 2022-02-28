@@ -173,17 +173,17 @@ function createPressabilityConfig(props: Props): PressabilityConfig {
     onFocus: props.onFocus,
     onLongPress: props.onLongPress,
     onPress: (event) => {
-      if (props.onPress != null && event.nativeEvent.isLeftButton) {
+      if (props.onPress != null && event.nativeEvent.button === 0) {
         props.onPress(event);
       }
     },
     onPressIn: (event) => {
-      if (props.onPressIn != null && event.nativeEvent.isLeftButton) {
+      if (props.onPressIn != null && event.nativeEvent.button === 0) {
         props.onPressIn(event);
       }
     },
     onPressOut: (event) => {
-      if (props.onPressOut != null && event.nativeEvent.isLeftButton) {
+      if (props.onPressOut != null && event.nativeEvent.button === 0) {
         props.onPressOut(event);
       }
     },

@@ -363,6 +363,20 @@ void TouchEventHandler::UpdatePointersInViews(
 }
 
 winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
+  // defines button payoad, follows https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
+  int button = -1;
+  if (pointer.isLeftButton) {
+    button = 0;
+  } else if (pointer.isMiddleButton) {
+    button = 1;
+  } else if (pointer.isRightButton) {
+    button = 2;
+  } else if (pointer.isBarrelButton) {
+    button = 3;
+  } else if (pointer.isHorizontalScrollWheel) {
+    button = 4;
+  }
+
   return winrt::Microsoft::ReactNative::JSValueObject{
       {"target", target},
       {"identifier", pointer.identifier},
@@ -384,6 +398,7 @@ winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const R
       {"isEraser", pointer.isEraser},
       {"shiftKey", pointer.shiftKey},
       {"ctrlKey", pointer.ctrlKey},
+      {"button", button},
       {"altKey", pointer.altKey}};
 }
 

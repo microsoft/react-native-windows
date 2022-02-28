@@ -164,12 +164,12 @@ class TouchableOpacity extends React.Component<Props, State> {
       },
       onLongPress: this.props.onLongPress,
       onPress: (event) => {
-        if (this.props.onPress != null && event.nativeEvent.isLeftButton) {
+        if (this.props.onPress != null && event.nativeEvent.button === 0) {
           this.props.onPress(event);
         }
       },
       onPressIn: (event) => {
-        if (event.nativeEvent.isLeftButton) {
+        if (event.nativeEvent.button === 0) {
           this._opacityActive(
             event.dispatchConfig.registrationName === 'onResponderGrant'
               ? 0
@@ -182,7 +182,7 @@ class TouchableOpacity extends React.Component<Props, State> {
         }
       },
       onPressOut: (event) => {
-        if (event.nativeEvent.isLeftButton) {
+        if (event.nativeEvent.button === 0) {
           this._opacityInactive(250);
 
           if (this.props.onPressOut != null) {

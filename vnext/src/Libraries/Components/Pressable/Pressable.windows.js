@@ -299,7 +299,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       onHoverOut,
       onLongPress,
       onPress(event: PressEvent): void {
-        if (onPress != null && event.nativeEvent.isLeftButton) {
+        if (onPress != null && event.nativeEvent.button === 0) {
           onPress(event);
         }
       },
@@ -308,7 +308,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
           android_rippleConfig.onPressIn(event);
         }
         setPressed(true);
-        if (onPressIn != null && event.nativeEvent.isLeftButton) {
+        if (onPressIn != null && event.nativeEvent.button === 0) {
           onPressIn(event);
         }
       },
@@ -318,7 +318,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
           android_rippleConfig.onPressOut(event);
         }
         setPressed(false);
-        if (onPressOut != null && event.nativeEvent.isLeftButton) {
+        if (onPressOut != null && event.nativeEvent.button === 0) {
           onPressOut(event);
         }
       },
