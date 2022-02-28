@@ -1,8 +1,8 @@
 const projectConfig = {
   sourceDir: 'windows',
-  solutionFile: 'WithUseExperimentalNuget.sln',
+  solutionFile: 'WithHermes.sln',
   project: {
-    projectFile: 'WithUseExperimentalNuget\\WithUseExperimentalNuget.vcxproj',
+    projectFile: 'WithHermes\\WithHermes.vcxproj',
   },
 };
 
