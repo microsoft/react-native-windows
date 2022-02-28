@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Feb 2022 16:07:53 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Feb 2022 16:08:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.4
+
+Mon, 28 Feb 2022 16:08:28 GMT
+
+### Changes
+
+- MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (#9562) (julio.rocha@microsoft.com)
+- [0.68] Move hardcoded PackageReferences from templates into targets (jthysell@microsoft.com)
+- Crash when getting Platform.osVersion on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Expose InlineSourceMap property (tudor.mihai@microsoft.com)
+- Enable TurboModule Promise completion from any thread (#9595) (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.68.0-preview.4
 
 ## 0.68.0-preview.3
 

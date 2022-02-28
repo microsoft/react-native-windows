@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 28 Feb 2022 16:08:28 GMT",
+      "tag": "@react-native-windows/cli_v0.68.0-preview.4",
+      "version": "0.68.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "52a278049712fb39edfcd6a9de9d0f926d3d99d0",
+            "comment": "[0.68] Move hardcoded PackageReferences from templates into targets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Feb 2022 16:07:53 GMT",
       "tag": "@react-native-windows/cli_v0.68.0-preview.3",
       "version": "0.68.0-preview.3",

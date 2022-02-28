@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 21 Feb 2022 16:07:53 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Feb 2022 16:08:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.4
+
+Mon, 28 Feb 2022 16:08:28 GMT
+
+### Changes
+
+- [0.68] Move hardcoded PackageReferences from templates into targets (jthysell@microsoft.com)
 
 ## 0.68.0-preview.3
 
