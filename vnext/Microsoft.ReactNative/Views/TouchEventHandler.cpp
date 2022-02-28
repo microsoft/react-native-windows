@@ -8,7 +8,7 @@
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/ViewComponentView.h>
+#include <Fabric/CompViewComponentView.h>
 #include <react/renderer/components/view/TouchEventEmitter.h>
 #endif
 
@@ -136,6 +136,71 @@ void TouchEventHandler::OnPointerPressed(
     }
   }
 }
+
+void TouchEventHandler::PointerDown(
+    facebook::react::SurfaceId surfaceId,
+    facebook::react::Point pt,
+    uint32_t pointerId) {
+  if (IndexOfPointerWithId(pointerId) != std::nullopt) {
+    // A pointer with this ID already exists
+    assert(false);
+    return;
+  }
+
+  const auto eventType = TouchEventType::Start;
+  const auto kind = winrt::Microsoft::ReactNative::PointerEventKind::Start;
+
+  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+    facebook::react::Point ptLocal;
+
+    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
+    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(pt, ptLocal);
+
+    if (tag == -1)
+      return;
+
+    ReactPointer pointer;
+    pointer.target = tag;
+    pointer.identifier = m_touchId++;
+    pointer.pointerId = pointerId;
+    pointer.deviceType = winrt::Windows::Devices::Input::PointerDeviceType::Mouse;
+    pointer.isLeftButton = true;
+    pointer.isRightButton = false;
+    pointer.isMiddleButton = false;
+    pointer.isHorizontalScrollWheel = false;
+    pointer.isEraser = false;
+
+    pointer.positionRoot = {pt.x, pt.y};
+    pointer.positionView = {ptLocal.x, ptLocal.y};
+    pointer.timestamp =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+            .count();
+    pointer.pressure = 0;
+    pointer.isBarrelButton = false;
+    pointer.shiftKey = false;
+    pointer.ctrlKey = false;
+    pointer.altKey = false;
+
+    m_pointers.emplace_back(std::move(pointer));
+    size_t pointerIndex = m_pointers.size() - 1;
+
+    DispatchTouchEvent(eventType, pointerIndex);
+  }
+}
+
+void TouchEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t pointerId) {
+  auto optPointerIndex = IndexOfPointerWithId(pointerId);
+  if (!optPointerIndex)
+    return;
+
+  DispatchTouchEvent(TouchEventType::End, *optPointerIndex);
+
+  m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
+  if (m_pointers.size() == 0)
+    m_touchId = 0;
+}
+
 
 void TouchEventHandler::OnPointerReleased(
     const winrt::IInspectable & /*sender*/,
@@ -401,11 +466,12 @@ facebook::react::SharedEventEmitter EventEmitterForElement(
   auto &registry = uimanager->GetViewRegistry();
 
   auto descriptor = registry.componentViewDescriptorWithTag(tag);
-  auto view = std::static_pointer_cast<BaseComponentView const>(descriptor.view);
+  auto view = std::static_pointer_cast<CompBaseComponentView const>(descriptor.view);
   auto emitter = view->GetEventEmitter();
   if (emitter)
     return emitter;
 
+  /*
   auto element = view->Element();
   while (auto parent = element.Parent()) {
     if (element = parent.try_as<xaml::FrameworkElement>()) {
@@ -416,6 +482,7 @@ facebook::react::SharedEventEmitter EventEmitterForElement(
       }
     }
   }
+  */
   return nullptr;
 }
 

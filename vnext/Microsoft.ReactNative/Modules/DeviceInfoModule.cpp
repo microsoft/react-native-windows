@@ -133,7 +133,9 @@ void DeviceInfoHolder::SetCallback(
     Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept {
   auto holder = propertyBag.Get(DeviceInfoHolderPropertyId());
 
-  (*holder)->m_notifyCallback = std::move(callback);
+  if (holder) {
+    (*holder)->m_notifyCallback = std::move(callback);
+  }
 }
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {

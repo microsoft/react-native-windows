@@ -7,6 +7,7 @@
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
 #include "ComponentViewRegistry.h"
+#include <winrt/Windows.UI.Composition.h>
 
 namespace facebook::react {
 class Scheduler;
@@ -65,7 +66,12 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   bool m_followUpTransactionRequired{false};
 
   ComponentViewRegistry m_registry;
-  std::unordered_map<facebook::react::SurfaceId, XamlView> m_surfaceRegistry;
+  struct SurfaceInfo {
+    winrt::Windows::UI::Composition::Visual rootVisual{nullptr};
+    winrt::Windows::UI::Composition::Compositor compositor{nullptr};
+  };
+
+  std::unordered_map<facebook::react::SurfaceId, /*XamlView*/ SurfaceInfo> m_surfaceRegistry;
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(

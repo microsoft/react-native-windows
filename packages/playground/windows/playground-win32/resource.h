@@ -24,6 +24,7 @@
 #define IDC_THEMELABEL 110
 #define IDC_JSENGINELABEL 111
 #define IDI_ICON1 1008
+#define BTN_ADD 1009
 
 // Next default values for new objects
 //

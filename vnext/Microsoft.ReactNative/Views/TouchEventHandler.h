@@ -33,6 +33,8 @@ class TouchEventHandler {
   virtual ~TouchEventHandler();
 
   void AddTouchHandlers(XamlView xamlView, XamlView rootView = nullptr, bool handledEventsToo = false);
+  void PointerDown(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t pointerId);
+  void PointerUp(facebook::react::SurfaceId surfaceId, uint32_t pointerId);
   void RemoveTouchHandlers();
   winrt::Microsoft::ReactNative::BatchingEventEmitter &BatchingEmitter() noexcept;
 

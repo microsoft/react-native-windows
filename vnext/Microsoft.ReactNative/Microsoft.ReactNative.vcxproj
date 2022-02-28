@@ -377,6 +377,10 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="CompRootView.h">
+      <DependentUpon>CompRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="TestHook.h" />
@@ -504,6 +508,8 @@
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
+    <ClCompile Include="Fabric\CompViewComponentView.cpp" />
+    <ClCompile Include="Fabric\CompParagraphComponentView.cpp" />
     <ClCompile Include="SchedulerSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -697,6 +703,10 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="CompRootView.cpp">
+      <DependentUpon>CompRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="TestHook.cpp" />
@@ -753,6 +763,9 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="CompRootView.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="QuirkSettings.idl">

@@ -9,7 +9,6 @@
     <!-- <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier> -->
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
-    <BuildMSRNCxx>false</BuildMSRNCxx>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <AppxPackage>false</AppxPackage>
@@ -98,6 +97,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AutolinkedNativeModules.g.h" />
+    <ClInclude Include="CompositionHost.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AutolinkedNativeModules.g.cpp" />
+    <ClCompile Include="CompositionHost.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

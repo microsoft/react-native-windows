@@ -26,6 +26,9 @@
 #include "TextComponentView.h"
 #include "ViewComponentView.h"
 
+#include "CompViewComponentView.h"
+#include "CompParagraphComponentView.h"
+
 namespace Microsoft::ReactNative {
 
 void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
@@ -34,9 +37,11 @@ void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactConte
 
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
-    facebook::react::Tag tag) noexcept {
+    facebook::react::Tag tag,
+    const winrt::Windows::UI::Composition::Compositor& compositor) noexcept {
   // TODO implement recycled components like core does
 
+  /*
   std::shared_ptr<BaseComponentView> view;
 
   if (componentHandle == facebook::react::TextShadowNode::Handle()) {
@@ -61,6 +66,18 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   }
 
   view->Element().Tag(winrt::box_value(tag));
+  */
+
+  std::shared_ptr<CompBaseComponentView> view;
+
+  if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
+    view = std::make_shared<CompParagraphComponentView>();
+  } else {
+    view = std::make_shared<CompViewComponentView>();
+  }
+  view->Compositor(compositor);
+  view->Tag(tag);
+
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
   return it.first->second;
 }
@@ -79,6 +96,6 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
   assert(m_registry.find(tag) != m_registry.end());
 
   m_registry.erase(tag);
-  static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element().Tag(nullptr);
+  //static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element().Tag(nullptr);
 }
 } // namespace Microsoft::ReactNative

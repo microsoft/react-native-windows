@@ -45,19 +45,20 @@ TextMeasurement TextLayoutManager::measure(
             static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
         style,
         DWRITE_FONT_STRETCH_NORMAL,
-        fragment.textAttributes.fontSize,
+        fragment.textAttributes.fontSize * fragment.textAttributes.fontSizeMultiplier,
         L"en-us",
         spTextFormat.put());
 
     auto str = Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string);
 
     winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+    // TODO - For now assuming fragment.textAttributes.fontSizeMultiplier is the same as the pointScaleFactor
     spDWriteFactory->CreateTextLayout(
         str.c_str(), // The string to be laid out and formatted.
         static_cast<UINT32>(str.length()), // The length of the string.
         spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-        layoutConstraints.maximumSize.width, // The width of the layout box.
-        layoutConstraints.maximumSize.height, // The height of the layout box.
+        layoutConstraints.maximumSize.width * fragment.textAttributes.fontSizeMultiplier, // The width of the layout box.
+        layoutConstraints.maximumSize.height * fragment.textAttributes.fontSizeMultiplier, // The height of the layout box.
         spTextLayout.put() // The IDWriteTextLayout interface pointer.
     );
 
@@ -65,7 +66,7 @@ TextMeasurement TextLayoutManager::measure(
 
     DWRITE_TEXT_METRICS dtm;
     spTextLayout->GetMetrics(&dtm);
-    tm.size = {dtm.width, dtm.height};
+    tm.size = {dtm.width / fragment.textAttributes.fontSizeMultiplier, dtm.height / fragment.textAttributes.fontSizeMultiplier};
     return tm;
   }
 
