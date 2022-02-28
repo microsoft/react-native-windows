@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Feb 2022 16:14:18 GMT",
+      "tag": "react-native-windows_v0.66.14",
+      "version": "0.66.14",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable TurboModule Promise completion from any thread (#9595)",
+            "author": "vmorozov@microsoft.com",
+            "commit": "789933a1a3828cdd9cf5ee191689d35b31e134fe",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Feb 2022 16:40:08 GMT",
       "tag": "react-native-windows_v0.66.13",
       "version": "0.66.13",

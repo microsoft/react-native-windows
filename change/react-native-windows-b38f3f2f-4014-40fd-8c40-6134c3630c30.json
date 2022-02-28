@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Enable TurboModule Promise completion from any thread (#9595)",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

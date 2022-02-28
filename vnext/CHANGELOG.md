@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 24 Feb 2022 16:40:08 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Feb 2022 16:14:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.14
+
+Mon, 28 Feb 2022 16:14:18 GMT
+
+### Patches
+
+- Enable TurboModule Promise completion from any thread (#9595) (vmorozov@microsoft.com)
 
 ## 0.66.13
 
