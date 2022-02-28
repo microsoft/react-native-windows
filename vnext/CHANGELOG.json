@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Feb 2022 16:14:37 GMT",
+      "tag": "react-native-windows_v0.67.3",
+      "version": "0.67.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "502c215df9c2082305e160e3d8000428cbdeba4d",
+            "comment": "Enable TurboModule Promise completion from any thread (#9595)"
+          },
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0cd8d8f044a6d619846bce470a8537fa608ada85",
+            "comment": "Expose InlineSourceMap property"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cd3b6fdbf9ea0b3d0fd18a3afa236b0fbc713c3d",
+            "comment": "Crash when getting Platform.osVersion on Windows 8.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Feb 2022 16:18:09 GMT",
       "tag": "react-native-windows_v0.67.2",
       "version": "0.67.2",
