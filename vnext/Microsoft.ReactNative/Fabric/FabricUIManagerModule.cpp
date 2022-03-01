@@ -4,14 +4,14 @@
 #include "pch.h"
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
+#include <Fabric/CompViewComponentView.h>
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/ViewComponentView.h>
-#include <Fabric/CompViewComponentView.h>
+#include <ICompRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
-#include <ICompRootView.h>
 //#include <IXamlRootView.h>
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
@@ -30,8 +30,8 @@
 #include <react/utils/ContextContainer.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
-#include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
+#include <winrt/Windows.UI.Core.h>
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -73,39 +73,39 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
         // eventBeatManager_(eventBeatManager),
         runtimeExecutor_(runtimeExecutor),
         uiManager_(uiManager) {
-      /*
+    /*
 
-    m_context.UIDispatcher().Post([this, uiManager, ownerBox = ownerBox_]() {
-      auto owner = ownerBox->owner.lock();
-      if (!owner) {
-        return;
-      }
+  m_context.UIDispatcher().Post([this, uiManager, ownerBox = ownerBox_]() {
+    auto owner = ownerBox->owner.lock();
+    if (!owner) {
+      return;
+    }
 
-      // TODO: should use something other than CompositionTarget::Rendering ... not sure where to plug this in yet
-      // Getting the beat running to unblock basic events
-      m_rendering = xaml::Media::CompositionTarget::Rendering(
-          winrt::auto_revoke, [this, ownerBox](const winrt::IInspectable &, const winrt::IInspectable & ) {
-            auto owner = ownerBox->owner.lock();
-            if (!owner) {
-              return;
-            }
+    // TODO: should use something other than CompositionTarget::Rendering ... not sure where to plug this in yet
+    // Getting the beat running to unblock basic events
+    m_rendering = xaml::Media::CompositionTarget::Rendering(
+        winrt::auto_revoke, [this, ownerBox](const winrt::IInspectable &, const winrt::IInspectable & ) {
+          auto owner = ownerBox->owner.lock();
+          if (!owner) {
+            return;
+          }
 
-            tick();
-          });
-    });
-          */
+          tick();
+        });
+  });
+        */
 
     // eventBeatManager->addObserver(*this);
-      winrt::Microsoft::ReactNative::ReactPropertyBag propBag(m_context.Properties());
-      auto coreDisp = propBag.Get(
-          winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget>(
-              L"CompCoreDispatcher"));
-      
+    winrt::Microsoft::ReactNative::ReactPropertyBag propBag(m_context.Properties());
+    auto coreDisp = propBag.Get(
+        winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget>(
+            L"CompCoreDispatcher"));
+
     // TODO - look into what mechanism this should actually be
-      m_timer = coreDisp.DispatcherQueue().CreateTimer();
-      m_timer.Interval(winrt::Windows::Foundation::TimeSpan(1000));
-      m_timerToken = m_timer.Tick(winrt::auto_revoke, [this](const auto &, const auto &) { tick(); });
-      m_timer.Start();
+    m_timer = coreDisp.DispatcherQueue().CreateTimer();
+    m_timer.Interval(winrt::Windows::Foundation::TimeSpan(1000));
+    m_timerToken = m_timer.Tick(winrt::auto_revoke, [this](const auto &, const auto &) { tick(); });
+    m_timer.Start();
   }
 
   ~AsyncEventBeat() {
@@ -140,7 +140,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 
  private:
   // EventBeatManager *eventBeatManager_;
-  //xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
+  // xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::RuntimeExecutor runtimeExecutor_;
   std::weak_ptr<FabricUIManager> uiManager_;
@@ -243,12 +243,11 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-
-  //auto xamlRootView = static_cast<IXamlRootView *>(rootview);
+  // auto xamlRootView = static_cast<IXamlRootView *>(rootview);
   auto compRootView = static_cast<ICompRootView *>(rootview);
-  //auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
+  // auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
-  //m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});
+  // m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});
   m_surfaceRegistry.insert({surfaceId, {compRootView->GetVisual(), compRootView->Compositor()}});
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
@@ -259,8 +258,8 @@ void FabricUIManager::startSurface(
   facebook::react::LayoutContext context;
 
   // TODO: This call wont work with winUI
-  //context.pointScaleFactor = static_cast<facebook::react::Float>(
-      //winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
+  // context.pointScaleFactor = static_cast<facebook::react::Float>(
+  // winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
   context.pointScaleFactor = static_cast<float>(compRootView->ScaleFactor());
   context.fontSizeMultiplier = static_cast<float>(compRootView->ScaleFactor());
 
@@ -319,7 +318,8 @@ void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId s
   }
   */
 
-  auto containerChildren = m_surfaceRegistry.at(surfaceId).rootVisual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+  auto containerChildren =
+      m_surfaceRegistry.at(surfaceId).rootVisual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
 
   // Do not add the root again if its already in the tree
   auto existingChild = containerChildren.First();

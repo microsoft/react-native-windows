@@ -4,13 +4,13 @@
 
 #pragma once
 
-#include <react/renderer/components/text/ParagraphProps.h>
-#include "ComponentView.h"
-#include "CompViewComponentView.h"
-#include <winrt/Windows.UI.Composition.h>
 #include <d2d1_1.h>
-#include <windows.ui.composition.interop.h>
 #include <dwrite.h>
+#include <react/renderer/components/text/ParagraphProps.h>
+#include <windows.ui.composition.interop.h>
+#include <winrt/Windows.UI.Composition.h>
+#include "CompViewComponentView.h"
+#include "ComponentView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -34,7 +34,7 @@ struct CompParagraphComponentView : CompBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedProps props() noexcept override;
-  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point& localPt) const noexcept override;
+  facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
 
   const winrt::Windows::UI::Composition::Visual Visual() const noexcept override;
 

@@ -57,8 +57,10 @@ TextMeasurement TextLayoutManager::measure(
         str.c_str(), // The string to be laid out and formatted.
         static_cast<UINT32>(str.length()), // The length of the string.
         spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-        layoutConstraints.maximumSize.width * fragment.textAttributes.fontSizeMultiplier, // The width of the layout box.
-        layoutConstraints.maximumSize.height * fragment.textAttributes.fontSizeMultiplier, // The height of the layout box.
+        layoutConstraints.maximumSize.width *
+            fragment.textAttributes.fontSizeMultiplier, // The width of the layout box.
+        layoutConstraints.maximumSize.height *
+            fragment.textAttributes.fontSizeMultiplier, // The height of the layout box.
         spTextLayout.put() // The IDWriteTextLayout interface pointer.
     );
 
@@ -66,7 +68,9 @@ TextMeasurement TextLayoutManager::measure(
 
     DWRITE_TEXT_METRICS dtm;
     spTextLayout->GetMetrics(&dtm);
-    tm.size = {dtm.width / fragment.textAttributes.fontSizeMultiplier, dtm.height / fragment.textAttributes.fontSizeMultiplier};
+    tm.size = {
+        dtm.width / fragment.textAttributes.fontSizeMultiplier,
+        dtm.height / fragment.textAttributes.fontSizeMultiplier};
     return tm;
   }
 

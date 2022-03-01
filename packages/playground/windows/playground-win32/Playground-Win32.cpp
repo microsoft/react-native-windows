@@ -37,11 +37,11 @@
 #include <winrt/Microsoft.UI.h>
 #endif
 
+#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
+#include "../../../../vnext/codegen/NativeLogBoxSpec.g.h"
 #include "CompositionHost.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
-#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-#include "../../../../vnext/codegen/NativeLogBoxSpec.g.h"
 
 namespace controls = xaml::Controls;
 namespace hosting = xaml::Hosting;
@@ -52,7 +52,7 @@ struct DeviceInfo {
   using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;
 
   REACT_INIT(Initialize)
-      void Initialize(React::ReactContext const& reactContext) noexcept {
+  void Initialize(React::ReactContext const &reactContext) noexcept {
     m_context = reactContext;
   }
 
@@ -83,11 +83,9 @@ struct LogBox {
   void hide() noexcept {}
 };
 
-
 // Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
-
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     auto experimentalPackageBuilder =
@@ -133,7 +131,7 @@ struct WindowData {
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
-  WindowData(const std::shared_ptr<CompositionHost>& compHost) : m_compHost(compHost) {}
+  WindowData(const std::shared_ptr<CompositionHost> &compHost) : m_compHost(compHost) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
     auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WindowDataProperty));
@@ -207,8 +205,7 @@ struct WindowData {
           auto coreDisp = m_compHost->Target();
           propBag.Set(
               winrt::Microsoft::ReactNative::ReactPropertyId<
-                  winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget>(
-                  L"CompCoreDispatcher"),
+                  winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget>(L"CompCoreDispatcher"),
               coreDisp);
 
           m_compRootView = winrt::Microsoft::ReactNative::CompRootView();
@@ -269,19 +266,19 @@ struct WindowData {
   LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
     if (m_compHost) {
       m_compHost->Initialize(hwnd);
-    
-    CreateWindow(
-        TEXT("button"),
-        TEXT("Add element"),
-        WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-        12,
-        12,
-        100,
-        50,
-        hwnd,
-        (HMENU)BTN_ADD,
-        nullptr,
-        nullptr);
+
+      CreateWindow(
+          TEXT("button"),
+          TEXT("Add element"),
+          WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
+          12,
+          12,
+          100,
+          50,
+          hwnd,
+          (HMENU)BTN_ADD,
+          nullptr,
+          nullptr);
     }
 
     /*
@@ -295,6 +292,22 @@ struct WindowData {
     return 0;
   }
 
+  /*
+    LRESULT OnPointerDown(uint32_t pointerId) {
+      if (m_compRootView) {
+        m_compRootView.OnPointerDown(pointerId);
+      }
+      return 0;
+    }
+  */
+
+  LRESULT OnScrollWheel(POINT pt, int32_t delta) {
+    if (m_compRootView) {
+      m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
+    }
+    return 0;
+  }
+
   LRESULT OnMouseUp() {
     if (m_compRootView)
       m_compRootView.OnMouseUp();
@@ -302,21 +315,19 @@ struct WindowData {
   }
 
   LRESULT OnMouseDown(winrt::Windows::Foundation::Point pt) {
-        if (m_compRootView)
+    if (m_compRootView)
       m_compRootView.OnMouseDown(pt);
     return 0;
   }
 
-
   LRESULT OnWindowPosChanged(HWND /* hwnd */, const WINDOWPOS *windowPosition) {
-
     if (m_compRootView) {
-      winrt::Windows::Foundation::Size size{static_cast<float>(windowPosition->cx), static_cast<float>(windowPosition->cy)};
+      winrt::Windows::Foundation::Size size{
+          static_cast<float>(windowPosition->cx), static_cast<float>(windowPosition->cy)};
       m_compRootView.Size(size);
       m_compRootView.Measure(size);
       m_compRootView.Arrange(size);
     }
-
 
     /*
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
@@ -503,16 +514,38 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
-    case WM_LBUTTONDOWN: {
 
-      winrt::Windows::Foundation::Point pt;
-      pt.X = static_cast<float>(GET_X_LPARAM(lparam));
-      pt.Y = static_cast<float>(GET_Y_LPARAM(lparam));
-      return WindowData::GetFromWindow(hwnd)->OnMouseDown(pt);
+      /*
+          case WM_POINTERDOWN: {
+            uint32_t pointerID = GET_POINTERID_WPARAM(wparam);
+            return WindowData::GetFromWindow(hwnd)->OnPointerDown(pointerID);
+
+            break;
+          }
+      */
+    case WM_MOUSEWHEEL: {
+      POINT pt = {GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam)};
+      ::ScreenToClient(hwnd, &pt);
+      int32_t delta = GET_WHEEL_DELTA_WPARAM(wparam);
+
+      // TODO should use :
+      // Get the system setting on how many lines we should scroll for each delta,
+      // of it we should scroll by pages.
+      // UINT nMultiplier = 1;
+      // SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &nMultiplier, FALSE);
+
+      return WindowData::GetFromWindow(hwnd)->OnScrollWheel(pt, delta);
     }
+
+    case WM_LBUTTONDOWN: {
+      return WindowData::GetFromWindow(hwnd)->OnMouseDown(
+          {static_cast<float>(GET_X_LPARAM(lparam)), static_cast<float>(GET_Y_LPARAM(lparam))});
+    }
+
     case WM_LBUTTONUP: {
       return WindowData::GetFromWindow(hwnd)->OnMouseUp();
     }
+
     case WM_WINDOWPOSCHANGED: {
       return WindowData::GetFromWindow(hwnd)->OnWindowPosChanged(hwnd, reinterpret_cast<const WINDOWPOS *>(lparam));
     }
@@ -605,7 +638,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
     }
   }
 
-  //winrt::uninit_apartment();
+  // winrt::uninit_apartment();
 
   return (int)msg.wParam;
 }

@@ -24,9 +24,9 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-  
 //! This class ensures that we access ReactRootView from UI thread.
-struct CompReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, Mso::React::IReactViewInstance> {
+struct CompReactViewInstance
+    : public Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, Mso::React::IReactViewInstance> {
   CompReactViewInstance(
       winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl,
       Mso::DispatchQueue const &uiQueue) noexcept;
@@ -45,7 +45,6 @@ struct CompReactViewInstance : public Mso::UnknownObject<Mso::RefCountStrategy::
   winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> m_weakRootControl;
   Mso::DispatchQueue m_uiQueue;
 };
-
 
 CompReactViewInstance::CompReactViewInstance(
     winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl,
@@ -96,15 +95,14 @@ inline Mso::Future<void> CompReactViewInstance::PostInUIQueue(TAction &&action) 
       });
 }
 
-
 CompRootView::CompRootView() noexcept : m_uiQueue(Mso::DispatchQueue::GetCurrentUIThreadQueue()) {
   VerifyElseCrashSz(m_uiQueue, "Cannot get UI dispatch queue for the current thread");
 
-/*
-  Loaded([this](auto &&, auto &&) {
-    ::Microsoft::ReactNative::SetCompositor(::Microsoft::ReactNative::GetCompositor(*this));
-  });
-  */
+  /*
+    Loaded([this](auto &&, auto &&) {
+      ::Microsoft::ReactNative::SetCompositor(::Microsoft::ReactNative::GetCompositor(*this));
+    });
+    */
 }
 
 ReactNative::ReactNativeHost CompRootView::ReactNativeHost() noexcept {
@@ -123,7 +121,7 @@ winrt::Windows::UI::Composition::Compositor CompRootView::Compositor() noexcept 
   return m_compositor;
 }
 
-void CompRootView::Compositor(winrt::Windows::UI::Composition::Compositor const & value) noexcept {
+void CompRootView::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
   if (m_compositor != value) {
     assert(!m_compositor);
     m_compositor = value;
@@ -134,7 +132,7 @@ winrt::Windows::UI::Composition::Visual CompRootView::RootVisual() noexcept {
   return m_rootVisual;
 }
 
-void CompRootView::RootVisual(winrt::Windows::UI::Composition::Visual const & value) noexcept {
+void CompRootView::RootVisual(winrt::Windows::UI::Composition::Visual const &value) noexcept {
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
     m_rootVisual = value;
@@ -211,7 +209,7 @@ int64_t CompRootView::GetActualHeight() const noexcept {
 
 int64_t CompRootView::GetActualWidth() const noexcept {
   return static_cast<int64_t>(m_size.Width);
-  //return static_cast<int64_t>(m_xamlRootView.ActualWidth());
+  // return static_cast<int64_t>(m_xamlRootView.ActualWidth());
 }
 
 int64_t CompRootView::GetTag() const noexcept {
@@ -223,20 +221,31 @@ void CompRootView::SetTag(int64_t tag) noexcept {
 }
 
 void CompRootView::OnMouseDown(Windows::Foundation::Point point) noexcept {
+  if (m_rootTag == -1)
+    return;
 
-if (m_rootTag == -1)
-return;
-
-m_touchEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, 1);
-
+  m_touchEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, 1);
 }
 
 void CompRootView::OnMouseUp() noexcept {
   if (m_rootTag == -1)
+    return;
+
+  m_touchEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), 1);
+}
+
+/*
+void CompRootView::OnPointerDown(int32_t pointerId) noexcept
+{
+  if (m_rootTag == -1)
 return;
 
-m_touchEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), 1);
+m_touchEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTag), pointerId);
+}
+*/
 
+void CompRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept {
+  m_touchEventHandler->ScrollWheel(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
 }
 
 void CompRootView::InitRootView(
@@ -251,9 +260,13 @@ void CompRootView::InitRootView(
   m_reactOptions = std::make_unique<Mso::React::ReactOptions>(reactInstance->Options());
   m_weakReactInstance = Mso::WeakPtr{reactInstance};
   m_context = &reactInstance->GetReactContext();
+
+  winrt::Microsoft::ReactNative::CompRootView compRootView;
+  get_strong().as(compRootView);
+
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
   m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(
-      *m_context, m_reactViewOptions->UseFabric && !reactInstance->Options().UseWebDebugger());
+      *m_context, m_reactViewOptions->UseFabric && !reactInstance->Options().UseWebDebugger(), compRootView);
 
   UpdateRootViewInternal();
 
@@ -401,15 +414,15 @@ void CompRootView::ShowInstanceLoading() noexcept {
   if (!m_context->SettingsSnapshot().UseDeveloperSupport())
     return;
 
-/*
-  if (m_xamlRootView) {
-    EnsureLoadingUI();
+  /*
+    if (m_xamlRootView) {
+      EnsureLoadingUI();
 
-    // Place message into TextBlock
-    std::wstring wstrMessage(L"Loading bundle.");
-    m_waitingTextBlock.Text(wstrMessage);
-  }
-  */
+      // Place message into TextBlock
+      std::wstring wstrMessage(L"Loading bundle.");
+      m_waitingTextBlock.Text(wstrMessage);
+    }
+    */
 }
 
 Mso::React::IReactViewHost *CompRootView::ReactViewHost() noexcept {
@@ -481,7 +494,6 @@ Windows::Foundation::Size CompRootView::Measure(Windows::Foundation::Size const 
 }
 
 Windows::Foundation::Size CompRootView::Arrange(Windows::Foundation::Size finalSize) const {
-
   /*
   for (xaml::UIElement child : Children()) {
     child.Arrange(winrt::Rect(0, 0, finalSize.Width, finalSize.Height));
@@ -514,7 +526,7 @@ Windows::Foundation::Size CompRootView::Arrange(Windows::Foundation::Size finalS
           static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
     }
   }
-//#endif
+  //#endif
   return finalSize;
 }
 

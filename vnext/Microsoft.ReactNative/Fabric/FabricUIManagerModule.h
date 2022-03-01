@@ -6,8 +6,8 @@
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
-#include "ComponentViewRegistry.h"
 #include <winrt/Windows.UI.Composition.h>
+#include "ComponentViewRegistry.h"
 
 namespace facebook::react {
 class Scheduler;

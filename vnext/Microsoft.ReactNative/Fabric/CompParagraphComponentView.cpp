@@ -312,7 +312,6 @@ void CompParagraphComponentView::updateState(
     facebook::react::State::Shared const &oldState) noexcept {
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
-
   // Only handle single/empty fragments right now -- ignore the other fragments
   if (newState.getData().attributedString.getFragments().size()) {
     auto firstFragment = newState.getData().attributedString.getFragments()[0];
@@ -323,11 +322,10 @@ void CompParagraphComponentView::updateState(
         : Microsoft::Common::Unicode::Utf8ToUtf16(firstFragment.textAttributes.fontFamily);
     m_fontWeight = static_cast<DWRITE_FONT_WEIGHT>(firstFragment.textAttributes.fontWeight.value_or(
         static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR)));
-     m_fontStyle = DWRITE_FONT_STYLE_NORMAL;
+    m_fontStyle = DWRITE_FONT_STYLE_NORMAL;
     if (firstFragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic) {
       m_fontStyle = DWRITE_FONT_STYLE_ITALIC;
-    }
-    else if (firstFragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
+    } else if (firstFragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
       m_fontStyle = DWRITE_FONT_STYLE_OBLIQUE;
     }
   } else {

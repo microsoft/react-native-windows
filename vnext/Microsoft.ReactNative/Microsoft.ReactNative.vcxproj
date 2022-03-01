@@ -508,6 +508,7 @@
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
+    <ClCompile Include="Fabric\CompScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\CompViewComponentView.cpp" />
     <ClCompile Include="Fabric\CompParagraphComponentView.cpp" />
     <ClCompile Include="SchedulerSettings.cpp" />

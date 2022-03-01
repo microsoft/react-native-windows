@@ -29,8 +29,12 @@ const facebook::react::SharedViewEventEmitter &CompBaseComponentView::GetEventEm
   return m_eventEmitter;
 }
 
-void CompBaseComponentView::Compositor(const winrt::Windows::UI::Composition::Compositor& compositor) noexcept {
+void CompBaseComponentView::Compositor(const winrt::Windows::UI::Composition::Compositor &compositor) noexcept {
   m_compositor = compositor;
+}
+
+bool CompBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
+  return false;
 }
 
 CompViewComponentView::CompViewComponentView() {
@@ -58,18 +62,15 @@ void CompViewComponentView::mountChildComponentView(const IComponentView &childC
     insertAfter.MoveNext();
   containerChildren.InsertAbove(
       static_cast<const CompBaseComponentView &>(childComponentView).Visual(), insertAfter.Current());
-  //m_panel.Children().InsertAt(index, static_cast<const CompBaseComponentView &>(childComponentView).Element());
 }
 
 void CompViewComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
-
   m_children.erase(std::next(m_children.begin(), index));
 
   auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
   containerChildren.Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
-  //m_panel.Children().RemoveAt(index);
 }
 
 void CompViewComponentView::ensureVisual() noexcept {
@@ -89,7 +90,6 @@ void CompViewComponentView::updateProps(
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     auto color = *newViewProps.backgroundColor;
 
-
     if (newViewProps.backgroundColor) {
       auto brush = m_compositor.CreateColorBrush((*newViewProps.backgroundColor).m_color);
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);
@@ -101,7 +101,7 @@ void CompViewComponentView::updateProps(
   if (oldViewProps.borderColors != newViewProps.borderColors) {
     /*
     if (newViewProps.borderColors.all) {
-      
+
       m_panel.BorderBrush(newViewProps.borderColors.all->AsWindowsBrush());
     } else {
       m_panel.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
@@ -114,30 +114,43 @@ void CompViewComponentView::updateProps(
   }
 
   if (oldViewProps.borderStyles != newViewProps.borderStyles || oldViewProps.borderRadii != newViewProps.borderRadii) {
-    //m_needsBorderUpdate = true;
+    // m_needsBorderUpdate = true;
   }
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
-
-facebook::react::Tag CompViewComponentView::hitTest(facebook::react::Point pt, facebook::react::Point& localPt) const noexcept {
-
+facebook::react::Tag CompViewComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
+    const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Tag tag;
   if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal, &localPt](auto child) {
-    tag = static_cast<const CompBaseComponentView *>(child)->hitTest(ptLocal, localPt);
-    return tag != -1;
+        tag = static_cast<const CompBaseComponentView *>(child)->hitTest(ptLocal, localPt);
+        return tag != -1;
       }))
     return tag;
 
-  if (ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 && ptLocal.y <= m_layoutMetrics.frame.size.height) {
+  if (ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
+      ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
     return Tag();
   }
 
   return -1;
+}
+
+bool CompViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
+  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+
+  facebook::react::Tag tag;
+  if (std::any_of(m_children.rbegin(), m_children.rend(), [ptLocal, delta](auto child) {
+        return const_cast<CompBaseComponentView *>(static_cast<const CompBaseComponentView *>(child))
+            ->ScrollWheel(ptLocal, delta);
+      }))
+    return true;
+
+  return false;
 }
 
 bool CompViewComponentView::shouldBeControl() const noexcept {
@@ -158,7 +171,7 @@ void CompViewComponentView::updateLayoutMetrics(
     m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  //m_needsBorderUpdate = true;
+  // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
   m_visual.Size(

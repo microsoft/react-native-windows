@@ -20,6 +20,7 @@ struct CompBaseComponentView : public IComponentView {
   void Tag(facebook::react::Tag) noexcept;
 
   virtual facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept = 0;
+  virtual bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept;
 
  protected:
   winrt::Windows::UI::Composition::Compositor m_compositor;
@@ -47,6 +48,7 @@ struct CompViewComponentView : public CompBaseComponentView {
   facebook::react::SharedProps props() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
   virtual const winrt::Windows::UI::Composition::Visual Visual() const noexcept;
 

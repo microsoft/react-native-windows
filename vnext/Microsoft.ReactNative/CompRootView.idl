@@ -35,6 +35,7 @@ namespace Microsoft.ReactNative
 
     void OnMouseDown(Windows.Foundation.Point point);
     void OnMouseUp();
+    void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
 
     DOC_STRING(
       "The name of the root UI component registered in JavaScript with help of the "

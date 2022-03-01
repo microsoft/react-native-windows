@@ -25,11 +25,11 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
 
   // property Compositor
   winrt::Windows::UI::Composition::Compositor Compositor() noexcept;
-  void Compositor(winrt::Windows::UI::Composition::Compositor const & value) noexcept;
+  void Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept;
 
   // property RootVisual
   winrt::Windows::UI::Composition::Visual RootVisual() noexcept;
-  void RootVisual(winrt::Windows::UI::Composition::Visual const & value) noexcept;
+  void RootVisual(winrt::Windows::UI::Composition::Visual const &value) noexcept;
 
   // property InitialProps
   ReactNative::JSValueArgWriter InitialProps() noexcept;
@@ -50,6 +50,8 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
 
   void OnMouseDown(Windows::Foundation::Point point) noexcept;
   void OnMouseUp() noexcept;
+  // void OnPointerDown(int32_t pointerId) noexcept;
+  void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 
   // Used by RootViewManager
   /*
@@ -62,7 +64,7 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   */
  public: // ICompRootView
   winrt::Windows::UI::Composition::Visual GetVisual() const noexcept override;
-  //winrt::Windows::UI::Composition::Compositor Compositor() const noexcept override;
+  // winrt::Windows::UI::Composition::Compositor Compositor() const noexcept override;
 
  public: // IReactRootView
   std::string JSComponentName() const noexcept override;
@@ -78,12 +80,12 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   void UpdateRootView() noexcept;
   void UninitRootView() noexcept;
 
-/*
-  Windows::Foundation::Size MeasureOverride(Windows::Foundation::Size const &availableSize) const;
-  Windows::Foundation::Size ArrangeOverride(Windows::Foundation::Size finalSize) const;
+  /*
+    Windows::Foundation::Size MeasureOverride(Windows::Foundation::Size const &availableSize) const;
+    Windows::Foundation::Size ArrangeOverride(Windows::Foundation::Size finalSize) const;
 
-  void blur(::Microsoft::ReactNative::XamlView const &xamlView) noexcept;
-*/
+    void blur(::Microsoft::ReactNative::XamlView const &xamlView) noexcept;
+  */
  private:
   ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
   winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
