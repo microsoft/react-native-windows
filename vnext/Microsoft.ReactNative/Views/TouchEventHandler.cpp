@@ -369,12 +369,10 @@ winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const R
     button = 0;
   } else if (pointer.isMiddleButton) {
     button = 1;
-  } else if (pointer.isRightButton) {
+  } else if (pointer.isRightButton || pointer.isBarrelButton) {
     button = 2;
-  } else if (pointer.isBarrelButton) {
-    button = 3;
-  } else if (pointer.isHorizontalScrollWheel) {
-    button = 4;
+  } else if (pointer.isEraser) {
+    button = 5;
   }
 
   return winrt::Microsoft::ReactNative::JSValueObject{
