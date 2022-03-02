@@ -26,6 +26,7 @@
 #include "TextComponentView.h"
 #include "ViewComponentView.h"
 
+#include "CompImageComponentView.h"
 #include "CompParagraphComponentView.h"
 #include "CompScrollViewComponentView.h"
 #include "CompViewComponentView.h"
@@ -75,6 +76,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<CompParagraphComponentView>();
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
     view = std::make_shared<CompScrollViewComponentView>();
+  } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
+    view = std::make_shared<CompImageComponentView>(m_context);
   } else {
     view = std::make_shared<CompViewComponentView>();
   }

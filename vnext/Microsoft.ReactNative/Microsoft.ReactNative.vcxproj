@@ -496,21 +496,23 @@
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)codegen\react\components\rnwcore\ShadowNodes.cpp" />
     <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
+    <ClCompile Include="Fabric\CompHelpers.cpp" />
+    <ClCompile Include="Fabric\CompImageComponentView.cpp" />
     <ClCompile Include="Fabric\ComponentViewRegistry.cpp" />
+    <ClCompile Include="Fabric\CompParagraphComponentView.cpp" />
+    <ClCompile Include="Fabric\CompScrollViewComponentView.cpp" />
+    <ClCompile Include="Fabric\CompViewComponentView.cpp" />
     <ClCompile Include="Fabric\FabricUIManagerModule.cpp" />
     <ClCompile Include="Fabric\ImageComponentView.cpp" />
     <ClCompile Include="Fabric\ImageManager.cpp" />
     <ClCompile Include="Fabric\ImageRequest.cpp" />
     <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
-    <ClCompile Include="Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
     <ClCompile Include="Fabric\platform\react\renderer\graphics\Color.cpp" />
+    <ClCompile Include="Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
     <ClCompile Include="Fabric\ReactNativeConfigProperties.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
-    <ClCompile Include="Fabric\CompScrollViewComponentView.cpp" />
-    <ClCompile Include="Fabric\CompViewComponentView.cpp" />
-    <ClCompile Include="Fabric\CompParagraphComponentView.cpp" />
     <ClCompile Include="SchedulerSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
