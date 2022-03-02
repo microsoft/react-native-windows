@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Set ResolveNuGetPackages in external props",
+  "comment": "Set ResolveNuGetPackages in external props (#9628)",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
