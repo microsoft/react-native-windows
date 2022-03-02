@@ -72,6 +72,7 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
 
+# The minimum VS version to check for
 $vsver = "16.5"
 
 $v = [System.Environment]::OSVersion.Version;
