@@ -234,13 +234,6 @@ async function runWindowsInternal(
     }
   }
 
-  // Get build/deploy options
-  const buildType = deploy.getBuildConfiguration(options);
-  const msBuildProps = build.parseMsBuildProps(options);
-
-  // Disable the autolink check since we just ran it
-  msBuildProps.RunAutolinkCheck = 'false';
-
   // Set up the callback to capture MSBuild properties after the command completes
   evaluateMSBuildPropsCallback = () => {
     const projectFile = build.getAppProjectFile(options, config);
@@ -249,16 +242,24 @@ async function runWindowsInternal(
         newInfo('Gathering MSBuild data for telemetry.');
       }
 
-      const extraMsBuildProps = Object.assign({}, msBuildProps);
-      extraMsBuildProps.Configuration = buildType;
-      extraMsBuildProps.Architecture = options.arch;
-      return buildTools.evaluateMSBuildProperties(
-        slnFile!,
-        projectFile,
-        verbose,
-        extraMsBuildProps,
+      const msBuildPropertiesJsonPath = path.resolve(
+        path.dirname(projectFile),
+        'Generated Files',
+        'msbuildproperties.g.json',
       );
+
+      if (fs.existsSync(msBuildPropertiesJsonPath)) {
+        if (verbose) {
+          newInfo('Loading properties from msbuildproperties.g.json');
+        }
+        return fs.readJsonFileSync(msBuildPropertiesJsonPath);
+      }
+
+      if (verbose) {
+        newInfo('Unable to find msbuildproperties.g.json');
+      }
     }
+
     return {};
   };
 
@@ -273,6 +274,13 @@ async function runWindowsInternal(
     );
     throw e;
   }
+
+  // Get build/deploy options
+  const buildType = deploy.getBuildConfiguration(options);
+  const msBuildProps = build.parseMsBuildProps(options);
+
+  // Disable the autolink check since we just ran it
+  msBuildProps.RunAutolinkCheck = 'false';
 
   try {
     if (options.autolink) {

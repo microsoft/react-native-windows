@@ -24,7 +24,6 @@ import {
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../runWindowsOptions';
 import {findLatestVsInstall} from './vsInstalls';
-import {readProjectFile, tryFindPropertyValue} from '../../config/configUtils';
 import {CodedError} from '@react-native-windows/telemetry';
 
 export default class MSBuildTools {
@@ -271,56 +270,12 @@ export default class MSBuildTools {
   evaluateMSBuildProperties(
     solutionFile: string,
     projectFile: string,
-    verbose: boolean,
+    propertyNames?: string[],
     extraMsBuildProps?: Record<string, string>,
   ): Record<string, string> {
-    // CODESYNC vnext/PropertySheets/OutputMSBuildProperties.targets
+    const spinner = newSpinner('Running Eval-MsBuildProperties.ps1');
 
-    // Look for the generated file
-    const msBuildPropertiesJsonPath = path.resolve(
-      path.dirname(projectFile),
-      'Generated Files',
-      'msbuildproperties.g.json',
-    );
-    if (fs.existsSync(msBuildPropertiesJsonPath)) {
-      if (verbose) {
-        newInfo('Loading properties from msbuildproperties.g.json');
-      }
-      return fs.readJsonFileSync(msBuildPropertiesJsonPath);
-    }
-
-    // Couldn't find the output file, run the slow script
-
-    if (verbose) {
-      newInfo(
-        'Unable to find msbuildproperties.g.json, using Eval-MsBuildProperties.ps1',
-      );
-    }
-
-    const rnwPkgJsonPath = require.resolve(
-      'react-native-windows/package.json',
-      {
-        paths: [process.cwd(), __dirname],
-      },
-    );
-
-    const outputTargetsFile = path.resolve(
-      path.dirname(rnwPkgJsonPath),
-      'PropertySheets',
-      'OutputMSBuildProperties.targets',
-    );
-
-    if (fs.existsSync(outputTargetsFile)) {
-      const outputTargets = readProjectFile(outputTargetsFile);
-      const msbuildPropertiesJSON = tryFindPropertyValue(
-        outputTargets,
-        'MSBuildPropertiesJSON',
-      );
-
-      const propertyNames: string[] = msbuildPropertiesJSON
-        ? Object.keys(JSON.parse(msbuildPropertiesJSON))
-        : [];
-
+    try {
       const msbuildEvalScriptPath = path.resolve(
         __dirname,
         '..',
@@ -332,7 +287,7 @@ export default class MSBuildTools {
 
       let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
 
-      if (propertyNames.length > 0) {
+      if (propertyNames && propertyNames.length > 0) {
         command += ` -PropertyNames '${propertyNames.join(',')}'`;
       }
 
@@ -346,12 +301,18 @@ export default class MSBuildTools {
         command += "'";
       }
 
-      const output = execSync(command).toString();
-      return JSON.parse(output) as Record<string, string>;
-    }
+      const commandOutput = execSync(command).toString();
+      spinner.succeed();
 
-    // Complete failure to find the properties, return nothing
-    return {};
+      const properties = JSON.parse(commandOutput) as Record<string, string>;
+      spinner.succeed();
+      return properties;
+    } catch (e) {
+      spinner.fail(
+        'Running Eval-MsBuildProperties.ps1 failed: ' + (e as Error).message,
+      );
+      throw e;
+    }
   }
 }
 

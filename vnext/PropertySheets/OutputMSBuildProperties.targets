@@ -10,7 +10,6 @@
     <!--
       These are the properties we will report in telemetry. Do NOT add properties that may contain PII.
       You can add new properties following the format "PropertyName": "$(PropertyName)",
-      CODESYNC packages/@react-native-windows/cli/src/runWindows/utils/msbuildtools.ts
     -->
       <MSBuildPropertiesJSON>
       {
