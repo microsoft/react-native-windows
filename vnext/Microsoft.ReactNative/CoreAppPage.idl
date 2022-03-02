@@ -1,0 +1,10 @@
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative
+{
+    [default_interface]
+    runtimeclass CoreAppPage : XAML_NAMESPACE.Controls.Page
+    {
+        CoreAppPage();
+    }
+}

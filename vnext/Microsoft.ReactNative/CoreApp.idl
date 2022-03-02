@@ -1,0 +1,12 @@
+import "ReactApplication.idl";
+
+namespace Microsoft.ReactNative {
+    delegate void CoreAppStartingHandler(CoreApp app);
+
+
+    [default_interface]
+    runtimeclass CoreApp : Microsoft.ReactNative.ReactApplication
+    {
+      CoreApp(CoreAppStartingHandler handler);
+    }
+}

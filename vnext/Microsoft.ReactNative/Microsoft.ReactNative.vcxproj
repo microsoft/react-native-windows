@@ -184,6 +184,15 @@
     <ClInclude Include="Base\CoreNativeModules.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
+    <ClInclude Include="CoreApp.h">
+      <DependentUpon>CoreApp.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="CoreAppPage.h">
+      <DependentUpon>CoreAppPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Exports.h" />
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h" />
@@ -427,6 +436,15 @@
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
+    <ClCompile Include="CoreApp.cpp">
+      <DependentUpon>CoreApp.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="CoreAppPage.cpp">
+      <DependentUpon>CoreAppPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="Exports.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="DevMenuControl.cpp">
@@ -630,6 +648,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="CoreApp.idl">
+      <DependentUpon>CoreApp.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
+    <Midl Include="CoreAppPage.idl">
+      <DependentUpon>CoreAppPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Midl>
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="DevMenuControl.idl">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
@@ -717,6 +743,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="CoreApp.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CoreAppPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="DevMenuControl.xaml">
       <SubType>Designer</SubType>
     </Page>
