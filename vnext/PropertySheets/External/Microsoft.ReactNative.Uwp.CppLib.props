@@ -16,12 +16,6 @@
     <SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>true</SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>
     <GenerateLibraryLayout>false</GenerateLibraryLayout>
   </PropertyGroup>
-
-  <!-- Ensure PackageReference compatibility for any consuming projects/apps -->
-  <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
-    <ResolveNuGetPackages>false</ResolveNuGetPackages>
-  </PropertyGroup>
-
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PackageVersionDefinitions.props" />
