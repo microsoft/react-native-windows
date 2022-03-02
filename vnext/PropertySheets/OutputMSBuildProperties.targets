@@ -5,11 +5,11 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Target Name="OutputMSBuildProperties" BeforeTargets="Build">
+  <Target Name="OutputMSBuildProperties" AfterTargets="PrepareForBuild">
     <PropertyGroup>
     <!--
-      These are the properties we want to track in telemetry. You can add new properties following
-      the format "PropertyName": "$(PropertyName)",
+      These are the properties we will report in telemetry. Do NOT add properties that may contain PII.
+      You can add new properties following the format "PropertyName": "$(PropertyName)",
       CODESYNC packages/@react-native-windows/cli/src/runWindows/utils/msbuildtools.ts
     -->
       <MSBuildPropertiesJSON>
