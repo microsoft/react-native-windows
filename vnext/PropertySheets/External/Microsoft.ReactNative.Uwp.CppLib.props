@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 
@@ -16,6 +16,12 @@
     <SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>true</SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>
     <GenerateLibraryLayout>false</GenerateLibraryLayout>
   </PropertyGroup>
+
+  <!-- Ensure PackageReference compatibility for any consuming projects/apps -->
+  <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
+  </PropertyGroup>
+
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.Common.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PackageVersionDefinitions.props" />
