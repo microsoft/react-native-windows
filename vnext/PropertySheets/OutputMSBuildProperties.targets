@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <Target Name="OutputMSBuildProperties" BeforeTargets="Build">
+    <PropertyGroup>
+    <!--
+      These are the properties we want to track in telemetry. You can add new properties following
+      the format "PropertyName": "$(PropertyName)",
+      CODESYNC packages/@react-native-windows/cli/src/runWindows/utils/msbuildtools.ts
+    -->
+      <MSBuildPropertiesJSON>
+      {
+        "WinUIPackageName": "$(WinUIPackageName)",
+        "WinUIPackageVersion": "$(WinUIPackageVersion)",
+        "WindowsTargetPlatformVersion": "$(WindowsTargetPlatformVersion)",
+        "UseExperimentalNuGet": "$(UseExperimentalNuGet)",
+        "UseHermes": "$(UseHermes)",
+        "UseWinUI3": "$(UseWinUI3)"
+      }
+      </MSBuildPropertiesJSON>
+    </PropertyGroup>
+    <WriteLinesToFile
+        File="$([MSBuild]::NormalizePath($(ProjectDir)\Generated Files))\msbuildproperties.g.json"
+        Overwrite="true"
+        Lines="$(MSBuildPropertiesJSON)" />
+  </Target>
+
+</Project>

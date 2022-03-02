@@ -24,6 +24,7 @@ import {
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../runWindowsOptions';
 import {findLatestVsInstall} from './vsInstalls';
+import {readProjectFile, tryFindPropertyValue} from '../../config/configUtils';
 import {CodedError} from '@react-native-windows/telemetry';
 
 export default class MSBuildTools {
@@ -270,36 +271,87 @@ export default class MSBuildTools {
   evaluateMSBuildProperties(
     solutionFile: string,
     projectFile: string,
-    propertyNames?: string[],
+    verbose: boolean,
     extraMsBuildProps?: Record<string, string>,
   ): Record<string, string> {
-    const msbuildEvalScriptPath = path.resolve(
-      __dirname,
-      '..',
-      '..',
-      '..',
-      'powershell',
-      'Eval-MsBuildProperties.ps1',
+    // CODESYNC vnext/PropertySheets/OutputMSBuildProperties.targets
+
+    // Look for the generated file
+    const msBuildPropertiesJsonPath = path.resolve(
+      path.dirname(projectFile),
+      'Generated Files',
+      'msbuildproperties.g.json',
+    );
+    if (fs.existsSync(msBuildPropertiesJsonPath)) {
+      if (verbose) {
+        newInfo('Loading properties from msbuildproperties.g.json');
+      }
+      return fs.readJsonFileSync(msBuildPropertiesJsonPath);
+    }
+
+    // Couldn't find the output file, run the slow script
+
+    if (verbose) {
+      newInfo(
+        'Unable to find msbuildproperties.g.json, using Eval-MsBuildProperties.ps1',
+      );
+    }
+
+    const rnwPkgJsonPath = require.resolve(
+      'react-native-windows/package.json',
+      {
+        paths: [process.cwd(), __dirname],
+      },
     );
 
-    let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+    const outputTargetsFile = path.resolve(
+      path.dirname(rnwPkgJsonPath),
+      'PropertySheets',
+      'OutputMSBuildProperties.targets',
+    );
 
-    if (propertyNames && propertyNames.length > 0) {
-      command += ` -PropertyNames '${propertyNames.join(',')}'`;
-    }
+    if (fs.existsSync(outputTargetsFile)) {
+      const outputTargets = readProjectFile(outputTargetsFile);
+      const msbuildPropertiesJSON = tryFindPropertyValue(
+        outputTargets,
+        'MSBuildPropertiesJSON',
+      );
 
-    if (extraMsBuildProps) {
-      command += " -ExtraMSBuildProps '";
-      for (const extraProp in extraMsBuildProps) {
-        if (!(extraProp in Object.prototype)) {
-          command += `,${extraProp}=${extraMsBuildProps[extraProp]}`;
-        }
+      const propertyNames: string[] = msbuildPropertiesJSON
+        ? Object.keys(JSON.parse(msbuildPropertiesJSON))
+        : [];
+
+      const msbuildEvalScriptPath = path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'powershell',
+        'Eval-MsBuildProperties.ps1',
+      );
+
+      let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+
+      if (propertyNames.length > 0) {
+        command += ` -PropertyNames '${propertyNames.join(',')}'`;
       }
-      command += "'";
+
+      if (extraMsBuildProps) {
+        command += " -ExtraMSBuildProps '";
+        for (const extraProp in extraMsBuildProps) {
+          if (!(extraProp in Object.prototype)) {
+            command += `,${extraProp}=${extraMsBuildProps[extraProp]}`;
+          }
+        }
+        command += "'";
+      }
+
+      const output = execSync(command).toString();
+      return JSON.parse(output) as Record<string, string>;
     }
 
-    const output = execSync(command).toString();
-    return JSON.parse(output) as Record<string, string>;
+    // Complete failure to find the properties, return nothing
+    return {};
   }
 }
 

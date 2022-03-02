@@ -71,17 +71,6 @@ function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
   }
 }
 
-// These are the MSBuild properties we care about, in terms of
-// recording in telemetry
-const MSBuildPropertiesWeTrack: string[] = [
-  'WinUIPackageName',
-  'WinUIPackageVersion',
-  'WindowsTargetPlatformVersion',
-  'UseExperimentalNuGet',
-  'UseHermes',
-  'UseWinUI3',
-];
-
 /**
  * Get the extra props to add to the `run-windows` telemetry event.
  * @returns The extra props.
@@ -91,7 +80,7 @@ async function getExtraProps(): Promise<Record<string, any>> {
     phase: runWindowsPhase,
     hasRunRnwDependencies,
     msBuildProps: evaluateMSBuildPropsCallback
-      ? evaluateMSBuildPropsCallback(MSBuildPropertiesWeTrack)
+      ? evaluateMSBuildPropsCallback()
       : {},
   };
   return extraProps;
@@ -112,7 +101,7 @@ let runWindowsPhase: RunWindowsPhase = 'None';
 let hasRunRnwDependencies: boolean = false;
 
 let evaluateMSBuildPropsCallback:
-  | ((propsToEvaluate: string[]) => Record<string, string> | null)
+  | (() => Record<string, string> | null)
   | undefined;
 
 /**
@@ -253,11 +242,11 @@ async function runWindowsInternal(
   msBuildProps.RunAutolinkCheck = 'false';
 
   // Set up the callback to capture MSBuild properties after the command completes
-  evaluateMSBuildPropsCallback = (propsToEvaluate: string[]) => {
+  evaluateMSBuildPropsCallback = () => {
     const projectFile = build.getAppProjectFile(options, config);
     if (projectFile) {
       if (verbose) {
-        newInfo('Gathering extra data for telemetry.');
+        newInfo('Gathering MSBuild data for telemetry.');
       }
 
       const extraMsBuildProps = Object.assign({}, msBuildProps);
@@ -266,7 +255,7 @@ async function runWindowsInternal(
       return buildTools.evaluateMSBuildProperties(
         slnFile!,
         projectFile,
-        propsToEvaluate,
+        verbose,
         extraMsBuildProps,
       );
     }
