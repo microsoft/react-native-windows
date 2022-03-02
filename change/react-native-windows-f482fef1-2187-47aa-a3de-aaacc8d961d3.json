@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Use current version of Metro and Community CLI",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "none"
-}

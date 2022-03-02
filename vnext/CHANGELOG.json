@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 02 Mar 2022 06:08:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.462",
+      "version": "0.0.0-canary.462",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb7ef6991a5f20a0b4a51d539a2510c65c278408",
+            "comment": "Use current version of Metro and Community CLI"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Feb 2022 23:53:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.462",
       "version": "0.0.0-canary.462",
