@@ -9451,6 +9451,13 @@ react-native-codegen@*, react-native-codegen@^0.0.13:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-gradle-plugin@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.4.tgz#47adcc4f1e1f2c1558811ad78ad39546007d8667"
+  integrity sha512-D0lFhHy9uSkiPKsGEdEoFtN/jCjS70OxxzBXfq0s9J3ie8GXRBEDHsZuuX/enfRq5fvbCnhKjuYezf+DVYTNnw==
+  dependencies:
+    react-native-codegen "*"
+
 react-native-tscodegen@0.68.4:
   version "0.68.4"
   resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.4.tgz#d8cbf523f8e20b9f0806fca8a24254a31df1f383"
@@ -9469,10 +9476,10 @@ react-native-xaml@^0.0.50:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20220206-2010-113f8257c:
-  version "0.0.0-20220206-2010-113f8257c"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220206-2010-113f8257c.tgz#4b468e5c41eabb02dc4b84b3b1f6188b4d18c18e"
-  integrity sha512-cf3H6/r4BgLVmiTAQFKNN2xq2B7cC2DMjGBr8l2LB3g4nH84n9DVpPyBicGFrOBIv0c93hfNUTYart7VFOFjzw==
+react-native@0.0.0-20220213-2008-7cece3423:
+  version "0.0.0-20220213-2008-7cece3423"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220213-2008-7cece3423.tgz#5d46dc530c5beb1d5987368bfe793f115d5ca853"
+  integrity sha512-dbF3VVtPZAJalaOCrUeYId6JFHhZbZ6dKVDPKULPQIf3kuw62XTu/4ud4aDqUjAtW+9WxK1QycTQActp4kDj8g==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^7.0.1"
@@ -9496,6 +9503,7 @@ react-native@0.0.0-20220206-2010-113f8257c:
     promise "^8.0.3"
     react-devtools-core "^4.23.0"
     react-native-codegen "^0.0.13"
+    react-native-gradle-plugin "^0.0.4"
     react-refresh "^0.4.0"
     react-shallow-renderer "16.14.1"
     regenerator-runtime "^0.13.2"

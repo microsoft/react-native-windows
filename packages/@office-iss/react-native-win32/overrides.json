@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220206-2010-113f8257c",
+  "baseVersion": "0.0.0-20220213-2008-7cece3423",
   "overrides": [
     {
       "type": "derived",
@@ -336,7 +336,7 @@
       "type": "patch",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "79086d48f6601410773436dd1a20612db9ad42e9",
+      "baseHash": "623cbed5356a6d12537d417d47af5ffda03631cd",
       "issue": 7952
     },
     {
