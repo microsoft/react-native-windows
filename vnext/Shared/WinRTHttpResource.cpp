@@ -71,72 +71,12 @@ void WinRTHttpResource::SendRequest(
     HttpMethod httpMethod{to_hstring(std::move(method))};
     Uri uri{to_hstring(std::move(url))};
     HttpRequestMessage request{httpMethod, uri};
-    HttpMediaTypeHeaderValue contentType{nullptr};
-    string contentEncoding;
-    string contentLength;
 
-    // Headers are generally case-insensitive
-    // https://www.ietf.org/rfc/rfc2616.txt section 4.2
-    for (auto &header : headers) {
-      if (_stricmp(header.first.c_str(), "content-type") == 0) {
-        bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
-        if (!success && m_onError) {
-          return m_onError(requestId, "Failed to parse Content-Type");
-        }
-      } else if (_stricmp(header.first.c_str(), "content-encoding") == 0) {
-        contentEncoding = header.second;
-      } else if (_stricmp(header.first.c_str(), "content-length") == 0) {
-        contentLength = header.second;
-      } else if (_stricmp(header.first.c_str(), "authorization") == 0) {
-        bool success =
-            request.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
-        if (!success && m_onError) {
-          return m_onError(requestId, "Failed to append Authorization");
-        }
-      } else {
-        request.Headers().Append(to_hstring(header.first), to_hstring(header.second));
-      }
-    }
 
-    IHttpContent content{nullptr};
-    if (BodyData::Type::String == bodyData.Type) {
-      content = HttpStringContent{to_hstring(bodyData.Data)};
-    } else if (BodyData::Type::Base64 == bodyData.Type) {
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(bodyData.Data));
-      content = HttpBufferContent{buffer};
-    } else if (BodyData::Type::Uri == bodyData.Type) {
-      auto file = StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(bodyData.Data)}).get();
-      auto stream = file.OpenReadAsync().get();
-      content = HttpStreamContent{stream};
-    } else if (BodyData::Type::Form == bodyData.Type) {
-      // TODO: Add support
-    } else {
-      // BodyData::Type::Empty
-      // TODO: Error 'cause unsupported??
-    }
 
-    if (content != nullptr) {
-      // Attach content headers
-      if (contentType) {
-        content.Headers().ContentType(contentType);
-      }
-      if (!contentEncoding.empty()) {
-        if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
-          if (m_onError) {
-            m_onError(requestId, "Failed to parse Content-Encoding");
-          }
-          return;
-        }
-      }
-      if (!contentLength.empty()) {
-        const auto contentLengthHeader = _atoi64(contentLength.c_str()); // TODO: Alternatives to _atoi64?
-        content.Headers().ContentLength(contentLengthHeader);
-      }
 
-      request.Content(content);
-    }
 
-    PerformSendRequest(requestId, std::move(request), responseType == "text");
+    PerformSendRequest(requestId, std::move(request), std::move(headers), std::move(bodyData), responseType == "text");
   } catch (std::exception const &e) {
     if (m_onError) {
       m_onError(requestId, e.what());
@@ -205,14 +145,85 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   m_responses.erase(requestId);
 }
 
-fire_and_forget
-WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage &&request, bool textResponse) noexcept {
+fire_and_forget WinRTHttpResource::PerformSendRequest(
+    int64_t requestId,
+    HttpRequestMessage &&request,
+    Headers &&headers,
+    BodyData &&bodyData,
+    bool textResponse) noexcept {
   // Keep references after coroutine suspension.
   auto self = shared_from_this();
   auto coRequest = std::move(request);
+  auto coHeaders = std::move(headers);
+  auto coBodyData = std::move(bodyData);
 
   // Ensure background thread
   co_await winrt::resume_background();
+
+  HttpMediaTypeHeaderValue contentType{nullptr};
+  string contentEncoding;
+  string contentLength;
+
+  // Headers are generally case-insensitive
+  // https://www.ietf.org/rfc/rfc2616.txt section 4.2
+  for (auto &header : coHeaders) {
+    if (_stricmp(header.first.c_str(), "content-type") == 0) {
+      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
+      if (!success && m_onError) {
+        co_return m_onError(requestId, "Failed to parse Content-Type");
+      }
+    } else if (_stricmp(header.first.c_str(), "content-encoding") == 0) {
+      contentEncoding = header.second;
+    } else if (_stricmp(header.first.c_str(), "content-length") == 0) {
+      contentLength = header.second;
+    } else if (_stricmp(header.first.c_str(), "authorization") == 0) {
+      bool success =
+          coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+      if (!success && m_onError) {
+        co_return m_onError(requestId, "Failed to append Authorization");
+      }
+    } else {
+      coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
+    }
+  }
+
+  IHttpContent content{nullptr};
+  if (BodyData::Type::String == coBodyData.Type) {
+    content = HttpStringContent{to_hstring(coBodyData.Data)};
+  } else if (BodyData::Type::Base64 == coBodyData.Type) {
+    auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(coBodyData.Data));
+    content = HttpBufferContent{buffer};
+  } else if (BodyData::Type::Uri == coBodyData.Type) {
+    auto file = StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(coBodyData.Data)}).get();
+    auto stream = file.OpenReadAsync().get();
+    content = HttpStreamContent{stream};
+  } else if (BodyData::Type::Form == coBodyData.Type) {
+    // TODO: Add support
+  } else {
+    // BodyData::Type::Empty
+    // TODO: Error 'cause unsupported??
+  }
+
+  if (content != nullptr) {
+    // Attach content headers
+    if (contentType) {
+      content.Headers().ContentType(contentType);
+    }
+    if (!contentEncoding.empty()) {
+      if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
+        if (m_onError) {
+          m_onError(requestId, "Failed to parse Content-Encoding");
+        }
+        co_return;
+      }
+    }
+    if (!contentLength.empty()) {
+      const auto contentLengthHeader = _atoi64(contentLength.c_str()); // TODO: Alternatives to _atoi64?
+      content.Headers().ContentLength(contentLengthHeader);
+    }
+
+    coRequest.Content(content);
+  }
 
   try {
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
@@ -232,19 +243,19 @@ WinRTHttpResource::PerformSendRequest(int64_t requestId, HttpRequestMessage &&re
     auto response = sendRequestOp.GetResults();
     if (response) {
       if (self->m_onResponse) {
-        Headers headers;
+        Headers responseHeaders;
 
         // Gather headers for both the response content and the response itself
         // See Invoke-WebRequest PowerShell cmdlet or Chromium response handling
         for (auto header : response.Headers()) {
-          headers.emplace(to_string(header.Key()), to_string(header.Value()));
+          responseHeaders.emplace(to_string(header.Key()), to_string(header.Value()));
         }
         for (auto header : response.Content().Headers()) {
-          headers.emplace(to_string(header.Key()), to_string(header.Value()));
+          responseHeaders.emplace(to_string(header.Key()), to_string(header.Value()));
         }
         string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
         self->m_onResponse(
-            requestId, {static_cast<int32_t>(response.StatusCode()), std::move(headers), std::move(url)});
+            requestId, {static_cast<int32_t>(response.StatusCode()), std::move(responseHeaders), std::move(url)});
       }
     }
 

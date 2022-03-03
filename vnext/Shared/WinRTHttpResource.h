@@ -37,6 +37,8 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   winrt::fire_and_forget PerformSendRequest(
       int64_t requestId,
       winrt::Windows::Web::Http::HttpRequestMessage &&request,
+      Headers &&headers,
+      BodyData &&bodyData,
       bool textResponse) noexcept;
 
  public:
