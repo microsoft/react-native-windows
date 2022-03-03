@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fabric: Use XAML for layout",
+  "packageName": "react-native-windows",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch"
+}
