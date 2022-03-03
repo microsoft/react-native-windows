@@ -41,6 +41,9 @@
   <PropertyGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
     <!--See https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#restore-target-->
     <RestoreUseStaticGraphEvaluation Condition="'$(BuildingInsideVisualStudio)' == 'true'">true</RestoreUseStaticGraphEvaluation>
+
+    <!-- Ensure PackageReference compatibility for any consuming projects/apps -->
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
   </PropertyGroup>
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Generated\PackageVersion.g.props" />

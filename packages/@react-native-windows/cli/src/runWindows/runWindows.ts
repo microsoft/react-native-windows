@@ -91,9 +91,12 @@ async function getExtraProps(): Promise<Record<string, any>> {
  */
 type RunWindowsPhase =
   | 'None'
-  | 'AutoLink'
-  | 'FindBuildTools'
+  | 'Info'
   | 'FindSolution'
+  | 'FindBuildTools'
+  | 'Autolink'
+  | 'RestorePackagesConfig'
+  | 'Build'
   | 'Deploy';
 
 let runWindowsPhase: RunWindowsPhase = 'None';
@@ -140,6 +143,7 @@ async function runWindows(
 
   let runWindowsError: Error | undefined;
   if (options.info) {
+    runWindowsPhase = 'Info';
     try {
       const output = await info.getEnvironmentInfo();
       console.log(output.trimEnd());
@@ -207,6 +211,7 @@ async function runWindowsInternal(
 
   // Get the solution file
   let slnFile: string | null;
+  runWindowsPhase = 'FindSolution';
   try {
     slnFile = build.getAppSolutionFile(options, config);
   } catch (e) {
@@ -264,6 +269,7 @@ async function runWindowsInternal(
   };
 
   // Restore packages.config files for dependencies that don't support PackageReference.
+  runWindowsPhase = 'RestorePackagesConfig';
   try {
     await buildTools.restorePackageConfigs(slnFile);
   } catch (e) {
@@ -275,15 +281,9 @@ async function runWindowsInternal(
     throw e;
   }
 
-  // Get build/deploy options
-  const buildType = deploy.getBuildConfiguration(options);
-  const msBuildProps = build.parseMsBuildProps(options);
-
-  // Disable the autolink check since we just ran it
-  msBuildProps.RunAutolinkCheck = 'false';
-
-  try {
-    if (options.autolink) {
+  if (options.autolink) {
+    runWindowsPhase = 'Autolink';
+    try {
       const autolinkArgs: string[] = [];
       const autolinkConfig = config;
       const autoLinkOptions: AutoLinkOptions = {
@@ -293,22 +293,21 @@ async function runWindowsInternal(
         sln: options.sln,
         telemetry: options.telemetry,
       };
-      runWindowsPhase = 'AutoLink';
       await autolinkWindowsInternal(
         autolinkArgs,
         autolinkConfig,
         autoLinkOptions,
       );
-    } else {
-      newInfo('Autolink step is skipped');
+    } catch (e) {
+      newError(`Autolinking failed. ${(e as Error).message}`);
+      throw e;
     }
-  } catch (e) {
-    newError(`Autolinking failed. ${(e as Error).message}`);
-    throw e;
+  } else {
+    newInfo('Autolink step is skipped');
   }
 
   if (options.build) {
-    runWindowsPhase = 'FindSolution';
+    runWindowsPhase = 'Build';
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
@@ -316,8 +315,14 @@ async function runWindowsInternal(
       throw new CodedError('NoSolution', 'Cannot find solution file');
     }
 
+    // Get build/deploy options
+    const buildType = deploy.getBuildConfiguration(options);
+    const msBuildProps = build.parseMsBuildProps(options);
+
+    // Disable the autolink check since we just ran it
+    msBuildProps.RunAutolinkCheck = 'false';
+
     try {
-      runWindowsPhase = 'FindSolution';
       await build.buildSolution(
         buildTools,
         slnFile!,
@@ -349,7 +354,7 @@ async function runWindowsInternal(
   }
 
   if (options.deploy) {
-    runWindowsPhase = 'FindSolution';
+    runWindowsPhase = 'Deploy';
     if (!slnFile) {
       newError(
         'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
@@ -358,7 +363,6 @@ async function runWindowsInternal(
     }
 
     try {
-      runWindowsPhase = 'Deploy';
       if (options.device || options.emulator || options.target) {
         await deploy.deployToDevice(options, verbose, config);
       } else {
