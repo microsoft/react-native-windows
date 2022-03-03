@@ -134,6 +134,11 @@ export async function endTelemetrySession(
   error?: Error,
   getExtraProps?: () => Promise<Record<string, any>>,
 ) {
+  if (!Telemetry.isEnabled()) {
+    // Bail early so don't waste time here
+    return;
+  }
+
   const endInfo: CommandEndInfo = {
     resultCode: 'Success',
   };

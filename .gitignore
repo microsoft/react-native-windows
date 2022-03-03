@@ -125,6 +125,8 @@ packages/
 *project.lock.json
 jsconfig.json
 package-lock.json
+*.metaproj
+*.metaproj.tmp
 
 # VS Code
 .vscode/*
