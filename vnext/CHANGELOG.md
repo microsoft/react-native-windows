@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 25 Feb 2022 23:53:36 GMT and should not be manually modified.
+This log was last generated on Thu, 03 Mar 2022 06:09:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.463
+
+Thu, 03 Mar 2022 06:09:12 GMT
+
+### Changes
+
+- rnw-deps - try prerelease, guard against multiple VS installs (asklar@microsoft.com)
+- Set ResolveNuGetPackages in external props (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.462
 
