@@ -72,10 +72,6 @@ void WinRTHttpResource::SendRequest(
     Uri uri{to_hstring(std::move(url))};
     HttpRequestMessage request{httpMethod, uri};
 
-
-
-
-
     PerformSendRequest(requestId, std::move(request), std::move(headers), std::move(bodyData), responseType == "text");
   } catch (std::exception const &e) {
     if (m_onError) {
