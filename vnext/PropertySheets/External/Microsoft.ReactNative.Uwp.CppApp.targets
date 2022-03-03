@@ -47,6 +47,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.targets" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\FixupRoslynCscWarnings.targets" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\OutputMSBuildProperties.targets" />
 
   <ItemDefinitionGroup>
     <Reference>

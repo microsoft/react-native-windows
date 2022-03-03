@@ -79,6 +79,9 @@ async function getExtraProps(): Promise<Record<string, any>> {
   const extraProps: Record<string, any> = {
     phase: runWindowsPhase,
     hasRunRnwDependencies,
+    msBuildProps: evaluateMSBuildPropsCallback
+      ? evaluateMSBuildPropsCallback()
+      : {},
   };
   return extraProps;
 }
@@ -99,6 +102,10 @@ type RunWindowsPhase =
 let runWindowsPhase: RunWindowsPhase = 'None';
 
 let hasRunRnwDependencies: boolean = false;
+
+let evaluateMSBuildPropsCallback:
+  | (() => Record<string, string> | null)
+  | undefined;
 
 /**
  * The function run when calling `react-native run-windows`.
@@ -203,7 +210,7 @@ async function runWindowsInternal(
   }
 
   // Get the solution file
-  let slnFile;
+  let slnFile: string | null;
   runWindowsPhase = 'FindSolution';
   try {
     slnFile = build.getAppSolutionFile(options, config);
@@ -231,6 +238,35 @@ async function runWindowsInternal(
       throw error;
     }
   }
+
+  // Set up the callback to capture MSBuild properties after the command completes
+  evaluateMSBuildPropsCallback = () => {
+    const projectFile = build.getAppProjectFile(options, config);
+    if (projectFile) {
+      if (verbose) {
+        newInfo('Gathering MSBuild data for telemetry.');
+      }
+
+      const msBuildPropertiesJsonPath = path.resolve(
+        path.dirname(projectFile),
+        'Generated Files',
+        'msbuildproperties.g.json',
+      );
+
+      if (fs.existsSync(msBuildPropertiesJsonPath)) {
+        if (verbose) {
+          newInfo('Loading properties from msbuildproperties.g.json');
+        }
+        return fs.readJsonFileSync(msBuildPropertiesJsonPath);
+      }
+
+      if (verbose) {
+        newInfo('Unable to find msbuildproperties.g.json');
+      }
+    }
+
+    return {};
+  };
 
   // Restore packages.config files for dependencies that don't support PackageReference.
   runWindowsPhase = 'RestorePackagesConfig';
