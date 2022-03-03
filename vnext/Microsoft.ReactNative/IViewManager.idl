@@ -91,13 +91,13 @@ namespace Microsoft.ReactNative
   
   [webhosthidden]
   DOC_STRING(
-    "Enables view managers to track when the view is being "
-    "removed from the visual tree. "
+    "Enables view managers to track when the view is about to be "
+    "removed from the shadow tree. "
   )
   interface IViewManagerWithDropViewInstance {
     DOC_STRING(
-        "Method which gets called when the view is being "
-        "removed from the visual tree. "
+        "Invoked when the view is about to be "
+        "removed from the shadow tree. "
     )
     void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
   };
