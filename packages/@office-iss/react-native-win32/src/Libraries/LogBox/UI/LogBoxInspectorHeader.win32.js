@@ -93,7 +93,7 @@ const backgroundForLevel = (level: LogLevel) =>
 function LogBoxInspectorHeaderButton(
   props: $ReadOnly<{|
     disabled: boolean,
-    image: ImageSource,
+    image: string,
     level: LogLevel,
     onPress?: ?() => void,
   |}>,
