@@ -19,7 +19,6 @@ import StatusBar from '../../Components/StatusBar/StatusBar';
 import LogBoxButton from './LogBoxButton';
 import * as LogBoxStyle from './LogBoxStyle';
 import type {LogLevel} from '../Data/LogBoxLog';
-import type {ImageSource} from '../../Image/ImageSource';
 type Props = $ReadOnly<{|
   onSelectIndex: (selectedIndex: number) => void,
   selectedIndex: number,
