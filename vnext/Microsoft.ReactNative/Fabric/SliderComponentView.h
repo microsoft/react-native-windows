@@ -4,24 +4,23 @@
 
 #pragma once
 
-#include <react/renderer/components/view/ViewEventEmitter.h>
-#include <react/renderer/components/view/ViewProps.h>
 #include "ComponentView.h"
+
+#include <Microsoft.ReactNative.Cxx/ReactContext.h>
+#include <UI.Xaml.Controls.h>
+#include "ViewComponentView.h"
+#include <react/renderer/components/rnwcore/Props.h>
+
+#pragma warning(push)
+#pragma warning(disable : 4244 4305)
+//#include <react/renderer/components/view/ViewProps.h>
+#pragma warning(pop)
 
 namespace Microsoft::ReactNative {
 
-struct BaseComponentView : IComponentView {
-  virtual const xaml::FrameworkElement Element() const noexcept = 0;
-  void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
-  const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
-
- protected:
-  facebook::react::SharedViewEventEmitter m_eventEmitter;
-};
-
-struct ViewComponentView : BaseComponentView {
-  ViewComponentView();
+struct SliderComponentView : BaseComponentView {
+  using Super = BaseComponentView;
+  SliderComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -37,20 +36,17 @@ struct ViewComponentView : BaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedProps props() noexcept override;
+  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
 
-  virtual const xaml::FrameworkElement Element() const noexcept;
+  const xaml::FrameworkElement Element() const noexcept override;
 
  private:
-  bool shouldBeControl() const noexcept;
-
-  bool m_needsBorderUpdate{false};
-  bool m_needsControlUpdate{false};
-  bool m_needsControl{false};
-  facebook::react::SharedViewProps m_props;
+  bool m_needsOnLoadStart{false};
+  std::shared_ptr<facebook::react::SliderProps const> m_props;
   facebook::react::LayoutMetrics m_layoutMetrics;
-  winrt::Microsoft::ReactNative::ViewControl m_control{nullptr};
-  winrt::Microsoft::ReactNative::ViewPanel m_panel;
-  xaml::Controls::Border m_outerBorder{nullptr};
+  xaml::Controls::Slider m_element;
+  xaml::Controls::Slider::ValueChanged_revoker m_valueChangedRevoker;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative

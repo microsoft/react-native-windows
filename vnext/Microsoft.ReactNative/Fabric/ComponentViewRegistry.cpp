@@ -13,6 +13,7 @@
 #include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
+#include <react/renderer/components/slider/SliderShadowNode.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
@@ -23,6 +24,8 @@
 #include "ImageComponentView.h"
 #include "ParagraphComponentView.h"
 #include "ScrollViewComponentView.h"
+#include "SliderComponentView.h"
+#include "SwitchComponentView.h"
 #include "TextComponentView.h"
 #include "ViewComponentView.h"
 #include "XamlView.h"
@@ -48,6 +51,10 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<ScrollViewComponentView>();
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = std::make_shared<ImageComponentView>(m_context);
+  } else if (componentHandle == facebook::react::SliderShadowNode::Handle()) {
+    view = std::make_shared<SliderComponentView>(m_context);
+  } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
+    view = std::make_shared<SwitchComponentView>(m_context);
   } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
     view = std::make_shared<ActivityIndicatorComponentView>();
   } else {
@@ -80,6 +87,6 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
   assert(m_registry.find(tag) != m_registry.end());
 
   m_registry.erase(tag);
-  SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), nullptr);
+  SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), -1);
 }
 } // namespace Microsoft::ReactNative
