@@ -6,8 +6,8 @@
 
 #include "SliderComponentView.h"
 
-#include <Utils/ValueUtils.h>
 #include <UI.Xaml.Controls.Primitives.h>
+#include <Utils/ValueUtils.h>
 
 #include <IReactContext.h>
 
@@ -17,7 +17,6 @@ namespace Microsoft::ReactNative {
 
 SliderComponentView::SliderComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : m_context(reactContext), m_element(xaml::Controls::Slider()) {
-
   m_valueChangedRevoker = m_element.ValueChanged(winrt::auto_revoke, [this](auto sender, auto args) {
     if (m_props->value != m_element.Value()) {
       if (m_eventEmitter) {
@@ -39,7 +38,7 @@ void SliderComponentView::handleCommand(std::string const &commandName, folly::d
     m_element.IsOn(arg[0].asBool());
   } else {
   */
-    Super::handleCommand(commandName, arg);
+  Super::handleCommand(commandName, arg);
   //}
 }
 

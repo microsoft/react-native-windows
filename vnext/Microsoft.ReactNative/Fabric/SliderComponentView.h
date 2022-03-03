@@ -8,8 +8,8 @@
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <UI.Xaml.Controls.h>
-#include "ViewComponentView.h"
 #include <react/renderer/components/rnwcore/Props.h>
+#include "ViewComponentView.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)

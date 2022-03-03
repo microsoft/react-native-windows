@@ -18,9 +18,9 @@ Size SliderMeasurementsManager::measure(SurfaceId surfaceId, LayoutConstraints l
     m_slider = xaml::Controls::Slider();
     xaml::Style sliderStyle;
     xaml::Application::Current()
-                           .Resources()
-                           .TryLookup(
-        winrt::box_value(winrt::xaml_typename<xaml::Controls::Slider>())).as(sliderStyle);
+        .Resources()
+        .TryLookup(winrt::box_value(winrt::xaml_typename<xaml::Controls::Slider>()))
+        .as(sliderStyle);
     m_slider.Style(sliderStyle);
   }
 
