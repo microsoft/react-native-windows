@@ -194,8 +194,8 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
     auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(coBodyData.Data));
     content = HttpBufferContent{buffer};
   } else if (BodyData::Type::Uri == coBodyData.Type) {
-    auto file = StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(coBodyData.Data)}).get();
-    auto stream = file.OpenReadAsync().get();
+    auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(coBodyData.Data)});
+    auto stream = co_await file.OpenReadAsync();
     content = HttpStreamContent{stream};
   } else if (BodyData::Type::Form == coBodyData.Type) {
     // TODO: Add support
