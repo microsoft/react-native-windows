@@ -2851,9 +2851,9 @@ appdirsjs@^1.2.4:
   integrity sha512-WO5StDORR6JF/xYnXk/Fm0yu+iULaV5ULKuUw0Tu+jbgiTlSquaWBCgbpnsHLMXldf+fM3Gxn5p7vjond7He6w==
 
 applicationinsights@^2.1.5:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.2.1.tgz#89d509b26a4f9dce6e3351da73061c986565d1b0"
-  integrity sha512-N6panMyjw6E6ayCgjFDBmL/NkaolgBgeX1iJ0jh50E6wrncVJBCa+I4IelwwOfJ4Dl9BWzOSLjp84wTiUyhNwg==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.2.2.tgz#6e9f65aa3dc72a734c6f58dcac3182a517accdc3"
+  integrity sha512-X6cNOoTNJKSki8/U+eI1yqKbP7HtM1qIMcJtYp0E5rCllaYKYfN6w4gKARWuHLMQrzgiQoAfNTyZU8hVbIao1w==
   dependencies:
     "@azure/core-http" "^2.2.3"
     "@opentelemetry/api" "^1.0.4"
