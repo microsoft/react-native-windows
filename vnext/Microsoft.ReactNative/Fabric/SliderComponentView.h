@@ -36,7 +36,6 @@ struct SliderComponentView : BaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedProps props() noexcept override;
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
 
   const xaml::FrameworkElement Element() const noexcept override;
 

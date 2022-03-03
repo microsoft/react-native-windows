@@ -32,16 +32,6 @@ SliderComponentView::SliderComponentView(winrt::Microsoft::ReactNative::ReactCon
   m_props = defaultProps;
 }
 
-void SliderComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  /*
-  if (commandName == "setValue") {
-    m_element.IsOn(arg[0].asBool());
-  } else {
-  */
-  Super::handleCommand(commandName, arg);
-  //}
-}
-
 std::vector<facebook::react::ComponentDescriptorProvider>
 SliderComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};

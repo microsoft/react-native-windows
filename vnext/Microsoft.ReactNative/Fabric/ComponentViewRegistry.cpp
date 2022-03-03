@@ -87,6 +87,6 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
   assert(m_registry.find(tag) != m_registry.end());
 
   m_registry.erase(tag);
-  SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), -1);
+  SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), InvalidTag);
 }
 } // namespace Microsoft::ReactNative

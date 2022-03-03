@@ -58,12 +58,11 @@ TextMeasurement TextLayoutManager::measure(
     if (fragment.textAttributes.fontFamily.empty())
       m_textBlock.FontFamily(xaml::Media::FontFamily(L"Segoe UI"));
     else
-      m_textBlock.FontFamily(
-          xaml::Media::FontFamily(Microsoft::Common::Unicode::Utf8ToUtf16(fragment.textAttributes.fontFamily)));
+      m_textBlock.FontFamily(winrt::to_hstring(fragment.textAttributes.fontFamily));
 
-    winrt::Windows::Foundation::Size availiableSize(
+    winrt::Windows::Foundation::Size availableSize(
         layoutConstraints.maximumSize.width, layoutConstraints.maximumSize.height);
-    m_textBlock.Measure(availiableSize);
+    m_textBlock.Measure(availableSize);
     TextMeasurement tm;
     auto size = m_textBlock.DesiredSize();
 
