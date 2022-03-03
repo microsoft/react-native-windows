@@ -20,6 +20,10 @@ const facebook::react::SharedViewEventEmitter &BaseComponentView::GetEventEmitte
   return m_eventEmitter;
 }
 
+void BaseComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  assert(false); // Unhandled command
+}
+
 ViewComponentView::ViewComponentView() {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;

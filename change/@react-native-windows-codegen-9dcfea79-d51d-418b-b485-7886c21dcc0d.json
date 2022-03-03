@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Generate fabric eventemitter.cpp",
+  "packageName": "@react-native-windows/codegen",
+  "email": "acoates@microsoft.com",
+  "dependentChangeType": "patch"
+}
