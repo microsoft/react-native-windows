@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "stop inspector when destructing instance",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@microsoft.com",
+  "dependentChangeType": "none"
+}
