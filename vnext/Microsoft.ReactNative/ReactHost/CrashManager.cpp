@@ -35,7 +35,7 @@ extern "C" LONG WINAPI CustomWERExceptionFilter(LPEXCEPTION_POINTERS const excep
 void InternalRegisterCustomHandler() noexcept {
   // Do this now because by the time we catch the exception we may be in OOM
 #ifndef CORE_ABI // win32 vs uwp file permissions
-  wchar_t currentDirectory[MAX_PATH] {};
+  wchar_t currentDirectory[MAX_PATH]{};
   VerifyElseCrash(!!GetTempPath(MAX_PATH, currentDirectory));
   g_logFileName = currentDirectory;
 #else
