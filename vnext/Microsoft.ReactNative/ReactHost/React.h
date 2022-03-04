@@ -307,6 +307,14 @@ struct ReactOptions {
       bool value) noexcept;
   static bool UseDirectDebugger(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
 
+  //! Enables the default unhandled exception handler
+  void SetEnableDefaultCrashHandler(bool enable) noexcept;
+  bool EnableDefaultCrashHandler() const noexcept;
+  static void SetEnableDefaultCrashHandler(
+      winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+      bool value) noexcept;
+  static bool EnableDefaultCrashHandler(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept;
+
   //! Adds registered JS bundle to JSBundles.
   LIBLET_PUBLICAPI ReactOptions &AddRegisteredJSBundle(std::string_view jsBundleId) noexcept;
 
