@@ -129,11 +129,7 @@ void TouchEventHandler::OnPointerPressed(
 
     size_t pointerIndex = AddReactPointer(args, tag, sourceElement);
 
-    // For now, when using the mouse we only want to send click events for the left button.
-    // Finger and pen taps will also set isLeftButton.
-    if (m_pointers[pointerIndex].isLeftButton) {
-      DispatchTouchEvent(eventType, pointerIndex);
-    }
+    DispatchTouchEvent(eventType, pointerIndex);
   }
 }
 
@@ -211,14 +207,12 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   if (PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
     UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
 
-  if (m_pointers[*optPointerIndex].isLeftButton) {
-    // In case a PointerCaptureLost event should be treated as an "end" event,
-    // check the ReactPointerEventArgs Kind property before emitting the event.
-    const auto adjustedEventType = reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End
-        ? TouchEventType::End
-        : TouchEventType::Cancel;
-    DispatchTouchEvent(adjustedEventType, *optPointerIndex);
-  }
+  // In case a PointerCaptureLost event should be treated as an "end" event,
+  // check the ReactPointerEventArgs Kind property before emitting the event.
+  const auto adjustedEventType = reactArgs.Kind() == winrt::Microsoft::ReactNative::PointerEventKind::End
+      ? TouchEventType::End
+      : TouchEventType::Cancel;
+  DispatchTouchEvent(adjustedEventType, *optPointerIndex);
 
   m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
   if (m_pointers.size() == 0)
@@ -368,7 +362,21 @@ void TouchEventHandler::UpdatePointersInViews(
   }
 }
 
+// defines button payload, follows https://developer.mozilla.org/docs/Web/API/MouseEvent/button
+enum class MouseEventButtonKind { None = -1, Main = 0, Auxiliary = 1, Secondary = 2, Eraser = 5 };
+
 winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
+  MouseEventButtonKind button = MouseEventButtonKind::None;
+  if (pointer.isLeftButton) {
+    button = MouseEventButtonKind::Main;
+  } else if (pointer.isMiddleButton) {
+    button = MouseEventButtonKind::Auxiliary;
+  } else if (pointer.isRightButton || pointer.isBarrelButton) {
+    button = MouseEventButtonKind::Secondary;
+  } else if (pointer.isEraser) {
+    button = MouseEventButtonKind::Eraser;
+  }
+
   return winrt::Microsoft::ReactNative::JSValueObject{
       {"target", target},
       {"identifier", pointer.identifier},
@@ -390,6 +398,7 @@ winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const R
       {"isEraser", pointer.isEraser},
       {"shiftKey", pointer.shiftKey},
       {"ctrlKey", pointer.ctrlKey},
+      {"button", static_cast<int>(button)},
       {"altKey", pointer.altKey}};
 }
 

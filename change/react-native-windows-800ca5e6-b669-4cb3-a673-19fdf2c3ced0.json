@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "enable right-click exluding some components",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
