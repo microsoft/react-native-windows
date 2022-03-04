@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 03 Mar 2022 06:09:12 GMT and should not be manually modified.
+This log was last generated on Fri, 04 Mar 2022 06:09:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.464
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Changes
+
+- enable right-click exluding some components (email not defined)
+- Fabric: Use XAML for layout (acoates@microsoft.com)
+- Capture MSBuild properties in telemetry (jthysell@microsoft.com)
+- Update OnDropViewInstance API Doc (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.118
+- Bump @react-native-windows/codegen to v0.0.0-canary.27
 
 ## 0.0.0-canary.463
 

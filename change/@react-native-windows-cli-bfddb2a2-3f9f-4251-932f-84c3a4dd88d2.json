@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Capture MSBuild properties in telemetry",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
