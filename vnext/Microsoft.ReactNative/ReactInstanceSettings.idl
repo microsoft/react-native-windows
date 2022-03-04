@@ -151,6 +151,11 @@ namespace Microsoft.ReactNative
     DOC_DEFAULT("false")
     Boolean EnableByteCodeCaching { get; set; };
 
+    DOC_STRING(
+      "Opt in to using the default unhandled exception handler that logs additional information into a text file for WER.")
+    DOC_DEFAULT("false")
+    Boolean EnableDefaultCrashHandler { get; set; };
+
     // Deprecated
     [deprecated(
       "This property has been replaced by @.UseDeveloperSupport. "

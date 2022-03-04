@@ -96,6 +96,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool EnableByteCodeCaching() noexcept;
   void EnableByteCodeCaching(bool value) noexcept;
 
+  bool EnableDefaultCrashHandler() noexcept;
+  void EnableDefaultCrashHandler(bool value) noexcept;
+
   //! Same as UseDeveloperSupport
   bool EnableDeveloperMenu() noexcept;
   void EnableDeveloperMenu(bool value) noexcept;
