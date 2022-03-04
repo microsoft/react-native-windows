@@ -526,7 +526,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
-  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes) {
+  if (shouldStartHermesInspector(*m_devSettings)) {
     m_devManager->StopInspector();
   }
   m_nativeQueue->quitSynchronous();
