@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "integrate 2/13/2022 Nightly RN Build",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
