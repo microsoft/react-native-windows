@@ -104,14 +104,6 @@ payload.setProperty(runtime, "selectedSegmentIndex", event.selectedSegmentIndex)
     return payload;
   });
 }
-void SliderEventEmitter::onChange(OnChange event) const {
-  dispatchEvent("change", [event=std::move(event)](jsi::Runtime &runtime) {
-    auto payload = jsi::Object(runtime);
-    payload.setProperty(runtime, "value", event.value);
-payload.setProperty(runtime, "fromUser", event.fromUser);
-    return payload;
-  });
-}
 void SliderEventEmitter::onValueChange(OnValueChange event) const {
   dispatchEvent("valueChange", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
