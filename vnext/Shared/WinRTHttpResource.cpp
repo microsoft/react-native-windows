@@ -232,8 +232,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
       if (self->m_onError) {
         self->m_onError(requestId, Utilities::HResultToString(std::move(result)));
       }
-      self->UntrackResponse(requestId);
-      co_return;
+      co_return self->UntrackResponse(requestId);
     }
 
     auto response = sendRequestOp.GetResults();
