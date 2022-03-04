@@ -95,7 +95,7 @@ Here's what the contribution process looks like:
 > ⚛️ For RNW-specific walkthrough on setting up your branch, see the [Setup page](https://github.com/microsoft/react-native-windows/wiki/Setup) in our Wiki. 
 
 ### 🔙 **Backporting**
-There are cases when we'll want to port a fix back into one or more of the previous stable releases. If you are working on backporting a fix, your development process will look similar to what's described above, main difference being that your feature branch will need to build off of one of the n-stable branch as the base, instead of main. For example, if you were backporting a change to 0.67-stable you would run the following commands to get your branch set up:
+There are cases when we'll want to port a fix back into one or more of the previous stable releases. If you are working on backporting a fix, your development process will look similar to what's described above, main difference being that your feature branch will need to build off of one of the n-stable branches as the base, instead of main. For example, if you were backporting a change to 0.67-stable you would run the following commands to get your branch set up:
 
 ```
 > git fetch upstream
