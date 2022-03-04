@@ -17,6 +17,10 @@ namespace Microsoft::JSI {
 struct RuntimeHolderLazyInit {
   virtual std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept = 0;
   virtual facebook::react::JSIEngineOverride getRuntimeType() noexcept = 0;
+
+  // You can call this when a crash happens to attempt recording additional data
+  // The fd supplied is a raw file stream an implementation might write JSON to
+  virtual void crashHandler(int fileDescriptor) noexcept {};
 };
 
 } // namespace Microsoft::JSI

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update how RunWindows phases are reported",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

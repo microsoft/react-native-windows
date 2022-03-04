@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch"
+}

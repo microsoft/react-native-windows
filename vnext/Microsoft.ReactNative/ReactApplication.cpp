@@ -6,6 +6,7 @@
 #include "ReactApplication.g.cpp"
 #include "winrt/Microsoft.ReactNative.h"
 
+#include "CrashManager.h"
 #include "IReactDispatcher.h"
 #include "Modules/LinkingManagerModule.h"
 #include "ReactNativeHost.h"
@@ -40,12 +41,15 @@ ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactAp
 #ifndef USE_WINUI3
   Suspending({this, &ReactApplication::OnSuspending});
 
-#if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
+#if !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION
   UnhandledException([this](IInspectable const &, UnhandledExceptionEventArgs const &e) {
+#if defined _DEBUG
     if (IsDebuggerPresent()) {
       auto errorMessage = e.Message();
       __debugbreak();
-    }
+    } else
+#endif
+      Mso::React::CrashManager::OnUnhandledException();
   });
 #endif
 #endif

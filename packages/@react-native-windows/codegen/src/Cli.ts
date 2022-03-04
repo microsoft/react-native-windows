@@ -233,6 +233,8 @@ function generate(
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH').generate;
   const generatorEventEmitterH =
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH').generate;
+  const generatorEventEmitterCPP =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterCpp').generate;
 
   normalizeFileMap(
     generateNM2(libraryName, schema, moduleSpecName),
@@ -260,6 +262,7 @@ function generate(
       generatorShadowNodeCPP,
       generatorComponentDescriptorH,
       generatorEventEmitterH,
+      generatorEventEmitterCPP,
     ];
 
     componentGenerators.forEach((generator) => {
