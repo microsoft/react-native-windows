@@ -398,7 +398,7 @@ winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const R
       {"isEraser", pointer.isEraser},
       {"shiftKey", pointer.shiftKey},
       {"ctrlKey", pointer.ctrlKey},
-      {"button", (int)button},
+      {"button", static_cast<int>(button)},
       {"altKey", pointer.altKey}};
 }
 
