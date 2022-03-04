@@ -362,17 +362,19 @@ void TouchEventHandler::UpdatePointersInViews(
   }
 }
 
+// defines button payload, follows https://developer.mozilla.org/docs/Web/API/MouseEvent/button
+enum class MouseEventButtonKind { None = -1, Main = 0, Auxiliary = 1, Secondary = 2, Eraser = 5 };
+
 winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const ReactPointer &pointer, int64_t target) {
-  // defines button payoad, follows https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button
-  int button = -1;
+  MouseEventButtonKind button = MouseEventButtonKind::None;
   if (pointer.isLeftButton) {
-    button = 0;
+    button = MouseEventButtonKind::Main;
   } else if (pointer.isMiddleButton) {
-    button = 1;
+    button = MouseEventButtonKind::Auxiliary;
   } else if (pointer.isRightButton || pointer.isBarrelButton) {
-    button = 2;
+    button = MouseEventButtonKind::Secondary;
   } else if (pointer.isEraser) {
-    button = 5;
+    button = MouseEventButtonKind::Eraser;
   }
 
   return winrt::Microsoft::ReactNative::JSValueObject{
@@ -396,7 +398,7 @@ winrt::Microsoft::ReactNative::JSValue TouchEventHandler::GetPointerJson(const R
       {"isEraser", pointer.isEraser},
       {"shiftKey", pointer.shiftKey},
       {"ctrlKey", pointer.ctrlKey},
-      {"button", button},
+      {"button", (int)button},
       {"altKey", pointer.altKey}};
 }
 
