@@ -35,22 +35,22 @@ extern "C" LONG WINAPI CustomWERExceptionFilter(LPEXCEPTION_POINTERS const excep
 void InternalRegisterCustomHandler() noexcept {
   // Do this now because by the time we catch the exception we may be in OOM
 #ifndef CORE_ABI // win32 vs uwp file permissions
-  wchar_t currentDirectory[MAX_PATH];
-  GetTempPath(MAX_PATH, currentDirectory);
+  wchar_t currentDirectory[MAX_PATH] {};
+  VerifyElseCrash(!!GetTempPath(MAX_PATH, currentDirectory));
   g_logFileName = currentDirectory;
 #else
   g_logFileName = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path() + L"\\";
 #endif
 
-  g_logFileName += L"ReactNativeCrashDetails.txt";
+  g_logFileName += L"ReactNativeCrashDetails_" + std::to_wstring(GetCurrentProcessId()) + L".txt";
 
-  ::WerRegisterFile(g_logFileName.c_str(), WerRegFileTypeOther, WER_FILE_ANONYMOUS_DATA);
+  VerifySucceededElseCrash(::WerRegisterFile(g_logFileName.c_str(), WerRegFileTypeOther, WER_FILE_ANONYMOUS_DATA));
 
   g_previousExceptionFilter = ::SetUnhandledExceptionFilter(CustomWERExceptionFilter);
 }
 
 void InternalUnregisterCustomHandler() noexcept {
-  ::WerUnregisterFile(g_logFileName.c_str());
+  VerifySucceededElseCrash(::WerUnregisterFile(g_logFileName.c_str()));
 
   if (g_previousExceptionFilter) {
     ::SetUnhandledExceptionFilter(g_previousExceptionFilter);

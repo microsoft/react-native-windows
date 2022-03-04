@@ -152,7 +152,7 @@ namespace Microsoft.ReactNative
     Boolean EnableByteCodeCaching { get; set; };
 
     DOC_STRING(
-      "Opt in to using the default unhandled exception handler that logs additional information into a text file for WER.")
+      "Enables the default unhandled exception handler that logs additional information into a text file for [Windows Error Reporting](https://docs.microsoft.com/windows/win32/wer/windows-error-reporting).")
     DOC_DEFAULT("false")
     Boolean EnableDefaultCrashHandler { get; set; };
 
