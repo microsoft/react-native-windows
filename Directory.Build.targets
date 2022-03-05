@@ -86,6 +86,8 @@
         VCTargetsPath;
         UserRootDir;
         ProjectHome;
+        IntermediateOutputPath;
+        OutputPath;
       " />
       <_VarsCustom Include="
         RootDir;
@@ -123,7 +125,6 @@
         NuGetPackagesDirectory;
         NuGetRuntimeIdentifier;
         ProjectLockFile;
-        IntermediateOutputPath;
         NuGetTargetMoniker;
         TargetFramework;
         TargetFrameworks;
