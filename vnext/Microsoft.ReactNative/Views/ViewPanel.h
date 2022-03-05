@@ -77,13 +77,12 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
     return winrt::unbox_value<double>(element.GetValue(LeftProperty()));
   }
 
- static void InvalidateForArrange(const xaml::DependencyObject& element);
+  static void InvalidateForArrange(const xaml::DependencyObject &element);
 
  private:
   void Remove(xaml::UIElement element) const;
 
   void UpdateClip(winrt::Windows::Foundation::Size &finalSize);
-
 
  private:
   bool m_propertiesChanged{false};

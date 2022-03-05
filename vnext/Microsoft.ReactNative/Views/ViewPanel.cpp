@@ -115,7 +115,7 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   InvalidateForArrange(element);
 }
 
-void ViewPanel::InvalidateForArrange(const xaml::DependencyObject& element) {
+void ViewPanel::InvalidateForArrange(const xaml::DependencyObject &element) {
   // If the element's position has changed, we must invalidate the parent for arrange,
   // as it's the parent's responsibility to arrange its children.
   if (auto parent = VisualTreeHelper::GetParent(element)) {
