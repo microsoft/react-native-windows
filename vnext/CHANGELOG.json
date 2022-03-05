@@ -2,6 +2,41 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 05 Mar 2022 06:08:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.465",
+      "version": "0.0.0-canary.465",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "91f6a96cb282afcb0d1739a2e715e39ec62903ad",
+            "comment": "Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "f9160f690118754fc9e788aced5c51376513617d",
+            "comment": "integrate 2/13/2022 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.31",
+            "commit": "95638afb58acf9bdb662a72c945ee8f0f2b6a72a"
+          }
+        ],
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "95638afb58acf9bdb662a72c945ee8f0f2b6a72a",
+            "comment": "stop inspector when destructing instance"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Mar 2022 06:09:13 GMT",
       "tag": "react-native-windows_v0.0.0-canary.464",
       "version": "0.0.0-canary.464",

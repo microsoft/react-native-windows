@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 04 Mar 2022 06:09:13 GMT and should not be manually modified.
+This log was last generated on Sat, 05 Mar 2022 06:08:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.465
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Changes
+
+- Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting (tudor.mihai@microsoft.com)
+- integrate 2/13/2022 Nightly RN Build (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.31
 
 ## 0.0.0-canary.464
 
