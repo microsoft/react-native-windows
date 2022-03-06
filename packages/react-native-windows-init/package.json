@@ -18,7 +18,7 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^1.0.2",
+    "@react-native-windows/fs": "^0.0.0-canary.0",
     "@react-native-windows/telemetry": "^0.0.0-canary.34",
     "chalk": "^4.1.0",
     "find-up": "^4.1.0",
