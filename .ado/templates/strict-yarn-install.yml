@@ -4,8 +4,8 @@ parameters:
   default: .
 - name: workspace
   type: string
-  default: ''
+  default: react-native-windows-repo
 
 steps:
-  - script: npx --yes midgard-yarn-strict@1.2.4 --frozen-lockfile --ignore-scripts --cwd ${{ parameters.workingDirectory }} ${{ parameters.workspace }}
+  - script: npx --yes midgard-yarn-strict@1.2.4 ${{ parameters.workspace }} --frozen-lockfile --ignore-scripts --cwd ${{ parameters.workingDirectory }}
     displayName: Strict yarn install ${{ parameters.workspace }}
