@@ -75,6 +75,7 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
 
@@ -193,6 +194,9 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
 // ReactInstanceWin implementation
 //=============================================================================================
 
+/*static*/ std::mutex ReactInstanceWin::s_registryMutex;
+/*static*/ std::vector<ReactInstanceWin *> ReactInstanceWin::s_instanceRegistry;
+
 ReactInstanceWin::ReactInstanceWin(
     IReactHost &reactHost,
     ReactOptions const &options,
@@ -247,9 +251,48 @@ ReactInstanceWin::ReactInstanceWin(
   // OnInstanceCreated event is raised only after the internal react-native instance is ready and
   // it starts handling JS queue work items.
   m_whenCreated.SetValue();
+
+  if (m_options.EnableDefaultCrashHandler()) {
+    CrashManager::RegisterCustomHandler();
+  }
+
+  {
+    std::scoped_lock lock{s_registryMutex};
+    s_instanceRegistry.push_back(this);
+  }
 }
 
-ReactInstanceWin::~ReactInstanceWin() noexcept {}
+ReactInstanceWin::~ReactInstanceWin() noexcept {
+  std::scoped_lock lock{s_registryMutex};
+  auto it = std::find(s_instanceRegistry.begin(), s_instanceRegistry.end(), this);
+  if (it != s_instanceRegistry.end()) {
+    s_instanceRegistry.erase(it);
+  }
+
+  if (m_options.EnableDefaultCrashHandler()) {
+    CrashManager::UnregisterCustomHandler();
+  }
+}
+
+void ReactInstanceWin::InstanceCrashHandler(int fileDescriptor) noexcept {
+  if (!m_options.EnableDefaultCrashHandler()) {
+    return;
+  }
+
+  if (m_jsiRuntimeHolder) {
+    m_jsiRuntimeHolder->crashHandler(fileDescriptor);
+  }
+
+  // record additional information that could be useful for debugging crash dumps here
+  // (perhaps properties and settings or clues about the react tree)
+}
+
+/*static*/ void ReactInstanceWin::CrashHandler(int fileDescriptor) noexcept {
+  std::scoped_lock lock{s_registryMutex};
+  for (auto &entry : s_instanceRegistry) {
+    entry->InstanceCrashHandler(fileDescriptor);
+  }
+}
 
 void ReactInstanceWin::LoadModules(
     const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
