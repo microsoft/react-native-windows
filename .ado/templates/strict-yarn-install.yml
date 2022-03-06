@@ -7,5 +7,5 @@ parameters:
   default: ''
 
 steps:
-  - script: npx --yes midgard-yarn-strict@1.2.4 --frozen-lockfile --cwd ${{ parameters.workingDirectory }} ${{ parameters.workspace }}
+  - script: npx --yes midgard-yarn-strict@1.2.4 --frozen-lockfile --ignore-scripts --cwd ${{ parameters.workingDirectory }} ${{ parameters.workspace }}
     displayName: Strict yarn install ${{ parameters.workspace }}
