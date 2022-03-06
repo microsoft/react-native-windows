@@ -11,5 +11,5 @@ steps:
       $packageJson | ConvertTo-Json | Out-File ./package.json
     displayName: Remove postinstall
 
-  - script: npx --yes midgard-yarn-strict@1.2.4 ${{ parameters.workspace }} --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
+  - script: npx --yes midgard-yarn-strict@1.2.4 ${{ parameters.workspace }}
     displayName: Strict yarn install ${{ parameters.workspace }}
