@@ -56,7 +56,6 @@
     "bin.js",
     "lib-commonjs"
   ],
-  "windowsOnly": true,
   "engines": {
     "node": ">= 14"
   },
