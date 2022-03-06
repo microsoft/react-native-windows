@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 06 Mar 2022 06:08:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.466",
+      "version": "0.0.0-canary.466",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dc0cc573cb4f6b388df71e2d194816387a664329",
+            "comment": "Scope down usage of PackageReferences"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Mar 2022 06:08:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.465",
       "version": "0.0.0-canary.465",
