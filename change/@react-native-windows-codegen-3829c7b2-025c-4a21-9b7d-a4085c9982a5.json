@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Build/dependency fixes",
+  "packageName": "@react-native-windows/codegen",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}

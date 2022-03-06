@@ -63,6 +63,7 @@
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.5",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.0",
+    "@rnw-scripts/just-task": "2.2.3",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.21",
     "@types/react-native": "^0.66.0",
@@ -86,7 +87,6 @@
   },
   "beachball": {
     "defaultNpmTag": "canary",
-    "gitTags": true,
     "disallowedChangeTypes": [
       "major",
       "minor",

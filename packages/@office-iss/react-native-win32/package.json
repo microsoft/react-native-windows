@@ -59,6 +59,7 @@
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.11",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.5",
+    "@rnw-scripts/just-task": "2.2.3",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.0",
     "@types/node": "^14.14.22",

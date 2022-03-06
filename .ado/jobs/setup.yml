@@ -20,12 +20,12 @@ jobs:
 
       - template: ../templates/compute-beachball-branch-name.yml
 
-      - template: ../templates/yarn-install.yml
+      - template: ../templates/strict-yarn-install.yml
         parameters:
-          agentImage: HostedImage
+          workspace: '@rnw-scripts/beachball-config'
 
       - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
-        displayName: Minimal build
+        displayName: Build @rnw-scripts/beachball-config
 
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
         - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."
