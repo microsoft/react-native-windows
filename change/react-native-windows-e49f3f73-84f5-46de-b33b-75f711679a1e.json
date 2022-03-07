@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move react tag to an attached property",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
