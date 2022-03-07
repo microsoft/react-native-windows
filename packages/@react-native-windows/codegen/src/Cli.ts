@@ -185,9 +185,9 @@ function parseFlowFile(filename: string): SchemaType {
         const contents = fs.readFileSync(filename, 'utf8');
         if (contents) {
           if (contents.includes('TurboModuleRegistry.get<')) {
-            setOptionalTurboModule(spec, false);
-          } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
             setOptionalTurboModule(spec, true);
+          } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
+            setOptionalTurboModule(spec, false);
           }
         }
       }
