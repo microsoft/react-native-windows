@@ -184,6 +184,7 @@ function parseFlowFile(filename: string): SchemaType {
       if (spec.type === 'NativeModule') {
         const contents = fs.readFileSync(filename, 'utf8');
         if (contents) {
+          // This is a temporary implementation until such information is added to the schema in facebook/react-native
           if (contents.includes('TurboModuleRegistry.get<')) {
             setOptionalTurboModule(spec, true);
           } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
