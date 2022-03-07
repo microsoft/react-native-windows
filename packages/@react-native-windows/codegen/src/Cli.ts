@@ -10,7 +10,10 @@ import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
-import {generateTypeScript} from './generators/GenerateTypeScript';
+import {
+  generateTypeScript,
+  setOptionalTurboModule,
+} from './generators/GenerateTypeScript';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
 // @ts-ignore
@@ -173,7 +176,20 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
 function parseFlowFile(filename: string): SchemaType {
   try {
-    return parseFile(filename);
+    const schema = parseFile(filename);
+    const contents = fs.readFileSync(filename, 'utf8');
+    if (contents) {
+      if (contents.includes('TurboModuleRegistry.get<')) {
+        for (const spec of schema.modules) {
+          setOptionalTurboModule(spec, false);
+        }
+      } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
+        for (const spec of schema.modules) {
+          setOptionalTurboModule(spec, true);
+        }
+      }
+    }
+    return schema;
   } catch (e) {
     if (e instanceof Error) {
       e.message = `(${filename}): ${e.message}`;
