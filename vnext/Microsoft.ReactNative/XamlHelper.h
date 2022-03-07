@@ -14,8 +14,6 @@ struct XamlHelper : XamlHelperT<XamlHelper> {
   static Windows::UI::Color ColorFrom(JSValueArgWriter const &valueProvider) noexcept;
 
   static folly::dynamic GetFollyDynamicFromValueProvider(JSValueArgWriter const &valueProvider) noexcept;
-
-  static xaml::DependencyProperty ReactTagProperty() noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

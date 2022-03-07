@@ -3,8 +3,8 @@
 
 #pragma once
 
-#include "CppWinRTIncludes.h"
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include "CppWinRTIncludes.h"
 
 namespace Microsoft::ReactNative {
 
