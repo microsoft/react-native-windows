@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Mar 2022 16:07:47 GMT",
+      "tag": "react-native-windows_v0.68.0-preview.5",
+      "version": "0.68.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a891608d3bbb24dbaa2c9e700cc5b04f0ebdb529",
+            "comment": "Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f23a548f766d724f37f097e70f4277f64fb75f22",
+            "comment": "Set ResolveNuGetPackages in external props (#9628)"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3e25b04056345bf2e68195b9d49ba1b2807c2503",
+            "comment": "Bkpt API Docs Change"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "98ca6329a6b597ef3e6df3b9e36c756feb6276bb",
+            "comment": "[0.68] Capture MSBuild properties in telemetry"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.0-preview.5",
+            "commit": "f23a548f766d724f37f097e70f4277f64fb75f22"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Feb 2022 16:08:28 GMT",
       "tag": "react-native-windows_v0.68.0-preview.4",
       "version": "0.68.0-preview.4",
