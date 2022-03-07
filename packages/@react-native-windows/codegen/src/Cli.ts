@@ -177,15 +177,18 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 function parseFlowFile(filename: string): SchemaType {
   try {
     const schema = parseFile(filename);
-    const contents = fs.readFileSync(filename, 'utf8');
-    if (contents) {
-      if (contents.includes('TurboModuleRegistry.get<')) {
-        for (const spec of schema.modules) {
-          setOptionalTurboModule(spec, false);
-        }
-      } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
-        for (const spec of schema.modules) {
-          setOptionalTurboModule(spec, true);
+    // there will be at most one turbo module per file
+    const moduleName = Object.keys(schema.modules)[0];
+    if (moduleName) {
+      const spec = schema.modules[moduleName];
+      if (spec.type === 'NativeModule') {
+        const contents = fs.readFileSync(filename, 'utf8');
+        if (contents) {
+          if (contents.includes('TurboModuleRegistry.get<')) {
+            setOptionalTurboModule(spec, false);
+          } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
+            setOptionalTurboModule(spec, true);
+          }
         }
       }
     }
