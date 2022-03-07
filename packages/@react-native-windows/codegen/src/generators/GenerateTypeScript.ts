@@ -30,9 +30,7 @@ const moduleTemplate = `
  * This is a TypeScript turbo module definition file.
  */
 
-// the following import statements are not actually working today
-import {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
-import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import {TurboModule, TurboModuleRegistry} from 'react-native';
 'use strict';
 ::_MODULE_ALIASED_STRUCTS_::
 export interface Spec extends TurboModule {
