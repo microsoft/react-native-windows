@@ -1,8 +1,129 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Wed, 09 Feb 2022 06:09:36 GMT and should not be manually modified.
+This log was last generated on Sun, 06 Mar 2022 06:08:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.40
+
+Sun, 06 Mar 2022 06:08:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.466
+
+## 0.1.39
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Patches
+
+- integrate 2/13/2022 Nightly RN Build (email not defined)
+- Bump react-native-windows to v0.0.0-canary.465
+
+## 0.1.38
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.464
+
+## 0.1.37
+
+Thu, 03 Mar 2022 06:09:12 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.463
+
+## 0.1.36
+
+Fri, 25 Feb 2022 23:53:36 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.462
+
+## 0.1.35
+
+Fri, 25 Feb 2022 06:07:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.461
+
+## 0.1.34
+
+Thu, 24 Feb 2022 06:07:47 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.460
+
+## 0.1.33
+
+Wed, 23 Feb 2022 06:07:37 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.459
+
+## 0.1.32
+
+Sat, 19 Feb 2022 06:07:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.458
+
+## 0.1.31
+
+Fri, 18 Feb 2022 06:07:44 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.457
+
+## 0.1.30
+
+Wed, 16 Feb 2022 19:51:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.456
+
+## 0.1.29
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.455
+
+## 0.1.28
+
+Sat, 12 Feb 2022 06:08:37 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.454
+
+## 0.1.27
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.453
+
+## 0.1.26
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.452
 
 ## 0.1.25
 

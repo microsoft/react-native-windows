@@ -127,9 +127,8 @@ export default NativeComponentRegistry.get(nativeComponentName, () => __INTERNAL
 `.trim();
 };
 
-// If static view configs are enabled, get whether the native component exists
-// in the app binary using hasViewManagerConfig() instead of getViewManagerConfig().
-// Old getViewManagerConfig() checks for the existance of the native Paper view manager.
+// Check whether the native component exists in the app binary.
+// Old getViewManagerConfig() checks for the existance of the native Paper view manager. Not available in Bridgeless.
 // New hasViewManagerConfig() queries Fabric’s native component registry directly.
 const DeprecatedComponentNameCheckTemplate = ({
   componentName,
@@ -139,8 +138,7 @@ const DeprecatedComponentNameCheckTemplate = ({
   paperComponentNameDeprecated: string,
 }) =>
   `
-const staticViewConfigsEnabled = global.__fbStaticViewConfig === true;
-if (staticViewConfigsEnabled) {
+if (global.__nativeComponentRegistry__hasComponent) {
   if (UIManager.hasViewManagerConfig('${componentName}')) {
     nativeComponentName = '${componentName}';
   } else if (UIManager.hasViewManagerConfig('${paperComponentNameDeprecated}')) {
@@ -168,6 +166,23 @@ function normalizeInputEventName(name) {
   }
 
   return name;
+}
+
+// Replicates the behavior of viewConfig in RCTComponentData.m
+function getValidAttributesForEvents(events, imports) {
+  imports.add(
+    "const {ConditionallyIgnoredEventHandlers} = require('react-native/Libraries/NativeComponent/ViewConfigIgnore');",
+  );
+
+  const validAttributes = j.objectExpression(
+    events.map((eventType) => {
+      return j.property('init', j.identifier(eventType.name), j.literal(true));
+    }),
+  );
+
+  return j.callExpression(j.identifier('ConditionallyIgnoredEventHandlers'), [
+    validAttributes,
+  ]);
 }
 
 function generateBubblingEventInfo(event, nameOveride) {
@@ -239,6 +254,13 @@ function buildViewConfig(schema, componentName, component, imports) {
         getReactDiffProcessValue(schemaProp.typeAnnotation),
       );
     }),
+    ...(componentEvents.length > 0
+      ? [
+          j.spreadProperty(
+            getValidAttributesForEvents(componentEvents, imports),
+          ),
+        ]
+      : []),
   ]);
 
   const bubblingEventNames = component.events

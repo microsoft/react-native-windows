@@ -54,6 +54,9 @@ jobs:
     steps:
       - template: templates/checkout-full.yml
 
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+        displayName: 'Run Credential Scanner'
+
       - powershell: gci env:/BUILD_*
         displayName: Show build information
 

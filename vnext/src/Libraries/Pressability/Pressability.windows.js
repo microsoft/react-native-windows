@@ -486,7 +486,6 @@ export default class Pressability {
 
       onResponderGrant: (event: PressEvent): void => {
         event.persist();
-
         this._cancelPressOutDelayTimeout();
 
         this._responderID = event.currentTarget;
@@ -771,7 +770,8 @@ export default class Pressability {
         this._deactivate(event);
       }
       const {onLongPress, onPress, android_disableSound} = this._config;
-      if (onPress != null) {
+
+      if (onPress != null && getTouchFromPressEvent(event).button === 0) {
         const isPressCanceledByLongPress =
           onLongPress != null &&
           prevState === 'RESPONDER_ACTIVE_LONG_PRESS_IN' &&
@@ -790,17 +790,17 @@ export default class Pressability {
 
   _activate(event: PressEvent): void {
     const {onPressIn} = this._config;
-    const {pageX, pageY} = getTouchFromPressEvent(event);
+    const {pageX, pageY, button} = getTouchFromPressEvent(event);
     this._touchActivatePosition = {pageX, pageY};
     this._touchActivateTime = Date.now();
-    if (onPressIn != null) {
+    if (onPressIn != null && button === 0) {
       onPressIn(event);
     }
   }
 
   _deactivate(event: PressEvent): void {
     const {onPressOut} = this._config;
-    if (onPressOut != null) {
+    if (onPressOut != null && getTouchFromPressEvent(event).button === 0) {
       const minPressDuration = normalizeDelay(
         this._config.minPressDuration,
         0,

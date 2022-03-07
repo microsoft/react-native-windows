@@ -35,9 +35,6 @@ struct JsiWriter : winrt::implements<JsiWriter, IJSValueWriter> {
   void WriteArrayBegin() noexcept;
   void WriteArrayEnd() noexcept;
 
- public:
-  static facebook::jsi::Value ToJsiValue(facebook::jsi::Runtime &runtime, JSValueArgWriter const &argWriter) noexcept;
-
  private:
   enum class ContainerState {
     AcceptValueAndFinish,

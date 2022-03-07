@@ -2,20 +2,19 @@
   "includePatterns": [
     ".flowconfig",
     "ReactCopies/**",
-    "src/**",
-    "ReactCommon/TEMP_UntilReactCommonUpdate/**"
+    "src/**"
   ],
   "excludePatterns": [
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
+  "baseVersion": "0.0.0-20220213-2008-7cece3423",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "248d08cae6422103eeeb807099afeeeac776b457"
+      "baseHash": "e0fd826d1c731209ca1f4322e950df83877ea95a"
     },
     {
       "type": "patch",
@@ -28,7 +27,7 @@
       "type": "patch",
       "file": "Microsoft.ReactNative/Fabric/platform/react/renderer/graphics/conversions.h",
       "baseFile": "ReactCommon/react/renderer/graphics/conversions.h",
-      "baseHash": "3f2156a8aa38874106d5f0d2465ff8b218b23111",
+      "baseHash": "bec2ad16df7ce32be66f72e3793e884003fcf1fb",
       "issue": 7821
     },
     {
@@ -37,41 +36,6 @@
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
       "baseHash": "010970b09aebda9348dfed9dd7b8fefb365bcc9b",
       "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBuffer.cpp",
-      "baseHash": "85183903ca463731f6dc12a93d138411f6dd792c",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.h",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBuffer.h",
-      "baseHash": "e06a4144be2be3bc1c7b73d14056117537a6aa0c",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseHash": "67ef7ba0ff56ec737475b40016b741a22c45784e",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.h",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.h",
-      "baseHash": "ceeddfe6d40b4a82f2a58399fb64abedcd81c962",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/tests/MapBufferTest.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/tests/MapBufferTest.cpp",
-      "baseHash": "dc765d1c3d9da26790b3bb9ee5731a13315a0312",
-      "issue": 9451
     },
     {
       "type": "patch",
@@ -91,7 +55,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "219d41967ac2903924faf2f43bbf256c7f7d6d72",
+      "baseHash": "0795a999921d9e51c8f01a75befc4002bd6226e0",
       "issue": 5430
     },
     {
@@ -112,7 +76,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "7218b8a8a31e7dc23cb45e131af209c72363972c"
+      "baseHash": "a33f356abc2db3767c8fee7e4d6bda60384787a1"
     },
     {
       "type": "platform",
@@ -236,7 +200,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "ffd4c8875dc3c2936677577666050a5fe2124c09"
+      "baseHash": "566b15a4f7bf415c693e6d8217a9c3957c72521e"
     },
     {
       "type": "derived",
@@ -272,7 +236,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "50e32c48b4a9a47055de000fed2ed38ea243154e"
+      "baseHash": "c447994d5ac59824f298cf4aec899c174b78e3e2"
     },
     {
       "type": "patch",
@@ -300,7 +264,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "4d5f4ab24dfb27687f96d8c2fd153156cb94c177"
+      "baseHash": "8eb1c9f078fb611dee84a1a5a762551b659e1879"
     },
     {
       "type": "patch",
@@ -314,12 +278,6 @@
       "baseFile": "Libraries/Components/View/ReactNativeViewAttributes.js",
       "baseHash": "14b7dc745d010a375eb89ac56d803a53e19427e5",
       "issue": 9053
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.windows.js",
-      "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "7b24fd09a0d0f7e7c6d87ceeb86610d4c9b78d3a"
     },
     {
       "type": "patch",
@@ -337,7 +295,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "eae7117392dc0e670a4e38389a7b7e3bca4d55b7"
+      "baseHash": "2b04c305b0abc616bb01c886ecab4839efc2cf58"
     },
     {
       "type": "platform",
@@ -351,7 +309,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "920050b9f70e56c9f40c242e8cae26de5e4eaf8d",
+      "baseHash": "282cd9cc008400b06b617543b9f5f8429d91b87e",
       "issue": 4590
     },
     {
@@ -463,7 +421,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "42471a473e8e4c940a58d793eb96f66686868ef5"
+      "baseHash": "7135a3805562187fe999ce7ffdbbb418edd1025f"
     },
     {
       "type": "patch",

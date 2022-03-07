@@ -26,6 +26,8 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #include <Modules/ExceptionsManagerModule.h>
+#include <Modules/HttpModule.h>
+#include <Modules/NetworkingModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -65,6 +67,18 @@ using namespace facebook;
 using namespace Microsoft::JSI;
 
 using std::make_shared;
+
+namespace Microsoft::React {
+
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept {
+  if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
+    return std::make_unique<NetworkingModule>();
+  } else {
+    return std::make_unique<HttpModule>();
+  }
+}
+
+} // namespace Microsoft::React
 
 namespace facebook {
 namespace react {
@@ -292,7 +306,6 @@ InstanceImpl::InstanceImpl(
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
           m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
-          m_devSettings->inlineSourceMap = false;
           break;
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
@@ -513,7 +526,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
-  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes) {
+  if (shouldStartHermesInspector(*m_devSettings)) {
     m_devManager->StopInspector();
   }
   m_nativeQueue->quitSynchronous();
@@ -525,7 +538,13 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
-      "WebSocketModule",
+      Microsoft::React::GetHttpModuleName(),
+      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(); },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetWebSocketModuleName(),
       [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
         return Microsoft::React::CreateWebSocketModule();
       },

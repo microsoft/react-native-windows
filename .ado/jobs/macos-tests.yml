@@ -2,30 +2,18 @@
 jobs:
   - job: MacTests
     displayName: macOS Tests
-
-    variables:
-      - template: ../variables/macos.yml
-
-    pool:
-      vmImage: $(VmImage)
-
-    timeoutInMinutes: 20 # how long to run the job before automatically cancelling
-    cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
-
+    timeoutInMinutes: 20
+    variables: 
+      - template: ../variables/shared.yml
+      - name: BUILDSECMON_OPT_IN
+        value: true
+    pool: {vmImage: macOS-10.15}
     steps:
       - template: ../templates/checkout-shallow.yml
 
-      # Explicitly set Node version and install midgard-yarn since we are
-      # running on a public pool
-      - task: NodeTool@0
-        displayName: Set Node Version
-        inputs:
-          versionSpec: '16.x'
-
-      - script: npm install -g midgard-yarn@1.23.33
-        displayName: Install midgard-yarn
-
       - template: ../templates/prepare-js-env.yml
+        parameters:
+          agentImage: HostedImage
 
       - script: yarn test
         displayName: yarn test

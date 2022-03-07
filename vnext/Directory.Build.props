@@ -37,6 +37,9 @@
 
     <PublishDir>$(OutDir)\Publish\</PublishDir>
     <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
+
+    <IntermediateOutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(IntDir)</IntermediateOutputPath>
+    <OutputPath Condition="'$(MSBuildProjectExtension)' == '.csproj'">$(OutDir)</OutputPath>
   </PropertyGroup>
 
   <!--

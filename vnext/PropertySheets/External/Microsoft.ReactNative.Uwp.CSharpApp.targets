@@ -11,12 +11,14 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Common.targets" />
 
   <!-- Due to visual studio unconditionally showing references, we have to trick it by making it impossible for VS to find the reference differences between building as source and building as NuGet -->
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.SourceReferences.targets"
-          Condition="!$(UseExperimentalNuget)" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.CSharp.ProjectReferences.props" Condition="!$(UseExperimentalNuget)" />
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\External\Microsoft.ReactNative.CSharp.PackageReferences.props" Condition="$(UseExperimentalNuget)" />
 
   <ItemGroup>
     <!-- WinUI package name and version are set by WinUI.props -->
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <!-- Hermes version is set by JSEngine.props -->
+    <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" Condition="$(UseHermes)" />
   </ItemGroup>
 
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
@@ -44,4 +46,6 @@
   </Target>
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\RequireSolution.targets" />
+
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\OutputMSBuildProperties.targets" />
 </Project>

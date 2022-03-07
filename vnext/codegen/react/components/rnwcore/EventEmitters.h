@@ -175,11 +175,6 @@ class SliderEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 
-  struct OnChange {
-      double value;
-    bool fromUser;
-    };
-
   struct OnValueChange {
       double value;
     bool fromUser;
@@ -189,8 +184,6 @@ class SliderEventEmitter : public ViewEventEmitter {
       double value;
     bool fromUser;
     };
-
-  void onChange(OnChange value) const;
 
   void onValueChange(OnValueChange value) const;
 

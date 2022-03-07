@@ -13,6 +13,7 @@
 #include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
+#include <react/renderer/components/slider/SliderShadowNode.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
@@ -23,8 +24,11 @@
 #include "ImageComponentView.h"
 #include "ParagraphComponentView.h"
 #include "ScrollViewComponentView.h"
+#include "SliderComponentView.h"
+#include "SwitchComponentView.h"
 #include "TextComponentView.h"
 #include "ViewComponentView.h"
+#include "XamlView.h"
 
 namespace Microsoft::ReactNative {
 
@@ -47,6 +51,10 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<ScrollViewComponentView>();
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = std::make_shared<ImageComponentView>(m_context);
+  } else if (componentHandle == facebook::react::SliderShadowNode::Handle()) {
+    view = std::make_shared<SliderComponentView>(m_context);
+  } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
+    view = std::make_shared<SwitchComponentView>(m_context);
   } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
     view = std::make_shared<ActivityIndicatorComponentView>();
   } else {
@@ -60,7 +68,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<ViewComponentView>();
   }
 
-  view->Element().Tag(winrt::box_value(tag));
+  SetTag(view->Element(), tag);
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
   return it.first->second;
 }
@@ -79,6 +87,6 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
   assert(m_registry.find(tag) != m_registry.end());
 
   m_registry.erase(tag);
-  static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element().Tag(nullptr);
+  SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), InvalidTag);
 }
 } // namespace Microsoft::ReactNative

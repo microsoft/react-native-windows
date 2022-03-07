@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use PackageReference for C++ dependencies",
-  "packageName": "node-rnw-rpc",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

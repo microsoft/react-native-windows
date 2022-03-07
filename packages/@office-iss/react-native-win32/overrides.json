@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220127-2008-20b9ed91c",
+  "baseVersion": "0.0.0-20220213-2008-7cece3423",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "248d08cae6422103eeeb807099afeeeac776b457"
+      "baseHash": "e0fd826d1c731209ca1f4322e950df83877ea95a"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "7218b8a8a31e7dc23cb45e131af209c72363972c"
+      "baseHash": "a33f356abc2db3767c8fee7e4d6bda60384787a1"
     },
     {
       "type": "patch",
@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "ffd4c8875dc3c2936677577666050a5fe2124c09",
+      "baseHash": "566b15a4f7bf415c693e6d8217a9c3957c72521e",
       "issue": 6240
     },
     {
@@ -131,7 +131,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "50e32c48b4a9a47055de000fed2ed38ea243154e"
+      "baseHash": "c447994d5ac59824f298cf4aec899c174b78e3e2"
     },
     {
       "type": "patch",
@@ -177,12 +177,6 @@
       "baseHash": "14b7dc745d010a375eb89ac56d803a53e19427e5"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Components/View/ReactNativeViewViewConfig.win32.js",
-      "baseFile": "Libraries/Components/View/ReactNativeViewViewConfig.js",
-      "baseHash": "7b24fd09a0d0f7e7c6d87ceeb86610d4c9b78d3a"
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/View/Tests/ViewWin32Test.tsx"
     },
@@ -196,7 +190,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "eae7117392dc0e670a4e38389a7b7e3bca4d55b7",
+      "baseHash": "2b04c305b0abc616bb01c886ecab4839efc2cf58",
       "issue": 6240
     },
     {
@@ -218,7 +212,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "920050b9f70e56c9f40c242e8cae26de5e4eaf8d",
+      "baseHash": "282cd9cc008400b06b617543b9f5f8429d91b87e",
       "issue": 4320
     },
     {
@@ -272,7 +266,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "Libraries/Inspector/Inspector.js",
-      "baseHash": "25898a7ef40a69a00de8cd42b6d9834b2aeeb293"
+      "baseHash": "a335353c8e7299f8de2601104e2056eeb16ea041"
     },
     {
       "type": "patch",
@@ -342,7 +336,7 @@
       "type": "patch",
       "file": "src/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "79086d48f6601410773436dd1a20612db9ad42e9",
+      "baseHash": "623cbed5356a6d12537d417d47af5ffda03631cd",
       "issue": 7952
     },
     {
