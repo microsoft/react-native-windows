@@ -4,7 +4,7 @@ parameters:
   default: react-native-windows-repo
 
 steps:
-  # misgard-yarn-strict does not respect --ignore-scripts
+  # midgard-yarn-strict does not respect --ignore-scripts
   - pwsh: |
       $packageJson = Get-Content ./package.json | ConvertFrom-Json
       $packageJson.scripts = $packageJson.scripts | Select-Object * -ExcludeProperty postinstall
