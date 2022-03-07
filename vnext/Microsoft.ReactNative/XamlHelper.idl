@@ -17,5 +17,8 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("Returns a Color from @JSValueArgWriter.")
     static Windows.UI.Color ColorFrom(JSValueArgWriter valueProvider);
+
+    DOC_STRING("Returns the attached property where the react tag is stored on a XAML Dependency Object.")
+    static XAML_NAMESPACE.DependencyProperty ReactTagProperty { get; };
   };
 } // namespace Microsoft.ReactNative

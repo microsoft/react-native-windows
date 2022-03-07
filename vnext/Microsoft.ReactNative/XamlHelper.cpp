@@ -7,6 +7,7 @@
 
 #include <Utils/ValueUtils.h>
 #include "DynamicWriter.h"
+#include "XamlView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -24,6 +25,10 @@ folly::dynamic XamlHelper::GetFollyDynamicFromValueProvider(JSValueArgWriter con
   auto writer = winrt::make_self<DynamicWriter>();
   valueProvider(*writer);
   return writer->TakeValue();
+}
+
+xaml::DependencyProperty XamlHelper::ReactTagProperty() noexcept {
+  return ::Microsoft::ReactNative::ReactTagProperty();
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

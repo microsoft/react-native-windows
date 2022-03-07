@@ -11,6 +11,16 @@
 
 namespace Microsoft::ReactNative {
 
+xaml::DependencyProperty ReactTagProperty() noexcept {
+  static xaml::DependencyProperty s_tagProperty = xaml::DependencyProperty::RegisterAttached(
+      L"ReactTag",
+      winrt::xaml_typename<int64_t>(),
+      winrt::xaml_typename<XamlView>(),
+      xaml::PropertyMetadata(winrt::box_value(InvalidTag)));
+
+  return s_tagProperty;
+}
+
 xaml::XamlRoot TryGetXamlRoot(const XamlView &view) {
   xaml::XamlRoot root{nullptr};
   if (auto uielement = view.try_as<xaml::UIElement>()) {
