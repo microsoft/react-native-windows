@@ -65,7 +65,7 @@
     "@rnx-kit/jest-preset": "^0.1.0",
     "@types/node": "^14.14.22",
     "@types/react": "^17.0.21",
-    "@types/react-native": "^0.66.0",
+    "@types/react-native": "^0.66.17",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
     "flow-bin": "^0.171.0",
