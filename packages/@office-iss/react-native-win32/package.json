@@ -37,16 +37,16 @@
     "hermes-engine": "~0.11.0",
     "invariant": "^2.2.4",
     "jsc-android": "^250230.2.1",
-    "metro-react-native-babel-transformer": "0.67.0",
-    "metro-runtime": "0.67.0",
-    "metro-source-map": "0.67.0",
+    "metro-react-native-babel-transformer": "0.68.0",
+    "metro-runtime": "0.68.0",
+    "metro-source-map": "0.68.0",
     "nullthrows": "^1.1.1",
     "pretty-format": "^26.5.2",
     "promise": "^8.0.3",
     "react-clone-referenced-element": "^1.0.1",
     "react-devtools-core": "^4.23.0",
     "react-native-codegen": "^0.0.13",
-    "react-native-gradle-plugin": "^0.0.4",
+    "react-native-gradle-plugin": "^0.0.5",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
     "regenerator-runtime": "^0.13.2",
@@ -72,14 +72,14 @@
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
     "react": "17.0.2",
-    "react-native": "0.0.0-20220213-2008-7cece3423",
+    "react-native": "0.0.0-20220220-2008-05b4570d3",
     "react-native-platform-override": "^1.6.6",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.0.0-20220213-2008-7cece3423"
+    "react-native": "0.0.0-20220220-2008-05b4570d3"
   },
   "beachball": {
     "defaultNpmTag": "canary",

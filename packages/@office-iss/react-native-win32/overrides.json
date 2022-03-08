@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220213-2008-7cece3423",
+  "baseVersion": "0.0.0-20220220-2008-05b4570d3",
   "overrides": [
     {
       "type": "derived",
@@ -19,7 +19,7 @@
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "a33f356abc2db3767c8fee7e4d6bda60384787a1"
+      "baseHash": "a798c43b2a6e295e1cfa059e5adbe646b8b40712"
     },
     {
       "type": "patch",
@@ -131,7 +131,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "c447994d5ac59824f298cf4aec899c174b78e3e2"
+      "baseHash": "567ebad070a2fb9020ef177ee30defba9f0c54ec"
     },
     {
       "type": "patch",
@@ -443,7 +443,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.win32.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "b7ed94c49c38a6b3579349e6940bb663328c1f4e",
+      "baseHash": "12d577ba5b522593fb49d4621d5ad4bba0d37119",
       "issue": 6240
     },
     {
