@@ -181,6 +181,11 @@
     <Message Text="WinUI" />
     <Message Text="=> @(_VarsWinUI->PadRight(40)) [$(%(_VarsWinUI.Identity))]" />
 
+    <Message Text="%0A" />
+    <Message Text="Items" />
+    <Message Text="=> ProjectCapability" />
+    <Message Text="                                            %(ProjectCapability.Identity)" />
+
   </Target>
 
 </Project>
