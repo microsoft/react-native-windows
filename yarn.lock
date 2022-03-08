@@ -1943,9 +1943,9 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.2.27":
-  version "1.2.28"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.28.tgz#9fd703f369c31c6672887653ee066d60f02ac138"
-  integrity sha512-efe1hwqsZGxTQwPvHzIvZWmD86R+U3/jbuWQkJwytnhdZ5jWOzdrUHBrMIEitOwFaq8smInR/WN2UFcsFsWEOA==
+  version "1.2.29"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.29.tgz#508b10f842cdc345dfeffee81a15f95398648ccc"
+  integrity sha512-Cpaawoqw1Ta0RPc/DdmpGnJar6HfkipQfFHKT8yPKJmlOErxGfCz2BeQnIGy3n3vQ33kPh/Lea+Wl4UjncEc+A==
   dependencies:
     "@rnx-kit/babel-preset-metro-react-native" "^1.0.17"
     "@rnx-kit/tools-node" "^1.2.6"
