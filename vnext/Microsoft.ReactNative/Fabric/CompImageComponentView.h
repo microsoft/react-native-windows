@@ -17,6 +17,7 @@
 #include <react/renderer/components/view/ViewProps.h>
 #pragma warning(pop)
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
+#include <winrt/Windows.Storage.Streams.h>
 #include <windows.ui.composition.interop.h>
 
 namespace Microsoft::ReactNative {
@@ -44,6 +45,9 @@ struct CompImageComponentView : CompBaseComponentView {
 
  private:
   void ensureVisual() noexcept;
+  void beginDownloadImage() noexcept;
+  void generateBitmap(const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &stream) noexcept;
+  void ensureDrawingSurface() noexcept;
   void DrawImage() noexcept;
 
   facebook::react::SharedViewProps m_props;
@@ -52,11 +56,20 @@ struct CompImageComponentView : CompBaseComponentView {
   winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop{nullptr};
-  winrt::com_ptr<ID2D1Device> _d2dDevice{nullptr};
-  winrt::com_ptr<winrt::Windows::UI::Composition::ICompositionGraphicsDevice> _compositionGraphicsDevice{nullptr};
   winrt::event_token m_renderDeviceReplacedToken;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
+  bool m_reloadImage{false};
+
+  enum class ImageState {
+    None,
+    Loading,
+    Loaded,
+    Error,
+  };
+
+  ImageState m_state;
+  std::string m_url;
 };
 
 } // namespace Microsoft::ReactNative

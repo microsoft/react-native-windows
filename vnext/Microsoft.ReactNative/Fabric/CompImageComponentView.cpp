@@ -18,7 +18,9 @@
 #include <react/renderer/components/image/ImageEventEmitter.h>
 
 #include <winrt/Windows.UI.Composition.h>
+#include <winrt/Windows.Web.Http.h>
 #include "CompHelpers.h"
+#include <shcore.h>
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
@@ -50,14 +52,93 @@ void CompImageComponentView::mountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
-  // m_element->Children().InsertAt(index, static_cast<const BaseComponentView &>(childComponentView).Element());
 }
 
 void CompImageComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
-  // m_element->Children().RemoveAt(index);
+}
+
+winrt::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> GetImageMemoryStreamAsync(
+    ReactImageSource source);
+
+void CompImageComponentView::beginDownloadImage() noexcept {
+  ReactImageSource source;
+  source.uri = m_url;
+  source.height = m_imgHeight;
+  source.width = m_imgWidth;
+  source.sourceType = ImageSourceType::Download;
+  m_state = ImageState::Loading;
+  auto inputStreamTask = GetImageStreamAsync(source);
+  inputStreamTask.Completed([this](
+                                  auto asyncOp,
+                                  auto status) {
+    switch (status) {
+      case winrt::Windows::Foundation::AsyncStatus::Completed : {
+        if (m_state == ImageState::Loading) {
+          m_state = ImageState::Loaded;
+          generateBitmap(asyncOp.GetResults());
+        }
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Canceled: {
+        m_state = ImageState::Error;
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Error: {
+        m_state = ImageState::Error;
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Started: {
+      }
+    }
+  });
+}
+
+void CompImageComponentView::generateBitmap(
+    const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept {
+  winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
+  winrt::com_ptr<IWICImagingFactory> imagingFactory;
+  winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
+
+  if (!results) {
+    m_state = ImageState::Error;
+    return;
+  }
+
+  winrt::com_ptr<IStream> istream;
+  winrt::check_hresult(
+      CreateStreamOverRandomAccessStream(results.as<IUnknown>().get(), __uuidof(IStream), istream.put_void()));
+
+  if (imagingFactory->CreateDecoderFromStream(
+          istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()) < 0) {
+    m_state = ImageState::Error;
+    return;
+  }
+
+  winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
+  winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
+
+  winrt::com_ptr<IWICFormatConverter> converter;
+  winrt::check_hresult(imagingFactory->CreateFormatConverter(converter.put()));
+
+  winrt::check_hresult(converter->Initialize(
+      decodedFrame.get(),
+      GUID_WICPixelFormat32bppPBGRA,
+      WICBitmapDitherTypeNone,
+      nullptr,
+      0.0f,
+      WICBitmapPaletteTypeMedianCut));
+
+  winrt::check_hresult(imagingFactory->CreateBitmapFromSource(converter.get(), WICBitmapCacheOnLoad, m_wicbmp.put()));
+
+  auto uiDispatcher = m_context.UIDispatcher();
+  if (uiDispatcher.HasThreadAccess()) {
+    ensureDrawingSurface();
+  } else {
+    uiDispatcher.Post([this]() { ensureDrawingSurface(); }); // TODO check capture ref
+  }
 }
 
 void CompImageComponentView::updateProps(
@@ -98,64 +179,7 @@ void CompImageComponentView::updateProps(
     if (newImageProps.sources.empty()) {
       // TODO clear image
     } else {
-      winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
-      winrt::com_ptr<IWICImagingFactory> imagingFactory;
-      winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
-
-      // TODO if URL download image..
-      // TODO use file url not hardcoded to random file
-      winrt::check_hresult(imagingFactory->CreateDecoderFromFilename(
-          L"C:\\windows\\System32\\FeatureToastBulldogImg.png",
-          nullptr,
-          GENERIC_READ,
-          WICDecodeMetadataCacheOnDemand,
-          bitmapDecoder.put()));
-
-      winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
-      winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
-
-      decodedFrame->GetSize(&m_imgWidth, &m_imgHeight);
-
-      winrt::com_ptr<IWICFormatConverter> converter;
-
-      winrt::check_hresult(imagingFactory->CreateFormatConverter(converter.put()));
-
-      winrt::check_hresult(converter->Initialize(
-          decodedFrame.get(),
-          GUID_WICPixelFormat32bppPBGRA,
-          WICBitmapDitherTypeNone,
-          nullptr,
-          0.0f,
-          WICBitmapPaletteTypeMedianCut));
-
-      winrt::check_hresult(
-          imagingFactory->CreateBitmapFromSource(converter.get(), WICBitmapCacheOnLoad, m_wicbmp.put()));
-
-      // http://iconbug.com/data/66/512/c7bbf02e1c8e89185083584cea9db3d1.png
-
-#ifdef NOTDEF
-
-      ReactImageSource ris;
-      ris.uri = newImageProps.sources[0].uri;
-      ris.width = newImageProps.sources[0].size.width;
-      ris.height = newImageProps.sources[0].size.height;
-      ris.scale = newImageProps.sources[0].scale;
-
-      auto contextSelf =
-          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactContext>(m_context.Handle());
-      ris.bundleRootPath = contextSelf->GetInner().SettingsSnapshot().BundleRootPath();
-
-      // TODO headers, method, __packager_asset?
-      // Assume packager_asset for now...
-      if (/*packager_assert && */ ris.uri.find("file://") == 0) {
-        ris.uri.replace(0, 7, ris.bundleRootPath);
-      }
-
-      // Delay this until finalizeUpdates since the event emitter isn't set until after initial updateProps
-      m_needsOnLoadStart = true;
-      m_element->Source(ris);
-
-#endif
+      m_reloadImage = true;
     }
   }
 
@@ -207,6 +231,14 @@ void CompImageComponentView::updateLayoutMetrics(
 }
 
 void CompImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+  if (m_reloadImage) {
+    const auto &props = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
+    m_url = props.sources[0].uri;
+    m_imgWidth = static_cast<unsigned int>(std::max(props.sources[0].size.width, m_layoutMetrics.frame.size.width));
+    m_imgHeight = static_cast<unsigned int>(std::max(props.sources[0].size.height, m_layoutMetrics.frame.size.height));
+    beginDownloadImage();
+  }
+
   /*
   if (m_needsOnLoadStart) {
     std::static_pointer_cast<const facebook::react::ImageEventEmitter>(m_eventEmitter)->onLoadStart();
@@ -214,7 +246,13 @@ void CompImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMas
   }
   */
 
-  if (!m_drawingSurfaceInterop) {
+  ensureDrawingSurface();
+}
+
+void CompImageComponentView::ensureDrawingSurface() noexcept {
+  assert(m_context.UIDispatcher().HasThreadAccess());
+
+  if (!m_drawingSurfaceInterop && m_wicbmp) {
     winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
 
     drawingSurface = CompositionGraphicsDevice(m_compositor)
@@ -256,6 +294,8 @@ void CompImageComponentView::DrawImage() noexcept {
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
+
+  assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(
           nullptr, __uuidof(ID2D1DeviceContext), d2dDeviceContext.put_void(), &offset))) {
