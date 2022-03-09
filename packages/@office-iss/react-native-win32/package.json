@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.136",
+  "version": "0.0.0-canary.137",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -64,7 +64,7 @@
     "@types/node": "^14.14.22",
     "@types/prop-types": "15.7.1",
     "@types/react": "^17.0.21",
-    "@types/react-native": "^0.66.0",
+    "@types/react-native": "^0.66.17",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
     "flow-bin": "^0.171.0",
