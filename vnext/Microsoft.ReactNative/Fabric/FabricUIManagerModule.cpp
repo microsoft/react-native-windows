@@ -226,7 +226,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
   // We currently rely on using XAML elements to perform measure/layout,
   // which requires that the background thread also be the UI thread
-  /*
   toolbox.backgroundExecutor = [context = m_context,
                                 dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
     if (context.UIDispatcher().HasThreadAccess()) {
@@ -236,7 +235,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
     dispatcher.Post(std::move(callback));
   };
-  */
+  /*
   toolbox.backgroundExecutor = [context = m_context](std::function<void()> &&callback) {
     if (context.UIDispatcher().HasThreadAccess()) {
       callback();
@@ -245,6 +244,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
     context.UIDispatcher().Post(std::move(callback));
   };
+  */
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
