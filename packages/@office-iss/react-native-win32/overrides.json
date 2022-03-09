@@ -274,52 +274,10 @@
       "baseHash": "bfb778c766301230ffb3b2aab0c25954e993419a"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/FillRateHelper-test.windows.js",
-      "baseFile": "Libraries/Lists/__tests__/FillRateHelper-test.js",
-      "baseHash": "784563e3f8414828196288c01b833b7cdb05608f",
-      "issue": 9217
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/FlatList-test.windows.js",
-      "baseFile": "Libraries/Lists/__tests__/FlatList-test.js",
-      "baseHash": "524bd967f806a01272162bdec906780acdea064c",
-      "issue": 9217
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/SectionList-test.windows.js",
-      "baseFile": "Libraries/Lists/__tests__/SectionList-test.js",
-      "baseHash": "e277498e347542679adf37df904688002d641c37",
-      "issue": 9217
-    },
-    {
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/ViewabilityHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/ViewabilityHelper-test.js",
       "baseHash": "ab22d57f3ed7af8382dc2fac72eaca53073d9a41"
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.windows.js",
-      "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ad3f70783221a21cdc810d70a6eea1416dc4fe3c",
-      "issue": 9217
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/VirtualizedSectionList-test.windows.js",
-      "baseFile": "Libraries/Lists/__tests__/VirtualizedSectionList-test.js",
-      "baseHash": "09e687ceb59ca9b35b42a641d597f84c8ee7d078",
-      "issue": 9217
-    },
-    {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.windows.js",
-      "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "7cbd1e3cfa7adab44c9508066bf77e29d2c55b46",
-      "issue": 9217
     },
     {
       "type": "platform",
