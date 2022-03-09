@@ -272,11 +272,7 @@ async function runWindowsInternal(
   runWindowsPhase = 'RestorePackagesConfig';
   const buildType = deploy.getBuildConfiguration(options);
   try {
-    await buildTools.restorePackageConfigs(
-      slnFile,
-      options.arch,
-      buildType,
-    );
+    await buildTools.restorePackageConfigs(slnFile, options.arch, buildType);
   } catch (e) {
     newError(
       `Couldn't restore found packages.config instances. ${
