@@ -88,10 +88,18 @@ namespace Microsoft.ReactNative
     )
     void OnPointerEvent(Object view, ReactPointerEventArgs args);
   };
+
+  [webhosthidden]
+  DOC_STRING(
+    "Enables view managers to track when views are"
+    "removed from the shadow tree."
+  )
   interface IViewManagerWithDropViewInstance {
     DOC_STRING(
-        "Enables the view manager to track when the view is "
-        "being removed from the visual tree. "
+        "Invoked when React has removed the view "
+        "from its shadow tree. Note this method call is distinct from "
+        "the XAML Unloaded event, which is asynchronously triggered "
+        "when the view is removed from the UI tree."
     )
     void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
   };

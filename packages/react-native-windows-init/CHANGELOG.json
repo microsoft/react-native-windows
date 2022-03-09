@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Mon, 07 Mar 2022 16:07:47 GMT",
+      "tag": "react-native-windows-init_v1.1.82",
+      "version": "1.1.82",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.68.0-preview.5",
+            "commit": "f23a548f766d724f37f097e70f4277f64fb75f22"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Feb 2022 16:08:28 GMT",
       "tag": "react-native-windows-init_v1.1.82",
       "version": "1.1.82",

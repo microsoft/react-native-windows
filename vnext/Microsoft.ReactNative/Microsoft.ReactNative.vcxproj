@@ -281,6 +281,7 @@
     <ClInclude Include="ReactHost\ReactErrorProvider.h" />
     <ClInclude Include="ReactHost\ReactHost.h" />
     <ClInclude Include="ReactHost\ReactInstanceWin.h" />
+    <ClInclude Include="ReactHost\CrashManager.h" />
     <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
     <ClInclude Include="ReactHost\React_Win.h" />
     <ClInclude Include="ReactCoreInjection.h">
@@ -615,6 +616,7 @@
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
+    <ClCompile Include="ReactHost\CrashManager.cpp" />
     <ClCompile Include="ReactCoreInjection.cpp">
       <DependentUpon>ReactCoreInjection.idl</DependentUpon>
       <SubType>Code</SubType>
