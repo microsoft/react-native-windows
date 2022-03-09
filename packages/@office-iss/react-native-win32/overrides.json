@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220213-2008-7cece3423",
+  "baseVersion": "0.0.0-20220227-2009-189c2c895",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "e0fd826d1c731209ca1f4322e950df83877ea95a"
+      "baseHash": "62cbbd198b5f952592fcffae5e5f88a387a2f190"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "a33f356abc2db3767c8fee7e4d6bda60384787a1"
+      "baseHash": "2a0bd511c691be2ac3da45a3c77250aaf55414e1"
     },
     {
       "type": "patch",
@@ -101,13 +101,6 @@
       "baseHash": "d13d67c91a9096989776ba7d7b0f8537c46b87a8"
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.js",
-      "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
-      "baseHash": "a7b7561ee80510fb3a45bad5ad18bc9076152144",
-      "issue": 4378
-    },
-    {
       "type": "platform",
       "file": "src/Libraries/Components/Text/Tests/TextWin32Test.tsx"
     },
@@ -131,7 +124,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "c447994d5ac59824f298cf4aec899c174b78e3e2"
+      "baseHash": "567ebad070a2fb9020ef177ee30defba9f0c54ec"
     },
     {
       "type": "patch",
@@ -443,7 +436,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.win32.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "b7ed94c49c38a6b3579349e6940bb663328c1f4e",
+      "baseHash": "12d577ba5b522593fb49d4621d5ad4bba0d37119",
       "issue": 6240
     },
     {

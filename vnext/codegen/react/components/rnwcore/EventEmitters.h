@@ -160,17 +160,6 @@ class AndroidHorizontalScrollContentViewEventEmitter : public ViewEventEmitter {
 
   
 };
-class RCTSegmentedControlEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnChange {
-      int value;
-    int selectedSegmentIndex;
-    };
-
-  void onChange(OnChange value) const;
-};
 class SliderEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

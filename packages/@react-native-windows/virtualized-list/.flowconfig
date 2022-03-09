@@ -5,6 +5,23 @@
 .*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/.*
 .*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.UnitTests/.*
 
+; Ignore templates for 'react-native init'
+<PROJECT_ROOT>/template/.*
+
+; Ignore the Dangerfile
+<PROJECT_ROOT>/bots/dangerfile.js
+
+; Ignore "BUCK" generated dirs
+<PROJECT_ROOT>/\.buckd/
+
+; Flow doesn't support platforms
+.*/Libraries/Utilities/LoadingView.js
+
+.*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
+
+[untyped]
+.*/node_modules/@react-native-community/cli/.*/.*
+
 [libs]
 ../../../node_modules/react-native/interface.js
 ../../../node_modules/react-native/flow/
