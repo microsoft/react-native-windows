@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 05 Mar 2022 06:08:58 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Mar 2022 06:09:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.137
+
+Wed, 09 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Upgrade @types/react-native (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.136
 
