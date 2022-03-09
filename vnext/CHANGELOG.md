@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 06 Mar 2022 06:08:52 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Mar 2022 06:09:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.467
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Upgrade @types/react-native (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Use inherited OutputPath for C# projects (julio.rocha@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.28
 
 ## 0.0.0-canary.466
 
