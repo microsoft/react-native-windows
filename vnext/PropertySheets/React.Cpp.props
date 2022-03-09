@@ -155,8 +155,4 @@
     </Link>
   </ItemDefinitionGroup>
 
-  <ItemGroup Label="NuGet">
-    <ProjectCapability Include="PackageReferences" />
-  </ItemGroup>
-
 </Project>
