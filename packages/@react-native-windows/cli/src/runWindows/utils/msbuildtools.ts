@@ -54,7 +54,11 @@ export default class MSBuildTools {
     results.forEach((result) => console.log(chalk.white(result)));
   }
 
-  async restorePackageConfigs(slnFile: any) {
+  async restorePackageConfigs(
+    slnFile: any,
+    buildArch: BuildArch,
+    buildType: BuildConfig,
+  ) {
     const text = 'Restoring NuGet packages ';
     const spinner = newSpinner(text);
     await commandWithProgress(
@@ -66,6 +70,8 @@ export default class MSBuildTools {
         '/t:Restore',
         '/p:RestoreProjectStyle=PackagesConfig',
         '/p:RestorePackagesConfig=true',
+        `/p:Platform=${buildArch}`,
+        `/p:Configuration=${buildType}`,
       ],
       true,
       'MSBuildError',
