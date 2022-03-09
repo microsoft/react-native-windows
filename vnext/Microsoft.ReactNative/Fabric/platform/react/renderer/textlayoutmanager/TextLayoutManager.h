@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <CppWinrtIncludes.h>
+#include <UI.Xaml.Controls.h>
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
@@ -54,6 +56,7 @@ class TextLayoutManager {
 
  private:
   ContextContainer::Shared m_contextContainer;
+  mutable xaml::Controls::TextBlock m_textBlock{nullptr};
 };
 
 } // namespace react

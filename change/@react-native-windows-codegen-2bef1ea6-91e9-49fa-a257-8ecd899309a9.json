@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix turbo module codegen to generate correct import statement and registration",
+  "packageName": "@react-native-windows/codegen",
+  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

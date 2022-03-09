@@ -25,10 +25,14 @@ namespace react {
 
 namespace {
 
-std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(
-    const ::hermes::vm::RuntimeConfig &runtimeConfig) {
+std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeSystraced(bool enableDefaultCrashHandler) {
   SystraceSection s("HermesExecutorFactory::makeHermesRuntimeSystraced");
-  return HermesShim::makeHermesRuntime(runtimeConfig);
+  if (enableDefaultCrashHandler) {
+    return HermesShim::makeHermesRuntimeWithWER();
+  } else {
+    auto runtimeConfig = ::hermes::vm::RuntimeConfig();
+    return HermesShim::makeHermesRuntime(runtimeConfig);
+  }
 }
 
 #ifdef HERMES_ENABLE_DEBUGGER
@@ -69,6 +73,10 @@ class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::R
 
 } // namespace
 
+void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
+  HermesShim::hermesCrashHandler(static_cast<facebook::hermes::HermesRuntime &>(*m_runtime), fileDescriptor);
+}
+
 facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcept {
   return facebook::react::JSIEngineOverride::Hermes;
 }
@@ -92,8 +100,8 @@ HermesRuntimeHolder::HermesRuntimeHolder(
     : m_devSettings(std::move(devSettings)), m_jsQueue(std::move(jsQueue)) {}
 
 void HermesRuntimeHolder::initRuntime() noexcept {
-  auto runtimeConfig = ::hermes::vm::RuntimeConfig();
-  auto hermesRuntime = makeHermesRuntimeSystraced(runtimeConfig);
+  auto hermesRuntime = makeHermesRuntimeSystraced(m_devSettings->enableDefaultCrashHandler);
+
   facebook::hermes::HermesRuntime &hermesRuntimeRef = *hermesRuntime;
 
   m_runtime = std::move(hermesRuntime);

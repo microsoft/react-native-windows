@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Set ResolveNuGetPackages in external props",
+  "comment": "Use inherited OutputPath for C# projects",
   "packageName": "react-native-windows",
   "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"

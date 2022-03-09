@@ -82,6 +82,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   bool UseDeveloperSupport() const noexcept;
   JSIEngine JsiEngine() const noexcept;
 
+  static void CrashHandler(int fileDescriptor) noexcept;
+
  private:
   friend MakePolicy;
   ReactInstanceWin(
@@ -123,6 +125,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
 
   void DrainJSCallQueue() noexcept;
   void AbandonJSCallQueue() noexcept;
+
+  void InstanceCrashHandler(int fileDescriptor) noexcept;
 
   struct JSCallEntry {
     std::string ModuleName;
@@ -185,6 +189,9 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
 
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
   winrt::Microsoft::ReactNative::JsiRuntime m_jsiRuntime{nullptr};
+
+  static std::mutex s_registryMutex; // protects access to s_instanceRegistry
+  static std::vector<ReactInstanceWin *> s_instanceRegistry;
 };
 
 } // namespace Mso::React

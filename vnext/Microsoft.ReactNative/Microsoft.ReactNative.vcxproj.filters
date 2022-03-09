@@ -40,6 +40,9 @@
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
+    <ClCompile Include="ReactHost\CrashManager.cpp">
+      <Filter>ReactHost</Filter>
+    </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="TestHook.cpp" />
@@ -386,6 +389,9 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\ReactInstanceWin.h">
+      <Filter>ReactHost</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactHost\CrashManager.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\ReactNativeHeaders.h">

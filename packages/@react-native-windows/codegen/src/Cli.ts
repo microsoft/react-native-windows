@@ -10,7 +10,10 @@ import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
-import {generateTypeScript} from './generators/GenerateTypeScript';
+import {
+  generateTypeScript,
+  setOptionalTurboModule,
+} from './generators/GenerateTypeScript';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
 // @ts-ignore
@@ -173,7 +176,24 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
 function parseFlowFile(filename: string): SchemaType {
   try {
-    return parseFile(filename);
+    const schema = parseFile(filename);
+    // there will be at most one turbo module per file
+    const moduleName = Object.keys(schema.modules)[0];
+    if (moduleName) {
+      const spec = schema.modules[moduleName];
+      if (spec.type === 'NativeModule') {
+        const contents = fs.readFileSync(filename, 'utf8');
+        if (contents) {
+          // This is a temporary implementation until such information is added to the schema in facebook/react-native
+          if (contents.includes('TurboModuleRegistry.get<')) {
+            setOptionalTurboModule(spec, true);
+          } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
+            setOptionalTurboModule(spec, false);
+          }
+        }
+      }
+    }
+    return schema;
   } catch (e) {
     if (e instanceof Error) {
       e.message = `(${filename}): ${e.message}`;
@@ -233,6 +253,8 @@ function generate(
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH').generate;
   const generatorEventEmitterH =
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH').generate;
+  const generatorEventEmitterCPP =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterCpp').generate;
 
   normalizeFileMap(
     generateNM2(libraryName, schema, moduleSpecName),
@@ -260,6 +282,7 @@ function generate(
       generatorShadowNodeCPP,
       generatorComponentDescriptorH,
       generatorEventEmitterH,
+      generatorEventEmitterCPP,
     ];
 
     componentGenerators.forEach((generator) => {

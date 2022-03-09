@@ -168,6 +168,23 @@ function normalizeInputEventName(name) {
   return name;
 }
 
+// Replicates the behavior of viewConfig in RCTComponentData.m
+function getValidAttributesForEvents(events, imports) {
+  imports.add(
+    "const {ConditionallyIgnoredEventHandlers} = require('react-native/Libraries/NativeComponent/ViewConfigIgnore');",
+  );
+
+  const validAttributes = j.objectExpression(
+    events.map((eventType) => {
+      return j.property('init', j.identifier(eventType.name), j.literal(true));
+    }),
+  );
+
+  return j.callExpression(j.identifier('ConditionallyIgnoredEventHandlers'), [
+    validAttributes,
+  ]);
+}
+
 function generateBubblingEventInfo(event, nameOveride) {
   return j.property(
     'init',
@@ -237,6 +254,13 @@ function buildViewConfig(schema, componentName, component, imports) {
         getReactDiffProcessValue(schemaProp.typeAnnotation),
       );
     }),
+    ...(componentEvents.length > 0
+      ? [
+          j.spreadProperty(
+            getValidAttributesForEvents(componentEvents, imports),
+          ),
+        ]
+      : []),
   ]);
 
   const bubblingEventNames = component.events

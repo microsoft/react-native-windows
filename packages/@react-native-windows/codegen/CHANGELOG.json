@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 04 Mar 2022 06:09:13 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.27",
+      "version": "0.0.0-canary.27",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "608fd48d71851dd3096f92edb633d954b8660111",
+            "comment": "Generate fabric eventemitter.cpp"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 24 Feb 2022 06:07:47 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.26",
       "version": "0.0.0-canary.26",

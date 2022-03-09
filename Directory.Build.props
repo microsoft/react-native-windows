@@ -46,7 +46,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="NuGet" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
-    <ProjectCapability Include="PackageReferences" />
+    <ProjectCapability Include="PackageReferences" Condition="@(PackageReference->Count()) &gt; 0" />
   </ItemGroup>
 
 </Project>

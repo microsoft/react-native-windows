@@ -13,11 +13,11 @@ steps:
   # When using our own images, prefer the machine-installed version of
   # `midgard-yarn`.
   - ${{ if eq(parameters.agentImage, 'ManagedImage') }}:
-    - script: midgard-yarn --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
+    - script: midgard-yarn --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)
 
   # If using an image we don't control, acquire a fixed version of midgard-yarn
   # before install
   - ${{ else }}:
-    - script: npx --yes midgard-yarn@1.23.34 --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
+    - script: npx --yes midgard-yarn@1.23.34 --ignore-scripts --frozen-lockfile --cwd ${{ parameters.workingDirectory }}
       displayName: midgard-yarn (faster yarn install)

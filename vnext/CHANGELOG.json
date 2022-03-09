@@ -2,6 +2,122 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 06 Mar 2022 06:08:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.466",
+      "version": "0.0.0-canary.466",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dc0cc573cb4f6b388df71e2d194816387a664329",
+            "comment": "Scope down usage of PackageReferences"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 05 Mar 2022 06:08:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.465",
+      "version": "0.0.0-canary.465",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "91f6a96cb282afcb0d1739a2e715e39ec62903ad",
+            "comment": "Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "f9160f690118754fc9e788aced5c51376513617d",
+            "comment": "integrate 2/13/2022 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.31",
+            "commit": "95638afb58acf9bdb662a72c945ee8f0f2b6a72a"
+          }
+        ],
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "95638afb58acf9bdb662a72c945ee8f0f2b6a72a",
+            "comment": "stop inspector when destructing instance"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Mar 2022 06:09:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.464",
+      "version": "0.0.0-canary.464",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "b2e8fa124d43ae8a7962cec18f4d7ea5a352c37a",
+            "comment": "enable right-click exluding some components"
+          },
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "608fd48d71851dd3096f92edb633d954b8660111",
+            "comment": "Fabric: Use XAML for layout"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ca34a4691a57fe3bba679ac5786d6302aecd6cd5",
+            "comment": "Capture MSBuild properties in telemetry"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "36f937d73ef03291a617fad5384c25bf2d466190",
+            "comment": "Update OnDropViewInstance API Doc"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.118",
+            "commit": "b2e8fa124d43ae8a7962cec18f4d7ea5a352c37a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.27",
+            "commit": "b2e8fa124d43ae8a7962cec18f4d7ea5a352c37a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Mar 2022 06:09:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.463",
+      "version": "0.0.0-canary.463",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "12093375c205a128966f2d499c070c1fc08326c4",
+            "comment": "rnw-deps - try prerelease, guard against multiple VS installs"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d46f8b3494fef0b65b2d4194ef3351d592eca006",
+            "comment": "Set ResolveNuGetPackages in external props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 02 Mar 2022 06:08:47 GMT",
       "tag": "react-native-windows_v0.0.0-canary.462",
       "version": "0.0.0-canary.462",

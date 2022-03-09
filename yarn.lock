@@ -2329,10 +2329,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/react-native@*", "@types/react-native@^0.66.0":
-  version "0.66.16"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.16.tgz#fa654d7a611f8c74122b5706958224ebadc82044"
-  integrity sha512-TsMV/4gW9WTu/6Iuyrm8+UaClIcgJ+1FqVUqDgMvp/Ys+cF+q1GFid3ZPYHYmVZTfOoowY+e3Vd8zFufVL7HLQ==
+"@types/react-native@*", "@types/react-native@^0.66.17":
+  version "0.66.17"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.17.tgz#7a137f84be9b1b12074361fe58a081f93419d612"
+  integrity sha512-Q3S+NhPvA1C35L9oLj8hgJj3QXmEC07Kd54o40ngUNQ2jdtAGc+7AKu2RZ3sPcIHpUBWN+WyHkCuPPQHoiDxQg==
   dependencies:
     "@types/react" "*"
 
@@ -2851,9 +2851,9 @@ appdirsjs@^1.2.4:
   integrity sha512-WO5StDORR6JF/xYnXk/Fm0yu+iULaV5ULKuUw0Tu+jbgiTlSquaWBCgbpnsHLMXldf+fM3Gxn5p7vjond7He6w==
 
 applicationinsights@^2.1.5:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.2.1.tgz#89d509b26a4f9dce6e3351da73061c986565d1b0"
-  integrity sha512-N6panMyjw6E6ayCgjFDBmL/NkaolgBgeX1iJ0jh50E6wrncVJBCa+I4IelwwOfJ4Dl9BWzOSLjp84wTiUyhNwg==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.2.2.tgz#6e9f65aa3dc72a734c6f58dcac3182a517accdc3"
+  integrity sha512-X6cNOoTNJKSki8/U+eI1yqKbP7HtM1qIMcJtYp0E5rCllaYKYfN6w4gKARWuHLMQrzgiQoAfNTyZU8hVbIao1w==
   dependencies:
     "@azure/core-http" "^2.2.3"
     "@opentelemetry/api" "^1.0.4"
@@ -5039,21 +5039,21 @@ eslint-plugin-react-native@^3.11.0, eslint-plugin-react-native@^3.8.1:
     eslint-plugin-react-native-globals "^0.1.1"
 
 eslint-plugin-react@^7.20.0, eslint-plugin-react@^7.26.1:
-  version "7.28.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.28.0.tgz#8f3ff450677571a659ce76efc6d80b6a525adbdf"
-  integrity sha512-IOlFIRHzWfEQQKcAD4iyYDndHwTQiCMcJVJjxempf203jnNLUnW34AXLrV33+nEXoifJE2ZEGmcjKPL8957eSw==
+  version "7.29.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.29.3.tgz#f4eab757f2756d25d6d4c2a58a9e20b004791f05"
+  integrity sha512-MzW6TuCnDOcta67CkpDyRfRsEVx9FNMDV8wZsDqe1luHPdGTrQIUaUXD27Ja3gHsdOIs/cXzNchWGlqm+qRVRg==
   dependencies:
     array-includes "^3.1.4"
     array.prototype.flatmap "^1.2.5"
     doctrine "^2.1.0"
     estraverse "^5.3.0"
     jsx-ast-utils "^2.4.1 || ^3.0.0"
-    minimatch "^3.0.4"
+    minimatch "^3.1.2"
     object.entries "^1.1.5"
     object.fromentries "^2.0.5"
     object.hasown "^1.1.0"
     object.values "^1.1.5"
-    prop-types "^15.7.2"
+    prop-types "^15.8.1"
     resolve "^2.0.0-next.3"
     semver "^6.3.0"
     string.prototype.matchall "^4.0.6"
@@ -8306,7 +8306,7 @@ mimic-response@^3.1.0:
   resolved "https://registry.yarnpkg.com/mimic-response/-/mimic-response-3.1.0.tgz#2d1d59af9c1b129815accc2c46a022a5ce1fa3c9"
   integrity sha512-z0yWI+4FDrrweS8Zmt4Ej5HdJmky15+L2e6Wgn3+iK5fWzb6T3fhNFq2+MeTRb064c6Wr4N/wv0DzQTjNzHNGQ==
 
-minimatch@^3.0.2, minimatch@^3.0.4:
+minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
@@ -9340,7 +9340,7 @@ prompts@~2.1.0:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.7.2:
+prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -9451,6 +9451,13 @@ react-native-codegen@*, react-native-codegen@^0.0.13:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
+react-native-gradle-plugin@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-gradle-plugin/-/react-native-gradle-plugin-0.0.4.tgz#47adcc4f1e1f2c1558811ad78ad39546007d8667"
+  integrity sha512-D0lFhHy9uSkiPKsGEdEoFtN/jCjS70OxxzBXfq0s9J3ie8GXRBEDHsZuuX/enfRq5fvbCnhKjuYezf+DVYTNnw==
+  dependencies:
+    react-native-codegen "*"
+
 react-native-tscodegen@0.68.4:
   version "0.68.4"
   resolved "https://registry.yarnpkg.com/react-native-tscodegen/-/react-native-tscodegen-0.68.4.tgz#d8cbf523f8e20b9f0806fca8a24254a31df1f383"
@@ -9469,10 +9476,10 @@ react-native-xaml@^0.0.50:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.0.0-20220206-2010-113f8257c:
-  version "0.0.0-20220206-2010-113f8257c"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220206-2010-113f8257c.tgz#4b468e5c41eabb02dc4b84b3b1f6188b4d18c18e"
-  integrity sha512-cf3H6/r4BgLVmiTAQFKNN2xq2B7cC2DMjGBr8l2LB3g4nH84n9DVpPyBicGFrOBIv0c93hfNUTYart7VFOFjzw==
+react-native@0.0.0-20220213-2008-7cece3423:
+  version "0.0.0-20220213-2008-7cece3423"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.0.0-20220213-2008-7cece3423.tgz#5d46dc530c5beb1d5987368bfe793f115d5ca853"
+  integrity sha512-dbF3VVtPZAJalaOCrUeYId6JFHhZbZ6dKVDPKULPQIf3kuw62XTu/4ud4aDqUjAtW+9WxK1QycTQActp4kDj8g==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^7.0.1"
@@ -9496,6 +9503,7 @@ react-native@0.0.0-20220206-2010-113f8257c:
     promise "^8.0.3"
     react-devtools-core "^4.23.0"
     react-native-codegen "^0.0.13"
+    react-native-gradle-plugin "^0.0.4"
     react-refresh "^0.4.0"
     react-shallow-renderer "16.14.1"
     regenerator-runtime "^0.13.2"
