@@ -270,11 +270,12 @@ async function runWindowsInternal(
 
   // Restore packages.config files for dependencies that don't support PackageReference.
   runWindowsPhase = 'RestorePackagesConfig';
+  const buildType = deploy.getBuildConfiguration(options);
   try {
     await buildTools.restorePackageConfigs(
       slnFile,
       options.arch,
-      deploy.getBuildConfiguration(options),
+      buildType,
     );
   } catch (e) {
     newError(
@@ -320,7 +321,6 @@ async function runWindowsInternal(
     }
 
     // Get build/deploy options
-    const buildType = deploy.getBuildConfiguration(options);
     const msBuildProps = build.parseMsBuildProps(options);
 
     // Disable the autolink check since we just ran it
