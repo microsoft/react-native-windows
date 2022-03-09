@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Pass platform and configuration to restorePackageConfigs",
+  "packageName": "@react-native-windows/cli",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
