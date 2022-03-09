@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 09 Mar 2022 06:09:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.467",
+      "version": "0.0.0-canary.467",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9a7beb80d64632db3e322c56236a49d6907f8aa7",
+            "comment": "Adjust PackageReferences ProjectCapability evaluation"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "afb7e6c78ac73d700c7369d6f514c34b1b464985",
+            "comment": "Upgrade @types/react-native"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "26bd762e5e6ac37601b8d52a8e5f03b753409aa7",
+            "comment": "Use inherited OutputPath for C# projects"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.28",
+            "commit": "9a7beb80d64632db3e322c56236a49d6907f8aa7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 06 Mar 2022 06:08:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.466",
       "version": "0.0.0-canary.466",
