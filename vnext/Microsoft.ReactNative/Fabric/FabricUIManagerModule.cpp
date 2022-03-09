@@ -19,6 +19,7 @@
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
+#include <react/renderer/components/slider/SliderComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
@@ -162,6 +163,10 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
     providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::SliderComponentDescriptor>());
+    providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::SwitchComponentDescriptor>());
+    providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextInputComponentDescriptor>());
@@ -219,6 +224,9 @@ void FabricUIManager::installFabricUIManager() noexcept {
   toolbox.runtimeExecutor = runtimeExecutor;
   toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
+  // We currently rely on using XAML elements to perform measure/layout,
+  // which requires that the background thread also be the UI thread
+  /*
   toolbox.backgroundExecutor = [context = m_context,
                                 dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
     if (context.UIDispatcher().HasThreadAccess()) {
@@ -227,6 +235,15 @@ void FabricUIManager::installFabricUIManager() noexcept {
     }
 
     dispatcher.Post(std::move(callback));
+  };
+  */
+  toolbox.backgroundExecutor = [context = m_context](std::function<void()> &&callback) {
+    if (context.UIDispatcher().HasThreadAccess()) {
+      callback();
+      return;
+    }
+
+    context.UIDispatcher().Post(std::move(callback));
   };
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
@@ -525,7 +542,18 @@ void FabricUIManager::schedulerDidDispatchCommand(
     facebook::react::ShadowView const &shadowView,
     std::string const &commandName,
     folly::dynamic const &arg) {
-  assert(false);
+  if (m_context.UIDispatcher().HasThreadAccess()) {
+    auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
+    descriptor.view->handleCommand(commandName, arg);
+  } else {
+    m_context.UIDispatcher().Post(
+        [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
+          if (auto pThis = wkThis.lock()) {
+            auto descriptor = pThis->m_registry.componentViewDescriptorWithTag(tag);
+            descriptor.view->handleCommand(commandName, args);
+          }
+        });
+  }
 }
 
 void FabricUIManager::schedulerDidSetIsJSResponder(

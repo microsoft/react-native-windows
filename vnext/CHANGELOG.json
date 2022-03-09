@@ -2,6 +2,387 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 06 Mar 2022 06:08:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.466",
+      "version": "0.0.0-canary.466",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dc0cc573cb4f6b388df71e2d194816387a664329",
+            "comment": "Scope down usage of PackageReferences"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 05 Mar 2022 06:08:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.465",
+      "version": "0.0.0-canary.465",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "91f6a96cb282afcb0d1739a2e715e39ec62903ad",
+            "comment": "Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "f9160f690118754fc9e788aced5c51376513617d",
+            "comment": "integrate 2/13/2022 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.31",
+            "commit": "95638afb58acf9bdb662a72c945ee8f0f2b6a72a"
+          }
+        ],
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "95638afb58acf9bdb662a72c945ee8f0f2b6a72a",
+            "comment": "stop inspector when destructing instance"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Mar 2022 06:09:13 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.464",
+      "version": "0.0.0-canary.464",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "b2e8fa124d43ae8a7962cec18f4d7ea5a352c37a",
+            "comment": "enable right-click exluding some components"
+          },
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "608fd48d71851dd3096f92edb633d954b8660111",
+            "comment": "Fabric: Use XAML for layout"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ca34a4691a57fe3bba679ac5786d6302aecd6cd5",
+            "comment": "Capture MSBuild properties in telemetry"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "36f937d73ef03291a617fad5384c25bf2d466190",
+            "comment": "Update OnDropViewInstance API Doc"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.118",
+            "commit": "b2e8fa124d43ae8a7962cec18f4d7ea5a352c37a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.27",
+            "commit": "b2e8fa124d43ae8a7962cec18f4d7ea5a352c37a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 03 Mar 2022 06:09:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.463",
+      "version": "0.0.0-canary.463",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "12093375c205a128966f2d499c070c1fc08326c4",
+            "comment": "rnw-deps - try prerelease, guard against multiple VS installs"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d46f8b3494fef0b65b2d4194ef3351d592eca006",
+            "comment": "Set ResolveNuGetPackages in external props"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 02 Mar 2022 06:08:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.462",
+      "version": "0.0.0-canary.462",
+      "comments": {
+        "none": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bb7ef6991a5f20a0b4a51d539a2510c65c278408",
+            "comment": "Use current version of Metro and Community CLI"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Feb 2022 23:53:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.462",
+      "version": "0.0.0-canary.462",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "adb425a46ad8002d72bb8191a193e3139e907f2b",
+            "comment": "Move hardcoded PackageReferences from templates into targets"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2d3725153ee799c2c0b1a02e9667b9cb7a239aba",
+            "comment": "Update packages.lock.json"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.117",
+            "commit": "5fefed862a6757b78c3fd1494b9a4e0210be522c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Feb 2022 06:07:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.461",
+      "version": "0.0.0-canary.461",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "78f2f8e7b6a61f74ec688b43ee65003501379921",
+            "comment": "Fix tag handling to allow non-RNW elements in the scene (e.g. AdaptiveCards)"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "45d0c70bffcf439572ddb5e6a2e50cce3df95440",
+            "comment": "Enable TurboModule Promise completion in any thread"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 24 Feb 2022 06:07:47 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.460",
+      "version": "0.0.0-canary.460",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.26",
+            "commit": "042d47d2ebff13b8ecdd3d81898f2c86539c1827"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Feb 2022 06:07:37 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.459",
+      "version": "0.0.0-canary.459",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "axelfratoni@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "782f583e4359804917c970765ce96b58c37e08f0",
+            "comment": "Add wrap-reverse to flex wrap options"
+          },
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4503219836e63970fa56106afa18d4b86bae1643",
+            "comment": "Expose InlineSourceMap property"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Feb 2022 06:07:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.458",
+      "version": "0.0.0-canary.458",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ab5839b7c1fdcc07303f80935a5c8afa3294fef7",
+            "comment": "Update packages.lock.json"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Feb 2022 06:07:44 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.457",
+      "version": "0.0.0-canary.457",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2f3a44fd3f595491f6ba3656124fc0847bbded2b",
+            "comment": "Crash when getting osVersion on win 8.1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b81ccc50de12420655bcd183aa1ac0b41190552e",
+            "comment": "Use temporary folder to store JS bytecode"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "705a34de75cd93e99e93b7090c8c86a391b5a3b6",
+            "comment": "MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early"
+          }
+        ],
+        "none": [
+          {
+            "author": "lyahdav@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d2f1c2b24ac2acc60648d4b80d59069fdcd32d87",
+            "comment": "Rename C++ header file because another of the same name exists which leads to build issues in other environments (e.g. Buck/Clang)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Feb 2022 19:51:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.456",
+      "version": "0.0.0-canary.456",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61fb9ca437da08f8c7275732134600625db5aa7d",
+            "comment": "Lazy Install `sourcemap-support` when `react-native-windows` config is hooked"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 13 Feb 2022 06:08:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.455",
+      "version": "0.0.0-canary.455",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3634bfaded2181635aac1b84efd7776e90cab3e6",
+            "comment": "Implement IHttpResource"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.116",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.30",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.6",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Feb 2022 06:08:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.454",
+      "version": "0.0.0-canary.454",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3dfb9c2cf511fd9a0150bb1ebbd2be066e9b720f",
+            "comment": "Share monorepo-friendly metro config between dev packages"
+          },
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0e6a8087042920290927cdaffd4c4426665e1dd3",
+            "comment": "Bump Hermes version to 0.11"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.115",
+            "commit": "0e6a8087042920290927cdaffd4c4426665e1dd3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Feb 2022 06:08:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.453",
+      "version": "0.0.0-canary.453",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be8a8a8b77c9a2d4137f8cad00f76c8120e29f1a",
+            "comment": "Built in turbomodules should not override app provided versions"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ae5b3283fd03ec97f9b3ff33b9820778edb4188f",
+            "comment": "Integrate Feb 6 Nightly RN Build"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.29",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.5",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c93141bf6be4574ca32c38d1a92dcda143001cd7",
+            "comment": "backgroundExecutor now required for fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Feb 2022 06:07:57 GMT",
       "tag": "react-native-windows_v0.0.0-canary.452",
       "version": "0.0.0-canary.452",

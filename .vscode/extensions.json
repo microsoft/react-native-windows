@@ -4,5 +4,7 @@
     "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "orta.vscode-jest",
+    "ms-azure-devops.azure-pipelines",
+    "streetsidesoftware.code-spell-checker",
   ]
 }

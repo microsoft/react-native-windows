@@ -2,6 +2,72 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 04 Mar 2022 06:09:13 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.118",
+      "version": "0.0.0-canary.118",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4464cd1789488c659072de34cff9daf49f66088a",
+            "comment": "Update how RunWindows phases are reported"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ca34a4691a57fe3bba679ac5786d6302aecd6cd5",
+            "comment": "Capture MSBuild properties in telemetry"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Feb 2022 23:53:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.117",
+      "version": "0.0.0-canary.117",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "adb425a46ad8002d72bb8191a193e3139e907f2b",
+            "comment": "Move hardcoded PackageReferences from templates into targets"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 13 Feb 2022 06:08:34 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.116",
+      "version": "0.0.0-canary.116",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.26",
+            "commit": "dfc6ca9c55b67a3d2186884d0e1110c6d4690a97"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Feb 2022 06:08:36 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.115",
+      "version": "0.0.0-canary.115",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "564f0ced7e3f3eb29bc8c789d3634262bcce4651",
+            "comment": "Fix cache not being used when there are no dependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Feb 2022 06:07:57 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.114",
       "version": "0.0.0-canary.114",

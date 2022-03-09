@@ -5,29 +5,30 @@
 
 #include "pch.h"
 
+#include <dwrite.h>
 #include "TextLayoutManager.h"
 
-#include <dwrite.h>
-
+#include <CppWinrtIncludes.h>
+#include <UI.Xaml.Controls.h>
 #include <unicode.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 TextLayoutManager::~TextLayoutManager() {}
 
-// TODO: This is a placeholder implementation to get basic text rendering.  This should not be considered a real
-// implementation. It currently has various performance issues (like creating a new factory on every run), and only
-// handles single strings, and makes all kinds of assumptions around things like locale, font family etc. This whole
-// implementation will need to be replaced to get text rendering/layout to work properly.
+// Ideally we'd be able to measure Text either without creating a XAML element,
+// or we'd be able to create a XAML element on a background thread.
+//
+// For now we've forced the background executor to be the UI thread, so that we can use
+// TextBlocks within the measure call.
+//
+// There will be inconsistencies with layout if any property that affects layout is set differently here vs in the
+// actual view component. -- Any properties that rely on the context from the UI tree should be set directly on the
+// TextBlock here and in the view component.
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
-  winrt::com_ptr<IDWriteFactory> spDWriteFactory;
-  DWriteCreateFactory(
-      DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(spDWriteFactory.put()));
-
   for (auto &fragment : attributedStringBox.getValue().getFragments()) {
     DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
     if (fragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic)
@@ -65,6 +66,7 @@ TextMeasurement TextLayoutManager::measure(
     );
 
     TextMeasurement tm;
+    auto size = m_textBlock.DesiredSize();
 
     DWRITE_TEXT_METRICS dtm;
     spTextLayout->GetMetrics(&dtm);
@@ -91,5 +93,4 @@ void *TextLayoutManager::getNativeTextLayoutManager() const {
   return (void *)this;
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

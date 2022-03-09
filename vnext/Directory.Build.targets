@@ -9,7 +9,7 @@
     <!--
       Ensure restoring of PackageReference dependencies.
     -->
-    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" />
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackageReference" Condition="@(PackageReference->Count()) &gt; 0" />
 
     <!--
       Ensure restoring of packages.config dependencies.
