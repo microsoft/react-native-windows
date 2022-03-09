@@ -8,8 +8,6 @@
 #include <dwrite.h>
 #include "TextLayoutManager.h"
 
-#include <CppWinrtIncludes.h>
-#include <UI.Xaml.Controls.h>
 #include <unicode.h>
 
 namespace facebook::react {
@@ -29,6 +27,10 @@ TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
+  winrt::com_ptr<IDWriteFactory> spDWriteFactory;
+  DWriteCreateFactory(
+      DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(spDWriteFactory.put()));
+
   for (auto &fragment : attributedStringBox.getValue().getFragments()) {
     DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
     if (fragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic)
@@ -66,8 +68,6 @@ TextMeasurement TextLayoutManager::measure(
     );
 
     TextMeasurement tm;
-    auto size = m_textBlock.DesiredSize();
-
     DWRITE_TEXT_METRICS dtm;
     spTextLayout->GetMetrics(&dtm);
     tm.size = {

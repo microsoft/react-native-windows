@@ -14,6 +14,7 @@ struct CompBaseComponentView : public IComponentView {
   virtual const winrt::Windows::UI::Composition::Visual Visual() const noexcept = 0;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
+  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
 
   void Compositor(const winrt::Windows::UI::Composition::Compositor &compositor) noexcept;
   facebook::react::Tag Tag() const noexcept;

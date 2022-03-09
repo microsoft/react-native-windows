@@ -4,7 +4,7 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry, StyleSheet, Image, View} from 'react-native';
+import {AppRegistry, StyleSheet, Image, Text, View} from 'react-native';
 
 const styles = StyleSheet.create({
   base: {
@@ -27,7 +27,7 @@ export default class Bootstrap extends React.Component {
           }}
           style={styles.base}
         />
-        <Text style={{color: 'green'}}>Hello!</Text>
+        <Text style={{color: 'green', fontSize: 48}}>Hello!</Text>
       </View>
     );
   }

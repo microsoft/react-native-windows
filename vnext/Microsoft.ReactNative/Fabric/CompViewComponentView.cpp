@@ -25,6 +25,10 @@ void CompBaseComponentView::updateEventEmitter(facebook::react::EventEmitter::Sh
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
 }
 
+void CompBaseComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  assert(false); // Unhandled command
+}
+
 const facebook::react::SharedViewEventEmitter &CompBaseComponentView::GetEventEmitter() const noexcept {
   return m_eventEmitter;
 }
