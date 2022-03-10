@@ -24,6 +24,15 @@ void BaseComponentView::handleCommand(std::string const &commandName, folly::dyn
   assert(false); // Unhandled command
 }
 
+void BaseComponentView::parent(IComponentView *parent) noexcept {
+  assert(false);
+}
+
+IComponentView *BaseComponentView::parent() const noexcept {
+  assert(false);
+  return nullptr;
+}
+
 ViewComponentView::ViewComponentView() {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;

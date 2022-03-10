@@ -49,7 +49,7 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
 
   void OnMouseDown(Windows::Foundation::Point point) noexcept;
-  void OnMouseUp() noexcept;
+  void OnMouseUp(Windows::Foundation::Point point) noexcept;
   // void OnPointerDown(int32_t pointerId) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 

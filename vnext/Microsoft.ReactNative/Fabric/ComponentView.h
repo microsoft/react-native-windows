@@ -40,6 +40,8 @@ struct IComponentView {
   virtual void prepareForRecycle() noexcept = 0;
   virtual facebook::react::SharedProps props() noexcept = 0;
   virtual void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept = 0;
+  virtual void parent(IComponentView *parent) noexcept = 0;
+  virtual IComponentView * parent() const noexcept = 0;
 };
 
 } // namespace Microsoft::ReactNative

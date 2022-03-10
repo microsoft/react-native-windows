@@ -15,6 +15,8 @@ struct BaseComponentView : IComponentView {
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+  void parent(IComponentView *parent) noexcept override;
+  IComponentView *parent() const noexcept override;
 
  protected:
   facebook::react::SharedViewEventEmitter m_eventEmitter;

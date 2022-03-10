@@ -859,6 +859,7 @@
     <Midl Include="ReactInstanceSettings.idl" />
     <Midl Include="ReactNativeHost.idl" />
     <Midl Include="ReactRootView.idl" />
+    <Midl Include="CompHwndHost.idl" />
     <Midl Include="CompRootView.idl" />
     <Midl Include="RedBoxHandler.idl" />
     <Midl Include="QuirkSettings.idl" />

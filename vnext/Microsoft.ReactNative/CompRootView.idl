@@ -34,7 +34,7 @@ namespace Microsoft.ReactNative
     Windows.Foundation.Size Arrange(Windows.Foundation.Size availiableSize);
 
     void OnMouseDown(Windows.Foundation.Point point);
-    void OnMouseUp();
+    void OnMouseUp(Windows.Foundation.Point point);
     void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
 
     DOC_STRING(

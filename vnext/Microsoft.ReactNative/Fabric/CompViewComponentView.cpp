@@ -21,6 +21,14 @@ void CompBaseComponentView::Tag(facebook::react::Tag tag) noexcept {
   m_tag = tag;
 }
 
+void CompBaseComponentView::parent(IComponentView *parent) noexcept {
+  m_parent = parent;
+}
+
+IComponentView * CompBaseComponentView::parent() const noexcept {
+  return m_parent;
+}
+
 void CompBaseComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
 }
@@ -55,6 +63,7 @@ void CompViewComponentView::mountChildComponentView(const IComponentView &childC
   ensureVisual();
 
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
+  const_cast<IComponentView &>(childComponentView).parent(this);
 
   auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
   if (index == 0 || containerChildren.Count() == 0) {
@@ -72,6 +81,7 @@ void CompViewComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
+  const_cast<IComponentView &>(childComponentView).parent(nullptr);
 
   auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
   containerChildren.Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());

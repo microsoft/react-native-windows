@@ -124,6 +124,7 @@ void CompScrollViewComponentView::mountChildComponentView(
   ensureVisual();
 
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
+  const_cast<IComponentView &>(childComponentView).parent(this);
 
   auto containerChildren = m_contentVisual.Children();
   if (index == 0 || containerChildren.Count() == 0) {
@@ -144,6 +145,7 @@ void CompScrollViewComponentView::unmountChildComponentView(
 
   auto containerChildren = m_contentVisual.Children();
   containerChildren.Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
+  const_cast<IComponentView &>(childComponentView).parent(nullptr);
 }
 
 void CompScrollViewComponentView::updateProps(

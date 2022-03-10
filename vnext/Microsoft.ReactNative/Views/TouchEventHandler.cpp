@@ -238,16 +238,50 @@ void TouchEventHandler::PointerDown(
   }
 }
 
-void TouchEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t pointerId) {
+void TouchEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t pointerId) {
   auto optPointerIndex = IndexOfPointerWithId(pointerId);
   if (!optPointerIndex)
     return;
 
-  DispatchTouchEvent(TouchEventType::End, *optPointerIndex);
+  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+    facebook::react::Point ptLocal;
 
-  m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
-  if (m_pointers.size() == 0)
-    m_touchId = 0;
+    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
+    facebook::react::Point ptScaled = {
+        static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
+        static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
+    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+
+    if (tag == -1)
+      return;
+
+    ReactPointer &pointer = m_pointers[*optPointerIndex];
+
+    pointer.target = tag;
+    pointer.isLeftButton = true;
+    pointer.isRightButton = false;
+    pointer.isMiddleButton = false;
+    pointer.isHorizontalScrollWheel = false;
+    pointer.isEraser = false;
+
+    pointer.positionRoot = {ptScaled.x, ptScaled.y};
+    pointer.positionView = {ptLocal.x, ptLocal.y};
+    pointer.timestamp =
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+            .count();
+    pointer.pressure = 0;
+    pointer.isBarrelButton = false;
+    pointer.shiftKey = false;
+    pointer.ctrlKey = false;
+    pointer.altKey = false;
+
+    DispatchTouchEvent(TouchEventType::End, *optPointerIndex);
+
+    m_pointers.erase(cbegin(m_pointers) + *optPointerIndex);
+    if (m_pointers.size() == 0)
+      m_touchId = 0;
+  }
 }
 
 void TouchEventHandler::OnPointerReleased(
@@ -527,10 +561,16 @@ facebook::react::SharedEventEmitter EventEmitterForElement(
   auto &registry = uimanager->GetViewRegistry();
 
   auto descriptor = registry.componentViewDescriptorWithTag(tag);
-  auto view = std::static_pointer_cast<CompBaseComponentView const>(descriptor.view);
+  auto view = std::static_pointer_cast<CompBaseComponentView>(descriptor.view);
   auto emitter = view->GetEventEmitter();
   if (emitter)
     return emitter;
+
+  for (IComponentView *it = view->parent(); it; it = it->parent()) {
+    auto emitter = static_cast<CompBaseComponentView*>(it)->GetEventEmitter();
+    if (emitter)
+      return emitter;
+  }
 
   /*
   auto element = view->Element();

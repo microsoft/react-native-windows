@@ -39,7 +39,6 @@
 
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 #include "../../../../vnext/codegen/NativeLogBoxSpec.g.h"
-#include "CompositionHost.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
@@ -114,9 +113,7 @@ struct WindowData {
 
   std::wstring m_bundleFile;
   hosting::DesktopWindowXamlSource m_desktopWindowXamlSource{nullptr};
-  std::shared_ptr<CompositionHost> m_compHost{nullptr};
-
-  winrt::Microsoft::ReactNative::CompRootView m_compRootView{nullptr};
+  winrt::Microsoft::ReactNative::CompHwndHost m_compHwndHost{nullptr};
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
@@ -131,7 +128,7 @@ struct WindowData {
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
 
-  WindowData(const std::shared_ptr<CompositionHost> &compHost) : m_compHost(compHost) {}
+  WindowData(const winrt::Microsoft::ReactNative::CompHwndHost &compHost) : m_compHwndHost(compHost) {}
 
   static WindowData *GetFromWindow(HWND hwnd) {
     auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WindowDataProperty));
@@ -201,23 +198,9 @@ struct WindowData {
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
-          winrt::Microsoft::ReactNative::ReactPropertyBag propBag(host.InstanceSettings().Properties());
-          auto coreDisp = m_compHost->Target();
-          propBag.Set(
-              winrt::Microsoft::ReactNative::ReactPropertyId<
-                  winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget>(L"CompCoreDispatcher"),
-              coreDisp);
 
-          m_compRootView = winrt::Microsoft::ReactNative::CompRootView();
-          m_compRootView.ComponentName(appName);
-          m_compRootView.ReactNativeHost(host);
-          m_compRootView.ScaleFactor(GetDpiForWindow(hwnd) / 96.0);
-          m_compRootView.Compositor(m_compHost->Compositor());
-          m_compRootView.RootVisual(m_compHost->RootVisual());
-          m_compRootView.Size({600, 600});
-          m_compRootView.Measure({600, 600});
-          m_compRootView.Arrange({600, 600});
-
+          m_compHwndHost.ComponentName(appName);
+          m_compHwndHost.ReactNativeHost(host);
           /*
           m_reactRootView = winrt::Microsoft::ReactNative::ReactRootView();
           m_reactRootView.ComponentName(appName);
@@ -250,35 +233,21 @@ struct WindowData {
       case IDM_SETTINGS:
         DialogBoxParam(s_instance, MAKEINTRESOURCE(IDD_SETTINGSBOX), hwnd, &Settings, reinterpret_cast<INT_PTR>(this));
         break;
-      case BTN_ADD: // addButton click
-      {
-        float size = (float)(rand() % 150 + 50);
-        float x = (float)(rand() % 600);
-        float y = (float)(rand() % 200);
-        m_compHost->AddElement(size, x, y);
-        break;
-      }
     }
 
     return 0;
   }
 
-  LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
-    if (m_compHost) {
-      m_compHost->Initialize(hwnd);
+  LRESULT TranslateMessage(UINT message, WPARAM wparam, LPARAM lparam) noexcept {
+    if (m_compHwndHost) {
+      return m_compHwndHost.TranslateMessage(message, wparam, lparam);
+    }
+    return 0;
+  }
 
-      CreateWindow(
-          TEXT("button"),
-          TEXT("Add element"),
-          WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON,
-          12,
-          12,
-          100,
-          50,
-          hwnd,
-          (HMENU)BTN_ADD,
-          nullptr,
-          nullptr);
+  LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
+    if (m_compHwndHost) {
+      m_compHwndHost.Initialize((uint64_t)hwnd);
     }
 
     /*
@@ -288,61 +257,6 @@ struct WindowData {
 
     auto hWndXamlIsland = GetXamlIslandHwnd(m_desktopWindowXamlSource);
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
-    */
-    return 0;
-  }
-
-  /*
-    LRESULT OnPointerDown(uint32_t pointerId) {
-      if (m_compRootView) {
-        m_compRootView.OnPointerDown(pointerId);
-      }
-      return 0;
-    }
-  */
-
-  LRESULT OnScrollWheel(POINT pt, int32_t delta) {
-    if (m_compRootView) {
-      m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
-    }
-    return 0;
-  }
-
-  LRESULT OnMouseUp() {
-    if (m_compRootView)
-      m_compRootView.OnMouseUp();
-    return 0;
-  }
-
-  LRESULT OnMouseDown(winrt::Windows::Foundation::Point pt) {
-    if (m_compRootView)
-      m_compRootView.OnMouseDown(pt);
-    return 0;
-  }
-
-  LRESULT OnWindowPosChanged(HWND /* hwnd */, const WINDOWPOS *windowPosition) {
-    if (m_compRootView) {
-      winrt::Windows::Foundation::Size size{
-          static_cast<float>(windowPosition->cx), static_cast<float>(windowPosition->cy)};
-      m_compRootView.Size(size);
-      m_compRootView.Measure(size);
-      m_compRootView.Arrange(size);
-    }
-
-    /*
-    auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
-    HWND interopHwnd;
-    winrt::check_hresult(interop->get_WindowHandle(&interopHwnd));
-
-    constexpr int logBoxHeight = 100;
-    constexpr int scrollbarWidth = 24;
-    MoveWindow(
-        interopHwnd,
-        0,
-        0,
-        windowPosition->cx > scrollbarWidth ? windowPosition->cx - scrollbarWidth : windowPosition->cx,
-        windowPosition->cy > logBoxHeight ? windowPosition->cy - logBoxHeight : windowPosition->cy,
-        TRUE);
     */
     return 0;
   }
@@ -493,6 +407,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
   }
 #endif
 
+  auto windowData = WindowData::GetFromWindow(hwnd);
+  if (windowData) {
+    auto result = WindowData::GetFromWindow(hwnd)->TranslateMessage(message, wparam, lparam);
+    if (result)
+      return result;
+  }
+
   switch (message) {
     case WM_CREATE: {
       return WindowData::GetFromWindow(hwnd)->OnCreate(hwnd, reinterpret_cast<LPCREATESTRUCT>(lparam));
@@ -513,41 +434,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       WINRT_ASSERT(windowData);
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
-    }
-
-      /*
-          case WM_POINTERDOWN: {
-            uint32_t pointerID = GET_POINTERID_WPARAM(wparam);
-            return WindowData::GetFromWindow(hwnd)->OnPointerDown(pointerID);
-
-            break;
-          }
-      */
-    case WM_MOUSEWHEEL: {
-      POINT pt = {GET_X_LPARAM(lparam), GET_Y_LPARAM(lparam)};
-      ::ScreenToClient(hwnd, &pt);
-      int32_t delta = GET_WHEEL_DELTA_WPARAM(wparam);
-
-      // TODO should use :
-      // Get the system setting on how many lines we should scroll for each delta,
-      // of it we should scroll by pages.
-      // UINT nMultiplier = 1;
-      // SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &nMultiplier, FALSE);
-
-      return WindowData::GetFromWindow(hwnd)->OnScrollWheel(pt, delta);
-    }
-
-    case WM_LBUTTONDOWN: {
-      return WindowData::GetFromWindow(hwnd)->OnMouseDown(
-          {static_cast<float>(GET_X_LPARAM(lparam)), static_cast<float>(GET_Y_LPARAM(lparam))});
-    }
-
-    case WM_LBUTTONUP: {
-      return WindowData::GetFromWindow(hwnd)->OnMouseUp();
-    }
-
-    case WM_WINDOWPOSCHANGED: {
-      return WindowData::GetFromWindow(hwnd)->OnWindowPosChanged(hwnd, reinterpret_cast<const WINDOWPOS *>(lparam));
     }
     case WM_PAINT: {
       PAINTSTRUCT ps;
@@ -595,8 +481,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   desktopXamlSource.Content(xamlContent);
   */
 
-  auto compHost = std::make_shared<CompositionHost>();
-  auto windowData = std::make_unique<WindowData>(compHost);
+  auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompHwndHost());
 
   HWND hwnd = CreateWindow(
       c_windowClassName,

@@ -4,7 +4,14 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry, StyleSheet, Image, Text, View} from 'react-native';
+import {
+  AppRegistry,
+  StyleSheet,
+  Image,
+  Text,
+  View,
+  Pressable,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   base: {
@@ -21,13 +28,12 @@ export default class Bootstrap extends React.Component {
         accessible={true}
         style={{borderRadius: 30, width: 600, height: 600, margin: 10}}>
         <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
-        <Image
-          source={{
-            uri: 'https://www.facebook.com/ads/pics/successstories.png',
-          }}
-          style={styles.base}
-        />
-        <Text style={{color: 'green', fontSize: 48}}>Hello!</Text>
+        <Pressable
+          onPressIn={() => {
+            alert('hi');
+          }}>
+          <Text style={{color: 'green', fontSize: 48}}>Hello!</Text>
+        </Pressable>
       </View>
     );
   }
