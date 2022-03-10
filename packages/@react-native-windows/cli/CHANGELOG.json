@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 10 Mar 2022 06:09:23 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.119",
+      "version": "0.0.0-canary.119",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "cc1f86bd91fc49d2f790e87adad133dbd8b39ba6",
+            "comment": "Pass platform and configuration to restorePackageConfigs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Mar 2022 06:09:13 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.118",
       "version": "0.0.0-canary.118",

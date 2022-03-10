@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Mar 2022 06:09:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.468",
+      "version": "0.0.0-canary.468",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9a7beb80d64632db3e322c56236a49d6907f8aa7",
+            "comment": "Adjust PackageReferences ProjectCapability evaluation"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "364aa675226aef15ee79da1284038e04a53e462a",
+            "comment": "Update CppAppConsumeCSharpModules.props for VS2022"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.119",
+            "commit": "cc1f86bd91fc49d2f790e87adad133dbd8b39ba6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Mar 2022 06:09:08 GMT",
       "tag": "react-native-windows_v0.0.0-canary.467",
       "version": "0.0.0-canary.467",
