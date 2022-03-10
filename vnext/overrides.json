@@ -41,8 +41,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
       "baseFile": "ReactCommon/react/renderer/core/RawPropsParser.cpp",
-      "baseHash": "738a8dcf33d1e2bae57f2727625c8ca609f5fd0b",
-      "issue": 111
+      "baseHash": "738a8dcf33d1e2bae57f2727625c8ca609f5fd0b"
     },
     {
       "type": "patch",
