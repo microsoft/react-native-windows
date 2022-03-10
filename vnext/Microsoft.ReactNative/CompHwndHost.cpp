@@ -8,9 +8,9 @@
 #include <ReactHost/MsoUtils.h>
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include <windowsx.h>
 #include <winrt/Windows.UI.Core.h>
 #include "ReactNativeHost.h"
-#include <windowsx.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -57,8 +57,7 @@ void CompHwndHost::CreateCompositionRoot() {
   m_target.Root(root);
 }
 
-CompHwndHost::CompHwndHost() noexcept {
-}
+CompHwndHost::CompHwndHost() noexcept {}
 
 void CompHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
@@ -96,7 +95,6 @@ void CompHwndHost::UpdateSize() noexcept {
 }
 
 LRESULT CompHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) noexcept {
-
   if (!m_hwnd || !m_compRootView)
     return 0;
 
@@ -109,8 +107,7 @@ LRESULT CompHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) no
       return 0;
     }
     case WM_LBUTTONDOWN: {
-      m_compRootView.OnMouseDown(
-          {static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))});
+      m_compRootView.OnMouseDown({static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))});
       return 0;
     }
     case WM_LBUTTONUP: {

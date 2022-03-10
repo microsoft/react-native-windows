@@ -231,7 +231,7 @@ void CompRootView::OnMouseUp(Windows::Foundation::Point point) noexcept {
   if (m_rootTag == -1)
     return;
 
-  m_touchEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), { point.X, point.Y } , 1);
+  m_touchEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, 1);
 }
 
 /*

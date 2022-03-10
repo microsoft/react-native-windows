@@ -567,7 +567,7 @@ facebook::react::SharedEventEmitter EventEmitterForElement(
     return emitter;
 
   for (IComponentView *it = view->parent(); it; it = it->parent()) {
-    auto emitter = static_cast<CompBaseComponentView*>(it)->GetEventEmitter();
+    auto emitter = static_cast<CompBaseComponentView *>(it)->GetEventEmitter();
     if (emitter)
       return emitter;
   }

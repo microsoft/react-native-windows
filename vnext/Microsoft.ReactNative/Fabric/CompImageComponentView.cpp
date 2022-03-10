@@ -17,10 +17,10 @@
 #pragma warning(pop)
 #include <react/renderer/components/image/ImageEventEmitter.h>
 
+#include <shcore.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.h>
 #include "CompHelpers.h"
-#include <shcore.h>
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
@@ -71,11 +71,9 @@ void CompImageComponentView::beginDownloadImage() noexcept {
   source.sourceType = ImageSourceType::Download;
   m_state = ImageState::Loading;
   auto inputStreamTask = GetImageStreamAsync(source);
-  inputStreamTask.Completed([this](
-                                  auto asyncOp,
-                                  auto status) {
+  inputStreamTask.Completed([this](auto asyncOp, auto status) {
     switch (status) {
-      case winrt::Windows::Foundation::AsyncStatus::Completed : {
+      case winrt::Windows::Foundation::AsyncStatus::Completed: {
         if (m_state == ImageState::Loading) {
           m_state = ImageState::Loaded;
           generateBitmap(asyncOp.GetResults());

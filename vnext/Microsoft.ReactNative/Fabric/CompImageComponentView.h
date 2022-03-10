@@ -8,17 +8,17 @@
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <Views/Image/ReactImage.h>
-#include "CompViewComponentView.h"
 #include <wincodec.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "CompViewComponentView.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)
 #include <react/renderer/components/view/ViewProps.h>
 #pragma warning(pop)
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
-#include <winrt/Windows.Storage.Streams.h>
 #include <windows.ui.composition.interop.h>
+#include <winrt/Windows.Storage.Streams.h>
 
 namespace Microsoft::ReactNative {
 

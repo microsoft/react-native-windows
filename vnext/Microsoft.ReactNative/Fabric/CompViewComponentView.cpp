@@ -25,7 +25,7 @@ void CompBaseComponentView::parent(IComponentView *parent) noexcept {
   m_parent = parent;
 }
 
-IComponentView * CompBaseComponentView::parent() const noexcept {
+IComponentView *CompBaseComponentView::parent() const noexcept {
   return m_parent;
 }
 

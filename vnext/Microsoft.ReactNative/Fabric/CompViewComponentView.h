@@ -16,7 +16,7 @@ struct CompBaseComponentView : public IComponentView {
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   void parent(IComponentView *parent) noexcept override;
-  IComponentView * parent() const noexcept override;
+  IComponentView *parent() const noexcept override;
 
   void Compositor(const winrt::Windows::UI::Composition::Compositor &compositor) noexcept;
   facebook::react::Tag Tag() const noexcept;
@@ -30,7 +30,7 @@ struct CompBaseComponentView : public IComponentView {
   facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   std::vector<const IComponentView *> m_children;
-  IComponentView* m_parent{nullptr};
+  IComponentView *m_parent{nullptr};
 };
 
 struct CompViewComponentView : public CompBaseComponentView {

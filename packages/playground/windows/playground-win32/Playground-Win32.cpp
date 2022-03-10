@@ -198,7 +198,6 @@ struct WindowData {
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
-
           m_compHwndHost.ComponentName(appName);
           m_compHwndHost.ReactNativeHost(host);
           /*

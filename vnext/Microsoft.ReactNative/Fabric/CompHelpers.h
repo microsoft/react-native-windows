@@ -8,12 +8,12 @@
 
 #include <Utils/ValueUtils.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
+#include <d2d1_1.h>
 #include <d3d11.h>
 #include <d3d11_4.h>
+#include <dwrite.h>
 #include <unicode.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
-#include <d2d1_1.h>
-#include <dwrite.h>
 
 namespace Microsoft::ReactNative {
 
