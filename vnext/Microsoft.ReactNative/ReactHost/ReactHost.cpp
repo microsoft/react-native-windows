@@ -75,6 +75,14 @@ winrt::Microsoft::ReactNative::IReactPropertyName EnableFabricProperty() noexcep
   return propName;
 }
 
+winrt::Microsoft::ReactNative::IReactPropertyName EnableDefaultCrashHandlerProperty() noexcept {
+  static winrt::Microsoft::ReactNative::IReactPropertyName propName =
+      winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+          winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(L"ReactNative.ReactOptions"),
+          L"EnableDefaultCrashHandler");
+  return propName;
+}
+
 //=============================================================================================
 // ReactOptions implementation
 //=============================================================================================
@@ -232,6 +240,25 @@ bool ReactOptions::UseDirectDebugger() const noexcept {
 /*static*/ bool ReactOptions::UseDirectDebugger(
     winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
   return winrt::unbox_value_or<bool>(properties.Get(UseDirectDebuggerProperty()), false);
+}
+
+void ReactOptions::SetEnableDefaultCrashHandler(bool enabled) noexcept {
+  Properties.Set(EnableDefaultCrashHandlerProperty(), winrt::box_value(enabled));
+}
+
+bool ReactOptions::EnableDefaultCrashHandler() const noexcept {
+  return EnableDefaultCrashHandler(Properties);
+}
+
+/*static*/ void ReactOptions::SetEnableDefaultCrashHandler(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties,
+    bool value) noexcept {
+  properties.Set(EnableDefaultCrashHandlerProperty(), winrt::box_value(value));
+}
+
+/*static*/ bool ReactOptions::EnableDefaultCrashHandler(
+    winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) noexcept {
+  return winrt::unbox_value_or<bool>(properties.Get(EnableDefaultCrashHandlerProperty()), false);
 }
 
 //=============================================================================================
