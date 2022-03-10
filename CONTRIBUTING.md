@@ -106,7 +106,7 @@ There are cases when we'll want to port a fix back into one or more of the previ
 
 Then once you've added and tested the desired changes, you'll have to make sure to specify the target stable branch, instead of main, as the base branch when creating your PR.
 
-> Note that in order to preserve stability and compatibility we don't backport all fixes, and all backport changes will go through additional triage to get approved.
+> Note that in order to preserve stability and compatibility we don't backport all fixes, and all backport changes beyond a certain release (currently 0.66-stable) will go through additional triage to get approved.
 ### 🧪 Testing
 
 Build and see if your solution works. Consult [Building React-Native-Windows](https://github.com/microsoft/react-native-windows/blob/main/docs/building-rnw.md) if you have problems.
