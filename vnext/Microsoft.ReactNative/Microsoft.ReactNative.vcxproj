@@ -19,6 +19,7 @@
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
+    <DesktopCompatible Condition="'$(UseWinUI3)'=='true'">true</DesktopCompatible>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
