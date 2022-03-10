@@ -20,9 +20,12 @@ boost::beast::multi_buffer CreateStringResponseBody(std::string&& content);
 struct HttpCallbacks
 {
   std::function<void()> OnResponseSent;
-  std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-      const boost::beast::http::request<boost::beast::http::string_body> &)>
+    std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
+      const boost::beast::http::request<boost::beast::http::dynamic_body> &)>
       OnGet;
+  std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
+      const boost::beast::http::request<boost::beast::http::dynamic_body> &)>
+      OnOptions;
   std::function<void()> OnRequest;
 };
 
@@ -34,7 +37,7 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
 {
   boost::beast::tcp_stream m_stream;
   boost::beast::flat_buffer m_buffer;
-  boost::beast::http::request<boost::beast::http::string_body> m_request;
+  boost::beast::http::request<boost::beast::http::dynamic_body> m_request;
   std::shared_ptr<boost::beast::http::response<boost::beast::http::dynamic_body>> m_response; // Generic response
   HttpCallbacks& m_callbacks;
 
@@ -92,7 +95,7 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   // requests.
   ///
   void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-                    const boost::beast::http::request<boost::beast::http::string_body> &)> &&onGet) noexcept;
+                    const boost::beast::http::request<boost::beast::http::dynamic_body> &)> &&handler) noexcept;
 };
 
 } // namespace Microsoft::React::Test

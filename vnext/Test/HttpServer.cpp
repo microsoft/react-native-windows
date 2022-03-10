@@ -92,13 +92,20 @@ void HttpSession::Respond()
       break;
 
     case http::verb::options:
-      m_response = make_shared<http::response<http::dynamic_body>>(http::status::accepted, m_request.version());
-      m_response->set(
-          http::field::access_control_request_headers,
-          "Access-Control-Allow-Headers, Content-type, Custom-Header, Header-expose-allowed");
-      m_response->set(http::field::access_control_allow_methods, "GET, POST, DELETE");
-      m_response->set(http::field::access_control_expose_headers, "Header-expose-allowed");
-      m_response->result(http::status::ok);
+      if (m_callbacks.OnOptions)
+      {
+        m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnOptions(m_request));
+      }
+      else
+      {
+        m_response = make_shared<http::response<http::dynamic_body>>(http::status::accepted, m_request.version());
+        m_response->set(
+            http::field::access_control_request_headers,
+            "Access-Control-Allow-Headers, Content-type, Custom-Header, Header-expose-allowed");
+        m_response->set(http::field::access_control_allow_methods, "GET, POST, DELETE");
+        m_response->set(http::field::access_control_expose_headers, "Header-expose-allowed");
+        m_response->result(http::status::ok);
+      }
 
       http::async_write(
         m_stream,
@@ -135,7 +142,7 @@ void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
 
   if (m_callbacks.OnResponseSent)
   {
-	  m_callbacks.OnResponseSent(); 
+	  m_callbacks.OnResponseSent();
   }
 
   // TODO: Re-enable when concurrent sessions are implemented.
@@ -270,7 +277,7 @@ void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept
 }
 
 void HttpServer::SetOnGet(
-  function<http::response<http::dynamic_body>(const http::request<http::string_body> &)> &&handler) noexcept
+  function<http::response<http::dynamic_body>(const http::request<http::dynamic_body> &)> &&handler) noexcept
 {
   m_callbacks.OnGet = std::move(handler);
 }
