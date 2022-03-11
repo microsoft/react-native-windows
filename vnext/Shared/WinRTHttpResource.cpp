@@ -37,6 +37,41 @@ using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
 namespace Microsoft::React {
 
+using winrt::Windows::Foundation::IAsyncAction;
+using std::weak_ptr;
+struct IHttpRequestFilter {
+
+  virtual IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept = 0;
+
+  virtual IAsyncAction ProcessRequest(
+      int64_t requestId,
+      HttpRequestMessage &&request,
+      IHttpResource::Headers &&headers,
+      IHttpResource::BodyData &&bodyData,
+      bool textResponse) noexcept = 0;
+};
+
+class OriginPolicyRequestFilter : public IHttpRequestFilter {
+
+#pragma region IHttpRequestFilter
+
+IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept override {
+  
+}
+
+IAsyncAction ProcessRequest(
+  int64_t requestId,
+  HttpRequestMessage&& request,
+  IHttpResource::Headers&& headers,
+  IHttpResource::BodyData&& bodyData,
+  bool textResponse) noexcept override {
+
+}
+
+#pragma endregion IHttpRequestFilter
+
+};
+
 #pragma region WinRTHttpResource
 
 // TODO: Check for multi-thread issues if there are multiple instances.
@@ -238,19 +273,20 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
     auto response = sendRequestOp.GetResults();
     if (response) {
       if (self->m_onResponse) {
-        Headers responseHeaders;
+        string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
 
         // Gather headers for both the response content and the response itself
         // See Invoke-WebRequest PowerShell cmdlet or Chromium response handling
+        Headers responseHeaders;
         for (auto header : response.Headers()) {
           responseHeaders.emplace(to_string(header.Key()), to_string(header.Value()));
         }
         for (auto header : response.Content().Headers()) {
           responseHeaders.emplace(to_string(header.Key()), to_string(header.Value()));
         }
-        string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
+
         self->m_onResponse(
-            requestId, {static_cast<int32_t>(response.StatusCode()), std::move(responseHeaders), std::move(url)});
+            requestId, {static_cast<int32_t>(response.StatusCode()), std::move(url), std::move(responseHeaders)});
       }
     }
 
