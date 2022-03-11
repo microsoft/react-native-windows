@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use Canvas dependency properties for Top/Left instead of custom DPs",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

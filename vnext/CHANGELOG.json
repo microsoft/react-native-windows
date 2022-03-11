@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Mar 2022 06:09:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.469",
+      "version": "0.0.0-canary.469",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3c484ac8ae6dfcfc009057c2b91085e30c169284",
+            "comment": "Use Canvas dependency properties for Top/Left instead of custom DPs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Mar 2022 06:09:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.468",
       "version": "0.0.0-canary.468",
