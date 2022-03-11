@@ -21,8 +21,9 @@ struct IHttpResource {
 
   struct Response {
     int64_t StatusCode;
-    Headers Headers;
     std::string Url;
+    Headers Headers;
+    //TODO: Content?
   };
 
   static std::shared_ptr<IHttpResource> Make() noexcept;

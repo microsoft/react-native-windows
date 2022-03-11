@@ -160,4 +160,84 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Logger::WriteMessage(error.c_str());
     Assert::AreNotEqual(string{}, error);
   }
+
+  TEST_METHOD(RequestOptionsSucceeds) {
+    promise<void> promise;
+    string error;
+    IHttpResource::Response response;
+    string content;
+
+    // HTTP call scope
+    {
+      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
+      server->SetOnGet([](const http::request<http::dynamic_body>& request) -> http::response<http::dynamic_body> {
+        http::response<http::dynamic_body> response;
+        response.result(http::status::ok);
+        response.body() = Test::CreateStringResponseBody("Response Body");
+
+        return response;
+      });
+      server->SetOnOptions([](const http::request<http::dynamic_body> &request) -> http::response<http::dynamic_body> {
+        http::response<http::dynamic_body> response;
+        response.result(http::status::ok);
+        response.set("PreflightName", "PreflightValue");
+
+        return response;
+      });
+      server->Start();
+
+      auto resource = IHttpResource::Make();
+      resource->SetOnResponse([/*&promise, */&response](int64_t, IHttpResource::Response callbackResponse) {
+        response = callbackResponse;
+      });
+      resource->SetOnData([&promise, &content](int64_t, string &&responseData) {
+        content = std::move(responseData);
+        promise.set_value();
+      });
+      resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
+        error = std::move(message);
+        promise.set_value();
+
+        server->Abort();
+      });
+
+      //clang-format off
+      resource->SendRequest(
+          "OPTIONS",
+          "http://localhost:5555",
+          {} /*headers*/,
+          {} /*bodyData*/,
+          "text",
+          false,
+          1000 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
+      resource->SendRequest(
+          "GET",
+          "http://localhost:5555",
+          {} /*headers*/,
+          {} /*bodyData*/,
+          "text",
+          false,
+          1000 /*timeout*/,
+          false /*withCredentials*/,
+          [](int64_t) {});
+      //clang-format on
+
+      server->Stop();
+    }
+
+    promise.get_future().wait();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    for (auto header : response.Headers) {
+      if (header.first == "PreflightName") {
+        Assert::AreEqual({"PreflightValue"}, header.second, L"Wrong header");
+      } else {
+        string message = "Unexpected header: [" + header.first + "]=[" + header.second + "]";
+        Assert::Fail(Microsoft::Common::Unicode::Utf8ToUtf16(message).c_str());
+      }
+    }
+    Assert::AreEqual({"Response Body"}, content);
+  }
 };
