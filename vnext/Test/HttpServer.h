@@ -96,6 +96,13 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   ///
   void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
                     const boost::beast::http::request<boost::beast::http::dynamic_body> &)> &&handler) noexcept;
+
+  ///
+  // Function that creates an HTTP response to send to the client on GET
+  // requests.
+  ///
+  void SetOnOptions(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
+                    const boost::beast::http::request<boost::beast::http::dynamic_body> &)> &&handler) noexcept;
 };
 
 } // namespace Microsoft::React::Test

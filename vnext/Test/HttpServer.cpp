@@ -282,6 +282,12 @@ void HttpServer::SetOnGet(
   m_callbacks.OnGet = std::move(handler);
 }
 
+void HttpServer::SetOnOptions(
+  function<http::response<http::dynamic_body>(const http::request<http::dynamic_body> &)> &&handler) noexcept
+{
+  m_callbacks.OnOptions = std::move(handler);
+}
+
 #pragma endregion HttpServer
 
 } // namespace Microsoft::React::Test
