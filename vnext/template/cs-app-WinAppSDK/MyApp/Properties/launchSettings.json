@@ -1,7 +1,10 @@
 {
   "profiles": {
-    "MyApp": {
+    "{{ name }} (Package)": {
       "commandName": "MsixPackage"
+    },
+    "{{ name }} (Unpackaged)": {
+      "commandName": "Project"
     }
   }
 }
