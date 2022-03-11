@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update CppAppConsumeCSharpModules.props for VS2022",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
