@@ -106,14 +106,17 @@ class ImageShadowNode : public ShadowNodeBase {
   winrt::event_token m_onLoadEndToken;
 };
 
-ImageViewManager::ImageViewManager(const Mso::React::IReactContext &context) : Super(context) {}
+ImageViewManager::ImageViewManager(const Mso::React::IReactContext &context) : Super(context) {
+  m_imageCache = std::make_shared<ImageCache>(100);
+  m_surfaceCache = std::make_shared<SurfaceCache>(100);
+}
 
 const wchar_t *ImageViewManager::GetName() const {
   return L"RCTImageView";
 }
 
 XamlView ImageViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
-  return ReactImage::Create().as<winrt::Grid>();
+  return ReactImage::Create(m_imageCache, m_surfaceCache).as<winrt::Grid>();
 }
 
 ShadowNode *ImageViewManager::createShadow() const {

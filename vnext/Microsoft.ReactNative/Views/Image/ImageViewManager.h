@@ -30,5 +30,7 @@ class ImageViewManager : public FrameworkElementViewManager {
 
  private:
   void setSource(xaml::Controls::Grid grid, const winrt::Microsoft::ReactNative::JSValue &sources);
+  std::shared_ptr<ImageCache> m_imageCache{nullptr};
+  std::shared_ptr<SurfaceCache> m_surfaceCache{nullptr};
 };
 } // namespace Microsoft::ReactNative

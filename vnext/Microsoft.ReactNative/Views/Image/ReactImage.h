@@ -5,8 +5,10 @@
 
 #include "CppWinRTIncludes.h"
 #include "ReactImageBrush.h"
+#include "Utils/LRUCache.h"
 
 #include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Media.h>
 
 #include <JSValue.h>
 #include <folly/dynamic.h>
@@ -29,13 +31,16 @@ struct ReactImageSource {
   ImageSourceFormat sourceFormat = ImageSourceFormat::Bitmap;
 };
 
+typedef typename LRUCache<std::string, xaml::Media::Imaging::BitmapImage> ImageCache;
+typedef typename LRUCache<std::string, xaml::Media::LoadedImageSurface> SurfaceCache;
+
 struct ReactImage : xaml::Controls::GridT<ReactImage> {
   using Super = xaml::Controls::GridT<ReactImage>;
 
-  ReactImage() = default;
-
  public:
-  static winrt::com_ptr<ReactImage> Create();
+  static winrt::com_ptr<ReactImage> Create(std::shared_ptr<ImageCache> imageCache, std::shared_ptr<SurfaceCache> surfaceCache);
+
+  ReactImage(std::shared_ptr<ImageCache> imageCache, std::shared_ptr<SurfaceCache> surfaceCache): m_imageCache{imageCache}, m_surfaceCache{surfaceCache} {};
 
   // Overrides
   winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
@@ -72,6 +77,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
   GetImageMemoryStreamAsync(ReactImageSource source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
+  bool ReactImage::TrySetBackgroundSync(bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};
@@ -79,6 +85,8 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   ReactImageSource m_imageSource;
   facebook::react::ImageResizeMode m_resizeMode{facebook::react::ImageResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
+  std::shared_ptr<ImageCache> m_imageCache{nullptr};
+  std::shared_ptr<SurfaceCache> m_surfaceCache{nullptr};
 
   winrt::event<winrt::Windows::Foundation::EventHandler<bool>> m_onLoadEndEvent;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;

@@ -33,8 +33,8 @@ using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 namespace Microsoft::ReactNative {
 
-/*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
-  auto reactImage = winrt::make_self<ReactImage>();
+/*static*/ winrt::com_ptr<ReactImage> ReactImage::Create(std::shared_ptr<ImageCache> imageCache, std::shared_ptr<SurfaceCache> surfaceCache) {
+  auto reactImage = winrt::make_self<ReactImage>(imageCache, surfaceCache);
   // Grid inheirts the layout direction from parent and mirrors the background image in RTL mode.
   // Forcing the container to LTR mode to avoid the unexpected mirroring behavior.
   reactImage->FlowDirection(xaml::FlowDirection::LeftToRight);
@@ -213,7 +213,70 @@ void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
 #endif
 }
 
+// This solves the problem where images render a few frames later than adjacent UI,
+// which appear as flickers/flashes and make the app perceived as annoying and slow.
+// This method tries to render images synchronously if they are already cached
+// so that they will be painted on the screen at the same time with other UI, such as text.
+bool ReactImage::TrySetBackgroundSync(bool fireLoadEndEvent) {
+  const ReactImageSource source{m_imageSource};
+
+  if (source.sourceType != ImageSourceType::Uri) {
+    return false;
+  }
+
+  bool shouldUseCache = false;
+
+  if (!m_useCompositionBrush && m_imageCache->Exists(source.uri)) {
+    shouldUseCache = true;
+
+    winrt::ImageBrush imageBrush{Background().try_as<winrt::ImageBrush>()};
+    bool createImageBrush{!imageBrush};
+
+    if (createImageBrush) {
+      imageBrush = winrt::ImageBrush{};
+      imageBrush.Stretch(ResizeModeToStretch());
+    }
+
+    auto bitmap{m_imageCache->Get(source.uri)};
+    m_imageSource.height = bitmap.PixelHeight();
+    m_imageSource.width = bitmap.PixelWidth();
+    imageBrush.ImageSource(bitmap);
+
+    if (createImageBrush) {
+      Background(imageBrush);
+    }
+  } else if (m_useCompositionBrush && m_surfaceCache->Exists(source.uri)) {
+    shouldUseCache = true;
+
+    const auto compositionBrush{ReactImageBrush::Create()};
+    const auto surface{m_surfaceCache->Get(source.uri)};
+
+    winrt::Size size{surface.DecodedPhysicalSize()};
+    m_imageSource.height = size.Height;
+    m_imageSource.width = size.Width;
+
+    compositionBrush->Source(surface);
+    compositionBrush->ResizeMode(m_resizeMode);
+    compositionBrush->BlurRadius(m_blurRadius);
+    compositionBrush->TintColor(m_tintColor);
+
+    Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
+  }
+
+  if (shouldUseCache && fireLoadEndEvent) {
+    m_onLoadEndEvent(*this, true);
+  }
+
+  return shouldUseCache;
+}
+
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
+  const bool succeeded = TrySetBackgroundSync(fireLoadEndEvent);
+
+  if (succeeded) {
+    co_return;
+  }
+
   const ReactImageSource source{m_imageSource};
   winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
 
@@ -273,7 +336,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       if (surface) {
         strong_this->m_surfaceLoadedRevoker = surface.LoadCompleted(
             winrt::auto_revoke,
-            [weak_this, compositionBrush, surface, fireLoadEndEvent, uri](
+            [weak_this, compositionBrush, surface, fireLoadEndEvent, uri, source](
                 winrt::LoadedImageSurface const & /*sender*/,
                 winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
               if (auto strong_this{weak_this.get()}) {
@@ -298,6 +361,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                   compositionBrush->TintColor(strong_this->m_tintColor);
 
                   strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
+
+                  if (source.sourceType == ImageSourceType::Uri) {
+                    strong_this->m_surfaceCache->Put(source.uri, surface);
+                  }
+
                   succeeded = true;
                 } else {
                   ImageFailed(uri, args);
@@ -369,11 +437,14 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       } else {
         winrt::BitmapImage bitmapImage{imageBrush.ImageSource().try_as<winrt::BitmapImage>()};
 
-        if (!bitmapImage) {
+        // Create a new bitmap image if
+        // a.) there is no bitmap image from the image brush, or
+        // b.) the uri has changed, (Since the BitmapImage is mutable, to ensure the cache's integrity, a uri must pair with its own bitmap image)
+        if (!bitmapImage || !(uri && bitmapImage.UriSource() && uri.AbsoluteUri() == bitmapImage.UriSource().AbsoluteUri())) {
           bitmapImage = winrt::BitmapImage{};
 
           strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(
-              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent](const auto &, const auto &) {
+              winrt::auto_revoke, [imageBrush, weak_this, fireLoadEndEvent, source](const auto &, const auto &) {
                 imageBrush.Opacity(1);
 
                 auto strong_this{weak_this.get()};
@@ -382,6 +453,10 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                     strong_this->m_imageSource.height = bitmap.PixelHeight();
                     strong_this->m_imageSource.width = bitmap.PixelWidth();
                     imageBrush.Stretch(strong_this->ResizeModeToStretch());
+
+                    if (source.sourceType == ImageSourceType::Uri) {
+                      strong_this->m_imageCache->Put(source.uri, bitmap);
+                    }
                   }
 
                   strong_this->m_onLoadEndEvent(*strong_this, true);
