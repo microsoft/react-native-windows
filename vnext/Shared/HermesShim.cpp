@@ -50,8 +50,12 @@ constexpr const char *makeHermesRuntimeWithWERSymbol =
 constexpr const char *hermesCrashHandlerSymbol = "?hermesCrashHandler@hermes@facebook@@YAXAAVHermesRuntime@12@H@Z";
 #endif
 
+static std::once_flag s_hermesLoading;
+
 static void EnsureHermesLoaded() noexcept {
-  if (!s_hermesModule) {
+  std::call_once(s_hermesLoading, []() {
+    VerifyElseCrashSz(!s_hermesModule, "Invalid state: \"hermes.dll\" being loaded again.");
+
     s_hermesModule = LoadLibrary(L"hermes.dll");
     VerifyElseCrashSz(s_hermesModule, "Could not load \"hermes.dll\"");
 
@@ -78,7 +82,7 @@ static void EnsureHermesLoaded() noexcept {
     s_hermesCrashHandler =
         reinterpret_cast<decltype(s_hermesCrashHandler)>(GetProcAddress(s_hermesModule, hermesCrashHandlerSymbol));
     VerifyElseCrash(s_hermesCrashHandler);
-  }
+  });
 }
 
 std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntime(const hermes::vm::RuntimeConfig &runtimeConfig) {
