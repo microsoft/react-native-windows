@@ -8,6 +8,13 @@ import "ReactNativeHost.idl";
 
 namespace Microsoft.ReactNative
 {
+  
+//  [webhosthidden]
+//  struct PointerPressedArgs {
+    //Int32 X;
+    //Int32 Y;
+  //};
+
   [default_interface]
   [webhosthidden]
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
@@ -33,8 +40,10 @@ namespace Microsoft.ReactNative
     Windows.Foundation.Size Measure(Windows.Foundation.Size availiableSize);
     Windows.Foundation.Size Arrange(Windows.Foundation.Size availiableSize);
 
-    void OnMouseDown(Windows.Foundation.Point point);
-    void OnMouseUp(Windows.Foundation.Point point);
+    Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
+
+    //void OnPointerPressed(PointerPressedArgs args);
+    //void OnMouseUp(Windows.Foundation.Point point);
     void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
 
     DOC_STRING(

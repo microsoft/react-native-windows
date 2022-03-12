@@ -527,6 +527,11 @@
     <ClCompile Include="Fabric\SwitchComponentView.cpp" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\CompWindowsTextInputComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputShadowNode.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="SchedulerSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -700,6 +705,7 @@
     <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp" />
     <ClCompile Include="Views\Text\TextTransformVisitor.cpp" />
     <ClCompile Include="Views\Text\TextVisitor.cpp" />
+    <ClCompile Include="Views\CompEventHandler.cpp" />
     <ClCompile Include="Views\TouchEventHandler.cpp" />
     <ClCompile Include="Views\ViewControl.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />

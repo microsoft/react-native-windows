@@ -17,6 +17,7 @@ struct BaseComponentView : IComponentView {
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   void parent(IComponentView *parent) noexcept override;
   IComponentView *parent() const noexcept override;
+  RECT getClientRect() const noexcept override;
 
  protected:
   facebook::react::SharedViewEventEmitter m_eventEmitter;

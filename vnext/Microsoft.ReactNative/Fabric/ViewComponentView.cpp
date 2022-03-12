@@ -33,6 +33,11 @@ IComponentView *BaseComponentView::parent() const noexcept {
   return nullptr;
 }
 
+RECT BaseComponentView::getClientRect() const noexcept {
+  assert(false);
+  return {0};
+}
+
 ViewComponentView::ViewComponentView() {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;

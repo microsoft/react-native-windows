@@ -87,6 +87,14 @@ class SharedColor {
     return m_color->m_color;
   }
 
+  COLORREF AsColorRefNoAlpha() const {
+    return RGB(m_color->m_color.R, m_color->m_color.G, m_color->m_color.B);
+  }
+
+  COLORREF AsColorRefWithAlpha() const {
+    return RGB(m_color->m_color.R, m_color->m_color.G, m_color->m_color.B) | (m_color->m_color.A << 24);
+  }
+
   xaml::Media::Brush AsWindowsBrush() const;
 
  private:

@@ -220,19 +220,64 @@ void CompRootView::SetTag(int64_t tag) noexcept {
   m_rootTag = tag;
 }
 
-void CompRootView::OnMouseDown(Windows::Foundation::Point point) noexcept {
+int64_t CompRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+  if (m_rootTag == -1)
+    return 0;
+
+  if (m_compEventHandler)
+  {
+    auto result = m_compEventHandler->SendMessage(static_cast<facebook::react::SurfaceId>(m_rootTag), msg, wParam, lParam);
+    if (result)
+      return result;
+  }
+    /*
+
+  switch (msg) {
+    case WM_MOUSEWHEEL: {
+      POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
+      ::ScreenToClient(m_hwnd, &pt);
+      int32_t delta = GET_WHEEL_DELTA_WPARAM(wParam);
+      m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
+      return 0;
+    }
+    case WM_POINTERDOWN: {
+        if (m_compEventHandler) {
+    m_compEventHandler->PointerPressed(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)}, 1);
+  }
+      return 0;
+    }
+    case WM_POINTERUP: {
+      if (m_compEventHandler) {
+        m_compEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)}, 1);
+      }
+      return 0;
+    }
+    //case WM_WINDOWPOSCHANGED: {
+
+  }
+    */
+
+  return 0;
+}
+
+/*
+void CompRootView::OnPointerPressed(const PointerPressedArgs &args) noexcept {
   if (m_rootTag == -1)
     return;
 
-  m_touchEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, 1);
+  if (m_compEventHandler) {
+    m_compEventHandler->PointerPressed(static_cast<facebook::react::SurfaceId>(m_rootTag), args, 1);
+  }
 }
 
 void CompRootView::OnMouseUp(Windows::Foundation::Point point) noexcept {
   if (m_rootTag == -1)
     return;
-
-  m_touchEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, 1);
+  if (m_compEventHandler) {
+    m_compEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, 1);
+  }
 }
+*/
 
 /*
 void CompRootView::OnPointerDown(int32_t pointerId) noexcept
@@ -240,12 +285,14 @@ void CompRootView::OnPointerDown(int32_t pointerId) noexcept
   if (m_rootTag == -1)
 return;
 
-m_touchEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTag), pointerId);
+m_compEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTag), pointerId);
 }
 */
 
 void CompRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept {
-  m_touchEventHandler->ScrollWheel(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
+  if (m_compEventHandler) {
+    m_compEventHandler->ScrollWheel(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
+  }
 }
 
 void CompRootView::InitRootView(
@@ -265,7 +312,7 @@ void CompRootView::InitRootView(
   get_strong().as(compRootView);
 
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
-  m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(
+  m_compEventHandler = std::make_shared<::Microsoft::ReactNative::CompEventHandler>(
       *m_context, m_reactViewOptions->UseFabric && !reactInstance->Options().UseWebDebugger(), compRootView);
 
   UpdateRootViewInternal();

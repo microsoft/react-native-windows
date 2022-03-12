@@ -33,6 +33,7 @@
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Core.h>
+#include "TextInput/WindowsTextInputComponentDescriptor.h"
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -172,6 +173,8 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextInputComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
+    providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
     return providerRegistry;
   }();
 

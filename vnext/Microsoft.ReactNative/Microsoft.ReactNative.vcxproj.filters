@@ -245,6 +245,9 @@
     <ClCompile Include="Views\TextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
+    <ClCompile Include="Views\CompEventHandler.cpp">
+      <Filter>Views</Filter>
+    </ClCompile>
     <ClCompile Include="Views\TouchEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>

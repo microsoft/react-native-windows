@@ -19,6 +19,7 @@
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/textinput/iostextinput/TextInputShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
+#include "TextInput/WindowsTextInputShadowNode.h"
 
 #include "ActivityIndicatorComponentView.h"
 #include "ImageComponentView.h"
@@ -27,6 +28,7 @@
 #include "SliderComponentView.h"
 #include "SwitchComponentView.h"
 #include "TextComponentView.h"
+#include "TextInput/CompWindowsTextInputComponentView.h"
 #include "ViewComponentView.h"
 #include "XamlView.h"
 
@@ -86,6 +88,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<CompScrollViewComponentView>();
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = std::make_shared<CompImageComponentView>(m_context);
+  } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
+    view = std::make_shared<CompWindowsTextInputComponentView>(m_context);
   } else {
     view = std::make_shared<CompViewComponentView>();
   }

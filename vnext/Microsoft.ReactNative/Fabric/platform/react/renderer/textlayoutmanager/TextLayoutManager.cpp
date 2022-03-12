@@ -79,6 +79,20 @@ TextMeasurement TextLayoutManager::measure(
   return {};
 };
 
+
+/**
+ * Measures an AttributedString on the platform, as identified by some
+ * opaque cache ID.
+ */
+TextMeasurement TextLayoutManager::measureCachedSpannableById(
+    int64_t cacheId,
+    ParagraphAttributes const &paragraphAttributes,
+    LayoutConstraints layoutConstraints) const {
+  assert(false);
+  TextMeasurement tm;
+  return tm;
+}
+
 LinesMeasurements TextLayoutManager::measureLines(
     AttributedString attributedString,
     ParagraphAttributes paragraphAttributes,

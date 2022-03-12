@@ -6,7 +6,7 @@
 
 #include "ReactHost/React.h"
 #include "SIPEventHandler.h"
-#include "TouchEventHandler.h"
+#include "CompEventHandler.h"
 #include "Views/ICompRootView.h"
 #include "Views/KeyboardEventHandler.h"
 
@@ -48,9 +48,11 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   Windows::Foundation::Size Measure(Windows::Foundation::Size const &availableSize) const;
   Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
 
-  void OnMouseDown(Windows::Foundation::Point point) noexcept;
-  void OnMouseUp(Windows::Foundation::Point point) noexcept;
-  // void OnPointerDown(int32_t pointerId) noexcept;
+  int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
+
+  //void OnPointerPressed(const PointerPressedArgs& point) noexcept;
+  //void OnMouseUp(Windows::Foundation::Point point) noexcept;
+  // // void OnPointerDown(int32_t pointerId) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 
   // Used by RootViewManager
@@ -103,7 +105,7 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   Mso::CntPtr<Mso::React::IReactContext> m_context;
   Mso::CntPtr<Mso::React::IReactViewHost> m_reactViewHost;
   std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
-  std::shared_ptr<::Microsoft::ReactNative::TouchEventHandler> m_touchEventHandler;
+  std::shared_ptr<::Microsoft::ReactNative::CompEventHandler> m_compEventHandler;
   /*
   xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
   xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};

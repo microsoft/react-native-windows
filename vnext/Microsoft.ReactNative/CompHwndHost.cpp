@@ -106,14 +106,16 @@ LRESULT CompHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) no
       m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
       return 0;
     }
-    case WM_LBUTTONDOWN: {
-      m_compRootView.OnMouseDown({static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))});
+    /*
+    case WM_POINTERDOWN: {
+      m_compRootView.OnPointerPressed({GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)});
       return 0;
     }
     case WM_LBUTTONUP: {
       m_compRootView.OnMouseUp({static_cast<float>(GET_X_LPARAM(lParam)), static_cast<float>(GET_Y_LPARAM(lParam))});
       return 0;
     }
+    */
     case WM_WINDOWPOSCHANGED: {
       UpdateSize();
       /*
@@ -126,6 +128,10 @@ LRESULT CompHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) no
       */
       return 0;
     }
+  }
+
+  if (m_compRootView) {
+    return m_compRootView.SendMessage(msg, wParam, lParam);
   }
   return 0;
 }

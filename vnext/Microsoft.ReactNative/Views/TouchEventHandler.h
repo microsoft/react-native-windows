@@ -11,6 +11,7 @@
 #include <set>
 #include "Utils/BatchingEventEmitter.h"
 #include "XamlView.h"
+#include <winrt/Microsoft.ReactNative.h>
 
 #ifdef USE_FABRIC
 #include <react/renderer/components/view/Touch.h>
@@ -30,10 +31,6 @@ namespace Microsoft::ReactNative {
 class TouchEventHandler {
  public:
   TouchEventHandler(const Mso::React::IReactContext &context, bool fabric);
-  TouchEventHandler(
-      const Mso::React::IReactContext &context,
-      bool fabric,
-      const winrt::Microsoft::ReactNative::CompRootView &compRootView);
   virtual ~TouchEventHandler();
 
   void AddTouchHandlers(XamlView xamlView, XamlView rootView = nullptr, bool handledEventsToo = false);

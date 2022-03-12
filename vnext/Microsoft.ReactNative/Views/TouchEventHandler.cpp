@@ -41,14 +41,6 @@ TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, b
       m_batchingEventEmitter{
           std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 
-TouchEventHandler::TouchEventHandler(
-    const Mso::React::IReactContext &context,
-    bool fabric,
-    const winrt::Microsoft::ReactNative::CompRootView &compRootView)
-    : TouchEventHandler(context, fabric) {
-  m_compRootView = compRootView;
-};
-
 TouchEventHandler::~TouchEventHandler() {
   RemoveTouchHandlers();
 }

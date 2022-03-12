@@ -10,6 +10,10 @@
 
 namespace Microsoft::ReactNative {
 
+struct CompBaseComponentView;
+CompBaseComponentView *GetFocusedComponent() noexcept;
+void SetFocusedComponent(CompBaseComponentView *value) noexcept;
+
 struct CompBaseComponentView : public IComponentView {
   virtual const winrt::Windows::UI::Composition::Visual Visual() const noexcept = 0;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
@@ -24,6 +28,8 @@ struct CompBaseComponentView : public IComponentView {
 
   virtual facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept = 0;
   virtual bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept;
+  virtual int64_t SendMessage(uint32_t msg,    uint64_t wParam,    int64_t lParam) noexcept;
+  RECT getClientRect() const noexcept override;
 
  protected:
   winrt::Windows::UI::Composition::Compositor m_compositor;
@@ -49,6 +55,8 @@ struct CompViewComponentView : public CompBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
+  RECT getClientRect() const noexcept override;
+
   facebook::react::SharedProps props() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
