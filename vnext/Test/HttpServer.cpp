@@ -3,6 +3,7 @@
 
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/version.hpp>
+#include <boost/asio/dispatch.hpp>
 #include <boost/asio/strand.hpp>
 
 // Include to prevent 'incomplete type' errors.
@@ -164,14 +165,15 @@ void HttpSession::Close()
 
 void HttpSession::Start()
 {
-  Read();
+  // Ensure thread-safety.
+  boost::asio::dispatch(m_stream.get_executor(), bind_front_handler(&HttpSession::Read, shared_from_this()));
 }
 
 #pragma endregion // HttpSession
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context}, /*m_socket{m_context},*/ m_sessions{}
+HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{make_strand(m_context)}, m_sessions{}
 {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
