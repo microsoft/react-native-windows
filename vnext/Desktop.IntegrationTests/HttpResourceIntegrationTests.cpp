@@ -22,6 +22,9 @@ using std::promise;
 using std::string;
 using std::vector;
 
+using DynamicRequest = boost::beast::http::request<http::dynamic_body>;
+using DynamicResponse = boost::beast::http::response<http::dynamic_body>;
+
 TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(RequestGetSucceeds) {
     promise<void> promise;
@@ -32,7 +35,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     {
       auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
       server->SetOnGet([](const http::request<http::dynamic_body> &request) -> http::response<http::dynamic_body> {
-        http::response<http::dynamic_body> response;
+        DynamicResponse response;
         response.result(http::status::ok);
 
         return response;
@@ -78,8 +81,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     // HTTP call scope
     {
       auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
-      server->SetOnGet([](const http::request<http::dynamic_body> &request) -> http::response<http::dynamic_body> {
-        http::response<http::dynamic_body> response;
+      server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
+        DynamicResponse response;
         response.result(http::status::ok);
 
         // Response header
@@ -170,15 +173,15 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     // HTTP call scope
     {
       auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
-      server->SetOnGet([](const http::request<http::dynamic_body>& request) -> http::response<http::dynamic_body> {
-        http::response<http::dynamic_body> response;
+      server->SetOnGet([](const DynamicRequest& request) -> DynamicResponse {
+        DynamicResponse response;
         response.result(http::status::ok);
         response.body() = Test::CreateStringResponseBody("Response Body");
 
         return response;
       });
-      server->SetOnOptions([](const http::request<http::dynamic_body> &request) -> http::response<http::dynamic_body> {
-        http::response<http::dynamic_body> response;
+      server->SetOnOptions([](const DynamicRequest &request) -> DynamicResponse {
+        DynamicResponse response;
         response.result(http::status::ok);
         response.set("PreflightName", "PreflightValue");
 
