@@ -67,10 +67,12 @@ struct CompViewComponentView : public CompBaseComponentView {
  private:
   void ensureVisual() noexcept;
   bool shouldBeControl() const noexcept;
+  void ensureBorderVisual() noexcept;
 
   facebook::react::SharedViewProps m_props;
   facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::UI::Composition::Visual m_visual{nullptr};
+  winrt::Windows::UI::Composition::SpriteVisual m_borderVisual{nullptr};
 };
 
 } // namespace Microsoft::ReactNative
