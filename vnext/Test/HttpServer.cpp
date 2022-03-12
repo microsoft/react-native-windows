@@ -173,7 +173,10 @@ void HttpSession::Start()
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{make_strand(m_context)}, m_sessions{}
+HttpServer::HttpServer(string &&address, uint16_t port)
+  : m_strand{make_strand(m_context)}
+  , m_acceptor{m_strand}
+  //, m_sessions{}
 {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
@@ -214,7 +217,8 @@ void HttpServer::Accept()
     return;
 
   m_acceptor.async_accept(
-    make_strand(m_context),
+    //make_strand(m_context),
+    m_strand,
     bind_front_handler(
       &HttpServer::OnAccept,
       shared_from_this()
@@ -231,9 +235,11 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
   }
   else
   {
-    auto session = make_shared<HttpSession>(std::move(socket), m_callbacks);
-    m_sessions.push_back(session);
-    session->Start();
+    //auto session = make_shared<HttpSession>(std::move(socket), m_callbacks);
+    //m_sessions.push_back(session);
+    //session->Start();
+
+    make_shared<HttpSession>(std::move(socket), m_callbacks)->Start();
   }
 
   // ISS:2735328: Uncomment after implementing multiple context threading.

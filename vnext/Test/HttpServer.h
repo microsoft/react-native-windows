@@ -5,6 +5,7 @@
 #include <boost/beast/core/flat_buffer.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/http.hpp>
+#include <boost/asio/strand.hpp>
 
 #include <thread>
 
@@ -65,9 +66,10 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
 {
   std::thread m_contextThread;
   boost::asio::io_context m_context;
+  boost::asio::strand<boost::asio::io_context::executor_type> m_strand;//
   boost::asio::ip::tcp::acceptor m_acceptor;
   HttpCallbacks m_callbacks;
-  std::vector<std::shared_ptr<HttpSession>> m_sessions;
+  //std::vector<std::shared_ptr<HttpSession>> m_sessions;
 
   void OnAccept(boost::system::error_code ec, boost::asio::ip::tcp::socket socket);
 
