@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 12 Mar 2022 06:09:07 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.120",
+      "version": "0.0.0-canary.120",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "56cacd91cc27a76298cb1a357831d2cc31775b12",
+            "comment": "Update CLI project config tests with latest templates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Mar 2022 06:09:23 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.119",
       "version": "0.0.0-canary.119",
