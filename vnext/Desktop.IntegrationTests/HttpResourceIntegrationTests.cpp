@@ -34,7 +34,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     // HTTP call scope
     {
       auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
-      server->SetOnGet([](const http::request<http::dynamic_body> &request) -> http::response<http::dynamic_body> {
+      server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
         DynamicResponse response;
         response.result(http::status::ok);
 
