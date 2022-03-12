@@ -32,7 +32,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     int statusCode = 0;
 
     // HTTP call scope
-    {
+    //{
       auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
       server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
         DynamicResponse response;
@@ -65,7 +65,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
           [](int64_t) {});
 
       server->Stop();
-    }
+    //}
     // Synchronize response.
     promise.get_future().wait();
 
@@ -79,7 +79,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     IHttpResource::Response response;
 
     // HTTP call scope
-    {
+    //{
       auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
       server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
         DynamicResponse response;
@@ -127,7 +127,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       //clang-format on
 
       server->Stop();
-    }
+    //}
 
     promise.get_future().wait();
 
@@ -171,7 +171,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string content;
 
     // HTTP call scope
-    {
+    //{
       auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
       server->SetOnGet([](const DynamicRequest& request) -> DynamicResponse {
         DynamicResponse response;
@@ -228,7 +228,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       //clang-format on
 
       server->Stop();
-    }
+    //}
 
     promise.get_future().wait();
 
