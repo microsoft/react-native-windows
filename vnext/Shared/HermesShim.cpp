@@ -39,8 +39,12 @@ constexpr const char *dumpSampledTraceToFileSymbol =
     "?dumpSampledTraceToFile@HermesRuntime@hermes@facebook@@SAXABV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z";
 #endif
 
+static std::once_flag s_hermesLoading;
+
 static void EnsureHermesLoaded() noexcept {
-  if (!s_hermesModule) {
+  std::call_once(s_hermesLoading, []() {
+    VerifyElseCrashSz(!s_hermesModule, "Invalid state: \"hermes.dll\" being loaded again.");
+
     s_hermesModule = LoadLibrary(L"hermes.dll");
     VerifyElseCrashSz(s_hermesModule, "Could not load \"hermes.dll\"");
 
@@ -59,7 +63,7 @@ static void EnsureHermesLoaded() noexcept {
     s_dumpSampledTraceToFile = reinterpret_cast<decltype(s_dumpSampledTraceToFile)>(
         GetProcAddress(s_hermesModule, dumpSampledTraceToFileSymbol));
     VerifyElseCrash(s_dumpSampledTraceToFile);
-  }
+  });
 }
 
 std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntime(const hermes::vm::RuntimeConfig &runtimeConfig) {
