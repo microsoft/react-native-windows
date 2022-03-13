@@ -24,12 +24,8 @@ boost::beast::multi_buffer CreateStringResponseBody(std::string&& content);
 struct HttpCallbacks
 {
   std::function<void()> OnResponseSent;
-    std::function<DynamicResponse(
-      const DynamicRequest &)>
-      OnGet;
-  std::function<DynamicResponse(
-      const DynamicRequest &)>
-      OnOptions;
+  std::function<DynamicResponse(const DynamicRequest &)> OnGet;
+  std::function<DynamicResponse(const DynamicRequest &)> OnOptions;
   std::function<void()> OnRequest;
 };
 
@@ -99,15 +95,13 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   // Function that creates an HTTP response to send to the client on GET
   // requests.
   ///
-  void SetOnGet(std::function<DynamicResponse(
-                    const DynamicRequest &)> &&handler) noexcept;
+  void SetOnGet(std::function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept;
 
   ///
   // Function that creates an HTTP response to send to the client on GET
   // requests.
   ///
-  void SetOnOptions(std::function<DynamicResponse(
-                    const DynamicRequest &)> &&handler) noexcept;
+  void SetOnOptions(std::function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept;
 };
 
 } // namespace Microsoft::React::Test

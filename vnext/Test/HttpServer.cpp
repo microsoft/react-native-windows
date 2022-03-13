@@ -42,7 +42,8 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 #pragma region HttpSession
 
 HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks)
-  : m_stream{ std::move(socket) }, m_callbacks{ callbacks } {}
+  : m_stream{ std::move(socket) }
+  , m_callbacks{ callbacks } {}
 
 HttpSession::~HttpSession() {}
 
