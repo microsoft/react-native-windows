@@ -31,35 +31,37 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     int statusCode = 0;
 
     auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
-    server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
+    server->SetOnGet([&promise](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("some resposne content");
+      promise.set_value();
 
       return response;
     });
     server->Start();
 
-    auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
-      statusCode = static_cast<int>(response.StatusCode);
-      promise.set_value();
-    });
-    resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
-      error = std::move(message);
-      promise.set_value();
+    //auto resource = IHttpResource::Make();
+    //resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
+    //  statusCode = static_cast<int>(response.StatusCode);
+    //  promise.set_value();
+    //});
+    //resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
+    //  error = std::move(message);
+    //  promise.set_value();
 
-      server->Abort();
-    });
-    resource->SendRequest(
-        "GET",
-        "http://localhost:5556",
-        {} /*header*/,
-        {} /*bodyData*/,
-        "text",
-        false,
-        1000 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
+    //  server->Abort();
+    //});
+    //resource->SendRequest(
+    //    "GET",
+    //    "http://localhost:5556",
+    //    {} /*header*/,
+    //    {} /*bodyData*/,
+    //    "text",
+    //    false,
+    //    1000 /*timeout*/,
+    //    false /*withCredentials*/,
+    //    [](int64_t) {});
 
       // Synchronize response.
     promise.get_future().wait();
