@@ -4,7 +4,6 @@
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/version.hpp>
 #include <boost/asio/dispatch.hpp>
-#include <boost/asio/strand.hpp>
 
 // Include to prevent 'incomplete type' errors.
 #include <boost/utility/in_place_factory.hpp>
@@ -42,10 +41,12 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 #pragma region HttpSession
 
 HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks,
-  boost::asio::strand<boost::asio::io_context::executor_type>& readStrand)
+  boost::asio::strand<boost::asio::io_context::executor_type>& readStrand,
+  boost::asio::strand<boost::asio::io_context::executor_type>& writeStrand)
   : m_stream{ std::move(socket) }
   , m_callbacks{ callbacks }
   , m_readStrand{ readStrand }
+  , m_writeStrand{ writeStrand }
 {
 }
 
@@ -179,9 +180,9 @@ void HttpSession::Start()
 #pragma region HttpServer
 
 HttpServer::HttpServer(string &&address, uint16_t port)
-  : m_strand{make_strand(m_context)}
-  , m_readStrand{make_strand(m_context)}
-  , m_acceptor{m_strand}
+  : m_readStrand{make_strand(m_context)}
+  , m_writeStrand{make_strand(m_context)}
+  , m_acceptor{make_strand(m_context)}
   //, m_sessions{}
 {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
@@ -223,8 +224,7 @@ void HttpServer::Accept()
     return;
 
   m_acceptor.async_accept(
-    //make_strand(m_context),
-    m_strand,
+    make_strand(m_context),
     bind_front_handler(
       &HttpServer::OnAccept,
       shared_from_this()
@@ -245,7 +245,7 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
     //m_sessions.push_back(session);
     //session->Start();
 
-    make_shared<HttpSession>(std::move(socket), m_callbacks, m_readStrand)->Start();
+    make_shared<HttpSession>(std::move(socket), m_callbacks, m_readStrand, m_writeStrand)->Start();
   }
 
   // ISS:2735328: Uncomment after implementing multiple context threading.
