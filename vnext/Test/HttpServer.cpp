@@ -161,7 +161,7 @@ void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
   m_response = nullptr;
 
   // ISS:2735328: Re-enable for subsequent dispatching.
-  Read();
+  //Read();
 }
 
 void HttpSession::Close()

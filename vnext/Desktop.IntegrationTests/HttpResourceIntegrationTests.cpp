@@ -30,43 +30,40 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string error;
     int statusCode = 0;
 
-    // HTTP call scope
-    //{
-      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
-      server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
-        DynamicResponse response;
-        response.result(http::status::ok);
+    auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
+    server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
+      DynamicResponse response;
+      response.result(http::status::ok);
 
-        return response;
-      });
-      server->Start();
+      return response;
+    });
+    server->Start();
 
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
-        statusCode = static_cast<int>(response.StatusCode);
-        promise.set_value();
-      });
-      resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
-        error = std::move(message);
-        promise.set_value();
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+      promise.set_value();
+    });
+    resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
+      error = std::move(message);
+      promise.set_value();
 
-        server->Abort();
-      });
-      resource->SendRequest(
-          "GET",
-          "http://localhost:5556",
-          {} /*header*/,
-          {} /*bodyData*/,
-          "text",
-          false,
-          1000 /*timeout*/,
-          false /*withCredentials*/,
-          [](int64_t) {});
+      server->Abort();
+    });
+    resource->SendRequest(
+        "GET",
+        "http://localhost:5556",
+        {} /*header*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
 
-      server->Stop();
-    //}
-    // Synchronize response.
+      // Synchronize response.
     promise.get_future().wait();
+    server->Stop();
 
     Assert::AreEqual({}, error);
     Assert::AreEqual(200, statusCode);
