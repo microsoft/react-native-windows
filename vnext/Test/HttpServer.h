@@ -42,6 +42,7 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   HttpCallbacks& m_callbacks;
   boost::asio::strand<boost::asio::io_context::executor_type>& m_readStrand;
   boost::asio::strand<boost::asio::io_context::executor_type>& m_writeStrand;
+  boost::asio::io_context& m_context;
 
   void Read();
   void Respond();
@@ -53,7 +54,9 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
  public:
   HttpSession(boost::asio::ip::tcp::socket&& socket, HttpCallbacks &callbacks,
     boost::asio::strand<boost::asio::io_context::executor_type>& readStrand,
-    boost::asio::strand<boost::asio::io_context::executor_type>& writeStrand);
+    boost::asio::strand<boost::asio::io_context::executor_type>& writeStrand,
+    boost::asio::io_context& ioContext
+  );
 
   ~HttpSession();
 

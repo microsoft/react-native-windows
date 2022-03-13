@@ -42,11 +42,14 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 
 HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks,
   boost::asio::strand<boost::asio::io_context::executor_type>& readStrand,
-  boost::asio::strand<boost::asio::io_context::executor_type>& writeStrand)
+  boost::asio::strand<boost::asio::io_context::executor_type>& writeStrand,
+  boost::asio::io_context& context
+  )
   : m_stream{ std::move(socket) }
   , m_callbacks{ callbacks }
   , m_readStrand{ readStrand }
   , m_writeStrand{ writeStrand }
+  , m_context{ context }
 {
 }
 
@@ -76,7 +79,12 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
     return;
   }
 
-  Respond(); // ISS:2735328 - Handle request.
+  boost::asio::post(m_readStrand, [self = shared_from_this()]()
+  {
+    self->Respond();
+  });
+
+  //Respond(); // ISS:2735328 - Handle request.
 }
 
 void HttpSession::Respond()
@@ -245,7 +253,7 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
     //m_sessions.push_back(session);
     //session->Start();
 
-    make_shared<HttpSession>(std::move(socket), m_callbacks, m_readStrand, m_writeStrand)->Start();
+    make_shared<HttpSession>(std::move(socket), m_callbacks, m_readStrand, m_writeStrand, m_context)->Start();
   }
 
   // ISS:2735328: Uncomment after implementing multiple context threading.
@@ -271,14 +279,15 @@ void HttpServer::Start()
 
   for (auto& t : m_contextThreads)
   {
-    t.detach();//TODO: join instead (later)?
+    //t.detach();//TODO: join instead (later)?
   }
 }
 
 void HttpServer::Stop()
 {
-  if (m_acceptor.is_open())
-    m_acceptor.close();
+  //if (m_acceptor.is_open())
+  //  m_acceptor.close();
+  m_contextThreads[0].join();
 }
 
 void HttpServer::Abort()
