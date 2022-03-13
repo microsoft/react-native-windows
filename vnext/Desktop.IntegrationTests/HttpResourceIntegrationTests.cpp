@@ -223,6 +223,34 @@ class listener : public std::enable_shared_from_this<listener> {
   }
 };
 
+namespace net = boost::asio;
+
+class HttpServer : public std::enable_shared_from_this<HttpServer> {
+  net::io_context m_context;
+  std::vector<std::thread> m_threads;
+  int const numThreads = 1;
+
+public:
+  HttpServer()
+  : m_context{numThreads} {}
+
+  ~HttpServer() {
+    for (auto &t : m_threads) {
+      t.join();
+    }
+  }
+
+  void Start(const char* url, int port) {
+    auto const address = net::ip::make_address(url);
+    std::make_shared<listener>(m_context, net::ip::tcp::endpoint{address, static_cast<unsigned short>(port)})->run();
+
+    m_threads.reserve(numThreads);
+    for (auto i = numThreads; i > 0; --i) {
+      m_context.run();
+    }
+  }
+};
+
 } // falco
 
 using namespace Microsoft::React;
@@ -239,7 +267,11 @@ using Test::DynamicResponse;
 TEST_CLASS (HttpResourceIntegrationTest) {
 
   TEST_METHOD(Vinime) {
-    auto const address = boost::asio::ip::make_address("0.0.0.0");
+
+    std::make_shared<falco::HttpServer>()->Start("0.0.0.0", 5556);
+
+#if 0
+				    auto const address = boost::asio::ip::make_address("0.0.0.0");
     unsigned short const port = 5556;
     int const threadCount = 1;
 
@@ -255,6 +287,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       });
     }
     ioc.run();
+#endif // 0
   }
 
   TEST_METHOD(RequestGetSucceeds) {
