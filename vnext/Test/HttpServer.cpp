@@ -41,9 +41,13 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 
 #pragma region HttpSession
 
-HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks)
+HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks,
+  boost::asio::strand<boost::asio::io_context::executor_type>& readStrand)
   : m_stream{ std::move(socket) }
-  , m_callbacks{ callbacks } {}
+  , m_callbacks{ callbacks }
+  , m_readStrand{ readStrand }
+{
+}
 
 HttpSession::~HttpSession() {}
 
@@ -156,7 +160,7 @@ void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
   m_response = nullptr;
 
   // ISS:2735328: Re-enable for subsequent dispatching.
-  // Read();
+  Read();
 }
 
 void HttpSession::Close()
@@ -176,6 +180,7 @@ void HttpSession::Start()
 
 HttpServer::HttpServer(string &&address, uint16_t port)
   : m_strand{make_strand(m_context)}
+  , m_readStrand{make_strand(m_context)}
   , m_acceptor{m_strand}
   //, m_sessions{}
 {
@@ -240,7 +245,7 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
     //m_sessions.push_back(session);
     //session->Start();
 
-    make_shared<HttpSession>(std::move(socket), m_callbacks)->Start();
+    make_shared<HttpSession>(std::move(socket), m_callbacks, m_readStrand)->Start();
   }
 
   // ISS:2735328: Uncomment after implementing multiple context threading.
@@ -252,20 +257,26 @@ void HttpServer::Start()
 {
   Accept();
 
-  m_contextThread = std::thread([self = shared_from_this()]()
+  for (int i = 0; i < 1; i++)
   {
+    m_contextThreads.emplace_back([self = shared_from_this()]()
+    {
     // See
     // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/reference/io_context/run/overload1.html
     // The run() function blocks until all work has finished and there are no
     // more handlers to be dispatched, or until the io_context has been stopped.
-    self->m_context.run();
-  });
+      self->m_context.run();
+    });
+  }
+
+  for (auto& t : m_contextThreads)
+  {
+    t.detach();//TODO: join instead (later)?
+  }
 }
 
 void HttpServer::Stop()
 {
-  m_contextThread.join();
-
   if (m_acceptor.is_open())
     m_acceptor.close();
 }

@@ -40,6 +40,7 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   DynamicRequest m_request;
   std::shared_ptr<DynamicResponse> m_response; // Generic response
   HttpCallbacks& m_callbacks;
+  boost::asio::strand<boost::asio::io_context::executor_type>& m_readStrand;
 
   void Read();
   void Respond();
@@ -49,7 +50,8 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   void OnWrite(bool close, boost::system::error_code ec, std::size_t transferred);
 
  public:
-  HttpSession(boost::asio::ip::tcp::socket&& socket, HttpCallbacks &callbacks);
+  HttpSession(boost::asio::ip::tcp::socket&& socket, HttpCallbacks &callbacks,
+    boost::asio::strand<boost::asio::io_context::executor_type>& readStrans);
 
   ~HttpSession();
 
@@ -63,9 +65,10 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
 ///
 class HttpServer : public std::enable_shared_from_this<HttpServer>
 {
-  std::thread m_contextThread;
+  std::vector<std::thread> m_contextThreads;
   boost::asio::io_context m_context;
   boost::asio::strand<boost::asio::io_context::executor_type> m_strand;//
+  boost::asio::strand<boost::asio::io_context::executor_type> m_readStrand;//EXPERIMENTAL
   boost::asio::ip::tcp::acceptor m_acceptor;
   HttpCallbacks m_callbacks;
   //std::vector<std::shared_ptr<HttpSession>> m_sessions;
