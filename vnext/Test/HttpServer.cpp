@@ -78,7 +78,7 @@ void HttpSession::Respond()
   switch (m_request.method())
   {
     case http::verb::get:
-      m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnGet(m_request));
+      m_response = make_shared<DynamicResponse>(m_callbacks.OnGet(m_request));
 
       http::async_write(
         m_stream,
@@ -95,11 +95,11 @@ void HttpSession::Respond()
     case http::verb::options:
       if (m_callbacks.OnOptions)
       {
-        m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnOptions(m_request));
+        m_response = make_shared<DynamicResponse>(m_callbacks.OnOptions(m_request));
       }
       else
       {
-        m_response = make_shared<http::response<http::dynamic_body>>(http::status::accepted, m_request.version());
+        m_response = make_shared<DynamicResponse>(http::status::accepted, m_request.version());
         m_response->set(
             http::field::access_control_request_headers,
             "Access-Control-Allow-Headers, Content-type, Custom-Header, Header-expose-allowed");
@@ -285,13 +285,13 @@ void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept
 }
 
 void HttpServer::SetOnGet(
-  function<http::response<http::dynamic_body>(const http::request<http::dynamic_body> &)> &&handler) noexcept
+  function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept
 {
   m_callbacks.OnGet = std::move(handler);
 }
 
 void HttpServer::SetOnOptions(
-  function<http::response<http::dynamic_body>(const http::request<http::dynamic_body> &)> &&handler) noexcept
+  function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept
 {
   m_callbacks.OnOptions = std::move(handler);
 }

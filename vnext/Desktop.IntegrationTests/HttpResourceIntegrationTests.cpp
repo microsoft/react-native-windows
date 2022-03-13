@@ -21,9 +21,8 @@ namespace http = boost::beast::http;
 using std::promise;
 using std::string;
 using std::vector;
-
-using DynamicRequest = boost::beast::http::request<http::dynamic_body>;
-using DynamicResponse = boost::beast::http::response<http::dynamic_body>;
+using Test::DynamicRequest;
+using Test::DynamicResponse;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(RequestGetSucceeds) {

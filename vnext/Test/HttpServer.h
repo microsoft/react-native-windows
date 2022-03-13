@@ -12,6 +12,9 @@
 namespace Microsoft::React::Test
 {
 
+using DynamicRequest = boost::beast::http::request<boost::beast::http::dynamic_body>;
+using DynamicResponse = boost::beast::http::response<boost::beast::http::dynamic_body>;
+
 #pragma region Utility functions
 
 boost::beast::multi_buffer CreateStringResponseBody(std::string&& content);
@@ -21,11 +24,11 @@ boost::beast::multi_buffer CreateStringResponseBody(std::string&& content);
 struct HttpCallbacks
 {
   std::function<void()> OnResponseSent;
-    std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-      const boost::beast::http::request<boost::beast::http::dynamic_body> &)>
+    std::function<DynamicResponse(
+      const DynamicRequest &)>
       OnGet;
-  std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-      const boost::beast::http::request<boost::beast::http::dynamic_body> &)>
+  std::function<DynamicResponse(
+      const DynamicRequest &)>
       OnOptions;
   std::function<void()> OnRequest;
 };
@@ -38,8 +41,8 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
 {
   boost::beast::tcp_stream m_stream;
   boost::beast::flat_buffer m_buffer;
-  boost::beast::http::request<boost::beast::http::dynamic_body> m_request;
-  std::shared_ptr<boost::beast::http::response<boost::beast::http::dynamic_body>> m_response; // Generic response
+  DynamicRequest m_request;
+  std::shared_ptr<DynamicResponse> m_response; // Generic response
   HttpCallbacks& m_callbacks;
 
   void Read();
@@ -96,15 +99,15 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   // Function that creates an HTTP response to send to the client on GET
   // requests.
   ///
-  void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-                    const boost::beast::http::request<boost::beast::http::dynamic_body> &)> &&handler) noexcept;
+  void SetOnGet(std::function<DynamicResponse(
+                    const DynamicRequest &)> &&handler) noexcept;
 
   ///
   // Function that creates an HTTP response to send to the client on GET
   // requests.
   ///
-  void SetOnOptions(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-                    const boost::beast::http::request<boost::beast::http::dynamic_body> &)> &&handler) noexcept;
+  void SetOnOptions(std::function<DynamicResponse(
+                    const DynamicRequest &)> &&handler) noexcept;
 };
 
 } // namespace Microsoft::React::Test
