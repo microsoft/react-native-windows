@@ -14,7 +14,8 @@ namespace winrt::Microsoft::ReactNative::implementation
     CoreAppPage::CoreAppPage()
     {
         InitializeComponent();
-        auto app = Application::Current().as<CoreApp>();
+        auto app = Application::Current().as<ReactApplication>();
+
         ReactRootView().ReactNativeHost(app.Host());
     }
 

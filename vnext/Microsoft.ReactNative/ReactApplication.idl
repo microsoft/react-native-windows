@@ -7,6 +7,12 @@ import "ReactNativeHost.idl";
 
 namespace Microsoft.ReactNative
 {
+
+  delegate void AppLaunchedDelegate(
+      ReactApplication sender, Windows.ApplicationModel.Activation.LaunchActivatedEventArgs args);
+
+  delegate void AppViewCreatedDelegate(ReactApplication sender, String args);
+
   [webhosthidden]
   [default_interface]
   DOC_STRING(
@@ -18,6 +24,9 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("Creates a new instance of @ReactApplication")
     ReactApplication();
+
+    AppLaunchedDelegate LaunchedInternal;
+    AppViewCreatedDelegate ViewCreatedInternal;
 
     DOC_STRING(
       "Provides access to your application's @ReactInstanceSettings.\n"

@@ -115,7 +115,7 @@
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;_USE_MATH_DEFINES;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DISABLE_XAML_GENERATED_MAIN;FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;_USE_MATH_DEFINES;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
@@ -184,10 +184,6 @@
     <ClInclude Include="Base\CoreNativeModules.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
-    <ClInclude Include="CoreApp.h">
-      <DependentUpon>CoreApp.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="CoreAppPage.h">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -436,10 +432,6 @@
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="Base\CoreNativeModules.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
-    <ClCompile Include="CoreApp.cpp">
-      <DependentUpon>CoreApp.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="CoreAppPage.cpp">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -648,10 +640,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="CoreApp.idl">
-      <DependentUpon>CoreApp.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
     <Midl Include="CoreAppPage.idl">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -743,9 +731,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="CoreApp.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="CoreAppPage.xaml">
       <SubType>Designer</SubType>
     </Page>

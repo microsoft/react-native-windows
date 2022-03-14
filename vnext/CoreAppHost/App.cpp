@@ -7,11 +7,14 @@ void check(HRESULT hr) {
     throw hr;
 }
 
-int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR server, int showCommand)
+int __stdcall wWinMain(HINSTANCE, HINSTANCE, PWSTR /*server*/, int /*showCommand*/)
 {
   check(CoInitializeEx(nullptr, COINIT_MULTITHREADED));
-  RNStartCoreApp([](RNCoreApp *app) {
 
-    });
+  RNStartCoreApp(
+      [](RNCoreApp *app) {
+        app->jsBundleFile = L"index"; 
+      });
+
   CoUninitialize();
 }

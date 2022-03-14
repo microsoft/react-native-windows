@@ -6,6 +6,8 @@
 #include "ReactApplication.g.h"
 #include <CppWinRTIncludes.h>
 #include "ReactNativeHost.h"
+#include <winrt/Microsoft.ReactNative.h>
+#include <UI.Xaml.Markup.h>
 
 #ifdef USE_WINUI3
 namespace activation = xaml;
@@ -71,9 +73,10 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base :
   }
 };
 
-struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
+struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, xaml::Markup::IXamlMetadataProvider> {
  public: // ReactApplication ABI API
-  ReactApplication();
+
+  ReactApplication() = default;
   ReactApplication(IInspectable const &outer) noexcept;
 
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
@@ -95,11 +98,42 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
+  void LaunchedInternal(AppLaunchedDelegate del) {
+    m_launched = del;
+  }
+  AppLaunchedDelegate LaunchedInternal() {
+    return m_launched;
+  }
+
+  void ViewCreatedInternal(AppViewCreatedDelegate del) {
+    m_viewCreated = del;
+  }
+
+  AppViewCreatedDelegate ViewCreatedInternal() {
+    return m_viewCreated;
+  }
+
+  XamlMetaDataProvider m_provider;
+
+  xaml::Markup::IXamlType GetXamlType(winrt::hstring const &name) {
+    return m_provider.GetXamlType(name);
+  }
+
+  xaml::Markup::IXamlType GetXamlType(::winrt::Windows::UI::Xaml::Interop::TypeName const &type) {
+    return m_provider.GetXamlType(type);
+  }
+  ::winrt::com_array<::winrt::Windows::UI::Xaml::Markup::XmlnsDefinition> GetXmlnsDefinitions() {
+    return m_provider.GetXmlnsDefinitions();
+  }
+
  private:
-  ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  ReactNative::ReactNativeHost m_host{nullptr};
+  winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
 
   void OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
+
+  AppLaunchedDelegate m_launched;
+  AppViewCreatedDelegate m_viewCreated;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -109,7 +143,9 @@ namespace winrt::Microsoft::ReactNative::factory_implementation {
 // Override the CreateInstance method to pass baseInterface to the ReactApplication constructor
 // to support correct COM aggregation that is need to inherit from the ReactApplication.
 struct ReactApplication : ReactApplicationT<ReactApplication, implementation::ReactApplication> {
-  auto CreateInstance(IInspectable const &baseInterface, IInspectable &innerInterface) {
+  auto CreateInstance(
+      winrt::Windows::Foundation::IInspectable const &baseInterface,
+      winrt::Windows::Foundation::IInspectable &innerInterface) {
     return impl::composable_factory<implementation::ReactApplication>::template CreateInstance<
         Microsoft::ReactNative::ReactApplication>(baseInterface, innerInterface, baseInterface);
   }

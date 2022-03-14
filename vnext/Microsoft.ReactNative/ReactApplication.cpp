@@ -28,8 +28,6 @@ using namespace xaml::Navigation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ReactApplication::ReactApplication() = default;
-
 ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactApplication{} {
   // The factory is usually called in the base generated class. We call it here to pass correct
   // 'outer' interface to enable inheritance from the ReactApplication class in user code.
@@ -114,6 +112,11 @@ void ReactApplication::OnLaunched(activation::LaunchActivatedEventArgs const &e_
       e_;
 #endif // USE_WINUI3
 
+  if (m_launched) {
+    m_launched({*this}, e);
+    // m_launched({*this});
+  }
+
   this->OnCreate(e);
 }
 
@@ -195,6 +198,10 @@ void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivate
   }
 
   Window::Current().Activate();
+
+  if (m_viewCreated) {
+    m_viewCreated({*this}, args);
+  }
 }
 
 /// <summary>

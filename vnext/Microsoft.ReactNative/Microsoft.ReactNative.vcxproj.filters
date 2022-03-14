@@ -827,7 +827,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="DevMenuControl.xaml" />
-    <Page Include="CoreApp.xaml" />
     <Page Include="CoreAppPage.xaml" />
   </ItemGroup>
 </Project>
