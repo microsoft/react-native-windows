@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 07 Mar 2022 16:07:47 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Mar 2022 15:07:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.6
+
+Mon, 14 Mar 2022 15:07:44 GMT
+
+### Changes
+
+- Pass platform and configuration to restorePackageConfigs (#9674) (julio.rocha@microsoft.com)
 
 ## 0.68.0-preview.5
 
