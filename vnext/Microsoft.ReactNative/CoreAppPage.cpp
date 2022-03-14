@@ -16,6 +16,7 @@ namespace winrt::Microsoft::ReactNative::implementation
         InitializeComponent();
         auto app = Application::Current().as<ReactApplication>();
 
+        app.PageNavigatedInternal()(app, ReactRootView());
         ReactRootView().ReactNativeHost(app.Host());
     }
 

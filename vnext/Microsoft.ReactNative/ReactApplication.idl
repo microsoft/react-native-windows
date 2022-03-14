@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "ReactNativeHost.idl";
+import "ReactRootView.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -12,6 +13,8 @@ namespace Microsoft.ReactNative
       ReactApplication sender, Windows.ApplicationModel.Activation.LaunchActivatedEventArgs args);
 
   delegate void AppViewCreatedDelegate(ReactApplication sender, String args);
+
+  delegate void AppPageNavigatedDelegate(ReactApplication sender, ReactRootView view);
 
   [webhosthidden]
   [default_interface]
@@ -27,6 +30,7 @@ namespace Microsoft.ReactNative
 
     AppLaunchedDelegate LaunchedInternal;
     AppViewCreatedDelegate ViewCreatedInternal;
+    AppPageNavigatedDelegate PageNavigatedInternal;
 
     DOC_STRING(
       "Provides access to your application's @ReactInstanceSettings.\n"

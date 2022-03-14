@@ -113,6 +113,14 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
     return m_viewCreated;
   }
 
+  void PageNavigatedInternal(AppPageNavigatedDelegate del) {
+    m_pageNavigated = del;
+  }
+
+  AppPageNavigatedDelegate PageNavigatedInternal() {
+    return m_pageNavigated;
+  }
+
   XamlMetaDataProvider m_provider;
 
   xaml::Markup::IXamlType GetXamlType(winrt::hstring const &name) {
@@ -134,6 +142,7 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
 
   AppLaunchedDelegate m_launched;
   AppViewCreatedDelegate m_viewCreated;
+  AppPageNavigatedDelegate m_pageNavigated;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
