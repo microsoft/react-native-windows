@@ -15,21 +15,21 @@ namespace facebook {
 namespace react {
 
 // [Windows
-void InitTextInputThemeInfo(const Mso::React::IReactContext& reactContext) {
+void InitTextInputThemeInfo(const Mso::React::IReactContext &reactContext) {
   xaml::Thickness textBoxPadding;
   xaml::Application::Current().Resources().TryLookup(winrt::box_value(L"TextControlThemePadding")).as(textBoxPadding);
-  winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext.Properties()).Set(winrt::Microsoft::ReactNative::ReactPropertyId<xaml::Thickness>(L"TextBoxDefaultPadding"), textBoxPadding);
+  winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext.Properties())
+      .Set(winrt::Microsoft::ReactNative::ReactPropertyId<xaml::Thickness>(L"TextBoxDefaultPadding"), textBoxPadding);
 }
 
-YGStyle::Edges PaddingFromContext(const facebook::react::ContextContainer& contextContainer) {
+YGStyle::Edges PaddingFromContext(const facebook::react::ContextContainer &contextContainer) {
   auto context = contextContainer.at<winrt::Microsoft::ReactNative::ReactContext>("MSRN.ReactContext");
   auto defaultPadding = *context.Properties().Get(
-        winrt::Microsoft::ReactNative::ReactPropertyId<xaml::Thickness>(
-          L"TextBoxDefaultPadding"));
+      winrt::Microsoft::ReactNative::ReactPropertyId<xaml::Thickness>(L"TextBoxDefaultPadding"));
   YGStyle::Edges theme;
   theme[YGEdgeStart] = YGValue{static_cast<float>(defaultPadding.Left), YGUnitPoint};
   theme[YGEdgeEnd] = YGValue{static_cast<float>(defaultPadding.Right), YGUnitPoint};
-  theme[YGEdgeTop] = YGValue{static_cast<float>(defaultPadding.Top), YGUnitPoint}; 
+  theme[YGEdgeTop] = YGValue{static_cast<float>(defaultPadding.Top), YGUnitPoint};
   theme[YGEdgeBottom] = YGValue{static_cast<float>(defaultPadding.Bottom), YGUnitPoint};
   return theme;
 }
@@ -38,55 +38,51 @@ YGStyle::Edges PaddingFromContext(const facebook::react::ContextContainer& conte
 /*
  * Descriptor for <WindowsTextInput> component.
  */
-class WindowsTextInputComponentDescriptor final
-    : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
+class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
-  WindowsTextInputComponentDescriptor(
-      ComponentDescriptorParameters const &parameters)
+  WindowsTextInputComponentDescriptor(ComponentDescriptorParameters const &parameters)
       : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters) {
     // Every single `WindowsTextInputShadowNode` will have a reference to
     // a shared `TextLayoutManager`.
     textLayoutManager_ = std::make_shared<TextLayoutManager>(contextContainer_);
   }
 
-  virtual State::Shared createInitialState(
-      ShadowNodeFragment const &fragment,
-      ShadowNodeFamily::Shared const &family) const override {
+  virtual State::Shared createInitialState(ShadowNodeFragment const &fragment, ShadowNodeFamily::Shared const &family)
+      const override {
+    /*
+        int surfaceId = family->getSurfaceId();
 
-/*
-    int surfaceId = family->getSurfaceId();
+        YGStyle::Edges theme;
+        // TODO: figure out RTL/start/end/left/right stuff here
+        if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
+            surfaceIdToThemePaddingMap_.end()) {
+          theme = surfaceIdToThemePaddingMap_[surfaceId];
+        } else {
+          const jni::global_ref<jobject> &fabricUIManager =
+              contextContainer_->at<jni::global_ref<jobject>>("FabricUIManager");
 
-    YGStyle::Edges theme;
-    // TODO: figure out RTL/start/end/left/right stuff here
-    if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
-        surfaceIdToThemePaddingMap_.end()) {
-      theme = surfaceIdToThemePaddingMap_[surfaceId];
-    } else {
-      const jni::global_ref<jobject> &fabricUIManager =
-          contextContainer_->at<jni::global_ref<jobject>>("FabricUIManager");
+          auto env = jni::Environment::current();
+          auto defaultTextInputPaddingArray = env->NewFloatArray(4);
+          static auto getThemeData =
+              jni::findClassStatic(UIManagerJavaDescriptor)
+                  ->getMethod<jboolean(jint, jfloatArray)>("getThemeData");
 
-      auto env = jni::Environment::current();
-      auto defaultTextInputPaddingArray = env->NewFloatArray(4);
-      static auto getThemeData =
-          jni::findClassStatic(UIManagerJavaDescriptor)
-              ->getMethod<jboolean(jint, jfloatArray)>("getThemeData");
-
-      if (getThemeData(
-              fabricUIManager, surfaceId, defaultTextInputPaddingArray)) {
-        jfloat *defaultTextInputPadding =
-            env->GetFloatArrayElements(defaultTextInputPaddingArray, 0);
-        theme[YGEdgeStart] = (YGValue){defaultTextInputPadding[0], YGUnitPoint};
-        theme[YGEdgeEnd] = (YGValue){defaultTextInputPadding[1], YGUnitPoint};
-        theme[YGEdgeTop] = (YGValue){defaultTextInputPadding[2], YGUnitPoint};
-        theme[YGEdgeBottom] =
-            (YGValue){defaultTextInputPadding[3], YGUnitPoint};
-        surfaceIdToThemePaddingMap_.emplace(std::make_pair(surfaceId, theme));
-        env->ReleaseFloatArrayElements(
-            defaultTextInputPaddingArray, defaultTextInputPadding, JNI_ABORT);
-      }
-      env->DeleteLocalRef(defaultTextInputPaddingArray);
-    }
-*/
+          if (getThemeData(
+                  fabricUIManager, surfaceId, defaultTextInputPaddingArray)) {
+            jfloat *defaultTextInputPadding =
+                env->GetFloatArrayElements(defaultTextInputPaddingArray, 0);
+            theme[YGEdgeStart] = (YGValue){defaultTextInputPadding[0], YGUnitPoint};
+            theme[YGEdgeEnd] = (YGValue){defaultTextInputPadding[1], YGUnitPoint};
+            theme[YGEdgeTop] = (YGValue){defaultTextInputPadding[2], YGUnitPoint};
+            theme[YGEdgeBottom] =
+                (YGValue){defaultTextInputPadding[3], YGUnitPoint};
+            surfaceIdToThemePaddingMap_.emplace(std::make_pair(surfaceId, theme));
+            env->ReleaseFloatArrayElements(
+                defaultTextInputPaddingArray, defaultTextInputPadding, JNI_ABORT);
+          }
+          env->DeleteLocalRef(defaultTextInputPaddingArray);
+        }
+    */
 
     auto theme = PaddingFromContext(*contextContainer_); // [Windows]
 
@@ -107,20 +103,19 @@ class WindowsTextInputComponentDescriptor final
 
  protected:
   void adopt(ShadowNode::Unshared const &shadowNode) const override {
-    auto textInputShadowNode =
-        std::static_pointer_cast<WindowsTextInputShadowNode>(shadowNode);
+    auto textInputShadowNode = std::static_pointer_cast<WindowsTextInputShadowNode>(shadowNode);
 
     // `ParagraphShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
     textInputShadowNode->setTextLayoutManager(textLayoutManager_);
 
-    textInputShadowNode->setContextContainer(
-        const_cast<ContextContainer *>(getContextContainer().get()));
+    textInputShadowNode->setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
 
-/*
-    int surfaceId = textInputShadowNode->getSurfaceId();
-    if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
-        surfaceIdToThemePaddingMap_.end()) */ {
+    /*
+        int surfaceId = textInputShadowNode->getSurfaceId();
+        if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
+            surfaceIdToThemePaddingMap_.end()) */
+    {
       // YGStyle::Edges theme = surfaceIdToThemePaddingMap_[surfaceId];
 
       auto theme = PaddingFromContext(*contextContainer_); // [Windows]
@@ -130,8 +125,7 @@ class WindowsTextInputComponentDescriptor final
       // TODO: T62959168 account for RTL and paddingLeft when setting default
       // paddingStart, and vice-versa with paddingRight/paddingEnd.
       // For now this assumes no RTL.
-      YGStyle::Edges result =
-          textInputShadowNode->getConcreteProps().yogaStyle.padding();
+      YGStyle::Edges result = textInputShadowNode->getConcreteProps().yogaStyle.padding();
       bool changedPadding = false;
       if (!textInputShadowNode->getConcreteProps().hasPadding &&
           !textInputShadowNode->getConcreteProps().hasPaddingStart &&
@@ -183,13 +177,10 @@ class WindowsTextInputComponentDescriptor final
       // commit, state update, etc, will incur this cost.
       if (changedPadding) {
         // Set new props on node
-        const_cast<WindowsTextInputProps &>(
-            textInputShadowNode->getConcreteProps())
-            .yogaStyle.padding() = result;
+        const_cast<WindowsTextInputProps &>(textInputShadowNode->getConcreteProps()).yogaStyle.padding() = result;
         // Communicate new props to Yoga part of the node
         textInputShadowNode->updateYogaProps();
       }
-
     }
 
     textInputShadowNode->dirtyLayout();

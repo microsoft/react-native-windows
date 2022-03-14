@@ -8,17 +8,17 @@
 namespace facebook::react {
 
 void WindowsTextInputEventEmitter::onChange(OnChange event) const {
-  dispatchEvent("change", [event=std::move(event)](jsi::Runtime &runtime) {
+  dispatchEvent("change", [event = std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     payload.setProperty(runtime, "eventCount", event.eventCount);
-payload.setProperty(runtime, "target", event.target);
-payload.setProperty(runtime, "text", event.text);
+    payload.setProperty(runtime, "target", event.target);
+    payload.setProperty(runtime, "text", event.text);
     return payload;
   });
 }
 
-void WindowsTextInputEventEmitter::onSelectionChange(const OnSelectionChange& event) const {
-  dispatchEvent("textInputSelectionChange", [event=std::move(event)](jsi::Runtime &runtime) {
+void WindowsTextInputEventEmitter::onSelectionChange(const OnSelectionChange &event) const {
+  dispatchEvent("textInputSelectionChange", [event = std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     auto selection = jsi::Object(runtime);
     selection.setProperty(runtime, "start", event.selection.start);

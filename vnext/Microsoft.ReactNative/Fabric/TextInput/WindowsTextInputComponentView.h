@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "WindowsTextInputProps.h"
-#include "WindowsTextInputShadowNode.h"
 #include "../ComponentView.h"
 #include "../ViewComponentView.h"
+#include "WindowsTextInputProps.h"
+#include "WindowsTextInputShadowNode.h"
 
 namespace Microsoft::ReactNative {
 
@@ -43,7 +43,7 @@ struct WindowsTextInputComponentView : BaseComponentView {
   xaml::Controls::TextBox::SelectionChanged_revoker m_SelectionChangedRevoker;
   std::shared_ptr<facebook::react::WindowsTextInputProps const> m_props;
   std::shared_ptr<facebook::react::WindowsTextInputShadowNode::ConcreteState const> m_state;
-  int m_mostRecentEventCount{0};
+  int64_t m_mostRecentEventCount{0};
   int m_nativeEventCount{0};
   bool m_comingFromJS{false};
   bool m_comingFromState{false};

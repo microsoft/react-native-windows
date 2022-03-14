@@ -8,9 +8,9 @@
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
-#include "WindowsTextInputState.h"
-#include "WindowsTextInputShadowNode.h"
 #include <unicode.h>
+#include "WindowsTextInputShadowNode.h"
+#include "WindowsTextInputState.h"
 
 namespace Microsoft::ReactNative {
 
@@ -252,18 +252,18 @@ void WindowsTextInputComponentView::updateState(
 }
 
 void WindowsTextInputComponentView::SetText(winrt::hstring text) noexcept {
-        auto oldCursor = m_element.SelectionStart();
-        auto oldSelectionLength = m_element.SelectionLength();
-        auto oldValue = m_element.Text();
-        auto newValue = text;
-        if (oldValue != newValue) {
-          m_element.Text(newValue);
-          if (oldValue.size() == newValue.size()) {
-            m_element.SelectionStart(oldCursor);
-          } else {
-            m_element.SelectionStart(newValue.size());
-          }
-        }
+  auto oldCursor = m_element.SelectionStart();
+  auto oldSelectionLength = m_element.SelectionLength();
+  auto oldValue = m_element.Text();
+  auto newValue = text;
+  if (oldValue != newValue) {
+    m_element.Text(newValue);
+    if (oldValue.size() == newValue.size()) {
+      m_element.SelectionStart(oldCursor);
+    } else {
+      m_element.SelectionStart(newValue.size());
+    }
+  }
 }
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
@@ -286,7 +286,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
       layoutMetrics.frame.size.width + m_layoutMetrics.borderWidth.left + m_layoutMetrics.borderWidth.right);
   m_element.Height(
       layoutMetrics.frame.size.height + m_layoutMetrics.borderWidth.top + m_layoutMetrics.borderWidth.bottom);
-
 }
 void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   // m_element.FinalizeProperties();

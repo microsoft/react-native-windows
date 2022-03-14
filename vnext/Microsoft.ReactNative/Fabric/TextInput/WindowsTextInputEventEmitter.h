@@ -20,14 +20,14 @@ class WindowsTextInputEventEmitter : public ViewEventEmitter {
     int eventCount;
     int target;
     std::string text;
-    };
+  };
 
   struct OnSelectionChange {
-      Selection selection;
-    };
+    Selection selection;
+  };
 
   void onChange(OnChange value) const;
-  void onSelectionChange(const OnSelectionChange& value) const;
+  void onSelectionChange(const OnSelectionChange &value) const;
 };
 
 } // namespace facebook::react

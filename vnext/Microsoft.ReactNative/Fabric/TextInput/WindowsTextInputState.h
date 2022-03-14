@@ -86,16 +86,13 @@ class WindowsTextInputState final {
       float defaultThemePaddingBottom);
 
   WindowsTextInputState() = default;
-  WindowsTextInputState(
-      WindowsTextInputState const &previousState,
-      folly::dynamic const &data);
+  WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data);
   folly::dynamic getDynamic() const;
   /* [Windows
   MapBuffer getMapBuffer() const {
     return MapBufferBuilder::EMPTY();
   };
      Windows] */
-
 };
 
 } // namespace react
