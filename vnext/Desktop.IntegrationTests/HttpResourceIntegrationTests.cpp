@@ -67,12 +67,12 @@ class session : public std::enable_shared_from_this<session> {
 
     explicit send_lambda(session &self) : self_(self) {}
 
-    template <bool isRequest, class Body, class Fields>
-    void operator()(http::message<isRequest, Body, Fields> &&msg) const {
+    //template <bool isRequest, class Body, class Fields>
+    void operator()(Microsoft::React::Test::DynamicResponse &&msg) const {
       // The lifetime of the message has to extend
       // for the duration of the async operation so
       // we use a shared_ptr to manage it.
-      auto sp = std::make_shared<http::message<isRequest, Body, Fields>>(std::move(msg));
+      auto sp = std::make_shared<Microsoft::React::Test::DynamicResponse>(std::move(msg));
 
       // Store a type-erased version of the shared
       // pointer in the class to keep it alive.
@@ -87,7 +87,7 @@ class session : public std::enable_shared_from_this<session> {
   beast::tcp_stream stream_;
   beast::flat_buffer buffer_;
   Microsoft::React::Test::DynamicRequest req_;
-  std::shared_ptr<void> res_;
+  std::shared_ptr<Microsoft::React::Test::DynamicResponse> res_;
   send_lambda lambda_;
   Microsoft::React::Test::HttpCallbacks &m_callbacks;
 
