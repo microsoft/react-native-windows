@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Safe re-entrancy for EnsureHermesLoaded",
-  "packageName": "react-native-windows",
-  "email": "tudor.mihai@microsoft.com",
-  "dependentChangeType": "patch"
-}
