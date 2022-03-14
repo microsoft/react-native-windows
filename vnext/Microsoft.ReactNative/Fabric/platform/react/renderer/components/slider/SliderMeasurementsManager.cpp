@@ -14,6 +14,7 @@
 namespace facebook::react {
 
 Size SliderMeasurementsManager::measure(SurfaceId surfaceId, LayoutConstraints layoutConstraints) const {
+  /*
   if (!m_slider) {
     m_slider = xaml::Controls::Slider();
     xaml::Style sliderStyle;
@@ -30,6 +31,8 @@ Size SliderMeasurementsManager::measure(SurfaceId surfaceId, LayoutConstraints l
   m_slider.Measure(availiableSize);
   auto size = m_slider.DesiredSize();
   return {static_cast<float>(size.Width), static_cast<float>(size.Height)};
+  */
+  return {50, 50}; // TEMP
 }
 
 } // namespace facebook::react

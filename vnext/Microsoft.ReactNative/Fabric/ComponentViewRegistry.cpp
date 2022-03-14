@@ -107,6 +107,14 @@ ComponentViewDescriptor const &ComponentViewRegistry::componentViewDescriptorWit
   return iterator->second;
 }
 
+std::shared_ptr<IComponentView> ComponentViewRegistry::findComponentViewWithTag(facebook::react::Tag tag) const noexcept {
+  auto iterator = m_registry.find(tag);
+  if (iterator == m_registry.end()) {
+    return nullptr;
+  }
+  return iterator->second.view;
+}
+
 void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,

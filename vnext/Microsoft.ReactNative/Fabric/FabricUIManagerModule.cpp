@@ -552,8 +552,10 @@ void FabricUIManager::schedulerDidDispatchCommand(
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
-            auto descriptor = pThis->m_registry.componentViewDescriptorWithTag(tag);
-            descriptor.view->handleCommand(commandName, args);
+            auto view = pThis->m_registry.findComponentViewWithTag(tag);
+            if (view) {
+              view->handleCommand(commandName, args);
+            }
           }
         });
   }

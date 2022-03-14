@@ -61,6 +61,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   void UpdateParaFormat() noexcept;
   void UpdateText(const std::string& str) noexcept;
   void OnTextUpdated() noexcept;
+  void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::string GetTextFromRichEdit() const noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};

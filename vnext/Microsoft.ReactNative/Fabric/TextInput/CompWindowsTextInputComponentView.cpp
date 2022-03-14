@@ -388,6 +388,11 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
       m_outer->OnTextUpdated();
     }
 
+    if (iNotify == EN_SELCHANGE) {
+      auto selChange = (SELCHANGE *) pv;
+      m_outer->OnSelectionChanged(selChange->chrg.cpMin, selChange->chrg.cpMax);
+    }
+
     return S_OK;
   }
 
@@ -488,11 +493,21 @@ void CompWindowsTextInputComponentView::handleCommand(
       auto end = arg[3].asInt();
       m_comingFromJS = true;
       UpdateText(text);
-      // TODO set selection
+
+      SELCHANGE sc;
+      memset(&sc, 0, sizeof(sc));
+      sc.chrg.cpMin = static_cast<LONG>(begin);
+      sc.chrg.cpMax = static_cast<LONG>(end);
+      sc.seltyp = (begin == end) ? SEL_EMPTY : SEL_TEXT;
+
+      LRESULT res;
       /*
-      m_element.Text(winrt::to_hstring(text));
-      m_element.Select(static_cast<int32_t>(begin), static_cast<int32_t>(end - begin));
-      */
+      winrt::check_hresult(m_textServices->TxSendMessage(
+          EM_SELCHANGE, 0 , reinterpret_cast<WPARAM>(&sc), &res));
+          */
+      winrt::check_hresult(m_textServices->TxSendMessage(
+          EM_SETSEL, begin, end, &res));
+
       m_comingFromJS = false;
     }
   } else {
@@ -752,6 +767,17 @@ void CompWindowsTextInputComponentView::OnTextUpdated() noexcept {
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
+  }
+}
+
+void CompWindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
+
+  if (m_eventEmitter /* && !m_comingFromJS ?? */) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
+    onSelectionChangeArgs.selection.start = start;
+    onSelectionChangeArgs.selection.end = end;
+    emitter->onSelectionChange(onSelectionChangeArgs);
   }
 }
 
