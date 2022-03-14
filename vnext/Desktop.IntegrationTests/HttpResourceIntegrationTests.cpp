@@ -121,32 +121,14 @@ class session : public std::enable_shared_from_this<session> {
   }
 
   void Respond() {
-    std::shared_ptr<Microsoft::React::Test::DynamicResponse> sp;
     switch (req_.method()) {
       case http::verb::get:
-        sp = std::make_shared<Microsoft::React::Test::DynamicResponse>(m_callbacks.OnGet(req_));
-        res_ = sp;
+        lambda_(m_callbacks.OnGet(req_));
+        break;
 
-        http::async_write(
-          stream_,
-          *sp,
-          beast::bind_front_handler(&session::on_write, shared_from_this(), sp->need_eof())
-        );
-
-      break;
-
-    default:
-      throw;
+      default:
+        throw;
     }
-  }
-
-  //template </*class Body, class Allocator, */ class Send>
-  void HandleRequest(Microsoft::React::Test::DynamicRequest &&req, send_lambda &send) {
-    Microsoft::React::Test::DynamicResponse res;
-    res.result(http::status::ok);
-    res.body() = Microsoft::React::Test::CreateStringResponseBody("some resposne content");
-
-    return send(std::move(res));
   }
 
   void on_read(beast::error_code ec, std::size_t bytes_transferred) {
@@ -160,9 +142,7 @@ class session : public std::enable_shared_from_this<session> {
       return fail(ec, "read");
 
     // Send the response
-    //handle_request(std::move(req_), lambda_);
-    //Respond();
-    HandleRequest(std::move(req_), lambda_);
+    Respond();
   }
 
   void on_write(bool close, beast::error_code ec, std::size_t bytes_transferred) {
@@ -295,6 +275,7 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
   }
 
   void Stop() {
+    m_context.stop();
   }
 
   Microsoft::React::Test::HttpCallbacks& Callbacks() {
@@ -319,22 +300,28 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
   TEST_METHOD(Vinime) {
     promise<void> requestProm;
+    std::atomic<int> count;
 
     auto server = std::make_shared<falco::HttpServer>();
-    server->Callbacks().OnGet = [&requestProm](const DynamicRequest req) -> DynamicResponse {
+    server->Callbacks().OnGet = [&requestProm, &count](const DynamicRequest req) -> DynamicResponse {
       DynamicResponse res;
       res.result(http::status::ok);
       res.body() = Microsoft::React::Test::CreateStringResponseBody("some response content");
 
-      requestProm.set_value();
+      if (++count == 3)
+        requestProm.set_value();
 
       return res;
     };
 
     server->Start("0.0.0.0", 5556);
 
+    requestProm.get_future().wait();
+
+    server->Stop();
+
 #if 0
-				    auto const address = boost::asio::ip::make_address("0.0.0.0");
+    auto const address = boost::asio::ip::make_address("0.0.0.0");
     unsigned short const port = 5556;
     int const threadCount = 1;
 
