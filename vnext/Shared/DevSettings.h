@@ -89,6 +89,8 @@ struct DevSettings {
   std::function<void()> showDevMenuCallback;
 
   bool inlineSourceMap{true};
+
+  bool enableDefaultCrashHandler{false};
 };
 
 } // namespace react

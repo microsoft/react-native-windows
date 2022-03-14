@@ -1,8 +1,77 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 03 Mar 2022 06:09:12 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Mar 2022 06:09:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.470
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Safe re-entrancy for EnsureHermesLoaded (tudor.mihai@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.120
+
+## 0.0.0-canary.469
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Changes
+
+- Use Canvas dependency properties for Top/Left instead of custom DPs (asklar@microsoft.com)
+
+## 0.0.0-canary.468
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Update CppAppConsumeCSharpModules.props for VS2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.119
+
+## 0.0.0-canary.467
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Upgrade @types/react-native (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Use inherited OutputPath for C# projects (julio.rocha@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.28
+
+## 0.0.0-canary.466
+
+Sun, 06 Mar 2022 06:08:52 GMT
+
+### Changes
+
+- Scope down usage of PackageReferences (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.465
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Changes
+
+- Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting (tudor.mihai@microsoft.com)
+- integrate 2/13/2022 Nightly RN Build (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.31
+
+## 0.0.0-canary.464
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Changes
+
+- enable right-click exluding some components (email not defined)
+- Fabric: Use XAML for layout (acoates@microsoft.com)
+- Capture MSBuild properties in telemetry (jthysell@microsoft.com)
+- Update OnDropViewInstance API Doc (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.118
+- Bump @react-native-windows/codegen to v0.0.0-canary.27
 
 ## 0.0.0-canary.463
 

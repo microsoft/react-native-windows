@@ -136,6 +136,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   reactOptions.ByteCodeFileUri = to_string(m_instanceSettings.ByteCodeFileUri());
   reactOptions.EnableByteCodeCaching = m_instanceSettings.EnableByteCodeCaching();
+  reactOptions.SetEnableDefaultCrashHandler(m_instanceSettings.EnableDefaultCrashHandler());
   reactOptions.SetJsiEngine(static_cast<Mso::React::JSIEngine>(m_instanceSettings.JSIEngineOverride()));
 
   reactOptions.ModuleProvider = modulesProvider;

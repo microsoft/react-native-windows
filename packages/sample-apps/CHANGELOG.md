@@ -1,8 +1,67 @@
 # Change Log - sample-apps
 
-This log was last generated on Thu, 03 Mar 2022 06:09:12 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Mar 2022 06:09:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.470
+
+## 0.0.0
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.469
+
+## 0.0.0
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.468
+
+## 0.0.0
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.467
+- Bump @react-native-windows/codegen to v0.0.0-canary.28
+
+## 0.0.0
+
+Sun, 06 Mar 2022 06:08:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.466
+
+## 0.0.0
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.465
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.31
+
+## 0.0.0
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.464
+- Bump @react-native-windows/codegen to v0.0.0-canary.27
 
 ## 0.0.0
 

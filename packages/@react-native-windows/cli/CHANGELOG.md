@@ -1,8 +1,33 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 25 Feb 2022 23:53:36 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Mar 2022 06:09:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.120
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Update CLI project config tests with latest templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.119
+
+Thu, 10 Mar 2022 06:09:23 GMT
+
+### Changes
+
+- Pass platform and configuration to restorePackageConfigs (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.118
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Changes
+
+- Update how RunWindows phases are reported (jthysell@microsoft.com)
+- Capture MSBuild properties in telemetry (jthysell@microsoft.com)
 
 ## 0.0.0-canary.117
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update OnDropViewInstance API Doc",
-  "packageName": "react-native-windows",
-  "email": "34109996+chiaramooney@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

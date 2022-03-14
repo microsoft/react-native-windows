@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 24 Feb 2022 06:07:47 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Mar 2022 06:09:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.28
+
+Wed, 09 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Fix turbo module codegen to generate correct import statement and registration (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.27
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Changes
+
+- Generate fabric eventemitter.cpp (acoates@microsoft.com)
 
 ## 0.0.0-canary.26
 

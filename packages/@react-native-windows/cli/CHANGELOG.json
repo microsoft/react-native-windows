@@ -2,6 +2,57 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 12 Mar 2022 06:09:07 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.120",
+      "version": "0.0.0-canary.120",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "56cacd91cc27a76298cb1a357831d2cc31775b12",
+            "comment": "Update CLI project config tests with latest templates"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Mar 2022 06:09:23 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.119",
+      "version": "0.0.0-canary.119",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "cc1f86bd91fc49d2f790e87adad133dbd8b39ba6",
+            "comment": "Pass platform and configuration to restorePackageConfigs"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 04 Mar 2022 06:09:13 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.118",
+      "version": "0.0.0-canary.118",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4464cd1789488c659072de34cff9daf49f66088a",
+            "comment": "Update how RunWindows phases are reported"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ca34a4691a57fe3bba679ac5786d6302aecd6cd5",
+            "comment": "Capture MSBuild properties in telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 25 Feb 2022 23:53:36 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.117",
       "version": "0.0.0-canary.117",
