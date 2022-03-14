@@ -300,7 +300,7 @@ using Test::DynamicResponse;
 TEST_CLASS (HttpResourceIntegrationTest) {
 
   TEST_METHOD(Vinime) {
-#if 0
+#if 1
     promise<void> requestProm;
     std::atomic<int> count;
 
@@ -349,11 +349,14 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     int statusCode = 0;
 
     auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
-    server->SetOnGet([&promise](const DynamicRequest &request) -> DynamicResponse {
+    int count = 0;
+    server->SetOnGet([&promise, &count](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
       response.body() = Test::CreateStringResponseBody("some resposne content");
-      promise.set_value();
+
+      if (++count == 2)
+        promise.set_value();
 
       return response;
     });
@@ -381,7 +384,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     //    false /*withCredentials*/,
     //    [](int64_t) {});
 
-      // Synchronize response.
+    // Synchronize response.
     promise.get_future().wait();
     server->Stop();
 
