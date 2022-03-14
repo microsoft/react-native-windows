@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Mar 2022 15:13:42 GMT",
+      "tag": "react-native-windows_v0.66.15",
+      "version": "0.66.15",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Safe re-entrancy for EnsureHermesLoaded",
+            "author": "tudor.mihai@microsoft.com",
+            "commit": "7c9bdabed0af6a90c72ea1840efa5b6f00200627",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Feb 2022 16:14:18 GMT",
       "tag": "react-native-windows_v0.66.14",
       "version": "0.66.14",
