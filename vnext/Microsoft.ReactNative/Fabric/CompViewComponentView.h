@@ -28,12 +28,14 @@ struct CompBaseComponentView : public IComponentView {
 
   virtual facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept = 0;
   virtual bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept;
-  virtual int64_t SendMessage(uint32_t msg,    uint64_t wParam,    int64_t lParam) noexcept;
+  virtual int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   RECT getClientRect() const noexcept override;
 
   void ensureBorderVisual() noexcept;
-  void indexOffsetForBorder(uint32_t& index) const noexcept;
-  void updateBorderProps(const facebook::react::ViewProps& oldViewProps, const facebook::react::ViewProps& newViewProps) noexcept;
+  void indexOffsetForBorder(uint32_t &index) const noexcept;
+  void updateBorderProps(
+      const facebook::react::ViewProps &oldViewProps,
+      const facebook::react::ViewProps &newViewProps) noexcept;
   void updateBorderLayoutMetrics() noexcept;
 
  protected:

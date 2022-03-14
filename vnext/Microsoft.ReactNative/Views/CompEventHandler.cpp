@@ -15,13 +15,13 @@
 #include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>
 
+#include <windows.h>
+#include <windowsx.h>
 #include <winrt/Windows.ApplicationModel.Core.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
-#include <windows.h>
-#include <windowsx.h>
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Input.Experimental.h>
@@ -137,7 +137,6 @@ int64_t CompEventHandler::SendMessage(
     }
   }
 
-
   return 0;
 }
 
@@ -174,7 +173,7 @@ void CompEventHandler::PointerPressed(
     if (tag == -1)
       return;
 
-    auto& targetComponentView = static_cast<CompBaseComponentView &>(
+    auto &targetComponentView = static_cast<CompBaseComponentView &>(
         *fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
 
     targetComponentView.SendMessage(msg, wParam, lParam);
@@ -210,9 +209,7 @@ void CompEventHandler::PointerPressed(
   }
 }
 
-void CompEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
   int pointerId = 1; // TODO pointerId
 
   auto touch = std::find_if(

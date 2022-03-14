@@ -44,7 +44,6 @@ class TextLayoutManager {
   LinesMeasurements measureLines(AttributedString attributedString, ParagraphAttributes paragraphAttributes, Size size)
       const;
 
-
   /**
    * Measures an AttributedString on the platform, as identified by some
    * opaque cache ID.

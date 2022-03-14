@@ -48,7 +48,7 @@ void CompBaseComponentView::handleCommand(std::string const &commandName, folly:
   assert(false); // Unhandled command
 }
 
-int64_t CompBaseComponentView::SendMessage(uint32_t msg,    uint64_t wParam,    int64_t lParam) noexcept {
+int64_t CompBaseComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   return 0;
 }
 
@@ -86,10 +86,10 @@ void CompBaseComponentView::ensureBorderVisual() noexcept {
   }
 }
 
-void CompBaseComponentView::updateBorderProps(const facebook::react::ViewProps& oldViewProps, const facebook::react::ViewProps& newViewProps) noexcept {
-
+void CompBaseComponentView::updateBorderProps(
+    const facebook::react::ViewProps &oldViewProps,
+    const facebook::react::ViewProps &newViewProps) noexcept {
   if (oldViewProps.borderColors != newViewProps.borderColors) {
-   
     if (newViewProps.borderColors.all) {
       ensureBorderVisual();
       auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
@@ -119,8 +119,7 @@ void CompBaseComponentView::updateBorderLayoutMetrics() noexcept {
         m_layoutMetrics.borderWidth.left * m_layoutMetrics.pointScaleFactor,
         m_layoutMetrics.borderWidth.top * m_layoutMetrics.pointScaleFactor,
         m_layoutMetrics.borderWidth.right * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.bottom *
-        m_layoutMetrics.pointScaleFactor);
+        m_layoutMetrics.borderWidth.bottom * m_layoutMetrics.pointScaleFactor);
 
     m_borderVisual.Size(
         {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
@@ -128,7 +127,7 @@ void CompBaseComponentView::updateBorderLayoutMetrics() noexcept {
   }
 }
 
-void CompBaseComponentView::indexOffsetForBorder(uint32_t& index) const noexcept {
+void CompBaseComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
   if (m_borderVisual)
     index++;
 }
@@ -167,7 +166,6 @@ void CompViewComponentView::mountChildComponentView(const IComponentView &childC
 void CompViewComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
-
   m_children.erase(std::next(m_children.begin(), index));
 
   indexOffsetForBorder(index);

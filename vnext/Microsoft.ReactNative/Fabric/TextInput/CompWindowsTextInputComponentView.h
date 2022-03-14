@@ -4,16 +4,16 @@
 
 #pragma once
 
-#include "WindowsTextInputProps.h"
-#include "WindowsTextInputShadowNode.h"
-#include "../ComponentView.h"
-#include "../CompViewComponentView.h"
-#include <winrt/Windows.UI.Composition.h>
 #include <ReactContext.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
-#include <windows.ui.composition.interop.h>
 #include <richedit.h>
 #include <textserv.h>
+#include <windows.ui.composition.interop.h>
+#include <winrt/Windows.UI.Composition.h>
+#include "../CompViewComponentView.h"
+#include "../ComponentView.h"
+#include "WindowsTextInputProps.h"
+#include "WindowsTextInputShadowNode.h"
 
 namespace Microsoft::ReactNative {
 
@@ -40,17 +40,16 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   void prepareForRecycle() noexcept override;
   facebook::react::SharedProps props() noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
-  int64_t SendMessage(uint32_t msg,    uint64_t wParam,    int64_t lParam) noexcept override;
+  int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
 
   const winrt::Windows::UI::Composition::Visual Visual() const noexcept override;
 
  private:
-
   struct DrawBlock {
-    DrawBlock(CompWindowsTextInputComponentView& view);
+    DrawBlock(CompWindowsTextInputComponentView &view);
     ~DrawBlock();
-    CompWindowsTextInputComponentView& m_view;
+    CompWindowsTextInputComponentView &m_view;
   };
 
   facebook::react::AttributedString getAttributedString() const;
@@ -59,7 +58,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   void DrawImage() noexcept;
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
-  void UpdateText(const std::string& str) noexcept;
+  void UpdateText(const std::string &str) noexcept;
   void OnTextUpdated() noexcept;
   void OnSelectionChanged(LONG start, LONG end) noexcept;
   std::string GetTextFromRichEdit() const noexcept;

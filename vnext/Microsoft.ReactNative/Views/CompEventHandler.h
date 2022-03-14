@@ -5,11 +5,11 @@
 #include <IReactInstance.h>
 #include <JSValue.h>
 #include <ReactPointerEventArgs.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
 #include "Utils/BatchingEventEmitter.h"
-#include <winrt/Microsoft.ReactNative.h>
 
 #ifdef USE_FABRIC
 #include <react/renderer/components/view/Touch.h>
@@ -31,24 +31,14 @@ class CompEventHandler {
       const winrt::Microsoft::ReactNative::CompRootView &compRootView);
   virtual ~CompEventHandler();
 
-
   int64_t SendMessage(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta);
   void RemoveTouchHandlers();
   winrt::Microsoft::ReactNative::BatchingEventEmitter &BatchingEmitter() noexcept;
 
  private:
-
-  void PointerPressed(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam);
-  void PointerUp(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam);
+  void PointerPressed(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
+  void PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
 
   enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
   static bool IsEndishEventType(TouchEventType eventType) noexcept;

@@ -13,14 +13,12 @@
 
 #include <utility>
 
-
 namespace facebook {
 namespace react {
 
 extern const char WindowsTextInputComponentName[] = "WindowsTextInput";
 
-void WindowsTextInputShadowNode::setContextContainer(
-    ContextContainer *contextContainer) {
+void WindowsTextInputShadowNode::setContextContainer(ContextContainer *contextContainer) {
   ensureUnsealed();
   m_contextContainer = contextContainer;
 }
@@ -34,8 +32,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString() const {
 
   auto attributedString = AttributedString{};
   auto attachments = BaseTextShadowNode::Attachments{};
-  BaseTextShadowNode::buildAttributedString(
-      childTextAttributes, *this, attributedString, attachments);
+  BaseTextShadowNode::buildAttributedString(childTextAttributes, *this, attributedString, attachments);
 
   // BaseTextShadowNode only gets children. We must detect and prepend text
   // value attributes manually.
@@ -62,8 +59,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString() const {
 // display at all.
 // TODO T67606511: We will redefine the measurement of empty strings as part
 // of T67606511
-AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString()
-    const {
+AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString() const {
   // Return placeholder text, since text and children are empty.
   auto textAttributedString = AttributedString{};
   auto fragment = AttributedString::Fragment{};
@@ -85,14 +81,12 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString()
   return textAttributedString;
 }
 
-void WindowsTextInputShadowNode::setTextLayoutManager(
-    SharedTextLayoutManager textLayoutManager) {
+void WindowsTextInputShadowNode::setTextLayoutManager(SharedTextLayoutManager textLayoutManager) {
   ensureUnsealed();
   m_textLayoutManager = std::move(textLayoutManager);
 }
 
-AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString()
-    const {
+AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString() const {
   auto const &state = getStateData();
 
   auto reactTreeAttributedString = getAttributedString();
@@ -102,12 +96,9 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString()
   // the parent which has changed Thus, we can't directly compare the entire
   // AttributedString
   bool treeAttributedStringChanged =
-      !state.reactTreeAttributedString.compareTextAttributesWithoutFrame(
-          reactTreeAttributedString);
+      !state.reactTreeAttributedString.compareTextAttributesWithoutFrame(reactTreeAttributedString);
 
-  return (
-      !treeAttributedStringChanged ? state.attributedString
-                                   : reactTreeAttributedString);
+  return (!treeAttributedStringChanged ? state.attributedString : reactTreeAttributedString);
 }
 
 void WindowsTextInputShadowNode::updateStateIfNeeded() {
@@ -138,9 +129,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
   defaultTextAttributes.apply(getConcreteProps().textAttributes);
 
   auto newEventCount =
-      (state.reactTreeAttributedString == reactTreeAttributedString
-           ? 0
-           : getConcreteProps().mostRecentEventCount);
+      (state.reactTreeAttributedString == reactTreeAttributedString ? 0 : getConcreteProps().mostRecentEventCount);
   auto newAttributedString = getMostRecentAttributedString();
 
   // Even if we're here and updating state, it may be only to update the layout
@@ -152,7 +141,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
       newEventCount,
       newAttributedString,
       reactTreeAttributedString,
-      {},  // TODO getConcreteProps().paragraphAttributes,
+      {}, // TODO getConcreteProps().paragraphAttributes,
       defaultTextAttributes,
       ShadowView(*this),
       state.defaultThemePaddingStart,
@@ -170,7 +159,7 @@ Size WindowsTextInputShadowNode::measureContent(
     return m_textLayoutManager
         ->measureCachedSpannableById(
             getStateData().cachedAttributedStringId,
-            {},  // TODO getConcreteProps().paragraphAttributes
+            {}, // TODO getConcreteProps().paragraphAttributes
             layoutConstraints)
         .size;
   }
@@ -193,7 +182,7 @@ Size WindowsTextInputShadowNode::measureContent(
   return m_textLayoutManager
       ->measure(
           AttributedStringBox{attributedString},
-          {} , // TODO getConcreteProps().paragraphAttributes,
+          {}, // TODO getConcreteProps().paragraphAttributes,
           layoutConstraints)
       .size;
 }

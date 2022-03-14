@@ -14,7 +14,8 @@ struct WindowsTextInputSelectionStruct {
   int end;
 };
 
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, WindowsTextInputSelectionStruct &result) {
+static inline void
+fromRawValue(const PropsParserContext &context, const RawValue &value, WindowsTextInputSelectionStruct &result) {
   auto map = (butter::map<std::string, RawValue>)value;
 
   auto tmp_start = map.find("start");
@@ -39,7 +40,8 @@ struct WindowsTextInputSubmitKeyEventsStruct {
   std::string code;
 };
 
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, WindowsTextInputSubmitKeyEventsStruct &result) {
+static inline void
+fromRawValue(const PropsParserContext &context, const RawValue &value, WindowsTextInputSubmitKeyEventsStruct &result) {
   auto map = (butter::map<std::string, RawValue>)value;
 
   auto tmp_altKey = map.find("altKey");
@@ -68,7 +70,10 @@ static inline std::string toString(const WindowsTextInputSubmitKeyEventsStruct &
   return "[Object WindowsTextInputSubmitKeyEventsStruct]";
 }
 
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, std::vector<WindowsTextInputSubmitKeyEventsStruct> &result) {
+static inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    std::vector<WindowsTextInputSubmitKeyEventsStruct> &result) {
   auto items = (std::vector<RawValue>)value;
   for (const auto &item : items) {
     WindowsTextInputSubmitKeyEventsStruct newItem;
@@ -80,7 +85,10 @@ static inline void fromRawValue(const PropsParserContext& context, const RawValu
 class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
  public:
   WindowsTextInputProps() = default;
-  WindowsTextInputProps(const PropsParserContext& context, const WindowsTextInputProps &sourceProps, const RawProps &rawProps);
+  WindowsTextInputProps(
+      const PropsParserContext &context,
+      const WindowsTextInputProps &sourceProps,
+      const RawProps &rawProps);
 
   bool allowFontScaling{true};
   bool clearTextOnFocus{false};

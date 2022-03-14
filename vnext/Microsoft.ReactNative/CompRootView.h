@@ -4,9 +4,9 @@
 
 #include "CompRootView.g.h"
 
+#include "CompEventHandler.h"
 #include "ReactHost/React.h"
 #include "SIPEventHandler.h"
-#include "CompEventHandler.h"
 #include "Views/ICompRootView.h"
 #include "Views/KeyboardEventHandler.h"
 
@@ -50,8 +50,8 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
 
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
 
-  //void OnPointerPressed(const PointerPressedArgs& point) noexcept;
-  //void OnMouseUp(Windows::Foundation::Point point) noexcept;
+  // void OnPointerPressed(const PointerPressedArgs& point) noexcept;
+  // void OnMouseUp(Windows::Foundation::Point point) noexcept;
   // // void OnPointerDown(int32_t pointerId) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 

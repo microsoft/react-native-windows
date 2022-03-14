@@ -224,38 +224,40 @@ int64_t CompRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam)
   if (m_rootTag == -1)
     return 0;
 
-  if (m_compEventHandler)
-  {
-    auto result = m_compEventHandler->SendMessage(static_cast<facebook::react::SurfaceId>(m_rootTag), msg, wParam, lParam);
+  if (m_compEventHandler) {
+    auto result =
+        m_compEventHandler->SendMessage(static_cast<facebook::react::SurfaceId>(m_rootTag), msg, wParam, lParam);
     if (result)
       return result;
   }
-    /*
+  /*
 
-  switch (msg) {
-    case WM_MOUSEWHEEL: {
-      POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
-      ::ScreenToClient(m_hwnd, &pt);
-      int32_t delta = GET_WHEEL_DELTA_WPARAM(wParam);
-      m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
-      return 0;
-    }
-    case WM_POINTERDOWN: {
-        if (m_compEventHandler) {
-    m_compEventHandler->PointerPressed(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)}, 1);
+switch (msg) {
+  case WM_MOUSEWHEEL: {
+    POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
+    ::ScreenToClient(m_hwnd, &pt);
+    int32_t delta = GET_WHEEL_DELTA_WPARAM(wParam);
+    m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
+    return 0;
   }
-      return 0;
-    }
-    case WM_POINTERUP: {
+  case WM_POINTERDOWN: {
       if (m_compEventHandler) {
-        m_compEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)}, 1);
-      }
-      return 0;
-    }
-    //case WM_WINDOWPOSCHANGED: {
-
+  m_compEventHandler->PointerPressed(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam),
+GET_Y_LPARAM(lParam)}, 1);
+}
+    return 0;
   }
-    */
+  case WM_POINTERUP: {
+    if (m_compEventHandler) {
+      m_compEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam),
+GET_Y_LPARAM(lParam)}, 1);
+    }
+    return 0;
+  }
+  //case WM_WINDOWPOSCHANGED: {
+
+}
+  */
 
   return 0;
 }

@@ -6,14 +6,13 @@
 
 #include "CompWindowsTextInputComponentView.h"
 
-#include <winrt/Windows.UI.h>
 #include <Utils/ValueUtils.h>
-#include "WindowsTextInputState.h"
-#include "WindowsTextInputShadowNode.h"
-#include <unicode.h>
-#include "../CompHelpers.h"
 #include <tom.h>
-
+#include <unicode.h>
+#include <winrt/Windows.UI.h>
+#include "../CompHelpers.h"
+#include "WindowsTextInputShadowNode.h"
+#include "WindowsTextInputState.h"
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
@@ -389,7 +388,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     }
 
     if (iNotify == EN_SELCHANGE) {
-      auto selChange = (SELCHANGE *) pv;
+      auto selChange = (SELCHANGE *)pv;
       m_outer->OnSelectionChanged(selChange->chrg.cpMin, selChange->chrg.cpMax);
     }
 
@@ -427,13 +426,13 @@ facebook::react::AttributedString CompWindowsTextInputComponentView::getAttribut
   // BaseTextShadowNode only gets children. We must detect and prepend text
   // value attributes manually.
   auto text = GetTextFromRichEdit();
-  //if (!m_props->text.empty()) {
+  // if (!m_props->text.empty()) {
   if (!text.empty()) {
     auto textAttributes = facebook::react::TextAttributes::defaultTextAttributes();
     textAttributes.apply(m_props->textAttributes);
     auto fragment = facebook::react::AttributedString::Fragment{};
     fragment.string = text;
-    //fragment.string = m_props->text;
+    // fragment.string = m_props->text;
     fragment.textAttributes = textAttributes;
     // If the TextInput opacity is 0 < n < 1, the opacity of the TextInput and
     // text value's background will stack. This is a hack/workaround to prevent
@@ -505,8 +504,7 @@ void CompWindowsTextInputComponentView::handleCommand(
       winrt::check_hresult(m_textServices->TxSendMessage(
           EM_SELCHANGE, 0 , reinterpret_cast<WPARAM>(&sc), &res));
           */
-      winrt::check_hresult(m_textServices->TxSendMessage(
-          EM_SETSEL, begin, end, &res));
+      winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, begin, end, &res));
 
       m_comingFromJS = false;
     }
@@ -775,7 +773,6 @@ void CompWindowsTextInputComponentView::OnTextUpdated() noexcept {
 }
 
 void CompWindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
-
   if (m_eventEmitter /* && !m_comingFromJS ?? */) {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
@@ -786,19 +783,19 @@ void CompWindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end)
 }
 
 std::string CompWindowsTextInputComponentView::GetTextFromRichEdit() const noexcept {
-    BSTR bstr;
-    winrt::check_hresult(m_textServices->TxGetText(&bstr));
-    auto str = BstrToStdString(bstr);
+  BSTR bstr;
+  winrt::check_hresult(m_textServices->TxGetText(&bstr));
+  auto str = BstrToStdString(bstr);
 
-    // JS gets confused by the \r\0 ending
-    if (*(str.end() - 1) == '\0') {
-      str.pop_back();
-    }
-    if (*(str.end() - 1) == '\r') {
-      str.pop_back();
-    }
-    SysFreeString(bstr);
-    return str;
+  // JS gets confused by the \r\0 ending
+  if (*(str.end() - 1) == '\0') {
+    str.pop_back();
+  }
+  if (*(str.end() - 1) == '\r') {
+    str.pop_back();
+  }
+  SysFreeString(bstr);
+  return str;
 }
 
 void CompWindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
@@ -906,7 +903,8 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
     LRESULT lresult;
-    winrt::check_hresult(m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
+    winrt::check_hresult(
+        m_textServices->TxSendMessage(EM_SETEVENTMASK, 0, ENM_CHANGE | ENM_SELCHANGE | ENM_ENDCOMPOSITION, &lresult));
 
     // Cache the interop pointer, since that's what we always use.
     drawingSurface.as(m_drawingSurfaceInterop);

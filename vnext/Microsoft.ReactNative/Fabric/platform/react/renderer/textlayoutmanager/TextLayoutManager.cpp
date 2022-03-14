@@ -79,7 +79,6 @@ TextMeasurement TextLayoutManager::measure(
   return {};
 };
 
-
 /**
  * Measures an AttributedString on the platform, as identified by some
  * opaque cache ID.

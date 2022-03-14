@@ -37,38 +37,20 @@ WindowsTextInputState::WindowsTextInputState(
       defaultThemePaddingTop(defaultThemePaddingTop),
       defaultThemePaddingBottom(defaultThemePaddingBottom) {}
 
-WindowsTextInputState::WindowsTextInputState(
-    WindowsTextInputState const &previousState,
-    folly::dynamic const &data)
-    : mostRecentEventCount(data.getDefault(
-                                   "mostRecentEventCount",
-                                   previousState.mostRecentEventCount)
-                               .getInt()),
-      cachedAttributedStringId(data.getDefault(
-                                       "opaqueCacheId",
-                                       previousState.cachedAttributedStringId)
-                                   .getInt()),
+WindowsTextInputState::WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data)
+    : mostRecentEventCount(data.getDefault("mostRecentEventCount", previousState.mostRecentEventCount).getInt()),
+      cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt()),
       attributedString(previousState.attributedString),
       reactTreeAttributedString(previousState.reactTreeAttributedString),
       paragraphAttributes(previousState.paragraphAttributes),
       defaultTextAttributes(previousState.defaultTextAttributes),
       defaultParentShadowView(previousState.defaultParentShadowView),
-      defaultThemePaddingStart(data.getDefault(
-                                       "themePaddingStart",
-                                       previousState.defaultThemePaddingStart)
-                                   .getDouble()),
-      defaultThemePaddingEnd(data.getDefault(
-                                     "themePaddingEnd",
-                                     previousState.defaultThemePaddingEnd)
-                                 .getDouble()),
-      defaultThemePaddingTop(data.getDefault(
-                                     "themePaddingTop",
-                                     previousState.defaultThemePaddingTop)
-                                 .getDouble()),
-      defaultThemePaddingBottom(data.getDefault(
-                                        "themePaddingBottom",
-                                        previousState.defaultThemePaddingBottom)
-                                    .getDouble()){};
+      defaultThemePaddingStart(
+          data.getDefault("themePaddingStart", previousState.defaultThemePaddingStart).getDouble()),
+      defaultThemePaddingEnd(data.getDefault("themePaddingEnd", previousState.defaultThemePaddingEnd).getDouble()),
+      defaultThemePaddingTop(data.getDefault("themePaddingTop", previousState.defaultThemePaddingTop).getDouble()),
+      defaultThemePaddingBottom(
+          data.getDefault("themePaddingBottom", previousState.defaultThemePaddingBottom).getDouble()){};
 
 #ifdef ANDROID
 folly::dynamic AndroidTextInputState::getDynamic() const {
@@ -84,8 +66,7 @@ folly::dynamic AndroidTextInputState::getDynamic() const {
     newState["mostRecentEventCount"] = mostRecentEventCount;
     newState["attributedString"] = toDynamic(attributedString);
     newState["hash"] = newState["attributedString"]["hash"];
-    newState["paragraphAttributes"] =
-        toDynamic(paragraphAttributes); // TODO: can we memoize this in Java?
+    newState["paragraphAttributes"] = toDynamic(paragraphAttributes); // TODO: can we memoize this in Java?
   }
   return newState;
 }

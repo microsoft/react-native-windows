@@ -6,12 +6,12 @@
 #include <JSValue.h>
 #include <ReactPointerEventArgs.h>
 #include <UI.Xaml.Documents.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
 #include "Utils/BatchingEventEmitter.h"
 #include "XamlView.h"
-#include <winrt/Microsoft.ReactNative.h>
 
 #ifdef USE_FABRIC
 #include <react/renderer/components/view/Touch.h>
