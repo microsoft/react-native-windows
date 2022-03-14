@@ -85,6 +85,7 @@ bool ViewComponentView::shouldBeControl() const noexcept {
 void ViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
+
 void ViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
@@ -95,9 +96,6 @@ void ViewComponentView::updateLayoutMetrics(
 
   winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, layoutMetrics.frame.origin.x);
   winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, layoutMetrics.frame.origin.y);
-
-  m_panel.Width(layoutMetrics.frame.size.width);
-  m_panel.Height(layoutMetrics.frame.size.height);
 }
 
 void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
@@ -178,6 +176,21 @@ void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) no
         m_control.Content(m_panel);
     }
   }
+
+  // When ViewPanel creates an outerborder, we need to set the height on the inner element too.
+  // TODO - look at changing ViewPanel to make the inner child clear height/width info automatically
+  if (auto border = m_panel.try_as<xaml::Controls::Border>()) {
+    auto inner = border.Child().try_as<xaml::FrameworkElement>();
+    inner.Width(m_layoutMetrics.frame.size.width);
+    inner.Height(m_layoutMetrics.frame.size.height);
+  } else if (auto control = m_panel.try_as<xaml::Controls::ContentControl>()) {
+    auto inner = control.Content().as<xaml::FrameworkElement>();
+    inner.Width(m_layoutMetrics.frame.size.width);
+    inner.Height(m_layoutMetrics.frame.size.height);
+  }
+
+  m_panel.Width(m_layoutMetrics.frame.size.width);
+  m_panel.Height(m_layoutMetrics.frame.size.height);
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
