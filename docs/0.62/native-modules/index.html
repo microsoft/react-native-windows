@@ -311,6 +311,9 @@ AppRegistry<span class="token punctuation">.</span><span class="token function">
 <span class="token punctuation">}</span>
 </code></pre>
 <p>The <code>REACT_MODULE</code> macro-attribute says that the class is a ReactNative native module. It receives the class name as a first parameter. All other macro-attributes also receive their target as a first parameter. <code>REACT_MODULE</code> has an optional parameter for the module name visible to JavaScript and optionally the name of a registered event emitter. By default, the name visible to JavaScript is the same as the class name, and the default event emitter is <code>RCTDeviceEventEmitter</code>.</p>
+<blockquote>
+<p>NOTE: Methods annotated with <code>REACT_METHOD</code> and friends must have the <code>noexcept</code> specifier, otherwise the program will not compile. Module authors should make sure all exceptions are handled inside the method.</p>
+</blockquote>
 <p>You can overwrite the JavaScript module name like this: <code>REACT_MODULE(FancyMath, &quot;math&quot;)</code>.</p>
 <p>You can specify a different event emitter like this: <code>REACT_MODULE(FancyMath, &quot;math&quot;, &quot;mathEmitter&quot;)</code>.</p>
 <blockquote>
