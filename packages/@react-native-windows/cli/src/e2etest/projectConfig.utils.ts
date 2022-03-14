@@ -12,7 +12,7 @@ export async function tryMkdir(dir: string): Promise<void> {
   } catch (err) {}
 }
 
-export async function ensureWinUI3Project(folder: string) {
+export async function ensureCppAppProject(folder: string, name: string, useWinUI3?: boolean, useHermes?: boolean, useExperimentaNuget?: boolean) {
   const windowsDir = path.join(folder, 'windows');
   if (fs.existsSync(windowsDir)) {
     await fs.rmdir(windowsDir, {recursive: true});
@@ -20,29 +20,29 @@ export async function ensureWinUI3Project(folder: string) {
   await tryMkdir(windowsDir);
 
   const replacements = {
-    name: 'WithWinUI3',
-    namespace: 'WithWinUI3',
+    name,
+    namespace: name,
     useMustache: true,
     projectGuidUpper: testProjectGuid,
     projectGuidLower: testProjectGuid.toLowerCase(),
-    useWinUI3: false,
-    useHermes: false,
-    useExperimentalNuget: false,
+    useWinUI3: !!useWinUI3,
+    useHermes: !!useHermes,
+    useExperimentalNuget: !!useExperimentaNuget,
   };
 
   await copyAndReplace(
     path.join(templateRoot, 'cpp-app/proj/MyApp.sln'),
-    path.join(windowsDir, 'WithWinUI3.sln'),
+    path.join(windowsDir, `${name}.sln`),
     replacements,
     null
   );
 
-  const projDir = path.join(windowsDir, 'WithWinUI3');
+  const projDir = path.join(windowsDir, name);
   await tryMkdir(projDir);
 
   await copyAndReplace(
     path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
-    path.join(projDir, 'WithWinUI3.vcxproj'),
+    path.join(projDir, `${name}.vcxproj`),
     replacements,
     null
   );
@@ -53,4 +53,59 @@ export async function ensureWinUI3Project(folder: string) {
     replacements,
     null
   );
+}
+
+export async function ensureCSharpAppProject(folder: string, name: string, useWinUI3?: boolean, useHermes?: boolean, useExperimentaNuget?: boolean) {
+  const windowsDir = path.join(folder, 'windows');
+  if (fs.existsSync(windowsDir)) {
+    await fs.rmdir(windowsDir, {recursive: true});
+  }
+  await tryMkdir(windowsDir);
+
+  const replacements = {
+    name,
+    namespace: name,
+    useMustache: true,
+    projectGuidUpper: testProjectGuid,
+    projectGuidLower: testProjectGuid.toLowerCase(),
+    useWinUI3: !!useWinUI3,
+    useHermes: !!useHermes,
+    useExperimentalNuget: !!useExperimentaNuget,
+  };
+
+  await copyAndReplace(
+    path.join(templateRoot, 'cs-app/proj/MyApp.sln'),
+    path.join(windowsDir, `${name}.sln`),
+    replacements,
+    null
+  );
+
+  const projDir = path.join(windowsDir, name);
+  await tryMkdir(projDir);
+
+  await copyAndReplace(
+    path.join(templateRoot, 'cs-app/proj/MyApp.csproj'),
+    path.join(projDir, `${name}.csproj`),
+    replacements,
+    null
+  );
+
+  await copyAndReplace(
+    path.join(templateRoot, 'shared-app/proj/ExperimentalFeatures.props'),
+    path.join(windowsDir, 'ExperimentalFeatures.props'),
+    replacements,
+    null
+  );
+}
+
+export async function ensureWinUI3Project(folder: string) {
+  await ensureCppAppProject(folder, 'WithWinUI3', true, false, false);
+}
+
+export async function ensureHermesProject(folder: string) {
+  await ensureCppAppProject(folder, 'WithHermes', false, true, false);
+}
+
+export async function ensureExperimentalNuGetProject(folder: string) {
+  await ensureCppAppProject(folder, 'WithExperimentalNuGet', false, false, true);
 }

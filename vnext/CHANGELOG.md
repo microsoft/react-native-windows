@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 09 Mar 2022 06:09:08 GMT and should not be manually modified.
+This log was last generated on Sat, 12 Mar 2022 06:09:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.470
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Safe re-entrancy for EnsureHermesLoaded (tudor.mihai@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.120
+
+## 0.0.0-canary.469
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Changes
+
+- Use Canvas dependency properties for Top/Left instead of custom DPs (asklar@microsoft.com)
+
+## 0.0.0-canary.468
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Update CppAppConsumeCSharpModules.props for VS2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.119
 
 ## 0.0.0-canary.467
 
