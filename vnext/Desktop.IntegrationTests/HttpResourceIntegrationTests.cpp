@@ -39,9 +39,9 @@ using tcp = boost::asio::ip::tcp; // from <boost/asio/ip/tcp.hpp>
 // request. The type of the response object depends on the
 // contents of the request, so the interface requires the
 // caller to pass a generic lambda for receiving the response.
-template <class Body, class Allocator, class Send>
+template </*class Body, class Allocator, */class Send>
 void handle_request(
-    http::request<Body, http::basic_fields<Allocator>> &&req,
+    Microsoft::React::Test::DynamicRequest &&req,
     Send &&send) {
 
   Microsoft::React::Test::DynamicResponse res;
