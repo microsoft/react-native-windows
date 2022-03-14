@@ -143,6 +143,7 @@ class session : public std::enable_shared_from_this<session> {
 
     // Send the response
     Respond();
+    // handle_request(std::move(req_), lambda_);
   }
 
   void on_write(bool close, beast::error_code ec, std::size_t bytes_transferred) {
@@ -299,6 +300,7 @@ using Test::DynamicResponse;
 TEST_CLASS (HttpResourceIntegrationTest) {
 
   TEST_METHOD(Vinime) {
+#if 0
     promise<void> requestProm;
     std::atomic<int> count;
 
@@ -320,14 +322,15 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
     server->Stop();
 
-#if 0
+#else
     auto const address = boost::asio::ip::make_address("0.0.0.0");
     unsigned short const port = 5556;
     int const threadCount = 1;
 
     boost::asio::io_context ioc{threadCount};
+    Test::HttpCallbacks callbacks;
 
-    std::make_shared<falco::listener>(ioc, boost::asio::ip::tcp::endpoint{address, port})->run();
+    std::make_shared<falco::listener>(ioc, boost::asio::ip::tcp::endpoint{address, port}, callbacks)->run();
 
     std::vector<std::thread> threads;
     threads.reserve(threadCount - 1);
