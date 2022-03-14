@@ -51,7 +51,6 @@ struct CompImageComponentView : CompBaseComponentView {
   void DrawImage() noexcept;
 
   facebook::react::SharedViewProps m_props;
-  facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;

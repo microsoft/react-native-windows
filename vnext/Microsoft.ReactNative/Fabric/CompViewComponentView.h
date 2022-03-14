@@ -31,12 +31,20 @@ struct CompBaseComponentView : public IComponentView {
   virtual int64_t SendMessage(uint32_t msg,    uint64_t wParam,    int64_t lParam) noexcept;
   RECT getClientRect() const noexcept override;
 
+  void ensureBorderVisual() noexcept;
+  void indexOffsetForBorder(uint32_t& index) const noexcept;
+  void updateBorderProps(const facebook::react::ViewProps& oldViewProps, const facebook::react::ViewProps& newViewProps) noexcept;
+  void updateBorderLayoutMetrics() noexcept;
+
  protected:
   winrt::Windows::UI::Composition::Compositor m_compositor;
   facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   std::vector<const IComponentView *> m_children;
   IComponentView *m_parent{nullptr};
+  facebook::react::LayoutMetrics m_layoutMetrics;
+
+  winrt::Windows::UI::Composition::SpriteVisual m_borderVisual{nullptr};
 };
 
 struct CompViewComponentView : public CompBaseComponentView {
@@ -67,12 +75,9 @@ struct CompViewComponentView : public CompBaseComponentView {
  private:
   void ensureVisual() noexcept;
   bool shouldBeControl() const noexcept;
-  void ensureBorderVisual() noexcept;
 
   facebook::react::SharedViewProps m_props;
-  facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::UI::Composition::Visual m_visual{nullptr};
-  winrt::Windows::UI::Composition::SpriteVisual m_borderVisual{nullptr};
 };
 
 } // namespace Microsoft::ReactNative

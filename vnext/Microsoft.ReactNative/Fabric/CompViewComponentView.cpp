@@ -72,6 +72,67 @@ bool CompBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta
   return false;
 }
 
+void CompBaseComponentView::ensureBorderVisual() noexcept {
+  if (!m_borderVisual) {
+    m_borderVisual = m_compositor.CreateSpriteVisual();
+    auto ninegridBrush = m_compositor.CreateNineGridBrush();
+
+    // opt out of drawing Center of Nine-Grid
+    ninegridBrush.IsCenterHollow(true);
+
+    m_borderVisual.Brush(ninegridBrush);
+    auto containerChildren = Visual().as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    containerChildren.InsertAtTop(m_borderVisual);
+  }
+}
+
+void CompBaseComponentView::updateBorderProps(const facebook::react::ViewProps& oldViewProps, const facebook::react::ViewProps& newViewProps) noexcept {
+
+  if (oldViewProps.borderColors != newViewProps.borderColors) {
+   
+    if (newViewProps.borderColors.all) {
+      ensureBorderVisual();
+      auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
+      ninegridBrush.Source(m_compositor.CreateColorBrush((*newViewProps.borderColors.all).AsWindowsColor()));
+    } else {
+      // TODO handle clearing border
+    }
+  }
+
+  if (oldViewProps.borderStyles != newViewProps.borderStyles || oldViewProps.borderRadii != newViewProps.borderRadii) {
+    ensureBorderVisual();
+
+    // create NineGridBrush w/ ColorBrush Source
+    auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
+    ninegridBrush.SetInsets(
+        m_layoutMetrics.borderWidth.left * m_layoutMetrics.pointScaleFactor,
+        m_layoutMetrics.borderWidth.top * m_layoutMetrics.pointScaleFactor,
+        m_layoutMetrics.borderWidth.right * m_layoutMetrics.pointScaleFactor,
+        m_layoutMetrics.borderWidth.bottom * m_layoutMetrics.pointScaleFactor);
+  }
+}
+
+void CompBaseComponentView::updateBorderLayoutMetrics() noexcept {
+  if (m_borderVisual) {
+    auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
+    ninegridBrush.SetInsets(
+        m_layoutMetrics.borderWidth.left * m_layoutMetrics.pointScaleFactor,
+        m_layoutMetrics.borderWidth.top * m_layoutMetrics.pointScaleFactor,
+        m_layoutMetrics.borderWidth.right * m_layoutMetrics.pointScaleFactor,
+        m_layoutMetrics.borderWidth.bottom *
+        m_layoutMetrics.pointScaleFactor);
+
+    m_borderVisual.Size(
+        {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+         m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor});
+  }
+}
+
+void CompBaseComponentView::indexOffsetForBorder(uint32_t& index) const noexcept {
+  if (m_borderVisual)
+    index++;
+}
+
 CompViewComponentView::CompViewComponentView() {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
@@ -82,27 +143,12 @@ CompViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void CompViewComponentView::ensureBorderVisual() noexcept {
-  if (!m_borderVisual) {
-    m_borderVisual = m_compositor.CreateSpriteVisual();
-    auto ninegridBrush = m_compositor.CreateNineGridBrush();
-
-    // opt out of drawing Center of Nine-Grid
-    ninegridBrush.IsCenterHollow(true);
-
-    m_borderVisual.Brush(ninegridBrush);
-    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
-    containerChildren.InsertAtTop(m_borderVisual);
-  }
-}
-
 void CompViewComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   ensureVisual();
 
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
 
-  if (m_borderVisual)
-    index++;
+  indexOffsetForBorder(index);
 
   const_cast<IComponentView &>(childComponentView).parent(this);
 
@@ -124,8 +170,7 @@ void CompViewComponentView::unmountChildComponentView(
 
   m_children.erase(std::next(m_children.begin(), index));
 
-  if (m_borderVisual)
-    index++;
+  indexOffsetForBorder(index);
 
   const_cast<IComponentView &>(childComponentView).parent(nullptr);
 
@@ -158,32 +203,11 @@ void CompViewComponentView::updateProps(
     }
   }
 
-  if (oldViewProps.borderColors != newViewProps.borderColors) {
-   
-    if (newViewProps.borderColors.all) {
-      ensureBorderVisual();
-      auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
-      ninegridBrush.Source(m_compositor.CreateColorBrush((*newViewProps.borderColors.all).AsWindowsColor()));
-    } else {
-      // TODO handle clearing border
-    }
-  }
-
   if (oldViewProps.opacity != newViewProps.opacity) {
     m_visual.Opacity(newViewProps.opacity);
   }
 
-  if (oldViewProps.borderStyles != newViewProps.borderStyles || oldViewProps.borderRadii != newViewProps.borderRadii) {
-    ensureBorderVisual();
-
-    // create NineGridBrush w/ ColorBrush Source
-    auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
-    ninegridBrush.SetInsets(
-        m_layoutMetrics.borderWidth.left * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.top * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.right * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.bottom * m_layoutMetrics.pointScaleFactor);
-  }
+  updateBorderProps(oldViewProps, newViewProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
@@ -243,21 +267,7 @@ void CompViewComponentView::updateLayoutMetrics(
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
-
-
-  if (m_borderVisual) {
-    auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
-    ninegridBrush.SetInsets(
-        m_layoutMetrics.borderWidth.left * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.top * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.right * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.bottom *
-        m_layoutMetrics.pointScaleFactor);
-
-    m_borderVisual.Size(
-        {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-         layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  }
+  updateBorderLayoutMetrics();
 
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,

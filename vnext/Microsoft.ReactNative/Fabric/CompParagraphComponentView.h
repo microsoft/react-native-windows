@@ -45,7 +45,6 @@ struct CompParagraphComponentView : CompBaseComponentView {
   void updateTextAlignment(const butter::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
 
   std::shared_ptr<facebook::react::ParagraphProps const> m_props;
-  facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::com_ptr<::IDWriteTextFormat> m_textFormat{nullptr};
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout{nullptr};

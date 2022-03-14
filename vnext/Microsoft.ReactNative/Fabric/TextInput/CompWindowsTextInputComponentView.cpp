@@ -554,6 +554,8 @@ void CompWindowsTextInputComponentView::updateProps(
 
   ensureVisual();
 
+  updateBorderProps(oldTextInputProps, newTextInputProps);
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -739,6 +741,8 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
 
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
+
+  updateBorderLayoutMetrics();
 
   // TODO should ceil?
   m_imgWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);

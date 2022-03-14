@@ -147,6 +147,8 @@ void CompImageComponentView::updateProps(
 
   ensureVisual();
 
+  updateBorderProps(oldImageProps, newImageProps);
+
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor) {
     auto color = *newImageProps.backgroundColor;
 
@@ -156,17 +158,6 @@ void CompImageComponentView::updateProps(
     } else {
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(nullptr);
     }
-  }
-
-  if (oldImageProps.borderColors != newImageProps.borderColors) {
-    /*
-    if (newImageProps.borderColors.all) {
-
-      m_panel.BorderBrush(newImageProps.borderColors.all->AsWindowsBrush());
-    } else {
-      m_panel.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
-    }
-    */
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {
@@ -217,6 +208,8 @@ void CompImageComponentView::updateLayoutMetrics(
 
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
+
+  updateBorderLayoutMetrics();
 
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
