@@ -121,10 +121,32 @@ class session : public std::enable_shared_from_this<session> {
   }
 
   void Respond() {
+    std::shared_ptr<Microsoft::React::Test::DynamicResponse> sp;
     switch (req_.method()) {
-    case http::verb::get:
-        break;
+      case http::verb::get:
+        sp = std::make_shared<Microsoft::React::Test::DynamicResponse>(m_callbacks.OnGet(req_));
+        res_ = sp;
+
+        http::async_write(
+          stream_,
+          *sp,
+          beast::bind_front_handler(&session::on_write, shared_from_this(), sp->need_eof())
+        );
+
+      break;
+
+    default:
+      throw;
     }
+  }
+
+  //template </*class Body, class Allocator, */ class Send>
+  void HandleRequest(Microsoft::React::Test::DynamicRequest &&req, send_lambda &send) {
+    Microsoft::React::Test::DynamicResponse res;
+    res.result(http::status::ok);
+    res.body() = Microsoft::React::Test::CreateStringResponseBody("some resposne content");
+
+    return send(std::move(res));
   }
 
   void on_read(beast::error_code ec, std::size_t bytes_transferred) {
@@ -138,8 +160,9 @@ class session : public std::enable_shared_from_this<session> {
       return fail(ec, "read");
 
     // Send the response
-    handle_request(std::move(req_), lambda_);
-    // Respond();
+    //handle_request(std::move(req_), lambda_);
+    //Respond();
+    HandleRequest(std::move(req_), lambda_);
   }
 
   void on_write(bool close, beast::error_code ec, std::size_t bytes_transferred) {
