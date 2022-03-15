@@ -84,6 +84,8 @@ class session : public std::enable_shared_from_this<session> {
     }
   };
 
+  std::function<void(Microsoft::React::Test::DynamicResponse&&)> m_sendLambda;
+
   beast::tcp_stream stream_;
   beast::flat_buffer buffer_;
   Microsoft::React::Test::DynamicRequest req_;
@@ -97,10 +99,22 @@ class session : public std::enable_shared_from_this<session> {
     : stream_(std::move(socket))
     , lambda_(*this)
     , m_callbacks{ callbacks }
-  {}
+  {
+  }
 
   // Start the asynchronous operation
   void run() {
+    m_sendLambda = [self = shared_from_this()](Microsoft::React::Test::DynamicResponse&& res) {
+      auto sp = std::make_shared<Microsoft::React::Test::DynamicResponse>(std::move(res));
+      self->res_ = sp;
+
+      http::async_write(
+        self->stream_,
+        *sp,
+        beast::bind_front_handler(&session::on_write, self->shared_from_this(), sp->need_eof())
+      );
+    };
+
     // We need to be executing within a strand to perform async operations
     // on the I/O objects in this session. Although not strictly necessary
     // for single-threaded contexts, this example code is written to be
@@ -123,7 +137,7 @@ class session : public std::enable_shared_from_this<session> {
   void Respond() {
     switch (req_.method()) {
       case http::verb::get:
-        lambda_(m_callbacks.OnGet(req_));
+        m_sendLambda(m_callbacks.OnGet(req_));
         break;
 
       default:
