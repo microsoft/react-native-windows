@@ -13,7 +13,7 @@
 // Standard Library
 #include <future>
 
-#define FALCO 1
+#define FALCO 0
 
 #if FALCO
 #include <boost/asio/dispatch.hpp>
@@ -271,18 +271,22 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
   std::vector<std::thread> m_threads;
   int const numThreads = 1;
   Microsoft::React::Test::HttpCallbacks m_callbacks;
+  net::ip::tcp::endpoint m_endpoint;
 
  public:
-  HttpServer()
-  : m_context{numThreads} {}
+  HttpServer(const char *url, size_t port)
+  : m_context{numThreads}
+  , m_endpoint{net::ip::make_address(url), static_cast<unsigned short>(port)}
+  {}
+
+  HttpServer(size_t port) : HttpServer("0.0.0.0", port) {}
 
   ~HttpServer() {}
 
-  void Start(const char* url, int port) {
-    auto const address = net::ip::make_address(url);
+  void Start() {
     std::make_shared<listener>(
       m_context,
-      net::ip::tcp::endpoint{address, static_cast<unsigned short>(port)},
+      m_endpoint,
       m_callbacks
     )->run();
 
@@ -311,7 +315,6 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
 } // falco
 #endif // FALCO
 
-
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -330,14 +333,14 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string error;
     int statusCode = 0;
 
-    auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
-    server->SetOnGet([&resPromise](const DynamicRequest &request) -> DynamicResponse {
+    auto server = std::make_shared<Test::HttpServer>(5556);
+    server->Callbacks().OnGet = [&resPromise](const DynamicRequest &request)->DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
       response.body() = Test::CreateStringResponseBody("some response content");
 
       return response;
-    });
+    };
     server->Start();
 
     auto resource = IHttpResource::Make();
@@ -377,8 +380,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string error;
     IHttpResource::Response response;
 
-    auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
-    server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
+    auto server = std::make_shared<Test::HttpServer>(5555);
+    server->Callbacks().OnGet = [](const DynamicRequest &request)->DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
 
@@ -390,7 +393,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       response.set("ResponseHeaderName1", "ResponseHeaderValue1");
 
       return response;
-    });
+    };
     server->Start();
 
     auto resource = IHttpResource::Make();
@@ -469,44 +472,26 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string content;
 
 #if FALCO
-    auto server = std::make_shared<falco::HttpServer>();
+    auto server = std::make_shared<falco::HttpServer>(5555);
 #else
-    auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
+    auto server = std::make_shared<Test::HttpServer>(5555);
 #endif // FALCO
-#if FALCO
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> DynamicResponse {
-#else
-    server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
-#endif // FALCO
       DynamicResponse response;
       response.result(http::status::ok);
       response.body() = Test::CreateStringResponseBody("Response Body");
 
       return response;
-#if FALCO
     };
-#else
-    });
-#endif // FALCO
 
-#if FALCO
-    server->Callbacks().OnOptions = [](const DynamicRequest &request) -> DynamicResponse {
-#else
-    server->SetOnOptions([](const DynamicRequest &request) -> DynamicResponse {
-#endif // FALCO
-
+    server->Callbacks().OnOptions = [](const DynamicRequest &request)->DynamicResponse {
       DynamicResponse response;
       response.result(http::status::partial_content);
       response.set("PreflightName", "PreflightValue");
 
       return response;
-#if FALCO
     };
-    server->Start("0.0.0.0", 5555);
-#else
-    });
     server->Start();
-#endif // FALCO
 
     auto resource = IHttpResource::Make();
     resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsPromise](int64_t, IHttpResource::Response callbackResponse) {

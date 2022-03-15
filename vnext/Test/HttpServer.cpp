@@ -177,10 +177,10 @@ void HttpSession::Close()
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, uint16_t port)
+HttpServer::HttpServer(string &&address, size_t port)
   : m_acceptor{make_strand(m_context)}
 {
-  auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
+  auto endpoint = tcp::endpoint{make_address(std::move(address)), static_cast<uint16_t>(port)};
   error_code ec;
   m_acceptor.open(endpoint.protocol(), ec);
   if (ec)
@@ -209,6 +209,11 @@ HttpServer::HttpServer(string &&address, uint16_t port)
     // ISS:2735328 - Implement failure propagation mechanism
     return;
   }
+}
+
+HttpServer::HttpServer(size_t port)
+  : HttpServer("0.0.0.0", port)
+{
 }
 
 HttpServer::~HttpServer() {}
@@ -278,21 +283,9 @@ void HttpServer::Abort()
   Stop();
 }
 
-void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept
+HttpCallbacks& HttpServer::Callbacks()
 {
-  m_callbacks.OnResponseSent = std::move(handler);
-}
-
-void HttpServer::SetOnGet(
-  function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept
-{
-  m_callbacks.OnGet = std::move(handler);
-}
-
-void HttpServer::SetOnOptions(
-  function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept
-{
-  m_callbacks.OnOptions = std::move(handler);
+  return m_callbacks;
 }
 
 #pragma endregion HttpServer

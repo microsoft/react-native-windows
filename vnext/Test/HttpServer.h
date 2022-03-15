@@ -78,31 +78,17 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   // address - Valid IP address string (i.e. "127.0.0.1).
   // port    - TCP port number (i.e. 80).
   ///
-  HttpServer(std::string &&address, std::uint16_t port);
+  HttpServer(std::string &&address, size_t port);
+  HttpServer(size_t port);
 
   ~HttpServer();
 
   void Accept();
   void Start();
   void Stop();
-  void Abort();
+  void Abort();//TODO: Remove?
 
-  ///
-  // Callback to invoke after a successful response is sent.
-  ///
-  void SetOnResponseSent(std::function<void()> &&handler) noexcept;
-
-  ///
-  // Function that creates an HTTP response to send to the client on GET
-  // requests.
-  ///
-  void SetOnGet(std::function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept;
-
-  ///
-  // Function that creates an HTTP response to send to the client on GET
-  // requests.
-  ///
-  void SetOnOptions(std::function<DynamicResponse(const DynamicRequest &)> &&handler) noexcept;
+  HttpCallbacks& Callbacks();
 };
 
 } // namespace Microsoft::React::Test
