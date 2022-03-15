@@ -389,48 +389,46 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestGetSucceeds) {
-    promise<void> promise;
+    promise<void> resPromise;
     string error;
     int statusCode = 0;
 
     auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
-    int count = 0;
-    server->SetOnGet([&promise, &count](const DynamicRequest &request) -> DynamicResponse {
+    server->SetOnGet([&resPromise, &count](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
-      response.body() = Test::CreateStringResponseBody("some resposne content");
-
-      if (++count == 2)
-        promise.set_value();
+      response.body() = Test::CreateStringResponseBody("some response content");
 
       return response;
     });
     server->Start();
 
-    //auto resource = IHttpResource::Make();
-    //resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
-    //  statusCode = static_cast<int>(response.StatusCode);
-    //  promise.set_value();
-    //});
-    //resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
-    //  error = std::move(message);
-    //  promise.set_value();
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&resPromise, &statusCode](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+    });
+    resource->SetOnData([&resPromise](int64_t, string &&content) {
+      resPromise.set_value();
+    });
+    resource->SetOnError([&resPromise, &error, &server](int64_t, string &&message) {
+      error = std::move(message);
+      resPromise.set_value();
 
-    //  server->Abort();
-    //});
-    //resource->SendRequest(
-    //    "GET",
-    //    "http://localhost:5556",
-    //    {} /*header*/,
-    //    {} /*bodyData*/,
-    //    "text",
-    //    false,
-    //    1000 /*timeout*/,
-    //    false /*withCredentials*/,
-    //    [](int64_t) {});
+      server->Stop();
+    });
+    resource->SendRequest(
+        "GET",
+        "http://localhost:5556",
+        {} /*header*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
 
     // Synchronize response.
-    promise.get_future().wait();
+    resPromise.get_future().wait();
     server->Stop();
 
     Assert::AreEqual({}, error);
@@ -529,72 +527,68 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestOptionsSucceeds) {
-    promise<void> promise;
+    promise<void> resourcePromise;
     string error;
     IHttpResource::Response response;
     string content;
 
-    // HTTP call scope
-    //{
-      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
-      server->SetOnGet([](const DynamicRequest& request) -> DynamicResponse {
-        DynamicResponse response;
-        response.result(http::status::ok);
-        response.body() = Test::CreateStringResponseBody("Response Body");
+    auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
+    server->SetOnGet([](const DynamicRequest& request) -> DynamicResponse {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Response Body");
 
-        return response;
-      });
-      server->SetOnOptions([](const DynamicRequest &request) -> DynamicResponse {
-        DynamicResponse response;
-        response.result(http::status::ok);
-        response.set("PreflightName", "PreflightValue");
+      return response;
+    });
+    server->SetOnOptions([](const DynamicRequest &request) -> DynamicResponse {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.set("PreflightName", "PreflightValue");
 
-        return response;
-      });
-      server->Start();
+      return response;
+    });
+    server->Start();
 
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([/*&promise, */&response](int64_t, IHttpResource::Response callbackResponse) {
-        response = callbackResponse;
-      });
-      resource->SetOnData([&promise, &content](int64_t, string &&responseData) {
-        content = std::move(responseData);
-        promise.set_value();
-      });
-      resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
-        error = std::move(message);
-        promise.set_value();
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&response](int64_t, IHttpResource::Response callbackResponse) {
+      response = callbackResponse;
+    });
+    resource->SetOnData([&resourcePromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
+      resourcePromise.set_value();
+    });
+    resource->SetOnError([&resourcePromise, &error, &server](int64_t, string &&message) {
+      error = std::move(message);
+      resourcePromise.set_value();
 
-        server->Abort();
-      });
+      server->Abort();
+    });
 
-      //clang-format off
-      resource->SendRequest(
-          "OPTIONS",
-          "http://localhost:5555",
-          {} /*headers*/,
-          {} /*bodyData*/,
-          "text",
-          false,
-          1000 /*timeout*/,
-          false /*withCredentials*/,
-          [](int64_t) {});
-      resource->SendRequest(
-          "GET",
-          "http://localhost:5555",
-          {} /*headers*/,
-          {} /*bodyData*/,
-          "text",
-          false,
-          1000 /*timeout*/,
-          false /*withCredentials*/,
-          [](int64_t) {});
-      //clang-format on
+    //clang-format off
+    resource->SendRequest(
+        "OPTIONS",
+        "http://localhost:5555",
+        {} /*headers*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    resource->SendRequest(
+        "GET",
+        "http://localhost:5555",
+        {} /*headers*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
 
-      server->Stop();
-    //}
-
-    promise.get_future().wait();
+    resourcePromise.get_future().wait();
+    server->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
     for (auto header : response.Headers) {

@@ -40,20 +40,35 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 
 #pragma region HttpSession
 
-HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks,
-  boost::asio::strand<boost::asio::io_context::executor_type>& readStrand,
-  boost::asio::strand<boost::asio::io_context::executor_type>& writeStrand,
-  boost::asio::io_context& context
-  )
+HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks, io_context& context)
   : m_stream{ std::move(socket) }
   , m_callbacks{ callbacks }
-  , m_readStrand{ readStrand }
-  , m_writeStrand{ writeStrand }
-  , m_context{ context }
 {
 }
 
 HttpSession::~HttpSession() {}
+
+void HttpSession::Start()
+{
+  m_sendLambda = [self = shared_from_this()](DynamicResponse&& response)
+  {
+    auto sharedRes = std::make_shared<DynamicResponse>(std::move(response));
+    self->m_response = sharedRes;
+
+    http::async_write(
+      self->m_stream,
+      *sharedRes,
+      bind_front_handler(
+        &HttpSession::OnWrite,
+        self->shared_from_this(),
+        sharedRes->need_eof()
+      )
+    );
+  };
+
+  // Ensure thread-safety.
+  boost::asio::dispatch(m_stream.get_executor(), bind_front_handler(&HttpSession::Read, shared_from_this()));
+}
 
 void HttpSession::Read()
 {
@@ -79,12 +94,7 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
     return;
   }
 
-  boost::asio::post(m_readStrand, [self = shared_from_this()]()
-  {
-    self->Respond();
-  });
-
-  //Respond(); // ISS:2735328 - Handle request.
+  Respond(); // ISS:2735328 - Handle request.
 }
 
 void HttpSession::Respond()
@@ -92,24 +102,13 @@ void HttpSession::Respond()
   switch (m_request.method())
   {
     case http::verb::get:
-      m_response = make_shared<DynamicResponse>(m_callbacks.OnGet(m_request));
-
-      http::async_write(
-        m_stream,
-        *m_response,
-        bind_front_handler(
-          &HttpSession::OnWrite,
-          shared_from_this(),
-          m_response->need_eof() // close
-        )
-      );
-
+      m_sendLambda(m_callbacks.OnGet(m_request));
       break;
 
     case http::verb::options:
       if (m_callbacks.OnOptions)
       {
-        m_response = make_shared<DynamicResponse>(m_callbacks.OnOptions(m_request));
+        m_sendLambda(m_callbacks.OnOptions(m_request));
       }
       else
       {
@@ -143,15 +142,14 @@ void HttpSession::Respond()
       break;
     default:
       // ISS:2735328 - Implement failure propagation mechanism
-      break;
+      throw;
   }
 }
 
-void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
+void HttpSession::OnWrite(bool close, error_code ec, size_t /*transferred*/)
 {
   if (ec)
   {
-    m_response = nullptr;
     return;
   }
 
@@ -162,25 +160,20 @@ void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
 
   // TODO: Re-enable when concurrent sessions are implemented.
   // If response indicates "Connection: close"
-  // if (close)
-  //  return Close();
+   if (close)
+    return Close();
 
   // Clear response
   m_response = nullptr;
 
   // ISS:2735328: Re-enable for subsequent dispatching.
-  //Read();
+  Read();
 }
 
 void HttpSession::Close()
 {
-  m_stream.socket().shutdown(tcp::socket::shutdown_send);
-}
-
-void HttpSession::Start()
-{
-  // Ensure thread-safety.
-  boost::asio::dispatch(m_stream.get_executor(), bind_front_handler(&HttpSession::Read, shared_from_this()));
+  error_code ec;
+  m_stream.socket().shutdown(tcp::socket::shutdown_send, ec);
 }
 
 #pragma endregion // HttpSession
@@ -188,10 +181,7 @@ void HttpSession::Start()
 #pragma region HttpServer
 
 HttpServer::HttpServer(string &&address, uint16_t port)
-  : m_readStrand{make_strand(m_context)}
-  , m_writeStrand{make_strand(m_context)}
-  , m_acceptor{make_strand(m_context)}
-  //, m_sessions{}
+  : m_acceptor{make_strand(m_context)}
 {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
@@ -249,23 +239,21 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
   }
   else
   {
-    //auto session = make_shared<HttpSession>(std::move(socket), m_callbacks);
-    //m_sessions.push_back(session);
-    //session->Start();
-
-    make_shared<HttpSession>(std::move(socket), m_callbacks, m_readStrand, m_writeStrand, m_context)->Start();
+    make_shared<HttpSession>(std::move(socket), m_callbacks, m_context)->Start();
   }
 
   // ISS:2735328: Uncomment after implementing multiple context threading.
   // Accept next connection.
-  // Accept();
+  Accept();
 }
 
 void HttpServer::Start()
 {
   Accept();
 
-  for (int i = 0; i < 1; i++)
+  int numberOfThreads = 1;
+  m_contextThreads.reserve(numberOfThreads);
+  for (int i = 0; i < numberOfThreads; i++)
   {
     m_contextThreads.emplace_back([self = shared_from_this()]()
     {
@@ -276,26 +264,21 @@ void HttpServer::Start()
       self->m_context.run();
     });
   }
-
-  for (auto& t : m_contextThreads)
-  {
-    //t.detach();//TODO: join instead (later)?
-  }
 }
 
 void HttpServer::Stop()
 {
-  //if (m_acceptor.is_open())
-  //  m_acceptor.close();
-  m_contextThreads[0].join();
+  m_context.stop();
+
+  for (auto& t : m_contextThreads)
+    if (t.joinable())
+      t.join();
 }
 
 void HttpServer::Abort()
 {
   if (m_context.stopped())
     return;
-
-  m_context.stop();
 
   Stop();
 }

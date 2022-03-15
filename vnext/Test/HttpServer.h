@@ -40,9 +40,7 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   DynamicRequest m_request;
   std::shared_ptr<DynamicResponse> m_response; // Generic response
   HttpCallbacks& m_callbacks;
-  boost::asio::strand<boost::asio::io_context::executor_type>& m_readStrand;
-  boost::asio::strand<boost::asio::io_context::executor_type>& m_writeStrand;
-  boost::asio::io_context& m_context;
+  std::function<void(Microsoft::React::Test::DynamicResponse&&)> m_sendLambda;
 
   void Read();
   void Respond();
@@ -53,8 +51,6 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
 
  public:
   HttpSession(boost::asio::ip::tcp::socket&& socket, HttpCallbacks &callbacks,
-    boost::asio::strand<boost::asio::io_context::executor_type>& readStrand,
-    boost::asio::strand<boost::asio::io_context::executor_type>& writeStrand,
     boost::asio::io_context& ioContext
   );
 
@@ -72,8 +68,6 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
 {
   std::vector<std::thread> m_contextThreads;
   boost::asio::io_context m_context;
-  boost::asio::strand<boost::asio::io_context::executor_type> m_readStrand;//EXPERIMENTAL
-  boost::asio::strand<boost::asio::io_context::executor_type> m_writeStrand;//EXPERIMENTAL
   boost::asio::ip::tcp::acceptor m_acceptor;
   HttpCallbacks m_callbacks;
 
