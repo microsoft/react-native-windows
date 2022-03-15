@@ -196,29 +196,21 @@ void WindowsTextInputComponentView::updateProps(
     }
   }
 
-  /*
-  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    auto color = *newViewProps.backgroundColor;
-
-    if (newViewProps.backgroundColor) {
-      m_element.ViewBackground(SolidColorBrushFrom(newViewProps.backgroundColor));
+  if (oldTextInputProps.backgroundColor != newTextInputProps.backgroundColor) {
+    if (newTextInputProps.backgroundColor) {
+      m_element.Background(newTextInputProps.backgroundColor.AsWindowsBrush());
     } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::ViewBackgroundProperty());
+      m_element.ClearValue(xaml::Controls::Control::BackgroundProperty());
     }
   }
 
-  if (oldViewProps.borderColors != newViewProps.borderColors) {
-    if (newViewProps.borderColors.all) {
-      m_element.BorderBrush(SolidColorBrushFrom(*newViewProps.borderColors.all));
+  if (oldTextInputProps.borderColors != newTextInputProps.borderColors) {
+    if (newTextInputProps.borderColors.all) {
+      m_element.BorderBrush(newTextInputProps.borderColors.all->AsWindowsBrush());
     } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
+      m_element.ClearValue(xaml::Controls::Control::BorderBrushProperty());
     }
   }
-
-  if (oldViewProps.borderStyles != newViewProps.borderStyles) {
-    m_needsBorderUpdate = true;
-  }
-  */
 
   m_props = std::static_pointer_cast<facebook::react::WindowsTextInputProps const>(props);
 }
@@ -282,10 +274,22 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
   winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_element, layoutMetrics.frame.origin.x);
   winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_element, layoutMetrics.frame.origin.y);
 
-  m_element.Width(
-      layoutMetrics.frame.size.width + m_layoutMetrics.borderWidth.left + m_layoutMetrics.borderWidth.right);
-  m_element.Height(
-      layoutMetrics.frame.size.height + m_layoutMetrics.borderWidth.top + m_layoutMetrics.borderWidth.bottom);
+  m_element.MinHeight(0);
+
+  m_element.Padding({
+      layoutMetrics.contentInsets.left - layoutMetrics.borderWidth.left,
+      layoutMetrics.contentInsets.top - layoutMetrics.borderWidth.top,
+      layoutMetrics.contentInsets.right - layoutMetrics.borderWidth.right,
+      layoutMetrics.contentInsets.bottom - layoutMetrics.borderWidth.bottom,
+  });
+
+  m_element.ClearValue(xaml::FrameworkElement::HeightProperty());
+  m_element.ClearValue(xaml::FrameworkElement::WidthProperty());
+  m_element.Measure({std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()});
+  auto ds = m_element.DesiredSize();
+
+  m_element.Width(layoutMetrics.frame.size.width);
+  m_element.Height(layoutMetrics.frame.size.height);
 }
 void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   // m_element.FinalizeProperties();

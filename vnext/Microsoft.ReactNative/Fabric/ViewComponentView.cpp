@@ -177,16 +177,14 @@ void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) no
     }
   }
 
-  // When ViewPanel creates an outerborder, we need to set the height on the inner element too.
-  // TODO - look at changing ViewPanel to make the inner child clear height/width info automatically
-  if (auto border = m_panel.try_as<xaml::Controls::Border>()) {
-    auto inner = border.Child().try_as<xaml::FrameworkElement>();
-    inner.Width(m_layoutMetrics.frame.size.width);
-    inner.Height(m_layoutMetrics.frame.size.height);
-  } else if (auto control = m_panel.try_as<xaml::Controls::ContentControl>()) {
-    auto inner = control.Content().as<xaml::FrameworkElement>();
-    inner.Width(m_layoutMetrics.frame.size.width);
-    inner.Height(m_layoutMetrics.frame.size.height);
+  if (m_outerBorder) {
+    m_outerBorder.Width(m_layoutMetrics.frame.size.width);
+    m_outerBorder.Height(m_layoutMetrics.frame.size.height);
+  }
+
+  if (m_control) {
+    m_control.Width(m_layoutMetrics.frame.size.width);
+    m_control.Height(m_layoutMetrics.frame.size.height);
   }
 
   m_panel.Width(m_layoutMetrics.frame.size.width);
