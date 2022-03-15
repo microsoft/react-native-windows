@@ -269,12 +269,7 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
   HttpServer()
   : m_context{numThreads} {}
 
-  ~HttpServer() {
-    for (auto &t : m_threads) {
-      if (t.joinable())
-        t.join();
-    }
-  }
+  ~HttpServer() {}
 
   void Start(const char* url, int port) {
     auto const address = net::ip::make_address(url);
@@ -294,6 +289,11 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
 
   void Stop() {
     m_context.stop();
+
+    for (auto &t : m_threads) {
+      if (t.joinable())
+        t.join();
+    }
   }
 
   Microsoft::React::Test::HttpCallbacks& Callbacks() {
@@ -318,6 +318,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
   TEST_METHOD(Vinime) {
 #if 1
+    {
     promise<void> requestProm;
     std::atomic<int> count;
     string error;
@@ -365,7 +366,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     requestProm.get_future().wait();
 
     server->Stop();
-
+    }
 #else
     auto const address = boost::asio::ip::make_address("0.0.0.0");
     unsigned short const port = 5556;
