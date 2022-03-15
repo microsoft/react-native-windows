@@ -36,7 +36,7 @@ TextMeasurement TextLayoutManager::measure(
         fragment.textAttributes.fontFamily.empty()
             ? L"Segoe UI"
             : Microsoft::Common::Unicode::Utf8ToUtf16(fragment.textAttributes.fontFamily).c_str(),
-        NULL, // Font collection (NULL sets it to use the system font collection).
+        nullptr, // Font collection (nullptr sets it to use the system font collection).
         static_cast<DWRITE_FONT_WEIGHT>(fragment.textAttributes.fontWeight.value_or(
             static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
         style,
