@@ -312,14 +312,6 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromString(const facebo
   return MakePointer<facebook::jsi::PropNameID>(propertyId);
 }
 
-facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) {
-  // TODO: Support for symbols through the native API in JSC is very limited.
-  // While we could construct a PropNameID here, we would not be able to get a
-  // symbol property through the C++ API.
-  UNREFERENCED_PARAMETER(sym);
-  throw;
-}
-
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
   return Common::Unicode::Utf16ToUtf8(GetPropertyNameFromId(GetJsRef(id)));
 }
