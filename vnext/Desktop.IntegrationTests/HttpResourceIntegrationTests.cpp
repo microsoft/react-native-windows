@@ -13,6 +13,9 @@
 // Standard Library
 #include <future>
 
+#define FALCO 1
+
+#if FALCO
 #include <boost/asio/dispatch.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/beast/core.hpp>
@@ -138,6 +141,10 @@ class session : public std::enable_shared_from_this<session> {
     switch (req_.method()) {
       case http::verb::get:
         m_sendLambda(m_callbacks.OnGet(req_));
+        break;
+
+      case http::verb::options:
+        m_sendLambda(m_callbacks.OnOptions(req_));
         break;
 
       default:
@@ -302,6 +309,8 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
 };
 
 } // falco
+#endif // FALCO
+
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -315,78 +324,6 @@ using Test::DynamicRequest;
 using Test::DynamicResponse;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
-
-  TEST_METHOD(Vinime) {
-#if 1
-    {
-    promise<void> requestProm;
-    std::atomic<int> count;
-    string error;
-    int statusCode = 0;
-
-    auto server = std::make_shared<falco::HttpServer>();
-    server->Callbacks().OnGet = [&requestProm, &count](const DynamicRequest req) -> DynamicResponse {
-      DynamicResponse res;
-      res.result(http::status::ok);
-      res.body() = Microsoft::React::Test::CreateStringResponseBody("some response content");
-
-      //if (++count == 1)
-      //  requestProm.set_value();
-
-      return res;
-    };
-
-     auto resource = IHttpResource::Make();
-     resource->SetOnResponse([&requestProm, &statusCode](int64_t, IHttpResource::Response response) {
-       statusCode = static_cast<int>(response.StatusCode);
-       //requestProm.set_value();
-     });
-     resource->SetOnError([&requestProm, &error, &server](int64_t, string &&message) {
-       error = std::move(message);
-       requestProm.set_value();
-
-      //server->Abort();
-    });
-     resource->SetOnData([&requestProm](int64_t, string &&responseData) {
-       requestProm.set_value();
-     });
-     resource->SendRequest(
-        "GET",
-        "http://localhost:5556",
-        {} /*header*/,
-        {} /*bodyData*/,
-        "text",
-        false,
-        1000 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-
-    server->Start("0.0.0.0", 5556);
-
-    requestProm.get_future().wait();
-
-    server->Stop();
-    }
-#else
-    auto const address = boost::asio::ip::make_address("0.0.0.0");
-    unsigned short const port = 5556;
-    int const threadCount = 1;
-
-    boost::asio::io_context ioc{threadCount};
-    Test::HttpCallbacks callbacks;
-
-    std::make_shared<falco::listener>(ioc, boost::asio::ip::tcp::endpoint{address, port}, callbacks)->run();
-
-    std::vector<std::thread> threads;
-    threads.reserve(threadCount - 1);
-    for (auto i = threadCount - 1; i > 0; --i) {
-      threads.emplace_back([&ioc]() {
-        ioc.run();
-      });
-    }
-    ioc.run();
-#endif // 0
-  }
 
   TEST_METHOD(RequestGetSucceeds) {
     promise<void> resPromise;
@@ -523,41 +460,80 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestOptionsSucceeds) {
-    promise<void> resourcePromise;
+    promise<void> getResponsePromise;
+    promise<void> getDataPromise;
+    promise<void> optionsPromise;
     string error;
-    IHttpResource::Response response;
+    IHttpResource::Response getResponse;
+    IHttpResource::Response optionsResponse;
     string content;
 
+#if FALCO
+    auto server = std::make_shared<falco::HttpServer>();
+#else
     auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
-    server->SetOnGet([](const DynamicRequest& request) -> DynamicResponse {
+#endif // FALCO
+#if FALCO
+    server->Callbacks().OnGet = [](const DynamicRequest &request) -> DynamicResponse {
+#else
+    server->SetOnGet([](const DynamicRequest &request) -> DynamicResponse {
+#endif // FALCO
       DynamicResponse response;
       response.result(http::status::ok);
       response.body() = Test::CreateStringResponseBody("Response Body");
 
       return response;
+#if FALCO
+    };
+#else
     });
+#endif // FALCO
+
+#if FALCO
+    server->Callbacks().OnOptions = [](const DynamicRequest &request) -> DynamicResponse {
+#else
     server->SetOnOptions([](const DynamicRequest &request) -> DynamicResponse {
+#endif // FALCO
+
       DynamicResponse response;
-      response.result(http::status::ok);
+      response.result(http::status::partial_content);
       response.set("PreflightName", "PreflightValue");
 
       return response;
+#if FALCO
+    };
+    server->Start("0.0.0.0", 5555);
+#else
     });
     server->Start();
+#endif // FALCO
 
     auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&response](int64_t, IHttpResource::Response callbackResponse) {
-      response = callbackResponse;
+    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsPromise](int64_t, IHttpResource::Response callbackResponse) {
+      if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        getResponse = callbackResponse;
+        getResponsePromise.set_value();
+      }
+      else if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::partial_content)) {
+        optionsResponse = callbackResponse;
+        optionsPromise.set_value();
+      }
     });
-    resource->SetOnData([&resourcePromise, &content](int64_t, string &&responseData) {
+    resource->SetOnData([&getDataPromise, &content](int64_t, string &&responseData) {
       content = std::move(responseData);
-      resourcePromise.set_value();
-    });
-    resource->SetOnError([&resourcePromise, &error, &server](int64_t, string &&message) {
-      error = std::move(message);
-      resourcePromise.set_value();
 
-      server->Abort();
+      if (! content.empty())
+        getDataPromise.set_value();
+    });
+    resource->SetOnError(
+        [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string &&message) {
+      error = std::move(message);
+
+      optionsPromise.set_value();
+      getResponsePromise.set_value();
+      getDataPromise.set_value();
+
+      server->Stop();
     });
 
     //clang-format off
@@ -583,11 +559,13 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         [](int64_t) {});
     //clang-format on
 
-    resourcePromise.get_future().wait();
+    optionsPromise.get_future().wait();
+    getResponsePromise.get_future().wait();
+    getDataPromise.get_future().wait();
     server->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
-    for (auto header : response.Headers) {
+    for (auto header : getResponse.Headers) {
       if (header.first == "PreflightName") {
         Assert::AreEqual({"PreflightValue"}, header.second, L"Wrong header");
       } else {
