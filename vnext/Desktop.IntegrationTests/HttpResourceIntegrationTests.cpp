@@ -15,7 +15,6 @@
 
 #define FALCO 1
 
-#if FALCO
 #include <boost/asio/dispatch.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/beast/core.hpp>
@@ -79,28 +78,28 @@ class session : public std::enable_shared_from_this<session> {
 
       // Store a type-erased version of the shared
       // pointer in the class to keep it alive.
-      self_.res_ = sp;
+      self_.m_response = sp;
 
       // Write the response
       http::async_write(
-          self_.stream_, *sp, beast::bind_front_handler(&session::on_write, self_.shared_from_this(), sp->need_eof()));
+          self_.m_stream, *sp, beast::bind_front_handler(&session::on_write, self_.shared_from_this(), sp->need_eof()));
     }
   };
 
   std::function<void(Microsoft::React::Test::DynamicResponse&&)> m_sendLambda;
 
-  beast::tcp_stream stream_;
-  beast::flat_buffer buffer_;
-  Microsoft::React::Test::DynamicRequest req_;
-  std::shared_ptr<Microsoft::React::Test::DynamicResponse> res_;
-  send_lambda lambda_;
+  beast::tcp_stream m_stream;
+  beast::flat_buffer m_buffer;
+  Microsoft::React::Test::DynamicRequest m_request;
+  std::shared_ptr<Microsoft::React::Test::DynamicResponse> m_response;
+  send_lambda m_lambda;
   Microsoft::React::Test::HttpCallbacks &m_callbacks;
 
  public:
   // Take ownership of the stream
   session(tcp::socket &&socket, Microsoft::React::Test::HttpCallbacks &callbacks)
-    : stream_(std::move(socket))
-    , lambda_(*this)
+    : m_stream(std::move(socket))
+    , m_lambda(*this)
     , m_callbacks{ callbacks }
   {
   }
@@ -109,10 +108,10 @@ class session : public std::enable_shared_from_this<session> {
   void run() {
     m_sendLambda = [self = shared_from_this()](Microsoft::React::Test::DynamicResponse&& res) {
       auto sp = std::make_shared<Microsoft::React::Test::DynamicResponse>(std::move(res));
-      self->res_ = sp;
+      self->m_response = sp;
 
       http::async_write(
-        self->stream_,
+        self->m_stream,
         *sp,
         beast::bind_front_handler(&session::on_write, self->shared_from_this(), sp->need_eof())
       );
@@ -122,29 +121,29 @@ class session : public std::enable_shared_from_this<session> {
     // on the I/O objects in this session. Although not strictly necessary
     // for single-threaded contexts, this example code is written to be
     // thread-safe by default.
-    net::dispatch(stream_.get_executor(), beast::bind_front_handler(&session::do_read, shared_from_this()));
+    net::dispatch(m_stream.get_executor(), beast::bind_front_handler(&session::do_read, shared_from_this()));
   }
 
   void do_read() {
     // Make the request empty before reading,
     // otherwise the operation behavior is undefined.
-    req_ = {};
+    m_request = {};
 
     // Set the timeout.
-    stream_.expires_after(std::chrono::seconds(30));
+    m_stream.expires_after(std::chrono::seconds(30));
 
     // Read a request
-    http::async_read(stream_, buffer_, req_, beast::bind_front_handler(&session::on_read, shared_from_this()));
+    http::async_read(m_stream, m_buffer, m_request, beast::bind_front_handler(&session::on_read, shared_from_this()));
   }
 
   void Respond() {
-    switch (req_.method()) {
+    switch (m_request.method()) {
       case http::verb::get:
-        m_sendLambda(m_callbacks.OnGet(req_));
+        m_sendLambda(m_callbacks.OnGet(m_request));
         break;
 
       case http::verb::options:
-        m_sendLambda(m_callbacks.OnOptions(req_));
+        m_sendLambda(m_callbacks.OnOptions(m_request));
         break;
 
       default:
@@ -180,7 +179,7 @@ class session : public std::enable_shared_from_this<session> {
     }
 
     // We're done with the response so delete it
-    res_ = nullptr;
+    m_response = nullptr;
 
     // Read another request
     do_read();
@@ -189,7 +188,7 @@ class session : public std::enable_shared_from_this<session> {
   void do_close() {
     // Send a TCP shutdown
     beast::error_code ec;
-    stream_.socket().shutdown(tcp::socket::shutdown_send, ec);
+    m_stream.socket().shutdown(tcp::socket::shutdown_send, ec);
 
     // At this point the connection is closed gracefully
   }
@@ -314,7 +313,6 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
 };
 
 } // falco
-#endif // FALCO
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -472,11 +470,11 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     IHttpResource::Response optionsResponse;
     string content;
 
-#if FALCO
-    auto server = std::make_shared<falco::HttpServer>(5555);
+#if 1
+      auto server = std::make_shared<falco::HttpServer>(5555);
 #else
-    auto server = std::make_shared<Test::HttpServer>(5555);
-#endif // FALCO
+      auto server = std::make_shared<Test::HttpServer>(5555);
+#endif
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
