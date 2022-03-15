@@ -271,7 +271,8 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
 
   ~HttpServer() {
     for (auto &t : m_threads) {
-      t.join();
+      if (t.joinable())
+        t.join();
     }
   }
 
@@ -285,7 +286,9 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
 
     m_threads.reserve(numThreads);
     for (auto i = numThreads; i > 0; --i) {
-      m_context.run();
+      m_threads.emplace_back([self = shared_from_this()]() {
+        self->m_context.run();
+      });
     }
   }
 
@@ -317,6 +320,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 #if 1
     promise<void> requestProm;
     std::atomic<int> count;
+    string error;
+    int statusCode = 0;
 
     auto server = std::make_shared<falco::HttpServer>();
     server->Callbacks().OnGet = [&requestProm, &count](const DynamicRequest req) -> DynamicResponse {
@@ -324,11 +329,36 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       res.result(http::status::ok);
       res.body() = Microsoft::React::Test::CreateStringResponseBody("some response content");
 
-      if (++count == 3)
-        requestProm.set_value();
+      //if (++count == 1)
+      //  requestProm.set_value();
 
       return res;
     };
+
+     auto resource = IHttpResource::Make();
+     resource->SetOnResponse([&requestProm, &statusCode](int64_t, IHttpResource::Response response) {
+       statusCode = static_cast<int>(response.StatusCode);
+       //requestProm.set_value();
+     });
+     resource->SetOnError([&requestProm, &error, &server](int64_t, string &&message) {
+       error = std::move(message);
+       requestProm.set_value();
+
+      //server->Abort();
+    });
+     resource->SetOnData([&requestProm](int64_t, string &&responseData) {
+       requestProm.set_value();
+     });
+     resource->SendRequest(
+        "GET",
+        "http://localhost:5556",
+        {} /*header*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
 
     server->Start("0.0.0.0", 5556);
 
