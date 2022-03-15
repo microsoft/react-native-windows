@@ -470,10 +470,10 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     IHttpResource::Response optionsResponse;
     string content;
 
-#if 1
-      auto server = std::make_shared<falco::HttpServer>(5555);
+#if 0
+      auto server = std::make_shared<falco::HttpServer>(5557);
 #else
-      auto server = std::make_shared<Test::HttpServer>(5555);
+      auto server = std::make_shared<Test::HttpServer>(5557);
 #endif
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
@@ -523,7 +523,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     //clang-format off
     resource->SendRequest(
         "OPTIONS",
-        "http://localhost:5555",
+        "http://localhost:5557",
         {} /*headers*/,
         {} /*bodyData*/,
         "text",
@@ -533,7 +533,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         [](int64_t) {});
     resource->SendRequest(
         "GET",
-        "http://localhost:5555",
+        "http://localhost:5557",
         {} /*headers*/,
         {} /*bodyData*/,
         "text",

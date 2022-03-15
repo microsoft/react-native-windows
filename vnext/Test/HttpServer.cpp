@@ -106,31 +106,22 @@ void HttpSession::Respond()
       break;
 
     case http::verb::options:
-      if (m_callbacks.OnOptions)
+      if (!m_callbacks.OnOptions)
       {
-        m_sendLambda(m_callbacks.OnOptions(m_request));
-      }
-      else
-      {
-        m_response = make_shared<DynamicResponse>(http::status::accepted, m_request.version());
-        m_response->set(
+        // Default OPTIONS handler
+        m_callbacks.OnOptions = [](const DynamicRequest& request) -> DynamicResponse {
+          DynamicResponse response{http::status::accepted, request.version()};
+          response.set(
             http::field::access_control_request_headers,
             "Access-Control-Allow-Headers, Content-type, Custom-Header, Header-expose-allowed");
-        m_response->set(http::field::access_control_allow_methods, "GET, POST, DELETE");
-        m_response->set(http::field::access_control_expose_headers, "Header-expose-allowed");
-        m_response->result(http::status::ok);
+          response.set(http::field::access_control_allow_methods, "GET, POST, DELETE");
+          response.set(http::field::access_control_expose_headers, "Header-expose-allowed");
+          response.result(http::status::ok);
+
+          return response;
+        };
       }
-
-      http::async_write(
-        m_stream,
-        *m_response,
-        bind_front_handler(
-          &HttpSession::OnWrite,
-          shared_from_this(),
-          m_response->need_eof() // close
-        )
-      );
-
+      m_sendLambda(m_callbacks.OnOptions(m_request));
       break;
 
     case http::verb::post:
