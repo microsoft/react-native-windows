@@ -94,7 +94,7 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
     return;
   }
 
-  Respond(); // ISS:2735328 - Handle request.
+  Respond();
 }
 
 void HttpSession::Respond()
@@ -158,15 +158,12 @@ void HttpSession::OnWrite(bool close, error_code ec, size_t /*transferred*/)
 	  m_callbacks.OnResponseSent();
   }
 
-  // TODO: Re-enable when concurrent sessions are implemented.
-  // If response indicates "Connection: close"
    if (close)
     return Close();
 
   // Clear response
   m_response = nullptr;
 
-  // ISS:2735328: Re-enable for subsequent dispatching.
   Read();
 }
 
@@ -242,8 +239,6 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
     make_shared<HttpSession>(std::move(socket), m_callbacks, m_context)->Start();
   }
 
-  // ISS:2735328: Uncomment after implementing multiple context threading.
-  // Accept next connection.
   Accept();
 }
 
