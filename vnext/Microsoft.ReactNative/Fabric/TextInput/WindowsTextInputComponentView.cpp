@@ -123,10 +123,11 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.textAttributes.fontSize != newTextInputProps.textAttributes.fontSize) {
-    if (std::isnan(newTextInputProps.textAttributes.fontSize))
-      m_element.ClearValue(::xaml::Controls::TextBlock::FontSizeProperty());
-    else
-      m_element.FontSize(newTextInputProps.textAttributes.fontSize);
+    if (std::isnan(newTextInputProps.textAttributes.fontSize)) {
+      m_element.FontSize(facebook::react::TextAttributes::defaultTextAttributes().fontSize);
+    } else {
+     m_element.FontSize(newTextInputProps.textAttributes.fontSize);
+    }
   }
 
   if (oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight) {
