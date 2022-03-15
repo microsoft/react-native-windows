@@ -177,8 +177,10 @@ void HttpSession::Close()
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, size_t port)
-  : m_acceptor{make_strand(m_context)}
+HttpServer::HttpServer(string &&address, size_t port, size_t concurrency)
+  : m_ioThreadCount{concurrency}
+  , m_ioContext{concurrency}
+  , m_acceptor{make_strand(m_ioContext)}
 {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), static_cast<uint16_t>(port)};
   error_code ec;
@@ -211,8 +213,8 @@ HttpServer::HttpServer(string &&address, size_t port)
   }
 }
 
-HttpServer::HttpServer(size_t port)
-  : HttpServer("0.0.0.0", port)
+HttpServer::HttpServer(size_t port, size_t concurrency)
+  : HttpServer("0.0.0.0", port, concurrency)
 {
 }
 
@@ -224,7 +226,7 @@ void HttpServer::Accept()
     return;
 
   m_acceptor.async_accept(
-    make_strand(m_context),
+    make_strand(m_ioContext),
     bind_front_handler(
       &HttpServer::OnAccept,
       shared_from_this()
@@ -241,7 +243,7 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
   }
   else
   {
-    make_shared<HttpSession>(std::move(socket), m_callbacks, m_context)->Start();
+    make_shared<HttpSession>(std::move(socket), m_callbacks, m_ioContext)->Start();
   }
 
   Accept();
@@ -251,33 +253,32 @@ void HttpServer::Start()
 {
   Accept();
 
-  int numberOfThreads = 1;
-  m_contextThreads.reserve(numberOfThreads);
-  for (int i = 0; i < numberOfThreads; i++)
+  m_ioThreads.reserve(m_ioThreadCount);
+  for (int i = 0; i < m_ioThreadCount; i++)
   {
-    m_contextThreads.emplace_back([self = shared_from_this()]()
+    m_ioThreads.emplace_back([self = shared_from_this()]()
     {
     // See
     // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/reference/io_context/run/overload1.html
     // The run() function blocks until all work has finished and there are no
     // more handlers to be dispatched, or until the io_context has been stopped.
-      self->m_context.run();
+      self->m_ioContext.run();
     });
   }
 }
 
 void HttpServer::Stop()
 {
-  m_context.stop();
+  m_ioContext.stop();
 
-  for (auto& t : m_contextThreads)
+  for (auto& t : m_ioThreads)
     if (t.joinable())
       t.join();
 }
 
 void HttpServer::Abort()
 {
-  if (m_context.stopped())
+  if (m_ioContext.stopped())
     return;
 
   Stop();

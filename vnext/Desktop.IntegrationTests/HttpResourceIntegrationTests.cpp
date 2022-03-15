@@ -13,7 +13,7 @@
 // Standard Library
 #include <future>
 
-#define FALCO 0
+#define FALCO 1
 
 #if FALCO
 #include <boost/asio/dispatch.hpp>
@@ -269,17 +269,18 @@ namespace net = boost::asio;
 class HttpServer : public std::enable_shared_from_this<HttpServer> {
   net::io_context m_context;
   std::vector<std::thread> m_threads;
-  int const numThreads = 1;
+  size_t m_numThreads;
   Microsoft::React::Test::HttpCallbacks m_callbacks;
   net::ip::tcp::endpoint m_endpoint;
 
  public:
-  HttpServer(const char *url, size_t port)
-  : m_context{numThreads}
+  HttpServer(const char *url, size_t port, size_t numThreads = 1)
+  : m_numThreads{numThreads},
+    m_context{static_cast<int>(m_numThreads)}
   , m_endpoint{net::ip::make_address(url), static_cast<unsigned short>(port)}
   {}
 
-  HttpServer(size_t port) : HttpServer("0.0.0.0", port) {}
+  HttpServer(size_t port, size_t numThreads = 1) : HttpServer("0.0.0.0", port, numThreads) {}
 
   ~HttpServer() {}
 
@@ -290,8 +291,8 @@ class HttpServer : public std::enable_shared_from_this<HttpServer> {
       m_callbacks
     )->run();
 
-    m_threads.reserve(numThreads);
-    for (auto i = numThreads; i > 0; --i) {
+    m_threads.reserve(m_numThreads);
+    for (auto i = m_numThreads; i > 0; --i) {
       m_threads.emplace_back([self = shared_from_this()]() {
         self->m_context.run();
       });

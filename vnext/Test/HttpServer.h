@@ -66,8 +66,9 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
 ///
 class HttpServer : public std::enable_shared_from_this<HttpServer>
 {
-  std::vector<std::thread> m_contextThreads;
-  boost::asio::io_context m_context;
+  size_t m_ioThreadCount;
+  std::vector<std::thread> m_ioThreads;
+  boost::asio::io_context m_ioContext;
   boost::asio::ip::tcp::acceptor m_acceptor;
   HttpCallbacks m_callbacks;
 
@@ -78,8 +79,8 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   // address - Valid IP address string (i.e. "127.0.0.1).
   // port    - TCP port number (i.e. 80).
   ///
-  HttpServer(std::string &&address, size_t port);
-  HttpServer(size_t port);
+  HttpServer(std::string &&address, size_t port, size_t concurrency = 1);
+  HttpServer(size_t port, size_t concurrency = 1);
 
   ~HttpServer();
 
