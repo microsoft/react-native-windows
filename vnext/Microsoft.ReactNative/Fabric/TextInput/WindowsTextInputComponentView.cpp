@@ -126,7 +126,7 @@ void WindowsTextInputComponentView::updateProps(
     if (std::isnan(newTextInputProps.textAttributes.fontSize)) {
       m_element.FontSize(facebook::react::TextAttributes::defaultTextAttributes().fontSize);
     } else {
-     m_element.FontSize(newTextInputProps.textAttributes.fontSize);
+      m_element.FontSize(newTextInputProps.textAttributes.fontSize);
     }
   }
 
