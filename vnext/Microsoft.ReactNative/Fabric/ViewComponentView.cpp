@@ -189,6 +189,23 @@ void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) no
 
   m_panel.Width(m_layoutMetrics.frame.size.width);
   m_panel.Height(m_layoutMetrics.frame.size.height);
+
+  if (m_control) {
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_control, m_layoutMetrics.frame.origin.x);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_control, m_layoutMetrics.frame.origin.y);
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_outerBorder, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_outerBorder, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, 0);
+  } else if (m_outerBorder) {
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_outerBorder, m_layoutMetrics.frame.origin.x);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_outerBorder, m_layoutMetrics.frame.origin.y);
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, 0);
+  } else {
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, m_layoutMetrics.frame.origin.x);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, m_layoutMetrics.frame.origin.y);
+  }
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
