@@ -15,6 +15,7 @@ import FileSystemRepository from './FileSystemRepository';
 import {VersionedReactFileRepository} from './FileRepository';
 import {getNpmPackage} from './PackageUtils';
 import {fetchFullRef} from './refFromVersion';
+import {ResetMode} from 'simple-git';
 
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
 
@@ -124,7 +125,7 @@ export default class GitReactFileRepository
 
         return patch;
       } finally {
-        await this.gitClient.reset('hard');
+        await this.gitClient.reset(ResetMode.HARD);
       }
     });
   }
@@ -178,7 +179,7 @@ export default class GitReactFileRepository
 
         return {patchedFile, hasConflicts};
       } finally {
-        await this.gitClient.reset('hard');
+        await this.gitClient.reset(ResetMode.HARD);
       }
     });
   }
