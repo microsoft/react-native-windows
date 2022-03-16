@@ -21,7 +21,6 @@ extern const char RCTProgressViewComponentName[] = "RCTProgressView";
 extern const char AndroidSwipeRefreshLayoutComponentName[] = "AndroidSwipeRefreshLayout";
 extern const char PullToRefreshViewComponentName[] = "PullToRefreshView";
 extern const char AndroidHorizontalScrollContentViewComponentName[] = "AndroidHorizontalScrollContentView";
-extern const char RCTSegmentedControlComponentName[] = "RCTSegmentedControl";
 extern const char SwitchComponentName[] = "Switch";
 extern const char UnimplementedNativeViewComponentName[] = "UnimplementedNativeView";
 
