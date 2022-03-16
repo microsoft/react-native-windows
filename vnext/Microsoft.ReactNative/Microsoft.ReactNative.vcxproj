@@ -24,7 +24,6 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\PackageVersionDefinitions.props" />
-  <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -835,13 +834,6 @@
     <When Condition="'$(UseV8)' == 'true'">
       <ItemGroup>
         <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="'$(WebView2Version)'!=''">
-      <ItemGroup>
-        <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2Version)" />
       </ItemGroup>
     </When>
   </Choose>
