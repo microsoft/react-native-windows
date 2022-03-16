@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Security: Update simple-git dependency to 3.3.0",
+  "packageName": "@rnw-scripts/promote-release",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

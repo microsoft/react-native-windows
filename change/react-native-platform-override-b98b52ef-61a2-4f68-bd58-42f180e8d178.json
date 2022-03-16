@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Security: Update simple-git dependency to 3.3.0",
+  "packageName": "react-native-platform-override",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
