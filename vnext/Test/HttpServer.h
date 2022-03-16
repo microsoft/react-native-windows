@@ -15,6 +15,21 @@ namespace Microsoft::React::Test
 using DynamicRequest = boost::beast::http::request<boost::beast::http::dynamic_body>;
 using DynamicResponse = boost::beast::http::response<boost::beast::http::dynamic_body>;
 
+using EmptyResponse = boost::beast::http::request<boost::beast::http::empty_body>;
+
+union GenericResponse {
+  EmptyResponse Empty;
+  DynamicResponse Dynamic;
+
+  public:
+    ~GenericResponse(){};
+};
+
+struct ResponseClass
+{
+  enum class Type : size_t { Empty, Strng, Dynamic };
+};
+
 #pragma region Utility functions
 
 boost::beast::multi_buffer CreateStringResponseBody(std::string&& content);
@@ -27,6 +42,7 @@ struct HttpCallbacks
   std::function<DynamicResponse(const DynamicRequest &)> OnGet;
   std::function<DynamicResponse(const DynamicRequest &)> OnOptions;
   std::function<void()> OnRequest;
+  std::function<GenericResponse(const DynamicRequest &)> OnGet2;
 };
 
 ///
@@ -39,8 +55,10 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   boost::beast::flat_buffer m_buffer;
   DynamicRequest m_request;
   std::shared_ptr<DynamicResponse> m_response; // Generic response
+  std::shared_ptr<GenericResponse> m_response2; // Generic response
   HttpCallbacks& m_callbacks;
   std::function<void(Microsoft::React::Test::DynamicResponse&&)> m_sendLambda;
+  std::function<void(Microsoft::React::Test::GenericResponse&&)> m_sendLambda2;
 
   void Read();
   void Respond();

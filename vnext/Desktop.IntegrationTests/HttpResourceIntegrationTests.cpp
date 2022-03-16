@@ -483,7 +483,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       return response;
     };
 
-    server->Callbacks().OnOptions = [](const DynamicRequest &request)->DynamicResponse {
+    server->Callbacks().OnOptions = [](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
       response.result(http::status::partial_content);
       response.set("PreflightName", "PreflightValue");
@@ -549,7 +549,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
-    for (auto header : getResponse.Headers) {
+    //TODO: Especialize AreEqual
+    Assert::AreEqual(static_cast<size_t>(1), optionsResponse.Headers.size());
+    for (auto header : optionsResponse.Headers) {
       if (header.first == "PreflightName") {
         Assert::AreEqual({"PreflightValue"}, header.second, L"Wrong header");
       } else {
