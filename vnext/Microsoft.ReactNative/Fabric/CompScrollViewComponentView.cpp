@@ -189,7 +189,8 @@ void CompScrollViewComponentView::updateState(
 
   auto contentSize = newState.getData().getContentSize();
   m_contentVisual.Size(
-      {contentSize.width * m_layoutMetrics.pointScaleFactor, contentSize.height * m_layoutMetrics.pointScaleFactor});
+      {std::max(contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
+       std::max(contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
 
   updateInteractionMaxPosition();
 }
@@ -264,8 +265,8 @@ void CompScrollViewComponentView::ScrollInteractionTrackerOwner::ValuesChanged(
   facebook::react::ScrollViewMetrics scrollMetrics;
   scrollMetrics.containerSize.height = m_outer->Visual().Size().y / m_outer->m_layoutMetrics.pointScaleFactor;
   scrollMetrics.containerSize.width = m_outer->Visual().Size().x / m_outer->m_layoutMetrics.pointScaleFactor;
-  scrollMetrics.contentOffset.x = m_outer->ContentVisual().Offset().x / m_outer->m_layoutMetrics.pointScaleFactor;
-  scrollMetrics.contentOffset.y = m_outer->ContentVisual().Offset().y / m_outer->m_layoutMetrics.pointScaleFactor;
+  scrollMetrics.contentOffset.x = args.Position().x / m_outer->m_layoutMetrics.pointScaleFactor;
+  scrollMetrics.contentOffset.y = args.Position().y / m_outer->m_layoutMetrics.pointScaleFactor;
   scrollMetrics.zoomScale = m_outer->ContentVisual().Scale().x;
   scrollMetrics.contentSize.height = m_outer->ContentVisual().Size().y / m_outer->m_layoutMetrics.pointScaleFactor;
   scrollMetrics.contentSize.width = m_outer->ContentVisual().Size().x / m_outer->m_layoutMetrics.pointScaleFactor;
