@@ -24,17 +24,18 @@ using StringResponse = boost::beast::http::response<boost::beast::http::string_b
 
 enum class ResponseType : size_t { Empty, Dynamic };
 
-union GenericResponse {
-  EmptyResponse Empty;
-  DynamicResponse Dynamic;
+class ResponseWrapper {
+  std::shared_ptr<void> m_response;
+  ResponseType m_type;
 
-  public:
-    ~GenericResponse(){};
-};
+public:
+  ResponseWrapper(DynamicResponse&& req);
 
-struct ResponseClass
-{
-  enum class Type : size_t { Empty, Strng, Dynamic };
+  ResponseWrapper(ResponseWrapper&&) = default;
+
+  std::shared_ptr<void> Response();
+
+  ResponseType Type();
 };
 
 #pragma region Utility functions
@@ -49,7 +50,8 @@ struct HttpCallbacks
   std::function<DynamicResponse(const DynamicRequest &)> OnGet;
   std::function<DynamicResponse(const DynamicRequest &)> OnOptions;
   std::function<void()> OnRequest;
-  std::function<GenericResponse(const DynamicRequest &)> OnGet2;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnGet2;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnOptions2;
 };
 
 ///
@@ -62,10 +64,10 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   boost::beast::flat_buffer m_buffer;
   DynamicRequest m_request;
   std::shared_ptr<DynamicResponse> m_response; // Generic response
-  std::shared_ptr<GenericResponse> m_response2; // Generic response
+  std::shared_ptr<ResponseWrapper> m_response2; // Generic response
   HttpCallbacks& m_callbacks;
   std::function<void(Microsoft::React::Test::DynamicResponse&&)> m_sendLambda;
-  std::function<void(Microsoft::React::Test::GenericResponse&&)> m_sendLambda2;
+  std::function<void(Microsoft::React::Test::ResponseWrapper&&)> m_sendLambda2;
 
   void Read();
   void Respond();

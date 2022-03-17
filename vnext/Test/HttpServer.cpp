@@ -20,6 +20,7 @@ using boost::system::error_code;
 using std::function;
 using std::make_shared;
 using std::shared_ptr;
+using std::static_pointer_cast;
 using std::string;
 
 namespace Microsoft::React::Test
@@ -38,6 +39,26 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 
 #pragma endregion // Utility functions
 
+#pragma region ResponseWrapper
+
+ResponseWrapper::ResponseWrapper(DynamicResponse&& res)
+  : m_response{ make_shared<DynamicResponse>(std::move(res)) }
+  , m_type{ ResponseType::Dynamic }
+{
+}
+
+shared_ptr<void> ResponseWrapper::Response()
+{
+  return m_response;
+}
+
+ResponseType ResponseWrapper::Type()
+{
+  return m_type;
+}
+
+#pragma endregion ResponseWrapper
+
 #pragma region HttpSession
 
 HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks, io_context& context)
@@ -50,6 +71,44 @@ HttpSession::~HttpSession() {}
 
 void HttpSession::Start()
 {
+  m_sendLambda2 = [self = shared_from_this()](ResponseWrapper&& wrapper)
+  {
+    auto dr = wrapper.Response();
+    auto type = wrapper.Type();
+    self->m_response2 = make_shared<ResponseWrapper>(std::move(wrapper));
+
+    // Ugh!
+    switch (type)
+	{
+    case Microsoft::React::Test::ResponseType::Empty:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<EmptyResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<EmptyResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    case Microsoft::React::Test::ResponseType::Dynamic:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<DynamicResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<DynamicResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    default:
+      throw;
+	}
+  };
+
   m_sendLambda = [self = shared_from_this()](DynamicResponse&& response)
   {
     auto sharedRes = std::make_shared<DynamicResponse>(std::move(response));
@@ -102,11 +161,11 @@ void HttpSession::Respond()
   switch (m_request.method())
   {
     case http::verb::get:
-      m_sendLambda(m_callbacks.OnGet(m_request));
+      m_sendLambda2(m_callbacks.OnGet2(m_request));
       break;
 
     case http::verb::options:
-      if (!m_callbacks.OnOptions)
+      if (!m_callbacks.OnOptions2)
       {
         // Default OPTIONS handler
         m_callbacks.OnOptions = [](const DynamicRequest& request) -> DynamicResponse {
@@ -118,10 +177,10 @@ void HttpSession::Respond()
           response.set(http::field::access_control_expose_headers, "Header-expose-allowed");
           response.result(http::status::ok);
 
-          return response;
+          return { std::move(response) };
         };
       }
-      m_sendLambda(m_callbacks.OnOptions(m_request));
+      m_sendLambda2(m_callbacks.OnOptions2(m_request));
       break;
 
     case http::verb::post:
@@ -154,6 +213,7 @@ void HttpSession::OnWrite(bool close, error_code ec, size_t /*transferred*/)
 
   // Clear response
   m_response = nullptr;
+  m_response2 = nullptr;
 
   Read();
 }

@@ -319,11 +319,13 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
+using std::make_shared;
 using std::promise;
 using std::string;
 using std::vector;
 using Test::DynamicRequest;
 using Test::DynamicResponse;
+using Test::ResponseWrapper;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
 
@@ -332,13 +334,20 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string error;
     int statusCode = 0;
 
-    auto server = std::make_shared<Test::HttpServer>(5556);
+    auto server = make_shared<Test::HttpServer>(5556);
     server->Callbacks().OnGet = [&resPromise](const DynamicRequest &request)->DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
       response.body() = Test::CreateStringResponseBody("some response content");
 
       return response;
+    };
+    server->Callbacks().OnGet2 = [&resPromise](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("some response content");
+
+      return {std::move(response)};
     };
     server->Start();
 
@@ -379,8 +388,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string error;
     IHttpResource::Response response;
 
-    auto server = std::make_shared<Test::HttpServer>(5555);
-    server->Callbacks().OnGet = [](const DynamicRequest &request)->DynamicResponse {
+    auto server = make_shared<Test::HttpServer>(5555);
+    server->Callbacks().OnGet = [](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
       response.result(http::status::ok);
 
@@ -392,6 +401,19 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       response.set("ResponseHeaderName1", "ResponseHeaderValue1");
 
       return response;
+    };
+    server->Callbacks().OnGet2 = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+
+      // Response header
+      response.set(http::field::server, "Microsoft::React::Test::HttpServer");
+      // Response content header
+      response.set(http::field::content_length, "0");
+      // Response arbitrary header
+      response.set("ResponseHeaderName1", "ResponseHeaderValue1");
+
+      return {std::move(response)};
     };
     server->Start();
 
@@ -471,9 +493,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string content;
 
 #if 0
-      auto server = std::make_shared<falco::HttpServer>(5557);
+      auto server = make_shared<falco::HttpServer>(5557);
 #else
-      auto server = std::make_shared<Test::HttpServer>(5557);
+      auto server = make_shared<Test::HttpServer>(5557);
 #endif
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> DynamicResponse {
       DynamicResponse response;
@@ -489,6 +511,21 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       response.set("PreflightName", "PreflightValue");
 
       return response;
+    };
+    server->Callbacks().OnGet2 = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Response Body");
+
+      return {std::move(response)};
+    };
+
+    server->Callbacks().OnOptions2 = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::partial_content);
+      response.set("PreflightName", "PreflightValue");
+
+      return {std::move(response)};
     };
     server->Start();
 
