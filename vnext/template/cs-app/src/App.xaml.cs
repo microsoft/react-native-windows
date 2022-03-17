@@ -1,12 +1,7 @@
 using Microsoft.ReactNative;
-#if USE_WINUI3
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-#else
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-#endif
 
 namespace {{ namespace }}
 {
@@ -49,7 +44,6 @@ namespace {{ namespace }}
             frame.Navigate(typeof(MainPage), e.Arguments);
         }
 
-#if !USE_WINUI3
         /// <summary>
         /// Invoked when the application is activated by some means other than normal launching.
         /// </summary>
@@ -66,4 +60,3 @@ namespace {{ namespace }}
         }
     }
 }
-#endif
