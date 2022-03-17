@@ -292,6 +292,9 @@ m_compEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTa
 */
 
 void CompRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept {
+  if (m_rootTag == -1)
+    return;
+
   if (m_compEventHandler) {
     m_compEventHandler->ScrollWheel(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
   }

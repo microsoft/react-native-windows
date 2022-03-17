@@ -49,42 +49,6 @@ void CompParagraphComponentView::updateProps(
     m_requireRedraw = true;
   }
 
-  if (oldViewProps.textAttributes.fontSize != newViewProps.textAttributes.fontSize) {
-    m_textFormat = nullptr;
-  }
-
-  /*
-  if (oldViewProps.textAttributes.fontWeight != newViewProps.textAttributes.fontWeight) {
-    m_element.FontWeight(
-        winrt::Windows::UI::Text::FontWeight{static_cast<uint16_t>(newViewProps.textAttributes.fontWeight.value_or(
-            static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR)))});
-  }
-
-  if (oldViewProps.textAttributes.fontStyle != newViewProps.textAttributes.fontStyle) {
-    switch (newViewProps.textAttributes.fontStyle.value_or(facebook::react::FontStyle::Normal)) {
-      case facebook::react::FontStyle::Italic:
-        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Italic);
-        break;
-      case facebook::react::FontStyle::Normal:
-        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Normal);
-        break;
-      case facebook::react::FontStyle::Oblique:
-        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Oblique);
-        break;
-      default:
-        assert(false);
-    }
-  }
-
-  if (oldViewProps.textAttributes.fontFamily != newViewProps.textAttributes.fontFamily) {
-    if (newViewProps.textAttributes.fontFamily.empty())
-      m_element.FontFamily(xaml::Media::FontFamily(L"Segoe UI"));
-    else
-      m_element.FontFamily(
-          xaml::Media::FontFamily(Microsoft::Common::Unicode::Utf8ToUtf16(newViewProps.textAttributes.fontFamily)));
-  }
-  */
-
   if (oldViewProps.textAttributes.alignment != newViewProps.textAttributes.alignment) {
     updateTextAlignment(newViewProps.textAttributes.alignment);
   }
@@ -100,29 +64,8 @@ void CompParagraphComponentView::updateState(
     facebook::react::State::Shared const &oldState) noexcept {
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
-  // Only handle single/empty fragments right now -- ignore the other fragments
-  if (newState.getData().attributedString.getFragments().size()) {
-    auto firstFragment = newState.getData().attributedString.getFragments()[0];
-    m_text = Microsoft::Common::Unicode::Utf8ToUtf16(firstFragment.string);
-    m_fontSize = firstFragment.textAttributes.fontSize * firstFragment.textAttributes.fontSizeMultiplier;
-    m_fontFamily = firstFragment.textAttributes.fontFamily.empty()
-        ? L"Segoe UI"
-        : Microsoft::Common::Unicode::Utf8ToUtf16(firstFragment.textAttributes.fontFamily);
-    m_fontWeight = static_cast<DWRITE_FONT_WEIGHT>(firstFragment.textAttributes.fontWeight.value_or(
-        static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR)));
-    m_fontStyle = DWRITE_FONT_STYLE_NORMAL;
-    if (firstFragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic) {
-      m_fontStyle = DWRITE_FONT_STYLE_ITALIC;
-    } else if (firstFragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
-      m_fontStyle = DWRITE_FONT_STYLE_OBLIQUE;
-    }
-  } else {
-    m_fontFamily = L"Segoe UI";
-    m_fontWeight = DWRITE_FONT_WEIGHT_REGULAR;
-    m_text = L"";
-    m_fontSize = 12.f;
-    m_fontStyle = DWRITE_FONT_STYLE_NORMAL;
-  }
+  m_attributedStringBox = facebook::react::AttributedStringBox(newState.getData().attributedString);
+  m_paragraphAttributes = {}; // TODO
 
   m_textLayout = nullptr;
 }
@@ -192,7 +135,7 @@ void CompParagraphComponentView::ensureVisual() noexcept {
 void CompParagraphComponentView::updateTextAlignment(
     const butter::optional<facebook::react::TextAlignment> &fbAlignment) noexcept {
   m_textLayout = nullptr;
-  if (!m_textFormat)
+  if (!m_textLayout)
     return;
 
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
@@ -218,54 +161,42 @@ void CompParagraphComponentView::updateTextAlignment(
         assert(false);
     }
   }
-  m_textFormat->SetTextAlignment(alignment);
+  // TODO
+  // m_textFormat->SetTextAlignment(alignment);
 }
 
 void CompParagraphComponentView::updateVisualBrush() noexcept {
   bool requireNewBrush{false};
 
-  if (!m_textFormat) {
-    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
-
-    winrt::check_hresult(DWriteFactory()->CreateTextFormat(
-        m_fontFamily.c_str(),
-        nullptr,
-        m_fontWeight,
-        m_fontStyle,
-        DWRITE_FONT_STRETCH_NORMAL,
-        m_fontSize,
-        L"en-US",
-        m_textFormat.put()));
-
-    updateTextAlignment(paragraphProps.textAttributes.alignment);
-  }
+  // TODO
+  // updateTextAlignment(paragraphProps.textAttributes.alignment);
 
   if (!m_textLayout) {
-    winrt::check_hresult(DWriteFactory()->CreateTextLayout(
-        m_text.c_str(),
-        (uint32_t)m_text.size(),
-        m_textFormat.get(),
-        m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor,
-        m_textLayout.put()));
+    facebook::react::LayoutConstraints contraints;
+    contraints.maximumSize = m_layoutMetrics.frame.size;
 
+    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, contraints, m_textLayout);
     requireNewBrush = true;
   }
 
   if (requireNewBrush || !m_drawingSurfaceInterop) {
-    // Create the surface just big enough to hold the formatted text block.
-    DWRITE_TEXT_METRICS metrics;
-    winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
-    winrt::Windows::Foundation::Size surfaceSize = {metrics.width, metrics.height};
-    winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
-    drawingSurface = CompositionGraphicsDevice(m_compositor)
-                         .CreateDrawingSurface(
-                             surfaceSize,
-                             winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-                             winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    if (!m_textLayout) { // Empty Text element
+      m_drawingSurfaceInterop = nullptr;
+    } else {
+      // Create the surface just big enough to hold the formatted text block.
+      DWRITE_TEXT_METRICS metrics;
+      winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
+      winrt::Windows::Foundation::Size surfaceSize = {metrics.width, metrics.height};
+      winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
+      drawingSurface = CompositionGraphicsDevice(m_compositor)
+                           .CreateDrawingSurface(
+                               surfaceSize,
+                               winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+                               winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
-    // Cache the interop pointer, since that's what we always use.
-    drawingSurface.as(m_drawingSurfaceInterop);
+      // Cache the interop pointer, since that's what we always use.
+      drawingSurface.as(m_drawingSurfaceInterop);
+    }
 
     DrawText();
 
@@ -291,6 +222,7 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
     // So we need to align the brush within the visual to match the text alignment.
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
     float horizAlignment{0.f};
+    /*
     if (paragraphProps.textAttributes.alignment) {
       switch (*paragraphProps.textAttributes.alignment) {
         case facebook::react::TextAlignment::Center:
@@ -313,8 +245,11 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
           assert(false);
       }
     }
+    */
+    // TODO Using brush alignment to align the text makes it blury...
     surfaceBrush.HorizontalAlignmentRatio(horizAlignment);
-
+    surfaceBrush.VerticalAlignmentRatio(0.f);
+    surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::None);
     m_visual.Brush(surfaceBrush);
   }
 
@@ -326,15 +261,14 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
 
 // Renders the text into our composition surface
 void CompParagraphComponentView::DrawText() noexcept {
+  if (!m_drawingSurfaceInterop)
+    return;
+
   // Begin our update of the surface pixels. If this is our first update, we are required
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
-
-  if (m_text.empty()) {
-    return;
-  }
 
   if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(
           nullptr, __uuidof(ID2D1DeviceContext), d2dDeviceContext.put_void(), &offset))) {

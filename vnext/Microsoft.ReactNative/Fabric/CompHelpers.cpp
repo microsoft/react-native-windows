@@ -4,16 +4,14 @@
 
 #pragma once
 
-#include "CompParagraphComponentView.h"
-
-#include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
+#include <d2d1_1.h>
 #include <d3d11.h>
 #include <d3d11_4.h>
-#include <react/renderer/components/text/ParagraphShadowNode.h>
-#include <react/renderer/components/text/ParagraphState.h>
+#include <dwrite.h>
 #include <unicode.h>
+#include <windows.ui.composition.interop.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 
 namespace Microsoft::ReactNative {

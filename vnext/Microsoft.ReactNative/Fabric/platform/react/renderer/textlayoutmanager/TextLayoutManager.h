@@ -11,6 +11,8 @@
 #include <react/utils/ContextContainer.h>
 #include <memory>
 
+#include <dwrite.h>
+
 namespace facebook {
 namespace react {
 
@@ -27,7 +29,7 @@ class TextLayoutManager {
 
 #pragma region required interface from core cxx cross platform impl
   TextLayoutManager(const ContextContainer::Shared &contextContainer) : m_contextContainer(contextContainer){};
-  ~TextLayoutManager();
+  ~TextLayoutManager(){};
 
   /*
    * Measures `attributedStringBox` using native text rendering infrastructure.
@@ -58,6 +60,12 @@ class TextLayoutManager {
    * Is used on a native views layer to delegate text rendering to the manager.
    */
   void *getNativeTextLayoutManager() const;
+
+  static void GetTextLayout(
+      AttributedStringBox attributedStringBox,
+      ParagraphAttributes paragraphAttributes,
+      LayoutConstraints layoutConstraints,
+      winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
 
 #pragma endregion
 

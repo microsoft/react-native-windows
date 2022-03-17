@@ -6,6 +6,7 @@
 
 #include <d2d1_1.h>
 #include <dwrite.h>
+#include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/components/text/ParagraphProps.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
@@ -46,18 +47,12 @@ struct CompParagraphComponentView : CompBaseComponentView {
 
   std::shared_ptr<facebook::react::ParagraphProps const> m_props;
   winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
-  winrt::com_ptr<::IDWriteTextFormat> m_textFormat{nullptr};
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout{nullptr};
-  std::wstring m_text;
-  float m_fontSize;
-  DWRITE_FONT_STYLE m_fontStyle;
-  DWRITE_FONT_WEIGHT m_fontWeight;
-  std::wstring m_fontFamily;
+  facebook::react::AttributedStringBox m_attributedStringBox;
+  facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
   winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop{nullptr};
-
-  winrt::com_ptr<ID2D1Device> _d2dDevice;
   winrt::com_ptr<winrt::Windows::UI::Composition::ICompositionGraphicsDevice> _compositionGraphicsDevice{nullptr};
   winrt::event_token m_renderDeviceReplacedToken;
 };
