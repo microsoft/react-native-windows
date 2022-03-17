@@ -47,6 +47,24 @@ ResponseWrapper::ResponseWrapper(DynamicResponse&& res)
 {
 }
 
+ResponseWrapper::ResponseWrapper(EmptyResponse&& res)
+  : m_response{ make_shared<EmptyResponse>(std::move(res)) }
+  , m_type{ ResponseType::Empty }
+{
+}
+
+ResponseWrapper::ResponseWrapper(FileResponse&& response)
+  : m_response{ make_shared<FileResponse>(std::move(response)) }
+  , m_type{ ResponseType::File }
+{
+}
+
+ResponseWrapper::ResponseWrapper(StringResponse&& response)
+  : m_response{ make_shared<StringResponse>(std::move(response)) }
+  , m_type{ ResponseType::String }
+{
+}
+
 shared_ptr<void> ResponseWrapper::Response()
 {
   return m_response;
@@ -80,7 +98,7 @@ void HttpSession::Start()
     // Ugh!
     switch (type)
 	{
-    case Microsoft::React::Test::ResponseType::Empty:
+    case ResponseType::Empty:
       http::async_write(
         self->m_stream,
         *static_pointer_cast<EmptyResponse>(dr),
@@ -92,7 +110,7 @@ void HttpSession::Start()
       );
       break;
 
-    case Microsoft::React::Test::ResponseType::Dynamic:
+    case ResponseType::Dynamic:
       http::async_write(
         self->m_stream,
         *static_pointer_cast<DynamicResponse>(dr),
@@ -100,6 +118,30 @@ void HttpSession::Start()
           &HttpSession::OnWrite,
           self->shared_from_this(),
           static_pointer_cast<DynamicResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    case ResponseType::File:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<FileResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<FileResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    case ResponseType::String:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<StringResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<StringResponse>(dr)->need_eof()
         )
       );
       break;

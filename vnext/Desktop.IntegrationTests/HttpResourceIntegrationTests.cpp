@@ -325,6 +325,7 @@ using std::string;
 using std::vector;
 using Test::DynamicRequest;
 using Test::DynamicResponse;
+using Test::EmptyResponse;
 using Test::ResponseWrapper;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
@@ -512,18 +513,17 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
       return response;
     };
+    server->Callbacks().OnOptions2 = [](const DynamicRequest &request) -> ResponseWrapper {
+      EmptyResponse response;
+      response.result(http::status::partial_content);
+      response.set("PreflightName", "PreflightValue");
+
+      return {std::move(response)};
+    };
     server->Callbacks().OnGet2 = [](const DynamicRequest &request) -> ResponseWrapper {
       DynamicResponse response;
       response.result(http::status::ok);
       response.body() = Test::CreateStringResponseBody("Response Body");
-
-      return {std::move(response)};
-    };
-
-    server->Callbacks().OnOptions2 = [](const DynamicRequest &request) -> ResponseWrapper {
-      DynamicResponse response;
-      response.result(http::status::partial_content);
-      response.set("PreflightName", "PreflightValue");
 
       return {std::move(response)};
     };

@@ -22,14 +22,20 @@ using FileResponse = boost::beast::http::response<boost::beast::http::file_body>
 
 using StringResponse = boost::beast::http::response<boost::beast::http::string_body>;
 
-enum class ResponseType : size_t { Empty, Dynamic };
+enum class ResponseType : size_t { Empty, Dynamic, File, String };
 
 class ResponseWrapper {
   std::shared_ptr<void> m_response;
   ResponseType m_type;
 
 public:
-  ResponseWrapper(DynamicResponse&& req);
+  ResponseWrapper(DynamicResponse&& response);
+
+  ResponseWrapper(EmptyResponse&& response);
+
+  ResponseWrapper(FileResponse&& response);
+
+  ResponseWrapper(StringResponse&& response);
 
   ResponseWrapper(ResponseWrapper&&) = default;
 
