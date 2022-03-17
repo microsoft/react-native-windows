@@ -89,11 +89,11 @@ HttpSession::~HttpSession() {}
 
 void HttpSession::Start()
 {
-  m_sendLambda2 = [self = shared_from_this()](ResponseWrapper&& wrapper)
+  m_sendLambda = [self = shared_from_this()](ResponseWrapper&& wrapper)
   {
     auto dr = wrapper.Response();
     auto type = wrapper.Type();
-    self->m_response2 = make_shared<ResponseWrapper>(std::move(wrapper));
+    self->m_response = make_shared<ResponseWrapper>(std::move(wrapper));
 
     // Ugh!
     switch (type)
@@ -151,22 +151,6 @@ void HttpSession::Start()
 	}
   };
 
-  m_sendLambda = [self = shared_from_this()](DynamicResponse&& response)
-  {
-    auto sharedRes = std::make_shared<DynamicResponse>(std::move(response));
-    self->m_response = sharedRes;
-
-    http::async_write(
-      self->m_stream,
-      *sharedRes,
-      bind_front_handler(
-        &HttpSession::OnWrite,
-        self->shared_from_this(),
-        sharedRes->need_eof()
-      )
-    );
-  };
-
   // Ensure thread-safety.
   boost::asio::dispatch(m_stream.get_executor(), bind_front_handler(&HttpSession::Read, shared_from_this()));
 }
@@ -203,11 +187,11 @@ void HttpSession::Respond()
   switch (m_request.method())
   {
     case http::verb::get:
-      m_sendLambda2(m_callbacks.OnGet2(m_request));
+      m_sendLambda(m_callbacks.OnGet(m_request));
       break;
 
     case http::verb::options:
-      if (!m_callbacks.OnOptions2)
+      if (!m_callbacks.OnOptions)
       {
         // Default OPTIONS handler
         m_callbacks.OnOptions = [](const DynamicRequest& request) -> DynamicResponse {
@@ -222,7 +206,7 @@ void HttpSession::Respond()
           return { std::move(response) };
         };
       }
-      m_sendLambda2(m_callbacks.OnOptions2(m_request));
+      m_sendLambda(m_callbacks.OnOptions(m_request));
       break;
 
     case http::verb::post:
@@ -255,7 +239,6 @@ void HttpSession::OnWrite(bool close, error_code ec, size_t /*transferred*/)
 
   // Clear response
   m_response = nullptr;
-  m_response2 = nullptr;
 
   Read();
 }

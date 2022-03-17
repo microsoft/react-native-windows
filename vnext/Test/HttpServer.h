@@ -53,11 +53,9 @@ boost::beast::multi_buffer CreateStringResponseBody(std::string&& content);
 struct HttpCallbacks
 {
   std::function<void()> OnResponseSent;
-  std::function<DynamicResponse(const DynamicRequest &)> OnGet;
-  std::function<DynamicResponse(const DynamicRequest &)> OnOptions;
   std::function<void()> OnRequest;
-  std::function<ResponseWrapper(const DynamicRequest &)> OnGet2;
-  std::function<ResponseWrapper(const DynamicRequest &)> OnOptions2;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnGet;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnOptions;
 };
 
 ///
@@ -69,11 +67,9 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   boost::beast::tcp_stream m_stream;
   boost::beast::flat_buffer m_buffer;
   DynamicRequest m_request;
-  std::shared_ptr<DynamicResponse> m_response; // Generic response
-  std::shared_ptr<ResponseWrapper> m_response2; // Generic response
+  std::shared_ptr<ResponseWrapper> m_response; // Generic response
   HttpCallbacks& m_callbacks;
-  std::function<void(Microsoft::React::Test::DynamicResponse&&)> m_sendLambda;
-  std::function<void(Microsoft::React::Test::ResponseWrapper&&)> m_sendLambda2;
+  std::function<void(Microsoft::React::Test::ResponseWrapper&&)> m_sendLambda;
 
   void Read();
   void Respond();
