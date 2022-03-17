@@ -548,10 +548,5 @@ function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
     version: '1.0.0',
   });
 
-  winAppSDKPackages.push({
-    id: 'Microsoft.Windows.SDK.BuildTools',
-    version: '10.0.22000.194',
-  });
-
   return winAppSDKPackages;
 }

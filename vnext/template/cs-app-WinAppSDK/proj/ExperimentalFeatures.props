@@ -18,7 +18,6 @@
       See https://microsoft.github.io/react-native-windows/docs/0.64/hermes
     -->
     <UseHermes>false</UseHermes>
-    <UseDocString>false</UseDocString>
   </PropertyGroup>
 
 </Project>

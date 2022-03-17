@@ -381,13 +381,9 @@ export async function deployToDesktop(
   } else {
     // Deploy from layout
     // If we have DeployAppRecipe.exe, use it (start in 16.8.4, earlier 16.8 versions have bugs)
-
-    console.log(JSON.stringify(config));
-
-    const deployProjectName = projectName;
     const appxRecipe = path.join(
       path.dirname(appxManifestPath),
-      `${deployProjectName}.build.appxrecipe`,
+      `${projectName}.build.appxrecipe`,
     );
     const ideFolder = `${buildTools.installationPath}\\Common7\\IDE`;
     const deployAppxRecipeExePath = `${ideFolder}\\DeployAppRecipe.exe`;

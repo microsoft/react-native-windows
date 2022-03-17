@@ -3,7 +3,7 @@
   Copyright (c) Microsoft Corporation. All rights reserved.
   Licensed under the MIT License.
 
-  This file will be consumed by ALL UWP app and module projects (both inside
+  This file will be consumed by ALL WinAppSDK app and module projects (both inside
   and outside of this repo) that build on top of Microsoft.ReactNative.
   Do not make any changes here unless it applies to ALL such projects.
 -->

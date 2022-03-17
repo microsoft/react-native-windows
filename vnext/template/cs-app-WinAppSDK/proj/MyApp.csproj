@@ -30,8 +30,8 @@
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WinAppSDK.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WinAppSDK.CSharpApp.props')" />
   </ImportGroup>
   <ItemGroup>
-		<SDKReference Include="Microsoft.VCLibs, Version=14.0" />
-	</ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0" />
+  </ItemGroup>
   <ItemGroup>
     {{#csNugetPackages}}
     <PackageReference Include="{{ id }}">
