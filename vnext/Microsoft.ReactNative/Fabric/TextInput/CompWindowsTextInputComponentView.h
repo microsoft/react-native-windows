@@ -42,6 +42,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  void parent(IComponentView *parent) noexcept override;
 
   const winrt::Windows::UI::Composition::Visual Visual() const noexcept override;
 

@@ -191,8 +191,6 @@ void CompViewComponentView::updateProps(
   ensureVisual();
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    auto color = *newViewProps.backgroundColor;
-
     if (newViewProps.backgroundColor) {
       auto brush = m_compositor.CreateColorBrush((*newViewProps.backgroundColor).m_color);
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);

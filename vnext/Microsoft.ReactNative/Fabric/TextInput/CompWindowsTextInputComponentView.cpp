@@ -530,6 +530,14 @@ CompWindowsTextInputComponentView::supplementalComponentDescriptorProviders() no
   return {};
 }
 
+void CompWindowsTextInputComponentView::parent(IComponentView *parent) noexcept {
+  Super::parent(parent);
+
+  if (!parent && GetFocusedComponent() == this) {
+    SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
+  }
+}
+
 void CompWindowsTextInputComponentView::mountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
