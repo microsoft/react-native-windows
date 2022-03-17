@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Mar 2022 05:09:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.471",
+      "version": "0.0.0-canary.471",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7e9d2cc0274bf44a4abb8be224a374a50671fe56",
+            "comment": "Update WebView Pkg Dep Following Pkg Ref"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205",
+            "comment": "integrates 2/27/22"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.32",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Mar 2022 06:09:07 GMT",
       "tag": "react-native-windows_v0.0.0-canary.470",
       "version": "0.0.0-canary.470",

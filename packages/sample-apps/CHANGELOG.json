@@ -2,6 +2,27 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Thu, 17 Mar 2022 05:09:18 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump react-native-windows to v0.0.0-canary.471",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205"
+          },
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.32",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Mar 2022 06:09:07 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",
