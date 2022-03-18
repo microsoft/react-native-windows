@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 18 Mar 2022 05:08:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.472",
+      "version": "0.0.0-canary.472",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0eee155bbe0be820fc39ce60c2ef9fdaef680d21",
+            "comment": "move some DLLs to delayload"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Mar 2022 05:09:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.471",
       "version": "0.0.0-canary.471",
