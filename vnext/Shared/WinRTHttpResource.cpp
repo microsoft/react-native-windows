@@ -41,31 +41,64 @@ using winrt::Windows::Foundation::IAsyncAction;
 using std::weak_ptr;
 struct IHttpRequestFilter {
 
-  virtual IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept = 0;
+  //virtual IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept = 0;
 
   virtual IAsyncAction ProcessRequest(
       int64_t requestId,
-      HttpRequestMessage &&request,
-      IHttpResource::Headers &&headers,
-      IHttpResource::BodyData &&bodyData,
+      HttpRequestMessage &request,
+      IHttpResource::Headers &headers,
+      IHttpResource::BodyData &bodyData,
       bool textResponse) noexcept = 0;
 };
 
 class OriginPolicyRequestFilter : public IHttpRequestFilter {
 
+  //TODO: Remove. Redundant.
+  typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
+      winrt::Windows::Web::Http::HttpResponseMessage,
+      winrt::Windows::Web::Http::HttpProgress>
+      ResponseType;
+
+  winrt::weak_ref<IHttpClient> m_weakClient;
+
+public:
+  OriginPolicyRequestFilter(winrt::weak_ref<IHttpClient> wkClient) noexcept
+    : m_weakClient{wkClient} {
+  }
+
 #pragma region IHttpRequestFilter
 
-IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept override {
-  
-}
+//IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept override{
 
 IAsyncAction ProcessRequest(
   int64_t requestId,
-  HttpRequestMessage&& request,
-  IHttpResource::Headers&& headers,
-  IHttpResource::BodyData&& bodyData,
+  HttpRequestMessage& request,
+  IHttpResource::Headers& headers,
+  IHttpResource::BodyData& bodyData,
   bool textResponse) noexcept override {
 
+  //auto preflight = headers.find("Preflight");
+
+  if (headers["Preflight"] != "requested")
+    co_return;
+
+  if (auto client = m_weakClient.get()) {
+    auto preflightRequest = HttpRequestMessage();
+    preflightRequest.RequestUri(request.RequestUri());
+    preflightRequest.Method(HttpMethod::Options());
+
+    auto sendPreflightOp = client.SendRequestAsync(preflightRequest);
+    co_await lessthrow_await_adapter<ResponseType>{sendPreflightOp};
+    auto result = sendPreflightOp.ErrorCode();
+    if (result < 0) {
+      auto error = Utilities::HResultToString(std::move(result));
+      co_return;
+    }
+    auto response = sendPreflightOp.GetResults();
+    for (auto header : response.Headers()) {
+      headers.emplace(to_string(header.Key()), to_string(header.Value()));
+    }
+  }
 }
 
 #pragma endregion IHttpRequestFilter
@@ -257,6 +290,10 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   }
 
   try {
+    //FILTER!
+    auto filter = OriginPolicyRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
+    filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
+
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
 
     self->TrackResponse(requestId, sendRequestOp);

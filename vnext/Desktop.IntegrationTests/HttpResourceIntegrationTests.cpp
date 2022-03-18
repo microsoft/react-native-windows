@@ -259,4 +259,77 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     }
     Assert::AreEqual({"Response Body"}, content);
   }
+
+  TEST_METHOD(PreflightSucceeds) {
+    promise<void> getResponsePromise;
+    promise<void> getDataPromise;
+    promise<void> optionsResponsePromise;
+    IHttpResource::Response getResponse;
+    IHttpResource::Response optionsResponse;
+    string error;
+    string getDataContent;
+    constexpr size_t port{5558};
+
+    auto server = make_shared<HttpServer>(port);
+    server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
+      EmptyResponse response;
+      response.result(http::status::partial_content);
+      response.set("Preflight", "sent");
+
+      return {std::move(response)};
+    };
+    server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
+      Test::StringResponse response;
+      response.result(http::status::ok);
+      response.body() = "Body After Preflight";
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsResponsePromise](
+                                int64_t, IHttpResource::Response &&res) {
+      if (res.StatusCode == static_cast<int64_t>(http::status::partial_content)) {
+        optionsResponse = std::move(res);
+        optionsResponsePromise.set_value();
+      }
+    });
+    resource->SetOnData([&getDataPromise, &getDataContent](int64_t, string &&content) {
+      if (!content.empty()) { // Ignore OPTIONS data response.
+        getDataContent = std::move(content);
+        getDataPromise.set_value();
+      }
+    });
+    resource->SetOnError(
+        [&getResponsePromise, &optionsResponsePromise, &server](int64_t, string &&message) {
+      optionsResponsePromise.set_value();
+      getResponsePromise.set_value();
+
+      server->Stop();
+    });
+
+    //clang-format off
+    resource->SendRequest(
+      "GET",
+      "http://localhost:5558",
+      {{"Preflight", "requested"}},
+      {},
+      "text",
+      false,
+      1000,
+      false,
+      [](int64_t){}
+    );
+    //clang-format on
+
+    optionsResponsePromise.get_future().wait();
+    getDataPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreEqual({}, error);
+    Assert::AreEqual(static_cast<size_t>(1), optionsResponse.Headers.size());
+    Assert::AreEqual({"sent"}, optionsResponse.Headers["Preflight"]);
+    Assert::AreEqual({"Body After Preflight"}, getDataContent);
+  }
 };
