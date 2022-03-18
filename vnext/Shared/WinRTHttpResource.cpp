@@ -82,7 +82,11 @@ IAsyncAction ProcessRequest(
   if (headers["Preflight"] != "requested")
     co_return;
 
-  if (auto client = m_weakClient.get()) {
+  auto client = m_weakClient.get();
+  if (!client)
+    co_return;
+
+  try {
     auto preflightRequest = HttpRequestMessage();
     preflightRequest.RequestUri(request.RequestUri());
     preflightRequest.Method(HttpMethod::Options());
@@ -98,6 +102,15 @@ IAsyncAction ProcessRequest(
     for (auto header : response.Headers()) {
       headers.emplace(to_string(header.Key()), to_string(header.Value()));
     }
+
+  } catch (hresult_error const &e) {
+    string error = Utilities::HResultToString(std::move(e));
+    co_return;
+  } catch (const std::exception &e) {
+    string error = e.what();
+    co_return;
+  } catch (...) {
+    co_return;
   }
 }
 

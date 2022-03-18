@@ -302,9 +302,10 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       }
     });
     resource->SetOnError(
-        [&getResponsePromise, &optionsResponsePromise, &server](int64_t, string &&message) {
+        [&getResponsePromise, &optionsResponsePromise, &getDataPromise, &server](int64_t, string &&message) {
       optionsResponsePromise.set_value();
       getResponsePromise.set_value();
+      getDataPromise.set_value();
 
       server->Stop();
     });
@@ -324,6 +325,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     //clang-format on
 
     optionsResponsePromise.get_future().wait();
+    getResponsePromise.get_future().wait();
     getDataPromise.get_future().wait();
     server->Stop();
 
