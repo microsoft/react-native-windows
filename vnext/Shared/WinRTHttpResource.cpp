@@ -41,8 +41,6 @@ using winrt::Windows::Foundation::IAsyncAction;
 using std::weak_ptr;
 struct IHttpRequestFilter {
 
-  //virtual IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept = 0;
-
   virtual IAsyncAction ProcessRequest(
       int64_t requestId,
       HttpRequestMessage &request,
@@ -68,8 +66,6 @@ public:
 
 #pragma region IHttpRequestFilter
 
-//IAsyncAction ProcessRequest(weak_ptr<IHttpResource> wkResource) noexcept override{
-
 IAsyncAction ProcessRequest(
   int64_t requestId,
   HttpRequestMessage& request,
@@ -84,6 +80,7 @@ IAsyncAction ProcessRequest(
   if (!client)
     co_return;
 
+  string exceptionMessage;
   try {
     auto preflightRequest = HttpRequestMessage();
     preflightRequest.RequestUri(request.RequestUri());
@@ -93,26 +90,26 @@ IAsyncAction ProcessRequest(
     co_await lessthrow_await_adapter<ResponseType>{sendPreflightOp};
     auto result = sendPreflightOp.ErrorCode();
     if (result < 0) {
-      auto error = Utilities::HResultToString(std::move(result));
-      co_return;
+      winrt::throw_hresult(result);
     }
     auto response = sendPreflightOp.GetResults();
 
-    // Check for Preflight 'approval'
-    //if (response.Headers().HasKey(L"Preflight") && response.Headers())
+    auto preflightStatus = response.Headers().Lookup(L"Preflight");
+    if (preflightStatus != L"Approved")
+      throw hresult_error{E_FAIL, L"Origin policy non-compliance"}; //TODO: Better HRESULT?
 
     for (auto header : response.Headers()) {
       headers.emplace(to_string(header.Key()), to_string(header.Value()));
     }
-  } catch (hresult_error const &e) {
-    string error = Utilities::HResultToString(std::move(e));
+
     co_return;
   } catch (const std::exception &e) {
-    string error = e.what();
-    co_return;
+    exceptionMessage = e.what();
   } catch (...) {
-    co_return;
+    exceptionMessage = "Unspecified error processing Origin Policy request";
   }
+
+  throw hresult_error{E_FAIL, to_hstring(exceptionMessage)};//TODO: Better HRESULT?
 }
 
 #pragma endregion IHttpRequestFilter
@@ -311,10 +308,10 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
     auto preResult = preflightOp.ErrorCode();
     if (preResult < 0) {
       if (self->m_onError) {
-        self->m_onError(requestId, Utilities::HResultToString(std::move(preResult)));
+        co_return self->m_onError(requestId, Utilities::HResultToString(std::move(preResult)));
       }
-      co_return;
     }
+    // FILTER
 
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
     self->TrackResponse(requestId, sendRequestOp);

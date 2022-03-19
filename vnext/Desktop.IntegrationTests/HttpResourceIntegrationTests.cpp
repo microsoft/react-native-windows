@@ -300,7 +300,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       }
     });
     resource->SetOnError(
-        [&getResponsePromise, &getDataPromise, &server](int64_t, string &&message) {
+        [&getResponsePromise, &getDataPromise, &server, &error](int64_t, string &&message) {
+
+      error = std::move(message);
       getResponsePromise.set_value();
       getDataPromise.set_value();
 
@@ -326,8 +328,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Stop();
 
     Assert::AreEqual({}, error);
-    Assert::AreEqual(static_cast<size_t>(1), optionsResponse.Headers.size());
-    Assert::AreEqual({"sent"}, optionsResponse.Headers["Preflight"]);
     Assert::AreEqual({"Body After Preflight"}, getDataContent);
   }
 };
