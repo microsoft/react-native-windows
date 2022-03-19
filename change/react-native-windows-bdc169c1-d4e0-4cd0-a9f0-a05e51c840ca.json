@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "move some DLLs to delayload",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

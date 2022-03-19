@@ -139,7 +139,14 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>chakra.dll;winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>
+        api-ms-win-core-file-l1-2-0.dll;
+        api-ms-win-core-windowserrorreporting-l1-1-0.dll;
+        ext-ms-win-uiacore-l1-1-1.dll;
+        chakra.dll;
+        winsqlite3.dll;
+        %(DelayLoadDLLs)
+      </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
