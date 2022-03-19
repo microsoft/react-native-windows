@@ -102,7 +102,6 @@ IAsyncAction ProcessRequest(
     for (auto header : response.Headers()) {
       headers.emplace(to_string(header.Key()), to_string(header.Value()));
     }
-
   } catch (hresult_error const &e) {
     string error = Utilities::HResultToString(std::move(e));
     co_return;
@@ -305,10 +304,17 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   try {
     //FILTER!
     auto filter = OriginPolicyRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
-    filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
+    auto preflightOp = filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
+    co_await lessthrow_await_adapter<IAsyncAction>{preflightOp};
+    auto preResult = preflightOp.ErrorCode();
+    if (preResult < 0) {
+      if (self->m_onError) {
+        self->m_onError(requestId, Utilities::HResultToString(std::move(preResult)));
+      }
+      co_return;
+    }
 
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
-
     self->TrackResponse(requestId, sendRequestOp);
 
     co_await lessthrow_await_adapter<ResponseType>{sendRequestOp};

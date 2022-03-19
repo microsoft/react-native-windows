@@ -290,9 +290,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     auto resource = IHttpResource::Make();
     resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsResponsePromise](
                                 int64_t, IHttpResource::Response &&res) {
-      if (res.StatusCode == static_cast<int64_t>(http::status::partial_content)) {
-        optionsResponse = std::move(res);
-        optionsResponsePromise.set_value();
+      if (res.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        getResponsePromise.set_value();
       }
     });
     resource->SetOnData([&getDataPromise, &getDataContent](int64_t, string &&content) {
@@ -303,7 +302,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     });
     resource->SetOnError(
         [&getResponsePromise, &optionsResponsePromise, &getDataPromise, &server](int64_t, string &&message) {
-      optionsResponsePromise.set_value();
+      //optionsResponsePromise.set_value();
       getResponsePromise.set_value();
       getDataPromise.set_value();
 
@@ -324,7 +323,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     );
     //clang-format on
 
-    optionsResponsePromise.get_future().wait();
+    //optionsResponsePromise.get_future().wait();
     getResponsePromise.get_future().wait();
     getDataPromise.get_future().wait();
     server->Stop();
