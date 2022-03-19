@@ -263,7 +263,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(PreflightSucceeds) {
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
-    promise<void> optionsResponsePromise;
     IHttpResource::Response getResponse;
     IHttpResource::Response optionsResponse;
     string error;
@@ -274,7 +273,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
       EmptyResponse response;
       response.result(http::status::partial_content);
-      response.set("Preflight", "sent");
+      response.set("Preflight", "Approved");
 
       return {std::move(response)};
     };
@@ -288,7 +287,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Start();
 
     auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsResponsePromise](
+    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse](
                                 int64_t, IHttpResource::Response &&res) {
       if (res.StatusCode == static_cast<int64_t>(http::status::ok)) {
         getResponsePromise.set_value();
@@ -301,8 +300,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       }
     });
     resource->SetOnError(
-        [&getResponsePromise, &optionsResponsePromise, &getDataPromise, &server](int64_t, string &&message) {
-      //optionsResponsePromise.set_value();
+        [&getResponsePromise, &getDataPromise, &server](int64_t, string &&message) {
       getResponsePromise.set_value();
       getDataPromise.set_value();
 
@@ -313,7 +311,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
       "GET",
       "http://localhost:5558",
-      {{"Preflight", "requested"}},
+      {{"Preflight", "Requested"}},
       {},
       "text",
       false,
@@ -323,7 +321,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     );
     //clang-format on
 
-    //optionsResponsePromise.get_future().wait();
     getResponsePromise.get_future().wait();
     getDataPromise.get_future().wait();
     server->Stop();

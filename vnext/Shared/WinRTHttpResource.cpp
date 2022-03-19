@@ -77,9 +77,7 @@ IAsyncAction ProcessRequest(
   IHttpResource::BodyData& bodyData,
   bool textResponse) noexcept override {
 
-  //auto preflight = headers.find("Preflight");
-
-  if (headers["Preflight"] != "requested")
+  if (headers["Preflight"] != "Requested")
     co_return;
 
   auto client = m_weakClient.get();
@@ -99,6 +97,10 @@ IAsyncAction ProcessRequest(
       co_return;
     }
     auto response = sendPreflightOp.GetResults();
+
+    // Check for Preflight 'approval'
+    //if (response.Headers().HasKey(L"Preflight") && response.Headers())
+
     for (auto header : response.Headers()) {
       headers.emplace(to_string(header.Key()), to_string(header.Value()));
     }
