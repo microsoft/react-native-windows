@@ -18,45 +18,73 @@ void TextLayoutManager::GetTextLayout(
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
-  for (auto &fragment : attributedStringBox.getValue().getFragments()) {
-    DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
-    if (fragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic)
+  if (attributedStringBox.getValue().isEmpty())
+    return;
+
+  auto fragments = attributedStringBox.getValue().getFragments();
+  auto outerFragment = fragments[0];
+
+  DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
+  if (outerFragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic)
       style = DWRITE_FONT_STYLE_ITALIC;
-    else if (fragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique)
+  else if (outerFragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique)
       style = DWRITE_FONT_STYLE_OBLIQUE;
 
-    winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-    Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
-        fragment.textAttributes.fontFamily.empty()
+  winrt::com_ptr<IDWriteTextFormat> spTextFormat;
+  Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
+      outerFragment.textAttributes.fontFamily.empty()
+          ? L"Segoe UI"
+          : Microsoft::Common::Unicode::Utf8ToUtf16(outerFragment.textAttributes.fontFamily).c_str(),
+      NULL, // Font collection (NULL sets it to use the system font collection).
+      static_cast<DWRITE_FONT_WEIGHT>(outerFragment.textAttributes.fontWeight.value_or(
+          static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
+      style,
+      DWRITE_FONT_STRETCH_NORMAL,
+      outerFragment.textAttributes.fontSize,
+      L"en-us",
+      spTextFormat.put());
+
+  auto str = Microsoft::Common::Unicode::Utf8ToUtf16(attributedStringBox.getValue().getString());
+
+  // TODO - For now assuming fragment.textAttributes.fontSizeMultiplier is the same as the pointScaleFactor
+  Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
+      str.c_str(), // The string to be laid out and formatted.
+      static_cast<UINT32>(str.length()), // The length of the string.
+      spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
+      layoutConstraints.maximumSize.width *
+          outerFragment.textAttributes.fontSizeMultiplier, // The width of the layout box.
+      layoutConstraints.maximumSize.height *
+          outerFragment.textAttributes.fontSizeMultiplier, // The height of the layout box.
+      spTextLayout.put() // The IDWriteTextLayout interface pointer.
+  );
+
+  unsigned int position = 0;
+  unsigned int length = 0;
+  for (auto fragment : fragments) {
+    length = static_cast<UINT32>(fragment.string.length());
+    DWRITE_TEXT_RANGE range = {position, length};
+    TextAttributes attributes = fragment.textAttributes;
+    DWRITE_FONT_STYLE fragmentStyle = DWRITE_FONT_STYLE_NORMAL;
+    if (attributes.fontStyle == facebook::react::FontStyle::Italic)
+      fragmentStyle = DWRITE_FONT_STYLE_ITALIC;
+    else if (attributes.fontStyle == facebook::react::FontStyle::Oblique)
+      fragmentStyle = DWRITE_FONT_STYLE_OBLIQUE;
+
+    spTextLayout->SetFontFamilyName(
+        attributes.fontFamily.empty()
             ? L"Segoe UI"
-            : Microsoft::Common::Unicode::Utf8ToUtf16(fragment.textAttributes.fontFamily).c_str(),
-        NULL, // Font collection (NULL sets it to use the system font collection).
-        static_cast<DWRITE_FONT_WEIGHT>(fragment.textAttributes.fontWeight.value_or(
+            : Microsoft::Common::Unicode::Utf8ToUtf16(attributes.fontFamily).c_str(),
+        range);
+    spTextLayout->SetFontWeight(
+        static_cast<DWRITE_FONT_WEIGHT>(attributes.fontWeight.value_or(
             static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
-        style,
-        DWRITE_FONT_STRETCH_NORMAL,
-        fragment.textAttributes.fontSize,
-        L"en-us",
-        spTextFormat.put());
+        range);
+    spTextLayout->SetFontStyle(fragmentStyle, range);
+    spTextLayout->SetFontSize(attributes.fontSize, range);
+    // ugh color stuff
 
-    auto str = Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string);
-
-    // TODO - For now assuming fragment.textAttributes.fontSizeMultiplier is the same as the pointScaleFactor
-    Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
-        str.c_str(), // The string to be laid out and formatted.
-        static_cast<UINT32>(str.length()), // The length of the string.
-        spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-        layoutConstraints.maximumSize.width *
-            fragment.textAttributes.fontSizeMultiplier, // The width of the layout box.
-        layoutConstraints.maximumSize.height *
-            fragment.textAttributes.fontSizeMultiplier, // The height of the layout box.
-        spTextLayout.put() // The IDWriteTextLayout interface pointer.
-    );
-
-    return;
+    position += length;
   }
-
-  spTextLayout = nullptr;
 }
 
 // Ideally we'd be able to measure Text either without creating a XAML element,
