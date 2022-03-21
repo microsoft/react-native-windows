@@ -35,7 +35,7 @@ Today we support the following projects as a NuGet package:
    1. open terminal for your enlsitment
    1. push vnext
    1. yarn link
-      > if it fails with already being registred for another enlistment you can run `yarn unlink`
+      > if it fails with already being registered for another enlistment you can run `yarn unlink`
 1. Generate a test project
    1. open terminal in a test folder
    1. `npx react-native init MyProj`
