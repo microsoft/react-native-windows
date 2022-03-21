@@ -2,6 +2,27 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 21 Mar 2022 15:08:46 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.68.0-preview.7",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0-preview.3",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Mar 2022 15:07:44 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

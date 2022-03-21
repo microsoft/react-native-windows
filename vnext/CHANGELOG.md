@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Mar 2022 15:07:44 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Mar 2022 15:08:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0-preview.7
+
+Mon, 21 Mar 2022 15:08:45 GMT
+
+### Changes
+
+- Update WebView Pkg Dep Following Pkg Ref (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 0.68.0-rc.2 (34109996+chiaramooney@users.noreply.github.com)
+- move some DLLs to delayload (asklar@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.68.0-preview.3
 
 ## 0.68.0-preview.6
 
