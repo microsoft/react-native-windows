@@ -1072,6 +1072,10 @@ class JSI_EXPORT Value {
     return data_.boolean;
   }
 
+  /// \return the boolean value, or throws JSIException if not a
+  /// boolean.
+  bool asBool() const;
+
   /// \return the number value, or asserts if not a number.
   double getNumber() const {
     assert(isNumber());
@@ -1242,6 +1246,8 @@ class JSI_EXPORT JSIException : public std::exception {
   JSIException(std::string what) : what_(std::move(what)){};
 
  public:
+  JSIException(const JSIException&) = default;
+
   virtual const char* what() const noexcept override {
     return what_.c_str();
   }
@@ -1257,6 +1263,8 @@ class JSI_EXPORT JSIException : public std::exception {
 class JSI_EXPORT JSINativeException : public JSIException {
  public:
   JSINativeException(std::string what) : JSIException(std::move(what)) {}
+
+  JSINativeException(const JSINativeException&) = default;
 
   virtual ~JSINativeException();
 };
@@ -1286,6 +1294,8 @@ class JSI_EXPORT JSError : public JSIException {
   /// set to provided message.  This argument order is a bit weird,
   /// but necessary to avoid ambiguity with the above.
   JSError(std::string what, Runtime& rt, Value&& value);
+
+  JSError(const JSError&) = default;
 
   virtual ~JSError();
 
