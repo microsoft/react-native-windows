@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 09 Mar 2022 06:09:07 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Mar 2022 05:09:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.138
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- integrates 2/27/22 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.32
 
 ## 0.0.0-canary.137
 

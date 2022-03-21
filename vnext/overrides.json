@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220213-2008-7cece3423",
+  "baseVersion": "0.0.0-20220227-2009-189c2c895",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "e0fd826d1c731209ca1f4322e950df83877ea95a"
+      "baseHash": "62cbbd198b5f952592fcffae5e5f88a387a2f190"
     },
     {
       "type": "patch",
@@ -39,6 +39,33 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/JSCRuntime.cpp",
+      "baseFile": "ReactCommon/jsi/JSCRuntime.cpp",
+      "baseHash": "da73ed017a05d0fdc4302bd0794a343dc5ac935a",
+      "issue": 9703
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
+      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
+      "baseHash": "c93e4d10173716218503599610eb48f40bd2a47c",
+      "issue": 9703
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
+      "baseFile": "ReactCommon/jsi/jsi/jsi.h",
+      "baseHash": "6ef3f675e8af4060ebd43ba75136d58932b02eb4",
+      "issue": 9703
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
+      "baseFile": "ReactCommon/react/renderer/core/RawPropsParser.cpp",
+      "baseHash": "738a8dcf33d1e2bae57f2727625c8ca609f5fd0b"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "b07275d20e080b8c0be48de8bb698c0623290c56",
@@ -55,7 +82,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "0795a999921d9e51c8f01a75befc4002bd6226e0",
+      "baseHash": "900dd159210db7a612ba30e1ebba3799f428425c",
       "issue": 5430
     },
     {
@@ -76,7 +103,7 @@
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "index.js",
-      "baseHash": "a33f356abc2db3767c8fee7e4d6bda60384787a1"
+      "baseHash": "2a0bd511c691be2ac3da45a3c77250aaf55414e1"
     },
     {
       "type": "platform",
@@ -227,16 +254,10 @@
       "baseHash": "d13d67c91a9096989776ba7d7b0f8537c46b87a8"
     },
     {
-      "type": "copy",
-      "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.windows.js",
-      "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
-      "baseHash": "a7b7561ee80510fb3a45bad5ad18bc9076152144"
-    },
-    {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "c447994d5ac59824f298cf4aec899c174b78e3e2"
+      "baseHash": "567ebad070a2fb9020ef177ee30defba9f0c54ec"
     },
     {
       "type": "patch",
@@ -421,13 +442,13 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "7135a3805562187fe999ce7ffdbbb418edd1025f"
+      "baseHash": "2585a673f2e11cb101f113c67eb2c379be3850c9"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "b7ed94c49c38a6b3579349e6940bb663328c1f4e"
+      "baseHash": "12d577ba5b522593fb49d4621d5ad4bba0d37119"
     },
     {
       "type": "copy",

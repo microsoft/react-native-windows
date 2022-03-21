@@ -1,8 +1,26 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 12 Mar 2022 06:09:07 GMT and should not be manually modified.
+This log was last generated on Fri, 18 Mar 2022 05:08:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.472
+
+Fri, 18 Mar 2022 05:08:51 GMT
+
+### Changes
+
+- move some DLLs to delayload (asklar@microsoft.com)
+
+## 0.0.0-canary.471
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- Update WebView Pkg Dep Following Pkg Ref (34109996+chiaramooney@users.noreply.github.com)
+- integrates 2/27/22 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.32
 
 ## 0.0.0-canary.470
 
