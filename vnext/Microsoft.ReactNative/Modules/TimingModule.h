@@ -68,7 +68,7 @@ class Timing : public std::enable_shared_from_this<Timing> {
  private:
   std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
   void OnTick();
-  winrt::system::DispatcherQueueTimer EnsureDispatcherTimer();
+  winrt::dispatching::DispatcherQueueTimer EnsureDispatcherTimer();
   void StartRendering();
   void StartDispatcherTimer();
   void StopTicks();
@@ -77,7 +77,7 @@ class Timing : public std::enable_shared_from_this<Timing> {
   TimingModule *m_parent;
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
-  winrt::system::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
+  winrt::dispatching::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
   bool m_usingRendering{false};
 };
 

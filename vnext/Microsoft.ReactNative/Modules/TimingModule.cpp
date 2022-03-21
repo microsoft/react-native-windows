@@ -130,9 +130,9 @@ void Timing::OnTick() {
   }
 }
 
-winrt::system::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
+winrt::dispatching::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
   if (!m_dispatcherQueueTimer) {
-    const auto queue = winrt::system::DispatcherQueue::GetForCurrentThread();
+    const auto queue = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
     m_dispatcherQueueTimer = queue.CreateTimer();
     m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
       if (auto pThis = wkThis.lock()) {

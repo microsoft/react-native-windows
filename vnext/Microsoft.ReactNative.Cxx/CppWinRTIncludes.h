@@ -17,13 +17,13 @@ namespace xaml = winrt::Windows::UI::Xaml;
 namespace comp = winrt::Windows::UI::Composition;
 namespace ui = winrt::Windows::UI;
 namespace winrt {
-namespace system = winrt::Windows::System;
+namespace dispatching = winrt::Windows::System;
 using ColorHelper = winrt::Windows::UI::ColorHelper;
 using Colors = winrt::Windows::UI::Colors;
 } // namespace winrt
 #else
 
-#include <winrt/Microsoft.System.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
 #include <winrt/Microsoft.UI.Xaml.h>
 
 #define XAML_CPPWINRT_NAMESPACE winrt::Microsoft::UI::Xaml
@@ -31,7 +31,7 @@ namespace xaml = winrt::Microsoft::UI::Xaml;
 namespace comp = winrt::Microsoft::UI::Composition;
 namespace ui = winrt::Microsoft::UI;
 namespace winrt {
-namespace system = winrt::Microsoft::System;
+namespace dispatching = winrt::Microsoft::UI::Dispatching;
 using ColorHelper = winrt::Microsoft::UI::ColorHelper;
 using Colors = winrt::Microsoft::UI::Colors;
 } // namespace winrt
