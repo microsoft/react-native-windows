@@ -4,7 +4,6 @@
 
 #include "CompHwndHost.g.h"
 
-#include <DispatcherQueue.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "ReactHost/React.h"
@@ -35,6 +34,7 @@ struct CompHwndHost : CompHwndHostT<CompHwndHost> {
 
   void ReloadView() noexcept;
   winrt::Windows::UI::Composition::Compositor Compositor() const noexcept;
+  void Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept;
   winrt::Windows::UI::Composition::Visual RootVisual() const noexcept;
 
   LRESULT TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) noexcept;
@@ -45,17 +45,16 @@ struct CompHwndHost : CompHwndHostT<CompHwndHost> {
 
   void EnsureTarget() noexcept;
   void CreateDesktopWindowTarget(HWND window);
-  void EnsureDispatcherQueue();
   void CreateCompositionRoot();
   void UpdateSize() noexcept;
 
   HWND m_hwnd;
   winrt::Microsoft::ReactNative::CompRootView m_compRootView{nullptr};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
-  winrt::Windows::System::DispatcherQueueController m_dispatcherQueueController{nullptr};
 
   // Store locally if set before we have a rootview
   hstring m_componentName;
+  winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
   ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
   ReactNative::JSValueArgWriter m_initialPropsWriter{nullptr};
 };

@@ -118,14 +118,18 @@ void CompRootView::ReactNativeHost(ReactNative::ReactNativeHost const &value) no
 }
 
 winrt::Windows::UI::Composition::Compositor CompRootView::Compositor() noexcept {
-  return m_compositor;
+  return m_compContext ? m_compContext->Compositor() : nullptr;
 }
 
 void CompRootView::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
-  if (m_compositor != value) {
-    assert(!m_compositor);
-    m_compositor = value;
+  if (Compositor() != value) {
+    assert(!Compositor());
+    m_compContext = std::make_shared<::Microsoft::ReactNative::CompContext>(value);
   }
+}
+
+std::shared_ptr<::Microsoft::ReactNative::CompContext> CompRootView::CompContext() noexcept {
+  return m_compContext;
 }
 
 winrt::Windows::UI::Composition::Visual CompRootView::RootVisual() noexcept {

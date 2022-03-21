@@ -153,7 +153,7 @@ void CompImageComponentView::updateProps(
     auto color = *newImageProps.backgroundColor;
 
     if (newImageProps.backgroundColor) {
-      auto brush = m_compositor.CreateColorBrush((*newImageProps.backgroundColor).m_color);
+      auto brush = Compositor().CreateColorBrush((*newImageProps.backgroundColor).m_color);
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);
     } else {
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(nullptr);
@@ -246,11 +246,10 @@ void CompImageComponentView::ensureDrawingSurface() noexcept {
   if (!m_drawingSurfaceInterop && m_wicbmp) {
     winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
 
-    drawingSurface = CompositionGraphicsDevice(m_compositor)
-                         .CreateDrawingSurface(
-                             {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
-                             winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-                             winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    drawingSurface = CompositionGraphicsDevice().CreateDrawingSurface(
+        {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
+        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     // Cache the interop pointer, since that's what we always use.
     drawingSurface.as(m_drawingSurfaceInterop);
@@ -260,20 +259,19 @@ void CompImageComponentView::ensureDrawingSurface() noexcept {
     // If the rendering device is lost, the application will recreate and replace it. We then
     // own redrawing our pixels.
     if (!m_renderDeviceReplacedToken) {
-      m_renderDeviceReplacedToken =
-          CompositionGraphicsDevice(m_compositor)
-              .RenderingDeviceReplaced([this](
-                                           winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
-                                           winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
-                // Draw the text again
-                DrawImage();
-                return S_OK;
-              });
+      m_renderDeviceReplacedToken = CompositionGraphicsDevice().RenderingDeviceReplaced(
+          [this](
+              winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
+              winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
+            // Draw the text again
+            DrawImage();
+            return S_OK;
+          });
     }
 
     winrt::Windows::UI::Composition::ICompositionSurface surface;
     m_drawingSurfaceInterop.as(surface);
-    auto surfaceBrush = m_compositor.CreateSurfaceBrush(surface);
+    auto surfaceBrush = Compositor().CreateSurfaceBrush(surface);
 
     m_visual.Brush(surfaceBrush);
   }
@@ -334,10 +332,9 @@ facebook::react::Tag CompImageComponentView::hitTest(facebook::react::Point pt, 
 }
 
 void CompImageComponentView::ensureVisual() noexcept {
-  assert(m_compositor);
   if (!m_visual) {
-    m_visual = m_compositor.CreateSpriteVisual();
-    m_brush = m_compositor.CreateSurfaceBrush();
+    m_visual = Compositor().CreateSpriteVisual();
+    m_brush = Compositor().CreateSurfaceBrush();
   }
 }
 

@@ -10,6 +10,7 @@
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "CompHelpers.h"
 
 namespace Microsoft::ReactNative {
 
@@ -64,8 +65,17 @@ const facebook::react::SharedViewEventEmitter &CompBaseComponentView::GetEventEm
   return m_eventEmitter;
 }
 
-void CompBaseComponentView::Compositor(const winrt::Windows::UI::Composition::Compositor &compositor) noexcept {
-  m_compositor = compositor;
+void CompBaseComponentView::CompContext(
+    const std::shared_ptr<Microsoft::ReactNative::CompContext> &compContext) noexcept {
+  m_compContext = compContext;
+}
+
+winrt::Windows::UI::Composition::Compositor CompBaseComponentView::Compositor() noexcept {
+  return m_compContext->Compositor();
+}
+
+winrt::Windows::UI::Composition::CompositionGraphicsDevice CompBaseComponentView::CompositionGraphicsDevice() noexcept {
+  return m_compContext->CompositionGraphicsDevice();
 }
 
 bool CompBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
@@ -74,8 +84,8 @@ bool CompBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta
 
 void CompBaseComponentView::ensureBorderVisual() noexcept {
   if (!m_borderVisual) {
-    m_borderVisual = m_compositor.CreateSpriteVisual();
-    auto ninegridBrush = m_compositor.CreateNineGridBrush();
+    m_borderVisual = Compositor().CreateSpriteVisual();
+    auto ninegridBrush = Compositor().CreateNineGridBrush();
 
     // opt out of drawing Center of Nine-Grid
     ninegridBrush.IsCenterHollow(true);
@@ -93,7 +103,7 @@ void CompBaseComponentView::updateBorderProps(
     if (newViewProps.borderColors.all) {
       ensureBorderVisual();
       auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
-      ninegridBrush.Source(m_compositor.CreateColorBrush((*newViewProps.borderColors.all).AsWindowsColor()));
+      ninegridBrush.Source(Compositor().CreateColorBrush((*newViewProps.borderColors.all).AsWindowsColor()));
     } else {
       // TODO handle clearing border
     }
@@ -177,9 +187,8 @@ void CompViewComponentView::unmountChildComponentView(
 }
 
 void CompViewComponentView::ensureVisual() noexcept {
-  assert(m_compositor);
   if (!m_visual)
-    m_visual = m_compositor.CreateSpriteVisual();
+    m_visual = Compositor().CreateSpriteVisual();
 }
 
 void CompViewComponentView::updateProps(
@@ -192,7 +201,7 @@ void CompViewComponentView::updateProps(
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      auto brush = m_compositor.CreateColorBrush((*newViewProps.backgroundColor).m_color);
+      auto brush = Compositor().CreateColorBrush((*newViewProps.backgroundColor).m_color);
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);
     } else {
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(nullptr);

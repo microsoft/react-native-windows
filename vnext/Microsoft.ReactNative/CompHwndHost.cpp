@@ -23,23 +23,6 @@ winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget CompHwndHost::Targ
   return m_target;
 }
 
-void CompHwndHost::EnsureDispatcherQueue() {
-  namespace abi = ABI::Windows::System;
-
-  if (m_dispatcherQueueController == nullptr) {
-    DispatcherQueueOptions options{
-        sizeof(DispatcherQueueOptions), /* dwSize */
-        DQTYPE_THREAD_CURRENT, /* threadType */
-        DQTAT_COM_ASTA /* apartmentType */
-    };
-
-    Windows::System::DispatcherQueueController controller{nullptr};
-    check_hresult(CreateDispatcherQueueController(
-        options, reinterpret_cast<abi::IDispatcherQueueController **>(put_abi(controller))));
-    m_dispatcherQueueController = controller;
-  }
-}
-
 void CompHwndHost::CreateDesktopWindowTarget(HWND window) {
   namespace abi = ABI::Windows::UI::Composition::Desktop;
 
@@ -62,11 +45,8 @@ CompHwndHost::CompHwndHost() noexcept {}
 void CompHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
 
-  EnsureDispatcherQueue();
   m_compRootView = winrt::Microsoft::ReactNative::CompRootView();
-
-  assert(m_dispatcherQueueController);
-  m_compRootView.Compositor(winrt::Windows::UI::Composition::Compositor());
+  m_compRootView.Compositor(std::move(m_compositor));
 
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();
@@ -147,6 +127,18 @@ void CompHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &value) no
     m_reactNativeHost = value;
   }
   EnsureTarget();
+}
+
+winrt::Windows::UI::Composition::Compositor CompHwndHost::Compositor() const noexcept {
+  return m_compRootView ? m_compRootView.Compositor() : m_compositor;
+}
+
+void CompHwndHost::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
+  if (m_compRootView) {
+    m_compRootView.Compositor(value);
+  } else {
+    m_compositor = value;
+  }
 }
 
 void CompHwndHost::EnsureTarget() noexcept {

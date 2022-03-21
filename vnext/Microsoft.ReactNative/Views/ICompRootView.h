@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Fabric/CompHelpers.h>
 #include <IReactRootView.h>
 #include <React.h>
 #include <folly/dynamic.h>
@@ -12,7 +13,7 @@ namespace Microsoft::ReactNative {
 
 struct ICompRootView : public facebook::react::IReactRootView {
   virtual winrt::Windows::UI::Composition::Visual GetVisual() const noexcept = 0;
-  virtual winrt::Windows::UI::Composition::Compositor Compositor() noexcept = 0;
+  virtual std::shared_ptr<CompContext> CompContext() noexcept = 0;
   virtual double ScaleFactor() noexcept = 0;
 };
 

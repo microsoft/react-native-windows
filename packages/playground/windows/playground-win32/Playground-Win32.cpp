@@ -39,6 +39,9 @@
 
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 #include "../../../../vnext/codegen/NativeLogBoxSpec.g.h"
+#include <DispatcherQueue.h>
+#include <windows.ui.composition.interop.h>
+#include <winrt/Windows.UI.Composition.Desktop.h>
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
@@ -72,16 +75,6 @@ struct DeviceInfo {
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
-// The default LogBox impl will try to show XAML UI - so stub it out for now.
-REACT_MODULE(LogBox)
-struct LogBox {
-  using ModuleSpec = Microsoft::ReactNativeSpecs::LogBoxSpec;
-  REACT_METHOD(show)
-  void show() noexcept {}
-  REACT_METHOD(hide)
-  void hide() noexcept {}
-};
-
 // Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
@@ -91,9 +84,11 @@ struct CompReactPackageProvider
         packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderExperimental>();
     experimentalPackageBuilder.AddTurboModule(
         L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
-    experimentalPackageBuilder.AddTurboModule(L"LogBox", winrt::Microsoft::ReactNative::MakeModuleProvider<LogBox>());
   }
 };
+
+winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
+winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 
 constexpr auto WindowDataProperty = L"WindowData";
 
@@ -246,6 +241,7 @@ struct WindowData {
 
   LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
     if (m_compHwndHost) {
+      m_compHwndHost.Compositor(g_compositor);
       m_compHwndHost.Initialize((uint64_t)hwnd);
     }
 
@@ -544,6 +540,19 @@ wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR
   ATOM classId = RegisterClassEx(&wcex);
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
+
+  DispatcherQueueOptions options{
+      sizeof(DispatcherQueueOptions), /* dwSize */
+      DQTYPE_THREAD_CURRENT, /* threadType */
+      DQTAT_COM_ASTA /* apartmentType */
+  };
+
+  winrt::check_hresult(CreateDispatcherQueueController(
+      options,
+      reinterpret_cast<ABI::Windows::System::IDispatcherQueueController **>(
+          winrt::put_abi(g_dispatcherQueueController))));
+
+  g_compositor = winrt::Windows::UI::Composition::Compositor();
 
   return RunPlayground(showCmd, true);
 }

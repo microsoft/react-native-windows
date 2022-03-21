@@ -11,6 +11,9 @@
 namespace Microsoft::ReactNative {
 
 struct CompBaseComponentView;
+struct CompContext;
+
+// TODO replace with proper FocusManager - does it need to be per rootview?
 CompBaseComponentView *GetFocusedComponent() noexcept;
 void SetFocusedComponent(CompBaseComponentView *value) noexcept;
 
@@ -22,7 +25,9 @@ struct CompBaseComponentView : public IComponentView {
   void parent(IComponentView *parent) noexcept override;
   IComponentView *parent() const noexcept override;
 
-  void Compositor(const winrt::Windows::UI::Composition::Compositor &compositor) noexcept;
+  void CompContext(const std::shared_ptr<Microsoft::ReactNative::CompContext> &compContext) noexcept;
+  winrt::Windows::UI::Composition::Compositor Compositor() noexcept;
+  winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept;
   facebook::react::Tag Tag() const noexcept;
   void Tag(facebook::react::Tag) noexcept;
 
@@ -39,7 +44,7 @@ struct CompBaseComponentView : public IComponentView {
   void updateBorderLayoutMetrics() noexcept;
 
  protected:
-  winrt::Windows::UI::Composition::Compositor m_compositor;
+  std::shared_ptr<Microsoft::ReactNative::CompContext> m_compContext;
   facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   std::vector<const IComponentView *> m_children;

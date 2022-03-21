@@ -268,11 +268,11 @@ void FabricUIManager::startSurface(
   // auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
   // m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});
-  m_surfaceRegistry.insert({surfaceId, {compRootView->GetVisual(), compRootView->Compositor()}});
+  m_surfaceRegistry.insert({surfaceId, {compRootView->GetVisual(), compRootView->CompContext()}});
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     self->m_registry.dequeueComponentViewWithComponentHandle(
-        facebook::react::RootShadowNode::Handle(), surfaceId, self->m_surfaceRegistry.at(surfaceId).compositor);
+        facebook::react::RootShadowNode::Handle(), surfaceId, self->m_surfaceRegistry.at(surfaceId).compContext);
   });
 
   facebook::react::LayoutContext context;
@@ -371,7 +371,7 @@ void FabricUIManager::RCTPerformMountInstructions(
       case facebook::react::ShadowViewMutation::Create: {
         auto &newChildShadowView = mutation.newChildShadowView;
         auto &newChildViewDescriptor = m_registry.dequeueComponentViewWithComponentHandle(
-            newChildShadowView.componentHandle, newChildShadowView.tag, m_surfaceRegistry.at(surfaceId).compositor);
+            newChildShadowView.componentHandle, newChildShadowView.tag, m_surfaceRegistry.at(surfaceId).compContext);
         // observerCoordinator.registerViewComponentDescriptor(newChildViewDescriptor, surfaceId);
         break;
       }

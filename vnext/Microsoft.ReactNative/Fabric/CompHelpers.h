@@ -17,18 +17,27 @@
 
 namespace Microsoft::ReactNative {
 
-// TODO these are more global than they should be
-
-winrt::com_ptr<ID2D1Factory1> D2DFactory();
-winrt::com_ptr<ID3D11Device> D3DDevice();
-
-winrt::com_ptr<ID2D1Device> D2DDevice();
-
-winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice(
-    const winrt::Windows::UI::Composition::Compositor &compositor);
-
-winrt::com_ptr<::IDWriteFactory> DWriteFactory();
-
 bool CheckForDeviceRemoved(HRESULT hr);
+
+// Can this be global?  Whats its scope?
+winrt::com_ptr<::IDWriteFactory> DWriteFactory() noexcept;
+
+struct CompContext {
+  CompContext(winrt::Windows::UI::Composition::Compositor const &compositor);
+
+  winrt::Windows::UI::Composition::Compositor Compositor() const noexcept;
+  winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept;
+  winrt::com_ptr<ID3D11Device> D3DDevice() noexcept;
+  winrt::com_ptr<ID2D1Device> D2DDevice() noexcept;
+  winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept;
+
+ private:
+  winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
+  winrt::com_ptr<ID2D1Factory1> m_d2dFactory;
+  winrt::com_ptr<ID3D11Device> m_d3dDevice;
+  winrt::com_ptr<ID2D1Device> m_d2dDevice;
+  winrt::Windows::UI::Composition::CompositionGraphicsDevice m_compositionGraphicsDevice{nullptr};
+  winrt::com_ptr<ID3D11DeviceContext> m_d3dDeviceContext;
+};
 
 } // namespace Microsoft::ReactNative

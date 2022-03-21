@@ -15,8 +15,6 @@
 
 namespace Microsoft::ReactNative {
 
-class SampleText;
-
 struct CompParagraphComponentView : CompBaseComponentView {
   CompParagraphComponentView();
 

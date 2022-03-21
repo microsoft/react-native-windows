@@ -8,6 +8,8 @@
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
+#include "CompHelpers.h"
+
 namespace Microsoft::ReactNative {
 
 struct ComponentViewDescriptor final {
@@ -22,7 +24,7 @@ class ComponentViewRegistry final {
   ComponentViewDescriptor const &dequeueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,
-      const winrt::Windows::UI::Composition::Compositor &compositor) noexcept;
+      const std::shared_ptr<Microsoft::ReactNative::CompContext> &compContext) noexcept;
   ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept;
   std::shared_ptr<IComponentView> findComponentViewWithTag(facebook::react::Tag tag) const noexcept;
   void enqueueComponentViewWithComponentHandle(

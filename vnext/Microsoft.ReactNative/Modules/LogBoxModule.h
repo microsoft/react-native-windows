@@ -21,14 +21,13 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   REACT_METHOD(Hide, L"hide") void Hide() noexcept;
 
  private:
+  static void RegisterWndClass() noexcept;
+
   void ShowOnUIThread() noexcept;
   void HideOnUIThread() noexcept;
 
   React::ReactContext m_context;
-  xaml::Controls::Primitives::Popup m_popup{nullptr};
-  React::ReactRootView m_logBoxContent{nullptr};
-  xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
-  winrt::event_token m_tokenClosed;
+  HWND m_hwnd{nullptr};
 };
 
 } // namespace Microsoft::ReactNative

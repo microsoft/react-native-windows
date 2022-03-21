@@ -127,7 +127,7 @@ void CompParagraphComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     // Create a sprite visual
     winrt::Windows::UI::Composition::SpriteVisual spriteVisual{nullptr};
-    spriteVisual = m_compositor.CreateSpriteVisual();
+    spriteVisual = Compositor().CreateSpriteVisual();
     m_visual = spriteVisual;
   }
 }
@@ -186,13 +186,18 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
       // Create the surface just big enough to hold the formatted text block.
       DWRITE_TEXT_METRICS metrics;
       winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
+
+      if (metrics.width == 0 || metrics.height == 0) {
+        m_drawingSurfaceInterop = nullptr;
+        return;
+      }
+
       winrt::Windows::Foundation::Size surfaceSize = {metrics.width, metrics.height};
       winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
-      drawingSurface = CompositionGraphicsDevice(m_compositor)
-                           .CreateDrawingSurface(
-                               surfaceSize,
-                               winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-                               winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+      drawingSurface = CompositionGraphicsDevice().CreateDrawingSurface(
+          surfaceSize,
+          winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
       // Cache the interop pointer, since that's what we always use.
       drawingSurface.as(m_drawingSurfaceInterop);
@@ -203,20 +208,19 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
     // If the rendering device is lost, the application will recreate and replace it. We then
     // own redrawing our pixels.
     if (!m_renderDeviceReplacedToken) {
-      m_renderDeviceReplacedToken =
-          CompositionGraphicsDevice(m_compositor)
-              .RenderingDeviceReplaced([this](
-                                           winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
-                                           winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
-                // Draw the text again
-                DrawText();
-                return S_OK;
-              });
+      m_renderDeviceReplacedToken = CompositionGraphicsDevice().RenderingDeviceReplaced(
+          [this](
+              winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
+              winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
+            // Draw the text again
+            DrawText();
+            return S_OK;
+          });
     }
 
     winrt::Windows::UI::Composition::ICompositionSurface surface;
     m_drawingSurfaceInterop.as(surface);
-    auto surfaceBrush = m_compositor.CreateSurfaceBrush(surface);
+    auto surfaceBrush = Compositor().CreateSurfaceBrush(surface);
 
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.

@@ -7,6 +7,7 @@
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "CompHelpers.h"
 #include "ComponentViewRegistry.h"
 
 namespace facebook::react {
@@ -68,7 +69,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   ComponentViewRegistry m_registry;
   struct SurfaceInfo {
     winrt::Windows::UI::Composition::Visual rootVisual{nullptr};
-    winrt::Windows::UI::Composition::Compositor compositor{nullptr};
+    std::shared_ptr<CompContext> compContext;
   };
 
   std::unordered_map<facebook::react::SurfaceId, /*XamlView*/ SurfaceInfo> m_surfaceRegistry;

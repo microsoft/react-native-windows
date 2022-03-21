@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "CompHelpers.h"
 #include <Utils/ValueUtils.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
 #include <d2d1_1.h>
@@ -15,98 +16,6 @@
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 
 namespace Microsoft::ReactNative {
-
-// TODO where should this live
-winrt::com_ptr<ID2D1Factory1> D2DFactory() {
-  static winrt::com_ptr<ID2D1Factory1> d2dFactory;
-  if (!d2dFactory) {
-    // Initialize Direct2D resources.
-    D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_NONE};
-
-    D2D1CreateFactory(
-        D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &d2d1FactoryOptions, d2dFactory.put_void());
-  }
-  return d2dFactory;
-}
-
-// Create the DX11 API device object, and get a corresponding context.
-winrt::com_ptr<ID3D11Device> s_device;
-winrt::com_ptr<ID3D11DeviceContext> s_context;
-
-winrt::com_ptr<ID3D11Device> D3DDevice() {
-  // This flag adds support for surfaces with a different color channel ordering than the API default.
-  // You need it for compatibility with Direct2D.
-  UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
-
-  // This array defines the set of DirectX hardware feature levels this app  supports.
-  // The ordering is important and you should  preserve it.
-  // Don't forget to declare your app's minimum required feature level in its
-  // description.  All apps are assumed to support 9.1 unless otherwise stated.
-  D3D_FEATURE_LEVEL featureLevels[] = {
-      D3D_FEATURE_LEVEL_11_1,
-      D3D_FEATURE_LEVEL_11_0,
-      D3D_FEATURE_LEVEL_10_1,
-      D3D_FEATURE_LEVEL_10_0,
-      D3D_FEATURE_LEVEL_9_3,
-      D3D_FEATURE_LEVEL_9_2,
-      D3D_FEATURE_LEVEL_9_1};
-  if (!s_device) {
-    D3D11CreateDevice(
-        nullptr, // specify null to use the default adapter
-        D3D_DRIVER_TYPE_HARDWARE,
-        0,
-        creationFlags, // optionally set debug and Direct2D compatibility flags
-        featureLevels, // list of feature levels this app can support
-        ARRAYSIZE(featureLevels), // number of possible feature levels
-        D3D11_SDK_VERSION,
-        s_device.put(), // returns the Direct3D device created
-        nullptr /*&m_featureLevel*/, // returns feature level of device created
-        nullptr /*&context*/ // returns the device immediate context
-    );
-  }
-  return s_device;
-}
-
-winrt::com_ptr<ID2D1Device> D2DDevice() {
-  static winrt::com_ptr<ID2D1Device> d2dDevice;
-  if (!d2dDevice) {
-    winrt::com_ptr<IDXGIDevice> dxgiDevice;
-    // Obtain the underlying DXGI device of the Direct3D11 device.
-    D3DDevice().as(dxgiDevice);
-
-    // Obtain the Direct2D device for 2-D rendering.
-    winrt::check_hresult(D2DFactory()->CreateDevice(dxgiDevice.get(), d2dDevice.put()));
-  }
-  return d2dDevice;
-}
-
-winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice(
-    const winrt::Windows::UI::Composition::Compositor &compositor) {
-  static winrt::Windows::UI::Composition::CompositionGraphicsDevice compGraphicDevice{nullptr};
-  if (!compGraphicDevice) {
-    // To create a composition graphics device, we need to QI for another interface
-
-    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositorInterop> compositorInterop{
-        compositor.as<ABI::Windows::UI::Composition::ICompositorInterop>()};
-
-    // Create a graphics device backed by our D3D device
-    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
-    winrt::check_hresult(
-        compositorInterop->CreateGraphicsDevice(D2DDevice().get(), compositionGraphicsDeviceIface.put()));
-
-    compositionGraphicsDeviceIface.as(compGraphicDevice);
-  }
-  return compGraphicDevice;
-}
-
-winrt::com_ptr<::IDWriteFactory> DWriteFactory() {
-  static winrt::com_ptr<::IDWriteFactory> dwriteFactory;
-  if (!dwriteFactory) {
-    winrt::check_hresult(::DWriteCreateFactory(
-        DWRITE_FACTORY_TYPE_SHARED, __uuidof(dwriteFactory), reinterpret_cast<::IUnknown **>(dwriteFactory.put())));
-  }
-  return dwriteFactory;
-}
 
 bool CheckForDeviceRemoved(HRESULT hr) {
   if (SUCCEEDED(hr)) {
@@ -223,5 +132,93 @@ struct DeviceLostHelper {
   winrt::handle m_eventHandle;
   DWORD m_cookie{0};
 };
+
+CompContext::CompContext(winrt::Windows::UI::Composition::Compositor const &compositor) : m_compositor(compositor) {}
+
+winrt::Windows::UI::Composition::Compositor CompContext::Compositor() const noexcept {
+  return m_compositor;
+}
+
+winrt::com_ptr<ID2D1Factory1> CompContext::D2DFactory() noexcept {
+  if (!m_d2dFactory) {
+    // Initialize Direct2D resources.
+    D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_NONE};
+
+    D2D1CreateFactory(
+        D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &d2d1FactoryOptions, m_d2dFactory.put_void());
+  }
+  return m_d2dFactory;
+}
+winrt::com_ptr<ID3D11Device> CompContext::D3DDevice() noexcept {
+  // This flag adds support for surfaces with a different color channel ordering than the API default.
+  // You need it for compatibility with Direct2D.
+  UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
+  // This array defines the set of DirectX hardware feature levels this app  supports.
+  // The ordering is important and you should  preserve it.
+  // Don't forget to declare your app's minimum required feature level in its
+  // description.  All apps are assumed to support 9.1 unless otherwise stated.
+  D3D_FEATURE_LEVEL featureLevels[] = {
+      D3D_FEATURE_LEVEL_11_1,
+      D3D_FEATURE_LEVEL_11_0,
+      D3D_FEATURE_LEVEL_10_1,
+      D3D_FEATURE_LEVEL_10_0,
+      D3D_FEATURE_LEVEL_9_3,
+      D3D_FEATURE_LEVEL_9_2,
+      D3D_FEATURE_LEVEL_9_1};
+  if (!m_d3dDevice) {
+    D3D11CreateDevice(
+        nullptr, // specify null to use the default adapter
+        D3D_DRIVER_TYPE_HARDWARE,
+        0,
+        creationFlags, // optionally set debug and Direct2D compatibility flags
+        featureLevels, // list of feature levels this app can support
+        ARRAYSIZE(featureLevels), // number of possible feature levels
+        D3D11_SDK_VERSION,
+        m_d3dDevice.put(), // returns the Direct3D device created
+        nullptr /*&m_featureLevel*/, // returns feature level of device created
+        nullptr /*&context*/ // returns the device immediate context
+    );
+  }
+  return m_d3dDevice;
+}
+
+winrt::com_ptr<ID2D1Device> CompContext::D2DDevice() noexcept {
+  if (!m_d2dDevice) {
+    winrt::com_ptr<IDXGIDevice> dxgiDevice;
+    // Obtain the underlying DXGI device of the Direct3D11 device.
+    D3DDevice().as(dxgiDevice);
+
+    // Obtain the Direct2D device for 2-D rendering.
+    winrt::check_hresult(D2DFactory()->CreateDevice(dxgiDevice.get(), m_d2dDevice.put()));
+  }
+  return m_d2dDevice;
+}
+
+winrt::Windows::UI::Composition::CompositionGraphicsDevice CompContext::CompositionGraphicsDevice() noexcept {
+  if (!m_compositionGraphicsDevice) {
+    // To create a composition graphics device, we need to QI for another interface
+
+    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositorInterop> compositorInterop{
+        m_compositor.as<ABI::Windows::UI::Composition::ICompositorInterop>()};
+
+    // Create a graphics device backed by our D3D device
+    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
+    winrt::check_hresult(
+        compositorInterop->CreateGraphicsDevice(D2DDevice().get(), compositionGraphicsDeviceIface.put()));
+
+    compositionGraphicsDeviceIface.as(m_compositionGraphicsDevice);
+  }
+  return m_compositionGraphicsDevice;
+}
+
+winrt::com_ptr<::IDWriteFactory> DWriteFactory() noexcept {
+  static winrt::com_ptr<::IDWriteFactory> s_dwriteFactory;
+  if (!s_dwriteFactory) {
+    winrt::check_hresult(::DWriteCreateFactory(
+        DWRITE_FACTORY_TYPE_SHARED, __uuidof(s_dwriteFactory), reinterpret_cast<::IUnknown **>(s_dwriteFactory.put())));
+  }
+  return s_dwriteFactory;
+}
 
 } // namespace Microsoft::ReactNative

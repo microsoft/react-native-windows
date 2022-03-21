@@ -23,6 +23,9 @@ namespace Microsoft.ReactNative
 
     Int64 TranslateMessage(UInt32 msg, UInt64 wParam, Int64 lParam);
 
+    DOC_STRING("The Compositor associated with the @CompHwndHost. It must be set to show any React UI elements.")
+    Windows.UI.Composition.Compositor Compositor {get; set; };
+
     DOC_STRING(
       "The name of the root UI component registered in JavaScript with help of the "
       "[`AppRegistry.registerComponent`](https://reactnative.dev/docs/appregistry#registercomponent) method.")

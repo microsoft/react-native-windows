@@ -32,6 +32,7 @@
 #include "ViewComponentView.h"
 #include "XamlView.h"
 
+#include "CompHelpers.h"
 #include "CompImageComponentView.h"
 #include "CompParagraphComponentView.h"
 #include "CompScrollViewComponentView.h"
@@ -46,7 +47,7 @@ void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactConte
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
-    const winrt::Windows::UI::Composition::Compositor &compositor) noexcept {
+    const std::shared_ptr<CompContext> &compContext) noexcept {
   // TODO implement recycled components like core does
 
   /*
@@ -93,7 +94,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   } else {
     view = std::make_shared<CompViewComponentView>();
   }
-  view->Compositor(compositor);
+  view->CompContext(compContext);
   view->Tag(tag);
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});

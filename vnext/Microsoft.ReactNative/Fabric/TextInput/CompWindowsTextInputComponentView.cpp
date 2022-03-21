@@ -901,11 +901,10 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   if (!m_drawingSurfaceInterop) {
     winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
 
-    drawingSurface = CompositionGraphicsDevice(m_compositor)
-                         .CreateDrawingSurface(
-                             {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
-                             winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-                             winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    drawingSurface = CompositionGraphicsDevice().CreateDrawingSurface(
+        {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
+        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     auto rcClient = getClientRect();
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
@@ -922,20 +921,19 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
     // If the rendering device is lost, the application will recreate and replace it. We then
     // own redrawing our pixels.
     if (!m_renderDeviceReplacedToken) {
-      m_renderDeviceReplacedToken =
-          CompositionGraphicsDevice(m_compositor)
-              .RenderingDeviceReplaced([this](
-                                           winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
-                                           winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
-                // Draw the text again
-                DrawImage();
-                return S_OK;
-              });
+      m_renderDeviceReplacedToken = CompositionGraphicsDevice().RenderingDeviceReplaced(
+          [this](
+              winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
+              winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
+            // Draw the text again
+            DrawImage();
+            return S_OK;
+          });
     }
 
     winrt::Windows::UI::Composition::ICompositionSurface surface;
     m_drawingSurfaceInterop.as(surface);
-    auto surfaceBrush = m_compositor.CreateSurfaceBrush(surface);
+    auto surfaceBrush = Compositor().CreateSurfaceBrush(surface);
 
     m_visual.Brush(surfaceBrush);
   }
@@ -1002,11 +1000,10 @@ facebook::react::Tag CompWindowsTextInputComponentView::hitTest(
 }
 
 void CompWindowsTextInputComponentView::ensureVisual() noexcept {
-  assert(m_compositor);
   if (!m_visual) {
     HrEnsureRichEd20Loaded();
-    m_visual = m_compositor.CreateSpriteVisual();
-    m_brush = m_compositor.CreateSurfaceBrush();
+    m_visual = Compositor().CreateSpriteVisual();
+    m_brush = Compositor().CreateSurfaceBrush();
     m_textHost = winrt::make<CompTextHost>(this);
     winrt::com_ptr<IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));

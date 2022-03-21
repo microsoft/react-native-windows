@@ -156,10 +156,10 @@ void CompScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      auto brush = m_compositor.CreateColorBrush((*newViewProps.backgroundColor).m_color);
+      auto brush = Compositor().CreateColorBrush((*newViewProps.backgroundColor).m_color);
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);
     } else {
-      auto brush = m_compositor.CreateColorBrush({0, 0, 0, 0});
+      auto brush = Compositor().CreateColorBrush({0, 0, 0, 0});
       m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(nullptr);
     }
   }
@@ -320,22 +320,21 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
 }
 
 void CompScrollViewComponentView::ensureVisual() noexcept {
-  assert(m_compositor);
   if (!m_visual) {
-    m_visual = m_compositor.CreateSpriteVisual();
+    m_visual = Compositor().CreateSpriteVisual();
 
-    m_contentVisual = m_compositor.CreateSpriteVisual();
+    m_contentVisual = Compositor().CreateSpriteVisual();
 
-    auto brush = m_compositor.CreateColorBrush({0, 0, 0, 0}); // transparent brush so that hit testing works
+    auto brush = Compositor().CreateColorBrush({0, 0, 0, 0}); // transparent brush so that hit testing works
     m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);
     m_contentVisual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);
 
     m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children().InsertAtTop(m_contentVisual);
 
-    m_visual.Clip(m_compositor.CreateInsetClip(0, 0, 0, 0));
+    m_visual.Clip(Compositor().CreateInsetClip(0, 0, 0, 0));
 
     m_interactionTracker = winrt::Windows::UI::Composition::Interactions::InteractionTracker::CreateWithOwner(
-        m_compositor, winrt::make<ScrollInteractionTrackerOwner>(this));
+        Compositor(), winrt::make<ScrollInteractionTrackerOwner>(this));
 
     m_interactionTracker.MinScale(1.0);
     m_interactionTracker.MaxScale(1.0);
@@ -355,7 +354,7 @@ void CompScrollViewComponentView::ensureVisual() noexcept {
             CapableTouchpadAndPointerWheel);
     m_interactionTracker.InteractionSources().Add(m_visualInteractionSource);
 
-    auto positionExpression = m_compositor.CreateExpressionAnimation(L"-tracker.Position");
+    auto positionExpression = Compositor().CreateExpressionAnimation(L"-tracker.Position");
     positionExpression.SetReferenceParameter(L"tracker", m_interactionTracker);
     m_contentVisual.StartAnimation(L"Offset", positionExpression);
   }
