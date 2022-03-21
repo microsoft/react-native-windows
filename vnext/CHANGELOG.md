@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Mar 2022 15:13:12 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Mar 2022 15:13:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.5
+
+Mon, 21 Mar 2022 15:13:26 GMT
+
+### Patches
+
+- move some DLLs to delayload (asklar@microsoft.com)
 
 ## 0.67.5
 
