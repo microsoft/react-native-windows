@@ -12,7 +12,7 @@
 #include <limits>
 
 #include <CppWinRTIncludes.h>
-#include <butter/optional.h>
+#include <optional>
 #include <react/renderer/graphics/ColorComponents.h>
 
 namespace facebook {
