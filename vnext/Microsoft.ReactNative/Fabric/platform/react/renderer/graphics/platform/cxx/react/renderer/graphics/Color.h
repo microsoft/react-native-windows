@@ -12,8 +12,8 @@
 #include <limits>
 
 #include <CppWinRTIncludes.h>
-#include <optional>
 #include <react/renderer/graphics/ColorComponents.h>
+#include <optional>
 
 namespace facebook {
 namespace react {
