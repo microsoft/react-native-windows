@@ -11,6 +11,13 @@
 
 namespace Microsoft::React {
 
+enum class OriginPolicy : size_t {
+  None = 0,
+  SingleOrigin = 1,
+  SimpleCrossOriginResourceSharing = 2,
+  CrossOriginResourceSharing = 3,
+};
+
 struct IHttpResource {
   typedef std::unordered_map<std::string, std::string> Headers;
 

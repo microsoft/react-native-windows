@@ -6,11 +6,13 @@
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
 #include <utilities.h>
+#include "RuntimeOptions.h"
 
 // Windows API
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
+#include <winrt/Windows.Web.Http.Filters.h>
 
 using std::function;
 using std::scoped_lock;
@@ -33,14 +35,16 @@ using winrt::Windows::Web::Http::HttpStreamContent;
 using winrt::Windows::Web::Http::HttpStringContent;
 using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
+using winrt::Windows::Web::Http::Filters::IHttpFilter;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
 namespace Microsoft::React {
 
-using winrt::Windows::Foundation::IAsyncAction;
-using std::weak_ptr;
-struct IHttpRequestFilter {
+#if LOOOOOL
 
+using std::weak_ptr;
+using winrt::Windows::Foundation::IAsyncAction;
+struct IHttpRequestFilter {
   virtual IAsyncAction ProcessRequest(
       int64_t requestId,
       HttpRequestMessage &request,
@@ -50,8 +54,7 @@ struct IHttpRequestFilter {
 };
 
 class PrototypeRequestFilter : public IHttpRequestFilter {
-
-  //TODO: Remove. Redundant.
+  // TODO: Remove. Redundant.
   typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
       winrt::Windows::Web::Http::HttpProgress>
@@ -59,61 +62,102 @@ class PrototypeRequestFilter : public IHttpRequestFilter {
 
   winrt::weak_ref<IHttpClient> m_weakClient;
 
-public:
-  PrototypeRequestFilter(winrt::weak_ref<IHttpClient> wkClient) noexcept
-    : m_weakClient{wkClient} {
-  }
+ public:
+  PrototypeRequestFilter(winrt::weak_ref<IHttpClient> wkClient) noexcept : m_weakClient{wkClient} {}
 
 #pragma region IHttpRequestFilter
 
-IAsyncAction ProcessRequest(
-  int64_t requestId,
-  HttpRequestMessage& request,
-  IHttpResource::Headers& headers,
-  IHttpResource::BodyData& bodyData,
-  bool textResponse) noexcept override {
+  IAsyncAction ProcessRequest(
+      int64_t requestId,
+      HttpRequestMessage &request,
+      IHttpResource::Headers &headers,
+      IHttpResource::BodyData &bodyData,
+      bool textResponse) noexcept override {
+    if (headers["Preflight"] != "Requested")
+      co_return;
 
-  if (headers["Preflight"] != "Requested")
-    co_return;
+    auto client = m_weakClient.get();
+    if (!client)
+      co_return;
 
-  auto client = m_weakClient.get();
-  if (!client)
-    co_return;
+    string exceptionMessage;
+    try {
+      auto preflightRequest = HttpRequestMessage();
+      preflightRequest.RequestUri(request.RequestUri());
+      preflightRequest.Method(HttpMethod::Options());
 
-  string exceptionMessage;
-  try {
-    auto preflightRequest = HttpRequestMessage();
-    preflightRequest.RequestUri(request.RequestUri());
-    preflightRequest.Method(HttpMethod::Options());
+      auto sendPreflightOp = client.SendRequestAsync(preflightRequest);
+      co_await lessthrow_await_adapter<ResponseType>{sendPreflightOp};
+      auto result = sendPreflightOp.ErrorCode();
+      if (result < 0) {
+        winrt::throw_hresult(result);
+      }
+      auto response = sendPreflightOp.GetResults();
 
-    auto sendPreflightOp = client.SendRequestAsync(preflightRequest);
-    co_await lessthrow_await_adapter<ResponseType>{sendPreflightOp};
-    auto result = sendPreflightOp.ErrorCode();
-    if (result < 0) {
-      winrt::throw_hresult(result);
+      auto preflightStatus = response.Headers().Lookup(L"Preflight");
+      if (preflightStatus != L"Approved")
+        throw hresult_error{E_FAIL, L"Origin policy non-compliance"}; // TODO: Better HRESULT?
+
+      for (auto header : response.Headers()) {
+        headers.emplace(to_string(header.Key()), to_string(header.Value()));
+      }
+
+      co_return;
+    } catch (const std::exception &e) {
+      exceptionMessage = e.what();
+    } catch (...) {
+      exceptionMessage = "Unspecified error processing Origin Policy request";
     }
-    auto response = sendPreflightOp.GetResults();
 
-    auto preflightStatus = response.Headers().Lookup(L"Preflight");
-    if (preflightStatus != L"Approved")
-      throw hresult_error{E_FAIL, L"Origin policy non-compliance"}; //TODO: Better HRESULT?
-
-    for (auto header : response.Headers()) {
-      headers.emplace(to_string(header.Key()), to_string(header.Value()));
-    }
-
-    co_return;
-  } catch (const std::exception &e) {
-    exceptionMessage = e.what();
-  } catch (...) {
-    exceptionMessage = "Unspecified error processing Origin Policy request";
+    throw hresult_error{E_FAIL, to_hstring(exceptionMessage)}; // TODO: Better HRESULT?
   }
 
-  throw hresult_error{E_FAIL, to_hstring(exceptionMessage)};//TODO: Better HRESULT?
-}
-
 #pragma endregion IHttpRequestFilter
+};
+#endif // LOOOOOL
 
+class PrototypeHttpFilter : public winrt::implements<PrototypeHttpFilter, IHttpFilter> { // public IHttpFilter {
+  // TODO: Remove. Redundant.
+  typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
+      winrt::Windows::Web::Http::HttpResponseMessage,
+      winrt::Windows::Web::Http::HttpProgress>
+      ResponseType;
+
+  IHttpFilter m_innerFilter;
+  OriginPolicy m_originPolicy;
+
+  public:
+  PrototypeHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
+       : m_originPolicy{m_originPolicy}, m_innerFilter{std::move(innerFilter)} {}
+
+  ResponseType SendRequestAsync(HttpRequestMessage const& request) const {
+    // Ensure absolute URL
+
+    auto coRequest = request;
+    // Prototype
+    try {
+      auto preflightRequest = HttpRequestMessage();
+      preflightRequest.RequestUri(request.RequestUri());
+      preflightRequest.Method(HttpMethod::Options());
+
+      auto response = co_await m_innerFilter.SendRequestAsync(preflightRequest);
+      auto preflightStatus = response.Headers().Lookup(L"Preflight");
+      if (L"Approved" != preflightStatus)
+        throw hresult_error{E_FAIL, L"Origin policy non-compliance"};//TODO: Better HRESULT?
+
+      for (auto header : response.Headers()) {
+        coRequest.Headers().Insert(header.Key(), header.Value());
+      }
+    } catch (hresult_error const &e) {
+      throw e;
+    } catch (const std::exception &e) {
+      throw hresult_error{E_FAIL, to_hstring(e.what())};
+    } catch (...) {
+      throw hresult_error{E_FAIL, L"Unspecified error processing Origin Policy request"};
+    }
+
+    co_return {co_await m_innerFilter.SendRequestAsync(coRequest)};
+  }
 };
 
 #pragma region WinRTHttpResource
@@ -301,17 +345,18 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   }
 
   try {
-    //FILTER!
-    auto filter = PrototypeRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
-    auto preflightOp = filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
-    co_await lessthrow_await_adapter<IAsyncAction>{preflightOp};
-    auto preResult = preflightOp.ErrorCode();
-    if (preResult < 0) {
-      if (self->m_onError) {
-        co_return self->m_onError(requestId, Utilities::HResultToString(std::move(preResult)));
-      }
-    }
-    // FILTER
+    //TODO: Remove
+    ////FILTER!
+    //auto filter = PrototypeRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
+    //auto preflightOp = filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
+    //co_await lessthrow_await_adapter<IAsyncAction>{preflightOp};
+    //auto preResult = preflightOp.ErrorCode();
+    //if (preResult < 0) {
+    //  if (self->m_onError) {
+    //    co_return self->m_onError(requestId, Utilities::HResultToString(std::move(preResult)));
+    //  }
+    //}
+    //// FILTER
 
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
     self->TrackResponse(requestId, sendRequestOp);
@@ -396,9 +441,6 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   }
 
   self->UntrackResponse(requestId);
-
-  // TODO: keep? See https://devblogs.microsoft.com/oldnewthing/?p=106160
-  co_return;
 }
 
 #pragma endregion WinRTHttpResource
@@ -406,7 +448,16 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
 #pragma region IHttpResource
 
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
-  return std::make_shared<WinRTHttpResource>();
+  auto originPolicy = static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy"));
+  if (originPolicy == OriginPolicy::None) {
+    return std::make_shared<WinRTHttpResource>();
+  } else {
+    auto baseFilter = winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{};
+    auto opFilter = winrt::make<PrototypeHttpFilter>(originPolicy, std::move(baseFilter));
+    auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
+
+    return std::make_shared<WinRTHttpResource>(std::move(client));
+  }
 }
 
 #pragma endregion IHttpResource

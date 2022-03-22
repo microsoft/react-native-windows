@@ -7,8 +7,11 @@
 #include <CppUnitTest.h>
 #include <IHttpResource.h>
 #include <Test/HttpServer.h>
-#include <boost/beast/http.hpp>
 #include <unicode.h>
+#include <RuntimeOptions.h>
+
+// Boost Library
+#include <boost/beast/http.hpp>
 
 // Standard Library
 #include <future>
@@ -261,6 +264,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(PreflightSucceeds) {
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SingleOrigin));
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
     IHttpResource::Response getResponse;
@@ -279,8 +283,13 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     };
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
       Test::StringResponse response;
-      response.result(http::status::ok);
-      response.body() = "Body After Preflight";
+      if (request.at("Preflight") == "Approved") {
+        response.result(http::status::ok);
+        response.set("Preflight", "Completed");
+        response.body() = "Body After Preflight";
+      } else {
+        response.result(http::status::bad_request);
+      }
 
       return {std::move(response)};
     };
@@ -290,6 +299,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse](
                                 int64_t, IHttpResource::Response &&res) {
       if (res.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        getResponse = std::move(res);
         getResponsePromise.set_value();
       }
     });
@@ -328,6 +338,13 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Stop();
 
     Assert::AreEqual({}, error);
+    Assert::AreEqual(200, static_cast<int>(getResponse.StatusCode));
+    Assert::AreEqual(1, static_cast<int>(getResponse.Headers.size()));
+    for (auto &header : getResponse.Headers)
+      if (header.first == "Preflight")
+        Assert::AreEqual({"Completed"}, header.second);
     Assert::AreEqual({"Body After Preflight"}, getDataContent);
+
+    SetRuntimeOptionInt("Http.OriginPolicy", 0);
   }
 };
