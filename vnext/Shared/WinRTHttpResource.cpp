@@ -49,7 +49,7 @@ struct IHttpRequestFilter {
       bool textResponse) noexcept = 0;
 };
 
-class OriginPolicyRequestFilter : public IHttpRequestFilter {
+class PrototypeRequestFilter : public IHttpRequestFilter {
 
   //TODO: Remove. Redundant.
   typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
@@ -60,7 +60,7 @@ class OriginPolicyRequestFilter : public IHttpRequestFilter {
   winrt::weak_ref<IHttpClient> m_weakClient;
 
 public:
-  OriginPolicyRequestFilter(winrt::weak_ref<IHttpClient> wkClient) noexcept
+  PrototypeRequestFilter(winrt::weak_ref<IHttpClient> wkClient) noexcept
     : m_weakClient{wkClient} {
   }
 
@@ -302,7 +302,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
 
   try {
     //FILTER!
-    auto filter = OriginPolicyRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
+    auto filter = PrototypeRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
     auto preflightOp = filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
     co_await lessthrow_await_adapter<IAsyncAction>{preflightOp};
     auto preResult = preflightOp.ErrorCode();
