@@ -19,6 +19,7 @@
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
+    <DesktopCompatible Condition="'$(UseWinUI3)'=='true'">true</DesktopCompatible>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
@@ -827,6 +828,7 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">

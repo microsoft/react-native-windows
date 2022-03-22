@@ -125,12 +125,34 @@ export async function copyProjectTemplateAndReplace(
   if (options.experimentalNuGetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
+
+  let realProjectType = projectType;
+
   if (options.useWinUI3) {
     console.log('Using experimental WinUI3 dependency.');
+    if (projectType === 'lib') {
+      throw new CodedError(
+        'IncompatibleOptions',
+        'WinUI 3 project template only supports apps at the moment',
+        {
+          detail: 'useWinUI3 and lib',
+        },
+      );
+    } else if (language !== 'cs') {
+      throw new CodedError(
+        'IncompatibleOptions',
+        'WinUI 3 project template only support C# at the moment',
+        {
+          detail: 'useWinUI3 and cpp',
+        },
+      );
+    }
+
+    realProjectType += '-WinAppSDK';
   }
 
   const projDir = 'proj';
-  const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
+  const srcPath = path.join(srcRootPath, `${language}-${realProjectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
   const projectGuid = existingProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
@@ -145,12 +167,9 @@ export async function copyProjectTemplateAndReplace(
     mainComponentName = appJson.name;
   }
 
-  const csNugetPackages: NugetPackage[] = [
-    {
-      id: 'Microsoft.NETCore.UniversalWindowsPlatform',
-      version: '6.2.9',
-    },
-  ];
+  const csNugetPackages: NugetPackage[] = options.useWinUI3
+    ? getWinAppSDKPackages(nugetVersion)
+    : getUwpCsPackages();
 
   const cppNugetPackages: NugetPackage[] = [
     {
@@ -399,15 +418,27 @@ export async function copyProjectTemplateAndReplace(
     );
   }
 
-  // shared src
-  if (fs.existsSync(path.join(sharedPath, 'src'))) {
-    await copyAndReplaceAll(
-      path.join(sharedPath, 'src'),
-      destPath,
-      path.join(windowsDir, newProjectName),
-      templateVars,
-      options.overwrite,
-    );
+  if (!options.useWinUI3) {
+    // shared src
+    if (fs.existsSync(path.join(sharedPath, 'src'))) {
+      await copyAndReplaceAll(
+        path.join(sharedPath, 'src'),
+        destPath,
+        path.join(windowsDir, newProjectName),
+        templateVars,
+        options.overwrite,
+      );
+    }
+  } else {
+    if (fs.existsSync(path.join(srcPath, 'MyApp'))) {
+      await copyAndReplaceAll(
+        path.join(srcPath, 'MyApp'),
+        destPath,
+        path.join(windowsDir, newProjectName),
+        templateVars,
+        options.overwrite,
+      );
+    }
   }
 
   // src
@@ -425,6 +456,15 @@ export async function copyProjectTemplateAndReplace(
     console.log(chalk.white.bold('To run your app on UWP:'));
     console.log(chalk.white('   npx react-native run-windows'));
   }
+}
+
+function getUwpCsPackages(): NugetPackage[] {
+  return [
+    {
+      id: 'Microsoft.NETCore.UniversalWindowsPlatform',
+      version: '6.2.9',
+    },
+  ];
 }
 
 function toCppNamespace(namespace: string) {
@@ -495,4 +535,18 @@ export async function installScriptsAndDependencies(options: {
       options.verbose ? {stdio: 'inherit'} : {},
     );
   }
+}
+function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
+  const winAppSDKPackages: NugetPackage[] = [];
+  winAppSDKPackages.push({
+    id: 'Microsoft.ReactNative.WindowsAppSDK',
+    version: nugetVersion,
+  });
+
+  winAppSDKPackages.push({
+    id: 'Microsoft.WindowsAppSDK',
+    version: '1.0.0',
+  });
+
+  return winAppSDKPackages;
 }
