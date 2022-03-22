@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update to Windows App SDK 1.0.0",
-  "packageName": "react-native-windows",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}
