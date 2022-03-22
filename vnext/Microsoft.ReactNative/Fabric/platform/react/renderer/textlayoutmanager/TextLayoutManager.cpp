@@ -26,9 +26,9 @@ void TextLayoutManager::GetTextLayout(
 
   DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
   if (outerFragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic)
-      style = DWRITE_FONT_STYLE_ITALIC;
+    style = DWRITE_FONT_STYLE_ITALIC;
   else if (outerFragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique)
-      style = DWRITE_FONT_STYLE_OBLIQUE;
+    style = DWRITE_FONT_STYLE_OBLIQUE;
 
   winrt::com_ptr<IDWriteTextFormat> spTextFormat;
   Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
@@ -71,13 +71,12 @@ void TextLayoutManager::GetTextLayout(
       fragmentStyle = DWRITE_FONT_STYLE_OBLIQUE;
 
     spTextLayout->SetFontFamilyName(
-        attributes.fontFamily.empty()
-            ? L"Segoe UI"
-            : Microsoft::Common::Unicode::Utf8ToUtf16(attributes.fontFamily).c_str(),
+        attributes.fontFamily.empty() ? L"Segoe UI"
+                                      : Microsoft::Common::Unicode::Utf8ToUtf16(attributes.fontFamily).c_str(),
         range);
     spTextLayout->SetFontWeight(
-        static_cast<DWRITE_FONT_WEIGHT>(attributes.fontWeight.value_or(
-            static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
+        static_cast<DWRITE_FONT_WEIGHT>(
+            attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
         range);
     spTextLayout->SetFontStyle(fragmentStyle, range);
     spTextLayout->SetFontSize(attributes.fontSize, range);

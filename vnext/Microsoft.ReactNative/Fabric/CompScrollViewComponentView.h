@@ -74,8 +74,9 @@ struct CompScrollViewComponentView : CompBaseComponentView {
 
  private:
   void ensureVisual() noexcept;
-  void updateInteractionMaxPosition() noexcept;
+  void updateContentVisualSize() noexcept;
 
+  facebook::react::Size m_contentSize;
   winrt::Windows::UI::Composition::Visual m_visual{nullptr};
   winrt::Windows::UI::Composition::ContainerVisual m_contentVisual{nullptr};
   winrt::Windows::UI::Composition::Interactions::InteractionTracker m_interactionTracker{nullptr};

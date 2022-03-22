@@ -58,7 +58,7 @@ LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
       auto windowData = static_cast<::IUnknown *>(cs->lpCreateParams);
       SetProp(hwnd, CompHostProperty, reinterpret_cast<::IUnknown *>(windowData));
       break;
-    } 
+    }
     case WM_CREATE: {
       host.Compositor(winrt::Windows::UI::Composition::Compositor());
       host.Initialize((uint64_t)hwnd);

@@ -57,17 +57,22 @@ void CompHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_compRootView.ComponentName(std::move(m_componentName));
   m_compRootView.ReactNativeHost(std::move(m_reactNativeHost));
 
-  m_compRootView.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0);
+  m_compRootView.ScaleFactor(ScaleFactor());
   m_compRootView.RootVisual(RootVisual());
 
   UpdateSize();
+}
+
+double CompHwndHost::ScaleFactor() noexcept {
+  return GetDpiForWindow(m_hwnd) / 96.0;
 }
 
 void CompHwndHost::UpdateSize() noexcept {
   RECT rc;
   if (GetClientRect(m_hwnd, &rc)) {
     winrt::Windows::Foundation::Size size{
-        static_cast<float>(rc.right - rc.left), static_cast<float>(rc.bottom - rc.top)};
+        static_cast<float>((rc.right - rc.left) / ScaleFactor()),
+        static_cast<float>((rc.bottom - rc.top) / ScaleFactor())};
     m_compRootView.Size(size);
     m_compRootView.Measure(size);
     m_compRootView.Arrange(size);

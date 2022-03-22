@@ -154,6 +154,8 @@ void CompScrollViewComponentView::updateProps(
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(props);
   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(oldProps);
 
+  ensureVisual();
+
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
       auto brush = Compositor().CreateColorBrush((*newViewProps.backgroundColor).m_color);
@@ -182,17 +184,14 @@ void CompScrollViewComponentView::updateProps(
 
 void CompScrollViewComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
+
 void CompScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
   const auto &newState = *std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState const>(state);
 
-  auto contentSize = newState.getData().getContentSize();
-  m_contentVisual.Size(
-      {std::max(contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
-       std::max(contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
-
-  updateInteractionMaxPosition();
+  m_contentSize = newState.getData().getContentSize();
+  updateContentVisualSize();
 }
 
 void CompScrollViewComponentView::updateLayoutMetrics(
@@ -216,10 +215,14 @@ void CompScrollViewComponentView::updateLayoutMetrics(
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
   });
-  updateInteractionMaxPosition();
+  updateContentVisualSize();
 }
 
-void CompScrollViewComponentView::updateInteractionMaxPosition() noexcept {
+void CompScrollViewComponentView::updateContentVisualSize() noexcept {
+  m_contentVisual.Size(
+      {std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
+       std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
+
   m_interactionTracker.MaxPosition(
       {m_contentVisual.Size().x - (m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor),
        m_contentVisual.Size().y - (m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor),
