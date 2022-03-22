@@ -291,6 +291,23 @@ void CompParagraphComponentView::DrawText() noexcept {
           d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
     }
 
+    // Create color effects for individual text fragments.
+    unsigned int position = 0;
+    unsigned int length = 0;
+    for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
+      length = static_cast<UINT32>(fragment.string.length());
+      DWRITE_TEXT_RANGE range = {position, length};
+      if (fragment.textAttributes.foregroundColor) {
+        winrt::com_ptr<ID2D1SolidColorBrush> brush;
+        auto winColor = fragment.textAttributes.foregroundColor.AsWindowsColor();
+        D2D1::ColorF color{winColor.R / 255.0f, winColor.G / 255.0f, winColor.B / 255.0f, winColor.A / 255.0f};
+        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
+        m_textLayout->SetDrawingEffect(brush.get(), range);
+      }
+
+      position += length;
+    }
+
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
 
     // Draw the line of text at the specified offset, which corresponds to the top-left

@@ -80,7 +80,6 @@ void TextLayoutManager::GetTextLayout(
         range);
     spTextLayout->SetFontStyle(fragmentStyle, range);
     spTextLayout->SetFontSize(attributes.fontSize, range);
-    // ugh color stuff
 
     position += length;
   }
