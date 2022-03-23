@@ -265,7 +265,6 @@ void CompScrollViewComponentView::ScrollInteractionTrackerOwner::RequestIgnored(
 void CompScrollViewComponentView::ScrollInteractionTrackerOwner::ValuesChanged(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept {
-
   /*
   // If we are transitioning to inertial scrolling.
   if (m_isScrolling && !m_isScrollingFromInertia && args.IsInertial()) {
