@@ -60,9 +60,6 @@ void CompImageComponentView::unmountChildComponentView(
   assert(false);
 }
 
-winrt::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> GetImageMemoryStreamAsync(
-    ReactImageSource source);
-
 void CompImageComponentView::beginDownloadImage() noexcept {
   ReactImageSource source;
   source.uri = m_url;
@@ -94,15 +91,13 @@ void CompImageComponentView::beginDownloadImage() noexcept {
   });
 }
 
-void CompImageComponentView::generateBitmap(
-    const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept {
+ winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept {
   winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
   winrt::com_ptr<IWICImagingFactory> imagingFactory;
   winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
 
   if (!results) {
-    m_state = ImageState::Error;
-    return;
+    return nullptr;
   }
 
   winrt::com_ptr<IStream> istream;
@@ -111,13 +106,25 @@ void CompImageComponentView::generateBitmap(
 
   if (imagingFactory->CreateDecoderFromStream(
           istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()) < 0) {
-    m_state = ImageState::Error;
-    return;
+    return nullptr;
   }
 
   winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
   winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
+  return decodedFrame;
+}
 
+void CompImageComponentView::generateBitmap(
+    const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept {
+  winrt::com_ptr<IWICBitmapSource> decodedFrame = wicBitmapSourceFromStream(results);
+
+  if (!decodedFrame) {
+    m_state = ImageState::Error;
+    return;
+  }
+
+  winrt::com_ptr<IWICImagingFactory> imagingFactory;
+  winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
   winrt::com_ptr<IWICFormatConverter> converter;
   winrt::check_hresult(imagingFactory->CreateFormatConverter(converter.put()));
 
@@ -150,14 +157,7 @@ void CompImageComponentView::updateProps(
   updateBorderProps(oldImageProps, newImageProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor) {
-    auto color = *newImageProps.backgroundColor;
-
-    if (newImageProps.backgroundColor) {
-      auto brush = Compositor().CreateColorBrush((*newImageProps.backgroundColor).m_color);
-      m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(brush);
-    } else {
-      m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Brush(nullptr);
-    }
+    m_drawingSurfaceInterop = nullptr; // TODO dont need to nuke the surface just to redraw...
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {
@@ -316,6 +316,9 @@ void CompImageComponentView::DrawImage() noexcept {
     winrt::check_hresult(d2dDeviceContext->CreateBitmapFromWicBitmap(m_wicbmp.get(), nullptr, bitmap.put()));
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+    if (m_props->backgroundColor) {
+      d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
+    }
 
     D2D1_RECT_F rect = D2D1::RectF(
         static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
