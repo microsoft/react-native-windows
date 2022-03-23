@@ -361,7 +361,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the native size
   HRESULT TxGetExtent(LPSIZEL lpExtent) override {
-    lpExtent->cx = static_cast<LONG>(m_outer->m_layoutMetrics.frame.size.width * m_outer->m_layoutMetrics.pointScaleFactor);
+    lpExtent->cx =
+        static_cast<LONG>(m_outer->m_layoutMetrics.frame.size.width * m_outer->m_layoutMetrics.pointScaleFactor);
     lpExtent->cy =
         static_cast<LONG>(m_outer->m_layoutMetrics.frame.size.height * m_outer->m_layoutMetrics.pointScaleFactor);
     return S_OK;
@@ -758,8 +759,15 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
   updateBorderLayoutMetrics();
 
   // TODO should ceil?
-  m_imgWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);
-  m_imgHeight = static_cast<unsigned int>(layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor);
+  unsigned int newWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);
+  unsigned int newHeight = static_cast<unsigned int>(layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor);
+
+  if (newWidth != m_imgWidth || newHeight != m_imgHeight) {
+    m_drawingSurfaceInterop = nullptr; // Invalidate surface if we get a size change
+  }
+
+  m_imgWidth = newWidth;
+  m_imgHeight = newHeight;
 
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
@@ -941,7 +949,9 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
     winrt::Windows::UI::Composition::ICompositionSurface surface;
     m_drawingSurfaceInterop.as(surface);
     auto surfaceBrush = Compositor().CreateSurfaceBrush(surface);
-
+    surfaceBrush.HorizontalAlignmentRatio(0.f);
+    surfaceBrush.VerticalAlignmentRatio(0.f);
+    surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::None);
     m_visual.Brush(surfaceBrush);
   }
 }
@@ -967,12 +977,14 @@ void CompWindowsTextInputComponentView::DrawImage() noexcept {
           nullptr, __uuidof(ID2D1DeviceContext), d2dDeviceContext.put_void(), &offset))) {
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
 
-    // TODO keep track of proper invalid rect
-    RECTL rc{offset.x, offset.y, offset.x + static_cast<LONG>(m_imgWidth), offset.y + static_cast<LONG>(m_imgHeight)};
-    RECT rcInvalid{
-        offset.x, offset.y, offset.x + static_cast<LONG>(m_imgWidth), offset.y + static_cast<LONG>(m_imgHeight)};
+    RECTL rc{
+        static_cast<LONG>(offset.x * m_layoutMetrics.pointScaleFactor),
+        static_cast<LONG>(offset.y * m_layoutMetrics.pointScaleFactor),
+        static_cast<LONG>(offset.x * m_layoutMetrics.pointScaleFactor) + static_cast<LONG>(m_imgWidth),
+        static_cast<LONG>(offset.y * m_layoutMetrics.pointScaleFactor) + static_cast<LONG>(m_imgHeight)};
 
-    auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, &rcInvalid, TXTVIEW_ACTIVE);
+    // TODO keep track of proper invalid rect
+    auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
     winrt::check_hresult(hrDraw);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
