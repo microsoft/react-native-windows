@@ -54,11 +54,16 @@ int64_t CompBaseComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_
 }
 
 RECT CompBaseComponentView::getClientRect() const noexcept {
+  RECT rc{0};
   if (m_parent) {
-    return m_parent->getClientRect();
+    rc = m_parent->getClientRect();
   }
 
-  return {0};
+  rc.left += static_cast<LONG>(m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor);
+  rc.top += static_cast<LONG>(m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor);
+  rc.right = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor);
+  rc.bottom = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
+  return rc;
 }
 
 const facebook::react::SharedViewEventEmitter &CompBaseComponentView::GetEventEmitter() const noexcept {
@@ -282,20 +287,6 @@ void CompViewComponentView::updateLayoutMetrics(
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
   });
-}
-
-RECT CompViewComponentView::getClientRect() const noexcept {
-  RECT rc{0};
-  if (m_parent) {
-    rc = m_parent->getClientRect();
-  }
-
-  rc.left += static_cast<LONG>(m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor);
-  rc.top += static_cast<LONG>(m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor);
-  rc.right = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor);
-  rc.bottom = rc.left + static_cast<LONG>(m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor);
-
-  return rc;
 }
 
 void CompViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {

@@ -70,7 +70,6 @@ struct CompViewComponentView : public CompBaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  RECT getClientRect() const noexcept override;
 
   facebook::react::SharedProps props() noexcept override;
 

@@ -332,7 +332,11 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the maximum length for the text
   HRESULT TxGetMaxLength(DWORD *plength) override {
-    *plength = INFINITE;
+    auto length = m_outer->m_props->maxLength;
+    if (length > static_cast<decltype(m_outer->m_props->maxLength)>(std::numeric_limits<DWORD>::max())) {
+      length = std::numeric_limits<DWORD>::max();
+    }
+    *plength = static_cast<DWORD>(length);
     return S_OK;
   }
 
@@ -357,7 +361,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the native size
   HRESULT TxGetExtent(LPSIZEL lpExtent) override {
-    return E_NOTIMPL;
+    lpExtent->cx = static_cast<LONG>(m_outer->m_layoutMetrics.frame.size.width * m_outer->m_layoutMetrics.pointScaleFactor);
+    lpExtent->cy =
+        static_cast<LONG>(m_outer->m_layoutMetrics.frame.size.height * m_outer->m_layoutMetrics.pointScaleFactor);
+    return S_OK;
   }
 
   //@cmember Notify host that default character format has changed
