@@ -1643,7 +1643,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": Array [
             Object {
-              "Background": "#0000003F",
+              "Background": "#00000038",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -1870,7 +1870,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": Array [
             Object {
-              "Background": "#0000003F",
+              "Background": "#00000038",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
