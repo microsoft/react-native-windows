@@ -142,6 +142,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -194,6 +197,12 @@
     </Filter>
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{e78de2f1-a7e5-4a81-b69b-4a1f7fa91cde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Networking">
+      <UniqueIdentifier>{deefba53-d1ca-457d-9293-1993510e6d5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Networking">
+      <UniqueIdentifier>{71196e04-aca0-48d6-99e4-f418c957b50f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -398,6 +407,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicy.h">
+      <Filter>Header Files\Networking</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
