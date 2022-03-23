@@ -777,7 +777,10 @@ std::shared_ptr<IRedBoxHandler> ReactInstanceWin::GetRedBoxHandler() noexcept {
 #ifndef CORE_ABI
   } else if (UseDeveloperSupport()) {
     auto localWkReactHost = m_weakReactHost;
-    return CreateDefaultRedBoxHandler(std::move(localWkReactHost), *m_uiQueue);
+    return CreateDefaultRedBoxHandler(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()),
+        std::move(localWkReactHost),
+        *m_uiQueue);
 #endif
   } else {
     return {};
