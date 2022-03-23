@@ -172,6 +172,11 @@ struct WindowData {
           host.InstanceSettings().UseFastRefresh(m_fastRefreshEnabled);
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
+
+          winrt::Microsoft::ReactNative::ReactPropertyBag(host.InstanceSettings().Properties())
+              .Set(
+                  winrt::Microsoft::ReactNative::ReactPropertyId<uint64_t>(L"RootHwndForDevUI"),
+                  reinterpret_cast<uint64_t>(hwnd));
           /*
           auto rootElement = m_desktopWindowXamlSource.Content().as<controls::Panel>();
           winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
