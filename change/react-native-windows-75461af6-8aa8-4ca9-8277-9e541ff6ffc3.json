@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Enable version checks in IDL files",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
