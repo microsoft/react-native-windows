@@ -273,6 +273,28 @@ void CompImageComponentView::ensureDrawingSurface() noexcept {
     m_drawingSurfaceInterop.as(surface);
     auto surfaceBrush = Compositor().CreateSurfaceBrush(surface);
 
+    const auto &imageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
+    switch (imageProps.resizeMode) {
+      case facebook::react::ImageResizeMode::Stretch:
+        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::Fill);
+        break;
+      case facebook::react::ImageResizeMode::Cover:
+        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::UniformToFill);
+        break;
+      case facebook::react::ImageResizeMode::Contain:
+        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::Uniform);
+        break;
+      case facebook::react::ImageResizeMode::Center:
+        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::None);
+        break;
+      case facebook::react::ImageResizeMode::Repeat:
+        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::UniformToFill);
+        // TODO - Hook up repeat
+        break;
+      default:
+        assert(false);
+    }
+
     m_visual.Brush(surfaceBrush);
   }
 }
@@ -295,8 +317,15 @@ void CompImageComponentView::DrawImage() noexcept {
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
 
-    D2D1_RECT_F rect = D2D1::RectF(0, 0, static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight));
-    d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
+    D2D1_RECT_F rect = D2D1::RectF(
+        static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
+        static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor),
+        static_cast<float>(
+            (offset.x + m_imgWidth) / m_layoutMetrics.pointScaleFactor),
+        static_cast<float>(
+            (offset.y + m_imgHeight) / m_layoutMetrics.pointScaleFactor));
+
+        d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.
