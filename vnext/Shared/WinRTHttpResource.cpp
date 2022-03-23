@@ -11,8 +11,11 @@
 // Windows API
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.Filters.h>
+#include <winrt/Windows.Web.Http.Headers.h>
+
+// Standard Library
+#include <set>
 
 using std::function;
 using std::scoped_lock;
@@ -123,15 +126,111 @@ class PrototypeHttpFilter : public winrt::implements<PrototypeHttpFilter, IHttpF
       winrt::Windows::Web::Http::HttpProgress>
       ResponseType;
 
+  // https://fetch.spec.whatwg.org/#forbidden-method
+  static inline std::set<const char *> s_forbiddenMethods{"CONNECT", "TRACE", "TRACK"};
+
+  static inline std::set<const char *> s_simpleCorsRequestHeaderNames{
+      "Accept",
+      "Accept-Language",
+      "Content-Language",
+      "Content-Type",
+      "DPR",
+      "Downlink",
+      "Save-Data",
+      "Viewport-Width",
+      "Width"};
+
+  static inline std::set<const char *> s_simpleCorsResponseHeaderNames{
+      "Cache-Control",
+      "Content-Language",
+      "Content-Type",
+      "Expires",
+      "Last-Modified",
+      "Pragma"};
+
+  static inline std::set<const char *> s_simpleCorsContentTypeValues{
+      "application/x-www-form-urlencoded",
+      "multipart/form-data",
+      "text/plain"};
+
+  // https://fetch.spec.whatwg.org/#forbidden-header-name
+  // Chromium still bans "User-Agent" due to https://crbug.com/571722 //TODO: Remove?
+  static inline std::set<const char *> s_corsForbiddenRequestHeaderNames{
+      "Accept-Charset",
+      "Accept-Encoding",
+      "Access-Control-Request-Headers",
+      "Access-Control-Request-Method",
+      "Connection",
+      "Content-Length",
+      "Cookie",
+      "Cookie2",
+      "Date",
+      "DNT",
+      "Expect",
+      "Host",
+      "Keep-Alive",
+      "Origin",
+      "Referer",
+      "TE",
+      "Trailer",
+      "Transfer-Encoding",
+      "Upgrade",
+      "Via"};
+
+  static inline std::set<const char *> s_corsForbiddenRequestHeaderNamePrefixes{"Proxy-", "Sec-"};
+
   IHttpFilter m_innerFilter;
   OriginPolicy m_originPolicy;
+  // Uri m_origin;
 
-  public:
+ public:
   PrototypeHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
-       : m_originPolicy{m_originPolicy}, m_innerFilter{std::move(innerFilter)} {}
+      : m_originPolicy{m_originPolicy}, m_innerFilter{std::move(innerFilter)} {}
 
-  ResponseType SendRequestAsync(HttpRequestMessage const& request) const {
+  bool ValidateRequest(Uri &url) {
+    // case CORS:
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
+    // Refer to CorsURLLoaderFactory::IsValidRequest in chrome\src\services\network\cors\cors_url_loader_factory.cc.
+    // Forbidden headers should be blocked regardless of origins.
+    // It is correct to check for forbidden header first.
+    // It is verified in Edge when I try to set the "host" header to a XHR. The browser rejected it as unsafe.
+    // In fact, this check probably should apply to all networking security policy.
+    // https://fetch.spec.whatwg.org/#forbidden-header-name
+    /// Is mixed content? (incoming URL vs origin URL)
+    //// => false
+    /// AreRequestHeadersSafe(headers)
+    //// => false
+    /// IsForbiddenMethod(method)
+    //// => false
+    /// IsSameOrigin(m_securitySettings.origin, destinationOrigin)
+    //// => SOP; Reset the validated policy to SOP policy and no need to involve simple CORS which is for cross origins.
+    /// IsSimpleCors(meth, headers)
+    //// => SimpleCORS; Cross origins but meet Simple CORS conditions. No need to go through Preflight.
+    /// else => CORS
+
+    return true;
+  }
+
+  // Mso::React::HttpResource::SendPreflight
+  ResponseType SendPreflightAsync(HttpRequestMessage const &request) const { // TODO: const& ??
+
+    co_return {};
+  }
+
+  ResponseType SendRequestAsync(HttpRequestMessage const &request) const {
     // Ensure absolute URL
+
+    // If fetch is in CORS mode, ValidateSecurityOnRequest() determines if it is a simple request by inspecting origin,
+    // header, and method
+    /// ValidateRequest()
+
+    // const bool isSameOrigin =
+    /// (validatedSecurityPolicy != NetworkingSecurityPolicy::SimpleCORS) &&
+    /// (validatedSecurityPolicy != NetworkingSecurityPolicy::CORS);
+    // !isSameOrigin => CrossOrigin => RemoveUserNamePasswordFromUrl || FAIL
+
+    // If CORS && !inCache => Preflight! { cache() }
+    //
 
     auto coRequest = request;
     // Prototype
@@ -143,7 +242,7 @@ class PrototypeHttpFilter : public winrt::implements<PrototypeHttpFilter, IHttpF
       auto response = co_await m_innerFilter.SendRequestAsync(preflightRequest);
       auto preflightStatus = response.Headers().Lookup(L"Preflight");
       if (L"Approved" != preflightStatus)
-        throw hresult_error{E_FAIL, L"Origin policy non-compliance"};//TODO: Better HRESULT?
+        throw hresult_error{E_FAIL, L"Origin policy non-compliance"}; // TODO: Better HRESULT?
 
       for (auto header : response.Headers()) {
         coRequest.Headers().Insert(header.Key(), header.Value());
@@ -345,13 +444,13 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   }
 
   try {
-    //TODO: Remove
+    // TODO: Remove
     ////FILTER!
-    //auto filter = PrototypeRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
-    //auto preflightOp = filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
-    //co_await lessthrow_await_adapter<IAsyncAction>{preflightOp};
-    //auto preResult = preflightOp.ErrorCode();
-    //if (preResult < 0) {
+    // auto filter = PrototypeRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
+    // auto preflightOp = filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
+    // co_await lessthrow_await_adapter<IAsyncAction>{preflightOp};
+    // auto preResult = preflightOp.ErrorCode();
+    // if (preResult < 0) {
     //  if (self->m_onError) {
     //    co_return self->m_onError(requestId, Utilities::HResultToString(std::move(preResult)));
     //  }

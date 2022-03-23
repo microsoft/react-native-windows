@@ -6,9 +6,9 @@
 
 #include <CppUnitTest.h>
 #include <IHttpResource.h>
+#include <RuntimeOptions.h>
 #include <Test/HttpServer.h>
 #include <unicode.h>
-#include <RuntimeOptions.h>
 
 // Boost Library
 #include <boost/beast/http.hpp>
@@ -32,7 +32,6 @@ using Test::HttpServer;
 using Test::ResponseWrapper;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
-
   TEST_METHOD(RequestGetSucceeds) {
     promise<void> resPromise;
     string error;
@@ -52,9 +51,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SetOnResponse([&resPromise, &statusCode](int64_t, IHttpResource::Response response) {
       statusCode = static_cast<int>(response.StatusCode);
     });
-    resource->SetOnData([&resPromise](int64_t, string &&content) {
-      resPromise.set_value();
-    });
+    resource->SetOnData([&resPromise](int64_t, string &&content) { resPromise.set_value(); });
     resource->SetOnError([&resPromise, &error, &server](int64_t, string &&message) {
       error = std::move(message);
       resPromise.set_value();
@@ -194,12 +191,12 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Start();
 
     auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsPromise](int64_t, IHttpResource::Response callbackResponse) {
+    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsPromise](
+                                int64_t, IHttpResource::Response callbackResponse) {
       if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::ok)) {
         getResponse = callbackResponse;
         getResponsePromise.set_value();
-      }
-      else if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::partial_content)) {
+      } else if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::partial_content)) {
         optionsResponse = callbackResponse;
         optionsPromise.set_value();
       }
@@ -207,19 +204,19 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SetOnData([&getDataPromise, &content](int64_t, string &&responseData) {
       content = std::move(responseData);
 
-      if (! content.empty())
+      if (!content.empty())
         getDataPromise.set_value();
     });
     resource->SetOnError(
         [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string &&message) {
-      error = std::move(message);
+          error = std::move(message);
 
-      optionsPromise.set_value();
-      getResponsePromise.set_value();
-      getDataPromise.set_value();
+          optionsPromise.set_value();
+          getResponsePromise.set_value();
+          getDataPromise.set_value();
 
-      server->Stop();
-    });
+          server->Stop();
+        });
 
     //clang-format off
     resource->SendRequest(
@@ -250,7 +247,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
-    //TODO: Especialize AreEqual
+    // TODO: Especialize AreEqual
     Assert::AreEqual(static_cast<size_t>(1), optionsResponse.Headers.size());
     for (auto header : optionsResponse.Headers) {
       if (header.first == "PreflightName") {
@@ -296,22 +293,20 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Start();
 
     auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse](
-                                int64_t, IHttpResource::Response &&res) {
-      if (res.StatusCode == static_cast<int64_t>(http::status::ok)) {
-        getResponse = std::move(res);
-        getResponsePromise.set_value();
-      }
-    });
+    resource->SetOnResponse(
+        [&getResponse, &getResponsePromise, &optionsResponse](int64_t, IHttpResource::Response &&res) {
+          if (res.StatusCode == static_cast<int64_t>(http::status::ok)) {
+            getResponse = std::move(res);
+            getResponsePromise.set_value();
+          }
+        });
     resource->SetOnData([&getDataPromise, &getDataContent](int64_t, string &&content) {
       if (!content.empty()) { // Ignore OPTIONS data response.
         getDataContent = std::move(content);
         getDataPromise.set_value();
       }
     });
-    resource->SetOnError(
-        [&getResponsePromise, &getDataPromise, &server, &error](int64_t, string &&message) {
-
+    resource->SetOnError([&getResponsePromise, &getDataPromise, &server, &error](int64_t, string &&message) {
       error = std::move(message);
       getResponsePromise.set_value();
       getDataPromise.set_value();
@@ -321,16 +316,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
     //clang-format off
     resource->SendRequest(
-      "GET",
-      "http://localhost:5558",
-      {{"Preflight", "Requested"}},
-      {},
-      "text",
-      false,
-      1000,
-      false,
-      [](int64_t){}
-    );
+        "GET", "http://localhost:5558", {{"Preflight", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
     //clang-format on
 
     getResponsePromise.get_future().wait();

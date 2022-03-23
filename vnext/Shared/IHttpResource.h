@@ -30,7 +30,7 @@ struct IHttpResource {
     int64_t StatusCode;
     std::string Url;
     Headers Headers;
-    //TODO: Content?
+    // TODO: Content?
   };
 
   static std::shared_ptr<IHttpResource> Make() noexcept;
