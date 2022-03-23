@@ -265,14 +265,6 @@ void CompScrollViewComponentView::ScrollInteractionTrackerOwner::RequestIgnored(
 void CompScrollViewComponentView::ScrollInteractionTrackerOwner::ValuesChanged(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept {
-  facebook::react::ScrollViewMetrics scrollMetrics;
-  scrollMetrics.containerSize.height = m_outer->Visual().Size().y / m_outer->m_layoutMetrics.pointScaleFactor;
-  scrollMetrics.containerSize.width = m_outer->Visual().Size().x / m_outer->m_layoutMetrics.pointScaleFactor;
-  scrollMetrics.contentOffset.x = args.Position().x / m_outer->m_layoutMetrics.pointScaleFactor;
-  scrollMetrics.contentOffset.y = args.Position().y / m_outer->m_layoutMetrics.pointScaleFactor;
-  scrollMetrics.zoomScale = m_outer->ContentVisual().Scale().x;
-  scrollMetrics.contentSize.height = m_outer->ContentVisual().Size().y / m_outer->m_layoutMetrics.pointScaleFactor;
-  scrollMetrics.contentSize.width = m_outer->ContentVisual().Size().x / m_outer->m_layoutMetrics.pointScaleFactor;
 
   /*
   // If we are transitioning to inertial scrolling.
@@ -290,6 +282,14 @@ void CompScrollViewComponentView::ScrollInteractionTrackerOwner::ValuesChanged(
 
   auto eventEmitter = m_outer->GetEventEmitter();
   if (eventEmitter) {
+    facebook::react::ScrollViewMetrics scrollMetrics;
+    scrollMetrics.containerSize.height = m_outer->Visual().Size().y / m_outer->m_layoutMetrics.pointScaleFactor;
+    scrollMetrics.containerSize.width = m_outer->Visual().Size().x / m_outer->m_layoutMetrics.pointScaleFactor;
+    scrollMetrics.contentOffset.x = args.Position().x / m_outer->m_layoutMetrics.pointScaleFactor;
+    scrollMetrics.contentOffset.y = args.Position().y / m_outer->m_layoutMetrics.pointScaleFactor;
+    scrollMetrics.zoomScale = m_outer->ContentVisual().Scale().x;
+    scrollMetrics.contentSize.height = m_outer->ContentVisual().Size().y / m_outer->m_layoutMetrics.pointScaleFactor;
+    scrollMetrics.contentSize.width = m_outer->ContentVisual().Size().x / m_outer->m_layoutMetrics.pointScaleFactor;
     std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)->onScroll(scrollMetrics);
   }
 }

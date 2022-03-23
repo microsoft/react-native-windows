@@ -14,6 +14,7 @@
 #include <CppWinRTIncludes.h>
 #include <butter/optional.h>
 #include <react/renderer/graphics/ColorComponents.h>
+#include <d2d1_1.h>
 
 namespace facebook {
 namespace react {
@@ -81,6 +82,14 @@ class SharedColor {
 
   operator bool() const {
     return m_color != nullptr;
+  }
+
+  D2D1::ColorF AsD2DColor() const {
+    return {
+        m_color->m_color.R / 255.0f,
+        m_color->m_color.G / 255.0f,
+        m_color->m_color.B / 255.0f,
+        m_color->m_color.A / 255.0f};
   }
 
   winrt::Windows::UI::Color AsWindowsColor() const {

@@ -283,8 +283,7 @@ void CompParagraphComponentView::DrawText() noexcept {
     // it in the event of device removed.
     winrt::com_ptr<ID2D1SolidColorBrush> brush;
     if (paragraphProps.textAttributes.foregroundColor) {
-      auto winColor = paragraphProps.textAttributes.foregroundColor.AsWindowsColor();
-      D2D1::ColorF color{winColor.R / 255.0f, winColor.G / 255.0f, winColor.B / 255.0f, winColor.A / 255.0f};
+      auto color = paragraphProps.textAttributes.foregroundColor.AsD2DColor();
       winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
     } else {
       winrt::check_hresult(
@@ -299,8 +298,7 @@ void CompParagraphComponentView::DrawText() noexcept {
       DWRITE_TEXT_RANGE range = {position, length};
       if (fragment.textAttributes.foregroundColor) {
         winrt::com_ptr<ID2D1SolidColorBrush> brush;
-        auto winColor = fragment.textAttributes.foregroundColor.AsWindowsColor();
-        D2D1::ColorF color{winColor.R / 255.0f, winColor.G / 255.0f, winColor.B / 255.0f, winColor.A / 255.0f};
+        auto color = fragment.textAttributes.foregroundColor.AsD2DColor();
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
         m_textLayout->SetDrawingEffect(brush.get(), range);
       }
@@ -309,6 +307,9 @@ void CompParagraphComponentView::DrawText() noexcept {
     }
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+    //assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+    //const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    //d2dDeviceContext->SetDpi(dpi, dpi);
 
     // Draw the line of text at the specified offset, which corresponds to the top-left
     // corner of our drawing surface. Notice we don't call BeginDraw on the D2D device
