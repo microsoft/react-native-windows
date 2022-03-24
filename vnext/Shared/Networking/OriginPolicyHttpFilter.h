@@ -17,17 +17,17 @@ namespace Microsoft::React::Networking {
 
 class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
 
-  static /*inline*/ std::set<const char *> s_forbiddenMethods;
+  static std::set<const char *> s_forbiddenMethods;
 
-  static /*inline*/ std::set<const char *> s_simpleCorsRequestHeaderNames;
+  static std::set<const char *> s_simpleCorsRequestHeaderNames;
 
-  static /*inline*/ std::set<const char *> s_simpleCorsResponseHeaderNames;
+  static std::set<const char *> s_simpleCorsResponseHeaderNames;
 
-  static /*inline*/ std::set<const char *> s_simpleCorsContentTypeValues;
+  static std::set<const char *> s_simpleCorsContentTypeValues;
 
-  static /*inline*/ std::set<const char *> s_corsForbiddenRequestHeaderNames;
+  static std::set<const char *> s_corsForbiddenRequestHeaderNames;
 
-  static /*inline*/ std::set<const char *> s_corsForbiddenRequestHeaderNamePrefixes;
+  static std::set<const char *> s_corsForbiddenRequestHeaderNamePrefixes;
 
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
   OriginPolicy m_originPolicy;

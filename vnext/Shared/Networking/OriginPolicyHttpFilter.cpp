@@ -22,9 +22,9 @@ namespace Microsoft::React::Networking {
 #pragma region OriginPolicyHttpFilter
 
 // https://fetch.spec.whatwg.org/#forbidden-method
-/*static*/ /*inline*/ set<const char *> OriginPolicyHttpFilter::s_forbiddenMethods = {"CONNECT", "TRACE", "TRACK"};
+/*static*/ set<const char *> OriginPolicyHttpFilter::s_forbiddenMethods = {"CONNECT", "TRACE", "TRACK"};
 
-/*static*/ /*inline*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
+/*static*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
     "Accept",
     "Accept-Language",
     "Content-Language",
@@ -35,7 +35,7 @@ namespace Microsoft::React::Networking {
     "Viewport-Width",
     "Width"};
 
-/*static*/ /*inline*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames = {
+/*static*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames = {
     "Cache-Control",
     "Content-Language",
     "Content-Type",
@@ -43,14 +43,14 @@ namespace Microsoft::React::Networking {
     "Last-Modified",
     "Pragma"};
 
-/*static*/ /*inline*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
+/*static*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
     "application/x-www-form-urlencoded",
     "multipart/form-data",
     "text/plain"};
 
 // https://fetch.spec.whatwg.org/#forbidden-header-name
 // Chromium still bans "User-Agent" due to https://crbug.com/571722 //TODO: Remove?
-/*static*/ /*inline*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
+/*static*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
     "Accept-Charset",
     "Accept-Encoding",
     "Access-Control-Request-Headers",
@@ -72,7 +72,7 @@ namespace Microsoft::React::Networking {
     "Upgrade",
     "Via"};
 
-/*static*/ /*inline*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {"Proxy-", "Sec-"};
+/*static*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {"Proxy-", "Sec-"};
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri origin, IHttpFilter &&innerFilter)
     : m_originPolicy{m_originPolicy}, /*m_origin{origin},*/ m_innerFilter{std::move(innerFilter)} {}
