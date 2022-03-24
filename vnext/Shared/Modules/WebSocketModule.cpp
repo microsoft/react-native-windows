@@ -26,7 +26,7 @@ using std::string;
 using std::weak_ptr;
 
 namespace {
-using Microsoft::React::IWebSocketResource;
+using Microsoft::React::Networking::IWebSocketResource;
 using Microsoft::React::WebSocketModule;
 
 constexpr char moduleName[] = "WebSocketModule";

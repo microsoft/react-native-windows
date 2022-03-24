@@ -3,7 +3,7 @@
 
 // clang-format off
 #include <CppUnitTest.h>
-#include <IWebSocketResource.h>
+#include <Networking/IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
 
 // Standard Library
@@ -18,6 +18,7 @@ using std::promise;
 using std::string;
 using std::vector;
 
+using Networking::IWebSocketResource;
 using CloseCode = IWebSocketResource::CloseCode;
 using Error = IWebSocketResource::Error;
 

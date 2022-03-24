@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 /// <summary>
 /// Defines the core functionality for a native WebSocket client resource.

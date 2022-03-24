@@ -4,13 +4,16 @@
 #include "pch.h"
 
 #include <RuntimeOptions.h>
-#include <WinRTWebSocketResource.h>
+#include <Networking/WinRTWebSocketResource.h>
+#if ENABLE_BEAST
 #include "BeastWebSocketResource.h"
+#endif // ENABLE_BEAST
+
 
 using std::shared_ptr;
 using std::string;
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 #pragma region IWebSocketResource static members
 
 /*static*/

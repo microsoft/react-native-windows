@@ -5,7 +5,9 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #include <CppUnitTest.h>
-#include <IHttpResource.h>
+
+#include <Networking/IHttpResource.h>
+#include <Networking/OriginPolicy.h>
 #include <RuntimeOptions.h>
 #include <Test/HttpServer.h>
 #include <unicode.h>
@@ -25,6 +27,8 @@ using std::make_shared;
 using std::promise;
 using std::string;
 using std::vector;
+using Networking::IHttpResource;
+using Networking::OriginPolicy;
 using Test::DynamicRequest;
 using Test::DynamicResponse;
 using Test::EmptyResponse;

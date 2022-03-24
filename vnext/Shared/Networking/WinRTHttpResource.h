@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <IHttpResource.h>
+#include "IHttpResource.h"
 
 // Windows API
 #include <winrt/Windows.Web.Http.h>
@@ -11,7 +11,7 @@
 // Standard Library
 #include <mutex>
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
   typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<

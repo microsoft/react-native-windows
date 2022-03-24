@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <IWebSocketResource.h>
+#include "IWebSocketResource.h"
 #include <dispatchQueue/dispatchQueue.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 #include <winrt/Windows.Networking.Sockets.h>
@@ -14,7 +14,7 @@
 #include <mutex>
 #include <queue>
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 class WinRTWebSocketResource : public IWebSocketResource, public std::enable_shared_from_this<WinRTWebSocketResource> {
   winrt::Windows::Networking::Sockets::IMessageWebSocket m_socket;

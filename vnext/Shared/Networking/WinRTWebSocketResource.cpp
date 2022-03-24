@@ -79,7 +79,7 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
 
 } // namespace
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 // private
 WinRTWebSocketResource::WinRTWebSocketResource(

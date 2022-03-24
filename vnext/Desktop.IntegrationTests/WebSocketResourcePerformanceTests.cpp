@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <IWebSocketResource.h>
+#include <Networking/IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
 #include <unicode.h>
 
@@ -19,6 +19,7 @@ using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
+using Networking::IWebSocketResource;
 using std::shared_ptr;
 using std::string;
 using std::vector;

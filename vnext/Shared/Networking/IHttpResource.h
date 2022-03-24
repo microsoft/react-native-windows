@@ -9,14 +9,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace Microsoft::React {
-
-enum class OriginPolicy : size_t {
-  None = 0,
-  SingleOrigin = 1,
-  SimpleCrossOriginResourceSharing = 2,
-  CrossOriginResourceSharing = 3,
-};
+namespace Microsoft::React::Networking {
 
 struct IHttpResource {
   typedef std::unordered_map<std::string, std::string> Headers;

@@ -5,8 +5,9 @@
 
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
+#include <RuntimeOptions.h>
 #include <utilities.h>
-#include "RuntimeOptions.h"
+#include "OriginPolicyHttpFilter.h"
 
 // Windows API
 #include <winrt/Windows.Security.Cryptography.h>
@@ -41,7 +42,7 @@ using winrt::Windows::Web::Http::IHttpContent;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 #if LOOOOOL
 
@@ -551,8 +552,9 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   if (originPolicy == OriginPolicy::None) {
     return std::make_shared<WinRTHttpResource>();
   } else {
+    Uri u{L"http://localhost:0"};
     auto baseFilter = winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{};
-    auto opFilter = winrt::make<PrototypeHttpFilter>(originPolicy, std::move(baseFilter));
+    auto opFilter = winrt::make<OriginPolicyHttpFilter>(originPolicy, u, std::move(baseFilter));
     auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
 
     return std::make_shared<WinRTHttpResource>(std::move(client));
