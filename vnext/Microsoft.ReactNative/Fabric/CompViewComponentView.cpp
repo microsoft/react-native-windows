@@ -89,13 +89,13 @@ bool CompBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta
 
 void CompBaseComponentView::ensureBorderVisual() noexcept {
   if (!m_borderVisual) {
-    m_borderVisual = Compositor().CreateSpriteVisual();
-    auto ninegridBrush = Compositor().CreateNineGridBrush();
+    m_borderVisual = Compositor().CreateShapeVisual();
+    m_borderGeometry = Compositor().CreateRoundedRectangleGeometry();
+    m_borderShape = Compositor().CreateSpriteShape(m_borderGeometry);
+    m_borderVisual.Shapes().Append(m_borderShape);
 
-    // opt out of drawing Center of Nine-Grid
-    ninegridBrush.IsCenterHollow(true);
+    Visual().Clip(Compositor().CreateGeometricClip(m_borderGeometry));
 
-    m_borderVisual.Brush(ninegridBrush);
     auto containerChildren = Visual().as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
     containerChildren.InsertAtTop(m_borderVisual);
   }
@@ -107,38 +107,43 @@ void CompBaseComponentView::updateBorderProps(
   if (oldViewProps.borderColors != newViewProps.borderColors) {
     if (newViewProps.borderColors.all) {
       ensureBorderVisual();
-      auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
-      ninegridBrush.Source(Compositor().CreateColorBrush((*newViewProps.borderColors.all).AsWindowsColor()));
+      m_borderShape.StrokeBrush(Compositor().CreateColorBrush((*newViewProps.borderColors.all).AsWindowsColor()));
     } else {
       // TODO handle clearing border
     }
   }
 
-  if (oldViewProps.borderStyles != newViewProps.borderStyles || oldViewProps.borderRadii != newViewProps.borderRadii) {
-    ensureBorderVisual();
-
-    // create NineGridBrush w/ ColorBrush Source
-    auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
-    ninegridBrush.SetInsets(
-        m_layoutMetrics.borderWidth.left * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.top * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.right * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.bottom * m_layoutMetrics.pointScaleFactor);
+  if (oldViewProps.borderRadii != newViewProps.borderRadii) {
+    if (newViewProps.borderRadii.all) {
+      ensureBorderVisual();
+    }
   }
 }
 
-void CompBaseComponentView::updateBorderLayoutMetrics() noexcept {
+void CompBaseComponentView::updateBorderLayoutMetrics(const facebook::react::ViewProps &viewProps) noexcept {
   if (m_borderVisual) {
-    auto ninegridBrush = m_borderVisual.Brush().as<winrt::Windows::UI::Composition::CompositionNineGridBrush>();
-    ninegridBrush.SetInsets(
-        m_layoutMetrics.borderWidth.left * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.top * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.right * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.borderWidth.bottom * m_layoutMetrics.pointScaleFactor);
-
-    m_borderVisual.Size(
+    m_borderGeometry.Size(
         {m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
          m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor});
+    m_borderVisual.Size(m_borderGeometry.Size());
+    m_borderShape.StrokeThickness(
+        m_layoutMetrics.borderWidth.left *
+        m_layoutMetrics.pointScaleFactor); // Assume all border widths are the same for now
+
+    if (viewProps.borderRadii.all) {
+      // We have to update the corner radius on layout metric, because we need to clamp the radius to the width/2
+      float radiusX, radiusY;
+      radiusX = radiusY = *viewProps.borderRadii.all;
+      if ((m_layoutMetrics.frame.size.width / 2) < radiusX) {
+        radiusX = (m_layoutMetrics.frame.size.width / 2);
+      }
+      if ((m_layoutMetrics.frame.size.height / 2) < radiusY) {
+        radiusY = (m_layoutMetrics.frame.size.height / 2);
+      }
+
+      m_borderGeometry.CornerRadius(
+          {radiusX * m_layoutMetrics.pointScaleFactor, radiusY * m_layoutMetrics.pointScaleFactor});
+    }
   }
 }
 
@@ -277,7 +282,7 @@ void CompViewComponentView::updateLayoutMetrics(
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
-  updateBorderLayoutMetrics();
+  updateBorderLayoutMetrics(*m_props);
 
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,

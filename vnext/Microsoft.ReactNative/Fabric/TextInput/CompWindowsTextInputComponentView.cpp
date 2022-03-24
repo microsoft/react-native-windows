@@ -756,7 +756,7 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
-  updateBorderLayoutMetrics();
+  updateBorderLayoutMetrics(*m_props);
 
   // TODO should ceil?
   unsigned int newWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);

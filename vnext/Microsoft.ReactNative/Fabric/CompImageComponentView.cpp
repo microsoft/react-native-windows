@@ -91,7 +91,8 @@ void CompImageComponentView::beginDownloadImage() noexcept {
   });
 }
 
- winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept {
+winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
+    const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept {
   winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
   winrt::com_ptr<IWICImagingFactory> imagingFactory;
   winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
@@ -209,7 +210,7 @@ void CompImageComponentView::updateLayoutMetrics(
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
-  updateBorderLayoutMetrics();
+  updateBorderLayoutMetrics(*m_props);
 
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
@@ -323,12 +324,10 @@ void CompImageComponentView::DrawImage() noexcept {
     D2D1_RECT_F rect = D2D1::RectF(
         static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
         static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor),
-        static_cast<float>(
-            (offset.x + m_imgWidth) / m_layoutMetrics.pointScaleFactor),
-        static_cast<float>(
-            (offset.y + m_imgHeight) / m_layoutMetrics.pointScaleFactor));
+        static_cast<float>((offset.x + m_imgWidth) / m_layoutMetrics.pointScaleFactor),
+        static_cast<float>((offset.y + m_imgHeight) / m_layoutMetrics.pointScaleFactor));
 
-        d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
+    d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.

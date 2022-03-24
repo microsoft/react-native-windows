@@ -13,9 +13,9 @@
 #include <UI.Xaml.Media.Imaging.h>
 #include <Views/Image/ReactImage.h>
 #include <cxxreact/JsArgumentHelpers.h>
+#include <wincodec.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
-#include <wincodec.h>
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -25,8 +25,8 @@ using namespace xaml::Media::Imaging;
 
 namespace Microsoft::ReactNative {
 
-
- winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept;
+winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
+    const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept;
 
 winrt::fire_and_forget GetImageSizeAsync(
     std::string uriString,

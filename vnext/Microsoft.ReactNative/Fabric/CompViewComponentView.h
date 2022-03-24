@@ -41,7 +41,7 @@ struct CompBaseComponentView : public IComponentView {
   void updateBorderProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps) noexcept;
-  void updateBorderLayoutMetrics() noexcept;
+  void updateBorderLayoutMetrics(const facebook::react::ViewProps &viewProps) noexcept;
 
  protected:
   std::shared_ptr<Microsoft::ReactNative::CompContext> m_compContext;
@@ -51,7 +51,9 @@ struct CompBaseComponentView : public IComponentView {
   IComponentView *m_parent{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;
 
-  winrt::Windows::UI::Composition::SpriteVisual m_borderVisual{nullptr};
+  winrt::Windows::UI::Composition::ShapeVisual m_borderVisual{nullptr};
+  winrt::Windows::UI::Composition::CompositionSpriteShape m_borderShape{nullptr};
+  winrt::Windows::UI::Composition::CompositionRoundedRectangleGeometry m_borderGeometry{nullptr};
 };
 
 struct CompViewComponentView : public CompBaseComponentView {
