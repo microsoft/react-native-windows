@@ -74,6 +74,11 @@ namespace Microsoft::React::Networking {
 
 /*static*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {"Proxy-", "Sec-"};
 
+/*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
+  return
+    u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
+}
+
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
     : m_originPolicy{m_originPolicy}, m_origin{nullptr}, m_innerFilter{std::move(innerFilter)} {
 }

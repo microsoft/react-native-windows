@@ -29,6 +29,10 @@ class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, 
   winrt::Windows::Foundation::Uri m_origin;
 
  public:
+  static bool IsSameOrigin(
+      winrt::Windows::Foundation::Uri const &u1,
+      winrt::Windows::Foundation::Uri const &u2) noexcept;
+
   OriginPolicyHttpFilter(
       OriginPolicy originPolicy,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
