@@ -90,6 +90,11 @@ void CompParagraphComponentView::updateLayoutMetrics(
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
   });
+
+  if (m_textLayout) {
+    m_textLayout->SetMaxWidth(layoutMetrics.frame.size.width);
+    m_textLayout->SetMaxHeight(layoutMetrics.frame.size.height);
+  }
 }
 void CompParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();

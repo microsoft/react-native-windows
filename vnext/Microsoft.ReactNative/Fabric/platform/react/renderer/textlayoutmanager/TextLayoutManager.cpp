@@ -51,10 +51,8 @@ void TextLayoutManager::GetTextLayout(
       str.c_str(), // The string to be laid out and formatted.
       static_cast<UINT32>(str.length()), // The length of the string.
       spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-      layoutConstraints.maximumSize.width *
-          outerFragment.textAttributes.fontSizeMultiplier, // The width of the layout box.
-      layoutConstraints.maximumSize.height *
-          outerFragment.textAttributes.fontSizeMultiplier, // The height of the layout box.
+      layoutConstraints.maximumSize.width, // The width of the layout box.
+      layoutConstraints.maximumSize.height, // The height of the layout box.
       spTextLayout.put() // The IDWriteTextLayout interface pointer.
   );
 
