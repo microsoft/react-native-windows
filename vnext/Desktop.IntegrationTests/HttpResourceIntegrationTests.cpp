@@ -18,6 +18,10 @@
 // Standard Library
 #include <future>
 
+//TODO: Remove
+#include <winrt/base.h>
+#include <winrt/Windows.Foundation.h>
+
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -336,5 +340,27 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Body After Preflight"}, getDataContent);
 
     SetRuntimeOptionInt("Http.OriginPolicy", 0);
+  }
+
+  //TEMP tests to see if Uri has comparison capabilities
+  TEST_METHOD(UrlTests) {
+    using winrt::Windows::Foundation::Uri;
+
+    Assert::IsTrue(Uri{L"http://www.microsoft.com"}.Equals(Uri{L"http://www.microsoft.com"}));
+    Assert::IsTrue(Uri{L"http://www.microsoft.com:80"}.Equals(Uri{L"http://www.microsoft.com:80"}));
+    Assert::IsTrue(Uri{L"https://msw"}.Equals(Uri{L"https://MSW"}));
+    Assert::IsTrue(Uri{L"http://www.microsoft.com"}.Equals(Uri{L"http://www.microsoft.com:80"}));
+    Assert::IsTrue(Uri{L"https://www.microsoft.com"}.Equals(Uri{L"https://www.microsoft.com:443"}));
+
+    Assert::IsTrue(Uri{L"http://www.microsoft.com"}.Equals(Uri{L"https://www.microsoft.com"}));//NOPE
+    Assert::IsTrue(Uri{L"http://www.microsoft.com"}.Equals(Uri{L"http://www.microsoft.com:8080"}));
+    Assert::IsTrue(Uri{L"http://www.microsoft.com"}.Equals(Uri{L"http://www.microsoft.com:81"}));
+    Assert::IsTrue(Uri{L"http://www.microsoft.com:80"}.Equals(Uri{L"http://www.microsoft.com:81"}));
+    Assert::IsTrue(Uri{L""}.Equals(Uri{L"http://www.microsoft.com:81"}));
+    Assert::IsTrue(Uri{L"file://testfolder"}.Equals(Uri{L"http://testfolder"}));
+    Assert::IsTrue(Uri{L"http://www.microsoft.com:443"}.Equals(Uri{L"https://www.microsoft.com:443"}));
+    Assert::IsTrue(Uri{L"ftp://www.microsoft.com"}.Equals(Uri{L"file://abc.com"}));
+    Assert::IsTrue(Uri{L"bar://abc.com"}.Equals(Uri{L"abc.com"}));
+    Assert::IsTrue(Uri{L"http://"}.Equals(Uri{L"http://www.microsoft.com"}));
   }
 };
