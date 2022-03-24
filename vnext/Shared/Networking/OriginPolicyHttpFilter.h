@@ -18,26 +18,22 @@ namespace Microsoft::React::Networking {
 class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
 
   static std::set<const char *> s_forbiddenMethods;
-
   static std::set<const char *> s_simpleCorsRequestHeaderNames;
-
   static std::set<const char *> s_simpleCorsResponseHeaderNames;
-
   static std::set<const char *> s_simpleCorsContentTypeValues;
-
   static std::set<const char *> s_corsForbiddenRequestHeaderNames;
-
   static std::set<const char *> s_corsForbiddenRequestHeaderNamePrefixes;
 
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
   OriginPolicy m_originPolicy;
-  //winrt::Windows::Foundation::Uri m_origin;
+  winrt::Windows::Foundation::Uri m_origin;
 
  public:
   OriginPolicyHttpFilter(
       OriginPolicy originPolicy,
-      winrt::Windows::Foundation::Uri origin,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
+
+  OriginPolicyHttpFilter(OriginPolicy originPolicy);
 
   bool ValidateRequest(winrt::Windows::Foundation::Uri &url);
 
@@ -46,10 +42,14 @@ class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, 
       winrt::Windows::Web::Http::HttpProgress>
   SendPreflightAsync(winrt::Windows::Web::Http::HttpRequestMessage const &request) const;
 
+#pragma region IHttpFilter
+
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
       winrt::Windows::Web::Http::HttpProgress>
-  SendRequestAsync(winrt::Windows::Web::Http::HttpRequestMessage const &request) const;
+  SendRequestAsync(winrt::Windows::Web::Http::HttpRequestMessage const &request);
+
+#pragma endregion IHttpFilter
 };
 
 }//namespace

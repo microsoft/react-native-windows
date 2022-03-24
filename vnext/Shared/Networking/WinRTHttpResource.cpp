@@ -39,7 +39,7 @@ using winrt::Windows::Web::Http::HttpStreamContent;
 using winrt::Windows::Web::Http::HttpStringContent;
 using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
-using winrt::Windows::Web::Http::Filters::IHttpFilter;
+using winrt::Windows::Web::Http::Filters::IHttpFilter;//TODO: Remove
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
 namespace Microsoft::React::Networking {
@@ -552,9 +552,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   if (originPolicy == OriginPolicy::None) {
     return std::make_shared<WinRTHttpResource>();
   } else {
-    Uri u{L"http://localhost:0"};
-    auto baseFilter = winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{};
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>(originPolicy, u, std::move(baseFilter));
+    auto opFilter = winrt::make<OriginPolicyHttpFilter>(originPolicy);
     auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
 
     return std::make_shared<WinRTHttpResource>(std::move(client));

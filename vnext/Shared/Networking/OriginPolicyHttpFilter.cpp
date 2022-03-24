@@ -74,8 +74,12 @@ namespace Microsoft::React::Networking {
 
 /*static*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {"Proxy-", "Sec-"};
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri origin, IHttpFilter &&innerFilter)
-    : m_originPolicy{m_originPolicy}, /*m_origin{origin},*/ m_innerFilter{std::move(innerFilter)} {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
+    : m_originPolicy{m_originPolicy}, m_origin{nullptr}, m_innerFilter{std::move(innerFilter)} {
+}
+
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
+    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 bool OriginPolicyHttpFilter::ValidateRequest(Uri &url) {
   // case CORS:
@@ -109,8 +113,10 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
 #pragma region IHttpFilter
 
-ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) const {
+ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
+
   // Ensure absolute URL
+  m_origin = Uri{request.RequestUri().AbsoluteCanonicalUri()};
 
   // If fetch is in CORS mode, ValidateSecurityOnRequest() determines if it is a simple request by inspecting origin,
   // header, and method
