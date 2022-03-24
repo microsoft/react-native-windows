@@ -224,6 +224,29 @@ void CompViewComponentView::updateProps(
 
   updateBorderProps(oldViewProps, newViewProps);
 
+  // Shadow
+  if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
+      oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
+      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
+    winrt::Windows::UI::Composition::DropShadow shadow = Compositor().CreateDropShadow();
+    shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
+    shadow.Opacity(newViewProps.shadowOpacity);
+    shadow.BlurRadius(newViewProps.shadowRadius);
+    if (newViewProps.shadowColor)
+      shadow.Color(newViewProps.shadowColor.AsWindowsColor());
+    m_visual.as<winrt::Windows::UI::Composition::SpriteVisual>().Shadow(shadow);
+  }
+
+  // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
+  if (oldViewProps.transform != newViewProps.transform) {
+    for (const auto &operation : newViewProps.transform.operations) {
+      if (operation.type == facebook::react::TransformOperationType::Scale)
+        m_visual.Scale({operation.x, operation.y, operation.z});
+      else if (operation.type == facebook::react::TransformOperationType::Rotate)
+        m_visual.RotationAngle(operation.z);
+    }
+  }
+
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
