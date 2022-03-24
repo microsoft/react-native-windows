@@ -105,17 +105,16 @@ int64_t CompEventHandler::SendMessage(
   switch (msg) {
     case WM_LBUTTONDOWN: {
       // TODO why are we not getting WM_POINTERDOWN instead?
-      PointerPressed(surfaceId, msg, wParam, lParam);
+      ButtonDown(surfaceId, msg, wParam, lParam);
       return 0;
     }
-
     case WM_POINTERDOWN: {
       PointerPressed(surfaceId, msg, wParam, lParam);
       return 0;
     }
     case WM_LBUTTONUP: {
       // TODO why are we not getting WM_POINTERUP instead?
-      PointerUp(surfaceId, msg, wParam, lParam);
+      ButtonUp(surfaceId, msg, wParam, lParam);
       return 0;
     }
     case WM_POINTERUP: {
@@ -141,6 +140,37 @@ int64_t CompEventHandler::SendMessage(
 }
 
 void CompEventHandler::PointerPressed(
+    facebook::react::SurfaceId surfaceId,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam) {
+  POINTER_INFO pi;
+  GetPointerInfo(GET_POINTERID_WPARAM(wParam), &pi);
+  POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
+  ::ScreenToClient(pi.hwndTarget, &pt);
+
+  const auto eventType = TouchEventType::Start;
+
+  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+    facebook::react::Point ptLocal;
+
+    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
+    facebook::react::Point ptScaled = {
+        static_cast<float>(pt.x / m_compRootView.ScaleFactor()), static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
+    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+
+    if (tag == -1)
+      return;
+
+    auto &targetComponentView = static_cast<CompBaseComponentView &>(
+        *fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
+
+    targetComponentView.SendMessage(msg, wParam, lParam);
+  }
+}
+
+void CompEventHandler::ButtonDown(
     facebook::react::SurfaceId surfaceId,
     uint32_t msg,
     uint64_t wParam,
@@ -209,7 +239,38 @@ void CompEventHandler::PointerPressed(
   }
 }
 
-void CompEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
+void CompEventHandler::PointerUp(
+    facebook::react::SurfaceId surfaceId,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam) {
+  POINTER_INFO pi;
+  GetPointerInfo(GET_POINTERID_WPARAM(wParam), &pi);
+  POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
+  ::ScreenToClient(pi.hwndTarget, &pt);
+
+  const auto eventType = TouchEventType::Start;
+
+  if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+          winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
+    facebook::react::Point ptLocal;
+
+    auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
+    facebook::react::Point ptScaled = {
+        static_cast<float>(pt.x / m_compRootView.ScaleFactor()), static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
+    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+
+    if (tag == -1)
+      return;
+
+    auto &targetComponentView = static_cast<CompBaseComponentView &>(
+        *fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
+
+    targetComponentView.SendMessage(msg, wParam, lParam);
+  }
+}
+
+void CompEventHandler::ButtonUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
   int pointerId = 1; // TODO pointerId
 
   auto touch = std::find_if(
