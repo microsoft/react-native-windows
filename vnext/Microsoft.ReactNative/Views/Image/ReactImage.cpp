@@ -342,7 +342,20 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         }
 
         if (fromStream) {
-          co_await svgImageSource.SetSourceAsync(memoryStream);
+          try {
+            co_await svgImageSource.SetSourceAsync(memoryStream);
+          } catch (const winrt::hresult_error&) {
+            /*
+                winrt::hresult_canceled
+                If the app changes the image source again via SetSourceAsync, SetSource or UriSource while a SetSourceAsync
+                call is already in progress, the pending SetSourceAsync action will throw a TaskCanceledException and set the Status to Canceled.
+
+                WINCODEC_ERR_BADIMAGE
+                In low memory situations (most likely on lower-memory phones), it is possible for an exception to be raised with the message 
+                "The image is unrecognized" and an HRESULT of 0x88982F60. While this exception ordinarily indicates bad data, if your app is close 
+                to its memory limit then the cause of the exception is likely to be low memory. In that case, we recommend that you free memory and try again.            
+            */
+          }
         } else {
           svgImageSource.UriSource(uri);
         }
@@ -385,7 +398,20 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         }
 
         if (fromStream) {
-          co_await bitmapImage.SetSourceAsync(memoryStream);
+          try {
+            co_await bitmapImage.SetSourceAsync(memoryStream);
+          } catch (const winrt::hresult_error&) {
+            /*
+                winrt::hresult_canceled
+                If the app changes the image source again via SetSourceAsync, SetSource or UriSource while a SetSourceAsync
+                call is already in progress, the pending SetSourceAsync action will throw a TaskCanceledException and set the Status to Canceled.
+
+                WINCODEC_ERR_BADIMAGE
+                In low memory situations (most likely on lower-memory phones), it is possible for an exception to be raised with the message 
+                "The image is unrecognized" and an HRESULT of 0x88982F60. While this exception ordinarily indicates bad data, if your app is close 
+                to its memory limit then the cause of the exception is likely to be low memory. In that case, we recommend that you free memory and try again.            
+            */
+          }
         } else {
           bitmapImage.UriSource(uri);
 
