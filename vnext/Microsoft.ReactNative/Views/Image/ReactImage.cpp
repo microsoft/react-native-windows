@@ -184,7 +184,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
 }
 template <typename TImage>
 std::wstring GetUriFromImage(const TImage &image) {
-  return image.UriSource().ToString().c_str();
+  return image.UriSource() ? image.UriSource().ToString().c_str() : L"<no Uri available>";
 }
 template <>
 std::wstring GetUriFromImage(const winrt::Uri &uri) {
@@ -193,7 +193,9 @@ std::wstring GetUriFromImage(const winrt::Uri &uri) {
 
 template <typename TImage>
 void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
+#ifdef DEBUG
   cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")\n";
+#endif
 }
 
 // TSourceFailedEventArgs can be either LoadedImageSourceLoadCompletedEventArgs or
@@ -203,10 +205,12 @@ void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args
 template <typename TImage, typename TSourceFailedEventArgs>
 void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
   // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.loadedimagesourceloadstatus
+#ifdef DEBUG
   constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
   const auto status = (int)args.Status();
   assert(0 <= status && status < ARRAYSIZE(statusNames));
   cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")\n";
+#endif
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
