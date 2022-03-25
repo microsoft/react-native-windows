@@ -17,6 +17,7 @@ void TextLayoutManager::GetTextLayout(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints,
+    const butter::optional<TextAlignment> &textAlignment,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
   if (attributedStringBox.getValue().isEmpty())
     return;
@@ -43,6 +44,31 @@ void TextLayoutManager::GetTextLayout(
       outerFragment.textAttributes.fontSize,
       L"en-us",
       spTextFormat.put());
+
+  DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+  if (textAlignment) {
+    switch (*textAlignment) {
+      case facebook::react::TextAlignment::Center:
+        alignment = DWRITE_TEXT_ALIGNMENT_CENTER;
+        break;
+      case facebook::react::TextAlignment::Justified:
+        alignment = DWRITE_TEXT_ALIGNMENT_JUSTIFIED;
+        break;
+      case facebook::react::TextAlignment::Left:
+        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+        break;
+      case facebook::react::TextAlignment::Right:
+        alignment = DWRITE_TEXT_ALIGNMENT_TRAILING;
+        break;
+      // TODO use LTR values
+      case facebook::react::TextAlignment::Natural:
+        alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
+        break;
+      default:
+        assert(false);
+    }
+  }
+  spTextFormat->SetTextAlignment(alignment);
 
   auto str = Microsoft::Common::Unicode::Utf8ToUtf16(attributedStringBox.getValue().getString());
 
@@ -97,7 +123,8 @@ TextMeasurement TextLayoutManager::measure(
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints, spTextLayout);
+
+  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints, TextAlignment::Left, spTextLayout);
 
   TextMeasurement tm;
   if (spTextLayout) {
