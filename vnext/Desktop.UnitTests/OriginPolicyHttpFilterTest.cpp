@@ -15,7 +15,7 @@ namespace Microsoft::React::Test {
 TEST_CLASS (OriginPolicyHttpFilterTest) {
 
 //TEMP tests to see if Uri has comparison capabilities
-TEST_METHOD(UrlsHaveSameOrigin) {  
+TEST_METHOD(UrlsHaveSameOrigin) {
   // clang-format off
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"http://www.microsoft.com"     }, Uri{L"http://www.microsoft.com"       }));
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"http://www.microsoft.com"     }, Uri{L"http://www.microsoft.com/"      }));

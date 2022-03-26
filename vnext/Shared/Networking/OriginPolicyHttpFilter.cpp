@@ -3,6 +3,8 @@
 
 #include "OriginPolicyHttpFilter.h"
 
+#include <RuntimeOptions.h>
+
 using std::set;
 
 using winrt::hresult_error;
@@ -22,61 +24,100 @@ namespace Microsoft::React::Networking {
 #pragma region OriginPolicyHttpFilter
 
 // https://fetch.spec.whatwg.org/#forbidden-method
-/*static*/ set<const char *> OriginPolicyHttpFilter::s_forbiddenMethods = {"CONNECT", "TRACE", "TRACK"};
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_forbiddenMethods = {L"CONNECT", L"TRACE", L"TRACK"};
 
-/*static*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
-    "Accept",
-    "Accept-Language",
-    "Content-Language",
-    "Content-Type",
-    "DPR",
-    "Downlink",
-    "Save-Data",
-    "Viewport-Width",
-    "Width"};
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsMethods = {L"GET", L"HEAD", L"POST"};
 
-/*static*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames = {
-    "Cache-Control",
-    "Content-Language",
-    "Content-Type",
-    "Expires",
-    "Last-Modified",
-    "Pragma"};
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
+    L"Accept",
+    L"Accept-Language",
+    L"Content-Language",
+    L"Content-Type",
+    L"DPR",
+    L"Downlink",
+    L"Save-Data",
+    L"Viewport-Width",
+    L"Width"};
 
-/*static*/ set<const char *> OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
-    "application/x-www-form-urlencoded",
-    "multipart/form-data",
-    "text/plain"};
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames =
+    {
+    L"Cache-Control",
+    L"Content-Language",
+    L"Content-Type",
+    L"Expires",
+    L"Last-Modified",
+    L"Pragma"};
+
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
+    L"application/x-www-form-urlencoded",
+    L"multipart/form-data",
+    L"text/plain"};
 
 // https://fetch.spec.whatwg.org/#forbidden-header-name
 // Chromium still bans "User-Agent" due to https://crbug.com/571722 //TODO: Remove?
-/*static*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
-    "Accept-Charset",
-    "Accept-Encoding",
-    "Access-Control-Request-Headers",
-    "Access-Control-Request-Method",
-    "Connection",
-    "Content-Length",
-    "Cookie",
-    "Cookie2",
-    "Date",
-    "DNT",
-    "Expect",
-    "Host",
-    "Keep-Alive",
-    "Origin",
-    "Referer",
-    "TE",
-    "Trailer",
-    "Transfer-Encoding",
-    "Upgrade",
-    "Via"};
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
+    L"Accept-Charset",
+    L"Accept-Encoding",
+    L"Access-Control-Request-Headers",
+    L"Access-Control-Request-Method",
+    L"Connection",
+    L"Content-Length",
+    L"Cookie",
+    L"Cookie2",
+    L"Date",
+    L"DNT",
+    L"Expect",
+    L"Host",
+    L"Keep-Alive",
+    L"Origin",
+    L"Referer",
+    L"TE",
+    L"Trailer",
+    L"Transfer-Encoding",
+    L"Upgrade",
+    L"Via"};
 
-/*static*/ set<const char *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {"Proxy-", "Sec-"};
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
 
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
   return
     u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
+}
+
+/*static*/ bool OriginPolicyHttpFilter::IsSimpleCorsRequest(HttpRequestMessage const& request) noexcept {
+
+  // Ensure header is in Simple CORS white list
+  for (const auto &header : request.Headers()) {
+    if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend())
+      return false;
+
+    // Ensure Content-Type value is in Simple CORS white list, if present
+    if (header.Key() == L"Content-Type") {
+      if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) != s_simpleCorsContentTypeValues.cend())
+        return false;
+    }
+  }
+
+  // Ensure method is in Simple CORS white list
+  return s_simpleCorsMethods.find(request.Method().ToString().c_str()) != s_simpleCorsMethods.cend();
+}
+
+/*static*/ Uri OriginPolicyHttpFilter::GetOrigin(Uri const& uri) noexcept {
+    return Uri{uri.SchemeName() + L"://" + uri.Host() + to_hstring(uri.Port())};
+}
+
+/*static*/ bool OriginPolicyHttpFilter::AreSafeRequestHeaders(
+  winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection const& headers) noexcept {
+  for (const auto &header : headers) {
+    if (s_corsForbiddenRequestHeaderNames.find(header.Key().c_str()) != s_corsForbiddenRequestHeaderNames.cend())
+      return false;
+
+    for (const auto &prefix : s_corsForbiddenRequestHeaderNamePrefixes) {
+      //TODO: If prefix matches header name, RETURN FALSE
+    }
+  }
+
+  return true;
 }
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
@@ -86,7 +127,7 @@ OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpF
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
     : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
-bool OriginPolicyHttpFilter::ValidateRequest(Uri &url) {
+void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
   // case CORS:
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
   // Refer to CorsURLLoaderFactory::IsValidRequest in chrome\src\services\network\cors\cors_url_loader_factory.cc.
@@ -107,7 +148,57 @@ bool OriginPolicyHttpFilter::ValidateRequest(Uri &url) {
   //// => SimpleCORS; Cross origins but meet Simple CORS conditions. No need to go through Preflight.
   /// else => CORS
 
-  return true;
+  switch (m_originPolicy) {
+    case Microsoft::React::Networking::OriginPolicy::None:
+      return;
+
+    case Microsoft::React::Networking::OriginPolicy::SingleOrigin:
+      if (!IsSameOrigin(m_origin, request.RequestUri()))
+        throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced.\\n"};
+      break;
+
+    case Microsoft::React::Networking::OriginPolicy::SimpleCrossOriginResourceSharing:
+      // Check for disallowed mixed content
+      if (GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
+          m_origin.SchemeName() != request.RequestUri().SchemeName())
+        throw hresult_error{E_INVALIDARG, L"The origin and request URL must have the same URL scheme.\\n"};
+
+      if (!IsSimpleCorsRequest(request))
+        // TODO: isRedirect?
+        throw hresult_error{
+            E_INVALIDARG,
+            L"The request does not meet conditions for security policy of SOP (same-origin policy) or simple CORS (cross-origin resource sharing).\\n"};
+
+      break;
+
+    case Microsoft::React::Networking::OriginPolicy::CrossOriginResourceSharing:
+      //TODO: Rewrite
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
+      // Refer to CorsURLLoaderFactory::IsValidRequest in chrome\src\services\network\cors\cors_url_loader_factory.cc.
+      // Forbidden headers should be blocked regardless of origins.
+
+      // It is correct to check for forbidden header first.
+      // It is verified in Edge when I try to set the "host" header to a XHR. The browser rejected it as unsafe.
+      // In fact, this check probably should apply to all networking security policy.
+      // https://fetch.spec.whatwg.org/#forbidden-header-name
+
+      //TODO: Make message static private
+      if (m_origin.SchemeName() != request.RequestUri().SchemeName())
+        throw hresult_error{E_INVALIDARG, L"The origin and request URL must have the same URL scheme.\\n"};
+
+      if (!AreSafeRequestHeaders(request.Headers()))
+        throw hresult_error{E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden request header.\\n"};
+
+      //TODO: else if (IsForbiddenMethod(method))
+      //TODO: else if (IsSameOrigin(m_securitySettings.origin, destinationOrigin))
+      //TODO: else if (IsSimpleCors(meth, headers))
+      //TODO: else { set CORS }
+
+      break;
+
+    default:
+      throw hresult_error{E_INVALIDARG, L"Invalid OriginPolicy type: " + to_hstring(static_cast<size_t>(m_originPolicy))};
+  }
 }
 
 // Mso::React::HttpResource::SendPreflight
@@ -120,20 +211,33 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
 ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
 
-  // Ensure absolute URL
-  m_origin = Uri{request.RequestUri().AbsoluteCanonicalUri()};
+  // Allow only HTTP or HTTPS schemes
+  if (request.RequestUri().SchemeName() != L"https" && request.RequestUri().SchemeName() != L"http")
+    throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + m_origin.SchemeName() + L"]"};
 
+  //TODO: Should m_origin be vectored/mapped to requestId???
+  //      Should it be even kept as an instance member?
+  // Ensure absolute URL
+  m_origin = GetOrigin(request.RequestUri());
+  
   // If fetch is in CORS mode, ValidateSecurityOnRequest() determines if it is a simple request by inspecting origin,
   // header, and method
-  /// ValidateRequest()
+  ValidateRequest(request);
 
   // const bool isSameOrigin =
   /// (validatedSecurityPolicy != NetworkingSecurityPolicy::SimpleCORS) &&
   /// (validatedSecurityPolicy != NetworkingSecurityPolicy::CORS);
   // !isSameOrigin => CrossOrigin => RemoveUserNamePasswordFromUrl || FAIL
 
-  // If CORS && !inCache => Preflight! { cache() }
+  // If CORS && !inCache => SendPreflight! { cache() }
   //
+
+  // Preflight::OnResponse => ValidatePreflightResponse
+
+  // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
+  // NetworkingSecurity::ValidateSecurityOnResponse
+  // ActualRequest::OnResponse => ValidateResponse()
+
 
   auto coRequest = request;
   // Prototype
