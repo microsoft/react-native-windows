@@ -189,10 +189,16 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       if (!AreSafeRequestHeaders(request.Headers()))
         throw hresult_error{E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden request header.\\n"};
 
-      //TODO: else if (IsForbiddenMethod(method))
-      //TODO: else if (IsSameOrigin(m_securitySettings.origin, destinationOrigin))
-      //TODO: else if (IsSimpleCors(meth, headers))
-      //TODO: else { set CORS }
+      if (s_forbiddenMethods.find(request.Method().ToString().c_str()) != s_forbiddenMethods.cend())
+        throw hresult_error{E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden method.\\n"};
+
+      //TODO: overwrite member OP, or set/return validated OP?
+      if (IsSameOrigin(m_origin, request.RequestUri()))
+        m_originPolicy = OriginPolicy::SingleOrigin;
+      else if (IsSimpleCorsRequest(request))
+        m_originPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
+      else
+        m_originPolicy = OriginPolicy::CrossOriginResourceSharing;
 
       break;
 
