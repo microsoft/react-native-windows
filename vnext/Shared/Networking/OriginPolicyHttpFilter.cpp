@@ -12,6 +12,7 @@ using winrt::to_hstring;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
+using winrt::Windows::Web::Http::HttpResponseMessage;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
 
 // TODO: Remove. Redundant.
@@ -103,7 +104,7 @@ namespace Microsoft::React::Networking {
 }
 
 /*static*/ Uri OriginPolicyHttpFilter::GetOrigin(Uri const& uri) noexcept {
-    return Uri{uri.SchemeName() + L"://" + uri.Host() + to_hstring(uri.Port())};
+  return Uri{uri.SchemeName() + L"://" + uri.Host() + L":" + to_hstring(uri.Port())};
 }
 
 /*static*/ bool OriginPolicyHttpFilter::AreSafeRequestHeaders(
@@ -121,7 +122,7 @@ namespace Microsoft::React::Networking {
 }
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
-    : m_originPolicy{m_originPolicy}, m_origin{nullptr}, m_innerFilter{std::move(innerFilter)} {
+    : m_originPolicy{originPolicy}, m_origin{nullptr}, m_innerFilter{std::move(innerFilter)} {
 }
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
@@ -207,6 +208,11 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
   }
 }
 
+void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const& response) const
+{
+
+}
+
 // Mso::React::HttpResource::SendPreflight
 ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const { // TODO: const& ??
   //TODO: Inject user agent?
@@ -215,6 +221,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
   // Section 4.8.2 https://fetch.spec.whatwg.org/#cors-preflight-fetch
   preflightRequest.Method(HttpMethod::Options());
+  preflightRequest.RequestUri(m_origin);
   preflightRequest.Headers().Insert(L"Accept", L"*/*");
   preflightRequest.Headers().Insert(L"Access-Control-Request-Method", request.Method().ToString());
 
@@ -225,6 +232,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
   while (++headerItr != request.Headers().end())
     headerNames += L", " + (*headerItr).Key();
   preflightRequest.Headers().Insert(L"Access-Control-Request-Headers", headerNames);
+
   preflightRequest.Headers().Insert(L"Origin", m_origin.AbsoluteCanonicalUri());
   preflightRequest.Headers().Insert(L"Sec-Fetch-Mode", L"CORS");
 
@@ -260,8 +268,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   // If CORS && !inCache => SendPreflight! { cache() }
   try {
     auto preflightResponse = co_await SendPreflightAsync(coRequest);
-
-    // Preflight::OnResponse => ValidatePreflightResponse
+    ValidatePreflightResponse(preflightResponse);
     
     // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
     // NetworkingSecurity::ValidateSecurityOnResponse

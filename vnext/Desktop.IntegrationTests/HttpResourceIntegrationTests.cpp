@@ -269,7 +269,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(PreflightSucceeds) {
-    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SameOrigin));
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
     IHttpResource::Response getResponse;
@@ -281,20 +281,33 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     auto server = make_shared<HttpServer>(port);
     server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
       EmptyResponse response;
-      response.result(http::status::partial_content);
-      response.set("Preflight", "Approved");
+      response.result(http::status::accepted);
+      //response.set("Preflight", "Approved");
+
+      //response.set(http::field::access_control_request_headers, "Preflight");
+      response.set(http::field::access_control_allow_headers, "ValidHeader");
+
+      if (false /*allowCredentials*/) {
+        response.set(http::field::access_control_allow_credentials, "true");
+      }
+
+      response.set(http::field::access_control_allow_origin, "http://localhost:5558");
+      response.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
 
       return {std::move(response)};
     };
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
       Test::StringResponse response;
-      if (request.at("Preflight") == "Approved") {
-        response.result(http::status::ok);
-        response.set("Preflight", "Completed");
-        response.body() = "Body After Preflight";
-      } else {
-        response.result(http::status::bad_request);
-      }
+      //if (request.at("Preflight") == "Approved") {
+      //  response.result(http::status::ok);
+      //  response.set("Preflight", "Completed");
+      //  response.body() = "Body After Preflight";
+      //} else {
+      //  response.result(http::status::bad_request);
+      //}
+      response.result(http::status::ok);
+      //response.set("Preflight", "Completed");
+      response.body() = "Body After Preflight";
 
       return {std::move(response)};
     };
@@ -324,7 +337,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
     //clang-format off
     resource->SendRequest(
-        "GET", "http://localhost:5558", {{"Preflight", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
+        "GET", "http://localhost:5558", {{"ValidHeader", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
     //clang-format on
 
     getResponsePromise.get_future().wait();
@@ -334,11 +347,11 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({}, error);
     Assert::AreEqual(200, static_cast<int>(getResponse.StatusCode));
     Assert::AreEqual(1, static_cast<int>(getResponse.Headers.size()));
-    for (auto &header : getResponse.Headers)
-      if (header.first == "Preflight")
-        Assert::AreEqual({"Completed"}, header.second);
+    //for (auto &header : getResponse.Headers)
+    //  if (header.first == "Preflight")
+    //    Assert::AreEqual({"Completed"}, header.second);
     Assert::AreEqual({"Body After Preflight"}, getDataContent);
 
-    SetRuntimeOptionInt("Http.OriginPolicy", 0);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
   }
 };
