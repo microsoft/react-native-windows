@@ -269,7 +269,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(PreflightSucceeds) {
-    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SingleOrigin));
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SameOrigin));
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
     IHttpResource::Response getResponse;

@@ -152,7 +152,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
     case Microsoft::React::Networking::OriginPolicy::None:
       return;
 
-    case Microsoft::React::Networking::OriginPolicy::SingleOrigin:
+    case Microsoft::React::Networking::OriginPolicy::SameOrigin:
       if (!IsSameOrigin(m_origin, request.RequestUri()))
         throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced.\\n"};
       break;
@@ -194,7 +194,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
       //TODO: overwrite member OP, or set/return validated OP?
       if (IsSameOrigin(m_origin, request.RequestUri()))
-        m_originPolicy = OriginPolicy::SingleOrigin;
+        m_originPolicy = OriginPolicy::SameOrigin;
       else if (IsSimpleCorsRequest(request))
         m_originPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
       else
