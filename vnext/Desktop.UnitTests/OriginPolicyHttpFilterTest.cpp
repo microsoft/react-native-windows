@@ -53,6 +53,18 @@ TEST_METHOD(UrlsHaveSameOrigin) {
   // clang-format on
 }
 
+//TODO: Remove
+TEST_METHOD(Dummy)
+{
+  Uri uri{L"http://user:password@domain.com/ab?c=d&e=f"};
+  Uri iri{uri.DisplayUri()};
+
+  winrt::hstring::size_type zero = 0;
+  Assert::AreEqual(zero, iri.UserName().size());
+  Assert::AreEqual(zero, iri.Password().size());
+  Assert::AreEqual(uri.DisplayUri().c_str(), iri.ToString().c_str());
+}
+
 };
 
 } //namespace
