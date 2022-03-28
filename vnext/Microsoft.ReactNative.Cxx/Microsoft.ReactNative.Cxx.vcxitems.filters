@@ -18,7 +18,7 @@
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
       <Filter>TurboModule</Filter>
     </ClCompile>
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
+    <ClCompile Include="$(TurboModule_SourcePath)\..\..\bridging\LongLivedObject.cpp">
       <Filter>TurboModule</Filter>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
