@@ -18,21 +18,21 @@
 // Standard Library
 #include <future>
 
-//TODO: Remove
-#include <winrt/base.h>
+// TODO: Remove
 #include <winrt/Windows.Foundation.h>
+#include <winrt/base.h>
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
+using Networking::IHttpResource;
+using Networking::OriginPolicy;
 using std::make_shared;
 using std::promise;
 using std::string;
 using std::vector;
-using Networking::IHttpResource;
-using Networking::OriginPolicy;
 using Test::DynamicRequest;
 using Test::DynamicResponse;
 using Test::EmptyResponse;
@@ -282,9 +282,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
       EmptyResponse response;
       response.result(http::status::accepted);
-      //response.set("Preflight", "Approved");
+      // response.set("Preflight", "Approved");
 
-      //response.set(http::field::access_control_request_headers, "Preflight");
+      // response.set(http::field::access_control_request_headers, "Preflight");
       response.set(http::field::access_control_allow_headers, "ValidHeader");
 
       if (false /*allowCredentials*/) {
@@ -298,7 +298,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     };
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
       Test::StringResponse response;
-      //if (request.at("Preflight") == "Approved") {
+      // if (request.at("Preflight") == "Approved") {
       //  response.result(http::status::ok);
       //  response.set("Preflight", "Completed");
       //  response.body() = "Body After Preflight";
@@ -306,7 +306,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       //  response.result(http::status::bad_request);
       //}
       response.result(http::status::ok);
-      //response.set("Preflight", "Completed");
+      // response.set("Preflight", "Completed");
       response.body() = "Body After Preflight";
 
       return {std::move(response)};
@@ -347,7 +347,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({}, error);
     Assert::AreEqual(200, static_cast<int>(getResponse.StatusCode));
     Assert::AreEqual(1, static_cast<int>(getResponse.Headers.size()));
-    //for (auto &header : getResponse.Headers)
+    // for (auto &header : getResponse.Headers)
     //  if (header.first == "Preflight")
     //    Assert::AreEqual({"Completed"}, header.second);
     Assert::AreEqual({"Body After Preflight"}, getDataContent);

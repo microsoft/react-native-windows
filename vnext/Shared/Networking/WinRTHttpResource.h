@@ -70,4 +70,4 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
                       &&handler) noexcept override;
 };
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

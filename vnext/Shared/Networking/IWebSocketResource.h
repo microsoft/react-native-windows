@@ -181,4 +181,4 @@ struct IWebSocketResource {
   virtual void SetOnError(std::function<void(Error &&)> &&handler) noexcept = 0;
 };
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

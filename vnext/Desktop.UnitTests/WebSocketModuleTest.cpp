@@ -77,9 +77,7 @@ TEST_CLASS (WebSocketModuleTest) {
       rc->Mocks.Connect = [rc](
                               string &&,
                               const Networking::IWebSocketResource::Protocols &,
-                              const Networking::IWebSocketResource::Options &) {
-        rc->OnConnect();
-      };
+                              const Networking::IWebSocketResource::Options &) { rc->OnConnect(); };
 
       return rc;
     });

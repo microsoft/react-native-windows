@@ -408,4 +408,4 @@ void WinRTWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noex
 
 #pragma endregion IWebSocketResource
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

@@ -44,13 +44,7 @@ namespace Microsoft::React::Networking {
     L"Width"};
 
 /*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames =
-    {
-    L"Cache-Control",
-    L"Content-Language",
-    L"Content-Type",
-    L"Expires",
-    L"Last-Modified",
-    L"Pragma"};
+    {L"Cache-Control", L"Content-Language", L"Content-Type", L"Expires", L"Last-Modified", L"Pragma"};
 
 /*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
     L"application/x-www-form-urlencoded",
@@ -84,12 +78,10 @@ namespace Microsoft::React::Networking {
 /*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
 
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
-  return
-    u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
+  return u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
 }
 
-/*static*/ bool OriginPolicyHttpFilter::IsSimpleCorsRequest(HttpRequestMessage const& request) noexcept {
-
+/*static*/ bool OriginPolicyHttpFilter::IsSimpleCorsRequest(HttpRequestMessage const &request) noexcept {
   // Ensure header is in Simple CORS white list
   for (const auto &header : request.Headers()) {
     if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend())
@@ -106,18 +98,18 @@ namespace Microsoft::React::Networking {
   return s_simpleCorsMethods.find(request.Method().ToString().c_str()) != s_simpleCorsMethods.cend();
 }
 
-/*static*/ Uri OriginPolicyHttpFilter::GetOrigin(Uri const& uri) noexcept {
+/*static*/ Uri OriginPolicyHttpFilter::GetOrigin(Uri const &uri) noexcept {
   return Uri{uri.SchemeName() + L"://" + uri.Host() + L":" + to_hstring(uri.Port())};
 }
 
 /*static*/ bool OriginPolicyHttpFilter::AreSafeRequestHeaders(
-  winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection const& headers) noexcept {
+    winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection const &headers) noexcept {
   for (const auto &header : headers) {
     if (s_corsForbiddenRequestHeaderNames.find(header.Key().c_str()) != s_corsForbiddenRequestHeaderNames.cend())
       return false;
 
     for (const auto &prefix : s_corsForbiddenRequestHeaderNamePrefixes) {
-      //TODO: If prefix matches header name, RETURN FALSE
+      // TODO: If prefix matches header name, RETURN FALSE
     }
   }
 
@@ -125,8 +117,7 @@ namespace Microsoft::React::Networking {
 }
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
-    : m_originPolicy{originPolicy}, m_origin{nullptr}, m_innerFilter{std::move(innerFilter)} {
-}
+    : m_originPolicy{originPolicy}, m_origin{nullptr}, m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
     : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
@@ -176,7 +167,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       break;
 
     case Microsoft::React::Networking::OriginPolicy::CrossOriginResourceSharing:
-      //TODO: Rewrite
+      // TODO: Rewrite
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
       // Refer to CorsURLLoaderFactory::IsValidRequest in chrome\src\services\network\cors\cors_url_loader_factory.cc.
       // Forbidden headers should be blocked regardless of origins.
@@ -186,17 +177,19 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       // In fact, this check probably should apply to all networking security policy.
       // https://fetch.spec.whatwg.org/#forbidden-header-name
 
-      //TODO: Make message static private
+      // TODO: Make message static private
       if (m_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URL must have the same URL scheme.\\n"};
 
       if (!AreSafeRequestHeaders(request.Headers()))
-        throw hresult_error{E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden request header.\\n"};
+        throw hresult_error{
+            E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden request header.\\n"};
 
       if (s_forbiddenMethods.find(request.Method().ToString().c_str()) != s_forbiddenMethods.cend())
-        throw hresult_error{E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden method.\\n"};
+        throw hresult_error{
+            E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden method.\\n"};
 
-      //TODO: overwrite member OP, or set/return validated OP?
+      // TODO: overwrite member OP, or set/return validated OP?
       if (IsSameOrigin(m_origin, request.RequestUri()))
         m_originPolicy = OriginPolicy::SameOrigin;
       else if (IsSimpleCorsRequest(request))
@@ -207,12 +200,14 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       break;
 
     default:
-      throw hresult_error{E_INVALIDARG, L"Invalid OriginPolicy type: " + to_hstring(static_cast<size_t>(m_originPolicy))};
+      throw hresult_error{
+          E_INVALIDARG, L"Invalid OriginPolicy type: " + to_hstring(static_cast<size_t>(m_originPolicy))};
   }
 }
 
 // See https://fetch.spec.whatwg.org/#cors-check
-void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const& allowCredentials) const {
+void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials)
+    const {
   if (origin.size() == 0)
     throw hresult_error{E_INVALIDARG, L"No valid origin in response.\\n"};
 
@@ -248,8 +243,9 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, w
         L"Access-Control-Allow-Credentials value must be \"true\" when the response includes credentials.\\n"};
 };
 
-void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const& request, HttpResponseMessage const& response) const
-{
+void OriginPolicyHttpFilter::ValidatePreflightResponse(
+    HttpRequestMessage const &request,
+    HttpResponseMessage const &response) const {
   using std::wregex;
   using std::wsregex_token_iterator;
   using std::wstring;
@@ -257,9 +253,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const&
 
   // https://tools.ietf.org/html/rfc2616#section-4.2
   wregex rgx{L"\\s*,\\s*"};
-  auto ciStrCmp = [](const wstring &a, const wstring &b) {
-    return _wcsicmp(a.c_str(), b.c_str()) < 0;
-  };
+  auto ciStrCmp = [](const wstring &a, const wstring &b) { return _wcsicmp(a.c_str(), b.c_str()) < 0; };
 
   set<wstring, decltype(ciStrCmp)> allowedHeaders{ciStrCmp};
   set<wstring, decltype(ciStrCmp)> allowedMethods{ciStrCmp};
@@ -284,8 +278,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const&
       auto parsed = set<wstring, decltype(ciStrCmp)>{
           wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
       allowedMethods.insert(parsed.cbegin(), parsed.cend());
-    }
-    else if (header.Key() == L"Access-Control-Allow-Origin")
+    } else if (header.Key() == L"Access-Control-Allow-Origin")
       allowedOrigin = header.Value();
     else if (header.Key() == L"Access-Control-Expose-Headers") {
       auto value = wstring{header.Value().c_str()};
@@ -294,8 +287,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const&
       auto parsed = set<wstring, decltype(ciStrCmp)>{
           wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
       exposedHeaders.insert(parsed.cbegin(), parsed.cend());
-    }
-    else if (header.Key() == L"Access-Control-Allow-Credentials")
+    } else if (header.Key() == L"Access-Control-Allow-Credentials")
       allowedCredentials = header.Value();
     else if (header.Key() == L"Access-Control-Max-Age")
       maxAge = _wtoi(header.Value().c_str());
@@ -303,11 +295,11 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const&
 
   // Check if the origin is allowed in conjuction with the withCredentials flag
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
-  //if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
+  // if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
   ValidateAllowOrigin(allowedOrigin, allowedCredentials);
 
   // Check if the request method is allowed
-  //if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
+  // if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
   bool requestMethodAllowed = false;
   for (const auto &method : allowedMethods) {
     if (L"*" == method) {
@@ -315,8 +307,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const&
         requestMethodAllowed = true;
         break;
       }
-    }
-    else if (HttpMethod{method} == request.Method()) {
+    } else if (HttpMethod{method} == request.Method()) {
       requestMethodAllowed = true;
       break;
     }
@@ -328,7 +319,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const&
             L"] is not allowed by Access-Control-Allow-Methods in preflight response.\\n"};
 
   // Check if request headers are allowed
-  //if (!IsCrossOriginRequestHeadersAllowed(requestHeaders, allowedHeadersList, withCredentials, /*out*/ errorText))
+  // if (!IsCrossOriginRequestHeadersAllowed(requestHeaders, allowedHeadersList, withCredentials, /*out*/ errorText))
   // See https://fetch.spec.whatwg.org/#cors-preflight-fetch, section 4.8.7.6-7
   // Check if the header should be allowed through wildcard, if the request does not have credentials.
   bool requestHeadersAllowed = false;
@@ -345,15 +336,16 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const&
   if (!requestHeadersAllowed) {
     // Forbidden headers are excluded from the JavaScript layer.
     // User agents may use these headers internally.
-    //TODO: CorsUnsafeNotForbiddenRequestHeaderNames(requestHeaders);
+    // TODO: CorsUnsafeNotForbiddenRequestHeaderNames(requestHeaders);
   }
 
-  //TODO: Implement with cache
-  // InsertToPreflightCache(url.c_str(), allowedMethodsList, allowedHeadersList, exposeHeaders, withCredentials, parseMaxSeconds)
+  // TODO: Implement with cache
+  // InsertToPreflightCache(url.c_str(), allowedMethodsList, allowedHeadersList, exposeHeaders, withCredentials,
+  // parseMaxSeconds)
 }
 
 ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const { // TODO: const& ??
-  //TODO: Inject user agent?
+  // TODO: Inject user agent?
 
   HttpRequestMessage preflightRequest;
 
@@ -386,18 +378,17 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   if (coRequest.RequestUri().SchemeName() != L"https" && coRequest.RequestUri().SchemeName() != L"http")
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + m_origin.SchemeName() + L"]"};
 
-  //TODO: Should m_origin be vectored/mapped to requestId???
+  // TODO: Should m_origin be vectored/mapped to requestId???
   //      Should it be even kept as an instance member?
   // Ensure absolute URL
   m_origin = GetOrigin(coRequest.RequestUri());
-  
+
   // If fetch is in CORS mode, ValidateSecurityOnRequest() determines if it is a simple request by inspecting origin,
   // header, and method
   ValidateRequest(coRequest);
 
   if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
-      m_originPolicy == OriginPolicy::CrossOriginResourceSharing)
-  {
+      m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     if (coRequest.RequestUri().UserName().size() > 0 || coRequest.RequestUri().Password().size() > 0) {
       coRequest.RequestUri(Uri{coRequest.RequestUri().DisplayUri()});
     }
@@ -407,7 +398,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   try {
     auto preflightResponse = co_await SendPreflightAsync(coRequest);
     ValidatePreflightResponse(coRequest, preflightResponse);
-    
+
     // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
     // NetworkingSecurity::ValidateSecurityOnResponse
     // ActualRequest::OnResponse => ValidateResponse()
@@ -420,8 +411,8 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   }
 
   // Prototype
-  //TODO: Remove!
-  //try {
+  // TODO: Remove!
+  // try {
   //  auto preflightRequest = HttpRequestMessage();
   //  preflightRequest.RequestUri(coRequest.RequestUri());
   //  preflightRequest.Method(HttpMethod::Options());
@@ -449,5 +440,4 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
 
 #pragma endregion OriginPolicyHttpFilter
 
-
-}// namespace
+} // namespace Microsoft::React::Networking

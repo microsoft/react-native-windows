@@ -3,12 +3,11 @@
 
 #include "pch.h"
 
-#include <RuntimeOptions.h>
 #include <Networking/WinRTWebSocketResource.h>
+#include <RuntimeOptions.h>
 #if ENABLE_BEAST
 #include "BeastWebSocketResource.h"
 #endif // ENABLE_BEAST
-
 
 using std::shared_ptr;
 using std::string;
@@ -37,4 +36,4 @@ shared_ptr<IWebSocketResource> IWebSocketResource::Make() {
 }
 
 #pragma endregion IWebSocketResource static members
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

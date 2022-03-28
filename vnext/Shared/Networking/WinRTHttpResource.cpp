@@ -3,9 +3,9 @@
 
 #include "WinRTHttpResource.h"
 
+#include <RuntimeOptions.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
-#include <RuntimeOptions.h>
 #include <utilities.h>
 #include "OriginPolicyHttpFilter.h"
 
@@ -39,7 +39,7 @@ using winrt::Windows::Web::Http::HttpStreamContent;
 using winrt::Windows::Web::Http::HttpStringContent;
 using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
-using winrt::Windows::Web::Http::Filters::IHttpFilter;//TODO: Remove
+using winrt::Windows::Web::Http::Filters::IHttpFilter; // TODO: Remove
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
 namespace Microsoft::React::Networking {
@@ -421,4 +421,4 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
 
 #pragma endregion IHttpResource
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

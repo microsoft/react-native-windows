@@ -7,16 +7,16 @@
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Filters.h>
+#include <winrt/Windows.Web.Http.h>
 
 // Standard Library
 #include <set>
 
 namespace Microsoft::React::Networking {
 
-class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
-
+class OriginPolicyHttpFilter
+    : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
   static std::set<const wchar_t *> s_forbiddenMethods;
   static std::set<const wchar_t *> s_simpleCorsMethods;
   static std::set<const wchar_t *> s_simpleCorsRequestHeaderNames;
@@ -42,18 +42,17 @@ class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, 
   static bool AreSafeRequestHeaders(
       winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection const &headers) noexcept;
 
-  OriginPolicyHttpFilter(
-      OriginPolicy originPolicy,
-      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
+  OriginPolicyHttpFilter(OriginPolicy originPolicy, winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
 
   OriginPolicyHttpFilter(OriginPolicy originPolicy);
 
-  void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const& request);
+  void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request);
 
-  void ValidatePreflightResponse(winrt::Windows::Web::Http::HttpRequestMessage const
-                                     & request,winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
+  void ValidatePreflightResponse(
+      winrt::Windows::Web::Http::HttpRequestMessage const &request,
+      winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
 
-  void ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const& allowCredentials) const;
+  void ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials) const;
 
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
@@ -70,4 +69,4 @@ class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, 
 #pragma endregion IHttpFilter
 };
 
-}//namespace
+} // namespace Microsoft::React::Networking

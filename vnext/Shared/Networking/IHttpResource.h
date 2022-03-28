@@ -51,4 +51,4 @@ struct IHttpResource {
       std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> &&handler) noexcept = 0;
 };
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

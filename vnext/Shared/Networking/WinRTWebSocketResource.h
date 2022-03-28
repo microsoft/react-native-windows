@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include "IWebSocketResource.h"
 #include <dispatchQueue/dispatchQueue.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 #include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include "IWebSocketResource.h"
 
 // Standard Library
 #include <future>
@@ -126,4 +126,4 @@ class WinRTWebSocketResource : public IWebSocketResource, public std::enable_sha
 #pragma endregion IWebSocketResource
 };
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

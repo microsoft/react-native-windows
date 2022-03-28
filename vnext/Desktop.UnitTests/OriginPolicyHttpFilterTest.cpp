@@ -5,9 +5,9 @@
 
 #include <Networking/OriginPolicyHttpFilter.h>
 
-//TODO: revert
-#include <winrt/base.h>
+// TODO: revert
 #include <winrt/Windows.Web.Http.h>
+#include <winrt/base.h>
 #include <regex>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -18,10 +18,9 @@ using winrt::Windows::Foundation::Uri;
 namespace Microsoft::React::Test {
 
 TEST_CLASS (OriginPolicyHttpFilterTest) {
-
-//TEMP tests to see if Uri has comparison capabilities
-TEST_METHOD(UrlsHaveSameOrigin) {
-  // clang-format off
+  // TEMP tests to see if Uri has comparison capabilities
+  TEST_METHOD(UrlsHaveSameOrigin) {
+    // clang-format off
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"http://www.microsoft.com"     }, Uri{L"http://www.microsoft.com"       }));
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"http://www.microsoft.com"     }, Uri{L"http://www.microsoft.com/"      }));
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"http://www.microsoft.com"     }, Uri{L"http://www.microsoft.com//"     }));
@@ -55,33 +54,32 @@ TEST_METHOD(UrlsHaveSameOrigin) {
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"http://[2001:db8:1f70::999:de8:7648:6e8]"}, Uri{L"http://[2001:db8:1f70::999:de8:7648:6e8]/test.html"}));
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"https://\u65E5\u672C\u8A9E.com"          }, Uri{L"https://\u65E5\u672C\u8A9E.com/FakeResponse.ashx"}));
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"https://www.microsoft.com"               }, Uri{L"https://www.microsoft.com:443"}));
-  // clang-format on
-}
+    // clang-format on
+  }
 
-//TODO: Remove
-TEST_METHOD(Dummy) {
-  Uri uri{L"http://user:password@domain.com/ab?c=d&e=f"};
-  Uri iri{uri.DisplayUri()};
+  // TODO: Remove
+  TEST_METHOD(Dummy) {
+    Uri uri{L"http://user:password@domain.com/ab?c=d&e=f"};
+    Uri iri{uri.DisplayUri()};
 
-  winrt::hstring::size_type zero = 0;
-  Assert::AreEqual(zero, iri.UserName().size());
-  Assert::AreEqual(zero, iri.Password().size());
-  Assert::AreEqual(uri.DisplayUri().c_str(), iri.ToString().c_str());
+    winrt::hstring::size_type zero = 0;
+    Assert::AreEqual(zero, iri.UserName().size());
+    Assert::AreEqual(zero, iri.Password().size());
+    Assert::AreEqual(uri.DisplayUri().c_str(), iri.ToString().c_str());
 
-  auto cmp = [](std::string a, std::string b) { return _strcmpi(a.c_str(), b.c_str()) < 0; };
-  std::regex rgx{"\\s*,\\s*"};
-  std::string value = "NO , si, no  ,Yes,yes ,  \tnelson, Yes, nO, SI";
+    auto cmp = [](std::string a, std::string b) { return _strcmpi(a.c_str(), b.c_str()) < 0; };
+    std::regex rgx{"\\s*,\\s*"};
+    std::string value = "NO , si, no  ,Yes,yes ,  \tnelson, Yes, nO, SI";
 
-  std::set<std::string> conjcs{
-      std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}};
+    std::set<std::string> conjcs{
+        std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}};
 
-  std::set<std::string, decltype(cmp)> conj{
-      std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}, cmp};
+    std::set<std::string, decltype(cmp)> conj{
+        std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}, cmp};
 
-  size_t sz = 4;
-  Assert::AreEqual(sz, conj.size());
-}
-
+    size_t sz = 4;
+    Assert::AreEqual(sz, conj.size());
+  }
 };
 
-} //namespace
+} // namespace Microsoft::React::Test
