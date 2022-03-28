@@ -89,6 +89,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_caretShown{false};
+  bool m_drawing{false};
 };
 
 } // namespace Microsoft::ReactNative

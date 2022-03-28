@@ -13,6 +13,7 @@
 #include "../CompHelpers.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
+#include "guid/msoGuid.h"
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
@@ -131,6 +132,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember InvalidateRect
   void TxInvalidateRect(LPCRECT prc, BOOL fMode) override {
+    if (m_outer->m_drawing)
+      return;
     m_outer->DrawImage();
   }
 
@@ -241,10 +244,6 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   //@cmember Retrieves the coordinates of a window's client area
   HRESULT TxGetClientRect(LPRECT prc) override {
     *prc = m_outer->getClientRect();
-    prc->right -= prc->left;
-    prc->left -= prc->left;
-    prc->bottom -= prc->top;
-    prc->top -= prc->top;
     return S_OK;
   }
 
@@ -255,7 +254,6 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     // them inside its space.
     int cxInset = 0;
 
-    AssertTag(prc, 0x01249816 /* tag_bjj6w */);
     prc->left = cxInset;
     prc->top = cxInset;
     prc->bottom = cxInset;
@@ -366,11 +364,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the native size
   HRESULT TxGetExtent(LPSIZEL lpExtent) override {
-    lpExtent->cx =
-        static_cast<LONG>(m_outer->m_layoutMetrics.frame.size.width * m_outer->m_layoutMetrics.pointScaleFactor);
-    lpExtent->cy =
-        static_cast<LONG>(m_outer->m_layoutMetrics.frame.size.height * m_outer->m_layoutMetrics.pointScaleFactor);
-    return S_OK;
+    return E_NOTIMPL;
+    // This shouldn't be implemented
   }
 
   //@cmember Notify host that default character format has changed
@@ -758,6 +753,13 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
     m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
+  if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
+  LRESULT res;
+    winrt::check_hresult(m_textServices->TxSendMessage(
+      (WM_USER + 328), // EM_SETDPI
+       static_cast<WPARAM>(layoutMetrics.pointScaleFactor * 96.0f), static_cast<LPARAM>(layoutMetrics.pointScaleFactor * 96.0f), &res));
+  }
+
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
@@ -844,7 +846,7 @@ facebook::react::SharedProps CompWindowsTextInputComponentView::props() noexcept
 }
 
 void CompWindowsTextInputComponentView::UpdateCharFormat() noexcept {
-  CHARFORMAT2W cfNew = {};
+  CHARFORMAT2W cfNew = {0};
   // Set CHARFORMAT structure
   cfNew.cbSize = sizeof(CHARFORMAT2W);
 
@@ -863,14 +865,10 @@ void CompWindowsTextInputComponentView::UpdateCharFormat() noexcept {
   // cfNew.bPitchAndFamily = FF_DONTCARE;
 
   // set font size -- 20 to convert twips to pt
-  if (!std::isnan(m_props->textAttributes.fontSize)) {
-    cfNew.dwMask |= CFM_SIZE;
-    cfNew.yHeight = static_cast<LONG>(m_props->textAttributes.fontSize * 20 * m_layoutMetrics.pointScaleFactor);
-  } else {
-    cfNew.dwMask |= CFM_SIZE;
-    cfNew.yHeight = static_cast<LONG>(
-        facebook::react::TextAttributes::defaultTextAttributes().fontSize * 20 * m_layoutMetrics.pointScaleFactor);
-  }
+  float fontSize = 14;
+  // TODO get fontSize from m_props->textAttributes, or defaultTextAttributes, or fragment?
+  cfNew.dwMask |= CFM_SIZE;
+  cfNew.yHeight = static_cast<LONG>(fontSize * 20);
 
   // set bold
   cfNew.dwMask |= CFM_WEIGHT;
@@ -986,7 +984,10 @@ void CompWindowsTextInputComponentView::DrawCaret(bool show) noexcept {
         {2.0f * m_layoutMetrics.pointScaleFactor,
          (0.0f - m_layoutMetrics.borderWidth.top - m_layoutMetrics.borderWidth.bottom) *
              m_layoutMetrics.pointScaleFactor});
-    m_caretVisual.Offset({static_cast<float>(xPos / m_layoutMetrics.pointScaleFactor), 0.0f, 0.0f});
+
+    auto rcClient = getClientRect();
+    xPos -= rcClient.left;
+    m_caretVisual.Offset({static_cast<float>(xPos), 0.0f, 0.0f});
   }
 }
 
@@ -1007,16 +1008,27 @@ void CompWindowsTextInputComponentView::DrawImage() noexcept {
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 
+  m_drawing = true;
   if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(
           nullptr, __uuidof(ID2D1DeviceContext), d2dDeviceContext.put_void(), &offset))) {
-
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+    assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
+    d2dDeviceContext->SetDpi(dpi, dpi);
 
     RECTL rc{
-        static_cast<LONG>(offset.x * m_layoutMetrics.pointScaleFactor),
-        static_cast<LONG>(offset.y * m_layoutMetrics.pointScaleFactor),
-        static_cast<LONG>(offset.x * m_layoutMetrics.pointScaleFactor) + static_cast<LONG>(m_imgWidth),
-        static_cast<LONG>(offset.y * m_layoutMetrics.pointScaleFactor) + static_cast<LONG>(m_imgHeight)};
+        static_cast<LONG>(offset.x),
+        static_cast<LONG>(offset.y),
+        static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
+        static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+
+    RECT rcClient{
+        static_cast<LONG>(offset.x),
+        static_cast<LONG>(offset.y),
+        static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
+        static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
+
+    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
     // TODO keep track of proper invalid rect
     auto hrDraw = m_textServices->TxDrawD2D(d2dDeviceContext.get(), &rc, nullptr, TXTVIEW_ACTIVE);
@@ -1027,7 +1039,7 @@ void CompWindowsTextInputComponentView::DrawImage() noexcept {
     auto hrEndDraw = m_drawingSurfaceInterop->EndDraw();
     winrt::check_hresult(hrEndDraw);
   }
-
+  m_drawing = false;
   m_needsRedraw = false;
 }
 
@@ -1085,7 +1097,7 @@ void CompWindowsTextInputComponentView::ensureVisual() noexcept {
     m_caretOpacityAnimation.Duration(std::chrono::milliseconds{1000});
     m_caretOpacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
 
-    m_visual.Children().InsertAtBottom(m_caretVisual);
+    m_visual.Children().InsertAtTop(m_caretVisual);
   }
 }
 
