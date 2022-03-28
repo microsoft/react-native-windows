@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220227-2009-189c2c895",
+  "baseVersion": "0.0.0-20220311-2027-b676ca560",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "62cbbd198b5f952592fcffae5e5f88a387a2f190"
+      "baseHash": "ddc552b19a8b22fa111a160b2b3c6c928f866b22"
     },
     {
       "type": "patch",
@@ -55,7 +55,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
       "baseFile": "ReactCommon/jsi/jsi/jsi.h",
-      "baseHash": "6ef3f675e8af4060ebd43ba75136d58932b02eb4",
+      "baseHash": "0b364cdd3da5361d2016186a42e143428f88f406",
       "issue": 9703
     },
     {
@@ -82,7 +82,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "900dd159210db7a612ba30e1ebba3799f428425c",
+      "baseHash": "5fcc6fbfb6a0fd658334ef68078be6aa215e8090",
       "issue": 5430
     },
     {
@@ -171,7 +171,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Button.windows.js",
       "baseFile": "Libraries/Components/Button.js",
-      "baseHash": "6fb35939cfcb9731ee9e72e7091124534e649844"
+      "baseHash": "d614f54b5d5554eb7e2b16f8b05db0dc17cced69"
     },
     {
       "type": "copy",
@@ -227,7 +227,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "566b15a4f7bf415c693e6d8217a9c3957c72521e"
+      "baseHash": "b6e9d331a959f84314be9a0efcf40ce8eca4a6d8"
     },
     {
       "type": "derived",
@@ -279,25 +279,25 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "5a8d6fc314a31def23e8bb6e31ddcdb015840692"
+      "baseHash": "b73cf5a72709ec421e63e8b41e50c37b329e4e8c"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "8eb1c9f078fb611dee84a1a5a762551b659e1879"
+      "baseHash": "6e573b4dd18a4ce5ad6233ad71598b02ed95517d"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "df7216642c89e694ae629442de9865b6bd993b23"
+      "baseHash": "ed3f6e8a5cf73c49223d42bd584bf6ef6e3c4572"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewAttributes.windows.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseHash": "14b7dc745d010a375eb89ac56d803a53e19427e5",
+      "baseHash": "1e2900121c17ba9f58a7f6d0b3604456a13642bf",
       "issue": 9053
     },
     {
@@ -316,7 +316,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "2b04c305b0abc616bb01c886ecab4839efc2cf58"
+      "baseHash": "8c4e0e5c8d30af80e93d2cfaa685f3ac25bc8978"
     },
     {
       "type": "platform",
