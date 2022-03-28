@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 21 Mar 2022 15:08:45 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.0-preview.3",
+      "version": "0.68.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "94d294948c06c235228acea8204620359da335fa",
+            "comment": "Integrate 0.68.0-rc.2"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0-preview.3",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Feb 2022 16:08:39 GMT",
       "tag": "@office-iss/react-native-win32_v0.68.0-preview.2",
       "version": "0.68.0-preview.2",

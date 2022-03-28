@@ -2,6 +2,57 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 28 Mar 2022 15:08:01 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.68.0-preview.8",
+            "commit": "423d91443f86a3e4123fa8d53d0be536d8be2115"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Mar 2022 15:08:46 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.68.0-preview.7",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0-preview.3",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Mar 2022 15:07:44 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.68.0-preview.6",
+            "commit": "09fa7051ab95b1ff704fcede5e0522ef53d7feb7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Mar 2022 16:07:47 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
