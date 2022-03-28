@@ -5,6 +5,11 @@
 
 #include <Networking/OriginPolicyHttpFilter.h>
 
+//TODO: revert
+#include <winrt/base.h>
+#include <winrt/Windows.Web.Http.h>
+#include <regex>
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using Microsoft::React::Networking::OriginPolicyHttpFilter;
@@ -54,8 +59,7 @@ TEST_METHOD(UrlsHaveSameOrigin) {
 }
 
 //TODO: Remove
-TEST_METHOD(Dummy)
-{
+TEST_METHOD(Dummy) {
   Uri uri{L"http://user:password@domain.com/ab?c=d&e=f"};
   Uri iri{uri.DisplayUri()};
 
@@ -63,6 +67,19 @@ TEST_METHOD(Dummy)
   Assert::AreEqual(zero, iri.UserName().size());
   Assert::AreEqual(zero, iri.Password().size());
   Assert::AreEqual(uri.DisplayUri().c_str(), iri.ToString().c_str());
+
+  auto cmp = [](std::string a, std::string b) { return _strcmpi(a.c_str(), b.c_str()) < 0; };
+  std::regex rgx{"\\s*,\\s*"};
+  std::string value = "NO , si, no  ,Yes,yes ,  \tnelson, Yes, nO, SI";
+
+  std::set<std::string> conjcs{
+      std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}};
+
+  std::set<std::string, decltype(cmp)> conj{
+      std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}, cmp};
+
+  size_t sz = 4;
+  Assert::AreEqual(sz, conj.size());
 }
 
 };

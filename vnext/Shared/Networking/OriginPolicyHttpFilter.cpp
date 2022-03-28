@@ -5,6 +5,9 @@
 
 #include <RuntimeOptions.h>
 
+// Standard Library
+#include <regex>
+
 using std::set;
 
 using winrt::hresult_error;
@@ -210,7 +213,47 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
 void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const& response) const
 {
+  //ExtractAccessControlValues
+  using std::wregex;
+  using std::wsregex_token_iterator;
+  using std::wstring;
+  auto ciStrCmp = [](const wstring a, const wstring b) {
+    return _wcsicmp(a.c_str(), b.c_str()) < 0;
+  };
 
+  wregex rgx{L"\\s*,\\s*"};
+  set<wstring, decltype(ciStrCmp)> allowedHeaders{ciStrCmp};
+
+  for (const auto &header : response.Headers()) {
+    if (header.Key() == L"Access-Control-Allow-Headers") {
+      auto value = std::wstring{header.Value().c_str()};
+
+      //TODO: Skip redundant comparison.
+      auto parsed = set<wstring, decltype(ciStrCmp)> {
+        wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
+      allowedHeaders.insert(parsed.cbegin(), parsed.cend());
+    }
+    else if (header.Key() == L"Access-Control-Allow-Methods")
+      continue;
+    else if (header.Key() == L"Access-Control-Allow-Origin")
+      continue;
+    else if (header.Key() == L"Access-Control-Expose-Headers")
+      continue;
+    else if (header.Key() == L"Access-Control-Allow-Credentials")
+      continue;
+    else if (header.Key() == L"Access-Control-Max-Age")
+      continue;
+  }
+
+  // Check if the origin is allowed in conjuction with the withCredentials flag
+  // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
+  //if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
+
+  // Check if the method is allowed
+  //if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
+
+  // Check if the headers are allowed
+  //if (!IsCrossOriginRequestHeadersAllowed(requestHeaders, allowedHeadersList, withCredentials, /*out*/ errorText))
 }
 
 // Mso::React::HttpResource::SendPreflight
