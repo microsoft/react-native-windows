@@ -8,13 +8,13 @@
 import fs from '@react-native-windows/fs';
 import os from 'os';
 import path from 'path';
+import simplegit, {SimpleGit, ResetMode} from 'simple-git';
 
 import BatchingQueue from './BatchingQueue';
 import FileSystemRepository from './FileSystemRepository';
 import {VersionedReactFileRepository} from './FileRepository';
 import {getNpmPackage} from './PackageUtils';
 import {fetchFullRef} from './refFromVersion';
-import simplegit, {SimpleGit, ResetMode} from 'simple-git';
 
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
 
