@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 12 Mar 2022 06:09:07 GMT and should not be manually modified.
+This log was last generated on Tue, 22 Mar 2022 05:09:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.121
+
+Tue, 22 Mar 2022 05:09:20 GMT
+
+### Changes
+
+- Update to Windows App SDK 1.0.0 (agnel@microsoft.com)
 
 ## 0.0.0-canary.120
 

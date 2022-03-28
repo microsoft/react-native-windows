@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 26 Mar 2022 05:09:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.475",
+      "version": "0.0.0-canary.475",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6f4e5c31e03683758f1dac7095f3736d6ebc66ae",
+            "comment": "Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Mar 2022 05:09:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.474",
+      "version": "0.0.0-canary.474",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "53bd508909a0bbe9236825619fd3713a2342f94a",
+            "comment": "Enable version checks in IDL files"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Mar 2022 05:09:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.473",
+      "version": "0.0.0-canary.473",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6ba68b373879c52139b8f528d10c967a62f4144d",
+            "comment": "Update to Windows App SDK 1.0.0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.121",
+            "commit": "6ba68b373879c52139b8f528d10c967a62f4144d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 18 Mar 2022 05:08:51 GMT",
       "tag": "react-native-windows_v0.0.0-canary.472",
       "version": "0.0.0-canary.472",

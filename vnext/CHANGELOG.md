@@ -1,8 +1,33 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 18 Mar 2022 05:08:51 GMT and should not be manually modified.
+This log was last generated on Sat, 26 Mar 2022 05:09:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.475
+
+Sat, 26 Mar 2022 05:09:10 GMT
+
+### Changes
+
+- Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync (asklar@microsoft.com)
+
+## 0.0.0-canary.474
+
+Wed, 23 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- Enable version checks in IDL files (asklar@microsoft.com)
+
+## 0.0.0-canary.473
+
+Tue, 22 Mar 2022 05:09:20 GMT
+
+### Changes
+
+- Update to Windows App SDK 1.0.0 (agnel@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.121
 
 ## 0.0.0-canary.472
 

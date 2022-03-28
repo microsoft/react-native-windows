@@ -235,8 +235,8 @@ jobs:
           SearchPattern: vnext/target/**/*.pdb
           SymbolServerType: TeamServices
 
-  - job: RnwNativeBuildReunion
-    displayName: Build Reunion
+  - job: RnwNativeBuildWinAppSDK
+    displayName: Build WinAppSDK
     dependsOn: RnwNpmPublish
     strategy:
       matrix:
@@ -259,7 +259,7 @@ jobs:
       - template: templates/msbuild-sln.yml
         parameters:
           solutionDir: vnext
-          solutionName: Microsoft.ReactNative.ProjectReunion.sln
+          solutionName: Microsoft.ReactNative.WindowsAppSDK.sln
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           msbuildArguments:
@@ -268,12 +268,12 @@ jobs:
 
       - template: templates/publish-build-artifacts.yml
         parameters:
-          artifactName: Reunion
+          artifactName: WindowsAppSDK
           buildPlatform: $(BuildPlatform)
           buildConfiguration: $(BuildConfiguration)
           contents: |
             Microsoft.ReactNative\**
-            Microsoft.ReactNative.ProjectReunion\**
+            Microsoft.ReactNative.WindowsAppSDK\**
 
       - template: templates/component-governance.yml
 
@@ -289,7 +289,7 @@ jobs:
       - RnwNpmPublish
       - RnwNativeBuildDesktop
       - RnwNativeBuildUniversal
-      - RnwNativeBuildReunion
+      - RnwNativeBuildWinAppSDK
     displayName: Sign Binaries and Publish NuGet
     pool: ${{ parameters.AgentPool.Medium }}
 
@@ -356,11 +356,11 @@ jobs:
 
       - template: templates/prep-and-pack-nuget.yml
         parameters:
-          artifactName: Reunion
+          artifactName: WindowsAppSDK
           publishCommitId: $(publishCommitId)
           npmVersion: $(npmVersion)
-          nugetroot: $(System.DefaultWorkingDirectory)\Reunion
-          packMicrosoftReactNativeProjectReunion: true
+          nugetroot: $(System.DefaultWorkingDirectory)\WindowsAppSDK
+          packMicrosoftReactNativeWindowsAppSDK: true
           ${{ if or(eq(variables['EnableCodesign'], 'true'), endsWith(variables['Build.SourceBranchName'], '-stable')) }}: # Sign if EnableCodeSign or on *-stable release builds
             signMicrosoft: true
           slices:
