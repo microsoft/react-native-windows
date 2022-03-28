@@ -8,14 +8,13 @@
 import fs from '@react-native-windows/fs';
 import os from 'os';
 import path from 'path';
-import simplegit from 'simple-git/promise';
 
 import BatchingQueue from './BatchingQueue';
 import FileSystemRepository from './FileSystemRepository';
 import {VersionedReactFileRepository} from './FileRepository';
 import {getNpmPackage} from './PackageUtils';
 import {fetchFullRef} from './refFromVersion';
-import {ResetMode} from 'simple-git';
+import simplegit, {SimpleGit, ResetMode} from 'simple-git';
 
 const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
 
@@ -27,7 +26,7 @@ export default class GitReactFileRepository
   implements VersionedReactFileRepository
 {
   private readonly fileRepo: FileSystemRepository;
-  private readonly gitClient: simplegit.SimpleGit;
+  private readonly gitClient: SimpleGit;
   private checkedOutVersion?: string;
   private static githubToken?: string;
 
@@ -36,7 +35,7 @@ export default class GitReactFileRepository
   // ensure they are performed atomically.
   private readonly batchingQueue: BatchingQueue<string>;
 
-  private constructor(gitDirectory: string, gitClient: simplegit.SimpleGit) {
+  private constructor(gitDirectory: string, gitClient: SimpleGit) {
     this.batchingQueue = new BatchingQueue();
     this.fileRepo = new FileSystemRepository(gitDirectory);
     this.gitClient = gitClient;
@@ -53,7 +52,6 @@ export default class GitReactFileRepository
     await fs.mkdir(dir, {recursive: true});
 
     const gitClient = simplegit(dir);
-    gitClient.silent(true);
 
     if (!(await gitClient.checkIsRepo())) {
       await gitClient.init();
