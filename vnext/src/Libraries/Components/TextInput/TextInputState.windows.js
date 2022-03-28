@@ -75,7 +75,7 @@ function blurField(textFieldID: ?number) {
 /**
  * @param {number} TextInputID id of the text field to focus
  * Focuses the specified text field
- * noop if the text field was already focused
+ * noop if the text field was already focused or if the field is not editable
  */
 function focusTextInput(textField: ?ComponentRef) {
   if (typeof textField === 'number') {
@@ -97,7 +97,15 @@ function focusTextInput(textField: ?ComponentRef) {
     focusInput(textField);
     WindowsTextInputCommands.focus(textField);
     // Windows]
-  } else if (currentlyFocusedInputRef !== textField && textField != null) {
+  } else if (textField != null) {
+    const fieldCanBeFocused =
+      currentlyFocusedInputRef !== textField &&
+      // $FlowFixMe - `currentProps` is missing in `NativeMethods`
+      textField.currentProps?.editable !== false;
+
+    if (!fieldCanBeFocused) {
+      return;
+    }
     focusInput(textField);
     if (Platform.OS === 'ios') {
       // This isn't necessarily a single line text input

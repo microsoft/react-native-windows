@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220311-2027-b676ca560",
+  "baseVersion": "0.0.0-20220322-2008-8a5460ce8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "ddc552b19a8b22fa111a160b2b3c6c928f866b22"
+      "baseHash": "a8c0d9b54ea5b1514ed4a81c2d87cb7972bc4b26"
     },
     {
       "type": "derived",
@@ -130,7 +130,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "53e9f8f6739e958e84709d02201a76527534b367"
+      "baseHash": "a5802e5d8b960912293d0069a99bbf346c8ecc4c"
     },
     {
       "type": "copy",

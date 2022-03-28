@@ -172,8 +172,9 @@ function ForceTouchExample() {
           style={styles.wrapper}
           testID="pressable_3dtouch_button"
           onStartShouldSetResponder={() => true}
-          onResponderMove={(event) => setForce(event.nativeEvent?.force || 1)}
-          onResponderRelease={(event) => setForce(0)}>
+          // $FlowFixMe[sketchy-null-number]
+          onResponderMove={event => setForce(event.nativeEvent?.force || 1)}
+          onResponderRelease={event => setForce(0)}>
           <Text style={styles.button}>Press Me</Text>
         </View>
       </View>
