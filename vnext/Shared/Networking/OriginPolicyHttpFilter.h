@@ -48,9 +48,12 @@ class OriginPolicyHttpFilter : public winrt::implements<OriginPolicyHttpFilter, 
 
   OriginPolicyHttpFilter(OriginPolicy originPolicy);
 
-  void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const& url);
+  void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const& request);
 
-  void ValidatePreflightResponse(winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
+  void ValidatePreflightResponse(winrt::Windows::Web::Http::HttpRequestMessage const
+                                     & request,winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
+
+  void ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const& allowCredentials) const;
 
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,

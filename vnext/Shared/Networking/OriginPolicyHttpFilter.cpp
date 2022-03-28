@@ -211,7 +211,44 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
   }
 }
 
-void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const& response) const
+// See https://fetch.spec.whatwg.org/#cors-check
+void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const& allowCredentials) const {
+  if (origin.size() == 0)
+    throw hresult_error{E_INVALIDARG, L"No valid origin in response.\\n"};
+
+  // 4.10.1-2 - null allow origin
+  if (L"null" == origin)
+    throw hresult_error{
+        E_INVALIDARG,
+        L"The Access-Control-Allow-Origin header has a value of [null] which differs from the supplied origin.\\n"};
+
+  // 4.10.3 - valid wild card allow origin
+  if (!true /*withCredentials*/ && L"*" == origin)
+    return;
+
+  // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected.
+  // 4.10.4 - Mismatched allow origin
+  if (!IsSameOrigin(m_origin, Uri{origin}))
+    throw hresult_error{
+        E_INVALIDARG,
+        L"The Access-Control-Allow-Origin header has a value of [" + origin +
+            L"] which differs from the supplied origin.\\n"};
+
+  // 4.10.5
+  if (false /*withCredentials*/)
+    return;
+
+  // 4.10.6-8
+  // https://fetch.spec.whatwg.org/#http-access-control-allow-credentials
+  // This check should be case sensitive.
+  // See also https://fetch.spec.whatwg.org/#http-new-header-syntax
+  if (L"true" != allowCredentials)
+    throw hresult_error{
+        E_INVALIDARG,
+        L"Access-Control-Allow-Credentials value must be \"true\" when the response includes credentials.\\n"};
+};
+
+void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpRequestMessage const& request, HttpResponseMessage const& response) const
 {
   using std::wregex;
   using std::wsregex_token_iterator;
@@ -227,10 +264,11 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const
   set<wstring, decltype(ciStrCmp)> allowedHeaders{ciStrCmp};
   set<wstring, decltype(ciStrCmp)> allowedMethods{ciStrCmp};
   set<wstring, decltype(ciStrCmp)> exposedHeaders{ciStrCmp};
-  hstring allowOrigin;
-  hstring allowCredentials;
+  hstring allowedOrigin;
+  hstring allowedCredentials;
   size_t maxAge;
 
+  // Extract header values
   for (const auto &header : response.Headers()) {
     if (header.Key() == L"Access-Control-Allow-Headers") {
       auto value = wstring{header.Value().c_str()};
@@ -248,7 +286,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const
       allowedMethods.insert(parsed.cbegin(), parsed.cend());
     }
     else if (header.Key() == L"Access-Control-Allow-Origin")
-      allowOrigin = header.Value();
+      allowedOrigin = header.Value();
     else if (header.Key() == L"Access-Control-Expose-Headers") {
       auto value = wstring{header.Value().c_str()};
 
@@ -258,7 +296,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const
       exposedHeaders.insert(parsed.cbegin(), parsed.cend());
     }
     else if (header.Key() == L"Access-Control-Allow-Credentials")
-      allowCredentials = header.Value();
+      allowedCredentials = header.Value();
     else if (header.Key() == L"Access-Control-Max-Age")
       maxAge = _wtoi(header.Value().c_str());
   }
@@ -266,15 +304,54 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const
   // Check if the origin is allowed in conjuction with the withCredentials flag
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
   //if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
+  ValidateAllowOrigin(allowedOrigin, allowedCredentials);
 
-  // Check if the method is allowed
+  // Check if the request method is allowed
   //if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
+  bool requestMethodAllowed = false;
+  for (const auto &method : allowedMethods) {
+    if (L"*" == method) {
+      if (false /*withCredentials*/) {
+        requestMethodAllowed = true;
+        break;
+      }
+    }
+    else if (HttpMethod{method} == request.Method()) {
+      requestMethodAllowed = true;
+      break;
+    }
+  }
+  if (!requestMethodAllowed)
+    throw hresult_error{
+        E_INVALIDARG,
+        L"Method [" + request.Method().ToString() +
+            L"] is not allowed by Access-Control-Allow-Methods in preflight response.\\n"};
 
-  // Check if the headers are allowed
+  // Check if request headers are allowed
   //if (!IsCrossOriginRequestHeadersAllowed(requestHeaders, allowedHeadersList, withCredentials, /*out*/ errorText))
+  // See https://fetch.spec.whatwg.org/#cors-preflight-fetch, section 4.8.7.6-7
+  // Check if the header should be allowed through wildcard, if the request does not have credentials.
+  bool requestHeadersAllowed = false;
+  if (true /*!withCredentials*/ && allowedHeaders.find(L"*") != allowedHeaders.cend()) {
+    // "Authorization" header cannot be allowed through wildcard alone.
+    // "Authorization" is the only member of https://fetch.spec.whatwg.org/#cors-non-wildcard-request-header-name.
+    if (request.Headers().HasKey(L"Authorization") && allowedHeaders.find(L"Authorization") == allowedHeaders.cend())
+      throw hresult_error{
+          E_INVALIDARG,
+          L"Request header field [Authorization] is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
+
+    requestHeadersAllowed = true;
+  }
+  if (!requestHeadersAllowed) {
+    // Forbidden headers are excluded from the JavaScript layer.
+    // User agents may use these headers internally.
+    //TODO: CorsUnsafeNotForbiddenRequestHeaderNames(requestHeaders);
+  }
+
+  //TODO: Implement with cache
+  // InsertToPreflightCache(url.c_str(), allowedMethodsList, allowedHeadersList, exposeHeaders, withCredentials, parseMaxSeconds)
 }
 
-// Mso::React::HttpResource::SendPreflight
 ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const { // TODO: const& ??
   //TODO: Inject user agent?
 
@@ -329,7 +406,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   // If CORS && !inCache => SendPreflight! { cache() }
   try {
     auto preflightResponse = co_await SendPreflightAsync(coRequest);
-    ValidatePreflightResponse(preflightResponse);
+    ValidatePreflightResponse(coRequest, preflightResponse);
     
     // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
     // NetworkingSecurity::ValidateSecurityOnResponse
