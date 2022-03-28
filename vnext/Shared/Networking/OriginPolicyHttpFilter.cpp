@@ -213,36 +213,54 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
 void OriginPolicyHttpFilter::ValidatePreflightResponse(HttpResponseMessage const& response) const
 {
-  //ExtractAccessControlValues
   using std::wregex;
   using std::wsregex_token_iterator;
   using std::wstring;
-  auto ciStrCmp = [](const wstring a, const wstring b) {
+  using winrt::hstring;
+
+  // https://tools.ietf.org/html/rfc2616#section-4.2
+  wregex rgx{L"\\s*,\\s*"};
+  auto ciStrCmp = [](const wstring &a, const wstring &b) {
     return _wcsicmp(a.c_str(), b.c_str()) < 0;
   };
 
-  wregex rgx{L"\\s*,\\s*"};
   set<wstring, decltype(ciStrCmp)> allowedHeaders{ciStrCmp};
+  set<wstring, decltype(ciStrCmp)> allowedMethods{ciStrCmp};
+  set<wstring, decltype(ciStrCmp)> exposedHeaders{ciStrCmp};
+  hstring allowOrigin;
+  hstring allowCredentials;
+  size_t maxAge;
 
   for (const auto &header : response.Headers()) {
     if (header.Key() == L"Access-Control-Allow-Headers") {
-      auto value = std::wstring{header.Value().c_str()};
+      auto value = wstring{header.Value().c_str()};
 
-      //TODO: Skip redundant comparison.
-      auto parsed = set<wstring, decltype(ciStrCmp)> {
-        wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
+      // TODO: Avoid redundant comparison.
+      auto parsed = set<wstring, decltype(ciStrCmp)>{
+          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
       allowedHeaders.insert(parsed.cbegin(), parsed.cend());
+    } else if (header.Key() == L"Access-Control-Allow-Methods") {
+      auto value = wstring{header.Value().c_str()};
+
+      // TODO: Avoid redundant comparison.
+      auto parsed = set<wstring, decltype(ciStrCmp)>{
+          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
+      allowedMethods.insert(parsed.cbegin(), parsed.cend());
     }
-    else if (header.Key() == L"Access-Control-Allow-Methods")
-      continue;
     else if (header.Key() == L"Access-Control-Allow-Origin")
-      continue;
-    else if (header.Key() == L"Access-Control-Expose-Headers")
-      continue;
+      allowOrigin = header.Value();
+    else if (header.Key() == L"Access-Control-Expose-Headers") {
+      auto value = wstring{header.Value().c_str()};
+
+      // TODO: Avoid redundant comparison.
+      auto parsed = set<wstring, decltype(ciStrCmp)>{
+          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
+      exposedHeaders.insert(parsed.cbegin(), parsed.cend());
+    }
     else if (header.Key() == L"Access-Control-Allow-Credentials")
-      continue;
+      allowCredentials = header.Value();
     else if (header.Key() == L"Access-Control-Max-Age")
-      continue;
+      maxAge = _wtoi(header.Value().c_str());
   }
 
   // Check if the origin is allowed in conjuction with the withCredentials flag
