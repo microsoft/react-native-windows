@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Mar 2022 15:08:01 GMT",
+      "tag": "react-native-windows_v0.68.0-preview.8",
+      "version": "0.68.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "423d91443f86a3e4123fa8d53d0be536d8be2115",
+            "comment": "Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eada31cdfbae1ba5611e16c0c2fc487bc94f85dc",
+            "comment": "Enable version checks in IDL files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Mar 2022 15:08:45 GMT",
       "tag": "react-native-windows_v0.68.0-preview.7",
       "version": "0.68.0-preview.7",
