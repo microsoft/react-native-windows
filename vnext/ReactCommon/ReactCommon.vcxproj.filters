@@ -279,6 +279,9 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h">
+      <Filter>turbomodule\core</Filter>
+    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
