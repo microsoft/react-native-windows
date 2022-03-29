@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Mar 2022 15:13:26 GMT and should not be manually modified.
+This log was last generated on Tue, 29 Mar 2022 17:35:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.6
+
+Tue, 29 Mar 2022 17:35:16 GMT
+
+### Patches
+
+- Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync (asklar@microsoft.com)
 
 ## 0.67.5
 
