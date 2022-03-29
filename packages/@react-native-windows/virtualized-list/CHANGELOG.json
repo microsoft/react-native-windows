@@ -2,6 +2,21 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Tue, 29 Mar 2022 05:09:50 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.33",
+      "version": "0.0.0-canary.33",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "b0dbc51d8ac6add9172891a5ab97a68eec9b979a",
+            "comment": "Integrate 3/11"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Mar 2022 05:09:18 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.32",
       "version": "0.0.0-canary.32",

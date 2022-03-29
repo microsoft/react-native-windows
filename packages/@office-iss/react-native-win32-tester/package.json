@@ -14,12 +14,12 @@
     "@react-native/tester": "0.0.1"
   },
   "peerDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.138",
+    "@office-iss/react-native-win32": "^0.0.0-canary.139",
     "react": "17.0.2",
     "react-native": "0.0.0-20220322-2008-8a5460ce8"
   },
   "devDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.138",
+    "@office-iss/react-native-win32": "^0.0.0-canary.139",
     "@rnw-scripts/eslint-config": "1.1.11",
     "@rnw-scripts/just-task": "2.2.3",
     "@rnw-scripts/ts-config": "2.0.2",
