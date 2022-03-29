@@ -24,7 +24,6 @@
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\PackageVersionDefinitions.props" />
-  <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -138,7 +137,14 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>chakra.dll;winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>
+        api-ms-win-core-file-l1-2-0.dll;
+        api-ms-win-core-windowserrorreporting-l1-1-0.dll;
+        ext-ms-win-uiacore-l1-1-1.dll;
+        chakra.dll;
+        winsqlite3.dll;
+        %(DelayLoadDLLs)
+      </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
@@ -829,13 +835,6 @@
     <When Condition="'$(UseV8)' == 'true'">
       <ItemGroup>
         <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="'$(WebView2Version)'!=''">
-      <ItemGroup>
-        <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2Version)" />
       </ItemGroup>
     </When>
   </Choose>

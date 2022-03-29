@@ -9,13 +9,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.68.0-rc.1",
+  "baseVersion": "0.68.0-rc.2",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "248d08cae6422103eeeb807099afeeeac776b457"
+      "baseHash": "2c2e7e50f6f0583ed3ddd91463abdb13902d7ac1"
     },
     {
       "type": "patch",
@@ -37,41 +37,6 @@
       "baseFile": "ReactCommon/react/renderer/graphics/platform/cxx/react/renderer/graphics/Color.h",
       "baseHash": "010970b09aebda9348dfed9dd7b8fefb365bcc9b",
       "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBuffer.cpp",
-      "baseHash": "85183903ca463731f6dc12a93d138411f6dd792c",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBuffer.h",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBuffer.h",
-      "baseHash": "e06a4144be2be3bc1c7b73d14056117537a6aa0c",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseHash": "67ef7ba0ff56ec737475b40016b741a22c45784e",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.h",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.h",
-      "baseHash": "ceeddfe6d40b4a82f2a58399fb64abedcd81c962",
-      "issue": 9451
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/tests/MapBufferTest.cpp",
-      "baseFile": "ReactCommon/react/renderer/mapbuffer/tests/MapBufferTest.cpp",
-      "baseHash": "dc765d1c3d9da26790b3bb9ee5731a13315a0312",
-      "issue": 9451
     },
     {
       "type": "patch",
