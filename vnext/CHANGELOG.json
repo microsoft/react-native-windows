@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 29 Mar 2022 17:35:30 GMT",
+      "tag": "react-native-windows_v0.67.6",
+      "version": "0.67.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "not available",
+            "comment": "Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Mar 2022 17:35:16 GMT",
       "tag": "react-native-windows_v0.67.6",
       "version": "0.67.6",
