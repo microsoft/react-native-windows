@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #include "OriginPolicyHttpFilter.h"
+#include "WinRTHttpResource.h"//RequestArgs
 
 #include <RuntimeOptions.h>
 
@@ -12,6 +13,7 @@ using std::set;
 
 using winrt::hresult_error;
 using winrt::to_hstring;
+using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
@@ -206,7 +208,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 }
 
 // See https://fetch.spec.whatwg.org/#cors-check
-void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials)
+void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials, IInspectable const& iArgs)
     const {
   if (origin.size() == 0)
     throw hresult_error{E_INVALIDARG, L"No valid origin in response.\\n"};
@@ -217,8 +219,9 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, w
         E_INVALIDARG,
         L"The Access-Control-Allow-Origin header has a value of [null] which differs from the supplied origin.\\n"};
 
+  bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iArgs)->WithCredentials;
   // 4.10.3 - valid wild card allow origin
-  if (!true /*withCredentials*/ && L"*" == origin)
+  if (!withCredentials && L"*" == origin)
     return;
 
   // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected.
@@ -230,7 +233,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, w
             L"] which differs from the supplied origin.\\n"};
 
   // 4.10.5
-  if (false /*withCredentials*/)
+  if (withCredentials)
     return;
 
   // 4.10.6-8
@@ -296,7 +299,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   // Check if the origin is allowed in conjuction with the withCredentials flag
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
   // if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
-  ValidateAllowOrigin(allowedOrigin, allowedCredentials);
+  ValidateAllowOrigin(allowedOrigin, allowedCredentials, request.Properties().Lookup(L"RequestArgs"));
 
   // Check if the request method is allowed
   // if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))

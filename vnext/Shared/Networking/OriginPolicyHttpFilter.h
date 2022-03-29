@@ -52,7 +52,7 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpRequestMessage const &request,
       winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
 
-  void ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials) const;
+  void ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials, winrt::Windows::Foundation::IInspectable const& iArgs) const;
 
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
