@@ -242,8 +242,12 @@ void DevSupportManager::StartInspector(
     [[maybe_unused]] const uint16_t packagerPort) noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
   std::string packageName("RNW");
-  if (auto currentPackage = winrt::Windows::ApplicationModel::Package::Current()) {
-    packageName = winrt::to_string(currentPackage.DisplayName());
+  try {
+    if (auto currentPackage = winrt::Windows::ApplicationModel::Package::Current()) {
+      packageName = winrt::to_string(currentPackage.DisplayName());
+    }
+  } catch (const winrt::hresult_error&) {
+    // we may be in an unpackaged app
   }
 
   std::string deviceName("RNWHost");
