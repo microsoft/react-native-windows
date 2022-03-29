@@ -27,6 +27,7 @@ using winrt::fire_and_forget;
 using winrt::hresult_error;
 using winrt::to_hstring;
 using winrt::to_string;
+using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 using winrt::Windows::Storage::StorageFile;
@@ -155,7 +156,17 @@ void WinRTHttpResource::SendRequest(
     Uri uri{to_hstring(std::move(url))};
     HttpRequestMessage request{httpMethod, uri};
 
-    PerformSendRequest(requestId, std::move(request), std::move(headers), std::move(bodyData), responseType == "text");
+    auto args = winrt::make<RequestArgs>();
+    auto concreteArgs = winrt::get_self<RequestArgs, IInspectable>(args);
+    concreteArgs->RequestId = requestId;
+    concreteArgs->Headers = std::move(headers);
+    concreteArgs->Body = std::move(bodyData);
+    concreteArgs->IncrementalUpdates = useIncrementalUpdates;
+    concreteArgs->WithCredentials = withCredentials;
+    concreteArgs->IsText = responseType == "text";
+    concreteArgs->Timeout = timeout;
+
+    PerformSendRequest(std::move(request), args);
   } catch (std::exception const &e) {
     if (m_onError) {
       m_onError(requestId, e.what());
@@ -224,17 +235,12 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   m_responses.erase(requestId);
 }
 
-fire_and_forget WinRTHttpResource::PerformSendRequest(
-    int64_t requestId,
-    HttpRequestMessage &&request,
-    Headers &&headers,
-    BodyData &&bodyData,
-    bool textResponse) noexcept {
+fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&request, IInspectable const& args) noexcept {
   // Keep references after coroutine suspension.
   auto self = shared_from_this();
   auto coRequest = std::move(request);
-  auto coHeaders = std::move(headers);
-  auto coBodyData = std::move(bodyData);
+  auto coArgs = args;
+  auto coReqArgs = winrt::get_self<RequestArgs, IInspectable>(coArgs);
 
   // Ensure background thread
   co_await winrt::resume_background();
@@ -245,11 +251,11 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
 
   // Headers are generally case-insensitive
   // https://www.ietf.org/rfc/rfc2616.txt section 4.2
-  for (auto &header : coHeaders) {
+  for (auto &header : coReqArgs->Headers) {
     if (_stricmp(header.first.c_str(), "content-type") == 0) {
       bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
       if (!success && m_onError) {
-        co_return m_onError(requestId, "Failed to parse Content-Type");
+        co_return m_onError(coReqArgs->RequestId, "Failed to parse Content-Type");
       }
     } else if (_stricmp(header.first.c_str(), "content-encoding") == 0) {
       contentEncoding = header.second;
@@ -259,7 +265,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
       bool success =
           coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
       if (!success && m_onError) {
-        co_return m_onError(requestId, "Failed to append Authorization");
+        co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
       }
     } else {
       coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
@@ -267,16 +273,16 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
   }
 
   IHttpContent content{nullptr};
-  if (BodyData::Type::String == coBodyData.Type) {
-    content = HttpStringContent{to_hstring(coBodyData.Data)};
-  } else if (BodyData::Type::Base64 == coBodyData.Type) {
-    auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(coBodyData.Data));
+  if (BodyData::Type::String == coReqArgs->Body.Type) {
+    content = HttpStringContent{to_hstring(coReqArgs->Body.Data)};
+  } else if (BodyData::Type::Base64 == coReqArgs->Body.Type) {
+    auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(coReqArgs->Body.Data));
     content = HttpBufferContent{buffer};
-  } else if (BodyData::Type::Uri == coBodyData.Type) {
-    auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(coBodyData.Data)});
+  } else if (BodyData::Type::Uri == coReqArgs->Body.Type) {
+    auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(coReqArgs->Body.Data)});
     auto stream = co_await file.OpenReadAsync();
     content = HttpStreamContent{stream};
-  } else if (BodyData::Type::Form == coBodyData.Type) {
+  } else if (BodyData::Type::Form == coReqArgs->Body.Type) {
     // TODO: Add support
   } else {
     // BodyData::Type::Empty
@@ -291,7 +297,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
     if (!contentEncoding.empty()) {
       if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
         if (m_onError) {
-          m_onError(requestId, "Failed to parse Content-Encoding");
+          m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
         }
         co_return;
       }
@@ -318,16 +324,17 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
     //}
     //// FILTER
 
+    coRequest.Properties().Insert(L"RequestArgs", coArgs);
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
-    self->TrackResponse(requestId, sendRequestOp);
+    self->TrackResponse(coReqArgs->RequestId, sendRequestOp);
 
     co_await lessthrow_await_adapter<ResponseType>{sendRequestOp};
     auto result = sendRequestOp.ErrorCode();
     if (result < 0) {
       if (self->m_onError) {
-        self->m_onError(requestId, Utilities::HResultToString(std::move(result)));
+        self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(std::move(result)));
       }
-      co_return self->UntrackResponse(requestId);
+      co_return self->UntrackResponse(coReqArgs->RequestId);
     }
 
     auto response = sendRequestOp.GetResults();
@@ -346,7 +353,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
         }
 
         self->m_onResponse(
-            requestId, {static_cast<int32_t>(response.StatusCode()), std::move(url), std::move(responseHeaders)});
+            coReqArgs->RequestId, {static_cast<int32_t>(response.StatusCode()), std::move(url), std::move(responseHeaders)});
       }
     }
 
@@ -355,7 +362,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
-      if (textResponse) {
+      if (coReqArgs->IsText) {
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
@@ -364,13 +371,13 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
       co_await reader.LoadAsync(10 * 1024 * 1024);
       auto length = reader.UnconsumedBufferLength();
 
-      if (textResponse) {
+      if (coReqArgs->IsText) {
         std::vector<uint8_t> data(length);
         reader.ReadBytes(data);
         string responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
 
         if (self->m_onData) {
-          self->m_onData(requestId, std::move(responseData));
+          self->m_onData(coReqArgs->RequestId, std::move(responseData));
         }
       } else {
         auto buffer = reader.ReadBuffer(length);
@@ -378,29 +385,29 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(
         auto responseData = to_string(std::wstring_view(data));
 
         if (self->m_onData) {
-          self->m_onData(requestId, std::move(responseData));
+          self->m_onData(coReqArgs->RequestId, std::move(responseData));
         }
       }
     } else {
       if (self->m_onError) {
-        self->m_onError(requestId, response == nullptr ? "request failed" : "No response content");
+        self->m_onError(coReqArgs->RequestId, response == nullptr ? "request failed" : "No response content");
       }
     }
   } catch (std::exception const &e) {
     if (self->m_onError) {
-      self->m_onError(requestId, e.what());
+      self->m_onError(coReqArgs->RequestId, e.what());
     }
   } catch (hresult_error const &e) {
     if (self->m_onError) {
-      self->m_onError(requestId, Utilities::HResultToString(e));
+      self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(e));
     }
   } catch (...) {
     if (self->m_onError) {
-      self->m_onError(requestId, "Unhandled exception during request");
+      self->m_onError(coReqArgs->RequestId, "Unhandled exception during request");
     }
   }
 
-  self->UntrackResponse(requestId);
+  self->UntrackResponse(coReqArgs->RequestId);
 }
 
 #pragma endregion WinRTHttpResource

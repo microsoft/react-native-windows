@@ -21,6 +21,17 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
 
   static int64_t s_lastRequestId;
 
+  struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Foundation::IInspectable>
+  {
+    int64_t   RequestId;
+    Headers   Headers;
+    BodyData  Body;
+    bool      IncrementalUpdates;
+    bool      WithCredentials;
+    bool      IsText;
+    int64_t   Timeout;
+  };
+
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseType> m_responses;
@@ -35,11 +46,9 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   void UntrackResponse(int64_t requestId) noexcept;
 
   winrt::fire_and_forget PerformSendRequest(
-      int64_t requestId,
-      winrt::Windows::Web::Http::HttpRequestMessage &&request,
-      Headers &&headers,
-      BodyData &&bodyData,
-      bool textResponse) noexcept;
+    winrt::Windows::Web::Http::HttpRequestMessage && request,
+      winrt::Windows::Foundation::IInspectable const& args
+  ) noexcept;
 
  public:
   WinRTHttpResource() noexcept;
