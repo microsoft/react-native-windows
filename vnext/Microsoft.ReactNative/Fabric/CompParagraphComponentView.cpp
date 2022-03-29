@@ -48,6 +48,9 @@ void CompParagraphComponentView::updateProps(
   if (oldViewProps.textAttributes.foregroundColor != newViewProps.textAttributes.foregroundColor) {
     m_requireRedraw = true;
   }
+  if (oldViewProps.textAttributes.opacity != newViewProps.textAttributes.opacity) {
+    m_requireRedraw = true;
+  }
 
   if (oldViewProps.textAttributes.alignment != newViewProps.textAttributes.alignment) {
     updateTextAlignment(newViewProps.textAttributes.alignment);
@@ -90,11 +93,6 @@ void CompParagraphComponentView::updateLayoutMetrics(
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
   });
-
-  if (m_textLayout) {
-    m_textLayout->SetMaxWidth(layoutMetrics.frame.size.width);
-    m_textLayout->SetMaxHeight(layoutMetrics.frame.size.height);
-  }
 }
 void CompParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
@@ -167,7 +165,7 @@ void CompParagraphComponentView::updateTextAlignment(
     }
   }
   // TODO
-  // m_textFormat->SetTextAlignment(alignment);
+  //m_textFormat->SetTextAlignment(alignment);
 }
 
 void CompParagraphComponentView::updateVisualBrush() noexcept {
@@ -178,9 +176,16 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
 
   if (!m_textLayout) {
     facebook::react::LayoutConstraints contraints;
-    contraints.maximumSize = m_layoutMetrics.frame.size;
+    contraints.maximumSize.width = m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left - m_layoutMetrics.contentInsets.right;
+    contraints.maximumSize.height =
+        m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    facebook::react::TextLayoutManager::GetTextLayout(m_attributedStringBox, {} /*TODO*/, contraints, m_textLayout);
+    // TODO Figure out how to get text alignment not through m_props and only use StringBox and ParagraphAttributes instead
+    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
+    const butter::optional<facebook::react::TextAlignment> &textAlignment = m_props->textAttributes.alignment;
+
+    facebook::react::TextLayoutManager::GetTextLayout(
+        m_attributedStringBox, {} /*TODO*/, contraints, textAlignment, m_textLayout);
     requireNewBrush = true;
   }
 
@@ -198,7 +203,8 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
       }
 
       winrt::Windows::Foundation::Size surfaceSize = {
-          metrics.width * m_layoutMetrics.pointScaleFactor, metrics.height * m_layoutMetrics.pointScaleFactor};
+          m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
+          m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
       winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
       drawingSurface = CompositionGraphicsDevice().CreateDrawingSurface(
           surfaceSize,
@@ -263,7 +269,6 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
     m_visual.Brush(surfaceBrush);
   }
 
-  m_requireRedraw = false;
   if (m_requireRedraw) {
     DrawText();
   }
@@ -296,17 +301,31 @@ void CompParagraphComponentView::DrawText() noexcept {
           d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
     }
 
+    if (!isnan(paragraphProps.opacity)) {
+      brush->SetOpacity(paragraphProps.opacity);
+    }
+
     // Create color effects for individual text fragments.
     unsigned int position = 0;
     unsigned int length = 0;
     for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
       length = static_cast<UINT32>(fragment.string.length());
       DWRITE_TEXT_RANGE range = {position, length};
-      if (fragment.textAttributes.foregroundColor) {
-        winrt::com_ptr<ID2D1SolidColorBrush> brush;
-        auto color = fragment.textAttributes.foregroundColor.AsD2DColor();
-        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
-        m_textLayout->SetDrawingEffect(brush.get(), range);
+      if (fragment.textAttributes.foregroundColor && (fragment.textAttributes.foregroundColor != paragraphProps.textAttributes.foregroundColor) ||
+          !isnan(fragment.textAttributes.opacity)) {
+        winrt::com_ptr<ID2D1SolidColorBrush> fragmentBrush;
+        if (fragment.textAttributes.foregroundColor) {
+          auto color = fragment.textAttributes.foregroundColor.AsD2DColor();
+          winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, fragmentBrush.put()));
+        } else {
+          winrt::check_hresult(
+              d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), fragmentBrush.put()));
+        }
+
+        if (!isnan(fragment.textAttributes.opacity)) {
+          fragmentBrush->SetOpacity(fragment.textAttributes.opacity);
+        }
+        m_textLayout->SetDrawingEffect(fragmentBrush.get(), range);
       }
 
       position += length;
@@ -322,8 +341,8 @@ void CompParagraphComponentView::DrawText() noexcept {
     // context; this has already been done for us by the composition API.
     d2dDeviceContext->DrawTextLayout(
         D2D1::Point2F(
-            static_cast<FLOAT>(offset.x / m_layoutMetrics.pointScaleFactor),
-            static_cast<FLOAT>(offset.y / m_layoutMetrics.pointScaleFactor)),
+            static_cast<FLOAT>((offset.x + m_layoutMetrics.contentInsets.left) / m_layoutMetrics.pointScaleFactor),
+            static_cast<FLOAT>((offset.y + m_layoutMetrics.contentInsets.top) / m_layoutMetrics.pointScaleFactor)),
         m_textLayout.get(),
         brush.get());
 
