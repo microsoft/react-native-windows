@@ -20,7 +20,6 @@ import {Commands as iOSTextInputCommands} from '../../Components/TextInput/RCTSi
 import {Commands as WindowsTextInputCommands} from '../../Components/TextInput/WindowsTextInputNativeComponent';
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
-import {UIManager} from 'react-native';
 type ComponentRef = React.ElementRef<HostComponent<mixed>>;
 
 let currentlyFocusedInputRef: ?ComponentRef = null;

@@ -38,6 +38,36 @@
       "issue": 7821
     },
     {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputComponentDescriptor.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
+      "baseHash": "0e8bc2d76cda863ed7986747546d2b96af876ada"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
+      "baseHash": "f3f144385043dbf86cce33881cc8765abdcc21a4"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputShadowNode.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
+      "baseHash": "700382cf4e73bf1ddc70cf764516b6655890fdaf"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputState.cpp",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
+      "baseHash": "ab386b821cfe714d9aaaa394d82785227762ab6b"
+    },
+    {
+      "type": "derived",
+      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputState.h",
+      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputState.h",
+      "baseHash": "86ac95fb195394bc314b2481907026d2568a0c45"
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/JSCRuntime.cpp",
       "baseFile": "ReactCommon/jsi/JSCRuntime.cpp",
