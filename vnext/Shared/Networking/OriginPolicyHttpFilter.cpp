@@ -537,7 +537,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
     }
   }
 
-  // If CORS && !inCache => SendPreflight! { cache() }
+  // TODO: If CORS && !inCache => SendPreflight! { cache() }
   try {
     auto preflightResponse = co_await SendPreflightAsync(coRequest);
     ValidatePreflightResponse(coRequest, preflightResponse);

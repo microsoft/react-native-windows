@@ -6,9 +6,9 @@
 #include <Networking/OriginPolicyHttpFilter.h>
 
 // TODO: revert
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Headers.h>
-#include <winrt/base.h>
 #include <regex>
 #include <boost/algorithm/string.hpp>
 #include <boost/numeric/conversion/cast.hpp>
@@ -112,6 +112,14 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     } catch (const std::exception &e) {
       auto y = e.what();
     }
+
+    using winrt::Windows::Web::Http::HttpRequestMessage;
+    HttpRequestMessage req;
+    req.Headers().Insert(L"accept", L"text/json");
+    auto key = (*req.Headers().begin()).Key().c_str();
+    Assert::AreEqual(L"text/json", req.Headers().Accept().ToString().c_str());
+    Assert::IsTrue(req.Headers().HasKey(L"Accept"));
+    //Assert::AreEqual(L"Accept", key); // FAILS
 
     Assert::IsTrue(true);
   }
