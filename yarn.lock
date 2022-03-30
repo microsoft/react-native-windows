@@ -9430,10 +9430,10 @@ react-native-xaml@^0.0.50:
     "@types/react-native" "*"
     typescript "^4.4.3"
 
-react-native@0.68.0-rc.2:
-  version "0.68.0-rc.2"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.68.0-rc.2.tgz#6b826810355e70193fcc3a4f4c862767e5c2cce2"
-  integrity sha512-PdaPs+g5DCZdWTFScZ42nv6m+iTvLSo34efxDiWBwrkU7kr6M9WjNSnPhd07KAOxHWBOQKZgV0UwwlN2ugvqtw==
+react-native@0.68.0, react-native@^0.68.0:
+  version "0.68.0"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.68.0.tgz#00204818c7fa5a9802ee73f3905a6d9b1c945a31"
+  integrity sha512-Qi8KpG9rqiU0hVp05GKkuRe8iAVhblYMwpnwG3wkBi99Z/X8iZ0jD1b1UW0/y6oesmCyGQAxpsB36imU8zg1AQ==
   dependencies:
     "@jest/create-cache-key-function" "^27.0.1"
     "@react-native-community/cli" "^7.0.3"
