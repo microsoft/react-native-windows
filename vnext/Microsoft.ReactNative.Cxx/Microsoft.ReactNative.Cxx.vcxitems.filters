@@ -150,6 +150,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h">
       <Filter>JSI</Filter>
     </ClInclude>
+    <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">
