@@ -7,8 +7,13 @@
 
 // TODO: revert
 #include <winrt/Windows.Web.Http.h>
+#include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/base.h>
 #include <regex>
+#include <boost/algorithm/string.hpp>
+#include <boost/numeric/conversion/cast.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/lexical_cast/try_lexical_convert.hpp>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -79,6 +84,36 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
 
     size_t sz = 4;
     Assert::AreEqual(sz, conj.size());
+
+    winrt::hstring hs{L"ASDFG"};
+    bool cont = boost::istarts_with(hs, L"aSd");
+    Assert::IsTrue(cont);
+
+    std::wstring fl{L"0.12412"};
+    std::wstring fo{L".234234"};
+    //auto cast1 = boost::numeric_cast<double>(fl);
+    //auto cast2 = boost::numeric_cast<double>(fo);
+    auto cast1 = boost::lexical_cast<double>(fl);
+    auto cast2 = boost::lexical_cast<double>(fo);
+    double d11{0};
+    auto cast11 = boost::conversion::try_lexical_convert<double, std::wstring>(fl, d11);
+    auto cast12 = boost::conversion::try_lexical_convert<double, std::wstring>(fo, d11);
+    auto cast13 = boost::conversion::try_lexical_convert<double, std::wstring>(L"a.0234", d11);
+
+    using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
+    try {
+
+      auto x = HttpMediaTypeHeaderValue::Parse(L"text/html");
+      x = HttpMediaTypeHeaderValue::Parse(L"text/html;charset=shift_jis");
+      x = HttpMediaTypeHeaderValue::Parse(
+          L"text/html;charset=\"shift_jis\"iso-2022-jp");
+    } catch (winrt::hresult_error const& e) {
+      auto y = e.code();
+    } catch (const std::exception &e) {
+      auto y = e.what();
+    }
+
+    Assert::IsTrue(true);
   }
 };
 

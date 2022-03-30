@@ -6,10 +6,18 @@
 
 #include <RuntimeOptions.h>
 
+// Boost Library
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast/try_lexical_convert.hpp>
+
+// Windows API
+#include <winrt/Windows.Web.Http.Headers.h>
+
 // Standard Library
 #include <regex>
 
 using std::set;
+using std::wstring;
 
 using winrt::hresult_error;
 using winrt::to_hstring;
@@ -19,6 +27,8 @@ using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
 using winrt::Windows::Web::Http::HttpResponseMessage;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
+using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
+using winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection;
 
 // TODO: Remove. Redundant.
 typedef winrt::Windows::Foundation::
@@ -116,6 +126,130 @@ namespace Microsoft::React::Networking {
   }
 
   return true;
+}
+
+// See https://fetch.spec.whatwg.org/#cors-safelisted-request-header
+// "A CORS-safelisted header is a header whose name is either one of 'Accept', 'Accept-Language', and
+// 'Content-Language', or whose name is 'Content-Type' and value is one of 'application/x-www-form-urlencoded',
+// 'multipart/form-data', and 'text/plain'
+/*static*/ bool OriginPolicyHttpFilter::IsCorsSafelistedRequestHeader(
+  winrt::hstring const& name,
+  winrt::hstring const& value) noexcept
+{
+  // 1. If value's length is greater than 128, then return false.
+  if (value.size() > 128)
+    return false;
+
+  // 2. Byte-lowercase name and switch on the result:
+  static const wchar_t *const safeHeaderNames[] = {
+    // The following four headers are from the CORS spec
+    L"accept",
+    L"accept-language",
+    L"content-language",
+    L"content-type",
+
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Save-Data
+    L"save-data",
+
+    // https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header
+    L"device-memory",
+    L"dpr",
+    L"width",
+    L"viewport-width",
+
+    // https://tools.ietf.org/html/draft-west-lang-client-hint
+    L"sec-ch-lang",
+
+    // https://tools.ietf.org/html/draft-west-ua-client-hints
+    L"sec-ch-ua",
+    L"sec-ch-ua-platform",
+    L"sec-ch-ua-arch",
+    L"sec-ch-ua-model",
+    L"sec-ch-ua-mobile",
+    L"sec-ch-ua-full-version",
+    L"sec-ch-ua-platform-version",
+  };
+
+  auto nameLower = boost::to_lower_copy(wstring{name.c_str()});
+  if (std::find(std::cbegin(safeHeaderNames), std::cend(safeHeaderNames), nameLower) ==
+      std::end(safeHeaderNames))
+    return false;
+
+  double doubleHolder;
+  if (nameLower == L"device-memory" || nameLower == L"dpr")
+    return boost::conversion::try_lexical_convert<double, wstring>(value.c_str(), doubleHolder);
+
+  int intHolder;
+  if (nameLower == L"width" || nameLower == L"viewport-width")
+    return boost::conversion::try_lexical_convert<int, wstring>(value.c_str(), intHolder);
+
+  auto valueLower = boost::to_lower_copy(wstring{value.c_str()});
+  if (nameLower == L"save-data")
+    return valueLower == L"on";
+
+  if (nameLower == L"accept")
+    return !std::any_of(valueLower.cbegin(), valueLower.cend(), IsCorsUnsafeRequestHeaderByte);
+
+  if (nameLower == L"accept-language" || nameLower == L"content-language") {
+    return std::all_of(valueLower.cbegin(), valueLower.cend(), [](wchar_t c) noexcept {
+      return (0x30 <= c && c <= 0x39) || // 0-9
+          (0x41 <= c && c <= 0x5A) || // A-Z
+          (0x61 <= c && c <= 0x7A) || // a-z
+          c == 0x20 || c == 0x2A || c == 0x2C || c == 0x2D || c == 0x2E || c == 0x3B || c == 0x3D; // *,-.;=
+    });
+  }
+
+  if (nameLower == L"content-type") {
+    if (std::any_of(valueLower.cbegin(), valueLower.cend(), IsCorsUnsafeRequestHeaderByte))
+      return false;
+
+    // https://mimesniff.spec.whatwg.org/#parse-a-mime-type
+    HttpMediaTypeHeaderValue mediaType{nullptr};
+    if (HttpMediaTypeHeaderValue::TryParse(valueLower, mediaType))
+      return mediaType.ToString() == L"application/x-www-form-urlencoded" ||
+          mediaType.ToString() == L"multipart/form-data" || mediaType.ToString() == L"text/plain";
+
+    return false;
+  }
+
+  return true;
+}
+
+// https://fetch.spec.whatwg.org/#cors-unsafe-request-header-byte
+/*static*/ bool OriginPolicyHttpFilter::IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept
+{
+  //const auto u = static_cast<uint8_t>(c);
+  return (c < 0x20 && c != 0x09) || c == 0x22 || c == 0x28 || c == 0x29 || c == 0x3a || c == 0x3c || c == 0x3e ||
+      c == 0x3f || c == 0x40 || c == 0x5b || c == 0x5c || c == 0x5d || c == 0x7b || c == 0x7d || c == 0x7f;
+}
+
+/*static*/ set<const wchar_t*> OriginPolicyHttpFilter::CorsUnsafeNotForbiddenRequestHeaderNames(
+  HttpRequestHeaderCollection const& headers) noexcept
+{
+  constexpr size_t maxSafelistValueSize = 1024;
+  size_t safelistValueSize = 0;
+  std::vector<const wchar_t *> potentiallyUnsafeNames;
+  set<const wchar_t *> result;
+  for (const auto &header : headers) {
+    const auto headerName = header.Key().c_str();
+
+    // If header is not safe
+    if (boost::istarts_with(headerName, L"Proxy-") || boost::istarts_with(headerName, L"Sec-") ||
+        s_corsForbiddenRequestHeaderNames.find(headerName) != s_corsForbiddenRequestHeaderNames.cend())
+      continue;
+
+    if (!IsCorsSafelistedRequestHeader(header.Key(), header.Value())) {
+      result.emplace(header.Key().c_str());
+    } else {
+      potentiallyUnsafeNames.emplace_back(std::wstring_view{header.Key()}.data());
+      safelistValueSize += header.Value().size();
+    }
+  }
+
+  if (safelistValueSize > maxSafelistValueSize)
+    result.insert(potentiallyUnsafeNames.begin(), potentiallyUnsafeNames.end());
+
+  return result;
 }
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
@@ -251,7 +385,6 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
     HttpResponseMessage const &response) const {
   using std::wregex;
   using std::wsregex_token_iterator;
-  using std::wstring;
   using winrt::hstring;
 
   // https://tools.ietf.org/html/rfc2616#section-4.2
@@ -296,17 +429,19 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
       maxAge = _wtoi(header.Value().c_str());
   }
 
+  auto iRequestArgs = request.Properties().Lookup(L"RequestArgs");
   // Check if the origin is allowed in conjuction with the withCredentials flag
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
   // if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
-  ValidateAllowOrigin(allowedOrigin, allowedCredentials, request.Properties().Lookup(L"RequestArgs"));
+  ValidateAllowOrigin(allowedOrigin, allowedCredentials, iRequestArgs);
 
   // Check if the request method is allowed
   // if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
+  bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iRequestArgs)->WithCredentials;
   bool requestMethodAllowed = false;
   for (const auto &method : allowedMethods) {
     if (L"*" == method) {
-      if (false /*withCredentials*/) {
+      if (!withCredentials) {
         requestMethodAllowed = true;
         break;
       }
@@ -326,7 +461,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   // See https://fetch.spec.whatwg.org/#cors-preflight-fetch, section 4.8.7.6-7
   // Check if the header should be allowed through wildcard, if the request does not have credentials.
   bool requestHeadersAllowed = false;
-  if (true /*!withCredentials*/ && allowedHeaders.find(L"*") != allowedHeaders.cend()) {
+  if (!withCredentials && allowedHeaders.find(L"*") != allowedHeaders.cend()) {
     // "Authorization" header cannot be allowed through wildcard alone.
     // "Authorization" is the only member of https://fetch.spec.whatwg.org/#cors-non-wildcard-request-header-name.
     if (request.Headers().HasKey(L"Authorization") && allowedHeaders.find(L"Authorization") == allowedHeaders.cend())
@@ -340,6 +475,11 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
     // Forbidden headers are excluded from the JavaScript layer.
     // User agents may use these headers internally.
     // TODO: CorsUnsafeNotForbiddenRequestHeaderNames(requestHeaders);
+    const set unsafeNotForbidenHeaderNames = CorsUnsafeNotForbiddenRequestHeaderNames(request.Headers());
+    for (const auto name : unsafeNotForbidenHeaderNames) {
+      if (allowedHeaders.find(name) == allowedHeaders.cend())
+        throw hresult_error{E_INVALIDARG, L"Request header field [" + to_hstring(name) + L"]is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
+    }
   }
 
   // TODO: Implement with cache
@@ -358,7 +498,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
   preflightRequest.Headers().Insert(L"Accept", L"*/*");
   preflightRequest.Headers().Insert(L"Access-Control-Request-Method", request.Method().ToString());
 
-  auto headerNames = std::wstring{};
+  auto headerNames = wstring{};
   auto headerItr = request.Headers().begin();
   if (headerItr != request.Headers().end())
     headerNames += (*headerItr).Key();
