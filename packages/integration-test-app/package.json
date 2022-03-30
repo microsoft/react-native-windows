@@ -14,7 +14,7 @@
     "@react-native-windows/fs": "^1.0.2",
     "chai": "^4.2.0",
     "react": "17.0.2",
-    "react-native": "0.0.0-20220311-2027-b676ca560",
+    "react-native": "0.0.0-20220322-2008-8a5460ce8",
     "react-native-windows": "^0.0.0-canary.476"
   },
   "devDependencies": {

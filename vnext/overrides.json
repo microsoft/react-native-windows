@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220311-2027-b676ca560",
+  "baseVersion": "0.0.0-20220322-2008-8a5460ce8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "ddc552b19a8b22fa111a160b2b3c6c928f866b22"
+      "baseHash": "a8c0d9b54ea5b1514ed4a81c2d87cb7972bc4b26"
     },
     {
       "type": "patch",
@@ -60,12 +60,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
-      "baseFile": "ReactCommon/react/renderer/core/RawPropsParser.cpp",
-      "baseHash": "738a8dcf33d1e2bae57f2727625c8ca609f5fd0b"
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "b07275d20e080b8c0be48de8bb698c0623290c56",
@@ -89,7 +83,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/index.js",
       "baseFile": "packages/babel-plugin-codegen/index.js",
-      "baseHash": "12426614f964886ead91345e5c238b35600c3c29",
+      "baseHash": "78374ff1cee9fcb65e33f91894c5e665e8b8b3be",
       "issue": 5430
     },
     {
@@ -263,7 +257,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "53e9f8f6739e958e84709d02201a76527534b367"
+      "baseHash": "a5802e5d8b960912293d0069a99bbf346c8ecc4c"
     },
     {
       "type": "platform",

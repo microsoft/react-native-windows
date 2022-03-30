@@ -405,7 +405,7 @@ bool isHBCBundle(const std::string &bundle) {
   // can be potentially huge.
   // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
   auto header = reinterpret_cast<const BundleHeader *>(&bundle[0]);
-  if (HBCBundleMagicNumber == folly::Endian::little(header->magic)) {
+  if (HBCBundleMagicNumber == header->magic32.value) {
     return true;
   } else {
     return false;
