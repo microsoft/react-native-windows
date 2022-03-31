@@ -16,8 +16,8 @@
     "@react-native-windows/automation-channel": "^0.1.22",
     "@react-native-windows/tester": "0.0.1",
     "react": "17.0.2",
-    "react-native": "0.68.0-rc.1",
-    "react-native-windows": "0.68.0-preview.4",
+    "react-native": "0.68.0",
+    "react-native-windows": "0.68.0-preview.8",
     "react-native-xaml": "^0.0.50"
   },
   "devDependencies": {
@@ -27,7 +27,7 @@
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/automation": "^0.1.33",
     "@react-native-windows/automation-commands": "^0.0.60",
-    "@react-native-windows/virtualized-list": "0.68.0-preview.2",
+    "@react-native-windows/virtualized-list": "0.68.0-preview.3",
     "@rnw-scripts/babel-node-config": "2.0.3",
     "@rnw-scripts/eslint-config": "1.1.10",
     "@rnw-scripts/just-task": "2.2.2",

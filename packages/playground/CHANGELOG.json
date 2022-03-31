@@ -2,6 +2,72 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Mon, 28 Mar 2022 15:08:01 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.68.0-preview.8",
+            "commit": "423d91443f86a3e4123fa8d53d0be536d8be2115"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Mar 2022 15:08:46 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.68.0-preview.7",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          },
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0-preview.3",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Mar 2022 15:07:44 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.68.0-preview.6",
+            "commit": "09fa7051ab95b1ff704fcede5e0522ef53d7feb7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Mar 2022 16:07:47 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.68.0-preview.5",
+            "commit": "f23a548f766d724f37f097e70f4277f64fb75f22"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Feb 2022 16:08:28 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",

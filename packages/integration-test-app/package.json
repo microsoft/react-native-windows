@@ -14,8 +14,8 @@
     "@react-native-windows/fs": "0.68.0-preview.2",
     "chai": "^4.2.0",
     "react": "17.0.2",
-    "react-native": "0.68.0-rc.1",
-    "react-native-windows": "0.68.0-preview.4"
+    "react-native": "0.68.0",
+    "react-native-windows": "0.68.0-preview.8"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
@@ -24,7 +24,7 @@
     "@babel/preset-typescript": "^7.11.5",
     "@babel/traverse": "^7.11.5",
     "@babel/types": "^7.11.5",
-    "@react-native-windows/virtualized-list": "0.68.0-preview.2",
+    "@react-native-windows/virtualized-list": "0.68.0-preview.3",
     "@rnw-scripts/babel-node-config": "2.0.3",
     "@rnw-scripts/eslint-config": "^1.1.10",
     "@rnw-scripts/just-task": "^2.2.2",
