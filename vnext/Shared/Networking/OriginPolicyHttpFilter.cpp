@@ -367,7 +367,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, w
             L"] which differs from the supplied origin.\\n"};
 
   // 4.10.5
-  if (withCredentials)
+  if (!withCredentials)
     return;
 
   // 4.10.6-8
