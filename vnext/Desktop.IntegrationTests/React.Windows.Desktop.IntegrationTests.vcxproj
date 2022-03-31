@@ -84,6 +84,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
     <ClCompile Include="ChakraRuntimeHolder.cpp" />
+    <ClCompile Include="HttpOriginPolicyIntegrationTest.cpp" />
     <ClCompile Include="HttpResourceIntegrationTests.cpp" />
     <ClCompile Include="Modules\TestDevSettingsModule.cpp" />
     <ClCompile Include="Modules\TestImageLoaderModule.cpp" />
