@@ -723,9 +723,14 @@ inline DispatchTaskImpl<TInvoke, TOnCancel>::~DispatchTaskImpl() noexcept {
   }
 }
 
+namespace details {
+template <typename>
+constexpr bool always_false = false;
+}
+
 template <typename T>
 inline void MustBeNoExceptVoidFunctor() {
-  static_assert(false, __FUNCTION__ ": not a noexcept callable functor returning void");
+  static_assert(details::always_false<T>, __FUNCTION__ ": not a noexcept callable functor returning void");
 }
 
 template <typename TInvoke, typename TOnCancel>
