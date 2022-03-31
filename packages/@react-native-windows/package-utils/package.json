@@ -27,7 +27,7 @@
     "typescript": "^4.4.4"
   },
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.67-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
