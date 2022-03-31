@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "TextInput for Fabric",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch"
-}

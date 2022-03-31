@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Mar 2022 05:10:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.477",
+      "version": "0.0.0-canary.477",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "877da651fccfc1d4f21b4bf53367b21ff70288e4",
+            "comment": "TextInput for Fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4531ab803aa0c369dde127841935416669a42279",
+            "comment": "Remove deskop base ShadowNode and ViewManager classes"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "040176bfc09ef4b3d914b447ee151f94da0452ee",
+            "comment": "Integrate 3/11"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c42f0dd251c1d4db3efd790ba08e25a4b2e84174",
+            "comment": "Avoid crash in DevSupportManager when running in unpackaged apps with Hermes"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.34",
+            "commit": "c42f0dd251c1d4db3efd790ba08e25a4b2e84174"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Mar 2022 05:09:50 GMT",
       "tag": "react-native-windows_v0.0.0-canary.476",
       "version": "0.0.0-canary.476",

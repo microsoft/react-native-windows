@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Mar 2022 05:10:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.7
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Patches
+
+- Fixup peerDependencies when going from preview to latest (ngerlem@microsoft.com)
 
 ## 1.1.6
 

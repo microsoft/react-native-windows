@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove deskop base ShadowNode and ViewManager classes",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
