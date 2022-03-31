@@ -57,9 +57,7 @@
     <file src="$nugetroot$\inc\Shared\Modules\I18nModule.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\NativeModuleProvider.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\RuntimeOptions.h" target="inc"/>
-    <file src="$nugetroot$\inc\ReactWin32\ShadowNode.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\Tracing.h" target="inc"/>
-    <file src="$nugetroot$\inc\include\Shared\ViewManager.h" target="inc"/>
 
     <!-- Test DLL -->
     <file src="$nugetroot$\inc\Test\WebSocketServer.h" target="inc\Test" />
