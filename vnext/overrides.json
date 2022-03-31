@@ -53,7 +53,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "700382cf4e73bf1ddc70cf764516b6655890fdaf"
+      "baseHash": "3cf5d3da7910c603737b0001879f204fbbcf1f76"
     },
     {
       "type": "derived",
