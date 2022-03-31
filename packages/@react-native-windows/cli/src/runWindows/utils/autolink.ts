@@ -772,7 +772,7 @@ export class AutolinkWindows {
         configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI3Version');
 
       const dialects = [
-        {id: 'Microsoft.WinUI', version: winui3Version!},
+        {id: 'Microsoft.WindowsAppSDK', version: winui3Version!},
         {id: 'Microsoft.UI.Xaml', version: winui2xVersion!},
       ];
       const keepPkg = useWinUI3 ? dialects[0] : dialects[1];

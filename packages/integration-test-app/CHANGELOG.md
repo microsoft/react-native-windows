@@ -1,8 +1,110 @@
 # Change Log - integration-test-app
 
-This log was last generated on Sun, 06 Mar 2022 06:08:52 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Mar 2022 05:10:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Thu, 31 Mar 2022 05:10:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.51
+- Bump react-native-windows to v0.0.0-canary.477
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.34
+
+## 0.0.0
+
+Tue, 29 Mar 2022 05:09:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.50
+- Bump react-native-windows to v0.0.0-canary.476
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.33
+
+## 0.0.0
+
+Sat, 26 Mar 2022 05:09:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.49
+- Bump react-native-windows to v0.0.0-canary.475
+
+## 0.0.0
+
+Wed, 23 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.48
+- Bump react-native-windows to v0.0.0-canary.474
+
+## 0.0.0
+
+Tue, 22 Mar 2022 05:09:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.47
+- Bump react-native-windows to v0.0.0-canary.473
+
+## 0.0.0
+
+Fri, 18 Mar 2022 05:08:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.46
+- Bump react-native-windows to v0.0.0-canary.472
+
+## 0.0.0
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.45
+- Bump react-native-windows to v0.0.0-canary.471
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.32
+
+## 0.0.0
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.44
+- Bump react-native-windows to v0.0.0-canary.470
+
+## 0.0.0
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.43
+- Bump react-native-windows to v0.0.0-canary.469
+
+## 0.0.0
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.42
+- Bump react-native-windows to v0.0.0-canary.468
+
+## 0.0.0
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.41
+- Bump react-native-windows to v0.0.0-canary.467
 
 ## 0.0.0
 

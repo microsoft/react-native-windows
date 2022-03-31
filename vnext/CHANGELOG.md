@@ -1,8 +1,110 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 06 Mar 2022 06:08:52 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Mar 2022 05:10:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.477
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Changes
+
+- TextInput for Fabric (acoates@microsoft.com)
+- Remove deskop base ShadowNode and ViewManager classes (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Avoid crash in DevSupportManager when running in unpackaged apps with Hermes (asklar@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.34
+
+## 0.0.0-canary.476
+
+Tue, 29 Mar 2022 05:09:50 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.33
+
+## 0.0.0-canary.475
+
+Sat, 26 Mar 2022 05:09:10 GMT
+
+### Changes
+
+- Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync (asklar@microsoft.com)
+
+## 0.0.0-canary.474
+
+Wed, 23 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- Enable version checks in IDL files (asklar@microsoft.com)
+
+## 0.0.0-canary.473
+
+Tue, 22 Mar 2022 05:09:20 GMT
+
+### Changes
+
+- Update to Windows App SDK 1.0.0 (agnel@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.121
+
+## 0.0.0-canary.472
+
+Fri, 18 Mar 2022 05:08:51 GMT
+
+### Changes
+
+- move some DLLs to delayload (asklar@microsoft.com)
+
+## 0.0.0-canary.471
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- Update WebView Pkg Dep Following Pkg Ref (34109996+chiaramooney@users.noreply.github.com)
+- integrates 2/27/22 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.32
+
+## 0.0.0-canary.470
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Safe re-entrancy for EnsureHermesLoaded (tudor.mihai@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.120
+
+## 0.0.0-canary.469
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Changes
+
+- Use Canvas dependency properties for Top/Left instead of custom DPs (asklar@microsoft.com)
+
+## 0.0.0-canary.468
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Update CppAppConsumeCSharpModules.props for VS2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.119
+
+## 0.0.0-canary.467
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Upgrade @types/react-native (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Use inherited OutputPath for C# projects (julio.rocha@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.28
 
 ## 0.0.0-canary.466
 

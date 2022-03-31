@@ -58,6 +58,8 @@
 ; Ignore files with flow typing issues #9223
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
 
+.*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 ; Should work out how to do this properly
@@ -107,7 +109,6 @@ nonstrict-import=warn
 deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
-signature-verification-failure=warn
 
 [strict]
 deprecated-type
@@ -119,4 +120,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.171.0
+^0.173.0

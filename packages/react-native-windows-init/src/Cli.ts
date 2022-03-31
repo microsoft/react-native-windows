@@ -100,7 +100,7 @@ export const windowsInitOptions = initOptions({
   },
   useWinUI3: {
     type: 'boolean',
-    describe: '[Experimental] Use WinUI3',
+    describe: '[Experimental] Use WinUI 3 (Windows App SDK)',
     hidden: true,
     default: false,
   },

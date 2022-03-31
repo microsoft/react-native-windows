@@ -2,6 +2,84 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 31 Mar 2022 05:10:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.140",
+      "version": "0.0.0-canary.140",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "040176bfc09ef4b3d914b447ee151f94da0452ee",
+            "comment": "Integrate 3/11"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.34",
+            "commit": "c42f0dd251c1d4db3efd790ba08e25a4b2e84174"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 29 Mar 2022 05:09:49 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.139",
+      "version": "0.0.0-canary.139",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b0dbc51d8ac6add9172891a5ab97a68eec9b979a",
+            "comment": "Integrate 3/11"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.33",
+            "commit": "b0dbc51d8ac6add9172891a5ab97a68eec9b979a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Mar 2022 05:09:18 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.138",
+      "version": "0.0.0-canary.138",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205",
+            "comment": "integrates 2/27/22"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.32",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Mar 2022 06:09:07 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.137",
+      "version": "0.0.0-canary.137",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "afb7e6c78ac73d700c7369d6f514c34b1b464985",
+            "comment": "Upgrade @types/react-native"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 05 Mar 2022 06:08:58 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.136",
       "version": "0.0.0-canary.136",

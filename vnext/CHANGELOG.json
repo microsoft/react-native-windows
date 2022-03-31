@@ -2,6 +2,255 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Mar 2022 05:10:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.477",
+      "version": "0.0.0-canary.477",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "877da651fccfc1d4f21b4bf53367b21ff70288e4",
+            "comment": "TextInput for Fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4531ab803aa0c369dde127841935416669a42279",
+            "comment": "Remove deskop base ShadowNode and ViewManager classes"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "040176bfc09ef4b3d914b447ee151f94da0452ee",
+            "comment": "Integrate 3/11"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c42f0dd251c1d4db3efd790ba08e25a4b2e84174",
+            "comment": "Avoid crash in DevSupportManager when running in unpackaged apps with Hermes"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.34",
+            "commit": "c42f0dd251c1d4db3efd790ba08e25a4b2e84174"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 29 Mar 2022 05:09:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.476",
+      "version": "0.0.0-canary.476",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b0dbc51d8ac6add9172891a5ab97a68eec9b979a",
+            "comment": "Integrate 3/11"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.33",
+            "commit": "b0dbc51d8ac6add9172891a5ab97a68eec9b979a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Mar 2022 05:09:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.475",
+      "version": "0.0.0-canary.475",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6f4e5c31e03683758f1dac7095f3736d6ebc66ae",
+            "comment": "Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Mar 2022 05:09:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.474",
+      "version": "0.0.0-canary.474",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "53bd508909a0bbe9236825619fd3713a2342f94a",
+            "comment": "Enable version checks in IDL files"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Mar 2022 05:09:20 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.473",
+      "version": "0.0.0-canary.473",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6ba68b373879c52139b8f528d10c967a62f4144d",
+            "comment": "Update to Windows App SDK 1.0.0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.121",
+            "commit": "6ba68b373879c52139b8f528d10c967a62f4144d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 18 Mar 2022 05:08:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.472",
+      "version": "0.0.0-canary.472",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0eee155bbe0be820fc39ce60c2ef9fdaef680d21",
+            "comment": "move some DLLs to delayload"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Mar 2022 05:09:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.471",
+      "version": "0.0.0-canary.471",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7e9d2cc0274bf44a4abb8be224a374a50671fe56",
+            "comment": "Update WebView Pkg Dep Following Pkg Ref"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205",
+            "comment": "integrates 2/27/22"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.32",
+            "commit": "26b1a72c753692d07739027984a74ca35b2c2205"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Mar 2022 06:09:07 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.470",
+      "version": "0.0.0-canary.470",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b2fe8df4ffb4d771734cc56d619b392661116202",
+            "comment": "Safe re-entrancy for EnsureHermesLoaded"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.120",
+            "commit": "b2fe8df4ffb4d771734cc56d619b392661116202"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 11 Mar 2022 06:09:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.469",
+      "version": "0.0.0-canary.469",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3c484ac8ae6dfcfc009057c2b91085e30c169284",
+            "comment": "Use Canvas dependency properties for Top/Left instead of custom DPs"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Mar 2022 06:09:24 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.468",
+      "version": "0.0.0-canary.468",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9a7beb80d64632db3e322c56236a49d6907f8aa7",
+            "comment": "Adjust PackageReferences ProjectCapability evaluation"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "364aa675226aef15ee79da1284038e04a53e462a",
+            "comment": "Update CppAppConsumeCSharpModules.props for VS2022"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.119",
+            "commit": "cc1f86bd91fc49d2f790e87adad133dbd8b39ba6"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Mar 2022 06:09:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.467",
+      "version": "0.0.0-canary.467",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9a7beb80d64632db3e322c56236a49d6907f8aa7",
+            "comment": "Adjust PackageReferences ProjectCapability evaluation"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "afb7e6c78ac73d700c7369d6f514c34b1b464985",
+            "comment": "Upgrade @types/react-native"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "26bd762e5e6ac37601b8d52a8e5f03b753409aa7",
+            "comment": "Use inherited OutputPath for C# projects"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.28",
+            "commit": "9a7beb80d64632db3e322c56236a49d6907f8aa7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 06 Mar 2022 06:08:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.466",
       "version": "0.0.0-canary.466",
