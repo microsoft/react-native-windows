@@ -445,7 +445,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
         requestMethodAllowed = true;
         break;
       }
-    } else if (HttpMethod{method} == request.Method()) {
+    } else if (boost::iequals(method, request.Method().ToString())) {
       requestMethodAllowed = true;
       break;
     }

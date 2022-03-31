@@ -114,12 +114,18 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     }
 
     using winrt::Windows::Web::Http::HttpRequestMessage;
+    using winrt::Windows::Web::Http::HttpMethod;
     HttpRequestMessage req;
     req.Headers().Insert(L"accept", L"text/json");
     auto key = (*req.Headers().begin()).Key().c_str();
     Assert::AreEqual(L"text/json", req.Headers().Accept().ToString().c_str());
     Assert::IsTrue(req.Headers().HasKey(L"Accept"));
     //Assert::AreEqual(L"Accept", key); // FAILS
+
+    auto m1 = HttpMethod::Get();
+    auto m2 = HttpMethod{L"GET"};
+    bool meq = m1.Method() == m2.Method();
+    Assert::IsTrue(meq);
 
     Assert::IsTrue(true);
   }
