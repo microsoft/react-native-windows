@@ -1,7 +1,7 @@
 {
   "name": "@react-native-windows/fs",
   "description": "A minimal-dependency drop-in replacement to `fs` with changes for resiliency, promises, and convenience.",
-  "version": "1.0.2",
+  "version": "0.0.0-canary.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -34,6 +34,15 @@
     "assets",
     "lib-commonjs"
   ],
+  "beachball": {
+    "defaultNpmTag": "canary",
+    "disallowedChangeTypes": [
+      "major",
+      "minor",
+      "patch"
+    ]
+  },
+  "promoteRelease": true,
   "engines": {
     "node": ">= 14"
   }
