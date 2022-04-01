@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[RN][Windows][Perf] Render cached images synchronously",
+  "packageName": "react-native-windows",
+  "email": "mowang@fb.com",
+  "dependentChangeType": "patch"
+}
