@@ -216,6 +216,15 @@ void HttpSession::Respond()
     case http::verb::delete_:
       this->Close();
       break;
+
+    case http::verb::connect:
+      m_sendLambda(m_callbacks.OnConnect(m_request));
+      break;
+
+    case http::verb::trace:
+      m_sendLambda(m_callbacks.OnTrace(m_request));
+      break;
+
     default:
       // ISS:2735328 - Implement failure propagation mechanism
       throw;

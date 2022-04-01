@@ -292,15 +292,14 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       // Check for disallowed mixed content
       if (GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
           m_origin.SchemeName() != request.RequestUri().SchemeName())
-        throw hresult_error{E_INVALIDARG, L"The origin and request URL must have the same URL scheme.\\n"};
+        throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
       if (!IsSimpleCorsRequest(request))
         // TODO: isRedirect?
         throw hresult_error{
             E_INVALIDARG,
-            L"The request does not meet conditions for security policy of SOP (same-origin policy) or simple CORS (cross-origin resource sharing).\\n"};
-
-      break;
+            L"The request does not meet the requirements for Same-Origin policy or Simple Cross-Origin resource sharing"};
+        break;
 
     case Microsoft::React::Networking::OriginPolicy::CrossOriginResourceSharing:
       // TODO: Rewrite
@@ -315,15 +314,16 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
       // TODO: Make message static private
       if (m_origin.SchemeName() != request.RequestUri().SchemeName())
-        throw hresult_error{E_INVALIDARG, L"The origin and request URL must have the same URL scheme.\\n"};
+        throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
       if (!AreSafeRequestHeaders(request.Headers()))
         throw hresult_error{
-            E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden request header.\\n"};
+            E_INVALIDARG, L"Request header not allowed in cross-origin resource sharing"};
 
       if (s_forbiddenMethods.find(request.Method().ToString().c_str()) != s_forbiddenMethods.cend())
         throw hresult_error{
-            E_INVALIDARG, L"The request contains CORS (cross-origin resource sharing) forbidden method.\\n"};
+          E_INVALIDARG,
+            L"Request method not allowed in cross-origin resource sharing"};
 
       // TODO: overwrite member OP, or set/return validated OP?
       if (IsSameOrigin(m_origin, request.RequestUri()))
@@ -545,8 +545,8 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
     // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
     // NetworkingSecurity::ValidateSecurityOnResponse
     // ActualRequest::OnResponse => ValidateResponse()
-  } catch (hresult_error const &e) {
-    throw e;
+  //} catch (hresult_error const &e) {
+  //  throw e;
   } catch (const std::exception &e) {
     throw hresult_error{E_FAIL, to_hstring(e.what())};
   } catch (...) {

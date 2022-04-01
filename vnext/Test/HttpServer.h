@@ -56,6 +56,14 @@ struct HttpCallbacks
   std::function<void()> OnRequest;
   std::function<ResponseWrapper(const DynamicRequest &)> OnGet;
   std::function<ResponseWrapper(const DynamicRequest &)> OnOptions;
+
+  std::function<ResponseWrapper(const DynamicRequest &)> OnConnect;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnTrace;
+
+  //Not supported by Boost/Beast
+  #if 0
+  std::function<ResponseWrapper(const DynamicRequest &)> OnTrack;   
+  #endif // 0
 };
 
 ///
