@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix publish after promotion to preview",
-  "packageName": "@react-native-windows/cli",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

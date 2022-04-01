@@ -2,6 +2,27 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Fri, 01 Apr 2022 05:09:58 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/tester",
+            "comment": "Bump react-native-platform-override to v1.6.7",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/tester",
+            "comment": "Bump react-native-windows to v0.0.0-canary.478",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Mar 2022 05:10:19 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

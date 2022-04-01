@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix publish after promotion to preview",
-  "packageName": "@rnw-scripts/create-github-releases",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

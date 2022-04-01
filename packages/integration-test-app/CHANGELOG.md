@@ -1,8 +1,19 @@
 # Change Log - integration-test-app
 
-This log was last generated on Thu, 31 Mar 2022 05:10:19 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 05:09:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.52
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+- Bump react-native-windows to v0.0.0-canary.478
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.35
 
 ## 0.0.0
 
