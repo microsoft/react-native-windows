@@ -1,7 +1,7 @@
 {
   "type": "patch",
-  "comment": "Integrate 0.68.0",
-  "packageName": "@react-native-windows/virtualized-list",
+  "comment": "Promote 0.68 to latest",
+  "packageName": "@react-native-windows/telemetry",
   "email": "34109996+chiaramooney@users.noreply.github.com",
   "dependentChangeType": "patch"
 }
