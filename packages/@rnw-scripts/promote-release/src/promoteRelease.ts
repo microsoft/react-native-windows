@@ -14,7 +14,7 @@
 
 import * as chalk from 'chalk';
 import * as child_process from 'child_process';
-import * as simplegit from 'simple-git/promise';
+import * as simplegit from 'simple-git';
 import * as yargs from 'yargs';
 
 import {
