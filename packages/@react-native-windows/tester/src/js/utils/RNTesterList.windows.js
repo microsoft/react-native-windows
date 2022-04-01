@@ -275,6 +275,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples-win/Mouse/MouseExample'),
   },
   {
+    key: 'MouseClickExample',
+    category: 'Basic',
+    module: require('../examples-win/Mouse/MouseClickExample'),
+  },
+  {
     key: 'NativeAnimationsExample',
     category: 'UI',
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
