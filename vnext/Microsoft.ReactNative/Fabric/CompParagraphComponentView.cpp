@@ -279,6 +279,11 @@ void CompParagraphComponentView::DrawText() noexcept {
   if (!m_drawingSurfaceInterop)
     return;
 
+  if (m_layoutMetrics.frame.size.width == 0 || m_layoutMetrics.frame.size.height == 0) {
+    m_requireRedraw = false;
+    return;
+  }
+
   // Begin our update of the surface pixels. If this is our first update, we are required
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
@@ -301,6 +306,30 @@ void CompParagraphComponentView::DrawText() noexcept {
           d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), brush.put()));
     }
 
+    if (paragraphProps.textAttributes.textDecorationLineType) {
+      DWRITE_TEXT_RANGE range = {0, std::numeric_limits<uint32_t>::max()};
+      if (*(paragraphProps.textAttributes.textDecorationLineType) ==
+              facebook::react::TextDecorationLineType::Underline ||
+          *(paragraphProps.textAttributes.textDecorationLineType) ==
+          facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+        m_textLayout->SetUnderline(true, range);
+      } else {
+        m_textLayout->SetUnderline(false, range);
+      }
+    }
+
+    if (paragraphProps.textAttributes.textDecorationLineType) {
+      DWRITE_TEXT_RANGE range = {0, std::numeric_limits<uint32_t>::max()};
+      if (*(paragraphProps.textAttributes.textDecorationLineType) ==
+              facebook::react::TextDecorationLineType::Strikethrough ||
+          *(paragraphProps.textAttributes.textDecorationLineType)
+              == facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+        m_textLayout->SetStrikethrough(true, range);
+      } else {
+        m_textLayout->SetStrikethrough(false, range);
+      }
+    }
+
     if (!isnan(paragraphProps.opacity)) {
       brush->SetOpacity(paragraphProps.opacity);
     }
@@ -320,6 +349,27 @@ void CompParagraphComponentView::DrawText() noexcept {
         } else {
           winrt::check_hresult(
               d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black, 1.0f), fragmentBrush.put()));
+        }
+
+        if (fragment.textAttributes.textDecorationLineType) {
+          if (*(fragment.textAttributes.textDecorationLineType) == facebook::react::TextDecorationLineType::Underline ||
+              *(fragment.textAttributes.textDecorationLineType) ==
+                  facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+              m_textLayout->SetUnderline(true, range);
+          } else {
+            m_textLayout->SetUnderline(false, range);
+          }
+        }
+
+        if (fragment.textAttributes.textDecorationLineType) {
+          if (*(fragment.textAttributes.textDecorationLineType) ==
+                  facebook::react::TextDecorationLineType::Strikethrough ||
+              *(fragment.textAttributes.textDecorationLineType) ==
+                  facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+            m_textLayout->SetStrikethrough(true, range);
+          } else {
+            m_textLayout->SetStrikethrough(false, range);
+          }
         }
 
         if (!isnan(fragment.textAttributes.opacity)) {
