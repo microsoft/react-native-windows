@@ -41,11 +41,14 @@ using Test::ResponseWrapper;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
   TEST_METHOD(RequestGetSucceeds) {
+    constexpr uint16_t port{5555};
+    constexpr char url[]{"http://localhost:5555"};
+
     promise<void> resPromise;
     string error;
     int statusCode = 0;
 
-    auto server = make_shared<HttpServer>(5556);
+    auto server = make_shared<HttpServer>(port);
     server->Callbacks().OnGet = [&resPromise](const DynamicRequest &request) -> ResponseWrapper {
       DynamicResponse response;
       response.result(http::status::ok);
@@ -68,7 +71,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     });
     resource->SendRequest(
         "GET",
-        "http://localhost:5556",
+        url,
         {} /*header*/,
         {} /*bodyData*/,
         "text",
@@ -86,11 +89,14 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestGetHeadersSucceeds) {
+    constexpr uint16_t port{5556};
+    constexpr char url[]{"http://localhost:5556"};
+
     promise<void> rcPromise;
     string error;
     IHttpResource::Response response;
 
-    auto server = make_shared<HttpServer>(5555);
+    auto server = make_shared<HttpServer>(port);
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
       DynamicResponse response;
       response.result(http::status::ok);
@@ -121,7 +127,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     //clang-format off
     resource->SendRequest(
         "GET",
-        "http://localhost:5555",
+        url,
         {
             {"Content-Type", "application/json"},
             {"Content-Encoding", "ASCII"},
@@ -173,6 +179,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestOptionsSucceeds) {
+    constexpr uint16_t port{5557};
+    constexpr char url[]{"http://localhost:5557"};
+
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
     promise<void> optionsPromise;
@@ -181,7 +190,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     IHttpResource::Response optionsResponse;
     string content;
 
-    auto server = make_shared<HttpServer>(5557);
+    auto server = make_shared<HttpServer>(port);
     server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
       EmptyResponse response;
       response.result(http::status::partial_content);
@@ -229,7 +238,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     //clang-format off
     resource->SendRequest(
         "OPTIONS",
-        "http://localhost:5557",
+        url,
         {} /*headers*/,
         {} /*bodyData*/,
         "text",
@@ -239,7 +248,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         [](int64_t) {});
     resource->SendRequest(
         "GET",
-        "http://localhost:5557",
+        url,
         {} /*headers*/,
         {} /*bodyData*/,
         "text",
@@ -270,16 +279,19 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
   TEST_METHOD(PreflightSucceeds) {
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    constexpr uint16_t port{5558};
+    constexpr char url[]{"http://localhost:5558"};
+
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
     IHttpResource::Response getResponse;
     IHttpResource::Response optionsResponse;
     string error;
     string getDataContent;
-    constexpr size_t port{5558};
 
     auto server = make_shared<HttpServer>(port);
-    server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
+    server->Callbacks().OnOptions = [&url](const DynamicRequest &request) -> ResponseWrapper {
       EmptyResponse response;
       response.result(http::status::accepted);
       // response.set("Preflight", "Approved");
@@ -291,7 +303,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         response.set(http::field::access_control_allow_credentials, "true");
       }
 
-      response.set(http::field::access_control_allow_origin, "http://localhost:5558");
+      response.set(http::field::access_control_allow_origin, url);
       response.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
 
       return {std::move(response)};
@@ -337,7 +349,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
     //clang-format off
     resource->SendRequest(
-        "GET", "http://localhost:5558", {{"ValidHeader", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
+        "GET", url, {{"ValidHeader", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
     //clang-format on
 
     getResponsePromise.get_future().wait();

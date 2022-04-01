@@ -116,8 +116,8 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   // address - Valid IP address string (i.e. "127.0.0.1).
   // port    - TCP port number (i.e. 80).
   ///
-  HttpServer(std::string &&address, size_t port, size_t concurrency = 1);
-  HttpServer(size_t port, size_t concurrency = 1);
+  HttpServer(std::string &&address, uint16_t port, size_t concurrency = 1);
+  HttpServer(uint16_t port, size_t concurrency = 1);
 
   ~HttpServer();
 

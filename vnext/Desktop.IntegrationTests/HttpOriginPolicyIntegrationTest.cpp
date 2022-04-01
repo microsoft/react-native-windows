@@ -42,7 +42,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   {
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    constexpr size_t port{5555};
+    constexpr uint16_t port{5555};
+    constexpr char url[]{"http://localhost:5555"};
 
     string error;
     string getContent;
@@ -92,7 +93,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     resource->SendRequest(
       "GET",
-      "http://localhost:5555",
+      url,
       {
         {"ValidHeader", "AnyValue"}
       },
@@ -123,7 +124,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   {
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
-    constexpr size_t port{5556};
+    constexpr uint16_t port{5556};
+    constexpr char url[]{"http://localhost:5556"};
 
     string error;
     string getContent;
@@ -131,7 +133,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     promise<void> getDataPromise;
 
     auto server = make_shared<HttpServer>(port);
-    server->Callbacks().OnOptions = [](const DynamicRequest& request) -> ResponseWrapper
+    server->Callbacks().OnOptions = [&url](const DynamicRequest& request) -> ResponseWrapper
     {
       EmptyResponse response;
       response.result(http::status::accepted);
@@ -139,7 +141,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       response.set(http::field::access_control_allow_credentials, "false");
       response.set(http::field::access_control_allow_headers, "ValidHeader");
       response.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
-      response.set(http::field::access_control_allow_origin, "http://localhost:5557");
+      response.set(http::field::access_control_allow_origin, url);
 
       return {std::move(response)};
     };
@@ -167,13 +169,11 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     {
       error = std::move(message);
       getDataPromise.set_value();
-
-      server->Stop();
     });
 
     resource->SendRequest(
       "TRACE",
-      "http://localhost:5556",
+      url,
       {
         {"ValidHeader", "AnyValue"}
       },
@@ -194,15 +194,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsForbiddenMethodFails)
-    // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
-    // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-19041#properties
-    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsForbiddenMethodFails)
   {
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
 
-    constexpr size_t port{5557};
+    constexpr uint16_t port{5557};
     constexpr char url[]{"http://localhost:5557"};
 
     string error;

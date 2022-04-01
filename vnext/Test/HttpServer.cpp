@@ -262,12 +262,12 @@ void HttpSession::Close()
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, size_t port, size_t concurrency)
+HttpServer::HttpServer(string &&address, uint16_t port, size_t concurrency)
   : m_ioThreadCount{concurrency}
   , m_ioContext{concurrency}
   , m_acceptor{make_strand(m_ioContext)}
 {
-  auto endpoint = tcp::endpoint{make_address(std::move(address)), static_cast<uint16_t>(port)};
+  auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
   m_acceptor.open(endpoint.protocol(), ec);
   if (ec)
@@ -298,7 +298,7 @@ HttpServer::HttpServer(string &&address, size_t port, size_t concurrency)
   }
 }
 
-HttpServer::HttpServer(size_t port, size_t concurrency)
+HttpServer::HttpServer(uint16_t port, size_t concurrency)
   : HttpServer("0.0.0.0", port, concurrency)
 {
 }
