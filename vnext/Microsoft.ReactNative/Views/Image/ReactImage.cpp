@@ -226,7 +226,7 @@ bool ReactImage::TrySetBackgroundSync(bool fireLoadEndEvent) {
 
   bool shouldUseCache = false;
 
-  if (!m_useCompositionBrush && m_imageCache->Exists(source.uri)) {
+  if (!m_useCompositionBrush && (m_imageCache && m_imageCache->Exists(source.uri))) {
     shouldUseCache = true;
 
     winrt::ImageBrush imageBrush{Background().try_as<winrt::ImageBrush>()};
@@ -245,7 +245,7 @@ bool ReactImage::TrySetBackgroundSync(bool fireLoadEndEvent) {
     if (createImageBrush) {
       Background(imageBrush);
     }
-  } else if (m_useCompositionBrush && m_surfaceCache->Exists(source.uri)) {
+  } else if (m_useCompositionBrush && (m_surfaceCache && m_surfaceCache->Exists(source.uri))) {
     shouldUseCache = true;
 
     const auto compositionBrush{ReactImageBrush::Create()};
@@ -362,7 +362,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
                   strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
 
-                  if (source.sourceType == ImageSourceType::Uri) {
+                  if (source.sourceType == ImageSourceType::Uri && strong_this->m_surfaceCache) {
                     strong_this->m_surfaceCache->Put(source.uri, surface);
                   }
 
@@ -454,7 +454,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                     strong_this->m_imageSource.width = bitmap.PixelWidth();
                     imageBrush.Stretch(strong_this->ResizeModeToStretch());
 
-                    if (source.sourceType == ImageSourceType::Uri) {
+                    if (source.sourceType == ImageSourceType::Uri && strong_this->m_imageCache) {
                       strong_this->m_imageCache->Put(source.uri, bitmap);
                     }
                   }

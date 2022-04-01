@@ -20,7 +20,7 @@
 namespace Microsoft::ReactNative {
 
 ImageComponentView::ImageComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_context(reactContext), m_element(ReactImage::Create()) {
+    : m_context(reactContext), m_element(ReactImage::Create(nullptr, nullptr)) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 

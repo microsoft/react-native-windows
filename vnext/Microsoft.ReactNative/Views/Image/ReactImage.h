@@ -77,7 +77,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
   GetImageMemoryStreamAsync(ReactImageSource source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
-  bool ReactImage::TrySetBackgroundSync(bool fireLoadEndEvent);
+  bool TrySetBackgroundSync(bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};

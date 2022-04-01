@@ -10,7 +10,7 @@
 #include <cstddef>
 #include <stdexcept>
 
-namespace react::uwp {
+namespace Microsoft::ReactNative {
 
 template<typename TKey, typename TValue>
 class LRUCache {
