@@ -33,7 +33,9 @@ using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 namespace Microsoft::ReactNative {
 
-/*static*/ winrt::com_ptr<ReactImage> ReactImage::Create(std::shared_ptr<ImageCache> imageCache, std::shared_ptr<SurfaceCache> surfaceCache) {
+/*static*/ winrt::com_ptr<ReactImage> ReactImage::Create(
+    std::shared_ptr<ImageCache> imageCache,
+    std::shared_ptr<SurfaceCache> surfaceCache) {
   auto reactImage = winrt::make_self<ReactImage>(imageCache, surfaceCache);
   // Grid inheirts the layout direction from parent and mirrors the background image in RTL mode.
   // Forcing the container to LTR mode to avoid the unexpected mirroring behavior.
@@ -439,8 +441,10 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
         // Create a new bitmap image if
         // a.) there is no bitmap image from the image brush, or
-        // b.) the uri has changed, (Since the BitmapImage is mutable, to ensure the cache's integrity, a uri must pair with its own bitmap image)
-        if (!bitmapImage || !(uri && bitmapImage.UriSource() && uri.AbsoluteUri() == bitmapImage.UriSource().AbsoluteUri())) {
+        // b.) the uri has changed, (Since the BitmapImage is mutable, to ensure the cache's integrity, a uri must pair
+        // with its own bitmap image)
+        if (!bitmapImage ||
+            !(uri && bitmapImage.UriSource() && uri.AbsoluteUri() == bitmapImage.UriSource().AbsoluteUri())) {
           bitmapImage = winrt::BitmapImage{};
 
           strong_this->m_bitmapImageOpened = bitmapImage.ImageOpened(

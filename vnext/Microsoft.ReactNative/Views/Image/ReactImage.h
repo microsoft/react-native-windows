@@ -38,9 +38,12 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   using Super = xaml::Controls::GridT<ReactImage>;
 
  public:
-  static winrt::com_ptr<ReactImage> Create(std::shared_ptr<ImageCache> imageCache, std::shared_ptr<SurfaceCache> surfaceCache);
+  static winrt::com_ptr<ReactImage> Create(
+      std::shared_ptr<ImageCache> imageCache,
+      std::shared_ptr<SurfaceCache> surfaceCache);
 
-  ReactImage(std::shared_ptr<ImageCache> imageCache, std::shared_ptr<SurfaceCache> surfaceCache): m_imageCache{imageCache}, m_surfaceCache{surfaceCache} {};
+  ReactImage(std::shared_ptr<ImageCache> imageCache, std::shared_ptr<SurfaceCache> surfaceCache)
+      : m_imageCache{imageCache}, m_surfaceCache{surfaceCache} {};
 
   // Overrides
   winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
