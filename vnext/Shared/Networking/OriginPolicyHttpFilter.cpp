@@ -489,7 +489,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   // #9770 - insert into preflight cache
 }
 
-ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const { // TODO: const& ??
+ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
   // TODO: Inject user agent?
 
   auto coRequest = request;
@@ -498,7 +498,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
   // Section 4.8.2 https://fetch.spec.whatwg.org/#cors-preflight-fetch
   preflightRequest.Method(HttpMethod::Options());
-  preflightRequest.RequestUri(m_origin);
+  preflightRequest.RequestUri(coRequest.RequestUri());
   preflightRequest.Headers().Insert(L"Accept", L"*/*");
   preflightRequest.Headers().Insert(L"Access-Control-Request-Method", coRequest.Method().ToString());
 
@@ -531,6 +531,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
 ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
   auto coRequest = request;
+  auto self = this;//REMOVE!
 
   // Allow only HTTP or HTTPS schemes
   if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
@@ -559,6 +560,8 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
       // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
       ValidatePreflightResponse(coRequest, preflightResponse);
     }
+  } catch (hresult_error const& e) {
+    throw e;
   } catch (const std::exception &e) {
     throw hresult_error{E_FAIL, to_hstring(e.what())};
   } catch (...) {

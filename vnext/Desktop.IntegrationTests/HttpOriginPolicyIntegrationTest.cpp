@@ -229,7 +229,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     };
     server->Start();
 
-    auto resource = IHttpResource::Make("http://example.com");
+    auto resource = IHttpResource::Make("http://example.rnw");
     resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
     {
       getResponse = std::move(res);
@@ -303,7 +303,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     };
     server->Start();
 
-    auto resource = IHttpResource::Make("http://example.com");
+    auto resource = IHttpResource::Make("http://example.rnw");
     resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
     {
       getResponse = std::move(res);
@@ -379,7 +379,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     };
     server->Start();
 
-    auto resource = IHttpResource::Make("http://example.com");
+    auto resource = IHttpResource::Make("http://example.rnw");
     resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
     {
       getResponse = std::move(res);
@@ -530,7 +530,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     };
     server->Start();
 
-    auto resource = IHttpResource::Make("http://example.com");
+    auto resource = IHttpResource::Make("http://example.rnw");
     resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
     {
       getResponse = std::move(res);
@@ -678,7 +678,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     };
     server->Start();
 
-    auto resource = IHttpResource::Make("http://example.com");
+    auto resource = IHttpResource::Make("http://example.rnw");
     resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
     {
       getResponse = std::move(res);
@@ -743,7 +743,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       response.set(http::field::access_control_allow_credentials, "false");
       response.set(http::field::access_control_allow_methods,     "GET, POST, DELETE, PATCH");
       response.set(http::field::access_control_allow_headers,     "Content-Type");
-      response.set(http::field::access_control_allow_origin,      "http://example.com");
+      response.set(http::field::access_control_allow_origin,      "http://example.rnw");
 
       response.set(http::field::access_control_request_headers,   "Content-Type");
 
@@ -759,7 +759,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     };
     server->Start();
 
-    auto resource = IHttpResource::Make("http://example.com");
+    auto resource = IHttpResource::Make("http://example.rnw");
     resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
     {
       getResponse = std::move(res);
