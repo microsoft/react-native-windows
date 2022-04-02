@@ -90,6 +90,13 @@ namespace Microsoft::React::Networking {
 
 /*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
 
+/*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
+
+/*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(const char* url)
+{
+  s_origin = Uri{to_hstring(url)};
+}
+
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
   return u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
 }
@@ -249,13 +256,12 @@ namespace Microsoft::React::Networking {
   return result;
 }
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri &&origin, IHttpFilter &&innerFilter)
-    : m_originPolicy{originPolicy}, m_origin{std::move(origin)}, m_innerFilter{std::move(innerFilter)} {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
+    : m_originPolicy{originPolicy}, m_innerFilter{std::move(innerFilter)} {}
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri &&origin)
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
     : OriginPolicyHttpFilter(
           originPolicy,
-          std::move(origin),
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
@@ -284,17 +290,17 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       return;
 
     case OriginPolicy::SameOrigin:
-      if (!IsSameOrigin(m_origin, request.RequestUri()))
+      if (!IsSameOrigin(s_origin, request.RequestUri()))
         throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced.\\n"};
       break;
 
     case OriginPolicy::SimpleCrossOriginResourceSharing:
       // Check for disallowed mixed content
       if (GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
-          m_origin.SchemeName() != request.RequestUri().SchemeName())
+          s_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
-      if (IsSameOrigin(m_origin, request.RequestUri()))
+      if (IsSameOrigin(s_origin, request.RequestUri()))
         // Same origin. Therefore, skip Cross-Origin handling.
         m_originPolicy = OriginPolicy::SameOrigin;
       else if (!IsSimpleCorsRequest(request))
@@ -316,7 +322,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       // https://fetch.spec.whatwg.org/#forbidden-header-name
 
       // TODO: Make message static private
-      if (m_origin.SchemeName() != request.RequestUri().SchemeName())
+      if (s_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
       if (!AreSafeRequestHeaders(request.Headers()))
@@ -326,7 +332,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
         throw hresult_error{E_INVALIDARG, L"Request method not allowed in cross-origin resource sharing"};
 
       // TODO: overwrite member OP, or set/return validated OP?
-      if (IsSameOrigin(m_origin, request.RequestUri()))
+      if (IsSameOrigin(s_origin, request.RequestUri()))
         m_originPolicy = OriginPolicy::SameOrigin;
       else if (IsSimpleCorsRequest(request))
         m_originPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
@@ -362,7 +368,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
 
   // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected.
   // 4.10.4 - Mismatched allow origin
-  if (!IsSameOrigin(m_origin, Uri{origin}))
+  if (!IsSameOrigin(s_origin, Uri{origin}))
     throw hresult_error{
         E_INVALIDARG,
         L"The Access-Control-Allow-Origin header has a value of [" + origin +
@@ -521,7 +527,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
   }
 
   preflightRequest.Headers().Insert(L"Access-Control-Request-Headers", headerNames);
-  preflightRequest.Headers().Insert(L"Origin", m_origin.AbsoluteCanonicalUri());
+  preflightRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
   preflightRequest.Headers().Insert(L"Sec-Fetch-Mode", L"CORS");
 
   co_return {co_await m_innerFilter.SendRequestAsync(preflightRequest)};
@@ -536,7 +542,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   // Allow only HTTP or HTTPS schemes
   if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
       coRequest.RequestUri().SchemeName() != L"http")
-    throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + m_origin.SchemeName() + L"]"};
+    throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + s_origin.SchemeName() + L"]"};
 
   // Ensure absolute URL
   coRequest.RequestUri(Uri{coRequest.RequestUri().AbsoluteCanonicalUri()});

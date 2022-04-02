@@ -25,13 +25,18 @@ class OriginPolicyHttpFilter
   static std::set<const wchar_t *> s_corsForbiddenRequestHeaderNames;
   static std::set<const wchar_t *> s_corsForbiddenRequestHeaderNamePrefixes;
 
+  // TODO: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
+  static winrt::Windows::Foundation::Uri s_origin;
+
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
   OriginPolicy m_originPolicy;
 
   // TODO: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
-  winrt::Windows::Foundation::Uri m_origin;
+  //winrt::Windows::Foundation::Uri m_origin;
 
  public:
+  static void SetStaticOrigin(const char *url);
+
   static bool IsSameOrigin(
       winrt::Windows::Foundation::Uri const &u1,
       winrt::Windows::Foundation::Uri const &u2) noexcept;
@@ -52,10 +57,9 @@ class OriginPolicyHttpFilter
 
   OriginPolicyHttpFilter(
       OriginPolicy originPolicy,
-      winrt::Windows::Foundation::Uri &&origin,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
 
-  OriginPolicyHttpFilter(OriginPolicy originPolicy, winrt::Windows::Foundation::Uri &&origin);
+  OriginPolicyHttpFilter(OriginPolicy originPolicy);
 
   void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request);
 
