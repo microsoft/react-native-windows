@@ -32,7 +32,7 @@ class OriginPolicyHttpFilter
   OriginPolicy m_originPolicy;
 
   // TODO: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
-  //winrt::Windows::Foundation::Uri m_origin;
+  // winrt::Windows::Foundation::Uri m_origin;
 
  public:
   static void SetStaticOrigin(const char *url);
@@ -55,9 +55,7 @@ class OriginPolicyHttpFilter
 
   static bool IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept;
 
-  OriginPolicyHttpFilter(
-      OriginPolicy originPolicy,
-      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
+  OriginPolicyHttpFilter(OriginPolicy originPolicy, winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
 
   OriginPolicyHttpFilter(OriginPolicy originPolicy);
 

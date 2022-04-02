@@ -44,6 +44,6 @@ const std::int32_t __cdecl GetRuntimeOptionInt(const std::string &name) noexcept
 /// </summary>
 /// <param name="name">Global key</param>
 /// <returns>Value stored for the given key, or nullptr if the entry doesn't exist (default)</returns>
-const char* __cdecl GetRuntimeOptionString(const char* name) noexcept;
+const char *__cdecl GetRuntimeOptionString(const char *name) noexcept;
 
 } // namespace Microsoft::React

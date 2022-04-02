@@ -92,8 +92,7 @@ namespace Microsoft::React::Networking {
 
 /*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
 
-/*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(const char* url)
-{
+/*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(const char *url) {
   s_origin = Uri{to_hstring(url)};
 }
 
@@ -260,9 +259,7 @@ OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpF
     : m_originPolicy{originPolicy}, m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
-    : OriginPolicyHttpFilter(
-          originPolicy,
-          winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
+    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
   // case CORS:
@@ -537,7 +534,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
 ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
   auto coRequest = request;
-  auto self = this;//REMOVE!
+  auto self = this; // REMOVE!
 
   // Allow only HTTP or HTTPS schemes
   if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
@@ -566,7 +563,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
       // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
       ValidatePreflightResponse(coRequest, preflightResponse);
     }
-  } catch (hresult_error const& e) {
+  } catch (hresult_error const &e) {
     throw e;
   } catch (const std::exception &e) {
     throw hresult_error{E_FAIL, to_hstring(e.what())};
