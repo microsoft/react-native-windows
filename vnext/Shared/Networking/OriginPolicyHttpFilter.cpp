@@ -280,15 +280,15 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
   /// else => CORS
 
   switch (m_originPolicy) {
-    case Microsoft::React::Networking::OriginPolicy::None:
+    case OriginPolicy::None:
       return;
 
-    case Microsoft::React::Networking::OriginPolicy::SameOrigin:
+    case OriginPolicy::SameOrigin:
       if (!IsSameOrigin(m_origin, request.RequestUri()))
         throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced.\\n"};
       break;
 
-    case Microsoft::React::Networking::OriginPolicy::SimpleCrossOriginResourceSharing:
+    case OriginPolicy::SimpleCrossOriginResourceSharing:
       // Check for disallowed mixed content
       if (GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
           m_origin.SchemeName() != request.RequestUri().SchemeName())
@@ -304,7 +304,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
             L"The request does not meet the requirements for Same-Origin policy or Simple Cross-Origin resource sharing"};
       break;
 
-    case Microsoft::React::Networking::OriginPolicy::CrossOriginResourceSharing:
+    case OriginPolicy::CrossOriginResourceSharing:
       // TODO: Rewrite
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
       // Refer to CorsURLLoaderFactory::IsValidRequest in chrome\src\services\network\cors\cors_url_loader_factory.cc.
