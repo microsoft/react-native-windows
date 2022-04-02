@@ -5,8 +5,8 @@
 
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
-#include <Test/HttpServer.h>
 #include <RuntimeOptions.h>
+#include <Test/HttpServer.h>
 
 // Boost Library
 #include <boost/beast/http.hpp>
@@ -23,10 +23,10 @@ using Microsoft::React::Networking::OriginPolicy;
 using std::make_shared;
 using std::promise;
 using std::string;
-//using Test::DynamicRequest;
-//using Test::DynamicResponse;
-//using Test::HttpServer;
-//using Test::ResponseWrapper;
+// using Test::DynamicRequest;
+// using Test::DynamicResponse;
+// using Test::HttpServer;
+// using Test::ResponseWrapper;
 
 // clang-format off
 namespace Microsoft::React::Test {

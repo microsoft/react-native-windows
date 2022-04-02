@@ -45,9 +45,8 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   void UntrackResponse(int64_t requestId) noexcept;
 
   winrt::fire_and_forget PerformSendRequest(
-    winrt::Windows::Web::Http::HttpRequestMessage && request,
-      winrt::Windows::Foundation::IInspectable const& args
-  ) noexcept;
+      winrt::Windows::Web::Http::HttpRequestMessage &&request,
+      winrt::Windows::Foundation::IInspectable const &args) noexcept;
 
  public:
   WinRTHttpResource() noexcept;

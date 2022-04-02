@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include "OriginPolicyHttpFilter.h"
-#include "WinRTHttpResource.h"//RequestArgs
+#include "WinRTHttpResource.h" //RequestArgs
 
 #include <RuntimeOptions.h>
 
@@ -134,46 +134,44 @@ namespace Microsoft::React::Networking {
 // 'Content-Language', or whose name is 'Content-Type' and value is one of 'application/x-www-form-urlencoded',
 // 'multipart/form-data', and 'text/plain'
 /*static*/ bool OriginPolicyHttpFilter::IsCorsSafelistedRequestHeader(
-  hstring const& name,
-  hstring const& value) noexcept
-{
+    hstring const &name,
+    hstring const &value) noexcept {
   // 1. If value's length is greater than 128, then return false.
   if (value.size() > 128)
     return false;
 
   // 2. Byte-lowercase name and switch on the result:
   static const wchar_t *const safeHeaderNames[] = {
-    // The following four headers are from the CORS spec
-    L"accept",
-    L"accept-language",
-    L"content-language",
-    L"content-type",
+      // The following four headers are from the CORS spec
+      L"accept",
+      L"accept-language",
+      L"content-language",
+      L"content-type",
 
-    // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Save-Data
-    L"save-data",
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Save-Data
+      L"save-data",
 
-    // https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header
-    L"device-memory",
-    L"dpr",
-    L"width",
-    L"viewport-width",
+      // https://w3c.github.io/device-memory/#sec-device-memory-client-hint-header
+      L"device-memory",
+      L"dpr",
+      L"width",
+      L"viewport-width",
 
-    // https://tools.ietf.org/html/draft-west-lang-client-hint
-    L"sec-ch-lang",
+      // https://tools.ietf.org/html/draft-west-lang-client-hint
+      L"sec-ch-lang",
 
-    // https://tools.ietf.org/html/draft-west-ua-client-hints
-    L"sec-ch-ua",
-    L"sec-ch-ua-platform",
-    L"sec-ch-ua-arch",
-    L"sec-ch-ua-model",
-    L"sec-ch-ua-mobile",
-    L"sec-ch-ua-full-version",
-    L"sec-ch-ua-platform-version",
+      // https://tools.ietf.org/html/draft-west-ua-client-hints
+      L"sec-ch-ua",
+      L"sec-ch-ua-platform",
+      L"sec-ch-ua-arch",
+      L"sec-ch-ua-model",
+      L"sec-ch-ua-mobile",
+      L"sec-ch-ua-full-version",
+      L"sec-ch-ua-platform-version",
   };
 
   auto nameLower = boost::to_lower_copy(wstring{name.c_str()});
-  if (std::find(std::cbegin(safeHeaderNames), std::cend(safeHeaderNames), nameLower) ==
-      std::end(safeHeaderNames))
+  if (std::find(std::cbegin(safeHeaderNames), std::cend(safeHeaderNames), nameLower) == std::end(safeHeaderNames))
     return false;
 
   double doubleHolder;
@@ -217,16 +215,14 @@ namespace Microsoft::React::Networking {
 }
 
 // https://fetch.spec.whatwg.org/#cors-unsafe-request-header-byte
-/*static*/ bool OriginPolicyHttpFilter::IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept
-{
-  //const auto u = static_cast<uint8_t>(c);
+/*static*/ bool OriginPolicyHttpFilter::IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept {
+  // const auto u = static_cast<uint8_t>(c);
   return (c < 0x20 && c != 0x09) || c == 0x22 || c == 0x28 || c == 0x29 || c == 0x3a || c == 0x3c || c == 0x3e ||
       c == 0x3f || c == 0x40 || c == 0x5b || c == 0x5c || c == 0x5d || c == 0x7b || c == 0x7d || c == 0x7f;
 }
 
-/*static*/ set<const wchar_t*> OriginPolicyHttpFilter::CorsUnsafeNotForbiddenRequestHeaderNames(
-  HttpRequestHeaderCollection const& headers) noexcept
-{
+/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::CorsUnsafeNotForbiddenRequestHeaderNames(
+    HttpRequestHeaderCollection const &headers) noexcept {
   constexpr size_t maxSafelistValueSize = 1024;
   size_t safelistValueSize = 0;
   std::vector<const wchar_t *> potentiallyUnsafeNames;
@@ -253,11 +249,14 @@ namespace Microsoft::React::Networking {
   return result;
 }
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri&& origin, IHttpFilter &&innerFilter)
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri &&origin, IHttpFilter &&innerFilter)
     : m_originPolicy{originPolicy}, m_origin{std::move(origin)}, m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri &&origin)
-    : OriginPolicyHttpFilter(originPolicy, std::move(origin), winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
+    : OriginPolicyHttpFilter(
+          originPolicy,
+          std::move(origin),
+          winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
   // case CORS:
@@ -321,13 +320,10 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
       if (!AreSafeRequestHeaders(request.Headers()))
-        throw hresult_error{
-            E_INVALIDARG, L"Request header not allowed in cross-origin resource sharing"};
+        throw hresult_error{E_INVALIDARG, L"Request header not allowed in cross-origin resource sharing"};
 
       if (s_forbiddenMethods.find(request.Method().ToString().c_str()) != s_forbiddenMethods.cend())
-        throw hresult_error{
-          E_INVALIDARG,
-            L"Request method not allowed in cross-origin resource sharing"};
+        throw hresult_error{E_INVALIDARG, L"Request method not allowed in cross-origin resource sharing"};
 
       // TODO: overwrite member OP, or set/return validated OP?
       if (IsSameOrigin(m_origin, request.RequestUri()))
@@ -346,8 +342,10 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 }
 
 // See https://fetch.spec.whatwg.org/#cors-check
-void OriginPolicyHttpFilter::ValidateAllowOrigin(hstring const &origin, hstring const &allowCredentials, IInspectable const& iArgs)
-    const {
+void OriginPolicyHttpFilter::ValidateAllowOrigin(
+    hstring const &origin,
+    hstring const &allowCredentials,
+    IInspectable const &iArgs) const {
   if (origin.size() == 0)
     throw hresult_error{E_INVALIDARG, L"No valid origin in response"};
 
@@ -481,7 +479,10 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
     const set unsafeNotForbidenHeaderNames = CorsUnsafeNotForbiddenRequestHeaderNames(request.Headers());
     for (const auto name : unsafeNotForbidenHeaderNames) {
       if (allowedHeaders.find(name) == allowedHeaders.cend())
-        throw hresult_error{E_INVALIDARG, L"Request header field [" + to_hstring(name) + L"]is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
+        throw hresult_error{
+            E_INVALIDARG,
+            L"Request header field [" + to_hstring(name) +
+                L"]is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
     }
   }
 
@@ -519,7 +520,8 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   auto coRequest = request;
 
   // Allow only HTTP or HTTPS schemes
-  if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" && coRequest.RequestUri().SchemeName() != L"http")
+  if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
+      coRequest.RequestUri().SchemeName() != L"http")
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + m_origin.SchemeName() + L"]"};
 
   // Ensure absolute URL

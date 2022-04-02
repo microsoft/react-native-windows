@@ -348,8 +348,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     });
 
     //clang-format off
-    resource->SendRequest(
-        "GET", url, {{"ValidHeader", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
+    resource->SendRequest("GET", url, {{"ValidHeader", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
     //clang-format on
 
     getResponsePromise.get_future().wait();

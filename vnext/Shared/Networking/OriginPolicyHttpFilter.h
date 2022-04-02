@@ -46,7 +46,7 @@ class OriginPolicyHttpFilter
   static std::set<const wchar_t *> CorsUnsafeNotForbiddenRequestHeaderNames(
       winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection const &headers) noexcept;
 
-  static bool IsCorsSafelistedRequestHeader(winrt::hstring const& name, winrt::hstring const& value) noexcept;
+  static bool IsCorsSafelistedRequestHeader(winrt::hstring const &name, winrt::hstring const &value) noexcept;
 
   static bool IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept;
 
@@ -63,7 +63,10 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpRequestMessage const &request,
       winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
 
-  void ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials, winrt::Windows::Foundation::IInspectable const& iArgs) const;
+  void ValidateAllowOrigin(
+      winrt::hstring const &origin,
+      winrt::hstring const &allowCredentials,
+      winrt::Windows::Foundation::IInspectable const &iArgs) const;
 
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
