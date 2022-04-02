@@ -492,22 +492,26 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const { // TODO: const& ??
   // TODO: Inject user agent?
 
+  auto coRequest = request;
+
   HttpRequestMessage preflightRequest;
 
   // Section 4.8.2 https://fetch.spec.whatwg.org/#cors-preflight-fetch
   preflightRequest.Method(HttpMethod::Options());
   preflightRequest.RequestUri(m_origin);
   preflightRequest.Headers().Insert(L"Accept", L"*/*");
-  preflightRequest.Headers().Insert(L"Access-Control-Request-Method", request.Method().ToString());
+  preflightRequest.Headers().Insert(L"Access-Control-Request-Method", coRequest.Method().ToString());
 
   auto headerNames = wstring{};
-  auto headerItr = request.Headers().begin();
-  if (headerItr != request.Headers().end())
+  auto headerItr = coRequest.Headers().begin();
+  if (headerItr != coRequest.Headers().end()) {
     headerNames += (*headerItr).Key();
-  while (++headerItr != request.Headers().end())
-    headerNames += L", " + (*headerItr).Key();
-  preflightRequest.Headers().Insert(L"Access-Control-Request-Headers", headerNames);
 
+    while (++headerItr != coRequest.Headers().end())
+      headerNames += L", " + (*headerItr).Key();
+  }
+
+  preflightRequest.Headers().Insert(L"Access-Control-Request-Headers", headerNames);
   preflightRequest.Headers().Insert(L"Origin", m_origin.AbsoluteCanonicalUri());
   preflightRequest.Headers().Insert(L"Sec-Fetch-Mode", L"CORS");
 

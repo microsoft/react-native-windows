@@ -495,7 +495,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Assert::AreEqual({"SERVER_CONTENT"}, getContent);
   }// SimpleCorsSameOriginSucceededs
 
-  //TODO!
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsCrossOriginFetchFails)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsCrossOriginFetchFails)
@@ -567,6 +566,236 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Assert::AreNotEqual({}, error);
   }// SimpleCorsCrossOriginFetchFails
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsSameOriginRequestSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsSameOriginRequestSucceeds)
+  {
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    constexpr uint16_t port{5562};
+    constexpr char url[]{"http://localhost:5562"};
+
+    string error;
+    string getContent;
+    IHttpResource::Response getResponse;
+    promise<void> getDataPromise;
+
+    auto server = make_shared<HttpServer>(port);
+    server->Callbacks().OnOptions = [&url](const DynamicRequest& request) -> ResponseWrapper
+    {
+      EmptyResponse response;
+      response.result(http::status::accepted);
+
+      response.set(http::field::access_control_allow_credentials, "false");
+      response.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
+
+      return {std::move(response)};
+    };
+    server->Callbacks().OnGet = [](const DynamicRequest& request) -> ResponseWrapper
+    {
+      StringResponse response;
+      response.result(http::status::ok);
+      response.body() = "SERVER_CONTENT";
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make(url);
+    resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
+    {
+      getResponse = std::move(res);
+    });
+    resource->SetOnData([&getDataPromise, &getContent](int64_t, string&& content)
+    {
+      getContent = std::move(content);
+      getDataPromise.set_value();
+    });
+    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message)
+    {
+      error = std::move(message);
+      getDataPromise.set_value();
+    });
+
+    resource->SendRequest(
+      "GET",
+      url,
+      {
+        { "Content-Type", "text/plain" }, // text/plain is a non-simple header
+      },
+      {} /*bodyData*/,
+      "text",
+      false /*useIncrementalUpdates*/,
+      1000 /*timeout*/,
+      false /*withCredentials*/,
+      [](int64_t){} /*callback*/
+    );
+
+    getDataPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreEqual({}, error);
+    Assert::AreEqual(200, static_cast<int>(getResponse.StatusCode));
+    Assert::AreEqual({"SERVER_CONTENT"}, getContent);
+  }// FullCorsSameOriginRequestSucceeds
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginAllowOriginWildcardSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginAllowOriginWildcardSucceeds)
+  {
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    constexpr uint16_t port{5563};
+    constexpr char url[]{"http://localhost:5563"};
+
+    string error;
+    string getContent;
+    IHttpResource::Response getResponse;
+    promise<void> getDataPromise;
+
+    auto server = make_shared<HttpServer>(port);
+    server->Callbacks().OnOptions = [&url](const DynamicRequest& request) -> ResponseWrapper
+    {
+      EmptyResponse response;
+      response.result(http::status::accepted);
+
+      response.set(http::field::access_control_allow_credentials, "false");
+      response.set(http::field::access_control_allow_methods,     "GET, POST, DELETE, PATCH");
+      response.set(http::field::access_control_allow_headers,     "Content-Type");
+      response.set(http::field::access_control_allow_origin,      "*");
+
+      response.set(http::field::access_control_request_headers,   "Content-Type");
+
+      return {std::move(response)};
+    };
+    server->Callbacks().OnGet = [](const DynamicRequest& request) -> ResponseWrapper
+    {
+      StringResponse response;
+      response.result(http::status::ok);
+      response.body() = "SERVER_CONTENT";
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make("http://example.com");
+    resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
+    {
+      getResponse = std::move(res);
+    });
+    resource->SetOnData([&getDataPromise, &getContent](int64_t, string&& content)
+    {
+      getContent = std::move(content);
+      getDataPromise.set_value();
+    });
+    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message)
+    {
+      error = std::move(message);
+      getDataPromise.set_value();
+    });
+
+    resource->SendRequest(
+      "GET",
+      url,
+      {
+        { "Content-Type", "text/plain" }, // text/plain is a non-simple header
+      },
+      { IHttpResource::BodyData::Type::String, "CLIENT_CONTENT" } /*bodyData*/,
+      "text",
+      false /*useIncrementalUpdates*/,
+      1000 /*timeout*/,
+      false /*withCredentials*/,
+      [](int64_t){} /*callback*/
+    );
+
+    getDataPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreEqual({}, error);
+    Assert::AreEqual(200, static_cast<int>(getResponse.StatusCode));
+    Assert::AreEqual({"SERVER_CONTENT"}, getContent);
+  }// FullCorsCrossOriginAllowOriginWildcardSucceeds
+
+
+  // With CORS, Cross-Origin Resource Sharing, the server can decide what origins are permitted to read information from the client.
+  // Additionally, for non-simple requests, client should preflight the request through the HTTP Options request, and only send the
+  // actual request after the server has responded that the desired headers are supported.
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMatchingOriginSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginMatchingOriginSucceeds)
+  {
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    constexpr uint16_t port{5564};
+    constexpr char url[]{"http://localhost:5564"};
+
+    string error;
+    string getContent;
+    IHttpResource::Response getResponse;
+    promise<void> getDataPromise;
+
+    auto server = make_shared<HttpServer>(port);
+    server->Callbacks().OnOptions = [&url](const DynamicRequest& request) -> ResponseWrapper
+    {
+      EmptyResponse response;
+      response.result(http::status::accepted);
+
+      response.set(http::field::access_control_allow_credentials, "false");
+      response.set(http::field::access_control_allow_methods,     "GET, POST, DELETE, PATCH");
+      response.set(http::field::access_control_allow_headers,     "Content-Type");
+      response.set(http::field::access_control_allow_origin,      "http://example.com");
+
+      response.set(http::field::access_control_request_headers,   "Content-Type");
+
+      return {std::move(response)};
+    };
+    server->Callbacks().OnGet = [](const DynamicRequest& request) -> ResponseWrapper
+    {
+      StringResponse response;
+      response.result(http::status::ok);
+      response.body() = "SERVER_CONTENT";
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make("http://example.com");
+    resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
+    {
+      getResponse = std::move(res);
+    });
+    resource->SetOnData([&getDataPromise, &getContent](int64_t, string&& content)
+    {
+      getContent = std::move(content);
+      getDataPromise.set_value();
+    });
+    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message)
+    {
+      error = std::move(message);
+      getDataPromise.set_value();
+    });
+
+    resource->SendRequest(
+      "GET",
+      url,
+      {
+        { "Content-Type", "text/plain" }, // text/plain is a non-simple header
+      },
+      { IHttpResource::BodyData::Type::String, "CLIENT_CONTENT"} /*bodyData*/,
+      "text",
+      false /*useIncrementalUpdates*/,
+      1000 /*timeout*/,
+      false /*withCredentials*/,
+      [](int64_t){} /*callback*/
+    );
+
+    getDataPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreEqual({}, error);
+    Assert::AreEqual(200, static_cast<int>(getResponse.StatusCode));
+    Assert::AreEqual({"SERVER_CONTENT"}, getContent);
+  }// FullCorsCrossOriginMatchingOriginSucceeds
 };
 
 }//namespace
