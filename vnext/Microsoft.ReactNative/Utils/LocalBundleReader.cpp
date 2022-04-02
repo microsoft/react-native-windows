@@ -65,8 +65,7 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &b
     winrt::Windows::Foundation::Uri uri(str);
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
   } else if (bundleUri._Starts_with("resource://")) {
-    script = GetBundleFromEmbeddedResource(str);
-    co_return script;
+    co_return GetBundleFromEmbeddedResource(str);
   } else {
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(str);
   }
