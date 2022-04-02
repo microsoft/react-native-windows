@@ -510,6 +510,15 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
     while (++headerItr != coRequest.Headers().end())
       headerNames += L", " + (*headerItr).Key();
   }
+  if (coRequest.Content()) {
+    headerItr = coRequest.Content().Headers().begin();
+    if (headerItr != coRequest.Content().Headers().end()) {
+      headerNames += (*headerItr).Key();
+
+      while (++headerItr != coRequest.Content().Headers().end())
+        headerNames += L", " + (*headerItr).Key();
+    }
+  }
 
   preflightRequest.Headers().Insert(L"Access-Control-Request-Headers", headerNames);
   preflightRequest.Headers().Insert(L"Origin", m_origin.AbsoluteCanonicalUri());
