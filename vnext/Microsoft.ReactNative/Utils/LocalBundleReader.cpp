@@ -15,6 +15,44 @@
 
 namespace Microsoft::ReactNative {
 
+std::string GetBundleFromEmbeddedResource(winrt::hstring str) {
+  winrt::Windows::Foundation::Uri uri(str);
+  auto moduleName = uri.Host();
+  auto path = uri.Path();
+  // skip past the leading / slash
+  auto resourceName = path.c_str() + 1;
+  std::string script;
+
+  if (auto hmodule = GetModuleHandle(moduleName != L"" ? moduleName.c_str() : nullptr)) {
+    if (auto resource = FindResourceW(hmodule, resourceName, RT_RCDATA)) {
+      if (auto hglobal = LoadResource(hmodule, resource)) {
+        if (auto start = static_cast<char *>(LockResource(hglobal))) {
+          if (auto size = SizeofResource(hmodule, resource)) {
+            script = std::string(start, start + size);
+          } else {
+            throw std::invalid_argument(fmt::format(
+                "Couldn't get size of resource {} in module {}",
+                winrt::to_string(resourceName),
+                winrt::to_string(moduleName)));
+          }
+        } else {
+          throw std::invalid_argument(fmt::format(
+              "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+        }
+      } else {
+        throw std::invalid_argument(fmt::format(
+            "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+      }
+    } else {
+      throw std::invalid_argument(fmt::format(
+          "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+    }
+  } else {
+    throw std::invalid_argument(fmt::format("Couldn't find module {}", winrt::to_string(moduleName)));
+  }
+  return script;
+}
+
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &bundleUri) {
   winrt::hstring str(Microsoft::Common::Unicode::Utf8ToUtf16(bundleUri));
 
@@ -26,6 +64,9 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &b
   if (bundleUri._Starts_with("ms-app")) {
     winrt::Windows::Foundation::Uri uri(str);
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
+  } else if (bundleUri._Starts_with("resource://")) {
+    script = GetBundleFromEmbeddedResource(str);
+    co_return script;
   } else {
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(str);
   }
