@@ -142,6 +142,7 @@
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
+        $(ReactNativeDir)\ReactCommon\react\bridging;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
         %(AdditionalIncludeDirectories);

@@ -85,6 +85,7 @@ bool ViewComponentView::shouldBeControl() const noexcept {
 void ViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
+
 void ViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
@@ -95,9 +96,6 @@ void ViewComponentView::updateLayoutMetrics(
 
   winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, layoutMetrics.frame.origin.x);
   winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, layoutMetrics.frame.origin.y);
-
-  m_panel.Width(layoutMetrics.frame.size.width);
-  m_panel.Height(layoutMetrics.frame.size.height);
 }
 
 void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
@@ -177,6 +175,36 @@ void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) no
       else
         m_control.Content(m_panel);
     }
+  }
+
+  if (m_outerBorder) {
+    m_outerBorder.Width(m_layoutMetrics.frame.size.width);
+    m_outerBorder.Height(m_layoutMetrics.frame.size.height);
+  }
+
+  if (m_control) {
+    m_control.Width(m_layoutMetrics.frame.size.width);
+    m_control.Height(m_layoutMetrics.frame.size.height);
+  }
+
+  m_panel.Width(m_layoutMetrics.frame.size.width);
+  m_panel.Height(m_layoutMetrics.frame.size.height);
+
+  if (m_control) {
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_control, m_layoutMetrics.frame.origin.x);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_control, m_layoutMetrics.frame.origin.y);
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_outerBorder, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_outerBorder, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, 0);
+  } else if (m_outerBorder) {
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_outerBorder, m_layoutMetrics.frame.origin.x);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_outerBorder, m_layoutMetrics.frame.origin.y);
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, 0);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, 0);
+  } else {
+    winrt::Microsoft::ReactNative::ViewPanel::SetLeft(m_panel, m_layoutMetrics.frame.origin.x);
+    winrt::Microsoft::ReactNative::ViewPanel::SetTop(m_panel, m_layoutMetrics.frame.origin.y);
   }
 }
 

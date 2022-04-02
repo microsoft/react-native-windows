@@ -19,6 +19,7 @@
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/textinput/iostextinput/TextInputShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
+#include "TextInput/WindowsTextInputShadowNode.h"
 
 #include "ActivityIndicatorComponentView.h"
 #include "ImageComponentView.h"
@@ -27,6 +28,7 @@
 #include "SliderComponentView.h"
 #include "SwitchComponentView.h"
 #include "TextComponentView.h"
+#include "TextInput/WindowsTextInputComponentView.h"
 #include "ViewComponentView.h"
 #include "XamlView.h"
 
@@ -55,6 +57,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<SliderComponentView>(m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
     view = std::make_shared<SwitchComponentView>(m_context);
+  } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
+    view = std::make_shared<WindowsTextInputComponentView>();
   } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
     view = std::make_shared<ActivityIndicatorComponentView>();
   } else {
@@ -78,6 +82,15 @@ ComponentViewDescriptor const &ComponentViewRegistry::componentViewDescriptorWit
   auto iterator = m_registry.find(tag);
   assert(iterator != m_registry.end());
   return iterator->second;
+}
+
+std::shared_ptr<IComponentView> ComponentViewRegistry::findComponentViewWithTag(
+    facebook::react::Tag tag) const noexcept {
+  auto iterator = m_registry.find(tag);
+  if (iterator == m_registry.end()) {
+    return nullptr;
+  }
+  return iterator->second.view;
 }
 
 void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(

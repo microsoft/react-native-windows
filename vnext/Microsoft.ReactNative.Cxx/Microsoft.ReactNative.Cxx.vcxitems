@@ -12,6 +12,8 @@
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallInvoker.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
     <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\nativemodule\core</TurboModule_SourcePath>
     <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</TurboModule_SourcePath>
+    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\bridging</Bridging_SourcePath>
+    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</Bridging_SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -20,6 +22,7 @@
         $(JSI_SourcePath);
         $(CallInvoker_SourcePath);
         $(TurboModule_SourcePath);
+        $(Bridging_SourcePath);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
     </ClCompile>
@@ -40,6 +43,7 @@
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)XamlUtils.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
@@ -104,7 +108,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp">
+    <ClCompile Include="$(TurboModule_SourcePath)\..\..\bridging\LongLivedObject.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>

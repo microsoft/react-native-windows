@@ -1,8 +1,28 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 05:09:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.8
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Patches
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.30
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.27
+- Bump react-native-platform-override to v1.6.7
+
+## 1.1.7
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Patches
+
+- Fixup peerDependencies when going from preview to latest (ngerlem@microsoft.com)
 
 ## 1.1.6
 

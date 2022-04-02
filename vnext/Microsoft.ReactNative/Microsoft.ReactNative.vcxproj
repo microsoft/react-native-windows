@@ -519,6 +519,11 @@
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />
     <ClCompile Include="Fabric\SwitchComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputShadowNode.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
     <ClCompile Include="SchedulerSettings.cpp" />

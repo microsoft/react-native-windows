@@ -2,6 +2,39 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Fri, 01 Apr 2022 05:09:58 GMT",
+      "tag": "react-native-windows-init_v1.1.93",
+      "version": "1.1.93",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605",
+            "comment": "Fix publish after promotion to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.1",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.35",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.122",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Mar 2022 05:09:21 GMT",
       "tag": "react-native-windows-init_v1.1.92",
       "version": "1.1.92",

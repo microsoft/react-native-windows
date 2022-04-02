@@ -34,6 +34,8 @@
 
 #include <future>
 
+#include <AppModel.h>
+
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
 #pragma optimize("", off)
@@ -242,8 +244,11 @@ void DevSupportManager::StartInspector(
     [[maybe_unused]] const uint16_t packagerPort) noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
   std::string packageName("RNW");
-  if (auto currentPackage = winrt::Windows::ApplicationModel::Package::Current()) {
-    packageName = winrt::to_string(currentPackage.DisplayName());
+  wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
+  UINT32 size = ARRAYSIZE(fullName);
+  if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
+    // we are in an unpackaged app
+    packageName = winrt::to_string(fullName);
   }
 
   std::string deviceName("RNWHost");

@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,9 +18,9 @@
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.29",
-    "@react-native-windows/fs": "^1.0.2",
-    "@react-native-windows/package-utils": "^0.0.0-canary.26",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.30",
+    "@react-native-windows/fs": "^0.0.0-canary.1",
+    "@react-native-windows/package-utils": "^0.0.0-canary.27",
     "chalk": "^4.1.0",
     "simple-git": "^1.131.0",
     "source-map-support": "^0.5.19",

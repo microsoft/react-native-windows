@@ -760,7 +760,7 @@ void TextInputShadowNode::dispatchCommand(
 TextInputViewManager::TextInputViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const wchar_t *TextInputViewManager::GetName() const {
-  return L"RCTTextInput";
+  return L"WindowsTextInput";
 }
 
 void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
