@@ -521,7 +521,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   auto coRequest = request;
 
   // Allow only HTTP or HTTPS schemes
-  if (coRequest.RequestUri().SchemeName() != L"https" && coRequest.RequestUri().SchemeName() != L"http")
+  if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" && coRequest.RequestUri().SchemeName() != L"http")
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + m_origin.SchemeName() + L"]"};
 
   // TODO: Should m_origin be vectored/mapped to requestId???

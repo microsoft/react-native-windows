@@ -498,6 +498,78 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Assert::AreEqual({"SERVER_CONTENT"}, getContent);
   }// SimpleCorsSameOriginSucceededs
 
+  //TODO!
+  BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsCrossOriginFetchFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SimpleCorsCrossOriginFetchFails)
+  {
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
+    constexpr uint16_t port{5561};
+    constexpr char url[]{"http://localhost:5561"};
+
+    string error;
+    string getContent;
+    IHttpResource::Response getResponse;
+    promise<void> getDataPromise;
+
+    auto server = make_shared<HttpServer>(port);
+    server->Callbacks().OnOptions = [&url](const DynamicRequest& request) -> ResponseWrapper
+    {
+      EmptyResponse response;
+      response.result(http::status::accepted);
+
+      response.set(http::field::access_control_allow_credentials, "false");
+      response.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
+
+      return {std::move(response)};
+    };
+    server->Callbacks().OnGet = [](const DynamicRequest& request) -> ResponseWrapper
+    {
+      StringResponse response;
+      response.result(http::status::ok);
+      response.body() = "SERVER_CONTENT";
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&getResponse](int64_t, IHttpResource::Response&& res)
+    {
+      getResponse = std::move(res);
+    });
+    resource->SetOnData([&getDataPromise, &getContent](int64_t, string&& content)
+    {
+      getContent = std::move(content);
+      getDataPromise.set_value();
+    });
+    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message)
+    {
+      error = std::move(message);
+      getDataPromise.set_value();
+    });
+
+    resource->SendRequest(
+      "GET",
+      url,
+      {
+        { "Content-Type", "text/html" }, // text/html is a non-simple value
+        { "Origin"      , "http://example.com" }
+      },
+      {} /*bodyData*/,
+      "text",
+      false /*useIncrementalUpdates*/,
+      1000 /*timeout*/,
+      false /*withCredentials*/,
+      [](int64_t){} /*callback*/
+    );
+
+    getDataPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreNotEqual({}, error);
+  }// SimpleCorsCrossOriginFetchFails
 
 };
 
