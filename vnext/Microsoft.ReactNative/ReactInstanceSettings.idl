@@ -176,7 +176,13 @@ namespace Microsoft.ReactNative
       "If this is not provided, the value of @.JavaScriptBundleFile is used.")
     String DebugBundlePath { get; set; };
 
-    DOC_STRING("Base path used for the location of the bundle.")
+    DOC_STRING(
+      "Base path used for the location of the bundle. \n"
+      "This can be an `ms-appx://` or `ms-appdata://` URI (if the app is UWP or packaged using MSIX), "
+      "a filesystem path, or a URI pointing at an embedded resource.\n"
+      "To specify an embedded (`RCDATA`) resource, use the format `resource://moduleName` for @.BundleRootPath "
+      "and use the resource ID as the @.JavaScriptBundleFile. If `moduleName` is empty, the embedded bundle resource "
+      " will be searched for in the running process's module.")
     DOC_DEFAULT("ms-appx:///Bundle/")
     String BundleRootPath { get; set; };
 
