@@ -12,11 +12,7 @@
 // Windows API
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
-#include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
-
-// Standard Library
-#include <set>
 
 using std::function;
 using std::scoped_lock;
@@ -40,7 +36,6 @@ using winrt::Windows::Web::Http::HttpStreamContent;
 using winrt::Windows::Web::Http::HttpStringContent;
 using winrt::Windows::Web::Http::IHttpClient;
 using winrt::Windows::Web::Http::IHttpContent;
-using winrt::Windows::Web::Http::Filters::IHttpFilter; // TODO: Remove
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 
 namespace Microsoft::React::Networking {
@@ -137,7 +132,7 @@ void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response 
   m_onResponse = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnData(function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&responseData)> &&handler) noexcept
 /*override*/ {
   m_onData = std::move(handler);
 }
@@ -235,19 +230,6 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   }
 
   try {
-    // TODO: Remove
-    ////FILTER!
-    // auto filter = PrototypeRequestFilter(winrt::make_weak<IHttpClient>(self->m_client));
-    // auto preflightOp = filter.ProcessRequest(requestId, coRequest, coHeaders, coBodyData, textResponse);
-    // co_await lessthrow_await_adapter<IAsyncAction>{preflightOp};
-    // auto preResult = preflightOp.ErrorCode();
-    // if (preResult < 0) {
-    //  if (self->m_onError) {
-    //    co_return self->m_onError(requestId, Utilities::HResultToString(std::move(preResult)));
-    //  }
-    //}
-    //// FILTER
-
     coRequest.Properties().Insert(L"RequestArgs", coArgs);
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
     self->TrackResponse(coReqArgs->RequestId, sendRequestOp);
