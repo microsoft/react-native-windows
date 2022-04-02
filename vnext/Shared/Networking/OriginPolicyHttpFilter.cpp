@@ -294,12 +294,15 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
           m_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
-      if (!IsSimpleCorsRequest(request))
+      if (IsSameOrigin(m_origin, request.RequestUri()))
+        // Same origin. Therefore, skip Cross-Origin handling.
+        m_originPolicy = OriginPolicy::SameOrigin;
+      else if (!IsSimpleCorsRequest(request))
         // TODO: isRedirect?
         throw hresult_error{
             E_INVALIDARG,
             L"The request does not meet the requirements for Same-Origin policy or Simple Cross-Origin resource sharing"};
-        break;
+      break;
 
     case Microsoft::React::Networking::OriginPolicy::CrossOriginResourceSharing:
       // TODO: Rewrite
@@ -345,7 +348,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials, IInspectable const& iArgs)
     const {
   if (origin.size() == 0)
-    throw hresult_error{E_INVALIDARG, L"No valid origin in response.\\n"};
+    throw hresult_error{E_INVALIDARG, L"No valid origin in response"};
 
   // 4.10.1-2 - null allow origin
   if (L"null" == origin)
@@ -537,44 +540,19 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
     }
   }
 
-  // TODO: If CORS && !inCache => SendPreflight! { cache() }
   try {
-    auto preflightResponse = co_await SendPreflightAsync(coRequest);
-    ValidatePreflightResponse(coRequest, preflightResponse);
+    // TODO: Validate preflight cache
+    if (m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+      auto preflightResponse = co_await SendPreflightAsync(coRequest);
 
-    // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
-    // NetworkingSecurity::ValidateSecurityOnResponse
-    // ActualRequest::OnResponse => ValidateResponse()
-  //} catch (hresult_error const &e) {
-  //  throw e;
+      // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
+      ValidatePreflightResponse(coRequest, preflightResponse);
+    }
   } catch (const std::exception &e) {
     throw hresult_error{E_FAIL, to_hstring(e.what())};
   } catch (...) {
     throw hresult_error{E_FAIL, L"Unspecified error processing Origin Policy request"};
   }
-
-  // Prototype
-  // TODO: Remove!
-  // try {
-  //  auto preflightRequest = HttpRequestMessage();
-  //  preflightRequest.RequestUri(coRequest.RequestUri());
-  //  preflightRequest.Method(HttpMethod::Options());
-
-  //  auto response = co_await m_innerFilter.SendRequestAsync(preflightRequest);
-  //  auto preflightStatus = response.Headers().Lookup(L"Preflight");
-  //  if (L"Approved" != preflightStatus)
-  //    throw hresult_error{E_FAIL, L"Origin policy non-compliance"}; // TODO: Better HRESULT?
-
-  //  for (auto header : response.Headers()) {
-  //    coRequest.Headers().Insert(header.Key(), header.Value());
-  //  }
-  //} catch (hresult_error const &e) {
-  //  throw e;
-  //} catch (const std::exception &e) {
-  //  throw hresult_error{E_FAIL, to_hstring(e.what())};
-  //} catch (...) {
-  //  throw hresult_error{E_FAIL, L"Unspecified error processing Origin Policy request"};
-  //}
 
   co_return {co_await m_innerFilter.SendRequestAsync(coRequest)};
 }

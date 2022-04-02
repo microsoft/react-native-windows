@@ -55,6 +55,7 @@ struct HttpCallbacks
   std::function<void()> OnResponseSent;
   std::function<void()> OnRequest;
   std::function<ResponseWrapper(const DynamicRequest &)> OnGet;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnPatch;
   std::function<ResponseWrapper(const DynamicRequest &)> OnOptions;
 
   std::function<ResponseWrapper(const DynamicRequest &)> OnConnect;
