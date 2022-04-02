@@ -485,9 +485,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
     }
   }
 
-  // TODO: Implement with cache
-  // InsertToPreflightCache(url.c_str(), allowedMethodsList, allowedHeadersList, exposeHeaders, withCredentials,
-  // parseMaxSeconds)
+  // #9770 - insert into preflight cache
 }
 
 ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const { // TODO: const& ??
@@ -541,7 +539,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   }
 
   try {
-    // TODO: Validate preflight cache
+    // #9770 - Validate preflight cache
     if (m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
       auto preflightResponse = co_await SendPreflightAsync(coRequest);
 
