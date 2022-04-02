@@ -324,7 +324,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       url,
       {
         { "Content-Type", "text/plain" },
-        { "Origin"      , "http://example.com" }
       },
       {} /*bodyData*/,
       "text",
@@ -401,7 +400,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       url,
       {
         { "Content-Type", "text/plain" },
-        { "Origin"      , "http://example.com" }
       },
       {} /*bodyData*/,
       "text",
@@ -480,7 +478,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       url,
       {
         { "Content-Type", "text/plain" },
-        { "Origin"      , url }
       },
       {} /*bodyData*/,
       "text",
@@ -555,7 +552,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       url,
       {
         { "Content-Type", "text/html" }, // text/html is a non-simple value
-        { "Origin"      , "http://example.com" }
       },
       {} /*bodyData*/,
       "text",
