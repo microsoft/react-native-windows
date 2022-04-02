@@ -62,7 +62,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     // clang-format on
   }
 
-  // TODO: Remove
+  // TODO: Remove before merging
   TEST_METHOD(Dummy) {
     Uri uri{L"http://user:password@domain.com/ab?c=d&e=f"};
     Uri iri{uri.DisplayUri()};

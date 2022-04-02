@@ -26,7 +26,7 @@ struct IHttpResource {
     // TODO: Content?
   };
 
-  static std::shared_ptr<IHttpResource> Make() noexcept;
+  static std::shared_ptr<IHttpResource> Make(const char *origin = "null") noexcept;
 
   virtual ~IHttpResource() noexcept {}
 

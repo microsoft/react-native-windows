@@ -20,6 +20,7 @@ using std::set;
 using std::wstring;
 
 using winrt::hresult_error;
+using winrt::hstring;
 using winrt::to_hstring;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
@@ -133,8 +134,8 @@ namespace Microsoft::React::Networking {
 // 'Content-Language', or whose name is 'Content-Type' and value is one of 'application/x-www-form-urlencoded',
 // 'multipart/form-data', and 'text/plain'
 /*static*/ bool OriginPolicyHttpFilter::IsCorsSafelistedRequestHeader(
-  winrt::hstring const& name,
-  winrt::hstring const& value) noexcept
+  hstring const& name,
+  hstring const& value) noexcept
 {
   // 1. If value's length is greater than 128, then return false.
   if (value.size() > 128)
@@ -252,11 +253,11 @@ namespace Microsoft::React::Networking {
   return result;
 }
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
-    : m_originPolicy{originPolicy}, m_origin{nullptr}, m_innerFilter{std::move(innerFilter)} {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri&& origin, IHttpFilter &&innerFilter)
+    : m_originPolicy{originPolicy}, m_origin{std::move(origin)}, m_innerFilter{std::move(innerFilter)} {}
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
-    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, Uri &&origin)
+    : OriginPolicyHttpFilter(originPolicy, std::move(origin), winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
   // case CORS:
@@ -345,7 +346,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 }
 
 // See https://fetch.spec.whatwg.org/#cors-check
-void OriginPolicyHttpFilter::ValidateAllowOrigin(winrt::hstring const &origin, winrt::hstring const &allowCredentials, IInspectable const& iArgs)
+void OriginPolicyHttpFilter::ValidateAllowOrigin(hstring const &origin, hstring const &allowCredentials, IInspectable const& iArgs)
     const {
   if (origin.size() == 0)
     throw hresult_error{E_INVALIDARG, L"No valid origin in response"};
@@ -388,7 +389,6 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
     HttpResponseMessage const &response) const {
   using std::wregex;
   using std::wsregex_token_iterator;
-  using winrt::hstring;
 
   // https://tools.ietf.org/html/rfc2616#section-4.2
   wregex rgx{L"\\s*,\\s*"};
@@ -522,10 +522,8 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" && coRequest.RequestUri().SchemeName() != L"http")
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + m_origin.SchemeName() + L"]"};
 
-  // TODO: Should m_origin be vectored/mapped to requestId???
-  //      Should it be even kept as an instance member?
   // Ensure absolute URL
-  m_origin = GetOrigin(coRequest.RequestUri());
+  coRequest.RequestUri(Uri{coRequest.RequestUri().AbsoluteCanonicalUri()});
 
   // If fetch is in CORS mode, ValidateSecurityOnRequest() determines if it is a simple request by inspecting origin,
   // header, and method

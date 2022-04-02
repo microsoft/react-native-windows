@@ -50,9 +50,12 @@ class OriginPolicyHttpFilter
 
   static bool IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept;
 
-  OriginPolicyHttpFilter(OriginPolicy originPolicy, winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
+  OriginPolicyHttpFilter(
+      OriginPolicy originPolicy,
+      winrt::Windows::Foundation::Uri &&origin,
+      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
 
-  OriginPolicyHttpFilter(OriginPolicy originPolicy);
+  OriginPolicyHttpFilter(OriginPolicy originPolicy, winrt::Windows::Foundation::Uri &&origin);
 
   void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request);
 
