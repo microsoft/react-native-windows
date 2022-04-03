@@ -93,7 +93,8 @@ namespace Microsoft::React::Networking {
 /*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
 
 /*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(const char *url) {
-  s_origin = Uri{to_hstring(url)};
+  if (url)
+    s_origin = Uri{to_hstring(url)};
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
@@ -318,7 +319,6 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
       // In fact, this check probably should apply to all networking security policy.
       // https://fetch.spec.whatwg.org/#forbidden-header-name
 
-      // TODO: Make message static private
       if (s_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
