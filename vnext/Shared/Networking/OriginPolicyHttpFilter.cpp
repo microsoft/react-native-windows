@@ -263,26 +263,6 @@ OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
     : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
-  // case CORS:
-  // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
-  // Refer to CorsURLLoaderFactory::IsValidRequest in chrome\src\services\network\cors\cors_url_loader_factory.cc.
-  // Forbidden headers should be blocked regardless of origins.
-  // It is correct to check for forbidden header first.
-  // It is verified in Edge when I try to set the "host" header to a XHR. The browser rejected it as unsafe.
-  // In fact, this check probably should apply to all networking security policy.
-  // https://fetch.spec.whatwg.org/#forbidden-header-name
-  /// Is mixed content? (incoming URL vs origin URL)
-  //// => false
-  /// AreRequestHeadersSafe(headers)
-  //// => false
-  /// IsForbiddenMethod(method)
-  //// => false
-  /// IsSameOrigin(m_securitySettings.origin, destinationOrigin)
-  //// => SOP; Reset the validated policy to SOP policy and no need to involve simple CORS which is for cross origins.
-  /// IsSimpleCors(meth, headers)
-  //// => SimpleCORS; Cross origins but meet Simple CORS conditions. No need to go through Preflight.
-  /// else => CORS
-
   switch (m_originPolicy) {
     case OriginPolicy::None:
       return;
@@ -348,7 +328,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 void OriginPolicyHttpFilter::ValidateAllowOrigin(
     hstring const &origin,
     hstring const &allowCredentials,
-    IInspectable const &iArgs) const {
+    IInspectable const &iRequestArgs) const {
   if (origin.size() == 0)
     throw hresult_error{E_INVALIDARG, L"No valid origin in response"};
 
@@ -358,7 +338,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
         E_INVALIDARG,
         L"The Access-Control-Allow-Origin header has a value of [null] which differs from the supplied origin.\\n"};
 
-  bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iArgs)->WithCredentials;
+  bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iRequestArgs)->WithCredentials;
   // 4.10.3 - valid wild card allow origin
   if (!withCredentials && L"*" == origin)
     return;
@@ -492,6 +472,51 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   // #9770 - insert into preflight cache
 }
 
+// See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
+void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response) const {
+/*
+  _Inout_ std::map<std::wstring, std::wstring>& responseHeaders,
+  NetworkingSecurityPolicy validatedSecurityPolicy,
+  const std::vector<std::wstring>& exposeHeaders,
+  bool withCredentials,
+  _Out_ std::string& errorText) noexcept
+*/
+
+  bool removeAllCookies = false;
+
+  if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
+      m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+
+    if (GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
+        m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
+
+      // if (!NetworkingSecurity::IsOriginAllowed(m_securitySettings.origin, responseHeaders))
+      if (false) {
+        throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
+      }
+    } else {
+      // if (!CheckAccess(responseHeaders, withCredentials, /*out*/ errorText)) => throw
+    }
+
+    if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
+      // Filter out response headers that are not in the Simple CORS whitelist
+      for (const auto &header : response.Headers())
+        if (s_simpleCorsResponseHeaderNames.find(header.Key().c_str()) == s_simpleCorsResponseHeaderNames.cend())
+          response.Headers().Remove(header.Key());
+
+    } else {
+      // filter out response headers that are not simple headers and not in expose list
+      //NetworkingSecurity::FilterResponseHeadersWithExposeList(/*out*/ responseHeaders, exposeHeaders, withCredentials);
+    }
+
+    // When withCredentials is false, request cannot include cookies. Also, cookies will be ignored in responses.
+    //fRemoveAllCookies = !withCredentials && !IsEbrakeApplied(g_wzFeatureNameRemoveCookiesFromResponse);
+  }
+
+  // Don't expose HttpOnly cookies to JavaScript
+  //TODO: RemoveApplicableCookiesFromResponseHeader
+}
+
 ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
   // TODO: Inject user agent?
 
@@ -534,12 +559,16 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
 ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
   auto coRequest = request;
-  auto self = this; // REMOVE!
 
   // Allow only HTTP or HTTPS schemes
   if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
       coRequest.RequestUri().SchemeName() != L"http")
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + s_origin.SchemeName() + L"]"};
+
+  if (!GetRuntimeOptionBool("Http.OmitCredentials")) {
+    auto concreteArgs = winrt::get_self<RequestArgs, IInspectable>(coRequest.Properties().Lookup(L"RequestArgs"));
+    concreteArgs->WithCredentials = false;
+  }
 
   // Ensure absolute URL
   coRequest.RequestUri(Uri{coRequest.RequestUri().AbsoluteCanonicalUri()});
@@ -560,7 +589,6 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
     if (m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
       auto preflightResponse = co_await SendPreflightAsync(coRequest);
 
-      // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
       ValidatePreflightResponse(coRequest, preflightResponse);
     }
   } catch (hresult_error const &e) {
@@ -571,7 +599,11 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
     throw hresult_error{E_FAIL, L"Unspecified error processing Origin Policy request"};
   }
 
-  co_return {co_await m_innerFilter.SendRequestAsync(coRequest)};
+  auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
+
+  ValidateResponse(response);
+
+  co_return response;
 }
 
 #pragma endregion IHttpFilter

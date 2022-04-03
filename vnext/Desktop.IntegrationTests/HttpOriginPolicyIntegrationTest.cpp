@@ -8,9 +8,6 @@
 #include <RuntimeOptions.h>
 #include <Test/HttpServer.h>
 
-// Boost Library
-#include <boost/beast/http.hpp>
-
 // Standard Library
 #include <future>
 
@@ -46,7 +43,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       : Port{port}
       , Url{s_serverHost + string{":"} + std::to_string(port)}
     {
-      Preflight.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH"); //TODO: Confirm
+      Preflight.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
+
+      Response.result(http::status::ok);
+      Response.body() = "RESPONSE_CONTENT";
     }
   };
 
@@ -58,6 +58,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     string ResponseContent;
     http::verb Method;
     IHttpResource::Headers RequestHeaders;
+    bool WithCredentials{false};
 
     ClientParams(http::verb method, IHttpResource::Headers&& headers)
       : Method{ method }
@@ -76,9 +77,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     auto reqHandler = [&serverArgs](const DynamicRequest& request) -> ResponseWrapper
     {
-      serverArgs.Response.result(http::status::ok);
-      serverArgs.Response.body() = "RESPONSE_CONTENT";
-
       return { std::move(serverArgs.Response) };
     };
 
@@ -133,10 +131,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       std::move(clientArgs.RequestHeaders),
       { IHttpResource::BodyData::Type::String, "REQUEST_CONTENT" },
       "text",
-      false,          /*useIncrementalUpdates*/
-      1000,           /*timeout*/
-      false,          /*withCredentials*/
-      [](int64_t) {}  /*reactCallback*/
+      false,                      /*useIncrementalUpdates*/
+      1000,                       /*timeout*/
+      clientArgs.WithCredentials, /*withCredentials*/
+      [](int64_t) {}              /*reactCallback*/
     );
 
     clientArgs.ContentPromise.get_future().wait();
@@ -356,9 +354,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsCrossOriginAllowOriginWildcardSucceeds
-
 
   // With CORS, Cross-Origin Resource Sharing, the server can decide what origins are permitted to read information from the client.
   // Additionally, for non-simple requests, client should preflight the request through the HTTP Options request, and only send the
@@ -367,7 +365,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginMatchingOriginSucceeds)
   {
-
     ServerParams serverArgs(5564);
     serverArgs.Preflight.set(http::field::access_control_allow_headers,   "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,    s_crossOriginUrl);
@@ -377,8 +374,49 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsCrossOriginMatchingOriginSucceeds
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginWithCredentialsFails)
+  {
+    ServerParams serverArgs(5565);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    serverArgs.Preflight.set(http::field::access_control_allow_credentials, "true");
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
+    clientArgs.WithCredentials = true;
+
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionBool("Http.OmitCredentials", true);
+
+    TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
+  }// FullCorsCrossOriginWithCredentialsFails
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
+  {
+    ServerParams serverArgs(5566);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    serverArgs.Preflight.set(http::field::access_control_allow_credentials, "true");
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
+    clientArgs.WithCredentials = true;
+
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
+  }// FullCorsCrossOriginWithCredentialsSucceeds
 };
 
 }//namespace
