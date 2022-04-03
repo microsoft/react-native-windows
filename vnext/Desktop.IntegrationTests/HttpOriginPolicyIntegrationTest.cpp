@@ -26,6 +26,7 @@ using std::string;
 
 namespace {
 constexpr char s_serverHost[]{"http://localhost"};
+constexpr char s_crossOriginUrl[]{"http://example.rnw"};
 }//anonymous
 
 // clang-format off
@@ -167,12 +168,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   {
     EmptyResponse originResponse;
     originResponse.set(http::field::access_control_allow_headers, "ValidHeader");
-    originResponse.set(http::field::access_control_allow_origin, "http://example.rnw");
+    originResponse.set(http::field::access_control_allow_origin, s_crossOriginUrl);
     ServerParams serverArgs(5555, std::move(originResponse), StringResponse{});
 
     ClientParams clientArgs(http::verb::get, {{"ValidHeader", "AnyValue"}});
 
-    SetRuntimeOptionString("Http.GlobalOrigin", "http://example.rnw");
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsPreflightSucceeds
@@ -267,7 +268,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::connect, {{"Content-Type", "text/plain"}});
 
-    SetRuntimeOptionString("Http.GlobalOrigin", "http://example.rnw");
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// SimpleCorsForbiddenMethodFails
@@ -278,7 +279,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsCrossOriginFetchRequestSucceeds)
   {
-    SetRuntimeOptionString("Http.GlobalOrigin", "http://example.rnw");
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     EmptyResponse preflightResponse;
@@ -295,7 +296,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsCrossOriginPatchSucceededs)
   {
-    SetRuntimeOptionString("Http.GlobalOrigin", "http://example.rnw");
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     EmptyResponse preflightResponse;
@@ -334,7 +335,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/html" }});  // text/html is a non-simple value
 
-    SetRuntimeOptionString("Http.GlobalOrigin", "http://example.rnw");
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// SimpleCorsCrossOriginFetchFails
@@ -365,7 +366,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
-    SetRuntimeOptionString("Http.GlobalOrigin", "http://example.rnw");
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsCrossOriginAllowOriginWildcardSucceeds
@@ -381,12 +382,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     EmptyResponse preflightResponse;
     ServerParams serverArgs(5564, std::move(preflightResponse), StringResponse{});
     serverArgs.PreflightResponse.set(http::field::access_control_allow_headers, "Content-Type");
-    serverArgs.PreflightResponse.set(http::field::access_control_allow_origin, "http://example.rnw");
+    serverArgs.PreflightResponse.set(http::field::access_control_allow_origin, s_crossOriginUrl);
     serverArgs.PreflightResponse.set(http::field::access_control_request_headers, "Content-Type");
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
-    SetRuntimeOptionString("Http.GlobalOrigin", "http://example.rnw");
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsCrossOriginMatchingOriginSucceeds
