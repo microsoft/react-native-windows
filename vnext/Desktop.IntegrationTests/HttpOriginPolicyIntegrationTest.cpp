@@ -399,6 +399,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// FullCorsCrossOriginWithCredentialsFails
 
+
+  // The current implementation omits withCredentials flag from request and always sets it to false
+  // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
@@ -408,6 +411,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
     serverArgs.Preflight.set(http::field::access_control_allow_credentials, "true");
+    serverArgs.Response.result(http::status::accepted);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
     clientArgs.WithCredentials = true;
@@ -417,6 +422,45 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsCrossOriginWithCredentialsSucceeds
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMissingCorsHeadersFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginMissingCorsHeadersFails)
+  {
+    ServerParams serverArgs(5567);
+    serverArgs.Preflight.erase(http::field::access_control_allow_methods);
+    serverArgs.Preflight.result(http::status::not_implemented);
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
+    clientArgs.WithCredentials = false;
+
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
+  }// FullCorsCrossOriginMissingCorsHeadersFails
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMismatchedCorsHeaderFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginMismatchedCorsHeaderFails)
+  {
+    ServerParams serverArgs(5568);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    serverArgs.Response.result(http::status::accepted);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       "http://other.example.rnw");
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
+    clientArgs.WithCredentials = false;
+
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
+  }// FullCorsCrossOriginMismatchedCorsHeaderFails
+
+  //TODO: FullCors_CorsCheckFailOnPreflightRedirect_Failed
 };
 
 }//namespace
