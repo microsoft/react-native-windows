@@ -24,7 +24,7 @@ using std::string;
 namespace {
 constexpr char s_serverHost[]{"http://localhost"};
 constexpr char s_crossOriginUrl[]{"http://example.rnw"};
-}//anonymous
+} // namespace
 
 // clang-format off
 namespace Microsoft::React::Test {

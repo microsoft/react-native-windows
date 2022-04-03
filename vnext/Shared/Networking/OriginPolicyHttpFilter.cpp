@@ -474,22 +474,20 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 
 // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
 void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response) const {
-/*
-  _Inout_ std::map<std::wstring, std::wstring>& responseHeaders,
-  NetworkingSecurityPolicy validatedSecurityPolicy,
-  const std::vector<std::wstring>& exposeHeaders,
-  bool withCredentials,
-  _Out_ std::string& errorText) noexcept
-*/
+  /*
+    _Inout_ std::map<std::wstring, std::wstring>& responseHeaders,
+    NetworkingSecurityPolicy validatedSecurityPolicy,
+    const std::vector<std::wstring>& exposeHeaders,
+    bool withCredentials,
+    _Out_ std::string& errorText) noexcept
+  */
 
   bool removeAllCookies = false;
 
   if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
-
     if (GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
         m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
-
       // if (!NetworkingSecurity::IsOriginAllowed(m_securitySettings.origin, responseHeaders))
       if (false) {
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
@@ -506,15 +504,16 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
 
     } else {
       // filter out response headers that are not simple headers and not in expose list
-      //NetworkingSecurity::FilterResponseHeadersWithExposeList(/*out*/ responseHeaders, exposeHeaders, withCredentials);
+      // NetworkingSecurity::FilterResponseHeadersWithExposeList(/*out*/ responseHeaders, exposeHeaders,
+      // withCredentials);
     }
 
     // When withCredentials is false, request cannot include cookies. Also, cookies will be ignored in responses.
-    //fRemoveAllCookies = !withCredentials && !IsEbrakeApplied(g_wzFeatureNameRemoveCookiesFromResponse);
+    // fRemoveAllCookies = !withCredentials && !IsEbrakeApplied(g_wzFeatureNameRemoveCookiesFromResponse);
   }
 
   // Don't expose HttpOnly cookies to JavaScript
-  //TODO: RemoveApplicableCookiesFromResponseHeader
+  // TODO: RemoveApplicableCookiesFromResponseHeader
 }
 
 ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
