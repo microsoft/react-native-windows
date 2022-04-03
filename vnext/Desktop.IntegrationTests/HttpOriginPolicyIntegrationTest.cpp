@@ -38,19 +38,15 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   {
     uint16_t Port;
     string Url;
-    EmptyResponse PreflightResponse;
-    StringResponse MainResponse;
+    EmptyResponse Preflight;
+    StringResponse Response;
 
     ServerParams(
-      uint16_t port,
-      EmptyResponse&& preflightResponse,
-      StringResponse&& mainResponse) noexcept
+      uint16_t port) noexcept
       : Port{port}
       , Url{s_serverHost + string{":"} + std::to_string(port)}
-      , PreflightResponse{std::move(preflightResponse)}
-      , MainResponse{std::move(mainResponse)}
     {
-      PreflightResponse.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH"); //TODO: Confirm
+      Preflight.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH"); //TODO: Confirm
     }
   };
 
@@ -75,15 +71,15 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     auto server = make_shared<HttpServer>(serverArgs.Port);
     server->Callbacks().OnOptions = [/*origin, */&serverArgs](const DynamicRequest& request) -> ResponseWrapper
     {
-      return { std::move(serverArgs.PreflightResponse) };
+      return { std::move(serverArgs.Preflight) };
     };
 
     auto reqHandler = [&serverArgs](const DynamicRequest& request) -> ResponseWrapper
     {
-      serverArgs.MainResponse.result(http::status::ok);
-      serverArgs.MainResponse.body() = "RESPONSE_CONTENT";
+      serverArgs.Response.result(http::status::ok);
+      serverArgs.Response.body() = "RESPONSE_CONTENT";
 
-      return { std::move(serverArgs.MainResponse) };
+      return { std::move(serverArgs.Response) };
     };
 
     switch (clientArgs.Method)
@@ -166,10 +162,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
   TEST_METHOD(FullCorsPreflightSucceeds)
   {
-    EmptyResponse originResponse;
-    originResponse.set(http::field::access_control_allow_headers, "ValidHeader");
-    originResponse.set(http::field::access_control_allow_origin, s_crossOriginUrl);
-    ServerParams serverArgs(5555, std::move(originResponse), StringResponse{});
+    ServerParams serverArgs(5555);
+    serverArgs.Preflight.set(http::field::access_control_allow_headers, "ValidHeader");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin, s_crossOriginUrl);
 
     ClientParams clientArgs(http::verb::get, {{"ValidHeader", "AnyValue"}});
 
@@ -184,8 +179,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
     // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-19041#properties
     TEST_IGNORE()
-    END_TEST_METHOD_ATTRIBUTE()
-    TEST_METHOD(NoCorsForbiddenMethodSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(NoCorsForbiddenMethodSucceeds)
   {
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
@@ -259,12 +254,11 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }// NoCorsForbiddenMethodSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsForbiddenMethodFails)
-    END_TEST_METHOD_ATTRIBUTE()
-    TEST_METHOD(SimpleCorsForbiddenMethodFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(SimpleCorsForbiddenMethodFails)
   {
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5557, std::move(preflightResponse), StringResponse{});
-    serverArgs.PreflightResponse.set(http::field::access_control_allow_origin, serverArgs.Url);
+    ServerParams serverArgs(5557);
+    serverArgs.Preflight.set(http::field::access_control_allow_origin, serverArgs.Url);
 
     ClientParams clientArgs(http::verb::connect, {{"Content-Type", "text/plain"}});
 
@@ -276,14 +270,13 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   //NoCors_ForbiddenMethodConnect_Failed
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginFetchRequestSucceeds)
-    END_TEST_METHOD_ATTRIBUTE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsCrossOriginFetchRequestSucceeds)
   {
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5558, std::move(preflightResponse), StringResponse{});
+    ServerParams serverArgs(5558);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
 
@@ -293,14 +286,13 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   //NoCors_CrossOriginFetchRequestWithTimeout_Succeeded //TODO: Implement timeout
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginPatchSucceededs)
-    END_TEST_METHOD_ATTRIBUTE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsCrossOriginPatchSucceededs)
   {
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5559, std::move(preflightResponse), StringResponse{});
+    ServerParams serverArgs(5559);
 
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
@@ -313,11 +305,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // In addition, JavaScript may not access any properties of the resulting Response.
   // This ensures that ServiceWorkers do not affect the semantics of the Web and prevents security and privacy issues arising from leaking data across domains.
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsSameOriginSucceededs)
-    END_TEST_METHOD_ATTRIBUTE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsSameOriginSucceededs)
   {
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5560, std::move(preflightResponse), StringResponse{});
+    ServerParams serverArgs(5560);
 
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
@@ -327,11 +318,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }// SimpleCorsSameOriginSucceededs
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsCrossOriginFetchFails)
-    END_TEST_METHOD_ATTRIBUTE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsCrossOriginFetchFails)
   {
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5561, std::move(preflightResponse), StringResponse{});
+    ServerParams serverArgs(5561);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/html" }});  // text/html is a non-simple value
 
@@ -341,11 +331,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }// SimpleCorsCrossOriginFetchFails
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsSameOriginRequestSucceeds)
-    END_TEST_METHOD_ATTRIBUTE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsSameOriginRequestSucceeds)
   {
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5562, std::move(preflightResponse), StringResponse{});
+    ServerParams serverArgs(5562);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
@@ -355,14 +344,13 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }// FullCorsSameOriginRequestSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginAllowOriginWildcardSucceeds)
-    END_TEST_METHOD_ATTRIBUTE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginAllowOriginWildcardSucceeds)
   {
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5563, std::move(preflightResponse), StringResponse{});
-    serverArgs.PreflightResponse.set(http::field::access_control_allow_headers,   "Content-Type");
-    serverArgs.PreflightResponse.set(http::field::access_control_allow_origin,    "*");
-    serverArgs.PreflightResponse.set(http::field::access_control_request_headers, "Content-Type");
+    ServerParams serverArgs(5563);
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,    "*");
+    serverArgs.Preflight.set(http::field::access_control_request_headers, "Content-Type");
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
@@ -376,14 +364,14 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // Additionally, for non-simple requests, client should preflight the request through the HTTP Options request, and only send the
   // actual request after the server has responded that the desired headers are supported.
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMatchingOriginSucceeds)
-    END_TEST_METHOD_ATTRIBUTE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginMatchingOriginSucceeds)
   {
-    EmptyResponse preflightResponse;
-    ServerParams serverArgs(5564, std::move(preflightResponse), StringResponse{});
-    serverArgs.PreflightResponse.set(http::field::access_control_allow_headers, "Content-Type");
-    serverArgs.PreflightResponse.set(http::field::access_control_allow_origin, s_crossOriginUrl);
-    serverArgs.PreflightResponse.set(http::field::access_control_request_headers, "Content-Type");
+
+    ServerParams serverArgs(5564);
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,    s_crossOriginUrl);
+    serverArgs.Preflight.set(http::field::access_control_request_headers, "Content-Type");
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
