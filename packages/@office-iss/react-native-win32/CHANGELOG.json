@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 04 Apr 2022 15:12:54 GMT",
+      "tag": "@office-iss/react-native-win32_v0.67.1",
+      "version": "0.67.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "f4f970be35618e9942c5c96e6c15c88f8426c91c",
+            "comment": "Promote 0.67 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.67.1",
+            "commit": "e92602643cb768e9ce34430e9800d76769a31a2a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jan 2022 16:13:22 GMT",
       "tag": "@office-iss/react-native-win32_v0.67.0",
       "version": "0.67.0",

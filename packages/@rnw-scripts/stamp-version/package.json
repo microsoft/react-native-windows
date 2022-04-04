@@ -15,7 +15,7 @@
     "stamp-version": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/package-utils": "0.67.0",
+    "@react-native-windows/package-utils": "0.67.1",
     "mustache": "^4.0.1",
     "semver": "^7.3.2",
     "source-map-support": "^0.5.19",

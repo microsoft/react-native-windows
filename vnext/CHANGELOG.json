@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 Apr 2022 15:12:55 GMT",
+      "tag": "react-native-windows_v0.67.7",
+      "version": "0.67.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e92602643cb768e9ce34430e9800d76769a31a2a",
+            "comment": "MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (#9609)"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f4f970be35618e9942c5c96e6c15c88f8426c91c",
+            "comment": "Promote 0.67 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.67.2",
+            "commit": "e92602643cb768e9ce34430e9800d76769a31a2a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.67.1",
+            "commit": "e92602643cb768e9ce34430e9800d76769a31a2a"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.67.1",
+            "commit": "e92602643cb768e9ce34430e9800d76769a31a2a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Mar 2022 17:35:30 GMT",
       "tag": "react-native-windows_v0.67.6",
       "version": "0.67.6",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (#9609)",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
