@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Promote 0.68 to latest",
-  "packageName": "@react-native-windows/package-utils",
-  "email": "34109996+chiaramooney@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

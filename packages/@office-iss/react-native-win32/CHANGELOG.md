@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 21 Mar 2022 15:08:45 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Apr 2022 15:12:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0
+
+Mon, 04 Apr 2022 15:12:10 GMT
+
+### Patches
+
+- Bump RN Dependency (34109996+chiaramooney@users.noreply.github.com)
+- Promote 0.68 to latest (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.68.0
 
 ## 0.68.0-preview.3
 

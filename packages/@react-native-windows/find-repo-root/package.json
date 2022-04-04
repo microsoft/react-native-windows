@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.68.0-preview.2",
+  "version": "0.68.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
