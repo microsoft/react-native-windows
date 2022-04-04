@@ -79,7 +79,7 @@ It is a shortcut for the <a href="ReactDispatcherHelper#jsdispatcherproperty"><c
 <p><code>readonly</code>  Object <code>JSRuntime</code></p>
 <p>Gets the JavaScript runtime for the running React instance.
 It can be null if Web debugging is used.
-**Note: do not use this property directly. It is an experimental property that may be removed or changed in version 0.65.</p>
+**Note: do not use this property directly. It is an experimental property that may be removed or changed in a future version.</p>
 <h3><a class="anchor" aria-hidden="true" id="notifications"></a><a href="#notifications" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Notifications</h3>
 <p><code>readonly</code>  <a href="IReactNotificationService"><code>IReactNotificationService</code></a> <code>Notifications</code></p>
 <p>Gets <a href="IReactNotificationService"><code>IReactNotificationService</code></a> shared with the <a href="ReactInstanceSettings#notifications"><code>ReactInstanceSettings.Notifications</code></a>.
@@ -107,18 +107,20 @@ The <code>paramsArgWriter</code> is a <a href="JSValueArgWriter"><code>JSValueAr
 <blockquote>
 <p><strong>Deprecated</strong>: Use <a href="XamlUIService#dispatchevent"><code>XamlUIService.DispatchEvent</code></a> instead</p>
 </blockquote>
-<p>Deprecated property. Use <a href="XamlUIService#dispatchevent"><code>XamlUIService.DispatchEvent</code></a> instead. It will be removed in version 0.65.</p>
+<p>Deprecated property. Use <a href="XamlUIService#dispatchevent"><code>XamlUIService.DispatchEvent</code></a> instead. It will be removed in a future version.</p>
 <h3><a class="anchor" aria-hidden="true" id="emitjsevent"></a><a href="#emitjsevent" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>EmitJSEvent</h3>
 <p>void <strong><code>EmitJSEvent</code></strong>(string eventEmitterName, string eventName, <a href="JSValueArgWriter"><code>JSValueArgWriter</code></a> paramsArgWriter)</p>
 <p>Emits JavaScript module event <code>eventName</code> for the <code>eventEmitterName</code> with the <code>paramsArgWriter</code>.
 It is a specialized <a href="#calljsfunction"><code>CallJSFunction</code></a><code>call where the method name is always</code>emit<code>and the</code>eventName<code>is added to parameters. The</code>paramsArgWriter<code>is a [</code>JSValueArgWriter<code>](JSValueArgWriter) delegate that receives [</code>IJSValueWriter`](IJSValueWriter) to serialize the event parameters.</p>
 <h2><a class="anchor" aria-hidden="true" id="referenced-by"></a><a href="#referenced-by" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Referenced by</h2>
 <ul>
+<li><a href="IReactViewInstance"><code>IReactViewInstance</code></a></li>
 <li><a href="IViewManagerWithReactContext"><code>IViewManagerWithReactContext</code></a></li>
 <li><a href="InitializerDelegate"><code>InitializerDelegate</code></a></li>
 <li><a href="InstanceCreatedEventArgs"><code>InstanceCreatedEventArgs</code></a></li>
 <li><a href="InstanceDestroyedEventArgs"><code>InstanceDestroyedEventArgs</code></a></li>
 <li><a href="InstanceLoadedEventArgs"><code>InstanceLoadedEventArgs</code></a></li>
+<li><a href="ReactCoreInjection"><code>ReactCoreInjection</code></a></li>
 <li><a href="ReactNativeHost"><code>ReactNativeHost</code></a></li>
 <li><a href="XamlUIService"><code>XamlUIService</code></a></li>
 </ul>
