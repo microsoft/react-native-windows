@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 Apr 2022 15:13:07 GMT",
+      "tag": "react-native-windows_v0.66.16",
+      "version": "0.66.16",
+      "comments": {
+        "patch": [
+          {
+            "comment": "MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (#9609)",
+            "author": "asklar@microsoft.com",
+            "commit": "aab0df703cec0f9e69b185d13a59d976fa62a873",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Mar 2022 15:13:42 GMT",
       "tag": "react-native-windows_v0.66.15",
       "version": "0.66.15",

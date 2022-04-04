@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Mar 2022 15:13:42 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Apr 2022 15:13:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.16
+
+Mon, 04 Apr 2022 15:13:07 GMT
+
+### Patches
+
+- MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (#9609) (asklar@microsoft.com)
 
 ## 0.66.15
 
