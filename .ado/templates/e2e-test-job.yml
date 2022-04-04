@@ -1,7 +1,7 @@
 #
 parameters:
   name: ''
-  BuildPlatform: x86 # ARM, x86, x64
+  BuildPlatform: x64
 
 jobs:
   - job: ${{ parameters.name }}
@@ -10,7 +10,7 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
       - name: BuildLogDirectory
-        value: $(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs
+        value: $(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs
 
     pool:
       vmImage: $(VmImage)
@@ -56,7 +56,7 @@ jobs:
           buildEnvironment: PullRequest
           encodedKey: reactUWPTestAppEncodedKey
           buildConfiguration: Release
-          buildPlatform: $(BuildPlatform)
+          buildPlatform: ${{ parameters.BuildPlatform }}
           deployOption: --deploy-from-layout
           buildLogDirectory: $(BuildLogDirectory)
           workingDirectory: packages/E2ETest

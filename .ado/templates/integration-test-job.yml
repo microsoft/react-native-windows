@@ -9,7 +9,7 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
       - name: BuildLogDirectory
-        value: $(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs
+        value: $(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs
 
     pool:
       vmImage: $(VmImage)
