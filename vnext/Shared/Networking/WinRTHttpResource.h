@@ -5,6 +5,8 @@
 
 #include "IHttpResource.h"
 
+#include "WinRTTypes.h"
+
 // Windows API
 #include <winrt/Windows.Web.Http.h>
 
@@ -13,22 +15,7 @@
 
 namespace Microsoft::React::Networking {
 
-struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Foundation::IInspectable> {
-  int64_t RequestId;
-  IHttpResource::Headers Headers;
-  IHttpResource::BodyData Body;
-  bool IncrementalUpdates;
-  bool WithCredentials;
-  bool IsText;
-  int64_t Timeout;
-};
-
 class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
-  typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
-      winrt::Windows::Web::Http::HttpResponseMessage,
-      winrt::Windows::Web::Http::HttpProgress>
-      ResponseType;
-
   static int64_t s_lastRequestId;
 
   winrt::Windows::Web::Http::IHttpClient m_client;

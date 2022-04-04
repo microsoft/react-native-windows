@@ -11,9 +11,8 @@
 
 namespace Microsoft::React::Test
 {
-
-
 using DynamicRequest = boost::beast::http::request<boost::beast::http::dynamic_body>;
+
 using DynamicResponse = boost::beast::http::response<boost::beast::http::dynamic_body>;
 
 using EmptyResponse = boost::beast::http::response<boost::beast::http::empty_body>;
@@ -22,9 +21,12 @@ using FileResponse = boost::beast::http::response<boost::beast::http::file_body>
 
 using StringResponse = boost::beast::http::response<boost::beast::http::string_body>;
 
-enum class ResponseType : size_t { Empty, Dynamic, File, String };
+class ResponseWrapper
+{
+public:
+  enum class ResponseType : size_t { Empty, Dynamic, File, String };
 
-class ResponseWrapper {
+private:
   std::shared_ptr<void> m_response;
   ResponseType m_type;
 

@@ -31,9 +31,6 @@ class OriginPolicyHttpFilter
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
   OriginPolicy m_originPolicy;
 
-  // TODO: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
-  // winrt::Windows::Foundation::Uri m_origin;
-
  public:
   static void SetStaticOrigin(const char *url);
 

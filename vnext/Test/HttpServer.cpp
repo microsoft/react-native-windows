@@ -70,7 +70,7 @@ shared_ptr<void> ResponseWrapper::Response()
   return m_response;
 }
 
-ResponseType ResponseWrapper::Type()
+ResponseWrapper::ResponseType ResponseWrapper::Type()
 {
   return m_type;
 }
@@ -97,8 +97,8 @@ void HttpSession::Start()
 
     // Ugh!
     switch (type)
-	{
-    case ResponseType::Empty:
+    {
+    case ResponseWrapper::ResponseType::Empty:
       http::async_write(
         self->m_stream,
         *static_pointer_cast<EmptyResponse>(dr),
@@ -110,7 +110,7 @@ void HttpSession::Start()
       );
       break;
 
-    case ResponseType::Dynamic:
+    case ResponseWrapper::ResponseType::Dynamic:
       http::async_write(
         self->m_stream,
         *static_pointer_cast<DynamicResponse>(dr),
@@ -122,7 +122,7 @@ void HttpSession::Start()
       );
       break;
 
-    case ResponseType::File:
+    case ResponseWrapper::ResponseType::File:
       http::async_write(
         self->m_stream,
         *static_pointer_cast<FileResponse>(dr),
@@ -134,7 +134,7 @@ void HttpSession::Start()
       );
       break;
 
-    case ResponseType::String:
+    case ResponseWrapper::ResponseType::String:
       http::async_write(
         self->m_stream,
         *static_pointer_cast<StringResponse>(dr),

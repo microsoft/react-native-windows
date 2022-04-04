@@ -414,6 +414,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.h">
       <Filter>Header Files\Networking</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTTypes.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">

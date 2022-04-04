@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 #include "OriginPolicyHttpFilter.h"
-#include "WinRTHttpResource.h" //RequestArgs
 
+// React Native Windows
 #include <RuntimeOptions.h>
+#include "WinRTTypes.h"
 
 // Boost Library
 #include <boost/algorithm/string.hpp>
@@ -30,11 +31,6 @@ using winrt::Windows::Web::Http::HttpResponseMessage;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 using winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection;
-
-// TODO: Remove. Redundant.
-typedef winrt::Windows::Foundation::
-    IAsyncOperationWithProgress<winrt::Windows::Web::Http::HttpResponseMessage, winrt::Windows::Web::Http::HttpProgress>
-        ResponseType;
 
 namespace Microsoft::React::Networking {
 

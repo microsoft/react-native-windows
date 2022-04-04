@@ -94,6 +94,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
