@@ -57,7 +57,7 @@ jobs:
           encodedKey: reactUWPTestAppEncodedKey
           buildConfiguration: Release
           buildPlatform: ${{ parameters.BuildPlatform }}
-          deployOption: --deploy-from-layout
+          deployOption: ''
           buildLogDirectory: $(BuildLogDirectory)
           workingDirectory: packages/E2ETest
 
