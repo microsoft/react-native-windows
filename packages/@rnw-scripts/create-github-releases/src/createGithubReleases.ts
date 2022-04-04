@@ -14,7 +14,7 @@ import * as chalk from 'chalk';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as semver from 'semver';
-import * as simplegit from 'simple-git';
+import simplegit from 'simple-git';
 import * as util from 'util';
 import * as yargs from 'yargs';
 
