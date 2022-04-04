@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 04 Apr 2022 15:13:28 GMT",
+      "tag": "@react-native-windows/telemetry_v0.67.1",
+      "version": "0.67.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "not available",
+            "comment": "Promote 0.67 to legacy"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Apr 2022 15:12:55 GMT",
       "tag": "@react-native-windows/telemetry_v0.67.1",
       "version": "0.67.1",
