@@ -26,8 +26,7 @@ const RN_GITHUB_URL = 'https://github.com/facebook/react-native.git';
  * between getting file contents of different versions may be slow.
  */
 export default class GitReactFileRepository
-  implements VersionedReactFileRepository
-{
+  implements VersionedReactFileRepository {
   private readonly fileRepo: FileSystemRepository;
   private readonly gitClient: SimpleGit;
   private checkedOutVersion?: string;
