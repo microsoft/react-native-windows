@@ -75,6 +75,7 @@ inline void FlushLogFiles(LogSeverity min_severity) {}
 
 #define google GlogStub
 static const int INFO = 1;
+static const int GLOG_INFO = 1;
 
 #endif
 
