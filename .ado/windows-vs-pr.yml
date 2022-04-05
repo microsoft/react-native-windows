@@ -853,10 +853,11 @@ jobs:
           packMicrosoftReactNativeManagedCodeGen: false
           slices: '("x64.Debug", "x64.Release", "x86.Debug", "ARM64.Debug")'
 
-  - template: templates/e2e-test-job.yml
-    parameters:
-      name: E2ETest
-      BuildPlatform: x64
+  # Without a cert, the E2ETest app cannot be deployed and run as a part of PRs.
+  # - template: templates/e2e-test-job.yml
+  #   parameters:
+  #     name: E2ETest
+  #     BuildPlatform: x64
 
   - template: templates/integration-test-job.yml
     parameters:

@@ -55,7 +55,7 @@ jobs:
         parameters:
           buildEnvironment: PullRequest
           encodedKey: reactUWPTestAppEncodedKey
-          buildConfiguration: Debug
+          buildConfiguration: Release
           buildPlatform: ${{ parameters.BuildPlatform }}
           deployOption: ''
           buildLogDirectory: $(BuildLogDirectory)
