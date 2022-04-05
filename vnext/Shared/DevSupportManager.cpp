@@ -90,8 +90,9 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
   if (len > 0 || response.IsSuccessStatusCode()) {
     std::string data;
     data.resize(len);
-    auto buf = reinterpret_cast<uint8_t*>(data.data());
-    static_assert(sizeof(buf[0]) == sizeof(data[0]), "perf optimization relies on uint8_t and char being the same size");
+    auto buf = reinterpret_cast<uint8_t *>(data.data());
+    static_assert(
+        sizeof(buf[0]) == sizeof(data[0]), "perf optimization relies on uint8_t and char being the same size");
     reader.ReadBytes(winrt::array_view(buf, buf + len));
     result = std::move(data);
   } else {
