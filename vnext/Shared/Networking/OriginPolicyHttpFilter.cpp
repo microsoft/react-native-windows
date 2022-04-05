@@ -324,7 +324,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
     case OriginPolicy::SimpleCrossOriginResourceSharing:
       // Check for disallowed mixed content
-      if (GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
+      if (Microsoft_React_GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
           s_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
@@ -508,7 +508,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
 
   if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
-    if (GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
+    if (Microsoft_React_GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
         m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       // if (!NetworkingSecurity::IsOriginAllowed(m_securitySettings.origin, responseHeaders))
       if (false) {
@@ -586,11 +586,11 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   auto coRequest = request;
 
   // Allow only HTTP or HTTPS schemes
-  if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
+  if (Microsoft_React_GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
       coRequest.RequestUri().SchemeName() != L"http")
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + s_origin.SchemeName() + L"]"};
 
-  if (!GetRuntimeOptionBool("Http.OmitCredentials")) {
+  if (!Microsoft_React_GetRuntimeOptionBool("Http.OmitCredentials")) {
     auto concreteArgs = winrt::get_self<RequestArgs, IInspectable>(coRequest.Properties().Lookup(L"RequestArgs"));
     concreteArgs->WithCredentials = false;
   }

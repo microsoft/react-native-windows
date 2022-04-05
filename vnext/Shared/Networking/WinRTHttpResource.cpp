@@ -322,11 +322,11 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 #pragma region IHttpResource
 
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
-  auto originPolicy = static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy"));
+  auto originPolicy = static_cast<OriginPolicy>(Microsoft_React_GetRuntimeOptionInt("Http.OriginPolicy"));
   if (originPolicy == OriginPolicy::None) {
     return std::make_shared<WinRTHttpResource>();
   } else {
-    OriginPolicyHttpFilter::SetStaticOrigin(GetRuntimeOptionString("Http.GlobalOrigin"));
+    OriginPolicyHttpFilter::SetStaticOrigin(Microsoft_React_GetRuntimeOptionString("Http.GlobalOrigin"));
     auto opFilter = winrt::make<OriginPolicyHttpFilter>(originPolicy);
     auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
 
