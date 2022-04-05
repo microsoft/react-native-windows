@@ -45,8 +45,7 @@ const int32_t __cdecl GetRuntimeOptionInt(const string &name) noexcept {
 
 } // namespace Microsoft::React
 
-void __cdecl Microsoft_React_SetRuntimeOptionBool(const char* name, bool value) noexcept
-{
+void __cdecl Microsoft_React_SetRuntimeOptionBool(const char *name, bool value) noexcept {
   if (!name)
     return;
 
@@ -57,8 +56,7 @@ void __cdecl Microsoft_React_SetRuntimeOptionBool(const char* name, bool value) 
     g_runtimeOptionInts.erase(name);
 }
 
-void __cdecl Microsoft_React_SetRuntimeOptionInt(const char* name, int32_t value) noexcept
-{
+void __cdecl Microsoft_React_SetRuntimeOptionInt(const char *name, int32_t value) noexcept {
   if (!name)
     return;
 
@@ -69,8 +67,7 @@ void __cdecl Microsoft_React_SetRuntimeOptionInt(const char* name, int32_t value
     g_runtimeOptionInts.erase(name);
 }
 
-void __cdecl Microsoft_React_SetRuntimeOptionString(const char* name, const char* value) noexcept
-{
+void __cdecl Microsoft_React_SetRuntimeOptionString(const char *name, const char *value) noexcept {
   if (!name)
     return;
 
@@ -81,8 +78,7 @@ void __cdecl Microsoft_React_SetRuntimeOptionString(const char* name, const char
     g_runtimeOptionStrings.erase(name);
 }
 
-const bool __cdecl Microsoft_React_GetRuntimeOptionBool(const char* name) noexcept
-{
+const bool __cdecl Microsoft_React_GetRuntimeOptionBool(const char *name) noexcept {
   lock_guard<mutex> guard{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionInts.find(name);
   if (itr != g_runtimeOptionInts.end())
@@ -91,8 +87,7 @@ const bool __cdecl Microsoft_React_GetRuntimeOptionBool(const char* name) noexce
   return false;
 }
 
-const int32_t __cdecl Microsoft_React_GetRuntimeOptionInt(const char* name) noexcept
-{
+const int32_t __cdecl Microsoft_React_GetRuntimeOptionInt(const char *name) noexcept {
   lock_guard<mutex> guard{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionInts.find(name);
   if (itr != g_runtimeOptionInts.end())
@@ -101,8 +96,7 @@ const int32_t __cdecl Microsoft_React_GetRuntimeOptionInt(const char* name) noex
   return 0;
 }
 
-const char* __cdecl Microsoft_React_GetRuntimeOptionString(const char* name) noexcept
-{
+const char *__cdecl Microsoft_React_GetRuntimeOptionString(const char *name) noexcept {
   lock_guard<mutex> guard{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionStrings.find(name);
   if (itr != g_runtimeOptionStrings.cend())

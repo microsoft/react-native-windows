@@ -28,8 +28,7 @@ class OriginPolicyHttpFilter
   // NOTE: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
   static winrt::Windows::Foundation::Uri s_origin;
 
-  struct AccessControlValues
-  {
+  struct AccessControlValues {
     winrt::hstring AllowedOrigin;
     winrt::hstring AllowedCredentials;
     std::set<std::wstring> AllowedHeaders;

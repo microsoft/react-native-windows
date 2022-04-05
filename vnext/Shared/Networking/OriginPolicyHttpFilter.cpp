@@ -104,7 +104,7 @@ namespace Microsoft::React::Networking {
       return false;
 
     // Ensure Content-Type value is in Simple CORS white list, if present
-    if (header.Key() == L"Content-Type") {
+    if (boost::iequals(header.Key(), L"Content-Type")) {
       if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) != s_simpleCorsContentTypeValues.cend())
         return false;
     }
@@ -261,16 +261,13 @@ namespace Microsoft::React::Networking {
   wregex rgx{L"\\s*,\\s*"};
   AccessControlValues result;
 
-  auto ciStrCmp = [](const wstring &a, const wstring &b)
-  {
-    return _wcsicmp(a.c_str(), b.c_str()) < 0;
-  };
+  auto ciStrCmp = [](const wstring &a, const wstring &b) { return _wcsicmp(a.c_str(), b.c_str()) < 0; };
   set<wstring, decltype(ciStrCmp)> allowedHeaders{ciStrCmp};
   set<wstring, decltype(ciStrCmp)> allowedMethods{ciStrCmp};
   set<wstring, decltype(ciStrCmp)> exposedHeaders{ciStrCmp};
 
-  for (const auto& header : headers) {
-    if (header.Key() == L"Access-Control-Allow-Headers") {
+  for (const auto &header : headers) {
+    if (boost::iequals(header.Key(), L"Access-Control-Allow-Headers")) {
       auto value = wstring{header.Value().c_str()};
 
       // TODO: Avoid redundant comparison.
@@ -278,7 +275,7 @@ namespace Microsoft::React::Networking {
           wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
       allowedHeaders.insert(parsed.cbegin(), parsed.cend());
       result.AllowedHeaders.insert(allowedHeaders.cbegin(), allowedHeaders.cend());
-    } else if (header.Key() == L"Access-Control-Allow-Methods") {
+    } else if (boost::iequals(header.Key(), L"Access-Control-Allow-Methods")) {
       auto value = wstring{header.Value().c_str()};
 
       // TODO: Avoid redundant comparison.
@@ -286,9 +283,9 @@ namespace Microsoft::React::Networking {
           wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
       allowedMethods.insert(parsed.cbegin(), parsed.cend());
       result.AllowedMethods.insert(allowedMethods.cbegin(), allowedMethods.cend());
-    } else if (header.Key() == L"Access-Control-Allow-Origin")
+    } else if (boost::iequals(header.Key(), L"Access-Control-Allow-Origin")) {
       result.AllowedOrigin = header.Value();
-    else if (header.Key() == L"Access-Control-Expose-Headers") {
+    } else if (boost::iequals(header.Key(), L"Access-Control-Expose-Headers")) {
       auto value = wstring{header.Value().c_str()};
 
       // TODO: Avoid redundant comparison.
@@ -296,9 +293,9 @@ namespace Microsoft::React::Networking {
           wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
       exposedHeaders.insert(parsed.cbegin(), parsed.cend());
       result.ExposedHeaders.insert(exposedHeaders.cbegin(), exposedHeaders.cend());
-    } else if (header.Key() == L"Access-Control-Allow-Credentials")
+    } else if (boost::iequals(header.Key(), L"Access-Control-Allow-Credentials")) {
       result.AllowedCredentials = header.Value();
-    else if (header.Key() == L"Access-Control-Max-Age") {
+    } else if (boost::iequals(header.Key(), L"Access-Control-Max-Age")) {
       result.MaxAge = _wtoi(header.Value().c_str());
     }
   }
@@ -379,7 +376,6 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
     hstring const &allowedOrigin,
     hstring const &allowCredentials,
     IInspectable const &iRequestArgs) const {
-
   // 4.10.1-2 - null allow origin
   if (L"null" == allowedOrigin)
     throw hresult_error{
@@ -411,7 +407,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
 
     else
       errorMessage = L"The Access-Control-Allow-Origin header has a value of [" + allowedOrigin +
-        L"] which differs from the supplied origin.\\n";
+          L"] which differs from the supplied origin.\\n";
 
     throw hresult_error{E_INVALIDARG, errorMessage};
   }
@@ -456,6 +452,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
       break;
     }
   }
+
   if (!requestMethodAllowed)
     throw hresult_error{
         E_INVALIDARG,
@@ -470,7 +467,8 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   if (!withCredentials && controlValues.AllowedHeaders.find(L"*") != controlValues.AllowedHeaders.cend()) {
     // "Authorization" header cannot be allowed through wildcard alone.
     // "Authorization" is the only member of https://fetch.spec.whatwg.org/#cors-non-wildcard-request-header-name.
-    if (request.Headers().HasKey(L"Authorization") && controlValues.AllowedHeaders.find(L"Authorization") == controlValues.AllowedHeaders.cend())
+    if (request.Headers().HasKey(L"Authorization") &&
+        controlValues.AllowedHeaders.find(L"Authorization") == controlValues.AllowedHeaders.cend())
       throw hresult_error{
           E_INVALIDARG,
           L"Request header field [Authorization] is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
@@ -487,7 +485,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
         throw hresult_error{
             E_INVALIDARG,
             L"Request header field [" + to_hstring(name) +
-                L"]is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
+                L"] is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
     }
   }
 
@@ -563,6 +561,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
     while (++headerItr != coRequest.Headers().end())
       headerNames += L", " + (*headerItr).Key();
   }
+
   if (coRequest.Content()) {
     headerItr = coRequest.Content().Headers().begin();
     if (headerItr != coRequest.Content().Headers().end()) {

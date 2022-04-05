@@ -23,9 +23,8 @@ struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Found
   int64_t Timeout;
 };
 
-typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
-    winrt::Windows::Web::Http::HttpResponseMessage,
-    winrt::Windows::Web::Http::HttpProgress>
-    ResponseType;
+typedef winrt::Windows::Foundation::
+    IAsyncOperationWithProgress<winrt::Windows::Web::Http::HttpResponseMessage, winrt::Windows::Web::Http::HttpProgress>
+        ResponseType;
 
 } // namespace Microsoft::React::Networking
