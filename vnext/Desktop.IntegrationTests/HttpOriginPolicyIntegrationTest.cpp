@@ -161,17 +161,20 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsPreflightSucceeds)
   {
     ServerParams serverArgs(5555);
-    serverArgs.Preflight.set(http::field::access_control_allow_headers, "ValidHeader");
-    serverArgs.Preflight.set(http::field::access_control_allow_origin, s_crossOriginUrl);
+    serverArgs.Preflight.set(http::field::access_control_request_headers, "ArbitraryHeader");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,   "ArbitraryHeader");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,    s_crossOriginUrl);
+    serverArgs.Response.result(http::status::ok);
+    serverArgs.Response.set(http::field::access_control_allow_origin,     s_crossOriginUrl);
 
-    ClientParams clientArgs(http::verb::get, {{"ValidHeader", "AnyValue"}});
+    ClientParams clientArgs(http::verb::get, {{"ArbitraryHeader", "AnyValue"}});
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsPreflightSucceeds
 
-  //NoCors_InvalidMethod_Failed
+  //TODO: NoCors_InvalidMethod_Failed?
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsForbiddenMethodSucceeds)
     // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
@@ -369,9 +372,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginMatchingOriginSucceeds)
   {
     ServerParams serverArgs(5564);
-    serverArgs.Preflight.set(http::field::access_control_allow_headers,   "Content-Type");
-    serverArgs.Preflight.set(http::field::access_control_allow_origin,    s_crossOriginUrl);
-    serverArgs.Preflight.set(http::field::access_control_request_headers, "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Response.result(http::status::accepted);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+    serverArgs.Response.set(http::field::access_control_allow_credentials,  "true");
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
@@ -406,6 +412,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // The current implementation omits withCredentials flag from request and always sets it to false
   // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
+    //TODO: Passes only when ran individually
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
   {

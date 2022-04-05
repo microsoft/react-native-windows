@@ -376,30 +376,45 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
 // See https://fetch.spec.whatwg.org/#cors-check
 void OriginPolicyHttpFilter::ValidateAllowOrigin(
-    hstring const &origin,
+    hstring const &allowedOrigin,
     hstring const &allowCredentials,
     IInspectable const &iRequestArgs) const {
-  if (origin.size() == 0)
-    throw hresult_error{E_INVALIDARG, L"No valid origin in response"};
 
   // 4.10.1-2 - null allow origin
-  if (L"null" == origin)
+  if (L"null" == allowedOrigin)
     throw hresult_error{
         E_INVALIDARG,
-        L"The Access-Control-Allow-Origin header has a value of [null] which differs from the supplied origin.\\n"};
+        L"Response header Access-Control-Allow-Origin has a value of [null] which differs from the supplied origin.\\n"};
 
   bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iRequestArgs)->WithCredentials;
   // 4.10.3 - valid wild card allow origin
-  if (!withCredentials && L"*" == origin)
+  if (!withCredentials && L"*" == allowedOrigin)
     return;
 
-  // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected.
+  // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected
   // 4.10.4 - Mismatched allow origin
-  if (!IsSameOrigin(s_origin, Uri{origin}))
-    throw hresult_error{
-        E_INVALIDARG,
-        L"The Access-Control-Allow-Origin header has a value of [" + origin +
-            L"] which differs from the supplied origin.\\n"};
+  if (!IsSameOrigin(s_origin, Uri{allowedOrigin})) {
+    hstring errorMessage;
+    if (allowedOrigin.size() == 0)
+      errorMessage = L"No valid origin in response";
+
+    // See https://fetch.spec.whatwg.org/#http-access-control-allow-origin.
+    else if (boost::contains(allowedOrigin, L" ,"))
+      errorMessage = L"Response header Access-Control-Allow-Origin can not have multiple values.\\n";
+
+    // A wildcard Access-Control-Allow-Origin can not be used if credentials are to be sent,
+    // even with Access-Control-Allow-Credentials set to true
+    // See https://fetch.spec.whatwg.org/#cors-protocol-and-credentials
+    else if (L"*" == allowedOrigin)
+      errorMessage =
+          L"Response header Access-Control-Allow-Origin can not have a wildcard value when the request includes credentials.\\n";
+
+    else
+      errorMessage = L"The Access-Control-Allow-Origin header has a value of [" + allowedOrigin +
+        L"] which differs from the supplied origin.\\n";
+
+    throw hresult_error{E_INVALIDARG, errorMessage};
+  }
 
   // 4.10.5
   if (!withCredentials)

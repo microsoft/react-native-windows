@@ -78,7 +78,7 @@ class OriginPolicyHttpFilter
   void ValidateResponse(winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
 
   void ValidateAllowOrigin(
-      winrt::hstring const &origin,
+      winrt::hstring const &allowedOrigin,
       winrt::hstring const &allowCredentials,
       winrt::Windows::Foundation::IInspectable const &iArgs) const;
 
