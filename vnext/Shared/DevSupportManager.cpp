@@ -73,7 +73,7 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
     if (hr == WININET_E_CANNOT_CONNECT) {
       error = fmt::format("A connection with the server {} could not be established\n\nIs the packager running?", url);
     } else {
-      error = fmt::format("Error 0x{:x} downloading {}", static_cast<int>(asyncRequest.ErrorCode()), url);
+      error = fmt::format("Error 0x{:x} downloading {}.", static_cast<int>(asyncRequest.ErrorCode()), url);
     }
     co_return std::make_pair(error, false);
   }
