@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.1.63",
+  "version": "0.1.64",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": "https://github.com/microsoft/react-native-windows",
@@ -14,7 +14,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.1.52",
+    "@react-native-windows/automation-channel": "^0.1.53",
     "@react-native-windows/fs": "^0.0.0-canary.1",
     "chalk": "^4.1.2",
     "readline-sync": "1.4.10",
