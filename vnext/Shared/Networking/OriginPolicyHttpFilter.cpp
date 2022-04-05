@@ -316,7 +316,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
     case OriginPolicy::SameOrigin:
       if (!IsSameOrigin(s_origin, request.RequestUri()))
-        throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced.\\n"};
+        throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced"};
       break;
 
     case OriginPolicy::SimpleCrossOriginResourceSharing:
@@ -380,7 +380,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
   if (L"null" == allowedOrigin)
     throw hresult_error{
         E_INVALIDARG,
-        L"Response header Access-Control-Allow-Origin has a value of [null] which differs from the supplied origin.\\n"};
+        L"Response header Access-Control-Allow-Origin has a value of [null] which differs from the supplied origin"};
 
   bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iRequestArgs)->WithCredentials;
   // 4.10.3 - valid wild card allow origin
@@ -396,18 +396,18 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
 
     // See https://fetch.spec.whatwg.org/#http-access-control-allow-origin.
     else if (boost::contains(allowedOrigin, L" ,"))
-      errorMessage = L"Response header Access-Control-Allow-Origin can not have multiple values.\\n";
+      errorMessage = L"Response header Access-Control-Allow-Origin can not have multiple values";
 
     // A wildcard Access-Control-Allow-Origin can not be used if credentials are to be sent,
     // even with Access-Control-Allow-Credentials set to true
     // See https://fetch.spec.whatwg.org/#cors-protocol-and-credentials
     else if (L"*" == allowedOrigin)
       errorMessage =
-          L"Response header Access-Control-Allow-Origin can not have a wildcard value when the request includes credentials.\\n";
+          L"Response header Access-Control-Allow-Origin can not have a wildcard value when the request includes credentials";
 
     else
       errorMessage = L"The Access-Control-Allow-Origin header has a value of [" + allowedOrigin +
-          L"] which differs from the supplied origin.\\n";
+          L"] which differs from the supplied origin";
 
     throw hresult_error{E_INVALIDARG, errorMessage};
   }
@@ -423,7 +423,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
   if (L"true" != allowCredentials)
     throw hresult_error{
         E_INVALIDARG,
-        L"Access-Control-Allow-Credentials value must be \"true\" when the response includes credentials.\\n"};
+        L"Access-Control-Allow-Credentials value must be \"true\" when the response includes credentials"};
 };
 
 void OriginPolicyHttpFilter::ValidatePreflightResponse(
@@ -457,7 +457,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
     throw hresult_error{
         E_INVALIDARG,
         L"Method [" + request.Method().ToString() +
-            L"] is not allowed by Access-Control-Allow-Methods in preflight response.\\n"};
+            L"] is not allowed by Access-Control-Allow-Methods in preflight response"};
 
   // Check if request headers are allowed
   // if (!IsCrossOriginRequestHeadersAllowed(requestHeaders, allowedHeadersList, withCredentials, /*out*/ errorText))
@@ -471,7 +471,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
         controlValues.AllowedHeaders.find(L"Authorization") == controlValues.AllowedHeaders.cend())
       throw hresult_error{
           E_INVALIDARG,
-          L"Request header field [Authorization] is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
+          L"Request header field [Authorization] is not allowed by Access-Control-Allow-Headers in preflight response"};
 
     requestHeadersAllowed = true;
   }
@@ -485,7 +485,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
         throw hresult_error{
             E_INVALIDARG,
             L"Request header field [" + to_hstring(name) +
-                L"] is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
+                L"] is not allowed by Access-Control-Allow-Headers in preflight response"};
     }
   }
 
