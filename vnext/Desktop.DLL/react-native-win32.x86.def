@@ -67,6 +67,13 @@ EXPORTS
 ?invokeAsync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
 ?invokeSync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
 
+Microsoft_React_SetRuntimeOptionBool
+Microsoft_React_SetRuntimeOptionInt
+Microsoft_React_SetRuntimeOptionString
+Microsoft_React_GetRuntimeOptionBool
+Microsoft_React_GetRuntimeOptionInt
+Microsoft_React_GetRuntimeOptionString
+
 _YGAlignToString@4
 _YGAssert@8
 _YGAssertWithConfig@12
