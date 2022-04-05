@@ -34,7 +34,7 @@ import type {
   ViewToken,
   ViewabilityConfigCallbackPair,
 } from './ViewabilityHelper';
-import type {LayoutEvent} from '../Types/CoreEventTypes';
+import type {LayoutEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 import {
   VirtualizedListCellContextProvider,
   VirtualizedListContext,
