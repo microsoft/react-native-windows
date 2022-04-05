@@ -408,7 +408,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// FullCorsCrossOriginWithCredentialsFails
 
-
   // The current implementation omits withCredentials flag from request and always sets it to false
   // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
@@ -470,7 +469,26 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// FullCorsCrossOriginMismatchedCorsHeaderFails
 
-  //TODO: FullCors_CorsCheckFailOnPreflightRedirect_Failed
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
+  {
+    ServerParams serverArgs(5568);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    serverArgs.Response.result(http::status::accepted);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+    //TODO: Use send to redirect server (... after implementing it!)
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
+    clientArgs.WithCredentials = false;
+
+    //TODO: Implement redirection!
+
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+  }// FullCorsCrossOriginCheckFailsOnPreflightRedirectFails
 };
 
 }//namespace
