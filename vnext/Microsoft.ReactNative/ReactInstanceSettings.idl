@@ -180,9 +180,12 @@ namespace Microsoft.ReactNative
       "Base path used for the location of the bundle. \n"
       "This can be an `ms-appx://` or `ms-appdata://` URI (if the app is UWP or packaged using MSIX), "
       "a filesystem path, or a URI pointing at an embedded resource.\n"
-      "To specify an embedded (`RCDATA`) resource, use the format `resource://moduleName` for @.BundleRootPath "
-      "and use the resource ID as the @.JavaScriptBundleFile. If `moduleName` is empty, the embedded bundle resource "
-      " will be searched for in the running process's module.")
+      "Examples:\n\n"
+      "- `ms-appx:///Bundle` - locates the bundle in the MSIX package. See [URI schemes](https://docs.microsoft.com/windows/uwp/app-resources/uri-schemes) for other UWP/MSIX valid URI formats."
+      "- `C:\\foo\\bar` - locates the bundle in the local filesystem. Note [UWP app file access permissions](https://docs.microsoft.com/windows/uwp/files/file-access-permissions)."
+      "- `resource://moduleName/resourceID` - locates the bundle as an embedded RCDATA resource in moduleName."
+      "- `resource:///resourceID` - locates the bundle as an embedded RCDATA resource in the running process's module."
+    )
     DOC_DEFAULT("ms-appx:///Bundle/")
     String BundleRootPath { get; set; };
 
