@@ -96,7 +96,7 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
     reader.ReadBytes(winrt::array_view(buf, buf + len));
     result = std::move(data);
   } else {
-    result = fmt::format("HTTP Error {} downloading {}", static_cast<int>(response.StatusCode()), url);
+    result = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
   }
 
   co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
