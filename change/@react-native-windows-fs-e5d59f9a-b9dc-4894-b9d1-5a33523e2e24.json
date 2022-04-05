@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Remove Parens",
   "packageName": "@react-native-windows/fs",
   "email": "34109996+chiaramooney@users.noreply.github.com",
