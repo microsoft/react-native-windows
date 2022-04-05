@@ -252,6 +252,60 @@ namespace Microsoft::React::Networking {
   return result;
 }
 
+/*static*/ OriginPolicyHttpFilter::AccessControlValues OriginPolicyHttpFilter::ExtractAccessControlValues(
+    winrt::Windows::Foundation::Collections::IMap<hstring, hstring> const &headers) {
+  using std::wregex;
+  using std::wsregex_token_iterator;
+
+  // https://tools.ietf.org/html/rfc2616#section-4.2
+  wregex rgx{L"\\s*,\\s*"};
+  AccessControlValues result;
+
+  auto ciStrCmp = [](const wstring &a, const wstring &b)
+  {
+    return _wcsicmp(a.c_str(), b.c_str()) < 0;
+  };
+  set<wstring, decltype(ciStrCmp)> allowedHeaders{ciStrCmp};
+  set<wstring, decltype(ciStrCmp)> allowedMethods{ciStrCmp};
+  set<wstring, decltype(ciStrCmp)> exposedHeaders{ciStrCmp};
+
+  for (const auto& header : headers) {
+    if (header.Key() == L"Access-Control-Allow-Headers") {
+      auto value = wstring{header.Value().c_str()};
+
+      // TODO: Avoid redundant comparison.
+      auto parsed = set<wstring, decltype(ciStrCmp)>{
+          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
+      allowedHeaders.insert(parsed.cbegin(), parsed.cend());
+      result.AllowedHeaders.insert(allowedHeaders.cbegin(), allowedHeaders.cend());
+    } else if (header.Key() == L"Access-Control-Allow-Methods") {
+      auto value = wstring{header.Value().c_str()};
+
+      // TODO: Avoid redundant comparison.
+      auto parsed = set<wstring, decltype(ciStrCmp)>{
+          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
+      allowedMethods.insert(parsed.cbegin(), parsed.cend());
+      result.AllowedMethods.insert(allowedMethods.cbegin(), allowedMethods.cend());
+    } else if (header.Key() == L"Access-Control-Allow-Origin")
+      result.AllowedOrigin = header.Value();
+    else if (header.Key() == L"Access-Control-Expose-Headers") {
+      auto value = wstring{header.Value().c_str()};
+
+      // TODO: Avoid redundant comparison.
+      auto parsed = set<wstring, decltype(ciStrCmp)>{
+          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
+      exposedHeaders.insert(parsed.cbegin(), parsed.cend());
+      result.ExposedHeaders.insert(exposedHeaders.cbegin(), exposedHeaders.cend());
+    } else if (header.Key() == L"Access-Control-Allow-Credentials")
+      result.AllowedCredentials = header.Value();
+    else if (header.Key() == L"Access-Control-Max-Age") {
+      result.MaxAge = _wtoi(header.Value().c_str());
+    }
+  }
+
+  return result;
+} // ExtractAccessControlValues
+
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
     : m_originPolicy{originPolicy}, m_innerFilter{std::move(innerFilter)} {}
 
@@ -364,62 +418,19 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
 void OriginPolicyHttpFilter::ValidatePreflightResponse(
     HttpRequestMessage const &request,
     HttpResponseMessage const &response) const {
-  using std::wregex;
-  using std::wsregex_token_iterator;
-
-  // https://tools.ietf.org/html/rfc2616#section-4.2
-  wregex rgx{L"\\s*,\\s*"};
-  auto ciStrCmp = [](const wstring &a, const wstring &b) { return _wcsicmp(a.c_str(), b.c_str()) < 0; };
-
-  set<wstring, decltype(ciStrCmp)> allowedHeaders{ciStrCmp};
-  set<wstring, decltype(ciStrCmp)> allowedMethods{ciStrCmp};
-  set<wstring, decltype(ciStrCmp)> exposedHeaders{ciStrCmp};
-  hstring allowedOrigin;
-  hstring allowedCredentials;
-  size_t maxAge;
-
-  // Extract header values
-  for (const auto &header : response.Headers()) {
-    if (header.Key() == L"Access-Control-Allow-Headers") {
-      auto value = wstring{header.Value().c_str()};
-
-      // TODO: Avoid redundant comparison.
-      auto parsed = set<wstring, decltype(ciStrCmp)>{
-          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
-      allowedHeaders.insert(parsed.cbegin(), parsed.cend());
-    } else if (header.Key() == L"Access-Control-Allow-Methods") {
-      auto value = wstring{header.Value().c_str()};
-
-      // TODO: Avoid redundant comparison.
-      auto parsed = set<wstring, decltype(ciStrCmp)>{
-          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
-      allowedMethods.insert(parsed.cbegin(), parsed.cend());
-    } else if (header.Key() == L"Access-Control-Allow-Origin")
-      allowedOrigin = header.Value();
-    else if (header.Key() == L"Access-Control-Expose-Headers") {
-      auto value = wstring{header.Value().c_str()};
-
-      // TODO: Avoid redundant comparison.
-      auto parsed = set<wstring, decltype(ciStrCmp)>{
-          wsregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, wsregex_token_iterator{}, ciStrCmp};
-      exposedHeaders.insert(parsed.cbegin(), parsed.cend());
-    } else if (header.Key() == L"Access-Control-Allow-Credentials")
-      allowedCredentials = header.Value();
-    else if (header.Key() == L"Access-Control-Max-Age")
-      maxAge = _wtoi(header.Value().c_str());
-  }
+  auto controlValues = ExtractAccessControlValues(response.Headers());
 
   auto iRequestArgs = request.Properties().Lookup(L"RequestArgs");
   // Check if the origin is allowed in conjuction with the withCredentials flag
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
   // if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
-  ValidateAllowOrigin(allowedOrigin, allowedCredentials, iRequestArgs);
+  ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
 
   // Check if the request method is allowed
   // if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
   bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iRequestArgs)->WithCredentials;
   bool requestMethodAllowed = false;
-  for (const auto &method : allowedMethods) {
+  for (const auto &method : controlValues.AllowedMethods) {
     if (L"*" == method) {
       if (!withCredentials) {
         requestMethodAllowed = true;
@@ -441,10 +452,10 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   // See https://fetch.spec.whatwg.org/#cors-preflight-fetch, section 4.8.7.6-7
   // Check if the header should be allowed through wildcard, if the request does not have credentials.
   bool requestHeadersAllowed = false;
-  if (!withCredentials && allowedHeaders.find(L"*") != allowedHeaders.cend()) {
+  if (!withCredentials && controlValues.AllowedHeaders.find(L"*") != controlValues.AllowedHeaders.cend()) {
     // "Authorization" header cannot be allowed through wildcard alone.
     // "Authorization" is the only member of https://fetch.spec.whatwg.org/#cors-non-wildcard-request-header-name.
-    if (request.Headers().HasKey(L"Authorization") && allowedHeaders.find(L"Authorization") == allowedHeaders.cend())
+    if (request.Headers().HasKey(L"Authorization") && controlValues.AllowedHeaders.find(L"Authorization") == controlValues.AllowedHeaders.cend())
       throw hresult_error{
           E_INVALIDARG,
           L"Request header field [Authorization] is not allowed by Access-Control-Allow-Headers in preflight response.\\n"};
@@ -457,7 +468,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
     // TODO: CorsUnsafeNotForbiddenRequestHeaderNames(requestHeaders);
     const set unsafeNotForbidenHeaderNames = CorsUnsafeNotForbiddenRequestHeaderNames(request.Headers());
     for (const auto name : unsafeNotForbidenHeaderNames) {
-      if (allowedHeaders.find(name) == allowedHeaders.cend())
+      if (controlValues.AllowedHeaders.find(name) == controlValues.AllowedHeaders.cend())
         throw hresult_error{
             E_INVALIDARG,
             L"Request header field [" + to_hstring(name) +
@@ -489,7 +500,11 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
       }
     } else {
-      // if (!CheckAccess(responseHeaders, withCredentials, /*out*/ errorText)) => throw
+      // if (!CheckAccess(responseHeaders, withCredentials, /*out*/ errorText)) => throw //TODO: REMOVE
+      auto controlValues = ExtractAccessControlValues(response.Headers());
+
+      auto iRequestArgs = response.RequestMessage().Properties().Lookup(L"RequestArgs");
+      ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
     }
 
     if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {

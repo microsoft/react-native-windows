@@ -25,8 +25,18 @@ class OriginPolicyHttpFilter
   static std::set<const wchar_t *> s_corsForbiddenRequestHeaderNames;
   static std::set<const wchar_t *> s_corsForbiddenRequestHeaderNamePrefixes;
 
-  // TODO: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
+  // NOTE: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
   static winrt::Windows::Foundation::Uri s_origin;
+
+  struct AccessControlValues
+  {
+    winrt::hstring AllowedOrigin;
+    winrt::hstring AllowedCredentials;
+    std::set<std::wstring> AllowedHeaders;
+    std::set<std::wstring> AllowedMethods;
+    std::set<std::wstring> ExposedHeaders;
+    size_t MaxAge;
+  };
 
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
   OriginPolicy m_originPolicy;
@@ -47,6 +57,9 @@ class OriginPolicyHttpFilter
 
   static std::set<const wchar_t *> CorsUnsafeNotForbiddenRequestHeaderNames(
       winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection const &headers) noexcept;
+
+  static AccessControlValues ExtractAccessControlValues(
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::hstring> const &headers);
 
   static bool IsCorsSafelistedRequestHeader(winrt::hstring const &name, winrt::hstring const &value) noexcept;
 

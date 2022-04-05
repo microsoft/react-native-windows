@@ -143,7 +143,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     if (shouldSucceed)
     {
       Assert::AreEqual({}, clientArgs.ErrorMessage);
-      Assert::AreEqual(static_cast<int>(http::status::ok), static_cast<int>(clientArgs.Response.StatusCode));
+      Assert::AreEqual(serverArgs.Response.result_int(), static_cast<unsigned int>(clientArgs.Response.StatusCode));
       Assert::AreEqual({"RESPONSE_CONTENT"}, clientArgs.ResponseContent);
     }
     else
@@ -346,9 +346,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginAllowOriginWildcardSucceeds)
   {
     ServerParams serverArgs(5563);
-    serverArgs.Preflight.set(http::field::access_control_allow_headers,   "Content-Type");
-    serverArgs.Preflight.set(http::field::access_control_allow_origin,    "*");
-    serverArgs.Preflight.set(http::field::access_control_request_headers, "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      "*");
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Response.result(http::status::accepted);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       "*");
+    serverArgs.Response.set(http::field::access_control_allow_credentials,  "true");
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
