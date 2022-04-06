@@ -12,13 +12,11 @@
 
 namespace Microsoft::ReactNative {
 
-template <typename TKey, typename TValue>
+template <typename TKey, typename TValue, size_t size>
 class LRUCache {
  public:
   typedef typename std::pair<TKey, TValue> TKeyValuePair;
   typedef typename std::list<TKeyValuePair>::iterator TListIterator;
-
-  LRUCache(size_t maxSize) : m_maxSize(maxSize) {}
 
   void Put(const TKey &key, const TValue &value);
 
@@ -26,16 +24,13 @@ class LRUCache {
 
   bool Exists(const TKey &key) const;
 
-  size_t Size() const;
-
  private:
   std::list<TKeyValuePair> m_cacheItemsList;
   std::unordered_map<TKey, TListIterator> m_cacheItemsMap;
-  size_t m_maxSize;
 };
 
-template <typename TKey, typename TValue>
-void LRUCache<TKey, TValue>::Put(const TKey &key, const TValue &value) {
+template <typename TKey, typename TValue, size_t size>
+void LRUCache<TKey, TValue, size>::Put(const TKey &key, const TValue &value) {
   auto it = m_cacheItemsMap.find(key);
   m_cacheItemsList.push_front(TKeyValuePair(key, value));
   if (it != m_cacheItemsMap.end()) {
@@ -44,7 +39,7 @@ void LRUCache<TKey, TValue>::Put(const TKey &key, const TValue &value) {
   }
   m_cacheItemsMap[key] = m_cacheItemsList.begin();
 
-  if (m_cacheItemsMap.size() > m_maxSize) {
+  if (m_cacheItemsMap.size() > size) {
     auto last = m_cacheItemsList.end();
     last--;
     m_cacheItemsMap.erase(last->first);
@@ -52,8 +47,8 @@ void LRUCache<TKey, TValue>::Put(const TKey &key, const TValue &value) {
   }
 }
 
-template <typename TKey, typename TValue>
-const TValue &LRUCache<TKey, TValue>::Get(const TKey &key) {
+template <typename TKey, typename TValue, size_t size>
+const TValue &LRUCache<TKey, TValue, size>::Get(const TKey &key) {
   auto it = m_cacheItemsMap.find(key);
   if (it == m_cacheItemsMap.end()) {
     throw std::range_error("There is no such key in cache");
@@ -63,14 +58,9 @@ const TValue &LRUCache<TKey, TValue>::Get(const TKey &key) {
   }
 }
 
-template <typename TKey, typename TValue>
-bool LRUCache<TKey, TValue>::Exists(const TKey &key) const {
+template <typename TKey, typename TValue, size_t size>
+bool LRUCache<TKey, TValue, size>::Exists(const TKey &key) const {
   return m_cacheItemsMap.find(key) != m_cacheItemsMap.end();
-}
-
-template <typename TKey, typename TValue>
-size_t LRUCache<TKey, TValue>::Size() const {
-  return m_cacheItemsMap.size();
 }
 
 } // namespace Microsoft::ReactNative

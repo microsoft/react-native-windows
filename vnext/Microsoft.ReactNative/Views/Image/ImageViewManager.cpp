@@ -107,8 +107,8 @@ class ImageShadowNode : public ShadowNodeBase {
 };
 
 ImageViewManager::ImageViewManager(const Mso::React::IReactContext &context) : Super(context) {
-  m_imageCache = std::make_shared<ImageCache>(100);
-  m_surfaceCache = std::make_shared<SurfaceCache>(100);
+  m_imageCache = std::make_shared<ImageCache>();
+  m_surfaceCache = std::make_shared<SurfaceCache>();
 }
 
 const wchar_t *ImageViewManager::GetName() const {
