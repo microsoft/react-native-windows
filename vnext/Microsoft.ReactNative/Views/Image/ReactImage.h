@@ -31,8 +31,8 @@ struct ReactImageSource {
   ImageSourceFormat sourceFormat = ImageSourceFormat::Bitmap;
 };
 
-typedef typename LRUCache<std::string, xaml::Media::Imaging::BitmapImage, 100> ImageCache;
-typedef typename LRUCache<std::string, xaml::Media::LoadedImageSurface, 100> SurfaceCache;
+using ImageCache = typename LRUCache<std::string, xaml::Media::Imaging::BitmapImage, 100>;
+using SurfaceCache = typename LRUCache<std::string, xaml::Media::LoadedImageSurface, 100>;
 
 struct ReactImage : xaml::Controls::GridT<ReactImage> {
   using Super = xaml::Controls::GridT<ReactImage>;

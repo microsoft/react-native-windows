@@ -14,10 +14,10 @@ namespace Microsoft::ReactNative {
 
 template <typename TKey, typename TValue, size_t size>
 class LRUCache {
- public:
-  typedef typename std::pair<TKey, TValue> TKeyValuePair;
-  typedef typename std::list<TKeyValuePair>::iterator TListIterator;
+ using TKeyValuePair = typename std::pair<TKey, TValue>;
+ using TListIterator = typename std::list<TKeyValuePair>::iterator;
 
+ public:
   void Put(const TKey &key, const TValue &value);
 
   const TValue &Get(const TKey &key);
