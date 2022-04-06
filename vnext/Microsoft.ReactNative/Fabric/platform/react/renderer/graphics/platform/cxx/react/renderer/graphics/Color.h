@@ -104,7 +104,9 @@ class SharedColor {
     return RGB(m_color->m_color.R, m_color->m_color.G, m_color->m_color.B) | (m_color->m_color.A << 24);
   }
 
+#ifndef CORE_ABI
   xaml::Media::Brush AsWindowsBrush() const;
+#endif
 
  private:
   std::shared_ptr<Color> m_color;

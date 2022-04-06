@@ -20,6 +20,7 @@
 #include <shcore.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.h>
+#include <winrt/Windows.Web.Http.Headers.h>
 #include "CompHelpers.h"
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
@@ -60,6 +61,47 @@ void CompImageComponentView::unmountChildComponentView(
   assert(false);
 }
 
+
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> getImageStreamAsync(ReactImageSource source) {
+  try {
+    co_await winrt::resume_background();
+
+    auto httpMethod{
+        source.method.empty() ? winrt::Windows::Web::Http::HttpMethod::Get()
+                              : winrt::Windows::Web::Http::HttpMethod{winrt::to_hstring(source.method)}};
+
+    winrt::Windows::Foundation::Uri uri{winrt::to_hstring(source.uri)};
+    winrt::Windows::Web::Http::HttpRequestMessage request{httpMethod, uri};
+
+    if (!source.headers.empty()) {
+      for (auto &header : source.headers) {
+        if (_stricmp(header.first.c_str(), "authorization") == 0) {
+          request.Headers().TryAppendWithoutValidation(
+              winrt::to_hstring(header.first), winrt::to_hstring(header.second));
+        } else {
+          request.Headers().Append(winrt::to_hstring(header.first), winrt::to_hstring(header.second));
+        }
+      }
+    }
+
+    winrt::Windows::Web::Http::HttpClient httpClient;
+    winrt::Windows::Web::Http::HttpResponseMessage response{co_await httpClient.SendRequestAsync(request)};
+
+    if (response && response.StatusCode() == winrt::Windows::Web::Http::HttpStatusCode::Ok) {
+      winrt::Windows::Storage::Streams::IInputStream inputStream{co_await response.Content().ReadAsInputStreamAsync()};
+      winrt::Windows::Storage::Streams::InMemoryRandomAccessStream memoryStream;
+      co_await winrt::Windows::Storage::Streams::RandomAccessStream::CopyAsync(inputStream, memoryStream);
+      memoryStream.Seek(0);
+
+      co_return memoryStream;
+    }
+  } catch (winrt::hresult_error const &) {
+  }
+
+  co_return nullptr;
+}
+
+
 void CompImageComponentView::beginDownloadImage() noexcept {
   ReactImageSource source;
   source.uri = m_url;
@@ -67,7 +109,7 @@ void CompImageComponentView::beginDownloadImage() noexcept {
   source.width = m_imgWidth;
   source.sourceType = ImageSourceType::Download;
   m_state = ImageState::Loading;
-  auto inputStreamTask = GetImageStreamAsync(source);
+  auto inputStreamTask = getImageStreamAsync(source);
   inputStreamTask.Completed([this](auto asyncOp, auto status) {
     switch (status) {
       case winrt::Windows::Foundation::AsyncStatus::Completed: {

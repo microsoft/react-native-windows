@@ -961,11 +961,8 @@ void ReactInstanceWin::AttachMeasuredRootView(
     facebook::react::IReactRootView *rootView,
     const winrt::Microsoft::ReactNative::JSValueArgWriter &initialProps,
     bool useFabric) noexcept {
-#ifndef CORE_ABI
   if (State() == ReactInstanceState::HasError)
     return;
-
-  int64_t rootTag = -1;
 
 #ifdef USE_FABRIC
   if (useFabric && !m_useWebDebugger) {
@@ -976,9 +973,13 @@ void ReactInstanceWin::AttachMeasuredRootView(
     rootView->SetTag(rootTag);
     uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), DynamicWriter::ToDynamic(initialProps));
 
-  } else
+  }
 #endif
+#ifndef CORE_ABI
+  if (!useFabric || m_useWebDebugger)
   {
+    int64_t rootTag = -1;
+
     if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {
       rootTag = uiManager->AddMeasuredRootView(rootView);
       rootView->SetTag(rootTag);

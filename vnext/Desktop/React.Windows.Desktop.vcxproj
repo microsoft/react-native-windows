@@ -50,6 +50,7 @@
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
     <CppWinRTUsePrefixes>true</CppWinRTUsePrefixes>
     <UseV8>true</UseV8>
+    <UseFabric>true</UseFabric>
     <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
@@ -103,12 +104,16 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
-        %(AdditionalIncludeDirectories);
         "$(ReactNativeWindowsDir)Microsoft.ReactNative";
+        "$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
+        "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
+        "$(ReactNativeWindowsDir)codegen";
+        %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
+      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
@@ -130,6 +135,8 @@
     <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="ABI\TestController.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
+    <Midl Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
+    <Midl Include="..\Microsoft.ReactNative\CompRootView.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
@@ -170,6 +177,15 @@
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\CompHwndHost.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\CompHwndHost.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="..\Microsoft.ReactNative\Views\CompEventHandler.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\CompRootView.cpp">
+      <DependentUpon>..\Microsoft.ReactNative\CompRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClCompile>
@@ -230,9 +246,6 @@
       <DependentUpon>..\Microsoft.ReactNative\QuirkSettings.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
-    <ClCompile Include="ShadowNode.cpp" />
-    <ClCompile Include="ShadowNodeRegistry.cpp" />
-    <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />

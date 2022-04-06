@@ -7,9 +7,6 @@
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "ReactHost/React.h"
-#include "SIPEventHandler.h"
-#include "TouchEventHandler.h"
-#include "Views/KeyboardEventHandler.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 

@@ -12,6 +12,8 @@
 #include <winrt/Windows.UI.Core.h>
 #include "ReactNativeHost.h"
 
+WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 winrt::Windows::UI::Composition::Visual CompHwndHost::RootVisual() const noexcept {

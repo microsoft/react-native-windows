@@ -6,9 +6,10 @@
 #include "pch.h"
 #include "winrt/base.h"
 void* winrt_make_Microsoft_Internal_TestController();
-void* winrt_make_Microsoft_ReactNative_JsiRuntime();
+void *winrt_make_Microsoft_ReactNative_CompRootView();
+void *winrt_make_Microsoft_ReactNative_JsiRuntime();
 void* winrt_make_Microsoft_ReactNative_ReactCoreInjection();
-void* winrt_make_Microsoft_ReactNative_ReactDispatcherHelper();
+void *winrt_make_Microsoft_ReactNative_ReactDispatcherHelper();
 void* winrt_make_Microsoft_ReactNative_ReactInstanceSettings();
 void* winrt_make_Microsoft_ReactNative_ReactNativeHost();
 void* winrt_make_Microsoft_ReactNative_ReactNotificationServiceHelper();
@@ -16,7 +17,7 @@ void* winrt_make_Microsoft_ReactNative_ReactPropertyBagHelper();
 void* winrt_make_Microsoft_ReactNative_ReactViewOptions();
 void* winrt_make_Microsoft_ReactNative_RedBoxHelper();
 void* winrt_make_facebook_react_NativeLogEventSource();
-void* winrt_make_facebook_react_NativeTraceEventSource();
+void *winrt_make_facebook_react_NativeTraceEventSource();
 
 bool __stdcall winrt_can_unload_now() noexcept
 {
@@ -39,6 +40,10 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     if (requal(name, L"Microsoft.Internal.TestController"))
     {
         return winrt_make_Microsoft_Internal_TestController();
+    }
+
+    if (requal(name, L"Microsoft.ReactNative.CompRootView")) {
+      return winrt_make_Microsoft_ReactNative_CompRootView();
     }
 
     if (requal(name, L"Microsoft.ReactNative.JsiRuntime"))

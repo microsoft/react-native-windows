@@ -6,9 +6,8 @@
 
 #include "CompEventHandler.h"
 #include "ReactHost/React.h"
-#include "SIPEventHandler.h"
+#include <winrt/Microsoft.ReactNative.h>
 #include "Views/ICompRootView.h"
-#include "Views/KeyboardEventHandler.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -96,7 +95,7 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   bool m_isPerspectiveEnabled{true};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
-  Mso::DispatchQueue m_uiQueue;
+  IReactDispatcher m_uiDispatcher{nullptr};
   int64_t m_rootTag{-1};
   double m_scaleFactor{1.0};
   winrt::Windows::Foundation::Size m_size;

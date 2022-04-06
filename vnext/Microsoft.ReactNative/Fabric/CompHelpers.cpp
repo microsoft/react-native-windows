@@ -142,7 +142,11 @@ winrt::Windows::UI::Composition::Compositor CompContext::Compositor() const noex
 winrt::com_ptr<ID2D1Factory1> CompContext::D2DFactory() noexcept {
   if (!m_d2dFactory) {
     // Initialize Direct2D resources.
+// #if defined(_DEBUG)
+//     D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_INFORMATION};
+// #else
     D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_NONE};
+// #endif
 
     D2D1CreateFactory(
         D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &d2d1FactoryOptions, m_d2dFactory.put_void());
@@ -153,6 +157,10 @@ winrt::com_ptr<ID3D11Device> CompContext::D3DDevice() noexcept {
   // This flag adds support for surfaces with a different color channel ordering than the API default.
   // You need it for compatibility with Direct2D.
   UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
+// #if defined(_DEBUG)
+//   creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+// #endif
 
   // This array defines the set of DirectX hardware feature levels this app  supports.
   // The ordering is important and you should  preserve it.

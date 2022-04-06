@@ -6,15 +6,11 @@
 
 #include <QuirkSettings.h>
 #include <ReactHost/MsoUtils.h>
-#include <UI.Xaml.Input.h>
-#include <UI.Xaml.Media.Media3D.h>
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.UI.Core.h>
 #include "ReactNativeHost.h"
-#include "ReactViewInstance.h"
-
-#include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <IReactInstance.h>
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
@@ -28,8 +24,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 struct CompReactViewInstance
     : public Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, Mso::React::IReactViewInstance> {
   CompReactViewInstance(
-      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl,
-      Mso::DispatchQueue const &uiQueue) noexcept;
+      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl) noexcept;
 
   Mso::Future<void> InitRootView(
       Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
@@ -43,17 +38,20 @@ struct CompReactViewInstance
 
  private:
   winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> m_weakRootControl;
-  Mso::DispatchQueue m_uiQueue;
+  IReactDispatcher m_uiDispatcher{nullptr};
 };
 
 CompReactViewInstance::CompReactViewInstance(
-    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl,
-    Mso::DispatchQueue const &uiQueue) noexcept
-    : m_weakRootControl{std::move(weakRootControl)}, m_uiQueue{uiQueue} {}
+    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl) noexcept
+    : m_weakRootControl{std::move(weakRootControl)} {}
 
 Mso::Future<void> CompReactViewInstance::InitRootView(
     Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
     Mso::React::ReactViewOptions &&viewOptions) noexcept {
+
+      m_uiDispatcher = reactInstance->GetReactContext().Properties().Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+                       .try_as<IReactDispatcher>();
+
   return PostInUIQueue(
       [reactInstance{std::move(reactInstance)}, viewOptions{std::move(viewOptions)}](
           winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompRootView> &rootControl) mutable noexcept {
@@ -82,27 +80,23 @@ Mso::Future<void> CompReactViewInstance::UninitRootView() noexcept {
 template <class TAction>
 inline Mso::Future<void> CompReactViewInstance::PostInUIQueue(TAction &&action) noexcept {
   // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
-  return Mso::PostFuture(
-      m_uiQueue, [weakThis = Mso::WeakPtr{this}, action{std::forward<TAction>(action)}]() mutable noexcept {
-        if (auto strongThis = weakThis.GetStrongPtr()) {
-          if (auto rootControl = strongThis->m_weakRootControl.get()) {
-            action(rootControl);
-            return Mso::Maybe<void>{};
-          }
-        }
+  auto promise = Mso::Promise<void>();
 
-        return Mso::CancellationErrorProvider().MakeMaybe<void>();
-      });
+  m_uiDispatcher.Post([promise, weakThis = Mso::WeakPtr{this}, action{std::forward<TAction>(action)}]() mutable {
+    if (auto strongThis = weakThis.GetStrongPtr()) {
+      if (auto rootControl = strongThis->m_weakRootControl.get()) {
+        action(rootControl);
+        promise.SetValue();
+        return;
+      }
+    }
+    promise.TryCancel();
+  });
+
+  return promise.AsFuture();
 }
 
-CompRootView::CompRootView() noexcept : m_uiQueue(Mso::DispatchQueue::GetCurrentUIThreadQueue()) {
-  VerifyElseCrashSz(m_uiQueue, "Cannot get UI dispatch queue for the current thread");
-
-  /*
-    Loaded([this](auto &&, auto &&) {
-      ::Microsoft::ReactNative::SetCompositor(::Microsoft::ReactNative::GetCompositor(*this));
-    });
-    */
+CompRootView::CompRootView() noexcept {
 }
 
 ReactNative::ReactNativeHost CompRootView::ReactNativeHost() noexcept {
@@ -307,7 +301,11 @@ void CompRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta
 void CompRootView::InitRootView(
     Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
     Mso::React::ReactViewOptions &&reactViewOptions) noexcept {
-  VerifyElseCrash(m_uiQueue.HasThreadAccess());
+  m_uiDispatcher = reactInstance->GetReactContext()
+                       .Properties()
+                       .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+                       .try_as<IReactDispatcher>();
+  VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
 
   if (m_isInitialized) {
     UninitRootView();
@@ -330,7 +328,7 @@ void CompRootView::InitRootView(
 }
 
 void CompRootView::UpdateRootView() noexcept {
-  VerifyElseCrash(m_uiQueue.HasThreadAccess());
+  VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
   VerifyElseCrash(m_isInitialized);
   UpdateRootViewInternal();
 }
@@ -498,7 +496,7 @@ void CompRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept 
   m_reactViewHost = viewHost;
 
   if (m_reactViewHost) {
-    auto viewInstance = Mso::Make<CompReactViewInstance>(this->get_weak(), m_uiQueue);
+    auto viewInstance = Mso::Make<CompReactViewInstance>(this->get_weak());
     m_reactViewHost->AttachViewInstance(*viewInstance);
   }
 }
@@ -536,9 +534,8 @@ Windows::Foundation::Size CompRootView::Measure(Windows::Foundation::Size const 
           static_cast<facebook::react::Float>(availableSize.Height);
       constraints.minimumSize.width = constraints.maximumSize.width =
           static_cast<facebook::react::Float>(availableSize.Width);
-      constraints.layoutDirection = FlowDirection() == xaml::FlowDirection::LeftToRight
-          ? facebook::react::LayoutDirection::LeftToRight
-          : facebook::react::LayoutDirection::RightToLeft;
+      // TODO get RTL
+      constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
 
       auto yogaSize =
           fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
@@ -574,9 +571,8 @@ Windows::Foundation::Size CompRootView::Arrange(Windows::Foundation::Size finalS
           static_cast<facebook::react::Float>(finalSize.Height);
       constraints.minimumSize.width = constraints.maximumSize.width =
           static_cast<facebook::react::Float>(finalSize.Width);
-      constraints.layoutDirection = FlowDirection() == xaml::FlowDirection::LeftToRight
-          ? facebook::react::LayoutDirection::LeftToRight
-          : facebook::react::LayoutDirection::RightToLeft;
+      // TODO get RTL
+      constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
 
       fabricuiManager->constraintSurfaceLayout(
           static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);

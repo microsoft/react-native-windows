@@ -4,6 +4,7 @@
     <ProjectGuid>{74085F13-2DDE-45E5-A0CA-927AC9D0B953}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
     <RootNamespace>FollyWin32</RootNamespace>
+    <UseFabric>true</UseFabric>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />

@@ -4,7 +4,6 @@
 #pragma once
 #include <IReactInstance.h>
 #include <JSValue.h>
-#include <ReactPointerEventArgs.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
@@ -34,7 +33,6 @@ class CompEventHandler {
   int64_t SendMessage(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta);
   void RemoveTouchHandlers();
-  winrt::Microsoft::ReactNative::BatchingEventEmitter &BatchingEmitter() noexcept;
 
  private:
   void ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam);
@@ -45,7 +43,6 @@ class CompEventHandler {
   enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
   static bool IsEndishEventType(TouchEventType eventType) noexcept;
   void DispatchTouchEvent(TouchEventType eventType, int64_t pointerId);
-  bool DispatchBackEvent();
 
   struct TagSet {
     std::unordered_set<int64_t> tags;
@@ -58,7 +55,6 @@ class CompEventHandler {
   winrt::Microsoft::ReactNative::CompRootView m_compRootView{nullptr};
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   bool m_fabric;
-  std::shared_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;
 };
 
 } // namespace Microsoft::ReactNative

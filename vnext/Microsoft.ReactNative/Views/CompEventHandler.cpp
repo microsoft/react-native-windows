@@ -12,7 +12,6 @@
 #include <react/renderer/components/view/TouchEventEmitter.h>
 #endif
 
-#include <Modules/NativeUIManager.h>
 #include <Utils/ValueUtils.h>
 
 #include <windows.h>
@@ -29,17 +28,28 @@
 
 namespace Microsoft::ReactNative {
 
-std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag);
-
-facebook::react::SharedEventEmitter EventEmitterForElement(
+facebook::react::SharedEventEmitter EventEmitterForComponent(
     std::shared_ptr<FabricUIManager> &uimanager,
-    facebook::react::Tag tag) noexcept;
+    facebook::react::Tag tag) noexcept {
+  auto &registry = uimanager->GetViewRegistry();
 
+  auto descriptor = registry.componentViewDescriptorWithTag(tag);
+  auto view = std::static_pointer_cast<CompBaseComponentView>(descriptor.view);
+  auto emitter = view->GetEventEmitter();
+  if (emitter)
+    return emitter;
+
+  for (IComponentView *it = view->parent(); it; it = it->parent()) {
+    auto emitter = static_cast<CompBaseComponentView *>(it)->GetEventEmitter();
+    if (emitter)
+      return emitter;
+  }
+
+  return nullptr;
+}
 CompEventHandler::CompEventHandler(const Mso::React::IReactContext &context, bool fabric)
     : m_context(&context),
-      m_fabric(fabric),
-      m_batchingEventEmitter{
-          std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
+      m_fabric(fabric) {}
 
 CompEventHandler::CompEventHandler(
     const Mso::React::IReactContext &context,
@@ -50,10 +60,6 @@ CompEventHandler::CompEventHandler(
 };
 
 CompEventHandler::~CompEventHandler() {}
-
-winrt::Microsoft::ReactNative::BatchingEventEmitter &CompEventHandler::BatchingEmitter() noexcept {
-  return *m_batchingEventEmitter;
-}
 
 // For DM
 /*
@@ -367,7 +373,7 @@ void CompEventHandler::DispatchTouchEvent(TouchEventType eventType, int64_t poin
 
       auto emitter = std::static_pointer_cast<facebook::react::TouchEventEmitter>(
           std::const_pointer_cast<facebook::react::EventEmitter>(
-              EventEmitterForElement(fabricuiManager, pointer.target)));
+              EventEmitterForComponent(fabricuiManager, pointer.target)));
       emittersForIndex.push_back(emitter);
       if (emitter)
         uniqueEventEmitters.insert(emitter);
@@ -399,16 +405,6 @@ void CompEventHandler::DispatchTouchEvent(TouchEventType eventType, int64_t poin
       }
     }
   }
-}
-
-bool CompEventHandler::DispatchBackEvent() {
-  if (m_context->State() != Mso::React::ReactInstanceState::Loaded)
-    return false;
-
-  BatchingEmitter().EmitJSEvent(
-      L"RCTDeviceEventEmitter", L"emit", winrt::Microsoft::ReactNative::MakeJSValueArgWriter(L"hardwardBackPress"));
-
-  return true;
 }
 
 } // namespace Microsoft::ReactNative

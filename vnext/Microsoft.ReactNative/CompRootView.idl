@@ -37,8 +37,8 @@ namespace Microsoft.ReactNative
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Double ScaleFactor {get; set;};
 
-    Windows.Foundation.Size Measure(Windows.Foundation.Size availiableSize);
-    Windows.Foundation.Size Arrange(Windows.Foundation.Size availiableSize);
+    Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
+    Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);
 
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
 

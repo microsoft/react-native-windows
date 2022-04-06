@@ -97,7 +97,7 @@ void CompBaseComponentView::ensureBorderVisual() noexcept {
     Visual().Clip(Compositor().CreateGeometricClip(m_borderGeometry));
 
     auto containerChildren = Visual().as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
-    containerChildren.InsertAtTop(m_borderVisual);
+    containerChildren.InsertAtBottom(m_borderVisual);
   }
 }
 

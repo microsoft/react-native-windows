@@ -21,6 +21,7 @@
 #include <react/renderer/components/view/ViewShadowNode.h>
 #include "TextInput/WindowsTextInputShadowNode.h"
 
+#ifndef CORE_ABI
 #include "ActivityIndicatorComponentView.h"
 #include "ImageComponentView.h"
 #include "ParagraphComponentView.h"
@@ -28,15 +29,16 @@
 #include "SliderComponentView.h"
 #include "SwitchComponentView.h"
 #include "TextComponentView.h"
-#include "TextInput/CompWindowsTextInputComponentView.h"
 #include "ViewComponentView.h"
 #include "XamlView.h"
+#endif // CORE_ABI
 
 #include "CompHelpers.h"
 #include "CompImageComponentView.h"
 #include "CompParagraphComponentView.h"
 #include "CompScrollViewComponentView.h"
 #include "CompViewComponentView.h"
+#include "TextInput/CompWindowsTextInputComponentView.h"
 
 namespace Microsoft::ReactNative {
 
