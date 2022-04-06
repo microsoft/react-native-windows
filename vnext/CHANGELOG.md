@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Mar 2022 16:07:47 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Apr 2022 15:12:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0
+
+Mon, 04 Apr 2022 15:12:12 GMT
+
+### Patches
+
+- Integrate 0.68.0 (34109996+chiaramooney@users.noreply.github.com)
+- Promote 0.68 to latest (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.68.0
+- Bump @react-native-windows/virtualized-list to v0.68.0
+- Bump @react-native-windows/codegen to v0.68.0
+
+## 0.68.0-preview.8
+
+Mon, 28 Mar 2022 15:08:01 GMT
+
+### Changes
+
+- Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync (asklar@microsoft.com)
+- Enable version checks in IDL files (asklar@microsoft.com)
+
+## 0.68.0-preview.7
+
+Mon, 21 Mar 2022 15:08:45 GMT
+
+### Changes
+
+- Update WebView Pkg Dep Following Pkg Ref (34109996+chiaramooney@users.noreply.github.com)
+- Integrate 0.68.0-rc.2 (34109996+chiaramooney@users.noreply.github.com)
+- move some DLLs to delayload (asklar@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.68.0-preview.3
+
+## 0.68.0-preview.6
+
+Mon, 14 Mar 2022 15:07:44 GMT
+
+### Changes
+
+- Safe re-entrancy for EnsureHermesLoaded (tudor.mihai@microsoft.com)
+- Bump @react-native-windows/cli to v0.68.0-preview.6
 
 ## 0.68.0-preview.5
 

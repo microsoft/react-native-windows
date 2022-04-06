@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/package-utils",
-  "version": "0.68.0-preview.2",
+  "version": "0.68.0",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,8 +16,8 @@
     "directory": "packages/@react-native-windows/package-utils"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "0.68.0-preview.2",
-    "@react-native-windows/fs": "0.68.0-preview.2",
+    "@react-native-windows/find-repo-root": "0.68.0",
+    "@react-native-windows/fs": "0.68.0",
     "get-monorepo-packages": "^1.2.0",
     "lodash": "^4.17.15"
   },
@@ -33,11 +33,11 @@
     "typescript": "^4.4.4"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ]
   },
   "promoteRelease": true,

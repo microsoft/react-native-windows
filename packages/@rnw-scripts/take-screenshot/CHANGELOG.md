@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Mon, 14 Feb 2022 16:08:40 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Apr 2022 15:12:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.19
+
+Mon, 04 Apr 2022 15:12:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.68.0
 
 ## 1.0.19
 

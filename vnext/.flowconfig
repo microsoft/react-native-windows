@@ -59,6 +59,8 @@
 ; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/vnext/src/.*
 
+.*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
+
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
 

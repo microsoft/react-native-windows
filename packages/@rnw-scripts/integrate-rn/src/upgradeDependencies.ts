@@ -368,9 +368,19 @@ function ensureValidReactNativePeerDep(
     // Semver satisfaction logic for * is too strict, so we need to special
     // case it https://github.com/npm/node-semver/issues/130
     peerDep === '*' ||
-    (semver.prerelease(semver.minVersion(peerDep)!) === null &&
+    (semver.prerelease(newReactNativeVersion) === null &&
+      semver.prerelease(semver.minVersion(peerDep)!) === null &&
       semver.satisfies(newReactNativeVersion, peerDep))
   ) {
+    return;
+  }
+
+  // Prerelease builds can have breaking changes, requiring a strict peerDependency. Non-prerelease versions should have
+  // a loose peerDependency to allow in-place updates without warnings.
+  if (semver.prerelease(newReactNativeVersion) === null) {
+    pkg.peerDependencies['react-native'] = `^${semver.major(
+      newReactNativeVersion,
+    )}.${semver.minor(newReactNativeVersion)}.0`;
     return;
   }
 

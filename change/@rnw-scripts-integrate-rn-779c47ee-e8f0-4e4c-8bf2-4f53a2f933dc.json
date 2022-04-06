@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixup peerDependencies when going from preview to latest",
+  "packageName": "@rnw-scripts/integrate-rn",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
