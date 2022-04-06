@@ -69,13 +69,13 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
 
   HRESULT hr = asyncRequest.ErrorCode();
   if (FAILED(hr)) {
-    std::ostringstream sstream;
+    std::string error;
     if (hr == WININET_E_CANNOT_CONNECT) {
-      sstream << "A connection with the server " << url << " could not be established\n\nIs the packager running?";
+      error = fmt::format("A connection with the server {} could not be established.\n\nIs the packager running?", url);
     } else {
-      sstream << "Error " << std::hex << static_cast<int>(asyncRequest.ErrorCode()) << " downloading " << url;
+      error = fmt::format("Error 0x{:x} downloading {}.", static_cast<int>(asyncRequest.ErrorCode()), url);
     }
-    co_return std::make_pair(sstream.str(), false);
+    co_return std::make_pair(error, false);
   }
 
   winrt::Windows::Web::Http::HttpResponseMessage response = asyncRequest.GetResults();
@@ -88,15 +88,15 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
   uint32_t len = reader.UnconsumedBufferLength();
   std::string result;
   if (len > 0 || response.IsSuccessStatusCode()) {
-    std::vector<uint8_t> data;
+    std::string data;
     data.resize(len);
-    reader.ReadBytes(winrt::array_view(data.data(), data.data() + len));
-    data.resize(len);
-    result = std::string(data.begin(), data.end());
+    auto buf = reinterpret_cast<uint8_t *>(data.data());
+    static_assert(
+        sizeof(buf[0]) == sizeof(data[0]), "perf optimization relies on uint8_t and char being the same size");
+    reader.ReadBytes(winrt::array_view(buf, buf + len));
+    result = std::move(data);
   } else {
-    std::ostringstream sstream;
-    sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
-    result = sstream.str();
+    result = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
   }
 
   co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());

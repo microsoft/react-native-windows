@@ -1,6 +1,6 @@
 {
   "name": "react-native-platform-override",
-  "version": "1.6.7",
+  "version": "1.6.8",
   "description": "react-native-platform-override offers CLI tools to manage Javascript overrides in out-of-tree React Native platforms",
   "license": "MIT",
   "main": "./lib-commonjs/Api.js",
@@ -35,7 +35,7 @@
     "node-fetch": "^2.6.7",
     "ora": "^3.4.0",
     "semver": "^7.3.2",
-    "simple-git": "^1.131.0",
+    "simple-git": "^3.3.0",
     "source-map-support": "^0.5.19",
     "upath": "^1.2.0",
     "yargs": "^16.2.0"

@@ -2,6 +2,36 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Wed, 06 Apr 2022 05:09:24 GMT",
+      "tag": "@react-native-windows/automation_v0.1.65",
+      "version": "0.1.65",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.54",
+            "commit": "b3d9af79424dd0c03dca6bb48d31308e5bd60a9a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 05 Apr 2022 05:10:13 GMT",
+      "tag": "@react-native-windows/automation_v0.1.64",
+      "version": "0.1.64",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.53",
+            "commit": "02e23ab160f96d0960988a4d28e83f1e6ce3a0d3"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Apr 2022 05:09:58 GMT",
       "tag": "@react-native-windows/automation_v0.1.63",
       "version": "0.1.63",
