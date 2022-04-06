@@ -721,6 +721,11 @@ export default class Pressability {
     }
   }
 
+  // [Windows]
+  _isDefaultPressButton(button) {
+    return !button; // Treat 0 or undefined as default press
+  }
+
   /**
    * Performs a transition between touchable states and identify any activations
    * or deactivations (and callback invocations).
@@ -771,7 +776,10 @@ export default class Pressability {
       }
       const {onLongPress, onPress, android_disableSound} = this._config;
 
-      if (onPress != null && getTouchFromPressEvent(event).button === 0) {
+      if (
+        onPress != null &&
+        this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+      ) {
         const isPressCanceledByLongPress =
           onLongPress != null &&
           prevState === 'RESPONDER_ACTIVE_LONG_PRESS_IN' &&
@@ -800,7 +808,10 @@ export default class Pressability {
 
   _deactivate(event: PressEvent): void {
     const {onPressOut} = this._config;
-    if (onPressOut != null && getTouchFromPressEvent(event).button === 0) {
+    if (
+      onPressOut != null &&
+      this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+    ) {
       const minPressDuration = normalizeDelay(
         this._config.minPressDuration,
         0,

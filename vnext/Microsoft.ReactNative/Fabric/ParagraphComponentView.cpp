@@ -7,6 +7,7 @@
 #include "ParagraphComponentView.h"
 
 #include <UI.Xaml.Controls.h>
+#include <UI.Xaml.Documents.h>
 #include <Utils/ValueUtils.h>
 #include <dwrite.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
@@ -99,11 +100,41 @@ void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &oldState) noexcept {
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
 
-  // Only handle single/empty fragments right now -- ignore the other fragments
-  m_element.Text(
-      newState.getData().attributedString.getFragments().size()
-          ? Microsoft::Common::Unicode::Utf8ToUtf16(newState.getData().attributedString.getFragments()[0].string)
-          : L"");
+  m_element.Inlines().Clear();
+
+  for (auto fragment : newState.getData().attributedString.getFragments()) {
+    auto inlines = m_element.Inlines();
+
+    if (fragment.textAttributes.textDecorationLineType &&
+        (*(fragment.textAttributes.textDecorationLineType) == facebook::react::TextDecorationLineType::Underline ||
+         *(fragment.textAttributes.textDecorationLineType) ==
+             facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
+      auto underline = xaml::Documents::Underline();
+      inlines.Append(underline);
+      inlines = underline.Inlines();
+    }
+
+    if (fragment.textAttributes.fontStyle == facebook::react::FontStyle::Italic ||
+        fragment.textAttributes.fontStyle == facebook::react::FontStyle::Oblique) {
+      auto italic = xaml::Documents::Italic();
+      inlines.Append(italic);
+      inlines = italic.Inlines();
+    }
+
+    auto run = xaml::Documents::Run();
+    run.Text(winrt::to_hstring(fragment.string));
+    run.FontFamily(xaml::Media::FontFamily(
+        fragment.textAttributes.fontFamily.empty() ? L"Segoe UI"
+                                                   : winrt::to_hstring(fragment.textAttributes.fontFamily)));
+
+    run.FontWeight(
+        winrt::Windows::UI::Text::FontWeight{static_cast<uint16_t>(fragment.textAttributes.fontWeight.value_or(
+            static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR)))});
+
+    run.FontSize(fragment.textAttributes.fontSize);
+    run.Foreground(fragment.textAttributes.foregroundColor.AsWindowsBrush());
+    inlines.Append(run);
+  }
 }
 void ParagraphComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
