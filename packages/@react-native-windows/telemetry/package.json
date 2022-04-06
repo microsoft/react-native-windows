@@ -14,7 +14,7 @@
     "clean": "rnw-scripts clean",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
-    "test": "set RNW_CLI_TEST=true&& rnw-scripts test",
+    "test": "set RNW_CLI_TEST=true&&set APPLICATION_INSIGHTS_NO_STATSBEAT=true&& rnw-scripts test",
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
