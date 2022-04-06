@@ -343,7 +343,7 @@ const SingleSelectionItemComponent: React.FunctionComponent<ISelectionItemCompon
         accessibilityPositionInSet={props.position}
         accessibilitySetSize={props.size}
         accessibilityActions={[{ name: 'Select' }]}
-        accessibilityRole="tab"
+        accessibilityRole="listitem"
         accessibilityState={{selected: props.isSelected}}
         onFocus={() => {setHasFocus(true)}}
         onBlur={() => {setHasFocus(false)}}
@@ -358,21 +358,21 @@ const SingleSelectionItemComponent: React.FunctionComponent<ISelectionItemCompon
 
 };
 
-const AccessibilityControlsExample: React.FunctionComponent = props => {
+const AccessibilityControlsExample: React.FunctionComponent = _props => {
   const listLength = 3;
   const controlsRef = React.useRef<ViewWin32>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [keyTargetHasFocus, setKeyTargetHasFocus] = React.useState(false);
   return (
     <View>      
-      <ViewWin32 accessible accessibilityRole="tablist" ref={controlsRef}>
+      <ViewWin32 accessible accessibilityRole="list" ref={controlsRef}>
       <SingleSelectionItemComponent
             value={"Joshua Jones"}
             color="#aee8fcff"
             level={1}
             position={1}
             size={3}
-            isSelected={selectedIndex == 0 ? true : false}
+            isSelected={selectedIndex === 0 ? true : false}
           />
       <SingleSelectionItemComponent
           value={"Kriti ."}
@@ -380,7 +380,7 @@ const AccessibilityControlsExample: React.FunctionComponent = props => {
           level={1}
           position={2}
           size={3}
-          isSelected={selectedIndex == 1 ? true : false}
+          isSelected={selectedIndex === 1 ? true : false}
         />
       <SingleSelectionItemComponent
         value={"Moiz Ghadiyali"}
@@ -388,7 +388,7 @@ const AccessibilityControlsExample: React.FunctionComponent = props => {
         level={1}
         position={3}
         size={3}
-        isSelected={selectedIndex == 2 ? true : false}
+        isSelected={selectedIndex === 2 ? true : false}
       />
       </ViewWin32>
       
@@ -403,13 +403,13 @@ const AccessibilityControlsExample: React.FunctionComponent = props => {
         onFocus={() => {setKeyTargetHasFocus(true)}}
         onBlur={() => {setKeyTargetHasFocus(false)}}
         onKeyDown={(event) => {
-        if (event?.nativeEvent?.key == 'ArrowUp' || event?.nativeEvent?.key == 'ArrowDown')
+        if (event.nativeEvent.key === 'ArrowUp' || event.nativeEvent.key === 'ArrowDown')
         {
-          const indexChange = (event.nativeEvent.key == 'ArrowUp') ? -1 : 1;
+          const indexChange = (event.nativeEvent.key === 'ArrowUp') ? -1 : 1;
           
           setSelectedIndex(
               (
-                ((selectedIndex == 0) ? listLength : selectedIndex) + indexChange)
+                ((selectedIndex === 0) ? listLength : selectedIndex) + indexChange)
               % listLength);
         }
       }}>
