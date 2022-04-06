@@ -96,6 +96,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   bool EnableByteCodeCaching() noexcept;
   void EnableByteCodeCaching(bool value) noexcept;
 
+  bool EnableDefaultCrashHandler() noexcept;
+  void EnableDefaultCrashHandler(bool value) noexcept;
+
   //! Same as UseDeveloperSupport
   bool EnableDeveloperMenu() noexcept;
   void EnableDeveloperMenu(bool value) noexcept;
@@ -129,6 +132,9 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
 
   uint16_t SourceBundlePort() noexcept;
   void SourceBundlePort(uint16_t value) noexcept;
+
+  bool RequestInlineSourceMap() noexcept;
+  void RequestInlineSourceMap(bool value) noexcept;
 
   JSIEngine JSIEngineOverride() noexcept;
   void JSIEngineOverride(JSIEngine value) noexcept;
@@ -174,6 +180,7 @@ struct ReactInstanceSettings : ReactInstanceSettingsT<ReactInstanceSettings> {
   hstring m_sourceBundleHost{};
   hstring m_debuggerRuntimeName{};
   uint16_t m_sourceBundlePort{0};
+  bool m_requestInlineSourceMap{true};
   LogHandler m_nativeLogger{nullptr};
 
 #if USE_HERMES
@@ -306,6 +313,14 @@ inline uint16_t ReactInstanceSettings::SourceBundlePort() noexcept {
 
 inline void ReactInstanceSettings::SourceBundlePort(uint16_t value) noexcept {
   m_sourceBundlePort = value;
+}
+
+inline bool ReactInstanceSettings::RequestInlineSourceMap() noexcept {
+  return m_requestInlineSourceMap;
+}
+
+inline void ReactInstanceSettings::RequestInlineSourceMap(bool value) noexcept {
+  m_requestInlineSourceMap = value;
 }
 
 inline JSIEngine ReactInstanceSettings::JSIEngineOverride() noexcept {

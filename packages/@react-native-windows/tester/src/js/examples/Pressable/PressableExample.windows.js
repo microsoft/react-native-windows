@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -100,6 +100,10 @@ function PressableFeedbackEvents() {
           testID="pressable_feedback_events_button"
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
+          // [Windows
+          onHoverIn={() => appendEvent('hover in')}
+          onHoverOut={() => appendEvent('hover out')}
+          // Windows]
           onPress={() => appendEvent('press')}
           onPressIn={() => appendEvent('pressIn')}
           onPressOut={() => appendEvent('pressOut')}
@@ -168,6 +172,7 @@ function ForceTouchExample() {
           style={styles.wrapper}
           testID="pressable_3dtouch_button"
           onStartShouldSetResponder={() => true}
+          // $FlowFixMe[sketchy-null-number]
           onResponderMove={(event) => setForce(event.nativeEvent?.force || 1)}
           onResponderRelease={(event) => setForce(0)}>
           <Text style={styles.button}>Press Me</Text>

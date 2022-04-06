@@ -1,1 +1,0 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../HeartbeatFunction/index.ts"],"names":[],"mappings":";;AAEA,kBAAe,KAAK,EAAE,OAAgB,EAAE,EAAE;IACtC,OAAO,CAAC,GAAG,CAAC,aAAa,CAAC,CAAC;AAC/B,CAAC,CAAC","sourcesContent":["import { Context } from \"@azure/functions\"\n\nexport default async (context: Context) => {\n    context.log('Hello world');\n};\n"]}

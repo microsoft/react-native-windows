@@ -4,7 +4,6 @@
 #include <TestRunner.h>
 
 #include <CreateModules.h>
-#include <IUIManager.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
 #include <RuntimeOptions.h>
@@ -50,14 +49,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
          return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
        },
        nativeQueue},
-
-      {"WebSocketModule", []() -> unique_ptr<CxxModule> { return std::make_unique<WebSocketModule>(); }, nativeQueue},
-
-      {"Networking",
-       []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
-       nativeQueue},
-
-      {"Timing", [nativeQueue]() -> unique_ptr<CxxModule> { return CreateTimingModule(nativeQueue); }, nativeQueue},
 
       // Apparently mandatory for /IntegrationTests
       {TestAppStateModule::name,

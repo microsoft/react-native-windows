@@ -50,6 +50,12 @@ class TouchEventHandler {
   winrt::IInspectable m_exitedHandler;
   winrt::IInspectable m_movedHandler;
 
+#ifdef USE_WINUI3
+  using PointerDeviceType = winrt::Microsoft::UI::Input::PointerDeviceType;
+#else
+  using PointerDeviceType = winrt::Windows::Devices::Input::PointerDeviceType;
+#endif
+
   struct ReactPointer {
     int64_t target = 0;
     int64_t identifier = 0;
@@ -57,8 +63,7 @@ class TouchEventHandler {
     uint64_t timestamp = 0;
     winrt::Point positionRoot = {0, 0};
     winrt::Point positionView = {0, 0};
-    winrt::Windows::Devices::Input::PointerDeviceType deviceType{
-        winrt::Windows::Devices::Input::PointerDeviceType::Mouse};
+    PointerDeviceType deviceType{PointerDeviceType::Mouse};
     float pressure = 0;
     bool isLeftButton = false;
     bool isRightButton = false;
@@ -80,14 +85,16 @@ class TouchEventHandler {
       xaml::UIElement sourceElement,
       std::vector<int64_t> &&newViews);
 
+  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
 #ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
+  static bool IsEndishEventType(TouchEventType eventType) noexcept;
 #endif
-  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
   bool DispatchBackEvent();
-  const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
+  const char *GetPointerDeviceTypeName(PointerDeviceType deviceType) noexcept;
+
   winrt::Microsoft::ReactNative::PointerEventKind GetPointerEventKind(TouchEventType eventType) noexcept;
   const wchar_t *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 

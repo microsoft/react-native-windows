@@ -144,22 +144,6 @@
   <ImportGroup Label="ReactNativeWindowsPropertySheets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CSharpApp.props')" />
   </ImportGroup>
-  <Choose>
-    <When Condition="'$(UseWinUI3)'!='true'">
-      <ItemGroup>
-        <PackageReference Include="Microsoft.UI.Xaml" >
-          <Version>$(WinUI2xVersion)</Version>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="Microsoft.WinUI">
-          <Version>$(WinUI3Version)</Version>
-        </PackageReference>
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
   <ItemGroup>
   <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
@@ -168,7 +152,7 @@
       <Version>1.0.9</Version>
     </PackageReference>
     <PackageReference Include="ReactNative.Hermes.Windows">
-      <Version>0.10.0-ms.1</Version>
+      <Version>0.11.0-ms.2</Version>
     </PackageReference>
   </ItemGroup>
   <ImportGroup Label="ReactNativeWindowsTargets">

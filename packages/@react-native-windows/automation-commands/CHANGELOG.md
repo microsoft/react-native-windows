@@ -1,8 +1,380 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Tue, 28 Dec 2021 06:09:21 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Apr 2022 05:10:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.91
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.53
+
+## 0.0.90
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.52
+
+## 0.0.89
+
+Thu, 31 Mar 2022 05:10:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.51
+
+## 0.0.88
+
+Tue, 29 Mar 2022 05:09:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.50
+
+## 0.0.87
+
+Sat, 26 Mar 2022 05:09:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.49
+
+## 0.0.86
+
+Wed, 23 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.48
+
+## 0.0.85
+
+Tue, 22 Mar 2022 05:09:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.47
+
+## 0.0.84
+
+Fri, 18 Mar 2022 05:08:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.46
+
+## 0.0.83
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.45
+
+## 0.0.82
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.44
+
+## 0.0.81
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.43
+
+## 0.0.80
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.42
+
+## 0.0.79
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.41
+
+## 0.0.78
+
+Sun, 06 Mar 2022 06:08:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.40
+
+## 0.0.77
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.39
+
+## 0.0.76
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.38
+
+## 0.0.75
+
+Thu, 03 Mar 2022 06:09:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.37
+
+## 0.0.74
+
+Fri, 25 Feb 2022 23:53:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.36
+
+## 0.0.73
+
+Fri, 25 Feb 2022 06:07:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.35
+
+## 0.0.72
+
+Thu, 24 Feb 2022 06:07:47 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.34
+
+## 0.0.71
+
+Wed, 23 Feb 2022 06:07:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.33
+
+## 0.0.70
+
+Sat, 19 Feb 2022 06:07:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.32
+
+## 0.0.69
+
+Fri, 18 Feb 2022 06:07:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.31
+
+## 0.0.68
+
+Wed, 16 Feb 2022 19:51:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.30
+
+## 0.0.67
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.29
+
+## 0.0.66
+
+Sat, 12 Feb 2022 06:08:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.28
+
+## 0.0.65
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.27
+
+## 0.0.64
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.26
+
+## 0.0.63
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.1.25
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.62
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.24
+
+## 0.0.61
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.23
+
+## 0.0.60
+
+Sat, 05 Feb 2022 06:07:42 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.22
+
+## 0.0.59
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.21
+
+## 0.0.58
+
+Wed, 02 Feb 2022 06:08:39 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.20
+
+## 0.0.57
+
+Tue, 01 Feb 2022 06:07:59 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.19
+
+## 0.0.56
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.18
+
+## 0.0.55
+
+Thu, 27 Jan 2022 06:11:45 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.17
+
+## 0.0.54
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.16
+
+## 0.0.53
+
+Sat, 22 Jan 2022 06:10:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.15
+
+## 0.0.52
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.14
+
+## 0.0.51
+
+Fri, 14 Jan 2022 06:09:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.13
+
+## 0.0.50
+
+Tue, 11 Jan 2022 06:09:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.12
+
+## 0.0.49
+
+Sun, 09 Jan 2022 06:07:57 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.11
+
+## 0.0.48
+
+Sat, 08 Jan 2022 06:09:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.10
+
+## 0.0.47
+
+Fri, 07 Jan 2022 22:21:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.9
+
+## 0.0.46
+
+Thu, 06 Jan 2022 04:18:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.8
 
 ## 0.0.45
 

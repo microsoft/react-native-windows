@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -89,9 +89,12 @@ class IsIPhoneXExample extends React.Component<{...}> {
       <View>
         <Text>
           Is this an iPhone X:{' '}
-          {DeviceInfo.getConstants().isIPhoneX_deprecated
-            ? 'Yeah!'
-            : 'Nope. (Or `isIPhoneX_deprecated` was already removed.)'}
+          {
+            // $FlowFixMe[sketchy-null-bool]
+            DeviceInfo.getConstants().isIPhoneX_deprecated
+              ? 'Yeah!'
+              : 'Nope. (Or `isIPhoneX_deprecated` was already removed.)'
+          }
         </Text>
       </View>
     );

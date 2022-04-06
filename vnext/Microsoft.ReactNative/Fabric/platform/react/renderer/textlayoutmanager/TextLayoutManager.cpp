@@ -7,26 +7,22 @@
 
 #include "TextLayoutManager.h"
 
-#include <dwrite.h>
-
 #include <unicode.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 TextLayoutManager::~TextLayoutManager() {}
 
-// TODO: This is a placeholder implementation to get basic text rendering.  This should not be considered a real
-// implementation. It currently has various performance issues (like creating a new factory on every run), and only
-// handles single strings, and makes all kinds of assumptions around things like locale, font family etc. This whole
-// implementation will need to be replaced to get text rendering/layout to work properly.
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
   winrt::com_ptr<IDWriteFactory> spDWriteFactory;
-  DWriteCreateFactory(
-      DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(spDWriteFactory.put()));
+
+  if (!m_spDWriteFactory) {
+    DWriteCreateFactory(
+        DWRITE_FACTORY_TYPE_SHARED, __uuidof(IDWriteFactory), reinterpret_cast<IUnknown **>(m_spDWriteFactory.put()));
+  }
 
   for (auto &fragment : attributedStringBox.getValue().getFragments()) {
     DWRITE_FONT_STYLE style = DWRITE_FONT_STYLE_NORMAL;
@@ -36,41 +32,58 @@ TextMeasurement TextLayoutManager::measure(
       style = DWRITE_FONT_STYLE_OBLIQUE;
 
     winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-    spDWriteFactory->CreateTextFormat(
+    m_spDWriteFactory->CreateTextFormat(
         fragment.textAttributes.fontFamily.empty()
             ? L"Segoe UI"
             : Microsoft::Common::Unicode::Utf8ToUtf16(fragment.textAttributes.fontFamily).c_str(),
-        NULL, // Font collection (NULL sets it to use the system font collection).
+        nullptr, // Font collection (nullptr sets it to use the system font collection).
         static_cast<DWRITE_FONT_WEIGHT>(fragment.textAttributes.fontWeight.value_or(
             static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
         style,
         DWRITE_FONT_STRETCH_NORMAL,
-        fragment.textAttributes.fontSize,
+        fragment.textAttributes.fontSize * fragment.textAttributes.fontSizeMultiplier,
         L"en-us",
         spTextFormat.put());
 
     auto str = Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string);
 
     winrt::com_ptr<IDWriteTextLayout> spTextLayout;
-    spDWriteFactory->CreateTextLayout(
+    // TODO - For now assuming fragment.textAttributes.fontSizeMultiplier is the same as the pointScaleFactor
+    m_spDWriteFactory->CreateTextLayout(
         str.c_str(), // The string to be laid out and formatted.
         static_cast<UINT32>(str.length()), // The length of the string.
         spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-        layoutConstraints.maximumSize.width, // The width of the layout box.
-        layoutConstraints.maximumSize.height, // The height of the layout box.
+        layoutConstraints.maximumSize.width *
+            fragment.textAttributes.fontSizeMultiplier, // The width of the layout box.
+        layoutConstraints.maximumSize.height *
+            fragment.textAttributes.fontSizeMultiplier, // The height of the layout box.
         spTextLayout.put() // The IDWriteTextLayout interface pointer.
     );
 
     TextMeasurement tm;
-
     DWRITE_TEXT_METRICS dtm;
     spTextLayout->GetMetrics(&dtm);
-    tm.size = {dtm.width, dtm.height};
+    tm.size = {
+        dtm.width / fragment.textAttributes.fontSizeMultiplier,
+        dtm.height / fragment.textAttributes.fontSizeMultiplier};
     return tm;
   }
 
   return {};
 };
+
+/**
+ * Measures an AttributedString on the platform, as identified by some
+ * opaque cache ID.
+ */
+TextMeasurement TextLayoutManager::measureCachedSpannableById(
+    int64_t cacheId,
+    ParagraphAttributes const &paragraphAttributes,
+    LayoutConstraints layoutConstraints) const {
+  assert(false);
+  TextMeasurement tm;
+  return tm;
+}
 
 LinesMeasurements TextLayoutManager::measureLines(
     AttributedString attributedString,
@@ -86,5 +99,4 @@ void *TextLayoutManager::getNativeTextLayoutManager() const {
   return (void *)this;
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

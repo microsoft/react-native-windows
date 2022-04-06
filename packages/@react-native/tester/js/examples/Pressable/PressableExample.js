@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -166,6 +166,7 @@ function ForceTouchExample() {
           style={styles.wrapper}
           testID="pressable_3dtouch_button"
           onStartShouldSetResponder={() => true}
+          // $FlowFixMe[sketchy-null-number]
           onResponderMove={event => setForce(event.nativeEvent?.force || 1)}
           onResponderRelease={event => setForce(0)}>
           <Text style={styles.button}>Press Me</Text>

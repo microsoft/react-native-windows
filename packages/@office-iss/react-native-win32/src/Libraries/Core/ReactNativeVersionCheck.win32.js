@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -43,13 +43,13 @@ exports.checkVersions = function checkVersions(): void {
 function _formatVersion(
   version:
     | {major: number, minor: number, patch: number, prerelease: ?number}
+    | {major: number, minor: number, patch: number, prerelease: ?string}
     | $TEMPORARY$object<{
         major: number,
         minor: number,
         patch: number,
         prerelease: null,
-      }>
-    | {major: number, minor: number, patch: number, prerelease: ?string},
+      }>,
 ): string {
   return (
     `${version.major}.${version.minor}.${version.patch}` +

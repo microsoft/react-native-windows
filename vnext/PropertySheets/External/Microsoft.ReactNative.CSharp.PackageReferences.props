@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Only include Microsoft.ReactNative.* NuGet packages that C# (app and lib) projects need when using UseExperimentalNuget. -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ReactNative" Version="$(ReactNativeWindowsVersion)" />
+    <PackageReference Include="Microsoft.ReactNative.Managed" Version="$(ReactNativeWindowsVersion)" />
+  </ItemGroup>
+</Project>

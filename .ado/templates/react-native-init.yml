@@ -36,9 +36,12 @@ parameters:
   - name: buildEnvironment
     type: string
     default: PullRequest
-    values:
-      - PullRequest
-      - Continuous
+    values: 
+     - PullRequest 
+     - Continuous 
+  - name: useWinAppSDK
+    type: boolean
+    default: false
 
 steps:
   - powershell: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
@@ -74,6 +77,16 @@ steps:
           - platform: ${{ parameters.platform }}
             configuration: Release
 
+  - ${{ if eq(parameters.useWinAppSDK, true) }}:
+    - template: prep-and-pack-nuget.yml
+      parameters:
+        artifactName: ReactWindows
+        npmVersion: $(npmVersion)
+        packMicrosoftReactNativeWindowsAppSDK: true
+        slices: 
+          - platform: x64
+            configuration: Release
+
   - ${{ if eq(parameters.projectType, 'app') }}:
     - script: |
         npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
@@ -101,12 +114,16 @@ steps:
         npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }} --experimentalNuGetDependency true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
       displayName: Apply windows template (with nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.useNuget, false) }}:
     - script: |
         npx --yes react-native-windows-init@latest --verbose --version $(npmVersion) --overwrite --language ${{ parameters.language }} --projectType ${{ parameters.projectType }} ${{ parameters.additionalInitArguments }}
       displayName: Apply windows template (without nuget)
       workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - powershell: |

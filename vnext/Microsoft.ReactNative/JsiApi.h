@@ -58,16 +58,16 @@ struct RuntimeAccessor;
 
 struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiRuntime(
-      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+      std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> &&runtimeHolder,
       std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept;
   ~JsiRuntime() noexcept;
 
   static ReactNative::JsiRuntime FromRuntime(facebook::jsi::Runtime &runtime) noexcept;
   static ReactNative::JsiRuntime GetOrCreate(
-      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
       std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
   static ReactNative::JsiRuntime Create(
-      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
       std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
 
  public: // JsiRuntime
@@ -168,7 +168,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   void SetError(facebook::jsi::JSINativeException const &nativeException) noexcept;
 
  private:
-  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_runtimeHolder;
+  std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> m_runtimeHolder;
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
   RuntimeAccessor *m_runtimeAccessor{};
   std::mutex m_mutex;

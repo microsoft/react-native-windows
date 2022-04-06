@@ -8,4 +8,6 @@
  */
 
 require('source-map-support').install();
-require('./lib-commonjs/Cli');
+const cli = require('./lib-commonjs/Cli');
+
+cli.reactNativeWindowsInit();

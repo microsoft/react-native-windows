@@ -11,7 +11,7 @@ parameters:
 
   - name: versions
     type: object
-    default: [12, 14, 16]
+    default: [14, 16]
 
 jobs:
   - job: NodeTests

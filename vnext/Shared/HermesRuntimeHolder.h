@@ -12,9 +12,12 @@
 namespace facebook {
 namespace react {
 
-class HermesRuntimeHolder : public facebook::jsi::RuntimeHolderLazyInit {
+class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
  public:
   std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept override;
+  facebook::react::JSIEngineOverride getRuntimeType() noexcept override;
+
+  void crashHandler(int fileDescriptor) noexcept override;
 
   HermesRuntimeHolder(
       std::shared_ptr<facebook::react::DevSettings> devSettings,

@@ -1,8 +1,54 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Fri, 03 Dec 2021 06:12:10 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 05:09:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.35
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+
+## 0.0.0-canary.34
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Changes
+
+- Normalize package reference for WinUI between C# and C++ templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.33
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.0-canary.32
+
+Thu, 27 Jan 2022 06:11:44 GMT
+
+### Changes
+
+- exports getVersionOfNpmPackage for use in CLI (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.31
+
+Thu, 06 Jan 2022 04:18:32 GMT
+
+### Changes
+
+- Update when telemetry populates NPM package versions (jthysell@microsoft.com)
 
 ## 0.0.0-canary.30
 

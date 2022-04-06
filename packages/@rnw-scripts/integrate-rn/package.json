@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/integrate-rn",
-  "version": "1.1.2",
+  "version": "1.1.9",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,13 +19,13 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.27",
-    "@react-native-windows/fs": "^1.0.1",
-    "@react-native-windows/package-utils": "^0.0.0-canary.24",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.30",
+    "@react-native-windows/fs": "^0.0.0-canary.1",
+    "@react-native-windows/package-utils": "^0.0.0-canary.27",
     "async": "^3.2.0",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
-    "react-native-platform-override": "^1.6.2",
+    "react-native-platform-override": "^1.6.8",
     "semver": "^7.3.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
@@ -34,10 +34,10 @@
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
-    "@rnw-scripts/eslint-config": "1.1.10",
-    "@rnw-scripts/jest-unittest-config": "1.2.5",
-    "@rnw-scripts/just-task": "2.2.2",
-    "@rnw-scripts/ts-config": "2.0.1",
+    "@rnw-scripts/eslint-config": "1.1.11",
+    "@rnw-scripts/jest-unittest-config": "1.2.6",
+    "@rnw-scripts/just-task": "2.2.3",
+    "@rnw-scripts/ts-config": "2.0.2",
     "@types/async": "^3.2.5",
     "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.168",
@@ -56,8 +56,7 @@
     "bin.js",
     "lib-commonjs"
   ],
-  "windowsOnly": true,
   "engines": {
-    "node": ">= 12.0.0"
+    "node": ">= 14"
   }
 }

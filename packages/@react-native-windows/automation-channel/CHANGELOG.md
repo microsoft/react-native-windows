@@ -1,8 +1,387 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Tue, 28 Dec 2021 06:09:21 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Apr 2022 05:10:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.53
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.479
+
+## 0.1.52
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.478
+
+## 0.1.51
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Patches
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.477
+
+## 0.1.50
+
+Tue, 29 Mar 2022 05:09:50 GMT
+
+### Patches
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.476
+
+## 0.1.49
+
+Sat, 26 Mar 2022 05:09:10 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.475
+
+## 0.1.48
+
+Wed, 23 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.474
+
+## 0.1.47
+
+Tue, 22 Mar 2022 05:09:21 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.473
+
+## 0.1.46
+
+Fri, 18 Mar 2022 05:08:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.472
+
+## 0.1.45
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- integrates 2/27/22 (email not defined)
+- Bump react-native-windows to v0.0.0-canary.471
+
+## 0.1.44
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.470
+
+## 0.1.43
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.469
+
+## 0.1.42
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.468
+
+## 0.1.41
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.467
+
+## 0.1.40
+
+Sun, 06 Mar 2022 06:08:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.466
+
+## 0.1.39
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Patches
+
+- integrate 2/13/2022 Nightly RN Build (email not defined)
+- Bump react-native-windows to v0.0.0-canary.465
+
+## 0.1.38
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.464
+
+## 0.1.37
+
+Thu, 03 Mar 2022 06:09:12 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.463
+
+## 0.1.36
+
+Fri, 25 Feb 2022 23:53:36 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.462
+
+## 0.1.35
+
+Fri, 25 Feb 2022 06:07:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.461
+
+## 0.1.34
+
+Thu, 24 Feb 2022 06:07:47 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.460
+
+## 0.1.33
+
+Wed, 23 Feb 2022 06:07:37 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.459
+
+## 0.1.32
+
+Sat, 19 Feb 2022 06:07:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.458
+
+## 0.1.31
+
+Fri, 18 Feb 2022 06:07:44 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.457
+
+## 0.1.30
+
+Wed, 16 Feb 2022 19:51:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.456
+
+## 0.1.29
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.455
+
+## 0.1.28
+
+Sat, 12 Feb 2022 06:08:37 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.454
+
+## 0.1.27
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.453
+
+## 0.1.26
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.452
+
+## 0.1.25
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+- Bump react-native-windows to v0.0.0-canary.451
+
+## 0.1.24
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.450
+
+## 0.1.23
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.449
+
+## 0.1.22
+
+Sat, 05 Feb 2022 06:07:42 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.448
+
+## 0.1.21
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Patches
+
+- Intg 1/27 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.447
+
+## 0.1.20
+
+Wed, 02 Feb 2022 06:08:39 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.446
+
+## 0.1.19
+
+Tue, 01 Feb 2022 06:07:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.445
+
+## 0.1.18
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.444
+
+## 0.1.17
+
+Thu, 27 Jan 2022 06:11:45 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.443
+
+## 0.1.16
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.442
+
+## 0.1.15
+
+Sat, 22 Jan 2022 06:10:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.441
+
+## 0.1.14
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.440
+
+## 0.1.13
+
+Fri, 14 Jan 2022 06:09:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.439
+
+## 0.1.12
+
+Tue, 11 Jan 2022 06:09:10 GMT
+
+### Patches
+
+- Integrate 1/7 Nightly Build (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.438
+
+## 0.1.11
+
+Sun, 09 Jan 2022 06:07:57 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.437
+
+## 0.1.10
+
+Sat, 08 Jan 2022 06:09:24 GMT
+
+### Patches
+
+- Integrate 12/7 Nightly Build (ngerlem@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.436
+
+## 0.1.9
+
+Fri, 07 Jan 2022 22:21:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.435
+
+## 0.1.8
+
+Thu, 06 Jan 2022 04:18:33 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.434
 
 ## 0.1.7
 

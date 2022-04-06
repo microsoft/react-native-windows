@@ -151,6 +151,11 @@ namespace Microsoft.ReactNative
     DOC_DEFAULT("false")
     Boolean EnableByteCodeCaching { get; set; };
 
+    DOC_STRING(
+      "Enables the default unhandled exception handler that logs additional information into a text file for [Windows Error Reporting](https://docs.microsoft.com/windows/win32/wer/windows-error-reporting).")
+    DOC_DEFAULT("false")
+    Boolean EnableDefaultCrashHandler { get; set; };
+
     // Deprecated
     [deprecated(
       "This property has been replaced by @.UseDeveloperSupport. "
@@ -204,16 +209,22 @@ namespace Microsoft.ReactNative
     IReactDispatcher UIDispatcher { get; set; };
 
     DOC_STRING(
-      "When using a @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server hostname "
+      "When using @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server hostname "
       "that will be used to load the bundle from.")
     DOC_DEFAULT("localhost")
     String SourceBundleHost { get; set; };
 
     DOC_STRING(
-      "When using a @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server port "
+      "When using @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this is the server port "
       "that will be used to load the bundle from.")
     DOC_DEFAULT("8081")
     UInt16 SourceBundlePort { get; set; };
+
+    DOC_STRING(
+      "When using @.UseFastRefresh, @.UseLiveReload, or @.UseWebDebugger this controls whether the bundler should include inline source maps."
+      "If set, the bundler will include the source maps inline (this will improve debugging experience, but for very large bundles it could have a significant performance hit)")
+    DOC_DEFAULT("true")
+    Boolean RequestInlineSourceMap { get; set; };
 
     DOC_STRING(
       "The @JSIEngine override to be used with the React instance.\n"

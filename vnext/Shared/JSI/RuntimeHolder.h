@@ -3,8 +3,9 @@
 #include <jsi/jsi.h>
 #include <memory>
 
-namespace facebook {
-namespace jsi {
+#include <DevSettings.h>
+
+namespace Microsoft::JSI {
 
 // An instance of this interface is expected to
 // a. lazily create a JSI Runtime on the first call to getRuntime
@@ -15,7 +16,11 @@ namespace jsi {
 
 struct RuntimeHolderLazyInit {
   virtual std::shared_ptr<facebook::jsi::Runtime> getRuntime() noexcept = 0;
+  virtual facebook::react::JSIEngineOverride getRuntimeType() noexcept = 0;
+
+  // You can call this when a crash happens to attempt recording additional data
+  // The fd supplied is a raw file stream an implementation might write JSON to
+  virtual void crashHandler(int fileDescriptor) noexcept {};
 };
 
-} // namespace jsi
-} // namespace facebook
+} // namespace Microsoft::JSI

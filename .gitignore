@@ -125,6 +125,8 @@ packages/
 *project.lock.json
 jsconfig.json
 package-lock.json
+*.metaproj
+*.metaproj.tmp
 
 # VS Code
 .vscode/*
@@ -174,5 +176,6 @@ nul
 .verdaccio-db.json
 
 # Graveyard of old packages (whose build-outputs may exist on disk after pull)
+/packages/@rnw-bots/*
 /packages/jest-environment-winappdriver/*
 /packages/node-rnw-rpc/*

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Fri, 03 Dec 2021 06:12:11 GMT and should not be manually modified.
+This log was last generated on Wed, 09 Feb 2022 06:09:37 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.11
+
+Wed, 09 Feb 2022 06:09:37 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
 
 ## 1.1.10
 

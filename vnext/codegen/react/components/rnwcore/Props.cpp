@@ -133,22 +133,9 @@ SafeAreaViewProps::SafeAreaViewProps(
 AndroidHorizontalScrollContentViewProps::AndroidHorizontalScrollContentViewProps(
     const PropsParserContext &context,
     const AndroidHorizontalScrollContentViewProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
-
-    
-      {}
-RCTSegmentedControlProps::RCTSegmentedControlProps(
-    const PropsParserContext &context,
-    const RCTSegmentedControlProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    values(convertRawProp(context, rawProps, "values", sourceProps.values, {})),
-    selectedIndex(convertRawProp(context, rawProps, "selectedIndex", sourceProps.selectedIndex, {0})),
-    enabled(convertRawProp(context, rawProps, "enabled", sourceProps.enabled, {true})),
-    tintColor(convertRawProp(context, rawProps, "tintColor", sourceProps.tintColor, {})),
-    textColor(convertRawProp(context, rawProps, "textColor", sourceProps.textColor, {})),
-    backgroundColor(convertRawProp(context, rawProps, "backgroundColor", sourceProps.backgroundColor, {})),
-    momentary(convertRawProp(context, rawProps, "momentary", sourceProps.momentary, {false}))
+    removeClippedSubviews(convertRawProp(context, rawProps, "removeClippedSubviews", sourceProps.removeClippedSubviews, {false}))
       {}
 SliderProps::SliderProps(
     const PropsParserContext &context,

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Perf] avoid copying the JS bundle string",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

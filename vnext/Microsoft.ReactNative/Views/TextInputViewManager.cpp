@@ -461,6 +461,7 @@ void TextInputShadowNode::setPasswordBoxPlaceholderForeground(
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForeground"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundFocused"), winrt::box_value(solidColorBrush));
   defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundPointerOver"), winrt::box_value(solidColorBrush));
+  defaultRD.Insert(winrt::box_value(L"TextControlPlaceholderForegroundDisabled"), winrt::box_value(solidColorBrush));
   auto passwordBoxResource = xaml::ResourceDictionary();
   auto themeDictionaries = passwordBoxResource.ThemeDictionaries();
   themeDictionaries.Insert(winrt::box_value(L"Default"), defaultRD);
@@ -475,16 +476,20 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
   auto passwordBox = control.try_as<xaml::Controls::PasswordBox>();
   auto hasKeyDownEvents = false;
 
+  auto markDirty = false;
   for (auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
 
     // Applicable properties for both TextBox and PasswordBox
     if (TryUpdateFontProperties(control, propertyName, propertyValue)) {
+      markDirty = true;
       continue;
     } else if (TryUpdateCharacterSpacing(control, propertyName, propertyValue)) {
+      markDirty = true;
       continue;
     } else if (propertyName == "allowFontScaling") {
+      markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         control.IsTextScaleFactorEnabled(propertyValue.AsBoolean());
       else if (propertyValue.IsNull())
@@ -509,6 +514,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         HideCaretIfNeeded();
       }
     } else if (propertyName == "secureTextEntry") {
+      markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         if (propertyValue.AsBoolean()) {
           if (m_isTextBox) {
@@ -537,6 +543,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         }
       }
     } else if (propertyName == "maxLength") {
+      markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
           propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
         control.SetValue(
@@ -608,22 +615,25 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
     } else if (propertyName == "autoFocus") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         m_autoFocus = propertyValue.AsBoolean();
+    } else if (propertyName == "editable") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        m_isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean()) : passwordBox.IsEnabled(propertyValue.AsBoolean());
+      } else if (propertyValue.IsNull()) {
+        m_isTextBox ? textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty())
+                    : passwordBox.ClearValue(xaml::Controls::Control::IsEnabledProperty());
+      }
     } else {
       if (m_isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
           continue;
         } else if (propertyName == "multiline") {
+          markDirty = true;
           if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
             const bool isMultiline = propertyValue.AsBoolean();
             textBox.TextWrapping(isMultiline ? xaml::TextWrapping::Wrap : xaml::TextWrapping::NoWrap);
             textBox.AcceptsReturn(isMultiline);
           } else if (propertyValue.IsNull())
             textBox.ClearValue(xaml::Controls::TextBox::TextWrappingProperty());
-        } else if (propertyName == "editable") {
-          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
-            textBox.IsReadOnly(!propertyValue.AsBoolean());
-          else if (propertyValue.IsNull())
-            textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty());
         } else if (propertyName == "scrollEnabled") {
           if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean &&
               textBox.TextWrapping() == xaml::TextWrapping::Wrap) {
@@ -643,6 +653,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
           else if (propertyValue.IsNull())
             textBox.ClearValue(xaml::Controls::TextBox::IsSpellCheckEnabledProperty());
         } else if (propertyName == "text") {
+          markDirty = true;
           SetText(propertyValue);
         } else if (propertyName == "autoCapitalize") {
           if (textBox.try_as<xaml::Controls::ITextBox6>()) {
@@ -659,10 +670,15 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         }
       } else { // Applicable properties for PasswordBox
         if (propertyName == "text" && !m_isTextBox) {
+          markDirty = true;
           SetText(propertyValue);
         }
       }
     }
+  }
+
+  if (markDirty) {
+    GetViewManager()->MarkDirty(m_tag);
   }
 
   Super::updateProperties(props);
@@ -744,7 +760,7 @@ void TextInputShadowNode::dispatchCommand(
 TextInputViewManager::TextInputViewManager(const Mso::React::IReactContext &context) : Super(context) {}
 
 const wchar_t *TextInputViewManager::GetName() const {
-  return L"RCTTextInput";
+  return L"WindowsTextInput";
 }
 
 void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
@@ -871,6 +887,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::TextBox::SelectionHighlightColorProperty(),
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::PasswordBox>().Password(oldView.as<xaml::Controls::TextBox>().Text());
+      newView.as<xaml::Controls::PasswordBox>().IsEnabled(!oldView.as<xaml::Controls::TextBox>().IsReadOnly());
     } else {
       TransferProperty(
           oldView,
@@ -888,6 +905,7 @@ void TextInputViewManager::TransferProperties(const XamlView &oldView, const Xam
           xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
           xaml::Controls::TextBox::SelectionHighlightColorProperty());
       newView.as<xaml::Controls::TextBox>().Text(oldView.as<xaml::Controls::PasswordBox>().Password());
+      newView.as<xaml::Controls::TextBox>().IsReadOnly(!oldView.as<xaml::Controls::PasswordBox>().IsEnabled());
     }
 
     TransferInputScope(oldView, newView, copyToPasswordBox);

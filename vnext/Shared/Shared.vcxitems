@@ -46,6 +46,7 @@
       <ExcludedFromBuild Condition="'$(ApplicationType)' == ''">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\PlatformConstantsModule.cpp" />
@@ -61,9 +62,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)tracing\tracing.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Utils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinRTHttpResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +86,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
@@ -102,7 +106,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IReactRootView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)IUIManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IWebSocketResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSBigAbiString.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h" />
@@ -130,8 +133,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleRegistry.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\CppWinrtLessExceptions.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)WinRTHttpResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
