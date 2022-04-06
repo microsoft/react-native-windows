@@ -511,9 +511,9 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 #else
       std::string bundlePath;
       if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
-        bundlePath = winrt::Windows::Foundation::Uri(
-                         winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath))
-                         .ToString();
+        auto uri = winrt::Windows::Foundation::Uri(
+            winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
+        bundlePath = winrt::to_string(uri.ToString());
       } else {
         bundlePath = (fs::path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
       }
