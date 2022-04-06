@@ -474,12 +474,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
   {
     ServerParams serverArgs(5568);
-    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
-    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
-    serverArgs.Response.result(http::status::accepted);
-    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
-    //TODO: Use send to redirect server (... after implementing it!)
+    serverArgs.Preflight.set(http::field::location,                         "http://localhost:5569");
+    serverArgs.Preflight.result(http::status::moved_permanently);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
     clientArgs.WithCredentials = false;
