@@ -308,6 +308,8 @@ OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpF
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
     : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {
+
+  // Manually validate redirections (preflight redirections are not allowed)
   m_innerFilter.as<winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter>().AllowAutoRedirect(false);
 }
 

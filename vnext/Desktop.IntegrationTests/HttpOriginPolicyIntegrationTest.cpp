@@ -31,6 +31,8 @@ namespace Microsoft::React::Test {
 
 TEST_CLASS(HttpOriginPolicyIntegrationTest)
 {
+  static uint16_t s_port;
+
   struct ServerParams
   {
     uint16_t Port;
@@ -156,11 +158,15 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   {
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", nullptr);
+
+    // Bug in HttpServer does not correctly release TCP port between test methods.
+    // Using a different por per test for now.
+    s_port++;
   }
 
   TEST_METHOD(FullCorsPreflightSucceeds)
   {
-    ServerParams serverArgs(5555);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_request_headers, "ArbitraryHeader");
     serverArgs.Preflight.set(http::field::access_control_allow_headers,   "ArbitraryHeader");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,    s_crossOriginUrl);
@@ -258,7 +264,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsForbiddenMethodFails)
   {
-    ServerParams serverArgs(5557);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_allow_origin, serverArgs.Url);
 
     ClientParams clientArgs(http::verb::connect, {{"Content-Type", "text/plain"}});
@@ -277,7 +283,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
-    ServerParams serverArgs(5558);
+    ServerParams serverArgs(s_port);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
 
@@ -293,7 +299,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
-    ServerParams serverArgs(5559);
+    ServerParams serverArgs(s_port);
 
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
@@ -309,7 +315,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsSameOriginSucceededs)
   {
-    ServerParams serverArgs(5560);
+    ServerParams serverArgs(s_port);
 
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
@@ -322,7 +328,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsCrossOriginFetchFails)
   {
-    ServerParams serverArgs(5561);
+    ServerParams serverArgs(s_port);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/html" }});  // text/html is a non-simple value
 
@@ -335,7 +341,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsSameOriginRequestSucceeds)
   {
-    ServerParams serverArgs(5562);
+    ServerParams serverArgs(s_port);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
@@ -348,7 +354,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginAllowOriginWildcardSucceeds)
   {
-    ServerParams serverArgs(5563);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      "*");
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
@@ -371,7 +377,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginMatchingOriginSucceeds)
   {
-    ServerParams serverArgs(5564);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
@@ -391,7 +397,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsFails)
   {
-    ServerParams serverArgs(5565);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
@@ -415,7 +421,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
   {
-    ServerParams serverArgs(5566);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
@@ -436,7 +442,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginMissingCorsHeadersFails)
   {
-    ServerParams serverArgs(5567);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.erase(http::field::access_control_allow_methods);
     serverArgs.Preflight.result(http::status::not_implemented);
 
@@ -453,7 +459,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginMismatchedCorsHeaderFails)
   {
-    ServerParams serverArgs(5568);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
@@ -469,13 +475,14 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// FullCorsCrossOriginMismatchedCorsHeaderFails
 
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSExternalRedirectNotAllowed
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
   {
-    ServerParams serverArgs(5569);
+    ServerParams serverArgs(s_port);
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
-    serverArgs.Preflight.set(http::field::location,                         "http://localhost:5570");
+    serverArgs.Preflight.set(http::field::location,                         "http://any-host.extension");
     serverArgs.Preflight.result(http::status::moved_permanently);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
@@ -485,7 +492,29 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// FullCorsCrossOriginCheckFailsOnPreflightRedirectFails
+
+  //FullCors_CorsCheckFailOnResponseRedirect_Failed
+
+  //BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCorsCheckFailsOnResponseRedirectFails)
+  //END_TEST_METHOD_ATTRIBUTE()
+  //TEST_METHOD(FullCorsCorsCheckFailsOnResponseRedirectFails)
+  //{
+  //  ServerParams serverArgs(5569);
+  //  serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+  //  serverArgs.Preflight.set(http::field::location,                         "http://localhost:5570");
+  //  serverArgs.Preflight.result(http::status::moved_permanently);
+
+  //  ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
+  //  clientArgs.WithCredentials = false;
+
+  //  Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+  //  Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+  //  TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
+  //}// FullCorsCorsCheckFailsOnResponseRedirectFails
+
 };
+
+uint16_t HttpOriginPolicyIntegrationTest::s_port = 5555;
 
 }//namespace
 // clang-format on
