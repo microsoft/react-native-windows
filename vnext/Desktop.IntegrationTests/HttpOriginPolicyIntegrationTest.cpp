@@ -473,9 +473,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginCheckFailsOnPreflightRedirectFails)
   {
-    ServerParams serverArgs(5568);
+    ServerParams serverArgs(5569);
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
-    serverArgs.Preflight.set(http::field::location,                         "http://localhost:5569");
+    serverArgs.Preflight.set(http::field::location,                         "http://localhost:5570");
     serverArgs.Preflight.result(http::status::moved_permanently);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
@@ -485,6 +485,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
   }// FullCorsCrossOriginCheckFailsOnPreflightRedirectFails
 };
 

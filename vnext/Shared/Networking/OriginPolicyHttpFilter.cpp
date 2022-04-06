@@ -307,7 +307,9 @@ OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpF
     : m_originPolicy{originPolicy}, m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
-    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
+    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {
+  m_innerFilter.as<winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter>().AllowAutoRedirect(false);
+}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
   switch (m_originPolicy) {
@@ -429,6 +431,18 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
 void OriginPolicyHttpFilter::ValidatePreflightResponse(
     HttpRequestMessage const &request,
     HttpResponseMessage const &response) const {
+  // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS/Errors/CORSExternalRedirectNotAllowed
+  using winrt::Windows::Web::Http::HttpStatusCode;
+  switch (response.StatusCode()) {
+    case HttpStatusCode::MovedPermanently:
+    case HttpStatusCode::TemporaryRedirect:
+    case HttpStatusCode::PermanentRedirect:
+      throw hresult_error{INET_E_REDIRECTING, L"Redirect is not allowed in a preflight request"};
+
+    default:
+      break;
+  }
+
   auto controlValues = ExtractAccessControlValues(response.Headers());
 
   auto iRequestArgs = request.Properties().Lookup(L"RequestArgs");
