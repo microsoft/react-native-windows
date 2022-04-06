@@ -99,7 +99,6 @@ static void GetAccessibilityValueProps(const winrt::Microsoft::ReactNative::IJSV
   writer.WriteObjectEnd();
 }
 
-
 inline float ToRadians(const winrt::Microsoft::ReactNative::JSValue &value) {
   if ((value.Type() == winrt::Microsoft::ReactNative::JSValueType::Double)) {
     return value.AsSingle();
@@ -108,8 +107,7 @@ inline float ToRadians(const winrt::Microsoft::ReactNative::JSValue &value) {
 
   auto stringValue = value.AsString();
   char *suffixStart;
-  double num = strtod(
-      stringValue.c_str(), &suffixStart);
+  double num = strtod(stringValue.c_str(), &suffixStart);
   if (0 == strncmp(suffixStart, "deg", 3)) {
     return static_cast<float>(num * M_PI / 180.0f);
   }
