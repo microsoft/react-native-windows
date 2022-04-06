@@ -21,36 +21,37 @@ std::string GetBundleFromEmbeddedResource(winrt::hstring str) {
   auto path = uri.Path();
   // skip past the leading / slash
   auto resourceName = path.c_str() + 1;
-  std::string script;
 
-  if (auto hmodule = GetModuleHandle(moduleName != L"" ? moduleName.c_str() : nullptr)) {
-    if (auto resource = FindResourceW(hmodule, resourceName, RT_RCDATA)) {
-      if (auto hglobal = LoadResource(hmodule, resource)) {
-        if (auto start = static_cast<char *>(LockResource(hglobal))) {
-          if (auto size = SizeofResource(hmodule, resource)) {
-            script = std::string(start, start + size);
-          } else {
-            throw std::invalid_argument(fmt::format(
-                "Couldn't get size of resource {} in module {}",
-                winrt::to_string(resourceName),
-                winrt::to_string(moduleName)));
-          }
-        } else {
-          throw std::invalid_argument(fmt::format(
-              "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
-        }
-      } else {
-        throw std::invalid_argument(fmt::format(
-            "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
-      }
-    } else {
-      throw std::invalid_argument(fmt::format(
-          "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
-    }
-  } else {
+  auto hmodule = GetModuleHandle(moduleName != L"" ? moduleName.c_str() : nullptr);
+  if (!hmodule) {
     throw std::invalid_argument(fmt::format("Couldn't find module {}", winrt::to_string(moduleName)));
   }
-  return script;
+
+  auto resource = FindResourceW(hmodule, resourceName, RT_RCDATA);
+  if (!resource) {
+    throw std::invalid_argument(fmt::format(
+        "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+  }
+
+  auto hglobal = LoadResource(hmodule, resource);
+  if (!hglobal) {
+    throw std::invalid_argument(fmt::format(
+        "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+  }
+
+  auto start = static_cast<char *>(LockResource(hglobal));
+  if (!start) {
+    throw std::invalid_argument(fmt::format(
+        "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+  }
+
+  auto size = SizeofResource(hmodule, resource);
+  if (!size) {
+    throw std::invalid_argument(fmt::format(
+        "Couldn't get size of resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
+  }
+
+  return std::string(start, start + size);
 }
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &bundleUri) {
