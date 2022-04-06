@@ -93,7 +93,7 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
-      "issue": 111
+      "issue": 9791
     },
     {
       "type": "patch",
