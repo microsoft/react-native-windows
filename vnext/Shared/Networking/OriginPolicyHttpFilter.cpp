@@ -384,7 +384,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
         E_INVALIDARG,
         L"Response header Access-Control-Allow-Origin has a value of [null] which differs from the supplied origin.\\n"};
 
-  bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iRequestArgs)->WithCredentials;
+  bool withCredentials = iRequestArgs.as<RequestArgs>()->WithCredentials;
   // 4.10.3 - valid wild card allow origin
   if (!withCredentials && L"*" == allowedOrigin)
     return;
@@ -453,7 +453,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 
   // Check if the request method is allowed
   // if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
-  bool withCredentials = winrt::get_self<RequestArgs, IInspectable>(iRequestArgs)->WithCredentials;
+  bool withCredentials = iRequestArgs.as<RequestArgs>()->WithCredentials;
   bool requestMethodAllowed = false;
   for (const auto &method : controlValues.AllowedMethods) {
     if (L"*" == method) {
@@ -604,8 +604,7 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + s_origin.SchemeName() + L"]"};
 
   if (!Microsoft_React_GetRuntimeOptionBool("Http.OmitCredentials")) {
-    auto concreteArgs = winrt::get_self<RequestArgs, IInspectable>(coRequest.Properties().Lookup(L"RequestArgs"));
-    concreteArgs->WithCredentials = false;
+    coRequest.Properties().Lookup(L"RequestArgs").as<RequestArgs>()->WithCredentials = false;
   }
 
   // Ensure absolute URL

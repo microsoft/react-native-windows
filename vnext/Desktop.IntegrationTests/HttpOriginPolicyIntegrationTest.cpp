@@ -481,8 +481,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
     clientArgs.WithCredentials = false;
 
-    //TODO: Implement redirection!
-
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);

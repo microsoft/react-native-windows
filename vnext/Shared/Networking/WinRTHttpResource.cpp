@@ -76,7 +76,7 @@ void WinRTHttpResource::SendRequest(
     HttpRequestMessage request{httpMethod, uri};
 
     auto args = winrt::make<RequestArgs>();
-    auto concreteArgs = winrt::get_self<RequestArgs, IInspectable>(args);
+    auto concreteArgs = args.as<RequestArgs>();
     concreteArgs->RequestId = requestId;
     concreteArgs->Headers = std::move(headers);
     concreteArgs->Body = std::move(bodyData);
@@ -159,7 +159,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   auto self = shared_from_this();
   auto coRequest = std::move(request);
   auto coArgs = args;
-  auto coReqArgs = winrt::get_self<RequestArgs, IInspectable>(coArgs);
+  auto coReqArgs = coArgs.as<RequestArgs>();
 
   // Ensure background thread
   co_await winrt::resume_background();
