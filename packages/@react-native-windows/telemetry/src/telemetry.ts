@@ -145,10 +145,7 @@ export class Telemetry {
 
   /** Sets up Telemetry.client. */
   private static setupClient() {
-    appInsights.Configuration.setInternalLogging(
-      Telemetry.isTest,
-      Telemetry.isTest,
-    );
+    appInsights.Configuration.setInternalLogging(false, false);
 
     Telemetry.client = new appInsights.TelemetryClient(
       Telemetry.options.setupString,
@@ -162,6 +159,8 @@ export class Telemetry {
     }
 
     Telemetry.client.config.disableAppInsights = Telemetry.isTest;
+    Telemetry.client.config.disableStatsbeat = true;
+    Telemetry.client.getStatsbeat()?.enable(false);
     Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
   }
 
