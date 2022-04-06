@@ -515,7 +515,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
             winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
         bundlePath = winrt::to_string(uri.ToString());
       } else {
-        bundlePath = (fs::path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
+        bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
       }
 
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
