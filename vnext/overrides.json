@@ -69,27 +69,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/JSCRuntime.cpp",
-      "baseFile": "ReactCommon/jsi/JSCRuntime.cpp",
-      "baseHash": "da73ed017a05d0fdc4302bd0794a343dc5ac935a",
-      "issue": 9703
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
-      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
-      "baseHash": "c93e4d10173716218503599610eb48f40bd2a47c",
-      "issue": 9703
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
-      "baseFile": "ReactCommon/jsi/jsi/jsi.h",
-      "baseHash": "0b364cdd3da5361d2016186a42e143428f88f406",
-      "issue": 9703
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "b07275d20e080b8c0be48de8bb698c0623290c56",

@@ -312,6 +312,12 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromString(const facebo
   return MakePointer<facebook::jsi::PropNameID>(propertyId);
 }
 
+facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) {
+  // Stub Function to match react-native: see #9703
+  UNREFERENCED_PARAMETER(sym);
+  throw;
+}
+
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
   return Common::Unicode::Utf16ToUtf8(GetPropertyNameFromId(GetJsRef(id)));
 }
