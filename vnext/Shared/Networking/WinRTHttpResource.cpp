@@ -326,7 +326,9 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   if (originPolicy == OriginPolicy::None) {
     return std::make_shared<WinRTHttpResource>();
   } else {
-    OriginPolicyHttpFilter::SetStaticOrigin(Microsoft_React_GetRuntimeOptionString("Http.GlobalOrigin"));
+    auto globalOrigin = Microsoft_React_GetRuntimeOptionString("Http.GlobalOrigin");
+    OriginPolicyHttpFilter::SetStaticOrigin(globalOrigin);
+    delete globalOrigin;
     auto opFilter = winrt::make<OriginPolicyHttpFilter>(originPolicy);
     auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
 

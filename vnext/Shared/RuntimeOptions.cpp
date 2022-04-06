@@ -99,8 +99,13 @@ const int32_t __cdecl Microsoft_React_GetRuntimeOptionInt(const char *name) noex
 const char *__cdecl Microsoft_React_GetRuntimeOptionString(const char *name) noexcept {
   lock_guard<mutex> guard{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionStrings.find(name);
-  if (itr != g_runtimeOptionStrings.cend())
-    return itr->second.c_str();
+  if (itr != g_runtimeOptionStrings.cend()) {
+    auto size = itr->second.size() * sizeof(char) + 1 /*NULL termination*/;
+    auto result = static_cast<char *>(malloc(size));
+    strncpy_s(result, size, itr->second.c_str(), itr->second.size());
+
+    return result;
+  }
 
   return nullptr;
 }
