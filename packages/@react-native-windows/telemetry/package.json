@@ -14,13 +14,13 @@
     "clean": "rnw-scripts clean",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
-    "test": "set RNW_CLI_TEST=true&& rnw-scripts test",
+    "test": "set RNW_CLI_TEST=true&&set APPLICATION_INSIGHTS_NO_STATSBEAT=true&& rnw-scripts test",
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
     "@react-native-windows/fs": "0.68.0",
     "@xmldom/xmldom": "^0.7.5",
-    "applicationinsights": "^2.1.5",
+    "applicationinsights": "^2.3.1",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",
     "lodash": "^4.17.21",
