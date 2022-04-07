@@ -2898,7 +2898,7 @@ appdirsjs@^1.2.4:
   resolved "https://registry.yarnpkg.com/appdirsjs/-/appdirsjs-1.2.4.tgz#3ab582acc9fdfaaa0c1f81b3a25422ad4d95f9d4"
   integrity sha512-WO5StDORR6JF/xYnXk/Fm0yu+iULaV5ULKuUw0Tu+jbgiTlSquaWBCgbpnsHLMXldf+fM3Gxn5p7vjond7He6w==
 
-applicationinsights@^2.1.5:
+applicationinsights@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/applicationinsights/-/applicationinsights-2.3.1.tgz#b6908ea2da67bf3dc781da9b0994e1e042ca8b91"
   integrity sha512-lhKd8EgmLKdDDhzB0jx8lcnbTAzedT63AH5DosnK4GQO3HgjRCC7AlUr86+aEwJEWfmfg0CxEdXDb9Rug/5XpQ==
