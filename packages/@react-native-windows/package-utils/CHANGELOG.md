@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-This log was last generated on Mon, 14 Feb 2022 16:08:40 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Apr 2022 15:12:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0
+
+Mon, 04 Apr 2022 15:12:11 GMT
+
+### Patches
+
+- Promote 0.68 to latest (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.68.0
+- Bump @react-native-windows/fs to v0.68.0
 
 ## 0.68.0-preview.2
 

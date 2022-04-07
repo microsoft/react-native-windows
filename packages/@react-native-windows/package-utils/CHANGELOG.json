@@ -2,6 +2,33 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Mon, 04 Apr 2022 15:12:11 GMT",
+      "tag": "@react-native-windows/package-utils_v0.68.0",
+      "version": "0.68.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "f5199ee384e936805081462ccb2205feb3f332ad",
+            "comment": "Promote 0.68 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.68.0",
+            "commit": "d32c32b9d4cfa48eed7941272af3e9da45c1d51c"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.68.0",
+            "commit": "d32c32b9d4cfa48eed7941272af3e9da45c1d51c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Feb 2022 16:08:40 GMT",
       "tag": "@react-native-windows/package-utils_v0.68.0-preview.2",
       "version": "0.68.0-preview.2",

@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 28 Mar 2022 15:08:01 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Apr 2022 15:12:12 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.0
+
+Mon, 04 Apr 2022 15:12:12 GMT
+
+### Patches
+
+- Integrate 0.68.0 (34109996+chiaramooney@users.noreply.github.com)
+- Promote 0.68 to latest (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.68.0
+- Bump @react-native-windows/virtualized-list to v0.68.0
+- Bump @react-native-windows/codegen to v0.68.0
 
 ## 0.68.0-preview.8
 
