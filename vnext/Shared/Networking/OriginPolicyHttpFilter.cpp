@@ -126,7 +126,8 @@ namespace Microsoft::React::Networking {
       return false;
 
     for (const auto &prefix : s_corsForbiddenRequestHeaderNamePrefixes) {
-      // TODO: If prefix matches header name, RETURN FALSE
+      if (boost::istarts_with(header.Key(), prefix))
+        return false;
     }
   }
 
@@ -490,7 +491,6 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   if (!requestHeadersAllowed) {
     // Forbidden headers are excluded from the JavaScript layer.
     // User agents may use these headers internally.
-    // TODO: CorsUnsafeNotForbiddenRequestHeaderNames(requestHeaders);
     const set unsafeNotForbidenHeaderNames = CorsUnsafeNotForbiddenRequestHeaderNames(request.Headers());
     for (const auto name : unsafeNotForbidenHeaderNames) {
       if (controlValues.AllowedHeaders.find(name) == controlValues.AllowedHeaders.cend())
@@ -512,8 +512,14 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
       m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     if (Microsoft_React_GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
         m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
-      //TODO: if (!NetworkingSecurity::IsOriginAllowed(m_securitySettings.origin, responseHeaders))
-      if (false) {
+      bool originAllowed = false;
+      for (const auto &header : response.Headers()) {
+        if (boost::iequals(header.Key(), L"Access-Control-Allow-Origin")) {
+          originAllowed |= L"*" == header.Value() || s_origin == Uri{header.Value()};
+        }
+      }
+
+      if (!originAllowed) {
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
       }
     } else {
