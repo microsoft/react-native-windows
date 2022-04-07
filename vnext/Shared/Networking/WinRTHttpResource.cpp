@@ -202,7 +202,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     auto stream = co_await file.OpenReadAsync();
     content = HttpStreamContent{stream};
   } else if (BodyData::Type::Form == coReqArgs->Body.Type) {
-    // TODO: Add support
+    // #9535 - HTTP form data support
   } else {
     // BodyData::Type::Empty
     // TODO: Error 'cause unsupported??
@@ -264,7 +264,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       }
     }
 
-    // TODO: Incremental updates?
+    // #9534 - Support HTTP incremental updates
     if (response && response.Content()) {
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
@@ -273,8 +273,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      // Only support response sizes up to 10MB.
-      // TODO: WHY????
+      // #9510 - 10mb limit on fetch
       co_await reader.LoadAsync(10 * 1024 * 1024);
       auto length = reader.UnconsumedBufferLength();
 
