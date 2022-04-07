@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "[0.68] Stop Telemetry background threads running after test completion",
   "packageName": "@react-native-windows/telemetry",
   "email": "jthysell@microsoft.com",
