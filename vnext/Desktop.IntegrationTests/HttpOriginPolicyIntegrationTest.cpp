@@ -69,10 +69,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     }
   };
 
-  void TestOriginPolicy(ServerParams& serverArgs, ClientParams& clientArgs, bool shouldSucceed)
+  std::shared_ptr<HttpServer> CreateServer(ServerParams& serverArgs, ClientParams& clientArgs) noexcept
   {
     auto server = make_shared<HttpServer>(serverArgs.Port);
-    server->Callbacks().OnOptions = [/*origin, */&serverArgs](const DynamicRequest& request) -> ResponseWrapper
+    server->Callbacks().OnOptions = [&serverArgs](const DynamicRequest& request) -> ResponseWrapper
     {
       return { std::move(serverArgs.Preflight) };
     };
@@ -108,6 +108,67 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       default:
 	    Assert::Fail(L"Unsupported request method");
     }
+
+    return server;
+  }
+
+  void TestOriginPolicy(ServerParams& server1Args, ServerParams& server2Args, ClientParams& clientArgs, bool shouldSucceed)
+  {
+    auto server1 = CreateServer(server1Args, clientArgs);
+    auto server2 = CreateServer(server2Args, clientArgs);
+
+    server1->Start();
+    server2->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&clientArgs](int64_t, IHttpResource::Response&& response)
+    {
+      clientArgs.Response = std::move(response);
+    });
+    resource->SetOnData([&clientArgs](int64_t, string&& content)
+    {
+        clientArgs.ResponseContent = std::move(content);
+        clientArgs.ContentPromise.set_value();
+    });
+    resource->SetOnError([&clientArgs](int64_t, string&& message)
+    {
+      clientArgs.ErrorMessage = std::move(message);
+      clientArgs.ContentPromise.set_value();
+    });
+
+    resource->SendRequest(
+      string{http::to_string(clientArgs.Method).data()},
+      string{server1Args.Url},
+      std::move(clientArgs.RequestHeaders),
+      { IHttpResource::BodyData::Type::String, "REQUEST_CONTENT" },
+      "text",
+      false,                      /*useIncrementalUpdates*/
+      1000,                       /*timeout*/
+      clientArgs.WithCredentials, /*withCredentials*/
+      [](int64_t){}               /*reactCallback*/
+    );
+
+    clientArgs.ContentPromise.get_future().wait();
+
+    server2->Stop();
+    server1->Stop();
+
+    if (shouldSucceed)
+    {
+      Assert::AreEqual({}, clientArgs.ErrorMessage);
+      //TODO: chose server?
+      Assert::AreEqual(server2Args.Response.result_int(), static_cast<unsigned int>(clientArgs.Response.StatusCode));
+      Assert::AreEqual({"RESPONSE_CONTENT"}, clientArgs.ResponseContent);
+    }
+    else
+    {
+      Assert::AreNotEqual({}, clientArgs.ErrorMessage);
+    }
+  }
+
+  void TestOriginPolicy(ServerParams& serverArgs, ClientParams& clientArgs, bool shouldSucceed)
+  {
+    auto server = CreateServer(serverArgs, clientArgs);
 
     server->Start();
 
@@ -508,21 +569,22 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     // This is a CORS request to server1, but server1 redirects the request to server2
     serverArgs.Response.result(http::status::moved_permanently);
     serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+    // Redir server's URL
     serverArgs.Response.set(http::field::location,                          "http://localhost:6666");
+    serverArgs.Response.set(http::field::server,                            "BaseServer");
 
     // Server2 does not set Access-Control-Allow-Origin for GET requests
-    //TODO: Set up "server 2"!!!
-    ServerParams server2Args(6666);
-    server2Args.Response.result(http::status::accepted);
-
+    ServerParams redirectServerArgs(6666);
+    redirectServerArgs.Response.result(http::status::accepted);
+    redirectServerArgs.Response.set(http::field::server,                    "RedirectServer");
+    
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
     clientArgs.WithCredentials = false;
 
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    //TODO: Write a multi-server test method?
-    TestOriginPolicy(serverArgs, clientArgs, false /*shouldSucceed*/);
+    TestOriginPolicy(serverArgs, redirectServerArgs, clientArgs, false /*shouldSucceed*/);
   }// FullCorsCorsCheckFailsOnResponseRedirectFails
 
 };

@@ -28,6 +28,7 @@ using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
 using winrt::Windows::Web::Http::HttpResponseMessage;
+using winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
 using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
 using winrt::Windows::Web::Http::Headers::HttpRequestHeaderCollection;
@@ -307,11 +308,7 @@ OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpF
     : m_originPolicy{originPolicy}, m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
-    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {
-
-  // Manually validate redirections (preflight redirections are not allowed)
-  m_innerFilter.as<winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter>().AllowAutoRedirect(false);
-}
+    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
   switch (m_originPolicy) {
@@ -333,7 +330,6 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
         // Same origin. Therefore, skip Cross-Origin handling.
         m_originPolicy = OriginPolicy::SameOrigin;
       else if (!IsSimpleCorsRequest(request))
-        // TODO: isRedirect?
         throw hresult_error{
             E_INVALIDARG,
             L"The request does not meet the requirements for Same-Origin policy or Simple Cross-Origin resource sharing"};
@@ -393,9 +389,9 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
 
   // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected
   // 4.10.4 - Mismatched allow origin
-  if (!IsSameOrigin(s_origin, Uri{allowedOrigin})) {
+  if (allowedOrigin.empty() || !IsSameOrigin(s_origin, Uri{allowedOrigin})) {
     hstring errorMessage;
-    if (allowedOrigin.size() == 0)
+    if (allowedOrigin.empty())
       errorMessage = L"No valid origin in response";
 
     // See https://fetch.spec.whatwg.org/#http-access-control-allow-origin.
@@ -510,28 +506,18 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 
 // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
 void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response) const {
-  /*
-    _Inout_ std::map<std::wstring, std::wstring>& responseHeaders,
-    NetworkingSecurityPolicy validatedSecurityPolicy,
-    const std::vector<std::wstring>& exposeHeaders,
-    bool withCredentials,
-    _Out_ std::string& errorText) noexcept
-  */
-
   bool removeAllCookies = false;
 
   if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     if (Microsoft_React_GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
         m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
-      // if (!NetworkingSecurity::IsOriginAllowed(m_securitySettings.origin, responseHeaders))
+      //TODO: if (!NetworkingSecurity::IsOriginAllowed(m_securitySettings.origin, responseHeaders))
       if (false) {
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
       }
     } else {
-      // if (!CheckAccess(responseHeaders, withCredentials, /*out*/ errorText)) => throw //TODO: REMOVE
       auto controlValues = ExtractAccessControlValues(response.Headers());
-
       auto iRequestArgs = response.RequestMessage().Properties().Lookup(L"RequestArgs");
       ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
     }
@@ -626,7 +612,17 @@ ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &
   try {
     // #9770 - Validate preflight cache
     if (m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+      // If inner filter can AllowRedirect, disable for preflight.
+      winrt::impl::com_ref<IHttpBaseProtocolFilter> baseFilter;
+      if (baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+        baseFilter.AllowAutoRedirect(false);
+      }
+
       auto preflightResponse = co_await SendPreflightAsync(coRequest);
+
+      if (baseFilter) {
+        baseFilter.AllowAutoRedirect(true);
+      }
 
       ValidatePreflightResponse(coRequest, preflightResponse);
     }
