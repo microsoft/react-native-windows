@@ -2,6 +2,120 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 04 Apr 2022 15:12:12 GMT",
+      "tag": "react-native-windows_v0.68.0",
+      "version": "0.68.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "133fd353a14c08706d71411191217786347bc10f",
+            "comment": "Integrate 0.68.0"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f5199ee384e936805081462ccb2205feb3f332ad",
+            "comment": "Promote 0.68 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.0",
+            "commit": "d32c32b9d4cfa48eed7941272af3e9da45c1d51c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0",
+            "commit": "d32c32b9d4cfa48eed7941272af3e9da45c1d51c"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.68.0",
+            "commit": "d32c32b9d4cfa48eed7941272af3e9da45c1d51c"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Mar 2022 15:08:01 GMT",
+      "tag": "react-native-windows_v0.68.0-preview.8",
+      "version": "0.68.0-preview.8",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "423d91443f86a3e4123fa8d53d0be536d8be2115",
+            "comment": "Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eada31cdfbae1ba5611e16c0c2fc487bc94f85dc",
+            "comment": "Enable version checks in IDL files"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 21 Mar 2022 15:08:45 GMT",
+      "tag": "react-native-windows_v0.68.0-preview.7",
+      "version": "0.68.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "eb3fa990ce4dda42db7451c4348dc8a8d7836c46",
+            "comment": "Update WebView Pkg Dep Following Pkg Ref"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "94d294948c06c235228acea8204620359da335fa",
+            "comment": "Integrate 0.68.0-rc.2"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439",
+            "comment": "move some DLLs to delayload"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.0-preview.3",
+            "commit": "43f8f593963a04cd69f2dee3d00f296d405ac439"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Mar 2022 15:07:44 GMT",
+      "tag": "react-native-windows_v0.68.0-preview.6",
+      "version": "0.68.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "09fa7051ab95b1ff704fcede5e0522ef53d7feb7",
+            "comment": "Safe re-entrancy for EnsureHermesLoaded"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.0-preview.6",
+            "commit": "09fa7051ab95b1ff704fcede5e0522ef53d7feb7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Mar 2022 16:07:47 GMT",
       "tag": "react-native-windows_v0.68.0-preview.5",
       "version": "0.68.0-preview.5",

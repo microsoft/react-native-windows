@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.68.0-preview.2",
+  "version": "0.68.0",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -22,10 +22,10 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^27.0.1",
-    "@react-native-community/cli": "^7.0.1",
+    "@react-native-community/cli": "^7.0.3",
     "@react-native-community/cli-platform-android": "^7.0.1",
     "@react-native-community/cli-platform-ios": "^7.0.1",
-    "@react-native-windows/virtualized-list": "0.68.0-preview.2",
+    "@react-native-windows/virtualized-list": "0.68.0",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -47,6 +47,7 @@
     "react-clone-referenced-element": "^1.0.1",
     "react-devtools-core": "^4.23.0",
     "react-native-codegen": "^0.0.13",
+    "react-native-gradle-plugin": "^0.0.5",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
     "regenerator-runtime": "^0.13.2",
@@ -71,21 +72,21 @@
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
     "react": "17.0.2",
-    "react-native": "0.68.0-rc.1",
+    "react-native": "^0.68.0",
     "react-native-platform-override": "^1.6.4",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"
   },
   "peerDependencies": {
     "react": "17.0.2",
-    "react-native": "0.68.0-rc.1"
+    "react-native": "^0.68.0"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ]
   },
   "promoteRelease": true,
