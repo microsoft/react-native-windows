@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 07 Apr 2022 05:09:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.481",
+      "version": "0.0.0-canary.481",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5061e5f30d857763aff0d9b5a03b43418d6ec35c",
+            "comment": "Fix Glog"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7cbb3fe78434c709e17483f0b4167ffbe77c2e31",
+            "comment": "Enable loading the bundle from an embedded resource via resource://moduleName/resourceId"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Apr 2022 05:09:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.480",
       "version": "0.0.0-canary.480",
