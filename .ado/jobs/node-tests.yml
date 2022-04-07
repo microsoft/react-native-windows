@@ -14,18 +14,18 @@ parameters:
     default: [14, 16]
 
 jobs:
-  - job: NodeTests
-    displayName: Node Tests
-    timeoutInMinutes: 20
-    variables: [template: ../variables/windows.yml]
-    pool: ${{ parameters.AgentPool.Medium }}
+  - ${{ each nodeVersion in parameters.versions }}:
+    - job: NodeTests${{ nodeVersion }}
+      displayName: Node Tests v${{ nodeVersion }}
+      timeoutInMinutes: 20
+      variables: [template: ../variables/windows.yml]
+      pool: ${{ parameters.AgentPool.Medium }}
 
-    steps:
-      - template: ../templates/checkout-shallow.yml
+      steps:
+        - template: ../templates/checkout-shallow.yml
 
-      - template: ../templates/prepare-js-env.yml
+        - template: ../templates/prepare-js-env.yml
 
-      - ${{ each nodeVersion in parameters.versions }}:
         - task: NodeTool@0
           displayName: Using Node ${{ nodeVersion }}.x
           inputs:
