@@ -160,7 +160,7 @@ export class Telemetry {
 
     Telemetry.client.config.disableAppInsights = Telemetry.isTest;
     Telemetry.client.config.disableStatsbeat = true;
-    Telemetry.client.getStatsbeat()?.enable(false);
+    Telemetry.client.getStatsbeat().enable(false);
     Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
   }
 
