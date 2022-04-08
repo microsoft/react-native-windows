@@ -31,14 +31,12 @@ void ParagraphComponentView::mountChildComponentView(
     uint32_t index) noexcept {
   auto v = static_cast<const ParagraphComponentView &>(childComponentView);
   assert(false);
-  // m_element.Children().InsertAt(index, v.Element());
 }
 
 void ParagraphComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
-  // m_element.Children().RemoveAt(index);
 }
 
 void ParagraphComponentView::updateProps(
@@ -102,7 +100,7 @@ void ParagraphComponentView::updateState(
 
   m_element.Inlines().Clear();
 
-  for (auto fragment : newState.getData().attributedString.getFragments()) {
+  for (const auto &fragment : newState.getData().attributedString.getFragments()) {
     auto inlines = m_element.Inlines();
 
     if (fragment.textAttributes.textDecorationLineType &&
@@ -149,9 +147,7 @@ void ParagraphComponentView::updateLayoutMetrics(
   m_element.Width(layoutMetrics.frame.size.width);
   m_element.Height(layoutMetrics.frame.size.height);
 }
-void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  // m_element.FinalizeProperties();
-}
+void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 void ParagraphComponentView::prepareForRecycle() noexcept {}
 facebook::react::SharedProps ParagraphComponentView::props() noexcept {
   assert(false);
