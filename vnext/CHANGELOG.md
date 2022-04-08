@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 07 Apr 2022 05:09:50 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Apr 2022 05:09:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.482
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Changes
+
+- Don't load XAML just to check if we are a XAML app (asklar@microsoft.com)
+- Fix deps script (asklar@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.123
 
 ## 0.0.0-canary.481
 

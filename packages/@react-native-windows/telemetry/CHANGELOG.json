@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 08 Apr 2022 05:09:52 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.36",
+      "version": "0.0.0-canary.36",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "b6f8fd9bcab4e7d53467e35d2bc6892aec004bd2",
+            "comment": "Stop Telemetry background threads running after test completion"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Apr 2022 05:09:57 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.35",
       "version": "0.0.0-canary.35",
