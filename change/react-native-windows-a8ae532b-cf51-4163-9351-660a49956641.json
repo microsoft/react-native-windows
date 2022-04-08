@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Don't load XAML just to check if we are a XAML app",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

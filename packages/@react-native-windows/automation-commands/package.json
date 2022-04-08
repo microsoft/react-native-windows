@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-commands",
-  "version": "0.0.93",
+  "version": "0.0.94",
   "description": "Allows controlling your react-native-windows application",
   "main": "lib-commonjs/index.js",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.1.55"
+    "@react-native-windows/automation-channel": "^0.1.56"
   },
   "devDependencies": {
     "@jest/types": "^26.6.2",
