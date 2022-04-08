@@ -11,8 +11,8 @@
 #include <unicode.h>
 #include <winrt/Windows.UI.h>
 #include "../CompHelpers.h"
-#include "WindowsTextInputShadowNode.h"
-#include "WindowsTextInputState.h"
+#include "CompWindowsTextInputShadowNode.h"
+#include "CompWindowsTextInputState.h"
 #include "guid/msoGuid.h"
 
 // convert a BSTR to a std::string.
@@ -456,7 +456,7 @@ facebook::react::AttributedString CompWindowsTextInputComponentView::getAttribut
 CompWindowsTextInputComponentView::CompWindowsTextInputComponentView(
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : m_context(reactContext) {
-  static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
+  static auto const defaultProps = std::make_shared<facebook::react::CompWindowsTextInputProps const>();
   m_props = defaultProps;
 
   /*
@@ -563,8 +563,8 @@ void CompWindowsTextInputComponentView::unmountChildComponentView(
 void CompWindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
-  const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(props);
+  const auto &oldTextInputProps = *std::static_pointer_cast<const facebook::react::CompWindowsTextInputProps>(m_props);
+  const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::CompWindowsTextInputProps>(props);
 
   ensureVisual();
 
@@ -680,7 +680,7 @@ void CompWindowsTextInputComponentView::updateProps(
 void CompWindowsTextInputComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  m_state = std::static_pointer_cast<facebook::react::WindowsTextInputShadowNode::ConcreteState const>(state);
+  m_state = std::static_pointer_cast<facebook::react::CompWindowsTextInputShadowNode::ConcreteState const>(state);
 
   if (!m_state) {
     assert(false && "State is `null` for <TextInput> component.");
@@ -794,8 +794,8 @@ void CompWindowsTextInputComponentView::OnTextUpdated() noexcept {
   m_state->updateState(std::move(data));
 
   if (m_eventEmitter && !m_comingFromJS) {
-    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-    facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
+    auto emitter = std::static_pointer_cast<const facebook::react::CompWindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::CompWindowsTextInputEventEmitter::OnChange onChangeArgs;
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
@@ -804,8 +804,8 @@ void CompWindowsTextInputComponentView::OnTextUpdated() noexcept {
 
 void CompWindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
   if (m_eventEmitter /* && !m_comingFromJS ?? */) {
-    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-    facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
+    auto emitter = std::static_pointer_cast<const facebook::react::CompWindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::CompWindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
     onSelectionChangeArgs.selection.start = start;
     onSelectionChangeArgs.selection.end = end;
     emitter->onSelectionChange(onSelectionChangeArgs);

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
-#include <Fabric/CompViewComponentView.h>
+#include <Fabric/WinComp/CompViewComponentView.h>
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
@@ -27,7 +27,6 @@
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
-#include <react/renderer/components/textinput/iostextinput/TextInputComponentDescriptor.h>
 #include <react/renderer/components/view/ViewComponentDescriptor.h>
 #include <react/renderer/core/EventBeat.h>
 #include <react/renderer/scheduler/Scheduler.h>
@@ -36,7 +35,7 @@
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
-#include "TextInput/WindowsTextInputComponentDescriptor.h"
+#include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentDescriptor.h>
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -184,11 +183,9 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
     providerRegistry->add(
-        facebook::react::concreteComponentDescriptorProvider<facebook::react::TextInputComponentDescriptor>());
-    providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
     providerRegistry->add(
-        facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::CompWindowsTextInputComponentDescriptor>());
     return providerRegistry;
   }();
 

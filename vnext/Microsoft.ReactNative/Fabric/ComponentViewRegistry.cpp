@@ -17,9 +17,9 @@
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
-#include <react/renderer/components/textinput/iostextinput/TextInputShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
-#include "TextInput/WindowsTextInputShadowNode.h"
+#include <Fabric/WinComp/TextInput/CompWindowsTextInputShadowNode.h>
+//#include "TextInput/WindowsTextInputShadowNode.h"
 
 #ifndef CORE_ABI
 #include "ActivityIndicatorComponentView.h"
@@ -34,12 +34,12 @@
 #include "XamlView.h"
 #endif // CORE_ABI
 
-#include "CompHelpers.h"
-#include "CompImageComponentView.h"
-#include "CompParagraphComponentView.h"
-#include "CompScrollViewComponentView.h"
-#include "CompViewComponentView.h"
-#include "TextInput/CompWindowsTextInputComponentView.h"
+#include <Fabric/WinComp/CompHelpers.h>
+#include <Fabric/WinComp/CompImageComponentView.h>
+#include <Fabric/WinComp/CompParagraphComponentView.h>
+#include <Fabric/WinComp/CompScrollViewComponentView.h>
+#include <Fabric/WinComp/CompViewComponentView.h>
+#include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentView.h>
 
 namespace Microsoft::ReactNative {
 
@@ -76,7 +76,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     // Just to keep track of what kinds of shadownodes we are being used verify we know about them here
     assert(
         componentHandle == facebook::react::RawTextShadowNode::Handle() ||
-        componentHandle == facebook::react::TextInputShadowNode::Handle() ||
+        componentHandle == facebook::react::WindowsTextInputShadowNode::Handle() ||
         componentHandle == facebook::react::RootShadowNode::Handle() ||
         componentHandle == facebook::react::ViewShadowNode::Handle());
 
@@ -94,7 +94,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<CompScrollViewComponentView>();
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
     view = std::make_shared<CompImageComponentView>(m_context);
-  } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
+  } else if (componentHandle == facebook::react::CompWindowsTextInputShadowNode::Handle()) {
     view = std::make_shared<CompWindowsTextInputComponentView>(m_context);
   } else {
     view = std::make_shared<CompViewComponentView>();

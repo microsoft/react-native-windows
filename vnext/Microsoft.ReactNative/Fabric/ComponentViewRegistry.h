@@ -8,7 +8,7 @@
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
-#include "CompHelpers.h"
+#include <Fabric/WinComp/CompHelpers.h>
 
 namespace Microsoft::ReactNative {
 

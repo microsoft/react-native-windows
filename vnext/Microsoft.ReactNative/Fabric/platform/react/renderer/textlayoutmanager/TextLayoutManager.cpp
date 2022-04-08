@@ -5,7 +5,7 @@
 
 #include "pch.h"
 
-#include <Fabric/CompHelpers.h>
+#include <Fabric/WinComp/CompHelpers.h>
 #include <dwrite.h>
 #include "TextLayoutManager.h"
 

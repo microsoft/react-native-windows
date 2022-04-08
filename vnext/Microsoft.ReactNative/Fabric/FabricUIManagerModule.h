@@ -7,7 +7,7 @@
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
 #include <winrt/Windows.UI.Composition.h>
-#include "CompHelpers.h"
+#include <Fabric/WinComp/CompHelpers.h>
 #include "ComponentViewRegistry.h"
 
 namespace facebook::react {

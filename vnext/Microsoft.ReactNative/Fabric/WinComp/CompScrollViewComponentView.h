@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "ComponentView.h"
+#include <Fabric/ComponentView.h>
 
 #include "CompViewComponentView.h"
 

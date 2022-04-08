@@ -6,7 +6,7 @@
 
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
-#include "ComponentView.h"
+#include <Fabric/ComponentView.h>
 
 namespace Microsoft::ReactNative {
 
