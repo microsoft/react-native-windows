@@ -7050,9 +7050,9 @@ jest-jasmine2@^26.6.3:
     throat "^5.0.0"
 
 jest-junit@^10.0.0, jest-junit@^13.0.0:
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-13.0.0.tgz#479be347457aad98ae8a5983a23d7c3ec526c9a3"
-  integrity sha512-JSHR+Dhb32FGJaiKkqsB7AR3OqWKtldLd6ZH2+FJ8D4tsweb8Id8zEVReU4+OlrRO1ZluqJLQEETm+Q6/KilBg==
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/jest-junit/-/jest-junit-13.1.0.tgz#c364b90b88ad2492dae4002f00c9fed75e0590c4"
+  integrity sha512-ECbhzEG3Oe2IH3Mnwcv2vAXM4qTbcObN/gTUzwKPlpaNsf2G/zlj/teEUqRGV17YQiQ4AqzTf3pCO7W59DKVIw==
   dependencies:
     mkdirp "^1.0.4"
     strip-ansi "^6.0.1"
@@ -7567,9 +7567,9 @@ jsprim@^1.2.2:
     yargs "^16.2.0"
 
 just-scripts@^1.3.2, just-scripts@^1.3.3:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.8.1.tgz#dd0f3fbc7c352ea5a45be3e539efa549958e9069"
-  integrity sha512-l7Pqieekd4ae+GkrloCanfZkLIxHMVEte9a+NRniZQXgpsjsKCG1VSE9jazDg1HN6MzT1x2E6NJhlqhf3sKrBQ==
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/just-scripts/-/just-scripts-1.8.2.tgz#4a3e402fab5eff0948a46b845aa721b04709d5d9"
+  integrity sha512-ZTaWL/r2hdswji60HFrOP3FrqUCXrIr5ElgXH3sr1cySamOeP1aWsvfKXssc7c2gAP8xi3S5JFAAffDOV60/EA==
   dependencies:
     "@types/node" "^10.12.18"
     chalk "^4.0.0"
