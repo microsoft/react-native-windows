@@ -1,8 +1,138 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Sun, 06 Mar 2022 06:08:52 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Apr 2022 05:09:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.67
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.56
+
+## 0.1.66
+
+Thu, 07 Apr 2022 05:09:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.55
+
+## 0.1.65
+
+Wed, 06 Apr 2022 05:09:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.54
+
+## 0.1.64
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.53
+
+## 0.1.63
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Patches
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.1.52
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+
+## 0.1.62
+
+Thu, 31 Mar 2022 05:10:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.51
+
+## 0.1.61
+
+Tue, 29 Mar 2022 05:09:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.50
+
+## 0.1.60
+
+Sat, 26 Mar 2022 05:09:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.49
+
+## 0.1.59
+
+Wed, 23 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.48
+
+## 0.1.58
+
+Tue, 22 Mar 2022 05:09:21 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.47
+
+## 0.1.57
+
+Fri, 18 Mar 2022 05:08:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.46
+
+## 0.1.56
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.45
+
+## 0.1.55
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.44
+
+## 0.1.54
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.43
+
+## 0.1.53
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.42
+
+## 0.1.52
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.41
 
 ## 0.1.51
 

@@ -59,7 +59,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   void layout(LayoutContext layoutContext) override;
 
  private:
-  ContextContainer *m_contextContainer{};
+  ContextContainer *contextContainer_{};
 
   /**
    * Get the most up-to-date attributed string for measurement and State.
@@ -72,13 +72,13 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
    */
   void updateStateIfNeeded();
 
-  SharedTextLayoutManager m_textLayoutManager;
+  SharedTextLayoutManager textLayoutManager_;
 
   /*
    * Cached attributed string that represents the content of the subtree started
    * from the node.
    */
-  mutable butter::optional<AttributedString> m_cachedAttributedString{};
+  mutable std::optional<AttributedString> cachedAttributedString_{};
 };
 
 } // namespace react

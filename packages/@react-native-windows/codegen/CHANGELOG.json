@@ -2,6 +2,42 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 01 Apr 2022 05:09:56 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605",
+            "comment": "Fix publish after promotion to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.1",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Mar 2022 06:09:07 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "afb7e6c78ac73d700c7369d6f514c34b1b464985",
+            "comment": "Fix turbo module codegen to generate correct import statement and registration"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Mar 2022 06:09:13 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.27",
       "version": "0.0.0-canary.27",

@@ -1,8 +1,27 @@
 # Change Log - @rnw-scripts/promote-release
 
-This log was last generated on Sun, 13 Feb 2022 06:08:34 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Apr 2022 05:10:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.6
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Patches
+
+- Security: Update simple-git dependency to 3.3.0 (jthysell@microsoft.com)
+
+## 2.0.5
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Patches
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.30
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.27
 
 ## 2.0.4
 

@@ -84,7 +84,7 @@ struct BrushCache {
         {L"SystemListAccentHighColor", {nullptr}}};
 
     m_uiSettings = winrt::Windows::UI::ViewManagement::UISettings();
-    auto dq = winrt::system::DispatcherQueue::GetForCurrentThread();
+    auto dq = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
     m_uiSettings.ColorValuesChanged([this, dq](auto &&sender, auto &&args) {
       dq.TryEnqueue([this]() {
         for (auto &entry : m_map) {

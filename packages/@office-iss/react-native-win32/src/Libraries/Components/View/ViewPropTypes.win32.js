@@ -100,6 +100,20 @@ type TouchEventProps = $ReadOnly<{|
   onTouchStartCapture?: ?(e: PressEvent) => void,
 |}>;
 
+type PointerEventCallbackProps = $ReadOnly<{|
+  onPointerCancel?: ?(e: PointerEvent) => void,
+  onPointerCancelCapture?: ?(e: PointerEvent) => void,
+  onPointerDown?: ?(e: PointerEvent) => void,
+  onPointerDownCapture?: ?(e: PointerEvent) => void,
+  onPointerEnter2?: ?(e: PointerEvent) => void,
+  onPointerLeave2?: ?(e: PointerEvent) => void,
+  onPointerEnter2Capture?: ?(e: PointerEvent) => void,
+  onPointerLeave2Capture?: ?(e: PointerEvent) => void,
+  onPointerMove2Capture?: ?(e: PointerEvent) => void,
+  onPointerUp?: ?(e: PointerEvent) => void,
+  onPointerUpCapture?: ?(e: PointerEvent) => void,
+|}>;
+
 /**
  * For most touch interactions, you'll simply want to wrap your component in
  * `TouchableHighlight` or `TouchableOpacity`. Check out `Touchable.js`,
@@ -430,6 +444,7 @@ export type ViewProps = $ReadOnly<{|
   ...GestureResponderEventProps,
   ...MouseEventProps,
   ...TouchEventProps,
+  ...PointerEventCallbackProps,
   ...AndroidViewProps,
   ...IOSViewProps,
   ...WindowsViewProps, // [Windows]
@@ -463,6 +478,15 @@ export type ViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#accessibilityHint
    */
   accessibilityHint?: ?Stringish,
+
+  /**
+   * Indicates to the accessibility services that the UI component is in
+   * a specific language. The provided string should be formatted following
+   * the BCP 47 specification (https://www.rfc-editor.org/info/bcp47).
+   *
+   * @platform ios
+   */
+  accessibilityLanguage?: ?Stringish,
 
   /**
    * Indicates to accessibility services to treat UI component like a specific role.

@@ -7,6 +7,25 @@
 
 namespace facebook::react {
 
+static bool
+hasValue(const RawProps &rawProps, bool defaultValue, const char *name, const char *prefix, const char *suffix) {
+  auto rawValue = rawProps.at(name, prefix, suffix);
+
+  // No change to prop - use default
+  if (rawValue == nullptr) {
+    return defaultValue;
+  }
+
+  // Value passed from JS
+  if (rawValue->hasValue()) {
+    return true;
+  }
+
+  // Null/undefined passed in, indicating that we should use the default
+  // platform value - thereby resetting this
+  return false;
+}
+
 WindowsTextInputProps::WindowsTextInputProps(
     const PropsParserContext &context,
     const WindowsTextInputProps &sourceProps,
@@ -46,6 +65,17 @@ WindowsTextInputProps::WindowsTextInputProps(
       autoCapitalize(convertRawProp(context, rawProps, "autoCapitalize", sourceProps.autoCapitalize, {})),
       clearTextOnSubmit(convertRawProp(context, rawProps, "clearTextOnSubmit", sourceProps.clearTextOnSubmit, {false})),
       submitKeyEvents(convertRawProp(context, rawProps, "submitKeyEvents", sourceProps.submitKeyEvents, {})),
-      autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})) {}
+      autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})),
+      // See AndroidTextInputComponentDescriptor for usage
+      // TODO T63008435: can these, and this feature, be removed entirely?
+      hasPadding(hasValue(rawProps, sourceProps.hasPadding, "", "padding", "")),
+      hasPaddingHorizontal(hasValue(rawProps, sourceProps.hasPaddingHorizontal, "Horizontal", "padding", "")),
+      hasPaddingVertical(hasValue(rawProps, sourceProps.hasPaddingVertical, "Vertical", "padding", "")),
+      hasPaddingLeft(hasValue(rawProps, sourceProps.hasPaddingLeft, "Left", "padding", "")),
+      hasPaddingTop(hasValue(rawProps, sourceProps.hasPaddingTop, "Top", "padding", "")),
+      hasPaddingRight(hasValue(rawProps, sourceProps.hasPaddingRight, "Right", "padding", "")),
+      hasPaddingBottom(hasValue(rawProps, sourceProps.hasPaddingBottom, "Bottom", "padding", "")),
+      hasPaddingStart(hasValue(rawProps, sourceProps.hasPaddingStart, "Start", "padding", "")),
+      hasPaddingEnd(hasValue(rawProps, sourceProps.hasPaddingEnd, "End", "padding", "")) {}
 
 } // namespace facebook::react

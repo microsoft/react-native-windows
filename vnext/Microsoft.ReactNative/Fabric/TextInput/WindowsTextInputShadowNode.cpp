@@ -20,14 +20,12 @@ extern const char WindowsTextInputComponentName[] = "WindowsTextInput";
 
 void WindowsTextInputShadowNode::setContextContainer(ContextContainer *contextContainer) {
   ensureUnsealed();
-  m_contextContainer = contextContainer;
+  contextContainer_ = contextContainer;
 }
 
 AttributedString WindowsTextInputShadowNode::getAttributedString() const {
   // Use BaseTextShadowNode to get attributed string from children
-
   auto childTextAttributes = TextAttributes::defaultTextAttributes();
-
   childTextAttributes.apply(getConcreteProps().textAttributes);
 
   auto attributedString = AttributedString{};
@@ -83,7 +81,7 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString() co
 
 void WindowsTextInputShadowNode::setTextLayoutManager(SharedTextLayoutManager textLayoutManager) {
   ensureUnsealed();
-  m_textLayoutManager = std::move(textLayoutManager);
+  textLayoutManager_ = std::move(textLayoutManager);
 }
 
 AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString() const {
@@ -125,7 +123,6 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
   // in the AttributedString, and when State is updated, it needs some way to
   // reconstruct a Fragment with default TextAttributes.
   auto defaultTextAttributes = TextAttributes::defaultTextAttributes();
-
   defaultTextAttributes.apply(getConcreteProps().textAttributes);
 
   auto newEventCount =
@@ -137,11 +134,11 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
   // current attributedString unchanged, and pass in zero for the "event count"
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
-  setStateData(facebook::react::WindowsTextInputState{
+  setStateData(WindowsTextInputState{
       newEventCount,
       newAttributedString,
       reactTreeAttributedString,
-      {}, // TODO getConcreteProps().paragraphAttributes,
+      {}, // [Windows] getConcreteProps().paragraphAttributes,
       defaultTextAttributes,
       ShadowView(*this),
       state.defaultThemePaddingStart,
@@ -156,10 +153,10 @@ Size WindowsTextInputShadowNode::measureContent(
     LayoutContext const &layoutContext,
     LayoutConstraints const &layoutConstraints) const {
   if (getStateData().cachedAttributedStringId != 0) {
-    return m_textLayoutManager
+    return textLayoutManager_
         ->measureCachedSpannableById(
             getStateData().cachedAttributedStringId,
-            {}, // TODO getConcreteProps().paragraphAttributes
+            {}, // [Windows] getConcreteProps().paragraphAttributes,
             layoutConstraints)
         .size;
   }
@@ -179,7 +176,7 @@ Size WindowsTextInputShadowNode::measureContent(
     return {0, 0};
   }
 
-  return m_textLayoutManager
+  return textLayoutManager_
       ->measure(
           AttributedStringBox{attributedString},
           {}, // TODO getConcreteProps().paragraphAttributes,

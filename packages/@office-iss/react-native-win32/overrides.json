@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220213-2008-7cece3423",
+  "baseVersion": "0.0.0-20220404-2009-d5da70e17",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "e0fd826d1c731209ca1f4322e950df83877ea95a"
+      "baseHash": "267dd59e570448f2e5241fb3f839c349970285af"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "a33f356abc2db3767c8fee7e4d6bda60384787a1"
+      "baseHash": "2a0bd511c691be2ac3da45a3c77250aaf55414e1"
     },
     {
       "type": "patch",
@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "566b15a4f7bf415c693e6d8217a9c3957c72521e",
+      "baseHash": "b6e9d331a959f84314be9a0efcf40ce8eca4a6d8",
       "issue": 6240
     },
     {
@@ -99,13 +99,6 @@
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
       "baseHash": "d13d67c91a9096989776ba7d7b0f8537c46b87a8"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.js",
-      "baseFile": "Libraries/Components/SegmentedControlIOS/SegmentedControlIOS.android.js",
-      "baseHash": "a7b7561ee80510fb3a45bad5ad18bc9076152144",
-      "issue": 4378
     },
     {
       "type": "platform",
@@ -131,13 +124,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "c447994d5ac59824f298cf4aec899c174b78e3e2"
+      "baseHash": "567ebad070a2fb9020ef177ee30defba9f0c54ec"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "53e9f8f6739e958e84709d02201a76527534b367"
+      "baseHash": "a5802e5d8b960912293d0069a99bbf346c8ecc4c"
     },
     {
       "type": "copy",
@@ -174,7 +167,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ReactNativeViewAttributes.win32.js",
       "baseFile": "Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseHash": "14b7dc745d010a375eb89ac56d803a53e19427e5"
+      "baseHash": "1e2900121c17ba9f58a7f6d0b3604456a13642bf"
     },
     {
       "type": "platform",
@@ -190,7 +183,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "2b04c305b0abc616bb01c886ecab4839efc2cf58",
+      "baseHash": "db3a6bb1d981e4136f63c9730d3333803f3ca219",
       "issue": 6240
     },
     {
@@ -311,7 +304,7 @@
       "type": "patch",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.windows.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "20e330dbe984f22feaf44c0558d0b9451df43c05",
+      "baseHash": "ad3f70783221a21cdc810d70a6eea1416dc4fe3c",
       "issue": 9217
     },
     {
@@ -436,14 +429,14 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "cd1ff3f3c9e841847f77cdb2799abcf1a83e79e3",
+      "baseHash": "27d6b7e72f84abed594050d86808190add804b87",
       "issue": 7074
     },
     {
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.win32.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "b7ed94c49c38a6b3579349e6940bb663328c1f4e",
+      "baseHash": "d9fb8f9555d98ec994eaa472fce31594d37ddfd6",
       "issue": 6240
     },
     {

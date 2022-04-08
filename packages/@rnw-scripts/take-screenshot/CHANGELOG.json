@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Fri, 01 Apr 2022 05:09:57 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.21",
+      "version": "1.0.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605",
+            "comment": "Fix publish after promotion to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.1",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Feb 2022 06:09:38 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.0.20",
       "version": "1.0.20",

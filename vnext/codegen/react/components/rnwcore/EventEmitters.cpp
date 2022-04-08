@@ -96,14 +96,6 @@ void PullToRefreshViewEventEmitter::onRefresh(OnRefresh event) const {
 }
 
 
-void RCTSegmentedControlEventEmitter::onChange(OnChange event) const {
-  dispatchEvent("change", [event=std::move(event)](jsi::Runtime &runtime) {
-    auto payload = jsi::Object(runtime);
-    payload.setProperty(runtime, "value", event.value);
-payload.setProperty(runtime, "selectedSegmentIndex", event.selectedSegmentIndex);
-    return payload;
-  });
-}
 void SliderEventEmitter::onValueChange(OnValueChange event) const {
   dispatchEvent("valueChange", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);

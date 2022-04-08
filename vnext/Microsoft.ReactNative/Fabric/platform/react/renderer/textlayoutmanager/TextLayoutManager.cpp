@@ -109,15 +109,6 @@ void TextLayoutManager::GetTextLayout(
   }
 }
 
-// Ideally we'd be able to measure Text either without creating a XAML element,
-// or we'd be able to create a XAML element on a background thread.
-//
-// For now we've forced the background executor to be the UI thread, so that we can use
-// TextBlocks within the measure call.
-//
-// There will be inconsistencies with layout if any property that affects layout is set differently here vs in the
-// actual view component. -- Any properties that rely on the context from the UI tree should be set directly on the
-// TextBlock here and in the view component.
 TextMeasurement TextLayoutManager::measure(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
@@ -132,6 +123,19 @@ TextMeasurement TextLayoutManager::measure(
     spTextLayout->GetMetrics(&dtm);
     tm.size = {dtm.width, dtm.height};
   }
+  return tm;
+}
+
+/**
+ * Measures an AttributedString on the platform, as identified by some
+ * opaque cache ID.
+ */
+TextMeasurement TextLayoutManager::measureCachedSpannableById(
+    int64_t cacheId,
+    ParagraphAttributes const &paragraphAttributes,
+    LayoutConstraints layoutConstraints) const {
+  assert(false);
+  TextMeasurement tm;
   return tm;
 }
 

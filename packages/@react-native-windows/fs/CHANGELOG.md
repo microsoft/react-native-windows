@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Wed, 09 Feb 2022 06:09:36 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 05:09:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.1
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
 
 ## 1.0.2
 

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <dwrite.h>
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
@@ -10,8 +11,6 @@
 #include <react/renderer/textlayoutmanager/TextMeasureCache.h>
 #include <react/utils/ContextContainer.h>
 #include <memory>
-
-#include <dwrite.h>
 
 namespace facebook {
 namespace react {

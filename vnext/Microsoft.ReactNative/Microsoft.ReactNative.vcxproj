@@ -19,12 +19,12 @@
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
+    <DesktopCompatible Condition="'$(UseWinUI3)'=='true'">true</DesktopCompatible>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\PackageVersionDefinitions.props" />
-  <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -138,7 +138,14 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>chakra.dll;winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>
+        api-ms-win-core-file-l1-2-0.dll;
+        api-ms-win-core-windowserrorreporting-l1-1-0.dll;
+        ext-ms-win-uiacore-l1-1-1.dll;
+        chakra.dll;
+        winsqlite3.dll;
+        %(DelayLoadDLLs)
+      </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
@@ -413,6 +420,11 @@
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />
     <ClCompile Include="Fabric\SwitchComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputShadowNode.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
   </ItemGroup>
@@ -735,6 +747,7 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
@@ -749,13 +762,6 @@
     <When Condition="'$(UseV8)' == 'true'">
       <ItemGroup>
         <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="'$(WebView2Version)'!=''">
-      <ItemGroup>
-        <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2Version)" />
       </ItemGroup>
     </When>
   </Choose>

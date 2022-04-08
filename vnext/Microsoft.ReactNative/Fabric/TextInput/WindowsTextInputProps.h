@@ -112,6 +112,21 @@ class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
   bool clearTextOnSubmit{false};
   std::vector<WindowsTextInputSubmitKeyEventsStruct> submitKeyEvents{};
   bool autoFocus{false};
+
+  /**
+   * Auxiliary information to detect if these props are set or not.
+   * See AndroidTextInputComponentDescriptor for usage.
+   * TODO T63008435: can these, and this feature, be removed entirely?
+   */
+  const bool hasPadding{};
+  const bool hasPaddingHorizontal{};
+  const bool hasPaddingVertical{};
+  const bool hasPaddingLeft{};
+  const bool hasPaddingTop{};
+  const bool hasPaddingRight{};
+  const bool hasPaddingBottom{};
+  const bool hasPaddingStart{};
+  const bool hasPaddingEnd{};
 };
 
 } // namespace facebook::react

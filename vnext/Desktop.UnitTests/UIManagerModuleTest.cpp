@@ -4,7 +4,6 @@
 #include <CppUnitTest.h>
 
 #include <EmptyUIManagerModule.h>
-#include <ViewManager.h>
 
 using namespace facebook::react;
 using namespace Microsoft::React::Test;
@@ -54,17 +53,10 @@ TEST_CLASS (UIManagerModuleTests) {
 
  public:
   UIManagerModuleTests() {
-    // Native views types
-    auto viewmanagers = std::make_unique<std::vector<std::unique_ptr<IViewManager>>>();
-    // TODO: Fix linking errors.
-    // viewmanagers->push_back(std::make_unique<ViewManager>()); // RCTView
-    // viewmanagers->push_back(std::make_unique<StubViewManager>("RCTText"));
-    // viewmanagers->push_back(std::make_unique<StubViewManager>("RCTRawText"));
-
     m_nodeRegistry = std::make_shared<NodeRegistry>();
 
     // EmptyUIManager
-    m_emptyUIManager = std::make_unique<EmptyUIManager>(std::move(viewmanagers), m_nodeRegistry);
+    m_emptyUIManager = std::make_unique<EmptyUIManager>(m_nodeRegistry);
   }
 
   ~UIManagerModuleTests() {

@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Wed, 09 Feb 2022 06:09:38 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Apr 2022 05:09:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.21
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Patches
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
 
 ## 1.0.20
 

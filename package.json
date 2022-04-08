@@ -34,7 +34,7 @@
     "beachball": "^2.20.0",
     "husky": "^4.2.5",
     "unbroken": "1.0.27",
-    "lage": "^0.29.3"
+    "lage": "^1.5.0"
   },
   "resolutions": {
     "kind-of": "6.0.3",

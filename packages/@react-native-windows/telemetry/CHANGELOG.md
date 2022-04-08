@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 10 Feb 2022 06:07:57 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Apr 2022 05:09:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.36
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Changes
+
+- Stop Telemetry background threads running after test completion (jthysell@microsoft.com)
+
+## 0.0.0-canary.35
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
 
 ## 0.0.0-canary.34
 

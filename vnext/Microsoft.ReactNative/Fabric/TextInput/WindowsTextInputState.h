@@ -7,14 +7,21 @@
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
-namespace facebook::react {
+#ifdef ANDROID
+#include <folly/dynamic.h>
+#include <react/renderer/mapbuffer/MapBuffer.h>
+#include <react/renderer/mapbuffer/MapBufferBuilder.h>
+#endif
+
+namespace facebook {
+namespace react {
 
 /*
  * State for <WindowsTextInput> component.
  */
 class WindowsTextInputState final {
  public:
-  int mostRecentEventCount{0};
+  int64_t mostRecentEventCount{0};
 
   /**
    * Stores an opaque cache ID used on the Java side to refer to a specific
@@ -81,6 +88,12 @@ class WindowsTextInputState final {
   WindowsTextInputState() = default;
   WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data);
   folly::dynamic getDynamic() const;
+  /* [Windows
+  MapBuffer getMapBuffer() const {
+    return MapBufferBuilder::EMPTY();
+  };
+     Windows] */
 };
 
-} // namespace facebook::react
+} // namespace react
+} // namespace facebook

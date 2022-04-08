@@ -29,6 +29,7 @@
 #include "SliderComponentView.h"
 #include "SwitchComponentView.h"
 #include "TextComponentView.h"
+#include "TextInput/WindowsTextInputComponentView.h"
 #include "ViewComponentView.h"
 #include "XamlView.h"
 #endif // CORE_ABI
@@ -67,6 +68,8 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     view = std::make_shared<SliderComponentView>(m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
     view = std::make_shared<SwitchComponentView>(m_context);
+  } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
+    view = std::make_shared<WindowsTextInputComponentView>();
   } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
     view = std::make_shared<ActivityIndicatorComponentView>();
   } else {

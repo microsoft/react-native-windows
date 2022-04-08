@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <ViewManager.h>
 #include <cxxreact/CxxModule.h>
 #include <vector>
 
@@ -28,9 +27,7 @@ struct NodeRegistry {
 
 class EmptyUIManager {
  public:
-  EmptyUIManager(
-      std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>> viewManagers,
-      std::shared_ptr<NodeRegistry> nodeRegistry);
+  EmptyUIManager(std::shared_ptr<NodeRegistry> nodeRegistry);
 
   void removeRootView(int64_t rootViewTag);
   void createView(int64_t tag, const std::string &className, int64_t rootViewTag, folly::dynamic /*ReadableMap*/ props);
@@ -84,7 +81,6 @@ class EmptyUIManager {
   std::shared_ptr<EmptyUINode> addRootView(int64_t rootViewTag);
 
  private:
-  std::unique_ptr<std::vector<std::unique_ptr<facebook::react::IViewManager>>> m_viewManagers;
   std::shared_ptr<NodeRegistry> m_nodeRegistry;
 };
 
