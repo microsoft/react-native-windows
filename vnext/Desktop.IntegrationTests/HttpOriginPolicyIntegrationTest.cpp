@@ -50,7 +50,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     {
       Preflight.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
 
-      Response.result(http::status::ok);
+      Response.result(http::status::unknown);
       Response.body() = "RESPONSE_CONTENT";
     }
   };
@@ -348,6 +348,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     ServerParams serverArgs(s_port);
+    serverArgs.Response.result(http::status::ok);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
 
@@ -364,6 +365,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     ServerParams serverArgs(s_port);
+    serverArgs.Response.result(http::status::ok);
 
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
@@ -380,6 +382,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(SimpleCorsSameOriginSucceededs)
   {
     ServerParams serverArgs(s_port);
+    serverArgs.Response.result(http::status::ok);
 
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
@@ -406,6 +409,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsSameOriginRequestSucceeds)
   {
     ServerParams serverArgs(s_port);
+    serverArgs.Response.result(http::status::ok);
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
@@ -624,6 +628,55 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsSameOriginToCrossOriginRedirectSucceeds
+
+  //TODO: Seems to redirect to exact same resource
+  // Redirects a cross origin request to cross origin request on the same server
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
+  {
+    ServerParams serverArgs(s_port);
+    //ServerParams redirServerArgs(6668);
+
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      serverArgs.Url);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    serverArgs.Response.result(http::status::moved_permanently);
+    serverArgs.Response.set(http::field::location,                          serverArgs.Url);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+
+    //redirServerArgs.Response.result(http::status::accepted);
+    //redirServerArgs.Response.set(http::field::access_control_allow_origin,  serverArgs.Url);
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, /*redirServerArgs, */clientArgs, s_shouldSucceed);
+  } // FullCorsCrossOriginToCrossOriginRedirectSucceeds
+
+  // The initial request gets redirected back to the original origin,
+  // but it will lack the Access-Control-Allow-Origin header.
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToOriginalOriginRedirectFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginToOriginalOriginRedirectFails)
+  {
+    ServerParams serverArgs(s_port);
+    ServerParams redirServerArgs(6669);
+
+    serverArgs.Response.result(http::status::moved_permanently);
+    serverArgs.Response.set(http::field::location,                          redirServerArgs.Url);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       redirServerArgs.Url);
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", redirServerArgs.Url.c_str());
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
+  } // FullCorsCrossOriginToOriginalOriginRedirectFails
 
 };
 
