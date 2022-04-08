@@ -629,9 +629,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsSameOriginToCrossOriginRedirectSucceeds
 
-  //TODO: Seems to redirect to exact same resource
+  //TODO: Seems to redirect to exact same resource. Implement second resource in same server.
   // Redirects a cross origin request to cross origin request on the same server
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
   {
@@ -677,6 +678,30 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   } // FullCorsCrossOriginToOriginalOriginRedirectFails
+
+  //TODO: OP should change to SimpleCORS and skip preflight.
+  // Redirects cross origin request to server1 to cross origin request to server2
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds)
+  {
+    ServerParams serverArgs(s_port);
+    ServerParams redirServerArgs(6670);
+
+    serverArgs.Response.result(http::status::moved_permanently);
+    serverArgs.Response.set(http::field::location,                          redirServerArgs.Url);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+
+    redirServerArgs.Response.result(http::status::accepted);
+    redirServerArgs.Response.set(http::field::access_control_allow_origin,  "*");
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
+  } // FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds
 
 };
 
