@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220322-2008-8a5460ce8",
+  "baseVersion": "0.0.0-20220404-2009-d5da70e17",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a8c0d9b54ea5b1514ed4a81c2d87cb7972bc4b26"
+      "baseHash": "267dd59e570448f2e5241fb3f839c349970285af"
     },
     {
       "type": "derived",
@@ -183,7 +183,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "8c4e0e5c8d30af80e93d2cfaa685f3ac25bc8978",
+      "baseHash": "db3a6bb1d981e4136f63c9730d3333803f3ca219",
       "issue": 6240
     },
     {
@@ -304,7 +304,7 @@
       "type": "patch",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.windows.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "20e330dbe984f22feaf44c0558d0b9451df43c05",
+      "baseHash": "ad3f70783221a21cdc810d70a6eea1416dc4fe3c",
       "issue": 9217
     },
     {
@@ -429,14 +429,14 @@
       "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "Libraries/Text/TextNativeComponent.js",
-      "baseHash": "cd1ff3f3c9e841847f77cdb2799abcf1a83e79e3",
+      "baseHash": "27d6b7e72f84abed594050d86808190add804b87",
       "issue": 7074
     },
     {
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.win32.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "12d577ba5b522593fb49d4621d5ad4bba0d37119",
+      "baseHash": "d9fb8f9555d98ec994eaa472fce31594d37ddfd6",
       "issue": 6240
     },
     {
