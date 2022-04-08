@@ -42,7 +42,7 @@ void TextLayoutManager::GetTextLayout(
       style,
       DWRITE_FONT_STRETCH_NORMAL,
       outerFragment.textAttributes.fontSize,
-      L"en-us",
+      L"",
       spTextFormat.put()));
 
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
