@@ -54,50 +54,50 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
     OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
-    L"Accept",
-    L"Accept-Language",
-    L"Content-Language",
-    L"Content-Type",
-    L"DPR",
-    L"Downlink",
-    L"Save-Data",
-    L"Viewport-Width",
-    L"Width"};
+        L"Accept",
+        L"Accept-Language",
+        L"Content-Language",
+        L"Content-Type",
+        L"DPR",
+        L"Downlink",
+        L"Save-Data",
+        L"Viewport-Width",
+        L"Width"};
 
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
     OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames =
-    {L"Cache-Control", L"Content-Language", L"Content-Type", L"Expires", L"Last-Modified", L"Pragma"};
+        {L"Cache-Control", L"Content-Language", L"Content-Type", L"Expires", L"Last-Modified", L"Pragma"};
 
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
     OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
-    L"application/x-www-form-urlencoded",
-    L"multipart/form-data",
-    L"text/plain"};
+        L"application/x-www-form-urlencoded",
+        L"multipart/form-data",
+        L"text/plain"};
 
 // https://fetch.spec.whatwg.org/#forbidden-header-name
 // Chromium still bans "User-Agent" due to https://crbug.com/571722 //TODO: Remove?
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
-    L"Accept-Charset",
-    L"Accept-Encoding",
-    L"Access-Control-Request-Headers",
-    L"Access-Control-Request-Method",
-    L"Connection",
-    L"Content-Length",
-    L"Cookie",
-    L"Cookie2",
-    L"Date",
-    L"DNT",
-    L"Expect",
-    L"Host",
-    L"Keep-Alive",
-    L"Origin",
-    L"Referer",
-    L"TE",
-    L"Trailer",
-    L"Transfer-Encoding",
-    L"Upgrade",
-    L"Via"};
+        L"Accept-Charset",
+        L"Accept-Encoding",
+        L"Access-Control-Request-Headers",
+        L"Access-Control-Request-Method",
+        L"Connection",
+        L"Content-Length",
+        L"Cookie",
+        L"Cookie2",
+        L"Date",
+        L"DNT",
+        L"Expect",
+        L"Host",
+        L"Keep-Alive",
+        L"Origin",
+        L"Referer",
+        L"TE",
+        L"Trailer",
+        L"Transfer-Encoding",
+        L"Upgrade",
+        L"Via"};
 
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
