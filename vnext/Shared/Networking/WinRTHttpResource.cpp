@@ -100,7 +100,7 @@ void WinRTHttpResource::SendRequest(
 }
 
 void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
-  ResponseType request{nullptr};
+  ResponseOperation request{nullptr};
 
   {
     scoped_lock lock{m_mutex};
@@ -144,7 +144,7 @@ void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&err
 
 #pragma endregion IHttpResource
 
-void WinRTHttpResource::TrackResponse(int64_t requestId, ResponseType response) noexcept {
+void WinRTHttpResource::TrackResponse(int64_t requestId, ResponseOperation response) noexcept {
   scoped_lock lock{m_mutex};
   m_responses[requestId] = response;
 }
@@ -234,7 +234,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
     self->TrackResponse(coReqArgs->RequestId, sendRequestOp);
 
-    co_await lessthrow_await_adapter<ResponseType>{sendRequestOp};
+    co_await lessthrow_await_adapter<ResponseOperation>{sendRequestOp};
     auto result = sendRequestOp.ErrorCode();
     if (result < 0) {
       if (self->m_onError) {

@@ -25,6 +25,6 @@ struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Found
 
 typedef winrt::Windows::Foundation::
     IAsyncOperationWithProgress<winrt::Windows::Web::Http::HttpResponseMessage, winrt::Windows::Web::Http::HttpProgress>
-        ResponseType;
+        ResponseOperation;
 
 } // namespace Microsoft::React::Networking

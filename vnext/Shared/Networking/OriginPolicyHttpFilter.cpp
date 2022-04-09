@@ -579,7 +579,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
   // TODO: RemoveApplicableCookiesFromResponseHeader
 }
 
-ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
+ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
   // TODO: Inject user agent?
 
   auto coRequest = request;
@@ -620,7 +620,7 @@ ResponseType OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const
 
 #pragma region IHttpFilter
 
-ResponseType OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
+ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
   auto coRequest = request;
 
   // Allow only HTTP or HTTPS schemes
