@@ -6,7 +6,6 @@
 #include <JSValue.h>
 #include <ReactPointerEventArgs.h>
 #include <UI.Xaml.Documents.h>
-#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <optional>
 #include <set>
@@ -34,9 +33,6 @@ class TouchEventHandler {
   virtual ~TouchEventHandler();
 
   void AddTouchHandlers(XamlView xamlView, XamlView rootView = nullptr, bool handledEventsToo = false);
-  void PointerDown(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t pointerId);
-  void PointerUp(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t pointerId);
-  void ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta);
   void RemoveTouchHandlers();
   winrt::Microsoft::ReactNative::BatchingEventEmitter &BatchingEmitter() noexcept;
 
@@ -119,7 +115,6 @@ class TouchEventHandler {
       std::vector<int64_t> *pTagsForBranch,
       xaml::UIElement *pSourceElement);
 
-  winrt::Microsoft::ReactNative::CompRootView m_compRootView{nullptr};
   XamlView m_xamlView;
   XamlView m_rootView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
