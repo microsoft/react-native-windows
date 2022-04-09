@@ -24,9 +24,6 @@ class OriginPolicyHttpFilter
   };
 
  private:
-
-  static std::set<const wchar_t *, ConstWcharComparer> s_asdf;
-
   static std::set<const wchar_t *, ConstWcharComparer> s_forbiddenMethods;
   static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsMethods;
   static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsRequestHeaderNames;

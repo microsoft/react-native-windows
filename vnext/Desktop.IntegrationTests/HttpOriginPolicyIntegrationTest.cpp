@@ -486,7 +486,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // The current implementation omits withCredentials flag from request and always sets it to false
   // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
-    //TODO: Passes only when ran individually
+    //TODO: Fails if run after FullCorsCrossOriginWithCredentialsFails
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
   {
