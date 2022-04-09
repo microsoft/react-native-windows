@@ -17,13 +17,23 @@ namespace Microsoft::React::Networking {
 
 class OriginPolicyHttpFilter
     : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
-  static std::set<const wchar_t *> s_forbiddenMethods;
-  static std::set<const wchar_t *> s_simpleCorsMethods;
-  static std::set<const wchar_t *> s_simpleCorsRequestHeaderNames;
-  static std::set<const wchar_t *> s_simpleCorsResponseHeaderNames;
-  static std::set<const wchar_t *> s_simpleCorsContentTypeValues;
-  static std::set<const wchar_t *> s_corsForbiddenRequestHeaderNames;
-  static std::set<const wchar_t *> s_corsForbiddenRequestHeaderNamePrefixes;
+
+  public:
+  struct ConstWcharComparer {
+    bool operator()(const wchar_t*, const wchar_t*) const;
+  };
+
+ private:
+
+  static std::set<const wchar_t *, ConstWcharComparer> s_asdf;
+
+  static std::set<const wchar_t *, ConstWcharComparer> s_forbiddenMethods;
+  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsMethods;
+  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsRequestHeaderNames;
+  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsResponseHeaderNames;
+  static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsContentTypeValues;
+  static std::set<const wchar_t *, ConstWcharComparer> s_corsForbiddenRequestHeaderNames;
+  static std::set<const wchar_t *, ConstWcharComparer> s_corsForbiddenRequestHeaderNamePrefixes;
 
   // NOTE: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
   static winrt::Windows::Foundation::Uri s_origin;

@@ -37,12 +37,23 @@ namespace Microsoft::React::Networking {
 
 #pragma region OriginPolicyHttpFilter
 
+#pragma region ConstWcharComparer
+
+bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, const wchar_t *b) const {
+  return boost::iequals(a, b);
+}
+
+#pragma endregion ConstWcharComparer
+
 // https://fetch.spec.whatwg.org/#forbidden-method
-/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_forbiddenMethods = {L"CONNECT", L"TRACE", L"TRACK"};
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer> OriginPolicyHttpFilter::s_forbiddenMethods =
+    {L"CONNECT", L"TRACE", L"TRACK"};
 
-/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsMethods = {L"GET", L"HEAD", L"POST"};
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+    OriginPolicyHttpFilter::s_simpleCorsMethods = {L"GET", L"HEAD", L"POST"};
 
-/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+    OriginPolicyHttpFilter::s_simpleCorsRequestHeaderNames = {
     L"Accept",
     L"Accept-Language",
     L"Content-Language",
@@ -53,17 +64,20 @@ namespace Microsoft::React::Networking {
     L"Viewport-Width",
     L"Width"};
 
-/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames =
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+    OriginPolicyHttpFilter::s_simpleCorsResponseHeaderNames =
     {L"Cache-Control", L"Content-Language", L"Content-Type", L"Expires", L"Last-Modified", L"Pragma"};
 
-/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+    OriginPolicyHttpFilter::s_simpleCorsContentTypeValues = {
     L"application/x-www-form-urlencoded",
     L"multipart/form-data",
     L"text/plain"};
 
 // https://fetch.spec.whatwg.org/#forbidden-header-name
 // Chromium still bans "User-Agent" due to https://crbug.com/571722 //TODO: Remove?
-/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+    OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
     L"Accept-Charset",
     L"Accept-Encoding",
     L"Access-Control-Request-Headers",
@@ -85,7 +99,8 @@ namespace Microsoft::React::Networking {
     L"Upgrade",
     L"Via"};
 
-/*static*/ set<const wchar_t *> OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+    OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
 
 /*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
 
@@ -108,6 +123,22 @@ namespace Microsoft::React::Networking {
     if (boost::iequals(header.Key(), L"Content-Type")) {
       if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) != s_simpleCorsContentTypeValues.cend())
         return false;
+    }
+  }
+
+  // WinRT separates request headers from request content headers
+  if (auto content = request.Content()) {
+    for (const auto &header : content.Headers()) {
+      // WinRT automatically appends non-whitelisted header Content-Length when Content-Type is set. Skip it.
+      if (s_simpleCorsRequestHeaderNames.find(header.Key().c_str()) == s_simpleCorsRequestHeaderNames.cend() &&
+          !boost::iequals(header.Key(), "Content-Length"))
+        return false;
+
+      // Ensure Content-Type value is in Simple CORS white list, if present
+      if (boost::iequals(header.Key(), L"Content-Type")) {
+        if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) != s_simpleCorsContentTypeValues.cend())
+          return false;
+      }
     }
   }
 
