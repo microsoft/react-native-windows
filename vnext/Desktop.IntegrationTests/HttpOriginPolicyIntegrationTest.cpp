@@ -160,6 +160,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     {
       Assert::AreEqual({}, clientArgs.ErrorMessage);
       //TODO: chose server?
+      // We assume 2-server tests will always redirect so the final response will come from server 2.
       Assert::AreEqual(server2Args.Response.result_int(), static_cast<unsigned int>(clientArgs.Response.StatusCode));
       Assert::AreEqual({"RESPONSE_CONTENT"}, clientArgs.ResponseContent);
     }
@@ -679,7 +680,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   } // FullCorsCrossOriginToOriginalOriginRedirectFails
 
-  //TODO: OP should change to SimpleCORS and skip preflight.
   // Redirects cross origin request to server1 to cross origin request to server2
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds)
   END_TEST_METHOD_ATTRIBUTE()

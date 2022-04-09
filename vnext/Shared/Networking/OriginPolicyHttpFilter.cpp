@@ -136,7 +136,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 
       // Ensure Content-Type value is in Simple CORS white list, if present
       if (boost::iequals(header.Key(), L"Content-Type")) {
-        if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) != s_simpleCorsContentTypeValues.cend())
+        if (s_simpleCorsContentTypeValues.find(header.Value().c_str()) == s_simpleCorsContentTypeValues.cend())
           return false;
       }
     }
