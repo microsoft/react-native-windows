@@ -237,11 +237,11 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     serverArgs.Response.result(http::status::ok);
     serverArgs.Response.set(http::field::access_control_allow_origin,     s_crossOriginUrl);
 
-    ClientParams clientArgs(http::verb::get, {{"ArbitraryHeader", "AnyValue"}});
+    ClientParams clientArgs(http::verb::get, { {"Content-Type", "text/plain"}, {"ArbitraryHeader", "AnyValue"} });
 
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
-    TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
+    TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
   }// FullCorsPreflightSucceeds
 
   //TODO: NoCors_InvalidMethod_Failed?
@@ -581,7 +581,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     ServerParams redirServerArgs(6666);
     redirServerArgs.Response.result(http::status::accepted);
     redirServerArgs.Response.set(http::field::server,                    "RedirectServer");
-    
+
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
 
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);

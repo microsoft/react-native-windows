@@ -40,7 +40,7 @@ namespace Microsoft::React::Networking {
 #pragma region ConstWcharComparer
 
 bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, const wchar_t *b) const {
-  return boost::iequals(a, b);
+  return _wcsicmp(a, b) < 0;
 }
 
 #pragma endregion ConstWcharComparer
