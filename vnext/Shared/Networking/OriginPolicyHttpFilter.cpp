@@ -24,6 +24,7 @@ using winrt::hresult_error;
 using winrt::hstring;
 using winrt::to_hstring;
 using winrt::Windows::Foundation::IInspectable;
+using winrt::Windows::Foundation::IPropertyValue;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
@@ -337,13 +338,14 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 } // ExtractAccessControlValues
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
-    : m_originPolicy{originPolicy}, m_innerFilter{std::move(innerFilter)} {}
+    : m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
     : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
-  switch (m_originPolicy) {
+  auto originPolicy = static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  switch (originPolicy) {
     case OriginPolicy::None:
       return;
 
@@ -360,7 +362,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
       if (IsSameOrigin(s_origin, request.RequestUri()))
         // Same origin. Therefore, skip Cross-Origin handling.
-        m_originPolicy = OriginPolicy::SameOrigin;
+        request.Properties().Insert(L"OriginPolicy", winrt::box_value(static_cast<size_t>(OriginPolicy::SameOrigin)));
       else if (!IsSimpleCorsRequest(request))
         throw hresult_error{
             E_INVALIDARG,
@@ -389,17 +391,19 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
       // TODO: overwrite member OP, or set/return validated OP?
       if (IsSameOrigin(s_origin, request.RequestUri()))
-        m_originPolicy = OriginPolicy::SameOrigin;
+        originPolicy = OriginPolicy::SameOrigin;
       else if (IsSimpleCorsRequest(request))
-        m_originPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
+        originPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
       else
-        m_originPolicy = OriginPolicy::CrossOriginResourceSharing;
+        originPolicy = OriginPolicy::CrossOriginResourceSharing;
+
+      request.Properties().Insert(L"OriginPolicy", winrt::box_value(static_cast<size_t>(originPolicy)));
 
       break;
 
     default:
       throw hresult_error{
-          E_INVALIDARG, L"Invalid OriginPolicy type: " + to_hstring(static_cast<size_t>(m_originPolicy))};
+          E_INVALIDARG, L"Invalid OriginPolicy type: " + to_hstring(static_cast<size_t>(originPolicy))};
   }
 }
 
@@ -538,11 +542,13 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
 void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response) const {
   bool removeAllCookies = false;
+  auto originPolicy = static_cast<OriginPolicy>(
+      response.RequestMessage().Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
 
-  if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
-      m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+  if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
+      originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     if (Microsoft_React_GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
-        m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
+        originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       bool originAllowed = false;
       for (const auto &header : response.Headers()) {
         if (boost::iequals(header.Key(), L"Access-Control-Allow-Origin")) {
@@ -559,7 +565,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
       ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
     }
 
-    if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
+    if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       // Filter out response headers that are not in the Simple CORS whitelist
       for (const auto &header : response.Headers())
         if (s_simpleCorsResponseHeaderNames.find(header.Key().c_str()) == s_simpleCorsResponseHeaderNames.cend())
@@ -623,6 +629,10 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
 ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
   auto coRequest = request;
 
+  // Set request origin policy to global runtime option.
+  request.Properties().Insert(
+      L"OriginPolicy", winrt::box_value(Microsoft_React_GetRuntimeOptionInt("Http.OriginPolicy")));
+
   // Allow only HTTP or HTTPS schemes
   if (Microsoft_React_GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
       coRequest.RequestUri().SchemeName() != L"http")
@@ -639,8 +649,10 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
   // header, and method
   ValidateRequest(coRequest);
 
-  if (m_originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
-      m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+  auto originPolicy =
+      static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
+      originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     if (coRequest.RequestUri().UserName().size() > 0 || coRequest.RequestUri().Password().size() > 0) {
       coRequest.RequestUri(Uri{coRequest.RequestUri().DisplayUri()});
     }
@@ -648,7 +660,7 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
 
   try {
     // #9770 - Validate preflight cache
-    if (m_originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+    if (originPolicy == OriginPolicy::CrossOriginResourceSharing) {
       // If inner filter can AllowRedirect, disable for preflight.
       winrt::impl::com_ref<IHttpBaseProtocolFilter> baseFilter;
       if (baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {

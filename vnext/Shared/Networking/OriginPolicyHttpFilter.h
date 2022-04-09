@@ -44,7 +44,6 @@ class OriginPolicyHttpFilter
   };
 
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
-  OriginPolicy m_originPolicy;
 
  public:
   static void SetStaticOrigin(const char *url);
@@ -70,8 +69,10 @@ class OriginPolicyHttpFilter
 
   static bool IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept;
 
+  //TODO: Remove originPolicy arg. Should be set at request time instead.
   OriginPolicyHttpFilter(OriginPolicy originPolicy, winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
 
+  // TODO: Remove originPolicy arg. Should be set at request time instead.
   OriginPolicyHttpFilter(OriginPolicy originPolicy);
 
   void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request);
