@@ -9,6 +9,9 @@
 #include <utilities.h>
 #include "OriginPolicyHttpFilter.h"
 
+// Boost Libraries
+#include <boost/algorithm/string.hpp>
+
 // Windows API
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
@@ -171,22 +174,23 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   // Headers are generally case-insensitive
   // https://www.ietf.org/rfc/rfc2616.txt section 4.2
   for (auto &header : coReqArgs->Headers) {
-    if (_stricmp(header.first.c_str(), "content-type") == 0) {
+    if (boost::iequals(header.first.c_str(), "Content-Type")) {
       bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
       if (!success && m_onError) {
         co_return m_onError(coReqArgs->RequestId, "Failed to parse Content-Type");
       }
-    } else if (_stricmp(header.first.c_str(), "content-encoding") == 0) {
+    } else if (boost::iequals(header.first.c_str(), "Content-Encoding")) {
       contentEncoding = header.second;
-    } else if (_stricmp(header.first.c_str(), "content-length") == 0) {
+    } else if (boost::iequals(header.first.c_str(), "Content-Length")) {
       contentLength = header.second;
-    } else if (_stricmp(header.first.c_str(), "authorization") == 0) {
+    } else if (boost::iequals(header.first.c_str(), "Authorization")) {
       bool success =
           coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
       if (!success && m_onError) {
         co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
       }
     } else {
+      //TODO: Use TryAppendWithoutValidation instead??
       try {
         coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
       } catch (hresult_error const &e) {

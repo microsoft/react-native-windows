@@ -18,10 +18,6 @@
 // Standard Library
 #include <future>
 
-// TODO: Remove
-#include <winrt/Windows.Foundation.h>
-#include <winrt/base.h>
-
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -275,94 +271,5 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       }
     }
     Assert::AreEqual({"Response Body"}, content);
-  }
-
-  TEST_METHOD(PreflightSucceeds) {
-    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
-
-    constexpr uint16_t port{5558};
-    constexpr char url[]{"http://localhost:5558"};
-
-    promise<void> getResponsePromise;
-    promise<void> getDataPromise;
-    IHttpResource::Response getResponse;
-    IHttpResource::Response optionsResponse;
-    string error;
-    string getDataContent;
-
-    auto server = make_shared<HttpServer>(port);
-    server->Callbacks().OnOptions = [&url](const DynamicRequest &request) -> ResponseWrapper {
-      EmptyResponse response;
-      response.result(http::status::accepted);
-      // response.set("Preflight", "Approved");
-
-      // response.set(http::field::access_control_request_headers, "Preflight");
-      response.set(http::field::access_control_allow_headers, "ValidHeader");
-
-      if (false /*allowCredentials*/) {
-        response.set(http::field::access_control_allow_credentials, "true");
-      }
-
-      response.set(http::field::access_control_allow_origin, url);
-      response.set(http::field::access_control_allow_methods, "GET, POST, DELETE, PATCH");
-
-      return {std::move(response)};
-    };
-    server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
-      Test::StringResponse response;
-      // if (request.at("Preflight") == "Approved") {
-      //  response.result(http::status::ok);
-      //  response.set("Preflight", "Completed");
-      //  response.body() = "Body After Preflight";
-      //} else {
-      //  response.result(http::status::bad_request);
-      //}
-      response.result(http::status::ok);
-      // response.set("Preflight", "Completed");
-      response.body() = "Body After Preflight";
-
-      return {std::move(response)};
-    };
-    server->Start();
-
-    auto resource = IHttpResource::Make();
-    resource->SetOnResponse(
-        [&getResponse, &getResponsePromise, &optionsResponse](int64_t, IHttpResource::Response &&res) {
-          if (res.StatusCode == static_cast<int64_t>(http::status::ok)) {
-            getResponse = std::move(res);
-            getResponsePromise.set_value();
-          }
-        });
-    resource->SetOnData([&getDataPromise, &getDataContent](int64_t, string &&content) {
-      if (!content.empty()) { // Ignore OPTIONS data response.
-        getDataContent = std::move(content);
-        getDataPromise.set_value();
-      }
-    });
-    resource->SetOnError([&getResponsePromise, &getDataPromise, &server, &error](int64_t, string &&message) {
-      error = std::move(message);
-      getResponsePromise.set_value();
-      getDataPromise.set_value();
-
-      server->Stop();
-    });
-
-    //clang-format off
-    resource->SendRequest("GET", url, {{"ValidHeader", "Requested"}}, {}, "text", false, 1000, false, [](int64_t) {});
-    //clang-format on
-
-    getResponsePromise.get_future().wait();
-    getDataPromise.get_future().wait();
-    server->Stop();
-
-    Assert::AreEqual({}, error);
-    Assert::AreEqual(200, static_cast<int>(getResponse.StatusCode));
-    Assert::AreEqual(1, static_cast<int>(getResponse.Headers.size()));
-    // for (auto &header : getResponse.Headers)
-    //  if (header.first == "Preflight")
-    //    Assert::AreEqual({"Completed"}, header.second);
-    Assert::AreEqual({"Body After Preflight"}, getDataContent);
-
-    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
   }
 };
