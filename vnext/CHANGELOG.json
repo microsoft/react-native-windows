@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 09 Apr 2022 05:10:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.483",
+      "version": "0.0.0-canary.483",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "69f4432924079c65c25d29b3a43e34b1e871a61c",
+            "comment": "integrate 4/4"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.37",
+            "commit": "66ca5ce8b0dad82b3008e283903ce2816840ce5d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Apr 2022 05:09:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.482",
+      "version": "0.0.0-canary.482",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b7d3ebfc395edd550c0ac1e1fd3dd2b83cb2366d",
+            "comment": "Don't load XAML just to check if we are a XAML app"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2b162bf6952d8e275a4d96593da78e151f320e53",
+            "comment": "Fix deps script"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.123",
+            "commit": "2b162bf6952d8e275a4d96593da78e151f320e53"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Apr 2022 05:09:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.481",
+      "version": "0.0.0-canary.481",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5061e5f30d857763aff0d9b5a03b43418d6ec35c",
+            "comment": "Fix Glog"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7cbb3fe78434c709e17483f0b4167ffbe77c2e31",
+            "comment": "Enable loading the bundle from an embedded resource via resource://moduleName/resourceId"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Apr 2022 05:09:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.480",
       "version": "0.0.0-canary.480",
