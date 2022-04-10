@@ -337,14 +337,14 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
   return result;
 } // ExtractAccessControlValues
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter &&innerFilter)
-    : m_innerFilter{std::move(innerFilter)} {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter &&innerFilter) : m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter()
     : OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
-  auto effectiveOriginPolicy = static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  auto effectiveOriginPolicy =
+      static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
   switch (effectiveOriginPolicy) {
     case OriginPolicy::None:
       return effectiveOriginPolicy;
@@ -540,7 +540,8 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 }
 
 // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
-void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response, const OriginPolicy originPolicy) const {
+void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response, const OriginPolicy originPolicy)
+    const {
   bool removeAllCookies = false;
   if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       originPolicy == OriginPolicy::CrossOriginResourceSharing) {

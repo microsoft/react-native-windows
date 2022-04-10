@@ -190,7 +190,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
       }
     } else {
-      //TODO: Use TryAppendWithoutValidation instead??
+      // TODO: Use TryAppendWithoutValidation instead??
       try {
         coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
       } catch (hresult_error const &e) {
