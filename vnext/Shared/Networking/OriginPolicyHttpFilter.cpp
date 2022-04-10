@@ -337,17 +337,17 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
   return result;
 } // ExtractAccessControlValues
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy, IHttpFilter &&innerFilter)
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter &&innerFilter)
     : m_innerFilter{std::move(innerFilter)} {}
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(OriginPolicy originPolicy)
-    : OriginPolicyHttpFilter(originPolicy, winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter()
+    : OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
-void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
-  auto originPolicy = static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
-  switch (originPolicy) {
+OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
+  auto effectiveOriginPolicy = static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  switch (effectiveOriginPolicy) {
     case OriginPolicy::None:
-      return;
+      return effectiveOriginPolicy;
 
     case OriginPolicy::SameOrigin:
       if (!IsSameOrigin(s_origin, request.RequestUri()))
@@ -362,7 +362,7 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
       if (IsSameOrigin(s_origin, request.RequestUri()))
         // Same origin. Therefore, skip Cross-Origin handling.
-        request.Properties().Insert(L"OriginPolicy", winrt::box_value(static_cast<size_t>(OriginPolicy::SameOrigin)));
+        effectiveOriginPolicy = OriginPolicy::SameOrigin;
       else if (!IsSimpleCorsRequest(request))
         throw hresult_error{
             E_INVALIDARG,
@@ -391,20 +391,20 @@ void OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) 
 
       // TODO: overwrite member OP, or set/return validated OP?
       if (IsSameOrigin(s_origin, request.RequestUri()))
-        originPolicy = OriginPolicy::SameOrigin;
+        effectiveOriginPolicy = OriginPolicy::SameOrigin;
       else if (IsSimpleCorsRequest(request))
-        originPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
+        effectiveOriginPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
       else
-        originPolicy = OriginPolicy::CrossOriginResourceSharing;
-
-      request.Properties().Insert(L"OriginPolicy", winrt::box_value(static_cast<size_t>(originPolicy)));
+        effectiveOriginPolicy = OriginPolicy::CrossOriginResourceSharing;
 
       break;
 
     default:
       throw hresult_error{
-          E_INVALIDARG, L"Invalid OriginPolicy type: " + to_hstring(static_cast<size_t>(originPolicy))};
+          E_INVALIDARG, L"Invalid OriginPolicy type: " + to_hstring(static_cast<size_t>(effectiveOriginPolicy))};
   }
+
+  return effectiveOriginPolicy;
 }
 
 // See https://fetch.spec.whatwg.org/#cors-check
@@ -540,11 +540,8 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 }
 
 // See 10.7.4 of https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
-void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response) const {
+void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &response, const OriginPolicy originPolicy) const {
   bool removeAllCookies = false;
-  auto originPolicy = static_cast<OriginPolicy>(
-      response.RequestMessage().Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
-
   if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     if (Microsoft_React_GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
@@ -567,10 +564,15 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
 
     if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       // Filter out response headers that are not in the Simple CORS whitelist
-      for (const auto &header : response.Headers())
+      std::deque<hstring> nonSimpleNames;
+      for (const auto &header : response.Headers().GetView()) {
         if (s_simpleCorsResponseHeaderNames.find(header.Key().c_str()) == s_simpleCorsResponseHeaderNames.cend())
-          response.Headers().Remove(header.Key());
+          nonSimpleNames.push_back(header.Key());
+      }
 
+      for (auto name : nonSimpleNames) {
+        response.Headers().Remove(name);
+      }
     } else {
       // filter out response headers that are not simple headers and not in expose list
       // NetworkingSecurity::FilterResponseHeadersWithExposeList(/*out*/ responseHeaders, exposeHeaders,
@@ -629,7 +631,7 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
 ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
   auto coRequest = request;
 
-  // Set request origin policy to global runtime option.
+  // Set initial origin policy to global runtime option.
   request.Properties().Insert(
       L"OriginPolicy", winrt::box_value(Microsoft_React_GetRuntimeOptionInt("Http.OriginPolicy")));
 
@@ -645,12 +647,7 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
   // Ensure absolute URL
   coRequest.RequestUri(Uri{coRequest.RequestUri().AbsoluteCanonicalUri()});
 
-  // If fetch is in CORS mode, ValidateSecurityOnRequest() determines if it is a simple request by inspecting origin,
-  // header, and method
-  ValidateRequest(coRequest);
-
-  auto originPolicy =
-      static_cast<OriginPolicy>(request.Properties().Lookup(L"OriginPolicy").as<IPropertyValue>().GetUInt64());
+  auto originPolicy = ValidateRequest(coRequest);
   if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     if (coRequest.RequestUri().UserName().size() > 0 || coRequest.RequestUri().Password().size() > 0) {
@@ -675,6 +672,13 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
 
       ValidatePreflightResponse(coRequest, preflightResponse);
     }
+
+    auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
+
+    ValidateResponse(response, originPolicy);
+
+    co_return response;
+
   } catch (hresult_error const &e) {
     throw e;
   } catch (const std::exception &e) {
@@ -682,12 +686,6 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
   } catch (...) {
     throw hresult_error{E_FAIL, L"Unspecified error processing Origin Policy request"};
   }
-
-  auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
-
-  ValidateResponse(response);
-
-  co_return response;
 }
 
 #pragma endregion IHttpFilter

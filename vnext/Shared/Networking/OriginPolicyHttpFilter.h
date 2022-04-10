@@ -69,19 +69,17 @@ class OriginPolicyHttpFilter
 
   static bool IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept;
 
-  //TODO: Remove originPolicy arg. Should be set at request time instead.
-  OriginPolicyHttpFilter(OriginPolicy originPolicy, winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
+  OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
 
-  // TODO: Remove originPolicy arg. Should be set at request time instead.
-  OriginPolicyHttpFilter(OriginPolicy originPolicy);
+  OriginPolicyHttpFilter();
 
-  void ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request);
+  OriginPolicy ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request);
 
   void ValidatePreflightResponse(
       winrt::Windows::Web::Http::HttpRequestMessage const &request,
       winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
 
-  void ValidateResponse(winrt::Windows::Web::Http::HttpResponseMessage const &response) const;
+  void ValidateResponse(winrt::Windows::Web::Http::HttpResponseMessage const &response, const OriginPolicy effectivePolicy) const;
 
   void ValidateAllowOrigin(
       winrt::hstring const &allowedOrigin,
