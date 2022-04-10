@@ -187,7 +187,13 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
       }
     } else {
-      coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
+      try {
+        coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
+      } catch (hresult_error const &e) {
+        if (self->m_onError) {
+          co_return self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(e));
+        }
+      }
     }
   }
 

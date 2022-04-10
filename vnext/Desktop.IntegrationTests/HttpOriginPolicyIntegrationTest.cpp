@@ -229,22 +229,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     s_port++;
   }
 
-  TEST_METHOD(FullCorsPreflightSucceeds)
-  {
-    ServerParams serverArgs(s_port);
-    serverArgs.Preflight.set(http::field::access_control_request_headers, "ArbitraryHeader");
-    serverArgs.Preflight.set(http::field::access_control_allow_headers,   "ArbitraryHeader");
-    serverArgs.Preflight.set(http::field::access_control_allow_origin,    s_crossOriginUrl);
-    serverArgs.Response.result(http::status::ok);
-    serverArgs.Response.set(http::field::access_control_allow_origin,     s_crossOriginUrl);
-
-    ClientParams clientArgs(http::verb::get, { {"Content-Type", "text/plain"}, {"ArbitraryHeader", "AnyValue"} });
-
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
-    TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
-  }// FullCorsPreflightSucceeds
-
   //TODO: NoCors_InvalidMethod_Failed?
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsForbiddenMethodSucceeds)
@@ -483,30 +467,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// FullCorsCrossOriginWithCredentialsFails
 
-  // The current implementation omits withCredentials flag from request and always sets it to false
-  // Configure the responses for CORS request
-  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
-    //TODO: Fails if run after FullCorsCrossOriginWithCredentialsFails
-    TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
-  {
-    ServerParams serverArgs(s_port);
-    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
-    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
-    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
-    serverArgs.Preflight.set(http::field::access_control_allow_credentials, "true");
-    serverArgs.Response.result(http::status::accepted);
-    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
-
-    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
-    clientArgs.WithCredentials = true;
-
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
-
-    TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
-  }// FullCorsCrossOriginWithCredentialsSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginMissingCorsHeadersFails)
   END_TEST_METHOD_ATTRIBUTE()
@@ -703,6 +663,164 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
+  {
+    ServerParams serverArgs(s_port);
+    ServerParams redirServerArgs(6672);
+
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    // server1 redirects the GET request to server2
+    serverArgs.Response.result(http::status::moved_permanently);
+    serverArgs.Response.set(http::field::location,                          redirServerArgs.Url);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+
+    // Since redirect tainted the origin, the server has to allow all origins for CORS to succeed
+    redirServerArgs.Response.result(http::status::accepted);
+    redirServerArgs.Response.set(http::field::access_control_allow_origin,  "*");
+
+    // PATCH is not a simple method, so preflight is required for server1
+    ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
+  } // FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails)
+  {
+    ServerParams serverArgs(s_port);
+    ServerParams redirServerArgs(6673);
+
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    // server1 redirects the GET request to server2
+    serverArgs.Response.result(http::status::moved_permanently);
+    serverArgs.Response.set(http::field::location,                          redirServerArgs.Url);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+
+    // Since redirect tainted the origin, the server does not know what origin to allow through a single value.
+    // Even if server successfully guessed the single value, it will still fail on the client side.
+    redirServerArgs.Response.result(http::status::accepted);
+    redirServerArgs.Response.set(http::field::access_control_allow_origin,  s_crossOriginUrl);
+
+    // PATCH is not a simple method, so preflight is required for server1
+    ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
+  } // FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCors304ForSimpleGetFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCors304ForSimpleGetFails)
+  {
+    ServerParams serverArgs(s_port);
+    serverArgs.Response.result(http::status::not_modified);
+
+    // PATCH is not a simple method, so preflight is required for server1
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
+  } // FullCors304ForSimpleGetFails
+
+  TEST_METHOD(FullCorsPreflightSucceeds)
+  {
+    ServerParams serverArgs(s_port);
+    serverArgs.Preflight.set(http::field::access_control_request_headers, "ArbitraryHeader");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,   "ArbitraryHeader");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,    s_crossOriginUrl);
+    serverArgs.Response.result(http::status::ok);
+    serverArgs.Response.set(http::field::access_control_allow_origin,     s_crossOriginUrl);
+
+    ClientParams clientArgs(http::verb::get, { {"Content-Type", "text/plain"}, {"ArbitraryHeader", "AnyValue"} });
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
+  }// FullCorsPreflightSucceeds
+
+  // The current implementation omits withCredentials flag from request and always sets it to false
+  // Configure the responses for CORS request
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
+    //TODO: Fails if run after FullCorsCrossOriginWithCredentialsFails
+    TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
+  {
+    ServerParams serverArgs(s_port);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_origin,      s_crossOriginUrl);
+    serverArgs.Preflight.set(http::field::access_control_allow_credentials, "true");
+    serverArgs.Response.result(http::status::accepted);
+    serverArgs.Response.set(http::field::access_control_allow_origin,       s_crossOriginUrl);
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
+    clientArgs.WithCredentials = true;
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
+  }// FullCorsCrossOriginWithCredentialsSucceeds
+
+  // "Host" is one of the forbidden headers for fetch
+  BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsRequestWithHostHeaderFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(FullCorsRequestWithHostHeaderFails)
+  {
+    ServerParams serverArgs(s_port);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Response.result(http::status::accepted);
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }, { "Host", "http://sub.example.rnw" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
+
+    Assert::Fail(L"FIX!!! Passes for the worng reason. Error: 0x80070057 : 'Invalid HTTP headers.'");
+  }// FullCorsRequestWithHostHeaderFails
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(RequestWithProxyAuthorizationHeaderFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(RequestWithProxyAuthorizationHeaderFails)
+  {
+    ServerParams serverArgs(s_port);
+    serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
+    serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
+    serverArgs.Response.result(http::status::accepted);
+
+    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }, { "Proxy-Authorization", "Basic Zm9vOmJhcg==" }});
+
+    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
+  }// RequestWithProxyAuthorizationHeaderFails
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(ExceedingRedirectLimitFails)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(ExceedingRedirectLimitFails)
+  {
+    Assert::Fail(L"NOT IMPLEMENTED");
+  }// ExceedingRedirectLimitFails
 
 };
 
