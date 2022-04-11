@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 11 Apr 2022 15:08:27 GMT",
+      "tag": "@react-native-windows/cli_v0.68.1",
+      "version": "0.68.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "78b1ab9dff910863255f756fd23313363844f7c7",
+            "comment": "[0.68] Update CLI project config tests with latest templates"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.68.1",
+            "commit": "223d20b71889ad37f936f1ce730caf3cca1bb068"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Apr 2022 15:12:11 GMT",
       "tag": "@react-native-windows/cli_v0.68.0",
       "version": "0.68.0",

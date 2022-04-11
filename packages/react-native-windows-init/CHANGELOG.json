@@ -2,6 +2,27 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Mon, 11 Apr 2022 15:08:27 GMT",
+      "tag": "react-native-windows-init_v1.1.82",
+      "version": "1.1.82",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/telemetry to v0.68.1",
+            "commit": "223d20b71889ad37f936f1ce730caf3cca1bb068"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.68.1",
+            "commit": "223d20b71889ad37f936f1ce730caf3cca1bb068"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Apr 2022 15:12:12 GMT",
       "tag": "react-native-windows-init_v1.1.82",
       "version": "1.1.82",

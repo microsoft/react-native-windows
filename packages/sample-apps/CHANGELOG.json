@@ -2,6 +2,21 @@
   "name": "sample-apps",
   "entries": [
     {
+      "date": "Mon, 11 Apr 2022 15:08:27 GMT",
+      "tag": "sample-apps_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "sample-apps",
+            "comment": "Bump react-native-windows to v0.68.1",
+            "commit": "223d20b71889ad37f936f1ce730caf3cca1bb068"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Apr 2022 15:12:12 GMT",
       "tag": "sample-apps_v0.0.0",
       "version": "0.0.0",
