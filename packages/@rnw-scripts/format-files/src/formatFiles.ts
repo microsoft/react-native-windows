@@ -30,7 +30,7 @@ function main() {
   // Run clang-format.
   try {
     const verify = process.argv.indexOf(VERIFY_FLAG) > 0;
-    const args = process.argv.slice(2).filter((_) => _ !== VERIFY_FLAG);
+    const args = process.argv.slice(2).filter(_ => _ !== VERIFY_FLAG);
 
     // Pass all arguments to clang-format, including e.g. -version etc.
     spawnClangFormat(args, verify ? queryNoOpenFiles : process.exit, 'inherit');
@@ -107,10 +107,10 @@ function spawnClangFormat(
 
   // Apply file filters from constants
   files = files.filter(
-    (file) =>
-      includeEndsWith.some((_) => file.endsWith(_)) &&
-      !excludePathContains.some((_) => file.indexOf(_) > 0) &&
-      !excludePathEndsWith.some((_) => file.endsWith(_)),
+    file =>
+      includeEndsWith.some(_ => file.endsWith(_)) &&
+      !excludePathContains.some(_ => file.indexOf(_) > 0) &&
+      !excludePathEndsWith.some(_ => file.endsWith(_)),
   );
 
   // split file array into chunks of 30
@@ -125,12 +125,12 @@ function spawnClangFormat(
 
   // launch a new process for each chunk
   async.series<number, Error>(
-    chunks.map((chunk) => {
+    chunks.map(chunk => {
       return function (callback) {
         const clangFormatProcess = spawn(nativeBinary, args.concat(chunk), {
           stdio: stdio,
         });
-        clangFormatProcess.on('close', (exit) => {
+        clangFormatProcess.on('close', exit => {
           if (exit !== 0) {
             callback(errorFromExitCode(exit!));
           } else {
@@ -139,7 +139,7 @@ function spawnClangFormat(
         });
       };
     }),
-    (err) => {
+    err => {
       if (err) {
         done(err);
         return;
