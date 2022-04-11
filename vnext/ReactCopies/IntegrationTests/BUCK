@@ -17,10 +17,7 @@ rn_library(
             "websocket_integration_test_server.js",
         ],
     ),
-    labels = [
-        "pfh:ReactNative_CommonInfrastructurePlaceholde",
-        "supermodule:xplat/default/public.react_native.tests",
-    ],
+    labels = ["supermodule:xplat/default/public.react_native.tests"],
     skip_processors = True,
     visibility = ["PUBLIC"],
     deps = [

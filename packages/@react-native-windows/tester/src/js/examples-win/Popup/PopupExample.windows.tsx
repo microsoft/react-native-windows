@@ -68,7 +68,7 @@ class AnchoredPopupExample extends React.Component<
     );
   }
   _togglePopup = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       buttonTitle: state.showPopup ? 'Open Popup' : 'Close Popup',
       showPopup: !state.showPopup,
     }));
@@ -116,7 +116,7 @@ class PopupPlacementExample extends React.Component<
   }
 
   _togglePopup = () => {
-    this.setState((state) => ({
+    this.setState(state => ({
       showPopup: !state.showPopup,
     }));
   };

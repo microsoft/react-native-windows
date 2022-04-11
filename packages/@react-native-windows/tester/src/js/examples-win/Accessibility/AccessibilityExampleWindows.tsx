@@ -301,7 +301,7 @@ class AccessibilityStateExamples extends React.Component {
         <FlatList
           accessibilityLabel="List of selectable items"
           data={selectableItems}
-          renderItem={(item) => (
+          renderItem={item => (
             <TouchableHighlight
               style={{
                 width: 100,
@@ -508,7 +508,7 @@ class AccessibilityListExamples extends React.Component {
           accessibilityRole="list">
           <FlatList
             data={items}
-            renderItem={(item) => (
+            renderItem={item => (
               <View
                 style={{
                   width: 100,
@@ -531,7 +531,7 @@ class AccessibilityListExamples extends React.Component {
           <Text>The following does the same, but with Touchables.</Text>
           <FlatList
             data={items}
-            renderItem={(item) => (
+            renderItem={item => (
               <TouchableHighlight
                 style={{
                   width: 100,

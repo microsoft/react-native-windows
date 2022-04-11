@@ -71,9 +71,7 @@ export default class Bootstrap extends React.Component<
           <Picker
             style={{width: 125}}
             selectedValue={this.state.selectedResizeMode}
-            onValueChange={(value) =>
-              this.setState({selectedResizeMode: value})
-            }>
+            onValueChange={value => this.setState({selectedResizeMode: value})}>
             <Picker.Item label="cover" value="cover" />
             <Picker.Item label="contain" value="contain" />
             <Picker.Item label="stretch" value="stretch" />
@@ -86,7 +84,7 @@ export default class Bootstrap extends React.Component<
           <Picker
             style={{width: 125}}
             selectedValue={this.state.selectedSource}
-            onValueChange={(value) => this.switchImageUri(value)}>
+            onValueChange={value => this.switchImageUri(value)}>
             <Picker.Item label="small" value="small" />
             <Picker.Item label="large" value="large" />
             <Picker.Item label="data" value="data" />
@@ -99,7 +97,7 @@ export default class Bootstrap extends React.Component<
           <Picker
             style={{width: 125}}
             selectedValue={this.state.blurRadius}
-            onValueChange={(value) => this.setState({blurRadius: value})}>
+            onValueChange={value => this.setState({blurRadius: value})}>
             <Picker.Item label="0" value={0} />
             <Picker.Item label="5" value={5} />
             <Picker.Item label="10" value={10} />
@@ -110,7 +108,7 @@ export default class Bootstrap extends React.Component<
           <Picker
             style={{width: 125}}
             selectedValue={this.state.tintColor}
-            onValueChange={(value) => this.setState({tintColor: value})}>
+            onValueChange={value => this.setState({tintColor: value})}>
             <Picker.Item label="None" value="transparent" />
             <Picker.Item label="Purple" value="purple" />
             <Picker.Item label="Green" value="green" />

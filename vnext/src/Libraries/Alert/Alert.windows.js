@@ -70,7 +70,7 @@ class Alert {
       buttonNeutral,
       buttonNegative,
       buttonPositive,
-    ].findIndex((b) => b != null && b.style === 'default');
+    ].findIndex(b => b != null && b.style === 'default');
 
     // XAML has an enum to specify the default button, which is:
     //   None = 0, Primary = 1, Secondary = 2, Close = 3
@@ -101,7 +101,7 @@ class Alert {
         options && options.onDismiss && options.onDismiss();
       }
     };
-    const onError = (errorMessage) => console.warn(errorMessage);
+    const onError = errorMessage => console.warn(errorMessage);
     NativeDialogManagerWindows.showAlert(config, onError, onAction);
   }
 

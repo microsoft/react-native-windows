@@ -88,7 +88,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           step={10}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onValueChange={(value) => this.setState({width: value})}
+          onValueChange={value => this.setState({width: value})}
         />
         <Text>Multiline:</Text>
         <Switch
@@ -97,7 +97,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           value={this.state.multiline}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onValueChange={(value) => this.setState({multiline: value})}
+          onValueChange={value => this.setState({multiline: value})}
         />
         <Text>TextInput:</Text>
         {/* $FlowFixMe(>=0.122.0 site=react_native_android_fb) This comment
@@ -112,8 +112,8 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
           style={[style, {width: this.state.width + '%'}]}
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
-          onChangeText={(value) => this.setState({text: value})}
-          onContentSizeChange={(event) =>
+          onChangeText={value => this.setState({text: value})}
+          onContentSizeChange={event =>
             /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
              * found when making Flow check .android.js files. */
             this.setState({contentSize: event.nativeEvent.contentSize})
@@ -162,7 +162,7 @@ function PropagationSample() {
 
   function logEvent(eventName) {
     const limit = 6;
-    setEventLog((current) => {
+    setEventLog(current => {
       return [eventName].concat(current.slice(0, limit - 1));
     });
     console.log(eventName);
@@ -176,20 +176,18 @@ function PropagationSample() {
           {code: 'KeyW', handledEventPhase: 3},
           {code: 'KeyE', handledEventPhase: 1},
         ]}
-        onKeyDown={(event) =>
-          logEvent('outer keyDown ' + event.nativeEvent.code)
-        }
-        onKeyDownCapture={(event) =>
+        onKeyDown={event => logEvent('outer keyDown ' + event.nativeEvent.code)}
+        onKeyDownCapture={event =>
           logEvent('outer keyDownCapture ' + event.nativeEvent.code)
         }>
         <Text>some text to focus on</Text>
         <TextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
-          onKeyDown={(event) =>
+          onKeyDown={event =>
             logEvent('textinput keyDown ' + event.nativeEvent.code)
           }
-          onKeyUp={(event) =>
+          onKeyUp={event =>
             logEvent('textinput keyUp ' + event.nativeEvent.code)
           }
           keyDownEvents={[
@@ -319,7 +317,7 @@ exports.examples = ([
             '300',
             '200',
             '100',
-          ].map((fontWeight) => (
+          ].map(fontWeight => (
             <TextInput
               defaultValue={`Font Weight (${fontWeight})`}
               key={fontWeight}
@@ -496,7 +494,7 @@ exports.examples = ([
         'next',
       ];
       const returnKeyLabels = ['Compile', 'React Native'];
-      const examples = returnKeyTypes.map((type) => {
+      const examples = returnKeyTypes.map(type => {
         return (
           <TextInput
             key={type}
@@ -506,7 +504,7 @@ exports.examples = ([
           />
         );
       });
-      const types = returnKeyLabels.map((type) => {
+      const types = returnKeyLabels.map(type => {
         return (
           <TextInput
             key={type}
