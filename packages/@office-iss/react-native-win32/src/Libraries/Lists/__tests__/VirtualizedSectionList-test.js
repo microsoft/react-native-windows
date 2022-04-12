@@ -25,7 +25,7 @@ describe('VirtualizedSectionList', () => {
         ]}
         renderItem={({item}) => <item value={item.key} />}
         getItem={(data, key) => data[key]}
-        getItemCount={(data) => data.length}
+        getItemCount={data => data.length}
       />,
     );
     expect(component).toMatchSnapshot();
@@ -37,7 +37,7 @@ describe('VirtualizedSectionList', () => {
         sections={[]}
         renderItem={({item}) => <item value={item.key} />}
         getItem={(data, key) => data[key]}
-        getItemCount={(data) => data.length}
+        getItemCount={data => data.length}
       />,
     );
     expect(component).toMatchSnapshot();
@@ -51,7 +51,7 @@ describe('VirtualizedSectionList', () => {
         ListFooterComponent={() => <footer />}
         ListHeaderComponent={() => <header />}
         getItem={(data, key) => data[key]}
-        getItemCount={(data) => data.length}
+        getItemCount={data => data.length}
         renderItem={({item}) => <item value={item.key} />}
       />,
     );
@@ -64,7 +64,7 @@ describe('VirtualizedSectionList', () => {
         sections={[{title: 's1', data: [{key: 'hello'}]}]}
         ListEmptyComponent={() => <empty />}
         getItem={(data, key) => data[key]}
-        getItemCount={(data) => data.length}
+        getItemCount={data => data.length}
         renderItem={({item}) => <item value={item.key} />}
       />,
     );
@@ -85,7 +85,7 @@ describe('VirtualizedSectionList', () => {
           },
         ]}
         getItem={(data, key) => data[key]}
-        getItemCount={(data) => data.length}
+        getItemCount={data => data.length}
         getItemLayout={({index}) => ({
           index: -1,
           length: 50,
@@ -107,16 +107,16 @@ describe('VirtualizedSectionList', () => {
     ReactTestRenderer.act(() => {
       component = ReactTestRenderer.create(
         <VirtualizedSectionList
-          ItemSeparatorComponent={(props) => <separator {...props} />}
+          ItemSeparatorComponent={props => <separator {...props} />}
           sections={[
             {title: 's0', data: [{key: 'i0'}, {key: 'i1'}, {key: 'i2'}]},
           ]}
-          renderItem={(info) => {
+          renderItem={info => {
             infos.push(info);
             return <item title={info.item.key} />;
           }}
           getItem={(data, key) => data[key]}
-          getItemCount={(data) => data.length}
+          getItemCount={data => data.length}
         />,
       );
     });
@@ -140,7 +140,7 @@ describe('VirtualizedSectionList', () => {
     const component = ReactTestRenderer.create(
       <VirtualizedSectionList
         sections={[{title: 'outer', data: [{key: 'outer0'}, {key: 'outer1'}]}]}
-        renderItem={(outerInfo) => (
+        renderItem={outerInfo => (
           <VirtualizedSectionList
             sections={[
               {
@@ -152,15 +152,15 @@ describe('VirtualizedSectionList', () => {
               },
             ]}
             horizontal={outerInfo.item.key === 'outer1'}
-            renderItem={(innerInfo) => {
+            renderItem={innerInfo => {
               return <item title={innerInfo.item.key} />;
             }}
             getItem={(data, key) => data[key]}
-            getItemCount={(data) => data.length}
+            getItemCount={data => data.length}
           />
         )}
         getItem={(data, key) => data[key]}
-        getItemCount={(data) => data.length}
+        getItemCount={data => data.length}
       />,
     );
     expect(component).toMatchSnapshot();
@@ -180,7 +180,7 @@ describe('VirtualizedSectionList', () => {
           ]}
           renderItem={({item}) => <item value={item.key} />}
           getItem={(data, key) => data[key]}
-          getItemCount={(data) => data.length}
+          getItemCount={data => data.length}
           getItemLayout={(data, index) => ({
             length: ITEM_HEIGHT,
             offset: ITEM_HEIGHT * index,

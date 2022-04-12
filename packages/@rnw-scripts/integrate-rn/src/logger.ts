@@ -102,26 +102,26 @@ export class CompositeLogger implements Logger {
   constructor(private readonly loggers: Logger[]) {}
 
   newTask(taskName: string) {
-    this.loggers.forEach((logger) => logger.newTask(taskName));
+    this.loggers.forEach(logger => logger.newTask(taskName));
   }
 
   info(message: string) {
-    this.loggers.forEach((logger) => logger.info(message));
+    this.loggers.forEach(logger => logger.info(message));
   }
 
   success(taskName: string, body?: string) {
-    this.loggers.forEach((logger) => logger.success(taskName, body));
+    this.loggers.forEach(logger => logger.success(taskName, body));
   }
 
   warn(taskName: string, body?: string) {
-    this.loggers.forEach((logger) => logger.warn(taskName, body));
+    this.loggers.forEach(logger => logger.warn(taskName, body));
   }
 
   error(taskName: string, body?: string) {
-    this.loggers.forEach((logger) => logger.error(taskName, body));
+    this.loggers.forEach(logger => logger.error(taskName, body));
   }
 
   close() {
-    this.loggers.forEach((logger) => logger.close());
+    this.loggers.forEach(logger => logger.close());
   }
 }

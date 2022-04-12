@@ -65,7 +65,7 @@ function translatePossibleMethodSignatures(
   baseAliasName: string,
 ): string {
   return getPossibleMethodSignatures(prop, funcType, aliases, baseAliasName)
-    .map((sig) => `"    ${sig}\\n"`)
+    .map(sig => `"    ${sig}\\n"`)
     .join('\n          ');
 }
 
@@ -76,7 +76,7 @@ function renderProperties(
 ): string {
   // TODO: generate code for constants
   return properties
-    .filter((prop) => prop.name !== 'getConstants')
+    .filter(prop => prop.name !== 'getConstants')
     .map((prop, index) => {
       // TODO: prop.optional === true
       // TODO: prop.typeAnnotation.type === 'NullableTypeAnnotation'
