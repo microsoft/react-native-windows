@@ -402,7 +402,7 @@ function verifyTestCommandTelemetryProcessor(
   };
 }
 
-test('Telemetry run test command end to end, verify event fires', async done => {
+xtest('Telemetry run test command end to end, verify event fires', async done => {
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
@@ -418,7 +418,7 @@ test('Telemetry run test command end to end, verify event fires', async done => 
   });
 });
 
-test('Telemetry run test command end to end with CodedError, verify events fire', async done => {
+xtest('Telemetry run test command end to end with CodedError, verify events fire', async done => {
   const expectedError = new errorUtils.CodedError('MSBuildError', 'test error');
 
   // AI eats errors thrown in telemetry processors
@@ -440,7 +440,7 @@ test('Telemetry run test command end to end with CodedError, verify events fire'
   });
 });
 
-test('Telemetry run test command end to end with CodedError (with error in message), verify events fire', async done => {
+xtest('Telemetry run test command end to end with CodedError (with error in message), verify events fire', async done => {
   const expectedError = new errorUtils.CodedError(
     'MSBuildError',
     'error FOO2020: test error',
@@ -465,7 +465,7 @@ test('Telemetry run test command end to end with CodedError (with error in messa
   });
 });
 
-test('Telemetry run test command end to end with CodedError (with data), verify events fire', async done => {
+xtest('Telemetry run test command end to end with CodedError (with data), verify events fire', async done => {
   const expectedError = new errorUtils.CodedError(
     'MSBuildError',
     'test error',
@@ -491,7 +491,7 @@ test('Telemetry run test command end to end with CodedError (with data), verify 
   });
 });
 
-test('Telemetry run test command end to end with Error, verify events fire', async done => {
+xtest('Telemetry run test command end to end with Error, verify events fire', async done => {
   const expectedError = new Error('error FOO2020: test error');
 
   // AI eats errors thrown in telemetry processors
@@ -509,7 +509,7 @@ test('Telemetry run test command end to end with Error, verify events fire', asy
   });
 });
 
-test('Telemetry run test command end to end with Error (no message), verify events fire', async done => {
+xtest('Telemetry run test command end to end with Error (no message), verify events fire', async done => {
   const expectedError = new Error();
 
   // AI eats errors thrown in telemetry processors
