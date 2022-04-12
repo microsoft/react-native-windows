@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Tue, 12 Apr 2022 05:10:37 GMT",
+      "tag": "@react-native-windows/automation_v0.1.69",
+      "version": "0.1.69",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/automation",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114",
+            "comment": "Fix Overrides"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.58",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.2",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Apr 2022 05:10:10 GMT",
       "tag": "@react-native-windows/automation_v0.1.68",
       "version": "0.1.68",

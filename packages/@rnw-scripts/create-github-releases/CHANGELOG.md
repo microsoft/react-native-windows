@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Tue, 05 Apr 2022 05:10:13 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Apr 2022 05:10:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.12
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Patches
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.31
+- Bump @react-native-windows/fs to v0.0.0-canary.2
 
 ## 1.1.11
 

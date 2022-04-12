@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 09 Apr 2022 05:10:10 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Apr 2022 05:10:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.484
+
+Tue, 12 Apr 2022 05:10:39 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.124
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.38
+- Bump @react-native-windows/codegen to v0.0.0-canary.30
+- Bump react-native-platform-override to v1.6.9
 
 ## 0.0.0-canary.483
 
