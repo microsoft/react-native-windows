@@ -25,6 +25,10 @@ function expectValidVersion(version: string | null, expectSemVer: boolean) {
   }
 }
 
+beforeAll(() => {
+  jest.setTimeout(10000); // These tests can run longer than the default 5000ms
+});
+
 test('getNodeVersion() is valid', async () => {
   const version = await versionUtils.getNodeVersion();
   expectValidVersion(version, true);
