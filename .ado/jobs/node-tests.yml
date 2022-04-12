@@ -32,4 +32,4 @@ jobs:
             versionSpec: '${{ nodeVersion }}.x'
 
         - script: yarn test
-          displayName: yarn test
+          displayName: yarn test --concurrency 1
