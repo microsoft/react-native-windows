@@ -7,10 +7,6 @@
 
 import * as basePropUtils from '../utils/basePropUtils';
 
-beforeAll(() => {
-  jest.setTimeout(10000); // These tests can run longer than the default 5000ms
-});
-
 test('deviceId() is valid', async () => {
   const value = await basePropUtils.deviceId();
   expect(value).toBeDefined();

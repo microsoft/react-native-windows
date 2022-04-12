@@ -25,23 +25,19 @@ function expectValidVersion(version: string | null, expectSemVer: boolean) {
   }
 }
 
-beforeAll(() => {
-  jest.setTimeout(10000); // These tests can run longer than the default 5000ms
-});
-
 test('getNodeVersion() is valid', async () => {
   const version = await versionUtils.getNodeVersion();
   expectValidVersion(version, true);
 });
 
-test('getNpmVersion() is valid', async () => {
+xtest('getNpmVersion() is valid', async () => {
   const version = await versionUtils.getNpmVersion();
   if (version) {
     expectValidVersion(version, true);
   }
 });
 
-test('getYarnVersion() is valid', async () => {
+xtest('getYarnVersion() is valid', async () => {
   const version = await versionUtils.getYarnVersion();
   if (version) {
     expectValidVersion(version, true);
