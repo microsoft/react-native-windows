@@ -6,6 +6,7 @@
  */
 
 import * as appInsights from 'applicationinsights';
+import CorrelationIdManager from 'applicationinsights/out/Library/CorrelationIdManager';
 import * as path from 'path';
 
 import {
@@ -39,6 +40,13 @@ export class TelemetryTest extends Telemetry {
     Telemetry.isTest = true;
 
     await Telemetry.setup({preserveErrorMessages: true});
+    
+    // Workaround for https://github.com/microsoft/ApplicationInsights-node.js/issues/833
+    Telemetry.client!.config.correlationIdRetryIntervalMs = 500;
+    CorrelationIdManager.cancelCorrelationIdQuery(
+      Telemetry.client!.config,
+      () => {},
+    );
   }
 
   /** Run at the end of each test where telemetry was fired. */
