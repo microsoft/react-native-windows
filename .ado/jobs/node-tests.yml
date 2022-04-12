@@ -24,13 +24,13 @@ jobs:
       steps:
         - template: ../templates/checkout-shallow.yml
 
-        - script: yarn install
-          displayName: yarn install
-
         - task: NodeTool@0
           displayName: Using Node ${{ nodeVersion }}.x
           inputs:
             versionSpec: '${{ nodeVersion }}.x'
+
+        - script: yarn install
+          displayName: yarn install
 
         - script: yarn test
           displayName: yarn test
