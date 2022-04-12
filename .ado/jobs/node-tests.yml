@@ -31,5 +31,5 @@ jobs:
           inputs:
             versionSpec: '${{ nodeVersion }}.x'
 
-        - script: yarn test
-          displayName: yarn test --concurrency 1
+        - script: yarn test --concurrency 1
+          displayName: yarn test
