@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disable unstable telemetry tests",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
