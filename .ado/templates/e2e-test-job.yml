@@ -1,7 +1,7 @@
 #
 parameters:
   name: ''
-  BuildPlatform: x86 # ARM, x86, x64
+  BuildPlatform: x64
 
 jobs:
   - job: ${{ parameters.name }}
@@ -10,7 +10,7 @@ jobs:
     variables:
       - template: ../variables/vs2019.yml
       - name: BuildLogDirectory
-        value: $(Build.BinariesDirectory)\$(BuildPlatform)\BuildLogs
+        value: $(Build.BinariesDirectory)\${{ parameters.BuildPlatform }}\BuildLogs
 
     pool:
       vmImage: $(VmImage)
@@ -51,10 +51,14 @@ jobs:
           Start-Process msiexec -ArgumentList "/quiet","/i","$(Agent.TempDirectory)\WinAppDriver.msi" -Verb runAs -Wait
         displayName: Replace WinAppDriver 1.2.1 with WinAppDriver 1.1
 
-      - task: CmdLine@2
-        displayName: run-windows
-        inputs:
-          script: yarn windows --no-launch --no-packager --arch ${{ parameters.BuildPlatform }} --release --logging --buildLogDirectory $(BuildLogDirectory) --msbuildprops BaseIntDir=$(BaseIntDir)
+      - template: ../templates/run-windows-with-certificates.yml
+        parameters:
+          buildEnvironment: PullRequest
+          encodedKey: reactUWPTestAppEncodedKey
+          buildConfiguration: Release
+          buildPlatform: ${{ parameters.BuildPlatform }}
+          deployOption: ''
+          buildLogDirectory: $(BuildLogDirectory)
           workingDirectory: packages/E2ETest
 
       - task: CopyFiles@2
@@ -88,7 +92,7 @@ jobs:
       - task: CopyFiles@2
         displayName: Copy tree dump output files
         inputs:
-          sourceFolder: $(UserProfile)\Documents\ReactUWPTestApp_cezq6h4ygq1hw!App
+          sourceFolder: $(UserProfile)\Documents\ReactUWPTestApp_8wekyb3d8bbwe!App
           targetFolder: $(Build.StagingDirectory)/ReactUWPTestAppTreeDump
           contents: TreeDump\**
         condition: succeededOrFailed()

@@ -357,9 +357,9 @@ capabilities are the configuration which appium/WinAppDriver used to identify th
       maxInstances: 1,
       platformName: 'windows',
       'appium:deviceName': 'WindowsPC',
-      'appium:app': 'ReactUWPTestApp_cezq6h4ygq1hw!App',
+      'appium:app': 'ReactUWPTestApp_8wekyb3d8bbwe!App',
       'deviceName': 'WindowsPC',
-      'app': 'ReactUWPTestApp_cezq6h4ygq1hw!App',
+      'app': 'ReactUWPTestApp_8wekyb3d8bbwe!App',
       'winAppDriver:experimental-w3c': true,
   },
 
@@ -459,7 +459,7 @@ The best way to do this is by letting the CI run and fail, then downloading the 
 When an output doesn't match its master, a file with `.err` extension will be produced under the `TreeDump` folder in the `ReactUWPTestAppTreeDump` artifact. The content of the `.err` file will usually just say:
 
 ```txt
-Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__cezq6h4ygq1hw\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\Documents\ReactUWPTestApp_cezq6h4ygq1hw\LocalState\TreeDump\ControlStyleRoundBorder.json
+Tree dump file does not match master at C:\Program Files\WindowsApps\ReactUWPTestApp_1.0.0.0_x64__8wekyb3d8bbwe\Assets\TreeDump\masters\ControlStyleRoundBorder.json - See output at C:\Users\VssAdministrator\Documents\ReactUWPTestApp_8wekyb3d8bbwe\LocalState\TreeDump\ControlStyleRoundBorder.json
 ```
 
 ![Errors](img/e2e-errors.png)
