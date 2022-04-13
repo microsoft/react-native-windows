@@ -77,9 +77,9 @@ export function bindVersion(
   version: string,
 ): ReactFileRepository {
   return {
-    listFiles: (globs) => repository.listFiles(globs, version),
-    readFile: (filename) => repository.readFile(filename, version),
-    stat: (filename) => repository.stat(filename, version),
+    listFiles: globs => repository.listFiles(globs, version),
+    readFile: filename => repository.readFile(filename, version),
+    stat: filename => repository.stat(filename, version),
     getVersion: () => version,
   };
 }

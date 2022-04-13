@@ -950,7 +950,7 @@ test('Mixed types', () => {
 });
 
 function expectSortedDeps(packages: LocalPackageDeps[]) {
-  packages.forEach((pkg) => {
+  packages.forEach(pkg => {
     expectSortedArray(Object.keys(pkg.dependencies || {}));
     expectSortedArray(Object.keys(pkg.peerDependencies || {}));
     expectSortedArray(Object.keys(pkg.devDependencies || {}));

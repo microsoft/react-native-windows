@@ -214,61 +214,58 @@ export default class Bootstrap extends React.Component {
         <View style={styles.buttonRow}>
           <CalcButton
             name={operators.clearEntry}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
           <CalcButton
             name={operators.clear}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
           <CalcButton
             name={operators.backspace}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
           <CalcButton
             name={operators.divide}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
         </View>
         <View style={styles.buttonRow}>
-          <CalcButton name="7" onPress={(n) => this.buttonPress(n)} />
-          <CalcButton name="8" onPress={(n) => this.buttonPress(n)} />
-          <CalcButton name="9" onPress={(n) => this.buttonPress(n)} />
+          <CalcButton name="7" onPress={n => this.buttonPress(n)} />
+          <CalcButton name="8" onPress={n => this.buttonPress(n)} />
+          <CalcButton name="9" onPress={n => this.buttonPress(n)} />
           <CalcButton
             name={operators.multiply}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
         </View>
         <View style={styles.buttonRow}>
-          <CalcButton name="4" onPress={(n) => this.buttonPress(n)} />
-          <CalcButton name="5" onPress={(n) => this.buttonPress(n)} />
-          <CalcButton name="6" onPress={(n) => this.buttonPress(n)} />
+          <CalcButton name="4" onPress={n => this.buttonPress(n)} />
+          <CalcButton name="5" onPress={n => this.buttonPress(n)} />
+          <CalcButton name="6" onPress={n => this.buttonPress(n)} />
           <CalcButton
             name={operators.subtract}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
         </View>
         <View style={styles.buttonRow}>
-          <CalcButton name="1" onPress={(n) => this.buttonPress(n)} />
-          <CalcButton name="2" onPress={(n) => this.buttonPress(n)} />
-          <CalcButton name="3" onPress={(n) => this.buttonPress(n)} />
-          <CalcButton
-            name={operators.add}
-            onPress={(n) => this.buttonPress(n)}
-          />
+          <CalcButton name="1" onPress={n => this.buttonPress(n)} />
+          <CalcButton name="2" onPress={n => this.buttonPress(n)} />
+          <CalcButton name="3" onPress={n => this.buttonPress(n)} />
+          <CalcButton name={operators.add} onPress={n => this.buttonPress(n)} />
         </View>
         <View style={styles.buttonRow}>
           <CalcButton
             name={operators.sign}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
-          <CalcButton name="0" onPress={(n) => this.buttonPress(n)} />
+          <CalcButton name="0" onPress={n => this.buttonPress(n)} />
           <CalcButton
             name={operators.decimal}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
           <CalcButton
             name={operators.equals}
-            onPress={(n) => this.buttonPress(n)}
+            onPress={n => this.buttonPress(n)}
           />
         </View>
       </View>

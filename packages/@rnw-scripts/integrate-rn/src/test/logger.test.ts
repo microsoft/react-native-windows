@@ -14,7 +14,7 @@ let loggerOuptput: string;
 beforeEach(() => {
   loggerOuptput = '';
   outStream = new PassThrough();
-  outStream.on('data', (chunk) => {
+  outStream.on('data', chunk => {
     loggerOuptput += chunk;
   });
 });

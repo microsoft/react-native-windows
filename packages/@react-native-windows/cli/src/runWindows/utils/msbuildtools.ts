@@ -51,7 +51,7 @@ export default class MSBuildTools {
       'msbuild.exe',
     )}" "${slnFile}" /t:Clean`;
     const results = child_process.execSync(cmd).toString().split(EOL);
-    results.forEach((result) => console.log(chalk.white(result)));
+    results.forEach(result => console.log(chalk.white(result)));
   }
 
   async restorePackageConfigs(
@@ -131,7 +131,7 @@ export default class MSBuildTools {
       args.push(`/t:Deploy`);
     }
 
-    Object.keys(msBuildProps).forEach((key) => {
+    Object.keys(msBuildProps).forEach(key => {
       args.push(`/p:${key}=${msBuildProps[key]}`);
     });
 
@@ -266,9 +266,9 @@ export default class MSBuildTools {
 
     shell
       .ls(uapFolderPath)
-      .filter((uapDir) => shell.test('-d', path.join(uapFolderPath, uapDir)))
+      .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
       .map(Version.tryParse)
-      .forEach((version) => version && results.push(version));
+      .forEach(version => version && results.push(version));
 
     return results;
   }

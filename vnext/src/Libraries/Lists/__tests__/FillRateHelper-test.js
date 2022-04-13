@@ -31,7 +31,7 @@ function computeResult({helper, props, state, scroll}): number {
   return helper.computeBlankness(
     {
       data: dataGlobal,
-      getItemCount: (data2) => data2.length,
+      getItemCount: data2 => data2.length,
       initialNumToRender: 10,
       ...(props || {}),
     },
@@ -98,7 +98,7 @@ describe('computeBlankness', function () {
 
   it('can handle multiple listeners and unsubscribe', function () {
     const listeners = [jest.fn(), jest.fn(), jest.fn()];
-    const subscriptions = listeners.map((listener) =>
+    const subscriptions = listeners.map(listener =>
       FillRateHelper.addListener(listener),
     );
     subscriptions[1].remove();
