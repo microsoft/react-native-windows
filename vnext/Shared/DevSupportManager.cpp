@@ -33,6 +33,7 @@
 #pragma warning(pop)
 
 #include <future>
+#include <mutex>
 
 #include <AppModel.h>
 
@@ -239,37 +240,32 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
-void DevSupportManager::StartInspector(
+void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const std::string &packagerHost,
     [[maybe_unused]] const uint16_t packagerPort) noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
-  std::string packageName("RNW");
-  wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
-  UINT32 size = ARRAYSIZE(fullName);
-  if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
-    // we are in an unpackaged app
-    packageName = winrt::to_string(fullName);
-  }
+  static std::once_flag once;
+  std::call_once(once, [this, &packagerHost, packagerPort]() {
+    std::string packageName("RNW");
+    wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
+    UINT32 size = ARRAYSIZE(fullName);
+    if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
+      // we are in an unpackaged app
+      packageName = winrt::to_string(fullName);
+    }
 
-  std::string deviceName("RNWHost");
-  auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
-  if (hostNames && hostNames.First() && hostNames.First().Current()) {
-    deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
-  }
+    std::string deviceName("RNWHost");
+    auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
+    if (hostNames && hostNames.First() && hostNames.First().Current()) {
+      deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
+    }
 
-  m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
-      facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
-      m_BundleStatusProvider);
-  m_inspectorPackagerConnection->connectAsync();
-#endif
-}
-
-void DevSupportManager::StopInspector() noexcept {
-#ifdef HERMES_ENABLE_DEBUGGER
-  if (m_inspectorPackagerConnection) {
-    m_inspectorPackagerConnection->disconnectAsync();
-    m_inspectorPackagerConnection = nullptr;
-  }
+    m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
+        facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
+        m_BundleStatusProvider);
+    m_inspectorPackagerConnection->connectAsync();
+  });
+  
 #endif
 }
 

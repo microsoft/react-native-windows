@@ -254,7 +254,7 @@ InstanceImpl::InstanceImpl(
 #endif
 
   if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+    m_devManager->EnsureHermesInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
   // Default (common) NativeModules
@@ -532,8 +532,9 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
-  if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->StopInspector();
+  if (shouldStartHermesInspector(*m_devSettings) && m_devSettings->jsiRuntimeHolder) {
+    m_devSettings->jsiRuntimeHolder->teardown();
+    // m_devManager->StopInspector();
   }
   m_nativeQueue->quitSynchronous();
 }
