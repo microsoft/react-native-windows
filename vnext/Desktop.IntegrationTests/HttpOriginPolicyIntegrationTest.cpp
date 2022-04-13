@@ -540,7 +540,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     serverArgs.Response.set(http::field::server,                            "BaseServer");
 
     // Server2 does not set Access-Control-Allow-Origin for GET requests
-    ServerParams redirServerArgs(6666);
+    ServerParams redirServerArgs(++s_port);
     redirServerArgs.Response.result(http::status::accepted);
     redirServerArgs.Response.set(http::field::server,                    "RedirectServer");
 
@@ -574,7 +574,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsSameOriginToCrossOriginRedirectSucceeds)
   {
     ServerParams serverArgs(s_port);
-    ServerParams redirServerArgs(6667);
+    ServerParams redirServerArgs(++s_port);
 
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      serverArgs.Url);
     serverArgs.Response.result(http::status::moved_permanently);
@@ -599,7 +599,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
   {
     ServerParams serverArgs(s_port);
-    //ServerParams redirServerArgs(6668);
+    //ServerParams redirServerArgs(++s_port);
 
     serverArgs.Preflight.set(http::field::access_control_allow_origin,      serverArgs.Url);
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
@@ -627,7 +627,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginToOriginalOriginRedirectFails)
   {
     ServerParams serverArgs(s_port);
-    ServerParams redirServerArgs(6669);
+    ServerParams redirServerArgs(++s_port);
 
     serverArgs.Response.result(http::status::moved_permanently);
     serverArgs.Response.set(http::field::location,                          redirServerArgs.Url);
@@ -647,7 +647,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds)
   {
     ServerParams serverArgs(s_port);
-    ServerParams redirServerArgs(6670);
+    ServerParams redirServerArgs(++s_port);
 
     serverArgs.Response.result(http::status::moved_permanently);
     serverArgs.Response.set(http::field::location,                          redirServerArgs.Url);
@@ -669,7 +669,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
   {
     ServerParams serverArgs(s_port);
-    ServerParams redirServerArgs(6672);
+    ServerParams redirServerArgs(++s_port);
 
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
@@ -697,7 +697,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails)
   {
     ServerParams serverArgs(s_port);
-    ServerParams redirServerArgs(6673);
+    ServerParams redirServerArgs(++s_port);
 
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
@@ -816,6 +816,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }// RequestWithProxyAuthorizationHeaderFails
 
   BEGIN_TEST_METHOD_ATTRIBUTE(ExceedingRedirectLimitFails)
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ExceedingRedirectLimitFails)
   {
