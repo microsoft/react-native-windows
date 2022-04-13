@@ -296,7 +296,27 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
       [self = shared_from_this()](IWebSocket const &sender, IMessageWebSocketMessageReceivedEventArgs const &args) {
         try {
           string response;
-          IDataReader reader = args.GetDataReader();
+          IDataReader reader = nullptr;
+          try {
+            reader = args.GetDataReader();
+          } catch (hresult_error const &e) {
+            string message;
+            ErrorType errorType;
+
+            // See https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-19041#remarks
+            if (e.code() == WININET_E_CONNECTION_ABORTED) {
+              message = "[0x80072EFE] Underlying TCP connection suddenly terminated";
+              errorType = ErrorType::Connection;
+            } else {
+              message = Utilities::HResultToString(e);
+              errorType = ErrorType::Receive;
+            }
+
+            self->m_errorHandler({message, errorType});
+
+            return self->Close(CloseCode::BadPayload, message);
+          }
+
           auto len = reader.UnconsumedBufferLength();
           if (args.MessageType() == SocketMessageType::Utf8) {
             reader.UnicodeEncoding(UnicodeEncoding::Utf8);
