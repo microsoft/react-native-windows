@@ -1,0 +1,14 @@
+{
+    "Registrations": [
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                    "RepositoryUrl": "https://github.com/lamerman/cpp-lru-cache",
+                    "CommitHash": "de1c4a03569bf3bd540e7f55ab5c2961411dbe22"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}
