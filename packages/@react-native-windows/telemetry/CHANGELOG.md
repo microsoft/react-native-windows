@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Tue, 12 Apr 2022 05:10:38 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Apr 2022 05:09:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.38
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Changes
+
+- Disable unstable telemetry tests (jthysell@microsoft.com)
 
 ## 0.0.0-canary.37
 
