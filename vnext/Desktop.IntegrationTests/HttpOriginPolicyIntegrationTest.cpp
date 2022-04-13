@@ -115,7 +115,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     return server;
   }
 
-  void TestOriginPolicy(ServerParams& server1Args, ServerParams& server2Args, ClientParams& clientArgs, bool shouldSucceed)
+  void TestOriginPolicyWithRedirect(ServerParams& server1Args, ServerParams& server2Args, ClientParams& clientArgs, bool shouldSucceed)
   {
     auto server1 = CreateServer(server1Args, clientArgs);
     auto server2 = CreateServer(server2Args, clientArgs);
@@ -549,7 +549,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   }// FullCorsCorsCheckFailsOnResponseRedirectFails
 
 
@@ -588,7 +588,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsSameOriginToCrossOriginRedirectSucceeds
 
   //TODO: Seems to redirect to exact same resource. Implement second resource in same server.
@@ -638,7 +638,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", redirServerArgs.Url.c_str());
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   } // FullCorsCrossOriginToOriginalOriginRedirectFails
 
   // Redirects cross origin request to server1 to cross origin request to server2
@@ -661,7 +661,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
@@ -689,7 +689,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails)
@@ -718,7 +718,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    TestOriginPolicy(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
+    TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCors304ForSimpleGetFails)
