@@ -265,7 +265,7 @@ void DevSupportManager::EnsureHermesInspector(
         m_BundleStatusProvider);
     m_inspectorPackagerConnection->connectAsync();
   });
-  
+
 #endif
 }
 

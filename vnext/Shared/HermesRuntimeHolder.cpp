@@ -77,8 +77,7 @@ void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
   HermesShim::hermesCrashHandler(*m_hermesRuntime, fileDescriptor);
 }
 
-void HermesRuntimeHolder::teardown() noexcept
-{
+void HermesRuntimeHolder::teardown() noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
   if (auto devSettings = m_weakDevSettings.lock(); devSettings && devSettings->useDirectDebugger) {
     facebook::hermes::inspector::chrome::disableDebugging(*m_hermesRuntime);
@@ -110,7 +109,8 @@ HermesRuntimeHolder::HermesRuntimeHolder(
 
 void HermesRuntimeHolder::initRuntime() noexcept {
   auto devSettings = m_weakDevSettings.lock();
-  if (!devSettings) std::terminate();
+  if (!devSettings)
+    std::terminate();
 
   m_hermesRuntime = makeHermesRuntimeSystraced(devSettings->enableDefaultCrashHandler);
   m_own_thread_id = std::this_thread::get_id();
@@ -126,8 +126,9 @@ void HermesRuntimeHolder::initRuntime() noexcept {
 
   // Add js engine information to Error.prototype so in error reporting we
   // can send this information.
-  auto errorPrototype =
-      m_hermesRuntime->global().getPropertyAsObject(*m_hermesRuntime, "Error").getPropertyAsObject(*m_hermesRuntime, "prototype");
+  auto errorPrototype = m_hermesRuntime->global()
+                            .getPropertyAsObject(*m_hermesRuntime, "Error")
+                            .getPropertyAsObject(*m_hermesRuntime, "prototype");
   errorPrototype.setProperty(*m_hermesRuntime, "jsEngine", "hermes");
 }
 

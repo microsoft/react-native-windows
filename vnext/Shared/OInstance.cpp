@@ -534,7 +534,6 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 InstanceImpl::~InstanceImpl() {
   if (shouldStartHermesInspector(*m_devSettings) && m_devSettings->jsiRuntimeHolder) {
     m_devSettings->jsiRuntimeHolder->teardown();
-    // m_devManager->StopInspector();
   }
   m_nativeQueue->quitSynchronous();
 }
