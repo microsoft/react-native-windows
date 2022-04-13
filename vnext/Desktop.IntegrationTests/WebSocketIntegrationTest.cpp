@@ -23,6 +23,35 @@ using Error = IWebSocketResource::Error;
 
 TEST_CLASS (WebSocketIntegrationTest)
 {
+  TEST_METHOD(UnplugServer)
+  {
+    //auto server = make_shared<Test::WebSocketServer>(5555, false);
+    promise<void> closedPromise;
+    auto ws = IWebSocketResource::Make();
+    string errorMessage{};
+    ws->SetOnClose([&closedPromise](CloseCode code, const string& reason)
+    {
+      int x = 99;
+      closedPromise.set_value();
+    });
+    ws->SetOnMessage([](size_t, const string& message, bool isBinary)
+    {
+        int x = 88;
+    });
+    ws->SetOnError([&closedPromise, &errorMessage](IWebSocketResource::Error&& error)
+    {
+      errorMessage = std::move(error.Message);
+      closedPromise.set_value();
+    });
+
+    ws->Connect("ws://localhost:5555");
+
+
+    closedPromise.get_future().wait();
+
+    Assert::AreEqual({}, errorMessage);
+  }
+
   void SendReceiveCloseBase(bool isSecure)
   {
     auto server = make_shared<Test::WebSocketServer>(5556, isSecure);
