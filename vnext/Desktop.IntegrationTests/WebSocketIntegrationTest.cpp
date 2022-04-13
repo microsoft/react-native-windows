@@ -23,33 +23,6 @@ using Error = IWebSocketResource::Error;
 
 TEST_CLASS (WebSocketIntegrationTest)
 {
-  TEST_METHOD(AbruptServerDisconnectFailsWithSpecificMessage)
-  {
-    promise<void> closedPromise;
-    auto ws = IWebSocketResource::Make();
-    IWebSocketResource::Error error{{}, IWebSocketResource::ErrorType::None};
-    CloseCode closeCode;
-    ws->SetOnClose([&closedPromise, &closeCode](CloseCode code, const string& reason)
-    {
-      closeCode = code;
-      closedPromise.set_value();
-    });
-    ws->SetOnError([&closedPromise, &error](IWebSocketResource::Error&& wsError)
-    {
-      error = std::move(wsError);
-    });
-
-    ws->Connect("ws://localhost:5555");
-
-
-    closedPromise.get_future().wait();
-
-    //NOTE: This message is implementation-specific (WinRTWebSocketResource)
-    Assert::AreEqual({"[0x80072EFE] Underlying TCP connection suddenly terminated"}, error.Message);
-    Assert::AreEqual(static_cast<size_t>(IWebSocketResource::ErrorType::Connection), static_cast<size_t>(error.Type));
-    Assert::AreEqual(static_cast<size_t>(CloseCode::BadPayload), static_cast<size_t>(closeCode));
-  }
-
   void SendReceiveCloseBase(bool isSecure)
   {
     auto server = make_shared<Test::WebSocketServer>(5556, isSecure);
@@ -401,5 +374,34 @@ TEST_CLASS (WebSocketIntegrationTest)
 
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(expected, result);
+  }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(AbruptDisconnectFailsWithSpecificMessage)
+  TEST_IGNORE() //TODO: Find a way to emulate abrupt disconnection using Test::WebSocketServer
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(AbruptDisconnectFailsWithSpecificMessage)
+  {
+    promise<void> closedPromise;
+    auto ws = IWebSocketResource::Make();
+    IWebSocketResource::Error error{{}, IWebSocketResource::ErrorType::None};
+    CloseCode closeCode;
+    ws->SetOnClose([&closedPromise, &closeCode](CloseCode code, const string& reason)
+    {
+      closeCode = code;
+      closedPromise.set_value();
+    });
+    ws->SetOnError([&closedPromise, &error](IWebSocketResource::Error&& wsError)
+    {
+      error = std::move(wsError);
+    });
+
+    ws->Connect("ws://localhost:5555");
+
+    closedPromise.get_future().wait();
+
+    //NOTE: This message is implementation-specific (WinRTWebSocketResource)
+    Assert::AreEqual({"[0x80072EFE] Underlying TCP connection suddenly terminated"}, error.Message);
+    Assert::AreEqual(static_cast<size_t>(IWebSocketResource::ErrorType::Connection), static_cast<size_t>(error.Type));
+    Assert::AreEqual(static_cast<size_t>(CloseCode::BadPayload), static_cast<size_t>(closeCode));
   }
 };
