@@ -18,7 +18,7 @@
     "react": "17.0.2",
     "react-native": "0.0.0-20220411-2010-f503b2120",
     "react-native-windows": "^0.0.0-canary.486",
-    "react-native-xaml": "^0.0.50"
+    "react-native-xaml": "^0.0.63"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
