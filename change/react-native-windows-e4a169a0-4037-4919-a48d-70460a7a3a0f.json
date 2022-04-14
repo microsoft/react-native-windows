@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "re-use InspectorPackagerConnection across reloads, prevent circular reference between DevSettings and HermesRuntimeHolder",
-  "packageName": "react-native-windows",
-  "email": "aeulitz@microsoft.com",
-  "dependentChangeType": "none"
-}

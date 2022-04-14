@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 Apr 2022 05:09:34 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Apr 2022 05:09:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.486
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Fix Sequential DispatchQueue deadlock on shutdown (vmorozov@microsoft.com)
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.39
 
 ## 0.0.0-canary.485
 
