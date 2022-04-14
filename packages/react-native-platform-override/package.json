@@ -24,7 +24,7 @@
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0-canary.2",
     "@react-native-windows/package-utils": "^0.0.0-canary.28",
-    "async": "^3.2.0",
+    "async": "^3.2.3",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
     "globby": "^9.2.0",
