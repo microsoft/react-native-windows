@@ -136,7 +136,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
         },
     };
 
-    for (auto i = 0; i < cases.size(); ++i) {
+    for (size_t i = 0; i < cases.size(); ++i) {
       winrt::Windows::Web::Http::HttpResponseMessage response;
       for (const auto &header : cases[i]) {
         response.Headers().Insert(header.first, header.second);
@@ -197,8 +197,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
         },
     };
 
-    for (auto i = 0; i < cases.size(); ++i) {
-      auto expected = cases[i].size();
+    for (size_t i = 0; i < cases.size(); ++i) {
       winrt::Windows::Web::Http::HttpResponseMessage response;
       for (const auto &header : cases[i]) {
         response.Headers().Insert(header.first, header.second);
@@ -226,8 +225,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
         },
     };
 
-    for (auto i = 0; i < cases.size(); ++i) {
-      auto expected = cases[i].size();
+    for (size_t i = 0; i < cases.size(); ++i) {
       winrt::Windows::Web::Http::HttpResponseMessage response;
       for (const auto &header : cases[i]) {
         response.Headers().Insert(header.first, header.second);
