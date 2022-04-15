@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Avoid loading XAML just to create a Color struct",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

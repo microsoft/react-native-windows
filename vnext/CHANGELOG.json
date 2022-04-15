@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 15 Apr 2022 05:09:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.487",
+      "version": "0.0.0-canary.487",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0bd6f4a16ca47a64b7189144cec337b99a002c0d",
+            "comment": "Avoid loading XAML just to create a Color struct"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 14 Apr 2022 05:09:19 GMT",
       "tag": "react-native-windows_v0.0.0-canary.486",
       "version": "0.0.0-canary.486",
