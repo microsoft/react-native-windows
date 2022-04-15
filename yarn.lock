@@ -2466,9 +2466,9 @@
   integrity sha512-QBCRpkCoGdtUgLzLHcA5E7Dg9fJNdhuZd6IshuPxmf3EbVqrslWVTHOIDEWGx//16FoMElpOXxIR3utIWsPoIA==
 
 "@types/xml2js@^0.4.8":
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/@types/xml2js/-/xml2js-0.4.9.tgz#a38267d8c2fe121c96922b12ee3bd89a58a6e20e"
-  integrity sha512-CHiCKIihl1pychwR2RNX5mAYmJDACgFVCMT5OArMaO3erzwXVcBqPcusr+Vl8yeeXukxZqtF8mZioqX+mpjjdw==
+  version "0.4.10"
+  resolved "https://registry.yarnpkg.com/@types/xml2js/-/xml2js-0.4.10.tgz#8e2df0ecde46074456e268b4b3e4264978f5f20e"
+  integrity sha512-SuiMNi9WxzxbUgI6uJjf0ztaOfBZ79rmbgi9Fp+g9Xk+YIBh3arN33tWito5WTSsBPxPRMOgdTSU5YIXCldaDg==
   dependencies:
     "@types/node" "*"
 
