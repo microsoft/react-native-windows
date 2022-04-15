@@ -4,15 +4,20 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry, View} from 'react-native';
+import {AppRegistry, View, TouchableHighlight, Text, Button, TextInput} from 'react-native';
 
 export default class Bootstrap extends React.Component {
   render() {
     return (
-      <View
-        accessible={true}
-        style={{borderRadius: 30, width: 60, height: 60, margin: 10}}>
-        <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
+      <View>
+      <TouchableHighlight onPress={()=>{}} style={{height: 200, width: 200, backgroundColor: 'blue'}} accessible={false}>
+        <Text>Hello!</Text>
+      </TouchableHighlight>
+      <View>
+        <Text>Hello 2</Text>
+        <Button onPress={()=> {}} title="button"/>
+        <TextInput focusable={false}/>
+      </View>
       </View>
     );
   }
