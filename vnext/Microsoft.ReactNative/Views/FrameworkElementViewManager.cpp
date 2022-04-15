@@ -348,22 +348,25 @@ bool FrameworkElementViewManager::UpdateProperty(
           if (innerName == "selected") { 
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Selected)] =
                 innerValue.AsBoolean();
-
-            if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
+            const auto old_val = DynamicAutomationProperties::GetAccessibilityStateSelected(element);
+            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+            if ( peer != nullptr && old_val != innerValue.AsBoolean()) { //if peer exists and state has changed, announce
               peer.RaisePropertyChangedEvent(
                   winrt::SelectionItemPatternIdentifiers::IsSelectedProperty(),
-                  winrt::box_value(innerValue.AsBoolean()),
-                  winrt::box_value(!innerValue.AsBoolean()));
+                  winrt::box_value(old_val),
+                  winrt::box_value(innerValue.AsBoolean()));
             }
           } else if (innerName == "disabled") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled)] =
                 innerValue.AsBoolean();
+            const auto old_val = DynamicAutomationProperties::GetAccessibilityStateDisabled(element);
+            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
 
-            if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
+            if (peer != nullptr && old_val != innerValue.AsBoolean()) {
               peer.RaisePropertyChangedEvent(
                   winrt::AutomationElementIdentifiers::IsEnabledProperty(),
-                  winrt::box_value(!innerValue.AsBoolean()),
-                  winrt::box_value(innerValue.AsBoolean()));
+                  winrt::box_value(old_val),
+                  winrt::box_value(!innerValue.AsBoolean()));
             }
           } else if (innerName == "checked") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Checked)] =
@@ -373,14 +376,14 @@ bool FrameworkElementViewManager::UpdateProperty(
             // If the state is "mixed" we'll just set both Checked and Unchecked to false,
             // then later in the IToggleProvider implementation it will return the Intermediate state
             // due to both being set to false (see  DynamicAutomationPeer::ToggleState()).
-            // todo: move this out into a function that does the check for automation peer itself. saving (n-1)x2 lines
-            // of code.S
 
-            if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-              //todo can also be mixed
+            //TODO: account for mixed
+            const auto old_val = DynamicAutomationProperties::GetAccessibilityStateChecked(element);
+            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+
+            if (peer != nullptr && old_val != innerValue.AsBoolean()) {
               const auto newValue = innerValue.AsBoolean() ? winrt::ToggleState::On : winrt::ToggleState::Off;
-              const auto oldValue =
-                  (newValue == winrt::ToggleState::On) ? winrt::ToggleState::Off : winrt::ToggleState::On;
+              const auto oldValue = old_val ? winrt::ToggleState::Off : winrt::ToggleState::On;
               peer.RaisePropertyChangedEvent(
                   winrt::TogglePatternIdentifiers::ToggleStateProperty(),
                   winrt::box_value(oldValue),
@@ -389,17 +392,18 @@ bool FrameworkElementViewManager::UpdateProperty(
           } else if (innerName =="busy")
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Busy)] =
                 !innerValue.IsNull() && innerValue.AsBoolean();
-            else if (innerName == "expanded") {
+          else if (innerName == "expanded") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded)] =
                 !innerValue.IsNull() && innerValue.AsBoolean();
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
                 innerValue.IsNull() || !innerValue.AsBoolean();
 
-            if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
+            const auto old_val = DynamicAutomationProperties::GetAccessibilityStateExpanded(element);
+            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+
+            if (peer != nullptr && old_val != innerValue.AsBoolean()) {
               const auto newValue = innerValue.AsBoolean() ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
-              const auto oldValue = (newValue == winrt::ExpandCollapseState::Expanded)
-                  ? winrt::ExpandCollapseState::Collapsed
-                  : winrt::ExpandCollapseState::Expanded;
+              const auto oldValue = old_val ? winrt::ExpandCollapseState::Collapsed : winrt::ExpandCollapseState::Expanded;
               peer.RaisePropertyChangedEvent(
                   winrt::ExpandCollapsePatternIdentifiers::ExpandCollapseStateProperty(),
                   winrt::box_value(oldValue),
@@ -423,16 +427,6 @@ bool FrameworkElementViewManager::UpdateProperty(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded)]);
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
-
-      // get old value (same methods as setting here) if old is not null and not the same as new, call:
-      // AutomationPeer.RaisePropertyChangedEvent(automationProperty, oldValue, newValue)
-      // or check if the value has changed some other way and then old value will always be the opposite of new
-      //  except in some cases there's a third option so not really. 
-
-      ////TODO: not on initial render and not if value hasn't changed
-      //if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-      //  peer.RaiseAutomationEvent(xaml::Automation::Peers::AutomationEvents::PropertyChanged);
-      //}
     } else if (propertyName == "accessibilityValue") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {
