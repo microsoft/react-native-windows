@@ -587,7 +587,6 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
       }
     } else {
-      // auto controlValues = ExtractAccessControlValues(response.Headers());
       auto iRequestArgs = response.RequestMessage().Properties().Lookup(L"RequestArgs");
       ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
     }
