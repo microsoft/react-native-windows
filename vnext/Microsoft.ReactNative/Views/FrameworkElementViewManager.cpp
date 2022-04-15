@@ -24,7 +24,6 @@
 #include "DynamicAutomationProperties.h"
 
 #include <Views/ViewPanel.h>
-#include <Views/ViewViewManager.h>
 #include "Unicode.h"
 #include "cdebug.h"
 
