@@ -516,6 +516,7 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
   ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
 
+  // See https://fetch.spec.whatwg.org/#cors-preflight-fetch, section 4.8.7.5
   // Check if the request method is allowed
   bool withCredentials = iRequestArgs.as<RequestArgs>()->WithCredentials;
   bool requestMethodAllowed = false;
@@ -530,6 +531,9 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
       break;
     }
   }
+
+  // Preflight should always allow simple CORS methods
+  requestMethodAllowed |= s_simpleCorsMethods.find(request.Method().ToString().c_str()) != s_simpleCorsMethods.cend();
 
   if (!requestMethodAllowed)
     throw hresult_error{
