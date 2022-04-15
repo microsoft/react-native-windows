@@ -7,8 +7,8 @@
 
 #include "ViewControl.h"
 
-#include "DynamicAutomationProperties.h"
 #include <UI.Xaml.Automation.Peers.h>
+#include "DynamicAutomationProperties.h"
 
 #include <JSValueWriter.h>
 #include <Modules/NativeUIManager.h>
@@ -581,7 +581,8 @@ void ViewViewManager::TryUpdateView(
 
   if (pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
     pViewShadowNode->GetControl().IsTabStop(false);
-    xaml::Automation::AutomationProperties::SetAccessibilityView(pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
+    xaml::Automation::AutomationProperties::SetAccessibilityView(
+        pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
   }
 }
 

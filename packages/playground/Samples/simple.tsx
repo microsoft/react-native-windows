@@ -10,9 +10,9 @@ export default class Bootstrap extends React.Component {
   render() {
     return (
       <View
-      accessible={true}
-      style={{borderRadius: 30, width: 60, height: 60, margin: 10}}>
-      <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
+        accessible={true}
+        style={{borderRadius: 30, width: 60, height: 60, margin: 10}}>
+        <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
       </View>
     );
   }
