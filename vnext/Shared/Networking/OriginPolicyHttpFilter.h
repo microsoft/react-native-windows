@@ -30,6 +30,7 @@ class OriginPolicyHttpFilter
   static std::set<const wchar_t *, ConstWcharComparer> s_simpleCorsContentTypeValues;
   static std::set<const wchar_t *, ConstWcharComparer> s_corsForbiddenRequestHeaderNames;
   static std::set<const wchar_t *, ConstWcharComparer> s_corsForbiddenRequestHeaderNamePrefixes;
+  static std::set<const wchar_t *, ConstWcharComparer> s_cookieSettingResponseHeaders;
 
   // NOTE: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
   static winrt::Windows::Foundation::Uri s_origin;
@@ -68,6 +69,11 @@ class OriginPolicyHttpFilter
   static bool IsCorsSafelistedRequestHeader(winrt::hstring const &name, winrt::hstring const &value) noexcept;
 
   static bool IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept;
+
+  // Filter out Http-Only cookies from response headers to prevent malicious code from being sent to a malicious server
+  static void RemoveHttpOnlyCookiesFromResponseHeaders(
+      winrt::Windows::Web::Http::HttpResponseMessage const &response,
+      bool removeAll);
 
   OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
 

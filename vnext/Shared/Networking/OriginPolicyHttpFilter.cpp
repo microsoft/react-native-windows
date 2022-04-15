@@ -15,8 +15,8 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 
 // Standard Library
-#include <regex>
 #include <queue>
+#include <regex>
 
 using std::set;
 using std::wstring;
@@ -100,6 +100,12 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
         L"Transfer-Encoding",
         L"Upgrade",
         L"Via"};
+
+/*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
+    OriginPolicyHttpFilter::s_cookieSettingResponseHeaders = {
+        L"Set-Cookie",
+        L"Set-Cookie2", // Deprecated by the spec, but probably still used
+};
 
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
@@ -338,6 +344,31 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
   return result;
 } // ExtractAccessControlValues
 
+/*static*/ void OriginPolicyHttpFilter::RemoveHttpOnlyCookiesFromResponseHeaders(
+    HttpResponseMessage const &response,
+    bool removeAll) {
+  // Example: "Set-Cookie", L"id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT;  HttpOnly"
+  std::queue<hstring> httpOnlyCookies;
+  for (const auto &header : response.Headers()) {
+    if (s_cookieSettingResponseHeaders.find(header.Key().c_str()) == s_cookieSettingResponseHeaders.cend())
+      continue;
+
+    if (removeAll) {
+      httpOnlyCookies.push(header.Key());
+      continue;
+    }
+
+    // Anchors (^$) can't be part of bracket expressions ([]).
+    // Create 3 matching groups: 1. Beginning of string 2. Between delimiters 3. End of string
+    const std::wregex re(L"(^HttpOnly\\s*;)|(;\\s*HttpOnly\\s*;)|(;\\s*HttpOnly$)", std::regex_constants::icase);
+    if (!std::regex_search(header.Key().c_str(), re))
+      continue;
+
+    // HttpOnly cookie detected. Removing.
+    httpOnlyCookies.push(header.Key());
+  } // const auto &header : response.Headers()
+}
+
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter &&innerFilter) : m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter()
@@ -539,6 +570,10 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
   bool removeAllCookies = false;
   if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       originPolicy == OriginPolicy::CrossOriginResourceSharing) {
+    auto controlValues = ExtractAccessControlValues(response.Headers());
+    auto withCredentials =
+        response.RequestMessage().Properties().Lookup(L"RequestArgs").try_as<RequestArgs>()->WithCredentials;
+
     if (Microsoft_React_GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
         originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       bool originAllowed = false;
@@ -552,7 +587,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
       }
     } else {
-      auto controlValues = ExtractAccessControlValues(response.Headers());
+      // auto controlValues = ExtractAccessControlValues(response.Headers());
       auto iRequestArgs = response.RequestMessage().Properties().Lookup(L"RequestArgs");
       ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
     }
@@ -570,17 +605,32 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
         nonSimpleNames.pop();
       }
     } else {
-      // filter out response headers that are not simple headers and not in expose list
-      // NetworkingSecurity::FilterResponseHeadersWithExposeList(/*out*/ responseHeaders, exposeHeaders,
-      // withCredentials);
+      // Filter out response headers that are not simple headers and not in expose list
+
+      // Keep simple headers and those found in the expose header list.
+      if (withCredentials || controlValues.ExposedHeaders.find(L"*") == controlValues.ExposedHeaders.cend()) {
+        std::queue<hstring> nonSimpleNonExposedHeaders;
+
+        for (const auto &header : response.Headers().GetView()) {
+          if (s_simpleCorsResponseHeaderNames.find(header.Key().c_str()) == s_simpleCorsResponseHeaderNames.cend() &&
+              controlValues.ExposedHeaders.find(header.Key().c_str()) == controlValues.ExposedHeaders.cend()) {
+            nonSimpleNonExposedHeaders.push(header.Key());
+          }
+        }
+
+        while (!nonSimpleNonExposedHeaders.empty()) {
+          response.Headers().Remove(nonSimpleNonExposedHeaders.front());
+          nonSimpleNonExposedHeaders.pop();
+        }
+      }
     }
 
     // When withCredentials is false, request cannot include cookies. Also, cookies will be ignored in responses.
-    // fRemoveAllCookies = !withCredentials && !IsEbrakeApplied(g_wzFeatureNameRemoveCookiesFromResponse);
-  }
+    removeAllCookies = !withCredentials && Microsoft_React_GetRuntimeOptionBool("Http.RemoveCookiesFromResponse");
+  } // originPolicy == SimpleCrossOriginResourceSharing || CrossOriginResourceSharing
 
   // Don't expose HttpOnly cookies to JavaScript
-  // TODO: RemoveApplicableCookiesFromResponseHeader
+  RemoveHttpOnlyCookiesFromResponseHeaders(response, removeAllCookies);
 }
 
 ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
