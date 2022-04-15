@@ -169,6 +169,81 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       Assert::IsTrue(equals);
     }
   }
+
+  TEST_METHOD(KeepNonHttpOnlyCookies) {
+    std::vector<std::map<std::wstring, std::wstring>> cases{
+        {
+            {L"k1", L"v1"},
+            {L"Set-Cookie", L"id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT HttpOnly;"},
+            {L"k3", L"v3"},
+        },
+
+        {
+            {L"k1", L"v1"},
+            {L"Set-Cookie", L"HttpOnly=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT ;"},
+            {L"k3", L"v3"},
+        },
+
+        {
+            {L"k1", L"v1"},
+            {L"Set-Cookies", L"id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT;  HttpOnly"},
+            {L"k3", L"v3"},
+        },
+
+        {
+            {L"k1", L"v1"},
+            {L"Set-Cookie", L"HttpOnly id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT"},
+            {L"k3", L"v3"},
+        },
+
+        {
+            {L"k1", L"v1"},
+            {L"Set-Cookie2", L"HttpOnly id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT"},
+            {L"k3", L"v3"},
+        },
+    };
+
+    for (auto i = 0; i < cases.size(); ++i) {
+      auto expected = cases[i].size();
+      winrt::Windows::Web::Http::HttpResponseMessage response;
+      for (const auto &header : cases[i]) {
+        response.Headers().Insert(header.first, header.second);
+      }
+
+      OriginPolicyHttpFilter::RemoveHttpOnlyCookiesFromResponseHeaders(response, false /*removeAll*/);
+
+      // No fields removed.
+      Assert::AreEqual(cases[i].size(), static_cast<size_t>(response.Headers().Size()));
+    }
+  }
+
+  TEST_METHOD(RemoveAllCookies) {
+    std::vector<std::map<std::wstring, std::wstring>> cases{
+        {
+            {L"k1", L"v1"},
+            {L"Set-Cookie", L"id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT HttpOnly;"},
+            {L"k3", L"v3"},
+        },
+
+        {
+            {L"k1", L"v1"},
+            {L"Set-Cookie", L"Expires=Wed, 21 Oct 2020 07:28:00 GMT ;"},
+            {L"k3", L"v3"},
+        },
+    };
+
+    for (auto i = 0; i < cases.size(); ++i) {
+      auto expected = cases[i].size();
+      winrt::Windows::Web::Http::HttpResponseMessage response;
+      for (const auto &header : cases[i]) {
+        response.Headers().Insert(header.first, header.second);
+      }
+
+      OriginPolicyHttpFilter::RemoveHttpOnlyCookiesFromResponseHeaders(response, true /*removeAll*/);
+
+      Assert::AreEqual(2, static_cast<int>(response.Headers().Size()));
+    }
+  }
 };
 
 } // namespace Microsoft::React::Test
