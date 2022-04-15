@@ -16,6 +16,7 @@
 
 // Standard Library
 #include <regex>
+#include <queue>
 
 using std::set;
 using std::wstring;
@@ -370,14 +371,10 @@ OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &r
       break;
 
     case OriginPolicy::CrossOriginResourceSharing:
-      // TODO: Rewrite
       // https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#simple_requests
       // Refer to CorsURLLoaderFactory::IsValidRequest in chrome\src\services\network\cors\cors_url_loader_factory.cc.
       // Forbidden headers should be blocked regardless of origins.
-
-      // It is correct to check for forbidden header first.
-      // It is verified in Edge when I try to set the "host" header to a XHR. The browser rejected it as unsafe.
-      // In fact, this check probably should apply to all networking security policy.
+      // Example: On the Edge browser, an XHR request with the "Host" header set gets rejected as unsafe.
       // https://fetch.spec.whatwg.org/#forbidden-header-name
 
       if (s_origin.SchemeName() != request.RequestUri().SchemeName())
@@ -482,11 +479,9 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
   auto iRequestArgs = request.Properties().Lookup(L"RequestArgs");
   // Check if the origin is allowed in conjuction with the withCredentials flag
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
-  // if (!CheckAccessStatic(allowedOrigin, allowCredentials, GetOrigin(), withCredentials, /*out*/ errorText))
   ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
 
   // Check if the request method is allowed
-  // if (!IsCrossOriginRequestMethodAllowed(requestMethod, allowedMethodsList, withCredentials, /*out*/ errorText))
   bool withCredentials = iRequestArgs.as<RequestArgs>()->WithCredentials;
   bool requestMethodAllowed = false;
   for (const auto &method : controlValues.AllowedMethods) {
@@ -508,7 +503,6 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
             L"] is not allowed by Access-Control-Allow-Methods in preflight response"};
 
   // Check if request headers are allowed
-  // if (!IsCrossOriginRequestHeadersAllowed(requestHeaders, allowedHeadersList, withCredentials, /*out*/ errorText))
   // See https://fetch.spec.whatwg.org/#cors-preflight-fetch, section 4.8.7.6-7
   // Check if the header should be allowed through wildcard, if the request does not have credentials.
   bool requestHeadersAllowed = false;
@@ -565,14 +559,15 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
 
     if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       // Filter out response headers that are not in the Simple CORS whitelist
-      std::deque<hstring> nonSimpleNames;
+      std::queue<hstring> nonSimpleNames;
       for (const auto &header : response.Headers().GetView()) {
         if (s_simpleCorsResponseHeaderNames.find(header.Key().c_str()) == s_simpleCorsResponseHeaderNames.cend())
-          nonSimpleNames.push_back(header.Key());
+          nonSimpleNames.push(header.Key());
       }
 
-      for (auto name : nonSimpleNames) {
-        response.Headers().Remove(name);
+      while (!nonSimpleNames.empty()) {
+        response.Headers().Remove(nonSimpleNames.front());
+        nonSimpleNames.pop();
       }
     } else {
       // filter out response headers that are not simple headers and not in expose list
