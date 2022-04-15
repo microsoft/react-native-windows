@@ -361,12 +361,17 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
     // Anchors (^$) can't be part of bracket expressions ([]).
     // Create 3 matching groups: 1. Beginning of string 2. Between delimiters 3. End of string
     const std::wregex re(L"(^HttpOnly\\s*;)|(;\\s*HttpOnly\\s*;)|(;\\s*HttpOnly$)", std::regex_constants::icase);
-    if (!std::regex_search(header.Key().c_str(), re))
+    if (!std::regex_search(header.Value().c_str(), re))
       continue;
 
     // HttpOnly cookie detected. Removing.
     httpOnlyCookies.push(header.Key());
   } // const auto &header : response.Headers()
+
+  while (!httpOnlyCookies.empty()) {
+    response.Headers().Remove(httpOnlyCookies.front());
+    httpOnlyCookies.pop();
+  }
 }
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter &&innerFilter) : m_innerFilter{std::move(innerFilter)} {}

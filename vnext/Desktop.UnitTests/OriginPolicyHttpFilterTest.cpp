@@ -62,70 +62,112 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     // clang-format on
   }
 
-  // TODO: Remove before merging
-  TEST_METHOD(Dummy) {
-    Uri uri{L"http://user:password@domain.com/ab?c=d&e=f"};
-    Uri iri{uri.DisplayUri()};
+  TEST_METHOD(ExcludeHttpOnlyCookies) {
+    std::vector<std::map<std::wstring, std::wstring>> cases{
+        {
+            {L"Cache-Control", L"controlled"},
+            {L"Set-Cookie", L"k=v; HttpOnly  ; k2=v2"},
+        },
 
-    winrt::hstring::size_type zero = 0;
-    Assert::AreEqual(zero, iri.UserName().size());
-    Assert::AreEqual(zero, iri.Password().size());
-    Assert::AreEqual(uri.DisplayUri().c_str(), iri.ToString().c_str());
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"Set-Cookie", L"id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT;  HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
 
-    auto cmp = [](std::string a, std::string b) { return _strcmpi(a.c_str(), b.c_str()) < 0; };
-    std::regex rgx{"\\s*,\\s*"};
-    std::string value = "NO , si, no  ,Yes,yes ,  \tnelson, Yes, nO, SI";
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"Set-Cookie", L"id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT;  httponly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
 
-    std::set<std::string> conjcs{
-        std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}};
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"Set-Cookie", L"id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT; httpOnly;"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
 
-    std::set<std::string, decltype(cmp)> conj{
-        std::sregex_token_iterator{value.cbegin(), value.cend(), rgx, -1}, std::sregex_token_iterator{}, cmp};
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"Set-Cookie", L"HTTPONLY;id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT;"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
 
-    size_t sz = 4;
-    Assert::AreEqual(sz, conj.size());
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"set-cookie", L"HttpOnly id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT;  HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
 
-    winrt::hstring hs{L"ASDFG"};
-    bool cont = boost::istarts_with(hs, L"aSd");
-    Assert::IsTrue(cont);
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"set-cookie2", L"HttpOnly id=a3fWa; Expires=Wed, 21 Oct 2020 07:28:00 GMT;  HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
+    };
 
-    std::wstring fl{L"0.12412"};
-    std::wstring fo{L".234234"};
-    // auto cast1 = boost::numeric_cast<double>(fl);
-    // auto cast2 = boost::numeric_cast<double>(fo);
-    auto cast1 = boost::lexical_cast<double>(fl);
-    auto cast2 = boost::lexical_cast<double>(fo);
-    double d11{0};
-    auto cast11 = boost::conversion::try_lexical_convert<double, std::wstring>(fl, d11);
-    auto cast12 = boost::conversion::try_lexical_convert<double, std::wstring>(fo, d11);
-    auto cast13 = boost::conversion::try_lexical_convert<double, std::wstring>(L"a.0234", d11);
+    std::vector<std::map<std::wstring, std::wstring>> expected{
+        {
+            {L"Cache-Control", L"controlled"},
+        },
 
-    using winrt::Windows::Web::Http::Headers::HttpMediaTypeHeaderValue;
-    try {
-      auto x = HttpMediaTypeHeaderValue::Parse(L"text/html");
-      x = HttpMediaTypeHeaderValue::Parse(L"text/html;charset=shift_jis");
-      x = HttpMediaTypeHeaderValue::Parse(L"text/html;charset=\"shift_jis\"iso-2022-jp");
-    } catch (winrt::hresult_error const &e) {
-      auto y = e.code();
-    } catch (const std::exception &e) {
-      auto y = e.what();
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
+
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
+
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
+
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
+
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
+
+        {
+            {L"k1", L"v1=w1; HttpOnly"},
+            {L"k3", L"HttpOnly; v3=w3"},
+        },
+    };
+
+    for (auto i = 0; i < cases.size(); ++i) {
+      winrt::Windows::Web::Http::HttpResponseMessage response;
+      for (const auto &header : cases[i]) {
+        response.Headers().Insert(header.first, header.second);
+      }
+
+      winrt::Windows::Web::Http::HttpResponseMessage expectedResponse;
+      auto expectedHeaders = expectedResponse.Headers();
+      for (const auto &header : expected[i]) {
+        expectedHeaders.Insert(header.first, header.second);
+      }
+
+      OriginPolicyHttpFilter::RemoveHttpOnlyCookiesFromResponseHeaders(response, false /*removeAll*/);
+
+      // Set-Cookie field removed.
+      Assert::AreEqual(expected[i].size(), static_cast<size_t>(response.Headers().Size()));
+      bool equals = true;
+      for (const auto &expectedHeader : expected[i]) {
+        auto optHeader = response.Headers().TryLookup(expectedHeader.first);
+        if (!optHeader.has_value() || optHeader.value() != expectedHeader.second) {
+          equals = false;
+          break;
+        }
+      }
+      Assert::IsTrue(equals);
     }
-
-    using winrt::Windows::Web::Http::HttpMethod;
-    using winrt::Windows::Web::Http::HttpRequestMessage;
-    HttpRequestMessage req;
-    req.Headers().Insert(L"accept", L"text/json");
-    auto key = (*req.Headers().begin()).Key().c_str();
-    Assert::AreEqual(L"text/json", req.Headers().Accept().ToString().c_str());
-    Assert::IsTrue(req.Headers().HasKey(L"Accept"));
-    // Assert::AreEqual(L"Accept", key); // FAILS
-
-    auto m1 = HttpMethod::Get();
-    auto m2 = HttpMethod{L"GET"};
-    bool meq = m1.Method() == m2.Method();
-    Assert::IsTrue(meq);
-
-    Assert::IsTrue(true);
   }
 };
 
