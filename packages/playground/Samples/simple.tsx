@@ -10,13 +10,16 @@ export default class Bootstrap extends React.Component {
   render() {
     return (
       <View>
-      <TouchableHighlight onPress={()=>{}} style={{height: 200, width: 200, backgroundColor: 'blue'}} accessible={false}>
+      <TouchableHighlight onPress={()=>{}} style={{height: 200, width: 200, backgroundColor: 'blue'}}>
         <Text>Hello!</Text>
       </TouchableHighlight>
-      <View>
+      <View accessible={false}>
         <Text>Hello 2</Text>
         <Button onPress={()=> {}} title="button"/>
-        <TextInput focusable={false}/>
+        <TouchableHighlight onPress={()=>{}} >
+          <Text>Here!</Text>
+        </TouchableHighlight>
+        <TextInput/>
       </View>
       </View>
     );
