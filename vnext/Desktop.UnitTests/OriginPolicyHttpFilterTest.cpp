@@ -5,15 +5,9 @@
 
 #include <Networking/OriginPolicyHttpFilter.h>
 
-// TODO: revert
-#include <boost/algorithm/string.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/lexical_cast/try_lexical_convert.hpp>
-#include <boost/numeric/conversion/cast.hpp>
+// Windows API
 #include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
-#include <regex>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

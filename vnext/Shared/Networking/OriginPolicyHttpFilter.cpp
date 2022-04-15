@@ -77,7 +77,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
         L"text/plain"};
 
 // https://fetch.spec.whatwg.org/#forbidden-header-name
-// Chromium still bans "User-Agent" due to https://crbug.com/571722 //TODO: Remove?
+// Chromium still bans "User-Agent" due to https://crbug.com/571722
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::ConstWcharComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNames = {
         L"Accept-Charset",
@@ -422,7 +422,6 @@ OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &r
       if (s_forbiddenMethods.find(request.Method().ToString().c_str()) != s_forbiddenMethods.cend())
         throw hresult_error{E_INVALIDARG, L"Request method not allowed in cross-origin resource sharing"};
 
-      // TODO: overwrite member OP, or set/return validated OP?
       if (IsSameOrigin(s_origin, request.RequestUri()))
         effectiveOriginPolicy = OriginPolicy::SameOrigin;
       else if (IsSimpleCorsRequest(request))

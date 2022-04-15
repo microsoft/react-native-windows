@@ -23,7 +23,6 @@ struct IHttpResource {
     int64_t StatusCode;
     std::string Url;
     Headers Headers;
-    // TODO: Content?
   };
 
   static std::shared_ptr<IHttpResource> Make() noexcept;
@@ -44,7 +43,7 @@ struct IHttpResource {
 
   virtual void ClearCookies() noexcept = 0;
 
-  virtual void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept = 0; // TODO: Keep???
+  virtual void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept = 0;
   virtual void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept = 0;
   virtual void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept = 0;
   virtual void SetOnError(

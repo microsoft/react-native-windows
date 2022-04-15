@@ -190,7 +190,6 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
       }
     } else {
-      // TODO: Use TryAppendWithoutValidation instead??
       try {
         coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
       } catch (hresult_error const &e) {
@@ -215,7 +214,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     // #9535 - HTTP form data support
   } else {
     // BodyData::Type::Empty
-    // TODO: Error 'cause unsupported??
+    // TODO: Error => unsupported??
   }
 
   if (content != nullptr) {
@@ -232,7 +231,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       }
     }
     if (!contentLength.empty()) {
-      const auto contentLengthHeader = _atoi64(contentLength.c_str()); // TODO: Alternatives to _atoi64?
+      const auto contentLengthHeader = _atoi64(contentLength.c_str());
       content.Headers().ContentLength(contentLengthHeader);
     }
 
