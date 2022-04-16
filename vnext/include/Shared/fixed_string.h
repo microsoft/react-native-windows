@@ -8,16 +8,16 @@
 namespace details {
 
 #ifdef FNV_HASH_WIDTH_64
-  using hash_t = uint64_t;
-  inline constexpr size_t FNV_offset_basis = 14695981039346656037ULL;
-  inline constexpr size_t FNV_prime = 1099511628211ULL;
+using hash_t = uint64_t;
+inline constexpr size_t FNV_offset_basis = 14695981039346656037ULL;
+inline constexpr size_t FNV_prime = 1099511628211ULL;
 #else
-  using hash_t = uint32_t;
-  inline constexpr hash_t FNV_offset_basis = 2166136261U;
-  inline constexpr hash_t FNV_prime = 16777619U;
+using hash_t = uint32_t;
+inline constexpr hash_t FNV_offset_basis = 2166136261U;
+inline constexpr hash_t FNV_prime = 16777619U;
 #endif
 
-  [[nodiscard]] inline CONSTEVAL hash_t Fnv1a_append_bytes(
+[[nodiscard]] inline CONSTEVAL hash_t Fnv1a_append_bytes(
     hash_t _Val,
     const char *_First,
     const size_t _Count) noexcept { // accumulate range [_First, _First + _Count) into partial FNV-1a hash _Val

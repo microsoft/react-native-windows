@@ -408,7 +408,6 @@ static void SetYogaValueAutoHelper(
   }
 }
 
-
 static void StyleYogaNode(
     ShadowNodeBase &shadowNode,
     const YGNodeRef yogaNode,
@@ -423,116 +422,165 @@ static void StyleYogaNode(
 
     switch (key_hash) {
       case HASH_STRING("flexDirection"): {
-        YGFlexDirection direction = YGFlexDirectionColumn;
+        YGFlexDirection direction;
 
-        if (value_hash == HASH_STRING("column") || value.IsNull())
-          direction = YGFlexDirectionColumn;
-        else if (value_hash == HASH_STRING("row"))
-          direction = YGFlexDirectionRow;
-        else if (value_hash == HASH_STRING("column-reverse"))
-          direction = YGFlexDirectionColumnReverse;
-        else if (value_hash == HASH_STRING("row-reverse"))
-          direction = YGFlexDirectionRowReverse;
-        else
-          assert(false);
-
+        switch (value_hash) {
+          case HASH_STRING("column"):
+            direction = YGFlexDirectionColumn;
+            break;
+          case HASH_STRING("row"):
+            direction = YGFlexDirectionRow;
+            break;
+          case HASH_STRING("column-reverse"):
+            direction = YGFlexDirectionColumnReverse;
+            break;
+          case HASH_STRING("row-reverse"):
+            direction = YGFlexDirectionRowReverse;
+            break;
+          default:
+            direction = YGFlexDirectionColumn;
+            assert(value.IsNull());
+        }
         YGNodeStyleSetFlexDirection(yogaNode, direction);
         break;
       }
       case HASH_STRING("justifyContent"): {
-        YGJustify justify = YGJustifyFlexStart;
+        YGJustify justify;
 
-        if (value_hash == HASH_STRING("flex-start") || value.IsNull())
-          justify = YGJustifyFlexStart;
-        else if (value_hash == HASH_STRING("flex-end"))
-          justify = YGJustifyFlexEnd;
-        else if (value_hash == HASH_STRING("center"))
-          justify = YGJustifyCenter;
-        else if (value_hash == HASH_STRING("space-between"))
-          justify = YGJustifySpaceBetween;
-        else if (value_hash == HASH_STRING("space-around"))
-          justify = YGJustifySpaceAround;
-        else if (value_hash == HASH_STRING("space-evenly"))
-          justify = YGJustifySpaceEvenly;
-        else
-          assert(false);
-
+        switch (value_hash) {
+          case HASH_STRING("flex-start"):
+            justify = YGJustifyFlexStart;
+            break;
+          case HASH_STRING("flex-end"):
+            justify = YGJustifyFlexEnd;
+            break;
+          case HASH_STRING("center"):
+            justify = YGJustifyCenter;
+            break;
+          case HASH_STRING("space-between"):
+            justify = YGJustifySpaceBetween;
+            break;
+          case HASH_STRING("space-around"):
+            justify = YGJustifySpaceAround;
+            break;
+          case HASH_STRING("space-evenly"):
+            justify = YGJustifySpaceEvenly;
+            break;
+          default:
+            justify = YGJustifyFlexStart;
+            assert(value.IsNull());
+        }
         YGNodeStyleSetJustifyContent(yogaNode, justify);
         break;
       }
       case HASH_STRING("flexWrap"): {
-        YGWrap wrap = YGWrapNoWrap;
+        YGWrap wrap;
 
-        if (value_hash == HASH_STRING("nowrap") || value.IsNull())
-          wrap = YGWrapNoWrap;
-        else if (value_hash == HASH_STRING("wrap"))
-          wrap = YGWrapWrap;
-        else if (value_hash == HASH_STRING("wrap-reverse"))
-          wrap = YGWrapWrapReverse;
-        else
-          assert(false);
+        switch (value_hash) {
+          case HASH_STRING("nowrap"):
+            wrap = YGWrapNoWrap;
+            break;
+          case HASH_STRING("wrap"):
+            wrap = YGWrapWrap;
+            break;
+          case HASH_STRING("wrap-reverse"):
+            wrap = YGWrapWrapReverse;
+            break;
+          default:
+            wrap = YGWrapNoWrap;
+            assert(value.IsNull());
 
+            break;
+        }
         YGNodeStyleSetFlexWrap(yogaNode, wrap);
         break;
       }
       case HASH_STRING("alignItems"): {
-        YGAlign align = YGAlignStretch;
+        YGAlign align;
 
-        if (value_hash == HASH_STRING("stretch") || value.IsNull())
-          align = YGAlignStretch;
-        else if (value_hash == HASH_STRING("flex-start"))
-          align = YGAlignFlexStart;
-        else if (value_hash == HASH_STRING("flex-end"))
-          align = YGAlignFlexEnd;
-        else if (value_hash == HASH_STRING("center"))
-          align = YGAlignCenter;
-        else if (value_hash == HASH_STRING("baseline"))
-          align = YGAlignBaseline;
-        else
-          assert(false);
-
+        switch (value_hash) {
+          case HASH_STRING("stretch"):
+            align = YGAlignStretch;
+            break;
+          case HASH_STRING("flex-start"):
+            align = YGAlignFlexStart;
+            break;
+          case HASH_STRING("flex-end"):
+            align = YGAlignFlexEnd;
+            break;
+          case HASH_STRING("center"):
+            align = YGAlignCenter;
+            break;
+          case HASH_STRING("baseline"):
+            align = YGAlignBaseline;
+            break;
+          default:
+            align = YGAlignStretch;
+            assert(value.IsNull());
+            break;
+        }
         YGNodeStyleSetAlignItems(yogaNode, align);
         break;
       }
       case HASH_STRING("alignSelf"): {
-        YGAlign align = YGAlignAuto;
+        YGAlign align;
 
-        if (value_hash == HASH_STRING("auto") || value.IsNull())
-          align = YGAlignAuto;
-        else if (value_hash == HASH_STRING("stretch"))
-          align = YGAlignStretch;
-        else if (value_hash == HASH_STRING("flex-start"))
-          align = YGAlignFlexStart;
-        else if (value_hash == HASH_STRING("flex-end"))
-          align = YGAlignFlexEnd;
-        else if (value_hash == HASH_STRING("center"))
-          align = YGAlignCenter;
-        else if (value_hash == HASH_STRING("baseline"))
-          align = YGAlignBaseline;
-        else
-          assert(false);
+        switch (value_hash) {
+          case HASH_STRING("auto"):
+            align = YGAlignAuto;
+            break;
+          case HASH_STRING("stretch"):
+            align = YGAlignStretch;
+            break;
+          case HASH_STRING("flex-start"):
+            align = YGAlignFlexStart;
+            break;
+          case HASH_STRING("flex-end"):
+            align = YGAlignFlexEnd;
+            break;
+          case HASH_STRING("center"):
+            align = YGAlignCenter;
+            break;
+          case HASH_STRING("baseline"):
+            align = YGAlignBaseline;
+            break;
+          default:
+            align = YGAlignAuto;
+            assert(value.IsNull());
+
+            break;
+        }
 
         YGNodeStyleSetAlignSelf(yogaNode, align);
         break;
       }
       case HASH_STRING("alignContent"): {
-        YGAlign align = YGAlignFlexStart;
+        YGAlign align;
 
-        if (value_hash == HASH_STRING("stretch"))
-          align = YGAlignStretch;
-        else if (value_hash == HASH_STRING("flex-start") || value.IsNull())
-          align = YGAlignFlexStart;
-        else if (value_hash == HASH_STRING("flex-end"))
-          align = YGAlignFlexEnd;
-        else if (value_hash == HASH_STRING("center"))
-          align = YGAlignCenter;
-        else if (value_hash == HASH_STRING("space-between"))
-          align = YGAlignSpaceBetween;
-        else if (value_hash == HASH_STRING("space-around"))
-          align = YGAlignSpaceAround;
-        else
-          assert(false);
-
+        switch (value_hash) {
+          case HASH_STRING("stretch"):
+            align = YGAlignStretch;
+            break;
+          case HASH_STRING("flex-start"):
+            align = YGAlignFlexStart;
+            break;
+          case HASH_STRING("flex-end"):
+            align = YGAlignFlexEnd;
+            break;
+          case HASH_STRING("center"):
+            align = YGAlignCenter;
+            break;
+          case HASH_STRING("space-between"):
+            align = YGAlignSpaceBetween;
+            break;
+          case HASH_STRING("space-around"):
+            align = YGAlignSpaceAround;
+            break;
+          default:
+            align = YGAlignFlexStart;
+            assert(value.IsNull());
+            break;
+        }
         YGNodeStyleSetAlignContent(yogaNode, align);
         break;
       }
@@ -562,38 +610,60 @@ static void StyleYogaNode(
         break;
       }
       case HASH_STRING("position"): {
-        YGPositionType position = YGPositionTypeRelative;
+        YGPositionType position;
 
-        if (value_hash == HASH_STRING("relative") || value.IsNull())
-          position = YGPositionTypeRelative;
-        else if (value_hash == HASH_STRING("absolute"))
-          position = YGPositionTypeAbsolute;
-        else if (value_hash == HASH_STRING("static"))
-          position = YGPositionTypeStatic;
-        else
-          assert(false);
-
+        switch (value_hash) {
+          case HASH_STRING("relative"):
+            position = YGPositionTypeRelative;
+            break;
+          case HASH_STRING("absolute"):
+            position = YGPositionTypeAbsolute;
+            break;
+          case HASH_STRING("static"):
+            position = YGPositionTypeStatic;
+            break;
+          default:
+            position = YGPositionTypeRelative;
+            assert(value.IsNull());
+            break;
+        }
         YGNodeStyleSetPositionType(yogaNode, position);
         break;
       }
       case HASH_STRING("overflow"): {
-        YGOverflow overflow = YGOverflowVisible;
-        if (value_hash == HASH_STRING("visible") || value.IsNull())
-          overflow = YGOverflowVisible;
-        else if (value_hash == HASH_STRING("hidden"))
-          overflow = YGOverflowHidden;
-        else if (value_hash == HASH_STRING("scroll"))
-          overflow = YGOverflowScroll;
-
+        YGOverflow overflow;
+        switch (value_hash) {
+          case HASH_STRING("visible"):
+            overflow = YGOverflowVisible;
+            break;
+          case HASH_STRING("hidden"):
+            overflow = YGOverflowHidden;
+            break;
+          case HASH_STRING("scroll"):
+            overflow = YGOverflowScroll;
+            break;
+          default:
+            overflow = YGOverflowVisible;
+            assert(value.IsNull());
+            break;
+        }
         YGNodeStyleSetOverflow(yogaNode, overflow);
         break;
       }
       case HASH_STRING("display"): {
-        YGDisplay display = YGDisplayFlex;
-        if (value_hash == HASH_STRING("flex") || value.IsNull())
-          display = YGDisplayFlex;
-        else if (value == "none")
-          display = YGDisplayNone;
+        YGDisplay display;
+        switch (value_hash) {
+          case HASH_STRING("flex"):
+            display = YGDisplayFlex;
+            break;
+          case HASH_STRING("none"):
+            display = YGDisplayNone;
+            break;
+          default:
+            display = YGDisplayFlex;
+            assert(value.IsNull());
+            break;
+        }
 
         YGNodeStyleSetDisplay(yogaNode, display);
         break;
