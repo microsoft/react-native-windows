@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use compile-time string hash comparisons instead of runtime string comparisons",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
