@@ -7,39 +7,41 @@
 #endif
 namespace details {
 
-#if defined(_WIN64)
-inline constexpr size_t FNV_offset_basis = 14695981039346656037ULL;
-inline constexpr size_t FNV_prime = 1099511628211ULL;
-#else // defined(_WIN64)
-inline constexpr size_t FNV_offset_basis = 2166136261U;
-inline constexpr size_t FNV_prime = 16777619U;
-#endif // defined(_WIN64)
+#ifdef FNV_HASH_WIDTH_64
+  using hash_t = uint64_t;
+  inline constexpr size_t FNV_offset_basis = 14695981039346656037ULL;
+  inline constexpr size_t FNV_prime = 1099511628211ULL;
+#else
+  using hash_t = uint32_t;
+  inline constexpr hash_t FNV_offset_basis = 2166136261U;
+  inline constexpr hash_t FNV_prime = 16777619U;
+#endif
 
-[[nodiscard]] inline CONSTEVAL size_t Fnv1a_append_bytes(
-    size_t _Val,
+  [[nodiscard]] inline CONSTEVAL hash_t Fnv1a_append_bytes(
+    hash_t _Val,
     const char *_First,
     const size_t _Count) noexcept { // accumulate range [_First, _First + _Count) into partial FNV-1a hash _Val
   for (size_t _Idx = 0; _Idx < _Count; ++_Idx) {
-    _Val ^= static_cast<size_t>(_First[_Idx]);
+    _Val ^= static_cast<hash_t>(_First[_Idx]);
     _Val *= FNV_prime;
   }
 
   return _Val;
 }
 
-_NODISCARD inline constexpr size_t Fnv1a_append_bytes_constexpr(
-    size_t _Val,
+_NODISCARD inline constexpr hash_t Fnv1a_append_bytes_constexpr(
+    hash_t _Val,
     const char *_First,
     const size_t _Count) noexcept { // accumulate range [_First, _First + _Count) into partial FNV-1a hash _Val
   for (size_t _Idx = 0; _Idx < _Count; ++_Idx) {
-    _Val ^= static_cast<size_t>(_First[_Idx]);
+    _Val ^= static_cast<hash_t>(_First[_Idx]);
     _Val *= FNV_prime;
   }
 
   return _Val;
 }
 
-inline size_t hash(const char *str) noexcept {
+inline hash_t hash(const char *str) noexcept {
   return Fnv1a_append_bytes_constexpr(FNV_offset_basis, str, strlen(str));
 }
 
@@ -65,7 +67,7 @@ struct fixed_string {
     return strcmp(val, v) == 0;
   }
 
-  CONSTEVAL size_t hash() const noexcept {
+  CONSTEVAL hash_t hash() const noexcept {
     return Fnv1a_append_bytes(FNV_offset_basis, val, N);
   }
 };
