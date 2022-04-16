@@ -215,9 +215,6 @@
     <ClCompile Include="Views\RawTextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\ReactRootControl.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\RefreshControlManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -337,6 +334,8 @@
       <Filter>Views\Text</Filter>
     </ClCompile>
     <ClCompile Include="ReactPointerEventArgs.cpp" />
+    <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
+    <ClCompile Include="Views\ReactViewInstance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -575,9 +574,6 @@
     <ClInclude Include="Views\RawTextViewManager.h">
       <Filter>Views</Filter>
     </ClInclude>
-    <ClInclude Include="Views\ReactRootControl.h">
-      <Filter>Views</Filter>
-    </ClInclude>
     <ClInclude Include="Views\RefreshControlManager.h">
       <Filter>Views</Filter>
     </ClInclude>
@@ -734,6 +730,8 @@
       <Filter>Views\Text</Filter>
     </ClInclude>
     <ClInclude Include="ReactPointerEventArgs.h" />
+    <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
+    <ClInclude Include="Views\ReactViewInstance.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />
@@ -772,6 +770,7 @@
     <Midl Include="DocString.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="ReactPointerEventArgs.idl" />
+    <Midl Include="ReactCoreInjection.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />

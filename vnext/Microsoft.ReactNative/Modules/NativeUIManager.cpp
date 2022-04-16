@@ -15,6 +15,7 @@
 #include "QuirkSettings.h"
 #include "ReactRootViewTagGenerator.h"
 #include "Unicode.h"
+#include "fixed_string.h"
 
 namespace winrt {
 using namespace Windows::Foundation;
@@ -407,362 +408,476 @@ static void SetYogaValueAutoHelper(
   }
 }
 
+
 static void StyleYogaNode(
     ShadowNodeBase &shadowNode,
     const YGNodeRef yogaNode,
     const winrt::Microsoft::ReactNative::JSValueObject &props) {
   for (const auto &pair : props) {
-    const std::string &key = pair.first;
+    const auto &key = pair.first;
+    const auto key_hash = details::hash(pair.first.c_str());
     const auto &value = pair.second;
+    const auto value_hash = value.Type() == winrt::Microsoft::ReactNative::JSValueType::String
+        ? details::hash(value.TryGetString()->c_str())
+        : 0ull;
 
-    if (key == "flexDirection") {
-      YGFlexDirection direction = YGFlexDirectionColumn;
+    switch (key_hash) {
+      case HASH_STRING("flexDirection"): {
+        YGFlexDirection direction = YGFlexDirectionColumn;
 
-      if (value == "column" || value.IsNull())
-        direction = YGFlexDirectionColumn;
-      else if (value == "row")
-        direction = YGFlexDirectionRow;
-      else if (value == "column-reverse")
-        direction = YGFlexDirectionColumnReverse;
-      else if (value == "row-reverse")
-        direction = YGFlexDirectionRowReverse;
-      else
-        assert(false);
+        if (value_hash == HASH_STRING("column") || value.IsNull())
+          direction = YGFlexDirectionColumn;
+        else if (value_hash == HASH_STRING("row"))
+          direction = YGFlexDirectionRow;
+        else if (value_hash == HASH_STRING("column-reverse"))
+          direction = YGFlexDirectionColumnReverse;
+        else if (value_hash == HASH_STRING("row-reverse"))
+          direction = YGFlexDirectionRowReverse;
+        else
+          assert(false);
 
-      YGNodeStyleSetFlexDirection(yogaNode, direction);
-    } else if (key == "justifyContent") {
-      YGJustify justify = YGJustifyFlexStart;
+        YGNodeStyleSetFlexDirection(yogaNode, direction);
+        break;
+      }
+      case HASH_STRING("justifyContent"): {
+        YGJustify justify = YGJustifyFlexStart;
 
-      if (value == "flex-start" || value.IsNull())
-        justify = YGJustifyFlexStart;
-      else if (value == "flex-end")
-        justify = YGJustifyFlexEnd;
-      else if (value == "center")
-        justify = YGJustifyCenter;
-      else if (value == "space-between")
-        justify = YGJustifySpaceBetween;
-      else if (value == "space-around")
-        justify = YGJustifySpaceAround;
-      else if (value == "space-evenly")
-        justify = YGJustifySpaceEvenly;
-      else
-        assert(false);
+        if (value_hash == HASH_STRING("flex-start") || value.IsNull())
+          justify = YGJustifyFlexStart;
+        else if (value_hash == HASH_STRING("flex-end"))
+          justify = YGJustifyFlexEnd;
+        else if (value_hash == HASH_STRING("center"))
+          justify = YGJustifyCenter;
+        else if (value_hash == HASH_STRING("space-between"))
+          justify = YGJustifySpaceBetween;
+        else if (value_hash == HASH_STRING("space-around"))
+          justify = YGJustifySpaceAround;
+        else if (value_hash == HASH_STRING("space-evenly"))
+          justify = YGJustifySpaceEvenly;
+        else
+          assert(false);
 
-      YGNodeStyleSetJustifyContent(yogaNode, justify);
-    } else if (key == "flexWrap") {
-      YGWrap wrap = YGWrapNoWrap;
+        YGNodeStyleSetJustifyContent(yogaNode, justify);
+        break;
+      }
+      case HASH_STRING("flexWrap"): {
+        YGWrap wrap = YGWrapNoWrap;
 
-      if (value == "nowrap" || value.IsNull())
-        wrap = YGWrapNoWrap;
-      else if (value == "wrap")
-        wrap = YGWrapWrap;
-      else if (value == "wrap-reverse")
-        wrap = YGWrapWrapReverse;
-      else
-        assert(false);
+        if (value_hash == HASH_STRING("nowrap") || value.IsNull())
+          wrap = YGWrapNoWrap;
+        else if (value_hash == HASH_STRING("wrap"))
+          wrap = YGWrapWrap;
+        else if (value_hash == HASH_STRING("wrap-reverse"))
+          wrap = YGWrapWrapReverse;
+        else
+          assert(false);
 
-      YGNodeStyleSetFlexWrap(yogaNode, wrap);
-    } else if (key == "alignItems") {
-      YGAlign align = YGAlignStretch;
+        YGNodeStyleSetFlexWrap(yogaNode, wrap);
+        break;
+      }
+      case HASH_STRING("alignItems"): {
+        YGAlign align = YGAlignStretch;
 
-      if (value == "stretch" || value.IsNull())
-        align = YGAlignStretch;
-      else if (value == "flex-start")
-        align = YGAlignFlexStart;
-      else if (value == "flex-end")
-        align = YGAlignFlexEnd;
-      else if (value == "center")
-        align = YGAlignCenter;
-      else if (value == "baseline")
-        align = YGAlignBaseline;
-      else
-        assert(false);
+        if (value_hash == HASH_STRING("stretch") || value.IsNull())
+          align = YGAlignStretch;
+        else if (value_hash == HASH_STRING("flex-start"))
+          align = YGAlignFlexStart;
+        else if (value_hash == HASH_STRING("flex-end"))
+          align = YGAlignFlexEnd;
+        else if (value_hash == HASH_STRING("center"))
+          align = YGAlignCenter;
+        else if (value_hash == HASH_STRING("baseline"))
+          align = YGAlignBaseline;
+        else
+          assert(false);
 
-      YGNodeStyleSetAlignItems(yogaNode, align);
-    } else if (key == "alignSelf") {
-      YGAlign align = YGAlignAuto;
+        YGNodeStyleSetAlignItems(yogaNode, align);
+        break;
+      }
+      case HASH_STRING("alignSelf"): {
+        YGAlign align = YGAlignAuto;
 
-      if (value == "auto" || value.IsNull())
-        align = YGAlignAuto;
-      else if (value == "stretch")
-        align = YGAlignStretch;
-      else if (value == "flex-start")
-        align = YGAlignFlexStart;
-      else if (value == "flex-end")
-        align = YGAlignFlexEnd;
-      else if (value == "center")
-        align = YGAlignCenter;
-      else if (value == "baseline")
-        align = YGAlignBaseline;
-      else
-        assert(false);
+        if (value_hash == HASH_STRING("auto") || value.IsNull())
+          align = YGAlignAuto;
+        else if (value_hash == HASH_STRING("stretch"))
+          align = YGAlignStretch;
+        else if (value_hash == HASH_STRING("flex-start"))
+          align = YGAlignFlexStart;
+        else if (value_hash == HASH_STRING("flex-end"))
+          align = YGAlignFlexEnd;
+        else if (value_hash == HASH_STRING("center"))
+          align = YGAlignCenter;
+        else if (value_hash == HASH_STRING("baseline"))
+          align = YGAlignBaseline;
+        else
+          assert(false);
 
-      YGNodeStyleSetAlignSelf(yogaNode, align);
-    } else if (key == "alignContent") {
-      YGAlign align = YGAlignFlexStart;
+        YGNodeStyleSetAlignSelf(yogaNode, align);
+        break;
+      }
+      case HASH_STRING("alignContent"): {
+        YGAlign align = YGAlignFlexStart;
 
-      if (value == "stretch")
-        align = YGAlignStretch;
-      else if (value == "flex-start" || value.IsNull())
-        align = YGAlignFlexStart;
-      else if (value == "flex-end")
-        align = YGAlignFlexEnd;
-      else if (value == "center")
-        align = YGAlignCenter;
-      else if (value == "space-between")
-        align = YGAlignSpaceBetween;
-      else if (value == "space-around")
-        align = YGAlignSpaceAround;
-      else
-        assert(false);
+        if (value_hash == HASH_STRING("stretch"))
+          align = YGAlignStretch;
+        else if (value_hash == HASH_STRING("flex-start") || value.IsNull())
+          align = YGAlignFlexStart;
+        else if (value_hash == HASH_STRING("flex-end"))
+          align = YGAlignFlexEnd;
+        else if (value_hash == HASH_STRING("center"))
+          align = YGAlignCenter;
+        else if (value_hash == HASH_STRING("space-between"))
+          align = YGAlignSpaceBetween;
+        else if (value_hash == HASH_STRING("space-around"))
+          align = YGAlignSpaceAround;
+        else
+          assert(false);
 
-      YGNodeStyleSetAlignContent(yogaNode, align);
-    } else if (key == "flex") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        YGNodeStyleSetAlignContent(yogaNode, align);
+        break;
+      }
+      case HASH_STRING("flex"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
 
-      YGNodeStyleSetFlex(yogaNode, result);
-    } else if (key == "flexGrow") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        YGNodeStyleSetFlex(yogaNode, result);
+        break;
+      }
+      case HASH_STRING("flexGrow"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
 
-      YGNodeStyleSetFlexGrow(yogaNode, result);
-    } else if (key == "flexShrink") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        YGNodeStyleSetFlexGrow(yogaNode, result);
+        break;
+      }
+      case HASH_STRING("flexShrink"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
 
-      YGNodeStyleSetFlexShrink(yogaNode, result);
-    } else if (key == "flexBasis") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaUnitValueAutoHelper(
-          yogaNode, result, YGNodeStyleSetFlexBasis, YGNodeStyleSetFlexBasisPercent, YGNodeStyleSetFlexBasisAuto);
-    } else if (key == "position") {
-      YGPositionType position = YGPositionTypeRelative;
-
-      if (value == "relative" || value.IsNull())
-        position = YGPositionTypeRelative;
-      else if (value == "absolute")
-        position = YGPositionTypeAbsolute;
-      else if (value == "static")
-        position = YGPositionTypeStatic;
-      else
-        assert(false);
-
-      YGNodeStyleSetPositionType(yogaNode, position);
-    } else if (key == "overflow") {
-      YGOverflow overflow = YGOverflowVisible;
-      if (value == "visible" || value.IsNull())
-        overflow = YGOverflowVisible;
-      else if (value == "hidden")
-        overflow = YGOverflowHidden;
-      else if (value == "scroll")
-        overflow = YGOverflowScroll;
-
-      YGNodeStyleSetOverflow(yogaNode, overflow);
-    } else if (key == "display") {
-      YGDisplay display = YGDisplayFlex;
-      if (value == "flex" || value.IsNull())
-        display = YGDisplayFlex;
-      else if (value == "none")
-        display = YGDisplayNone;
-
-      YGNodeStyleSetDisplay(yogaNode, display);
-    } else if (key == "direction") {
-      // https://github.com/microsoft/react-native-windows/issues/4668
-      // In order to support the direction property, we tell yoga to always layout
-      // in LTR direction, then push the appropriate FlowDirection into XAML.
-      // This way XAML handles flipping in RTL mode, which works both for RN components
-      // as well as native components that have purely XAML sub-trees (eg ComboBox).
-      YGDirection direction = YGDirectionLTR;
-
-      YGNodeStyleSetDirection(yogaNode, direction);
-    } else if (key == "aspectRatio") {
-      float result = NumberOrDefault(value, 1.0f /*default*/);
-
-      YGNodeStyleSetAspectRatio(yogaNode, result);
-    } else if (key == "left") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
-    } else if (key == "top") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
-    } else if (key == "right") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
-    } else if (key == "bottom") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
-    } else if (key == "end") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
-    } else if (key == "start") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
-    } else if (key == "width") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaUnitValueAutoHelper(
-          yogaNode, result, YGNodeStyleSetWidth, YGNodeStyleSetWidthPercent, YGNodeStyleSetWidthAuto);
-    } else if (key == "minWidth") {
-      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinWidth, YGNodeStyleSetMinWidthPercent);
-    } else if (key == "maxWidth") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxWidth, YGNodeStyleSetMaxWidthPercent);
-    } else if (key == "height") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaUnitValueAutoHelper(
-          yogaNode, result, YGNodeStyleSetHeight, YGNodeStyleSetHeightPercent, YGNodeStyleSetHeightAuto);
-    } else if (key == "minHeight") {
-      YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinHeight, YGNodeStyleSetMinHeightPercent);
-    } else if (key == "maxHeight") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxHeight, YGNodeStyleSetMaxHeightPercent);
-    } else if (key == "margin") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode, YGEdgeAll, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
-    } else if (key == "marginLeft") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode, YGEdgeLeft, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
-    } else if (key == "marginStart") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode, YGEdgeStart, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
-    } else if (key == "marginTop") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode, YGEdgeTop, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
-    } else if (key == "marginRight") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode, YGEdgeRight, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
-    } else if (key == "marginEnd") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode, YGEdgeEnd, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
-    } else if (key == "marginBottom") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode, YGEdgeBottom, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
-    } else if (key == "marginHorizontal") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeHorizontal,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
-    } else if (key == "marginVertical") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueAutoHelper(
-          yogaNode,
-          YGEdgeVertical,
-          result,
-          YGNodeStyleSetMargin,
-          YGNodeStyleSetMarginPercent,
-          YGNodeStyleSetMarginAuto);
-    } else if (key == "padding") {
-      if (!shadowNode.ImplementsPadding()) {
+        YGNodeStyleSetFlexShrink(yogaNode, result);
+        break;
+      }
+      case HASH_STRING("flexBasis"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeAll, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaUnitValueAutoHelper(
+            yogaNode, result, YGNodeStyleSetFlexBasis, YGNodeStyleSetFlexBasisPercent, YGNodeStyleSetFlexBasisAuto);
+        break;
       }
-    } else if (key == "paddingLeft") {
-      if (!shadowNode.ImplementsPadding()) {
+      case HASH_STRING("position"): {
+        YGPositionType position = YGPositionTypeRelative;
+
+        if (value_hash == HASH_STRING("relative") || value.IsNull())
+          position = YGPositionTypeRelative;
+        else if (value_hash == HASH_STRING("absolute"))
+          position = YGPositionTypeAbsolute;
+        else if (value_hash == HASH_STRING("static"))
+          position = YGPositionTypeStatic;
+        else
+          assert(false);
+
+        YGNodeStyleSetPositionType(yogaNode, position);
+        break;
+      }
+      case HASH_STRING("overflow"): {
+        YGOverflow overflow = YGOverflowVisible;
+        if (value_hash == HASH_STRING("visible") || value.IsNull())
+          overflow = YGOverflowVisible;
+        else if (value_hash == HASH_STRING("hidden"))
+          overflow = YGOverflowHidden;
+        else if (value_hash == HASH_STRING("scroll"))
+          overflow = YGOverflowScroll;
+
+        YGNodeStyleSetOverflow(yogaNode, overflow);
+        break;
+      }
+      case HASH_STRING("display"): {
+        YGDisplay display = YGDisplayFlex;
+        if (value_hash == HASH_STRING("flex") || value.IsNull())
+          display = YGDisplayFlex;
+        else if (value == "none")
+          display = YGDisplayNone;
+
+        YGNodeStyleSetDisplay(yogaNode, display);
+        break;
+      }
+      case HASH_STRING("direction"): {
+        // https://github.com/microsoft/react-native-windows/issues/4668
+        // In order to support the direction property, we tell yoga to always layout
+        // in LTR direction, then push the appropriate FlowDirection into XAML.
+        // This way XAML handles flipping in RTL mode, which works both for RN components
+        // as well as native components that have purely XAML sub-trees (eg ComboBox).
+        YGDirection direction = YGDirectionLTR;
+
+        YGNodeStyleSetDirection(yogaNode, direction);
+        break;
+      }
+      case HASH_STRING("aspectRatio"): {
+        float result = NumberOrDefault(value, 1.0f /*default*/);
+
+        YGNodeStyleSetAspectRatio(yogaNode, result);
+        break;
+      }
+      case HASH_STRING("left"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
+        break;
       }
-    } else if (key == "paddingStart") {
-      if (!shadowNode.ImplementsPadding()) {
+      case HASH_STRING("top"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
+        break;
       }
-    } else if (key == "paddingTop") {
-      if (!shadowNode.ImplementsPadding()) {
+      case HASH_STRING("right"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
+        break;
       }
-    } else if (key == "paddingRight") {
-      YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
-
-      SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
-    } else if (key == "paddingEnd") {
-      if (!shadowNode.ImplementsPadding()) {
+      case HASH_STRING("bottom"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
+        break;
       }
-    } else if (key == "paddingBottom") {
-      if (!shadowNode.ImplementsPadding()) {
+      case HASH_STRING("end"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
+        break;
       }
-    } else if (key == "paddingHorizontal") {
-      if (!shadowNode.ImplementsPadding()) {
+      case HASH_STRING("start"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeHorizontal, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPosition, YGNodeStyleSetPositionPercent);
+        break;
       }
-    } else if (key == "paddingVertical") {
-      if (!shadowNode.ImplementsPadding()) {
+      case HASH_STRING("width"): {
         YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-        SetYogaValueHelper(yogaNode, YGEdgeVertical, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        SetYogaUnitValueAutoHelper(
+            yogaNode, result, YGNodeStyleSetWidth, YGNodeStyleSetWidthPercent, YGNodeStyleSetWidthAuto);
+        break;
       }
-    } else if (key == "borderWidth") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+      case HASH_STRING("minWidth"): {
+        YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/, shadowNode, key);
 
-      YGNodeStyleSetBorder(yogaNode, YGEdgeAll, result);
-    } else if (key == "borderLeftWidth") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinWidth, YGNodeStyleSetMinWidthPercent);
+        break;
+      }
+      case HASH_STRING("maxWidth"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-      YGNodeStyleSetBorder(yogaNode, YGEdgeLeft, result);
-    } else if (key == "borderStartWidth") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxWidth, YGNodeStyleSetMaxWidthPercent);
+        break;
+      }
+      case HASH_STRING("height"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-      YGNodeStyleSetBorder(yogaNode, YGEdgeStart, result);
-    } else if (key == "borderTopWidth") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        SetYogaUnitValueAutoHelper(
+            yogaNode, result, YGNodeStyleSetHeight, YGNodeStyleSetHeightPercent, YGNodeStyleSetHeightAuto);
+        break;
+      }
+      case HASH_STRING("minHeight"): {
+        YGValue result = YGValueOrDefault(value, YGValue{0.0f, YGUnitPoint} /*default*/, shadowNode, key);
 
-      YGNodeStyleSetBorder(yogaNode, YGEdgeTop, result);
-    } else if (key == "borderRightWidth") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMinHeight, YGNodeStyleSetMinHeightPercent);
+        break;
+      }
+      case HASH_STRING("maxHeight"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-      YGNodeStyleSetBorder(yogaNode, YGEdgeRight, result);
-    } else if (key == "borderEndWidth") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        SetYogaUnitValueHelper(yogaNode, result, YGNodeStyleSetMaxHeight, YGNodeStyleSetMaxHeightPercent);
+        break;
+      }
+      case HASH_STRING("margin"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-      YGNodeStyleSetBorder(yogaNode, YGEdgeEnd, result);
-    } else if (key == "borderBottomWidth") {
-      float result = NumberOrDefault(value, 0.0f /*default*/);
+        SetYogaValueAutoHelper(
+            yogaNode, YGEdgeAll, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginLeft"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
 
-      YGNodeStyleSetBorder(yogaNode, YGEdgeBottom, result);
+        SetYogaValueAutoHelper(
+            yogaNode, YGEdgeLeft, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginStart"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueAutoHelper(
+            yogaNode, YGEdgeStart, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginTop"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueAutoHelper(
+            yogaNode, YGEdgeTop, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginRight"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueAutoHelper(
+            yogaNode, YGEdgeRight, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginEnd"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueAutoHelper(
+            yogaNode, YGEdgeEnd, result, YGNodeStyleSetMargin, YGNodeStyleSetMarginPercent, YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginBottom"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueAutoHelper(
+            yogaNode,
+            YGEdgeBottom,
+            result,
+            YGNodeStyleSetMargin,
+            YGNodeStyleSetMarginPercent,
+            YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginHorizontal"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueAutoHelper(
+            yogaNode,
+            YGEdgeHorizontal,
+            result,
+            YGNodeStyleSetMargin,
+            YGNodeStyleSetMarginPercent,
+            YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("marginVertical"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueAutoHelper(
+            yogaNode,
+            YGEdgeVertical,
+            result,
+            YGNodeStyleSetMargin,
+            YGNodeStyleSetMarginPercent,
+            YGNodeStyleSetMarginAuto);
+        break;
+      }
+      case HASH_STRING("padding"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeAll, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("paddingLeft"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeLeft, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("paddingStart"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeStart, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("paddingTop"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeTop, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("paddingRight"): {
+        YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+        SetYogaValueHelper(yogaNode, YGEdgeRight, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        break;
+      }
+      case HASH_STRING("paddingEnd"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeEnd, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("paddingBottom"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeBottom, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("paddingHorizontal"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeHorizontal, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("paddingVertical"): {
+        if (!shadowNode.ImplementsPadding()) {
+          YGValue result = YGValueOrDefault(value, YGValue{YGUndefined, YGUnitPoint} /*default*/, shadowNode, key);
+
+          SetYogaValueHelper(yogaNode, YGEdgeVertical, result, YGNodeStyleSetPadding, YGNodeStyleSetPaddingPercent);
+        }
+        break;
+      }
+      case HASH_STRING("borderWidth"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
+
+        YGNodeStyleSetBorder(yogaNode, YGEdgeAll, result);
+        break;
+      }
+      case HASH_STRING("borderLeftWidth"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
+
+        YGNodeStyleSetBorder(yogaNode, YGEdgeLeft, result);
+        break;
+      }
+      case HASH_STRING("borderStartWidth"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
+
+        YGNodeStyleSetBorder(yogaNode, YGEdgeStart, result);
+        break;
+      }
+      case HASH_STRING("borderTopWidth"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
+
+        YGNodeStyleSetBorder(yogaNode, YGEdgeTop, result);
+        break;
+      }
+      case HASH_STRING("borderRightWidth"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
+
+        YGNodeStyleSetBorder(yogaNode, YGEdgeRight, result);
+        break;
+      }
+      case HASH_STRING("borderEndWidth"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
+
+        YGNodeStyleSetBorder(yogaNode, YGEdgeEnd, result);
+        break;
+      }
+      case HASH_STRING("borderBottomWidth"): {
+        float result = NumberOrDefault(value, 0.0f /*default*/);
+
+        YGNodeStyleSetBorder(yogaNode, YGEdgeBottom, result);
+      }
     }
   }
 }
