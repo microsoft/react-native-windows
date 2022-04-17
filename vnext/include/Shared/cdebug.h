@@ -4,9 +4,9 @@
 #include <sstream>
 #include <string>
 
-struct basic_dostream : public std::streambuf {};
+struct basic_dostream  {};
 
-extern basic_dostream cdebug;
+inline constexpr basic_dostream cdebug{};
 
 inline basic_dostream &operator<<(basic_dostream &o, const char *str) {
   OutputDebugStringA(str);
