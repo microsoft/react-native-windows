@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-struct basic_dostream  {};
+struct basic_dostream {};
 
 inline constexpr basic_dostream cdebug{};
 
