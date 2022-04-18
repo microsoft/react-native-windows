@@ -51,6 +51,8 @@
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
     "xmldom": "github:xmldom/xmldom#^0.7.5",
+    "**/clang-format/async": "^3.2.3",
+    "**/licenses/async": "^3.2.3",
     "**/@react-native/repo-config/jest-junit": "^13.0.0",
     "**/@react-native/repo-config/shelljs": "^0.8.5",
     "**/@react-native/repo-config/ws": "^6.2.2",
