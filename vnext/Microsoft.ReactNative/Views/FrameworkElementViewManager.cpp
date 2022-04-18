@@ -197,12 +197,6 @@ bool FrameworkElementViewManager::UpdateProperty(
         } else {
           xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
         }
-        if (auto control = nodeToUpdate->GetView().try_as<xaml::Controls::Control>()) {
-          if (control.IsTabStop() != propertyValue.AsBoolean()) {
-            control.IsTabStop(false);
-            xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
-          }
-        }
       } else if (propertyValue.IsNull()) {
         element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
       }
