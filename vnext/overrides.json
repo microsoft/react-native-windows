@@ -475,6 +475,13 @@
       "file": "src/Libraries/StyleSheet/PlatformColorValueTypes.windows.js"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/StyleSheet/processTransform.windows.js",
+      "baseFile": "Libraries/StyleSheet/processTransform.js",
+      "baseHash": "cf8b6fd7e28565a689d0ae1252801b54bccf6c7f",
+      "issue": 9797
+    },
+    {
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
