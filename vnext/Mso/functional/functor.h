@@ -161,7 +161,7 @@ class FunctionObjectWrapper final
   template <typename T>
   FunctionObjectWrapper(T &&func) noexcept : m_func(std::forward<T>(func)) {}
 
-  virtual TResult Invoke(TArgs &&... args) noexcept override {
+  virtual TResult Invoke(TArgs &&...args) noexcept override {
     return m_func(std::forward<TArgs>(args)...);
   }
 
@@ -180,7 +180,7 @@ class FunctionObjectWrapperThrow final
   template <typename T>
   FunctionObjectWrapperThrow(T &&func) noexcept : m_func(std::forward<T>(func)) {}
 
-  virtual TResult Invoke(TArgs &&... args) override {
+  virtual TResult Invoke(TArgs &&...args) override {
     return m_func(std::forward<TArgs>(args)...);
   }
 
@@ -199,7 +199,7 @@ class FunctionPointerWrapper final : public ConstexprFunctorBase<Mso::IFunctor<T
  public:
   constexpr FunctionPointerWrapper(TFunc func) noexcept : m_func(func) {}
 
-  TResult Invoke(TArgs &&... args) noexcept override {
+  TResult Invoke(TArgs &&...args) noexcept override {
     return (*m_func)(std::forward<TArgs>(args)...);
   }
 
@@ -216,7 +216,7 @@ class FunctionPointerWrapperThrow final : public ConstexprFunctorBase<Mso::IFunc
  public:
   constexpr FunctionPointerWrapperThrow(TFunc func) noexcept : m_func(func) {}
 
-  TResult Invoke(TArgs &&... args) override {
+  TResult Invoke(TArgs &&...args) override {
     return (*m_func)(std::forward<TArgs>(args)...);
   }
 
@@ -234,7 +234,7 @@ class StatelessFunctorWrapper final : public ConstexprFunctorBase<Mso::IFunctor<
  public:
   constexpr StatelessFunctorWrapper(TFunc &func) noexcept : m_func(func) {}
 
-  TResult Invoke(TArgs &&... args) noexcept override {
+  TResult Invoke(TArgs &&...args) noexcept override {
     return m_func(std::forward<TArgs>(args)...);
   }
 
@@ -248,7 +248,7 @@ class StatelessFunctorWrapperThrow final : public ConstexprFunctorBase<Mso::IFun
  public:
   constexpr StatelessFunctorWrapperThrow(TFunc &func) noexcept : m_func(func) {}
 
-  TResult Invoke(TArgs &&... args) override {
+  TResult Invoke(TArgs &&...args) override {
     return m_func(std::forward<TArgs>(args)...);
   }
 

@@ -168,7 +168,7 @@ TEST_CLASS (DynamicReaderWriterTests) {
  private:
   template <class TWriterValue, class TReaderValue = TWriterValue>
   void TestScalar(
-      void (IJSValueWriter::*writerMethod)(TWriterValue) const,
+      void(IJSValueWriter::*writerMethod)(TWriterValue) const,
       TReaderValue (IJSValueReader::*readerMethod)() const,
       JSValueType runtimeType,
       TWriterValue value) {
