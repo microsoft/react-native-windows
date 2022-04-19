@@ -72,10 +72,10 @@ const renderObject = (obj: Record<string, any>) => {
 
 const renderThemeObject = (key: string): React.ReactElement => withBox(key, renderObject(Theming[key]));
 
-const withBox = (key: string, component: React.Component | JSX.Element) => (
+const withBox = (key: string, component: React.ReactNode) => (
   <View style={styles.box} key={key}>
-    <Text style={styles.header}>{key}</Text>
-    {component}
+      <Text style={styles.header}>{key}</Text>
+      {component}
   </View>
 );
 
