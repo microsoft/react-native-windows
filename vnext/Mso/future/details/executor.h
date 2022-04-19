@@ -197,7 +197,7 @@ namespace Internal {
 
 struct ExecutorInvoker {
   template <class TCallback, class... TArgs>
-  auto Invoke(TCallback &&callback, TArgs &&... args) noexcept -> decltype(callback(std::forward<TArgs>(args)...)) {
+  auto Invoke(TCallback &&callback, TArgs &&...args) noexcept -> decltype(callback(std::forward<TArgs>(args)...)) {
     UNREFERENCED_OACR(this);
     static_assert(noexcept(callback(std::forward<TArgs>(args)...)), "Callback must not throw.");
     return callback(std::forward<TArgs>(args)...);
@@ -209,7 +209,7 @@ struct ThrowingExecutor : TBaseExecutor {
   using TBaseExecutor::TBaseExecutor;
 
   template <class TCallback, class... TArgs>
-  auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     using TResult = decltype(callback(std::forward<TArgs>(args)...));
     constexpr const bool isNoExcept = noexcept(callback(std::forward<TArgs>(args)...));
     return Mso::Futures::MaybeInvoker<TResult, isNoExcept>::Invoke(

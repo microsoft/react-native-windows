@@ -70,7 +70,7 @@ struct IFuture : IUnknown {
   virtual void AddContinuation(Mso::CntPtr<IFuture> &&continuation) noexcept = 0;
 
   _Success_(
-      return ) virtual bool TryStartSetValue(_Out_ ByteArrayView &valueBuffer, bool crashIfFailed = false) noexcept = 0;
+      return) virtual bool TryStartSetValue(_Out_ ByteArrayView &valueBuffer, bool crashIfFailed = false) noexcept = 0;
   virtual void Post() noexcept = 0;
   virtual void StartAwaiting() noexcept = 0;
   virtual bool TrySetSuccess(bool crashIfFailed = false) noexcept = 0;
@@ -81,7 +81,7 @@ struct IFuture : IUnknown {
   virtual bool IsFailed() const noexcept = 0;
 
   template <class T, class... TArgs>
-  void SetValue(TArgs &&... args) noexcept {
+  void SetValue(TArgs &&...args) noexcept {
     ByteArrayView valueBuffer;
     (void)TryStartSetValue(/*ref*/ valueBuffer, /*crashIfFailed:*/ true);
     ::new (valueBuffer.VoidDataChecked(sizeof(T))) T(std::forward<TArgs>(args)...);
@@ -89,7 +89,7 @@ struct IFuture : IUnknown {
   }
 
   template <class T, class... TArgs>
-  bool TrySetValue(TArgs &&... args) noexcept {
+  bool TrySetValue(TArgs &&...args) noexcept {
     ByteArrayView valueBuffer;
     if (TryStartSetValue(/*ref*/ valueBuffer)) {
       ::new (valueBuffer.VoidDataChecked(sizeof(T))) T(std::forward<TArgs>(args)...);
