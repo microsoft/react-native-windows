@@ -161,7 +161,7 @@ export async function upgradeOverrides(
   const upgradeResults = await mapLimit<Override, UpgradeResult>(
     outOfDateOverrides,
     MAX_CONCURRENT_TASKS,
-    async override => {
+    async (override: any) => {
       const upgradeResult = await override
         .upgradeStrategy()
         .upgrade(
