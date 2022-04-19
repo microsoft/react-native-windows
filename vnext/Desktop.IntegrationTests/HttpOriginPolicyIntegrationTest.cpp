@@ -365,8 +365,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // In addition, JavaScript may not access any properties of the resulting Response.
   // This ensures that ServiceWorkers do not affect the semantics of the Web and prevents security and privacy issues arising from leaking data across domains.
   BEGIN_TEST_METHOD_ATTRIBUTE(SimpleCorsSameOriginSucceededs)
-    //TODO: Apparently hangs during CI validation.
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleCorsSameOriginSucceededs)
   {
