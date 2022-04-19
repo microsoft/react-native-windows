@@ -830,7 +830,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
 };
 
-uint16_t HttpOriginPolicyIntegrationTest::s_port = 5555;
+uint16_t HttpOriginPolicyIntegrationTest::s_port = 7777;
 
 }//namespace Microsoft::React::Test
 // clang-format on
