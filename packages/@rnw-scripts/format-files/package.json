@@ -18,7 +18,7 @@
     "format-files": "./bin.js"
   },
   "dependencies": {
-    "async": "^3.2.0",
+    "async": "^3.2.3",
     "clang-format": "1.5.0",
     "source-map-support": "^0.5.19"
   },
