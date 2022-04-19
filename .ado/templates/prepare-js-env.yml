@@ -7,6 +7,14 @@ parameters:
         - HostedImage
 
 steps:
+  - script: |
+      dir c:\npm /s/b
+    displayName: dir
+
+  - script: |
+      set
+    displayName: env
+
   - ${{ if eq(parameters.agentImage, 'HostedImage') }}:
     - task: NodeTool@0
       displayName: Set Node Version
