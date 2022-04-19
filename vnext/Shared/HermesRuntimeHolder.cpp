@@ -74,7 +74,15 @@ class HermesExecutorRuntimeAdapter final : public facebook::hermes::inspector::R
 } // namespace
 
 void HermesRuntimeHolder::crashHandler(int fileDescriptor) noexcept {
-  HermesShim::hermesCrashHandler(static_cast<facebook::hermes::HermesRuntime &>(*m_runtime), fileDescriptor);
+  HermesShim::hermesCrashHandler(*m_hermesRuntime, fileDescriptor);
+}
+
+void HermesRuntimeHolder::teardown() noexcept {
+#ifdef HERMES_ENABLE_DEBUGGER
+  if (auto devSettings = m_weakDevSettings.lock(); devSettings && devSettings->useDirectDebugger) {
+    facebook::hermes::inspector::chrome::disableDebugging(*m_hermesRuntime);
+  }
+#endif
 }
 
 facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcept {
@@ -84,43 +92,44 @@ facebook::react::JSIEngineOverride HermesRuntimeHolder::getRuntimeType() noexcep
 std::shared_ptr<jsi::Runtime> HermesRuntimeHolder::getRuntime() noexcept {
   std::call_once(m_once_flag, [this]() { initRuntime(); });
 
-  if (!m_runtime)
+  if (!m_hermesRuntime)
     std::terminate();
 
   // Make sure that the runtime instance is not consumed from multiple threads.
   if (m_own_thread_id != std::this_thread::get_id())
     std::terminate();
 
-  return m_runtime;
+  return m_hermesRuntime;
 }
 
 HermesRuntimeHolder::HermesRuntimeHolder(
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue) noexcept
-    : m_devSettings(std::move(devSettings)), m_jsQueue(std::move(jsQueue)) {}
+    : m_weakDevSettings(devSettings), m_jsQueue(std::move(jsQueue)) {}
 
 void HermesRuntimeHolder::initRuntime() noexcept {
-  auto hermesRuntime = makeHermesRuntimeSystraced(m_devSettings->enableDefaultCrashHandler);
+  auto devSettings = m_weakDevSettings.lock();
+  if (!devSettings)
+    std::terminate();
 
-  facebook::hermes::HermesRuntime &hermesRuntimeRef = *hermesRuntime;
-
-  m_runtime = std::move(hermesRuntime);
+  m_hermesRuntime = makeHermesRuntimeSystraced(devSettings->enableDefaultCrashHandler);
   m_own_thread_id = std::this_thread::get_id();
 
 #ifdef HERMES_ENABLE_DEBUGGER
-  if (m_devSettings->useDirectDebugger) {
-    auto adapter = std::make_unique<HermesExecutorRuntimeAdapter>(m_runtime, hermesRuntimeRef, m_jsQueue);
+  if (devSettings->useDirectDebugger) {
+    auto adapter = std::make_unique<HermesExecutorRuntimeAdapter>(m_hermesRuntime, *m_hermesRuntime, m_jsQueue);
     facebook::hermes::inspector::chrome::enableDebugging(
         std::move(adapter),
-        m_devSettings->debuggerRuntimeName.empty() ? "Hermes React Native" : m_devSettings->debuggerRuntimeName);
+        devSettings->debuggerRuntimeName.empty() ? "Hermes React Native" : devSettings->debuggerRuntimeName);
   }
 #endif
 
   // Add js engine information to Error.prototype so in error reporting we
   // can send this information.
-  auto errorPrototype =
-      m_runtime->global().getPropertyAsObject(*m_runtime, "Error").getPropertyAsObject(*m_runtime, "prototype");
-  errorPrototype.setProperty(*m_runtime, "jsEngine", "hermes");
+  auto errorPrototype = m_hermesRuntime->global()
+                            .getPropertyAsObject(*m_hermesRuntime, "Error")
+                            .getPropertyAsObject(*m_hermesRuntime, "prototype");
+  errorPrototype.setProperty(*m_hermesRuntime, "jsEngine", "hermes");
 }
 
 } // namespace react

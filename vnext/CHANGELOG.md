@@ -1,8 +1,83 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Apr 2022 05:09:24 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Apr 2022 05:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.488
+
+Tue, 19 Apr 2022 05:08:59 GMT
+
+### Changes
+
+- simplify cdebug, removes an unnecessary dynamic initializer (asklar@microsoft.com)
+- Modify transform code to allow fabric usage of transform (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.487
+
+Fri, 15 Apr 2022 05:09:04 GMT
+
+### Changes
+
+- Avoid loading XAML just to create a Color struct (asklar@microsoft.com)
+
+## 0.0.0-canary.486
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Fix Sequential DispatchQueue deadlock on shutdown (vmorozov@microsoft.com)
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.39
+
+## 0.0.0-canary.485
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.125
+
+## 0.0.0-canary.484
+
+Tue, 12 Apr 2022 05:10:39 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.124
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.38
+- Bump @react-native-windows/codegen to v0.0.0-canary.30
+- Bump react-native-platform-override to v1.6.9
+
+## 0.0.0-canary.483
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Changes
+
+- integrate 4/4 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.37
+
+## 0.0.0-canary.482
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Changes
+
+- Don't load XAML just to check if we are a XAML app (asklar@microsoft.com)
+- Fix deps script (asklar@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.123
+
+## 0.0.0-canary.481
+
+Thu, 07 Apr 2022 05:09:50 GMT
+
+### Changes
+
+- Fix Glog (34109996+chiaramooney@users.noreply.github.com)
+- Enable loading the bundle from an embedded resource via resource://moduleName/resourceId (asklar@microsoft.com)
 
 ## 0.0.0-canary.480
 

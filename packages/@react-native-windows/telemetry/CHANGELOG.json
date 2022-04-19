@@ -2,6 +2,57 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Wed, 13 Apr 2022 05:09:34 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.38",
+      "version": "0.0.0-canary.38",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "658ed96eaffcf0398186cfc934e4b7a5d1f054d7",
+            "comment": "Disable unstable telemetry tests"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Apr 2022 05:10:38 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.37",
+      "version": "0.0.0-canary.37",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114",
+            "comment": "Fix Overrides"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.2",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Apr 2022 05:09:52 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.36",
+      "version": "0.0.0-canary.36",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "b6f8fd9bcab4e7d53467e35d2bc6892aec004bd2",
+            "comment": "Stop Telemetry background threads running after test completion"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Apr 2022 05:09:57 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.35",
       "version": "0.0.0-canary.35",

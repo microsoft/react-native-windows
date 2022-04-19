@@ -303,10 +303,8 @@ struct NestedObjectWithPrimitiveValues {
 // on DynamicReader+DynamicWriter and JsiReader+JsiWriter
 // in this way we ensure that two implementation behaves exactly the same
 
-#define IMPORT_READER_TEST_CASE(name)       \
-  TEST_METHOD(name) {                       \
-    RunReaderTest<ReaderTestCases::name>(); \
-  }
+#define IMPORT_READER_TEST_CASE(name) \
+  TEST_METHOD(name) { RunReaderTest<ReaderTestCases::name>(); }
 
 #define IMPORT_ARGUMENT_READER_TEST_CASES           \
   IMPORT_READER_TEST_CASE(EmptyArray)               \

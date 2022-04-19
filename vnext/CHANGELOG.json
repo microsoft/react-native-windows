@@ -2,6 +2,200 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 Apr 2022 05:08:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.488",
+      "version": "0.0.0-canary.488",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e86c6d416ee7195ba4f34b39aea6378f2962d575",
+            "comment": "simplify cdebug, removes an unnecessary dynamic initializer"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d6c7dc916e1793f7880e1589b0fc31945ed0e9de",
+            "comment": "Modify transform code to allow fabric usage of transform"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Apr 2022 05:09:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.487",
+      "version": "0.0.0-canary.487",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0bd6f4a16ca47a64b7189144cec337b99a002c0d",
+            "comment": "Avoid loading XAML just to create a Color struct"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Apr 2022 05:09:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.486",
+      "version": "0.0.0-canary.486",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8cb02d171f6cc06cadf356034a30630d33551a46",
+            "comment": "Fix Sequential DispatchQueue deadlock on shutdown"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2777d696c740f663f8f35191cda5d99cb251af48",
+            "comment": "Integrate RN Nightly Build 4/11"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.39",
+            "commit": "2e771eea4e5bbe3b3a812ce426215f8084fcb535"
+          }
+        ],
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2e771eea4e5bbe3b3a812ce426215f8084fcb535",
+            "comment": "re-use InspectorPackagerConnection across reloads, prevent circular reference between DevSettings and HermesRuntimeHolder"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Apr 2022 05:09:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.485",
+      "version": "0.0.0-canary.485",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.125",
+            "commit": "658ed96eaffcf0398186cfc934e4b7a5d1f054d7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Apr 2022 05:10:39 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.484",
+      "version": "0.0.0-canary.484",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114",
+            "comment": "Fix Overrides"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.124",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.38",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.30",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.9",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Apr 2022 05:10:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.483",
+      "version": "0.0.0-canary.483",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "69f4432924079c65c25d29b3a43e34b1e871a61c",
+            "comment": "integrate 4/4"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.37",
+            "commit": "66ca5ce8b0dad82b3008e283903ce2816840ce5d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Apr 2022 05:09:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.482",
+      "version": "0.0.0-canary.482",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b7d3ebfc395edd550c0ac1e1fd3dd2b83cb2366d",
+            "comment": "Don't load XAML just to check if we are a XAML app"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2b162bf6952d8e275a4d96593da78e151f320e53",
+            "comment": "Fix deps script"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.123",
+            "commit": "2b162bf6952d8e275a4d96593da78e151f320e53"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Apr 2022 05:09:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.481",
+      "version": "0.0.0-canary.481",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5061e5f30d857763aff0d9b5a03b43418d6ec35c",
+            "comment": "Fix Glog"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7cbb3fe78434c709e17483f0b4167ffbe77c2e31",
+            "comment": "Enable loading the bundle from an embedded resource via resource://moduleName/resourceId"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Apr 2022 05:09:24 GMT",
       "tag": "react-native-windows_v0.0.0-canary.480",
       "version": "0.0.0-canary.480",

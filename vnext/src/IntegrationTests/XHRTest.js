@@ -67,7 +67,7 @@ class XHRTest extends React.Component<{...}, State> {
 
   componentDidMount() {
     this._get();
-    this._waitFor(this._getSucceeded, 5, (doneSucceeded) => {
+    this._waitFor(this._getSucceeded, 5, doneSucceeded => {
       TestModule.markTestPassed(doneSucceeded);
     });
   }

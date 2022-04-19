@@ -149,7 +149,7 @@ async function runWindows(
       console.log(output.trimEnd());
       console.log('  Installed UWP SDKs:');
       const sdks = MSBuildTools.getAllAvailableUAPVersions();
-      sdks.forEach((version) => console.log('    ' + version));
+      sdks.forEach(version => console.log('    ' + version));
     } catch (ex) {
       runWindowsError =
         ex instanceof Error ? (ex as Error) : new Error(String(ex));

@@ -33,7 +33,7 @@ export class DisplayNoneExample extends React.Component<{}> {
               style={{display: this.state.displayNone ? 'none' : 'flex'}}>
               <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                onChangeText={(text) => this._handleChangeText(text)}
+                onChangeText={text => this._handleChangeText(text)}
                 value={this.state.textState}
               />
             </View>

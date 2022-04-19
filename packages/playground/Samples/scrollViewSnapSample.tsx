@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 
 function wait(timeout: number) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     setTimeout(resolve, timeout);
   });
 }

@@ -50,8 +50,7 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
       std::function<void()> onChangeCallback) override;
   virtual void StopPollingLiveReload() override;
 
-  virtual void StartInspector(const std::string &packagerHost, const uint16_t packagerPort) noexcept override;
-  virtual void StopInspector() noexcept override;
+  virtual void EnsureHermesInspector(const std::string &packagerHost, const uint16_t packagerPort) noexcept override;
   virtual void UpdateBundleStatus(bool isLastDownloadSucess, int64_t updateTimestamp) noexcept override;
 
  private:
