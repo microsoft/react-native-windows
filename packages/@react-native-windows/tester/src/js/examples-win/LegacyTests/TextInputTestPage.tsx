@@ -20,7 +20,7 @@ export class TextInputTestPage extends React.Component<
   };
 
   public updateText = (text: string) => {
-    this.setState((state) => {
+    this.setState(state => {
       return {
         log: text + '\n' + state.log,
       };
@@ -36,16 +36,16 @@ export class TextInputTestPage extends React.Component<
           placeholder="Enter text to see events"
           onFocus={() => this.updateText('onFocus')}
           onBlur={() => this.updateText('onBlur')}
-          onChange={(event) =>
+          onChange={event =>
             this.updateText('onChange text: ' + event.nativeEvent.text)
           }
-          onEndEditing={(event) =>
+          onEndEditing={event =>
             this.updateText('onEndEditing text: ' + event.nativeEvent.text)
           }
-          onSubmitEditing={(event) =>
+          onSubmitEditing={event =>
             this.updateText('onSubmitEditing text: ' + event.nativeEvent.text)
           }
-          onSelectionChange={(event) => {
+          onSelectionChange={event => {
             this.updateText(
               'onSelectionChange range: ' +
                 event.nativeEvent.selection.start +
@@ -53,7 +53,7 @@ export class TextInputTestPage extends React.Component<
                 event.nativeEvent.selection.end,
             );
           }}
-          onKeyPress={(event) => {
+          onKeyPress={event => {
             this.updateText('onKeyPress key: ' + event.nativeEvent.key);
           }}
         />

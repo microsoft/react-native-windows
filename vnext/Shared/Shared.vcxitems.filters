@@ -37,9 +37,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)cdebug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

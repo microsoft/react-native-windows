@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220404-2009-d5da70e17",
+  "baseVersion": "0.0.0-20220411-2010-f503b2120",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "267dd59e570448f2e5241fb3f839c349970285af"
+      "baseHash": "cb54d72c618ca4d10ef76e2180cb77bf0414857d"
     },
     {
       "type": "patch",
@@ -106,7 +106,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "e5d9ab7fa18bc0654b5966d6618ace085e34dccc",
+      "baseHash": "190ec41abe71f83c4d0d9e95bea10115b2e35ee7",
       "issue": 4054
     },
     {
@@ -347,7 +347,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "db3a6bb1d981e4136f63c9730d3333803f3ca219"
+      "baseHash": "6d3449a499bfc37c44b530ecabe7c2af28ee5147"
     },
     {
       "type": "platform",
@@ -371,23 +371,25 @@
       "baseHash": "bfb778c766301230ffb3b2aab0c25954e993419a"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/FillRateHelper-test.windows.js",
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/FillRateHelper-test.js",
       "baseFile": "Libraries/Lists/__tests__/FillRateHelper-test.js",
-      "baseHash": "784563e3f8414828196288c01b833b7cdb05608f"
+      "baseHash": "784563e3f8414828196288c01b833b7cdb05608f",
+      "issue": 0
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/FlatList-test.windows.js",
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/FlatList-test.js",
       "baseFile": "Libraries/Lists/__tests__/FlatList-test.js",
       "baseHash": "524bd967f806a01272162bdec906780acdea064c",
-      "issue": 9217
+      "issue": 0
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/SectionList-test.windows.js",
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/SectionList-test.js",
       "baseFile": "Libraries/Lists/__tests__/SectionList-test.js",
-      "baseHash": "e277498e347542679adf37df904688002d641c37"
+      "baseHash": "e277498e347542679adf37df904688002d641c37",
+      "issue": 0
     },
     {
       "type": "copy",
@@ -396,22 +398,25 @@
       "baseHash": "ab22d57f3ed7af8382dc2fac72eaca53073d9a41"
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.windows.js",
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ad3f70783221a21cdc810d70a6eea1416dc4fe3c"
+      "baseHash": "ad3f70783221a21cdc810d70a6eea1416dc4fe3c",
+      "issue": 0
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/VirtualizedSectionList-test.windows.js",
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/VirtualizedSectionList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedSectionList-test.js",
-      "baseHash": "09e687ceb59ca9b35b42a641d597f84c8ee7d078"
+      "baseHash": "09e687ceb59ca9b35b42a641d597f84c8ee7d078",
+      "issue": 0
     },
     {
-      "type": "patch",
-      "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.windows.js",
+      "type": "copy",
+      "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "7cbd1e3cfa7adab44c9508066bf77e29d2c55b46"
+      "baseHash": "7cbd1e3cfa7adab44c9508066bf77e29d2c55b46",
+      "issue": 0
     },
     {
       "type": "platform",
@@ -468,6 +473,13 @@
     {
       "type": "platform",
       "file": "src/Libraries/StyleSheet/PlatformColorValueTypes.windows.js"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/StyleSheet/processTransform.windows.js",
+      "baseFile": "Libraries/StyleSheet/processTransform.js",
+      "baseHash": "cf8b6fd7e28565a689d0ae1252801b54bccf6c7f",
+      "issue": 9797
     },
     {
       "type": "derived",

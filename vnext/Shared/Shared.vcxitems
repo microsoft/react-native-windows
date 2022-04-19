@@ -20,7 +20,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)cdebug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />

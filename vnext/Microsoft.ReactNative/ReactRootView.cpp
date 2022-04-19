@@ -13,6 +13,7 @@
 #include <winrt/Windows.UI.Core.h>
 #include "ReactNativeHost.h"
 #include "ReactViewInstance.h"
+#include "XamlUtils.h"
 
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 
@@ -269,7 +270,7 @@ void ReactRootView::EnsureLoadingUI() noexcept {
       m_greenBoxGrid.ColumnDefinitions().Append(c);
 
       m_waitingTextBlock.SetValue(xaml::Controls::Grid::ColumnProperty(), winrt::box_value(1));
-      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0x80, 0x03, 0x29, 0x29)));
+      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(xaml::FromArgb(0x80, 0x03, 0x29, 0x29)));
       m_greenBoxGrid.Children().Append(m_waitingTextBlock);
       m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Center);
       Microsoft::UI::Xaml::Controls::ProgressRing ring{};

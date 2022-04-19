@@ -111,8 +111,8 @@ const asyncMethods: AsyncMethods = {
   ...promisifyImportedMethods(),
 
   exists: (path: fs.PathLike) =>
-    new Promise((resolve) => {
-      fs.access(path, fs.constants.F_OK, (err) =>
+    new Promise(resolve => {
+      fs.access(path, fs.constants.F_OK, err =>
         err ? resolve(false) : resolve(true),
       );
     }),

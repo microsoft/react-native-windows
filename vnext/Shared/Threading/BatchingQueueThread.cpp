@@ -17,7 +17,7 @@ void BatchingQueueCallInvoker::invokeAsync(std::function<void()> &&func) noexcep
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
 
-//#define TRACK_UI_CALLS
+// #define TRACK_UI_CALLS
 #ifdef TRACK_UI_CALLS
   char buffer[1024];
   static uint32_t cCalls = 0;

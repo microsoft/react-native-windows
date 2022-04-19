@@ -394,7 +394,7 @@ class DECLSPEC_NOVTABLE UnknownObject : public Mso::QueryCastList<TBaseType0, TB
 
  protected:
   template <typename... TArgs>
-  UnknownObject(TArgs &&... args) noexcept : Super(std::forward<TArgs>(args)...) {}
+  UnknownObject(TArgs &&...args) noexcept : Super(std::forward<TArgs>(args)...) {}
 
   virtual ~UnknownObject() noexcept = default;
 
@@ -442,7 +442,7 @@ class DECLSPEC_NOVTABLE UnknownObject<Mso::SimpleRefCountPolicy<TDeleter, TAlloc
 
  protected:
   template <typename... TArgs>
-  UnknownObject(TArgs &&... args) noexcept : Super(std::forward<TArgs>(args)...) {}
+  UnknownObject(TArgs &&...args) noexcept : Super(std::forward<TArgs>(args)...) {}
 
   virtual ~UnknownObject() noexcept = default;
 
@@ -489,7 +489,7 @@ class DECLSPEC_NOVTABLE UnknownObject<Mso::RefCountStrategy::SimpleNoQuery, TBas
 
  protected:
   template <typename... TArgs>
-  UnknownObject(TArgs &&... args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
+  UnknownObject(TArgs &&...args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
 
   virtual ~UnknownObject() noexcept = default;
 
@@ -536,7 +536,7 @@ class UnknownObject<Mso::WeakRefCountPolicy<TDeleter, TAllocator>, TBaseType0, T
 
  protected:
   template <typename... TArgs>
-  UnknownObject(TArgs &&... args) noexcept : Super(std::forward<TArgs>(args)...) {}
+  UnknownObject(TArgs &&...args) noexcept : Super(std::forward<TArgs>(args)...) {}
 
   virtual ~UnknownObject() noexcept = default;
 };
@@ -552,7 +552,7 @@ class DECLSPEC_NOVTABLE UnknownObject<Mso::RefCountStrategy::NoRefCount, TBaseTy
   MSO_OBJECT_NOREFCOUNT(UnknownObject);
 
   template <typename... TArgs>
-  UnknownObject(TArgs &&... args) noexcept : Super(std::forward<TArgs>(args)...) {}
+  UnknownObject(TArgs &&...args) noexcept : Super(std::forward<TArgs>(args)...) {}
 
   _Success_(return == S_OK) STDMETHOD(QueryInterface)(const GUID &riid, _Outptr_ void **ppvObject) noexcept override {
     return ::Mso::Details::QueryInterfaceHelper<UnknownObject>::QueryInterface(this, riid, ppvObject);
@@ -582,7 +582,7 @@ class DECLSPEC_NOVTABLE UnknownObject<Mso::RefCountStrategy::NoRefCountNoQuery, 
   MSO_OBJECT_NOREFCOUNT(UnknownObject);
 
   template <typename... TArgs>
-  UnknownObject(TArgs &&... args) noexcept : Super(std::forward<TArgs>(args)...) {}
+  UnknownObject(TArgs &&...args) noexcept : Super(std::forward<TArgs>(args)...) {}
 
   _Success_(return == S_OK)
       STDMETHOD(QueryInterface)(const GUID & /*riid*/, _Outptr_ void ** /*ppvObject*/) noexcept override {
@@ -613,7 +613,7 @@ class AgileUnknownObject : public UnknownObject<TBaseTypes...> {
   MSO_NO_COPY_CTOR_AND_ASSIGNMENT(AgileUnknownObject);
 
   template <typename... TArgs>
-  AgileUnknownObject(TArgs &&... args) noexcept : Super(std::forward<TArgs>(args)...) {}
+  AgileUnknownObject(TArgs &&...args) noexcept : Super(std::forward<TArgs>(args)...) {}
 
   _Success_(return == S_OK) STDMETHOD(QueryInterface)(const GUID &riid, _Outptr_ void **ppvObject) noexcept override {
     HRESULT hr = Super::QueryInterface(riid, ppvObject);

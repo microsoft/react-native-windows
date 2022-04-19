@@ -22,7 +22,7 @@ template <class T>
 struct ReactNonAbiValue : implements<ReactNonAbiValue<T>, IReactNonAbiValue> {
   // Create ReactNonAbiValue and construct the wrapped value.
   template <class... TArgs>
-  ReactNonAbiValue(TArgs &&... args) noexcept : m_value{std::forward<TArgs>(args)...} {}
+  ReactNonAbiValue(TArgs &&...args) noexcept : m_value{std::forward<TArgs>(args)...} {}
 
   // Get a pointer to the wrapped value.
   int64_t GetPtr() const noexcept {
@@ -47,7 +47,7 @@ template <class T>
 struct ReactNonAbiValue : Windows::Foundation::IInspectable {
   // Create a new instance of implementation::ReactNonAbiValue with args and keep a ref-counted pointer to it.
   template <class... TArgs>
-  ReactNonAbiValue(std::in_place_t, TArgs &&... args) noexcept
+  ReactNonAbiValue(std::in_place_t, TArgs &&...args) noexcept
       : IInspectable{make<implementation::ReactNonAbiValue<T>>(std::forward<TArgs>(args)...)} {}
 
   // Create an empty ReactNonAbiValue.
@@ -100,7 +100,7 @@ struct ReactNonAbiValue : Windows::Foundation::IInspectable {
   // Call the call operator() for the stored value.
   // Crash the app if ReactNonAbiValue is empty.
   template <class... TArgs>
-  auto operator()(TArgs &&... args) const {
+  auto operator()(TArgs &&...args) const {
     return (*GetPtr())(std::forward<TArgs>(args)...);
   }
 };
