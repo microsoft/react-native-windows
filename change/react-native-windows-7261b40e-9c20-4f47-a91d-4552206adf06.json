@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Modify transform code to allow fabric usage of transform",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

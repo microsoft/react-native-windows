@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 Apr 2022 05:08:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.488",
+      "version": "0.0.0-canary.488",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e86c6d416ee7195ba4f34b39aea6378f2962d575",
+            "comment": "simplify cdebug, removes an unnecessary dynamic initializer"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d6c7dc916e1793f7880e1589b0fc31945ed0e9de",
+            "comment": "Modify transform code to allow fabric usage of transform"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Apr 2022 05:09:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.487",
       "version": "0.0.0-canary.487",

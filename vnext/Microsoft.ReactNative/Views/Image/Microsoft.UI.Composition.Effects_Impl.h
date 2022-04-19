@@ -141,14 +141,10 @@ class EffectBase : public winrt::implements<EffectBase, abi::IGraphicsEffectD2D1
 
 #pragma push_macro("DECLARE_SOURCE")
 #undef DECLARE_SOURCE
-#define DECLARE_SOURCE(Name)                             \
-  winrt::IGraphicsEffectSource m_##Name;                 \
-  winrt::IGraphicsEffectSource Name() {                  \
-    return m_##Name;                                     \
-  }                                                      \
-  void Name(winrt::IGraphicsEffectSource const &value) { \
-    m_##Name = value;                                    \
-  }
+#define DECLARE_SOURCE(Name)                               \
+  winrt::IGraphicsEffectSource m_##Name;                   \
+  winrt::IGraphicsEffectSource Name() { return m_##Name; } \
+  void Name(winrt::IGraphicsEffectSource const &value) { m_##Name = value; }
 
 #pragma push_macro("DECLARE_SINGLE_SOURCE")
 #undef DECLARE_SINGLE_SOURCE
@@ -192,9 +188,7 @@ class EffectBase : public winrt::implements<EffectBase, abi::IGraphicsEffectD2D1
   Type m_##Name = InitialValue;                                   \
                                                                   \
  public:                                                          \
-  Type Name() {                                                   \
-    return m_##Name;                                              \
-  }                                                               \
+  Type Name() { return m_##Name; }                                \
   void Name(Type const &value) {                                  \
     if (!(0, Condition)) {                                        \
       throw winrt::hresult_invalid_argument();                    \

@@ -92,7 +92,7 @@ __declspec(selectany) std::unordered_map<std::wstring, IndirectLibrary> indirect
 } // namespace details
 
 template <typename TFn, typename... TArgs>
-auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&... args) noexcept {
+auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&...args) noexcept {
   if (details::indirectLibraries.count(dllName) == 0) {
     details::indirectLibraries.emplace(dllName, WINRT_IMPL_LoadLibraryW(dllName));
   }
