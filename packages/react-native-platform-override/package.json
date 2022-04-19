@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@react-native-windows/package-utils": "0.67.1",
-    "async": "^3.2.0",
+    "async": "^3.2.3",
     "chalk": "^4.1.0",
     "fp-ts": "^2.5.0",
     "globby": "^9.2.0",
