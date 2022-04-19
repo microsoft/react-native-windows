@@ -21,21 +21,21 @@ struct ReactModuleBuilderMock {
   ReactModuleBuilderMock() noexcept;
 
   template <class... TArgs>
-  void Call0(std::wstring const &methodName, TArgs &&... args) noexcept;
+  void Call0(std::wstring const &methodName, TArgs &&...args) noexcept;
 
   template <class... TArgs, class... TReasolveArgs>
   Mso::Future<bool>
-  Call1(std::wstring const &methodName, std::function<void(TReasolveArgs...)> &&resolve, TArgs &&... args) noexcept;
+  Call1(std::wstring const &methodName, std::function<void(TReasolveArgs...)> &&resolve, TArgs &&...args) noexcept;
 
   template <class... TArgs, class... TResolveArgs, class... TRejectArgs>
   Mso::Future<bool> Call2(
       std::wstring const &methodName,
       std::function<void(TResolveArgs...)> const &resolve,
       std::function<void(TRejectArgs...)> const &reject,
-      TArgs &&... args) noexcept;
+      TArgs &&...args) noexcept;
 
   template <class TResult, class... TArgs>
-  void CallSync(std::wstring const &methodName, TResult &result, TArgs &&... args) noexcept;
+  void CallSync(std::wstring const &methodName, TResult &result, TArgs &&...args) noexcept;
 
   JSValueObject GetConstants() noexcept;
 
@@ -82,7 +82,7 @@ struct ReactModuleBuilderMock {
 
   static IJSValueWriter ArgWriter() noexcept;
   template <class... TArgs>
-  static IJSValueReader ArgReader(TArgs &&... args) noexcept;
+  static IJSValueReader ArgReader(TArgs &&...args) noexcept;
   static IJSValueReader CreateArgReader(std::function<void(IJSValueWriter const &)> const &argWriter) noexcept;
 
   template <class... TArgs, size_t... I>
@@ -216,7 +216,7 @@ struct ReactModuleBuilderImpl : implements<ReactModuleBuilderImpl, IReactModuleB
 //===========================================================================
 
 template <class... TArgs>
-inline void ReactModuleBuilderMock::Call0(std::wstring const &methodName, TArgs &&... args) noexcept {
+inline void ReactModuleBuilderMock::Call0(std::wstring const &methodName, TArgs &&...args) noexcept {
   if (auto method = GetMethod0(methodName)) {
     method(ArgReader(std::forward<TArgs>(args)...), ArgWriter(), nullptr, nullptr);
   }
@@ -226,7 +226,7 @@ template <class... TArgs, class... TResolveArgs>
 inline Mso::Future<bool> ReactModuleBuilderMock::Call1(
     std::wstring const &methodName,
     std::function<void(TResolveArgs...)> &&resolve,
-    TArgs &&... args) noexcept {
+    TArgs &&...args) noexcept {
   Mso::Promise<bool> promise;
   if (auto method = GetMethod1(methodName)) {
     method(
@@ -243,7 +243,7 @@ inline Mso::Future<bool> ReactModuleBuilderMock::Call2(
     std::wstring const &methodName,
     std::function<void(TResolveArgs...)> const &resolve,
     std::function<void(TRejectArgs...)> const &reject,
-    TArgs &&... args) noexcept {
+    TArgs &&...args) noexcept {
   Mso::Promise<bool> promise;
   if (auto method = GetMethod2(methodName)) {
     method(
@@ -257,7 +257,7 @@ inline Mso::Future<bool> ReactModuleBuilderMock::Call2(
 
 template <class TResult, class... TArgs>
 inline void
-ReactModuleBuilderMock::CallSync(std::wstring const &methodName, TResult &result, TArgs &&... args) noexcept {
+ReactModuleBuilderMock::CallSync(std::wstring const &methodName, TResult &result, TArgs &&...args) noexcept {
   if (auto method = GetSyncMethod(methodName)) {
     auto writer = ArgWriter();
     method(ArgReader(std::forward<TArgs>(args)...), writer);
@@ -266,7 +266,7 @@ ReactModuleBuilderMock::CallSync(std::wstring const &methodName, TResult &result
 }
 
 template <class... TArgs>
-inline /*static*/ IJSValueReader ReactModuleBuilderMock::ArgReader(TArgs &&... args) noexcept {
+inline /*static*/ IJSValueReader ReactModuleBuilderMock::ArgReader(TArgs &&...args) noexcept {
   return CreateArgReader(
       [&args...](IJSValueWriter const &writer) mutable noexcept { WriteArgs(writer, std::forward<TArgs>(args)...); });
 }

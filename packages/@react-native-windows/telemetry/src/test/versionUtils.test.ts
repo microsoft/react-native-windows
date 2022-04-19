@@ -30,14 +30,14 @@ test('getNodeVersion() is valid', async () => {
   expectValidVersion(version, true);
 });
 
-xtest('getNpmVersion() is valid', async () => {
+test('getNpmVersion() is valid', async () => {
   const version = await versionUtils.getNpmVersion();
   if (version) {
     expectValidVersion(version, true);
   }
 });
 
-xtest('getYarnVersion() is valid', async () => {
+test('getYarnVersion() is valid', async () => {
   const version = await versionUtils.getYarnVersion();
   if (version) {
     expectValidVersion(version, true);
