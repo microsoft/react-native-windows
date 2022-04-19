@@ -74,8 +74,8 @@ const renderThemeObject = (key: string): React.ReactElement => withBox(key, rend
 
 const withBox = (key: string, component: React.ReactNode) => (
   <View style={styles.box} key={key}>
-      <Text style={styles.header}>{key}</Text>
-      {component}
+    <Text style={styles.header}>{key}</Text>
+    {component}
   </View>
 );
 
