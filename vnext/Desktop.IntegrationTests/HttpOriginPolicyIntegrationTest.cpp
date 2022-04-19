@@ -328,8 +328,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   //NoCors_ForbiddenMethodConnect_Failed
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsCrossOriginFetchRequestSucceeds)
-    //TODO: Apparently hangs during CI validation.
-    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsCrossOriginFetchRequestSucceeds)
   {
