@@ -579,7 +579,7 @@ void ViewViewManager::TryUpdateView(
   if (useControl)
     pViewShadowNode->GetControl().Content(visualRoot);
 
-  if (pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
+  if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
     pViewShadowNode->GetControl().IsTabStop(false);
     xaml::Automation::AutomationProperties::SetAccessibilityView(
         pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
