@@ -13,34 +13,23 @@ std::unordered_map<string, string> g_runtimeOptionStrings;
 mutex g_runtimeOptionsMutex;
 } // namespace
 
+//TODO: Deprecate. These flat functions are not ABI-safe. Use "C" variants (non-namespaced).
 namespace Microsoft::React {
 
 void __cdecl SetRuntimeOptionBool(string &&name, bool value) noexcept {
-  scoped_lock lock{g_runtimeOptionsMutex};
-  g_runtimeOptionInts.insert_or_assign(std::move(name), value ? 1 : 0);
+  Microsoft_React_SetRuntimeOptionBool(name.c_str(), value);
 }
 
 void __cdecl SetRuntimeOptionInt(string &&name, int32_t value) noexcept {
-  scoped_lock lock{g_runtimeOptionsMutex};
-  g_runtimeOptionInts.insert_or_assign(std::move(name), value);
+  Microsoft_React_SetRuntimeOptionInt(name.c_str(), value);
 }
 
 const bool __cdecl GetRuntimeOptionBool(const string &name) noexcept {
-  scoped_lock lock{g_runtimeOptionsMutex};
-  auto itr = g_runtimeOptionInts.find(name);
-  if (itr != g_runtimeOptionInts.end())
-    return itr->second == 1;
-
-  return false;
+  return Microsoft_React_GetRuntimeOptionBool(name.c_str());
 }
 
 const int32_t __cdecl GetRuntimeOptionInt(const string &name) noexcept {
-  scoped_lock lock{g_runtimeOptionsMutex};
-  auto itr = g_runtimeOptionInts.find(name);
-  if (itr != g_runtimeOptionInts.end())
-    return itr->second;
-
-  return 0;
+  return Microsoft_React_GetRuntimeOptionInt(name.c_str());
 }
 
 } // namespace Microsoft::React
@@ -82,7 +71,7 @@ const bool __cdecl Microsoft_React_GetRuntimeOptionBool(const char *name) noexce
   scoped_lock lock{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionInts.find(name);
   if (itr != g_runtimeOptionInts.end())
-    return itr->second == 1;
+    return itr->second != 0;
 
   return false;
 }
