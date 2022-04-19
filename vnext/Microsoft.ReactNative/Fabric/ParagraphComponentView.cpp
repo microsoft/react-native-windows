@@ -103,10 +103,9 @@ void ParagraphComponentView::updateState(
   for (const auto &fragment : newState.getData().attributedString.getFragments()) {
     auto inlines = m_element.Inlines();
 
-    if (fragment.textAttributes.textDecorationLineType &&
-        (*(fragment.textAttributes.textDecorationLineType) == facebook::react::TextDecorationLineType::Underline ||
-         *(fragment.textAttributes.textDecorationLineType) ==
-             facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
+    if (auto tdlt = fragment.textAttributes.textDecorationLineType; tdlt &&
+        (*tdlt == facebook::react::TextDecorationLineType::Underline ||
+         *tdlt == facebook::react::TextDecorationLineType::UnderlineStrikethrough)) {
       auto underline = xaml::Documents::Underline();
       inlines.Append(underline);
       inlines = underline.Inlines();
