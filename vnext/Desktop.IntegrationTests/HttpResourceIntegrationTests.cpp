@@ -263,7 +263,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
-    // TODO: Especialize AreEqual
     Assert::AreEqual(static_cast<size_t>(1), optionsResponse.Headers.size());
     for (auto header : optionsResponse.Headers) {
       if (header.first == "PreflightName") {

@@ -260,7 +260,6 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 
 // https://fetch.spec.whatwg.org/#cors-unsafe-request-header-byte
 /*static*/ bool OriginPolicyHttpFilter::IsCorsUnsafeRequestHeaderByte(wchar_t c) noexcept {
-  // const auto u = static_cast<uint8_t>(c);
   return (c < 0x20 && c != 0x09) || c == 0x22 || c == 0x28 || c == 0x29 || c == 0x3a || c == 0x3c || c == 0x3e ||
       c == 0x3f || c == 0x40 || c == 0x5b || c == 0x5c || c == 0x5d || c == 0x7b || c == 0x7d || c == 0x7f;
 }
