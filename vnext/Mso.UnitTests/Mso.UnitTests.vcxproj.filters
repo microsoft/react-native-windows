@@ -28,6 +28,9 @@
     <Filter Include="pch">
       <UniqueIdentifier>{c1f49da1-d949-4a14-a312-36dd851d3f85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dispatchQueue">
+      <UniqueIdentifier>{f4486561-9d0c-45ec-a4a2-571345827d07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="activeObject\activeObjectTest.cpp">
@@ -117,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>pch</Filter>
+    </ClCompile>
+    <ClCompile Include="dispatchQueue\dispatchQueueTest.cpp">
+      <Filter>dispatchQueue</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
