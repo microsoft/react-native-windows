@@ -40,7 +40,7 @@ void __cdecl Microsoft_React_SetRuntimeOptionBool(const char *name, bool value) 
 
   scoped_lock lock{g_runtimeOptionsMutex};
   if (value)
-    g_runtimeOptionInts.insert_or_assign(name, value ? 1 : 0);
+    g_runtimeOptionInts.insert_or_assign(name, 1);
   else
     g_runtimeOptionInts.erase(name);
 }
