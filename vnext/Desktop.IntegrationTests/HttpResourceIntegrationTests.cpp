@@ -277,6 +277,81 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     }
     Assert::AreEqual({"Response Body"}, content);
   }
+
+  TEST_METHOD(SimpleRedirectSucceeds) {
+    auto port1 = s_port;
+    auto port2 = ++s_port;
+    string url = "http://localhost:" + std::to_string(port1);
+
+    promise<void> getResponsePromise;
+    promise<void> getContentPromise;
+    IHttpResource::Response getResponse;
+    string content;
+    string error;
+
+    auto server1 = make_shared<HttpServer>(port1);
+    server1->Callbacks().OnGet = [port2](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::moved_permanently);
+      response.set(http::field::location, {"http://localhost:" + std::to_string(port2)});
+
+      return {std::move(response)};
+    };
+    auto server2 = make_shared<HttpServer>(port2);
+    server2->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper { DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Redirect Content");
+
+      return {std::move(response)};
+    };
+
+    server1->Start();
+    server2->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&getResponse, &getResponsePromise](int64_t, IHttpResource::Response response) {
+      if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        getResponse = response;
+        getResponsePromise.set_value();
+      }
+    });
+    resource->SetOnData([&getContentPromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
+
+      if (!content.empty())
+        getContentPromise.set_value();
+    });
+    resource->SetOnError(
+        [&getResponsePromise, &getContentPromise, &error, &server1](int64_t, string &&message) {
+          error = std::move(message);
+
+          getResponsePromise.set_value();
+          getContentPromise.set_value();
+        });
+
+    //clang-format off
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        {} /*headers*/,
+        {} /*bodyData*/,
+        "text",
+        false, /*useIncrementalUpdates*/
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    getResponsePromise.get_future().wait();
+    getContentPromise.get_future().wait();
+
+    server2->Stop();
+    server1->Stop();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), getResponse.StatusCode);
+    Assert::AreEqual({"Redirect Content"}, content);
+  }
 };
 
 /*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;
