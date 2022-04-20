@@ -350,7 +350,7 @@ bool FrameworkElementViewManager::UpdateProperty(
                 innerValue.AsBoolean();
             const auto old_val = DynamicAutomationProperties::GetAccessibilityStateSelected(element);
             auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
-            if ( peer != nullptr && old_val != innerValue.AsBoolean()) { //if peer exists and state has changed, announce
+            if (peer != nullptr && old_val != innerValue.AsBoolean()) {
               peer.RaisePropertyChangedEvent(
                   winrt::SelectionItemPatternIdentifiers::IsSelectedProperty(),
                   winrt::box_value(old_val),
@@ -376,12 +376,24 @@ bool FrameworkElementViewManager::UpdateProperty(
             // If the state is "mixed" we'll just set both Checked and Unchecked to false,
             // then later in the IToggleProvider implementation it will return the Intermediate state
             // due to both being set to false (see  DynamicAutomationPeer::ToggleState()).
-
-            //TODO: account for mixed
             const auto old_val = DynamicAutomationProperties::GetAccessibilityStateChecked(element);
             auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
-
-            if (peer != nullptr && old_val != innerValue.AsBoolean()) {
+//what if it didn't matter that we got the old_val exactly right. we could really simplify the inclusion of mixed
+            //if state is mixed (aka innerValue != boolean, then call with old value as whatever.
+            //but we gotta check that state wasn't mixed before - meaning check that both checked and unchecked weren't false
+            //if it's not a bool and either checked or unchecked are true (aka not mixed before)
+            if (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+              if (old_val || DynamicAutomationProperties::GetAccessibilityStateUnchecked(element)) {
+                if (peer != nullptr) {
+                  const auto newValue = innerValue.AsBoolean() ? winrt::ToggleState::On : winrt::ToggleState::Off;
+                  const auto oldValue = old_val ? winrt::ToggleState::Off : winrt::ToggleState::On;
+                  peer.RaisePropertyChangedEvent(
+                      winrt::TogglePatternIdentifiers::ToggleStateProperty(),
+                      winrt::box_value(),
+                      winrt::box_value(winrt::ToggleState::Indeterminate));
+                }
+              }
+            } else if (peer != nullptr && old_val != innerValue.AsBoolean()) {
               const auto newValue = innerValue.AsBoolean() ? winrt::ToggleState::On : winrt::ToggleState::Off;
               const auto oldValue = old_val ? winrt::ToggleState::Off : winrt::ToggleState::On;
               peer.RaisePropertyChangedEvent(
