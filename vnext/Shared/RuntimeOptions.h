@@ -67,9 +67,15 @@ const bool __cdecl Microsoft_React_GetRuntimeOptionBool(const char *name) noexce
 /// <returns>Value stored for the given key, or 0 if the entry doesn't exist (default)</returns>
 const int32_t __cdecl Microsoft_React_GetRuntimeOptionInt(const char *name) noexcept;
 
+/// <param name="buffer">String contents. nullptr if none found</param>
+/// <param name="length">String length. 0 if none found</param>
+/// <param name="state">Pointer used to pass or retrieve arbitrary data</param>
+typedef void(__cdecl *Microsoft_React_GetStringCallback)(const char *buffer, size_t length, void *state);
+
 /// <summary>
 /// Retrieves a global string value for the given key.
 /// </summary>
 /// <param name="name">Global key</param>
-/// <returns>Value stored for the given key, or nullptr if the entry doesn't exist (default)</returns>
-const char *__cdecl Microsoft_React_GetRuntimeOptionString(const char *name) noexcept;
+/// <param name="callBack">Handler used to access the obtained string</param>
+/// <param name="state">Arbitrary data to pass on to or retrieve from callBack</param>
+void Microsoft_React_GetRuntimeOptionString(const char *name, Microsoft_React_GetStringCallback callBack, void *state);

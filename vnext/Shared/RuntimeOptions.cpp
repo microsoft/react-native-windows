@@ -13,7 +13,7 @@ std::unordered_map<string, string> g_runtimeOptionStrings;
 mutex g_runtimeOptionsMutex;
 } // namespace
 
-//TODO: Deprecate. These flat functions are not ABI-safe. Use "C" variants (non-namespaced).
+// TODO: Deprecate. These flat functions are not ABI-safe. Use "C" variants (non-namespaced).
 namespace Microsoft::React {
 
 void __cdecl SetRuntimeOptionBool(string &&name, bool value) noexcept {
@@ -85,16 +85,12 @@ const int32_t __cdecl Microsoft_React_GetRuntimeOptionInt(const char *name) noex
   return 0;
 }
 
-const char *__cdecl Microsoft_React_GetRuntimeOptionString(const char *name) noexcept {
+void Microsoft_React_GetRuntimeOptionString(const char *name, Microsoft_React_GetStringCallback callBack, void *state) {
   scoped_lock lock{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionStrings.find(name);
   if (itr != g_runtimeOptionStrings.cend()) {
-    auto size = itr->second.size() * sizeof(char) + 1 /*NULL termination*/;
-    auto result = static_cast<char *>(malloc(size));
-    strncpy_s(result, size, itr->second.c_str(), itr->second.size());
-
-    return result;
+    callBack(itr->second.c_str(), itr->second.size() * sizeof(char) + 1 /*NULL termination*/, state);
+  } else {
+    callBack(nullptr, 0, state);
   }
-
-  return nullptr;
 }

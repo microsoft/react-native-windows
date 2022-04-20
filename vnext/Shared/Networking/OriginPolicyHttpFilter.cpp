@@ -582,7 +582,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
     auto withCredentials =
         response.RequestMessage().Properties().Lookup(L"RequestArgs").try_as<RequestArgs>()->WithCredentials;
 
-    if (Microsoft_React_GetRuntimeOptionString("Http.StrictOriginCheckSimpleCors") &&
+    if (Microsoft_React_GetRuntimeOptionBool("Http.StrictOriginCheckSimpleCors") &&
         originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       bool originAllowed = false;
       for (const auto &header : response.Headers()) {
