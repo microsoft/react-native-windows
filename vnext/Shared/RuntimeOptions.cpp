@@ -16,6 +16,14 @@ namespace {
 std::unordered_map<string, int32_t> g_runtimeOptionInts;
 std::unordered_map<string, string> g_runtimeOptionStrings;
 mutex g_runtimeOptionsMutex;
+
+void __cdecl GetStringCallback(const char *buffer, size_t length, void *state) {
+  if (!buffer)
+    return;
+
+  *static_cast<char **>(state) = static_cast<char *>(malloc(length));
+  strncpy_s(*static_cast<char **>(state), length, buffer, length);
+}
 } // namespace
 
 namespace Microsoft::React {
@@ -28,12 +36,27 @@ void __cdecl SetRuntimeOptionInt(string &&name, int32_t value) noexcept {
   Microsoft_React_SetRuntimeOptionInt(name.c_str(), value);
 }
 
+void __cdecl SetRuntimeOptionString(string&& name, string&& value) noexcept {
+  if (!value.empty())
+    Microsoft_React_SetRuntimeOptionString(std::move(name).c_str(), std::move(value).c_str());
+}
+
 const bool __cdecl GetRuntimeOptionBool(const string &name) noexcept {
   return Microsoft_React_GetRuntimeOptionBool(name.c_str());
 }
 
 const int32_t __cdecl GetRuntimeOptionInt(const string &name) noexcept {
   return Microsoft_React_GetRuntimeOptionInt(name.c_str());
+}
+
+const string __cdecl GetRuntimeOptionString(const string &name) noexcept {
+  char *payload{nullptr};
+  Microsoft_React_GetRuntimeOptionString(name.c_str(), GetStringCallback, &payload);
+
+  if (!payload)
+    return string{};
+
+  return string{std::move(payload)};
 }
 
 } // namespace Microsoft::React

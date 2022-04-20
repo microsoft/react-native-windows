@@ -329,19 +329,12 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
 #pragma region IHttpResource
 
-static void __cdecl GetStringCallback(const char *buffer, size_t length, void *state) {
-  *static_cast<char **>(state) = static_cast<char *>(malloc(length));
-  strncpy_s(*static_cast<char **>(state), length, buffer, length);
-}
-
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
-  if (static_cast<OriginPolicy>(Microsoft_React_GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
+  if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
     return std::make_shared<WinRTHttpResource>();
   } else {
-    char *globalOrigin{nullptr};
-    Microsoft_React_GetRuntimeOptionString("Http.GlobalOrigin", GetStringCallback, &globalOrigin);
-    OriginPolicyHttpFilter::SetStaticOrigin(globalOrigin);
-    delete globalOrigin;
+    auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
+    OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
     auto opFilter = winrt::make<OriginPolicyHttpFilter>();
     auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
 

@@ -112,8 +112,8 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 
 /*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
 
-/*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(const char *url) {
-  if (url)
+/*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(std::string &&url) {
+  if (!url.empty())
     s_origin = Uri{to_hstring(url)};
 }
 
@@ -393,7 +393,7 @@ OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &r
 
     case OriginPolicy::SimpleCrossOriginResourceSharing:
       // Check for disallowed mixed content
-      if (Microsoft_React_GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
+      if (GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
           s_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
@@ -582,7 +582,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
     auto withCredentials =
         response.RequestMessage().Properties().Lookup(L"RequestArgs").try_as<RequestArgs>()->WithCredentials;
 
-    if (Microsoft_React_GetRuntimeOptionBool("Http.StrictOriginCheckSimpleCors") &&
+    if (GetRuntimeOptionBool("Http.StrictOriginCheckSimpleCors") &&
         originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
       bool originAllowed = false;
       for (const auto &header : response.Headers()) {
@@ -633,7 +633,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
     }
 
     // When withCredentials is false, request cannot include cookies. Also, cookies will be ignored in responses.
-    removeAllCookies = !withCredentials && Microsoft_React_GetRuntimeOptionBool("Http.RemoveCookiesFromResponse");
+    removeAllCookies = !withCredentials && GetRuntimeOptionBool("Http.RemoveCookiesFromResponse");
   } // originPolicy == SimpleCrossOriginResourceSharing || CrossOriginResourceSharing
 
   // Don't expose HttpOnly cookies to JavaScript
@@ -686,14 +686,14 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
 
   // Set initial origin policy to global runtime option.
   request.Properties().Insert(
-      L"OriginPolicy", winrt::box_value(Microsoft_React_GetRuntimeOptionInt("Http.OriginPolicy")));
+      L"OriginPolicy", winrt::box_value(GetRuntimeOptionInt("Http.OriginPolicy")));
 
   // Allow only HTTP or HTTPS schemes
-  if (Microsoft_React_GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
+  if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
       coRequest.RequestUri().SchemeName() != L"http")
     throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + s_origin.SchemeName() + L"]"};
 
-  if (!Microsoft_React_GetRuntimeOptionBool("Http.OmitCredentials")) {
+  if (!GetRuntimeOptionBool("Http.OmitCredentials")) {
     coRequest.Properties().Lookup(L"RequestArgs").as<RequestArgs>()->WithCredentials = false;
   }
 

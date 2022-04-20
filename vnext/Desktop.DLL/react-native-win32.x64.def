@@ -52,8 +52,10 @@ EXPORTS
 ?Utf16ToUtf8@Unicode@Common@Microsoft@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV?$basic_string@_WU?$char_traits@_W@std@@V?$allocator@_W@2@@5@@Z
 ?SetRuntimeOptionBool@React@Microsoft@@YAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@_N@Z
 ?SetRuntimeOptionInt@React@Microsoft@@YAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z
+?SetRuntimeOptionString@React@Microsoft@@YAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0@Z
 ?GetRuntimeOptionBool@React@Microsoft@@YA?B_NAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
 ?GetRuntimeOptionInt@React@Microsoft@@YA?BHAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z
+?GetRuntimeOptionString@React@Microsoft@@YA?BV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV34@@Z
 ?makeChakraRuntime@JSI@Microsoft@@YA?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QEAUChakraRuntimeArgs@12@@Z
 ?Make@IHttpResource@Networking@React@Microsoft@@SA?AV?$shared_ptr@UIHttpResource@Networking@React@Microsoft@@@std@@XZ
 ?CreateTimingModule@react@facebook@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@AEBV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z

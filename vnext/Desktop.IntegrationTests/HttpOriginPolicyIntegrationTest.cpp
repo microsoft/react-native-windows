@@ -221,8 +221,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
   TEST_METHOD_CLEANUP(MethodCleanup)
   {
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", nullptr);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
+    SetRuntimeOptionString("Http.GlobalOrigin", {});
 
     // Bug in HttpServer does not correctly release TCP port between test methods.
     // Using a different por per test for now.
@@ -238,7 +238,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsForbiddenMethodSucceeds)
   {
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     constexpr uint16_t port{ 5556 };
     constexpr char url[]{ "http://localhost:5556" };
@@ -318,8 +318,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::connect, {{"Content-Type", "text/plain"}});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// SimpleCorsForbiddenMethodFails
 
@@ -329,8 +329,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsCrossOriginFetchRequestSucceeds)
   {
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     ServerParams serverArgs(s_port);
     serverArgs.Response.result(http::status::ok);
@@ -346,8 +346,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsCrossOriginPatchSucceededs)
   {
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
 
     ServerParams serverArgs(s_port);
     serverArgs.Response.result(http::status::ok);
@@ -371,8 +371,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// SimpleCorsSameOriginSucceededs
 
@@ -384,8 +384,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/html" }});  // text/html is a non-simple value
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// SimpleCorsCrossOriginFetchFails
 
@@ -398,8 +398,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsSameOriginRequestSucceeds
 
@@ -417,8 +417,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsCrossOriginAllowOriginWildcardSucceeds
@@ -440,8 +440,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});  // text/plain is a non-simple header
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsCrossOriginMatchingOriginSucceeds
@@ -460,9 +460,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
     clientArgs.WithCredentials = true;
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
-    Microsoft_React_SetRuntimeOptionBool("Http.OmitCredentials", true);
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionBool("Http.OmitCredentials", true);
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// FullCorsCrossOriginWithCredentialsFails
@@ -478,8 +478,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// FullCorsCrossOriginMissingCorsHeadersFails
@@ -497,8 +497,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// FullCorsCrossOriginMismatchedCorsHeaderFails
@@ -515,8 +515,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// FullCorsCrossOriginCheckFailsOnPreflightRedirectFails
@@ -546,8 +546,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   }// FullCorsCorsCheckFailsOnResponseRedirectFails
@@ -563,8 +563,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
   } // FullCorsSameOriginToSameOriginRedirectSucceeds
@@ -585,8 +585,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsSameOriginToCrossOriginRedirectSucceeds
@@ -614,8 +614,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, /*redirServerArgs, */clientArgs, s_shouldSucceed);
   } // FullCorsCrossOriginToCrossOriginRedirectSucceeds
@@ -635,8 +635,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", redirServerArgs.Url.c_str());
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", redirServerArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   } // FullCorsCrossOriginToOriginalOriginRedirectFails
@@ -658,8 +658,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds
@@ -689,8 +689,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     // PATCH is not a simple method, so preflight is required for server1
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldSucceed);
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds
@@ -718,8 +718,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     // PATCH is not a simple method, so preflight is required for server1
     ClientParams clientArgs(http::verb::patch, {{ "Content-Type", "text/plain" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicyWithRedirect(serverArgs, redirServerArgs, clientArgs, s_shouldFail);
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightFails
@@ -734,8 +734,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     // PATCH is not a simple method, so preflight is required for server1
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy",    static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   } // FullCors304ForSimpleGetFails
@@ -751,8 +751,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, { {"Content-Type", "text/plain"}, {"ArbitraryHeader", "AnyValue"} });
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
     TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
   }// FullCorsPreflightSucceeds
 
@@ -775,8 +775,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }}); // application/text is a non-simple header
     clientArgs.WithCredentials = true;
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
   }// FullCorsCrossOriginWithCredentialsSucceeds
@@ -795,8 +795,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }, { "Host", "http://sub.example.rnw" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
 
@@ -814,8 +814,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     ClientParams clientArgs(http::verb::get, {{ "Content-Type", "application/text" }, { "Proxy-Authorization", "Basic Zm9vOmJhcg==" }});
 
-    Microsoft_React_SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
-    Microsoft_React_SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+    SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// RequestWithProxyAuthorizationHeaderFails

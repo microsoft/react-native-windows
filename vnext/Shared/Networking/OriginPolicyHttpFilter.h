@@ -47,7 +47,7 @@ class OriginPolicyHttpFilter
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
 
  public:
-  static void SetStaticOrigin(const char *url);
+  static void SetStaticOrigin(std::string &&url);
 
   static bool IsSameOrigin(
       winrt::Windows::Foundation::Uri const &u1,
