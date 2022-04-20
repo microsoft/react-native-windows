@@ -36,15 +36,22 @@ using Test::HttpServer;
 using Test::ResponseWrapper;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
+
+  static uint16_t s_port;
+
+  TEST_METHOD_CLEANUP(MethodCleanup) {
+    // Bug in WebSocketServer does not correctly release TCP port between test methods.
+    // Using a different por per test for now.
+    s_port++;
+  }
   TEST_METHOD(RequestGetSucceeds) {
-    constexpr uint16_t port{5555};
-    constexpr char url[]{"http://localhost:5555"};
+    string url = "http://localhost:" + std::to_string(s_port);
 
     promise<void> resPromise;
     string error;
     int statusCode = 0;
 
-    auto server = make_shared<HttpServer>(port);
+    auto server = make_shared<HttpServer>(s_port);
     server->Callbacks().OnGet = [&resPromise](const DynamicRequest &request) -> ResponseWrapper {
       DynamicResponse response;
       response.result(http::status::ok);
@@ -67,7 +74,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     });
     resource->SendRequest(
         "GET",
-        url,
+        std::move(url),
         {} /*header*/,
         {} /*bodyData*/,
         "text",
@@ -85,14 +92,13 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestGetHeadersSucceeds) {
-    constexpr uint16_t port{5556};
-    constexpr char url[]{"http://localhost:5556"};
+    string url = "http://localhost:" + std::to_string(s_port);
 
     promise<void> rcPromise;
     string error;
     IHttpResource::Response response;
 
-    auto server = make_shared<HttpServer>(port);
+    auto server = make_shared<HttpServer>(s_port);
     server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
       DynamicResponse response;
       response.result(http::status::ok);
@@ -123,7 +129,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     //clang-format off
     resource->SendRequest(
         "GET",
-        url,
+        std::move(url),
         {
             {"Content-Type", "application/json"},
             {"Content-Encoding", "ASCII"},
@@ -175,8 +181,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
   }
 
   TEST_METHOD(RequestOptionsSucceeds) {
-    constexpr uint16_t port{5557};
-    constexpr char url[]{"http://localhost:5557"};
+    string url = "http://localhost:" + std::to_string(s_port);
 
     promise<void> getResponsePromise;
     promise<void> getDataPromise;
@@ -186,7 +191,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     IHttpResource::Response optionsResponse;
     string content;
 
-    auto server = make_shared<HttpServer>(port);
+    auto server = make_shared<HttpServer>(s_port);
     server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
       EmptyResponse response;
       response.result(http::status::partial_content);
@@ -234,7 +239,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     //clang-format off
     resource->SendRequest(
         "OPTIONS",
-        url,
+        string{url},
         {} /*headers*/,
         {} /*bodyData*/,
         "text",
@@ -244,7 +249,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         [](int64_t) {});
     resource->SendRequest(
         "GET",
-        url,
+        std::move(url),
         {} /*headers*/,
         {} /*bodyData*/,
         "text",
@@ -273,3 +278,5 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Response Body"}, content);
   }
 };
+
+/*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;
