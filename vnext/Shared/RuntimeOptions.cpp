@@ -1,5 +1,10 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include <CppRuntimeOptions.h>
 #include <RuntimeOptions.h>
 
+// Standard Library
 #include <mutex>
 #include <unordered_map>
 
@@ -13,7 +18,6 @@ std::unordered_map<string, string> g_runtimeOptionStrings;
 mutex g_runtimeOptionsMutex;
 } // namespace
 
-// TODO: Deprecate. These flat functions are not ABI-safe. Use "C" variants (non-namespaced).
 namespace Microsoft::React {
 
 void __cdecl SetRuntimeOptionBool(string &&name, bool value) noexcept {

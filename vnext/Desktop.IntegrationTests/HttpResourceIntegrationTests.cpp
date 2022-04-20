@@ -8,7 +8,6 @@
 
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
-#include <RuntimeOptions.h>
 #include <Test/HttpServer.h>
 #include <unicode.h>
 

@@ -41,7 +41,7 @@
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>

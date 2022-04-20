@@ -3,7 +3,7 @@
 
 #include "WinRTHttpResource.h"
 
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
 #include <utilities.h>

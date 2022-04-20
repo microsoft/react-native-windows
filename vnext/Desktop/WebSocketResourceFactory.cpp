@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <Networking/WinRTWebSocketResource.h>
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #if ENABLE_BEAST
 #include "BeastWebSocketResource.h"
 #endif // ENABLE_BEAST

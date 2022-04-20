@@ -5,7 +5,7 @@
 
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #include <Test/HttpServer.h>
 
 // Standard Library

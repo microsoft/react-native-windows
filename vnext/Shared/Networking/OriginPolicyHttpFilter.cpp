@@ -4,7 +4,7 @@
 #include "OriginPolicyHttpFilter.h"
 
 // React Native Windows
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #include "WinRTTypes.h"
 
 // Boost Library
