@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "IHttpResource.h"
+#include <Networking/IHttpResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -47,7 +47,7 @@ class HttpModule : public facebook::xplat::module::CxxModule {
     HttpModule *Module{nullptr};
   };
 
-  std::shared_ptr<IHttpResource> m_resource;
+  std::shared_ptr<Networking::IHttpResource> m_resource;
   std::shared_ptr<ModuleHolder> m_holder;
 };
 } // namespace Microsoft::React
