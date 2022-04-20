@@ -3,7 +3,9 @@
 
 #pragma once
 
-#include <IHttpResource.h>
+#include "IHttpResource.h"
+
+#include "WinRTTypes.h"
 
 // Windows API
 #include <winrt/Windows.Web.Http.h>
@@ -11,33 +13,27 @@
 // Standard Library
 #include <mutex>
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
-  typedef winrt::Windows::Foundation::IAsyncOperationWithProgress<
-      winrt::Windows::Web::Http::HttpResponseMessage,
-      winrt::Windows::Web::Http::HttpProgress>
-      ResponseType;
-
   static int64_t s_lastRequestId;
 
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
-  std::unordered_map<int64_t, ResponseType> m_responses;
+  std::unordered_map<int64_t, ResponseOperation> m_responses;
 
   std::function<void(int64_t requestId)> m_onRequest;
   std::function<void(int64_t requestId, Response &&response)> m_onResponse;
   std::function<void(int64_t requestId, std::string &&responseData)> m_onData;
   std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> m_onError;
 
-  void TrackResponse(int64_t requestId, ResponseType response) noexcept;
+  void TrackResponse(int64_t requestId, ResponseOperation response) noexcept;
 
   void UntrackResponse(int64_t requestId) noexcept;
 
   winrt::fire_and_forget PerformSendRequest(
-      int64_t requestId,
       winrt::Windows::Web::Http::HttpRequestMessage &&request,
-      bool textResponse) noexcept;
+      winrt::Windows::Foundation::IInspectable const &args) noexcept;
 
  public:
   WinRTHttpResource() noexcept;
@@ -68,4 +64,4 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
                       &&handler) noexcept override;
 };
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking
