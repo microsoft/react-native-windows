@@ -9,7 +9,7 @@
 #include <string>
 #include <unordered_map>
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 struct IHttpResource {
   typedef std::unordered_map<std::string, std::string> Headers;
@@ -21,8 +21,8 @@ struct IHttpResource {
 
   struct Response {
     int64_t StatusCode;
-    Headers Headers;
     std::string Url;
+    Headers Headers;
   };
 
   static std::shared_ptr<IHttpResource> Make() noexcept;
@@ -43,11 +43,11 @@ struct IHttpResource {
 
   virtual void ClearCookies() noexcept = 0;
 
-  virtual void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept = 0; // TODO: Keep???
+  virtual void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept = 0;
   virtual void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept = 0;
   virtual void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept = 0;
   virtual void SetOnError(
       std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> &&handler) noexcept = 0;
 };
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

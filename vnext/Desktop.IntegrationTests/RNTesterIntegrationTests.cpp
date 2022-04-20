@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #include <Test/WebSocketServer.h>
 #include "TestRunner.h"
 
