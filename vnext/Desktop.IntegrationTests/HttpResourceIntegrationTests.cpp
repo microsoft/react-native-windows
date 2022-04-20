@@ -35,7 +35,6 @@ using Test::HttpServer;
 using Test::ResponseWrapper;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
-
   static uint16_t s_port;
 
   TEST_METHOD_CLEANUP(MethodCleanup) {
@@ -297,7 +296,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       return {std::move(response)};
     };
     auto server2 = make_shared<HttpServer>(port2);
-    server2->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper { DynamicResponse response;
+    server2->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
       response.result(http::status::ok);
       response.body() = Test::CreateStringResponseBody("Redirect Content");
 
@@ -320,13 +320,12 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       if (!content.empty())
         getContentPromise.set_value();
     });
-    resource->SetOnError(
-        [&getResponsePromise, &getContentPromise, &error, &server1](int64_t, string &&message) {
-          error = std::move(message);
+    resource->SetOnError([&getResponsePromise, &getContentPromise, &error, &server1](int64_t, string &&message) {
+      error = std::move(message);
 
-          getResponsePromise.set_value();
-          getContentPromise.set_value();
-        });
+      getResponsePromise.set_value();
+      getContentPromise.set_value();
+    });
 
     //clang-format off
     resource->SendRequest(

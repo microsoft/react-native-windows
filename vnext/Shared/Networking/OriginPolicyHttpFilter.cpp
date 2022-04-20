@@ -685,8 +685,7 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
   auto coRequest = request;
 
   // Set initial origin policy to global runtime option.
-  request.Properties().Insert(
-      L"OriginPolicy", winrt::box_value(GetRuntimeOptionInt("Http.OriginPolicy")));
+  request.Properties().Insert(L"OriginPolicy", winrt::box_value(GetRuntimeOptionInt("Http.OriginPolicy")));
 
   // Allow only HTTP or HTTPS schemes
   if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&

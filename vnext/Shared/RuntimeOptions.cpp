@@ -36,7 +36,7 @@ void __cdecl SetRuntimeOptionInt(string &&name, int32_t value) noexcept {
   Microsoft_React_SetRuntimeOptionInt(name.c_str(), value);
 }
 
-void __cdecl SetRuntimeOptionString(string&& name, string&& value) noexcept {
+void __cdecl SetRuntimeOptionString(string &&name, string &&value) noexcept {
   if (!value.empty())
     Microsoft_React_SetRuntimeOptionString(std::move(name).c_str(), std::move(value).c_str());
 }

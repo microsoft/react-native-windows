@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <Networking/WinRTWebSocketResource.h>
 #include <CppRuntimeOptions.h>
+#include <Networking/WinRTWebSocketResource.h>
 #if ENABLE_BEAST
 #include "BeastWebSocketResource.h"
 #endif // ENABLE_BEAST

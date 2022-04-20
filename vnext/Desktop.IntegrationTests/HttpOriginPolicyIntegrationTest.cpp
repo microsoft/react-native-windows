@@ -3,9 +3,9 @@
 
 #include <CppUnitTest.h>
 
+#include <CppRuntimeOptions.h>
 #include <Networking/IHttpResource.h>
 #include <Networking/OriginPolicy.h>
-#include <CppRuntimeOptions.h>
 #include <Test/HttpServer.h>
 
 // Standard Library
