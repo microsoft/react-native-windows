@@ -5,9 +5,6 @@
 
 #include "IHttpResource.h"
 
-// Folly
-#include <folly/dynamic.h>
-
 // Windows API
 #include <winrt/Windows.Web.Http.h>
 
@@ -19,10 +16,10 @@ namespace Microsoft::React::Networking {
 struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Foundation::IInspectable> {
   int64_t RequestId;
   IHttpResource::Headers Headers;
-  folly::dynamic Data;
+  IHttpResource::BodyData Body;
   bool IncrementalUpdates;
   bool WithCredentials;
-  std::string ResponseType;
+  bool IsText;
   int64_t Timeout;
 };
 

@@ -3,14 +3,10 @@
 
 #pragma once
 
-#include <Modules/IWebSocketModuleProxy.h>
 #include <Networking/IWebSocketResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
-
-// Windows API
-#include <winrt/Windows.Foundation.h>
 
 namespace Microsoft::React {
 

@@ -11,6 +11,9 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/lexical_cast/try_lexical_convert.hpp>
 
+// Windows API
+#include <winrt/Windows.Web.Http.Headers.h>
+
 // Standard Library
 #include <queue>
 #include <regex>
@@ -24,7 +27,6 @@ using winrt::to_hstring;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::IPropertyValue;
 using winrt::Windows::Foundation::Uri;
-using winrt::Windows::Foundation::Collections::IMap;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
 using winrt::Windows::Web::Http::HttpResponseMessage;
@@ -116,7 +118,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
-  return (u1 && u2) && u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
+  return u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSimpleCorsRequest(HttpRequestMessage const &request) noexcept {
@@ -371,7 +373,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
   }
 }
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter const &innerFilter) : m_innerFilter{innerFilter} {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter &&innerFilter) : m_innerFilter{std::move(innerFilter)} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter()
     : OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
@@ -440,24 +442,21 @@ OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &r
 void OriginPolicyHttpFilter::ValidateAllowOrigin(
     hstring const &allowedOrigin,
     hstring const &allowCredentials,
-    IMap<hstring, IInspectable> props) const {
+    IInspectable const &iRequestArgs) const {
   // 4.10.1-2 - null allow origin
   if (L"null" == allowedOrigin)
     throw hresult_error{
         E_INVALIDARG,
         L"Response header Access-Control-Allow-Origin has a value of [null] which differs from the supplied origin"};
 
-  bool withCredentials = props.Lookup(L"RequestArgs").as<RequestArgs>()->WithCredentials;
+  bool withCredentials = iRequestArgs.as<RequestArgs>()->WithCredentials;
   // 4.10.3 - valid wild card allow origin
   if (!withCredentials && L"*" == allowedOrigin)
     return;
 
   // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected
   // 4.10.4 - Mismatched allow origin
-  auto taintedOriginProp = props.TryLookup(L"TaintedOrigin");
-  auto taintedOrigin = taintedOriginProp && winrt::unbox_value<bool>(taintedOriginProp);
-  auto origin = taintedOrigin ? nullptr : s_origin;
-  if (allowedOrigin.empty() || !IsSameOrigin(origin, Uri{allowedOrigin})) {
+  if (allowedOrigin.empty() || !IsSameOrigin(s_origin, Uri{allowedOrigin})) {
     hstring errorMessage;
     if (allowedOrigin.empty())
       errorMessage = L"No valid origin in response";
@@ -511,14 +510,14 @@ void OriginPolicyHttpFilter::ValidatePreflightResponse(
 
   auto controlValues = ExtractAccessControlValues(response.Headers());
 
-  auto props = request.Properties();
+  auto iRequestArgs = request.Properties().Lookup(L"RequestArgs");
   // Check if the origin is allowed in conjuction with the withCredentials flag
   // CORS preflight should always exclude credentials although the subsequent CORS request may include credentials.
-  ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, props);
+  ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
 
   // See https://fetch.spec.whatwg.org/#cors-preflight-fetch, section 4.8.7.5
   // Check if the request method is allowed
-  bool withCredentials = props.Lookup(L"RequestArgs").as<RequestArgs>()->WithCredentials;
+  bool withCredentials = iRequestArgs.as<RequestArgs>()->WithCredentials;
   bool requestMethodAllowed = false;
   for (const auto &method : controlValues.AllowedMethods) {
     if (L"*" == method) {
@@ -579,8 +578,8 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
   if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     auto controlValues = ExtractAccessControlValues(response.Headers());
-    auto props = response.RequestMessage().Properties();
-    auto withCredentials = props.Lookup(L"RequestArgs").try_as<RequestArgs>()->WithCredentials;
+    auto withCredentials =
+        response.RequestMessage().Properties().Lookup(L"RequestArgs").try_as<RequestArgs>()->WithCredentials;
 
     if (GetRuntimeOptionBool("Http.StrictOriginCheckSimpleCors") &&
         originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
@@ -595,7 +594,8 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
       }
     } else {
-      ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, props);
+      auto iRequestArgs = response.RequestMessage().Properties().Lookup(L"RequestArgs");
+      ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
     }
 
     if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
@@ -640,6 +640,8 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
 }
 
 ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage const &request) const {
+  // TODO: Inject user agent?
+
   auto coRequest = request;
 
   HttpRequestMessage preflightRequest;
@@ -675,38 +677,6 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
 
   co_return {co_await m_innerFilter.SendRequestAsync(preflightRequest)};
 }
-
-#pragma region IRedirectEventSource
-
-bool OriginPolicyHttpFilter::OnRedirecting(
-    HttpRequestMessage const &request,
-    HttpResponseMessage const &response) noexcept {
-  // Consider the following scenario.
-  // User signs in to http://a.com and visits a page that makes CORS request to http://b.com with origin=http://a.com.
-  // Http://b.com reponds with a redirect to http://a.com. The browser follows the redirect to http://a.com with
-  // origin=http://a.com. Since the origin matches the URL, the request is authorized at http://a.com, but it actually
-  // allows http://b.com to bypass the CORS check at http://a.com since the redirected URL is from http://b.com.
-  if (!IsSameOrigin(response.Headers().Location(), request.RequestUri()) &&
-      !IsSameOrigin(s_origin, request.RequestUri())) {
-    // By masking the origin field in the request header, we make it impossible for the server to set a single value for
-    // the access-control-allow-origin header. It means, the only way to support redirect is that server allows access
-    // from all sites through wildcard.
-    request.Headers().Insert(L"Origin", L"null");
-
-    auto props = request.Properties();
-    // Look for 'RequestArgs' key to ensure we are redirecting the main request.
-    if (auto iReqArgs = props.TryLookup(L"RequestArgs")) {
-      props.Insert(L"TaintedOrigin", winrt::box_value(true));
-    } else {
-      // Abort redirection if the request is either preflight or extraneous.
-      return false;
-    }
-  }
-
-  return true;
-}
-
-#pragma endregion IRedirectEventSource
 
 #pragma region IHttpFilter
 
@@ -752,11 +722,6 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
       }
 
       ValidatePreflightResponse(coRequest, preflightResponse);
-    }
-
-    if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
-        originPolicy == OriginPolicy::CrossOriginResourceSharing) {
-      coRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
     }
 
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);

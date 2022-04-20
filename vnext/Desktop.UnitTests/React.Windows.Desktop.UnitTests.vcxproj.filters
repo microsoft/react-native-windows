@@ -61,9 +61,6 @@
     <ClCompile Include="OriginPolicyHttpFilterTest.cpp">
       <Filter>Unit Tests</Filter>
     </ClCompile>
-    <ClCompile Include="RedirectHttpFilterUnitTest.cpp">
-      <Filter>Unit Tests</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
