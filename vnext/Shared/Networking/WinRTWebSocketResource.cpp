@@ -79,7 +79,7 @@ namespace {
 
 } // namespace
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
   // private
   WinRTWebSocketResource::WinRTWebSocketResource(
@@ -421,4 +421,4 @@ namespace Microsoft::React {
 
 #pragma endregion IWebSocketResource
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking
