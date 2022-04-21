@@ -53,7 +53,7 @@ struct ReactContext {
   // Call methodName JS function of module with moduleName.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>
-  void CallJSFunction(std::wstring_view moduleName, std::wstring_view methodName, TArgs &&... args) const noexcept {
+  void CallJSFunction(std::wstring_view moduleName, std::wstring_view methodName, TArgs &&...args) const noexcept {
     m_handle.CallJSFunction(moduleName, methodName, MakeJSValueArgWriter(std::forward<TArgs>(args)...));
   }
 
@@ -61,7 +61,7 @@ struct ReactContext {
   // Call eventName JS event of module with eventEmitterName.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>
-  void EmitJSEvent(std::wstring_view eventEmitterName, std::wstring_view eventName, TArgs &&... args) const noexcept {
+  void EmitJSEvent(std::wstring_view eventEmitterName, std::wstring_view eventName, TArgs &&...args) const noexcept {
     m_handle.EmitJSEvent(eventEmitterName, eventName, MakeJSValueWriter(std::forward<TArgs>(args)...));
   }
 
@@ -69,7 +69,7 @@ struct ReactContext {
   // Dispatch eventName event to the view.
   // args are either function arguments or a single lambda with 'IJSValueWriter const&' argument.
   template <class... TArgs>
-  void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&... args) const noexcept {
+  void DispatchEvent(xaml::FrameworkElement const &view, std::wstring_view eventName, TArgs &&...args) const noexcept {
     XamlUIService::FromContext(m_handle).DispatchEvent(
         view, eventName, MakeJSValueWriter(std::forward<TArgs>(args)...));
   }

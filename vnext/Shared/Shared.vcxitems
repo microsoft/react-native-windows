@@ -20,7 +20,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)cdebug.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CxxMessageQueue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
@@ -53,6 +52,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\SourceCodeModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)OInstance.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RuntimeOptions.cpp" />
@@ -66,8 +68,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp">
       <ExcludedFromBuild Condition="'$(UseV8)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinRTHttpResource.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
@@ -76,6 +76,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\AsyncStorageManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\FollyDynamicConverter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\KeyValueStorage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CppRuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesShim.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ByteArrayBuffer.h" />
@@ -88,6 +89,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWebSocketResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTTypes.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RuntimeOptions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AsyncStorage\StorageFileIO.h" />
@@ -102,11 +110,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)IHttpResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IReactRootView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IRedBoxHandler.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)IWebSocketResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSBigAbiString.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LayoutAnimation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Logging.h" />
@@ -136,8 +142,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Utils\WinRTConversions.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WebSocketJSExecutorFactory.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)WinRTHttpResource.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)WinRTWebSocketResource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp" />

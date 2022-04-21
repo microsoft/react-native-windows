@@ -72,7 +72,7 @@ struct IAbiFunctor; // Intentionally not implemented to allow the specialization
 
 template <class TResult, class... TArgs>
 struct IAbiFunctor<TResult(TArgs...)> : IAbiObject {
-  virtual TResult Invoke(TArgs &&... args) noexcept = 0;
+  virtual TResult Invoke(TArgs &&...args) noexcept = 0;
 };
 
 // IAbiFunctorThrow is a representation of a function object (functors)
@@ -83,7 +83,7 @@ struct IAbiFunctorThrow; // Intentionally not implemented to allow the
 
 template <class TResult, class... TArgs>
 struct IAbiFunctorThrow<TResult(TArgs...)> : IAbiObject {
-  virtual TResult Invoke(TArgs &&... args) = 0;
+  virtual TResult Invoke(TArgs &&...args) = 0;
 };
 
 // A base class to implement ABI safe types.
@@ -107,7 +107,7 @@ struct AbiObject : TAbiInterface {
 
 // A helper method to create new instance of ABI safe object and return AbiPtr.
 template <class T, class TResult = T, class... TArgs>
-AbiPtr<TResult> AbiMake(TArgs &&... args) {
+AbiPtr<TResult> AbiMake(TArgs &&...args) {
   return AbiPtr<TResult>{new T{std::forward<TArgs>(args)...}};
 }
 

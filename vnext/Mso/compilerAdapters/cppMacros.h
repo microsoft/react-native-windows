@@ -29,11 +29,9 @@
   Make the macro act like a statement.
 */
 #ifndef __GNUC__
-#define Statement(x)                                                   \
-  __pragma(warning(push)) __pragma(warning(disable : 4127 25037)) do { \
-    x;                                                                 \
-  }                                                                    \
-  while (0)                                                            \
+#define Statement(x)                                                        \
+  __pragma(warning(push)) __pragma(warning(disable : 4127 25037)) do { x; } \
+  while (0)                                                                 \
   __pragma(warning(pop))
 #else
 #define Statement(x) \

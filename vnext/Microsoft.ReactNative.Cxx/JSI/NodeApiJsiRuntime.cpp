@@ -1254,7 +1254,7 @@ size_t NapiJsiRuntime::JsiValueViewArgs::Size() const noexcept {
 #pragma region PropNameIDView
 
 NapiJsiRuntime::PropNameIDView::PropNameIDView(NapiJsiRuntime *runtime, napi_value propertyId) noexcept
-    : m_propertyId{make<PropNameID>(new (std::addressof(m_pointerStore)) NapiPointerValueView{runtime, propertyId})} {}
+    : m_propertyId{make<PropNameID>(new(std::addressof(m_pointerStore)) NapiPointerValueView{runtime, propertyId})} {}
 
 NapiJsiRuntime::PropNameIDView::operator PropNameID const &() const noexcept {
   return m_propertyId;

@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 Apr 2022 05:09:34 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Apr 2022 05:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.488
+
+Tue, 19 Apr 2022 05:08:59 GMT
+
+### Changes
+
+- simplify cdebug, removes an unnecessary dynamic initializer (asklar@microsoft.com)
+- Modify transform code to allow fabric usage of transform (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.487
+
+Fri, 15 Apr 2022 05:09:04 GMT
+
+### Changes
+
+- Avoid loading XAML just to create a Color struct (asklar@microsoft.com)
+
+## 0.0.0-canary.486
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Fix Sequential DispatchQueue deadlock on shutdown (vmorozov@microsoft.com)
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.39
 
 ## 0.0.0-canary.485
 
