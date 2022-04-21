@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 19 Apr 2022 05:08:59 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Apr 2022 05:09:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.489
+
+Thu, 21 Apr 2022 05:09:32 GMT
+
+### Changes
+
+- Handle abrupt WebSocket connection interruption (julio.rocha@microsoft.com)
+- CG: Update async to resolve CVE-2021-43138 (jthysell@microsoft.com)
+- Implement Origin Policy Filter (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.126
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.40
+- Bump react-native-platform-override to v1.6.10
 
 ## 0.0.0-canary.488
 
