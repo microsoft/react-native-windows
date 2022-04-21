@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 21 Apr 2022 05:09:33 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.39",
+      "version": "0.0.0-canary.39",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "cb2af39060469381733f3fe5b4f59c0c49b661b7",
+            "comment": "Reenable Telemetry tests"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Apr 2022 05:09:34 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.38",
       "version": "0.0.0-canary.38",

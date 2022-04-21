@@ -1,8 +1,16 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Tue, 12 Apr 2022 05:10:39 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Apr 2022 05:09:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.10
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Patches
+
+- CG: Update async to resolve CVE-2021-43138 (jthysell@microsoft.com)
 
 ## 1.6.9
 

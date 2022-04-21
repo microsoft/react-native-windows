@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/tester
 
-This log was last generated on Tue, 19 Apr 2022 05:08:59 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Apr 2022 05:09:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Patches
+
+- Bump react-native-platform-override to v1.6.10
+- Bump react-native-windows to v0.0.0-canary.489
 
 ## 0.0.1
 
