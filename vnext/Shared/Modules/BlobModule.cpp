@@ -20,6 +20,7 @@ using facebook::react::Instance;
 using folly::dynamic;
 using std::lock_guard;
 using std::mutex;
+using std::scoped_lock;
 using std::string;
 using std::vector;
 using std::weak_ptr;
@@ -45,6 +46,10 @@ BlobModule::BlobModule(winrt::Microsoft::ReactNative::IReactPropertyBag const& p
     m_contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
     s_contentHandler = m_contentHandler;
   }
+
+  auto contentHandler = winrt::make<WebSocketModuleContentHandler>();
+  properties.Set(
+      ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(L"CxxNativeModule"), L"WebSocketModuleContentHandler"), contentHandler);
 
   m_sharedState->Module = this;
 }
@@ -212,6 +217,63 @@ void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, 
 }
 
 #pragma endregion BlobWebSocketModuleContentHandler
+
+#pragma region WebSocketModuleContentHandler
+
+void WebSocketModuleContentHandler::ProcessMessage(string&& message, dynamic& params)
+{
+  params["data"] = std::move(message);
+}
+
+void WebSocketModuleContentHandler::ProcessMessage(vector<uint8_t>&& message, dynamic& params)
+{
+  auto blob = dynamic::object();
+  blob("offset", 0);
+  blob("size", message.size());
+
+  // substr(1, 36) strips curly braces from a GUID
+  string blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
+  //TODO: StoreMessage
+
+  params["data"] = std::move(blob);
+  params["type"] = "blob";
+}
+
+void WebSocketModuleContentHandler::Register(int64_t socketId) noexcept
+{
+  scoped_lock lock{m_mutex};
+  m_socketIds.insert(socketId);
+}
+
+void WebSocketModuleContentHandler::Unregister(int64_t socketId) noexcept
+{
+  scoped_lock lock{m_mutex};
+  if (m_socketIds.find(socketId) != m_socketIds.end())
+    m_socketIds.erase(socketId);
+}
+
+winrt::array_view<uint8_t>
+WebSocketModuleContentHandler::ResolveMessage(string&& blobId, int64_t offset, int64_t size) noexcept
+{
+  scoped_lock lock{m_mutex};
+  auto &data = m_blobs.at(std::move(blobId));
+
+  return winrt::array_view<uint8_t>{data};
+}
+
+void WebSocketModuleContentHandler::StoreMessage(vector<uint8_t>&& message, string&& blobId) noexcept
+{
+  scoped_lock lock{m_mutex};
+  m_blobs.insert_or_assign(std::move(blobId), std::move(message));
+}
+
+void WebSocketModuleContentHandler::RemoveMessage(string&& blobId) noexcept
+{
+  scoped_lock lock{m_mutex};
+  m_blobs.erase(std::move(blobId));
+}
+
+#pragma endregion WebSocketModuleContentHandler
 
 /*static*/ weak_ptr<IWebSocketModuleContentHandler> IWebSocketModuleContentHandler::GetInstance() noexcept {
   return s_contentHandler;

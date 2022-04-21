@@ -21,6 +21,8 @@
 
 namespace Microsoft::React {
 
+//class OriginPolicyHttpFilter
+//    : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
 class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
   std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
   std::mutex m_blobsMutex;

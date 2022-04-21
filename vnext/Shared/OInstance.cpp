@@ -543,7 +543,6 @@ InstanceImpl::~InstanceImpl() {
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
-  auto ns = ReactPropertyBagHelper::GetNamespace(L"CxxModule");
   auto transitionalProps = m_transitionalModuleProperties;
 
   modules.push_back(std::make_unique<CxxNativeModule>(
