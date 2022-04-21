@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Modules/IWebSocketModuleContentHandler.h>
+#include <ReactPropertyBag.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -60,7 +61,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
     SIZE = 6
   };
 
-  BlobModule() noexcept;
+  BlobModule(winrt::Microsoft::ReactNative::IReactPropertyBag const& properties) noexcept;
 
   ~BlobModule() noexcept override;
 

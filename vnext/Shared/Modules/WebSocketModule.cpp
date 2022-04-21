@@ -6,10 +6,12 @@
 #include <Modules/WebSocketModule.h>
 
 #include <Modules/IWebSocketModuleContentHandler.h>
+#include <ReactPropertyBag.h>
+#include "Unicode.h"
 
+// React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
-#include "Unicode.h"
 
 // Windows API
 #include <winrt/Windows.Foundation.h>
@@ -29,6 +31,7 @@ using std::shared_ptr;
 using std::string;
 using std::weak_ptr;
 
+using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
@@ -148,7 +151,8 @@ namespace Microsoft::React {
 
 #pragma region WebSocketModule
 
-WebSocketModule::WebSocketModule() : m_sharedState{std::make_shared<SharedState>()} {
+WebSocketModule::WebSocketModule(/*winrt::Microsoft::ReactNative::IReactPropertyBag const &properties*/)
+    : m_sharedState{std::make_shared<SharedState>()} {
   m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(); };
   m_sharedState->Module = this;
   s_sharedState = weak_ptr<SharedState>(m_sharedState);
@@ -303,7 +307,9 @@ void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) no
   return moduleName;
 }
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
+    winrt::Windows::Foundation::IInspectable const &properties) noexcept {
+      
   return std::make_unique<WebSocketModule>();
 }
 

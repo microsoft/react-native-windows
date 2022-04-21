@@ -67,6 +67,7 @@ using namespace facebook;
 using namespace Microsoft::JSI;
 
 using std::make_shared;
+using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
 namespace Microsoft::React {
 
@@ -244,7 +245,8 @@ InstanceImpl::InstanceImpl(
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
       m_devSettings(std::move(devSettings)),
       m_devManager(std::move(devManager)),
-      m_innerInstance(std::move(instance)) {
+      m_innerInstance(std::move(instance)),
+      m_transitionalModuleProperties{ReactPropertyBagHelper::CreatePropertyBag()} {
   // Temp set the logmarker here
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 
@@ -541,6 +543,8 @@ InstanceImpl::~InstanceImpl() {
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
+  auto ns = ReactPropertyBagHelper::GetNamespace(L"CxxModule");
+  auto transitionalProps = m_transitionalModuleProperties;
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
@@ -551,8 +555,8 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetWebSocketModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateWebSocketModule();
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateWebSocketModule(transitionalProps);
       },
       nativeQueue));
 
@@ -615,7 +619,12 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       nativeQueue));
 
   modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance, "BlobModule", []() { return Microsoft::React::CreateBlobModule(); }, nativeQueue));
+      m_innerInstance,
+      Microsoft::React::GetBlobModuleName(),
+      [transitionalProps]() {
+        return Microsoft::React::CreateBlobModule(transitionalProps);
+      },
+      nativeQueue));
 
   return modules;
 }

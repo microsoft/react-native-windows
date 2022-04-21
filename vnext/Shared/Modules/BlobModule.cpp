@@ -23,6 +23,7 @@ using std::mutex;
 using std::string;
 using std::vector;
 using std::weak_ptr;
+using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 using winrt::Windows::Foundation::GuidHelper;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
@@ -37,7 +38,8 @@ namespace Microsoft::React {
 
 #pragma region BlobModule
 
-BlobModule::BlobModule() noexcept : m_sharedState{std::make_shared<SharedState>()} {
+BlobModule::BlobModule(winrt::Microsoft::ReactNative::IReactPropertyBag const& properties) noexcept
+    : m_sharedState{std::make_shared<SharedState>()} {
   m_contentHandler = std::static_pointer_cast<BlobWebSocketModuleContentHandler>(s_contentHandler.lock());
   if (!m_contentHandler) {
     m_contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
@@ -215,8 +217,15 @@ void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, 
   return s_contentHandler;
 }
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule() noexcept {
-  return std::make_unique<BlobModule>();
+/*extern*/ const char *GetBlobModuleName() noexcept {
+  return moduleName;
+}
+
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(winrt::Windows::Foundation::IInspectable const& iProps) noexcept {
+  if (auto props = iProps.try_as<winrt::Microsoft::ReactNative::IReactPropertyBag>())
+    return std::make_unique<BlobModule>(props);
+
+  return nullptr;
 }
 
 } // namespace Microsoft::React

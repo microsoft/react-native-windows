@@ -5,13 +5,17 @@
 
 #pragma once
 
+#include <TurboModuleManager.h>
+#include <ReactPropertyBag.h>
+#include "InstanceManager.h"
+
+// React Native
+#include <cxxreact/Instance.h>
+
+// Standard Libriary
 #include <memory>
 #include <string>
 #include <vector>
-
-#include <TurboModuleManager.h>
-#include <cxxreact/Instance.h>
-#include "InstanceManager.h"
 
 namespace facebook {
 namespace react {
@@ -104,6 +108,12 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
   std::shared_ptr<IDevSupportManager> m_devManager;
   std::shared_ptr<DevSettings> m_devSettings;
   bool m_isInError{false};
+
+  /// <summary>
+  /// Internal property bag meant to share arbitrary data between CxxModule instances.
+  /// <remarks>This element should be deprecated once full ABI safety is achieved.</remarks>
+  /// </summary>
+  winrt::Microsoft::ReactNative::IReactPropertyBag m_transitionalModuleProperties;
 };
 
 } // namespace react

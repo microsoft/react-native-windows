@@ -3,9 +3,14 @@
 
 #pragma once
 
+// React Native
 #include <cxxreact/CxxModule.h>
 #include <smartPtr/cntPtr.h>
 
+// Windows API
+#include <winrt/Windows.Foundation.h>
+
+// Standard Library
 #include <memory>
 
 // Forward declarations. Desktop projects can not access <React.h>
@@ -33,8 +38,11 @@ extern const char *GetHttpModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept;
 
 extern const char *GetWebSocketModuleName() noexcept;
-extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
+    winrt::Windows::Foundation::IInspectable const &properties) noexcept;
 
-extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule() noexcept;
+extern const char *GetBlobModuleName() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
+    winrt::Windows::Foundation::IInspectable const &properties) noexcept;
 
 } // namespace Microsoft::React
