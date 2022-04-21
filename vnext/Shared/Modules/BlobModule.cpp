@@ -221,9 +221,9 @@ void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, 
   return moduleName;
 }
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(winrt::Windows::Foundation::IInspectable const& iProps) noexcept {
-  if (auto props = iProps.try_as<winrt::Microsoft::ReactNative::IReactPropertyBag>())
-    return std::make_unique<BlobModule>(props);
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(winrt::Windows::Foundation::IInspectable const& iProperties) noexcept {
+  if (auto properties = iProperties.try_as<winrt::Microsoft::ReactNative::IReactPropertyBag>())
+    return std::make_unique<BlobModule>(properties);
 
   return nullptr;
 }

@@ -61,7 +61,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
     SIZE = 6
   };
 
-  BlobModule(winrt::Microsoft::ReactNative::IReactPropertyBag const& properties) noexcept;
+  BlobModule(winrt::Microsoft::ReactNative::IReactPropertyBag const& iProperties) noexcept;
 
   ~BlobModule() noexcept override;
 

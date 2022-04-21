@@ -3,9 +3,6 @@
 
 #include <TestRunner.h>
 
-#include <CreateModules.h>
-#include <Modules/NetworkingModule.h>
-#include <Modules/WebSocketModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
