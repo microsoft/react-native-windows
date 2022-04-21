@@ -14,11 +14,9 @@
 #define STRING_(s) #s
 #define STRING(s) STRING_(s)
 
-namespace facebook {
-namespace jsi {
+namespace Microsoft::JSI {
 struct RuntimeHolderLazyInit;
-}
-} // namespace facebook
+} // namespace Microsoft::JSI
 
 namespace facebook {
 namespace react {
@@ -81,7 +79,7 @@ struct DevSettings {
   /// instance. This object should in general be used only from the JS engine
   /// thread, unless the specific runtime implementation explicitly guarantees
   /// reentrancy.
-  std::shared_ptr<jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
 
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
@@ -91,6 +89,8 @@ struct DevSettings {
   std::function<void()> showDevMenuCallback;
 
   bool inlineSourceMap{true};
+
+  bool enableDefaultCrashHandler{false};
 };
 
 } // namespace react

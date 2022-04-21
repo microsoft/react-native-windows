@@ -280,7 +280,7 @@ struct IsPromise<ReactPromise<T>> : std::true_type {};
 template <class TArgsTuple>
 constexpr size_t GetPromiseCount() noexcept {
   if constexpr (
-      std::tuple_size_v<TArgsTuple> > 0 &&
+      std::tuple_size_v < TArgsTuple >> 0 &&
       IsPromise<TupleElementOrVoid<std::tuple_size_v<TArgsTuple> - 1, TArgsTuple>>::value) {
     return 1;
   } else {
@@ -301,7 +301,7 @@ constexpr void ValidateCoroutineArg() noexcept {
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
         "Coroutine parameter must be passed by value for safe access"
-#ifndef __APPLE__
+#ifndef __clang__
         ": " __FUNCSIG__
 #endif
     );

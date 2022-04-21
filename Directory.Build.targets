@@ -69,6 +69,7 @@
         PlatformName;
         DefaultPlatformToolset;
         PlatformToolset;
+        SolutionPath;
         SolutionDir;
         IntDir;
         OutDir;
@@ -85,6 +86,8 @@
         VCTargetsPath;
         UserRootDir;
         ProjectHome;
+        IntermediateOutputPath;
+        OutputPath;
       " />
       <_VarsCustom Include="
         RootDir;
@@ -122,7 +125,6 @@
         NuGetPackagesDirectory;
         NuGetRuntimeIdentifier;
         ProjectLockFile;
-        IntermediateOutputPath;
         NuGetTargetMoniker;
         TargetFramework;
         TargetFrameworks;
@@ -173,10 +175,16 @@
     <Message Text="%0A" />
     <Message Text="NuGet" />
     <Message Text="=> @(_VarsNuGet->PadRight(40)) [$(%(_VarsNuGet.Identity))]" />
+    <Message Text="=> PackageReference->Count                  [@(PackageReference->Count())]" />
 
     <Message Text="%0A" />
     <Message Text="WinUI" />
     <Message Text="=> @(_VarsWinUI->PadRight(40)) [$(%(_VarsWinUI.Identity))]" />
+
+    <Message Text="%0A" />
+    <Message Text="Items" />
+    <Message Text="=> ProjectCapability" />
+    <Message Text="                                            %(ProjectCapability.Identity)" />
 
   </Target>
 

@@ -3,7 +3,7 @@
 
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/version.hpp>
-#include <boost/asio/strand.hpp>
+#include <boost/asio/dispatch.hpp>
 
 // Include to prevent 'incomplete type' errors.
 #include <boost/utility/in_place_factory.hpp>
@@ -20,6 +20,7 @@ using boost::system::error_code;
 using std::function;
 using std::make_shared;
 using std::shared_ptr;
+using std::static_pointer_cast;
 using std::string;
 
 namespace Microsoft::React::Test
@@ -38,12 +39,121 @@ boost::beast::multi_buffer CreateStringResponseBody(string&& content)
 
 #pragma endregion // Utility functions
 
+#pragma region ResponseWrapper
+
+ResponseWrapper::ResponseWrapper(DynamicResponse&& res)
+  : m_response{ make_shared<DynamicResponse>(std::move(res)) }
+  , m_type{ ResponseType::Dynamic }
+{
+}
+
+ResponseWrapper::ResponseWrapper(EmptyResponse&& res)
+  : m_response{ make_shared<EmptyResponse>(std::move(res)) }
+  , m_type{ ResponseType::Empty }
+{
+}
+
+ResponseWrapper::ResponseWrapper(FileResponse&& response)
+  : m_response{ make_shared<FileResponse>(std::move(response)) }
+  , m_type{ ResponseType::File }
+{
+}
+
+ResponseWrapper::ResponseWrapper(StringResponse&& response)
+  : m_response{ make_shared<StringResponse>(std::move(response)) }
+  , m_type{ ResponseType::String }
+{
+}
+
+shared_ptr<void> ResponseWrapper::Response()
+{
+  return m_response;
+}
+
+ResponseWrapper::ResponseType ResponseWrapper::Type()
+{
+  return m_type;
+}
+
+#pragma endregion ResponseWrapper
+
 #pragma region HttpSession
 
-HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks)
-  : m_stream{ std::move(socket) }, m_callbacks{ callbacks } {}
+HttpSession::HttpSession(tcp::socket &&socket, HttpCallbacks &callbacks, io_context& context)
+  : m_stream{ std::move(socket) }
+  , m_callbacks{ callbacks }
+{
+}
 
 HttpSession::~HttpSession() {}
+
+void HttpSession::Start()
+{
+  m_sendLambda = [self = shared_from_this()](ResponseWrapper&& wrapper)
+  {
+    auto dr = wrapper.Response();
+    auto type = wrapper.Type();
+    self->m_response = make_shared<ResponseWrapper>(std::move(wrapper));
+
+    // Ugh!
+    switch (type)
+    {
+    case ResponseWrapper::ResponseType::Empty:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<EmptyResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<EmptyResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    case ResponseWrapper::ResponseType::Dynamic:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<DynamicResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<DynamicResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    case ResponseWrapper::ResponseType::File:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<FileResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<FileResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    case ResponseWrapper::ResponseType::String:
+      http::async_write(
+        self->m_stream,
+        *static_pointer_cast<StringResponse>(dr),
+        bind_front_handler(
+          &HttpSession::OnWrite,
+          self->shared_from_this(),
+          static_pointer_cast<StringResponse>(dr)->need_eof()
+        )
+      );
+      break;
+
+    default:
+      throw;
+	}
+  };
+
+  // Ensure thread-safety.
+  boost::asio::dispatch(m_stream.get_executor(), bind_front_handler(&HttpSession::Read, shared_from_this()));
+}
 
 void HttpSession::Read()
 {
@@ -69,51 +179,34 @@ void HttpSession::OnRead(error_code ec, size_t /*transferred*/)
     return;
   }
 
-  Respond(); // ISS:2735328 - Handle request.
+  Respond();
 }
-
-// disable __WARNING_IMPLICIT_CTOR
-#pragma warning(push)
-#pragma warning(disable : 25001)
 
 void HttpSession::Respond()
 {
   switch (m_request.method())
   {
     case http::verb::get:
-      m_response = make_shared<http::response<http::dynamic_body>>(m_callbacks.OnGet(m_request));
-
-      http::async_write(
-        m_stream,
-        *m_response,
-        bind_front_handler(
-          &HttpSession::OnWrite,
-          shared_from_this(),
-          m_response->need_eof() // close
-        )
-      );
-
+      m_sendLambda(m_callbacks.OnGet(m_request));
       break;
 
     case http::verb::options:
-      m_response = make_shared<http::response<http::dynamic_body>>(http::status::accepted, m_request.version());
-      m_response->set(
-          http::field::access_control_request_headers,
-          "Access-Control-Allow-Headers, Content-type, Custom-Header, Header-expose-allowed");
-      m_response->set(http::field::access_control_allow_methods, "GET, POST, DELETE");
-      m_response->set(http::field::access_control_expose_headers, "Header-expose-allowed");
-      m_response->result(http::status::ok);
+      if (!m_callbacks.OnOptions)
+      {
+        // Default OPTIONS handler
+        m_callbacks.OnOptions = [](const DynamicRequest& request) -> DynamicResponse {
+          DynamicResponse response{http::status::accepted, request.version()};
+          response.set(
+            http::field::access_control_request_headers,
+            "Access-Control-Allow-Headers, Content-type, Custom-Header, Header-expose-allowed");
+          response.set(http::field::access_control_allow_methods, "GET, POST, DELETE");
+          response.set(http::field::access_control_expose_headers, "Header-expose-allowed");
+          response.result(http::status::ok);
 
-      http::async_write(
-        m_stream,
-        *m_response,
-        bind_front_handler(
-          &HttpSession::OnWrite,
-          shared_from_this(),
-          m_response->need_eof() // close
-        )
-      );
-
+          return { std::move(response) };
+        };
+      }
+      m_sendLambda(m_callbacks.OnOptions(m_request));
       break;
 
     case http::verb::post:
@@ -123,51 +216,59 @@ void HttpSession::Respond()
     case http::verb::delete_:
       this->Close();
       break;
+    case http::verb::patch:
+      m_sendLambda(m_callbacks.OnPatch(m_request));
+      break;
+
+    case http::verb::connect:
+      m_sendLambda(m_callbacks.OnConnect(m_request));
+      break;
+
+    case http::verb::trace:
+      m_sendLambda(m_callbacks.OnTrace(m_request));
+      break;
+
     default:
       // ISS:2735328 - Implement failure propagation mechanism
-      break;
+      throw;
   }
 }
 
-void HttpSession::OnWrite(bool /*close*/, error_code ec, size_t /*transferred*/)
+void HttpSession::OnWrite(bool close, error_code ec, size_t /*transferred*/)
 {
   if (ec)
   {
-    m_response = nullptr;
     return;
   }
 
-  m_callbacks.OnResponseSent();
+  if (m_callbacks.OnResponseSent)
+  {
+	  m_callbacks.OnResponseSent();
+  }
 
-  // TODO: Re-enable when concurrent sessions are implemented.
-  // If response indicates "Connection: close"
-  // if (close)
-  //  return Close();
+   if (close)
+    return Close();
 
   // Clear response
   m_response = nullptr;
 
-  // ISS:2735328: Re-enable for subsequent dispatching.
-  // Read();
+  Read();
 }
 
 void HttpSession::Close()
 {
-  m_stream.socket().shutdown(tcp::socket::shutdown_send);
+  error_code ec;
+  m_stream.socket().shutdown(tcp::socket::shutdown_send, ec);
 }
-
-void HttpSession::Start()
-{
-  Read();
-}
-
-#pragma warning(pop)
 
 #pragma endregion // HttpSession
 
 #pragma region HttpServer
 
-HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context}, /*m_socket{m_context},*/ m_sessions{}
+HttpServer::HttpServer(string &&address, uint16_t port, size_t concurrency)
+  : m_ioThreadCount{concurrency}
+  , m_ioContext{concurrency}
+  , m_acceptor{make_strand(m_ioContext)}
 {
   auto endpoint = tcp::endpoint{make_address(std::move(address)), port};
   error_code ec;
@@ -200,6 +301,11 @@ HttpServer::HttpServer(string &&address, uint16_t port) : m_acceptor{m_context},
   }
 }
 
+HttpServer::HttpServer(uint16_t port, size_t concurrency)
+  : HttpServer("0.0.0.0", port, concurrency)
+{
+}
+
 HttpServer::~HttpServer() {}
 
 void HttpServer::Accept()
@@ -208,7 +314,7 @@ void HttpServer::Accept()
     return;
 
   m_acceptor.async_accept(
-    make_strand(m_context),
+    make_strand(m_ioContext),
     bind_front_handler(
       &HttpServer::OnAccept,
       shared_from_this()
@@ -221,50 +327,54 @@ void HttpServer::OnAccept(error_code ec, tcp::socket socket)
   if (ec)
   {
     // ISS:2735328 - Implement failure propagation mechanism
+    return;
   }
   else
   {
-    auto session = make_shared<HttpSession>(std::move(socket), m_callbacks);
-    m_sessions.push_back(session);
-    session->Start();
+    make_shared<HttpSession>(std::move(socket), m_callbacks, m_ioContext)->Start();
   }
 
-  // Accept next connection.
-  // Accept(); //ISS:2735328: Uncomment after implementing multiple context
-  // threading.
+  Accept();
 }
 
 void HttpServer::Start()
 {
   Accept();
 
-  m_contextThread = std::thread([self = shared_from_this()]()
+  m_ioThreads.reserve(m_ioThreadCount);
+  for (int i = 0; i < m_ioThreadCount; i++)
   {
+    m_ioThreads.emplace_back([self = shared_from_this()]()
+    {
     // See
-    // https://www.boost.org/doc/libs/1_68_0/doc/html/boost_asio/reference/io_context/run/overload1.html
+    // https://www.boost.org/doc/libs/1_76_0/doc/html/boost_asio/reference/io_context/run/overload1.html
     // The run() function blocks until all work has finished and there are no
     // more handlers to be dispatched, or until the io_context has been stopped.
-    self->m_context.run();
-  });
+      self->m_ioContext.run();
+    });
+  }
 }
 
 void HttpServer::Stop()
 {
-  m_contextThread.join();
+  m_ioContext.stop();
 
-  if (m_acceptor.is_open())
-    m_acceptor.close();
+  for (auto& t : m_ioThreads)
+    if (t.joinable())
+      t.join();
 }
 
-void HttpServer::SetOnResponseSent(function<void()> &&handler) noexcept
+void HttpServer::Abort()
 {
-  m_callbacks.OnResponseSent = std::move(handler);
+  if (m_ioContext.stopped())
+    return;
+
+  Stop();
 }
 
-void HttpServer::SetOnGet(
-  function<http::response<http::dynamic_body>(const http::request<http::string_body> &)> &&handler) noexcept
+HttpCallbacks& HttpServer::Callbacks()
 {
-  m_callbacks.OnGet = std::move(handler);
+  return m_callbacks;
 }
 
 #pragma endregion HttpServer

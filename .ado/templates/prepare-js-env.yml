@@ -1,7 +1,21 @@
-# Steps to setup an environment that can run JavaScript executables
+parameters:
+  - name: agentImage
+    type: string
+    default: ManagedImage
+    values:
+        - ManagedImage
+        - HostedImage
 
 steps:
+  - ${{ if eq(parameters.agentImage, 'HostedImage') }}:
+    - task: NodeTool@0
+      displayName: Set Node Version
+      inputs:
+        versionSpec: '16.x'
+
   - template: yarn-install.yml
+    parameters:
+      agentImage: ${{ parameters.agentImage }}
 
   - script: yarn build
     displayName: yarn build

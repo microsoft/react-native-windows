@@ -17,6 +17,7 @@
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
+#include <react/renderer/components/slider/SliderComponentDescriptor.h>
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
@@ -28,6 +29,7 @@
 #include <react/utils/ContextContainer.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
+#include "TextInput/WindowsTextInputComponentDescriptor.h"
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -143,11 +145,17 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
     providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::SliderComponentDescriptor>());
+    providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::SwitchComponentDescriptor>());
+    providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextInputComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
+    providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
     return providerRegistry;
   }();
 
@@ -161,6 +169,10 @@ void FabricUIManager::installFabricUIManager() noexcept {
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
   facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
+
+  // This allows access to our ReactContext from the contextContainer thats passed around the fabric codebase
+  contextContainer->insert("MSRN.ReactContext", m_context);
+
   auto runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
 
   // TODO: T31905686 Create synchronous Event Beat
@@ -200,14 +212,15 @@ void FabricUIManager::installFabricUIManager() noexcept {
   toolbox.runtimeExecutor = runtimeExecutor;
   toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
+  toolbox.backgroundExecutor = [context = m_context,
+                                dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
+    if (context.UIDispatcher().HasThreadAccess()) {
+      callback();
+      return;
+    }
 
-  /*
-  if (m_reactNativeConfig->getBool(
-      "react_fabric:enable_background_executor_android")) {
-    backgroundExecutor_ = std::make_unique<JBackgroundExecutor>();
-    toolbox.backgroundExecutor = backgroundExecutor_->get();
-  }
-  */
+    dispatcher.Post(std::move(callback));
+  };
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
@@ -476,15 +489,26 @@ void FabricUIManager::schedulerDidDispatchCommand(
     facebook::react::ShadowView const &shadowView,
     std::string const &commandName,
     folly::dynamic const &arg) {
-  assert(false);
+  if (m_context.UIDispatcher().HasThreadAccess()) {
+    auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
+    descriptor.view->handleCommand(commandName, arg);
+  } else {
+    m_context.UIDispatcher().Post(
+        [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
+          if (auto pThis = wkThis.lock()) {
+            auto view = pThis->m_registry.findComponentViewWithTag(tag);
+            if (view) {
+              view->handleCommand(commandName, args);
+            }
+          }
+        });
+  }
 }
 
 void FabricUIManager::schedulerDidSetIsJSResponder(
     facebook::react::ShadowView const &shadowView,
     bool isJSResponder,
-    bool blockNativeResponder) {
-  assert(false);
-}
+    bool blockNativeResponder) {}
 
 void FabricUIManager::schedulerDidSendAccessibilityEvent(
     const facebook::react::ShadowView &shadowView,

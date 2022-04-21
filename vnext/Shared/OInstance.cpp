@@ -26,6 +26,8 @@
 #include <cxxreact/ModuleRegistry.h>
 
 #include <Modules/ExceptionsManagerModule.h>
+#include <Modules/HttpModule.h>
+#include <Modules/NetworkingModule.h>
 #include <Modules/PlatformConstantsModule.h>
 #include <Modules/SourceCodeModule.h>
 #include <Modules/StatusBarManagerModule.h>
@@ -35,11 +37,11 @@
 #endif
 
 #include <BatchingMessageQueueThread.h>
+#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
-#include <RuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
@@ -65,6 +67,18 @@ using namespace facebook;
 using namespace Microsoft::JSI;
 
 using std::make_shared;
+
+namespace Microsoft::React {
+
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept {
+  if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
+    return std::make_unique<NetworkingModule>();
+  } else {
+    return std::make_unique<HttpModule>();
+  }
+}
+
+} // namespace Microsoft::React
 
 namespace facebook {
 namespace react {
@@ -113,7 +127,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
   }
 
   OJSIExecutorFactory(
-      std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder,
+      std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
       bool isProfilingEnabled,
@@ -125,7 +139,7 @@ class OJSIExecutorFactory : public JSExecutorFactory {
         isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
-  std::shared_ptr<jsi::RuntimeHolderLazyInit> runtimeHolder_;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
@@ -198,6 +212,20 @@ void InstanceImpl::SetInError() noexcept {
   m_isInError = true;
 }
 
+namespace {
+bool shouldStartHermesInspector(DevSettings &devSettings) {
+  bool isHermes =
+      ((devSettings.jsiEngineOverride == JSIEngineOverride::Hermes) ||
+       (devSettings.jsiEngineOverride == JSIEngineOverride::Default && devSettings.jsiRuntimeHolder &&
+        devSettings.jsiRuntimeHolder->getRuntimeType() == facebook::react::JSIEngineOverride::Hermes));
+
+  if (isHermes && devSettings.useDirectDebugger && !devSettings.useWebDebugger)
+    return true;
+  else
+    return false;
+}
+} // namespace
+
 InstanceImpl::InstanceImpl(
     std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
@@ -225,9 +253,8 @@ InstanceImpl::InstanceImpl(
   facebook::react::tracing::initializeETW();
 #endif
 
-  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes && m_devSettings->useDirectDebugger &&
-      !m_devSettings->useWebDebugger) {
-    m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+  if (shouldStartHermesInspector(*m_devSettings)) {
+    m_devManager->EnsureHermesInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
   // Default (common) NativeModules
@@ -279,7 +306,6 @@ InstanceImpl::InstanceImpl(
       switch (m_devSettings->jsiEngineOverride) {
         case JSIEngineOverride::Hermes:
           m_devSettings->jsiRuntimeHolder = std::make_shared<HermesRuntimeHolder>(m_devSettings, m_jsThread);
-          m_devSettings->inlineSourceMap = false;
           break;
         case JSIEngineOverride::V8: {
 #if defined(USE_V8)
@@ -379,7 +405,7 @@ bool isHBCBundle(const std::string &bundle) {
   // can be potentially huge.
   // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
   auto header = reinterpret_cast<const BundleHeader *>(&bundle[0]);
-  if (HBCBundleMagicNumber == folly::Endian::little(header->magic)) {
+  if (HBCBundleMagicNumber == header->magic32.value) {
     return true;
   } else {
     return false;
@@ -483,7 +509,15 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
-      std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
+      std::string bundlePath;
+      if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
+        auto uri = winrt::Windows::Foundation::Uri(
+            winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
+        bundlePath = winrt::to_string(uri.ToString());
+      } else {
+        bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
+      }
+
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
 #endif
       m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(jsBundleRelativePath), synchronously);
@@ -491,17 +525,15 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
   } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
   } catch (const winrt::hresult_error &hrerr) {
-    std::stringstream ss;
-    ss << "[" << std::hex << std::showbase << std::setw(8) << static_cast<uint32_t>(hrerr.code()) << "] "
-       << winrt::to_string(hrerr.message());
+    auto error = fmt::format("[0x{:0>8x}] {}", static_cast<uint32_t>(hrerr.code()), winrt::to_string(hrerr.message()));
 
-    m_devSettings->errorCallback(std::move(ss.str()));
+    m_devSettings->errorCallback(std::move(error));
   }
 }
 
 InstanceImpl::~InstanceImpl() {
-  if (m_devSettings->jsiEngineOverride == JSIEngineOverride::Hermes) {
-    m_devManager->StopInspector();
+  if (shouldStartHermesInspector(*m_devSettings) && m_devSettings->jsiRuntimeHolder) {
+    m_devSettings->jsiRuntimeHolder->teardown();
   }
   m_nativeQueue->quitSynchronous();
 }
@@ -512,7 +544,13 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
-      "WebSocketModule",
+      Microsoft::React::GetHttpModuleName(),
+      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(); },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetWebSocketModuleName(),
       [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
         return Microsoft::React::CreateWebSocketModule();
       },

@@ -184,6 +184,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Dimensions/DimensionsExample'),
   },
   {
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
+  },
+  {
     key: 'LayoutEventsExample',
     category: 'UI',
     module: require('../examples/Layout/LayoutEventsExample'),
@@ -260,7 +265,7 @@ if (global.__turboModuleProxy) {
 
 const Modules: any = {};
 
-APIs.concat(Components).forEach((Example) => {
+APIs.concat(Components).forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 

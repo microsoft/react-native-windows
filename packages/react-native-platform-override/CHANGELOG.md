@@ -1,8 +1,74 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Fri, 03 Dec 2021 06:12:08 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Apr 2022 05:10:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.6.9
+
+Tue, 12 Apr 2022 05:10:39 GMT
+
+### Patches
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+- Bump @react-native-windows/package-utils to v0.0.0-canary.28
+
+## 1.6.8
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Patches
+
+- Security: Update simple-git dependency to 3.3.0 (jthysell@microsoft.com)
+
+## 1.6.7
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Patches
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.27
+
+## 1.6.6
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/package-utils to v0.0.0-canary.26
+
+## 1.6.5
+
+Wed, 09 Feb 2022 06:09:38 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @react-native-windows/package-utils to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 1.6.4
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Patches
+
+- CG: Upgrade to node-fetch@^2.6.7 (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.6.3
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Patches
+
+- Fix integration by tag of newer RN Builds (ngerlem@microsoft.com)
 
 ## 1.6.2
 

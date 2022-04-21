@@ -19,12 +19,12 @@
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
     <BuildMSRNCxxReactCommon>false</BuildMSRNCxxReactCommon>
+    <DesktopCompatible Condition="'$(UseWinUI3)'=='true'">true</DesktopCompatible>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\Generated\PackageVersion.g.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\PackageVersionDefinitions.props" />
-  <Import Project="$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props" Condition="'$(WebView2Version)'!='' And Exists('$(SolutionDir)packages\Microsoft.Web.WebView2.$(WebView2Version)\build\native\Microsoft.Web.WebView2.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -138,7 +138,14 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <DelayLoadDLLs>chakra.dll;winsqlite3.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>
+        api-ms-win-core-file-l1-2-0.dll;
+        api-ms-win-core-windowserrorreporting-l1-1-0.dll;
+        ext-ms-win-uiacore-l1-1-1.dll;
+        chakra.dll;
+        winsqlite3.dll;
+        %(DelayLoadDLLs)
+      </DelayLoadDLLs>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
       <ModuleDefinitionFile>Microsoft.ReactNative.def</ModuleDefinitionFile>
@@ -189,6 +196,9 @@
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="DynamicWriter.h">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="JSDispatcherWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
     <ClInclude Include="GlyphViewManager.h" />
@@ -274,10 +284,11 @@
     <ClInclude Include="ReactHost\MoveOnCopy.h" />
     <ClInclude Include="ReactHost\MsoUtils.h" />
     <ClInclude Include="ReactHost\React.h" />
-    <ClInclude Include="ReactHost\ReactContext.h" />
+    <ClInclude Include="ReactHost\MsoReactContext.h" />
     <ClInclude Include="ReactHost\ReactErrorProvider.h" />
     <ClInclude Include="ReactHost\ReactHost.h" />
     <ClInclude Include="ReactHost\ReactInstanceWin.h" />
+    <ClInclude Include="ReactHost\CrashManager.h" />
     <ClInclude Include="ReactHost\ReactNativeHeaders.h" />
     <ClInclude Include="ReactHost\React_Win.h" />
     <ClInclude Include="ReactCoreInjection.h">
@@ -414,6 +425,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewProps.cpp" DisableSpecificWarnings="4018;4305;4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewShadowNode.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewState.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\slider\SliderShadowNode.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\slider\SliderState.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextShadowNode.cpp" />
@@ -487,6 +500,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\SurfaceRegistryBinding.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeWindowsDir)codegen\react\components\rnwcore\EventEmitters.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeWindowsDir)codegen\react\components\rnwcore\Props.cpp" DisableSpecificWarnings="4018;%(DisableSpecificWarnings)">
       <ObjectFileName>$(IntDir)\codegenRnwCoreProps.obj</ObjectFileName>
     </ClCompile>
@@ -499,9 +513,17 @@
     <ClCompile Include="Fabric\ImageRequest.cpp" />
     <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
     <ClCompile Include="Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
+    <ClCompile Include="Fabric\platform\react\renderer\components\slider\SliderMeasurementsManager.cpp" />
     <ClCompile Include="Fabric\platform\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="Fabric\ReactNativeConfigProperties.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
+    <ClCompile Include="Fabric\SliderComponentView.cpp" />
+    <ClCompile Include="Fabric\SwitchComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputShadowNode.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
     <ClCompile Include="SchedulerSettings.cpp" />
@@ -521,6 +543,9 @@
       <DependentUpon>IJSValueReader.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="DynamicWriter.cpp">
+      <DependentUpon>IJSValueWriter.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="JSDispatcherWriter.cpp">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="GlyphViewManager.cpp" />
@@ -605,10 +630,11 @@
     <ClCompile Include="ReactHost\JSBundle_Win32.cpp" />
     <ClCompile Include="ReactHost\JSCallInvokerScheduler.cpp" />
     <ClCompile Include="ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="ReactHost\ReactContext.cpp" />
+    <ClCompile Include="ReactHost\MsoReactContext.cpp" />
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp" />
     <ClCompile Include="ReactHost\ReactHost.cpp" />
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp" />
+    <ClCompile Include="ReactHost\CrashManager.cpp" />
     <ClCompile Include="ReactCoreInjection.cpp">
       <DependentUpon>ReactCoreInjection.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -807,6 +833,7 @@
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" />
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
@@ -821,13 +848,6 @@
     <When Condition="'$(UseV8)' == 'true'">
       <ItemGroup>
         <PackageReference Include="ReactNative.V8Jsi.Windows.UWP" Version="$(V8Version)" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Choose>
-    <When Condition="'$(WebView2Version)'!=''">
-      <ItemGroup>
-        <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2Version)" />
       </ItemGroup>
     </When>
   </Choose>

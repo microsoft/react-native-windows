@@ -214,7 +214,7 @@ export class AutolinkWindows {
       'project',
     ];
 
-    alwaysRequired.forEach((item) => {
+    alwaysRequired.forEach(item => {
       if (
         !(item in this.windowsAppConfig) ||
         this.windowsAppConfig[item] === null
@@ -257,7 +257,7 @@ export class AutolinkWindows {
       'projectGuid',
     ];
 
-    projectRequired.forEach((item) => {
+    projectRequired.forEach(item => {
       if (
         !(item in windowsAppProjectConfig) ||
         windowsAppProjectConfig[item] === null
@@ -318,15 +318,15 @@ export class AutolinkWindows {
     const windowsDependencies = this.getWindowsDependencies();
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach((project) => {
+      windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency) {
           cppIncludes += `\n\n// Includes from ${dependencyName}`;
-          project.cppHeaders.forEach((header) => {
+          project.cppHeaders.forEach(header => {
             cppIncludes += `\n#include <${header}>`;
           });
 
           cppPackageProviders += `\n    // IReactPackageProviders from ${dependencyName}`;
-          project.cppPackageProviders.forEach((packageProvider) => {
+          project.cppPackageProviders.forEach(packageProvider => {
             cppPackageProviders += `\n    packageProviders.Append(winrt::${packageProvider}());`;
           });
         }
@@ -380,15 +380,15 @@ export class AutolinkWindows {
 
     const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach((project) => {
+      windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency) {
           csUsingNamespaces += `\n\n// Namespaces from ${dependencyName}`;
-          project.csNamespaces.forEach((namespace) => {
+          project.csNamespaces.forEach(namespace => {
             csUsingNamespaces += `\nusing ${namespace};`;
           });
 
           csReactPackageProviders += `\n            // IReactPackageProviders from ${dependencyName}`;
-          project.csPackageProviders.forEach((packageProvider) => {
+          project.csPackageProviders.forEach(packageProvider => {
             csReactPackageProviders += `\n            packageProviders.Add(new ${packageProvider}());`;
           });
         }
@@ -398,13 +398,13 @@ export class AutolinkWindows {
   }
 
   /** Cache of dependencies */
-  private readonly windowsDependencies: Record<
-    string,
-    WindowsDependencyConfig
-  > = {};
+  private windowsDependencies:
+    | Record<string, WindowsDependencyConfig>
+    | undefined;
 
   private getWindowsDependencies() {
-    if (Object.keys(this.windowsDependencies).length === 0) {
+    if (!this.windowsDependencies) {
+      this.windowsDependencies = {};
       for (const dependencyName of Object.keys(this.dependenciesConfig)) {
         const windowsDependency: WindowsDependencyConfig | undefined =
           this.dependenciesConfig[dependencyName].platforms.windows;
@@ -439,12 +439,12 @@ export class AutolinkWindows {
                 `Found a Windows solution for ${dependencyName} but no React Native for Windows native module projects`,
               );
             }
-            windowsDependency.projects.forEach((project) => {
+            windowsDependency.projects.forEach(project => {
               const itemsToCheck: Array<keyof ProjectDependency> = [
                 'projectFile',
                 'directDependency',
               ];
-              itemsToCheck.forEach((item) => {
+              itemsToCheck.forEach(item => {
                 dependencyIsValid = !!(
                   dependencyIsValid &&
                   item in project &&
@@ -512,7 +512,7 @@ export class AutolinkWindows {
 
     const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach((project) => {
+      windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency) {
           const dependencyProjectFile = path.join(
             windowsDependencies[dependencyName].folder,
@@ -591,7 +591,7 @@ export class AutolinkWindows {
     const csModuleNames: string[] = [];
     const windowsDependencies = this.getWindowsDependencies();
     for (const dependencyName of Object.keys(windowsDependencies)) {
-      windowsDependencies[dependencyName].projects.forEach((project) => {
+      windowsDependencies[dependencyName].projects.forEach(project => {
         if (project.directDependency && project.projectLang === 'cs') {
           csModuleNames.push(project.projectName);
         }
@@ -606,7 +606,7 @@ export class AutolinkWindows {
 
     for (const dependencyName of Object.keys(windowsDependencies)) {
       // Process dependency projects
-      windowsDependencies[dependencyName].projects.forEach((project) => {
+      windowsDependencies[dependencyName].projects.forEach(project => {
         const dependencyProjectFile = path.join(
           windowsDependencies[dependencyName].folder,
           windowsDependencies[dependencyName].sourceDir!,
@@ -652,7 +652,7 @@ export class AutolinkWindows {
     );
 
     let changesNecessary = false;
-    projectsForSolution.forEach((project) => {
+    projectsForSolution.forEach(project => {
       const contentsChanged = vstools.addProjectToSolution(
         solutionFile,
         project,
@@ -772,7 +772,7 @@ export class AutolinkWindows {
         configUtils.tryFindPropertyValue(winuiPropsContents, 'WinUI3Version');
 
       const dialects = [
-        {id: 'Microsoft.WinUI', version: winui3Version!},
+        {id: 'Microsoft.WindowsAppSDK', version: winui3Version!},
         {id: 'Microsoft.UI.Xaml', version: winui2xVersion!},
       ];
       const keepPkg = useWinUI3 ? dialects[0] : dialects[1];
@@ -809,23 +809,23 @@ export class AutolinkWindows {
       const packageElement = packageElements.item(i)!;
       const idAttr = packageElement!.getAttributeNode('id');
       const id = idAttr!.value;
-      const keepPkg = keepPkgs.find((pkg) => pkg.id === id);
-      if (removePkgs.find((pkg) => pkg.id === id)) {
+      const keepPkg = keepPkgs.find(pkg => pkg.id === id);
+      if (removePkgs.find(pkg => pkg.id === id)) {
         nodesToRemove.push(packageElement);
         changed = true;
       } else if (keepPkg) {
         changed =
           changed || keepPkg.version !== packageElement.getAttribute('version');
         packageElement.setAttribute('version', keepPkg.version!);
-        keepPkgs = keepPkgs.filter((pkg) => pkg.id !== keepPkg.id);
+        keepPkgs = keepPkgs.filter(pkg => pkg.id !== keepPkg.id);
       }
     }
 
-    nodesToRemove.forEach((pkg) =>
+    nodesToRemove.forEach(pkg =>
       packagesConfig.content.documentElement.removeChild(pkg),
     );
 
-    keepPkgs.forEach((keepPkg) => {
+    keepPkgs.forEach(keepPkg => {
       const newPkg = packagesConfig.content.createElement('package');
 
       Object.entries(keepPkg).forEach(([attr, value]) => {

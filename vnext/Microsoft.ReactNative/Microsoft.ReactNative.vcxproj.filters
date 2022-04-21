@@ -28,7 +28,7 @@
     <ClCompile Include="ReactHost\MsoUtils.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
-    <ClCompile Include="ReactHost\ReactContext.cpp">
+    <ClCompile Include="ReactHost\MsoReactContext.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactHost\ReactErrorProvider.cpp">
@@ -38,6 +38,9 @@
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactHost\ReactInstanceWin.cpp">
+      <Filter>ReactHost</Filter>
+    </ClCompile>
+    <ClCompile Include="ReactHost\CrashManager.cpp">
       <Filter>ReactHost</Filter>
     </ClCompile>
     <ClCompile Include="ReactSupport.cpp" />
@@ -376,7 +379,7 @@
     <ClInclude Include="ReactHost\React_Win.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
-    <ClInclude Include="ReactHost\ReactContext.h">
+    <ClInclude Include="ReactHost\MsoReactContext.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\ReactErrorProvider.h">
@@ -386,6 +389,9 @@
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\ReactInstanceWin.h">
+      <Filter>ReactHost</Filter>
+    </ClInclude>
+    <ClInclude Include="ReactHost\CrashManager.h">
       <Filter>ReactHost</Filter>
     </ClInclude>
     <ClInclude Include="ReactHost\ReactNativeHeaders.h">

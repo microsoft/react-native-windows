@@ -22,7 +22,7 @@ class SpringAnimationDriver : public CalculatedAnimationDriver {
 
  protected:
   std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
-  bool IsAnimationDone(double currentValue, double currentVelocity) override;
+  bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) override;
 
  private:
   bool IsAtRest(double currentVelocity, double currentPosition, double endValue);

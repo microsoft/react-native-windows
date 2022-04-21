@@ -107,7 +107,7 @@ export async function enumerateRepoPackages(
 ): Promise<WritableNpmPackage[]> {
   const repoRoot = await findRepoRoot();
   const allPackges = getMonorepoPackages(repoRoot).map(
-    (pkg) => new WritableNpmPackage(pkg.location, pkg.package),
+    pkg => new WritableNpmPackage(pkg.location, pkg.package),
   );
 
   const filteredPackages: WritableNpmPackage[] = [];
@@ -118,6 +118,23 @@ export async function enumerateRepoPackages(
   }
 
   return filteredPackages;
+}
+
+/**
+ * Synchronously Finds monorepo-local packages matching a given predicate. The
+ * root package is not included.
+ *
+ * @param pred predicate describing whether to match a package
+ */
+export function enumerateRepoPackagesSync(
+  pred: (pkg: NpmPackage) => boolean = () => true,
+): WritableNpmPackage[] {
+  const repoRoot = findRepoRoot.sync();
+  const allPackges = getMonorepoPackages(repoRoot).map(
+    pkg => new WritableNpmPackage(pkg.location, pkg.package),
+  );
+
+  return allPackges.filter(pred);
 }
 
 /**
@@ -154,9 +171,20 @@ export async function findPackage(
 export async function findRepoPackage(
   name: string,
 ): Promise<WritableNpmPackage | null> {
-  const packages = await enumerateRepoPackages(
-    async (p) => p.json.name === name,
-  );
+  const packages = await enumerateRepoPackages(async p => p.json.name === name);
+
+  if (packages.length === 0) {
+    return null;
+  } else {
+    return packages[0];
+  }
+}
+
+/**
+ * Synchronously a monorepo-local package with a given name
+ */
+export function findRepoPackageSync(name: string): WritableNpmPackage | null {
+  const packages = enumerateRepoPackagesSync(p => p.json.name === name);
 
   if (packages.length === 0) {
     return null;

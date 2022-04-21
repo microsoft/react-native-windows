@@ -145,7 +145,7 @@ let Image = (props: ImagePropsType, forwardedRef) => {
   return (
     // [Windows
     <TextAncestor.Consumer>
-      {(hasTextAncestor) => {
+      {hasTextAncestor => {
         invariant(
           !hasTextAncestor,
           'Nesting of <Image> within <Text> is not currently supported.',
@@ -154,7 +154,7 @@ let Image = (props: ImagePropsType, forwardedRef) => {
 
         return (
           <ImageAnalyticsTagContext.Consumer>
-            {(analyticTag) => {
+            {analyticTag => {
               return (
                 <ImageViewNativeComponent
                   {...props}
@@ -247,12 +247,6 @@ Image.queryCache = queryCache;
  * suppresses an error found when Flow v0.89 was deployed. To see the error,
  * delete this comment and run Flow. */
 Image.resolveAssetSource = resolveAssetSource;
-
-/**
- * Switch to `deprecated-react-native-prop-types` for compatibility with future
- * releases. This is deprecated and will be removed in the future.
- */
-Image.propTypes = require('deprecated-react-native-prop-types').ImagePropTypes;
 
 const styles = StyleSheet.create({
   base: {

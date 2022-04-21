@@ -1,8 +1,27 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Fri, 03 Dec 2021 06:12:07 GMT and should not be manually modified.
+This log was last generated on Tue, 12 Apr 2022 05:10:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.30
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Patches
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.0.29
+
+Wed, 09 Feb 2022 06:09:37 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
 
 ## 1.0.28
 

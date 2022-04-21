@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #include <Test/WebSocketServer.h>
 #include "TestRunner.h"
 
@@ -23,11 +23,14 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 TEST_MODULE_INITIALIZE(InitModule) {
-  Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
-  Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", false);
+  using Microsoft::React::SetRuntimeOptionBool;
+
+  SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
+  SetRuntimeOptionBool("UseBeastWebSocket", false);
+  SetRuntimeOptionBool("Http.UseMonolithicModule", false);
 
   // WebSocketJSExecutor can't register native log hooks.
-  Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
+  SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
 }
 
 TEST_CLASS (RNTesterIntegrationTests) {

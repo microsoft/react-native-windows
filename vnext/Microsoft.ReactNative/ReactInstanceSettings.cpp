@@ -99,6 +99,14 @@ void ReactInstanceSettings::DebuggerBreakOnNextLine(bool value) noexcept {
   Mso::React::ReactOptions::SetDebuggerBreakOnNextLine(m_properties, value);
 }
 
+bool ReactInstanceSettings::EnableDefaultCrashHandler() noexcept {
+  return Mso::React::ReactOptions::EnableDefaultCrashHandler(m_properties);
+}
+
+void ReactInstanceSettings::EnableDefaultCrashHandler(bool value) noexcept {
+  Mso::React::ReactOptions::SetEnableDefaultCrashHandler(m_properties, value);
+}
+
 bool ReactInstanceSettings::EnableDeveloperMenu() noexcept {
   return UseDeveloperSupport();
 }

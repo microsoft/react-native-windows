@@ -146,7 +146,7 @@ class TouchableOpacity extends React.Component<Props, State> {
       pressRectOffset: this.props.pressRetentionOffset,
       onMouseEnter: this.props.onMouseEnter, // [Windows]
       onMouseLeave: this.props.onMouseLeave, // [Windows]
-      onBlur: (event) => {
+      onBlur: event => {
         if (Platform.isTV) {
           this._opacityInactive(250);
         }
@@ -154,7 +154,7 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onBlur(event);
         }
       },
-      onFocus: (event) => {
+      onFocus: event => {
         if (Platform.isTV) {
           this._opacityActive(150);
         }
@@ -164,7 +164,7 @@ class TouchableOpacity extends React.Component<Props, State> {
       },
       onLongPress: this.props.onLongPress,
       onPress: this.props.onPress,
-      onPressIn: (event) => {
+      onPressIn: event => {
         this._opacityActive(
           event.dispatchConfig.registrationName === 'onResponderGrant'
             ? 0
@@ -174,7 +174,7 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onPressIn(event);
         }
       },
-      onPressOut: (event) => {
+      onPressOut: event => {
         this._opacityInactive(250);
         if (this.props.onPressOut != null) {
           this.props.onPressOut(event);
@@ -190,7 +190,6 @@ class TouchableOpacity extends React.Component<Props, State> {
     Animated.timing(this.state.anim, {
       toValue,
       duration,
-      // $FlowFixMe[method-unbinding]
       easing: Easing.inOut(Easing.quad),
       useNativeDriver: true,
     }).start();
@@ -233,6 +232,7 @@ class TouchableOpacity extends React.Component<Props, State> {
         accessible={this.props.accessible !== false}
         accessibilityLabel={this.props.accessibilityLabel}
         accessibilityHint={this.props.accessibilityHint}
+        accessibilityLanguage={this.props.accessibilityLanguage}
         accessibilityRole={this.props.accessibilityRole}
         accessibilityState={accessibilityState}
         accessibilityActions={this.props.accessibilityActions}
@@ -275,7 +275,12 @@ class TouchableOpacity extends React.Component<Props, State> {
 
   componentDidUpdate(prevProps: Props, prevState: State) {
     this.state.pressability.configure(this._createPressabilityConfig());
-    if (this.props.disabled !== prevProps.disabled) {
+    if (
+      this.props.disabled !== prevProps.disabled ||
+      (flattenStyle(prevProps.style)?.opacity !==
+        flattenStyle(this.props.style)?.opacity) !==
+        undefined
+    ) {
       this._opacityInactive(250);
     }
   }

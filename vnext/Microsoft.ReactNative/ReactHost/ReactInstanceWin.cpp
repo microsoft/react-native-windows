@@ -8,6 +8,7 @@
 #include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <appModel.h>
 #include <comUtil/qiCast.h>
 
 #ifndef CORE_ABI
@@ -41,6 +42,7 @@
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
 #include "Modules/AppStateModule.h"
+#include "Modules/AppThemeModuleUwp.h"
 #include "Modules/ClipboardModule.h"
 #endif
 #include "Modules/DevSettingsModule.h"
@@ -73,8 +75,16 @@
 #include <tuple>
 #include "ChakraRuntimeHolder.h"
 
+#include "CrashManager.h"
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
+
+#ifdef USE_FABRIC
+namespace facebook::react {
+void InitTextInputThemeInfo(const Mso::React::IReactContext &reactContext);
+void InitSliderMeasurements(const Mso::React::IReactContext &reactContext);
+} // namespace facebook::react
+#endif
 
 namespace Microsoft::ReactNative {
 
@@ -191,6 +201,9 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
 // ReactInstanceWin implementation
 //=============================================================================================
 
+/*static*/ std::mutex ReactInstanceWin::s_registryMutex;
+/*static*/ std::vector<ReactInstanceWin *> ReactInstanceWin::s_instanceRegistry;
+
 ReactInstanceWin::ReactInstanceWin(
     IReactHost &reactHost,
     ReactOptions const &options,
@@ -245,9 +258,48 @@ ReactInstanceWin::ReactInstanceWin(
   // OnInstanceCreated event is raised only after the internal react-native instance is ready and
   // it starts handling JS queue work items.
   m_whenCreated.SetValue();
+
+  if (m_options.EnableDefaultCrashHandler()) {
+    CrashManager::RegisterCustomHandler();
+  }
+
+  {
+    std::scoped_lock lock{s_registryMutex};
+    s_instanceRegistry.push_back(this);
+  }
 }
 
-ReactInstanceWin::~ReactInstanceWin() noexcept {}
+ReactInstanceWin::~ReactInstanceWin() noexcept {
+  std::scoped_lock lock{s_registryMutex};
+  auto it = std::find(s_instanceRegistry.begin(), s_instanceRegistry.end(), this);
+  if (it != s_instanceRegistry.end()) {
+    s_instanceRegistry.erase(it);
+  }
+
+  if (m_options.EnableDefaultCrashHandler()) {
+    CrashManager::UnregisterCustomHandler();
+  }
+}
+
+void ReactInstanceWin::InstanceCrashHandler(int fileDescriptor) noexcept {
+  if (!m_options.EnableDefaultCrashHandler()) {
+    return;
+  }
+
+  if (m_jsiRuntimeHolder) {
+    m_jsiRuntimeHolder->crashHandler(fileDescriptor);
+  }
+
+  // record additional information that could be useful for debugging crash dumps here
+  // (perhaps properties and settings or clues about the react tree)
+}
+
+/*static*/ void ReactInstanceWin::CrashHandler(int fileDescriptor) noexcept {
+  std::scoped_lock lock{s_registryMutex};
+  for (auto &entry : s_instanceRegistry) {
+    entry->InstanceCrashHandler(fileDescriptor);
+  }
+}
 
 void ReactInstanceWin::LoadModules(
     const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
@@ -257,7 +309,7 @@ void ReactInstanceWin::LoadModules(
     if (m_options.UseWebDebugger()) {
       nativeModulesProvider->AddModuleProvider(name, provider);
     } else {
-      turboModulesProvider->AddModuleProvider(name, provider);
+      turboModulesProvider->AddModuleProvider(name, provider, false);
     }
   };
 
@@ -284,6 +336,9 @@ void ReactInstanceWin::LoadModules(
 
   registerTurboModule(
       L"AppState", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
+
+  registerTurboModule(
+      L"AppTheme", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppTheme>());
 
   registerTurboModule(
       L"LogBox", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>());
@@ -331,14 +386,19 @@ void ReactInstanceWin::Initialize() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
 #ifndef CORE_ABI
-      strongThis->m_appTheme = std::make_shared<Microsoft::ReactNative::AppTheme>(
-          strongThis->GetReactContext(), strongThis->m_uiMessageThread.LoadWithLock());
+      Microsoft::ReactNative::AppThemeHolder::InitAppThemeHolder(strongThis->GetReactContext());
       Microsoft::ReactNative::I18nManager::InitI18nInfo(
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
       strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
           strongThis->GetReactContext(), *(strongThis->m_uiQueue));
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
-#endif
+
+#if USE_FABRIC
+      facebook::react::InitTextInputThemeInfo(strongThis->GetReactContext());
+      facebook::react::InitSliderMeasurements(strongThis->GetReactContext());
+#endif // USE_FABRIC
+
+#endif // CORE_ABI
 
       strongThis->Queue().Post([this, weakThis]() noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
@@ -348,6 +408,7 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
           devSettings->sourceBundleHost = SourceBundleHost();
           devSettings->sourceBundlePort = SourceBundlePort();
+          devSettings->inlineSourceMap = RequestInlineSourceMap();
           devSettings->debugBundlePath = DebugBundlePath();
           devSettings->liveReloadCallback = GetLiveReloadCallback();
           devSettings->errorCallback = GetErrorCallback();
@@ -380,11 +441,7 @@ void ReactInstanceWin::Initialize() noexcept {
           // Acquire default modules and then populate with custom modules.
           // Note that some of these have custom thread affinity.
           std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
-              m_batchingUIThread,
-              m_jsMessageThread.Load(),
-              std::move(m_appTheme),
-              std::move(m_appearanceListener),
-              m_reactContext);
+              m_batchingUIThread, m_jsMessageThread.Load(), std::move(m_appearanceListener), m_reactContext);
 #endif
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
@@ -408,14 +465,22 @@ void ReactInstanceWin::Initialize() noexcept {
             case JSIEngine::Hermes:
               devSettings->jsiRuntimeHolder =
                   std::make_shared<facebook::react::HermesRuntimeHolder>(devSettings, m_jsMessageThread.Load());
-              devSettings->inlineSourceMap = false;
               break;
             case JSIEngine::V8:
 #if defined(USE_V8)
-#ifndef CORE_ABI
-              preparedScriptStore =
-                  std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationLocalFolder());
-#endif // CORE_ABI
+            {
+              uint32_t length{0};
+              if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
+                preparedScriptStore =
+                    std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
+              } else {
+                wchar_t tempPath[MAX_PATH];
+                if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+                  preparedScriptStore =
+                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+                }
+              }
+            }
               devSettings->jsiRuntimeHolder = std::make_shared<facebook::react::V8JSIRuntimeHolder>(
                   devSettings, m_jsMessageThread.Load(), std::move(scriptStore), std::move(preparedScriptStore));
               break;
@@ -870,7 +935,7 @@ void ReactInstanceWin::DispatchEvent(int64_t viewTag, std::string &&eventName, f
 }
 
 winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcept {
-  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
   {
     std::scoped_lock lock{m_mutex};
     if (m_jsiRuntime) {
@@ -976,8 +1041,8 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
 }
 
 #if defined(USE_V8)
-std::string ReactInstanceWin::getApplicationLocalFolder() {
-  auto local = winrt::Windows::Storage::ApplicationData::Current().LocalFolder().Path();
+std::string ReactInstanceWin::getApplicationTempFolder() {
+  auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
 
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
@@ -1020,6 +1085,10 @@ std::string ReactInstanceWin::SourceBundleHost() const noexcept {
 uint16_t ReactInstanceWin::SourceBundlePort() const noexcept {
   return m_options.DeveloperSettings.SourceBundlePort ? m_options.DeveloperSettings.SourceBundlePort
                                                       : facebook::react::DevServerHelper::DefaultPackagerPort;
+}
+
+bool ReactInstanceWin::RequestInlineSourceMap() const noexcept {
+  return m_options.DeveloperSettings.RequestInlineSourceMap;
 }
 
 JSIEngine ReactInstanceWin::JsiEngine() const noexcept {

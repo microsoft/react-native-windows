@@ -21,6 +21,7 @@ struct ReactSettingsSnapshot : winrt::implements<ReactSettingsSnapshot, IReactSe
   hstring BundleRootPath() const noexcept;
   hstring SourceBundleHost() const noexcept;
   uint16_t SourceBundlePort() const noexcept;
+  bool RequestInlineSourceMap() const noexcept;
   hstring JavaScriptBundleFile() const noexcept;
 
  public:
@@ -57,8 +58,8 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
       JSValueArgWriter const &paramsArgWriter) noexcept;
 
  public: // IReactContext
-  // Not part of the public ABI interface
-  // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods
+         // Not part of the public ABI interface
+         // Internal accessor for within the Microsoft.ReactNative dll to allow calling into internal methods
   Mso::React::IReactContext &GetInner() const noexcept;
 
  private:

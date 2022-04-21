@@ -21,7 +21,10 @@ import {
   copyAndReplaceWithChangedCallback,
 } from '../generator-common';
 import {GenerateOptions} from '..';
-import {CodedError} from '@react-native-windows/telemetry';
+import {
+  CodedError,
+  getVersionOfNpmPackage,
+} from '@react-native-windows/telemetry';
 import {
   findPackage,
   WritableNpmPackage,
@@ -80,6 +83,7 @@ export async function copyProjectTemplateAndReplace(
   }
 
   const projectType = options.projectType;
+  const language = options.language;
 
   // React-native init only allows alphanumerics in project names, but other
   // new project tools (like create-react-native-module) are less strict.
@@ -92,6 +96,23 @@ export async function copyProjectTemplateAndReplace(
     namespace = namespace.split(/[.:]+/).map(pascalCase).join('.');
   }
 
+  // Checking if we're overwriting an existing project and re-uses their projectGUID
+  const existingProjectPath = path.join(
+    destPath,
+    windowsDir,
+    newProjectName,
+    newProjectName + (language === 'cs' ? '.csproj' : '.vcxproj'),
+  );
+  let existingProjectGuid: string | undefined;
+  if (fs.existsSync(existingProjectPath)) {
+    console.log('Found existing project, extracting ProjectGuid.');
+    existingProjectGuid = findPropertyValue(
+      readProjectFile(existingProjectPath),
+      'ProjectGuid',
+      existingProjectPath,
+    ).replace(/[{}]/g, '');
+  }
+
   createDir(path.join(destPath, windowsDir));
   createDir(path.join(destPath, windowsDir, newProjectName));
 
@@ -100,18 +121,40 @@ export async function copyProjectTemplateAndReplace(
     createDir(path.join(destPath, windowsDir, newProjectName, 'BundleBuilder'));
   }
 
-  const language = options.language;
   const namespaceCpp = toCppNamespace(namespace);
   if (options.experimentalNuGetDependency) {
     console.log('Using experimental NuGet dependency.');
   }
+
+  let realProjectType = projectType;
+
   if (options.useWinUI3) {
     console.log('Using experimental WinUI3 dependency.');
+    if (projectType === 'lib') {
+      throw new CodedError(
+        'IncompatibleOptions',
+        'WinUI 3 project template only supports apps at the moment',
+        {
+          detail: 'useWinUI3 and lib',
+        },
+      );
+    } else if (language !== 'cs') {
+      throw new CodedError(
+        'IncompatibleOptions',
+        'WinUI 3 project template only support C# at the moment',
+        {
+          detail: 'useWinUI3 and cpp',
+        },
+      );
+    }
+
+    realProjectType += '-WinAppSDK';
   }
+
   const projDir = 'proj';
-  const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
+  const srcPath = path.join(srcRootPath, `${language}-${realProjectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
-  const projectGuid = uuid.v4();
+  const projectGuid = existingProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
@@ -124,75 +167,14 @@ export async function copyProjectTemplateAndReplace(
     mainComponentName = appJson.name;
   }
 
-  const xamlNamespace = options.useWinUI3
-    ? 'Microsoft.UI.Xaml'
-    : 'Windows.UI.Xaml';
-  const xamlNamespaceCpp = toCppNamespace(xamlNamespace);
-
-  const winuiPropsPath = resolveRnwPath('PropertySheets/WinUI.props');
-  const winuiProps = readProjectFile(winuiPropsPath);
-  const winui3Version = findPropertyValue(
-    winuiProps,
-    'WinUI3Version',
-    winuiPropsPath,
-  );
-  const winui2xVersion = findPropertyValue(
-    winuiProps,
-    'WinUI2xVersion',
-    winuiPropsPath,
-  );
-
-  const jsEnginePropsPath = resolveRnwPath('PropertySheets/JSengine.props');
-  const hermesVersion = findPropertyValue(
-    readProjectFile(jsEnginePropsPath),
-    'HermesVersion',
-    jsEnginePropsPath,
-  );
-
-  const csNugetPackages: NugetPackage[] = [
-    {
-      id: 'Microsoft.NETCore.UniversalWindowsPlatform',
-      version: '6.2.9',
-    },
-    {
-      id: 'ReactNative.Hermes.Windows',
-      version: hermesVersion,
-    },
-  ];
+  const csNugetPackages: NugetPackage[] = options.useWinUI3
+    ? getWinAppSDKPackages(nugetVersion)
+    : getUwpCsPackages();
 
   const cppNugetPackages: NugetPackage[] = [
     {
       id: 'Microsoft.Windows.CppWinRT',
       version: '2.0.211028.7',
-    },
-    {
-      id: 'ReactNative.Hermes.Windows',
-      version: hermesVersion,
-    },
-  ];
-
-  if (options.experimentalNuGetDependency) {
-    csNugetPackages.push({
-      id: 'Microsoft.ReactNative.Managed',
-      version: nugetVersion,
-    });
-
-    cppNugetPackages.push({
-      id: 'Microsoft.ReactNative',
-      version: nugetVersion,
-    });
-
-    cppNugetPackages.push({
-      id: 'Microsoft.ReactNative.Cxx',
-      version: nugetVersion,
-    });
-  }
-
-  const packagesConfigCppNugetPackages = [
-    ...cppNugetPackages,
-    {
-      id: options.useWinUI3 ? 'Microsoft.WinUI' : 'Microsoft.UI.Xaml',
-      version: options.useWinUI3 ? winui3Version : winui2xVersion,
     },
   ];
 
@@ -204,6 +186,8 @@ export async function copyProjectTemplateAndReplace(
     namespace: namespace,
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
+
+    rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
 
     mainComponentName: mainComponentName,
 
@@ -219,14 +203,12 @@ export async function copyProjectTemplateAndReplace(
 
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
+    nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
     useHermes: options.useHermes,
-    xamlNamespace: xamlNamespace,
-    xamlNamespaceCpp: xamlNamespaceCpp,
     cppNugetPackages: cppNugetPackages,
-    packagesConfigCppNugetPackages: packagesConfigCppNugetPackages,
 
     // cs template variables
     csNugetPackages: csNugetPackages,
@@ -323,11 +305,6 @@ export async function copyProjectTemplateAndReplace(
               ),
             },
           ];
-
-    csMappings.push({
-      from: path.join(srcPath, projDir, 'Directory.Build.props'),
-      to: path.join(windowsDir, 'Directory.Build.props'),
-    });
 
     for (const mapping of csMappings) {
       await copyAndReplaceWithChangedCallback(
@@ -441,15 +418,27 @@ export async function copyProjectTemplateAndReplace(
     );
   }
 
-  // shared src
-  if (fs.existsSync(path.join(sharedPath, 'src'))) {
-    await copyAndReplaceAll(
-      path.join(sharedPath, 'src'),
-      destPath,
-      path.join(windowsDir, newProjectName),
-      templateVars,
-      options.overwrite,
-    );
+  if (!options.useWinUI3) {
+    // shared src
+    if (fs.existsSync(path.join(sharedPath, 'src'))) {
+      await copyAndReplaceAll(
+        path.join(sharedPath, 'src'),
+        destPath,
+        path.join(windowsDir, newProjectName),
+        templateVars,
+        options.overwrite,
+      );
+    }
+  } else {
+    if (fs.existsSync(path.join(srcPath, 'MyApp'))) {
+      await copyAndReplaceAll(
+        path.join(srcPath, 'MyApp'),
+        destPath,
+        path.join(windowsDir, newProjectName),
+        templateVars,
+        options.overwrite,
+      );
+    }
   }
 
   // src
@@ -467,6 +456,15 @@ export async function copyProjectTemplateAndReplace(
     console.log(chalk.white.bold('To run your app on UWP:'));
     console.log(chalk.white('   npx react-native run-windows'));
   }
+}
+
+function getUwpCsPackages(): NugetPackage[] {
+  return [
+    {
+      id: 'Microsoft.NETCore.UniversalWindowsPlatform',
+      version: '6.2.9',
+    },
+  ];
 }
 
 function toCppNamespace(namespace: string) {
@@ -537,4 +535,18 @@ export async function installScriptsAndDependencies(options: {
       options.verbose ? {stdio: 'inherit'} : {},
     );
   }
+}
+function getWinAppSDKPackages(nugetVersion: string): NugetPackage[] {
+  const winAppSDKPackages: NugetPackage[] = [];
+  winAppSDKPackages.push({
+    id: 'Microsoft.ReactNative.WindowsAppSDK',
+    version: nugetVersion,
+  });
+
+  winAppSDKPackages.push({
+    id: 'Microsoft.WindowsAppSDK',
+    version: '1.0.0',
+  });
+
+  return winAppSDKPackages;
 }

@@ -27,6 +27,7 @@
 #include <winrt/Windows.Web.Http.h>
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
+#include "XamlUtils.h"
 #endif
 
 using namespace winrt::Windows::Foundation;
@@ -210,7 +211,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     webView.HorizontalAlignment(xaml::HorizontalAlignment::Stretch);
     webView.VerticalAlignment(xaml::VerticalAlignment::Stretch);
     webView.MinWidth(400);
-    auto dispatcher = winrt::system::DispatcherQueue::GetForCurrentThread();
+    auto dispatcher = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
     // XAML doesn't currently provide a way to measure a WebView control,
     // So we're going to tell the WebView to measure itself by running some javascript,
     // and then we'll post a task back to XAML to set the XAML WebView minimum height.
@@ -274,7 +275,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
             xaml::Documents::Run linkRun;
 
             linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-            link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+            link.Foreground(xaml::Media::SolidColorBrush(xaml::FromArgb(0xff, 0xff, 0xff, 0xff)));
             link.Inlines().Append(linkRun);
             xaml::Documents::Run normalRun;
             normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));

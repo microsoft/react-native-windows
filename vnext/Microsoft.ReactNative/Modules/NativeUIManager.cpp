@@ -236,7 +236,7 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_yogaConfig));
 
   auto element = view.as<xaml::FrameworkElement>();
-  element.Tag(winrt::PropertyValue::CreateInt64(shadowNode.m_tag));
+  Microsoft::ReactNative::SetTag(element, shadowNode.m_tag);
 
   // Add listener to size change so we can redo the layout when that happens
   m_sizeChangedVector.push_back(
@@ -456,6 +456,8 @@ static void StyleYogaNode(
         wrap = YGWrapNoWrap;
       else if (value == "wrap")
         wrap = YGWrapWrap;
+      else if (value == "wrap-reverse")
+        wrap = YGWrapWrapReverse;
       else
         assert(false);
 
@@ -978,7 +980,7 @@ void NativeUIManager::measure(
   int64_t childTag = rootTag;
   while (true) {
     auto &currNode = m_host->GetShadowNodeForTag(rootTag);
-    if (currNode.m_parent == -1)
+    if (currNode.m_parent == InvalidTag)
       break;
     ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
     if (rootNode.IsWindowed()) {
@@ -1092,9 +1094,9 @@ void NativeUIManager::findSubviewIn(
 
   for (const auto &elem : hitTestElements) {
     if (foundElement = elem.try_as<xaml::FrameworkElement>()) {
-      auto tag = foundElement.Tag();
-      if (tag != nullptr) {
-        foundTag = tag.as<winrt::IPropertyValue>().GetInt64();
+      auto tag = GetTag(foundElement);
+      if (tag != InvalidTag) {
+        foundTag = tag;
         break;
       }
     }

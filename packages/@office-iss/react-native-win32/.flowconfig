@@ -16,7 +16,6 @@
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
-<PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewViewConfig.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js
 <PROJECT_ROOT>/Libraries/Components/View/ViewPropTypes.js
 <PROJECT_ROOT>/Libraries/Image/Image.js
@@ -58,6 +57,8 @@
 
 ; Ignore files with flow typing issues #9223
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
+
+.*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
@@ -108,7 +109,6 @@ nonstrict-import=warn
 deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
-signature-verification-failure=warn
 
 [strict]
 deprecated-type
@@ -120,4 +120,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.168.0
+^0.175.1

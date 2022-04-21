@@ -13,20 +13,18 @@
 namespace winrt::Microsoft::ReactNative {
 
 class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
- private:
-  using TurboModule = facebook::react::TurboModule;
-  using CallInvoker = facebook::react::CallInvoker;
-
-  using TurboModulePtr = std::shared_ptr<TurboModule>;
-  using CallInvokerPtr = std::shared_ptr<CallInvoker>;
-
- public:
-  virtual TurboModulePtr getModule(const std::string &moduleName, const CallInvokerPtr &callInvoker) noexcept override;
-  virtual std::vector<std::string> getEagerInitModuleNames() noexcept override;
+ public: // TurboModuleRegistry implementation
+  std::shared_ptr<facebook::react::TurboModule> getModule(
+      const std::string &moduleName,
+      const std::shared_ptr<facebook::react::CallInvoker> &callInvoker) noexcept override;
+  std::vector<std::string> getEagerInitModuleNames() noexcept override;
 
  public:
   void SetReactContext(const IReactContext &reactContext) noexcept;
-  void AddModuleProvider(winrt::hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
+  void AddModuleProvider(
+      winrt::hstring const &moduleName,
+      ReactModuleProvider const &moduleProvider,
+      bool overwriteExisting) noexcept;
 
  private:
   std::unordered_map<std::string, ReactModuleProvider> m_moduleProviders;

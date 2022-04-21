@@ -17,10 +17,9 @@ const {
   Text,
   View,
   Alert,
-  NativeModules,
   findNodeHandle,
 } = require('react-native');
-const ScreenshotManager = NativeModules.ScreenshotManager;
+const ScreenshotManager = require('../../../NativeModuleExample/NativeScreenshotManager');
 
 const BUTTONS = ['Option 0', 'Option 1', 'Option 2', 'Delete', 'Cancel'];
 const DESTRUCTIVE_INDEX = 3;
@@ -202,6 +201,34 @@ class ActionSheetDisabledExample extends React.Component<Props, State> {
         this.setState({clicked: BUTTONS[buttonIndex]});
       },
     );
+  };
+}
+
+class ActionSheetDismissExample extends React.Component<{...}> {
+  render() {
+    return (
+      <View>
+        <Text onPress={this.showAndDismissActionSheet} style={style.button}>
+          Click to show and automatically dismiss the ActionSheet after 3
+          seconds
+        </Text>
+      </View>
+    );
+  }
+
+  showAndDismissActionSheet = () => {
+    ActionSheetIOS.showActionSheetWithOptions(
+      {
+        options: BUTTONS,
+        cancelButtonIndex: CANCEL_INDEX,
+        destructiveButtonIndex: DESTRUCTIVE_INDEX,
+      },
+      () => {},
+    );
+
+    setTimeout(() => {
+      ActionSheetIOS.dismissActionSheet();
+    }, 3000);
   };
 }
 
@@ -393,6 +420,12 @@ exports.examples = [
     title: 'Show Action Sheet with disabled buttons',
     render(): React.Element<any> {
       return <ActionSheetDisabledExample />;
+    },
+  },
+  {
+    title: 'Show Action Sheet and automatically dismiss it',
+    render(): React.Element<any> {
+      return <ActionSheetDismissExample />;
     },
   },
   {

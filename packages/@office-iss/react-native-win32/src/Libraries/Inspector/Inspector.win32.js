@@ -19,6 +19,7 @@ const React = require('react');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const StyleSheet = require('../StyleSheet/StyleSheet');
 const View = require('../Components/View/View');
+const ReactNativeStyleAttributes = require('../Components/View/ReactNativeStyleAttributes');
 
 const invariant = require('invariant');
 
@@ -49,10 +50,7 @@ const renderers = findRenderers();
 // Required for React DevTools to view/edit React Native styles in Flipper.
 // Flipper doesn't inject these values when initializing DevTools.
 hook.resolveRNStyle = require('../StyleSheet/flattenStyle');
-const viewConfig = require('../Components/View/ReactNativeViewViewConfig');
-hook.nativeStyleEditorValidAttributes = Object.keys(
-  viewConfig.validAttributes.style,
-);
+hook.nativeStyleEditorValidAttributes = Object.keys(ReactNativeStyleAttributes);
 
 function findRenderers(): $ReadOnlyArray<ReactRenderer> {
   const allRenderers = Array.from(hook.renderers.values());
@@ -77,7 +75,7 @@ function getInspectorDataForViewAtPoint(
         inspectedView,
         locationX,
         locationY,
-        (viewData) => {
+        viewData => {
           // Only return with non-empty view data since only one renderer will have this view.
           if (viewData && viewData.hierarchy.length > 0) {
             callback(viewData);
@@ -137,7 +135,7 @@ class Inspector extends React.Component<
 
   componentWillUnmount() {
     if (this._subs) {
-      this._subs.map((fn) => fn());
+      this._subs.map(fn => fn());
     }
     hook.off('react-devtools', this._attachToDevtools);
     this._setTouchedViewData = null;
@@ -222,7 +220,7 @@ class Inspector extends React.Component<
   }
 
   onTouchPoint(locationX: number, locationY: number) {
-    this._setTouchedViewData = (viewData) => {
+    this._setTouchedViewData = viewData => {
       const {
         hierarchy,
         props,
@@ -263,7 +261,7 @@ class Inspector extends React.Component<
       this.state.inspectedView,
       locationX,
       locationY,
-      (viewData) => {
+      viewData => {
         if (this._setTouchedViewData != null) {
           this._setTouchedViewData(viewData);
           this._setTouchedViewData = null;
@@ -290,7 +288,7 @@ class Inspector extends React.Component<
 
   setTouchTargeting(val: boolean) {
     PressabilityDebug.setEnabled(val);
-    this.props.onRequestRerenderApp((inspectedView) => {
+    this.props.onRequestRerenderApp(inspectedView => {
       this.setState({inspectedView});
     });
   }

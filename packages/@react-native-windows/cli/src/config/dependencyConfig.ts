@@ -214,7 +214,7 @@ export function dependencyConfigWindows(
       // Verifying (req) items
       let errorFound = false;
 
-      alwaysRequired.forEach((item) => {
+      alwaysRequired.forEach(item => {
         if (!(item in project)) {
           (project[
             item
@@ -277,7 +277,11 @@ export function dependencyConfigWindows(
         projectContents,
       );
 
-      if (projectType === 'dynamiclibrary' || projectType === 'winmdobj') {
+      if (
+        projectType === 'dynamiclibrary' ||
+        projectType === 'winmdobj' ||
+        projectType === 'library'
+      ) {
         const projectLang = configUtils.getProjectLanguage(projectFile);
 
         const projectName = configUtils.getProjectName(

@@ -1,8 +1,131 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Tue, 11 Jan 2022 06:09:11 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Apr 2022 05:09:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.39
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.38
+
+Tue, 12 Apr 2022 05:10:39 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.9
+
+## 0.0.0-canary.37
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Changes
+
+- integrate 4/4 (email not defined)
+
+## 0.0.0-canary.36
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.8
+
+## 0.0.0-canary.35
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.7
+
+## 0.0.0-canary.34
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.33
+
+Tue, 29 Mar 2022 05:09:50 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.32
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- integrates 2/27/22 (email not defined)
+
+## 0.0.0-canary.31
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Changes
+
+- integrate 2/13/2022 Nightly RN Build (email not defined)
+
+## 0.0.0-canary.30
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.6
+
+## 0.0.0-canary.29
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Changes
+
+- Integrate Feb 6 Nightly RN Build (ngerlem@microsoft.com)
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.28
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.27
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Changes
+
+- Intg 1/27 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.26
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.0-canary.25
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.6.3
 
 ## 0.0.0-canary.24
 

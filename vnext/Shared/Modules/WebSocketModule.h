@@ -3,9 +3,8 @@
 
 #pragma once
 
-#include <IWebSocketResource.h>
-
 #include <Modules/IWebSocketModuleProxy.h>
+#include <Networking/IWebSocketResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -37,12 +36,12 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
     /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
     /// As defined in WebSocket.js.
     /// </summary>
-    std::map<int64_t, std::shared_ptr<IWebSocketResource>> ResourceMap{};
+    std::map<int64_t, std::shared_ptr<Networking::IWebSocketResource>> ResourceMap{};
 
     /// <summary>
     /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
     /// </summary>
-    std::function<std::shared_ptr<IWebSocketResource>(std::string &&)> ResourceFactory;
+    std::function<std::shared_ptr<Networking::IWebSocketResource>(std::string &&)> ResourceFactory;
 
     /// <summary>
     /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
@@ -70,14 +69,15 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
 
 #pragma endregion CxxModule overrides
 
-  void SetResourceFactory(std::function<std::shared_ptr<IWebSocketResource>(const std::string &)> &&resourceFactory);
+  void SetResourceFactory(
+      std::function<std::shared_ptr<Networking::IWebSocketResource>(const std::string &)> &&resourceFactory);
 
  private:
   /// <summary>
   /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
   /// As defined in WebSocket.js.
   /// </summary>
-  std::map<int64_t, std::shared_ptr<IWebSocketResource>> m_webSockets;
+  std::map<int64_t, std::shared_ptr<Networking::IWebSocketResource>> m_webSockets;
 
   /// <summary>
   /// Keeps members that can be accessed threads other than this module's owner accessible.

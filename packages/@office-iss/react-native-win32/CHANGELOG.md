@@ -1,8 +1,164 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 11 Jan 2022 06:09:10 GMT and should not be manually modified.
+This log was last generated on Thu, 14 Apr 2022 05:09:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.145
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.39
+
+## 0.0.0-canary.144
+
+Tue, 12 Apr 2022 05:10:37 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.38
+- Bump react-native-platform-override to v1.6.9
+
+## 0.0.0-canary.143
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Changes
+
+- integrate 4/4 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.37
+
+## 0.0.0-canary.142
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.36
+- Bump react-native-platform-override to v1.6.8
+
+## 0.0.0-canary.141
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.35
+- Bump react-native-platform-override to v1.6.7
+
+## 0.0.0-canary.140
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.34
+
+## 0.0.0-canary.139
+
+Tue, 29 Mar 2022 05:09:49 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.33
+
+## 0.0.0-canary.138
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- integrates 2/27/22 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.32
+
+## 0.0.0-canary.137
+
+Wed, 09 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Upgrade @types/react-native (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.136
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Changes
+
+- integrate 2/13/2022 Nightly RN Build (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.31
+
+## 0.0.0-canary.135
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.30
+- Bump react-native-platform-override to v1.6.6
+
+## 0.0.0-canary.134
+
+Sat, 12 Feb 2022 06:08:36 GMT
+
+### Changes
+
+- Share monorepo-friendly metro config between dev packages (ngerlem@microsoft.com)
+
+## 0.0.0-canary.133
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Changes
+
+- Integrate Feb 6 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.29
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.132
+
+Wed, 09 Feb 2022 06:09:35 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.28
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.5
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.131
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Changes
+
+- Intg 1/27 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.27
+
+## 0.0.0-canary.130
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.26
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.0-canary.129
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.25
+- Bump react-native-platform-override to v1.6.3
 
 ## 0.0.0-canary.128
 

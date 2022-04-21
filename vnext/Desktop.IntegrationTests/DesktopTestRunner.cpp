@@ -6,7 +6,6 @@
 #include <CreateModules.h>
 #include <Modules/NetworkingModule.h>
 #include <Modules/WebSocketModule.h>
-#include <RuntimeOptions.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
@@ -49,10 +48,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
        []() -> unique_ptr<CxxModule> {
          return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
        },
-       nativeQueue},
-
-      {"Networking",
-       []() -> unique_ptr<CxxModule> { return std::make_unique<Microsoft::React::NetworkingModule>(); },
        nativeQueue},
 
       // Apparently mandatory for /IntegrationTests

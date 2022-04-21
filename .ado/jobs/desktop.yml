@@ -64,8 +64,8 @@ jobs:
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-                (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
-                (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
+                (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
+                (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
 
             #6799 -
             #       HostFunctionTest              - Crashes under JSI/V8
@@ -170,6 +170,16 @@ jobs:
                   otherConsoleOptions: '/blame -- RunConfiguration.TestSessionTimeout=300000'
 
               - template: ../templates/stop-packagers.yml
+
+            - task: BinSkim@3
+              displayName: Run Binskim Analysis
+              inputs:
+                  InputType: 'Basic'
+                  Function: 'analyze'
+                  AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\\React.Windows.Desktop.DLL\*.dll'
+                  AnalyzeVerbose: true
+                  toolVersion: 'LatestPreRelease'
+              continueOnError: true
 
             - template: ../templates/publish-build-artifacts.yml
               parameters:

@@ -137,6 +137,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::PropNameID createPropNameIDFromAscii(const char *str, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromUtf8(const uint8_t *utf8, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromString(const facebook::jsi::String &str) override;
+  facebook::jsi::PropNameID createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym);
   std::string utf8(const facebook::jsi::PropNameID &id) override;
   bool compare(const facebook::jsi::PropNameID &lhs, const facebook::jsi::PropNameID &rhs) override;
 
@@ -711,6 +712,14 @@ PropNameID NapiJsiRuntime::createPropNameIDFromString(const String &str) {
   return MakePointer<PropNameID>(uniqueStr);
 }
 
+PropNameID NapiJsiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
+  // TODO: Support for symbols through the native API in JSC is very limited.
+  // While we could construct a PropNameID here, we would not be able to get a
+  // symbol property through the C++ API.
+  UNREFERENCED_PARAMETER(sym);
+  throw;
+}
+
 string NapiJsiRuntime::utf8(const PropNameID &id) {
   EnvScope scope{m_env};
 
@@ -1245,7 +1254,7 @@ size_t NapiJsiRuntime::JsiValueViewArgs::Size() const noexcept {
 #pragma region PropNameIDView
 
 NapiJsiRuntime::PropNameIDView::PropNameIDView(NapiJsiRuntime *runtime, napi_value propertyId) noexcept
-    : m_propertyId{make<PropNameID>(new (std::addressof(m_pointerStore)) NapiPointerValueView{runtime, propertyId})} {}
+    : m_propertyId{make<PropNameID>(new(std::addressof(m_pointerStore)) NapiPointerValueView{runtime, propertyId})} {}
 
 NapiJsiRuntime::PropNameIDView::operator PropNameID const &() const noexcept {
   return m_propertyId;

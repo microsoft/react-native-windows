@@ -23,7 +23,7 @@
 #include <Utils/ValueUtils.h>
 
 #ifdef USE_WINUI3
-#include <winrt/Microsoft.UI.Input.Experimental.h>
+#include <winrt/Microsoft.UI.Input.h>
 #endif
 
 namespace winrt {
@@ -357,7 +357,7 @@ void TextViewManager::OnPointerEvent(
     args.Target(nullptr);
 
     // Get the pointer point and hit test
-    const auto point = args.Args().GetCurrentPoint(textBlock).RawPosition();
+    const auto point = args.Args().GetCurrentPoint(textBlock).Position();
     HitTest(node, args, point);
 
     // Set the target back to the current view if hit test failed

@@ -18,6 +18,9 @@ jobs:
     steps:
       - template: ../templates/checkout-shallow.yml
 
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+        displayName: 'Run Credential Scanner'
+
       - template: ../templates/prepare-js-env.yml
 
       - script: yarn format:verify

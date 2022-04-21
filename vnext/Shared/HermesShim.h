@@ -15,5 +15,7 @@ std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntime(const hermes:
 void enableSamplingProfiler();
 void disableSamplingProfiler();
 void dumpSampledTraceToFile(const std::string &fileName);
+std::unique_ptr<facebook::hermes::HermesRuntime> makeHermesRuntimeWithWER();
+void hermesCrashHandler(facebook::hermes::HermesRuntime &runtime, int fileDescriptor);
 
 } // namespace Microsoft::ReactNative::HermesShim

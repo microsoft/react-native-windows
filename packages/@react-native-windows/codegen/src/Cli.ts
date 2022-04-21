@@ -10,6 +10,10 @@ import path from 'path';
 import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import {createNM2Generator} from './generators/GenerateNM2';
+import {
+  generateTypeScript,
+  setOptionalTurboModule,
+} from './generators/GenerateTypeScript';
 // @ts-ignore
 import {parseFile} from 'react-native-tscodegen/lib/rncodegen/src/parsers/flow';
 // @ts-ignore
@@ -23,6 +27,16 @@ const argv = yargs.options({
   files: {
     type: 'array',
     describe: 'glob patterns for files which contains specs',
+  },
+  ts: {
+    type: 'boolean',
+    describe: 'generate turbo module definition files in TypeScript',
+    default: false,
+  },
+  outdir: {
+    type: 'string',
+    describe: 'output directory',
+    default: 'codegen',
   },
   test: {
     type: 'boolean',
@@ -98,11 +112,9 @@ function checkFilesForChanges(
 
   const allExistingFiles = globby
     .sync(`${outputDir}/**`)
-    .map((_) => path.normalize(_))
+    .map(_ => path.normalize(_))
     .sort();
-  const allGeneratedFiles = [...map.keys()]
-    .map((_) => path.normalize(_))
-    .sort();
+  const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
 
   if (
     allExistingFiles.length !== allGeneratedFiles.length ||
@@ -132,7 +144,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
   // This ensures that we delete any generated files from modules that have been deleted
   const allExistingFiles = globby.sync(`${outputDir}/**`);
-  allExistingFiles.forEach((existingFile) => {
+  allExistingFiles.forEach(existingFile => {
     if (!map.has(path.normalize(existingFile))) {
       fs.unlinkSync(existingFile);
     }
@@ -162,7 +174,24 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
 function parseFlowFile(filename: string): SchemaType {
   try {
-    return parseFile(filename);
+    const schema = parseFile(filename);
+    // there will be at most one turbo module per file
+    const moduleName = Object.keys(schema.modules)[0];
+    if (moduleName) {
+      const spec = schema.modules[moduleName];
+      if (spec.type === 'NativeModule') {
+        const contents = fs.readFileSync(filename, 'utf8');
+        if (contents) {
+          // This is a temporary implementation until such information is added to the schema in facebook/react-native
+          if (contents.includes('TurboModuleRegistry.get<')) {
+            setOptionalTurboModule(spec, true);
+          } else if (contents.includes('TurboModuleRegistry.getEnforcing<')) {
+            setOptionalTurboModule(spec, false);
+          }
+        }
+      }
+    }
+    return schema;
   } catch (e) {
     if (e instanceof Error) {
       e.message = `(${filename}): ${e.message}`;
@@ -209,6 +238,7 @@ function generate(
   );
 
   const generateNM2 = createNM2Generator({namespace: argv.namespace});
+
   const generatorPropsH =
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH').generate;
   const generatorPropsCPP =
@@ -221,6 +251,8 @@ function generate(
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateComponentDescriptorH').generate;
   const generatorEventEmitterH =
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterH').generate;
+  const generatorEventEmitterCPP =
+    require('react-native-tscodegen/lib/rncodegen/src/generators/components/GenerateEventEmitterCpp').generate;
 
   normalizeFileMap(
     generateNM2(libraryName, schema, moduleSpecName),
@@ -228,9 +260,17 @@ function generate(
     generatedFiles,
   );
 
+  if (argv.ts) {
+    normalizeFileMap(
+      generateTypeScript(libraryName, schema, moduleSpecName),
+      outputDirectory,
+      generatedFiles,
+    );
+  }
+
   if (
     Object.keys(schema.modules).some(
-      (moduleName) => schema.modules[moduleName].type === 'Component',
+      moduleName => schema.modules[moduleName].type === 'Component',
     )
   ) {
     const componentGenerators = [
@@ -240,9 +280,10 @@ function generate(
       generatorShadowNodeCPP,
       generatorComponentDescriptorH,
       generatorEventEmitterH,
+      generatorEventEmitterCPP,
     ];
 
-    componentGenerators.forEach((generator) => {
+    componentGenerators.forEach(generator => {
       const generated: Map<string, string> = generator(
         libraryName,
         schema,
@@ -273,7 +314,7 @@ if (argv.file) {
 
 const libraryName = argv.libraryName;
 const moduleSpecName = 'moduleSpecName';
-const outputDirectory = 'codegen';
+const outputDirectory = argv.outdir;
 generate(
   {libraryName, schema, outputDirectory, moduleSpecName},
   {generators: [], test: false},

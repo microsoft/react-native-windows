@@ -33,8 +33,8 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
 using Microsoft::React::IWebSocketModuleProxy;
-using Microsoft::React::IWebSocketResource;
 using Microsoft::React::WebSocketModule;
+using Microsoft::React::Networking::IWebSocketResource;
 
 constexpr char moduleName[] = "WebSocketModule";
 
@@ -297,6 +297,10 @@ void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) no
 
 /*static*/ weak_ptr<IWebSocketModuleProxy> IWebSocketModuleProxy::GetInstance() noexcept {
   return s_proxy;
+}
+
+/*extern*/ const char *GetWebSocketModuleName() noexcept {
+  return moduleName;
 }
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept {

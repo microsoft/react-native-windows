@@ -7,9 +7,11 @@ parameters:
 
 jobs:
   - job: Setup
-    timeoutInMinutes: 3
-    pool:
-      vmImage: ubuntu-latest
+    displayName: Setup
+    timeoutInMinutes: 3 # Kill the job early to catch Beachball hangs
+    variables: [template: ../variables/shared.yml]
+    pool: {vmImage: ubuntu-latest}
+
     steps:
       - template: ../templates/checkout-full.yml
 
@@ -18,8 +20,12 @@ jobs:
 
       - template: ../templates/compute-beachball-branch-name.yml
 
-      - script: npm install -g beachball@2.18.0
-        displayName: Install beachball
+      - template: ../templates/yarn-install.yml
+        parameters:
+          agentImage: HostedImage
+
+      - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
+        displayName: Minimal build
 
       - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
         - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run `yarn change` from root of repo to generate a change file."

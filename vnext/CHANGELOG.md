@@ -1,8 +1,474 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 14 Jan 2022 06:09:51 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Apr 2022 05:08:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.488
+
+Tue, 19 Apr 2022 05:08:59 GMT
+
+### Changes
+
+- simplify cdebug, removes an unnecessary dynamic initializer (asklar@microsoft.com)
+- Modify transform code to allow fabric usage of transform (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.487
+
+Fri, 15 Apr 2022 05:09:04 GMT
+
+### Changes
+
+- Avoid loading XAML just to create a Color struct (asklar@microsoft.com)
+
+## 0.0.0-canary.486
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Fix Sequential DispatchQueue deadlock on shutdown (vmorozov@microsoft.com)
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.39
+
+## 0.0.0-canary.485
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.125
+
+## 0.0.0-canary.484
+
+Tue, 12 Apr 2022 05:10:39 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.124
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.38
+- Bump @react-native-windows/codegen to v0.0.0-canary.30
+- Bump react-native-platform-override to v1.6.9
+
+## 0.0.0-canary.483
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Changes
+
+- integrate 4/4 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.37
+
+## 0.0.0-canary.482
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Changes
+
+- Don't load XAML just to check if we are a XAML app (asklar@microsoft.com)
+- Fix deps script (asklar@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.123
+
+## 0.0.0-canary.481
+
+Thu, 07 Apr 2022 05:09:50 GMT
+
+### Changes
+
+- Fix Glog (34109996+chiaramooney@users.noreply.github.com)
+- Enable loading the bundle from an embedded resource via resource://moduleName/resourceId (asklar@microsoft.com)
+
+## 0.0.0-canary.480
+
+Wed, 06 Apr 2022 05:09:24 GMT
+
+### Changes
+
+- [Perf] avoid copying the JS bundle string (asklar@microsoft.com)
+
+## 0.0.0-canary.479
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.36
+- Bump react-native-platform-override to v1.6.8
+
+## 0.0.0-canary.478
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.122
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.35
+- Bump @react-native-windows/codegen to v0.0.0-canary.29
+- Bump react-native-platform-override to v1.6.7
+
+## 0.0.0-canary.477
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Changes
+
+- TextInput for Fabric (acoates@microsoft.com)
+- Remove deskop base ShadowNode and ViewManager classes (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Avoid crash in DevSupportManager when running in unpackaged apps with Hermes (asklar@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.34
+
+## 0.0.0-canary.476
+
+Tue, 29 Mar 2022 05:09:50 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.33
+
+## 0.0.0-canary.475
+
+Sat, 26 Mar 2022 05:09:10 GMT
+
+### Changes
+
+- Guard against crashes due to cancelations and other errors from BitmapSource/SvgImageSource SetSourceAsync (asklar@microsoft.com)
+
+## 0.0.0-canary.474
+
+Wed, 23 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- Enable version checks in IDL files (asklar@microsoft.com)
+
+## 0.0.0-canary.473
+
+Tue, 22 Mar 2022 05:09:20 GMT
+
+### Changes
+
+- Update to Windows App SDK 1.0.0 (agnel@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.121
+
+## 0.0.0-canary.472
+
+Fri, 18 Mar 2022 05:08:51 GMT
+
+### Changes
+
+- move some DLLs to delayload (asklar@microsoft.com)
+
+## 0.0.0-canary.471
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- Update WebView Pkg Dep Following Pkg Ref (34109996+chiaramooney@users.noreply.github.com)
+- integrates 2/27/22 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.32
+
+## 0.0.0-canary.470
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Safe re-entrancy for EnsureHermesLoaded (tudor.mihai@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.120
+
+## 0.0.0-canary.469
+
+Fri, 11 Mar 2022 06:09:19 GMT
+
+### Changes
+
+- Use Canvas dependency properties for Top/Left instead of custom DPs (asklar@microsoft.com)
+
+## 0.0.0-canary.468
+
+Thu, 10 Mar 2022 06:09:24 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Update CppAppConsumeCSharpModules.props for VS2022 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.119
+
+## 0.0.0-canary.467
+
+Wed, 09 Mar 2022 06:09:08 GMT
+
+### Changes
+
+- Adjust PackageReferences ProjectCapability evaluation (julio.rocha@microsoft.com)
+- Upgrade @types/react-native (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Use inherited OutputPath for C# projects (julio.rocha@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.28
+
+## 0.0.0-canary.466
+
+Sun, 06 Mar 2022 06:08:52 GMT
+
+### Changes
+
+- Scope down usage of PackageReferences (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.465
+
+Sat, 05 Mar 2022 06:08:58 GMT
+
+### Changes
+
+- Implement crash management for optional collection of Hermes JS callstack and heap addresses with Windows Error Reporting (tudor.mihai@microsoft.com)
+- integrate 2/13/2022 Nightly RN Build (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.31
+
+## 0.0.0-canary.464
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Changes
+
+- enable right-click exluding some components (email not defined)
+- Fabric: Use XAML for layout (acoates@microsoft.com)
+- Capture MSBuild properties in telemetry (jthysell@microsoft.com)
+- Update OnDropViewInstance API Doc (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.118
+- Bump @react-native-windows/codegen to v0.0.0-canary.27
+
+## 0.0.0-canary.463
+
+Thu, 03 Mar 2022 06:09:12 GMT
+
+### Changes
+
+- rnw-deps - try prerelease, guard against multiple VS installs (asklar@microsoft.com)
+- Set ResolveNuGetPackages in external props (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.462
+
+Fri, 25 Feb 2022 23:53:36 GMT
+
+### Changes
+
+- Move hardcoded PackageReferences from templates into targets (jthysell@microsoft.com)
+- Update packages.lock.json (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.117
+
+## 0.0.0-canary.461
+
+Fri, 25 Feb 2022 06:07:52 GMT
+
+### Changes
+
+- Fix tag handling to allow non-RNW elements in the scene (e.g. AdaptiveCards) (asklar@microsoft.com)
+- Enable TurboModule Promise completion in any thread (vmorozov@microsoft.com)
+
+## 0.0.0-canary.460
+
+Thu, 24 Feb 2022 06:07:47 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.26
+
+## 0.0.0-canary.459
+
+Wed, 23 Feb 2022 06:07:37 GMT
+
+### Changes
+
+- Add wrap-reverse to flex wrap options (axelfratoni@microsoft.com)
+- Expose InlineSourceMap property (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.458
+
+Sat, 19 Feb 2022 06:07:07 GMT
+
+### Changes
+
+- Update packages.lock.json (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.457
+
+Fri, 18 Feb 2022 06:07:44 GMT
+
+### Changes
+
+- Crash when getting osVersion on win 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Use temporary folder to store JS bytecode (30809111+acoates-ms@users.noreply.github.com)
+- MustBeNoExceptVoidFunctor should depend on the template type parameter to avoid being evaluated too early (asklar@microsoft.com)
+
+## 0.0.0-canary.456
+
+Wed, 16 Feb 2022 19:51:00 GMT
+
+### Changes
+
+- Lazy Install `sourcemap-support` when `react-native-windows` config is hooked (ngerlem@microsoft.com)
+
+## 0.0.0-canary.455
+
+Sun, 13 Feb 2022 06:08:34 GMT
+
+### Changes
+
+- Implement IHttpResource (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.116
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.30
+- Bump react-native-platform-override to v1.6.6
+
+## 0.0.0-canary.454
+
+Sat, 12 Feb 2022 06:08:36 GMT
+
+### Changes
+
+- Share monorepo-friendly metro config between dev packages (ngerlem@microsoft.com)
+- Bump Hermes version to 0.11 (tudor.mihai@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.115
+
+## 0.0.0-canary.453
+
+Fri, 11 Feb 2022 06:08:20 GMT
+
+### Changes
+
+- Built in turbomodules should not override app provided versions (30809111+acoates-ms@users.noreply.github.com)
+- Integrate Feb 6 Nightly RN Build (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.29
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.452
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Changes
+
+- Normalize package reference for WinUI between C# and C++ templates (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.114
+
+## 0.0.0-canary.451
+
+Wed, 09 Feb 2022 06:09:38 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.113
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.28
+- Bump @react-native-windows/codegen to v0.0.0-canary.25
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.5
+- Bump react-native-platform-override to v1.6.5
+
+## 0.0.0-canary.450
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.24
+
+## 0.0.0-canary.449
+
+Tue, 08 Feb 2022 06:08:05 GMT
+
+### Changes
+
+- Fixes onMouseEnter/Leave to fire when pointer down (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.112
+
+## 0.0.0-canary.448
+
+Sat, 05 Feb 2022 06:07:42 GMT
+
+### Changes
+
+- Add onUnload to RNW View Manager (34109996+chiaramooney@users.noreply.github.com)
+- Replace __APPLE__ with __clang__ where applicable (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.447
+
+Thu, 03 Feb 2022 06:08:22 GMT
+
+### Changes
+
+- Stop both raw value and offset animation (erozell@outlook.com)
+- Intg 1/27 (34109996+chiaramooney@users.noreply.github.com)
+- Use raw value for CalculatedAnimationDriver (erozell@outlook.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.27
+
+## 0.0.0-canary.446
+
+Wed, 02 Feb 2022 06:08:39 GMT
+
+### Changes
+
+- Fix VS hang when switching Platform within IDE (julio.rocha@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.111
+
+## 0.0.0-canary.445
+
+Tue, 01 Feb 2022 06:07:59 GMT
+
+### Changes
+
+- UI Manager module is not being destroyed on the UI thread (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.444
+
+Sat, 29 Jan 2022 06:08:59 GMT
+
+### Changes
+
+- Fixing hermes inspector [#9407](https://github.com/microsoft/react-native-windows/issues/) (anandrag@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.26
+- Bump @react-native-windows/codegen to v0.0.0-canary.23
+- Bump react-native-platform-override to v1.6.4
+
+## 0.0.0-canary.443
+
+Thu, 27 Jan 2022 06:11:44 GMT
+
+### Changes
+
+- adds editable to textinput with securetextentry (tatianakapos@microsoft.com)
+- addsCLIversion to project file (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.110
+
+## 0.0.0-canary.442
+
+Wed, 26 Jan 2022 06:08:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.25
+- Bump react-native-platform-override to v1.6.3
+
+## 0.0.0-canary.441
+
+Sat, 22 Jan 2022 06:10:17 GMT
+
+### Changes
+
+- Install NuGet as needed (julio.rocha@microsoft.com)
+- Move AppTheme module to use codegen (30809111+acoates-ms@users.noreply.github.com)
+- Removes unnecessary conditional from NativeAnimatedNodeManager (erozell@outlook.com)
+- Terminate decay animation when value change is less than 0.1 (erozell@outlook.com)
+
+## 0.0.0-canary.440
+
+Wed, 19 Jan 2022 06:10:35 GMT
+
+### Changes
+
+- Remove ADO NuGet feed from config for new projects (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.109
 
 ## 0.0.0-canary.439
 

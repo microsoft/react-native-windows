@@ -41,7 +41,7 @@ function ContentPress() {
       <View style={styles.row}>
         <Pressable
           onPress={() => {
-            setTimesPressed((current) => current + 1);
+            setTimesPressed(current => current + 1);
           }}>
           {({pressed}) => (
             <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
@@ -71,7 +71,7 @@ function TextOnPressBox() {
         style={styles.textBlock}
         testID="tappable_text"
         onPress={() => {
-          setTimesPressed((prev) => prev + 1);
+          setTimesPressed(prev => prev + 1);
         }}>
         Text has built-in onPress handling
       </Text>
@@ -87,7 +87,7 @@ function PressableFeedbackEvents() {
 
   function appendEvent(eventName) {
     const limit = 6;
-    setEventLog((current) => {
+    setEventLog(current => {
       return [eventName].concat(current.slice(0, limit - 1));
     });
   }
@@ -172,8 +172,9 @@ function ForceTouchExample() {
           style={styles.wrapper}
           testID="pressable_3dtouch_button"
           onStartShouldSetResponder={() => true}
-          onResponderMove={(event) => setForce(event.nativeEvent?.force || 1)}
-          onResponderRelease={(event) => setForce(0)}>
+          // $FlowFixMe[sketchy-null-number]
+          onResponderMove={event => setForce(event.nativeEvent?.force || 1)}
+          onResponderRelease={event => setForce(0)}>
           <Text style={styles.button}>Press Me</Text>
         </View>
       </View>
@@ -195,7 +196,7 @@ function PressableHitSlop() {
     <View testID="pressable_hit_slop">
       <View style={[styles.row, styles.centered]}>
         <Pressable
-          onPress={() => setTimesPressed((num) => num + 1)}
+          onPress={() => setTimesPressed(num => num + 1)}
           style={styles.hitSlopWrapper}
           hitSlop={{top: 30, bottom: 30, left: 60, right: 60}}
           testID="pressable_hit_slop_button">
@@ -278,7 +279,7 @@ function PressableFocusCallbacks() {
           onFocus={() => console.log('Pressable onFocus')}
           onBlur={() => console.log('Pressable onBlur')}
           onPress={() => {
-            setTimesPressed((current) => current + 1);
+            setTimesPressed(current => current + 1);
           }}>
           {({pressed}) => (
             <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
@@ -313,7 +314,7 @@ function PressWithOnKeyDown() {
 
   const [shouldPreventDefault, setShouldPreventDefault] = useState(false);
   const toggleSwitch = () =>
-    setShouldPreventDefault((previousState) => !previousState);
+    setShouldPreventDefault(previousState => !previousState);
 
   function myKeyDown(event) {
     console.log('keyDown - ' + event.nativeEvent.code);
@@ -334,10 +335,10 @@ function PressWithOnKeyDown() {
     <>
       <View style={styles.row}>
         <Pressable
-          onKeyDown={(event) => myKeyDown(event)}
-          onKeyUp={(event) => myKeyUp(event)}
+          onKeyDown={event => myKeyDown(event)}
+          onKeyUp={event => myKeyUp(event)}
           onPress={() => {
-            setTimesPressed((current) => current + 1);
+            setTimesPressed(current => current + 1);
           }}>
           {({pressed}) => (
             <Text style={styles.text}>{pressed ? 'Pressed!' : 'Press Me'}</Text>
@@ -359,7 +360,7 @@ function PressWithKeyCapture() {
 
   function logEvent(eventName) {
     const limit = 6;
-    setEventLog((current) => {
+    setEventLog(current => {
       return [eventName].concat(current.slice(0, limit - 1));
     });
     console.log(eventName);
@@ -369,10 +370,8 @@ function PressWithKeyCapture() {
     <>
       <View
         style={styles.row}
-        onKeyDown={(event) =>
-          logEvent('outer keyDown ' + event.nativeEvent.code)
-        }
-        onKeyDownCapture={(event) =>
+        onKeyDown={event => logEvent('outer keyDown ' + event.nativeEvent.code)}
+        onKeyDownCapture={event =>
           logEvent('outer keyDownCapture ' + event.nativeEvent.code)
         }>
         <Pressable
@@ -380,12 +379,12 @@ function PressWithKeyCapture() {
             {code: 'KeyW', handledEventPhase: 3},
             {code: 'KeyE', handledEventPhase: 1},
           ]}
-          onKeyDown={(event) => logEvent('keyDown ' + event.nativeEvent.code)}
-          onKeyDownCapture={(event) =>
+          onKeyDown={event => logEvent('keyDown ' + event.nativeEvent.code)}
+          onKeyDownCapture={event =>
             logEvent('keyDownCapture ' + event.nativeEvent.code)
           }
           onPress={() => {
-            setTimesPressed((current) => current + 1);
+            setTimesPressed(current => current + 1);
             logEvent('pressed ' + timesPressed);
           }}>
           {({pressed}) => (

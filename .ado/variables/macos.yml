@@ -1,5 +1,0 @@
-variables:
-  - template: shared.yml
-
-  - name: VmImage
-    value: macOS-10.15

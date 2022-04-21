@@ -9,6 +9,8 @@ parameters:
     type: object
   - name: buildNuGetOnly
     type: boolean
+  - name: buildWinAppSDKOnly
+    type: boolean
   - name: buildMatrix
     type: object
     default:
@@ -50,18 +52,20 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-          - Name: X86DebugCppWinUI3
-            language: cpp
-            configuration: Debug
-            platform: x86
-            projectType: app
-            additionalInitArguments: --useWinUI3 true
-          - Name: X86DebugCsWinUI3
+          # #8132 Support for C++ WinAppSDK apps
+          # - Name: X86DebugCppWinUI3
+          #   language: cpp
+          #   configuration: Debug
+          #   platform: x86
+          #   projectType: app
+          #   additionalInitArguments: --useWinUI3 true
+          - Name: X64DebugCsWinUI3
             language: cs
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
-            additionalInitArguments: --useWinUI3 true
+            additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+            useWinAppSDK: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
@@ -145,18 +149,20 @@ parameters:
             platform: x86
             projectType: lib
             additionalRunArguments: --no-autolink --no-deploy
-          - Name: X86DebugCppWinUI3
-            language: cpp
-            configuration: Debug
-            platform: x86
-            projectType: app
-            additionalInitArguments: --useWinUI3 true
-          - Name: X86DebugCsWinUI3
+          # #8132 Support for C++ WinAppSDK apps
+          # - Name: X86DebugCppWinUI3
+          #   language: cpp
+          #   configuration: Debug
+          #   platform: x86
+          #   projectType: app
+          #   additionalInitArguments: --useWinUI3 true
+          - Name: X64DebugCsWinUI3
             language: cs
             configuration: Debug
-            platform: x86
+            platform: x64
             projectType: app
             additionalInitArguments: --useWinUI3 true
+            useWinAppSDK: true
           - Name: X86DebugCppHermes
             language: cpp
             configuration: Debug
@@ -296,13 +302,17 @@ jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
+        - ${{ if and(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly), eq(coalesce(matrix.useWinAppSDK, false), parameters.buildWinAppSDKOnly))}}:
           - job: CliInit${{ matrix.Name }}
             displayName: Verify Cli ${{ matrix.Name }}
 
             ${{ if eq(matrix.useNuGet, true) }}:
               dependsOn:
                 - UniversalBuild${{ matrix.platform }}Release
+
+            ${{ if eq(matrix.useWinAppSDK, true) }}:
+              dependsOn:
+                - WinAppSDKX64Release
 
             variables: [template: ../variables/windows.yml]
 

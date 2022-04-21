@@ -72,6 +72,9 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
 
+# The minimum VS version to check for
+$vsver = "16.5"
+
 $v = [System.Environment]::OSVersion.Version;
 if ($env:Agent_BuildDirectory) {
     $drive = (Resolve-Path $env:Agent_BuildDirectory).Drive
@@ -88,17 +91,25 @@ function CheckVS {
     if (!(Test-Path $vsWhere)) {
         return $false;
     }
-    $output = & $vsWhere -version 16.5 -requires $vsComponents -property productPath
 
-    return ($output -ne $null) -and (Test-Path $output);
+    [String[]]$output = & $vsWhere -version $vsver -requires $vsComponents -property productPath
+
+    if (($output.Count -eq 0) -or (!(Test-Path $output[0]))) {
+        Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
+        [String[]]$output = & $vsWhere -version $vsver -requires $vsComponents -property productPath -prerelease
+    }
+    if ($output.Count -gt 1) {
+        Write-Debug "More than one version of Visual Studio found, using the first one at $($output[0])"
+    }
+    return ($output.Count -ne 0) -and (Test-Path $output[0]);
 }
 
 function InstallVS {
     $installerPath = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer";
     $vsWhere = "$installerPath\vswhere.exe"
     if (Test-Path $vsWhere) {
-        $channelId = & $vsWhere -version 16.5 -property channelId
-        $productId = & $vsWhere -version 16.5 -property productId
+        $channelId = & $vsWhere -version $vsver -property channelId
+        $productId = & $vsWhere -version $vsver -property productId
     }
 
     if (!(Test-Path $vsWhere) -or ($channelId -eq $null) -or ($productId -eq $null)) {
@@ -109,8 +120,8 @@ function InstallVS {
         } else {
             & choco install -y visualstudio2019community
         }
-        $channelId = & $vsWhere -version 16.5 -property channelId
-        $productId = & $vsWhere -version 16.5 -property productId
+        $channelId = & $vsWhere -version $vsver -property channelId
+        $productId = & $vsWhere -version $vsver -property productId
     }
 
     $vsInstaller = "$installerPath\vs_installer.exe"
@@ -123,7 +134,7 @@ function InstallVS {
 function CheckNode {
     try {
         $v = (Get-Command node -ErrorAction Stop).Version.Major
-        return ($v -ge 12) -and (($v % 2) -eq 0);
+        return ($v -ge 14) -and (($v % 2) -eq 0);
     } catch {
         return $false;
     }
@@ -170,8 +181,17 @@ function CheckCppWinRT_VSIX {
         if (!(Test-Path $vsWhere)) {
             return $false;
         }
-        $vsPath = & $vsWhere -version 16.5 -property installationPath;
-        $natvis = Get-ChildItem "$vsPath\Common7\IDE\Extensions\cppwinrt.natvis" -Recurse;
+        [String[]]$vsPath = & $vsWhere -version $vsver -property installationPath;
+
+        if (($vsPath.Count -eq 0) -or (!(Test-Path $vsPath[0]))) {
+            Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
+            [String[]]$vsPath = & $vsWhere -version $vsver -property installationPath -prerelease
+        }
+
+        if ($vsPath.Count -gt 1) {
+            Write-Debug "More than one version of Visual Studio found, using the first one at $($vsPath[0])"
+        }
+        $natvis = Get-ChildItem "$($vsPath[0])\Common7\IDE\Extensions\cppwinrt.natvis" -Recurse;
         return $null -ne $natvis;
     } catch { return $false };
 }
@@ -185,8 +205,19 @@ function InstallCppWinRT_VSIX {
     if (!(Test-Path $vsWhere)) {
         return $false;
     }
-    $productPath = & $vsWhere -version 16.5 -property productPath
-    $VSIXInstaller_exe = Join-Path (Split-Path $productPath) "VSIXInstaller.exe"
+    [String[]]$productPath = & $vsWhere -version $vsver -property productPath
+
+    if (($productPath.Count -eq 0) -or (!(Test-Path $productPath[0]))) {
+        Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
+        [String[]]$productPath = & $vsWhere -version $vsver -property productPath -prerelease
+    }
+
+    if ($productPath.Count -gt 1) {
+        Write-Debug "More than one version of Visual Studio found, using the first one at $($productPath[0])"
+    }
+
+
+    $VSIXInstaller_exe = Join-Path (Split-Path $productPath[0]) "VSIXInstaller.exe"
     $process = Start-Process $VSIXInstaller_exe -PassThru -Wait -ArgumentList "/a /q $env:TEMP\Microsoft.Windows.CppWinRT.vsix"
     $process.WaitForExit();
 }

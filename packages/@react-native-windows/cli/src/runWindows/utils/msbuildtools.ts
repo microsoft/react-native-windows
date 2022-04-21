@@ -19,6 +19,7 @@ import {
   newSpinner,
   newSuccess,
   newError,
+  powershell,
 } from './commandWithProgress';
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../runWindowsOptions';
@@ -50,7 +51,31 @@ export default class MSBuildTools {
       'msbuild.exe',
     )}" "${slnFile}" /t:Clean`;
     const results = child_process.execSync(cmd).toString().split(EOL);
-    results.forEach((result) => console.log(chalk.white(result)));
+    results.forEach(result => console.log(chalk.white(result)));
+  }
+
+  async restorePackageConfigs(
+    slnFile: any,
+    buildArch: BuildArch,
+    buildType: BuildConfig,
+  ) {
+    const text = 'Restoring NuGet packages ';
+    const spinner = newSpinner(text);
+    await commandWithProgress(
+      spinner,
+      text,
+      path.join(this.msbuildPath(), 'msbuild.exe'),
+      [
+        slnFile,
+        '/t:Restore',
+        '/p:RestoreProjectStyle=PackagesConfig',
+        '/p:RestorePackagesConfig=true',
+        `/p:Platform=${buildArch}`,
+        `/p:Configuration=${buildType}`,
+      ],
+      true,
+      'MSBuildError',
+    );
   }
 
   async buildProject(
@@ -106,7 +131,7 @@ export default class MSBuildTools {
       args.push(`/t:Deploy`);
     }
 
-    Object.keys(msBuildProps).forEach((key) => {
+    Object.keys(msBuildProps).forEach(key => {
       args.push(`/p:${key}=${msBuildProps[key]}`);
     });
 
@@ -190,9 +215,11 @@ export default class MSBuildTools {
     );
 
     if (fs.existsSync(toolsPath)) {
-      newSuccess(
-        `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
-      );
+      if (verbose) {
+        newSuccess(
+          `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
+        );
+      }
       return new MSBuildTools(
         minVersion,
         vsInstallation.installationPath,
@@ -239,11 +266,59 @@ export default class MSBuildTools {
 
     shell
       .ls(uapFolderPath)
-      .filter((uapDir) => shell.test('-d', path.join(uapFolderPath, uapDir)))
+      .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
       .map(Version.tryParse)
-      .forEach((version) => version && results.push(version));
+      .forEach(version => version && results.push(version));
 
     return results;
+  }
+
+  evaluateMSBuildProperties(
+    solutionFile: string,
+    projectFile: string,
+    propertyNames?: string[],
+    extraMsBuildProps?: Record<string, string>,
+  ): Record<string, string> {
+    const spinner = newSpinner('Running Eval-MsBuildProperties.ps1');
+
+    try {
+      const msbuildEvalScriptPath = path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'powershell',
+        'Eval-MsBuildProperties.ps1',
+      );
+
+      let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+
+      if (propertyNames && propertyNames.length > 0) {
+        command += ` -PropertyNames '${propertyNames.join(',')}'`;
+      }
+
+      if (extraMsBuildProps) {
+        command += " -ExtraMSBuildProps '";
+        for (const extraProp in extraMsBuildProps) {
+          if (!(extraProp in Object.prototype)) {
+            command += `,${extraProp}=${extraMsBuildProps[extraProp]}`;
+          }
+        }
+        command += "'";
+      }
+
+      const commandOutput = execSync(command).toString();
+      spinner.succeed();
+
+      const properties = JSON.parse(commandOutput) as Record<string, string>;
+      spinner.succeed();
+      return properties;
+    } catch (e) {
+      spinner.fail(
+        'Running Eval-MsBuildProperties.ps1 failed: ' + (e as Error).message,
+      );
+      throw e;
+    }
   }
 }
 
