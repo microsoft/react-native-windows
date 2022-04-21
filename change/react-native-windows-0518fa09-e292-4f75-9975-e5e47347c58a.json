@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "CG: Update async to resolve CVE-2021-43138",
+  "comment": "Implement Focus Fix",
   "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
   "dependentChangeType": "patch"
 }

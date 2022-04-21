@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "CG: Update async to resolve CVE-2021-43138",
-  "packageName": "@rnw-scripts/format-files",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
