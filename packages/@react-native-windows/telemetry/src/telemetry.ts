@@ -173,6 +173,10 @@ export class Telemetry {
   private static async setupBaseProperties() {
     Telemetry.client!.commonProperties.deviceId =
       await basePropUtils.deviceId();
+    Telemetry.client!.commonProperties.deviceArchitecture =
+      basePropUtils.deviceArchitecture();
+    Telemetry.client!.commonProperties.devicePlatform =
+      basePropUtils.devicePlatform();
     Telemetry.client!.commonProperties.deviceLocale =
       await basePropUtils.deviceLocale();
     Telemetry.client!.commonProperties.deviceNumCPUs = basePropUtils
@@ -191,14 +195,13 @@ export class Telemetry {
     Telemetry.client!.commonProperties.isMsftInternal = basePropUtils
       .isMsftInternal()
       .toString();
+    Telemetry.client!.commonProperties.sampleRate = basePropUtils
+      .sampleRate()
+      .toString();
+    Telemetry.client!.commonProperties.isTest = Telemetry.isTest.toString();
+    Telemetry.client!.commonProperties.sessionId = Telemetry.getSessionId();
 
     Telemetry.client!.config.samplingPercentage = basePropUtils.sampleRate();
-
-    if (Telemetry.isTest) {
-      Telemetry.client!.commonProperties.isTest = true.toString();
-    }
-
-    Telemetry.client!.commonProperties.sessionId = Telemetry.getSessionId();
 
     await Telemetry.populateToolsVersions();
     if (Telemetry.options.populateNpmPackageVersions) {
@@ -257,6 +260,10 @@ export class Telemetry {
           for (const frame of exception.parsedStack) {
             errorUtils.sanitizeErrorStackFrame(frame);
           }
+
+          // Exception message must never be blank, or AI will reject it
+          exception.message = exception.message || '[None]';
+
           // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
           // The message may contain PII information. This can be sanitized, but for now delete it.
           // Note that the type of data.exceptions[0] is always going to be ExceptionDetails. It is not the original thrown exception.
@@ -266,7 +273,7 @@ export class Telemetry {
               exception.message,
             );
           } else {
-            delete exception.message;
+            exception.message = '[Removed]';
           }
         }
       }
