@@ -345,27 +345,27 @@ bool FrameworkElementViewManager::UpdateProperty(
           const std::string &innerName = pair.first;
           const auto &innerValue = pair.second;
 
+          auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+
           if (innerName == "selected") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Selected)] =
                 innerValue.AsBoolean();
-            const auto prevState = DynamicAutomationProperties::GetAccessibilityStateSelected(element);
-            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
-            if (peer != nullptr && prevState != innerValue.AsBoolean()) {
+            const auto prevSelectedState = DynamicAutomationProperties::GetAccessibilityStateSelected(element);
+            if (peer != nullptr && prevSelectedState != innerValue.AsBoolean()) {
               peer.RaisePropertyChangedEvent(
                   winrt::SelectionItemPatternIdentifiers::IsSelectedProperty(),
-                  winrt::box_value(prevState),
+                  winrt::box_value(prevSelectedState),
                   winrt::box_value(innerValue.AsBoolean()));
             }
           } else if (innerName == "disabled") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled)] =
                 innerValue.AsBoolean();
-            const auto prevState = DynamicAutomationProperties::GetAccessibilityStateDisabled(element);
-            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+            const auto prevDisabledState = DynamicAutomationProperties::GetAccessibilityStateDisabled(element);
 
-            if (peer != nullptr && prevState != innerValue.AsBoolean()) {
+            if (peer != nullptr && prevDisabledState != innerValue.AsBoolean()) {
               peer.RaisePropertyChangedEvent(
                   winrt::AutomationElementIdentifiers::IsEnabledProperty(),
-                  winrt::box_value(!prevState),
+                  winrt::box_value(!prevDisabledState),
                   winrt::box_value(!innerValue.AsBoolean()));
             }
           } else if (innerName == "checked") {
@@ -376,7 +376,6 @@ bool FrameworkElementViewManager::UpdateProperty(
             // If the state is "mixed" we'll just set both Checked and Unchecked to false,
             // then later in the IToggleProvider implementation it will return the Intermediate state
             // due to both being set to false (see  DynamicAutomationPeer::ToggleState()).
-            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
             const auto prevCheckedState = DynamicAutomationProperties::GetAccessibilityStateChecked(element);
             const auto prevUncheckedState = DynamicAutomationProperties::GetAccessibilityStateUnchecked(element);
 
@@ -410,14 +409,13 @@ bool FrameworkElementViewManager::UpdateProperty(
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
                 innerValue.IsNull() || !innerValue.AsBoolean();
 
-            const auto prevState = DynamicAutomationProperties::GetAccessibilityStateExpanded(element);
-            auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+            const auto prevExpandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(element);
 
-            if (peer != nullptr && prevState != innerValue.AsBoolean()) {
+            if (peer != nullptr && prevExpandedState != innerValue.AsBoolean()) {
               const auto newValue =
                   innerValue.AsBoolean() ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
               const auto oldValue =
-                  prevState ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
+                  prevExpandedState ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
               peer.RaisePropertyChangedEvent(
                   winrt::ExpandCollapsePatternIdentifiers::ExpandCollapseStateProperty(),
                   winrt::box_value(oldValue),
