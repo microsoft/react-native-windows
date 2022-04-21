@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 21 Apr 2022 05:09:33 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.126",
+      "version": "0.0.0-canary.126",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.39",
+            "commit": "cee6f05fac576b0380d16d1dade68e0bbd1ce572"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Apr 2022 05:09:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.125",
       "version": "0.0.0-canary.125",

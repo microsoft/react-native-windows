@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Tue, 12 Apr 2022 05:10:38 GMT and should not be manually modified.
+This log was last generated on Thu, 21 Apr 2022 05:09:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.11
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Patches
+
+- CG: Update async to resolve CVE-2021-43138 (jthysell@microsoft.com)
+- Bump react-native-platform-override to v1.6.10
 
 ## 1.1.10
 

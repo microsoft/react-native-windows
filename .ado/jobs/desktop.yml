@@ -64,7 +64,8 @@ jobs:
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
-                (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
+                (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
+                (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
 
             #6799 -
             #       HostFunctionTest              - Crashes under JSI/V8
