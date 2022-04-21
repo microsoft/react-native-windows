@@ -17,6 +17,8 @@
     "directory": "packages/@react-native-windows/fs"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "graceful-fs": "^4.2.8"
   },
   "devDependencies": {
