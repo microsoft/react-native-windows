@@ -17,6 +17,7 @@
 #include <WindowsNumerics.h>
 #include <winrt/Windows.Foundation.h>
 
+#include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Automation.h>
 #include <UI.Xaml.Controls.h>
 #include "Utils/PropertyHandlerUtils.h"
@@ -416,13 +417,30 @@ bool FrameworkElementViewManager::UpdateProperty(
           const std::string &innerName = pair.first;
           const auto &innerValue = pair.second;
 
-          if (innerName == "selected")
+          auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+
+          if (innerName == "selected") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Selected)] =
                 innerValue.AsBoolean();
-          else if (innerName == "disabled")
+            const auto prevSelectedState = DynamicAutomationProperties::GetAccessibilityStateSelected(element);
+            if (peer != nullptr && prevSelectedState != innerValue.AsBoolean()) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::SelectionItemPatternIdentifiers::IsSelectedProperty(),
+                  winrt::box_value(prevSelectedState),
+                  winrt::box_value(innerValue.AsBoolean()));
+            }
+          } else if (innerName == "disabled") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled)] =
                 innerValue.AsBoolean();
-          else if (innerName == "checked") {
+            const auto prevDisabledState = DynamicAutomationProperties::GetAccessibilityStateDisabled(element);
+
+            if (peer != nullptr && prevDisabledState != innerValue.AsBoolean()) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::AutomationElementIdentifiers::IsEnabledProperty(),
+                  winrt::box_value(!prevDisabledState),
+                  winrt::box_value(!innerValue.AsBoolean()));
+            }
+          } else if (innerName == "checked") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Checked)] =
                 innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean && innerValue.AsBoolean();
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked)] =
@@ -430,6 +448,30 @@ bool FrameworkElementViewManager::UpdateProperty(
             // If the state is "mixed" we'll just set both Checked and Unchecked to false,
             // then later in the IToggleProvider implementation it will return the Intermediate state
             // due to both being set to false (see  DynamicAutomationPeer::ToggleState()).
+            const auto prevCheckedState = DynamicAutomationProperties::GetAccessibilityStateChecked(element);
+            const auto prevUncheckedState = DynamicAutomationProperties::GetAccessibilityStateUnchecked(element);
+
+            if (peer != nullptr) {
+              if (prevCheckedState !=
+                      states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Checked)] ||
+                  prevUncheckedState !=
+                      states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked)]) {
+                // Checking if either state has changed here to catch changes involving "mixed" state.
+                const auto oldValue = prevCheckedState ? winrt::ToggleState::On : winrt::ToggleState::Off;
+                if (innerValue.Type() != winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+                  peer.RaisePropertyChangedEvent(
+                      winrt::TogglePatternIdentifiers::ToggleStateProperty(),
+                      winrt::box_value(oldValue),
+                      winrt::box_value(winrt::ToggleState::Indeterminate));
+                } else {
+                  const auto newValue = innerValue.AsBoolean() ? winrt::ToggleState::On : winrt::ToggleState::Off;
+                  peer.RaisePropertyChangedEvent(
+                      winrt::TogglePatternIdentifiers::ToggleStateProperty(),
+                      winrt::box_value(oldValue),
+                      winrt::box_value(newValue));
+                }
+              }
+            }
           } else if (innerName == "busy")
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Busy)] =
                 !innerValue.IsNull() && innerValue.AsBoolean();
@@ -438,6 +480,19 @@ bool FrameworkElementViewManager::UpdateProperty(
                 !innerValue.IsNull() && innerValue.AsBoolean();
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
                 innerValue.IsNull() || !innerValue.AsBoolean();
+
+            const auto prevExpandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(element);
+
+            if (peer != nullptr && prevExpandedState != innerValue.AsBoolean()) {
+              const auto newValue =
+                  innerValue.AsBoolean() ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
+              const auto oldValue =
+                  prevExpandedState ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
+              peer.RaisePropertyChangedEvent(
+                  winrt::ExpandCollapsePatternIdentifiers::ExpandCollapseStateProperty(),
+                  winrt::box_value(oldValue),
+                  winrt::box_value(newValue));
+            }
           }
         }
       }
