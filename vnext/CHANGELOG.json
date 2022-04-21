@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 21 Apr 2022 05:09:32 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.489",
+      "version": "0.0.0-canary.489",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cee6f05fac576b0380d16d1dade68e0bbd1ce572",
+            "comment": "Handle abrupt WebSocket connection interruption"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3f85b243ff340a45762ece5e1fcac609c2f27383",
+            "comment": "CG: Update async to resolve CVE-2021-43138"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "25d76fc058b3c66352e09192114d14589c716da9",
+            "comment": "Implement Origin Policy Filter"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.126",
+            "commit": "cee6f05fac576b0380d16d1dade68e0bbd1ce572"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.40",
+            "commit": "cee6f05fac576b0380d16d1dade68e0bbd1ce572"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.10",
+            "commit": "cee6f05fac576b0380d16d1dade68e0bbd1ce572"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 19 Apr 2022 05:08:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.488",
       "version": "0.0.0-canary.488",

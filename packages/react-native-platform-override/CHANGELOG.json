@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Thu, 21 Apr 2022 05:09:33 GMT",
+      "tag": "react-native-platform-override_v1.6.10",
+      "version": "1.6.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "3f85b243ff340a45762ece5e1fcac609c2f27383",
+            "comment": "CG: Update async to resolve CVE-2021-43138"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Apr 2022 05:10:39 GMT",
       "tag": "react-native-platform-override_v1.6.9",
       "version": "1.6.9",
