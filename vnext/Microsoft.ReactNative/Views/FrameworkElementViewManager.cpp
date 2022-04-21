@@ -362,10 +362,10 @@ bool FrameworkElementViewManager::UpdateProperty(
             const auto prevState = DynamicAutomationProperties::GetAccessibilityStateDisabled(element);
             auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
 
-            if (peer != nullptr && prevState == innerValue.AsBoolean()) {
+            if (peer != nullptr && prevState != innerValue.AsBoolean()) {
               peer.RaisePropertyChangedEvent(
                   winrt::AutomationElementIdentifiers::IsEnabledProperty(),
-                  winrt::box_value(prevState),
+                  winrt::box_value(!prevState),
                   winrt::box_value(!innerValue.AsBoolean()));
             }
           } else if (innerName == "checked") {
