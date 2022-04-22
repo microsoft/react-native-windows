@@ -413,9 +413,12 @@ export class Telemetry {
     };
 
     // Set remaining common props
-    Object.assign(props, extraProps);
     props.project = Telemetry.projectProp;
     props.versions = Telemetry.versionsProp;
+
+    // Set extra props
+    props.extraProps = {};
+    Object.assign(props.extraProps, extraProps);
 
     // Fire event
     Telemetry.client!.trackEvent({name: props.eventName, properties: props});
@@ -455,9 +458,12 @@ export class Telemetry {
     }
 
     // Set remaining common props
-    Object.assign(props, extraProps);
     props.project = Telemetry.projectProp;
     props.versions = Telemetry.versionsProp;
+
+    // Set extra props
+    props.extraProps = {};
+    Object.assign(props.extraProps, extraProps);
 
     // Fire event
     Telemetry.client!.trackException({

@@ -432,17 +432,7 @@ function verifyTestCommandTelemetryProcessor(
 
         // Verify extra props
         const extraProps = getExtraProps();
-        for (const key of Object.keys(extraProps)) {
-          switch (typeof extraProps[key]) {
-            case 'object':
-              expect(JSON.parse(properties[key])).toStrictEqual(
-                extraProps[key],
-              );
-              break;
-            default:
-              expect(properties[key]).toBe(extraProps[key].toString());
-          }
-        }
+        expect(JSON.parse(properties.extraProps)).toStrictEqual(extraProps);
       }
     } catch (ex) {
       caughtErrors.push(
