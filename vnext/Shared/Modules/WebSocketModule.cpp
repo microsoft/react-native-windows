@@ -6,6 +6,7 @@
 #include <Modules/WebSocketModule.h>
 
 #include <Modules/IWebSocketModuleContentHandler.h>
+#include <ReactPropertyBag.h>
 #include "Unicode.h"
 
 // React Native
@@ -149,7 +150,7 @@ namespace Microsoft::React {
 
 #pragma region WebSocketModule
 
-WebSocketModule::WebSocketModule(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties)
+WebSocketModule::WebSocketModule(winrt::Windows::Foundation::IInspectable const &properties)
     : m_sharedState{std::make_shared<SharedState>()} {
   m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(); };
   m_sharedState->Module = this;

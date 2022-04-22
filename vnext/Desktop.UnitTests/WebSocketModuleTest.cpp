@@ -26,7 +26,7 @@ TEST_CLASS (WebSocketModuleTest) {
       "connect", "close", "send", "sendBinary", "ping"};
 
   TEST_METHOD(CreateModule) {
-    auto module = make_unique<WebSocketModule>();
+    auto module = make_unique<WebSocketModule>(nullptr /*iProperties*/);
 
     Assert::IsFalse(module == nullptr);
     Assert::AreEqual(string("WebSocketModule"), module->getName());
@@ -40,7 +40,7 @@ TEST_CLASS (WebSocketModuleTest) {
   }
 
   TEST_METHOD(ConnectEmptyUriFails) {
-    auto module = make_unique<WebSocketModule>();
+    auto module = make_unique<WebSocketModule>(nullptr /*iProperties*/);
 
     module->getMethods()
         .at(WebSocketModule::MethodId::Connect)
@@ -70,7 +70,7 @@ TEST_CLASS (WebSocketModuleTest) {
     };
 
     auto instance = CreateMockInstance(jsef);
-    auto module = make_unique<WebSocketModule>();
+    auto module = make_unique<WebSocketModule>(nullptr /*iProperties*/);
     module->setInstance(instance);
     module->SetResourceFactory([](const string &) {
       auto rc = make_shared<MockWebSocketResource>();
