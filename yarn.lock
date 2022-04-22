@@ -1951,13 +1951,13 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.2.27":
-  version "1.2.30"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.30.tgz#a83ddf72cc7a0a567406b2db8f032ed0d078d238"
-  integrity sha512-j8/qQuJCFr2JpGuLfRPo9XZOXsCmfNatZNqlxgMUzTqJUYhJDzZMeuKgR//2AhHKbDnpK/ez1YozVbj1iMv+EA==
+  version "1.2.31"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.31.tgz#827e99d95399b625d638728f57b60dfc4dfce1d8"
+  integrity sha512-fbdrN4ZvdSsG5xnOjbiycmLozl3iDcALKwjVSeb1CDsufIl1+LKkW5tWWtpTYlxGRddQwf4y2a2nomjSk2Zpuw==
   dependencies:
     "@rnx-kit/babel-preset-metro-react-native" "^1.0.17"
     "@rnx-kit/tools-node" "^1.2.7"
-    workspace-tools "^0.18.2"
+    workspace-tools "^0.18.3"
 
 "@rnx-kit/metro-plugin-duplicates-checker@^1.2.15":
   version "1.2.15"
@@ -11825,10 +11825,10 @@ workspace-tools@^0.16.2:
     multimatch "^4.0.0"
     read-yaml-file "^2.0.0"
 
-workspace-tools@^0.18.2:
-  version "0.18.2"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.18.2.tgz#59753b5fb7c709f72250c8fbf5ccfe1903033a7d"
-  integrity sha512-XEW7VrD5XmYNLli89cHGQESf6Jgh45ELlKJQHbAAwd67XfC+Tf+hpJZ+GLFsKPIzJ+xIUvnJE6F71ScsMfu7KA==
+workspace-tools@^0.18.2, workspace-tools@^0.18.3:
+  version "0.18.4"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.18.4.tgz#a59ca6dc864d07aafc06a9ff4a9ff093456b8765"
+  integrity sha512-ZdhlB4NEC3uJ4eW7snyHKOfzMC00HXWO2QbIU3aY8XBdtE+VrU2ajv+oxDUIZfCLD4Wlk3ltWaPt4Jk6IC9bMA==
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     find-up "^4.1.0"
