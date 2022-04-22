@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Added support for Narrator announcing accessibilityState changes",
-  "packageName": "react-native-windows",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}

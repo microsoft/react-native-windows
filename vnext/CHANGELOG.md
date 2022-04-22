@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 21 Apr 2022 05:09:32 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Apr 2022 05:09:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.490
+
+Fri, 22 Apr 2022 05:09:17 GMT
+
+### Changes
+
+- Implement Focus Fix (34109996+chiaramooney@users.noreply.github.com)
+- Added support for Narrator announcing accessibilityState changes (agnel@microsoft.com)
+- [Fabric] Add support for text fragments (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.489
 

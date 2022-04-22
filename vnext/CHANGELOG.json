@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 22 Apr 2022 05:09:17 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.490",
+      "version": "0.0.0-canary.490",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8c37ad23431678bf5bb3d53515e9a3db7d84f2a0",
+            "comment": "Implement Focus Fix"
+          },
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "aa28258f298773ed752a09ae23d31c0f091a02aa",
+            "comment": "Added support for Narrator announcing accessibilityState changes"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e53b1fbe90ebaf83e9d42ac24db0cfc4a312afe6",
+            "comment": "[Fabric] Add support for text fragments"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Apr 2022 05:09:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.489",
       "version": "0.0.0-canary.489",
