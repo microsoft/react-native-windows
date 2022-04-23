@@ -133,9 +133,10 @@ export function commandWithProgress(
         reject(
           new CodedError(
             errorCategory,
-            `${taskDoingName} - error code ${code}`,
+            `${taskDoingName} - exit error code ${code}`,
             {
-              errorCode: code,
+              taskName: taskDoingName,
+              taskExitCode: code,
             },
           ),
         );

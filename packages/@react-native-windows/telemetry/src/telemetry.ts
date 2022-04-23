@@ -441,12 +441,24 @@ export class Telemetry {
         : null;
     props.codedError = {
       type: codedError?.type ?? 'Unknown',
-      rawErrorCode: errorUtils.tryGetErrorCode(error.message) ?? '',
       data: codedError?.data ?? {},
     };
 
-    if (codedError?.data) {
-      Object.assign(props.codedError.data, codedError.data);
+    // Copy msBuildErrorMessages into the codedError.data object
+    if ((error as any).msBuildErrorMessages) {
+      // Always grab MSBuild error codes if possible
+      props.codedError.data.msBuildErrors = (error as any).msBuildErrorMessages
+        .map(errorUtils.tryGetErrorCode)
+        .filter((msg: string | undefined) => msg);
+
+      // Grab sanitized MSBuild error messages if we're preserving them
+      if (Telemetry.options.preserveErrorMessages) {
+        props.codedError.data.msBuildErrorMessages = (
+          error as any
+        ).msBuildErrorMessages
+          .map(errorUtils.sanitizeErrorMessage)
+          .filter((msg: string) => msg);
+      }
     }
 
     // Copy miscellaneous system error fields into the codedError.data object

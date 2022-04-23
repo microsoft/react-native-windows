@@ -406,9 +406,7 @@ function verifyTestCommandTelemetryProcessor(
             ? expectedError.type
             : 'Unknown',
         );
-        expect(codedError.rawErrorCode).toBe(
-          errorUtils.tryGetErrorCode(expectedError?.message ?? '') ?? '',
-        );
+
         expect(codedError.data).toStrictEqual(
           (expectedError as errorUtils.CodedError).data ?? {},
         );
