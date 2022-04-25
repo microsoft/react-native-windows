@@ -2335,13 +2335,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/react-native@*":
-  version "0.67.4"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.67.4.tgz#97a8d3cff2a7606f247008e93d9fe2a3879bc84e"
-  integrity sha512-L81CB6W1m0s7d+TH/loP318+VKPwwjWQBUTVYQ1+lQTWiE5jHxyihgCmd7JbwLICo708FRSDwJW7pJoiZHy6yg==
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-native@*", "@types/react-native@^0.66.17":
   version "0.66.18"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.66.18.tgz#924fdbf413047e7ac2c18aead60142345814dede"
@@ -5752,15 +5745,9 @@ form-data@~2.3.2:
     mime-types "^2.1.12"
 
 fp-ts@^2.5.0:
-<<<<<<< HEAD
-  version "2.11.10"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.11.10.tgz#59f57d37242a4b7dfdf13945f27b768a665eed52"
-  integrity sha512-wtUo3eA0/+GZnT+dCjkSt5CuGCH5ZXjjrcZvYm/3BC5KGavuwgvME+eRRHYtCGYWD6I+fJ2uZ9en/JVqDEPrJw==
-=======
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.12.0.tgz#6a0c9e99f69576aaa5a6c94c1284ba977f5569b7"
   integrity sha512-ZIMpTxc4Vadj3gs3Geg4tohB7eSkC125TA7ZH2ddEcREmjpjpbq6wUxWQmFFfAOCRWEkljh3BPLZGBVj9HB9Xw==
->>>>>>> 58957d4da9b61472d0aad259f29e0c58eea6256a
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -11866,17 +11853,10 @@ workspace-tools@^0.16.2:
     multimatch "^4.0.0"
     read-yaml-file "^2.0.0"
 
-<<<<<<< HEAD
-workspace-tools@^0.18.2:
-  version "0.18.3"
-  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.18.3.tgz#55864c76a92b50556ddcd756cf0c6db5618b0cb1"
-  integrity sha512-AsUScmMM+HrDzBjbxlpc041VNLRnP9EzAOk0YxZHxAT0wnVtZmoe+FgKPOGX4s7oRUobwKqBRhaJDAuaAP78ZQ==
-=======
 workspace-tools@^0.18.2, workspace-tools@^0.18.3:
   version "0.18.4"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.18.4.tgz#a59ca6dc864d07aafc06a9ff4a9ff093456b8765"
   integrity sha512-ZdhlB4NEC3uJ4eW7snyHKOfzMC00HXWO2QbIU3aY8XBdtE+VrU2ajv+oxDUIZfCLD4Wlk3ltWaPt4Jk6IC9bMA==
->>>>>>> 58957d4da9b61472d0aad259f29e0c58eea6256a
   dependencies:
     "@yarnpkg/lockfile" "^1.1.0"
     find-up "^4.1.0"
