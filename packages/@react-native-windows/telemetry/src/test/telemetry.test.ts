@@ -10,6 +10,7 @@ import * as path from 'path';
 
 import {
   Telemetry,
+  TelemetryOptions,
   CommandStartInfo,
   CommandEndInfo,
   CommandEventName,
@@ -25,7 +26,7 @@ export class TelemetryTest extends Telemetry {
   protected static testTelemetryProvidersRan: boolean;
 
   /** Run at the beginning of each test. */
-  static async startTest() {
+  static async startTest(options?: Partial<TelemetryOptions>) {
     TelemetryTest.hasTestTelemetryProviders = false;
     TelemetryTest.testTelemetryProvidersRan = false;
 
@@ -38,17 +39,19 @@ export class TelemetryTest extends Telemetry {
     // Ensure that we don't actually fire events when testing
     Telemetry.isTest = true;
 
-    await Telemetry.setup({preserveErrorMessages: true});
+    await Telemetry.setup(options);
   }
 
   /** Run at the end of each test where telemetry was fired. */
-  static endTest(finalCallback: () => void): void {
+  static endTest(finalCallback?: () => void): void {
     Telemetry.client?.flush({
       callback: _ => {
         if (TelemetryTest.hasTestTelemetryProviders) {
           expect(TelemetryTest.testTelemetryProvidersRan).toBe(true);
         }
-        finalCallback();
+        if (finalCallback) {
+          finalCallback();
+        }
       },
     });
   }
@@ -70,6 +73,11 @@ export class TelemetryTest extends Telemetry {
       : null;
   }
 
+  /** Retrieves the value of the preserveErrorMessages option. */
+  static getPreserveErrorMessages(): boolean {
+    return TelemetryTest.options.preserveErrorMessages;
+  }
+
   /** Adds a telemetry processor, usually for verifying the envelope. */
   static addTelemetryProcessor(
     telemetryProcessor: (
@@ -84,19 +92,21 @@ export class TelemetryTest extends Telemetry {
   }
 }
 
-beforeEach(async () => {
+test('setup() verify session id is valid and a common property', async done => {
   await TelemetryTest.startTest();
-});
 
-test('setup() verify session id is valid and a common property', async () => {
   const sessionId = TelemetryTest.getSessionId();
   expect(sessionId).toBeDefined();
   expect(sessionId!).toHaveLength(32);
   expect(sessionId!).toBe(basePropUtils.getSessionId());
-  expect(sessionId!).toBe(TelemetryTest.getCommonProperty('sessionId'));
+  expect(TelemetryTest.getCommonProperty('sessionId')).toBe(sessionId!);
+
+  TelemetryTest.endTest(done);
 });
 
-test('setup() verify static common property values with async sources', async () => {
+test('setup() verify static common property values with async sources', async done => {
+  await TelemetryTest.startTest();
+
   const props: Record<string, () => Promise<string | undefined>> = {
     deviceId: basePropUtils.deviceId,
     deviceLocale: basePropUtils.deviceLocale,
@@ -104,42 +114,57 @@ test('setup() verify static common property values with async sources', async ()
 
   for (const key in props) {
     if (!(key in Object.prototype)) {
-      const value = await props[key]();
+      const value = TelemetryTest.getCommonProperty(key);
       expect(value).toBeDefined();
-      expect(value).toBe(TelemetryTest.getCommonProperty(key));
+      expect(value).toBe(await props[key]());
     }
   }
+
+  TelemetryTest.endTest(done);
 });
 
-test('setup() verify static common property values with sync sources', () => {
+test('setup() verify static common property values with sync sources', async done => {
+  await TelemetryTest.startTest();
+
   const props: Record<string, () => string | undefined> = {
+    deviceArchitecture: () => basePropUtils.deviceArchitecture(),
+    devicePlatform: () => basePropUtils.devicePlatform(),
     deviceNumCPUs: () => basePropUtils.deviceNumCPUs().toString(),
     deviceTotalMemory: () => basePropUtils.deviceTotalMemory().toString(),
     ciCaptured: () => basePropUtils.captureCI().toString(),
     ciType: () => basePropUtils.ciType(),
     isMsftInternal: () => basePropUtils.isMsftInternal().toString(),
+    sampleRate: () => basePropUtils.sampleRate().toString(),
     isTest: () => 'true',
   };
 
   for (const key in props) {
     if (!(key in Object.prototype)) {
-      const value = props[key]();
+      const value = TelemetryTest.getCommonProperty(key);
       expect(value).toBeDefined();
-      expect(value).toBe(TelemetryTest.getCommonProperty(key));
+      expect(value).toBe(props[key]());
     }
   }
+
+  TelemetryTest.endTest(done);
 });
 
-test('setup() verify other common property values are defined', () => {
+test('setup() verify other common property values are defined', async done => {
+  await TelemetryTest.startTest();
+
   const props: string[] = ['deviceDiskFreeSpace'];
 
   for (const key of props) {
     const value = TelemetryTest.getCommonProperty(key);
     expect(value).toBeDefined();
   }
+
+  TelemetryTest.endTest(done);
 });
 
-test('setup() verify tool versions are populated', async () => {
+test('setup() verify tool versions are populated', async done => {
+  await TelemetryTest.startTest();
+
   const props: Record<string, () => Promise<string | null>> = {
     node: versionUtils.getNodeVersion,
     npm: versionUtils.getNpmVersion,
@@ -153,18 +178,26 @@ test('setup() verify tool versions are populated', async () => {
       expect(value).toBe(TelemetryTest.getVersion(key));
     }
   }
+
+  TelemetryTest.endTest(done);
 });
 
-test('tryUpdateVersionsProp() returns true for adding a new version', async () => {
+test('tryUpdateVersionsProp() returns true for adding a new version', async done => {
+  await TelemetryTest.startTest();
+
   const name = 'test';
   const version = '1.0';
   expect(
     await TelemetryTest.tryUpdateVersionsProp(name, async () => version),
   ).toBe(true);
   expect(TelemetryTest.getVersion(name)).toBe(version);
+
+  TelemetryTest.endTest(done);
 });
 
-test('tryUpdateVersionsProp() returns false for adding an existing version with refresh is false', async () => {
+test('tryUpdateVersionsProp() returns false for adding an existing version with refresh is false', async done => {
+  await TelemetryTest.startTest();
+
   const name = 'test';
   const version = '1.0';
 
@@ -181,9 +214,13 @@ test('tryUpdateVersionsProp() returns false for adding an existing version with 
   ).toBe(false);
 
   expect(getValueCalled).toBe(false);
+
+  TelemetryTest.endTest(done);
 });
 
-test('tryUpdateVersionsProp() returns true for adding an existing version with refresh is true', async () => {
+test('tryUpdateVersionsProp() returns true for adding an existing version with refresh is true', async done => {
+  await TelemetryTest.startTest();
+
   const name = 'test';
   const version = '1.0';
 
@@ -204,6 +241,8 @@ test('tryUpdateVersionsProp() returns true for adding an existing version with r
   ).toBe(true);
 
   expect(getValueCalled).toBe(true);
+
+  TelemetryTest.endTest(done);
 });
 
 /** Returns the CommandStartInfo for our fake 'test-command'. */
@@ -345,6 +384,19 @@ function verifyTestCommandTelemetryProcessor(
         // Verify event name
         expect(properties.eventName).toBe(CodedErrorEventName);
 
+        // Verify exception info
+        const exceptions = envelope.data.baseData?.exceptions;
+        expect(exceptions).toBeDefined();
+        expect(exceptions.length).toBe(1);
+        expect(exceptions[0].message).toBeDefined();
+        expect(exceptions[0].message).not.toBe('');
+
+        expect(exceptions[0].message).toBe(
+          TelemetryTest.getPreserveErrorMessages()
+            ? errorUtils.sanitizeErrorMessage(expectedError?.message || 'None')
+            : '[Removed]',
+        );
+
         // Verify coded error info
         const codedError = JSON.parse(properties.codedError);
         expect(codedError).toBeDefined();
@@ -354,9 +406,7 @@ function verifyTestCommandTelemetryProcessor(
             ? expectedError.type
             : 'Unknown',
         );
-        expect(codedError.rawErrorCode).toBe(
-          errorUtils.tryGetErrorCode(expectedError?.message ?? '') ?? '',
-        );
+
         expect(codedError.data).toStrictEqual(
           (expectedError as errorUtils.CodedError).data ?? {},
         );
@@ -380,17 +430,7 @@ function verifyTestCommandTelemetryProcessor(
 
         // Verify extra props
         const extraProps = getExtraProps();
-        for (const key of Object.keys(extraProps)) {
-          switch (typeof extraProps[key]) {
-            case 'object':
-              expect(JSON.parse(properties[key])).toStrictEqual(
-                extraProps[key],
-              );
-              break;
-            default:
-              expect(properties[key]).toBe(extraProps[key].toString());
-          }
-        }
+        expect(JSON.parse(properties.extraProps)).toStrictEqual(extraProps);
       }
     } catch (ex) {
       caughtErrors.push(
@@ -403,6 +443,8 @@ function verifyTestCommandTelemetryProcessor(
 }
 
 test('Telemetry run test command end to end, verify event fires', async done => {
+  await TelemetryTest.startTest();
+
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
   TelemetryTest.addTelemetryProcessor(
@@ -418,114 +460,155 @@ test('Telemetry run test command end to end, verify event fires', async done => 
   });
 });
 
-test('Telemetry run test command end to end with CodedError, verify events fire', async done => {
-  const expectedError = new errorUtils.CodedError('MSBuildError', 'test error');
+const testTelemetryOptions = [
+  {preserveErrorMessages: false},
+  {preserveErrorMessages: true},
+];
 
-  // AI eats errors thrown in telemetry processors
-  const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(
-      caughtErrors,
-      expectedError.type,
-      expectedError,
-    ),
-  );
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with CodedError, verify events fire %s',
+  async (options, done: any) => {
+    await TelemetryTest.startTest(options);
 
-  await runTestCommandE2E(() => testCommandBody(expectedError));
+    const expectedError = new errorUtils.CodedError(
+      'MSBuildError',
+      'test error',
+    );
 
-  TelemetryTest.endTest(() => {
-    // Check if any errors were thrown
-    expect(caughtErrors).toHaveLength(0);
-    done();
-  });
-});
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryProcessor(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        expectedError.type,
+        expectedError,
+      ),
+    );
 
-test('Telemetry run test command end to end with CodedError (with error in message), verify events fire', async done => {
-  const expectedError = new errorUtils.CodedError(
-    'MSBuildError',
-    'error FOO2020: test error',
-  );
+    await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  // AI eats errors thrown in telemetry processors
-  const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(
-      caughtErrors,
-      expectedError.type,
-      expectedError,
-    ),
-  );
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+      done();
+    });
+  },
+);
 
-  await runTestCommandE2E(() => testCommandBody(expectedError));
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with CodedError (with error in message), verify events fire %s',
+  async (options, done: any) => {
+    await TelemetryTest.startTest(options);
 
-  TelemetryTest.endTest(() => {
-    // Check if any errors were thrown
-    expect(caughtErrors).toHaveLength(0);
-    done();
-  });
-});
+    const expectedError = new errorUtils.CodedError(
+      'MSBuildError',
+      'error FOO2020: test error',
+    );
 
-test('Telemetry run test command end to end with CodedError (with data), verify events fire', async done => {
-  const expectedError = new errorUtils.CodedError(
-    'MSBuildError',
-    'test error',
-    {foo: 42},
-  );
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryProcessor(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        expectedError.type,
+        expectedError,
+      ),
+    );
 
-  // AI eats errors thrown in telemetry processors
-  const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(
-      caughtErrors,
-      expectedError.type,
-      expectedError,
-    ),
-  );
+    await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  await runTestCommandE2E(() => testCommandBody(expectedError));
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+      done();
+    });
+  },
+);
 
-  TelemetryTest.endTest(() => {
-    // Check if any errors were thrown
-    expect(caughtErrors).toHaveLength(0);
-    done();
-  });
-});
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with CodedError (with data), verify events fire %s',
+  async (options, done: any) => {
+    await TelemetryTest.startTest(options);
 
-test('Telemetry run test command end to end with Error, verify events fire', async done => {
-  const expectedError = new Error('error FOO2020: test error');
+    const expectedError = new errorUtils.CodedError(
+      'MSBuildError',
+      'test error',
+      {foo: 42},
+    );
 
-  // AI eats errors thrown in telemetry processors
-  const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(caughtErrors, 'Unknown', expectedError),
-  );
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryProcessor(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        expectedError.type,
+        expectedError,
+      ),
+    );
 
-  await runTestCommandE2E(() => testCommandBody(expectedError));
+    await runTestCommandE2E(() => testCommandBody(expectedError));
 
-  TelemetryTest.endTest(() => {
-    // Check if any errors were thrown
-    expect(caughtErrors).toHaveLength(0);
-    done();
-  });
-});
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+      done();
+    });
+  },
+);
 
-test('Telemetry run test command end to end with Error (no message), verify events fire', async done => {
-  const expectedError = new Error();
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with Error, verify events fire %s',
+  async (options, done: any) => {
+    await TelemetryTest.startTest(options);
 
-  // AI eats errors thrown in telemetry processors
-  const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
-    verifyTestCommandTelemetryProcessor(caughtErrors, 'Unknown', expectedError),
-  );
+    const expectedError = new Error('error FOO2020: test error');
 
-  await runTestCommandE2E(() => testCommandBody(expectedError));
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryProcessor(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        'Unknown',
+        expectedError,
+      ),
+    );
 
-  TelemetryTest.endTest(() => {
-    // Check if any errors were thrown
-    expect(caughtErrors).toHaveLength(0);
-    done();
-  });
-});
+    await runTestCommandE2E(() => testCommandBody(expectedError));
+
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+      done();
+    });
+  },
+);
+
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with Error (no message), verify events fire %s',
+  async (options, done: any) => {
+    await TelemetryTest.startTest(options);
+
+    const expectedError = new Error();
+
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryProcessor(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        'Unknown',
+        expectedError,
+      ),
+    );
+
+    await runTestCommandE2E(() => testCommandBody(expectedError));
+
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+      done();
+    });
+  },
+);
 
 function b(s: string) {
   throw new Error('hello ' + s);
@@ -554,8 +637,13 @@ function getVerifyStackTelemetryProcessor(
         const data = (envelope.data as any).baseData;
         expect(data.exceptions).toBeDefined();
         expect(data.exceptions.length).toBe(1);
+        expect(data.exceptions[0].message).toBeDefined();
+        expect(data.exceptions[0].message).not.toBe('');
+
         expect(data.exceptions[0].message).toBe(
-          errorUtils.sanitizeErrorMessage(expectedError.message),
+          TelemetryTest.getPreserveErrorMessages()
+            ? errorUtils.sanitizeErrorMessage(expectedError.message || 'None')
+            : '[Removed]',
         );
 
         const stack = data.exceptions[0].parsedStack;
@@ -582,44 +670,54 @@ function getVerifyStackTelemetryProcessor(
   };
 }
 
-test('Telemetry run test command end to end with Error, verify sanitized message and stack', async done => {
-  const expectedError = new Error('hello world');
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with Error, verify sanitized message and stack %s',
+  async (options, done: any) => {
+    await TelemetryTest.startTest(options);
 
-  // AI eats errors thrown in telemetry processors
-  const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
-    getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
-  );
+    const expectedError = new Error('hello world');
 
-  await runTestCommandE2E(async () => {
-    await promiseDelay(100);
-    a('world');
-  });
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryProcessor(
+      getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
+    );
 
-  TelemetryTest.endTest(() => {
-    // Check if any errors were thrown
-    expect(caughtErrors).toHaveLength(0);
-    done();
-  });
-});
+    await runTestCommandE2E(async () => {
+      await promiseDelay(100);
+      a('world');
+    });
 
-test('Telemetry run test command end to end with Error, verify sanitized message with path and stack', async done => {
-  const expectedError = new Error(`hello ${process.cwd()}`);
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+      done();
+    });
+  },
+);
 
-  // AI eats errors thrown in telemetry processors
-  const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
-    getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
-  );
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with Error, verify sanitized message with path and stack %s',
+  async (options, done: any) => {
+    await TelemetryTest.startTest(options);
 
-  await runTestCommandE2E(async () => {
-    await promiseDelay(100);
-    a(process.cwd());
-  });
+    const expectedError = new Error(`hello ${process.cwd()}`);
 
-  TelemetryTest.endTest(() => {
-    // Check if any errors were thrown
-    expect(caughtErrors).toHaveLength(0);
-    done();
-  });
-});
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryProcessor(
+      getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
+    );
+
+    await runTestCommandE2E(async () => {
+      await promiseDelay(100);
+      a(process.cwd());
+    });
+
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+      done();
+    });
+  },
+);

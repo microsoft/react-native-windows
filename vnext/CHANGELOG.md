@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 Apr 2022 05:09:17 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Apr 2022 22:50:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.491
+
+Mon, 25 Apr 2022 22:50:29 GMT
+
+### Changes
+
+- Fix JSI for Node-API and update V8 to 0.65.11 (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.127
+- Bump @react-native-windows/codegen to v0.0.0-canary.31
 
 ## 0.0.0-canary.490
 
