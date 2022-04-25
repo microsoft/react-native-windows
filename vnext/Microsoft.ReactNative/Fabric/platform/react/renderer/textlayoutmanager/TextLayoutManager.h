@@ -28,7 +28,7 @@ class TextLayoutManager {
 
 #pragma region required interface from core cxx cross platform impl
   TextLayoutManager(const ContextContainer::Shared &contextContainer) : m_contextContainer(contextContainer){};
-  ~TextLayoutManager();
+  ~TextLayoutManager() = default;
 
   /*
    * Measures `attributedStringBox` using native text rendering infrastructure.
@@ -60,11 +60,17 @@ class TextLayoutManager {
    */
   void *getNativeTextLayoutManager() const;
 
+  static void GetTextLayout(
+      AttributedStringBox attributedStringBox,
+      ParagraphAttributes paragraphAttributes,
+      LayoutConstraints layoutConstraints,
+      const std::optional<TextAlignment> &textAlignment,
+      winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
+
 #pragma endregion
 
  private:
   ContextContainer::Shared m_contextContainer;
-  mutable winrt::com_ptr<IDWriteFactory> m_spDWriteFactory;
 };
 
 } // namespace react
