@@ -32,7 +32,7 @@ struct GTestFixture : ::testing::Test {
   std::unique_ptr<TestClass> m_test;
 };
 
-template <int &... ExplicitParameterBarrier, typename Factory>
+template <int &...ExplicitParameterBarrier, typename Factory>
 inline auto RegisterTest(
     const char *test_suite_name,
     const char *test_name,

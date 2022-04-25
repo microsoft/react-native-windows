@@ -416,6 +416,9 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
+    <ClCompile Include="Fabric\ComponentViewRegistry.cpp" />
+    <ClCompile Include="Fabric\DWriteHelpers.cpp" />
+    <ClCompile Include="Fabric\FabricUIManagerModule.cpp" />
     <ClCompile Include="Fabric\ImageComponentView.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />

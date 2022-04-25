@@ -342,6 +342,7 @@ class Button extends React.Component<
     if (Platform.OS === 'windows') {
       return (
         <Touchable
+          accessible={accessible}
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={accessibilityHint}
           accessibilityLanguage={accessibilityLanguage}

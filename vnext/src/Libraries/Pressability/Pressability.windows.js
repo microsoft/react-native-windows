@@ -721,6 +721,7 @@ export default class Pressability {
     }
   }
 
+  // [Windows]
   _isDefaultPressButton(button) {
     return !button; // Treat 0 or undefined as default press
   }

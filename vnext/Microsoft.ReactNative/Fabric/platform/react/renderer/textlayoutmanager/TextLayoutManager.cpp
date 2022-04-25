@@ -5,7 +5,7 @@
 
 #include "pch.h"
 
-#include <Fabric/WinComp/CompHelpers.h>
+#include <Fabric/DWriteHelpers.h>
 #include <dwrite.h>
 #include "TextLayoutManager.h"
 
@@ -32,18 +32,18 @@ void TextLayoutManager::GetTextLayout(
     style = DWRITE_FONT_STYLE_OBLIQUE;
 
   winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-  Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
+  winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
       outerFragment.textAttributes.fontFamily.empty()
           ? L"Segoe UI"
           : Microsoft::Common::Unicode::Utf8ToUtf16(outerFragment.textAttributes.fontFamily).c_str(),
-      NULL, // Font collection (NULL sets it to use the system font collection).
+      nullptr, // Font collection (nullptr sets it to use the system font collection).
       static_cast<DWRITE_FONT_WEIGHT>(outerFragment.textAttributes.fontWeight.value_or(
           static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
       style,
       DWRITE_FONT_STRETCH_NORMAL,
       outerFragment.textAttributes.fontSize,
-      L"en-us",
-      spTextFormat.put());
+      L"",
+      spTextFormat.put()));
 
   DWRITE_TEXT_ALIGNMENT alignment = DWRITE_TEXT_ALIGNMENT_LEADING;
   if (textAlignment) {
@@ -68,23 +68,22 @@ void TextLayoutManager::GetTextLayout(
         assert(false);
     }
   }
-  spTextFormat->SetTextAlignment(alignment);
+  winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
 
   auto str = Microsoft::Common::Unicode::Utf8ToUtf16(attributedStringBox.getValue().getString());
 
-  // TODO - For now assuming fragment.textAttributes.fontSizeMultiplier is the same as the pointScaleFactor
-  Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
+  winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
       str.c_str(), // The string to be laid out and formatted.
       static_cast<UINT32>(str.length()), // The length of the string.
       spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
       layoutConstraints.maximumSize.width, // The width of the layout box.
       layoutConstraints.maximumSize.height, // The height of the layout box.
       spTextLayout.put() // The IDWriteTextLayout interface pointer.
-  );
+      ));
 
   unsigned int position = 0;
   unsigned int length = 0;
-  for (auto fragment : fragments) {
+  for (const auto &fragment : fragments) {
     length = static_cast<UINT32>(fragment.string.length());
     DWRITE_TEXT_RANGE range = {position, length};
     TextAttributes attributes = fragment.textAttributes;
@@ -94,16 +93,16 @@ void TextLayoutManager::GetTextLayout(
     else if (attributes.fontStyle == facebook::react::FontStyle::Oblique)
       fragmentStyle = DWRITE_FONT_STYLE_OBLIQUE;
 
-    spTextLayout->SetFontFamilyName(
+    winrt::check_hresult(spTextLayout->SetFontFamilyName(
         attributes.fontFamily.empty() ? L"Segoe UI"
                                       : Microsoft::Common::Unicode::Utf8ToUtf16(attributes.fontFamily).c_str(),
-        range);
-    spTextLayout->SetFontWeight(
+        range));
+    winrt::check_hresult(spTextLayout->SetFontWeight(
         static_cast<DWRITE_FONT_WEIGHT>(
             attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
-        range);
-    spTextLayout->SetFontStyle(fragmentStyle, range);
-    spTextLayout->SetFontSize(attributes.fontSize, range);
+        range));
+    winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
+    winrt::check_hresult(spTextLayout->SetFontSize(attributes.fontSize, range));
 
     position += length;
   }
@@ -117,10 +116,10 @@ TextMeasurement TextLayoutManager::measure(
 
   GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints, TextAlignment::Left, spTextLayout);
 
-  TextMeasurement tm;
+  TextMeasurement tm{};
   if (spTextLayout) {
-    DWRITE_TEXT_METRICS dtm;
-    spTextLayout->GetMetrics(&dtm);
+    DWRITE_TEXT_METRICS dtm{};
+    winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
     tm.size = {dtm.width, dtm.height};
   }
   return tm;
@@ -135,8 +134,7 @@ TextMeasurement TextLayoutManager::measureCachedSpannableById(
     ParagraphAttributes const &paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
   assert(false);
-  TextMeasurement tm;
-  return tm;
+  return {};
 }
 
 LinesMeasurements TextLayoutManager::measureLines(
@@ -144,9 +142,7 @@ LinesMeasurements TextLayoutManager::measureLines(
     ParagraphAttributes paragraphAttributes,
     Size size) const {
   assert(false);
-
-  std::vector<LineMeasurement> paragraphLines{};
-  return paragraphLines;
+  return {};
 }
 
 void *TextLayoutManager::getNativeTextLayoutManager() const {

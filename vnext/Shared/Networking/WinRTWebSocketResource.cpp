@@ -79,7 +79,7 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
 
 } // namespace
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 // private
 WinRTWebSocketResource::WinRTWebSocketResource(
@@ -316,7 +316,22 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
           }
         } catch (hresult_error const &e) {
           if (self->m_errorHandler) {
-            self->m_errorHandler({Utilities::HResultToString(e), ErrorType::Receive});
+            string errorMessage;
+            ErrorType errorType;
+            // See
+            // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-19041#remarks
+            if (e.code() == WININET_E_CONNECTION_ABORTED) {
+              errorMessage = "[0x80072EFE] Underlying TCP connection suddenly terminated";
+              errorType = ErrorType::Connection;
+              self->m_errorHandler({errorMessage, errorType});
+
+              // Note: We are not clear whether all read-related errors should close the socket.
+              self->Close(CloseCode::BadPayload, std::move(errorMessage));
+            } else {
+              errorMessage = Utilities::HResultToString(e);
+              errorType = ErrorType::Receive;
+              self->m_errorHandler({errorMessage, errorType});
+            }
           }
         }
       });
@@ -408,4 +423,4 @@ void WinRTWebSocketResource::SetOnError(function<void(Error &&)> &&handler) noex
 
 #pragma endregion IWebSocketResource
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

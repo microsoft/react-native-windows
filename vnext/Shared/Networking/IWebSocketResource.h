@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 /// <summary>
 /// Defines the core functionality for a native WebSocket client resource.
@@ -71,7 +71,7 @@ struct IWebSocketResource {
 
   struct Error {
     std::string Message;
-    const ErrorType Type;
+    ErrorType Type;
   };
 
 #pragma endregion Inner types
@@ -181,4 +181,4 @@ struct IWebSocketResource {
   virtual void SetOnError(std::function<void(Error &&)> &&handler) noexcept = 0;
 };
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

@@ -258,7 +258,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       compositionBrush->TintColor(strong_this->m_tintColor);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
-                                      : uri ? winrt::LoadedImageSurface::StartLoadFromUri(uri) : nullptr;
+          : uri                       ? winrt::LoadedImageSurface::StartLoadFromUri(uri)
+                                      : nullptr;
 
       m_sizeChangedRevoker = strong_this->SizeChanged(
           winrt::auto_revoke, [compositionBrush](const auto &, const winrt::SizeChangedEventArgs &args) {

@@ -94,14 +94,14 @@ export async function promptForOverrideDetails(): Promise<OverridePromptAnswers>
       ],
     },
     {
-      when: (res) => res.type === 'derived',
+      when: res => res.type === 'derived',
       type: 'confirm',
       name: 'codeCopied',
       default: true,
       message: 'Does the derived file copy code from upstream?',
     },
     {
-      when: (res) =>
+      when: res =>
         (res.type === 'derived' && res.codeCopied) ||
         ['copy', 'directoryCopy', 'patch'].includes(res.type),
       type: 'input',
@@ -112,13 +112,13 @@ export async function promptForOverrideDetails(): Promise<OverridePromptAnswers>
       message: 'Issue number tracking removal:',
     },
     {
-      when: (res) => ['copy', 'patch', 'derived'].includes(res.type),
+      when: res => ['copy', 'patch', 'derived'].includes(res.type),
       type: 'input',
       name: 'baseFile',
       message: 'What file is this override based off of?',
     },
     {
-      when: (res) => res.type === 'directoryCopy',
+      when: res => res.type === 'directoryCopy',
       type: 'input',
       name: 'baseDirectory',
       message: 'What directory are you copying from?',

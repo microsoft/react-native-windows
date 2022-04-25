@@ -5,10 +5,14 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #include <CppUnitTest.h>
-#include <IHttpResource.h>
+
+#include <Networking/IHttpResource.h>
+#include <Networking/OriginPolicy.h>
 #include <Test/HttpServer.h>
-#include <boost/beast/http.hpp>
 #include <unicode.h>
+
+// Boost Library
+#include <boost/beast/http.hpp>
 
 // Standard Library
 #include <future>
@@ -18,115 +22,128 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
+using Networking::IHttpResource;
+using Networking::OriginPolicy;
+using std::make_shared;
 using std::promise;
 using std::string;
 using std::vector;
+using Test::DynamicRequest;
+using Test::DynamicResponse;
+using Test::EmptyResponse;
+using Test::HttpServer;
+using Test::ResponseWrapper;
 
 TEST_CLASS (HttpResourceIntegrationTest) {
+  static uint16_t s_port;
+
+  TEST_METHOD_CLEANUP(MethodCleanup) {
+    // Bug in WebSocketServer does not correctly release TCP port between test methods.
+    // Using a different por per test for now.
+    s_port++;
+  }
   TEST_METHOD(RequestGetSucceeds) {
-    promise<void> promise;
+    string url = "http://localhost:" + std::to_string(s_port);
+
+    promise<void> resPromise;
     string error;
     int statusCode = 0;
 
-    // HTTP call scope
-    {
-      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5556));
-      server->SetOnGet([](const http::request<http::string_body> &request) -> http::response<http::dynamic_body> {
-        http::response<http::dynamic_body> response;
-        response.result(http::status::ok);
+    auto server = make_shared<HttpServer>(s_port);
+    server->Callbacks().OnGet = [&resPromise](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("some response content");
 
-        return response;
-      });
-      server->Start();
+      return {std::move(response)};
+    };
+    server->Start();
 
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&promise, &statusCode](int64_t, IHttpResource::Response response) {
-        statusCode = static_cast<int>(response.StatusCode);
-        promise.set_value();
-      });
-      resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
-        error = std::move(message);
-        promise.set_value();
-
-        server->Abort();
-      });
-      resource->SendRequest(
-          "GET",
-          "http://localhost:5556",
-          {} /*header*/,
-          {} /*bodyData*/,
-          "text",
-          false,
-          1000 /*timeout*/,
-          false /*withCredentials*/,
-          [](int64_t) {});
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&resPromise, &statusCode](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+    });
+    resource->SetOnData([&resPromise](int64_t, string &&content) { resPromise.set_value(); });
+    resource->SetOnError([&resPromise, &error, &server](int64_t, string &&message) {
+      error = std::move(message);
+      resPromise.set_value();
 
       server->Stop();
-    }
+    });
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        {} /*header*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+
     // Synchronize response.
-    promise.get_future().wait();
+    resPromise.get_future().wait();
+    server->Stop();
 
     Assert::AreEqual({}, error);
     Assert::AreEqual(200, statusCode);
   }
 
   TEST_METHOD(RequestGetHeadersSucceeds) {
-    promise<void> promise;
+    string url = "http://localhost:" + std::to_string(s_port);
+
+    promise<void> rcPromise;
     string error;
     IHttpResource::Response response;
 
-    // HTTP call scope
-    {
-      auto server = std::make_shared<Test::HttpServer>("127.0.0.1", static_cast<uint16_t>(5555));
-      server->SetOnGet([](const http::request<http::string_body> &request) -> http::response<http::dynamic_body> {
-        http::response<http::dynamic_body> response;
-        response.result(http::status::ok);
+    auto server = make_shared<HttpServer>(s_port);
+    server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
 
-        // Response header
-        response.set(http::field::server, "Microsoft::React::Test::HttpServer");
-        // Response content header
-        response.set(http::field::content_length, "0");
-        // Response arbitrary header
-        response.set("ResponseHeaderName1", "ResponseHeaderValue1");
+      // Response header
+      response.set(http::field::server, "Microsoft::React::Test::HttpServer");
+      // Response content header
+      response.set(http::field::content_length, "0");
+      // Response arbitrary header
+      response.set("ResponseHeaderName1", "ResponseHeaderValue1");
 
-        return response;
-      });
-      server->Start();
+      return {std::move(response)};
+    };
+    server->Start();
 
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&promise, &response](int64_t, IHttpResource::Response callbackResponse) {
-        response = callbackResponse;
-        promise.set_value();
-      });
-      resource->SetOnError([&promise, &error, &server](int64_t, string &&message) {
-        error = std::move(message);
-        promise.set_value();
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
+      response = callbackResponse;
+      rcPromise.set_value();
+    });
+    resource->SetOnError([&rcPromise, &error, &server](int64_t, string &&message) {
+      error = std::move(message);
+      rcPromise.set_value();
 
-        server->Abort();
-      });
+      server->Abort();
+    });
 
-      //clang-format off
-      resource->SendRequest(
-          "GET",
-          "http://localhost:5555",
-          {
-              {"Content-Type", "application/json"},
-              {"Content-Encoding", "ASCII"},
-              {"name3", "value3"},
-              {"name4", "value4"},
-          },
-          {} /*bodyData*/,
-          "text",
-          false,
-          1000 /*timeout*/,
-          false /*withCredentials*/,
-          [](int64_t) {});
-      //clang-format on
+    //clang-format off
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        {
+            {"Content-Type", "application/json"},
+            {"Content-Encoding", "ASCII"},
+            {"name3", "value3"},
+            {"name4", "value4"},
+        },
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
 
-      server->Stop();
-    }
-
-    promise.get_future().wait();
+    rcPromise.get_future().wait();
+    server->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
     for (auto header : response.Headers) {
@@ -160,4 +177,178 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Logger::WriteMessage(error.c_str());
     Assert::AreNotEqual(string{}, error);
   }
+
+  TEST_METHOD(RequestOptionsSucceeds) {
+    string url = "http://localhost:" + std::to_string(s_port);
+
+    promise<void> getResponsePromise;
+    promise<void> getDataPromise;
+    promise<void> optionsPromise;
+    string error;
+    IHttpResource::Response getResponse;
+    IHttpResource::Response optionsResponse;
+    string content;
+
+    auto server = make_shared<HttpServer>(s_port);
+    server->Callbacks().OnOptions = [](const DynamicRequest &request) -> ResponseWrapper {
+      EmptyResponse response;
+      response.result(http::status::partial_content);
+      response.set("PreflightName", "PreflightValue");
+
+      return {std::move(response)};
+    };
+    server->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Response Body");
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&getResponse, &getResponsePromise, &optionsResponse, &optionsPromise](
+                                int64_t, IHttpResource::Response callbackResponse) {
+      if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        getResponse = callbackResponse;
+        getResponsePromise.set_value();
+      } else if (callbackResponse.StatusCode == static_cast<int64_t>(http::status::partial_content)) {
+        optionsResponse = callbackResponse;
+        optionsPromise.set_value();
+      }
+    });
+    resource->SetOnData([&getDataPromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
+
+      if (!content.empty())
+        getDataPromise.set_value();
+    });
+    resource->SetOnError(
+        [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string &&message) {
+          error = std::move(message);
+
+          optionsPromise.set_value();
+          getResponsePromise.set_value();
+          getDataPromise.set_value();
+
+          server->Stop();
+        });
+
+    //clang-format off
+    resource->SendRequest(
+        "OPTIONS",
+        string{url},
+        {} /*headers*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        {} /*headers*/,
+        {} /*bodyData*/,
+        "text",
+        false,
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    optionsPromise.get_future().wait();
+    getResponsePromise.get_future().wait();
+    getDataPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<size_t>(1), optionsResponse.Headers.size());
+    for (auto header : optionsResponse.Headers) {
+      if (header.first == "PreflightName") {
+        Assert::AreEqual({"PreflightValue"}, header.second, L"Wrong header");
+      } else {
+        string message = "Unexpected header: [" + header.first + "]=[" + header.second + "]";
+        Assert::Fail(Microsoft::Common::Unicode::Utf8ToUtf16(message).c_str());
+      }
+    }
+    Assert::AreEqual({"Response Body"}, content);
+  }
+
+  TEST_METHOD(SimpleRedirectSucceeds) {
+    auto port1 = s_port;
+    auto port2 = ++s_port;
+    string url = "http://localhost:" + std::to_string(port1);
+
+    promise<void> getResponsePromise;
+    promise<void> getContentPromise;
+    IHttpResource::Response getResponse;
+    string content;
+    string error;
+
+    auto server1 = make_shared<HttpServer>(port1);
+    server1->Callbacks().OnGet = [port2](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::moved_permanently);
+      response.set(http::field::location, {"http://localhost:" + std::to_string(port2)});
+
+      return {std::move(response)};
+    };
+    auto server2 = make_shared<HttpServer>(port2);
+    server2->Callbacks().OnGet = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Redirect Content");
+
+      return {std::move(response)};
+    };
+
+    server1->Start();
+    server2->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&getResponse, &getResponsePromise](int64_t, IHttpResource::Response response) {
+      if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        getResponse = response;
+        getResponsePromise.set_value();
+      }
+    });
+    resource->SetOnData([&getContentPromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
+
+      if (!content.empty())
+        getContentPromise.set_value();
+    });
+    resource->SetOnError([&getResponsePromise, &getContentPromise, &error, &server1](int64_t, string &&message) {
+      error = std::move(message);
+
+      getResponsePromise.set_value();
+      getContentPromise.set_value();
+    });
+
+    //clang-format off
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        {} /*headers*/,
+        {} /*bodyData*/,
+        "text",
+        false, /*useIncrementalUpdates*/
+        1000 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    getResponsePromise.get_future().wait();
+    getContentPromise.get_future().wait();
+
+    server2->Stop();
+    server1->Stop();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), getResponse.StatusCode);
+    Assert::AreEqual({"Redirect Content"}, content);
+  }
 };
+
+/*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;

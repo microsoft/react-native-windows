@@ -54,4 +54,9 @@ inline Application TryGetCurrentApplication() noexcept {
   }
 }
 
+// Using Windows::UI::ColorHelper causes the process to load Windows.UI.Xaml.dll which is not needed just to fill a
+// Color struct
+inline winrt::Windows::UI::Color FromArgb(uint8_t a, uint8_t r, uint8_t g, uint8_t b) {
+  return winrt::Windows::UI::Color{a, r, g, b};
+}
 } // namespace XAML_CPPWINRT_NAMESPACE

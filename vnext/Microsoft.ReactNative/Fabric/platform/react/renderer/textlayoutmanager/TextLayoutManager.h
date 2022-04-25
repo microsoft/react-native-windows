@@ -28,7 +28,7 @@ class TextLayoutManager {
 
 #pragma region required interface from core cxx cross platform impl
   TextLayoutManager(const ContextContainer::Shared &contextContainer) : m_contextContainer(contextContainer){};
-  ~TextLayoutManager(){};
+  ~TextLayoutManager() = default;
 
   /*
    * Measures `attributedStringBox` using native text rendering infrastructure.

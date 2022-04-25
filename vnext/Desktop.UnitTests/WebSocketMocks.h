@@ -1,9 +1,9 @@
 #pragma once
 
-#include <IWebSocketResource.h>
+#include <Networking/IWebSocketResource.h>
 
 namespace Microsoft::React::Test {
-struct MockWebSocketResource : public IWebSocketResource {
+struct MockWebSocketResource : public Networking::IWebSocketResource {
   ~MockWebSocketResource();
 
   struct Mocks {

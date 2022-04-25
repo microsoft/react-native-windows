@@ -37,11 +37,11 @@
 #endif
 
 #include <BatchingMessageQueueThread.h>
+#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
-#include <RuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
@@ -254,7 +254,7 @@ InstanceImpl::InstanceImpl(
 #endif
 
   if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+    m_devManager->EnsureHermesInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
   // Default (common) NativeModules
@@ -532,8 +532,8 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
 }
 
 InstanceImpl::~InstanceImpl() {
-  if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->StopInspector();
+  if (shouldStartHermesInspector(*m_devSettings) && m_devSettings->jsiRuntimeHolder) {
+    m_devSettings->jsiRuntimeHolder->teardown();
   }
   m_nativeQueue->quitSynchronous();
 }

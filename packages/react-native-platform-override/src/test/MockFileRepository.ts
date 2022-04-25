@@ -35,7 +35,7 @@ export default class MockFileRepository implements FileRepository {
     this.normalize =
       opts && opts.rawPaths ? (file: string) => file : normalizePath;
 
-    this.files = files.map((file) => ({
+    this.files = files.map(file => ({
       ...file,
       filename: this.normalize(file.filename),
     }));
@@ -44,28 +44,26 @@ export default class MockFileRepository implements FileRepository {
   }
 
   async listFiles(globs: string[] = ['**']): Promise<string[]> {
-    const parsedGlobs = globs.map(
-      (g) => new minimatch.Minimatch(g, {dot: true}),
-    );
-    const includeGlobs = parsedGlobs.filter((m) => !m.negate);
-    const excludeGlobs = parsedGlobs.filter((m) => m.negate);
+    const parsedGlobs = globs.map(g => new minimatch.Minimatch(g, {dot: true}));
+    const includeGlobs = parsedGlobs.filter(m => !m.negate);
+    const excludeGlobs = parsedGlobs.filter(m => m.negate);
 
     return this.files
-      .map((file) => file.filename)
-      .filter((file) => includeGlobs.some((g) => g.match(unixPath(file))))
-      .filter((file) => excludeGlobs.every((g) => g.match(unixPath(file))));
+      .map(file => file.filename)
+      .filter(file => includeGlobs.some(g => g.match(unixPath(file))))
+      .filter(file => excludeGlobs.every(g => g.match(unixPath(file))));
   }
 
   async readFile(filename: string): Promise<Buffer | null> {
     const normalizedName = this.normalize(filename);
-    const file = this.files.find((f) => f.filename === normalizedName);
+    const file = this.files.find(f => f.filename === normalizedName);
     return file ? Buffer.from(file.content) : null;
   }
 
   async stat(filename: string): Promise<'file' | 'directory' | 'none'> {
     const normalizedName = this.normalize(filename);
 
-    if (this.emptyDirectories.find((dir) => dir === normalizedName)) {
+    if (this.emptyDirectories.find(dir => dir === normalizedName)) {
       return 'directory';
     }
 
@@ -95,7 +93,7 @@ export class MockWritableFileRepository
   implements WritableFileRepository
 {
   async writeFile(filename: string, content: Buffer) {
-    const matchFile = this.files.find((file) => file.filename === filename);
+    const matchFile = this.files.find(file => file.filename === filename);
     if (matchFile) {
       matchFile.content = content;
     } else {
@@ -104,7 +102,7 @@ export class MockWritableFileRepository
   }
 
   async deleteFile(filename: string): Promise<void> {
-    const matchIdx = this.files.findIndex((file) => file.filename === filename);
+    const matchIdx = this.files.findIndex(file => file.filename === filename);
 
     if (matchIdx === -1) {
       const err = new Error(`Mock file ${filename} not found`);
