@@ -160,12 +160,27 @@ export default class MSBuildTools {
       );
     } catch (e) {
       let error = e;
-      if (!e) {
-        const firstMessage = (await fs.readFile(errorLog))
-          .toString()
-          .split(EOL)[0];
-        error = new CodedError('MSBuildError', firstMessage);
-        (error as any).logfile = errorLog;
+      if (e instanceof CodedError) {
+        const origCodedError = e as CodedError;
+        if (origCodedError.type === 'MSBuildError') {
+          // Try to parse msbuild errors from errorLog
+          const errorLogContents = (await fs.readFile(errorLog))
+            .toString()
+            .split(EOL)
+            .filter((s) => s)
+            .map((s) => s.trim());
+          if (errorLogContents.length > 0) {
+            const firstMessage = errorLogContents[0];
+            error = new CodedError(
+              'MSBuildError',
+              firstMessage,
+              origCodedError.data,
+            );
+            // Hide error messages in a field that won't automatically get reported
+            // with telemetry but is still available to be parsed and sanitized
+            (error as any).msBuildErrorMessages = errorLogContents;
+          }
+        }
       }
       throw error;
     }
