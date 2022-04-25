@@ -348,6 +348,13 @@
     },
     {
       "type": "derived",
+      "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
+      "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
+      "baseHash": "90ef97f18a53b362992aa13bbcaca6306737f1e6",
+      "issue": 0
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/Network/RCTNetworking.win32.js",
       "baseFile": "Libraries/Network/RCTNetworking.android.js",
       "baseHash": "224de62644b93c68f7e4fd766857e8db18db8aad",
