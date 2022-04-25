@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update globby of @react-native-windows/codegen to remove glob-parent 3.x dependency",
+  "packageName": "@react-native-windows/codegen",
+  "email": "dannyvv@microsoft.com",
+  "dependentChangeType": "patch"
+}
