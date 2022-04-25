@@ -12,6 +12,7 @@ module.exports = {
     'jest/no-disabled-tests': 'off',
     'react-native/no-inline-styles': 'off',
     'no-void': 'off',
+    'no-undef': 'off'
   },
   env: {
     node: true,
@@ -54,9 +55,10 @@ module.exports = {
           'error',
           { allowConstantLoopConditions: true },
         ],
+        '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/prefer-for-of': 'error',
         '@typescript-eslint/prefer-includes': 'error',
-        '@typescript-eslint/prefer-readonly': 'error',
+        '@typescript-eslint/prefer-readonly': 'warn',
         '@typescript-eslint/prefer-string-starts-ends-with': 'error',
         '@typescript-eslint/switch-exhaustiveness-check': 'error',
         'no-restricted-syntax': [

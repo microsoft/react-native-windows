@@ -11,7 +11,9 @@
     "validate-overrides": "react-native-platform-override validate"
   },
   "dependencies": {
-    "@react-native/tester": "0.0.1"
+    "@react-native/tester": "0.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0"
   },
   "peerDependencies": {
     "@react-native-picker/picker": "2.2.0",

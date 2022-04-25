@@ -12,7 +12,7 @@ import type {BeachballOptions} from 'beachball/lib/types/BeachballOptions';
 import type {ChangeInfo} from 'beachball/lib/types/ChangeInfo';
  
 const Options: BeachballOptions = {
-  ...require("@rnw-scripts/generated-beachball-config"),
+  ...require("../../generated-beachball-config"),
    
   // Do not generate tags for monorepo packages by default, to avoid a GitHub
   // release for every package.
