@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Apr 2022 15:12:03 GMT",
+      "tag": "react-native-windows_v0.68.2",
+      "version": "0.68.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "503b52a63f99056dffbe15f5691b1d2b61e5aa09",
+            "comment": "Fix Sequential DispatchQueue deadlock on shutdown"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Apr 2022 15:08:27 GMT",
       "tag": "react-native-windows_v0.68.1",
       "version": "0.68.1",
