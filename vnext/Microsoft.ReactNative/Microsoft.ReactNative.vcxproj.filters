@@ -245,9 +245,6 @@
     <ClCompile Include="Views\TextViewManager.cpp">
       <Filter>Views</Filter>
     </ClCompile>
-    <ClCompile Include="Views\CompEventHandler.cpp">
-      <Filter>Views</Filter>
-    </ClCompile>
     <ClCompile Include="Views\TouchEventHandler.cpp">
       <Filter>Views</Filter>
     </ClCompile>
@@ -443,9 +440,10 @@
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
-    <ClCompile Include="Fabric\CompScrollViewComponentView.cpp" />
-    <ClCompile Include="Fabric\CompViewComponentView.cpp" />
-    <ClCompile Include="Fabric\CompParagraphComponentView.cpp" />
+    <ClCompile Include="Fabric\WinComp\CompScrollViewComponentView.cpp" />
+    <ClCompile Include="Fabric\WinComp\CompViewComponentView.cpp" />
+    <ClCompile Include="Fabric\WinComp\CompParagraphComponentView.cpp" />
+    <ClCompile Include="Fabric\WinComp\CompEventHandler.cpp" />
     <ClCompile Include="SchedulerSettings.cpp" />
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />

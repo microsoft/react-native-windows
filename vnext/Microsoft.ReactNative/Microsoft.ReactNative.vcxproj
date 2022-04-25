@@ -388,14 +388,6 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="CompHwndHost.h">
-      <DependentUpon>CompHwndHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="CompRootView.h">
-      <DependentUpon>CompRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="RedBox.h" />
     <ClInclude Include="ReactSupport.h" />
     <ClInclude Include="TestHook.h" />
@@ -415,11 +407,20 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
+    <ClInclude Include="Fabric\WinComp\CompHwndHost.h">
+      <DependentUpon>CompHwndHost.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Fabric\WinComp\CompRootView.h">
+      <DependentUpon>CompRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
     <ClCompile Include="Fabric\ImageComponentView.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />
     <ClCompile Include="Fabric\SwitchComponentView.cpp" />
+    <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentDescriptor.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentView.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
@@ -427,6 +428,7 @@
     <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
+    <ClCompile Include="Fabric\WinComp\CompEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
@@ -598,7 +600,6 @@
     <ClCompile Include="Views\Text\TextTransformParentVisitor.cpp" />
     <ClCompile Include="Views\Text\TextTransformVisitor.cpp" />
     <ClCompile Include="Views\Text\TextVisitor.cpp" />
-    <ClCompile Include="Views\CompEventHandler.cpp" />
     <ClCompile Include="Views\TouchEventHandler.cpp" />
     <ClCompile Include="Views\ViewControl.cpp" />
     <ClCompile Include="Views\ViewManagerBase.cpp" />
@@ -623,11 +624,11 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="CompHwndHost.cpp">
+    <ClCompile Include="Fabric\WinComp\CompHwndHost.cpp">
       <DependentUpon>CompHwndHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="CompRootView.cpp">
+    <ClCompile Include="Fabric\WinComp\CompRootView.cpp">
       <DependentUpon>CompRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>

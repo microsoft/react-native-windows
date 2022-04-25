@@ -17,7 +17,7 @@ void TextLayoutManager::GetTextLayout(
     AttributedStringBox attributedStringBox,
     ParagraphAttributes paragraphAttributes,
     LayoutConstraints layoutConstraints,
-    const butter::optional<TextAlignment> &textAlignment,
+    const std::optional<TextAlignment> &textAlignment,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
   if (attributedStringBox.getValue().isEmpty())
     return;
@@ -123,19 +123,6 @@ TextMeasurement TextLayoutManager::measure(
     spTextLayout->GetMetrics(&dtm);
     tm.size = {dtm.width, dtm.height};
   }
-  return tm;
-}
-
-/**
- * Measures an AttributedString on the platform, as identified by some
- * opaque cache ID.
- */
-TextMeasurement TextLayoutManager::measureCachedSpannableById(
-    int64_t cacheId,
-    ParagraphAttributes const &paragraphAttributes,
-    LayoutConstraints layoutConstraints) const {
-  assert(false);
-  TextMeasurement tm;
   return tm;
 }
 

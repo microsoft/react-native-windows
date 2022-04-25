@@ -177,11 +177,11 @@
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\CompHwndHost.cpp">
+    <ClCompile Include="..\Microsoft.ReactNative\Fabric\WinComp\CompHwndHost.cpp">
       <DependentUpon>..\Microsoft.ReactNative\CompHwndHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\Views\CompEventHandler.cpp" />
+    <ClCompile Include="..\Microsoft.ReactNative\Fabric\WinComp\CompEventHandler.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\CompRootView.cpp">
       <DependentUpon>..\Microsoft.ReactNative\CompRootView.idl</DependentUpon>
       <SubType>Code</SubType>

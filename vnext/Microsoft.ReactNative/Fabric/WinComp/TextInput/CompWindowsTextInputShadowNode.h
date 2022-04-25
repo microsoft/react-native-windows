@@ -78,7 +78,7 @@ class CompWindowsTextInputShadowNode final : public ConcreteViewShadowNode<
    * Cached attributed string that represents the content of the subtree started
    * from the node.
    */
-  mutable butter::optional<AttributedString> m_cachedAttributedString{};
+  mutable std::optional<AttributedString> m_cachedAttributedString{};
 };
 
 } // namespace react

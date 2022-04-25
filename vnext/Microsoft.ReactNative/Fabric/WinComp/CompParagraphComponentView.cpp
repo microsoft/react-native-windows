@@ -136,7 +136,7 @@ void CompParagraphComponentView::ensureVisual() noexcept {
 }
 
 void CompParagraphComponentView::updateTextAlignment(
-    const butter::optional<facebook::react::TextAlignment> &fbAlignment) noexcept {
+    const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept {
   m_textLayout = nullptr;
   if (!m_textLayout)
     return;
@@ -182,7 +182,7 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
 
     // TODO Figure out how to get text alignment not through m_props and only use StringBox and ParagraphAttributes instead
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
-    const butter::optional<facebook::react::TextAlignment> &textAlignment = m_props->textAttributes.alignment;
+    const std::optional<facebook::react::TextAlignment> &textAlignment = m_props->textAttributes.alignment;
 
     facebook::react::TextLayoutManager::GetTextLayout(
         m_attributedStringBox, {} /*TODO*/, contraints, textAlignment, m_textLayout);

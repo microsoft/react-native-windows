@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
-#include "CompRootView.h"
+#include <Fabric/WinComp/CompRootView.h>
 #include "CompRootView.g.cpp"
 
 #include <QuirkSettings.h>

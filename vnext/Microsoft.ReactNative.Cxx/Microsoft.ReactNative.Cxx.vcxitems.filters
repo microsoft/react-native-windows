@@ -27,7 +27,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
-    <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.cpp" />
+    <ClCompile Include="$(TurboModule_SourcePath)\..\..\bridging\LongLivedObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -150,6 +150,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h">
       <Filter>JSI</Filter>
     </ClInclude>
+    <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">
