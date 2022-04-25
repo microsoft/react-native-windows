@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Merge",
+  "packageName": "@react-native-windows/codegen",
+  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
