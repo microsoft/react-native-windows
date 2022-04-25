@@ -20,7 +20,7 @@
     "jsonrpc-lite": "^2.2.0"
   },
   "peerDependencies": {
-    "react-native-windows": "0.66.16"
+    "react-native-windows": "0.66.17"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.7",
@@ -33,7 +33,7 @@
     "prettier": "1.19.1",
     "react": "17.0.2",
     "react-native": "0.66.0",
-    "react-native-windows": "0.66.16",
+    "react-native-windows": "0.66.17",
     "typescript": "^3.8.3"
   },
   "files": [
