@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Telemetry updates to meet server-side requirements",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

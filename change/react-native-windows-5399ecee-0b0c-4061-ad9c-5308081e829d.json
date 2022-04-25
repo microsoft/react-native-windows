@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix JSI for Node-API and update V8 to 0.65.11",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

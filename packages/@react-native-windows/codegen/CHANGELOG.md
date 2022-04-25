@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Tue, 12 Apr 2022 05:10:38 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Apr 2022 22:50:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.31
+
+Mon, 25 Apr 2022 22:50:30 GMT
+
+### Changes
+
+- Update globby of @react-native-windows/codegen to remove glob-parent 3.x dependency (dannyvv@microsoft.com)
 
 ## 0.0.0-canary.30
 
