@@ -7,8 +7,8 @@
 #include "CompEventHandler.h"
 
 #ifdef USE_FABRIC
-#include <Fabric/WinComp/CompViewComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
+#include <Fabric/WinComp/CompViewComponentView.h>
 #include <react/renderer/components/view/TouchEventEmitter.h>
 #endif
 
@@ -48,8 +48,7 @@ facebook::react::SharedEventEmitter EventEmitterForComponent(
   return nullptr;
 }
 CompEventHandler::CompEventHandler(const Mso::React::IReactContext &context, bool fabric)
-    : m_context(&context),
-      m_fabric(fabric) {}
+    : m_context(&context), m_fabric(fabric) {}
 
 CompEventHandler::CompEventHandler(
     const Mso::React::IReactContext &context,
@@ -163,7 +162,8 @@ void CompEventHandler::PointerPressed(
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
-        static_cast<float>(pt.x / m_compRootView.ScaleFactor()), static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
+        static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
+        static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
     auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
@@ -176,11 +176,7 @@ void CompEventHandler::PointerPressed(
   }
 }
 
-void CompEventHandler::ButtonDown(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
   int pointerId = 1; // TODO pointerId
 
   auto touch = std::find_if(
@@ -245,11 +241,7 @@ void CompEventHandler::ButtonDown(
   }
 }
 
-void CompEventHandler::PointerUp(
-    facebook::react::SurfaceId surfaceId,
-    uint32_t msg,
-    uint64_t wParam,
-    int64_t lParam) {
+void CompEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
   POINTER_INFO pi;
   GetPointerInfo(GET_POINTERID_WPARAM(wParam), &pi);
   POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
@@ -263,7 +255,8 @@ void CompEventHandler::PointerUp(
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
-        static_cast<float>(pt.x / m_compRootView.ScaleFactor()), static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
+        static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
+        static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
     auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)

@@ -4,9 +4,9 @@
 
 #pragma once
 
+#include <Fabric/ComponentView.h>
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
-#include <Fabric/ComponentView.h>
 
 namespace Microsoft::ReactNative {
 

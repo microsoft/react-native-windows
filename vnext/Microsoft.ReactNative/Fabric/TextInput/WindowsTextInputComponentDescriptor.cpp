@@ -31,15 +31,17 @@ YGStyle::Edges PaddingFromContext(const facebook::react::ContextContainer &conte
 }
 // Windows]
 
-WindowsTextInputComponentDescriptor::WindowsTextInputComponentDescriptor(ComponentDescriptorParameters const &parameters)
+WindowsTextInputComponentDescriptor::WindowsTextInputComponentDescriptor(
+    ComponentDescriptorParameters const &parameters)
     : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters) {
   // Every single `WindowsTextInputShadowNode` will have a reference to
   // a shared `TextLayoutManager`.
   textLayoutManager_ = std::make_shared<TextLayoutManager>(contextContainer_);
 }
 
-State::Shared WindowsTextInputComponentDescriptor::createInitialState(ShadowNodeFragment const &fragment, ShadowNodeFamily::Shared const &family)
-    const {
+State::Shared WindowsTextInputComponentDescriptor::createInitialState(
+    ShadowNodeFragment const &fragment,
+    ShadowNodeFamily::Shared const &family) const {
   /*
       int surfaceId = family->getSurfaceId();
 
@@ -124,15 +126,13 @@ void WindowsTextInputComponentDescriptor::adopt(ShadowNode::Unshared const &shad
       changedPadding = true;
       result[YGEdgeStart] = theme[YGEdgeStart];
     }
-    if (!textInputShadowNode->getConcreteProps().hasPadding &&
-        !textInputShadowNode->getConcreteProps().hasPaddingEnd &&
+    if (!textInputShadowNode->getConcreteProps().hasPadding && !textInputShadowNode->getConcreteProps().hasPaddingEnd &&
         !textInputShadowNode->getConcreteProps().hasPaddingRight &&
         !textInputShadowNode->getConcreteProps().hasPaddingHorizontal) {
       changedPadding = true;
       result[YGEdgeEnd] = theme[YGEdgeEnd];
     }
-    if (!textInputShadowNode->getConcreteProps().hasPadding &&
-        !textInputShadowNode->getConcreteProps().hasPaddingTop &&
+    if (!textInputShadowNode->getConcreteProps().hasPadding && !textInputShadowNode->getConcreteProps().hasPaddingTop &&
         !textInputShadowNode->getConcreteProps().hasPaddingVertical) {
       changedPadding = true;
       result[YGEdgeTop] = theme[YGEdgeTop];
@@ -149,15 +149,14 @@ void WindowsTextInputComponentDescriptor::adopt(ShadowNode::Unshared const &shad
     // paddingLeft update, we must explicitly unset paddingStart... (same with
     // paddingEnd)
     // TODO: support RTL
-    if ((textInputShadowNode->getConcreteProps().hasPadding ||
-          textInputShadowNode->getConcreteProps().hasPaddingLeft ||
-          textInputShadowNode->getConcreteProps().hasPaddingHorizontal) &&
+    if ((textInputShadowNode->getConcreteProps().hasPadding || textInputShadowNode->getConcreteProps().hasPaddingLeft ||
+         textInputShadowNode->getConcreteProps().hasPaddingHorizontal) &&
         !textInputShadowNode->getConcreteProps().hasPaddingStart) {
       result[YGEdgeStart] = YGValueUndefined;
     }
     if ((textInputShadowNode->getConcreteProps().hasPadding ||
-          textInputShadowNode->getConcreteProps().hasPaddingRight ||
-          textInputShadowNode->getConcreteProps().hasPaddingHorizontal) &&
+         textInputShadowNode->getConcreteProps().hasPaddingRight ||
+         textInputShadowNode->getConcreteProps().hasPaddingHorizontal) &&
         !textInputShadowNode->getConcreteProps().hasPaddingEnd) {
       result[YGEdgeEnd] = YGValueUndefined;
     }

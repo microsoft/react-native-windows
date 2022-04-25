@@ -3,7 +3,6 @@
 
 #pragma once
 
-
 #include <windows.h>
 
 #ifndef M_PI

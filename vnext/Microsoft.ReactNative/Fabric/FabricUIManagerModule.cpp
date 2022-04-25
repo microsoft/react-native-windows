@@ -4,10 +4,10 @@
 #include "pch.h"
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
-#include <Fabric/WinComp/CompViewComponentView.h>
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
+#include <Fabric/WinComp/CompViewComponentView.h>
 #ifndef CORE_ABI
 #include <Fabric/ViewComponentView.h>
 #endif
@@ -17,6 +17,7 @@
 #ifndef CORE_ABI
 #include <IXamlRootView.h>
 #endif
+#include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentDescriptor.h>
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
@@ -35,7 +36,6 @@
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
-#include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentDescriptor.h>
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -71,7 +71,8 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
       // EventBeatManager *eventBeatManager,
       const winrt::Microsoft::ReactNative::ReactContext &context,
       facebook::react::RuntimeExecutor runtimeExecutor,
-      std::weak_ptr<FabricUIManager> uiManager, bool async)
+      std::weak_ptr<FabricUIManager> uiManager,
+      bool async)
       : EventBeat(ownerBox),
         m_async(async),
         m_context(context),
@@ -184,8 +185,8 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
-    providerRegistry->add(
-        facebook::react::concreteComponentDescriptorProvider<facebook::react::CompWindowsTextInputComponentDescriptor>());
+    providerRegistry->add(facebook::react::concreteComponentDescriptorProvider<
+                          facebook::react::CompWindowsTextInputComponentDescriptor>());
     return providerRegistry;
   }();
 

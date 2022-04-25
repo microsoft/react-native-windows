@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include <Fabric/WinComp/CompHelpers.h>
 #include <NativeModules.h>
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
 #include <winrt/Windows.UI.Composition.h>
-#include <Fabric/WinComp/CompHelpers.h>
 #include "ComponentViewRegistry.h"
 
 namespace facebook::react {

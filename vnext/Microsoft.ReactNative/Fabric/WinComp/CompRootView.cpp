@@ -1,16 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
-#include <Fabric/WinComp/CompRootView.h>
+
+#include "CompRootView.h"
 #include "CompRootView.g.cpp"
 
+#include <IReactInstance.h>
 #include <QuirkSettings.h>
 #include <ReactHost/MsoUtils.h>
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.UI.Core.h>
 #include "ReactNativeHost.h"
-#include <IReactInstance.h>
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
@@ -48,8 +49,9 @@ CompReactViewInstance::CompReactViewInstance(
 Mso::Future<void> CompReactViewInstance::InitRootView(
     Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
     Mso::React::ReactViewOptions &&viewOptions) noexcept {
-
-      m_uiDispatcher = reactInstance->GetReactContext().Properties().Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+  m_uiDispatcher = reactInstance->GetReactContext()
+                       .Properties()
+                       .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                        .try_as<IReactDispatcher>();
 
   return PostInUIQueue(
@@ -96,8 +98,7 @@ inline Mso::Future<void> CompReactViewInstance::PostInUIQueue(TAction &&action) 
   return promise.AsFuture();
 }
 
-CompRootView::CompRootView() noexcept {
-}
+CompRootView::CompRootView() noexcept {}
 
 ReactNative::ReactNativeHost CompRootView::ReactNativeHost() noexcept {
   return m_reactNativeHost;
@@ -578,7 +579,7 @@ Windows::Foundation::Size CompRootView::Arrange(Windows::Foundation::Size finalS
           static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
     }
   }
-  //#endif
+  // #endif
   return finalSize;
 }
 

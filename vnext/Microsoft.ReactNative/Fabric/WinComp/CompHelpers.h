@@ -19,9 +19,6 @@ namespace Microsoft::ReactNative {
 
 bool CheckForDeviceRemoved(HRESULT hr);
 
-// Can this be global?  Whats its scope?
-winrt::com_ptr<::IDWriteFactory> DWriteFactory() noexcept;
-
 struct CompContext {
   CompContext(winrt::Windows::UI::Composition::Compositor const &compositor);
 

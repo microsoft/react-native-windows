@@ -19,8 +19,8 @@
 
 #include <shcore.h>
 #include <winrt/Windows.UI.Composition.h>
-#include <winrt/Windows.Web.Http.h>
 #include <winrt/Windows.Web.Http.Headers.h>
+#include <winrt/Windows.Web.Http.h>
 #include "CompHelpers.h"
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
@@ -61,8 +61,8 @@ void CompImageComponentView::unmountChildComponentView(
   assert(false);
 }
 
-
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream> getImageStreamAsync(ReactImageSource source) {
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+getImageStreamAsync(ReactImageSource source) {
   try {
     co_await winrt::resume_background();
 
@@ -100,7 +100,6 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::In
 
   co_return nullptr;
 }
-
 
 void CompImageComponentView::beginDownloadImage() noexcept {
   ReactImageSource source;

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <Fabric/ComponentView.h>
 #include <d2d1_1.h>
 #include <dwrite.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
@@ -11,7 +12,6 @@
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompViewComponentView.h"
-#include <Fabric/ComponentView.h>
 
 namespace Microsoft::ReactNative {
 

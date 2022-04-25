@@ -416,9 +416,6 @@
       <SubType>Code</SubType>
     </ClInclude>
     <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
-    <ClCompile Include="Fabric\ComponentViewRegistry.cpp" />
-    <ClCompile Include="Fabric\DWriteHelpers.cpp" />
-    <ClCompile Include="Fabric\FabricUIManagerModule.cpp" />
     <ClCompile Include="Fabric\ImageComponentView.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />
@@ -431,7 +428,6 @@
     <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
-    <ClCompile Include="Fabric\WinComp\CompEventHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />

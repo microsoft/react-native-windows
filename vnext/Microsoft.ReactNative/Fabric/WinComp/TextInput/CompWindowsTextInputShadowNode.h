@@ -24,10 +24,10 @@ extern const char CompWindowsTextInputComponentName[];
  * `ShadowNode` for <WindowsTextInput> component.
  */
 class CompWindowsTextInputShadowNode final : public ConcreteViewShadowNode<
-                                             CompWindowsTextInputComponentName,
-                                             CompWindowsTextInputProps,
-                                             CompWindowsTextInputEventEmitter,
-                                             CompWindowsTextInputState> {
+                                                 CompWindowsTextInputComponentName,
+                                                 CompWindowsTextInputProps,
+                                                 CompWindowsTextInputEventEmitter,
+                                                 CompWindowsTextInputState> {
  public:
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();

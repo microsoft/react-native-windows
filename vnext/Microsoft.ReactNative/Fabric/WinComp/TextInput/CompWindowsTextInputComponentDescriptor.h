@@ -17,7 +17,8 @@ namespace react {
 /*
  * Descriptor for <WindowsTextInput> component.
  */
-class CompWindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<CompWindowsTextInputShadowNode> {
+class CompWindowsTextInputComponentDescriptor final
+    : public ConcreteComponentDescriptor<CompWindowsTextInputShadowNode> {
  public:
   CompWindowsTextInputComponentDescriptor(ComponentDescriptorParameters const &parameters)
       : ConcreteComponentDescriptor<CompWindowsTextInputShadowNode>(parameters) {

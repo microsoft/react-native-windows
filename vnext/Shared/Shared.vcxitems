@@ -245,12 +245,8 @@
       <ObjectFileName>$(IntDir)\codegenRnwCoreProps.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)codegen\react\components\rnwcore\ShadowNodes.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompHelpers.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompImageComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ComponentViewRegistry.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompParagraphComponentView.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompScrollViewComponentView.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompViewComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\DWriteHelpers.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\FabricUIManagerModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ImageManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ImageRequest.cpp" />
@@ -258,6 +254,12 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ReactNativeConfigProperties.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompEventHandler.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompHelpers.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompImageComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompParagraphComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompScrollViewComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompViewComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputComponentView.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputEventEmitter.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputProps.cpp" />

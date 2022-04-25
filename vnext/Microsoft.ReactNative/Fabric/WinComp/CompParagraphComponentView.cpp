@@ -165,7 +165,7 @@ void CompParagraphComponentView::updateTextAlignment(
     }
   }
   // TODO
-  //m_textFormat->SetTextAlignment(alignment);
+  // m_textFormat->SetTextAlignment(alignment);
 }
 
 void CompParagraphComponentView::updateVisualBrush() noexcept {
@@ -176,11 +176,13 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
 
   if (!m_textLayout) {
     facebook::react::LayoutConstraints contraints;
-    contraints.maximumSize.width = m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left - m_layoutMetrics.contentInsets.right;
+    contraints.maximumSize.width =
+        m_layoutMetrics.frame.size.width - m_layoutMetrics.contentInsets.left - m_layoutMetrics.contentInsets.right;
     contraints.maximumSize.height =
         m_layoutMetrics.frame.size.height - m_layoutMetrics.contentInsets.top - m_layoutMetrics.contentInsets.bottom;
 
-    // TODO Figure out how to get text alignment not through m_props and only use StringBox and ParagraphAttributes instead
+    // TODO Figure out how to get text alignment not through m_props and only use StringBox and ParagraphAttributes
+    // instead
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
     const std::optional<facebook::react::TextAlignment> &textAlignment = m_props->textAttributes.alignment;
 
@@ -311,7 +313,7 @@ void CompParagraphComponentView::DrawText() noexcept {
       if (*(paragraphProps.textAttributes.textDecorationLineType) ==
               facebook::react::TextDecorationLineType::Underline ||
           *(paragraphProps.textAttributes.textDecorationLineType) ==
-          facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+              facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
         m_textLayout->SetUnderline(true, range);
       } else {
         m_textLayout->SetUnderline(false, range);
@@ -322,8 +324,8 @@ void CompParagraphComponentView::DrawText() noexcept {
       DWRITE_TEXT_RANGE range = {0, std::numeric_limits<uint32_t>::max()};
       if (*(paragraphProps.textAttributes.textDecorationLineType) ==
               facebook::react::TextDecorationLineType::Strikethrough ||
-          *(paragraphProps.textAttributes.textDecorationLineType)
-              == facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
+          *(paragraphProps.textAttributes.textDecorationLineType) ==
+              facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
         m_textLayout->SetStrikethrough(true, range);
       } else {
         m_textLayout->SetStrikethrough(false, range);
@@ -340,7 +342,8 @@ void CompParagraphComponentView::DrawText() noexcept {
     for (auto fragment : m_attributedStringBox.getValue().getFragments()) {
       length = static_cast<UINT32>(fragment.string.length());
       DWRITE_TEXT_RANGE range = {position, length};
-      if (fragment.textAttributes.foregroundColor && (fragment.textAttributes.foregroundColor != paragraphProps.textAttributes.foregroundColor) ||
+      if (fragment.textAttributes.foregroundColor &&
+              (fragment.textAttributes.foregroundColor != paragraphProps.textAttributes.foregroundColor) ||
           !isnan(fragment.textAttributes.opacity)) {
         winrt::com_ptr<ID2D1SolidColorBrush> fragmentBrush;
         if (fragment.textAttributes.foregroundColor) {
@@ -355,7 +358,7 @@ void CompParagraphComponentView::DrawText() noexcept {
           if (*(fragment.textAttributes.textDecorationLineType) == facebook::react::TextDecorationLineType::Underline ||
               *(fragment.textAttributes.textDecorationLineType) ==
                   facebook::react::TextDecorationLineType::UnderlineStrikethrough) {
-              m_textLayout->SetUnderline(true, range);
+            m_textLayout->SetUnderline(true, range);
           } else {
             m_textLayout->SetUnderline(false, range);
           }

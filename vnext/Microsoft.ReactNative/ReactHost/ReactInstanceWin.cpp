@@ -985,12 +985,10 @@ void ReactInstanceWin::AttachMeasuredRootView(
     auto rootTag = Microsoft::ReactNative::getNextRootViewTag();
     rootView->SetTag(rootTag);
     uiManager->startSurface(rootView, rootTag, rootView->JSComponentName(), DynamicWriter::ToDynamic(initialProps));
-
   }
 #endif
 #ifndef CORE_ABI
-  if (!useFabric || m_useWebDebugger)
-  {
+  if (!useFabric || m_useWebDebugger) {
     int64_t rootTag = -1;
 
     if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {

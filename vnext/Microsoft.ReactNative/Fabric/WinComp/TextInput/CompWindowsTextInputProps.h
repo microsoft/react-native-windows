@@ -40,8 +40,10 @@ struct CompWindowsTextInputSubmitKeyEventsStruct {
   std::string code;
 };
 
-static inline void
-fromRawValue(const PropsParserContext &context, const RawValue &value, CompWindowsTextInputSubmitKeyEventsStruct &result) {
+static inline void fromRawValue(
+    const PropsParserContext &context,
+    const RawValue &value,
+    CompWindowsTextInputSubmitKeyEventsStruct &result) {
   auto map = (butter::map<std::string, RawValue>)value;
 
   auto tmp_altKey = map.find("altKey");

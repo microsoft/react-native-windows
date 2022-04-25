@@ -10,6 +10,7 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
+#include <Fabric/WinComp/TextInput/CompWindowsTextInputShadowNode.h>
 #include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
@@ -18,7 +19,6 @@
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
-#include <Fabric/WinComp/TextInput/CompWindowsTextInputShadowNode.h>
 //#include "TextInput/WindowsTextInputShadowNode.h"
 
 #ifndef CORE_ABI

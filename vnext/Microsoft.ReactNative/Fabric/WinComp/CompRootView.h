@@ -4,9 +4,9 @@
 
 #include "CompRootView.g.h"
 
+#include <winrt/Microsoft.ReactNative.h>
 #include "CompEventHandler.h"
 #include "ReactHost/React.h"
-#include <winrt/Microsoft.ReactNative.h>
 #include "Views/ICompRootView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {

@@ -142,11 +142,11 @@ winrt::Windows::UI::Composition::Compositor CompContext::Compositor() const noex
 winrt::com_ptr<ID2D1Factory1> CompContext::D2DFactory() noexcept {
   if (!m_d2dFactory) {
     // Initialize Direct2D resources.
-// #if defined(_DEBUG)
-//     D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_INFORMATION};
-// #else
+    // #if defined(_DEBUG)
+    //     D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_INFORMATION};
+    // #else
     D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_NONE};
-// #endif
+    // #endif
 
     D2D1CreateFactory(
         D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &d2d1FactoryOptions, m_d2dFactory.put_void());
@@ -158,9 +158,9 @@ winrt::com_ptr<ID3D11Device> CompContext::D3DDevice() noexcept {
   // You need it for compatibility with Direct2D.
   UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
-// #if defined(_DEBUG)
-//   creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
-// #endif
+  // #if defined(_DEBUG)
+  //   creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
+  // #endif
 
   // This array defines the set of DirectX hardware feature levels this app  supports.
   // The ordering is important and you should  preserve it.
@@ -218,15 +218,6 @@ winrt::Windows::UI::Composition::CompositionGraphicsDevice CompContext::Composit
     compositionGraphicsDeviceIface.as(m_compositionGraphicsDevice);
   }
   return m_compositionGraphicsDevice;
-}
-
-winrt::com_ptr<::IDWriteFactory> DWriteFactory() noexcept {
-  static winrt::com_ptr<::IDWriteFactory> s_dwriteFactory;
-  if (!s_dwriteFactory) {
-    winrt::check_hresult(::DWriteCreateFactory(
-        DWRITE_FACTORY_TYPE_SHARED, __uuidof(s_dwriteFactory), reinterpret_cast<::IUnknown **>(s_dwriteFactory.put())));
-  }
-  return s_dwriteFactory;
 }
 
 } // namespace Microsoft::ReactNative

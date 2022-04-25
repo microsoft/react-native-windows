@@ -754,10 +754,12 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
   }
 
   if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
-  LRESULT res;
+    LRESULT res;
     winrt::check_hresult(m_textServices->TxSendMessage(
-      (WM_USER + 328), // EM_SETDPI
-       static_cast<WPARAM>(layoutMetrics.pointScaleFactor * 96.0f), static_cast<LPARAM>(layoutMetrics.pointScaleFactor * 96.0f), &res));
+        (WM_USER + 328), // EM_SETDPI
+        static_cast<WPARAM>(layoutMetrics.pointScaleFactor * 96.0f),
+        static_cast<LPARAM>(layoutMetrics.pointScaleFactor * 96.0f),
+        &res));
   }
 
   // m_needsBorderUpdate = true;
