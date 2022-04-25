@@ -55,10 +55,9 @@ module.exports = {
           'error',
           { allowConstantLoopConditions: true },
         ],
-        '@typescript-eslint/no-unused-vars': 'warn',
         '@typescript-eslint/prefer-for-of': 'error',
         '@typescript-eslint/prefer-includes': 'error',
-        '@typescript-eslint/prefer-readonly': 'warn',
+        '@typescript-eslint/prefer-readonly': 'error',
         '@typescript-eslint/prefer-string-starts-ends-with': 'error',
         '@typescript-eslint/switch-exhaustiveness-check': 'error',
         'no-restricted-syntax': [
