@@ -2,6 +2,21 @@
   "name": "playground",
   "entries": [
     {
+      "date": "Mon, 25 Apr 2022 15:11:36 GMT",
+      "tag": "playground_v0.0.54",
+      "version": "0.0.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "playground",
+            "comment": "Bump react-native-windows to v0.67.8",
+            "commit": "b9081f7705601939b4180380b659a0f7dc911aa9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Apr 2022 15:11:22 GMT",
       "tag": "playground_v0.0.54",
       "version": "0.0.54",
