@@ -2,6 +2,21 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 25 Apr 2022 15:09:39 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Bump react-native-windows to v0.66.17",
+            "author": "vmorozov@microsoft.com",
+            "commit": "3e1da9e94cba42c622cf68baecbd57d7e8a6971d",
+            "package": "integration-test-app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Apr 2022 15:13:07 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
