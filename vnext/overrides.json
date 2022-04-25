@@ -423,6 +423,13 @@
       "file": "src/Libraries/Lists/VirtualizedList.windows.js"
     },
     {
+      "type": "derived",
+      "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
+      "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
+      "baseHash": "90ef97f18a53b362992aa13bbcaca6306737f1e6",
+      "issue": 0
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/Network/RCTNetworking.windows.js"
     },
