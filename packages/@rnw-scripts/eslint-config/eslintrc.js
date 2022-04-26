@@ -53,8 +53,7 @@ module.exports = {
         '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
         '@typescript-eslint/no-unnecessary-condition': [
           'error',
-          { allowConstantLoopConditions: true,
-            allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false },
+          { allowConstantLoopConditions: true },
         ],
         '@typescript-eslint/prefer-for-of': 'error',
         '@typescript-eslint/prefer-includes': 'error',
