@@ -5,7 +5,7 @@
  */
 
 import {execSync} from 'child_process';
-import {totalmem, cpus} from 'os';
+import {totalmem, cpus, arch, platform} from 'os';
 
 import ci from 'ci-info';
 import {randomBytes} from 'crypto';
@@ -18,6 +18,22 @@ import osLocale from 'os-locale';
  */
 export async function deviceId(): Promise<string> {
   return await machineId(false);
+}
+
+/**
+ * Gets the device architecture, like x64/arm64.
+ * @returns The device architecture.
+ */
+export function deviceArchitecture(): string {
+  return arch();
+}
+
+/**
+ * Gets the device platform, like darwin/linux/win32.
+ * @returns The device platform.
+ */
+export function devicePlatform(): string {
+  return platform();
 }
 
 /**

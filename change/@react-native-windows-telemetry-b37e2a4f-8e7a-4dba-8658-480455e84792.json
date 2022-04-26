@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.68] Telemetry updates to meet server-side requirements",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
