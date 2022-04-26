@@ -71,7 +71,7 @@ struct IWebSocketResource {
 
   struct Error {
     std::string Message;
-    const ErrorType Type;
+    ErrorType Type;
   };
 
 #pragma endregion Inner types
