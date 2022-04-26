@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 Apr 2022 05:09:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.492",
+      "version": "0.0.0-canary.492",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bfb68d26b7ffc87542d8d182b9c2891f1a0e2bdd",
+            "comment": "Fix TextInput Props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Apr 2022 22:50:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.491",
       "version": "0.0.0-canary.491",
