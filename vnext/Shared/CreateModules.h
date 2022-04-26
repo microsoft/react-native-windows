@@ -32,6 +32,10 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateAsyncStorageMod
 
 namespace Microsoft::React {
 
+extern const char *GetHttpModuleName() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept;
+
+extern const char *GetWebSocketModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
 
 } // namespace Microsoft::React

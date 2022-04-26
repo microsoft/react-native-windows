@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Handle abrupt WebSocket connection interruption (#9829)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
