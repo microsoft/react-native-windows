@@ -18,7 +18,6 @@ namespace comp = winrt::Windows::UI::Composition;
 namespace ui = winrt::Windows::UI;
 namespace winrt {
 namespace dispatching = winrt::Windows::System;
-using ColorHelper = winrt::Windows::UI::ColorHelper;
 using Colors = winrt::Windows::UI::Colors;
 } // namespace winrt
 #else
@@ -32,7 +31,6 @@ namespace comp = winrt::Microsoft::UI::Composition;
 namespace ui = winrt::Microsoft::UI;
 namespace winrt {
 namespace dispatching = winrt::Microsoft::UI::Dispatching;
-using ColorHelper = winrt::Microsoft::UI::ColorHelper;
 using Colors = winrt::Microsoft::UI::Colors;
 } // namespace winrt
 

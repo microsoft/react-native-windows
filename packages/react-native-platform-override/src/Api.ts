@@ -151,8 +151,8 @@ export async function upgradeOverrides(
   );
 
   const outOfDateOverrides = validationErrors
-    .filter((err) => err.type === 'outOfDate')
-    .map((err) => ctx.manifest.findOverride(err.overrideName)!);
+    .filter(err => err.type === 'outOfDate')
+    .map(err => ctx.manifest.findOverride(err.overrideName)!);
 
   // Perform upgrades concurrently so we can take advantage of
   // GitReactFileRepository optimizations when multiple requests are queued at
@@ -161,7 +161,7 @@ export async function upgradeOverrides(
   const upgradeResults = await mapLimit<Override, UpgradeResult>(
     outOfDateOverrides,
     MAX_CONCURRENT_TASKS,
-    async (override) => {
+    async override => {
       const upgradeResult = await override
         .upgradeStrategy()
         .upgrade(
@@ -185,17 +185,15 @@ export async function upgradeOverrides(
   const upToDateOverrides = [
     ..._.difference(
       ctx.manifest.listOverrides(),
-      validationErrors.map(
-        (err) => ctx.manifest.findOverride(err.overrideName)!,
-      ),
-    ).map((ovr) => ovr.name()),
+      validationErrors.map(err => ctx.manifest.findOverride(err.overrideName)!),
+    ).map(ovr => ovr.name()),
 
     ...upgradeResults
-      .filter((res) => res.filesWritten)
-      .map((res) => res.overrideName),
+      .filter(res => res.filesWritten)
+      .map(res => res.overrideName),
   ];
 
-  await eachLimit(upToDateOverrides, MAX_CONCURRENT_TASKS, async (name) => {
+  await eachLimit(upToDateOverrides, MAX_CONCURRENT_TASKS, async name => {
     await ctx.manifest.markUpToDate(name, ctx.overrideFactory);
   });
 

@@ -3,7 +3,7 @@
 
 // clang-format off
 #include <CppUnitTest.h>
-#include <IWebSocketResource.h>
+#include <Networking/IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
 
 // Standard Library
@@ -18,14 +18,17 @@ using std::promise;
 using std::string;
 using std::vector;
 
+using Networking::IWebSocketResource;
 using CloseCode = IWebSocketResource::CloseCode;
 using Error = IWebSocketResource::Error;
 
 TEST_CLASS (WebSocketIntegrationTest)
 {
+  static uint16_t s_port;
+
   void SendReceiveCloseBase(bool isSecure)
   {
-    auto server = make_shared<Test::WebSocketServer>(5556, isSecure);
+    auto server = make_shared<Test::WebSocketServer>(s_port, isSecure);
     server->SetMessageFactory([](string&& message)
     {
       return message + "_response";
@@ -61,7 +64,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     server->Start();
     string sent = "prefix";
     auto expectedSize = sent.size();
-    ws->Connect(scheme + "://localhost:5556/");
+    ws->Connect(scheme + "://localhost:" + std::to_string(s_port));
     ws->Send(std::move(sent));
 
     // Block until response is received. Fail in case of a remote endpoint failure.
@@ -82,9 +85,16 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual({"prefix_response"}, received);
   }
 
+  TEST_METHOD_CLEANUP(MethodCleanup)
+  {
+    // Bug in WebSocketServer does not correctly release TCP port between test methods.
+    // Using a different por per test for now.
+    s_port++;
+  }
+
   TEST_METHOD(ConnectClose)
   {
-    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto server = make_shared<Test::WebSocketServer>(s_port);
     auto ws = IWebSocketResource::Make();
     Assert::IsFalse(nullptr == ws);
     bool connected = false;
@@ -105,7 +115,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
 
     server->Start();
-    ws->Connect("ws://localhost:5556/");
+    ws->Connect("ws://localhost:" + std::to_string(s_port));
     ws->Close(CloseCode::Normal, "Closing");
     server->Stop();
 
@@ -119,7 +129,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     bool connected = false;
     bool closed = false;
     string errorMessage;
-    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto server = make_shared<Test::WebSocketServer>(s_port);
     server->Start();
 
     // IWebSocketResource scope. Ensures object is closed implicitly by destructor.
@@ -138,7 +148,7 @@ TEST_CLASS (WebSocketIntegrationTest)
         errorMessage = error.Message;
       });
 
-      ws->Connect("ws://localhost:5556");
+      ws->Connect("ws://localhost:" + std::to_string(s_port));
       ws->Close();//TODO: Either remove or rename test.
     }
 
@@ -153,7 +163,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(PingClose)
   {
-    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto server = make_shared<Test::WebSocketServer>(s_port);
     server->Start();
 
     auto ws = IWebSocketResource::Make();
@@ -168,7 +178,7 @@ TEST_CLASS (WebSocketIntegrationTest)
       errorString = err.Message;
     });
 
-    ws->Connect("ws://localhost:5556");
+    ws->Connect("ws://localhost:" + std::to_string(s_port));
     ws->Ping();
     auto pingFuture = pingPromise.get_future();
     pingFuture.wait();
@@ -187,7 +197,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   }
 
   TEST_METHOD(SendReceiveLargeMessage) {
-    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto server = make_shared<Test::WebSocketServer>(s_port);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
     auto ws = IWebSocketResource::Make();
     promise<string> response;
@@ -196,7 +206,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->SetOnError([&errorMessage](Error err) { errorMessage = err.Message; });
 
     server->Start();
-    ws->Connect("ws://localhost:5556");
+    ws->Connect("ws://localhost:" + std::to_string(s_port));
 
     char digits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 #define LEN 4096 + 4096 * 2 + 1
@@ -241,7 +251,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(AdditionalHeaders) {
     string cookie;
-    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto server = make_shared<Test::WebSocketServer>(s_port);
     server->SetOnHandshake([server](boost::beast::websocket::response_type &response) {
       auto cookie = response[boost::beast::http::field::cookie].to_string();
       server->SetMessageFactory([cookie](string &&) { return cookie; });
@@ -251,7 +261,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     ws->SetOnMessage([&response](size_t size, const string &message, bool isBinary) { response.set_value(message); });
 
     server->Start();
-    ws->Connect("ws://localhost:5556/", {}, {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}});
+    ws->Connect("ws://localhost:" + std::to_string(s_port), {}, {{L"Cookie", "JSESSIONID=AD9A320CC4034641997FF903F1D10906"}});
     ws->Send("");
 
     auto future = response.get_future();
@@ -275,7 +285,7 @@ TEST_CLASS (WebSocketIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendBinary) {
 
-    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto server = make_shared<Test::WebSocketServer>(s_port);
 
     // The result should be the message "grown" by one element which value is the result's size.
     server->SetMessageFactory([](vector<uint8_t>&& message)
@@ -307,7 +317,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
 
     server->Start();
-    ws->Connect("ws://localhost:5556");
+    ws->Connect("ws://localhost:" + std::to_string(s_port));
 
     // Send all but the last message.
     // Compare result with the next message in the sequence.
@@ -331,7 +341,7 @@ TEST_CLASS (WebSocketIntegrationTest)
 
   TEST_METHOD(SendConsecutive)
   {
-    auto server = make_shared<Test::WebSocketServer>(5556);
+    auto server = make_shared<Test::WebSocketServer>(s_port);
     server->SetMessageFactory([](string&& message)
     {
       return message;
@@ -356,7 +366,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     });
 
     server->Start();
-    ws->Connect("ws://localhost:5556");
+    ws->Connect("ws://localhost:" + std::to_string(s_port));
 
     // Consecutive immediate writes should be enqueued.
     // The WebSocket library (WinRT or Beast) can't handle multiple write operations
@@ -375,4 +385,35 @@ TEST_CLASS (WebSocketIntegrationTest)
     Assert::AreEqual({}, errorMessage);
     Assert::AreEqual(expected, result);
   }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(AbruptDisconnectFailsWithSpecificMessage)
+  TEST_IGNORE() //TODO: Find a way to emulate abrupt disconnection using Test::WebSocketServer
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(AbruptDisconnectFailsWithSpecificMessage)
+  {
+    promise<void> closedPromise;
+    auto ws = IWebSocketResource::Make();
+    IWebSocketResource::Error error{{}, IWebSocketResource::ErrorType::None};
+    CloseCode closeCode;
+    ws->SetOnClose([&closedPromise, &closeCode](CloseCode code, const string& reason)
+    {
+      closeCode = code;
+      closedPromise.set_value();
+    });
+    ws->SetOnError([&closedPromise, &error](IWebSocketResource::Error&& wsError)
+    {
+      error = std::move(wsError);
+    });
+
+    ws->Connect("ws://localhost:5555");
+
+    closedPromise.get_future().wait();
+
+    //NOTE: This message is implementation-specific (WinRTWebSocketResource)
+    Assert::AreEqual({"[0x80072EFE] Underlying TCP connection suddenly terminated"}, error.Message);
+    Assert::AreEqual(static_cast<size_t>(IWebSocketResource::ErrorType::Connection), static_cast<size_t>(error.Type));
+    Assert::AreEqual(static_cast<size_t>(CloseCode::BadPayload), static_cast<size_t>(closeCode));
+  }
 };
+
+uint16_t WebSocketIntegrationTest::s_port = 6666;

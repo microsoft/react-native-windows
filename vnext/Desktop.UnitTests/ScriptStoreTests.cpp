@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 #include <BaseScriptStoreImpl.h>
+#include <CppRuntimeOptions.h>
 #include <CppUnitTest.h>
-#include <RuntimeOptions.h>
 
 // Windows API
 #include <Windows.h>

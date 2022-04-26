@@ -1,8 +1,113 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Tue, 05 Apr 2022 05:10:13 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Apr 2022 05:09:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.104
+
+Tue, 26 Apr 2022 05:09:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.66
+
+## 0.0.103
+
+Mon, 25 Apr 2022 22:50:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.65
+
+## 0.0.102
+
+Fri, 22 Apr 2022 05:09:17 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.64
+
+## 0.0.101
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.63
+
+## 0.0.100
+
+Tue, 19 Apr 2022 05:08:59 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.62
+
+## 0.0.99
+
+Fri, 15 Apr 2022 05:09:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.61
+
+## 0.0.98
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.60
+
+## 0.0.97
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.59
+
+## 0.0.96
+
+Tue, 12 Apr 2022 05:10:37 GMT
+
+### Patches
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.1.58
+
+## 0.0.95
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.57
+
+## 0.0.94
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.56
+
+## 0.0.93
+
+Thu, 07 Apr 2022 05:09:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.55
+
+## 0.0.92
+
+Wed, 06 Apr 2022 05:09:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.54
 
 ## 0.0.91
 

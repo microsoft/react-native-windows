@@ -181,7 +181,7 @@ async function updatePackageBeachballConfig(
  * Finds packages where we need to update version number + beachball config
  */
 async function enumeratePackagesToPromote(): Promise<WritableNpmPackage[]> {
-  return enumerateRepoPackages(async (pkg) => pkg.json.promoteRelease === true);
+  return enumerateRepoPackages(async pkg => pkg.json.promoteRelease === true);
 }
 
 /**
@@ -204,7 +204,7 @@ function distTag(release: ReleaseType, version: string): string {
  */
 async function updatePackageVersions(version: string) {
   const packagesToPromote = await enumeratePackagesToPromote();
-  const promotedPackages = packagesToPromote.map((p) => p.json.name);
+  const promotedPackages = packagesToPromote.map(p => p.json.name);
 
   for (const pkg of packagesToPromote) {
     await pkg.mergeProps({version});
@@ -241,7 +241,7 @@ async function updatePackageVersions(version: string) {
  */
 async function markMainBranchPackagesPrivate() {
   const mainBranchPublishedPackages = await enumerateRepoPackages(
-    async (pkg) => !pkg.json.promoteRelease && !pkg.json.private,
+    async pkg => !pkg.json.promoteRelease && !pkg.json.private,
   );
 
   for (const pkg of mainBranchPublishedPackages) {

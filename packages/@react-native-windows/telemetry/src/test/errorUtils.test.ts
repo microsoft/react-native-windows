@@ -193,6 +193,18 @@ test('sanitizeErrorMessage() with cpu/thread id', () => {
   );
 });
 
+test('sanitizeErrorMessage() with standard MSBuild error', () => {
+  expect(
+    errorUtils.sanitizeErrorMessage(
+      `2:6>C:\\Program Files (x86)\\Windows Kits\\10\\bin\\10.0.19041.0\\XamlCompiler\\Microsoft.Windows.UI.Xaml.Common.targets(486,5): error MSB4181: The "CompileXaml" task returned false but did not log an error. [${process.cwd()}\\windows\\teltest68\\teltest68.csproj]`,
+    ),
+  ).toEqual(
+    `[path](486,5): error MSB4181: The CompileXaml task returned false but did not log an error. [windows]\\???.csproj(${
+      'teltest68\\teltest68.csproj'.length
+    })`,
+  );
+});
+
 test('sanitizeErrorStackFrame() with empty frame', () => {
   const emptyFrame: appInsights.Contracts.StackFrame = {
     level: 0,

@@ -178,7 +178,7 @@ class FunctorRef<TResult(TArgs...)>
     FunctorRefWrapper &operator=(FunctorRefWrapper const &) = delete;
     ~FunctorRefWrapper() = delete;
 
-    TResult Invoke(TArgs &&... args) const noexcept override {
+    TResult Invoke(TArgs &&...args) const noexcept override {
       // If you see OACR warning "Nothrow Func Throws" here then it means that the
       // provided lambda or function object's operator() are not marked as noexcept.
 
@@ -269,7 +269,7 @@ class FunctorRefThrow<TResult(TArgs...)> final {
     FunctorRefThrowWrapper &operator=(FunctorRefThrowWrapper const &) = delete;
     ~FunctorRefThrowWrapper() = delete;
 
-    TResult Invoke(TArgs &&... args) const override {
+    TResult Invoke(TArgs &&...args) const override {
       OACR_POSSIBLE_THROW;
       // We use const_cast to enable support for mutable lambdas
       return (*const_cast<FunctorRefThrowWrapper *>(this)->m_func)(std::forward<TArgs>(args)...);

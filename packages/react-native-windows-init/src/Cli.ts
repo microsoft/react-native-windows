@@ -229,7 +229,7 @@ async function getLatestMatchingVersion(
     );
     if (versions.length > 0) {
       const candidates = versions
-        .filter((v) => semver.satisfies(v, versionSemVer))
+        .filter(v => semver.satisfies(v, versionSemVer))
         .sort(semver.rcompare);
       if (candidates.length > 0) {
         return candidates[0];

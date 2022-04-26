@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/integrate-rn",
-  "version": "1.1.9",
+  "version": "1.1.11",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -19,13 +19,13 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.30",
-    "@react-native-windows/fs": "^0.0.0-canary.1",
-    "@react-native-windows/package-utils": "^0.0.0-canary.27",
-    "async": "^3.2.0",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.31",
+    "@react-native-windows/fs": "^0.0.0-canary.2",
+    "@react-native-windows/package-utils": "^0.0.0-canary.28",
+    "async": "^3.2.3",
     "lodash": "^4.17.15",
     "ora": "^3.4.0",
-    "react-native-platform-override": "^1.6.8",
+    "react-native-platform-override": "^1.6.10",
     "semver": "^7.3.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

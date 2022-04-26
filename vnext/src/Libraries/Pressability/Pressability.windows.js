@@ -282,20 +282,20 @@ const Transitions = Object.freeze({
   },
 });
 
-const isActiveSignal = (signal) =>
+const isActiveSignal = signal =>
   signal === 'RESPONDER_ACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
 
-const isActivationSignal = (signal) =>
+const isActivationSignal = signal =>
   signal === 'RESPONDER_ACTIVE_PRESS_OUT' ||
   signal === 'RESPONDER_ACTIVE_PRESS_IN';
 
-const isPressInSignal = (signal) =>
+const isPressInSignal = signal =>
   signal === 'RESPONDER_INACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
 
-const isTerminalSignal = (signal) =>
+const isTerminalSignal = signal =>
   signal === 'RESPONDER_TERMINATED' || signal === 'RESPONDER_RELEASE';
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 500;
@@ -721,6 +721,11 @@ export default class Pressability {
     }
   }
 
+  // [Windows]
+  _isDefaultPressButton(button) {
+    return !button; // Treat 0 or undefined as default press
+  }
+
   /**
    * Performs a transition between touchable states and identify any activations
    * or deactivations (and callback invocations).
@@ -771,7 +776,10 @@ export default class Pressability {
       }
       const {onLongPress, onPress, android_disableSound} = this._config;
 
-      if (onPress != null && getTouchFromPressEvent(event).button === 0) {
+      if (
+        onPress != null &&
+        this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+      ) {
         const isPressCanceledByLongPress =
           onLongPress != null &&
           prevState === 'RESPONDER_ACTIVE_LONG_PRESS_IN' &&
@@ -800,7 +808,10 @@ export default class Pressability {
 
   _deactivate(event: PressEvent): void {
     const {onPressOut} = this._config;
-    if (onPressOut != null && getTouchFromPressEvent(event).button === 0) {
+    if (
+      onPressOut != null &&
+      this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+    ) {
       const minPressDuration = normalizeDelay(
         this._config.minPressDuration,
         0,

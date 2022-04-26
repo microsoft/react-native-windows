@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/beachball-config",
   "entries": [
     {
+      "date": "Tue, 12 Apr 2022 05:10:39 GMT",
+      "tag": "@rnw-scripts/beachball-config_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/beachball-config",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.28",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Apr 2022 05:09:58 GMT",
       "tag": "@rnw-scripts/beachball-config_v0.0.0",
       "version": "0.0.0",

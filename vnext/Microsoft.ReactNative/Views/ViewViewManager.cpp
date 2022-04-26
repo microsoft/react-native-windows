@@ -7,6 +7,7 @@
 
 #include "ViewControl.h"
 
+#include <UI.Xaml.Automation.Peers.h>
 #include "DynamicAutomationProperties.h"
 
 #include <JSValueWriter.h>
@@ -125,6 +126,14 @@ class ViewShadowNode : public ShadowNodeBase {
 
     if (IsControl())
       GetControl().IsTabStop(m_isFocusable);
+  }
+
+  bool IsAccessible() const {
+    return m_isAccessible;
+  }
+
+  void IsAccessible(bool isAccessible) {
+    m_isAccessible = isAccessible;
   }
 
   bool IsHitTestBrushRequired() const {
@@ -251,6 +260,7 @@ class ViewShadowNode : public ShadowNodeBase {
   bool m_enableFocusRing = true;
   bool m_onClick = false;
   bool m_isFocusable = false;
+  bool m_isAccessible = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 
   xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
@@ -420,6 +430,11 @@ bool ViewViewManager::UpdateProperty(
         pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
     } else {
+      if (propertyName == "accessible") {
+        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+          pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
+        }
+      }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
@@ -563,6 +578,12 @@ void ViewViewManager::TryUpdateView(
 
   if (useControl)
     pViewShadowNode->GetControl().Content(visualRoot);
+
+  if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
+    pViewShadowNode->GetControl().IsTabStop(false);
+    xaml::Automation::AutomationProperties::SetAccessibilityView(
+        pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
+  }
 }
 
 void ViewViewManager::SetLayoutProps(
