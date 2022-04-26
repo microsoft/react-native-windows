@@ -101,7 +101,6 @@ type ExtraMethods = {
    */
   readJsonFile: <T = Record<string, unknown>>(
     path: fs.PathLike | number,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     options?: {encoding?: null | BufferEncoding; flag?: string | undefined},
   ) => Promise<T>;
 };
