@@ -22,6 +22,7 @@
     "find-up": "^4.1.0"
   },
   "devDependencies": {
+    "@rnw-scripts/generated-beachball-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.1.11",
     "@rnw-scripts/just-task": "2.2.3",
     "@rnw-scripts/ts-config": "2.0.2",
