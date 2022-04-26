@@ -30,8 +30,6 @@ export class TelemetryTest extends Telemetry {
     TelemetryTest.hasTestTelemetryProviders = false;
     TelemetryTest.testTelemetryProvidersRan = false;
 
-    jest.setTimeout(10000); // These E2E tests can run longer than the default 5000ms
-
     if (TelemetryTest.isEnabled()) {
       Telemetry.reset();
     }
