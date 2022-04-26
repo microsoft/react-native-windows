@@ -15,6 +15,8 @@
     "@react-native-picker/picker": "2.2.0",
     "@react-native-windows/automation-channel": "^0.1.66",
     "@react-native-windows/tester": "0.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
     "react": "18.0.0",
     "react-native": "0.0.0-20220415-2010-3c1a81446",
     "react-native-windows": "^0.0.0-canary.492",
@@ -45,7 +47,7 @@
     "metro-config": "^0.67.0",
     "metro-react-native-babel-preset": "^0.67.0",
     "prettier": "^2.4.1",
-    "react-test-renderer": "17.0.2",
+    "react-test-renderer": "^18.0.0",
     "sanitize-filename": "^1.6.3",
     "typescript": "^4.4.4"
   },
