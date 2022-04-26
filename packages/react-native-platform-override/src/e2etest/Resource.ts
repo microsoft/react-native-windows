@@ -47,7 +47,7 @@ export async function usingScratchDirectory<T>(
  * Helper to acquire an isolated GitReactFileRepository whuch ust be deleted
  * using the returned callback.
  */
-export async function acquireGitRepo<T>(): Promise<
+export async function acquireGitRepo(): Promise<
   [GitReactFileRepository, () => Promise<void>]
 > {
   const [dir, dispose] = await acquireSratchDirectory();

@@ -61,7 +61,7 @@ function extractHashFromNightlyVersion(reactNativeVersion: string): string {
     '0.0.0-91adb761c-20211013-2010',
   ];
 
-  const preSegment = semver.prerelease(reactNativeVersion)![0];
+  const preSegment = String(semver.prerelease(reactNativeVersion)![0]);
   const splitPre = preSegment.split('-');
 
   // Handle #1

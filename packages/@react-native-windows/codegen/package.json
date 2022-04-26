@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0-canary.2",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "chalk": "^4.1.0",
     "globby": "^11.0.4",
     "mustache": "^4.0.1",

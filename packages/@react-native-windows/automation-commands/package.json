@@ -18,7 +18,9 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.1.66"
+    "@react-native-windows/automation-channel": "^0.1.66",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0"
   },
   "devDependencies": {
     "@jest/types": "^26.6.2",
