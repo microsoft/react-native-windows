@@ -348,7 +348,7 @@
     },
     {
       "type": "derived",
-      "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
+      "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
       "baseHash": "90ef97f18a53b362992aa13bbcaca6306737f1e6",
       "issue": 0
