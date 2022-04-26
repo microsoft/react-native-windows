@@ -248,7 +248,6 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-
 #ifndef CORE_ABI
   auto xamlRootView = static_cast<IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
@@ -306,7 +305,7 @@ void FabricUIManager::constraintSurfaceLayout(
 
 void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
   auto rootComponentViewDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
-#ifndef CORE_ABI  
+#ifndef CORE_ABI
   auto children = m_surfaceRegistry.at(surfaceId).as<xaml::Controls::Panel>().Children();
 
   uint32_t index;
