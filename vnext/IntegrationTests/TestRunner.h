@@ -14,7 +14,7 @@ namespace Microsoft::React::Test {
 enum class TestStatus : unsigned int { Pending = 0, Passed, Failed };
 
 struct TestResult {
-  TestStatus Status;
+  TestStatus Status{TestStatus::Pending};
   std::wstring Message;
 };
 

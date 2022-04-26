@@ -23,6 +23,7 @@ struct HttpCallbacks
   std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
       const boost::beast::http::request<boost::beast::http::string_body> &)>
       OnGet;
+  std::function<void()> OnRequest;
 };
 
 ///
@@ -79,6 +80,7 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   void Accept();
   void Start();
   void Stop();
+  void Abort();
 
   ///
   // Callback to invoke after a successful response is sent.
