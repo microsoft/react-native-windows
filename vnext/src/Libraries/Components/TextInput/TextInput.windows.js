@@ -1407,6 +1407,8 @@ function InternalTextInput(props: Props): React.Node {
       <WindowsTextInput
         ref={_setNativeRef}
         {...props}
+        accessible={accessible}
+        focusable={focusable}
         dataDetectorTypes={props.dataDetectorTypes}
         mostRecentEventCount={mostRecentEventCount}
         onBlur={_onBlur}
