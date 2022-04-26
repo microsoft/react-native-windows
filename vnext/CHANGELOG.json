@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 26 Apr 2022 05:09:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.492",
+      "version": "0.0.0-canary.492",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bfb68d26b7ffc87542d8d182b9c2891f1a0e2bdd",
+            "comment": "Fix TextInput Props"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Apr 2022 22:50:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.491",
+      "version": "0.0.0-canary.491",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "58957d4da9b61472d0aad259f29e0c58eea6256a",
+            "comment": "Fix JSI for Node-API and update V8 to 0.65.11"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.127",
+            "commit": "7289b83061faa1ad41ee584f2ce10161244b2060"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.31",
+            "commit": "7289b83061faa1ad41ee584f2ce10161244b2060"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Apr 2022 05:09:17 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.490",
+      "version": "0.0.0-canary.490",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8c37ad23431678bf5bb3d53515e9a3db7d84f2a0",
+            "comment": "Implement Focus Fix"
+          },
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "aa28258f298773ed752a09ae23d31c0f091a02aa",
+            "comment": "Added support for Narrator announcing accessibilityState changes"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e53b1fbe90ebaf83e9d42ac24db0cfc4a312afe6",
+            "comment": "[Fabric] Add support for text fragments"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Apr 2022 05:09:32 GMT",
       "tag": "react-native-windows_v0.0.0-canary.489",
       "version": "0.0.0-canary.489",
