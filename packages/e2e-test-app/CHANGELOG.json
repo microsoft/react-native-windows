@@ -2,6 +2,39 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Tue, 26 Apr 2022 05:09:08 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation-channel to v0.1.66",
+            "commit": "bfb68d26b7ffc87542d8d182b9c2891f1a0e2bdd"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.0.0-canary.492",
+            "commit": "bfb68d26b7ffc87542d8d182b9c2891f1a0e2bdd"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation to v0.1.77",
+            "commit": "bfb68d26b7ffc87542d8d182b9c2891f1a0e2bdd"
+          },
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump @react-native-windows/automation-commands to v0.0.104",
+            "commit": "bfb68d26b7ffc87542d8d182b9c2891f1a0e2bdd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Apr 2022 22:50:30 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",

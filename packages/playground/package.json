@@ -14,7 +14,7 @@
     "@react-native-windows/tester": "0.0.1",
     "react": "18.0.0",
     "react-native": "0.0.0-20220415-2010-3c1a81446",
-    "react-native-windows": "^0.0.0-canary.491"
+    "react-native-windows": "^0.0.0-canary.492"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

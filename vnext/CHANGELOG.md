@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Apr 2022 22:50:29 GMT and should not be manually modified.
+This log was last generated on Tue, 26 Apr 2022 05:09:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.492
+
+Tue, 26 Apr 2022 05:09:08 GMT
+
+### Changes
+
+- Fix TextInput Props (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.491
 
