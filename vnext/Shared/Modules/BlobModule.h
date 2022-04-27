@@ -52,6 +52,9 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
 class BlobModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
 
+  // Property bag high level reference.
+  winrt::Windows::Foundation::IInspectable m_iProperties;
+
  public:
   enum class MethodId {
     AddNetworkingHandler = 0,
@@ -63,7 +66,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
     SIZE = 6
   };
 
-  BlobModule(winrt::Microsoft::ReactNative::IReactPropertyBag const& iProperties) noexcept;
+  BlobModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept;
 
   ~BlobModule() noexcept override;
 

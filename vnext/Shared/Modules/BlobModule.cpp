@@ -21,35 +21,36 @@ using folly::dynamic;
 using std::lock_guard;
 using std::mutex;
 using std::scoped_lock;
+using std::shared_ptr;
 using std::string;
 using std::vector;
 using std::weak_ptr;
-using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
+using winrt::Microsoft::ReactNative::IReactPropertyBag;
+using winrt::Microsoft::ReactNative::ReactNonAbiValue;
+using winrt::Microsoft::ReactNative::ReactPropertyBag;
+using winrt::Microsoft::ReactNative::ReactPropertyId;
+using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::GuidHelper;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
 constexpr char moduleName[] = "BlobModule";
 constexpr char blobURIScheme[] = "blob";
-
-weak_ptr<Microsoft::React::IWebSocketModuleContentHandler> s_contentHandler;
 } // namespace
 
 namespace Microsoft::React {
 
 #pragma region BlobModule
 
-BlobModule::BlobModule(winrt::Microsoft::ReactNative::IReactPropertyBag const& properties) noexcept
-    : m_sharedState{std::make_shared<SharedState>()} {
-  m_contentHandler = std::static_pointer_cast<BlobWebSocketModuleContentHandler>(s_contentHandler.lock());
-  if (!m_contentHandler) {
-    m_contentHandler = std::make_shared<BlobWebSocketModuleContentHandler>();
-    s_contentHandler = m_contentHandler;
-  }
+BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept
+    : m_sharedState{std::make_shared<SharedState>()},
+      m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>()},
+      m_iProperties{iProperties} {
 
-  auto contentHandler = winrt::make<WebSocketModuleContentHandler>();
-  properties.Set(
-      ReactPropertyBagHelper::GetName(ReactPropertyBagHelper::GetNamespace(L"CxxNativeModule"), L"WebSocketModuleContentHandler"), contentHandler);
+  auto propId = ReactPropertyId<ReactNonAbiValue<shared_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
+  auto propBag = ReactPropertyBag{m_iProperties.try_as<IReactPropertyBag>()};
+  auto contentHandler = m_contentHandler;
+  propBag.Set(propId, std::move(contentHandler));
 
   m_sharedState->Module = this;
 }
@@ -90,8 +91,10 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"sendOverSocket",
-       [contentHandler = m_contentHandler](dynamic args) {
-         auto wsProxy = IWebSocketModuleProxy::GetInstance().lock();
+       [contentHandler = m_contentHandler,
+        propBag = ReactPropertyBag{m_iProperties.try_as<IReactPropertyBag>()}](dynamic args) {
+         auto propId = ReactPropertyId<ReactNonAbiValue<shared_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+         auto wsProxy = propBag.Get(propId).Value();
          if (!wsProxy) {
            return;
          }
@@ -275,16 +278,12 @@ void WebSocketModuleContentHandler::RemoveMessage(string&& blobId) noexcept
 
 #pragma endregion WebSocketModuleContentHandler
 
-/*static*/ weak_ptr<IWebSocketModuleContentHandler> IWebSocketModuleContentHandler::GetInstance() noexcept {
-  return s_contentHandler;
-}
-
 /*extern*/ const char *GetBlobModuleName() noexcept {
   return moduleName;
 }
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(winrt::Windows::Foundation::IInspectable const& iProperties) noexcept {
-  if (auto properties = iProperties.try_as<winrt::Microsoft::ReactNative::IReactPropertyBag>())
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(IInspectable const& iProperties) noexcept {
+  if (auto properties = iProperties.try_as<IReactPropertyBag>())
     return std::make_unique<BlobModule>(properties);
 
   return nullptr;

@@ -14,8 +14,6 @@ namespace Microsoft::React {
 /// without switching to the JavaScript queue thread.
 /// </summary>
 struct IWebSocketModuleProxy {
-  static std::weak_ptr<IWebSocketModuleProxy> GetInstance() noexcept;
-
   virtual ~IWebSocketModuleProxy() noexcept {}
 
   virtual void SendBinary(std::string &&base64String, int64_t id) noexcept = 0;

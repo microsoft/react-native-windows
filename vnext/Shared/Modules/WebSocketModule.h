@@ -50,6 +50,9 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
     /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
     /// </summary>
     CxxModule *Module{nullptr};
+
+    // Property bag high level reference.
+    winrt::Windows::Foundation::IInspectable InspectableProps;
   };
 
 #pragma region CxxModule overrides
