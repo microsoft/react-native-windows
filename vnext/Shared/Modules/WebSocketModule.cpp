@@ -116,9 +116,9 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
 
       dynamic args = dynamic::object("id", id)("type", isBinary ? "binary" : "text");
 
-      auto propId = ReactPropertyId<ReactNonAbiValue<shared_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
+      auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
           L"BlobModule.ContentHandler"};
-      auto contentHandler = propBag.Get(propId).Value();
+      auto contentHandler = propBag.Get(propId).Value().lock();
 
       if (!contentHandler) {
         args["data"] = message;
@@ -167,9 +167,9 @@ WebSocketModule::WebSocketModule(winrt::Windows::Foundation::IInspectable const 
   m_sharedState->InspectableProps = iProperties;
   s_sharedState = weak_ptr<SharedState>(m_sharedState);
 
-  auto propId = ReactPropertyId<ReactNonAbiValue<shared_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+  auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
   auto propBag = ReactPropertyBag{m_sharedState->InspectableProps.try_as<IReactPropertyBag>()};
-  auto proxy = m_proxy;
+  auto proxy = weak_ptr<IWebSocketModuleProxy>{m_proxy};
   propBag.Set(propId, std::move(proxy));
 }
 

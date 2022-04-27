@@ -47,9 +47,9 @@ BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &iProperti
       m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>()},
       m_iProperties{iProperties} {
 
-  auto propId = ReactPropertyId<ReactNonAbiValue<shared_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
+  auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
   auto propBag = ReactPropertyBag{m_iProperties.try_as<IReactPropertyBag>()};
-  auto contentHandler = m_contentHandler;
+  auto contentHandler = weak_ptr<IWebSocketModuleContentHandler>{m_contentHandler};
   propBag.Set(propId, std::move(contentHandler));
 
   m_sharedState->Module = this;
@@ -93,8 +93,8 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
       {"sendOverSocket",
        [contentHandler = m_contentHandler,
         propBag = ReactPropertyBag{m_iProperties.try_as<IReactPropertyBag>()}](dynamic args) {
-         auto propId = ReactPropertyId<ReactNonAbiValue<shared_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
-         auto wsProxy = propBag.Get(propId).Value();
+         auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+         auto wsProxy = propBag.Get(propId).Value().lock();
          if (!wsProxy) {
            return;
          }
