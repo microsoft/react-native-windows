@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/promote-release",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,9 +18,9 @@
     "promote-release": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.31",
-    "@react-native-windows/fs": "^0.0.0-canary.2",
-    "@react-native-windows/package-utils": "^0.0.0-canary.28",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.32",
+    "@react-native-windows/fs": "^0.0.0-canary.3",
+    "@react-native-windows/package-utils": "^0.0.0-canary.29",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "chalk": "^4.1.0",
@@ -29,7 +29,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.11",
+    "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",
     "@rnw-scripts/ts-config": "2.0.2",
     "@types/chalk": "^2.2.0",
