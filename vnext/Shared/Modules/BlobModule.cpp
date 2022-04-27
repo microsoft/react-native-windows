@@ -18,8 +18,6 @@ using namespace facebook::xplat;
 
 using facebook::react::Instance;
 using folly::dynamic;
-using std::lock_guard;
-using std::mutex;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
@@ -188,19 +186,19 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
 #pragma endregion IWebSocketModuleContentHandler
 
 void BlobWebSocketModuleContentHandler::Register(int64_t socketID) noexcept {
-  lock_guard<mutex> lock{m_socketIDsMutex};
+  scoped_lock lock{m_socketIDsMutex};
   m_socketIDs.insert(socketID);
 }
 
 void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
-  lock_guard<mutex> lock{m_socketIDsMutex};
+  scoped_lock lock{m_socketIDsMutex};
   if (m_socketIDs.find(socketID) != m_socketIDs.end())
     m_socketIDs.erase(socketID);
 }
 
 winrt::array_view<uint8_t>
 BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept {
-  lock_guard<mutex> lock{m_blobsMutex};
+  scoped_lock lock{m_blobsMutex};
 
   auto &data = m_blobs.at(std::move(blobId));
 
@@ -208,13 +206,13 @@ BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offse
 }
 
 void BlobWebSocketModuleContentHandler::RemoveMessage(string &&blobId) noexcept {
-  lock_guard<mutex> lock{m_blobsMutex};
+  scoped_lock lock{m_blobsMutex};
 
   m_blobs.erase(std::move(blobId));
 }
 
 void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, string &&blobId) noexcept {
-  lock_guard<mutex> lock{m_blobsMutex};
+  scoped_lock lock{m_blobsMutex};
 
   m_blobs.insert_or_assign(std::move(blobId), std::move(message));
 }
