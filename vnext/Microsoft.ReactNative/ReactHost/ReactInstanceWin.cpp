@@ -679,7 +679,9 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 void ReactInstanceWin::InitJSMessageThread() noexcept {
   m_instance.Exchange(std::make_shared<facebook::react::Instance>());
 
+  winrt::Microsoft::ReactNative::IReactNotificationService service = m_reactContext->Notifications();
   auto scheduler = Mso::MakeJSCallInvokerScheduler(
+      service,
       m_instance.Load()->getJSCallInvoker(),
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));

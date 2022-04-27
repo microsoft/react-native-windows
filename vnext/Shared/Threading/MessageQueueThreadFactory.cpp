@@ -8,7 +8,8 @@
 namespace Microsoft::ReactNative {
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeJSQueueThread() noexcept {
-  return std::make_shared<Mso::React::MessageDispatchQueue>(Mso::DispatchQueue::MakeLooperQueue(), nullptr, nullptr);
+  return std::make_shared<Mso::React::MessageDispatchQueue>(
+      Mso::DispatchQueue::MakeLooperQueue(nullptr), nullptr, nullptr);
 }
 
 std::shared_ptr<facebook::react::MessageQueueThread> MakeUIQueueThread() noexcept {

@@ -124,4 +124,22 @@ void ReactDispatcher::InvokeElsePost(Mso::DispatchTask &&task) const noexcept {
   return jsThreadDispatcherProperty;
 }
 
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherTaskStarting() noexcept {
+  static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherTaskStarting")};
+  return jsThreadDispatcherProperty;
+}
+
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherIdleWaitStarting() noexcept {
+  static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherIdleWaitStarting")};
+  return jsThreadDispatcherProperty;
+}
+
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherIdleWaitCompleted() noexcept {
+  static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherIdleWaitCompleted")};
+  return jsThreadDispatcherProperty;
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation
