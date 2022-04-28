@@ -2048,9 +2048,9 @@
   integrity sha512-RbzJvlNzmRq5c3O09UipeuXno4tA1FE6ikOjxZK0tuxVv3412l64l5t1W5pj4+rJq9vpkm/kwiR07aZXnsKPxw==
 
 "@types/async@^3.2.5":
-  version "3.2.12"
-  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.2.12.tgz#0ebbfaf3f249ffa0fdc50179b07705f69c90d70c"
-  integrity sha512-4i4w4tfNDo73BOjk0qHcB2YJ8A2SjITCrU4BTsgdJFTsVr6atPDXa0T9r0QZTrX3axtWwkqpZqF4B3gR0TqBGw==
+  version "3.2.13"
+  resolved "https://registry.yarnpkg.com/@types/async/-/async-3.2.13.tgz#ec023074c70180d17cbc9117ddc3cec2f3894ea4"
+  integrity sha512-7Q3awrhnvm89OzfsmqeqRQh8mh+8Pxfgq1UvSAn2nWQ5y/F3+NrbIF0RbkWq8+5dY99ozgap2b3DNBNwjLVOxw==
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.19"
@@ -2343,9 +2343,9 @@
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.0.0":
-  version "18.0.5"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.5.tgz#1a4d4b705ae6af5aed369dec22800b20f89f5301"
-  integrity sha512-UPxNGInDCIKlfqBrm8LDXYWNfLHwIdisWcsH5GpMyGjhEDLFgTtlRBaoWuCua9HcyuE0rMkmAeZ3FXV1pYLIYQ==
+  version "18.0.8"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.8.tgz#a051eb380a9fbcaa404550543c58e1cf5ce4ab87"
+  integrity sha512-+j2hk9BzCOrrOSJASi5XiOyBbERk9jG5O73Ya4M0env5Ixi6vUNli4qy994AINcEF+1IEHISYFfIT4zwr++LKw==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3629,9 +3629,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^2.20.0:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.21.0.tgz#8ba7f125080ad7395eb8ebb17d54fa6ab0fc17fd"
-  integrity sha512-MOUXS9vwAR5LziPHFvvyqvvFoFyBasTcjizATAcngdgAeNgfGfSrcelBTIVIPF+SgVwSSLhE5Ts60+wNa0RQgg==
+  version "2.22.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.22.0.tgz#7ef0a22e6cc7ae0dd3e9d9045064a4efa81bae1d"
+  integrity sha512-HhLWVw274YzcNBklr+4mVz2JuuoaYy+JEGDLXqKByO+cswoBjAIjMeJIqHED3dvLyvLIsrSHINAyMoPb34ZxvA==
   dependencies:
     cosmiconfig "^6.0.0"
     execa "^4.0.3"
@@ -5761,9 +5761,9 @@ flatted@^3.1.0:
   integrity sha512-WIWGi2L3DyTUvUrwRKgGi9TwxQMUEqPOPQBVi71R96jZXJdFskXEmf54BoZaS1kknGODoIGASGEzBUYdyMCBJg==
 
 flow-bin@^0.176.2:
-  version "0.176.2"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.176.2.tgz#b257da3ebd131b368c95c72e010dc823bfa159e8"
-  integrity sha512-gX3YJvv40oRY7A/ytEsWLDMHTfIkmy6ir1D4e5fklVsj3958iTg90cO8XwDdspnxQSgEUP1HW1e6wlX1OlQ5+Q==
+  version "0.176.3"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.176.3.tgz#d32de04e044ab474afe543b9fd245608bb6a6ac8"
+  integrity sha512-lbNqgjr2GlGLAEVp5+dhG4LdnFE7ekbvVNifAdlvTx58/nE8GrCOMiUwEQy4dLnfL2NIRMk2dbEVTrugeQJ3mA==
 
 flow-parser@0.*:
   version "0.176.2"
