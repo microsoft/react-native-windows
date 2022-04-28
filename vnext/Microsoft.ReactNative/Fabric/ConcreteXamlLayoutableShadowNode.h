@@ -9,10 +9,10 @@
 
 #include <react/renderer/components/rncore/EventEmitters.h>
 #include <react/renderer/components/rncore/Props.h>
-#include "XamlLayoutableComponentState.h"
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
-#include <react/renderer/imagemanager/primitives.h>
 #include <react/renderer/core/LayoutContext.h>
+#include <react/renderer/imagemanager/primitives.h>
+#include "XamlLayoutableComponentState.h"
 
 namespace facebook {
 namespace react {
@@ -22,11 +22,8 @@ template <
     typename ViewPropsT = ViewProps,
     typename ViewEventEmitterT = ViewEventEmitter,
     typename... Ts>
-class ConcreteXamlLayoutableShadowNode : public ConcreteViewShadowNode<
-                                   concreteComponentName,
-                                   ViewPropsT,
-                                   ViewEventEmitterT,
-                                   Ts...> {
+class ConcreteXamlLayoutableShadowNode
+    : public ConcreteViewShadowNode<concreteComponentName, ViewPropsT, ViewEventEmitterT, Ts...> {
  public:
   using BaseShadowNode = ConcreteViewShadowNode<concreteComponentName, ViewPropsT, ViewEventEmitterT, Ts...>;
 
@@ -36,12 +33,10 @@ class ConcreteXamlLayoutableShadowNode : public ConcreteViewShadowNode<
       ShadowNodeFragment const &fragment,
       ShadowNodeFamily::Shared const &family,
       ShadowNodeTraits traits)
-      : BaseShadowNode(fragment, family, traits) {
-  }
+      : BaseShadowNode(fragment, family, traits) {}
 
   ConcreteXamlLayoutableShadowNode(ShadowNode const &sourceShadowNode, ShadowNodeFragment const &fragment)
-      : BaseShadowNode(sourceShadowNode, fragment) {
-  }
+      : BaseShadowNode(sourceShadowNode, fragment) {}
 
   static XamlLayoutableComponentState initialStateData(
       ShadowNodeFragment const &fragment,
@@ -50,37 +45,32 @@ class ConcreteXamlLayoutableShadowNode : public ConcreteViewShadowNode<
     return {{}, {}};
   }
 
+  Size measureContent(LayoutContext const &layoutContext, LayoutConstraints const &layoutConstraints) const override {
+    constraints_ = layoutConstraints;
 
-Size measureContent(
-    LayoutContext const &layoutContext,
-    LayoutConstraints const &layoutConstraints) const override {
-
-  constraints_ = layoutConstraints;
-
-  auto const &currentState = BaseShadowNode::getStateData();
-  return currentState.getSize();
-}
-
-void layout(LayoutContext layoutContext) override {
-  auto const &currentState = this->getStateData();
-
-  auto constraints = currentState.getLayoutConstraints();
-  if (constraints == constraints_) {
-    return;
+    auto const &currentState = BaseShadowNode::getStateData();
+    return currentState.getSize();
   }
 
-  // Now we are about to mutate the Shadow Node.
-  this->ensureUnsealed();
-  this->setStateData({constraints_, currentState.getSize()});
+  void layout(LayoutContext layoutContext) override {
+    auto const &currentState = this->getStateData();
 
-  BaseShadowNode::layout(layoutContext);
-}
+    auto constraints = currentState.getLayoutConstraints();
+    if (constraints == constraints_) {
+      return;
+    }
+
+    // Now we are about to mutate the Shadow Node.
+    this->ensureUnsealed();
+    this->setStateData({constraints_, currentState.getSize()});
+
+    BaseShadowNode::layout(layoutContext);
+  }
 
  private:
   mutable LayoutConstraints constraints_;
   Size size_;
-                                   };
-
+};
 
 } // namespace react
 } // namespace facebook

@@ -5,8 +5,8 @@
 
 #include <react/renderer/components/rncore/EventEmitters.h>
 #include <react/renderer/components/rncore/Props.h>
-#include "XamlLayoutableComponentState.h"
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
+#include "XamlLayoutableComponentState.h"
 
 #include "ConcreteXamlLayoutableShadowNode.h"
 
@@ -22,10 +22,8 @@ class SliderShadowNode final : public ConcreteXamlLayoutableShadowNode<
                                    SliderProps,
                                    SliderEventEmitter,
                                    XamlLayoutableComponentState> {
-
  public:
   using ConcreteXamlLayoutableShadowNode::ConcreteXamlLayoutableShadowNode;
-
 };
 
 } // namespace facebook::react

@@ -16,14 +16,17 @@ struct YogaXamlPanel : YogaXamlPanelT<YogaXamlPanel> {
 
  public:
   // Constructors
-  YogaXamlPanel(std::function<void(facebook::react::Size size)>&& onMeasured, std::function<const facebook::react::LayoutConstraints&()>&& getConstraints);
+  YogaXamlPanel(
+      std::function<void(facebook::react::Size size)> &&onMeasured,
+      std::function<const facebook::react::LayoutConstraints &()> &&getConstraints);
 
   // Overrides
   winrt::Windows::Foundation::Size MeasureOverride(winrt::Windows::Foundation::Size availableSize);
   winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
-private:
+
+ private:
   std::function<void(facebook::react::Size size)> m_onMeasured;
-  std::function<const facebook::react::LayoutConstraints&()> m_getConstraints;
+  std::function<const facebook::react::LayoutConstraints &()> m_getConstraints;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

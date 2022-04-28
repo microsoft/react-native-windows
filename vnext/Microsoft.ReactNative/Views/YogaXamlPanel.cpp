@@ -23,11 +23,13 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 const winrt::TypeName yogaXamlPanelTypeName{winrt::hstring{L"YogaXamlPanel"}, winrt::TypeKind::Metadata};
 
-YogaXamlPanel::YogaXamlPanel(std::function<void(facebook::react::Size size)>&& onMeasured, std::function<const facebook::react::LayoutConstraints&()>&& getConstraints) : Super(), m_onMeasured(std::move(onMeasured)), m_getConstraints(std::move(getConstraints)) {}
+YogaXamlPanel::YogaXamlPanel(
+    std::function<void(facebook::react::Size size)> &&onMeasured,
+    std::function<const facebook::react::LayoutConstraints &()> &&getConstraints)
+    : Super(), m_onMeasured(std::move(onMeasured)), m_getConstraints(std::move(getConstraints)) {}
 
 winrt::Size YogaXamlPanel::MeasureOverride(winrt::Size /*availableSize*/) {
-
-  auto& constraints = m_getConstraints();
+  auto &constraints = m_getConstraints();
   winrt::Size availableSize{{constraints.maximumSize.width, constraints.maximumSize.height}};
 
   assert(Children().Size() == 1);
