@@ -75,23 +75,25 @@ const View: React.AbstractComponent<
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
-// [Windows
-const childrenWithImportantForAccessibility = children => {
-      return React.Children.map(
-        children,
-        (child) => {
-          if (React.isValidElement(child)) {
-              if (child.props.children){
-                return React.cloneElement(child, {accessible: false, children: childrenWithImportantForAccessibility(child.props.children)});
-              }else{
-                return React.cloneElement(child, {accessible: false});
-              }
-          }
-          return child;
-        },
-      );
-}
-// Windows]
+  // [Windows
+  const childrenWithImportantForAccessibility = children => {
+    return React.Children.map(children, child => {
+      if (React.isValidElement(child)) {
+        if (child.props.children) {
+          return React.cloneElement(child, {
+            accessible: false,
+            children: childrenWithImportantForAccessibility(
+              child.props.children,
+            ),
+          });
+        } else {
+          return React.cloneElement(child, {accessible: false});
+        }
+      }
+      return child;
+    });
+  };
+  // Windows]
 
   return (
     // [Windows
@@ -113,7 +115,11 @@ const childrenWithImportantForAccessibility = children => {
             onKeyUp={_keyUp}
             onKeyUpCapture={_keyUpCapture}
             // [Windows
-            children={props.importantForAccessibility == 'no-hide-descendants' ? childrenWithImportantForAccessibility(props.children) : props.children}
+            children={
+              props.importantForAccessibility == 'no-hide-descendants'
+                ? childrenWithImportantForAccessibility(props.children)
+                : props.children
+            }
             // Windows]
           />
         );
