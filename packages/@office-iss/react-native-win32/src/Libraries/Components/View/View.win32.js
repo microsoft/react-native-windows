@@ -115,8 +115,13 @@ const View: React.AbstractComponent<
             onKeyUp={_keyUp}
             onKeyUpCapture={_keyUpCapture}
             // [Windows
+            accessible={
+              props.importantForAccessibility === 'no-hide-descendants'
+                ? false
+                : props.accessible
+            }
             children={
-              props.importantForAccessibility == 'no-hide-descendants'
+              props.importantForAccessibility === 'no-hide-descendants'
                 ? childrenWithImportantForAccessibility(props.children)
                 : props.children
             }
