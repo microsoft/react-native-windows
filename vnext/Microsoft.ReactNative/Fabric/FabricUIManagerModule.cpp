@@ -7,17 +7,23 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
+#ifndef CORE_ABI
 #include <Fabric/ViewComponentView.h>
+#endif // CORE_ABI
 #include <IReactContext.h>
 #include <IReactRootView.h>
+#ifndef CORE_ABI
 #include <IXamlRootView.h>
+#endif // CORE_ABI
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
+#ifndef CORE_ABI
 #include <react/renderer/components/slider/SliderComponentDescriptor.h>
+#endif // CORE_ABI
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
@@ -29,7 +35,9 @@
 #include <react/utils/ContextContainer.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
+#ifndef CORE_ABI
 #include "TextInput/WindowsTextInputComponentDescriptor.h"
+#endif // CORE_ABI
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -77,6 +85,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
         return;
       }
 
+#ifndef CORE_ABI
       // TODO: should use something other than CompositionTarget::Rendering ... not sure where to plug this in yet
       // Getting the beat running to unblock basic events
       m_rendering = xaml::Media::CompositionTarget::Rendering(
@@ -88,6 +97,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 
             tick();
           });
+#endif // CORE_ABI
     });
 
     // eventBeatManager->addObserver(*this);
@@ -144,18 +154,20 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
         facebook::react::concreteComponentDescriptorProvider<facebook::react::RawTextComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
+#ifndef CORE_ABI
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::SliderComponentDescriptor>());
+#endif // CORE_ABI
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::SwitchComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
     providerRegistry->add(
-        facebook::react::concreteComponentDescriptorProvider<facebook::react::TextInputComponentDescriptor>());
-    providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
+#ifndef CORE_ABI
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
+#endif // CORE_ABI
     return providerRegistry;
   }();
 
@@ -236,10 +248,12 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
+#ifndef CORE_ABI
   auto xamlRootView = static_cast<IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
   m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});
+#endif // CORE_ABI
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     self->m_registry.dequeueComponentViewWithComponentHandle(facebook::react::RootShadowNode::Handle(), surfaceId);
@@ -252,6 +266,7 @@ void FabricUIManager::startSurface(
       winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
 
   facebook::react::LayoutConstraints constraints;
+#ifndef CORE_ABI
   constraints.minimumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
   constraints.minimumSize.width = static_cast<facebook::react::Float>(rootFE.ActualWidth());
   constraints.maximumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
@@ -259,6 +274,7 @@ void FabricUIManager::startSurface(
   constraints.layoutDirection = rootFE.FlowDirection() == xaml::FlowDirection::LeftToRight
       ? facebook::react::LayoutDirection::LeftToRight
       : facebook::react::LayoutDirection::RightToLeft;
+#endif // CORE_ABI
 
   m_surfaceManager->startSurface(
       surfaceId,
@@ -289,12 +305,14 @@ void FabricUIManager::constraintSurfaceLayout(
 
 void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
   auto rootComponentViewDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
+#ifndef CORE_ABI
   auto children = m_surfaceRegistry.at(surfaceId).as<xaml::Controls::Panel>().Children();
 
   uint32_t index;
   if (!children.IndexOf(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element(), index)) {
     children.Append(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element());
   }
+#endif // CORE_ABI
 }
 
 struct RemoveDeleteMetadata {
