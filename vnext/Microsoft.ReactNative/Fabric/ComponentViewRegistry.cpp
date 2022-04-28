@@ -13,12 +13,16 @@
 #include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
+#ifndef CORE_ABI
 #include <react/renderer/components/slider/SliderShadowNode.h>
+#endif // CORE_ABI
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/textinput/iostextinput/TextInputShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
+
+#ifndef CORE_ABI
 #include "TextInput/WindowsTextInputShadowNode.h"
 
 #include "ActivityIndicatorComponentView.h"
@@ -31,6 +35,7 @@
 #include "TextInput/WindowsTextInputComponentView.h"
 #include "ViewComponentView.h"
 #include "XamlView.h"
+#endif // CORE_ABI
 
 namespace Microsoft::ReactNative {
 
@@ -43,6 +48,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     facebook::react::Tag tag) noexcept {
   // TODO implement recycled components like core does
 
+#ifndef CORE_ABI
   std::shared_ptr<BaseComponentView> view;
 
   if (componentHandle == facebook::react::TextShadowNode::Handle()) {
@@ -74,6 +80,11 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
 
   SetTag(view->Element(), tag);
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
+
+#else
+  auto it = m_registry.insert({tag, ComponentViewDescriptor{nullptr}});
+#endif // CORE_ABI
+
   return it.first->second;
 }
 
@@ -100,6 +111,8 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
   assert(m_registry.find(tag) != m_registry.end());
 
   m_registry.erase(tag);
+#ifndef CORE_ABI
   SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), InvalidTag);
+#endif // CORE_ABI
 }
 } // namespace Microsoft::ReactNative

@@ -1,8 +1,18 @@
 # Change Log - playground
 
-This log was last generated on Tue, 26 Apr 2022 05:09:08 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Apr 2022 05:10:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Wed, 27 Apr 2022 05:10:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.493
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.41
+- Bump @rnw-scripts/eslint-config to v1.1.12
 
 ## 0.0.54
 

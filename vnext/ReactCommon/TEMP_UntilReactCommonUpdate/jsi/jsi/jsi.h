@@ -1252,7 +1252,7 @@ class JSI_EXPORT JSIException : public std::exception {
     return what_.c_str();
   }
 
-  virtual ~JSIException();
+  virtual ~JSIException() override;
 
  protected:
   std::string what_;
