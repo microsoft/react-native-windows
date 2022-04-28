@@ -60,7 +60,7 @@ class TextInput extends React.Component<TextInputProps, {}> {
 
   private readonly _inputRef: React.RefObject<React.Component<RCTTextInputProps> & Readonly<NativeMethods>>;
   private _lastNativeText: string;
-  private _eventCount = 0;
+  private readonly _eventCount = 0;
 
   constructor(props) {
     super(props);

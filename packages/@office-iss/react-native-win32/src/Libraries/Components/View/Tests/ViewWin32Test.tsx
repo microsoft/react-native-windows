@@ -30,7 +30,7 @@ interface IFocusableComponentState {
 }
 
 class FocusMoverTestComponent extends React.Component<{}, IFocusableComponentState> {
-  private _focusTarget: ViewWin32 = null;
+  private readonly _focusTarget: ViewWin32 = null;
   private readonly _labeledBy: React.RefObject<ViewWin32>;
 
   public constructor(props) {

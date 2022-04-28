@@ -181,14 +181,14 @@ const LONG_PRESS_ALLOWED_MOVEMENT = 10;
  * (that use internal state to conditionally calculate styles)
  */
 export class TouchableWin32 extends React.Component<ITouchableWin32Props, IInternalTouchableWin32State> {
-  private _longPressDelayTimeout: number;
-  private _touchableDelayTimeout: number;
-  private _pressOutDelayTimeout: number;
-  private _pressInLocation: IPressInLocation;
-  private _touchState: IState;
-  private _responderID: number;
-  private _positionOnActivate: IPosition;
-  private _dimensionsOnActivate: IDimensions;
+  private readonly _longPressDelayTimeout: number;
+  private readonly _touchableDelayTimeout: number;
+  private readonly _pressOutDelayTimeout: number;
+  private readonly _pressInLocation: IPressInLocation;
+  private readonly _touchState: IState;
+  private readonly _responderID: number;
+  private readonly _positionOnActivate: IPosition;
+  private readonly _dimensionsOnActivate: IDimensions;
 
   private readonly _internalRef: React.RefObject<ViewWin32>
 
