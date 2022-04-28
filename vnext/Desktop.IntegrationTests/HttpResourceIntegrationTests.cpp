@@ -79,6 +79,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         false,
         1000 /*timeout*/,
         false /*withCredentials*/,
+        {}, /*data*/
         [](int64_t) {});
 
     // Synchronize response.
@@ -139,6 +140,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         false,
         1000 /*timeout*/,
         false /*withCredentials*/,
+        {}, /*data*/
         [](int64_t) {});
     //clang-format on
 
@@ -170,7 +172,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       promise.set_value();
     });
 
-    resource->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, [](int64_t) {});
+    resource->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, {}, [](int64_t){});
 
     promise.get_future().wait();
 
@@ -244,6 +246,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         false,
         1000 /*timeout*/,
         false /*withCredentials*/,
+        {}, /*data*/
         [](int64_t) {});
     resource->SendRequest(
         "GET",
@@ -254,6 +257,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         false,
         1000 /*timeout*/,
         false /*withCredentials*/,
+        {}, /*data*/
         [](int64_t) {});
     //clang-format on
 
@@ -336,6 +340,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         false, /*useIncrementalUpdates*/
         1000 /*timeout*/,
         false /*withCredentials*/,
+        {}, /*data*/
         [](int64_t) {});
     //clang-format on
 
