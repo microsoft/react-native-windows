@@ -3,8 +3,10 @@
 
 #pragma once
 
+#include <Modules/IRequestBodyHandler.h>
+#include <Modules/IResponseHandler.h>
+#include <Modules/IUriHandler.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
-#include <ReactPropertyBag.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -21,8 +23,6 @@
 
 namespace Microsoft::React {
 
-//class OriginPolicyHttpFilter
-//    : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
 class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
   std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
   std::mutex m_blobsMutex;
@@ -47,6 +47,39 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
   void RemoveMessage(std::string &&blobId) noexcept;
 
   void StoreMessage(std::vector<uint8_t> &&message, std::string &&blobId) noexcept;
+};
+
+class BlobModuleUriHandler final : public IUriHandler {
+#pragma region IUriHandler
+
+  bool Supports(std::string& uri, std::string& responseType) override;
+
+  folly::dynamic Fetch(std::string& uri) override;
+
+#pragma endregion IUriHandler
+};
+
+class BlobModuleRequestBodyHandler final : public IRequestBodyHandler
+{
+#pragma region IRequestBodyHandler
+
+  bool Supports(folly::dynamic& data) override;
+
+  void * /*RequestBody*/ ToRequestBody(folly::dynamic &data, std::string& contentType)
+      override;
+
+#pragma endregion IRequestBodyHandler
+};
+
+class BlobModuleResponseHandler final : public IResponseHandler
+{
+#pragma region IResponseHandler
+
+  bool Supports(std::string responseType) override;
+
+  folly::dynamic ToResponseData(folly::dynamic& body) override;
+
+#pragma endregion IResponseHandler
 };
 
 class BlobModule : public facebook::xplat::module::CxxModule {

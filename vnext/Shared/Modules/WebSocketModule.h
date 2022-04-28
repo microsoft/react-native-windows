@@ -91,7 +91,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<SharedState> m_sharedState;
 
   /// <summary>
-  /// Exposes direct partial functionality to other modules.
+  /// Exposes a subset of the module's methods.
   /// </summary>
   std::shared_ptr<IWebSocketModuleProxy> m_proxy;
 };

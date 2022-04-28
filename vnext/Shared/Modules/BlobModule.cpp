@@ -4,6 +4,7 @@
 #include "BlobModule.h"
 
 #include <Modules/IWebSocketModuleProxy.h>
+#include <ReactPropertyBag.h>
 #include <unicode.h>
 
 // React Native

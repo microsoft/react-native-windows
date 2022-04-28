@@ -5,6 +5,8 @@
 
 #include "HttpModule.h"
 
+#include <ReactPropertyBag.h>
+
 // React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
@@ -14,6 +16,11 @@ using folly::dynamic;
 using std::shared_ptr;
 using std::string;
 using std::weak_ptr;
+using winrt::Microsoft::ReactNative::IReactPropertyBag;
+using winrt::Microsoft::ReactNative::ReactNonAbiValue;
+using winrt::Microsoft::ReactNative::ReactPropertyBag;
+using winrt::Microsoft::ReactNative::ReactPropertyId;
+using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 
@@ -65,8 +72,15 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReact
 
 namespace Microsoft::React {
 
-HttpModule::HttpModule() noexcept : m_holder{std::make_shared<ModuleHolder>()} {
+HttpModule::HttpModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept
+    : m_holder{std::make_shared<ModuleHolder>()}, m_inspectableProperties{iProperties} {
   m_holder->Module = this;
+
+  auto propId =
+      ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
+  auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
+  auto contentHandler = weak_ptr<IHttpModuleProxy>{m_proxy};
+  propBag.Set(propId, std::move(contentHandler));
 }
 
 HttpModule::~HttpModule() noexcept /*override*/ {

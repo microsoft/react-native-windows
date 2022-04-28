@@ -71,11 +71,12 @@ using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
 namespace Microsoft::React {
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept {
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    winrt::Windows::Foundation::IInspectable const &iProperties) noexcept {
   if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
     return std::make_unique<NetworkingModule>();
   } else {
-    return std::make_unique<HttpModule>();
+    return std::make_unique<HttpModule>(iProperties);
   }
 }
 
@@ -545,14 +546,11 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   std::vector<std::unique_ptr<NativeModule>> modules;
   auto transitionalProps = m_transitionalModuleProperties;
   auto propBag = winrt::Microsoft::ReactNative::ReactPropertyBag{transitionalProps};
-  winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative:: ReactNonAbiValue<int>> propId{
-      L"erasme"};
-  propBag.Set(propId, 99);
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetHttpModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(); },
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(transitionalProps); },
       nativeQueue));
 
   modules.push_back(std::make_unique<CxxNativeModule>(

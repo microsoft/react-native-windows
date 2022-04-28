@@ -3,12 +3,30 @@
 
 #pragma once
 
+#include <Modules/IHttpModuleProxy.h>
+#include <Modules/IUriHandler.h>
 #include <Networking/IHttpResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
 
+// Windows API
+#include <winrt/Windows.Foundation.h>
+
 namespace Microsoft::React {
+
+class HttpModuleProxy final : public IHttpModuleProxy
+{
+#pragma region IHttpModuleProxy
+
+  void AddUriHandler(std::shared_ptr<IUriHandler> uriHandler) noexcept override;
+
+  void AddRequestBodyHandler(std::shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept override;
+
+  void AddResponseHandler(std::shared_ptr<IResponseHandler> responseHandler) noexcept override;
+
+#pragma endregion IHttpModuleProxy
+};
 
 ///
 /// Realizes <c>NativeModules</c> projection.
@@ -18,7 +36,7 @@ class HttpModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { SendRequest = 0, AbortRequest = 1, ClearCookies = 2, LAST = ClearCookies };
 
-  HttpModule() noexcept;
+  HttpModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept;
 
   ~HttpModule() noexcept override;
 
@@ -49,5 +67,13 @@ class HttpModule : public facebook::xplat::module::CxxModule {
 
   std::shared_ptr<Networking::IHttpResource> m_resource;
   std::shared_ptr<ModuleHolder> m_holder;
+
+  /// <summary>
+  /// Exposes a subset of the module's methods.
+  /// </summary>
+  std::shared_ptr<IHttpModuleProxy> m_proxy;
+
+  // Property bag high level reference.
+  winrt::Windows::Foundation::IInspectable m_inspectableProperties;
 };
 } // namespace Microsoft::React
