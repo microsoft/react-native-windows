@@ -670,7 +670,7 @@
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
     <Midl Include="Views\cppwinrt\Effects.idl" />
     <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="Views\cppwinrt\ViewPanel.idl" />
+    <Midl Include="Views\cppwinrt\ViewPanel.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="Views\cppwinrt\YogaXamlPanel.idl" />
     <Midl Include="XamlUIService.idl">
       <SubType>Designer</SubType>
