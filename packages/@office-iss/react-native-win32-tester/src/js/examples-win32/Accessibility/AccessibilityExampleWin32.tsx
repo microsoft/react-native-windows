@@ -367,7 +367,7 @@ const AccessibilityControlsExample: React.FunctionComponent = _props => {
     <View>      
       <ViewWin32 accessible accessibilityRole="list" ref={controlsRef}>
       <SingleSelectionItemComponent
-            value={"Joshua Jones"}
+            value={"Label A"}
             color="#aee8fcff"
             level={1}
             position={1}
@@ -375,7 +375,7 @@ const AccessibilityControlsExample: React.FunctionComponent = _props => {
             isSelected={selectedIndex === 0 ? true : false}
           />
       <SingleSelectionItemComponent
-          value={"Kriti ."}
+          value={"Label B"}
           color="#aee8fcff"
           level={1}
           position={2}
@@ -383,7 +383,7 @@ const AccessibilityControlsExample: React.FunctionComponent = _props => {
           isSelected={selectedIndex === 1 ? true : false}
         />
       <SingleSelectionItemComponent
-        value={"Moiz Ghadiyali"}
+        value={"Label C"}
         color="#aee8fcff"
         level={1}
         position={3}

@@ -12,9 +12,9 @@
     "flow-check": "flow check",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
-    "run-win32-dev-web": "npx @office-iss/rex-win32@0.64.26-devmain.14829.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDevMain --useWebDebugger",
-    "run-win32-devmain": "npx @office-iss/rex-win32@0.64.26-devmain.14829.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDevMain",
-    "run-win32": "npx @office-iss/rex-win32@0.64.26-devmain.14829.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useWebDebugger",
+    "run-win32-dev-web": "npx @office-iss/rex-win32@0.66.15-devmain.15226.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDevMain --useWebDebugger",
+    "run-win32-devmain": "npx @office-iss/rex-win32@0.66.15-devmain.15226.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useDevMain",
+    "run-win32": "npx @office-iss/rex-win32@0.66.15-devmain.15226.10000 --bundle js/RNTesterApp --component RNTesterApp --basePath ./dist/win32/dev --jsEngine v8 --useWebDebugger",
     "start": "react-native start --projectRoot ../react-native-win32-tester",
     "test": "jest",
     "validate-overrides": "react-native-platform-override validate"
