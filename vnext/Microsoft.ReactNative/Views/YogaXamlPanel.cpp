@@ -7,6 +7,7 @@
 
 #include <Utils/PropertyUtils.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Xaml.Interop.h>
 
 // Needed for latest versions of C++/WinRT
 #if __has_include("YogaXamlPanel.g.cpp")
@@ -17,6 +18,7 @@ namespace winrt {
 using namespace Windows::UI;
 using namespace xaml;
 using namespace Windows::Foundation;
+using namespace winrt::Windows::UI::Xaml::Interop;
 } // namespace winrt
 
 namespace winrt::Microsoft::ReactNative::implementation {
