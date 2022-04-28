@@ -16,13 +16,24 @@
 namespace Microsoft::ReactNative {
 
 SliderComponentView::SliderComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_context(reactContext), m_element(xaml::Controls::Slider()) {
-  m_valueChangedRevoker = m_element.ValueChanged(winrt::auto_revoke, [this](auto sender, auto args) {
-    if (m_props->value != m_element.Value()) {
+    : m_context(reactContext),
+      m_slider(xaml::Controls::Slider()),
+      m_element(winrt::make<winrt::Microsoft::ReactNative::implementation::YogaXamlPanel>(
+          [&](facebook::react::Size desiredSize) {
+            auto &data = m_state->getData();
+            auto &originalSize = data.getSize();
+            if (desiredSize.width != originalSize.width || desiredSize.height != originalSize.height) {
+              m_state->updateState({data.getLayoutConstraints(), {desiredSize.width, desiredSize.height}});
+            }
+          },
+          [&]() -> const facebook::react::LayoutConstraints & { return m_state->getData().getLayoutConstraints(); })) {
+  m_element.Children().Append(m_slider);
+  m_valueChangedRevoker = m_slider.ValueChanged(winrt::auto_revoke, [this](auto sender, auto args) {
+    if (m_props->value != m_slider.Value()) {
       if (m_eventEmitter) {
         auto emitter = std::static_pointer_cast<const facebook::react::SliderEventEmitter>(m_eventEmitter);
         facebook::react::SliderEventEmitter::OnValueChange onValueChangeArgs;
-        onValueChangeArgs.value = m_element.Value();
+        onValueChangeArgs.value = m_slider.Value();
         emitter->onValueChange(onValueChangeArgs);
       }
     }
@@ -54,19 +65,19 @@ void SliderComponentView::updateProps(
   const auto &newSliderProps = *std::static_pointer_cast<const facebook::react::SliderProps>(props);
 
   if (oldSliderProps.value != newSliderProps.value) {
-    m_element.Value(newSliderProps.value);
+    m_slider.Value(newSliderProps.value);
   }
 
   if (oldSliderProps.maximumValue != newSliderProps.maximumValue) {
-    m_element.Maximum(newSliderProps.maximumValue);
+    m_slider.Maximum(newSliderProps.maximumValue);
   }
 
   if (oldSliderProps.minimumValue != newSliderProps.minimumValue) {
-    m_element.Minimum(newSliderProps.minimumValue);
+    m_slider.Minimum(newSliderProps.minimumValue);
   }
 
   if (oldSliderProps.disabled != newSliderProps.disabled) {
-    m_element.IsEnabled(!newSliderProps.disabled);
+    m_slider.IsEnabled(!newSliderProps.disabled);
   }
 
   // TODO tint colors
@@ -76,7 +87,14 @@ void SliderComponentView::updateProps(
 
 void SliderComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {}
+    facebook::react::State::Shared const &oldState) noexcept {
+  m_state = std::static_pointer_cast<facebook::react::SliderShadowNode::ConcreteState const>(state);
+
+  if (m_layoutConstraints != m_state->getData().getLayoutConstraints()) {
+    m_layoutConstraints = m_state->getData().getLayoutConstraints();
+    m_element.InvalidateMeasure();
+  }
+}
 
 void SliderComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,

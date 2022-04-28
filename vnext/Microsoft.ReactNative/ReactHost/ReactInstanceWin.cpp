@@ -82,7 +82,6 @@
 #ifdef USE_FABRIC
 namespace facebook::react {
 void InitTextInputThemeInfo(const Mso::React::IReactContext &reactContext);
-void InitSliderMeasurements(const Mso::React::IReactContext &reactContext);
 } // namespace facebook::react
 #endif
 
@@ -395,7 +394,6 @@ void ReactInstanceWin::Initialize() noexcept {
 
 #if USE_FABRIC
       facebook::react::InitTextInputThemeInfo(strongThis->GetReactContext());
-      facebook::react::InitSliderMeasurements(strongThis->GetReactContext());
 #endif // USE_FABRIC
 
 #endif // CORE_ABI

@@ -21,9 +21,6 @@
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
-#ifndef CORE_ABI
-#include <react/renderer/components/slider/SliderComponentDescriptor.h>
-#endif // CORE_ABI
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
@@ -36,6 +33,7 @@
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
 #ifndef CORE_ABI
+#include "SliderComponentDescriptor.h"
 #include "TextInput/WindowsTextInputComponentDescriptor.h"
 #endif // CORE_ABI
 #include "Unicode.h"

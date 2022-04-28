@@ -9,12 +9,10 @@
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <UI.Xaml.Controls.h>
 #include <react/renderer/components/rnwcore/Props.h>
+#include <react/renderer/core/LayoutConstraints.h>
+#include "SliderShadowNode.h"
 #include "ViewComponentView.h"
-
-#pragma warning(push)
-#pragma warning(disable : 4244 4305)
-// #include <react/renderer/components/view/ViewProps.h>
-#pragma warning(pop)
+#include "YogaXamlPanel.h"
 
 namespace Microsoft::ReactNative {
 
@@ -42,8 +40,11 @@ struct SliderComponentView : BaseComponentView {
  private:
   bool m_needsOnLoadStart{false};
   std::shared_ptr<facebook::react::SliderProps const> m_props;
+  std::shared_ptr<facebook::react::SliderShadowNode::ConcreteState const> m_state;
+  facebook::react::LayoutConstraints m_layoutConstraints;
   facebook::react::LayoutMetrics m_layoutMetrics;
-  xaml::Controls::Slider m_element;
+  winrt::Microsoft::ReactNative::YogaXamlPanel m_element;
+  xaml::Controls::Slider m_slider;
   xaml::Controls::Slider::ValueChanged_revoker m_valueChangedRevoker;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };

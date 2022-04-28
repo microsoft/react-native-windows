@@ -1,0 +1,17 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative
+{
+
+  // Internal implementation used to notify of layout changes to forward to yoga
+  [default_interface]
+  [webhosthidden]
+  runtimeclass YogaXamlPanel : XAML_NAMESPACE.Controls.Panel
+  {
+    // Constructors
+    // YogaXamlPanel();
+  }
+}

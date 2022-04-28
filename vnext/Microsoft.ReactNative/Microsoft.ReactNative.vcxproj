@@ -372,6 +372,7 @@
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />
     <ClInclude Include="Views\XamlFeatures.h" />
+    <ClInclude Include="Views\YogaXamlPanel.h" />
     <ClInclude Include="XamlLoadState.h" />
     <ClInclude Include="XamlUIService.h">
       <DependentUpon>XamlUIService.idl</DependentUpon>
@@ -410,10 +411,11 @@
     <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
     <ClCompile Include="Fabric\ImageComponentView.cpp" />
     <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
-    <ClCompile Include="Fabric\platform\react\renderer\components\slider\SliderMeasurementsManager.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />
+    <ClCompile Include="Fabric\SliderShadowNode.cpp" />
     <ClCompile Include="Fabric\SwitchComponentView.cpp" />
+    <ClCompile Include="Fabric\XamlLayoutableComponentState.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentView.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
@@ -421,6 +423,7 @@
     <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="Fabric\TextComponentView.cpp" />
     <ClCompile Include="Fabric\ViewComponentView.cpp" />
+    <ClCompile Include="Views\YogaXamlPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
@@ -667,7 +670,8 @@
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
     <Midl Include="Views\cppwinrt\Effects.idl" />
     <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
-    <Midl Include="Views\cppwinrt\ViewPanel.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="Views\cppwinrt\ViewPanel.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="Views\cppwinrt\YogaXamlPanel.idl" />
     <Midl Include="XamlUIService.idl">
       <SubType>Designer</SubType>
     </Midl>
