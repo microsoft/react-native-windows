@@ -12,6 +12,7 @@ module.exports = {
     'jest/no-disabled-tests': 'off',
     'react-native/no-inline-styles': 'off',
     'no-void': 'off',
+    'no-undef': 'off'
   },
   env: {
     node: true,

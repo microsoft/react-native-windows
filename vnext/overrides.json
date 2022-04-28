@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220411-2010-f503b2120",
+  "baseVersion": "0.0.0-20220415-2010-3c1a81446",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "cb54d72c618ca4d10ef76e2180cb77bf0414857d"
+      "baseHash": "7799292564c8742b9317f8320268062b29ba9ff9"
     },
     {
       "type": "patch",
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
       "baseFile": "ReactCommon/jsi/jsi/jsi.h",
-      "baseHash": "0b364cdd3da5361d2016186a42e143428f88f406",
+      "baseHash": "782b0b0602cfeb7c2d91269478d6a9545ea38230",
       "issue": 9703
     },
     {
@@ -99,7 +99,7 @@
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "b07275d20e080b8c0be48de8bb698c0623290c56",
+      "baseHash": "729d787e88fb911e603ca321a3bbc7340699fe9c",
       "issue": 3994
     },
     {
@@ -409,7 +409,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "ad3f70783221a21cdc810d70a6eea1416dc4fe3c",
+      "baseHash": "5a4cd66d4676e93031a8c36c7e00b533fe2e99c3",
       "issue": 0
     },
     {
@@ -429,6 +429,13 @@
     {
       "type": "platform",
       "file": "src/Libraries/Lists/VirtualizedList.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
+      "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
+      "baseHash": "90ef97f18a53b362992aa13bbcaca6306737f1e6",
+      "issue": 0
     },
     {
       "type": "platform",

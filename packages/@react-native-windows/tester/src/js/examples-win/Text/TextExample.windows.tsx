@@ -20,7 +20,7 @@ import {
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
 
-export class Entity extends React.Component<{}> {
+export class Entity extends React.Component<React.PropsWithChildren<{}>> {
   public render() {
     return (
       <Text style={{fontWeight: 'bold', color: '#527fe4'}}>

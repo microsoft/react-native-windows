@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Wed, 27 Apr 2022 05:10:25 GMT",
+      "tag": "@rnw-scripts/format-files_v1.0.32",
+      "version": "1.0.32",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/format-files",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b",
+            "comment": "Merge"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.12",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Apr 2022 05:09:33 GMT",
       "tag": "@rnw-scripts/format-files_v1.0.31",
       "version": "1.0.31",

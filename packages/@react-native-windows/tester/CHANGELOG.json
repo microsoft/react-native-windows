@@ -2,6 +2,33 @@
   "name": "@react-native-windows/tester",
   "entries": [
     {
+      "date": "Wed, 27 Apr 2022 05:10:25 GMT",
+      "tag": "@react-native-windows/tester_v0.0.1",
+      "version": "0.0.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/tester",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.12",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/tester",
+            "comment": "Bump react-native-platform-override to v1.6.11",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/tester",
+            "comment": "Bump react-native-windows to v0.0.0-canary.493",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Apr 2022 05:09:08 GMT",
       "tag": "@react-native-windows/tester_v0.0.1",
       "version": "0.0.1",

@@ -170,7 +170,7 @@ class TouchableWin32WithoutFeedback extends React.Component<ITouchableWin32Witho
   };
 }
 
-interface ITouchableWin32HighlightProps extends IViewWin32Props {
+interface ITouchableWin32HighlightProps extends Omit <IViewWin32Props, 'children'> {
   delayLongPress?: number;
   delayLongPressIn?: number;
   delayPressOut?: number;

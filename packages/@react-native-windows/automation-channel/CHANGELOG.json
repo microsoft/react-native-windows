@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 27 Apr 2022 05:10:23 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.1.67",
+      "version": "0.1.67",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b",
+            "comment": "Integrate 4/15 Test"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.12",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.493",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Apr 2022 05:09:08 GMT",
       "tag": "@react-native-windows/automation-channel_v0.1.66",
       "version": "0.1.66",

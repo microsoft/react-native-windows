@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/stamp-version
 
-This log was last generated on Tue, 12 Apr 2022 05:10:39 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Apr 2022 05:10:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Wed, 27 Apr 2022 05:10:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @react-native-windows/package-utils to v0.0.0-canary.29
+- Bump @rnw-scripts/eslint-config to v1.1.12
 
 ## 0.0.0
 
