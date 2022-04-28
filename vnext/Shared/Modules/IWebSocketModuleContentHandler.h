@@ -35,10 +35,10 @@ class WebSocketModuleContentHandler
   std::mutex m_mutex;
   std::unordered_set<int64_t> m_socketIds;
 
-public:
-  void ProcessMessage(std::string &&message, folly::dynamic &params); //TODO: noexcept?
+ public:
+  void ProcessMessage(std::string &&message, folly::dynamic &params); // TODO: noexcept?
 
-  void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params); //TODO: noexcept?
+  void ProcessMessage(std::vector<uint8_t> &&message, folly::dynamic &params); // TODO: noexcept?
 
   void Register(int64_t socketId) noexcept;
 

@@ -16,17 +16,15 @@ namespace Microsoft::React {
 /// fetch the URI and return the JS body payload.
 /// </summary>
 struct IUriHandler {
-
   /// <summary>
   /// Returns if the handler should be used for an URI.
   /// </summary>
-  virtual bool Supports(std::string& uri, std::string& responseType) = 0;
+  virtual bool Supports(std::string &uri, std::string &responseType) = 0;
 
   /// <summary>
   /// Fetch the URI and return the JS body payload.
   /// </summary>
-  virtual folly::dynamic Fetch(std::string& uri) = 0;
-
+  virtual folly::dynamic Fetch(std::string &uri) = 0;
 };
 
 } // namespace Microsoft::React

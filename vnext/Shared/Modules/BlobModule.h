@@ -52,32 +52,29 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
 class BlobModuleUriHandler final : public IUriHandler {
 #pragma region IUriHandler
 
-  bool Supports(std::string& uri, std::string& responseType) override;
+  bool Supports(std::string &uri, std::string &responseType) override;
 
-  folly::dynamic Fetch(std::string& uri) override;
+  folly::dynamic Fetch(std::string &uri) override;
 
 #pragma endregion IUriHandler
 };
 
-class BlobModuleRequestBodyHandler final : public IRequestBodyHandler
-{
+class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
 #pragma region IRequestBodyHandler
 
-  bool Supports(folly::dynamic& data) override;
+  bool Supports(folly::dynamic &data) override;
 
-  void * /*RequestBody*/ ToRequestBody(folly::dynamic &data, std::string& contentType)
-      override;
+  void * /*RequestBody*/ ToRequestBody(folly::dynamic &data, std::string &contentType) override;
 
 #pragma endregion IRequestBodyHandler
 };
 
-class BlobModuleResponseHandler final : public IResponseHandler
-{
+class BlobModuleResponseHandler final : public IResponseHandler {
 #pragma region IResponseHandler
 
   bool Supports(std::string responseType) override;
 
-  folly::dynamic ToResponseData(folly::dynamic& body) override;
+  folly::dynamic ToResponseData(folly::dynamic &body) override;
 
 #pragma endregion IResponseHandler
 };

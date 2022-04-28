@@ -76,8 +76,7 @@ HttpModule::HttpModule(winrt::Windows::Foundation::IInspectable const &iProperti
     : m_holder{std::make_shared<ModuleHolder>()}, m_inspectableProperties{iProperties} {
   m_holder->Module = this;
 
-  auto propId =
-      ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
+  auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
   auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
   auto contentHandler = weak_ptr<IHttpModuleProxy>{m_proxy};
   propBag.Set(propId, std::move(contentHandler));
@@ -158,6 +157,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
             params["incrementalUpdates"].asBool(),
             static_cast<int64_t>(params["timeout"].asDouble()),
             false,//withCredentials,
+            std::move(data),
             [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
               cxxCallback({requestId});
             }

@@ -17,6 +17,8 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
+using folly::dynamic;
+
 using std::function;
 using std::scoped_lock;
 using std::shared_ptr;
@@ -63,6 +65,7 @@ void WinRTHttpResource::SendRequest(
     bool useIncrementalUpdates,
     int64_t timeout,
     bool withCredentials,
+    dynamic &&data,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
   auto requestId = ++s_lastRequestId;
 

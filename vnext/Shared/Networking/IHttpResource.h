@@ -3,6 +3,9 @@
 
 #pragma once
 
+// Folly
+#include <folly/dynamic.h>
+
 // Standard Library
 #include <functional>
 #include <memory>
@@ -38,6 +41,7 @@ struct IHttpResource {
       bool useIncrementalUpdates,
       int64_t timeout,
       bool withCredentials,
+      folly::dynamic &&data, // TODO: Drop usage of folly::dynamic once content marshalling is implemented.
       std::function<void(int64_t)> &&callback) noexcept = 0;
   virtual void AbortRequest(int64_t requestId) noexcept = 0;
 

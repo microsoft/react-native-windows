@@ -8,9 +8,9 @@
 
 namespace Microsoft::React {
 
-  /// <summary>
-  /// Allows adding custom handling to build the JS body payload from the {@link ResponseBody}.
-  /// </summary>
+/// <summary>
+/// Allows adding custom handling to build the JS body payload from the {@link ResponseBody}.
+/// </summary>
 struct IResponseHandler {
   /// <summary>
   /// Returns if the handler should be used for a response type.
@@ -20,7 +20,7 @@ struct IResponseHandler {
   /// <summary>
   /// Returns the JS body payload for the {@link ResponseBody}.
   /// </summary>
-  virtual folly::dynamic ToResponseData(folly::dynamic& body) = 0;
+  virtual folly::dynamic ToResponseData(folly::dynamic &body) = 0;
 };
 
-} // namespace
+} // namespace Microsoft::React

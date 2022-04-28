@@ -110,33 +110,33 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
     ws->SetOnMessage(
         [id, weakInstance, propBag = ReactPropertyBag{state->InspectableProps.try_as<IReactPropertyBag>()}](
             size_t length, const string &message, bool isBinary) {
-      auto strongInstance = weakInstance.lock();
-      if (!strongInstance)
-        return;
+          auto strongInstance = weakInstance.lock();
+          if (!strongInstance)
+            return;
 
-      dynamic args = dynamic::object("id", id)("type", isBinary ? "binary" : "text");
+          dynamic args = dynamic::object("id", id)("type", isBinary ? "binary" : "text");
 
-      auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
-          L"BlobModule.ContentHandler"};
-      auto contentHandler = propBag.Get(propId).Value().lock();
+          auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
+              L"BlobModule.ContentHandler"};
+          auto contentHandler = propBag.Get(propId).Value().lock();
 
-      if (!contentHandler) {
-        args["data"] = message;
-      } else {
-        if (isBinary) {
-          auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(message));
-          winrt::com_array<uint8_t> arr;
-          CryptographicBuffer::CopyToByteArray(buffer, arr);
-          auto data = std::vector<uint8_t>(arr.begin(), arr.end());
+          if (!contentHandler) {
+            args["data"] = message;
+          } else {
+            if (isBinary) {
+              auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(message));
+              winrt::com_array<uint8_t> arr;
+              CryptographicBuffer::CopyToByteArray(buffer, arr);
+              auto data = std::vector<uint8_t>(arr.begin(), arr.end());
 
-          contentHandler->ProcessMessage(std::move(data), args);
-        } else {
-          contentHandler->ProcessMessage(string{message}, args);
-        }
-      }
+              contentHandler->ProcessMessage(std::move(data), args);
+            } else {
+              contentHandler->ProcessMessage(string{message}, args);
+            }
+          }
 
-      SendEvent(weakInstance, "websocketMessage", std::move(args));
-    });
+          SendEvent(weakInstance, "websocketMessage", std::move(args));
+        });
     ws->SetOnClose([id, weakInstance](IWebSocketResource::CloseCode code, const string &reason) {
       auto strongInstance = weakInstance.lock();
       if (!strongInstance)
@@ -160,8 +160,7 @@ namespace Microsoft::React {
 #pragma region WebSocketModule
 
 WebSocketModule::WebSocketModule(winrt::Windows::Foundation::IInspectable const &iProperties)
-    : m_sharedState{std::make_shared<SharedState>()},
-      m_proxy{std::make_shared<WebSocketModuleProxy>()} {
+    : m_sharedState{std::make_shared<SharedState>()}, m_proxy{std::make_shared<WebSocketModuleProxy>()} {
   m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(); };
   m_sharedState->Module = this;
   m_sharedState->InspectableProps = iProperties;

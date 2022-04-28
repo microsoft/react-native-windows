@@ -15,8 +15,7 @@
 
 namespace Microsoft::React {
 
-class HttpModuleProxy final : public IHttpModuleProxy
-{
+class HttpModuleProxy final : public IHttpModuleProxy {
 #pragma region IHttpModuleProxy
 
   void AddUriHandler(std::shared_ptr<IUriHandler> uriHandler) noexcept override;

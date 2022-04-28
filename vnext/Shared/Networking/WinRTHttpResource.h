@@ -51,6 +51,7 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
       bool useIncrementalUpdates,
       int64_t timeout,
       bool withCredentials,
+      folly::dynamic &&data,
       std::function<void(int64_t)> &&callback) noexcept override;
   void AbortRequest(int64_t requestId) noexcept override;
   void ClearCookies() noexcept override;

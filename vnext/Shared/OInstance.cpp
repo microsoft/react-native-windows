@@ -550,7 +550,9 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetHttpModuleName(),
-      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(transitionalProps); },
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateHttpModule(transitionalProps);
+      },
       nativeQueue));
 
   modules.push_back(std::make_unique<CxxNativeModule>(
@@ -622,9 +624,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetBlobModuleName(),
-      [transitionalProps]() {
-        return Microsoft::React::CreateBlobModule(transitionalProps);
-      },
+      [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
       nativeQueue));
 
   return modules;
