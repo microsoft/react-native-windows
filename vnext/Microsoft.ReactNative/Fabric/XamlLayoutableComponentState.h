@@ -14,11 +14,8 @@ namespace react {
  */
 class XamlLayoutableComponentState final {
  public:
-  XamlLayoutableComponentState(
-      LayoutConstraints const &layoutConstraints,
-      Size const & size)
-      : layoutConstraints_(layoutConstraints),
-        desiredSize_(size){};
+  XamlLayoutableComponentState(LayoutConstraints const &layoutConstraints, Size const &size)
+      : layoutConstraints_(layoutConstraints), desiredSize_(size){};
 
   XamlLayoutableComponentState() = default;
 
