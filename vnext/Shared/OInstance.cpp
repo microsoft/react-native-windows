@@ -509,7 +509,15 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
-      std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
+      std::string bundlePath;
+      if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
+        auto uri = winrt::Windows::Foundation::Uri(
+            winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
+        bundlePath = winrt::to_string(uri.ToString());
+      } else {
+        bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
+      }
+
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
 #endif
       m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(jsBundleRelativePath), synchronously);
@@ -517,11 +525,9 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
   } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
   } catch (const winrt::hresult_error &hrerr) {
-    std::stringstream ss;
-    ss << "[" << std::hex << std::showbase << std::setw(8) << static_cast<uint32_t>(hrerr.code()) << "] "
-       << winrt::to_string(hrerr.message());
+    auto error = fmt::format("[0x{:0>8x}] {}", static_cast<uint32_t>(hrerr.code()), winrt::to_string(hrerr.message()));
 
-    m_devSettings->errorCallback(std::move(ss.str()));
+    m_devSettings->errorCallback(std::move(error));
   }
 }
 
