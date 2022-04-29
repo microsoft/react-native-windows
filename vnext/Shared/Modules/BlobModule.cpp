@@ -30,6 +30,7 @@ using winrt::Microsoft::ReactNative::ReactPropertyBag;
 using winrt::Microsoft::ReactNative::ReactPropertyId;
 using winrt::Windows::Foundation::GuidHelper;
 using winrt::Windows::Foundation::IInspectable;
+using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
@@ -269,6 +270,85 @@ void WebSocketModuleContentHandler::RemoveMessage(string &&blobId) noexcept {
 }
 
 #pragma endregion WebSocketModuleContentHandler
+
+#pragma region BlobModuleUriHandler
+
+#pragma region IUriHandler
+
+bool BlobModuleUriHandler::Supports(string &uri, string &responseType) /*override*/ {
+  auto uriObj = Uri{winrt::to_hstring(uri)};
+
+  return !(L"http" == uriObj.SchemeName() || L"https" == uriObj.SchemeName()) && "blob" == responseType;
+}
+
+dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
+  auto blob = dynamic{};
+
+  blob["blobId"] = string{}; // TODO: Store (See BlobWebSocketModuleContentHandler::StoreMessage)
+  blob["offset"] = 0;
+  blob["size"] = uri.size();
+  blob["type"] = GetMimeTypeFromUri(uri);
+
+  // Needed for files
+  blob["name"] = GetNameFromUri(uri);
+  blob["lastModified"] = GetLastModifiedFromUri(uri);
+
+  return blob;
+}
+
+#pragma endregion IUriHandler
+
+string BlobModuleUriHandler::GetMimeTypeFromUri(string& uri) noexcept {
+  //TODO: content resolver.
+  // See https://developer.android.com/reference/android/content/ContentResolver
+  // See https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
+
+  return "blob";
+}
+
+string BlobModuleUriHandler::GetNameFromUri(string& uri) noexcept {
+  auto uriObj = Uri { winrt::to_hstring(uri) };
+  auto path = uriObj.Path();
+  if (L"file" == uriObj.SchemeName()) {
+    return GetLastPathSegment(path);
+  }
+
+  //TODO: Lookup "_display_name"
+
+  return GetLastPathSegment(path);
+}
+
+string BlobModuleUriHandler::GetLastPathSegment(winrt::hstring& path) noexcept {
+  auto start = path.size();
+  auto end = start;
+  while (end > 0) {
+    if (path[end - 1] != '/') {
+      start = end - 1;
+      break;
+    } else {
+      end--;
+    }
+  }
+
+  // No name characters found
+  if (start >= end)
+    return {};
+
+  while (start > 0 && path[start - 1] != '/') {
+    start--;
+  }
+
+  return winrt::to_string(path).substr(start, /*count*/ end - start);
+}
+
+int64_t BlobModuleUriHandler::GetLastModifiedFromUri(string& uri) noexcept {
+  //TODO: Handle StorageFile URIs
+  // https://stackoverflow.com/questions/31860360
+
+  return 0;
+}
+
+#pragma endregion BlobModuleUriHandler
 
 /*extern*/ const char *GetBlobModuleName() noexcept {
   return moduleName;

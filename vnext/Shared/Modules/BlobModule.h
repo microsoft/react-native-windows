@@ -50,6 +50,7 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
 };
 
 class BlobModuleUriHandler final : public IUriHandler {
+ public:
 #pragma region IUriHandler
 
   bool Supports(std::string &uri, std::string &responseType) override;
@@ -57,6 +58,14 @@ class BlobModuleUriHandler final : public IUriHandler {
   folly::dynamic Fetch(std::string &uri) override;
 
 #pragma endregion IUriHandler
+
+  std::string GetMimeTypeFromUri(std::string &uri) noexcept;
+
+  std::string GetNameFromUri(std::string &uri) noexcept;
+
+  std::string GetLastPathSegment(winrt::hstring &path) noexcept;
+
+  int64_t GetLastModifiedFromUri(std::string &uri) noexcept;
 };
 
 class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
