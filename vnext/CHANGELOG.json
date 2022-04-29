@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 29 Apr 2022 05:09:50 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.494",
+      "version": "0.0.0-canary.494",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ddfe3bbbad570aea7758e342a50657f91e334a97",
+            "comment": "Move fabric code to shared project"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ef86ec95f456ad5d8df7464fe540245aa2329464",
+            "comment": "Fix clang-check errors in NativeModules.h"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Apr 2022 05:10:23 GMT",
       "tag": "react-native-windows_v0.0.0-canary.493",
       "version": "0.0.0-canary.493",
