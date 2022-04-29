@@ -10,9 +10,6 @@
 #include <string>
 #include <vector>
 
-#include <unordered_map>
-#include <unordered_set>
-
 namespace Microsoft::React {
 
 /// <summary>

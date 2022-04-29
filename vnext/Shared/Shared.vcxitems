@@ -89,6 +89,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IHttpModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IRequestBodyHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h" />

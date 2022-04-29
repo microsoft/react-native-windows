@@ -44,7 +44,8 @@ namespace Microsoft::React {
 
 BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept
     : m_sharedState{std::make_shared<SharedState>()},
-      m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>()},
+      m_blobPersistor{std::make_shared<MemoryBlobPersistor>()},
+      m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>(m_blobPersistor)},
       m_iProperties{iProperties} {
   auto propId =
       ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
@@ -91,7 +92,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"sendOverSocket",
-       [contentHandler = m_contentHandler,
+       [persistor = m_blobPersistor,
         propBag = ReactPropertyBag{m_iProperties.try_as<IReactPropertyBag>()}](dynamic args) {
          auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
          auto wsProxy = propBag.Get(propId).Value().lock();
@@ -105,7 +106,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
          auto size = blob["size"].getInt();
          auto socketID = jsArgAsInt(args, 1);
 
-         auto data = contentHandler->ResolveMessage(std::move(blobId), offset, size);
+         auto data = persistor->ResolveMessage(std::move(blobId), offset, size);
 
          auto buffer = CryptographicBuffer::CreateFromByteArray(data);
          auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
@@ -118,7 +119,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
        // Directly use getInstance() once
        // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
-       [contentHandler = m_contentHandler, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
+       [persistor = m_blobPersistor, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
          auto parts = jsArgAsArray(args, 0); // Array<Object>
          auto blobId = jsArgAsString(args, 1);
          vector<uint8_t> buffer{};
@@ -127,7 +128,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
            auto type = part["type"];
            if (type == "blob") {
              auto blob = part["data"];
-             auto bufferPart = contentHandler->ResolveMessage(
+             auto bufferPart = persistor->ResolveMessage(
                  blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
              buffer.reserve(buffer.size() + bufferPart.size());
              buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
@@ -148,16 +149,16 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
              return;
            }
 
-           contentHandler->StoreMessage(std::move(buffer), std::move(blobId));
+           persistor->StoreMessage(std::move(buffer), std::move(blobId));
          }
        }},
 
       {"release",
-       [contentHandler = m_contentHandler](dynamic args) // blobId: string
+       [persistor = m_blobPersistor](dynamic args) // blobId: string
        {
          auto blobId = jsArgAsString(args, 0);
 
-         contentHandler->RemoveMessage(std::move(blobId));
+         persistor->RemoveMessage(std::move(blobId));
        }}};
 }
 
@@ -165,7 +166,40 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
 
 #pragma endregion BlobModule
 
+#pragma region MemoryBlobPersistor
+
+#pragma region IBlobPersistor
+
+winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept {
+  scoped_lock lock{m_mutex};
+
+  auto &data = m_blobs.at(std::move(blobId));
+
+  return winrt::array_view<uint8_t>{data};
+}
+
+void MemoryBlobPersistor::RemoveMessage(string &&blobId) noexcept {
+  scoped_lock lock{m_mutex};
+
+  m_blobs.erase(std::move(blobId));
+}
+
+void MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message, string &&blobId) noexcept {
+  scoped_lock lock{m_mutex};
+
+  m_blobs.insert_or_assign(std::move(blobId), std::move(message));
+}
+
+#pragma endregion IBlobPersistor
+
+#pragma endregion MemoryBlobPersistor
+
 #pragma region BlobWebSocketModuleContentHandler
+
+BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(
+  shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {
+}
 
 #pragma region IWebSocketModuleContentHandler
 
@@ -180,7 +214,8 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
 
   // substr(1, 36) strips curly braces from a GUID.
   string blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
-  StoreMessage(std::move(message), std::move(blobId));
+
+  m_blobPersistor->StoreMessage(std::move(message), std::move(blobId));
 
   params["data"] = std::move(blob);
   params["type"] = "blob";
@@ -188,35 +223,14 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
 #pragma endregion IWebSocketModuleContentHandler
 
 void BlobWebSocketModuleContentHandler::Register(int64_t socketID) noexcept {
-  scoped_lock lock{m_socketIDsMutex};
-  m_socketIDs.insert(socketID);
+  scoped_lock lock{m_mutex};
+  m_socketIds.insert(socketID);
 }
 
 void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
-  scoped_lock lock{m_socketIDsMutex};
-  if (m_socketIDs.find(socketID) != m_socketIDs.end())
-    m_socketIDs.erase(socketID);
-}
-
-winrt::array_view<uint8_t>
-BlobWebSocketModuleContentHandler::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept {
-  scoped_lock lock{m_blobsMutex};
-
-  auto &data = m_blobs.at(std::move(blobId));
-
-  return winrt::array_view<uint8_t>{data};
-}
-
-void BlobWebSocketModuleContentHandler::RemoveMessage(string &&blobId) noexcept {
-  scoped_lock lock{m_blobsMutex};
-
-  m_blobs.erase(std::move(blobId));
-}
-
-void BlobWebSocketModuleContentHandler::StoreMessage(vector<uint8_t> &&message, string &&blobId) noexcept {
-  scoped_lock lock{m_blobsMutex};
-
-  m_blobs.insert_or_assign(std::move(blobId), std::move(message));
+  scoped_lock lock{m_mutex};
+  if (m_socketIds.find(socketID) != m_socketIds.end())
+    m_socketIds.erase(socketID);
 }
 
 #pragma endregion BlobWebSocketModuleContentHandler

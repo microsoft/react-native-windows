@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <Modules/IBlobPersistor.h>
 #include <Modules/IRequestBodyHandler.h>
 #include <Modules/IResponseHandler.h>
 #include <Modules/IUriHandler.h>
@@ -23,13 +24,31 @@
 
 namespace Microsoft::React {
 
-class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
+class MemoryBlobPersistor final : public IBlobPersistor
+{
   std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
-  std::mutex m_blobsMutex;
-  std::unordered_set<int64_t> m_socketIDs;
-  std::mutex m_socketIDsMutex;
+  std::mutex m_mutex;
 
  public:
+#pragma region IBlobPersistor
+
+  winrt::array_view<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) noexcept override;
+
+  void RemoveMessage(std::string &&blobId) noexcept override;
+
+  void StoreMessage(std::vector<uint8_t> &&message, std::string &&blobId) noexcept override;
+
+#pragma endregion IBlobPersistor
+};
+
+class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHandler {
+  std::unordered_set<int64_t> m_socketIds;
+  std::mutex m_mutex;
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
+
+ public:
+  BlobWebSocketModuleContentHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+
 #pragma region IWebSocketModuleContentHandler
 
   void ProcessMessage(std::string &&message, folly::dynamic &params) override;
@@ -41,12 +60,6 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
   void Register(int64_t socketID) noexcept;
 
   void Unregister(int64_t socketID) noexcept;
-
-  winrt::array_view<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) noexcept;
-
-  void RemoveMessage(std::string &&blobId) noexcept;
-
-  void StoreMessage(std::vector<uint8_t> &&message, std::string &&blobId) noexcept;
 };
 
 class BlobModuleUriHandler final : public IUriHandler {
@@ -89,6 +102,7 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 };
 
 class BlobModule : public facebook::xplat::module::CxxModule {
+  std::shared_ptr<MemoryBlobPersistor> m_blobPersistor;
   std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
 
   // Property bag high level reference.

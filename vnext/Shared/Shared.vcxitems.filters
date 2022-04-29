@@ -441,6 +441,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
