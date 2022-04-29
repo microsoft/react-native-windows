@@ -12,13 +12,15 @@
 
 namespace Microsoft::React {
 
-struct IBlobPersistor
-{
+struct IBlobPersistor {
   virtual winrt::array_view<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) noexcept = 0;
 
   virtual void RemoveMessage(std::string &&blobId) noexcept = 0;
 
+  // TODO: Keep only one variant for StoreMessage.
   virtual void StoreMessage(std::vector<uint8_t> &&message, std::string &&blobId) noexcept = 0;
+
+  virtual std::string StoreMessage(std::vector<uint8_t> &&message) noexcept = 0;
 };
 
-}//namespace
+} // namespace Microsoft::React

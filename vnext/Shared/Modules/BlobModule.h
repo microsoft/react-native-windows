@@ -24,8 +24,7 @@
 
 namespace Microsoft::React {
 
-class MemoryBlobPersistor final : public IBlobPersistor
-{
+class MemoryBlobPersistor final : public IBlobPersistor {
   std::unordered_map<std::string, std::vector<uint8_t>> m_blobs;
   std::mutex m_mutex;
 
@@ -37,6 +36,8 @@ class MemoryBlobPersistor final : public IBlobPersistor
   void RemoveMessage(std::string &&blobId) noexcept override;
 
   void StoreMessage(std::vector<uint8_t> &&message, std::string &&blobId) noexcept override;
+
+  std::string StoreMessage(std::vector<uint8_t> &&message) noexcept override;
 
 #pragma endregion IBlobPersistor
 };
@@ -63,7 +64,11 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
 };
 
 class BlobModuleUriHandler final : public IUriHandler {
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
+
  public:
+  BlobModuleUriHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+
 #pragma region IUriHandler
 
   bool Supports(std::string &uri, std::string &responseType) override;
@@ -82,19 +87,29 @@ class BlobModuleUriHandler final : public IUriHandler {
 };
 
 class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
+
+ public:
+  BlobModuleRequestBodyHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+
 #pragma region IRequestBodyHandler
 
   bool Supports(folly::dynamic &data) override;
 
-  void * /*RequestBody*/ ToRequestBody(folly::dynamic &data, std::string &contentType) override;
+  folly::dynamic ToRequestBody(folly::dynamic &data, std::string &contentType) override;
 
 #pragma endregion IRequestBodyHandler
 };
 
 class BlobModuleResponseHandler final : public IResponseHandler {
+  std::shared_ptr<IBlobPersistor> m_blobPersistor;
+
+ public:
+  BlobModuleResponseHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
+
 #pragma region IResponseHandler
 
-  bool Supports(std::string responseType) override;
+  bool Supports(std::string &responseType) override;
 
   folly::dynamic ToResponseData(folly::dynamic &body) override;
 
@@ -104,6 +119,9 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 class BlobModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<MemoryBlobPersistor> m_blobPersistor;
   std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
+  std::shared_ptr<BlobModuleUriHandler> m_uriHandler;
+  std::shared_ptr<BlobModuleRequestBodyHandler> m_requestBodyHandler;
+  std::shared_ptr<BlobModuleResponseHandler> m_responseHandler;
 
   // Property bag high level reference.
   winrt::Windows::Foundation::IInspectable m_iProperties;

@@ -15,7 +15,7 @@ struct IResponseHandler {
   /// <summary>
   /// Returns if the handler should be used for a response type.
   /// </summary>
-  virtual bool Supports(std::string responseType) = 0;
+  virtual bool Supports(std::string &responseType) = 0;
 
   /// <summary>
   /// Returns the JS body payload for the {@link ResponseBody}.

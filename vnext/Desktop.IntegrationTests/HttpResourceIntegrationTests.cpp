@@ -172,7 +172,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       promise.set_value();
     });
 
-    resource->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, {}, [](int64_t){});
+    resource->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, {}, [](int64_t) {});
 
     promise.get_future().wait();
 

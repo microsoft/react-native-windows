@@ -46,6 +46,9 @@ BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &iProperti
     : m_sharedState{std::make_shared<SharedState>()},
       m_blobPersistor{std::make_shared<MemoryBlobPersistor>()},
       m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>(m_blobPersistor)},
+      m_uriHandler{std::make_shared<BlobModuleUriHandler>(m_blobPersistor)},
+      m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
+      m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
       m_iProperties{iProperties} {
   auto propId =
       ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
@@ -122,14 +125,14 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
        [persistor = m_blobPersistor, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
          auto parts = jsArgAsArray(args, 0); // Array<Object>
          auto blobId = jsArgAsString(args, 1);
-         vector<uint8_t> buffer{};
+         vector<uint8_t> buffer{}; // TODO: build from parts.
 
          for (const auto &part : parts) {
            auto type = part["type"];
            if (type == "blob") {
              auto blob = part["data"];
-             auto bufferPart = persistor->ResolveMessage(
-                 blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
+             auto bufferPart =
+                 persistor->ResolveMessage(blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
              buffer.reserve(buffer.size() + bufferPart.size());
              buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
            } else if (type == "string") {
@@ -190,16 +193,24 @@ void MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message, string &&blobI
   m_blobs.insert_or_assign(std::move(blobId), std::move(message));
 }
 
+string MemoryBlobPersistor::StoreMessage(vector<uint8_t> &&message) noexcept {
+  // substr(1, 36) strips curly braces from a GUID.
+  auto blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
+
+  scoped_lock lock{m_mutex};
+  m_blobs.insert_or_assign(blobId, std::move(message));
+
+  return blobId;
+}
+
 #pragma endregion IBlobPersistor
 
 #pragma endregion MemoryBlobPersistor
 
 #pragma region BlobWebSocketModuleContentHandler
 
-BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(
-  shared_ptr<IBlobPersistor> blobPersistor) noexcept
-    : m_blobPersistor{blobPersistor} {
-}
+BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {}
 
 #pragma region IWebSocketModuleContentHandler
 
@@ -211,11 +222,7 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
   auto blob = dynamic::object();
   blob("offset", 0);
   blob("size", message.size());
-
-  // substr(1, 36) strips curly braces from a GUID.
-  string blobId = winrt::to_string(winrt::to_hstring(GuidHelper::CreateNewGuid())).substr(1, 36);
-
-  m_blobPersistor->StoreMessage(std::move(message), std::move(blobId));
+  blob("blobId", m_blobPersistor->StoreMessage(std::move(message)));
 
   params["data"] = std::move(blob);
   params["type"] = "blob";
@@ -237,6 +244,9 @@ void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
 
 #pragma region BlobModuleUriHandler
 
+BlobModuleUriHandler::BlobModuleUriHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {}
+
 #pragma region IUriHandler
 
 bool BlobModuleUriHandler::Supports(string &uri, string &responseType) /*override*/ {
@@ -246,43 +256,45 @@ bool BlobModuleUriHandler::Supports(string &uri, string &responseType) /*overrid
 }
 
 dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
-  auto blob = dynamic{};
+  auto data = vector<uint8_t>{}; // getBytesFromUri
 
-  blob["blobId"] = string{}; // TODO: Store (See BlobWebSocketModuleContentHandler::StoreMessage)
-  blob["offset"] = 0;
-  blob["size"] = uri.size();
-  blob["type"] = GetMimeTypeFromUri(uri);
+  auto blob = dynamic::object();
+  blob("offset", 0);
+  blob("size", data.size());
+  blob("type", GetMimeTypeFromUri(uri));
+  blob("blobId", m_blobPersistor->StoreMessage(std::move(data)));
 
   // Needed for files
-  blob["name"] = GetNameFromUri(uri);
-  blob["lastModified"] = GetLastModifiedFromUri(uri);
+  blob("name", GetNameFromUri(uri));
+  blob("lastModified", GetLastModifiedFromUri(uri));
 
   return blob;
 }
 
 #pragma endregion IUriHandler
 
-string BlobModuleUriHandler::GetMimeTypeFromUri(string& uri) noexcept {
-  //TODO: content resolver.
-  // See https://developer.android.com/reference/android/content/ContentResolver
-  // See https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
+string BlobModuleUriHandler::GetMimeTypeFromUri(string &uri) noexcept {
+  // TODO: content resolver.
+  //  See https://developer.android.com/reference/android/content/ContentResolver
+  //  See
+  //  https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
 
   return "blob";
 }
 
-string BlobModuleUriHandler::GetNameFromUri(string& uri) noexcept {
-  auto uriObj = Uri { winrt::to_hstring(uri) };
+string BlobModuleUriHandler::GetNameFromUri(string &uri) noexcept {
+  auto uriObj = Uri{winrt::to_hstring(uri)};
   auto path = uriObj.Path();
   if (L"file" == uriObj.SchemeName()) {
     return GetLastPathSegment(path);
   }
 
-  //TODO: Lookup "_display_name"
+  // TODO: Lookup "_display_name"
 
   return GetLastPathSegment(path);
 }
 
-string BlobModuleUriHandler::GetLastPathSegment(winrt::hstring& path) noexcept {
+string BlobModuleUriHandler::GetLastPathSegment(winrt::hstring &path) noexcept {
   auto start = path.size();
   auto end = start;
   while (end > 0) {
@@ -305,14 +317,73 @@ string BlobModuleUriHandler::GetLastPathSegment(winrt::hstring& path) noexcept {
   return winrt::to_string(path).substr(start, /*count*/ end - start);
 }
 
-int64_t BlobModuleUriHandler::GetLastModifiedFromUri(string& uri) noexcept {
-  //TODO: Handle StorageFile URIs
-  // https://stackoverflow.com/questions/31860360
+int64_t BlobModuleUriHandler::GetLastModifiedFromUri(string &uri) noexcept {
+  // TODO: Handle StorageFile URIs
+  //  https://stackoverflow.com/questions/31860360
 
   return 0;
 }
 
 #pragma endregion BlobModuleUriHandler
+
+#pragma region BlobModuleRequestBodyHandler
+
+BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {}
+
+#pragma region IRequestBodyHandler
+
+bool BlobModuleRequestBodyHandler::Supports(dynamic &data) /*override*/ {
+  return !data.at("blob").empty();
+}
+
+dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &contentType) /*override*/ {
+  auto type = contentType;
+  if (!data["type"].asString().empty()) {
+    type = data["type"].asString();
+  }
+  if (type.empty()) {
+    type = "application/octet-stream";
+  }
+
+  auto blob = data["blob"];
+  auto blobId = blob["blobId"].asString();
+  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob["offset"].asInt(), blob["size"].asInt());
+
+  // TODO: create body from type and bytes
+  return {};
+}
+
+#pragma endregion IRequestBodyHandler
+
+#pragma endregion BlobModuleRequestBodyHandler
+
+#pragma region BlobModuleResponseHandler
+
+BlobModuleResponseHandler::BlobModuleResponseHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
+    : m_blobPersistor{blobPersistor} {}
+
+#pragma region IResponseHandler
+
+bool BlobModuleResponseHandler::Supports(std::string &responseType) /*override*/ {
+  return blobURIScheme == responseType;
+}
+
+dynamic BlobModuleResponseHandler::ToResponseData(dynamic &body) /*override*/ {
+  // TODO: get bytes from body
+  auto bytes = vector<uint8_t>{};
+
+  auto blob = dynamic::object();
+  blob("offset", 0);
+  blob("size", bytes.size());
+  blob("blobId", m_blobPersistor->StoreMessage(std::move(bytes)));
+
+  return blob;
+}
+
+#pragma endregion IResponseHandler
+
+#pragma endregion BlobModuleResponseHandler
 
 /*extern*/ const char *GetBlobModuleName() noexcept {
   return moduleName;

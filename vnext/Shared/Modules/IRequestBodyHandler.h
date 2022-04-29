@@ -23,7 +23,7 @@ struct IRequestBodyHandler {
   /// <summary>
   /// Returns the {@link RequestBody} for the JS body payload.
   /// </summary>
-  virtual void * /*RequestBody*/ ToRequestBody(folly::dynamic &data, std::string &contentType) = 0;
+  virtual folly::dynamic ToRequestBody(folly::dynamic &data, std::string &contentType) = 0;
 };
 
 } // namespace Microsoft::React
