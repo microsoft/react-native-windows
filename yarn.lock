@@ -1766,11 +1766,11 @@
     slash "^3.0.0"
 
 "@react-native-community/cli-platform-ios@^8.0.0-alpha.0":
-  version "8.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-8.0.0-alpha.0.tgz#030e2c0bb16500a82b6ca5ce2aa2c56909d0ed78"
-  integrity sha512-v0B4L1Xaez6oSsU7qXKkXQ+eAxsF0swz24q37XA4NokTUP9l+7QA9pRlqSbbsJPhTKUbQENZx8G8sAE0r+GFUg==
+  version "8.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-8.0.0-alpha.3.tgz#251d3723774babc499e599e4f2667b1203f57407"
+  integrity sha512-V8129DhF0r4cFwkkQcShkYDtRCCPAhAexgYdbzqF42GMK6pQMIfWoMagkBH6QuGYT2FGsrWPGFa+XZi3YVv+Qg==
   dependencies:
-    "@react-native-community/cli-tools" "^8.0.0-alpha.0"
+    "@react-native-community/cli-tools" "^8.0.0-alpha.3"
     chalk "^4.1.2"
     execa "^1.0.0"
     glob "^7.1.3"
