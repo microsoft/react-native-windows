@@ -9,14 +9,20 @@
 #include "ReactNativeHost.h"
 #include "Utils/Helpers.h"
 
+#ifdef USE_WINCOMP
 #include <winrt/Windows.UI.Composition.h>
+#else
+#include <UI.Xaml.Controls.Primitives.h>
+#endif
 
 namespace Microsoft::ReactNative {
 
+#ifdef USE_WINCOMP
 constexpr PCWSTR c_logBoxWindowClassName = L"MS_REACTNATIVE_LOGBOX";
 constexpr auto CompHostProperty = L"CompHost";
 const int LOGBOX_DEFAULT_WIDTH = 700;
 const int LOGBOX_DEFAULT_HEIGHT = 1000;
+#endif // USE_WINCOMP
 
 void LogBox::Show() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {
@@ -38,8 +44,7 @@ void LogBox::Hide() noexcept {
   });
 }
 
-bool g_ShouldBeWindowProp_isShown = false;
-
+#ifdef USE_WINCOMP
 LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   auto data = reinterpret_cast<::IUnknown *>(GetProp(hwnd, CompHostProperty));
   winrt::com_ptr<winrt::IUnknown> spunk;
@@ -72,7 +77,6 @@ LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
     case WM_DESTROY: {
       data->Release();
       SetProp(hwnd, CompHostProperty, nullptr);
-      g_ShouldBeWindowProp_isShown = false;
     }
   }
 
@@ -104,12 +108,14 @@ void LogBox::RegisterWndClass() noexcept {
 
   registered = true;
 }
+#endif // USE_WINCOMP
 
 void LogBox::ShowOnUIThread() noexcept {
   auto host = React::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
   if (!host)
     return;
 
+#ifdef USE_WINCOMP
   RegisterWndClass();
 
   if (!m_hwnd) {
@@ -139,12 +145,70 @@ void LogBox::ShowOnUIThread() noexcept {
   ShowWindow(m_hwnd, SW_NORMAL);
   BringWindowToTop(m_hwnd);
   SetFocus(m_hwnd);
+#else
+  m_logBoxContent = React::ReactRootView();
+  m_logBoxContent.ComponentName(L"LogBox");
+  m_logBoxContent.ReactNativeHost(host);
+
+  m_popup = xaml::Controls::Primitives::Popup{};
+  xaml::FrameworkElement root{nullptr};
+
+  if (Is19H1OrHigher()) {
+    // XamlRoot added in 19H1 - is required to be set for XamlIsland scenarios
+    if (auto xamlRoot = React::XamlUIService::GetXamlRoot(m_context.Properties().Handle())) {
+      m_popup.XamlRoot(xamlRoot);
+      root = xamlRoot.Content().as<xaml::FrameworkElement>();
+    }
+  }
+
+  if (!root) {
+    auto window = xaml::Window::Current();
+    root = window.Content().as<xaml::FrameworkElement>();
+  }
+
+  m_logBoxContent.MaxHeight(root.ActualHeight());
+  m_logBoxContent.Height(root.ActualHeight());
+  m_logBoxContent.MaxWidth(root.ActualWidth());
+  m_logBoxContent.Width(root.ActualWidth());
+  m_logBoxContent.UpdateLayout();
+
+  m_sizeChangedRevoker = root.SizeChanged(
+      winrt::auto_revoke, [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->m_logBoxContent.MaxHeight(args.NewSize().Height);
+          strongThis->m_logBoxContent.Height(args.NewSize().Height);
+          strongThis->m_logBoxContent.MaxWidth(args.NewSize().Width);
+          strongThis->m_logBoxContent.Width(args.NewSize().Width);
+        }
+      });
+
+  m_tokenClosed = m_popup.Closed(
+      [wkThis = weak_from_this()](auto const & /*sender*/, winrt::IInspectable const & /*args*/) noexcept {
+        if (auto strongThis = wkThis.lock()) {
+          strongThis->HideOnUIThread();
+        }
+      });
+
+  m_popup.Child(m_logBoxContent);
+  m_popup.IsOpen(true);
+#endif
+
 }
 
 void LogBox::HideOnUIThread() noexcept {
+#ifdef USE_WINCOMP
   if (m_hwnd) {
     ::ShowWindow(m_hwnd, SW_HIDE);
   }
+#else
+  if (m_popup) {
+    m_popup.Closed(m_tokenClosed);
+    m_sizeChangedRevoker.revoke();
+    m_popup.IsOpen(false);
+    m_popup = nullptr;
+    m_logBoxContent = nullptr;
+  }
+#endif
 }
 
 void LogBox::Initialize(React::ReactContext const &reactContext) noexcept {

@@ -53,6 +53,7 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
       const override {
     /*
         int surfaceId = family->getSurfaceId();
+
         YGStyle::Edges theme;
         // TODO: figure out RTL/start/end/left/right stuff here
         if (surfaceIdToThemePaddingMap_.find(surfaceId) !=
@@ -61,11 +62,13 @@ class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescri
         } else {
           const jni::global_ref<jobject> &fabricUIManager =
               contextContainer_->at<jni::global_ref<jobject>>("FabricUIManager");
+
           auto env = jni::Environment::current();
           auto defaultTextInputPaddingArray = env->NewFloatArray(4);
           static auto getThemeData =
               jni::findClassStatic(UIManagerJavaDescriptor)
                   ->getMethod<jboolean(jint, jfloatArray)>("getThemeData");
+
           if (getThemeData(
                   fabricUIManager, surfaceId, defaultTextInputPaddingArray)) {
             jfloat *defaultTextInputPadding =

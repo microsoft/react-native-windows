@@ -153,17 +153,16 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 
  private:
   // EventBeatManager *eventBeatManager_;
-#ifndef CORE_ABI
+#ifdef USE_WINCOMP
+  winrt::Windows::System::DispatcherQueueTimer m_timer{nullptr};
+  winrt::Windows::System::DispatcherQueueTimer::Tick_revoker m_timerToken;
+#else
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
-#endif // CORE_ABI
+#endif
   bool m_async;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::RuntimeExecutor runtimeExecutor_;
   std::weak_ptr<FabricUIManager> uiManager_;
-#ifdef USE_WINCOMP
-  winrt::Windows::System::DispatcherQueueTimer m_timer{nullptr};
-  winrt::Windows::System::DispatcherQueueTimer::Tick_revoker m_timerToken;
-#endif
 };
 
 std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> sharedProviderRegistry() {
@@ -285,7 +284,11 @@ void FabricUIManager::startSurface(
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     self->m_registry.dequeueComponentViewWithComponentHandle(
-        facebook::react::RootShadowNode::Handle(), surfaceId, self->m_surfaceRegistry.at(surfaceId).compContext);
+        facebook::react::RootShadowNode::Handle(), surfaceId
+#ifdef USE_WINCOMP
+        , self->m_surfaceRegistry.at(surfaceId).compContext
+#endif
+        );
   });
 
   facebook::react::LayoutContext context;
@@ -383,7 +386,11 @@ void FabricUIManager::RCTPerformMountInstructions(
       case facebook::react::ShadowViewMutation::Create: {
         auto &newChildShadowView = mutation.newChildShadowView;
         auto &newChildViewDescriptor = m_registry.dequeueComponentViewWithComponentHandle(
-            newChildShadowView.componentHandle, newChildShadowView.tag, m_surfaceRegistry.at(surfaceId).compContext);
+            newChildShadowView.componentHandle, newChildShadowView.tag
+#ifdef USE_WINCOMP
+            , m_surfaceRegistry.at(surfaceId).compContext
+#endif
+            );
         // observerCoordinator.registerViewComponentDescriptor(newChildViewDescriptor, surfaceId);
         break;
       }
