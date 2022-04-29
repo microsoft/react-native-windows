@@ -10,7 +10,6 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
-#include <Fabric/WinComp/TextInput/CompWindowsTextInputShadowNode.h>
 #include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
@@ -40,8 +39,7 @@ void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactConte
 
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
-    facebook::react::Tag tag,
-    const std::shared_ptr<CompContext> &compContext) noexcept {
+    facebook::react::Tag tag) noexcept {
   // TODO implement recycled components like core does
 
   std::shared_ptr<BaseComponentView> view;

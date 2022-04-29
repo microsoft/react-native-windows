@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include <Fabric/WinComp/CompHelpers.h>
 #include <NativeModules.h>
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
-#include <winrt/Windows.UI.Composition.h>
 #ifdef USE_WINCOMP
+#include <Fabric/WinComp/CompHelpers.h>
+#include <winrt/Windows.UI.Composition.h>
 #include "WinComp/CompComponentViewRegistry.h"
 #else
 #include "ComponentViewRegistry.h"
@@ -76,12 +76,12 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   ComponentViewRegistry m_registry;
 #endif
   struct SurfaceInfo {
+#ifdef USE_WINCOMP
     winrt::Windows::UI::Composition::Visual rootVisual{nullptr};
     std::shared_ptr<CompContext> compContext;
-
-#ifndef USE_WINCOMP
+#else
     XamlView xamlView;
-#endif // USE_WINCOMP
+#endif
   };
 
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;

@@ -7,26 +7,25 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
-#include <Fabric/WinComp/CompViewComponentView.h>
-#ifndef CORE_ABI
-#include <Fabric/ViewComponentView.h>
-#endif
-#include <ICompRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
-#ifndef CORE_ABI
-#include <IXamlRootView.h>
-#endif
+#ifdef USE_WINCOMP
+#include <Fabric/WinComp/CompViewComponentView.h>
 #include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentDescriptor.h>
+#include <ICompRootView.h>
+#include <winrt/Windows.UI.Composition.Desktop.h>
+#else
+#include <Fabric/ViewComponentView.h>
+#include <IXamlRootView.h>
+#include <react/renderer/components/slider/SliderComponentDescriptor.h>
+#include "TextInput/WindowsTextInputComponentDescriptor.h"
+#endif // USE_WINCOMP
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
-#ifndef CORE_ABI
-#include <react/renderer/components/slider/SliderComponentDescriptor.h>
-#endif // CORE_ABI
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
@@ -37,10 +36,6 @@
 #include <react/utils/ContextContainer.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
-#include <winrt/Windows.UI.Composition.Desktop.h>
-#ifndef CORE_ABI
-#include "TextInput/WindowsTextInputComponentDescriptor.h"
-#endif // CORE_ABI
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -84,21 +79,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
         // eventBeatManager_(eventBeatManager),
         runtimeExecutor_(runtimeExecutor),
         uiManager_(uiManager) {
-
-#ifndef USE_WINCOMP
-      // TODO: should use something other than CompositionTarget::Rendering ... not sure where to plug this in yet
-      // Getting the beat running to unblock basic events
-      m_rendering = xaml::Media::CompositionTarget::Rendering(
-          winrt::auto_revoke, [this, ownerBox](const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
-            auto owner = ownerBox->owner.lock();
-            if (!owner) {
-              return;
-            }
-
-            tick();
-          });
-#else
-
+#ifdef USE_WINCOMP
     // eventBeatManager->addObserver(*this);
     winrt::Microsoft::ReactNative::ReactPropertyBag propBag(m_context.Properties());
     auto coreDisp = propBag.Get(
@@ -119,8 +100,25 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
               m_async ? L"AsyncEventBeatCallback" : L"SyncEventBeatCallback"),
           winrt::Microsoft::ReactNative::ReactDispatcherCallback{[this]() { tick(); }});
     }
-#endif // CORE_ABI
+#else
+    m_context.UIDispatcher().Post([this, uiManager, ownerBox = ownerBox_]() {
+      auto owner = ownerBox->owner.lock();
+      if (!owner) {
+        return;
+      }
+      // TODO: should use something other than CompositionTarget::Rendering ... not sure where to plug this in yet
+      // Getting the beat running to unblock basic events
+      m_rendering = xaml::Media::CompositionTarget::Rendering(
+          winrt::auto_revoke, [this, ownerBox](const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
+            auto owner = ownerBox->owner.lock();
+            if (!owner) {
+              return;
+            }
 
+            tick();
+          });
+    }
+#endif // CORE_ABI
   }
 
   ~AsyncEventBeat() {
@@ -157,13 +155,15 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
   // EventBeatManager *eventBeatManager_;
 #ifndef CORE_ABI
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
-#endif
+#endif // CORE_ABI
   bool m_async;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::RuntimeExecutor runtimeExecutor_;
   std::weak_ptr<FabricUIManager> uiManager_;
+#ifdef USE_WINCOMP
   winrt::Windows::System::DispatcherQueueTimer m_timer{nullptr};
   winrt::Windows::System::DispatcherQueueTimer::Tick_revoker m_timerToken;
+#endif
 };
 
 std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> sharedProviderRegistry() {
@@ -179,10 +179,6 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
         facebook::react::concreteComponentDescriptorProvider<facebook::react::RawTextComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
-#ifndef CORE_ABI
-    providerRegistry->add(
-        facebook::react::concreteComponentDescriptorProvider<facebook::react::SliderComponentDescriptor>());
-#endif // CORE_ABI
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::SwitchComponentDescriptor>());
     providerRegistry->add(
@@ -192,11 +188,12 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
 #if USE_WINCOMP
     providerRegistry->add(facebook::react::concreteComponentDescriptorProvider<
                           facebook::react::CompWindowsTextInputComponentDescriptor>());
-#endif
-#ifndef CORE_ABI
+#else
+    providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::SliderComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
-#endif // CORE_ABI
+#endif // USE_WINCOMP
     return providerRegistry;
   }();
 
@@ -277,14 +274,13 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-
 #ifdef USE_WINCOMP
   auto compRootView = static_cast<ICompRootView *>(rootview);
   m_surfaceRegistry.insert({surfaceId, {compRootView->GetVisual(), compRootView->CompContext()}});
 #else
   auto xamlRootView = static_cast<IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
-  m_surfaceRegistry.insert({surfaceId, {nullptr /*comp visual*/, nullptr /*comp context*/, xamlRootView->GetXamlView()}});
+  m_surfaceRegistry.insert({surfaceId, {xamlRootView->GetXamlView()}});
 #endif
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
@@ -305,7 +301,7 @@ void FabricUIManager::startSurface(
 #else
   // TODO: This call wont work with winUI
   context.pointScaleFactor = static_cast<facebook::react::Float>(
-   winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
+      winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
   constraints.minimumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
   constraints.minimumSize.width = static_cast<facebook::react::Float>(rootFE.ActualWidth());
   constraints.maximumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());

@@ -394,8 +394,10 @@ void ReactInstanceWin::Initialize() noexcept {
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
 
 #if USE_FABRIC
+#ifndef USE_WINCOMP
       facebook::react::InitTextInputThemeInfo(strongThis->GetReactContext());
       facebook::react::InitSliderMeasurements(strongThis->GetReactContext());
+#endif // USE_WINCOMP
 #endif // USE_FABRIC
 
 #endif // CORE_ABI

@@ -407,14 +407,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
-    <ClInclude Include="Fabric\WinComp\CompHwndHost.h">
-      <DependentUpon>CompHwndHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="Fabric\WinComp\CompRootView.h">
-      <DependentUpon>CompRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
     <ClCompile Include="Fabric\ImageComponentView.cpp" />
     <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
@@ -422,7 +414,6 @@
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />
     <ClCompile Include="Fabric\SwitchComponentView.cpp" />
-    <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentDescriptor.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentView.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
     <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
@@ -625,14 +616,6 @@
       <DependentUpon>ReactRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="Fabric\WinComp\CompHwndHost.cpp">
-      <DependentUpon>CompHwndHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="Fabric\WinComp\CompRootView.cpp">
-      <DependentUpon>CompRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="RedBox.cpp" />
     <ClCompile Include="ReactSupport.cpp" />
     <ClCompile Include="TestHook.cpp" />
@@ -689,12 +672,6 @@
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="ReactRootView.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="CompHwndHost.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="CompRootView.idl">
       <SubType>Designer</SubType>
     </Midl>
     <Midl Include="QuirkSettings.idl">

@@ -50,7 +50,6 @@
     <CppWinRTNamespaceMergeDepth>2</CppWinRTNamespaceMergeDepth>
     <CppWinRTUsePrefixes>true</CppWinRTUsePrefixes>
     <UseV8>true</UseV8>
-    <UseFabric>true</UseFabric>
     <V8AppPlatform>win32</V8AppPlatform>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
@@ -113,7 +112,6 @@
       </AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -136,8 +134,6 @@
     <Midl Include="ABI\NativeTracing.idl" />
     <Midl Include="ABI\TestController.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
-    <Midl Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
-    <Midl Include="..\Microsoft.ReactNative\CompRootView.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl" />
     <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl" />
     <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
@@ -178,15 +174,6 @@
       <DependentUpon>ABI\TestController.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\Fabric\WinComp\CompHwndHost.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\CompHwndHost.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\Fabric\WinComp\CompEventHandler.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\CompRootView.cpp">
-      <DependentUpon>..\Microsoft.ReactNative\CompRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp">
       <DependentUpon>..\Microsoft.ReactNative\IJSValueReader.idl</DependentUpon>
     </ClCompile>

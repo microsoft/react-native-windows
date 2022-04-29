@@ -246,7 +246,6 @@
       <ObjectFileName>$(IntDir)\codegenRnwCoreProps.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)codegen\react\components\rnwcore\ShadowNodes.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ComponentViewRegistry.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\DWriteHelpers.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\FabricUIManagerModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ImageManager.cpp" />
@@ -255,6 +254,9 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ReactNativeConfigProperties.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\SchedulerSettings.cpp" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(UseWinComp)' != 'true'">
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ComponentViewRegistry.cpp" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseWinComp)' == 'true'">
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompComponentViewRegistry.cpp" />
@@ -269,5 +271,17 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputProps.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompHwndHost.cpp">
+      <DependentUpon>CompHwndHost.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompRootView.cpp">
+      <DependentUpon>CompRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
   </ItemGroup>
+  <ItemGroup Condition="'$(UseWinComp)' == 'true'">
+    <Midl Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
+    <Midl Include="..\Microsoft.ReactNative\CompRootView.idl" />
+  </ItemGroup>  
 </Project>
