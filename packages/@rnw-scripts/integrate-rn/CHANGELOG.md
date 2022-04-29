@@ -1,8 +1,21 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Thu, 21 Apr 2022 05:09:33 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Apr 2022 05:10:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.12
+
+Wed, 27 Apr 2022 05:10:25 GMT
+
+### Patches
+
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.32
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @react-native-windows/package-utils to v0.0.0-canary.29
+- Bump react-native-platform-override to v1.6.11
+- Bump @rnw-scripts/eslint-config to v1.1.12
 
 ## 1.1.11
 

@@ -4,33 +4,25 @@
 
 #pragma once
 
-#include "ComponentView.h"
-
-#include <Microsoft.ReactNative.Cxx/ReactContext.h>
-
-#include <Fabric/WinComp/CompHelpers.h>
+#include "IComponentViewRegistry.h"
 
 namespace Microsoft::ReactNative {
 
-struct ComponentViewDescriptor final {
-  std::shared_ptr<IComponentView> view{nullptr};
-};
-
 /* This could be expanded to have a pool of ComponentViewDescriptor's, like iOS does */
-class ComponentViewRegistry final {
+class ComponentViewRegistry final: public IComponentViewRegistry {
  public:
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept override;
 
   ComponentViewDescriptor const &dequeueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,
-      const std::shared_ptr<Microsoft::ReactNative::CompContext> &compContext) noexcept;
-  ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept;
-  std::shared_ptr<IComponentView> findComponentViewWithTag(facebook::react::Tag tag) const noexcept;
+      const std::shared_ptr<Microsoft::ReactNative::CompContext> &compContext) noexcept override;
+  ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept override;
+  std::shared_ptr<IComponentView> findComponentViewWithTag(facebook::react::Tag tag) const noexcept override;
   void enqueueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,
-      ComponentViewDescriptor componentViewDescriptor) noexcept;
+      ComponentViewDescriptor componentViewDescriptor) noexcept override;
 
  private:
   std::unordered_map<facebook::react::Tag, ComponentViewDescriptor> m_registry;

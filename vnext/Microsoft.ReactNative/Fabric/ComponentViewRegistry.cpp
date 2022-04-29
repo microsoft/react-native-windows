@@ -19,9 +19,7 @@
 #include <react/renderer/components/text/RawTextShadowNode.h>
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
-//#include "TextInput/WindowsTextInputShadowNode.h"
 
-#ifndef CORE_ABI
 #include "ActivityIndicatorComponentView.h"
 #include "ImageComponentView.h"
 #include "ParagraphComponentView.h"
@@ -30,16 +28,9 @@
 #include "SwitchComponentView.h"
 #include "TextComponentView.h"
 #include "TextInput/WindowsTextInputComponentView.h"
+#include "TextInput/WindowsTextInputShadowNode.h"
 #include "ViewComponentView.h"
 #include "XamlView.h"
-#endif // CORE_ABI
-
-#include <Fabric/WinComp/CompHelpers.h>
-#include <Fabric/WinComp/CompImageComponentView.h>
-#include <Fabric/WinComp/CompParagraphComponentView.h>
-#include <Fabric/WinComp/CompScrollViewComponentView.h>
-#include <Fabric/WinComp/CompViewComponentView.h>
-#include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentView.h>
 
 namespace Microsoft::ReactNative {
 
@@ -53,7 +44,6 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     const std::shared_ptr<CompContext> &compContext) noexcept {
   // TODO implement recycled components like core does
 
-  /*
   std::shared_ptr<BaseComponentView> view;
 
   if (componentHandle == facebook::react::TextShadowNode::Handle()) {
@@ -84,23 +74,6 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   }
 
   SetTag(view->Element(), tag);
-  */
-
-  std::shared_ptr<CompBaseComponentView> view;
-
-  if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
-    view = std::make_shared<CompParagraphComponentView>();
-  } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
-    view = std::make_shared<CompScrollViewComponentView>();
-  } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
-    view = std::make_shared<CompImageComponentView>(m_context);
-  } else if (componentHandle == facebook::react::CompWindowsTextInputShadowNode::Handle()) {
-    view = std::make_shared<CompWindowsTextInputComponentView>(m_context);
-  } else {
-    view = std::make_shared<CompViewComponentView>();
-  }
-  view->CompContext(compContext);
-  view->Tag(tag);
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
   return it.first->second;
@@ -129,6 +102,6 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
   assert(m_registry.find(tag) != m_registry.end());
 
   m_registry.erase(tag);
-  // SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), InvalidTag);
+  SetTag(static_cast<ViewComponentView &>(*componentViewDescriptor.view).Element(), InvalidTag);
 }
 } // namespace Microsoft::ReactNative

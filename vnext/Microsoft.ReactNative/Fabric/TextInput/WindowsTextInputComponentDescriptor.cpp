@@ -6,27 +6,33 @@
 #include "WindowsTextInputComponentDescriptor.h"
 
 #include "ReactContext.h"
+#include <XamlUtils.h>
+
 
 namespace facebook {
 namespace react {
 
 // [Windows
 void InitTextInputThemeInfo(const Mso::React::IReactContext &reactContext) {
-  xaml::Thickness textBoxPadding;
-  xaml::Application::Current().Resources().TryLookup(winrt::box_value(L"TextControlThemePadding")).as(textBoxPadding);
-  winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext.Properties())
-      .Set(winrt::Microsoft::ReactNative::ReactPropertyId<xaml::Thickness>(L"TextBoxDefaultPadding"), textBoxPadding);
+  if (auto currentApp = xaml::TryGetCurrentApplication()) {
+    xaml::Thickness textBoxPadding;
+    currentApp.Resources().TryLookup(winrt::box_value(L"TextControlThemePadding")).as(textBoxPadding);
+    winrt::Microsoft::ReactNative::ReactPropertyBag(reactContext.Properties())
+        .Set(winrt::Microsoft::ReactNative::ReactPropertyId<xaml::Thickness>(L"TextBoxDefaultPadding"), textBoxPadding);
+  }
 }
 
 YGStyle::Edges PaddingFromContext(const facebook::react::ContextContainer &contextContainer) {
   auto context = contextContainer.at<winrt::Microsoft::ReactNative::ReactContext>("MSRN.ReactContext");
-  auto defaultPadding = *context.Properties().Get(
+  auto defaultPadding = context.Properties().Get(
       winrt::Microsoft::ReactNative::ReactPropertyId<xaml::Thickness>(L"TextBoxDefaultPadding"));
-  YGStyle::Edges theme;
-  theme[YGEdgeStart] = YGValue{static_cast<float>(defaultPadding.Left), YGUnitPoint};
-  theme[YGEdgeEnd] = YGValue{static_cast<float>(defaultPadding.Right), YGUnitPoint};
-  theme[YGEdgeTop] = YGValue{static_cast<float>(defaultPadding.Top), YGUnitPoint};
-  theme[YGEdgeBottom] = YGValue{static_cast<float>(defaultPadding.Bottom), YGUnitPoint};
+  YGStyle::Edges theme{};
+  if (defaultPadding) {
+    theme[YGEdgeStart] = YGValue{static_cast<float>(defaultPadding->Left), YGUnitPoint};
+    theme[YGEdgeEnd] = YGValue{static_cast<float>(defaultPadding->Right), YGUnitPoint};
+    theme[YGEdgeTop] = YGValue{static_cast<float>(defaultPadding->Top), YGUnitPoint};
+    theme[YGEdgeBottom] = YGValue{static_cast<float>(defaultPadding->Bottom), YGUnitPoint};
+  }
   return theme;
 }
 // Windows]

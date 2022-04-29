@@ -142,6 +142,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTWebSocketResource.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

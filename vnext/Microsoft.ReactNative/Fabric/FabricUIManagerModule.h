@@ -8,7 +8,11 @@
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
 #include <winrt/Windows.UI.Composition.h>
+#ifdef USE_WINCOMP
+#include "WinComp/CompComponentViewRegistry.h"
+#else
 #include "ComponentViewRegistry.h"
+#endif
 
 namespace facebook::react {
 class Scheduler;
@@ -46,7 +50,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::LayoutConstraints &layoutConstraints,
       const facebook::react::LayoutContext &layoutContext) const noexcept;
 
-  const ComponentViewRegistry &GetViewRegistry() const noexcept;
+  const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
  private:
   void installFabricUIManager() noexcept;
@@ -66,13 +70,21 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   bool m_transactionInFlight{false};
   bool m_followUpTransactionRequired{false};
 
+#ifdef USE_WINCOMP
+  CompComponentViewRegistry m_registry;
+#else
   ComponentViewRegistry m_registry;
+#endif
   struct SurfaceInfo {
     winrt::Windows::UI::Composition::Visual rootVisual{nullptr};
     std::shared_ptr<CompContext> compContext;
+
+#ifndef USE_WINCOMP
+    XamlView xamlView;
+#endif // USE_WINCOMP
   };
 
-  std::unordered_map<facebook::react::SurfaceId, /*XamlView*/ SurfaceInfo> m_surfaceRegistry;
+  std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(

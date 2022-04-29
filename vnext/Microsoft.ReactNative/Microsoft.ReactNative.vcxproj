@@ -417,6 +417,8 @@
     </ClInclude>
     <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
     <ClCompile Include="Fabric\ImageComponentView.cpp" />
+    <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
+    <ClCompile Include="Fabric\platform\react\renderer\components\slider\SliderMeasurementsManager.cpp" />
     <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
     <ClCompile Include="Fabric\SliderComponentView.cpp" />
     <ClCompile Include="Fabric\SwitchComponentView.cpp" />

@@ -24,7 +24,7 @@ xaml::Media::Brush SharedColor::AsWindowsBrush() const {
   }
   return xaml::Media::SolidColorBrush(m_color->m_color);
 }
-#endif
+#endif // CORE_ABI
 
 SharedColor colorFromComponents(ColorComponents components) {
   float ratio = 255;
