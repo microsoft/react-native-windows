@@ -44,7 +44,7 @@ function processTransform(
 
   const result = MatrixMath.createIdentityMatrix();
 
-  transform.forEach((transformation) => {
+  transform.forEach(transformation => {
     const key = Object.keys(transformation)[0];
     const value = transformation[key];
 
@@ -141,7 +141,7 @@ function _convertToRadians(value: string): number {
 }
 
 function _validateTransforms(transform: Array<Object>): void {
-  transform.forEach((transformation) => {
+  transform.forEach(transformation => {
     const keys = Object.keys(transformation);
     invariant(
       keys.length === 1,

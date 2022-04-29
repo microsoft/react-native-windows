@@ -150,6 +150,8 @@
     <Midl Include="..\Microsoft.ReactNative\JsiApi.idl" />
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
+    <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
+    <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompRootView.idl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp">

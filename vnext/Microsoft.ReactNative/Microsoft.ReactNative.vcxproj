@@ -630,6 +630,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Midl Condition="'$(UseWinComp)' == 'true'" Include="CompHwndHost.idl" />
+    <Midl Condition="'$(UseWinComp)' == 'true'" Include="CompRootView.idl" />
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="DevMenuControl.idl">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>

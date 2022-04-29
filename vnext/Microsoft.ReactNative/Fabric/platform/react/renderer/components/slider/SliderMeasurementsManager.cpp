@@ -11,11 +11,11 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
+#include <XamlUtils.h>
 #include "ReactContext.h"
 #include "ReactHost/React.h"
 #include "ReactPropertyBag.h"
 #include "winrt/Microsoft.ReactNative.h"
-#include <XamlUtils.h>
 
 namespace facebook::react {
 
@@ -23,9 +23,7 @@ void InitSliderMeasurements(const Mso::React::IReactContext &reactContext) {
   if (auto currentApp = xaml::TryGetCurrentApplication()) {
     auto slider = xaml::Controls::Slider();
     xaml::Style sliderStyle;
-    currentApp.Resources()
-        .TryLookup(winrt::box_value(winrt::xaml_typename<xaml::Controls::Slider>()))
-        .as(sliderStyle);
+    currentApp.Resources().TryLookup(winrt::box_value(winrt::xaml_typename<xaml::Controls::Slider>())).as(sliderStyle);
     slider.Style(sliderStyle);
 
     slider.Measure({std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity()});
@@ -44,7 +42,7 @@ Size SliderMeasurementsManager::measure(SurfaceId surfaceId, LayoutConstraints l
 
   if (size)
     return {static_cast<float>(size->Width), static_cast<float>(size->Height)};
-  return {0,0};
+  return {0, 0};
 }
 
 } // namespace facebook::react

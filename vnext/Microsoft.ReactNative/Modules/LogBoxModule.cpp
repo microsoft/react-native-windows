@@ -192,7 +192,6 @@ void LogBox::ShowOnUIThread() noexcept {
   m_popup.Child(m_logBoxContent);
   m_popup.IsOpen(true);
 #endif
-
 }
 
 void LogBox::HideOnUIThread() noexcept {

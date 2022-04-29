@@ -117,7 +117,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 
             tick();
           });
-    }
+    });
 #endif // CORE_ABI
   }
 
@@ -284,11 +284,13 @@ void FabricUIManager::startSurface(
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     self->m_registry.dequeueComponentViewWithComponentHandle(
-        facebook::react::RootShadowNode::Handle(), surfaceId
+        facebook::react::RootShadowNode::Handle(),
+        surfaceId
 #ifdef USE_WINCOMP
-        , self->m_surfaceRegistry.at(surfaceId).compContext
+        ,
+        self->m_surfaceRegistry.at(surfaceId).compContext
 #endif
-        );
+    );
   });
 
   facebook::react::LayoutContext context;
@@ -386,11 +388,13 @@ void FabricUIManager::RCTPerformMountInstructions(
       case facebook::react::ShadowViewMutation::Create: {
         auto &newChildShadowView = mutation.newChildShadowView;
         auto &newChildViewDescriptor = m_registry.dequeueComponentViewWithComponentHandle(
-            newChildShadowView.componentHandle, newChildShadowView.tag
+            newChildShadowView.componentHandle,
+            newChildShadowView.tag
 #ifdef USE_WINCOMP
-            , m_surfaceRegistry.at(surfaceId).compContext
+            ,
+            m_surfaceRegistry.at(surfaceId).compContext
 #endif
-            );
+        );
         // observerCoordinator.registerViewComponentDescriptor(newChildViewDescriptor, surfaceId);
         break;
       }

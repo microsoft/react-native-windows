@@ -14,6 +14,11 @@
 #include <winrt/Windows.Foundation.h>
 
 #ifndef CORE_ABI
+
+#ifdef USE_WINCOMP
+#include <Shobjidl.h>
+#include <winrt/Windows.UI.Popups.h>
+#else
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
@@ -29,10 +34,9 @@
 #include "Utils/Helpers.h"
 #include "XamlUtils.h"
 #endif
+#endif
 
 #include <ReactPropertyBag.h>
-#include <Shobjidl.h>
-#include <winrt/Windows.UI.Popups.h>
 
 namespace Mso::React {
 
@@ -51,11 +55,14 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_errorInfo(std::move(errorInfo)) {}
 
   void Dismiss() noexcept {
+#ifndef USE_WINCOMP
     if (m_popup) {
       m_popup.IsOpen(false);
     }
+#endif
   }
 
+#ifndef USE_WINCOMP
   void Reload() noexcept {
     if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
       reactHost->ReloadInstance();
@@ -70,10 +77,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       m_redboxContent.Width(args.Size().Width);
     }
   }
+#endif
 
   void ShowNewJSError() noexcept {
     m_showing = true;
 
+#ifdef USE_WINCOMP
     // Using MessageDialog is "easy", but it does mean we cannot update the message when symbols are resolved.
     // Ideally we'd have a dialog we could update.  -- Maybe we could host the XAML dialog?
 
@@ -89,8 +98,8 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         *m_propBag.Get(winrt::Microsoft::ReactNative::ReactPropertyId<uint64_t>(L"RootHwndForDevUI")));
     auto initializeWithWindow{msg.as<::IInitializeWithWindow>()};
     initializeWithWindow->Initialize(hwnd);
-    msg.Commands().Append(winrt::Windows::UI::Popups::UICommand(
-        L"Dismiss", [](winrt::Windows::UI::Popups::IUICommand const &command) {}));
+    msg.Commands().Append(
+        winrt::Windows::UI::Popups::UICommand(L"Dismiss", [](winrt::Windows::UI::Popups::IUICommand const &command){}));
     msg.Commands().Append(winrt::Windows::UI::Popups::UICommand(
         L"Reload", [wkHost = m_weakReactHost](winrt::Windows::UI::Popups::IUICommand const &command) {
           if (auto reactHost = wkHost.GetStrongPtr()) {
@@ -99,7 +108,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         }));
     msg.ShowAsync();
 
-#ifdef NOTDEF
+#else
     m_popup = xaml::Controls::Primitives::Popup{};
 
     const winrt::hstring xamlString =
@@ -200,11 +209,14 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
   void UpdateError(const ErrorInfo &&info) noexcept {
     m_errorInfo = std::move(info);
+#ifndef USE_WINCOMP
     if (m_showing) {
       PopulateFrameStackUI();
     }
+#endif
   }
 
+#ifndef USE_WINCOMP
   void OnPopupClosed() noexcept {
     m_showing = false;
     m_dismissButton.Click(m_tokenDismiss);
@@ -214,12 +226,14 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_redboxContent = nullptr;
     m_onClosedCallback(GetId());
   }
+#endif
 
   uint32_t GetId() const noexcept {
     return m_errorInfo.Id;
   }
 
  private:
+#ifndef USE_WINCOMP
   static bool IsMetroBundlerError(const std::string &message, const std::string &type) {
     // This string must be kept in sync with the one in formatBundlingError in
     // node_modules\metro\src\lib\formatBundlingError.js
@@ -428,13 +442,15 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   xaml::Controls::TextBlock m_errorMessageText{nullptr};
   xaml::Controls::TextBlock m_errorStackText{nullptr};
 
-  winrt::Microsoft::ReactNative::ReactPropertyBag m_propBag;
-  bool m_showing = false;
-  Mso::Functor<void(uint32_t)> m_onClosedCallback;
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::event_token m_tokenClosed;
   winrt::event_token m_tokenDismiss;
   winrt::event_token m_tokenReload;
+#endif
+
+  winrt::Microsoft::ReactNative::ReactPropertyBag m_propBag;
+  bool m_showing = false;
+  Mso::Functor<void(uint32_t)> m_onClosedCallback;
   ErrorInfo m_errorInfo;
   Mso::WeakPtr<IReactHost> m_weakReactHost;
 };

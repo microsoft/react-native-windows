@@ -13,7 +13,9 @@
 #include <UI.Xaml.Media.Imaging.h>
 #include <Views/Image/ReactImage.h>
 #include <cxxreact/JsArgumentHelpers.h>
+#ifdef USE_WINCOMP
 #include <wincodec.h>
+#endif // USE_WINCOMP
 #include <winrt/Windows.Storage.Streams.h>
 #include "Unicode.h"
 
@@ -25,8 +27,10 @@ using namespace xaml::Media::Imaging;
 
 namespace Microsoft::ReactNative {
 
+#ifdef USE_WINCOMP
 winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
     const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept;
+#endif // USE_WINCOMP
 
 winrt::fire_and_forget GetImageSizeAsync(
     std::string uriString,
@@ -56,11 +60,23 @@ winrt::fire_and_forget GetImageSizeAsync(
       memoryStream = co_await GetImageInlineDataAsync(source);
     }
 
-    auto wicBmpSource = wicBitmapSourceFromStream(memoryStream);
+#ifdef USE_WINCOMP
     UINT width, height;
-    winrt::check_hresult(wicBmpSource->GetSize(&width, &height));
-
-    successCallback(width, height);
+    auto wicBmpSource = wicBitmapSourceFromStream(memoryStream);
+    if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
+      successCallback(width, height);
+      succeeded = true;
+    }
+#else
+    winrt::BitmapImage bitmap;
+    if (memoryStream) {
+      co_await bitmap.SetSourceAsync(memoryStream);
+    }
+    if (bitmap) {
+      successCallback(bitmap.PixelWidth(), bitmap.PixelHeight());
+      succeeded = true;
+    }
+#endif
   } catch (winrt::hresult_error const &) {
   }
 

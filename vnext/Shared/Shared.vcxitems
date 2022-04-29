@@ -272,16 +272,12 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\TextInput\CompWindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompHwndHost.cpp">
-      <DependentUpon>CompHwndHost.idl</DependentUpon>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompHwndHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompRootView.cpp">
-      <DependentUpon>CompRootView.idl</DependentUpon>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup Condition="'$(UseWinComp)' == 'true'">
-    <Midl Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
-    <Midl Include="..\Microsoft.ReactNative\CompRootView.idl" />
-  </ItemGroup>  
 </Project>
