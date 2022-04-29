@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 Apr 2022 05:10:23 GMT and should not be manually modified.
+This log was last generated on Fri, 29 Apr 2022 05:09:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.494
+
+Fri, 29 Apr 2022 05:09:50 GMT
+
+### Changes
+
+- Move fabric code to shared project (30809111+acoates-ms@users.noreply.github.com)
+- Fix clang-check errors in NativeModules.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.493
 

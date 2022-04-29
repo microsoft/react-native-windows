@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix clang-check errors in NativeModules.h",
-  "packageName": "react-native-windows",
-  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
