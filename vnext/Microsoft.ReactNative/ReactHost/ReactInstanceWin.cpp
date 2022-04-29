@@ -302,7 +302,7 @@ void ReactInstanceWin::LoadModules(
     if (m_options.UseWebDebugger()) {
       nativeModulesProvider->AddModuleProvider(name, provider);
     } else {
-      turboModulesProvider->AddModuleProvider(name, provider);
+      turboModulesProvider->AddModuleProvider(name, provider, false);
     }
   };
 
