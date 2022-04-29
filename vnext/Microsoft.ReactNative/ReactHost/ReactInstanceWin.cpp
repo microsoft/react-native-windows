@@ -397,7 +397,7 @@ void ReactInstanceWin::Initialize() noexcept {
 #ifndef USE_WINCOMP
       facebook::react::InitTextInputThemeInfo(strongThis->GetReactContext());
       facebook::react::InitSliderMeasurements(strongThis->GetReactContext());
-#endif // USE_WINCOMP
+#endif // !USE_WINCOMP
 #endif // USE_FABRIC
 
 #endif // CORE_ABI

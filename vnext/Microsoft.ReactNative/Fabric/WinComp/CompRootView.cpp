@@ -228,66 +228,9 @@ int64_t CompRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam)
     if (result)
       return result;
   }
-  /*
-
-switch (msg) {
-  case WM_MOUSEWHEEL: {
-    POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
-    ::ScreenToClient(m_hwnd, &pt);
-    int32_t delta = GET_WHEEL_DELTA_WPARAM(wParam);
-    m_compRootView.OnScrollWheel({static_cast<float>(pt.x), static_cast<float>(pt.y)}, delta);
-    return 0;
-  }
-  case WM_POINTERDOWN: {
-      if (m_compEventHandler) {
-  m_compEventHandler->PointerPressed(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam),
-GET_Y_LPARAM(lParam)}, 1);
-}
-    return 0;
-  }
-  case WM_POINTERUP: {
-    if (m_compEventHandler) {
-      m_compEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {GET_X_LPARAM(lParam),
-GET_Y_LPARAM(lParam)}, 1);
-    }
-    return 0;
-  }
-  //case WM_WINDOWPOSCHANGED: {
-
-}
-  */
 
   return 0;
 }
-
-/*
-void CompRootView::OnPointerPressed(const PointerPressedArgs &args) noexcept {
-  if (m_rootTag == -1)
-    return;
-
-  if (m_compEventHandler) {
-    m_compEventHandler->PointerPressed(static_cast<facebook::react::SurfaceId>(m_rootTag), args, 1);
-  }
-}
-
-void CompRootView::OnMouseUp(Windows::Foundation::Point point) noexcept {
-  if (m_rootTag == -1)
-    return;
-  if (m_compEventHandler) {
-    m_compEventHandler->PointerUp(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, 1);
-  }
-}
-*/
-
-/*
-void CompRootView::OnPointerDown(int32_t pointerId) noexcept
-{
-  if (m_rootTag == -1)
-return;
-
-m_compEventHandler->PointerDown(static_cast<facebook::react::SurfaceId>(m_rootTag), pointerId);
-}
-*/
 
 void CompRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept {
   if (m_rootTag == -1)
@@ -375,61 +318,9 @@ void CompRootView::UninitRootView() noexcept {
 }
 
 void CompRootView::ClearLoadingUI() noexcept {
-  /*
-  if (m_xamlRootView) {
-    auto children = m_xamlRootView.Children();
-    uint32_t index{0};
-    if (m_greenBoxGrid && children.IndexOf(m_greenBoxGrid, index)) {
-      children.RemoveAt(index);
-    }
-  }
-  */
 }
 
 void CompRootView::EnsureLoadingUI() noexcept {
-  /*
-  if (m_xamlRootView) {
-    // Create Grid & TextBlock to hold text
-    if (m_waitingTextBlock == nullptr) {
-      m_waitingTextBlock = winrt::TextBlock();
-
-      m_greenBoxGrid = winrt::Grid{};
-      auto c = xaml::Controls::ColumnDefinition{};
-      m_greenBoxGrid.ColumnDefinitions().Append(c);
-      c = xaml::Controls::ColumnDefinition{};
-      c.Width(xaml::GridLengthHelper::Auto());
-      m_greenBoxGrid.ColumnDefinitions().Append(c);
-      c = xaml::Controls::ColumnDefinition{};
-      c.Width(xaml::GridLengthHelper::Auto());
-      m_greenBoxGrid.ColumnDefinitions().Append(c);
-      c = xaml::Controls::ColumnDefinition{};
-      m_greenBoxGrid.ColumnDefinitions().Append(c);
-
-      m_waitingTextBlock.SetValue(xaml::Controls::Grid::ColumnProperty(), winrt::box_value(1));
-      m_greenBoxGrid.Background(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0x80, 0x03, 0x29, 0x29)));
-      m_greenBoxGrid.Children().Append(m_waitingTextBlock);
-      m_greenBoxGrid.VerticalAlignment(xaml::VerticalAlignment::Center);
-      Microsoft::UI::Xaml::Controls::ProgressRing ring{};
-      ring.SetValue(xaml::Controls::Grid::ColumnProperty(), winrt::box_value(2));
-      ring.IsActive(true);
-      m_greenBoxGrid.Children().Append(ring);
-
-      // Format TextBlock
-      m_waitingTextBlock.TextAlignment(winrt::TextAlignment::Center);
-      m_waitingTextBlock.TextWrapping(xaml::TextWrapping::Wrap);
-      m_waitingTextBlock.FontFamily(winrt::FontFamily(L"Segoe UI"));
-      m_waitingTextBlock.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::White()));
-      winrt::Thickness margin = {10.0f, 10.0f, 10.0f, 10.0f};
-      m_waitingTextBlock.Margin(margin);
-    }
-
-    auto children = m_xamlRootView.Children();
-    uint32_t index;
-    if (m_greenBoxGrid && !children.IndexOf(m_greenBoxGrid, index)) {
-      children.Append(m_greenBoxGrid);
-    }
-  }
-  */
 }
 
 void CompRootView::ShowInstanceLoaded() noexcept {
@@ -445,38 +336,15 @@ void CompRootView::ShowInstanceLoaded() noexcept {
 }
 
 void CompRootView::ShowInstanceError() noexcept {
-  /*
-  if (m_xamlRootView) {
-    ClearLoadingUI();
-  }
-  */
 }
 
 void CompRootView::ShowInstanceWaiting() noexcept {
-  /*
-  if (m_xamlRootView) {
-    EnsureLoadingUI();
-
-    // Place message into TextBlock
-    std::wstring wstrMessage(L"Connecting to remote debugger");
-    m_waitingTextBlock.Text(wstrMessage);
-  }
-  */
 }
 
 void CompRootView::ShowInstanceLoading() noexcept {
   if (!m_context->SettingsSnapshot().UseDeveloperSupport())
     return;
 
-  /*
-    if (m_xamlRootView) {
-      EnsureLoadingUI();
-
-      // Place message into TextBlock
-      std::wstring wstrMessage(L"Loading bundle.");
-      m_waitingTextBlock.Text(wstrMessage);
-    }
-    */
 }
 
 Mso::React::IReactViewHost *CompRootView::ReactViewHost() noexcept {
@@ -503,19 +371,7 @@ void CompRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept 
 
 Windows::Foundation::Size CompRootView::Measure(Windows::Foundation::Size const &availableSize) const {
   Windows::Foundation::Size size{0.0f, 0.0f};
-  /*
 
-  for (xaml::UIElement child : Children()) {
-    child.Measure(availableSize);
-    auto desired = child.DesiredSize();
-    if (desired.Height > size.Height)
-      size.Height = desired.Height;
-    if (desired.Width > size.Width)
-      size.Width = desired.Width;
-  }
-
-#ifdef USE_FABRIC
-*/
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
@@ -547,13 +403,6 @@ Windows::Foundation::Size CompRootView::Measure(Windows::Foundation::Size const 
 }
 
 Windows::Foundation::Size CompRootView::Arrange(Windows::Foundation::Size finalSize) const {
-  /*
-  for (xaml::UIElement child : Children()) {
-    child.Arrange(winrt::Rect(0, 0, finalSize.Width, finalSize.Height));
-  }
-
-#ifdef USE_FABRIC
-*/
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
@@ -578,37 +427,7 @@ Windows::Foundation::Size CompRootView::Arrange(Windows::Foundation::Size finalS
           static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
     }
   }
-  // #endif
   return finalSize;
 }
-
-/*
-// Maps react-native's view of the root view to the actual UI
-// react-native is unaware that there are non-RN elements within the CompRootView
-uint32_t CompRootView::RNIndexToXamlIndex(uint32_t index) noexcept {
-  // If m_focusSafeHarbor exists, it should be at index 0
-  // m_xamlRootView is the next element, followed by any RN content.
-#if DEBUG
-  uint32_t findIndex{0};
-  Assert(!m_focusSafeHarbor || Children().IndexOf(m_focusSafeHarbor, findIndex) && findIndex == 0);
-  Assert(Children().IndexOf(m_xamlRootView, findIndex) && findIndex == (m_focusSafeHarbor ? 1 : 0));
-#endif
-
-  return index + (m_focusSafeHarbor ? 2 : 1);
-}
-void CompRootView::AddView(uint32_t index, xaml::UIElement child) {
-  Children().InsertAt(RNIndexToXamlIndex(index), child);
-}
-
-void CompRootView::RemoveAllChildren() {
-  const uint32_t numLeft = m_focusSafeHarbor ? 2 : 1;
-  while (Children().Size() > numLeft)
-    Children().RemoveAt(numLeft);
-}
-
-void CompRootView::RemoveChildAt(uint32_t index) {
-  Children().RemoveAt(RNIndexToXamlIndex(index));
-}
-*/
 
 } // namespace winrt::Microsoft::ReactNative::implementation

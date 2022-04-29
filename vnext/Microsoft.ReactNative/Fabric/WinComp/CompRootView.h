@@ -48,22 +48,9 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   Windows::Foundation::Size Arrange(Windows::Foundation::Size finalSize) const;
 
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-
-  // void OnPointerPressed(const PointerPressedArgs& point) noexcept;
-  // void OnMouseUp(Windows::Foundation::Point point) noexcept;
-  // // void OnPointerDown(int32_t pointerId) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 
-  // Used by RootViewManager
-  /*
-  void AddView(uint32_t index, xaml::UIElement child);
-  void RemoveAllChildren();
-  void RemoveChildAt(uint32_t index);
-
- public: // IXamlRootView
-  ::Microsoft::ReactNative::XamlView GetXamlView() const noexcept override;
-  */
- public: // ICompRootView
+s public: // ICompRootView
   winrt::Windows::UI::Composition::Visual GetVisual() const noexcept override;
   std::shared_ptr<::Microsoft::ReactNative::CompContext> CompContext() noexcept override;
 
@@ -81,12 +68,6 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   void UpdateRootView() noexcept;
   void UninitRootView() noexcept;
 
-  /*
-    Windows::Foundation::Size MeasureOverride(Windows::Foundation::Size const &availableSize) const;
-    Windows::Foundation::Size ArrangeOverride(Windows::Foundation::Size finalSize) const;
-
-    void blur(::Microsoft::ReactNative::XamlView const &xamlView) noexcept;
-  */
  private:
   ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
   std::shared_ptr<::Microsoft::ReactNative::CompContext> m_compContext;
@@ -105,27 +86,6 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   Mso::CntPtr<Mso::React::IReactViewHost> m_reactViewHost;
   std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
   std::shared_ptr<::Microsoft::ReactNative::CompEventHandler> m_compEventHandler;
-  /*
-  xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
-  xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
-  xaml::FrameworkElement::SizeChanged_revoker m_rootSizeChangedRevoker{};
-  winrt::Grid m_greenBoxGrid{nullptr};
-  winrt::TextBlock m_waitingTextBlock{nullptr};
-  winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};
-
-  // Visual tree to support safe harbor
-  // this
-  //   m_focusSafeHarbor
-  //   m_greenBoxGrid
-  //     m_waitingTextBlock (loading string)
-  //   m_xamlRootView
-  //     JS created children
-  winrt::Grid m_xamlRootView{nullptr};
-
-
-  uint32_t RNIndexToXamlIndex(uint32_t index) noexcept;
-  void UpdatePerspective();
-  */
   winrt::Windows::UI::Composition::Visual m_rootVisual{nullptr};
   void UpdateRootViewInternal() noexcept;
   void ClearLoadingUI() noexcept;
