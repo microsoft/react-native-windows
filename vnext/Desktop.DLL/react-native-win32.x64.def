@@ -5,6 +5,8 @@
 ; **************************************************************************************************
 
 EXPORTS
+??$safe_assert_terminate@$0A@@detail@folly@@YAXPEBUsafe_assert_arg@01@ZZ
+??$safe_assert_terminate@$0A@PEBD@detail@folly@@YAXAEBUsafe_assert_arg@01@PEBD@Z
 ??$str_to_floating@N@detail@folly@@YA?AV?$Expected@NW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??$str_to_integral@_J@detail@folly@@YA?AV?$Expected@_JW4ConversionCode@folly@@@1@PEAV?$Range@PEBD@1@@Z
 ??0LayoutAnimation@react@facebook@@QEAA@Udynamic@folly@@@Z
@@ -26,8 +28,9 @@ EXPORTS
 ?atImpl@dynamic@folly@@AEGBAAEBU12@AEBU12@@Z
 ?callJSFunction@Instance@react@facebook@@QEAAX$$QEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QEAUdynamic@folly@@@Z
 ?createI18nModule@windows@react@@YA?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
-?data@?$to_ascii_powers@$09_K@detail@folly@@2U?$c_array@_K$0BE@@3@B
-?data@?$to_ascii_table@$09U?$to_ascii_alphabet@$0A@@folly@@@detail@folly@@2U?$c_array@G$0GE@@3@B
+??$to_ascii_with_route@$09U?$to_ascii_alphabet@$0A@@folly@@$0BE@@detail@folly@@YA_KAEAY0BE@D_K@Z
+??$to_ascii_with_route@$09U?$to_ascii_alphabet@$0A@@folly@@@detail@folly@@YA_KPEADPEBD_K@Z
+??$to_ascii_size_route@$09@detail@folly@@YA_K_K@Z
 ?destroy@dynamic@folly@@AEAAXXZ
 ?getModuleRegistry@Instance@react@facebook@@QEAAAEAVModuleRegistry@23@XZ
 ?get_ptr@dynamic@folly@@QEGBAPEBU12@V?$Range@PEBD@2@@Z
@@ -36,12 +39,6 @@ EXPORTS
 ?loadScriptFromString@Instance@react@facebook@@QEAAXV?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@5@_N@Z
 ?makeConversionError@folly@@YA?AVConversionError@1@W4ConversionCode@1@V?$Range@PEBD@1@@Z
 ?moduleNames@ModuleRegistry@react@facebook@@QEAA?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
-?name@?$TypeInfo@UObjectImpl@dynamic@folly@@@dynamic@folly@@2QEBDEB
-?name@?$TypeInfo@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@dynamic@folly@@2QEBDEB
-?name@?$TypeInfo@V?$vector@Udynamic@folly@@V?$allocator@Udynamic@folly@@@std@@@std@@@dynamic@folly@@2QEBDEB
-?name@?$TypeInfo@_J@dynamic@folly@@2QEBDEB
-?name@?$TypeInfo@_N@dynamic@folly@@2QEBDEB
-?name@?$TypeInfo@N@dynamic@folly@@2QEBDEB
 ?assertionFailure@detail@folly@@YAXPEBD00I0H@Z
 ?parseJson@folly@@YA?AUdynamic@1@V?$Range@PEBD@1@@Z
 ?setGlobalVariable@Instance@react@facebook@@QEAAXV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$unique_ptr@$$CBVJSBigString@react@facebook@@U?$default_delete@$$CBVJSBigString@react@facebook@@@std@@@5@@Z
