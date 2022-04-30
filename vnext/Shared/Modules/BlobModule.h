@@ -124,7 +124,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<BlobModuleResponseHandler> m_responseHandler;
 
   // Property bag high level reference.
-  winrt::Windows::Foundation::IInspectable m_iProperties;
+  winrt::Windows::Foundation::IInspectable m_inspectableProperties;
 
  public:
   enum class MethodId {

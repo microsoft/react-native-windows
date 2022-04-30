@@ -3,6 +3,7 @@
 
 #include "BlobModule.h"
 
+#include <Modules/IHttpModuleProxy.h>
 #include <Modules/IWebSocketModuleProxy.h>
 #include <ReactPropertyBag.h>
 #include <unicode.h>
@@ -49,10 +50,10 @@ BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &iProperti
       m_uriHandler{std::make_shared<BlobModuleUriHandler>(m_blobPersistor)},
       m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
       m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
-      m_iProperties{iProperties} {
+      m_inspectableProperties{iProperties} {
   auto propId =
       ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
-  auto propBag = ReactPropertyBag{m_iProperties.try_as<IReactPropertyBag>()};
+  auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
   auto contentHandler = weak_ptr<IWebSocketModuleContentHandler>{m_contentHandler};
   propBag.Set(propId, std::move(contentHandler));
 
@@ -73,11 +74,21 @@ std::map<string, dynamic> BlobModule::getConstants() {
   return {{"BLOB_URI_SCHEME", blobURIScheme}, {"BLOB_URI_HOST", {}}};
 }
 
-std::vector<module::CxxModule::Method> BlobModule::getMethods() {
+vector<module::CxxModule::Method> BlobModule::getMethods() {
   return {
       {"addNetworkingHandler",
-       [](dynamic args) {
-         // TODO: Implement #6081
+       [propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()},
+        uriHandler = m_uriHandler,
+        requestBodyHandler = m_requestBodyHandler,
+        responseHandler = m_responseHandler](dynamic args) {
+         auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
+
+         if (auto httpHandler = propBag.Get<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>(propId).Value().lock()) {
+           httpHandler->AddUriHandler(uriHandler);
+           httpHandler->AddRequestBodyHandler(requestBodyHandler);
+           httpHandler->AddResponseHandler(responseHandler);
+         }
+         // TODO: else emit error?
        }},
 
       {"addWebSocketHandler",
@@ -96,7 +107,7 @@ std::vector<module::CxxModule::Method> BlobModule::getMethods() {
 
       {"sendOverSocket",
        [persistor = m_blobPersistor,
-        propBag = ReactPropertyBag{m_iProperties.try_as<IReactPropertyBag>()}](dynamic args) {
+        propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()}](dynamic args) {
          auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
          auto wsProxy = propBag.Get(propId).Value().lock();
          if (!wsProxy) {
