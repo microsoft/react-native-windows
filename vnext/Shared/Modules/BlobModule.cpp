@@ -16,10 +16,14 @@
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Security.Cryptography.h>
 
+// Standard Library
+#include <queue>
+
 using namespace facebook::xplat;
 
 using facebook::react::Instance;
 using folly::dynamic;
+using std::queue;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
@@ -131,40 +135,40 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 
       {"createFromParts",
        // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
-       // Directly use getInstance() once
+       // Use getInstance() directly once
        // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
        [persistor = m_blobPersistor, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
          auto parts = jsArgAsArray(args, 0); // Array<Object>
          auto blobId = jsArgAsString(args, 1);
-         vector<uint8_t> buffer{}; // TODO: build from parts.
+         vector<uint8_t> buffer{};
 
          for (const auto &part : parts) {
-           auto type = part["type"];
-           if (type == "blob") {
+           auto type = part["type"].asString();
+           if ("blob" == type) {
              auto blob = part["data"];
              auto bufferPart =
                  persistor->ResolveMessage(blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
-             buffer.reserve(buffer.size() + bufferPart.size());
-             buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
-           } else if (type == "string") {
-             auto data = part["data"].asString();
-             auto bufferPart = vector<uint8_t>(data.begin(), data.end());
 
              buffer.reserve(buffer.size() + bufferPart.size());
              buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
+           } else if ("string" == type) {
+             auto data = part["data"].asString();
+
+             buffer.reserve(buffer.size() + data.size());
+             buffer.insert(buffer.end(), data.begin(), data.end());
            } else {
              if (auto state = weakState.lock()) {
                if (auto instance = state->Module->getInstance().lock()) {
-                 string message = "Invalid type for blob: " + type.asString();
+                 auto message = "Invalid type for blob: " + type;
                  instance->callJSFunction(
                      "RCTDeviceEventEmitter", "emit", dynamic::array("blobFailed", std::move(message)));
                }
              }
              return;
            }
-
-           persistor->StoreMessage(std::move(buffer), std::move(blobId));
          }
+
+         persistor->StoreMessage(std::move(buffer), std::move(blobId));
        }},
 
       {"release",
