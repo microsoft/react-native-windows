@@ -15,6 +15,12 @@
 namespace Microsoft::React {
 
 class WebSocketModuleProxy final : public IWebSocketModuleProxy {
+  // Property bag high level reference.
+  winrt::Windows::Foundation::IInspectable m_inspectableProps;
+
+public:
+  WebSocketModuleProxy(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+
 #pragma region IWebSocketModuleProxy
 
   void SendBinary(std::string &&base64String, int64_t id) noexcept override;

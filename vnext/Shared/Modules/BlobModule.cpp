@@ -251,8 +251,10 @@ void BlobWebSocketModuleContentHandler::Register(int64_t socketID) noexcept {
 
 void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
   scoped_lock lock{m_mutex};
-  if (m_socketIds.find(socketID) != m_socketIds.end())
-    m_socketIds.erase(socketID);
+
+  auto itr = m_socketIds.find(socketID);
+  if (itr != m_socketIds.end())
+    m_socketIds.erase(itr);
 }
 
 #pragma endregion BlobWebSocketModuleContentHandler
