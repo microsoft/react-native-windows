@@ -158,7 +158,8 @@ namespace Microsoft::React {
 #pragma region WebSocketModule
 
 WebSocketModule::WebSocketModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties)
-    : m_sharedState{std::make_shared<SharedState>()}, m_proxy{std::make_shared<WebSocketModuleProxy>(inspectableProperties)} {
+    : m_sharedState{std::make_shared<SharedState>()},
+      m_proxy{std::make_shared<WebSocketModuleProxy>(inspectableProperties)} {
   m_sharedState->ResourceFactory = [](string &&url) { return IWebSocketResource::Make(); };
   m_sharedState->Module = this;
   m_sharedState->InspectableProps = inspectableProperties;
@@ -300,13 +301,13 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
 
 #pragma region WebSocketModuleProxy
 
-WebSocketModuleProxy::WebSocketModuleProxy(IInspectable const& inspectableProperties) noexcept
-  : m_inspectableProps{inspectableProperties} {
-}
+WebSocketModuleProxy::WebSocketModuleProxy(IInspectable const &inspectableProperties) noexcept
+    : m_inspectableProps{inspectableProperties} {}
 
 void WebSocketModuleProxy::SendBinary(std::string &&base64String, int64_t id) noexcept /*override*/ {
   auto propBag = ReactPropertyBag{m_inspectableProps.try_as<IReactPropertyBag>()};
-  auto sharedPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{L"WebSocketModule.SharedState"};
+  auto sharedPropId =
+      ReactPropertyId<ReactNonAbiValue<weak_ptr<WebSocketModule::SharedState>>>{L"WebSocketModule.SharedState"};
   auto state = propBag.Get(sharedPropId).Value();
 
   weak_ptr weakWs = GetOrCreateWebSocket(id, {}, std::move(state));

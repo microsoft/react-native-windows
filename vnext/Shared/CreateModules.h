@@ -35,7 +35,8 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 namespace Microsoft::React {
 
 extern const char *GetHttpModuleName() noexcept;
-extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
 extern const char *GetWebSocketModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
