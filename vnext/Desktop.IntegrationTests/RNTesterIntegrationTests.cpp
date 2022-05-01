@@ -217,7 +217,7 @@ TEST_CLASS (RNTesterIntegrationTests) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketBlob)
-  // TEST_IGNORE()
+  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocketBlob) {
     auto result = m_runner.RunTest("IntegrationTests/WebSocketBlobTest", "WebSocketBlobTest");
