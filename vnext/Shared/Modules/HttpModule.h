@@ -35,7 +35,7 @@ class HttpModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { SendRequest = 0, AbortRequest = 1, ClearCookies = 2, LAST = ClearCookies };
 
-  HttpModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept;
+  HttpModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
   ~HttpModule() noexcept override;
 

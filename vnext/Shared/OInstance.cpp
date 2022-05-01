@@ -72,11 +72,11 @@ using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 namespace Microsoft::React {
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
-    winrt::Windows::Foundation::IInspectable const &iProperties) noexcept {
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
   if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
     return std::make_unique<NetworkingModule>();
   } else {
-    return std::make_unique<HttpModule>(iProperties);
+    return std::make_unique<HttpModule>(inspectableProperties);
   }
 }
 

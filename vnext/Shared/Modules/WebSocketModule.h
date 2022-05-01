@@ -36,7 +36,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
-  WebSocketModule(winrt::Windows::Foundation::IInspectable const &iProperties);
+  WebSocketModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties);
 
   ~WebSocketModule() noexcept override;
 

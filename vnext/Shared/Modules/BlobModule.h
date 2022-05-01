@@ -137,7 +137,7 @@ class BlobModule : public facebook::xplat::module::CxxModule {
     SIZE = 6
   };
 
-  BlobModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept;
+  BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
   ~BlobModule() noexcept override;
 

@@ -47,14 +47,14 @@ namespace Microsoft::React {
 
 #pragma region BlobModule
 
-BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept
+BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept
     : m_sharedState{std::make_shared<SharedState>()},
       m_blobPersistor{std::make_shared<MemoryBlobPersistor>()},
       m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>(m_blobPersistor)},
       m_uriHandler{std::make_shared<BlobModuleUriHandler>(m_blobPersistor)},
       m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
       m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
-      m_inspectableProperties{iProperties} {
+      m_inspectableProperties{inspectableProperties} {
   auto propId =
       ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
   auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
@@ -407,8 +407,8 @@ dynamic BlobModuleResponseHandler::ToResponseData(dynamic &body) /*override*/ {
 }
 
 /*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
-    IInspectable const &iProperties) noexcept {
-  if (auto properties = iProperties.try_as<IReactPropertyBag>())
+    IInspectable const &inspectableProperties) noexcept {
+  if (auto properties = inspectableProperties.try_as<IReactPropertyBag>())
     return std::make_unique<BlobModule>(properties);
 
   return nullptr;

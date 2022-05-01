@@ -39,10 +39,10 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() no
 
 extern const char *GetWebSocketModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
-    winrt::Windows::Foundation::IInspectable const &iProperties) noexcept;
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
 extern const char *GetBlobModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
-    winrt::Windows::Foundation::IInspectable const &iProperties) noexcept;
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
 } // namespace Microsoft::React

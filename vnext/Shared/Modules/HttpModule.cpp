@@ -72,8 +72,8 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReact
 
 namespace Microsoft::React {
 
-HttpModule::HttpModule(winrt::Windows::Foundation::IInspectable const &iProperties) noexcept
-    : m_holder{std::make_shared<ModuleHolder>()}, m_inspectableProperties{iProperties} {
+HttpModule::HttpModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept
+    : m_holder{std::make_shared<ModuleHolder>()}, m_inspectableProperties{inspectableProperties} {
   m_holder->Module = this;
 
   auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
