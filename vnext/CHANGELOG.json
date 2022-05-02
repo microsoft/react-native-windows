@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 May 2022 15:10:43 GMT",
+      "tag": "react-native-windows_v0.67.9",
+      "version": "0.67.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9458dad1646fa2a8a5afea7383133eeca144fb88",
+            "comment": "Fix clang-check errors in NativeModules.h"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "38c0547235927e51c08bd17b08b2f6be878fd0a5",
+            "comment": "Fix JSI for Node-API and update V8 to 0.65.11"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e3ef52d578991181c00a6487c902ce4c31cc702a",
+            "comment": "Handle abrupt WebSocket connection interruption (#9829)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Apr 2022 15:11:36 GMT",
       "tag": "react-native-windows_v0.67.8",
       "version": "0.67.8",
