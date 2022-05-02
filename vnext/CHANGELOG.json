@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 May 2022 21:26:43 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.495",
+      "version": "0.0.0-canary.495",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a54f8ccd6ad0a78815e8b89d5027a494e6614647",
+            "comment": "Implement no-hide-accessibility"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6bb6d438348526f288801acdaa21b458db70526a",
+            "comment": "Stop exporting data blocks from react-native-win32.dll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 29 Apr 2022 05:09:50 GMT",
       "tag": "react-native-windows_v0.0.0-canary.494",
       "version": "0.0.0-canary.494",
