@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Avoid crash in DevSupportManager when running in unpackaged apps with Hermes",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

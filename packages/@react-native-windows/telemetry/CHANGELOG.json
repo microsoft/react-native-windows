@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 02 May 2022 15:08:21 GMT",
+      "tag": "@react-native-windows/telemetry_v0.68.2",
+      "version": "0.68.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "886f5b745e44915a835c126d035aef254c721b0b",
+            "comment": "[0.68] Telemetry updates to meet server-side requirements"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "66c1e562a72937d353872f870865897feb117a7d",
+            "comment": "[0.68] Fix telemetry e2e tests"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Apr 2022 15:08:27 GMT",
       "tag": "@react-native-windows/telemetry_v0.68.1",
       "version": "0.68.1",

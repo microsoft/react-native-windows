@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 02 May 2022 15:08:21 GMT",
+      "tag": "@react-native-windows/cli_v0.68.2",
+      "version": "0.68.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "886f5b745e44915a835c126d035aef254c721b0b",
+            "comment": "[0.68] Telemetry updates to meet server-side requirements"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.68.2",
+            "commit": "de549c0ae7cfae13c75de983af180dcea6fd540e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Apr 2022 15:08:27 GMT",
       "tag": "@react-native-windows/cli_v0.68.1",
       "version": "0.68.1",

@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Apr 2022 15:12:03 GMT and should not be manually modified.
+This log was last generated on Mon, 02 May 2022 15:08:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.3
+
+Mon, 02 May 2022 15:08:21 GMT
+
+### Patches
+
+- Built in turbomodules should not override app provided versions (30809111+acoates-ms@users.noreply.github.com)
+- Fix JSI for Node-API and update V8 to 0.65.11 (vmorozov@microsoft.com)
+- Handle abrupt WebSocket connection interruption (#9829) (julio.rocha@microsoft.com)
+- Enable loading the bundle from an embedded resource via resource://moduleName/resourceId (asklar@microsoft.com)
+- Avoid crash in DevSupportManager when running in unpackaged apps with Hermes (asklar@microsoft.com)
+- Fix clang-check errors in NativeModules.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.68.2
 
 ## 0.68.2
 

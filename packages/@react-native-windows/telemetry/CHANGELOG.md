@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 11 Apr 2022 15:08:27 GMT and should not be manually modified.
+This log was last generated on Mon, 02 May 2022 15:08:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.2
+
+Mon, 02 May 2022 15:08:21 GMT
+
+### Patches
+
+- [0.68] Telemetry updates to meet server-side requirements (jthysell@microsoft.com)
+- [0.68] Fix telemetry e2e tests (jthysell@microsoft.com)
 
 ## 0.68.1
 

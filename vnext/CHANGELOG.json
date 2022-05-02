@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 May 2022 15:08:21 GMT",
+      "tag": "react-native-windows_v0.68.3",
+      "version": "0.68.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2c283f37036fc9288923e2d5358196c3c5ec5d0a",
+            "comment": "Built in turbomodules should not override app provided versions"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6cd67bf301ff4a5ce062c8f9cd4a8dc424a06f3e",
+            "comment": "Fix JSI for Node-API and update V8 to 0.65.11"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b8308ae3364f947a51cdff4bad8a9390c83a3673",
+            "comment": "Handle abrupt WebSocket connection interruption (#9829)"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "de549c0ae7cfae13c75de983af180dcea6fd540e",
+            "comment": "Enable loading the bundle from an embedded resource via resource://moduleName/resourceId"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5eb9ff6fcd7544ab311c37771f42a56edaa67554",
+            "comment": "Avoid crash in DevSupportManager when running in unpackaged apps with Hermes"
+          },
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc725c1ab2180f26e37a652b35ddac2dac154376",
+            "comment": "Fix clang-check errors in NativeModules.h"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.2",
+            "commit": "de549c0ae7cfae13c75de983af180dcea6fd540e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Apr 2022 15:12:03 GMT",
       "tag": "react-native-windows_v0.68.2",
       "version": "0.68.2",
