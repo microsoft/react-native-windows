@@ -271,6 +271,10 @@ DispatchQueue DispatchQueueStatic::MakeSerialQueue() noexcept {
   return Mso::Make<QueueService, IDispatchQueueService>(MakeThreadPoolScheduler(/*maxThreads:*/ 1));
 }
 
+DispatchQueue DispatchQueueStatic::MakeLooperQueue() noexcept {
+  return Mso::Make<QueueService, IDispatchQueueService>(MakeLooperScheduler());
+}
+
 DispatchQueue DispatchQueueStatic::MakeLooperQueue(
     winrt::Microsoft::ReactNative::IReactNotificationService notificationService) noexcept {
   return Mso::Make<QueueService, IDispatchQueueService>(MakeLooperScheduler(notificationService));

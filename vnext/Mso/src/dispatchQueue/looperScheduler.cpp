@@ -9,6 +9,7 @@
 namespace Mso {
 
 struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler> {
+  LooperScheduler() noexcept;
   LooperScheduler(winrt::Microsoft::ReactNative::IReactNotificationService notificationService) noexcept;
   ~LooperScheduler() noexcept override;
 
@@ -33,6 +34,9 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
 //=============================================================================
 // LooperScheduler implementation
 //=============================================================================
+
+LooperScheduler::LooperScheduler() noexcept
+  : m_looperThread([weakSelf = Mso::WeakPtr{ this }]() noexcept { RunLoop(weakSelf); }) {}
 
 LooperScheduler::LooperScheduler(winrt::Microsoft::ReactNative::IReactNotificationService notificationService) noexcept
     : m_notificationService(notificationService),
@@ -115,6 +119,10 @@ void LooperScheduler::AwaitTermination() noexcept {
 //=============================================================================
 // DispatchQueueStatic::MakeThreadPoolScheduler implementation
 //=============================================================================
+
+/*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeLooperScheduler() noexcept {
+  return Mso::Make<LooperScheduler, IDispatchQueueScheduler>();
+}
 
 /*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeLooperScheduler(
     winrt::Microsoft::ReactNative::IReactNotificationService notificationService) noexcept {

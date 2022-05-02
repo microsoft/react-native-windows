@@ -434,7 +434,7 @@ facebook::jsi::JSError const &jsError) {                             \
 }
 
 ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
-  auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue(nullptr);
+  auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
   auto jsThread = std::make_shared<Mso::React::MessageDispatchQueue>(jsDispatchQueue, nullptr, nullptr);
   auto devSettings = std::make_shared<facebook::react::DevSettings>();
 

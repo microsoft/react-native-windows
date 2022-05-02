@@ -118,6 +118,7 @@ struct DispatchQueue {
   static DispatchQueue MakeSerialQueue() noexcept;
 
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
+  static DispatchQueue MakeLooperQueue() noexcept;
   static DispatchQueue MakeLooperQueue(
       winrt::Microsoft::ReactNative::IReactNotificationService notificationService) noexcept;
 
@@ -419,6 +420,7 @@ struct IDispatchQueueStatic : IUnknown {
   virtual DispatchQueue MakeSerialQueue() noexcept = 0;
 
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
+  virtual DispatchQueue MakeLooperQueue() noexcept = 0;
   virtual DispatchQueue MakeLooperQueue(
       winrt::Microsoft::ReactNative::IReactNotificationService notificationService) noexcept = 0;
 
@@ -546,6 +548,10 @@ inline /*static*/ DispatchQueue const &DispatchQueue::ConcurrentQueue() noexcept
 
 inline /*static*/ DispatchQueue DispatchQueue::MakeSerialQueue() noexcept {
   return IDispatchQueueStatic::Instance()->MakeSerialQueue();
+}
+
+inline /*static*/ DispatchQueue DispatchQueue::MakeLooperQueue() noexcept {
+  return IDispatchQueueStatic::Instance()->MakeLooperQueue();
 }
 
 inline /*static*/ DispatchQueue DispatchQueue::MakeLooperQueue(
