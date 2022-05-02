@@ -12,7 +12,7 @@ namespace Mso {
 struct JSCallInvokerScheduler
     : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler, IJSCallInvokerQueueScheduler> {
   JSCallInvokerScheduler(
-      const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService,
+      const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService,
       std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
       Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
       Mso::Promise<void> &&whenQuit) noexcept;
@@ -46,7 +46,7 @@ std::shared_ptr<facebook::react::MessageQueueThread> JSCallInvokerScheduler::Get
 //=============================================================================
 
 JSCallInvokerScheduler::JSCallInvokerScheduler(
-    const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService,
+    const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService,
     std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept
@@ -93,7 +93,7 @@ void JSCallInvokerScheduler::AwaitTermination() noexcept {
 }
 
 Mso::CntPtr<IDispatchQueueScheduler> MakeJSCallInvokerScheduler(
-    const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService,
+    const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService,
     std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept {

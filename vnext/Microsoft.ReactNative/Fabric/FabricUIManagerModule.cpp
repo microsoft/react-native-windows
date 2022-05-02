@@ -224,8 +224,8 @@ void FabricUIManager::installFabricUIManager() noexcept {
   toolbox.runtimeExecutor = runtimeExecutor;
   toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
-  toolbox.backgroundExecutor = [context = m_context, dispatcher = Mso::DispatchQueue::MakeLooperQueue()](
-                                   std::function<void()> &&callback) {
+  toolbox.backgroundExecutor = [context = m_context,
+                                dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
     if (context.UIDispatcher().HasThreadAccess()) {
       callback();
       return;

@@ -120,7 +120,7 @@ struct DispatchQueue {
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
   static DispatchQueue MakeLooperQueue() noexcept;
   static DispatchQueue MakeLooperQueue(
-      const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService) noexcept;
+      const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept;
 
   //! Get a dispatch queue for the current UI thread. The result is null if the UI thread has no system UI thread
   //! dispatcher.
@@ -422,7 +422,7 @@ struct IDispatchQueueStatic : IUnknown {
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
   virtual DispatchQueue MakeLooperQueue() noexcept = 0;
   virtual DispatchQueue MakeLooperQueue(
-      const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService) noexcept = 0;
+      const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept = 0;
 
   //! Get a dispatch queue for the current UI thread. The result is null if the UI thread has no system UI thread
   //! dispatcher.
@@ -555,7 +555,7 @@ inline /*static*/ DispatchQueue DispatchQueue::MakeLooperQueue() noexcept {
 }
 
 inline /*static*/ DispatchQueue DispatchQueue::MakeLooperQueue(
-    const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService) noexcept {
+    const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept {
   return IDispatchQueueStatic::Instance()->MakeLooperQueue(notificationService);
 }
 

@@ -83,7 +83,7 @@ struct DispatchQueueStatic : Mso::UnknownObject<Mso::RefCountStrategy::NoRefCoun
   static DispatchQueueStatic *Instance() noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeLooperScheduler() noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeLooperScheduler(
-      const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService) noexcept;
+      const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeThreadPoolScheduler(uint32_t maxThreads) noexcept;
 
  public: // IDispatchQueueStatic
@@ -92,7 +92,7 @@ struct DispatchQueueStatic : Mso::UnknownObject<Mso::RefCountStrategy::NoRefCoun
   DispatchQueue MakeSerialQueue() noexcept override;
   DispatchQueue MakeLooperQueue() noexcept override;
   DispatchQueue MakeLooperQueue(
-    const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService) noexcept override;
+      const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept override;
   DispatchQueue GetCurrentUIThreadQueue() noexcept override;
   DispatchQueue MakeConcurrentQueue(uint32_t maxThreads) noexcept override;
   DispatchQueue MakeCustomQueue(Mso::CntPtr<IDispatchQueueScheduler> &&scheduler) noexcept override;
