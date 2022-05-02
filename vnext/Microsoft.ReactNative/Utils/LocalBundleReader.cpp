@@ -6,6 +6,7 @@
 #include <Utils/LocalBundleReader.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Storage.h>
+#include "BundleUtils.h"
 #include "Unicode.h"
 
 #if _MSC_VER <= 1913
@@ -15,43 +16,9 @@
 
 namespace Microsoft::ReactNative {
 
-std::string GetBundleFromEmbeddedResource(winrt::hstring str) {
-  winrt::Windows::Foundation::Uri uri(str);
-  auto moduleName = uri.Host();
-  auto path = uri.Path();
-  // skip past the leading / slash
-  auto resourceName = path.c_str() + 1;
-
-  auto hmodule = GetModuleHandle(moduleName != L"" ? moduleName.c_str() : nullptr);
-  if (!hmodule) {
-    throw std::invalid_argument(fmt::format("Couldn't find module {}", winrt::to_string(moduleName)));
-  }
-
-  auto resource = FindResourceW(hmodule, resourceName, RT_RCDATA);
-  if (!resource) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't find resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
-  }
-
-  auto hglobal = LoadResource(hmodule, resource);
-  if (!hglobal) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't load resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
-  }
-
-  auto start = static_cast<char *>(LockResource(hglobal));
-  if (!start) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't lock resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
-  }
-
-  auto size = SizeofResource(hmodule, resource);
-  if (!size) {
-    throw std::invalid_argument(fmt::format(
-        "Couldn't get size of resource {} in module {}", winrt::to_string(resourceName), winrt::to_string(moduleName)));
-  }
-
-  return std::string(start, start + size);
+std::string GetBundleFromEmbeddedResource(const winrt::hstring &str) {
+  const auto &bundle = GetEmbeddedResource(str);
+  return std::string(bundle.begin(), bundle.end());
 }
 
 std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::string &bundleUri) {
