@@ -29,7 +29,7 @@ function makeMetroConfig(customConfig = {}) {
       customSerializer: MetroSerializer([
         DuplicateDependencies({
           // Duplicate dependencies introduced by external code
-          ignoredModules: ['react-is'],
+          ignoredModules: ['react-is', 'metro-runtime'],
         }),
       ]),
     },
