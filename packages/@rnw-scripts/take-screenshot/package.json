@@ -18,7 +18,7 @@
     "take-screenshot": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.3",
+    "@react-native-windows/fs": "0.69.0-preview.0",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "screenshot-desktop": "^1.12.2",
@@ -47,5 +47,6 @@
   ],
   "engines": {
     "node": ">= 14"
-  }
+  },
+  "private": true
 }

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.495",
+  "version": "0.69.0-preview.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
     "@react-native-community/cli": "^8.0.0-alpha.0",
     "@react-native-community/cli-platform-android": "^8.0.0-alpha.0",
     "@react-native-community/cli-platform-ios": "^8.0.0-alpha.0",
-    "@react-native-windows/cli": "0.0.0-canary.128",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.41",
+    "@react-native-windows/cli": "0.69.0-preview.0",
+    "@react-native-windows/virtualized-list": "0.69.0-preview.0",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -59,7 +59,7 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.32",
+    "@react-native-windows/codegen": "0.69.0-preview.0",
     "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.6",
     "@rnw-scripts/metro-dev-config": "0.0.0",
@@ -86,7 +86,7 @@
     "react-native": "0.0.0-20220415-2010-3c1a81446"
   },
   "beachball": {
-    "defaultNpmTag": "canary",
+    "defaultNpmTag": "preview",
     "gitTags": true,
     "disallowedChangeTypes": [
       "major",
