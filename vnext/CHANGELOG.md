@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 May 2022 15:10:43 GMT and should not be manually modified.
+This log was last generated on Mon, 02 May 2022 15:10:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.67.9
+
+Mon, 02 May 2022 15:10:57 GMT
+
+### Patches
+
+- Fix clang-check errors in NativeModules.h (53799235+ZihanChen-MSFT@users.noreply.github.com)
+- Fix JSI for Node-API and update V8 to 0.65.11 (vmorozov@microsoft.com)
+- Handle abrupt WebSocket connection interruption (#9829) (julio.rocha@microsoft.com)
 
 ## 0.67.9
 
