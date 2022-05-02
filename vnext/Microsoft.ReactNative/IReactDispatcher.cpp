@@ -124,21 +124,21 @@ void ReactDispatcher::InvokeElsePost(Mso::DispatchTask &&task) const noexcept {
   return jsThreadDispatcherProperty;
 }
 
-/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherTaskStarting() noexcept {
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherTaskStartingEventName() noexcept {
   static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
-      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherTaskStarting")};
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherTaskStartingEventName")};
   return jsThreadDispatcherProperty;
 }
 
-/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherIdleWaitStarting() noexcept {
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherIdleWaitStartingEventName() noexcept {
   static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
-      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherIdleWaitStarting")};
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherIdleWaitStartingEventName")};
   return jsThreadDispatcherProperty;
 }
 
-/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherIdleWaitCompleted() noexcept {
+/*static*/ IReactPropertyName ReactDispatcher::JSDispatcherIdleWaitCompletedEventName() noexcept {
   static IReactPropertyName jsThreadDispatcherProperty{ReactPropertyBagHelper::GetName(
-      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherIdleWaitCompleted")};
+      ReactPropertyBagHelper::GetNamespace(L"ReactNative.Dispatcher"), L"JSDispatcherIdleWaitCompletedEventName")};
   return jsThreadDispatcherProperty;
 }
 

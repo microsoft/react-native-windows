@@ -50,7 +50,7 @@ LooperScheduler::~LooperScheduler() noexcept {
         while (queue->TryDequeTask(task)) {
           if (self->m_notificationService) {
             self->m_notificationService.SendNotification(
-                winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherTaskStarting(), nullptr, nullptr);
+                winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherTaskStartingEventName(), nullptr, nullptr);
           }
           queue->InvokeTask(std::move(task), std::nullopt);
         }
@@ -62,13 +62,13 @@ LooperScheduler::~LooperScheduler() noexcept {
 
       if (self->m_notificationService) {
         self->m_notificationService.SendNotification(
-            winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitStarting(), nullptr, nullptr);
+            winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitStartingEventName(), nullptr, nullptr);
       }
       self->m_wakeUpEvent.Wait();
       self->m_wakeUpEvent.Reset();
       if (self->m_notificationService) {
         self->m_notificationService.SendNotification(
-            winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitCompleted(), nullptr, nullptr);
+            winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitCompletedEventName(), nullptr, nullptr);
       }
       continue;
     }

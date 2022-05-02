@@ -55,21 +55,18 @@ namespace Microsoft.ReactNative
     static IReactPropertyName JSDispatcherProperty { get; };
 
     DOC_STRING(
-      "Gets name of the `JSDispatcherTaskStarting` property for the @IReactPropertyBag.\n"
-      "Generally you can use @IReactContext.JSDispatcherTaskStarting to get the value of this property for "
-      "a specific React instance.")
-    static IReactPropertyName JSDispatcherTaskStarting{ get; };
+      "Gets name of the `JSDispatcherTaskStartingEventName` property for the @IReactPropertyBag.\n"
+      "This notification name is to be used with IReactNotificationService.")
+    static IReactPropertyName JSDispatcherTaskStartingEventName{ get; };
 
     DOC_STRING(
-      "Gets name of the `JSDispatcherIdleWaitStarting` property for the @IReactPropertyBag.\n"
-      "Generally you can use @IReactContext.JSDispatcherIdleWaitStarting to get the value of this property for "
-      "a specific React instance.")
-    static IReactPropertyName JSDispatcherIdleWaitStarting{ get; };
+      "Gets name of the `JSDispatcherIdleWaitStartingEventName` property for the @IReactPropertyBag.\n"
+      "This notification name is to be used with IReactNotificationService.")
+    static IReactPropertyName JSDispatcherIdleWaitStartingEventName{ get; };
 
     DOC_STRING(
-      "Gets name of the `JSDispatcherIdleWaitCompleted` property for the @IReactPropertyBag.\n"
-      "Generally you can use @IReactContext.JSDispatcherIdleWaitCompleted to get the value of this property for "
-      "a specific React instance.")
-    static IReactPropertyName JSDispatcherIdleWaitCompleted{ get; };
+      "Gets name of the `JSDispatcherIdleWaitCompletedEventName` property for the @IReactPropertyBag.\n"
+      "This notification name is to be used with IReactNotificationService.")
+    static IReactPropertyName JSDispatcherIdleWaitCompletedEventName{ get; };
   }
 } // namespace ReactNative
