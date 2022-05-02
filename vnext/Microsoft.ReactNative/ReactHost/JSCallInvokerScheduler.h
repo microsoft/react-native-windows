@@ -19,7 +19,7 @@ struct IJSCallInvokerQueueScheduler : IUnknown {
 };
 
 Mso::CntPtr<IDispatchQueueScheduler> MakeJSCallInvokerScheduler(
-    winrt::Microsoft::ReactNative::IReactNotificationService notificationService,
+    const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService,
     std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit = nullptr) noexcept;

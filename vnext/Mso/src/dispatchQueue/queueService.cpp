@@ -276,7 +276,7 @@ DispatchQueue DispatchQueueStatic::MakeLooperQueue() noexcept {
 }
 
 DispatchQueue DispatchQueueStatic::MakeLooperQueue(
-    winrt::Microsoft::ReactNative::IReactNotificationService notificationService) noexcept {
+    const winrt::Microsoft::ReactNative::IReactNotificationService& notificationService) noexcept {
   return Mso::Make<QueueService, IDispatchQueueService>(MakeLooperScheduler(notificationService));
 }
 
