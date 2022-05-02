@@ -401,9 +401,9 @@
   integrity sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==
 
 "@babel/parser@^7.1.0", "@babel/parser@^7.1.6", "@babel/parser@^7.11.5", "@babel/parser@^7.13.16", "@babel/parser@^7.14.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.16.7", "@babel/parser@^7.17.9", "@babel/parser@^7.7.0":
-  version "7.17.9"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.9.tgz#9c94189a6062f0291418ca021077983058e171ef"
-  integrity sha512-vqUSBLP8dQHFPdPi9bc5GK9vRkYHJ49fsZdtoJ8EQ8ibpwk5rPKfvNIwChB0KVXcIjcepEBBd2VHC5r9Gy8ueg==
+  version "7.17.10"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.17.10.tgz#873b16db82a8909e0fbd7f115772f4b739f6ce78"
+  integrity sha512-n2Q6i+fnJqzOaq2VkdXxy2TCPCWQZHiCo0XqmrCvDWcZQKRyZzYi4Z0yxlBuN0w+r2ZHmre+Q087DSrw3pbJDQ==
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.16.7":
   version "7.16.7"
@@ -1765,21 +1765,7 @@
     logkitty "^0.7.1"
     slash "^3.0.0"
 
-"@react-native-community/cli-platform-ios@^8.0.0-alpha.0":
-  version "8.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-8.0.0-alpha.3.tgz#251d3723774babc499e599e4f2667b1203f57407"
-  integrity sha512-V8129DhF0r4cFwkkQcShkYDtRCCPAhAexgYdbzqF42GMK6pQMIfWoMagkBH6QuGYT2FGsrWPGFa+XZi3YVv+Qg==
-  dependencies:
-    "@react-native-community/cli-tools" "^8.0.0-alpha.3"
-    chalk "^4.1.2"
-    execa "^1.0.0"
-    glob "^7.1.3"
-    js-yaml "^3.13.1"
-    lodash "^4.17.15"
-    ora "^5.4.1"
-    plist "^3.0.2"
-
-"@react-native-community/cli-platform-ios@^8.0.0-alpha.3":
+"@react-native-community/cli-platform-ios@^8.0.0-alpha.0", "@react-native-community/cli-platform-ios@^8.0.0-alpha.3":
   version "8.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-8.0.0-alpha.3.tgz#251d3723774babc499e599e4f2667b1203f57407"
   integrity sha512-V8129DhF0r4cFwkkQcShkYDtRCCPAhAexgYdbzqF42GMK6pQMIfWoMagkBH6QuGYT2FGsrWPGFa+XZi3YVv+Qg==
@@ -1824,7 +1810,7 @@
     serve-static "^1.13.1"
     ws "^7.5.1"
 
-"@react-native-community/cli-tools@^8.0.0-alpha.0", "@react-native-community/cli-tools@^8.0.0-alpha.3":
+"@react-native-community/cli-tools@^8.0.0-alpha.3":
   version "8.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-8.0.0-alpha.3.tgz#0791c49eb11b39efc19a9670156056df6afddf7a"
   integrity sha512-laul2kNNygqZ9Y4jCy+cvBia8imb9Q9jGO00ObXGn1n7pvnPeS6JwbopYBI73Wk2yQrWaxcgrBnLFJ3LBXGm1w==
