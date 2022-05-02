@@ -79,7 +79,7 @@ For a primer on our codebase, see ["Repository Contents"](https://github.com/mic
 
 ### 🚧 Fork, Clone, Branch and Create your PR
 
-As is standard for GitHub and open source projects, RNW uses the ["Fork and pull"](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model) model for accepting and integrating code changes.
+As is standard for GitHub and open source projects, RNW uses the ["Fork and pull"](https://docs.github.com/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model) model for accepting and integrating code changes.
 
 Here's what the contribution process looks like:
 
@@ -90,7 +90,7 @@ Here's what the contribution process looks like:
 1. Test your changes.
 1. Open a Pull Request (PR) and address any feedback.
 
-> 👉 If this is your first time working with forks, you may find [GitHub's reference on forks](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) helpful. If this is your first time working with git or GitHub altogether, see the [GitHub Quickstart guide](https://docs.github.com/en/get-started/quickstart) for a walkthrough of setting up git, contributing to projects, and explanations of commonly used terms. 
+> 👉 If this is your first time working with forks, you may find [GitHub's reference on forks](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) helpful. If this is your first time working with git or GitHub altogether, see the [GitHub Quickstart guide](https://docs.github.com/get-started/quickstart) for a walkthrough of setting up git, contributing to projects, and explanations of commonly used terms. 
 
 > ⚛️ For RNW-specific walkthrough on setting up your branch, see the [Setup page](https://github.com/microsoft/react-native-windows/wiki/Setup) in our Wiki. 
 

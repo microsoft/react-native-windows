@@ -87,7 +87,9 @@ class SharedColor {
     return m_color->m_color;
   }
 
+#ifndef CORE_ABI
   xaml::Media::Brush AsWindowsBrush() const;
+#endif
 
  private:
   std::shared_ptr<Color> m_color;
