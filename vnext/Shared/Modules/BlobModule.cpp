@@ -144,7 +144,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 
          for (const auto &part : parts) {
            auto type = part["type"].asString();
-           if ("blob" == type) {
+           if (blobURIScheme == type) {
              auto blob = part["data"];
              auto bufferPart =
                  persistor->ResolveMessage(blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
@@ -240,7 +240,7 @@ void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message
   blob("blobId", m_blobPersistor->StoreMessage(std::move(message)));
 
   params["data"] = std::move(blob);
-  params["type"] = "blob";
+  params["type"] = blobURIScheme;
 }
 #pragma endregion IWebSocketModuleContentHandler
 
@@ -269,7 +269,7 @@ BlobModuleUriHandler::BlobModuleUriHandler(shared_ptr<IBlobPersistor> blobPersis
 bool BlobModuleUriHandler::Supports(string &uri, string &responseType) /*override*/ {
   auto uriObj = Uri{winrt::to_hstring(uri)};
 
-  return !(L"http" == uriObj.SchemeName() || L"https" == uriObj.SchemeName()) && "blob" == responseType;
+  return !(L"http" == uriObj.SchemeName() || L"https" == uriObj.SchemeName()) && blobURIScheme == responseType;
 }
 
 dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
@@ -296,7 +296,7 @@ string BlobModuleUriHandler::GetMimeTypeFromUri(string &uri) noexcept {
   //  See
   //  https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
 
-  return "blob";
+  return blobURIScheme;
 }
 
 string BlobModuleUriHandler::GetNameFromUri(string &uri) noexcept {
@@ -351,7 +351,7 @@ BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersi
 #pragma region IRequestBodyHandler
 
 bool BlobModuleRequestBodyHandler::Supports(dynamic &data) /*override*/ {
-  return !data.at("blob").empty();
+  return !data.at(blobURIScheme).empty();
 }
 
 dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &contentType) /*override*/ {
@@ -363,7 +363,7 @@ dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &conte
     type = "application/octet-stream";
   }
 
-  auto blob = data["blob"];
+  auto blob = data[blobURIScheme];
   auto blobId = blob["blobId"].asString();
   auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob["offset"].asInt(), blob["size"].asInt());
 
