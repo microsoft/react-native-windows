@@ -21,16 +21,16 @@
     "@rnw-scripts/eslint-config": "1.1.12",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "flow-bin": "^0.176.2",
+    "flow-bin": "^0.176.3",
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
     "react": "18.0.0",
-    "react-native": "0.0.0-20220415-2010-3c1a81446",
+    "react-native": "0.69.0-rc.0",
     "react-native-platform-override": "^1.6.11"
   },
   "peerDependencies": {
     "react": "18.0.0",
-    "react-native": "0.0.0-20220415-2010-3c1a81446"
+    "react-native": "0.69.0-rc.0"
   },
   "beachball": {
     "defaultNpmTag": "preview",
