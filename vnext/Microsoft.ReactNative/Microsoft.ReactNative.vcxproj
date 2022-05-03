@@ -655,6 +655,7 @@
     <Midl Include="ReactCoreInjection.idl">
       <SubType>Designer</SubType>
     </Midl>
+    <Midl Include="ReactImageSource.idl" />
     <Midl Include="ReactInstanceSettings.idl">
       <SubType>Designer</SubType>
     </Midl>

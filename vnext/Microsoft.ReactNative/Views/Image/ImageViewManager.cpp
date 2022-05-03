@@ -26,26 +26,27 @@ using namespace xaml::Automation::Peers;
 
 // Such code is better to move to a seperate parser layer
 template <>
-struct json_type_traits<Microsoft::ReactNative::ReactImageSource> {
-  static Microsoft::ReactNative::ReactImageSource parseJson(const winrt::Microsoft::ReactNative::JSValue &json) {
-    Microsoft::ReactNative::ReactImageSource source;
+struct json_type_traits<Microsoft::ReactNative::ReactImageSourceWithHeaders> {
+  static Microsoft::ReactNative::ReactImageSourceWithHeaders parseJson(
+      const winrt::Microsoft::ReactNative::JSValue &json) {
+    Microsoft::ReactNative::ReactImageSourceWithHeaders source;
     for (auto &item : json.AsObject()) {
       if (item.first == "uri")
-        source.uri = item.second.AsString();
+        source.Uri = winrt::to_hstring(item.second.AsString());
       else if (item.first == "method")
-        source.method = item.second.AsString();
+        source.Method = winrt::to_hstring(item.second.AsString());
       else if (item.first == "headers") {
         for (auto &header : item.second.AsObject()) {
           source.headers.push_back(std::make_pair(header.first, header.second.AsString()));
         }
       } else if (item.first == "width")
-        source.width = item.second.AsDouble();
+        source.Width = item.second.AsDouble();
       else if (item.first == "height")
-        source.height = item.second.AsDouble();
+        source.Height = item.second.AsDouble();
       else if (item.first == "scale")
-        source.scale = item.second.AsDouble();
+        source.Scale = item.second.AsDouble();
       else if (item.first == "__packager_asset")
-        source.packagerAsset = item.second.AsBoolean();
+        source.PackagerAsset = item.second.AsBoolean();
     }
     return source;
   }
@@ -90,7 +91,7 @@ class ImageShadowNode : public ShadowNodeBase {
 
     m_onLoadEndToken = reactImage->OnLoadEnd([imageViewManager{static_cast<ImageViewManager *>(GetViewManager())},
                                               reactImage](const auto &, const bool &succeeded) {
-      ReactImageSource source{reactImage->Source()};
+      ReactImageSourceWithHeaders source{reactImage->Source()};
 
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), succeeded ? "topLoad" : "topError", source);
       imageViewManager->EmitImageEvent(reactImage.as<winrt::Grid>(), "topLoadEnd", source);
@@ -166,21 +167,26 @@ bool ImageViewManager::UpdateProperty(
   return ret;
 }
 
-void ImageViewManager::EmitImageEvent(winrt::Grid grid, const char *eventName, ReactImageSource &source) {
+void ImageViewManager::EmitImageEvent(
+    winrt::Grid grid,
+    const char *eventName,
+    const winrt::Microsoft::ReactNative::ReactImageSource &source) {
   int64_t tag = GetTag(grid);
   folly::dynamic imageSource =
-      folly::dynamic::object()("uri", source.uri)("width", source.width)("height", source.height);
+      folly::dynamic::object()("uri", winrt::to_string(source.Uri))("width", source.Width)("height", source.Height);
 
   folly::dynamic eventData = folly::dynamic::object()("target", tag)("source", imageSource);
   GetReactContext().DispatchEvent(tag, eventName, std::move(eventData));
 }
 
 void ImageViewManager::setSource(winrt::Grid grid, const winrt::Microsoft::ReactNative::JSValue &data) {
-  auto sources{json_type_traits<std::vector<ReactImageSource>>::parseJson(data)};
-  sources[0].bundleRootPath = GetReactContext().SettingsSnapshot().BundleRootPath();
+  auto sources{json_type_traits<std::vector<ReactImageSourceWithHeaders>>::parseJson(data)};
+  sources[0].BundleRootPath = winrt::to_hstring(GetReactContext().SettingsSnapshot().BundleRootPath());
 
-  if (sources[0].packagerAsset && sources[0].uri.find("file://") == 0) {
-    sources[0].uri.replace(0, 7, sources[0].bundleRootPath);
+  std::wstring uri{sources[0].Uri.data()};
+  if (sources[0].PackagerAsset && uri.find(L"file://") == 0) {
+    uri.replace(0, 7, sources[0].BundleRootPath);
+    sources[0].Uri = uri;
   }
 
   auto reactImage{grid.as<ReactImage>()};

@@ -1,0 +1,24 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative {
+
+  enum ImageSourceType { Uri = 0, Download = 1, InlineData = 2, EmbeddedResource = 3 };
+
+  enum ImageSourceFormat { Bitmap = 0, Svg = 1 };
+
+  [webhosthidden] DOC_STRING("") struct ReactImageSource {
+    String Uri;
+    String Method;
+    String BundleRootPath;
+    Double Width;
+    Double Height;
+    Double Scale;
+    Boolean PackagerAsset;
+    ImageSourceType ImageSourceType;
+    ImageSourceFormat ImageSourceFormat;
+  };
+
+} // namespace ReactNative

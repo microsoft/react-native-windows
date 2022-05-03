@@ -4,8 +4,8 @@
 #include "pch.h"
 #include "BundleUtils.h"
 
-#include <winrt/Windows.Foundation.h>
 #include <fmt/format.h>
+#include <winrt/Windows.Security.Cryptography.h>
 
 namespace Microsoft::ReactNative {
 
@@ -46,6 +46,31 @@ winrt::array_view<char> GetEmbeddedResource(const winrt::hstring &str) {
   }
 
   return winrt::array_view<char>(start, size);
+}
+
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+GetImageInlineDataAsync(winrt::hstring uri) {
+  size_t start = std::wstring_view(uri).find(L',');
+  if (start == std::string::npos || start + 1 > uri.size())
+    co_return nullptr;
+
+  try {
+    co_await winrt::resume_background();
+
+    std::wstring_view base64String = uri;
+    base64String.remove_prefix(start + 1);
+    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(base64String);
+
+    winrt::Windows::Storage::Streams::InMemoryRandomAccessStream memoryStream;
+    co_await memoryStream.WriteAsync(buffer);
+    memoryStream.Seek(0);
+
+    co_return memoryStream;
+  } catch (winrt::hresult_error const &) {
+    // Base64 decode failed
+  }
+
+  co_return nullptr;
 }
 
 } // namespace Microsoft::ReactNative

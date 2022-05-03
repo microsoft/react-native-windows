@@ -14,6 +14,7 @@
 #include <Views/Image/ReactImage.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include "BundleUtils.h"
 #include "Unicode.h"
 
 namespace winrt {
@@ -32,8 +33,8 @@ winrt::fire_and_forget GetImageSizeAsync(
   bool succeeded{false};
 
   try {
-    ReactImageSource source;
-    source.uri = uriString;
+    ReactImageSourceWithHeaders source;
+    source.Uri = winrt::to_hstring(uriString);
     if (!headers.IsNull()) {
       for (auto &header : headers.AsObject()) {
         source.headers.push_back(std::make_pair(header.first, header.second.AsString()));
@@ -49,7 +50,7 @@ winrt::fire_and_forget GetImageSizeAsync(
     if (needsDownload) {
       memoryStream = co_await GetImageStreamAsync(source);
     } else if (inlineData) {
-      memoryStream = co_await GetImageInlineDataAsync(source);
+      memoryStream = co_await GetImageInlineDataAsync(source.Uri.data());
     }
 
     winrt::BitmapImage bitmap;

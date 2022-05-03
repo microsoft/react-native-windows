@@ -7,7 +7,6 @@
 
 #include <UI.Xaml.Media.Imaging.h>
 
-#include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
@@ -136,7 +135,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(winrt::Size size) {
     case facebook::react::ImageResizeMode::Contain:
       return winrt::Stretch::Uniform;
     default: // ResizeMode::Center || ResizeMode::Repeat
-      if (m_imageSource.height < size.Height && m_imageSource.width < size.Width) {
+      if (m_imageSource.Height < size.Height && m_imageSource.Width < size.Width) {
         return winrt::Stretch::None;
       } else {
         return winrt::Stretch::Uniform;
@@ -144,30 +143,30 @@ winrt::Stretch ReactImage::ResizeModeToStretch(winrt::Size size) {
   }
 }
 
-void ReactImage::Source(ReactImageSource source) {
-  if (source.uri.length() == 0) {
+void ReactImage::Source(ReactImageSourceWithHeaders source) {
+  if (source.Uri.size() == 0) {
     m_onLoadEndEvent(*this, false);
     return;
   }
 
   try {
-    winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
+    winrt::Uri uri{UriTryCreate(source.Uri)};
     winrt::hstring scheme{uri ? uri.SchemeName() : L""};
     winrt::hstring ext{uri ? uri.Extension() : L""};
 
     if (((scheme == L"http") || (scheme == L"https")) && !source.headers.empty()) {
-      source.sourceType = ImageSourceType::Download;
+      source.ImageSourceType = winrt::Microsoft::ReactNative::ImageSourceType::Download;
     } else if (scheme == L"data") {
-      source.sourceType = ImageSourceType::InlineData;
-      if (source.uri.find("image/svg+xml;base64") != std::string::npos) {
-        source.sourceFormat = ImageSourceFormat::Svg;
+      source.ImageSourceType = winrt::Microsoft::ReactNative::ImageSourceType::InlineData;
+      if (std::wstring_view(source.Uri).find(L"image/svg+xml;base64") != std::string::npos) {
+        source.ImageSourceFormat = winrt::Microsoft::ReactNative::ImageSourceFormat::Svg;
       }
     } else if (ext == L".svg" || ext == L".svgz") {
-      source.sourceFormat = ImageSourceFormat::Svg;
+      source.ImageSourceFormat = winrt::Microsoft::ReactNative::ImageSourceFormat::Svg;
     }
 
     if (scheme == L"resource") {
-      source.sourceType = ImageSourceType::EmbeddedResource;
+      source.ImageSourceType = winrt::Microsoft::ReactNative::ImageSourceType::EmbeddedResource;
     }
     m_imageSource = source;
 
@@ -177,13 +176,14 @@ void ReactImage::Source(ReactImageSource source) {
   }
 }
 
-winrt::IAsyncOperation<winrt::IRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(ReactImageSource source) {
-  switch (source.sourceType) {
-    case ImageSourceType::Download:
+winrt::IAsyncOperation<winrt::IRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(
+    ReactImageSourceWithHeaders source) {
+  switch (source.ImageSourceType) {
+    case winrt::Microsoft::ReactNative::ImageSourceType::Download:
       co_return co_await GetImageStreamAsync(source);
-    case ImageSourceType::InlineData:
-      co_return co_await GetImageInlineDataAsync(source);
-    case ImageSourceType::EmbeddedResource:
+    case winrt::Microsoft::ReactNative::ImageSourceType::InlineData:
+      co_return co_await GetImageInlineDataAsync(source.Uri);
+    case winrt::Microsoft::ReactNative::ImageSourceType::EmbeddedResource:
       co_return GetStreamFromEmbeddedResource(source);
     default: // ImageSourceType::Uri
       co_return nullptr;
@@ -221,15 +221,16 @@ void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
-  const ReactImageSource source{m_imageSource};
-  winrt::Uri uri{UriTryCreate(Utf8ToUtf16(source.uri))};
+  const ReactImageSourceWithHeaders source{m_imageSource};
+  winrt::Uri uri{UriTryCreate(source.Uri)};
 
   // Increment the image source ID before any co_await calls
   auto currentImageSourceId = ++m_imageSourceId;
 
   const bool fromStream{
-      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData ||
-      source.sourceType == ImageSourceType::EmbeddedResource};
+      source.ImageSourceType == winrt::Microsoft::ReactNative::ImageSourceType::Download ||
+      source.ImageSourceType == winrt::Microsoft::ReactNative::ImageSourceType::InlineData ||
+      source.ImageSourceType == winrt::Microsoft::ReactNative::ImageSourceType::EmbeddedResource};
 
   winrt::IRandomAccessStream memoryStream{nullptr};
 
@@ -289,8 +290,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 bool succeeded{false};
                 if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
                   winrt::Size size{surface.DecodedPhysicalSize()};
-                  strong_this->m_imageSource.height = size.Height;
-                  strong_this->m_imageSource.width = size.Width;
+                  strong_this->m_imageSource.Height = size.Height;
+                  strong_this->m_imageSource.Width = size.Width;
 
                   // If we are dynamically switching the resizeMode to 'repeat', then
                   // the SizeChanged event has already fired and the ReactImageBrush's
@@ -328,7 +329,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         imageBrush.Stretch(strong_this->ResizeModeToStretch());
       }
 
-      if (source.sourceFormat == ImageSourceFormat::Svg) {
+      if (source.ImageSourceFormat == winrt::Microsoft::ReactNative::ImageSourceFormat::Svg) {
         winrt::SvgImageSource svgImageSource{imageBrush.ImageSource().try_as<winrt::SvgImageSource>()};
 
         if (!svgImageSource) {
@@ -388,8 +389,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
                   if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
-                    strong_this->m_imageSource.height = bitmap.PixelHeight();
-                    strong_this->m_imageSource.width = bitmap.PixelWidth();
+                    strong_this->m_imageSource.Height = bitmap.PixelHeight();
+                    strong_this->m_imageSource.Width = bitmap.PixelWidth();
                     imageBrush.Stretch(strong_this->ResizeModeToStretch());
                   }
 
@@ -451,13 +452,13 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(const ReactImageSource &source) {
+winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ReactImageSourceWithHeaders source) {
   try {
     co_await winrt::resume_background();
 
-    auto httpMethod{source.method.empty() ? winrt::HttpMethod::Get() : winrt::HttpMethod{Utf8ToUtf16(source.method)}};
+    auto httpMethod{source.Method.empty() ? winrt::HttpMethod::Get() : winrt::HttpMethod{source.Method}};
 
-    winrt::Uri uri{Utf8ToUtf16(source.uri)};
+    winrt::Uri uri{source.Uri};
     winrt::HttpRequestMessage request{httpMethod, uri};
 
     if (!source.headers.empty()) {
@@ -488,32 +489,9 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(co
   co_return nullptr;
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(const ReactImageSource &source) {
-  size_t start = source.uri.find(',');
-  if (start == std::string::npos || start + 1 > source.uri.length())
-    co_return nullptr;
-
-  try {
-    co_await winrt::resume_background();
-
-    std::string_view base64String(source.uri.c_str() + start + 1, source.uri.length() - start - 1);
-    auto buffer =
-        winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(base64String));
-
-    winrt::InMemoryRandomAccessStream memoryStream;
-    co_await memoryStream.WriteAsync(buffer);
-    memoryStream.Seek(0);
-
-    co_return memoryStream;
-  } catch (winrt::hresult_error const &) {
-    // Base64 decode failed
-  }
-
-  co_return nullptr;
-}
-
-winrt::Windows::Storage::Streams::IRandomAccessStream GetStreamFromEmbeddedResource(const ReactImageSource &source) {
-  auto uri = winrt::to_hstring(source.uri);
+winrt::Windows::Storage::Streams::IRandomAccessStream GetStreamFromEmbeddedResource(
+    const winrt::Microsoft::ReactNative::ReactImageSource &source) {
+  auto uri = source.Uri;
   const auto &av = GetEmbeddedResource(uri);
 
   winrt::com_ptr<IStream> istream;

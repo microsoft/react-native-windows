@@ -13,20 +13,12 @@
 
 namespace Microsoft::ReactNative {
 
-enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2, EmbeddedResource = 3 };
-enum class ImageSourceFormat { Bitmap = 0, Svg = 1 };
-
-struct ReactImageSource {
-  std::string uri;
-  std::string method;
-  std::string bundleRootPath;
+struct ReactImageSourceWithHeaders : winrt::Microsoft::ReactNative::ReactImageSource {
   std::vector<std::pair<std::string, std::string>> headers;
-  double width = 0;
-  double height = 0;
-  double scale = 1.0;
-  bool packagerAsset = false;
-  ImageSourceType sourceType = ImageSourceType::Uri;
-  ImageSourceFormat sourceFormat = ImageSourceFormat::Bitmap;
+  ReactImageSourceWithHeaders() {
+    ImageSourceType = winrt::Microsoft::ReactNative::ImageSourceType::Uri;
+    ImageSourceFormat = winrt::Microsoft::ReactNative::ImageSourceFormat::Bitmap;
+  }
 };
 
 struct ReactImage : xaml::Controls::GridT<ReactImage> {
@@ -46,10 +38,10 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   void OnLoadEnd(winrt::event_token const &token) noexcept;
 
   // Public Properties
-  const ReactImageSource &Source() {
+  const ReactImageSourceWithHeaders &Source() {
     return m_imageSource;
   }
-  void Source(ReactImageSource source);
+  void Source(ReactImageSourceWithHeaders source);
 
   facebook::react::ImageResizeMode ResizeMode() {
     return m_resizeMode;
@@ -70,13 +62,13 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   xaml::Media::Stretch ResizeModeToStretch();
   xaml::Media::Stretch ResizeModeToStretch(winrt::Windows::Foundation::Size size);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>
-  GetImageMemoryStreamAsync(ReactImageSource source);
+  GetImageMemoryStreamAsync(ReactImageSourceWithHeaders source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
 
   bool m_useCompositionBrush{false};
   float m_blurRadius{0};
   int m_imageSourceId{0};
-  ReactImageSource m_imageSource;
+  ReactImageSourceWithHeaders m_imageSource;
   facebook::react::ImageResizeMode m_resizeMode{facebook::react::ImageResizeMode::Contain};
   winrt::Windows::UI::Color m_tintColor{winrt::Colors::Transparent()};
 
@@ -92,10 +84,8 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 
 // Helper functions
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageStreamAsync(const ReactImageSource &source);
+GetImageStreamAsync(ReactImageSourceWithHeaders source);
 
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageInlineDataAsync(const ReactImageSource &source);
-
-winrt::Windows::Storage::Streams::IRandomAccessStream GetStreamFromEmbeddedResource(const ReactImageSource &source);
+winrt::Windows::Storage::Streams::IRandomAccessStream GetStreamFromEmbeddedResource(
+    const winrt::Microsoft::ReactNative::ReactImageSource &source);
 } // namespace Microsoft::ReactNative
