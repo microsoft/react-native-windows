@@ -188,10 +188,12 @@ TEST_CLASS (RNTesterIntegrationTests) {
   TEST_METHOD(WebSocket) {
     // Should behave the same as IntegrationTests/websocket_integration_test_server.js
     auto server = std::make_shared<WebSocketServer>(5555, false /*useTLS*/);
-    server->SetMessageFactory([](std::string &&message) -> std::string { return message + "_response"; });
+    server->SetMessageFactory([](string &&message) -> string { return message + "_response"; });
     server->Start();
 
     TestComponent("WebSocketTest");
+
+    server->Stop();
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(AccessibilityManager)

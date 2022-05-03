@@ -246,8 +246,7 @@ InstanceImpl::InstanceImpl(
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
       m_devSettings(std::move(devSettings)),
       m_devManager(std::move(devManager)),
-      m_innerInstance(std::move(instance)),
-      m_transitionalModuleProperties{ReactPropertyBagHelper::CreatePropertyBag()} {
+      m_innerInstance(std::move(instance)) {
   // Temp set the logmarker here
   facebook::react::ReactMarker::logTaggedMarker = logMarker;
 
@@ -544,8 +543,7 @@ InstanceImpl::~InstanceImpl() {
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
-  auto transitionalProps = m_transitionalModuleProperties;
-  auto propBag = winrt::Microsoft::ReactNative::ReactPropertyBag{transitionalProps};
+  auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
