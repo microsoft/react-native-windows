@@ -641,11 +641,11 @@ export default class Pressability {
               onMouseEnter: (event: MouseEvent): void => {
                 // [Windows Add attached raw mouse event handler for compat
                 if (this._config.onMouseEnter) {
-                this._config.onMouseEnter(event);
+                  this._config.onMouseEnter(event);
                 }
                 // Windows]
 
-              if (isHoverEnabled()) {
+                if (isHoverEnabled()) {
                   this._isHovered = true;
                   this._cancelHoverOutDelayTimeout();
                   const {onHoverIn} = this._config;
@@ -667,9 +667,9 @@ export default class Pressability {
 
               onMouseLeave: (event: MouseEvent): void => {
                 // [Windows Add attached raw mouse event handler for compat
-                  if (this._config.onMouseLeave) {
-                    this._config.onMouseLeave(event);
-                  }
+                if (this._config.onMouseLeave) {
+                  this._config.onMouseLeave(event);
+                }
                 // Windows]
 
                 if (this._isHovered) {
@@ -691,8 +691,8 @@ export default class Pressability {
                   }
                 }
               },
-            }
-          };
+            };
+    }
 
     // [Windows
     const keyboardEventHandlers = {
