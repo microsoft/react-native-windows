@@ -418,7 +418,8 @@ void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::S
   auto surfaceId = mountingCoordinator->getSurfaceId();
 
   mountingCoordinator->getTelemetryController().pullTransaction(
-      [&](facebook::react::MountingTransaction const &transaction, facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
+      [&](facebook::react::MountingTransaction const &transaction,
+          facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
         //[self.delegate mountingManager:self willMountComponentsWithRootTag:surfaceId];
         // _observerCoordinator.notifyObserversMountingTransactionWillMount(transaction, surfaceTelemetry);
       },
