@@ -92,6 +92,17 @@ export type PointerEvent = ResponderSyntheticEvent<
     clientY: number,
     target: ?number,
     timestamp: number,
+    // [Windows
+    isLeftButton: boolean,
+    isRightButton: boolean,
+    isMiddleButton: boolean,
+    isBarrelButtonPressed: boolean,
+    isHorizontalScrollWheel: boolean,
+    isEraser: boolean,
+    shiftKey: boolean,
+    ctrlKey: boolean,
+    altKey: boolean,
+    // Windows]
   |}>,
 >;
 
@@ -167,7 +178,7 @@ export type FocusEvent = SyntheticEvent<
 export type MouseEvent = SyntheticEvent<
   $ReadOnly<{|
     target: number,
-    identifier?: number,
+    identifier: number,
     clientX: number,
     clientY: number,
     pageX: number,
@@ -175,17 +186,17 @@ export type MouseEvent = SyntheticEvent<
     locationX: number,
     locationY: number,
     timestamp: number,
-    pointerType?: string,
-    force?: number,
-    isLeftButton?: boolean,
-    isRightButton?: boolean,
-    isMiddleButton?: boolean,
-    isBarrelButtonPressed?: boolean,
-    isHorizontalScrollWheel?: boolean,
-    isEraser?: boolean,
-    shiftKey?: boolean,
-    ctrlKey?: boolean,
-    altKey?: boolean,
+    pointerType: string,
+    force: number,
+    isLeftButton: boolean,
+    isRightButton: boolean,
+    isMiddleButton: boolean,
+    isBarrelButtonPressed: boolean,
+    isHorizontalScrollWheel: boolean,
+    isEraser: boolean,
+    shiftKey: boolean,
+    ctrlKey: boolean,
+    altKey: boolean,
   |}>,
 >;
 // Windows]

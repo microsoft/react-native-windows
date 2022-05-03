@@ -1031,6 +1031,21 @@ const getTouchFromPressEvent = (event: PressEvent) => {
 function convertPointerEventToMouseEvent(input: PointerEvent): MouseEvent {
   const {touchHistory: _, ...synthEvent} = input;
   const {clientX, clientY, timestamp} = input.nativeEvent;
+  // [Windows
+  const {
+    pointerType,
+    pressure,
+    isLeftButton,
+    isRightButton,
+    isMiddleButton,
+    isBarrelButtonPressed,
+    isHorizontalScrollWheel,
+    isEraser,
+    shiftKey,
+    ctrlKey,
+    altKey,
+  } = input.nativeEvent;
+  // Windows]
   return {
     ...synthEvent,
     nativeEvent: {
@@ -1040,9 +1055,23 @@ function convertPointerEventToMouseEvent(input: PointerEvent): MouseEvent {
       pageY: clientY,
       timestamp,
       // [Windows
-      target: typeof input.target === 'number' ? input.target : -1,
+      target:
+        input.nativeEvent.target ??
+        (typeof input.target === 'number' ? input.target : -1),
+      identifier: input.nativeEvent.pointerId,
       locationX: clientX,
       locationY: clientY,
+      pointerType,
+      force: pressure,
+      isLeftButton,
+      isRightButton,
+      isMiddleButton,
+      isBarrelButtonPressed,
+      isHorizontalScrollWheel,
+      isEraser,
+      shiftKey,
+      ctrlKey,
+      altKey,
       // Windows]
     },
   };
