@@ -17,7 +17,6 @@ struct IBlobPersistor {
 
   virtual void RemoveMessage(std::string &&blobId) noexcept = 0;
 
-  // TODO: Keep only one variant for StoreMessage.
   virtual void StoreMessage(std::vector<uint8_t> &&message, std::string &&blobId) noexcept = 0;
 
   virtual std::string StoreMessage(std::vector<uint8_t> &&message) noexcept = 0;

@@ -59,16 +59,14 @@ WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windo
 void WinRTHttpResource::SendRequest(
     string &&method,
     string &&url,
+    int64_t requestId,
     Headers &&headers,
-    BodyData &&bodyData,
+    dynamic &&data,
     string &&responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
     bool withCredentials,
-    dynamic &&data,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
-  auto requestId = ++s_lastRequestId;
-
   // Enforce supported args
   assert(responseType == "text" || responseType == "base64");
 
@@ -85,7 +83,7 @@ void WinRTHttpResource::SendRequest(
     auto concreteArgs = args.as<RequestArgs>();
     concreteArgs->RequestId = requestId;
     concreteArgs->Headers = std::move(headers);
-    concreteArgs->Body = std::move(bodyData);
+    concreteArgs->Data = std::move(data);
     concreteArgs->IncrementalUpdates = useIncrementalUpdates;
     concreteArgs->WithCredentials = withCredentials;
     concreteArgs->IsText = responseType == "text";
@@ -204,20 +202,24 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   }
 
   IHttpContent content{nullptr};
-  if (BodyData::Type::String == coReqArgs->Body.Type) {
-    content = HttpStringContent{to_hstring(coReqArgs->Body.Data)};
-  } else if (BodyData::Type::Base64 == coReqArgs->Body.Type) {
-    auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(coReqArgs->Body.Data));
-    content = HttpBufferContent{buffer};
-  } else if (BodyData::Type::Uri == coReqArgs->Body.Type) {
-    auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(coReqArgs->Body.Data)});
-    auto stream = co_await file.OpenReadAsync();
-    content = HttpStreamContent{stream};
-  } else if (BodyData::Type::Form == coReqArgs->Body.Type) {
-    // #9535 - HTTP form data support
-  } else {
-    // BodyData::Type::Empty
-    // TODO: Error => unsupported??
+  auto &data = coReqArgs->Data;
+  if (!data.isNull()) {
+    if (!data["string"].empty()) {
+      content = HttpStringContent{to_hstring(data["string"].asString())};
+    } else if (!data["base64"].empty()) {
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].asString()));
+      content = HttpBufferContent{std::move(buffer)};
+    } else if (!data["uri"].empty()) {
+      auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].asString())});
+      auto stream = co_await file.OpenReadAsync();
+      content = HttpStreamContent{std::move(stream)};
+    } else if (!data["form"].empty()) {
+      // #9535 - HTTP form data support
+      // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
+    } else {
+      // Assume empty request body.
+      // content = HttpStringContent{L""};
+    }
   }
 
   if (content != nullptr) {

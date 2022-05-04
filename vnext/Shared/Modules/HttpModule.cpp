@@ -117,32 +117,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         auto resource = holder->Module->m_resource;
         if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
         {
-          IHttpResource::BodyData bodyData;
           auto params = facebook::xplat::jsArgAsObject(args, 0);
-          auto data = params["data"];
-          auto stringData = data["string"];
-          if (!stringData.empty())
-          {
-            bodyData = {IHttpResource::BodyData::Type::String, stringData.getString()};
-          }
-          else
-          {
-            auto base64Data = data["base64"];
-            if (!base64Data.empty())
-            {
-              bodyData = {IHttpResource::BodyData::Type::Base64, base64Data.getString()};
-            }
-            else
-            {
-              auto uriData = data["uri"];
-              if (!uriData.empty())
-              {
-                bodyData = {IHttpResource::BodyData::Type::Uri, uriData.getString()};
-              }
-            }
-          }
-          //TODO: Support FORM data
-
           IHttpResource::Headers headers;
           for (auto& header : params["headers"].items()) {
             headers.emplace(header.first.getString(), header.second.getString());
@@ -151,13 +126,13 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
           resource->SendRequest(
             params["method"].asString(),
             params["url"].asString(),
+            params["requestId"].asInt(),
             std::move(headers),
-            std::move(bodyData),
+            std::move(params["data"]),
             params["responseType"].asString(),
             params["incrementalUpdates"].asBool(),
             static_cast<int64_t>(params["timeout"].asDouble()),
-            false,//withCredentials,
-            std::move(data),
+            params["withCredentials"].asBool(),
             [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
               cxxCallback({requestId});
             }
