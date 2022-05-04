@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.1.69",
-    "@react-native-windows/fs": "0.69.0-preview.0",
+    "@react-native-windows/fs": "0.69.0-preview.1",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "chalk": "^4.1.2",

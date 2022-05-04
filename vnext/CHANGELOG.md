@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 May 2022 21:26:43 GMT and should not be manually modified.
+This log was last generated on Wed, 04 May 2022 23:30:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.0-preview.1
+
+Wed, 04 May 2022 23:30:23 GMT
+
+### Changes
+
+- Promote 0.69 to preview (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.69.0-preview.1
+- Bump @react-native-windows/virtualized-list to v0.69.0-preview.1
+- Bump @react-native-windows/codegen to v0.69.0-preview.1
 
 ## 0.0.0-canary.495
 

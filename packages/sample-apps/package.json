@@ -15,13 +15,13 @@
     "@typescript-eslint/parser": "^5.20.0",
     "react": "18.0.0",
     "react-native": "0.69.0-rc.0",
-    "react-native-windows": "0.69.0-preview.0"
+    "react-native-windows": "0.69.0-preview.1"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/codegen": "0.69.0-preview.0",
-    "@react-native-windows/virtualized-list": "0.69.0-preview.0",
+    "@react-native-windows/codegen": "0.69.0-preview.1",
+    "@react-native-windows/virtualized-list": "0.69.0-preview.1",
     "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",
     "@rnw-scripts/metro-dev-config": "0.0.0",
