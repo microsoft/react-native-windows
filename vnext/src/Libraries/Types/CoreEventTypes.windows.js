@@ -179,6 +179,8 @@ export type MouseEvent = SyntheticEvent<
   $ReadOnly<{|
     target: number,
     identifier: number,
+    clientX: number,
+    clientY: number,
     pageX: number,
     pageY: number,
     locationX: number,

@@ -1539,7 +1539,7 @@ Object {
           "XamlType": "Windows.UI.Xaml.Controls.ContentPresenter",
           "children": Array [
             Object {
-              "Background": "#00FFFFFF"
+              "Background": "#00FFFFFF",
               "BorderBrush": "#00000000",
               "BorderThickness": "0,0,0,0",
               "Clip": null,
