@@ -92,6 +92,17 @@ export type PointerEvent = ResponderSyntheticEvent<
     clientY: number,
     target: ?number,
     timestamp: number,
+    // [Windows
+    isLeftButton: boolean,
+    isRightButton: boolean,
+    isMiddleButton: boolean,
+    isBarrelButtonPressed: boolean,
+    isHorizontalScrollWheel: boolean,
+    isEraser: boolean,
+    shiftKey: boolean,
+    ctrlKey: boolean,
+    altKey: boolean,
+    // Windows]
   |}>,
 >;
 

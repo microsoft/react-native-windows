@@ -273,7 +273,7 @@ function PressableHoverStyle() {
         <Text style={styles.text}>Hover Me</Text>
       </Pressable>
     </View>
-    );
+  );
 }
 
 function PressableFocusCallbacks() {
