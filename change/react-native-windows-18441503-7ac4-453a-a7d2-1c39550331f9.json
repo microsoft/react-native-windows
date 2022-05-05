@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Allow accessibilityRole override for BasicButton",
+  "packageName": "react-native-windows",
+  "email": "adamgor@microsoft.com",
+  "dependentChangeType": "patch"
+}
