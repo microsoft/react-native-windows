@@ -16,8 +16,6 @@
 namespace Microsoft::React::Networking {
 
 class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
-  static int64_t s_lastRequestId;
-
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseOperation> m_responses;

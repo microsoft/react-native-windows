@@ -47,9 +47,6 @@ namespace Microsoft::React::Networking {
 
 #pragma region WinRTHttpResource
 
-// TODO: Check for multi-thread issues if there are multiple instances.
-/*static*/ int64_t WinRTHttpResource::s_lastRequestId = 0;
-
 WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient()) {}

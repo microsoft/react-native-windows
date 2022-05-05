@@ -40,7 +40,12 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
 constexpr char moduleName[] = "BlobModule";
-constexpr char blobURIScheme[] = "blob";
+constexpr char blobKey[] = "blob";
+constexpr char blobIdKey[] = "blobId";
+constexpr char offsetKey[] = "offset";
+constexpr char sizeKey[] = "size";
+constexpr char typeKey[] = "type";
+constexpr char dataKey[] = "data";
 } // namespace
 
 namespace Microsoft::React {
@@ -75,7 +80,7 @@ string BlobModule::getName() {
 }
 
 std::map<string, dynamic> BlobModule::getConstants() {
-  return {{"BLOB_URI_SCHEME", blobURIScheme}, {"BLOB_URI_HOST", {}}};
+  return {{"BLOB_URI_SCHEME", blobKey}, {"BLOB_URI_HOST", {}}};
 }
 
 vector<module::CxxModule::Method> BlobModule::getMethods() {
@@ -119,9 +124,9 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
          }
 
          auto blob = jsArgAsObject(args, 0);
-         auto blobId = blob["blobId"].getString();
-         auto offset = blob["offset"].getInt();
-         auto size = blob["size"].getInt();
+         auto blobId = blob[blobIdKey].getString();
+         auto offset = blob[offsetKey].getInt();
+         auto size = blob[sizeKey].getInt();
          auto socketID = jsArgAsInt(args, 1);
 
          auto data = persistor->ResolveMessage(std::move(blobId), offset, size);
@@ -143,16 +148,16 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
          vector<uint8_t> buffer{};
 
          for (const auto &part : parts) {
-           auto type = part["type"].asString();
-           if (blobURIScheme == type) {
-             auto blob = part["data"];
+           auto type = part[typeKey].asString();
+           if (blobKey == type) {
+             auto blob = part[dataKey];
              auto bufferPart =
-                 persistor->ResolveMessage(blob["blobId"].asString(), blob["offset"].asInt(), blob["size"].asInt());
+                 persistor->ResolveMessage(blob[blobIdKey].asString(), blob[offsetKey].asInt(), blob[sizeKey].asInt());
 
              buffer.reserve(buffer.size() + bufferPart.size());
              buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
            } else if ("string" == type) {
-             auto data = part["data"].asString();
+             auto data = part[dataKey].asString();
 
              buffer.reserve(buffer.size() + data.size());
              buffer.insert(buffer.end(), data.begin(), data.end());
@@ -230,17 +235,17 @@ BlobWebSocketModuleContentHandler::BlobWebSocketModuleContentHandler(shared_ptr<
 #pragma region IWebSocketModuleContentHandler
 
 void BlobWebSocketModuleContentHandler::ProcessMessage(string &&message, dynamic &params) /*override*/ {
-  params["data"] = std::move(message);
+  params[dataKey] = std::move(message);
 }
 
 void BlobWebSocketModuleContentHandler::ProcessMessage(vector<uint8_t> &&message, dynamic &params) /*override*/ {
   auto blob = dynamic::object();
-  blob("offset", 0);
-  blob("size", message.size());
-  blob("blobId", m_blobPersistor->StoreMessage(std::move(message)));
+  blob(offsetKey, 0);
+  blob(sizeKey, message.size());
+  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(message)));
 
-  params["data"] = std::move(blob);
-  params["type"] = blobURIScheme;
+  params[dataKey] = std::move(blob);
+  params[typeKey] = blobKey;
 }
 #pragma endregion IWebSocketModuleContentHandler
 
@@ -269,17 +274,17 @@ BlobModuleUriHandler::BlobModuleUriHandler(shared_ptr<IBlobPersistor> blobPersis
 bool BlobModuleUriHandler::Supports(string &uri, string &responseType) /*override*/ {
   auto uriObj = Uri{winrt::to_hstring(uri)};
 
-  return !(L"http" == uriObj.SchemeName() || L"https" == uriObj.SchemeName()) && blobURIScheme == responseType;
+  return !(L"http" == uriObj.SchemeName() || L"https" == uriObj.SchemeName()) && blobKey == responseType;
 }
 
 dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
   auto data = vector<uint8_t>{}; // getBytesFromUri
 
   auto blob = dynamic::object();
-  blob("offset", 0);
-  blob("size", data.size());
-  blob("type", GetMimeTypeFromUri(uri));
-  blob("blobId", m_blobPersistor->StoreMessage(std::move(data)));
+  blob(offsetKey, 0);
+  blob(sizeKey, data.size());
+  blob(typeKey, GetMimeTypeFromUri(uri));
+  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(data)));
 
   // Needed for files
   blob("name", GetNameFromUri(uri));
@@ -296,7 +301,7 @@ string BlobModuleUriHandler::GetMimeTypeFromUri(string &uri) noexcept {
   //  See
   //  https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
 
-  return blobURIScheme;
+  return blobIdKey;
 }
 
 string BlobModuleUriHandler::GetNameFromUri(string &uri) noexcept {
@@ -351,24 +356,28 @@ BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersi
 #pragma region IRequestBodyHandler
 
 bool BlobModuleRequestBodyHandler::Supports(dynamic &data) /*override*/ {
-  return !data.at(blobURIScheme).empty();
+  return !data.at(blobKey).empty();
 }
 
 dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &contentType) /*override*/ {
   auto type = contentType;
-  if (!data["type"].asString().empty()) {
-    type = data["type"].asString();
+  if (!data[typeKey].isNull() && !data[typeKey].asString().empty()) {
+    type = data[typeKey].asString();
   }
   if (type.empty()) {
     type = "application/octet-stream";
   }
 
-  auto blob = data[blobURIScheme];
-  auto blobId = blob["blobId"].asString();
-  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob["offset"].asInt(), blob["size"].asInt());
+  auto blob = data[blobKey];
+  auto blobId = blob[blobIdKey].asString();
+  auto bytes = m_blobPersistor->ResolveMessage(std::move(blobId), blob[offsetKey].asInt(), blob[sizeKey].asInt());
 
-  // TODO: create body from type and bytes
-  return {};
+  auto result = dynamic::object();
+  result(typeKey, type);
+  result(sizeKey, bytes.size());
+  result("bytes", dynamic(bytes.cbegin(), bytes.cend())); //TODO: Confirm key for blob payload.
+
+  return result;
 }
 
 #pragma endregion IRequestBodyHandler
@@ -383,7 +392,7 @@ BlobModuleResponseHandler::BlobModuleResponseHandler(shared_ptr<IBlobPersistor> 
 #pragma region IResponseHandler
 
 bool BlobModuleResponseHandler::Supports(std::string &responseType) /*override*/ {
-  return blobURIScheme == responseType;
+  return blobKey == responseType;
 }
 
 dynamic BlobModuleResponseHandler::ToResponseData(dynamic &body) /*override*/ {
@@ -391,9 +400,9 @@ dynamic BlobModuleResponseHandler::ToResponseData(dynamic &body) /*override*/ {
   auto bytes = vector<uint8_t>{};
 
   auto blob = dynamic::object();
-  blob("offset", 0);
-  blob("size", bytes.size());
-  blob("blobId", m_blobPersistor->StoreMessage(std::move(bytes)));
+  blob(offsetKey, 0);
+  blob(sizeKey, bytes.size());
+  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(bytes)));
 
   return blob;
 }
