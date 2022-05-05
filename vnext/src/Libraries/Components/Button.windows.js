@@ -24,6 +24,7 @@ import invariant from 'invariant';
 
 import type {
   AccessibilityState,
+  AccessibilityRole,
   AccessibilityActionEvent,
   AccessibilityActionInfo,
 } from './View/ViewAccessibility';
@@ -131,7 +132,7 @@ type ButtonProps = $ReadOnly<{|
   /**
     Role to display for blindness accessibility features.
    */
-  accessibilityRole?: ?string,
+  accessibilityRole?: ?AccessibilityRole,
 
   /**
     If `true`, disable all interactions for this component.
