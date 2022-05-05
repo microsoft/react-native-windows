@@ -129,6 +129,11 @@ type ButtonProps = $ReadOnly<{|
   accessibilityLabel?: ?string,
 
   /**
+    Role to display for blindness accessibility features.
+   */
+  accessibilityRole?: ?string,
+
+  /**
     If `true`, disable all interactions for this component.
 
     @default false
@@ -285,6 +290,7 @@ class Button extends React.Component<
   render(): React.Node {
     const {
       accessibilityLabel,
+      accessibilityRole,
       color,
       onPress,
       touchSoundDisabled,
@@ -346,7 +352,7 @@ class Button extends React.Component<
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={accessibilityHint}
           accessibilityLanguage={accessibilityLanguage}
-          accessibilityRole="button"
+          accessibilityRole={accessibilityRole ?? "button"}
           accessibilityState={accessibilityState}
           hasTVPreferredFocus={hasTVPreferredFocus}
           nextFocusDown={nextFocusDown}
@@ -441,7 +447,7 @@ class Button extends React.Component<
           onAccessibilityAction={onAccessibilityAction}
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={accessibilityHint}
-          accessibilityRole="button"
+          accessibilityRole={accessibilityRole ?? "button"}
           accessibilityState={accessibilityState}
           hasTVPreferredFocus={hasTVPreferredFocus}
           nextFocusDown={nextFocusDown}
