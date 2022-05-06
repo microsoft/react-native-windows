@@ -17,7 +17,9 @@
 #include <winrt/Windows.Security.Cryptography.h>
 
 // Standard Library
+#include <filesystem>
 #include <queue>
+#include <unordered_map>
 
 using namespace facebook::xplat;
 
@@ -46,6 +48,82 @@ constexpr char offsetKey[] = "offset";
 constexpr char sizeKey[] = "size";
 constexpr char typeKey[] = "type";
 constexpr char dataKey[] = "data";
+
+// See https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+const static std::unordered_map<string, const char *> extensionToMime = {
+    {".aac", "audio/aac"},
+    {".abw", "application/x-abiword"},
+    {".arc", "application/x-freearc"},
+    {".avif", "image/avif"},
+    {".avi", "video/x-msvideo"},
+    {".azw", "application/vnd.amazon.ebook"},
+    {".bin", "application/octet-stream"},
+    {".bmp", "image/bmp"},
+    {".bz", "application/x-bzip"},
+    {".bz2", "application/x-bzip2"},
+    {".cda", "application/x-cdf"},
+    {".csh", "application/x-csh"},
+    {".css", "text/css"},
+    {".csv", "text/csv"},
+    {".doc", "application/msword"},
+    {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+    {".eot", "application/vnd.ms-fontobject"},
+    {".epub", "application/epub+zip"},
+    {".gz", "application/gzip"},
+    {".gif", "image/gif"},
+    {".htm .html", "text/html"},
+    {".ico", "image/vnd.microsoft.icon"},
+    {".ics", "text/calendar"},
+    {".jar", "application/java-archive"},
+    {".jpeg .jpg", "image/jpeg"},
+    {".js", "text/javascript"},
+    {".json", "application/json"},
+    {".jsonld", "application/ld+json"},
+    {".mid .midi", "audio/midi audio/x-midi"},
+    {".mjs", "text/javascript"},
+    {".mp3", "audio/mpeg"},
+    {".mp4", "video/mp4"},
+    {".mpeg", "video/mpeg"},
+    {".mpkg", "application/vnd.apple.installer+xml"},
+    {".odp", "application/vnd.oasis.opendocument.presentation"},
+    {".ods", "application/vnd.oasis.opendocument.spreadsheet"},
+    {".odt", "application/vnd.oasis.opendocument.text"},
+    {".oga", "audio/ogg"},
+    {".ogv", "video/ogg"},
+    {".ogx", "application/ogg"},
+    {".opus", "audio/opus"},
+    {".otf", "font/otf"},
+    {".png", "image/png"},
+    {".pdf", "application/pdf"},
+    {".php", "application/x-httpd-php"},
+    {".ppt", "application/vnd.ms-powerpoint"},
+    {".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
+    {".rar", "application/vnd.rar"},
+    {".rtf", "application/rtf"},
+    {".sh", "application/x-sh"},
+    {".svg", "image/svg+xml"},
+    {".swf", "application/x-shockwave-flash"},
+    {".tar", "application/x-tar"},
+    {".tif .tiff", "image/tiff"},
+    {".ts", "video/mp2t"},
+    {".ttf", "font/ttf"},
+    {".txt", "text/plain"},
+    {".vsd", "application/vnd.visio"},
+    {".wav", "audio/wav"},
+    {".weba", "audio/webm"},
+    {".webm", "video/webm"},
+    {".webp", "image/webp"},
+    {".woff", "font/woff"},
+    {".woff2", "font/woff2"},
+    {".xhtml", "application/xhtml+xml"},
+    {".xls", "application/vnd.ms-excel"},
+    {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
+    {".xml", "application/xml"},
+    {".xul", "application/vnd.mozilla.xul+xml"},
+    {".zip", "application/zip"},
+    {".3gp", "video/3gpp; audio/3gpp if it doesn't contain video"},
+    {".3g2", "video/3gpp2; audio/3gpp2 if it doesn't contain video"},
+    {".7z", "application/x-7z-compressed"}}; // extensionToMime
 } // namespace
 
 namespace Microsoft::React {
@@ -295,13 +373,24 @@ dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
 
 #pragma endregion IUriHandler
 
+/// <remarks>
+/// See
+/// https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
+/// </remarks>
 string BlobModuleUriHandler::GetMimeTypeFromUri(string &uri) noexcept {
-  // TODO: content resolver.
-  //  See https://developer.android.com/reference/android/content/ContentResolver
-  //  See
-  //  https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
+  string result{};
 
-  return blobIdKey;
+  auto uriPath = Uri{winrt::to_hstring(uri)}.Path();
+  auto lastSegment = GetLastPathSegment(uriPath);
+  auto path = std::filesystem::path{lastSegment};
+  if (path.has_extension()) {
+    auto entry = extensionToMime.find(path.extension().string());
+    if (entry != extensionToMime.cend()) {
+      result = (*entry).second;
+    }
+  }
+
+  return result;
 }
 
 string BlobModuleUriHandler::GetNameFromUri(string &uri) noexcept {
@@ -340,10 +429,11 @@ string BlobModuleUriHandler::GetLastPathSegment(winrt::hstring &path) noexcept {
 }
 
 int64_t BlobModuleUriHandler::GetLastModifiedFromUri(string &uri) noexcept {
-  // TODO: Handle StorageFile URIs
-  //  https://stackoverflow.com/questions/31860360
+  int64_t result{0};
 
-  return 0;
+  // TODO: Use Windows.Storage, std::filesystem, or alternatives.
+
+  return result;
 }
 
 #pragma endregion BlobModuleUriHandler
@@ -375,7 +465,7 @@ dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &conte
   auto result = dynamic::object();
   result(typeKey, type);
   result(sizeKey, bytes.size());
-  result("bytes", dynamic(bytes.cbegin(), bytes.cend())); //TODO: Confirm key for blob payload.
+  result("bytes", dynamic(bytes.cbegin(), bytes.cend())); // TODO: Confirm key for blob payload.
 
   return result;
 }
