@@ -114,7 +114,6 @@ void ReactApplication::OnLaunched(activation::LaunchActivatedEventArgs const &e_
 
   if (m_launched) {
     m_launched({*this}, e);
-    // m_launched({*this});
   }
 
   this->OnCreate(e);

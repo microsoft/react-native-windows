@@ -166,9 +166,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="PropertySheet.props" />
-    <Text Include="readme.txt">
-      <DeploymentContent>false</DeploymentContent>
-    </Text>
   </ItemGroup>
   <Target Name="Deploy" />
   <Import Project="$(ReactNativeWindowsDir)\scripts\Microsoft.ReactNative.targets" Condition="Exists('$(ReactNativeWindowsDir)\scripts\Microsoft.ReactNative.targets')" />
