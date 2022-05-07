@@ -16,4 +16,4 @@ void SendEvent(weak_ptr<Instance> weakReactInstance, string &&eventName, dynamic
   }
 }
 
-} // namespace
+} // namespace Microsoft::React::Modules

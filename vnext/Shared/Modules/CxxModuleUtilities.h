@@ -15,6 +15,9 @@
 
 namespace Microsoft::React::Modules {
 
-void SendEvent(std::weak_ptr<facebook::react::Instance> weakReactInstance, std::string &&eventName, folly::dynamic &&args);
+void SendEvent(
+    std::weak_ptr<facebook::react::Instance> weakReactInstance,
+    std::string &&eventName,
+    folly::dynamic &&args);
 
-} // namespace
+} // namespace Microsoft::React::Modules
