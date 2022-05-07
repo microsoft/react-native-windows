@@ -5,6 +5,7 @@
 
 #include <Modules/WebSocketModule.h>
 
+#include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
 #include "Unicode.h"
@@ -41,15 +42,10 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 namespace {
 using Microsoft::React::IWebSocketModuleProxy;
 using Microsoft::React::WebSocketModule;
+using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IWebSocketResource;
 
 constexpr char moduleName[] = "WebSocketModule";
-
-static void SendEvent(weak_ptr<Instance> weakInstance, string &&eventName, dynamic &&args) {
-  if (auto instance = weakInstance.lock()) {
-    instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
-  }
-}
 
 static shared_ptr<IWebSocketResource>
 GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedState> weakState) {

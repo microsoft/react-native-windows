@@ -5,6 +5,7 @@
 
 #include "HttpModule.h"
 
+#include <Modules/CxxModuleUtilities.h>
 #include <ReactPropertyBag.h>
 
 // React Native
@@ -24,15 +25,10 @@ using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 
+using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
-
-static void SendEvent(weak_ptr<Instance> weakReactInstance, string &&eventName, dynamic &&args) {
-  if (auto instance = weakReactInstance.lock()) {
-    instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
-  }
-}
 
 static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReactInstance) {
   auto resource = IHttpResource::Make();
