@@ -17,7 +17,7 @@ namespace Microsoft::React {
 /// </summary>
 struct IUriHandler {
   /// <summary>
-  /// Returns if the handler should be used for an URI.
+  /// Returns whether the handler should be used for a given URI.
   /// </summary>
   virtual bool Supports(std::string &uri, std::string &responseType) = 0;
 

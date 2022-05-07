@@ -5,6 +5,7 @@
 
 // Standard Library
 #include <string>
+#include <vector>
 
 namespace Microsoft::React {
 
@@ -20,7 +21,7 @@ struct IResponseHandler {
   /// <summary>
   /// Returns the JS body payload for the {@link ResponseBody}.
   /// </summary>
-  virtual folly::dynamic ToResponseData(folly::dynamic &body) = 0;
+  virtual folly::dynamic ToResponseData(std::vector<uint8_t> &&content) = 0;
 };
 
 } // namespace Microsoft::React

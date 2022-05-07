@@ -77,12 +77,20 @@ class BlobModuleUriHandler final : public IUriHandler {
 
 #pragma endregion IUriHandler
 
+  /// <summary>
+  /// May throw std::filesystem::filesystem_error.
+  /// </summary>
+  std::vector<uint8_t> GetBytesFromUri(std::string &uri);
+
   std::string GetMimeTypeFromUri(std::string &uri) noexcept;
 
   std::string GetNameFromUri(std::string &uri) noexcept;
 
   std::string GetLastPathSegment(winrt::hstring &path) noexcept;
 
+  /// <returns>
+  /// Last modified time in miliseconds
+  /// </returns>
   int64_t GetLastModifiedFromUri(std::string &uri) noexcept;
 };
 
@@ -111,7 +119,7 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 
   bool Supports(std::string &responseType) override;
 
-  folly::dynamic ToResponseData(folly::dynamic &body) override;
+  folly::dynamic ToResponseData(std::vector<uint8_t> &&content) override;
 
 #pragma endregion IResponseHandler
 };

@@ -17,7 +17,9 @@
 #include <winrt/Windows.Security.Cryptography.h>
 
 // Standard Library
+#include <chrono>
 #include <filesystem>
+#include <fstream>
 #include <queue>
 #include <unordered_map>
 
@@ -39,6 +41,8 @@ using winrt::Windows::Foundation::GuidHelper;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
+
+namespace fs = std::filesystem;
 
 namespace {
 constexpr char moduleName[] = "BlobModule";
@@ -356,7 +360,7 @@ bool BlobModuleUriHandler::Supports(string &uri, string &responseType) /*overrid
 }
 
 dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
-  auto data = vector<uint8_t>{}; // getBytesFromUri
+  auto data = GetBytesFromUri(uri);
 
   auto blob = dynamic::object();
   blob(offsetKey, 0);
@@ -372,6 +376,18 @@ dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
 }
 
 #pragma endregion IUriHandler
+
+// TODO: Avoid double allocation (malloc() + vector{}}.
+vector<uint8_t> BlobModuleUriHandler::GetBytesFromUri(string &uri) {
+  auto path = fs::weakly_canonical(uri);
+  auto size = fs::file_size(path);
+  auto sharedBuff = shared_ptr<void>{malloc(static_cast<size_t>(size)), free};
+  auto inStream = std::ifstream{path, std::ios::binary};
+  inStream.read(static_cast<char *>(sharedBuff.get()), size);
+  auto asBytePtr = static_cast<uint8_t *>(sharedBuff.get());
+
+  return vector<uint8_t>{asBytePtr, asBytePtr + static_cast<uint32_t>(size)};
+}
 
 /// <remarks>
 /// See
@@ -429,9 +445,19 @@ string BlobModuleUriHandler::GetLastPathSegment(winrt::hstring &path) noexcept {
 }
 
 int64_t BlobModuleUriHandler::GetLastModifiedFromUri(string &uri) noexcept {
-  int64_t result{0};
+  int64_t result;
 
-  // TODO: Use Windows.Storage, std::filesystem, or alternatives.
+  try {
+    auto path = fs::weakly_canonical(uri);
+    auto lastModified = fs::last_write_time(path);
+    auto timeSince = lastModified.time_since_epoch();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(timeSince);
+    auto count = duration.count();
+
+    result = static_cast<int64_t>(count);
+  } catch (const fs::filesystem_error &) {
+    result = 0;
+  }
 
   return result;
 }
@@ -465,7 +491,7 @@ dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &conte
   auto result = dynamic::object();
   result(typeKey, type);
   result(sizeKey, bytes.size());
-  result("bytes", dynamic(bytes.cbegin(), bytes.cend())); // TODO: Confirm key for blob payload.
+  result("bytes", dynamic(bytes.cbegin(), bytes.cend()));
 
   return result;
 }
@@ -481,18 +507,15 @@ BlobModuleResponseHandler::BlobModuleResponseHandler(shared_ptr<IBlobPersistor> 
 
 #pragma region IResponseHandler
 
-bool BlobModuleResponseHandler::Supports(std::string &responseType) /*override*/ {
+bool BlobModuleResponseHandler::Supports(string &responseType) /*override*/ {
   return blobKey == responseType;
 }
 
-dynamic BlobModuleResponseHandler::ToResponseData(dynamic &body) /*override*/ {
-  // TODO: get bytes from body
-  auto bytes = vector<uint8_t>{};
-
+dynamic BlobModuleResponseHandler::ToResponseData(vector<uint8_t> &&content) /*override*/ {
   auto blob = dynamic::object();
   blob(offsetKey, 0);
-  blob(sizeKey, bytes.size());
-  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(bytes)));
+  blob(sizeKey, content.size());
+  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(content)));
 
   return blob;
 }
