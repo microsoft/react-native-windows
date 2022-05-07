@@ -9,7 +9,6 @@
 #include <unicode.h>
 
 // React Native
-#include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
 
 // Windows API
@@ -20,14 +19,11 @@
 #include <chrono>
 #include <filesystem>
 #include <fstream>
-#include <queue>
 #include <unordered_map>
 
 using namespace facebook::xplat;
 
-using facebook::react::Instance;
 using folly::dynamic;
-using std::queue;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
