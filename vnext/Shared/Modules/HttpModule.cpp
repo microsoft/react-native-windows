@@ -115,7 +115,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance())))
         {
           auto params = facebook::xplat::jsArgAsObject(args, 0);
           IHttpResource::Headers headers;
@@ -151,7 +151,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance())))
         {
           resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
         }
@@ -168,7 +168,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance())))
         {
           resource->ClearCookies();
         }
