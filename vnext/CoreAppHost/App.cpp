@@ -11,7 +11,7 @@ int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/
   check(CoInitializeEx(nullptr, COINIT_MULTITHREADED));
 
   RNStartCoreApp([](RNCoreApp *app) {
-    app->componentName = L"testRN";
+    app->componentName = L"RNTesterApp";
 
     app->jsBundleFile = L"index";
     app->useDeveloperSupport = true;
