@@ -89,9 +89,11 @@ struct IHttpResource {
 
   virtual void ClearCookies() noexcept = 0;
 
-  virtual void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept = 0;
+  virtual void SetOnRequestSuccess(std::function<void(int64_t requestId)> &&handler) noexcept = 0;
   virtual void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept = 0;
   virtual void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept = 0;
+  virtual void SetOnBlobData(
+      std::function<void(int64_t requestId, folly::dynamic &&responseData)> &&handler) noexcept = 0;
   virtual void SetOnError(
       std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> &&handler) noexcept = 0;
 };

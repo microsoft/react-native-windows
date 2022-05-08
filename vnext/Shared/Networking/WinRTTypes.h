@@ -22,7 +22,7 @@ struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Found
   folly::dynamic Data;
   bool IncrementalUpdates;
   bool WithCredentials;
-  bool IsText;
+  std::string ResponseType;
   int64_t Timeout;
 };
 

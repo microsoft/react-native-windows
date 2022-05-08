@@ -24,6 +24,13 @@ struct IUriHandler {
   /// <summary>
   /// Fetch the URI and return the JS body payload.
   /// </summary>
+  /// <returns>
+  /// Blob representation in a dynamic object with the folliwing structure:
+  /// "blobId"      - Blob unique identifier
+  /// "offset"      - Blob segment starting offset
+  /// "size"        - Number of bytes fetched from blob
+  /// "name"        - File name obtained from the URI
+  /// "lastModified - Last write to local file in milliseconds
   virtual folly::dynamic Fetch(std::string &uri) = 0;
 };
 

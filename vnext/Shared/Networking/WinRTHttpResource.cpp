@@ -85,7 +85,7 @@ void WinRTHttpResource::SendRequest(
     concreteArgs->Data = std::move(data);
     concreteArgs->IncrementalUpdates = useIncrementalUpdates;
     concreteArgs->WithCredentials = withCredentials;
-    concreteArgs->IsText = responseType == "text";
+    concreteArgs->ResponseType = std::move(responseType);
     concreteArgs->Timeout = timeout;
 
     PerformSendRequest(std::move(request), args);
@@ -126,8 +126,8 @@ void WinRTHttpResource::ClearCookies() noexcept /*override*/ {
   // NOT IMPLEMENTED
 }
 
-void WinRTHttpResource::SetOnRequest(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
-  m_onRequest = std::move(handler);
+void WinRTHttpResource::SetOnRequestSuccess(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
+  m_onRequestSuccess = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response &&response)> &&handler) noexcept
@@ -138,6 +138,12 @@ void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response 
 void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&responseData)> &&handler) noexcept
 /*override*/ {
   m_onData = std::move(handler);
+}
+
+void WinRTHttpResource::SetOnBlobData(function<void(int64_t requestId, dynamic &&responseData)> &&handler) noexcept
+/*override*/
+{
+  m_onBlobData = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&errorMessage)> &&handler) noexcept
@@ -166,6 +172,24 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
   // Ensure background thread
   co_await winrt::resume_background();
+
+  // If URI handler is available, it takes over request processing.
+  if (auto uriHandler = self->m_uriHandler.lock()) {
+    auto uri = winrt::to_string(coRequest.RequestUri().ToString());
+    try {
+      if (uriHandler->Supports(uri, coReqArgs->ResponseType)) {
+        auto blob = uriHandler->Fetch(uri);
+        if (self->m_onBlobData && self->m_onRequestSuccess)
+          co_return self->m_onBlobData(coReqArgs->RequestId, std::move(blob));
+      }
+    } catch (const hresult_error &e) {
+      if (self->m_onError)
+        co_return self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(e));
+    } catch (const std::exception &e) {
+      if (self->m_onError)
+        co_return self->m_onError(coReqArgs->RequestId, e.what());
+    }
+  }
 
   HttpMediaTypeHeaderValue contentType{nullptr};
   string contentEncoding;
@@ -282,7 +306,8 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
-      if (coReqArgs->IsText) {
+      auto isText = coReqArgs->ResponseType == "text";
+      if (isText) {
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
@@ -290,7 +315,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       co_await reader.LoadAsync(10 * 1024 * 1024);
       auto length = reader.UnconsumedBufferLength();
 
-      if (coReqArgs->IsText) {
+      if (isText) {
         std::vector<uint8_t> data(length);
         reader.ReadBytes(data);
         string responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());

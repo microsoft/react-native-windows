@@ -30,10 +30,22 @@ using Microsoft::React::Networking::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
 
+// React event names
+constexpr char completedResponse[] = "didCompleteNetworkResponse";
+constexpr char receivedResponse[] = "didReceiveNetworkResponse";
+constexpr char receivedData[] = "didReceiveNetworkData";
+constexpr char receivedDataProgress[] = "didReceiveNetworkDataProgress";
+
 static shared_ptr<IHttpResource> CreateHttpResource(
     weak_ptr<Instance> weakReactInstance,
     IInspectable &inspectableProperties) {
   auto resource = IHttpResource::Make(inspectableProperties);
+
+  resource->SetOnRequestSuccess([weakReactInstance](int64_t requestId) {
+    auto args = dynamic::array(requestId);
+
+    SendEvent(weakReactInstance, completedResponse, std::move(args));
+  });
 
   resource->SetOnResponse([weakReactInstance](int64_t requestId, IHttpResource::Response &&response) {
     dynamic headers = dynamic::object();
@@ -44,23 +56,25 @@ static shared_ptr<IHttpResource> CreateHttpResource(
     // TODO: Test response content.
     dynamic args = dynamic::array(requestId, response.StatusCode, headers, response.Url);
 
-    SendEvent(weakReactInstance, "didReceiveNetworkResponse", std::move(args));
+    SendEvent(weakReactInstance, receivedResponse, std::move(args));
   });
 
   resource->SetOnData([weakReactInstance](int64_t requestId, string &&responseData) {
-    dynamic args = dynamic::array(requestId, std::move(responseData));
-
-    SendEvent(weakReactInstance, "didReceiveNetworkData", std::move(args));
+    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
 
     // TODO: Move into separate method IF not executed right after onData()
-    SendEvent(weakReactInstance, "didCompleteNetworkResponse", dynamic::array(requestId));
+    SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
+  });
+
+  resource->SetOnBlobData([weakReactInstance](int64_t requestId, dynamic &&responseData) {
+    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
   });
 
   resource->SetOnError([weakReactInstance](int64_t requestId, string &&message) {
     dynamic args = dynamic::array(requestId, std::move(message));
     // TODO: isTimeout errorArgs.push_back(true);
 
-    SendEvent(weakReactInstance, "didCompleteNetworkResponse", std::move(args));
+    SendEvent(weakReactInstance, completedResponse, std::move(args));
   });
 
   return resource;
