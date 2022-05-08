@@ -4,6 +4,7 @@
 #include "WinRTHttpResource.h"
 
 #include <CppRuntimeOptions.h>
+#include <ReactPropertyBag.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
 #include <utilities.h>
@@ -23,6 +24,7 @@ using std::function;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
+using std::weak_ptr;
 
 using winrt::fire_and_forget;
 using winrt::hresult_error;
@@ -47,11 +49,7 @@ namespace Microsoft::React::Networking {
 
 #pragma region WinRTHttpResource
 
-WinRTHttpResource::WinRTHttpResource(IHttpClient &&client, IInspectable inspectableProperties) noexcept
-    : m_client{std::move(client)}, m_inspectableProperties{inspectableProperties} {}
-
-WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept
-    : WinRTHttpResource(std::move(client), IInspectable{nullptr}) {}
+WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
@@ -329,7 +327,26 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   }
 
   self->UntrackResponse(coReqArgs->RequestId);
+} // PerformSendRequest
+
+#pragma region IHttpModuleProxy
+
+void WinRTHttpResource::AddUriHandler(shared_ptr<IUriHandler> uriHandler) noexcept /*override*/
+{
+  m_uriHandler = weak_ptr<IUriHandler>(uriHandler);
 }
+
+void WinRTHttpResource::AddRequestBodyHandler(shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept /*override*/
+{
+  m_requestBodyHandler = weak_ptr<IRequestBodyHandler>(requestBodyHandler);
+}
+
+void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> responseHandler) noexcept /*override*/
+{
+  m_responseHandler = weak_ptr<IResponseHandler>(responseHandler);
+}
+
+#pragma endregion IHttpModuleProxy
 
 #pragma endregion WinRTHttpResource
 
@@ -337,31 +354,36 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make(
     winrt::Windows::Foundation::IInspectable &inspectableProperties) noexcept {
+  using namespace winrt::Microsoft::ReactNative;
   using winrt::Windows::Web::Http::HttpClient;
 
+  shared_ptr<WinRTHttpResource> result;
+
   if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
-    return std::make_shared<WinRTHttpResource>(HttpClient{}, inspectableProperties);
+    result = std::make_shared<WinRTHttpResource>();
   } else {
     auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
     OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
     auto opFilter = winrt::make<OriginPolicyHttpFilter>();
     auto client = HttpClient{opFilter};
 
-    return std::make_shared<WinRTHttpResource>(std::move(client), inspectableProperties);
+    result = std::make_shared<WinRTHttpResource>(std::move(client));
   }
+
+  // Register resource as HTTP module proxy.
+  if (inspectableProperties) {
+    auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
+    auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
+    auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
+    propBag.Set(propId, std::move(moduleProxy));
+  }
+
+  return result;
 }
 
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
-  if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
-    return std::make_shared<WinRTHttpResource>();
-  } else {
-    auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
-    OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>();
-    auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
-
-    return std::make_shared<WinRTHttpResource>(std::move(client));
-  }
+  auto inspectableProperties = IInspectable{nullptr};
+  return Make(inspectableProperties);
 }
 
 #pragma endregion IHttpResource

@@ -73,11 +73,6 @@ namespace Microsoft::React {
 HttpModule::HttpModule(IInspectable const &inspectableProperties) noexcept
     : m_holder{std::make_shared<ModuleHolder>()}, m_inspectableProperties{inspectableProperties} {
   m_holder->Module = this;
-
-  auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
-  auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
-  auto contentHandler = weak_ptr<IHttpModuleProxy>{m_proxy};
-  propBag.Set(propId, std::move(contentHandler));
 }
 
 HttpModule::~HttpModule() noexcept /*override*/ {

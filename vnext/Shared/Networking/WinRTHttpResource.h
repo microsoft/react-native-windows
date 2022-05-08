@@ -5,6 +5,7 @@
 
 #include "IHttpResource.h"
 
+#include <Modules/IHttpModuleProxy.h>
 #include "WinRTTypes.h"
 
 // Windows API
@@ -15,16 +16,22 @@
 
 namespace Microsoft::React::Networking {
 
-class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_this<WinRTHttpResource> {
+class WinRTHttpResource : public IHttpResource,
+                          public IHttpModuleProxy,
+                          public std::enable_shared_from_this<WinRTHttpResource> {
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseOperation> m_responses;
-  winrt::Windows::Foundation::IInspectable m_inspectableProperties;
 
   std::function<void(int64_t requestId)> m_onRequest;
   std::function<void(int64_t requestId, Response &&response)> m_onResponse;
   std::function<void(int64_t requestId, std::string &&responseData)> m_onData;
   std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> m_onError;
+
+  // Used for IHttpModuleProxy
+  std::weak_ptr<IUriHandler> m_uriHandler;
+  std::weak_ptr<IRequestBodyHandler> m_requestBodyHandler;
+  std::weak_ptr<IResponseHandler> m_responseHandler;
 
   void TrackResponse(int64_t requestId, ResponseOperation response) noexcept;
 
@@ -38,10 +45,6 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   WinRTHttpResource() noexcept;
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
-
-  WinRTHttpResource(
-      winrt::Windows::Web::Http::IHttpClient &&client,
-      winrt::Windows::Foundation::IInspectable inspectableProperties) noexcept;
 
 #pragma region IHttpResource
 
@@ -59,13 +62,23 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   void AbortRequest(int64_t requestId) noexcept override;
   void ClearCookies() noexcept override;
 
-#pragma endregion IHttpResource
-
   void SetOnRequest(std::function<void(int64_t requestId)> &&handler) noexcept override;
   void SetOnResponse(std::function<void(int64_t requestId, Response &&response)> &&handler) noexcept override;
   void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept override;
   void SetOnError(std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)>
                       &&handler) noexcept override;
+
+#pragma endregion IHttpResource
+
+#pragma region IHttpModuleProxy
+
+  void AddUriHandler(std::shared_ptr<IUriHandler> uriHandler) noexcept override;
+
+  void AddRequestBodyHandler(std::shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept override;
+
+  void AddResponseHandler(std::shared_ptr<IResponseHandler> responseHandler) noexcept override;
+
+#pragma endregion IHttpModuleProxy
 };
 
 } // namespace Microsoft::React::Networking
