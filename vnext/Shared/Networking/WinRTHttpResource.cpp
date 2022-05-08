@@ -47,9 +47,13 @@ namespace Microsoft::React::Networking {
 
 #pragma region WinRTHttpResource
 
-WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
+WinRTHttpResource::WinRTHttpResource(IHttpClient &&client, IInspectable inspectableProperties) noexcept
+    : m_client{std::move(client)}, m_inspectableProperties{inspectableProperties} {}
 
-WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient()) {}
+WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept
+    : WinRTHttpResource(std::move(client), IInspectable{nullptr}) {}
+
+WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
 #pragma region IHttpResource
 
@@ -330,6 +334,22 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 #pragma endregion WinRTHttpResource
 
 #pragma region IHttpResource
+
+/*static*/ shared_ptr<IHttpResource> IHttpResource::Make(
+    winrt::Windows::Foundation::IInspectable &inspectableProperties) noexcept {
+  using winrt::Windows::Web::Http::HttpClient;
+
+  if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
+    return std::make_shared<WinRTHttpResource>(HttpClient{}, inspectableProperties);
+  } else {
+    auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
+    OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
+    auto opFilter = winrt::make<OriginPolicyHttpFilter>();
+    auto client = HttpClient{opFilter};
+
+    return std::make_shared<WinRTHttpResource>(std::move(client), inspectableProperties);
+  }
+}
 
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
   if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {

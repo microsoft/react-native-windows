@@ -19,6 +19,7 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
   std::unordered_map<int64_t, ResponseOperation> m_responses;
+  winrt::Windows::Foundation::IInspectable m_inspectableProperties;
 
   std::function<void(int64_t requestId)> m_onRequest;
   std::function<void(int64_t requestId, Response &&response)> m_onResponse;
@@ -37,6 +38,10 @@ class WinRTHttpResource : public IHttpResource, public std::enable_shared_from_t
   WinRTHttpResource() noexcept;
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
+
+  WinRTHttpResource(
+      winrt::Windows::Web::Http::IHttpClient &&client,
+      winrt::Windows::Foundation::IInspectable inspectableProperties) noexcept;
 
 #pragma region IHttpResource
 

@@ -30,8 +30,10 @@ using Microsoft::React::Networking::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
 
-static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReactInstance) {
-  auto resource = IHttpResource::Make();
+static shared_ptr<IHttpResource> CreateHttpResource(
+    weak_ptr<Instance> weakReactInstance,
+    IInspectable &inspectableProperties) {
+  auto resource = IHttpResource::Make(inspectableProperties);
 
   resource->SetOnResponse([weakReactInstance](int64_t requestId, IHttpResource::Response &&response) {
     dynamic headers = dynamic::object();
@@ -45,7 +47,7 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReact
     SendEvent(weakReactInstance, "didReceiveNetworkResponse", std::move(args));
   });
 
-  resource->SetOnData([weakReactInstance](int64_t requestId, std::string &&responseData) {
+  resource->SetOnData([weakReactInstance](int64_t requestId, string &&responseData) {
     dynamic args = dynamic::array(requestId, std::move(responseData));
 
     SendEvent(weakReactInstance, "didReceiveNetworkData", std::move(args));
@@ -68,7 +70,7 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReact
 
 namespace Microsoft::React {
 
-HttpModule::HttpModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept
+HttpModule::HttpModule(IInspectable const &inspectableProperties) noexcept
     : m_holder{std::make_shared<ModuleHolder>()}, m_inspectableProperties{inspectableProperties} {
   m_holder->Module = this;
 
@@ -111,7 +113,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance())))
+        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance(), holder->Module->m_inspectableProperties)))
         {
           auto params = facebook::xplat::jsArgAsObject(args, 0);
           IHttpResource::Headers headers;
@@ -147,7 +149,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance())))
+        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance(), holder->Module->m_inspectableProperties)))
         {
           resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
         }
@@ -164,7 +166,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance())))
+        if (resource || (resource = holder->Module->m_resource = CreateHttpResource(holder->Module->getInstance(), holder->Module->m_inspectableProperties)))
         {
           resource->ClearCookies();
         }

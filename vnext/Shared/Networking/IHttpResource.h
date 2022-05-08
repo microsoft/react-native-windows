@@ -6,6 +6,9 @@
 // Folly
 #include <folly/dynamic.h>
 
+// Windows API
+#include <winrt/Windows.Foundation.h>
+
 // Standard Library
 #include <functional>
 #include <memory>
@@ -30,6 +33,8 @@ struct IHttpResource {
   };
 
   static std::shared_ptr<IHttpResource> Make() noexcept;
+
+  static std::shared_ptr<IHttpResource> Make(winrt::Windows::Foundation::IInspectable &inspectableProperties) noexcept;
 
   virtual ~IHttpResource() noexcept {}
 
