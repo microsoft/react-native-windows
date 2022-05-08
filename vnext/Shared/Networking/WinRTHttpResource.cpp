@@ -24,6 +24,7 @@ using std::function;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
+using std::vector;
 using std::weak_ptr;
 
 using winrt::fire_and_forget;
@@ -179,8 +180,12 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     try {
       if (uriHandler->Supports(uri, coReqArgs->ResponseType)) {
         auto blob = uriHandler->Fetch(uri);
-        if (self->m_onBlobData && self->m_onRequestSuccess)
-          co_return self->m_onBlobData(coReqArgs->RequestId, std::move(blob));
+        if (self->m_onBlobData && self->m_onRequestSuccess) {
+          self->m_onBlobData(coReqArgs->RequestId, std::move(blob));
+          self->m_onRequestSuccess(coReqArgs->RequestId);
+        }
+
+        co_return;
       }
     } catch (const hresult_error &e) {
       if (self->m_onError)
@@ -232,7 +237,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
         auto blob = bodyHandler->ToRequestBody(data, contentTypeString);
         auto bytes = blob["bytes"];
-        auto byteVector = std::vector<uint8_t>(bytes.size());
+        auto byteVector = vector<uint8_t>(bytes.size());
         for (auto &byte : bytes) {
           byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
         }
@@ -295,7 +300,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     auto response = sendRequestOp.GetResults();
     if (response) {
       if (self->m_onResponse) {
-        string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
+        auto url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
 
         // Gather headers for both the response content and the response itself
         // See Invoke-WebRequest PowerShell cmdlet or Chromium response handling
@@ -318,6 +323,22 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
+      // Let response handler take over, if set
+      if (auto responseHandler = self->m_responseHandler.lock()) {
+        if (responseHandler->Supports(coReqArgs->ResponseType)) {
+          auto bytes = vector<uint8_t>(reader.UnconsumedBufferLength());
+          reader.ReadBytes(bytes);
+          auto blob = responseHandler->ToResponseData(std::move(bytes));
+
+          if (self->m_onBlobData && self->m_onRequestSuccess) {
+            self->m_onBlobData(coReqArgs->RequestId, std::move(blob));
+            self->m_onRequestSuccess(coReqArgs->RequestId);
+          }
+
+          co_return;
+        }
+      }
+
       auto isText = coReqArgs->ResponseType == "text";
       if (isText) {
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
@@ -328,9 +349,9 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       auto length = reader.UnconsumedBufferLength();
 
       if (isText) {
-        std::vector<uint8_t> data(length);
+        auto data = vector<uint8_t>(length);
         reader.ReadBytes(data);
-        string responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        auto responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
 
         if (self->m_onData) {
           self->m_onData(coReqArgs->RequestId, std::move(responseData));
