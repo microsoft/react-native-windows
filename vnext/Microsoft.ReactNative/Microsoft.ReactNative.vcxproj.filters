@@ -299,7 +299,6 @@
     <ClCompile Include="GlyphViewManager.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Modules\ReactRootViewTagGenerator.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\ShadowNodeRegistry.cpp" />
@@ -336,7 +335,7 @@
     <ClCompile Include="ReactPointerEventArgs.cpp" />
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
-    <ClCompile Include="Exports.cpp" />
+    <ClCompile Include="CoreApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
@@ -733,7 +732,7 @@
     <ClInclude Include="ReactPointerEventArgs.h" />
     <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\ReactViewInstance.h" />
-    <ClInclude Include="Exports.h" />
+    <ClInclude Include="CoreApp.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />

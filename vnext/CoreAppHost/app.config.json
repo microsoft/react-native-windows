@@ -1,0 +1,6 @@
+{
+  "componentName": "RNTesterApp",
+  "jsBundleFile": "Samples\\rntester",
+  "useDeveloperSupport": true,
+  "useWebDebugger":  false
+}

@@ -1,6 +1,9 @@
 #pragma once
 #include <roapi.h>
 
+#ifdef __cplusplus
+#define NORETURN [[noreturn]]
+
 struct RNCoreApp {
   wchar_t const *jsBundleFile{L"index.windows"};
   wchar_t const *componentName{L""};
@@ -12,10 +15,20 @@ struct RNCoreApp {
   void *_abiResources{nullptr};
 };
 
-#ifdef __cplusplus
-#define NORETURN [[noreturn]]
 #else
 #define NORETURN _Noreturn
+
+struct RNCoreApp {
+  wchar_t const *jsBundleFile;
+  wchar_t const *componentName;
+  bool useWebDebugger;
+  bool useFastRefresh;
+  bool useDeveloperSupport;
+
+  void *_abi;
+  void *_abiResources;
+};
+
 #endif
 
 

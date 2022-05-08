@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Exports.h"
+#include "CoreApp.h"
 #include "ReactApplication.h"
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
