@@ -227,7 +227,20 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   IHttpContent content{nullptr};
   auto &data = coReqArgs->Data;
   if (!data.isNull()) {
-    if (!data["string"].empty()) {
+    if (auto bodyHandler = self->m_requestBodyHandler.lock()) {
+      if (bodyHandler->Supports(data)) {
+        auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
+        auto blob = bodyHandler->ToRequestBody(data, contentTypeString);
+        auto bytes = blob["bytes"];
+        auto byteVector = std::vector<uint8_t>(bytes.size());
+        for (auto &byte : bytes) {
+          byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
+        }
+        auto view = winrt::array_view<uint8_t>{byteVector};
+        auto buffer = CryptographicBuffer::CreateFromByteArray(view);
+        content = HttpBufferContent{std::move(buffer)};
+      }
+    } else if (!data["string"].empty()) {
       content = HttpStringContent{to_hstring(data["string"].asString())};
     } else if (!data["base64"].empty()) {
       auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].asString()));
@@ -252,12 +265,11 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     }
     if (!contentEncoding.empty()) {
       if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
-        if (m_onError) {
-          m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
-        }
-        co_return;
+        if (self->m_onError)
+          co_return self->m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
       }
     }
+
     if (!contentLength.empty()) {
       const auto contentLengthHeader = _atoi64(contentLength.c_str());
       content.Headers().ContentLength(contentLengthHeader);
