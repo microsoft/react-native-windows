@@ -8,7 +8,6 @@
 #include <Modules/CxxModuleUtilities.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 #include <ReactPropertyBag.h>
-#include "Unicode.h"
 
 // React Native
 #include <cxxreact/Instance.h>
@@ -24,8 +23,6 @@ using namespace facebook::xplat;
 
 using facebook::react::Instance;
 using folly::dynamic;
-
-using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 using std::shared_ptr;
 using std::string;
@@ -118,7 +115,7 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
             args["data"] = message;
           } else {
             if (isBinary) {
-              auto buffer = CryptographicBuffer::DecodeFromBase64String(Utf8ToUtf16(message));
+              auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
               winrt::com_array<uint8_t> arr;
               CryptographicBuffer::CopyToByteArray(buffer, arr);
               auto data = std::vector<uint8_t>(arr.begin(), arr.end());
@@ -214,7 +211,7 @@ std::vector<facebook::xplat::module::CxxModule::Method> WebSocketModule::getMeth
           const auto& headersDynamic = optionsDynamic["headers"];
           for (const auto& header : headersDynamic.items())
           {
-            options.emplace(Utf8ToUtf16(header.first.getString()), header.second.getString());
+            options.emplace(winrt::to_hstring(header.first.getString()), header.second.getString());
           }
         }
 
