@@ -308,7 +308,8 @@ PropNameID JsiAbiRuntime::createPropNameIDFromString(const String &str) try {
 
 PropNameID JsiAbiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
   return MakePropNameID(m_runtime.CreatePropertyIdFromSymbol({sym}));
-} catch (hresult_error const &) {
+}
+catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
