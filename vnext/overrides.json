@@ -69,6 +69,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
+      "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
+      "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
+      "issue": 9791
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "729d787e88fb911e603ca321a3bbc7340699fe9c",
