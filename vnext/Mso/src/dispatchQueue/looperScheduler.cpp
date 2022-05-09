@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-#include "Microsoft.ReactNative/IReactDispatcher.h"
 #include "dispatchQueue/dispatchQueue.h"
 #include "eventWaitHandle/eventWaitHandle.h"
 #include "queueService.h"
@@ -9,8 +8,7 @@
 namespace Mso {
 
 struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler> {
-  LooperScheduler() noexcept;
-  LooperScheduler(const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept;
+  LooperScheduler(DispatchQueueSettings const &settings = {}) noexcept;
   ~LooperScheduler() noexcept override;
 
   static void RunLoop(const Mso::WeakPtr<LooperScheduler> &weakSelf) noexcept;
@@ -25,7 +23,7 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
 
  private:
   ManualResetEvent m_wakeUpEvent;
-  winrt::Microsoft::ReactNative::IReactNotificationService m_notificationService;
+  DispatchQueueSettings m_settings;
   Mso::WeakPtr<IDispatchQueueService> m_queue;
   std::atomic_bool m_isShutdown{false};
   std::thread m_looperThread; // it must be last in the initialization list
@@ -35,13 +33,8 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
 // LooperScheduler implementation
 //=============================================================================
 
-LooperScheduler::LooperScheduler() noexcept
-    : m_looperThread([weakSelf = Mso::WeakPtr{this}]() noexcept { RunLoop(weakSelf); }) {}
-
-LooperScheduler::LooperScheduler(
-    const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept
-    : m_notificationService(notificationService),
-      m_looperThread([weakSelf = Mso::WeakPtr{this}]() noexcept { RunLoop(weakSelf); }) {}
+LooperScheduler::LooperScheduler(DispatchQueueSettings const &settings) noexcept
+    : m_settings(settings), m_looperThread([weakSelf = Mso::WeakPtr{this}]() noexcept { RunLoop(weakSelf); }) {}
 
 LooperScheduler::~LooperScheduler() noexcept {
   AwaitTermination();
@@ -51,37 +44,37 @@ LooperScheduler::~LooperScheduler() noexcept {
   for (;;) {
     if (auto self = weakSelf.GetStrongPtr()) {
       if (auto queue = self->m_queue.GetStrongPtr()) {
+        DispatchQueue q{Mso::CntPtr(queue)};
         DispatchTask task;
         while (queue->TryDequeTask(task)) {
-          if (self->m_notificationService) {
-            self->m_notificationService.SendNotification(
-                winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherTaskStartingEventName(),
-                nullptr,
-                nullptr);
+          if (auto &func = self->m_settings.TaskStarting) {
+            func(q);
           }
+
           queue->InvokeTask(std::move(task), std::nullopt);
+
+          if (auto &func = self->m_settings.TaskCompleted) {
+            func(q);
+          }
         }
-      }
 
-      if (self->m_isShutdown) {
-        break;
-      }
+        if (self->m_isShutdown) {
+          break;
+        }
 
-      if (self->m_notificationService) {
-        self->m_notificationService.SendNotification(
-            winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitStartingEventName(),
-            nullptr,
-            nullptr);
+        if (auto &func = self->m_settings.IdleWaitStarting) {
+          func(q);
+        }
+
+        self->m_wakeUpEvent.Wait();
+        self->m_wakeUpEvent.Reset();
+
+        if (auto &func = self->m_settings.IdleWaitCompleted) {
+          func(q);
+        }
+
+        continue;
       }
-      self->m_wakeUpEvent.Wait();
-      self->m_wakeUpEvent.Reset();
-      if (self->m_notificationService) {
-        self->m_notificationService.SendNotification(
-            winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitCompletedEventName(),
-            nullptr,
-            nullptr);
-      }
-      continue;
     }
 
     break;
@@ -127,13 +120,9 @@ void LooperScheduler::AwaitTermination() noexcept {
 // DispatchQueueStatic::MakeThreadPoolScheduler implementation
 //=============================================================================
 
-/*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeLooperScheduler() noexcept {
-  return Mso::Make<LooperScheduler, IDispatchQueueScheduler>();
-}
-
 /*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeLooperScheduler(
-    const winrt::Microsoft::ReactNative::IReactNotificationService &notificationService) noexcept {
-  return Mso::Make<LooperScheduler, IDispatchQueueScheduler>(notificationService);
+    DispatchQueueSettings const &settings) noexcept {
+  return Mso::Make<LooperScheduler, IDispatchQueueScheduler>(settings);
 }
 
 } // namespace Mso
