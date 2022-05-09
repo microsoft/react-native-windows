@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 02 May 2022 21:26:42 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.148",
+      "version": "0.0.0-canary.148",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "a54f8ccd6ad0a78815e8b89d5027a494e6614647",
+            "comment": "Implement no-hide-accessibility"
+          },
+          {
+            "author": "patboyd@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "c5a5ce42968a5b33563a29770b0d71b3f668d7c3",
+            "comment": "Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Apr 2022 05:10:23 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.147",
       "version": "0.0.0-canary.147",

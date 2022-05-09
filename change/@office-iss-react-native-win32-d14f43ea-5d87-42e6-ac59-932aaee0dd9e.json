@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "patboyd@microsoft.com",
-  "dependentChangeType": "patch"
-}

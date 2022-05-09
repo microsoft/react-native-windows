@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 27 Apr 2022 05:10:23 GMT and should not be manually modified.
+This log was last generated on Mon, 02 May 2022 21:26:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.148
+
+Mon, 02 May 2022 21:26:42 GMT
+
+### Changes
+
+- Implement no-hide-accessibility (34109996+chiaramooney@users.noreply.github.com)
+- Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example (patboyd@microsoft.com)
 
 ## 0.0.0-canary.147
 
