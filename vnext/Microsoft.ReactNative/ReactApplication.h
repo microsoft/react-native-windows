@@ -129,7 +129,7 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   xaml::Markup::IXamlType GetXamlType(::winrt::Windows::UI::Xaml::Interop::TypeName const &type) {
     return m_provider.GetXamlType(type);
   }
-  ::winrt::com_array<::winrt::Windows::UI::Xaml::Markup::XmlnsDefinition> GetXmlnsDefinitions() {
+  ::winrt::com_array<xaml::Markup::XmlnsDefinition> GetXmlnsDefinitions() {
     return m_provider.GetXmlnsDefinitions();
   }
 
