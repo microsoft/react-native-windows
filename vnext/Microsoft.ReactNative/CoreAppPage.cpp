@@ -11,7 +11,7 @@ using namespace Windows::UI::Xaml;
 namespace winrt::Microsoft::ReactNative::implementation {
 CoreAppPage::CoreAppPage() {
   InitializeComponent();
-  auto app = Application::Current().as<ReactApplication>();
+  auto app = xaml::Application::Current().as<ReactApplication>();
 
   app.PageNavigatedInternal()(app, ReactRootView());
   ReactRootView().ReactNativeHost(app.Host());
