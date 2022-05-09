@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 29 Apr 2022 05:09:50 GMT and should not be manually modified.
+This log was last generated on Mon, 02 May 2022 21:26:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.495
+
+Mon, 02 May 2022 21:26:43 GMT
+
+### Changes
+
+- Implement no-hide-accessibility (34109996+chiaramooney@users.noreply.github.com)
+- Stop exporting data blocks from react-native-win32.dll (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.494
 
