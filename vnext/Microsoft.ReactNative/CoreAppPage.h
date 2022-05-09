@@ -1,6 +1,6 @@
 #pragma once
 #include "CoreAppPage.g.h"
-#include <winrt/Windows.UI.Xaml.Markup.h>
+#include <UI.Xaml.Markup.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct CoreAppPage : CoreAppPageT<CoreAppPage> {
