@@ -106,14 +106,13 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
             return;
 
           dynamic args = dynamic::object("id", id)("type", isBinary ? "binary" : "text");
-
+          shared_ptr<Microsoft::React::IWebSocketModuleContentHandler> contentHandler;
           auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Microsoft::React::IWebSocketModuleContentHandler>>>{
               L"BlobModule.ContentHandler"};
-          auto contentHandler = propBag.Get(propId).Value().lock();
+          if (auto prop = propBag.Get(propId))
+            contentHandler = prop.Value().lock();
 
-          if (!contentHandler) {
-            args["data"] = message;
-          } else {
+          if (contentHandler) {
             if (isBinary) {
               auto buffer = CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(message));
               winrt::com_array<uint8_t> arr;
@@ -124,6 +123,8 @@ GetOrCreateWebSocket(int64_t id, string &&url, weak_ptr<WebSocketModule::SharedS
             } else {
               contentHandler->ProcessMessage(string{message}, args);
             }
+          } else {
+            args["data"] = message;
           }
 
           SendEvent(weakInstance, "websocketMessage", std::move(args));

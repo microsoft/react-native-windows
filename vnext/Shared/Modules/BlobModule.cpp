@@ -170,10 +170,12 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
         responseHandler = m_responseHandler](dynamic args) {
          auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
 
-         if (auto httpHandler = propBag.Get<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>(propId).Value().lock()) {
-           httpHandler->AddUriHandler(uriHandler);
-           httpHandler->AddRequestBodyHandler(requestBodyHandler);
-           httpHandler->AddResponseHandler(responseHandler);
+         if (auto prop = propBag.Get(propId)) {
+           if (auto httpHandler = prop.Value().lock()) {
+             httpHandler->AddUriHandler(uriHandler);
+             httpHandler->AddRequestBodyHandler(requestBodyHandler);
+             httpHandler->AddResponseHandler(responseHandler);
+           }
          }
          // TODO: else emit error?
        }},
@@ -196,7 +198,10 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
        [persistor = m_blobPersistor,
         propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()}](dynamic args) {
          auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
-         auto wsProxy = propBag.Get(propId).Value().lock();
+         shared_ptr<IWebSocketModuleProxy> wsProxy;
+         if (auto prop = propBag.Get(propId)) {
+           wsProxy = prop.Value().lock();
+         }
          if (!wsProxy) {
            return;
          }
