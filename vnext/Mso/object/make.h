@@ -23,7 +23,7 @@ namespace Mso {
                                 // ValidateObject throws, or when some of the lambda's are inlined...
 
 template <typename T, typename TResult = T, typename... TArgs>
-inline Mso::CntPtr<TResult> Make(TArgs &&... args) noexcept(T::MakePolicy::IsNoExcept) {
+inline Mso::CntPtr<TResult> Make(TArgs &&...args) noexcept(T::MakePolicy::IsNoExcept) {
   typename T::RefCountPolicy::template MemoryGuard<T> memoryGuard = {};
   T::RefCountPolicy::AllocateMemory(memoryGuard);
   VerifyAllocElseCrashTag(memoryGuard.ObjMemory, 0x01117748 /* tag_bex3i */);
@@ -47,7 +47,7 @@ inline Mso::CntPtr<TResult> Make(TArgs &&... args) noexcept(T::MakePolicy::IsNoE
   Method MakeAlloc is noexcept depending on the Make policy IsNoExcept value.
 */
 template <typename T, typename TResult = T, typename TAllocArg, typename... TArgs>
-inline Mso::CntPtr<TResult> MakeAlloc(TAllocArg &&allocArg, TArgs &&... args) noexcept(T::MakePolicy::IsNoExcept) {
+inline Mso::CntPtr<TResult> MakeAlloc(TAllocArg &&allocArg, TArgs &&...args) noexcept(T::MakePolicy::IsNoExcept) {
   typename T::RefCountPolicy::template MemoryGuard<T> memoryGuard = {};
   T::RefCountPolicy::AllocateMemory(memoryGuard, std::forward<TAllocArg>(allocArg));
   VerifyAllocElseCrashTag(memoryGuard.ObjMemory, 0x01117749 /* tag_bex3j */);
@@ -70,7 +70,7 @@ inline Mso::CntPtr<TResult> MakeAlloc(TAllocArg &&allocArg, TArgs &&... args) no
   Method MakeElseNull is noexcept depending on the Make policy IsNoExcept value.
 */
 template <typename T, typename TResult = T, typename... TArgs>
-inline Mso::CntPtr<TResult> MakeElseNull(TArgs &&... args) noexcept(T::MakePolicy::IsNoExcept) {
+inline Mso::CntPtr<TResult> MakeElseNull(TArgs &&...args) noexcept(T::MakePolicy::IsNoExcept) {
   Mso::CntPtr<TResult> result; // Hopefully we can benefit from NRVO
 
   typename T::RefCountPolicy::template MemoryGuard<T> memoryGuard = {};
@@ -98,7 +98,7 @@ inline Mso::CntPtr<TResult> MakeElseNull(TArgs &&... args) noexcept(T::MakePolic
   Method MakeAllocElseNull is noexcept depending on the Make policy IsNoExcept value.
 */
 template <typename T, typename TResult = T, typename TAllocArg, typename... TArgs>
-inline Mso::CntPtr<TResult> MakeAllocElseNull(TAllocArg &&allocArg, TArgs &&... args) noexcept(
+inline Mso::CntPtr<TResult> MakeAllocElseNull(TAllocArg &&allocArg, TArgs &&...args) noexcept(
     T::MakePolicy::IsNoExcept) {
   Mso::CntPtr<TResult> result; // Hopefully we can benefit from NRVO
 
@@ -125,7 +125,7 @@ struct ThrowCtor {
   static const bool IsNoExcept = false;
 
   template <typename T, typename TMemoryGuard, typename... TArgs>
-  static void Make(TMemoryGuard &memoryGuard, TArgs &&... args) {
+  static void Make(TMemoryGuard &memoryGuard, TArgs &&...args) {
     OACR_POSSIBLE_THROW;
     memoryGuard.Obj = ::new (memoryGuard.ObjMemory) T(std::forward<TArgs>(args)...);
     memoryGuard.ObjMemory = nullptr; // Memory is now controlled by the object. Set to null to avoid memory destruction.
@@ -139,7 +139,7 @@ struct NoThrowCtor {
   static const bool IsNoExcept = true;
 
   template <typename T, typename TMemoryGuard, typename... TArgs>
-  static void Make(TMemoryGuard &memoryGuard, TArgs &&... args) noexcept {
+  static void Make(TMemoryGuard &memoryGuard, TArgs &&...args) noexcept {
     memoryGuard.Obj = ::new (memoryGuard.ObjMemory) T(std::forward<TArgs>(args)...);
     memoryGuard.ObjMemory = nullptr; // Memory is now controlled by the object. Set to null to avoid memory destruction.
   }
@@ -152,7 +152,7 @@ struct ThrowCtorAndInitializeThis {
   static const bool IsNoExcept = false;
 
   template <typename T, typename TMemoryGuard, typename... TArgs>
-  static void Make(TMemoryGuard &memoryGuard, TArgs &&... args) {
+  static void Make(TMemoryGuard &memoryGuard, TArgs &&...args) {
     OACR_POSSIBLE_THROW;
     memoryGuard.Obj = ::new (memoryGuard.ObjMemory) T();
     memoryGuard.ObjMemory = nullptr; // Memory is now controlled by the object. Set to null to avoid memory destruction.
@@ -167,7 +167,7 @@ struct NoThrowCtorAndInitializeThis {
   static const bool IsNoExcept = true;
 
   template <typename T, typename TMemoryGuard, typename... TArgs>
-  static void Make(TMemoryGuard &memoryGuard, TArgs &&... args) noexcept {
+  static void Make(TMemoryGuard &memoryGuard, TArgs &&...args) noexcept {
     memoryGuard.Obj = ::new (memoryGuard.ObjMemory) T();
     memoryGuard.ObjMemory = nullptr; // Memory is now controlled by the object. Set to null to avoid memory destruction.
     memoryGuard.Obj->InitializeThis(std::forward<TArgs>(args)...);

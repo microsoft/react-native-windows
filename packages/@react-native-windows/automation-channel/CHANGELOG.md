@@ -1,8 +1,133 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Wed, 06 Apr 2022 05:09:24 GMT and should not be manually modified.
+This log was last generated on Mon, 02 May 2022 21:26:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.69
+
+Mon, 02 May 2022 21:26:43 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.495
+
+## 0.1.68
+
+Fri, 29 Apr 2022 05:09:51 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.494
+
+## 0.1.67
+
+Wed, 27 Apr 2022 05:10:23 GMT
+
+### Patches
+
+- Integrate 4/15 Test (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.1.12
+- Bump react-native-windows to v0.0.0-canary.493
+
+## 0.1.66
+
+Tue, 26 Apr 2022 05:09:08 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.492
+
+## 0.1.65
+
+Mon, 25 Apr 2022 22:50:30 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.491
+
+## 0.1.64
+
+Fri, 22 Apr 2022 05:09:17 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.490
+
+## 0.1.63
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.489
+
+## 0.1.62
+
+Tue, 19 Apr 2022 05:08:59 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.488
+
+## 0.1.61
+
+Fri, 15 Apr 2022 05:09:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.487
+
+## 0.1.60
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Patches
+
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.486
+
+## 0.1.59
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.485
+
+## 0.1.58
+
+Tue, 12 Apr 2022 05:10:37 GMT
+
+### Patches
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.484
+
+## 0.1.57
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Patches
+
+- integrate 4/4 (email not defined)
+- Bump react-native-windows to v0.0.0-canary.483
+
+## 0.1.56
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.482
+
+## 0.1.55
+
+Thu, 07 Apr 2022 05:09:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.481
 
 ## 0.1.54
 

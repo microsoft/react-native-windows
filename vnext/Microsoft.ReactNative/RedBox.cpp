@@ -27,6 +27,7 @@
 #include <winrt/Windows.Web.Http.h>
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
+#include "XamlUtils.h"
 #endif
 
 using namespace winrt::Windows::Foundation;
@@ -274,7 +275,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
             xaml::Documents::Run linkRun;
 
             linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
-            link.Foreground(xaml::Media::SolidColorBrush(winrt::ColorHelper::FromArgb(0xff, 0xff, 0xff, 0xff)));
+            link.Foreground(xaml::Media::SolidColorBrush(xaml::FromArgb(0xff, 0xff, 0xff, 0xff)));
             link.Inlines().Append(linkRun);
             xaml::Documents::Run normalRun;
             normalRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(json["type"].asString() + (" ─ See ")));

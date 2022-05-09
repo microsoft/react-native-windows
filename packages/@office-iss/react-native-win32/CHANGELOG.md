@@ -1,8 +1,66 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 05 Apr 2022 05:10:13 GMT and should not be manually modified.
+This log was last generated on Mon, 02 May 2022 21:26:42 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.148
+
+Mon, 02 May 2022 21:26:42 GMT
+
+### Changes
+
+- Implement no-hide-accessibility (34109996+chiaramooney@users.noreply.github.com)
+- Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example (patboyd@microsoft.com)
+
+## 0.0.0-canary.147
+
+Wed, 27 Apr 2022 05:10:23 GMT
+
+### Changes
+
+- Integrate 4/15 Test (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.41
+- Bump @rnw-scripts/eslint-config to v1.1.12
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.6
+- Bump react-native-platform-override to v1.6.11
+
+## 0.0.0-canary.146
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.40
+- Bump react-native-platform-override to v1.6.10
+
+## 0.0.0-canary.145
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.39
+
+## 0.0.0-canary.144
+
+Tue, 12 Apr 2022 05:10:37 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.38
+- Bump react-native-platform-override to v1.6.9
+
+## 0.0.0-canary.143
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Changes
+
+- integrate 4/4 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.37
 
 ## 0.0.0-canary.142
 

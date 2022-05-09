@@ -16,7 +16,7 @@ function expectValidVersion(version: string | null, expectSemVer: boolean) {
   if (expectSemVer) {
     expect(semver.valid(version)).toBe(version);
   } else {
-    version!.split('.').forEach((s) => {
+    version!.split('.').forEach(s => {
       const tryParseInt = () => {
         parseInt(s, 10);
       };

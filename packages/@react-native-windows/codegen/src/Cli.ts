@@ -112,11 +112,9 @@ function checkFilesForChanges(
 
   const allExistingFiles = globby
     .sync(`${outputDir}/**`)
-    .map((_) => path.normalize(_))
+    .map(_ => path.normalize(_))
     .sort();
-  const allGeneratedFiles = [...map.keys()]
-    .map((_) => path.normalize(_))
-    .sort();
+  const allGeneratedFiles = [...map.keys()].map(_ => path.normalize(_)).sort();
 
   if (
     allExistingFiles.length !== allGeneratedFiles.length ||
@@ -146,7 +144,7 @@ function writeMapToFiles(map: Map<string, string>, outputDir: string) {
 
   // This ensures that we delete any generated files from modules that have been deleted
   const allExistingFiles = globby.sync(`${outputDir}/**`);
-  allExistingFiles.forEach((existingFile) => {
+  allExistingFiles.forEach(existingFile => {
     if (!map.has(path.normalize(existingFile))) {
       fs.unlinkSync(existingFile);
     }
@@ -272,7 +270,7 @@ function generate(
 
   if (
     Object.keys(schema.modules).some(
-      (moduleName) => schema.modules[moduleName].type === 'Component',
+      moduleName => schema.modules[moduleName].type === 'Component',
     )
   ) {
     const componentGenerators = [
@@ -285,7 +283,7 @@ function generate(
       generatorEventEmitterCPP,
     ];
 
-    componentGenerators.forEach((generator) => {
+    componentGenerators.forEach(generator => {
       const generated: Map<string, string> = generator(
         libraryName,
         schema,

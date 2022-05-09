@@ -4,7 +4,6 @@
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
 
-#include <RuntimeOptions.h>
 #include "Unicode.h"
 #include "Utilities.h"
 
@@ -997,7 +996,7 @@ size_t ChakraRuntime::JsiValueViewArgs::Size() const noexcept {
 
 ChakraRuntime::PropNameIDView::PropNameIDView(JsPropertyIdRef propertyId) noexcept
     : m_propertyId{
-          make<facebook::jsi::PropNameID>(new (std::addressof(m_pointerStore)) ChakraPointerValueView(propertyId))} {}
+          make<facebook::jsi::PropNameID>(new(std::addressof(m_pointerStore)) ChakraPointerValueView(propertyId))} {}
 
 ChakraRuntime::PropNameIDView::~PropNameIDView() noexcept {}
 

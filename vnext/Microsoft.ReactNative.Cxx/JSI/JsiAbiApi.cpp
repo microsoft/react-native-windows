@@ -1001,7 +1001,7 @@ size_t JsiAbiRuntime::ValueRefArray::Size() const noexcept {
 //===========================================================================
 
 JsiAbiRuntime::PropNameIDRef::PropNameIDRef(JsiPropertyIdRef const &data) noexcept
-    : m_propertyId{make<PropNameID>(new (std::addressof(m_pointerStore)) DataPointerValue(data.Data))} {}
+    : m_propertyId{make<PropNameID>(new(std::addressof(m_pointerStore)) DataPointerValue(data.Data))} {}
 
 JsiAbiRuntime::PropNameIDRef::~PropNameIDRef() noexcept {}
 

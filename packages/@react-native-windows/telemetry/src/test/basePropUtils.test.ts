@@ -18,6 +18,20 @@ test('deviceId() does not change', async () => {
   expect(await basePropUtils.deviceId()).toBe(await basePropUtils.deviceId());
 });
 
+test('deviceArchitecture() is valid', () => {
+  const value = basePropUtils.deviceArchitecture();
+  expect(value).toBeDefined();
+  expect(value).not.toBe('');
+  expect(value).not.toBeNull();
+});
+
+test('devicePlatform() is valid', () => {
+  const value = basePropUtils.devicePlatform();
+  expect(value).toBeDefined();
+  expect(value).not.toBe('');
+  expect(value).not.toBeNull();
+});
+
 test('deviceLocale() is valid', async () => {
   const value = await basePropUtils.deviceLocale();
   expect(value).toBeDefined();

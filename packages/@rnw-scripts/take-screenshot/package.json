@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/take-screenshot",
-  "version": "1.0.21",
+  "version": "1.0.23",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,13 +18,15 @@
     "take-screenshot": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.1",
+    "@react-native-windows/fs": "^0.0.0-canary.3",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
     "screenshot-desktop": "^1.12.2",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.11",
+    "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",
     "@rnw-scripts/ts-config": "2.0.2",
     "@types/node": "^14.14.22",

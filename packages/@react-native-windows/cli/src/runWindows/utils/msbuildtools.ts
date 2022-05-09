@@ -51,7 +51,7 @@ export default class MSBuildTools {
       'msbuild.exe',
     )}" "${slnFile}" /t:Clean`;
     const results = child_process.execSync(cmd).toString().split(EOL);
-    results.forEach((result) => console.log(chalk.white(result)));
+    results.forEach(result => console.log(chalk.white(result)));
   }
 
   async restorePackageConfigs(
@@ -131,7 +131,7 @@ export default class MSBuildTools {
       args.push(`/t:Deploy`);
     }
 
-    Object.keys(msBuildProps).forEach((key) => {
+    Object.keys(msBuildProps).forEach(key => {
       args.push(`/p:${key}=${msBuildProps[key]}`);
     });
 
@@ -160,12 +160,27 @@ export default class MSBuildTools {
       );
     } catch (e) {
       let error = e;
-      if (!e) {
-        const firstMessage = (await fs.readFile(errorLog))
-          .toString()
-          .split(EOL)[0];
-        error = new CodedError('MSBuildError', firstMessage);
-        (error as any).logfile = errorLog;
+      if (e instanceof CodedError) {
+        const origCodedError = e as CodedError;
+        if (origCodedError.type === 'MSBuildError') {
+          // Try to parse msbuild errors from errorLog
+          const errorLogContents = (await fs.readFile(errorLog))
+            .toString()
+            .split(EOL)
+            .filter(s => s)
+            .map(s => s.trim());
+          if (errorLogContents.length > 0) {
+            const firstMessage = errorLogContents[0];
+            error = new CodedError(
+              'MSBuildError',
+              firstMessage,
+              origCodedError.data,
+            );
+            // Hide error messages in a field that won't automatically get reported
+            // with telemetry but is still available to be parsed and sanitized
+            (error as any).msBuildErrorMessages = errorLogContents;
+          }
+        }
       }
       throw error;
     }
@@ -266,9 +281,9 @@ export default class MSBuildTools {
 
     shell
       .ls(uapFolderPath)
-      .filter((uapDir) => shell.test('-d', path.join(uapFolderPath, uapDir)))
+      .filter(uapDir => shell.test('-d', path.join(uapFolderPath, uapDir)))
       .map(Version.tryParse)
-      .forEach((version) => version && results.push(version));
+      .forEach(version => version && results.push(version));
 
     return results;
   }

@@ -148,7 +148,7 @@ function tryGetConstantType(
   nativeModule: NativeModuleSchema,
 ): NativeModuleObjectTypeAnnotation | undefined {
   const candidates = nativeModule.spec.properties.filter(
-    (prop) => prop.name === 'getConstants',
+    prop => prop.name === 'getConstants',
   );
   if (candidates.length === 0) {
     return undefined;
@@ -215,7 +215,7 @@ export function generateTypeScript(
       console.log(`Generating ${preferredModuleName}Spec.g.ts`);
 
       const aliasCode = Object.keys(nativeModule.aliases)
-        .map((name) => translateAlias(name, nativeModule.aliases[name]))
+        .map(name => translateAlias(name, nativeModule.aliases[name]))
         .join('');
 
       const constantType = tryGetConstantType(nativeModule);
@@ -225,7 +225,7 @@ export function generateTypeScript(
           : `  getConstants(): ${translateType(constantType)}`;
 
       const methods = nativeModule.spec.properties.filter(
-        (prop) => prop.name !== 'getConstants',
+        prop => prop.name !== 'getConstants',
       );
       const membersCode = methods.map(translateMethod).join('');
 

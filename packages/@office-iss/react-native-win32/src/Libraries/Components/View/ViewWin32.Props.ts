@@ -45,6 +45,7 @@ export type ARIARole =
   | 'dialog'
   | 'group'
   | 'link'
+  | 'listitem'
   | 'menu'
   | 'menubar'
   | 'menuitem'
