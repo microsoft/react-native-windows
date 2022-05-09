@@ -5,9 +5,9 @@
 
 #include "ReactApplication.g.h"
 #include <CppWinRTIncludes.h>
-#include "ReactNativeHost.h"
-#include <winrt/Microsoft.ReactNative.h>
 #include <UI.Xaml.Markup.h>
+#include <winrt/Microsoft.ReactNative.h>
+#include "ReactNativeHost.h"
 
 #ifdef USE_WINUI3
 namespace activation = xaml;
@@ -75,7 +75,6 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base :
 
 struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, xaml::Markup::IXamlMetadataProvider> {
  public: // ReactApplication ABI API
-
   ReactApplication() = default;
   ReactApplication(IInspectable const &outer) noexcept;
 

@@ -31,5 +31,4 @@ struct RNCoreApp {
 
 #endif
 
-
 extern "C" NORETURN void RNStartCoreApp(void (*launched)(RNCoreApp *));

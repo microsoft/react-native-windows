@@ -1,9 +1,8 @@
 #include "pch.h"
-#include "CoreApp.h"
+#include <combaseapi.h>
 #include <winrt/Windows.Data.Json.h>
 #include <fstream>
-#include <combaseapi.h>
-
+#include "CoreApp.h"
 
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {
   winrt::init_apartment();
