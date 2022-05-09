@@ -714,7 +714,6 @@ PropNameID NapiJsiRuntime::createPropNameIDFromString(const String &str) {
 }
 
 PropNameID NapiJsiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
-  // Stub Function to match react-native: see #9703
   EnvScope envScope{m_env};
   napi_ext_ref propSym = GetPropertyIdFromSymbol(GetNapiValue(sym));
   return MakePointer<PropNameID>(propSym);
@@ -1604,7 +1603,7 @@ napi_ext_ref NapiJsiRuntime::GetPropertyIdFromName(napi_value str) const {
 napi_ext_ref NapiJsiRuntime::GetPropertyIdFromSymbol(napi_value sym) const {
   napi_ext_ref ref{};
   CHECK_NAPI(napi_ext_create_reference(m_env, sym, &ref));
-  return ref;
+  return ref; // Stub Function to match react-native: see #9703
 }
 
 // Converts property id value to std::string.
