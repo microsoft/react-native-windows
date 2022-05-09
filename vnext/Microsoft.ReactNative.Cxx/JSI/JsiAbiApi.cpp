@@ -307,8 +307,8 @@ PropNameID JsiAbiRuntime::createPropNameIDFromString(const String &str) try {
 }
 
 PropNameID JsiAbiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
-  // Stub Function to match react-native: see #9703
-  UNREFERENCED_PARAMETER(sym);
+  return MakePropNameID(m_runtime.CreatePropertyIdFromSymbol({sym}));
+} catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
