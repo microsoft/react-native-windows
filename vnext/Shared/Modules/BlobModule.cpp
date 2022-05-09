@@ -3,6 +3,7 @@
 
 #include "BlobModule.h"
 
+#include <Modules/CxxModuleUtilities.h>
 #include <Modules/IHttpModuleProxy.h>
 #include <Modules/IWebSocketModuleProxy.h>
 #include <ReactPropertyBag.h>
@@ -246,11 +247,8 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
              buffer.insert(buffer.end(), data.begin(), data.end());
            } else {
              if (auto state = weakState.lock()) {
-               if (auto instance = state->Module->getInstance().lock()) {
-                 auto message = "Invalid type for blob: " + type;
-                 instance->callJSFunction(
-                     "RCTDeviceEventEmitter", "emit", dynamic::array("blobFailed", std::move(message)));
-               }
+               auto message = "Invalid type for blob: " + type;
+               Modules::SendEvent(state->Module->getInstance(), "blobFailed", std::move(message));
              }
              return;
            }
