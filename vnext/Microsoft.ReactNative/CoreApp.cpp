@@ -26,8 +26,7 @@ extern "C" NORETURN void RNStartCoreApp(void (*launched)(RNCoreApp *)) {
       settings.UseFastRefresh(rnca->useFastRefresh);
       settings.UseDeveloperSupport(rnca->useDeveloperSupport);
 
-      if (auto res =
-              xaml::ResourceDictionary(rnca->_abiResources, winrt::take_ownership_from_abi)) {
+      if (auto res = xaml::ResourceDictionary(rnca->_abiResources, winrt::take_ownership_from_abi)) {
         app.Resources(res);
       } else {
         try {
