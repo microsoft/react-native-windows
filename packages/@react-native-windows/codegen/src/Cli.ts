@@ -33,6 +33,11 @@ const argv = yargs.options({
     describe: 'generate turbo module definition files in TypeScript',
     default: false,
   },
+  methodonly: {
+    type: 'boolean',
+    describe: 'generate only method metadata in C++ turbo module spec',
+    default: false,
+  },
   outdir: {
     type: 'string',
     describe: 'output directory',
@@ -237,7 +242,10 @@ function generate(
     'DisableFormat: true\nSortIncludes: false',
   );
 
-  const generateNM2 = createNM2Generator({namespace: argv.namespace});
+  const generateNM2 = createNM2Generator({
+    namespace: argv.namespace,
+    methodonly: argv.methodonly,
+  });
 
   const generatorPropsH =
     require('react-native-tscodegen/lib/rncodegen/src/generators/components/GeneratePropsH').generate;
