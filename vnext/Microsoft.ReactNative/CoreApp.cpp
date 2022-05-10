@@ -3,18 +3,17 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include "UI.Xaml.Controls.h"
 #include "ReactApplication.h"
 
 namespace react = winrt::Microsoft::ReactNative;
 
-extern "C" NORETURN void RNStartCoreApp(void (*launched)(RNCoreApp *)) {
+extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *)) {
   xaml::Application::Start([launched](auto &&) {
-    // CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
     winrt::Windows::Foundation::IInspectable outer{nullptr};
     const auto &app = winrt::make<react::implementation::ReactApplication>(outer);
 
     auto rnca = std::make_shared<RNCoreApp>();
-    rnca->_abi = winrt::get_abi(app);
 
     app.LaunchedInternal([rnca, launched](react::ReactApplication const &app, auto &&args) {
       if (launched) {
@@ -26,7 +25,7 @@ extern "C" NORETURN void RNStartCoreApp(void (*launched)(RNCoreApp *)) {
       settings.UseFastRefresh(rnca->useFastRefresh);
       settings.UseDeveloperSupport(rnca->useDeveloperSupport);
 
-      if (auto res = xaml::ResourceDictionary(rnca->_abiResources, winrt::take_ownership_from_abi)) {
+      if (auto res = xaml::ResourceDictionary(rnca->resourcesAbi, winrt::take_ownership_from_abi)) {
         app.Resources(res);
       } else {
         try {

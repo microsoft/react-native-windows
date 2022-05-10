@@ -1,5 +1,4 @@
 #pragma once
-#include <roapi.h>
 
 #ifdef __cplusplus
 #define NORETURN [[noreturn]]
@@ -11,8 +10,7 @@ struct RNCoreApp {
   bool useFastRefresh{true};
   bool useDeveloperSupport{true};
 
-  void *_abi{nullptr};
-  void *_abiResources{nullptr};
+  void *resourcesAbi{nullptr};
 };
 
 #else
@@ -25,10 +23,9 @@ struct RNCoreApp {
   bool useFastRefresh;
   bool useDeveloperSupport;
 
-  void *_abi;
-  void *_abiResources;
+  void *resourcesAbi;
 };
 
 #endif
 
-extern "C" NORETURN void RNStartCoreApp(void (*launched)(RNCoreApp *));
+extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *));
