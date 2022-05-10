@@ -164,18 +164,16 @@ steps:
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
       workingDirectory: $(Agent.BuildDirectory)\testcli
       restoreLockedMode: false # Allow new lockfile to be created
-      moreMSBuildProps: ',UseBundle=false' # Temporary until https://github.com/react-native-community/cli/pull/1605 is fixed and released
 
   - template: upload-build-logs.yml
     parameters:
       buildLogDirectory: '$(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs'
 
   # Only test bundling in debug since we already bundle as part of release builds
-  # Temporarily disabled until https://github.com/react-native-community/cli/pull/1605 is fixed and released
-  # - ${{ if and(eq(parameters.projectType, 'app'), eq(parameters.configuration, 'Debug')) }}:
-  #   - script: npx react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
-  #     displayName: Create bundle testcli
-  #     workingDirectory: $(Agent.BuildDirectory)\testcli
+  - ${{ if and(eq(parameters.projectType, 'app'), eq(parameters.configuration, 'Debug')) }}:
+    - script: npx react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
+      displayName: Create bundle testcli
+      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - ${{ if eq(parameters.runWack, true) }}:
     - template: ../templates/run-wack.yml
