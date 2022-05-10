@@ -3,8 +3,8 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
-#include "UI.Xaml.Controls.h"
 #include "ReactApplication.h"
+#include "UI.Xaml.Controls.h"
 
 namespace react = winrt::Microsoft::ReactNative;
 
