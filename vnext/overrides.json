@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220415-2010-3c1a81446",
+  "baseVersion": "0.0.0-20220501-2027-d992ae044",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7799292564c8742b9317f8320268062b29ba9ff9"
+      "baseHash": "22398587d11b601a2ec98362fa3879779983e898"
     },
     {
       "type": "patch",
@@ -69,6 +69,30 @@
     },
     {
       "type": "patch",
+<<<<<<< HEAD
+=======
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/JSCRuntime.cpp",
+      "baseFile": "ReactCommon/jsi/JSCRuntime.cpp",
+      "baseHash": "da73ed017a05d0fdc4302bd0794a343dc5ac935a",
+      "issue": 9703
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
+      "baseFile": "ReactCommon/jsi/jsi/decorator.h",
+      "baseHash": "c93e4d10173716218503599610eb48f40bd2a47c",
+      "issue": 9703
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
+      "baseFile": "ReactCommon/jsi/jsi/jsi.h",
+      "baseHash": "1c9a6c8fed1c776bb80063fe69c1dfabd5d1b886",
+      "issue": 9703
+    },
+    {
+      "type": "patch",
+>>>>>>> 6c9214c8deb259eb7b9bcee75f9aa357a0c680fc
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
@@ -85,7 +109,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "190ec41abe71f83c4d0d9e95bea10115b2e35ee7",
+      "baseHash": "db7ca9a031acc8f10a063f8db0e484e8988cc698",
       "issue": 4054
     },
     {
@@ -326,7 +350,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "6d3449a499bfc37c44b530ecabe7c2af28ee5147"
+      "baseHash": "d2a2c68a374e334a4ff211353c534a795433bd7d"
     },
     {
       "type": "platform",
@@ -380,7 +404,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "5a4cd66d4676e93031a8c36c7e00b533fe2e99c3",
+      "baseHash": "6eb2a875d4eeb9ab65476661ff3fc4f6c03b329c",
       "issue": 0
     },
     {
@@ -405,8 +429,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "90ef97f18a53b362992aa13bbcaca6306737f1e6",
-      "issue": 0
+      "baseHash": "ff335415e43399b3cdaf4fd2dd2063d495f39ec5"
     },
     {
       "type": "platform",
@@ -441,7 +464,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "9ad7624c5cfa58134e226cbe7e8594ceb18d3b43",
+      "baseHash": "87349e7a4175694c25df80538885fac1e0df96d1",
       "issue": 4379
     },
     {
