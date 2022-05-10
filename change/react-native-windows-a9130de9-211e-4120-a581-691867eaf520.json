@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Workaround Yoga bug with Text where content is sometimes truncated with ellipsis",
+  "packageName": "react-native-windows",
+  "email": "lyahdav@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
