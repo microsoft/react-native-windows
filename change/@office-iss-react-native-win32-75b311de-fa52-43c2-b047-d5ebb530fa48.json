@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[0.69] Upgrade to @react-native-community/cli@8.0.0-alpha.6",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
