@@ -47,6 +47,7 @@ class TextShadowNode final : public ShadowNodeBase {
   std::optional<winrt::Windows::UI::Color> m_foregroundColor{};
   std::unique_ptr<TouchEventHandler> m_touchEventHandler = nullptr;
   winrt::event_revoker<xaml::Controls::ITextBlock> m_selectionChangedRevoker;
+  xaml::Controls::TextBlock::IsTextTrimmedChanged_revoker m_isTextTrimmedChangedRevoker;
 
  public:
   TextShadowNode() {
@@ -164,6 +165,18 @@ class TextShadowNode final : public ShadowNodeBase {
         m_selectionChangedRevoker.revoke();
       }
     }
+  }
+
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
+    Super::createView(props);
+    auto textBlock = GetView().as<xaml::Controls::TextBlock>();
+    m_isTextTrimmedChangedRevoker = textBlock.IsTextTrimmedChanged(winrt::auto_revoke, [this](auto &&...) {
+      this->GetViewManager()->MarkDirty(this->m_tag);
+      if (auto uiManager = GetNativeUIManager(this->GetViewManager()->GetReactContext()).lock()) {
+        uiManager->ensureInBatch();
+        uiManager->onBatchComplete();
+      }
+    });
   }
 
   XamlView GetRootView() {
