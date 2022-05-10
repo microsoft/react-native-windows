@@ -9,6 +9,8 @@
 
 import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+
 const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
@@ -342,6 +344,14 @@ if (global.__turboModuleProxy) {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
+
+if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
+  APIs.push({
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
   });
 }
 

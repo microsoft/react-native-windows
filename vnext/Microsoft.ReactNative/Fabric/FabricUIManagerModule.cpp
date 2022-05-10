@@ -418,15 +418,19 @@ void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::S
   auto surfaceId = mountingCoordinator->getSurfaceId();
 
   mountingCoordinator->getTelemetryController().pullTransaction(
-      [&](facebook::react::MountingTransactionMetadata metadata) {
+      [&](facebook::react::MountingTransaction const &transaction,
+          facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
         //[self.delegate mountingManager:self willMountComponentsWithRootTag:surfaceId];
-        //_observerCoordinator.notifyObserversMountingTransactionWillMount(metadata);
+        // _observerCoordinator.notifyObserversMountingTransactionWillMount(transaction, surfaceTelemetry);
       },
-      [&](facebook::react::ShadowViewMutationList const &mutations) {
-        RCTPerformMountInstructions(mutations, /* _componentViewRegistry, _observerCoordinator,*/ surfaceId);
+      [&](facebook::react::MountingTransaction const &transaction,
+          facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
+        RCTPerformMountInstructions(
+            transaction.getMutations(), /* _componentViewRegistry, _observerCoordinator,*/ surfaceId);
       },
-      [&](facebook::react::MountingTransactionMetadata metadata) {
-        //_observerCoordinator.notifyObserversMountingTransactionDidMount(metadata);
+      [&](facebook::react::MountingTransaction const &transaction,
+          facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
+        //_observerCoordinator.notifyObserversMountingTransactionDidMount(transaction, surfaceTelemetry);
         didMountComponentsWithRootTag(surfaceId);
         //[self.delegate mountingManager:self didMountComponentsWithRootTag:surfaceId];
       });
