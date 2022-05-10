@@ -87,7 +87,7 @@ struct DispatchLocalValueGuard {
 };
 
 struct DispatchQueueSettings {
-  Mso::Functor<void(DispatchQueue const&)> TaskStarting;
+  Mso::Functor<void(DispatchQueue const &)> TaskStarting;
   Mso::Functor<void(DispatchQueue const &)> TaskCompleted;
   Mso::Functor<void(DispatchQueue const &)> IdleWaitStarting;
   Mso::Functor<void(DispatchQueue const &)> IdleWaitCompleted;
