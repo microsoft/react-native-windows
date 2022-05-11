@@ -282,26 +282,36 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
+      uint64_t segmentSize = 64; //TODO Revert to 10 * 2^20.
+      auto contentLengthHeader = response.Content().Headers().ContentLength();
+
+      uint64_t contentSize = segmentSize;
+      if (contentLengthHeader) {
+        contentSize = contentLengthHeader.Value();
+      }
+
       // #9510 - 10mb limit on fetch
-      co_await reader.LoadAsync(10 * 1024 * 1024);
-      auto length = reader.UnconsumedBufferLength();
+      string responseData;
+      auto length = segmentSize;
+      do {
+        co_await reader.LoadAsync(static_cast<uint32_t>(segmentSize));
+        length = reader.UnconsumedBufferLength();
 
-      if (coReqArgs->IsText) {
-        std::vector<uint8_t> data(length);
-        reader.ReadBytes(data);
-        string responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        if (coReqArgs->IsText) {
+          auto data = std::vector<uint8_t>(length);
+          reader.ReadBytes(data);
 
-        if (self->m_onData) {
-          self->m_onData(coReqArgs->RequestId, std::move(responseData));
+          responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        } else {
+          auto buffer = reader.ReadBuffer(static_cast<uint32_t>(length));
+          auto data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+          responseData += to_string(std::wstring_view(data));
         }
-      } else {
-        auto buffer = reader.ReadBuffer(length);
-        auto data = CryptographicBuffer::EncodeToBase64String(buffer);
-        auto responseData = to_string(std::wstring_view(data));
+      } while (length > 0);
 
-        if (self->m_onData) {
-          self->m_onData(coReqArgs->RequestId, std::move(responseData));
-        }
+      if (self->m_onData) {
+        self->m_onData(coReqArgs->RequestId, std::move(responseData));
       }
     } else {
       if (self->m_onError) {
