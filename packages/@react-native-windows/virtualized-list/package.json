@@ -19,10 +19,11 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.12",
+    "@rnw-scripts/just-task": "2.2.3",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
     "flow-bin": "^0.176.3",
-    "just-scripts": "^1.3.3",
+
     "prettier": "^2.4.1",
     "react": "18.0.0",
     "react-native": "0.0.0-20220501-2027-d992ae044",

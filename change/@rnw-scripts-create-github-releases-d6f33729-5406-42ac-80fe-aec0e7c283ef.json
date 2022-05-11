@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Tag by package name instead of all tags",
+  "packageName": "@rnw-scripts/create-github-releases",
+  "email": "ngerlem@microsoft.com",
+  "dependentChangeType": "patch"
+}
