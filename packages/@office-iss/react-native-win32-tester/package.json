@@ -16,12 +16,12 @@
     "@typescript-eslint/parser": "^5.20.0"
   },
   "peerDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.149",
+    "@office-iss/react-native-win32": "^0.0.0-canary.150",
     "react": "18.0.0",
     "react-native": "0.0.0-20220501-2027-d992ae044"
   },
   "devDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.149",
+    "@office-iss/react-native-win32": "^0.0.0-canary.150",
     "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",
     "@rnw-scripts/ts-config": "2.0.2",

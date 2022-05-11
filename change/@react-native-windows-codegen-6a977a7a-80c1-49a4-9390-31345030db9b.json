@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add --methodonly to RNW/codegen",
-  "packageName": "@react-native-windows/codegen",
-  "email": "53799235+ZihanChen-MSFT@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -15,12 +15,12 @@
     "@typescript-eslint/parser": "^5.20.0",
     "react": "18.0.0",
     "react-native": "0.0.0-20220501-2027-d992ae044",
-    "react-native-windows": "^0.0.0-canary.496"
+    "react-native-windows": "^0.0.0-canary.497"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/codegen": "0.0.0-canary.32",
+    "@react-native-windows/codegen": "0.0.0-canary.33",
     "@react-native-windows/virtualized-list": "0.0.0-canary.42",
     "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",

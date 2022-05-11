@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 11 May 2022 05:08:51 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.33",
+      "version": "0.0.0-canary.33",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "f7a69c8cd09188804313593b53ff4c096f130f26",
+            "comment": "Add --methodonly to RNW/codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Apr 2022 05:10:23 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.32",
       "version": "0.0.0-canary.32",

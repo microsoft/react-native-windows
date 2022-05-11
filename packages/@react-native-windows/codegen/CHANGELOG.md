@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 27 Apr 2022 05:10:23 GMT and should not be manually modified.
+This log was last generated on Wed, 11 May 2022 05:08:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.33
+
+Wed, 11 May 2022 05:08:51 GMT
+
+### Changes
+
+- Add --methodonly to RNW/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.32
 
