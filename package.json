@@ -11,7 +11,6 @@
     "doc": "doxysaurus --config vnext/doxysaurus.json",
     "format": "format-files -i -style=file -assume-filename=../.clang-format",
     "format:verify": "format-files -i -style=file -verify",
-    "postinstall": "yarn build",
     "test": "lage test --verbose",
     "validate-overrides": "react-native-platform-override validate"
   },
@@ -42,7 +41,8 @@
     "husky": "^4.2.5",
     "react-native-platform-override": "1.6.11",
     "unbroken": "1.0.27",
-    "lage": "^1.5.0"
+    "lage": "^1.5.0",
+    "lodash": "^4.17.15"
   },
   "resolutions": {
     "kind-of": "6.0.3",
