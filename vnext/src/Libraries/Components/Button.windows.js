@@ -148,6 +148,7 @@ type ButtonProps = $ReadOnly<{|
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityState?: ?AccessibilityState,
   accessibilityHint?: ?string,
+  accessibilityLanguage?: ?Stringish,
 
   // [Windows
   /**
@@ -298,6 +299,7 @@ class Button extends React.Component<
       accessible,
       accessibilityActions,
       accessibilityHint,
+      accessibilityLanguage,
       onAccessibilityAction,
       tabIndex,
     } = this.props;
@@ -340,8 +342,10 @@ class Button extends React.Component<
     if (Platform.OS === 'windows') {
       return (
         <Touchable
+          accessible={accessible}
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={accessibilityHint}
+          accessibilityLanguage={accessibilityLanguage}
           accessibilityRole="button"
           accessibilityState={accessibilityState}
           hasTVPreferredFocus={hasTVPreferredFocus}

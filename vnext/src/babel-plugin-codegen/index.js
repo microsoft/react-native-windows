@@ -94,6 +94,7 @@ module.exports = function ({parse, types: t}) {
 
           if (firstDeclaration.type === 'VariableDeclarator') {
             if (
+              firstDeclaration.init &&
               firstDeclaration.init.type === 'CallExpression' &&
               firstDeclaration.init.callee.type === 'Identifier' &&
               firstDeclaration.init.callee.name === 'codegenNativeCommands'
@@ -117,7 +118,7 @@ module.exports = function ({parse, types: t}) {
             }
           }
         } else if (path.node.specifiers && path.node.specifiers.length > 0) {
-          path.node.specifiers.forEach((specifier) => {
+          path.node.specifiers.forEach(specifier => {
             if (
               specifier.type === 'ExportSpecifier' &&
               specifier.local.type === 'Identifier' &&

@@ -2,6 +2,69 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Wed, 27 Apr 2022 05:10:24 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b",
+            "comment": "Merge"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.3",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.12",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Apr 2022 05:10:39 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.31",
+      "version": "0.0.0-canary.31",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.2",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Apr 2022 05:09:56 GMT",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.30",
+      "version": "0.0.0-canary.30",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605",
+            "comment": "Fix publish after promotion to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.1",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 13 Feb 2022 06:08:34 GMT",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.29",
       "version": "0.0.0-canary.29",

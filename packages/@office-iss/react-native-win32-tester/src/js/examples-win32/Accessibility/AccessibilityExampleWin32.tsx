@@ -10,6 +10,7 @@ import {
   ListRenderItemInfo,
 } from 'react-native';
 import { ViewWin32 } from '@office-iss/react-native-win32';
+import { IHandledKeyboardEvent, Pressable, TextWin32 } from '@office-iss/react-native-win32';
 
 const styles = StyleSheet.create({
   border: {
@@ -197,7 +198,7 @@ class MultiSelectionExample extends React.Component<{}, IMultiSelectionExampleSt
   }
 }
 interface ISelectionItemComponentProps {
-  value: number;
+  value: any;
   color: string;
   level?: number;
   position?: number;
@@ -209,7 +210,7 @@ interface ISelectionItemComponentProps {
 
 const SelectionItemComponent: React.FunctionComponent<ISelectionItemComponentProps> = props => {
   return (
-    <TouchableHighlight onPress={_onPress} underlayColor={'transparent'}>
+    <Pressable focusable={false} onPress={_onPress}>
       <ViewWin32
         accessible
         accessibilityLevel={props.level}
@@ -223,9 +224,9 @@ const SelectionItemComponent: React.FunctionComponent<ISelectionItemComponentPro
         onAccessibilityAction={_onAccessibilityAction}
         onAccessibilityTap={_onPress}
       >
-        <Text>Item {props.value.toString()}</Text>
+        <TextWin32>{props.value.toString()}</TextWin32>
       </ViewWin32>
-    </TouchableHighlight>
+    </Pressable>
   );
 
   function _onAccessibilityAction(event) {
@@ -328,6 +329,97 @@ const FlatListExample: React.FunctionComponent<IFlatListProps> = props => {
   );
 };
 
+const handledNativeKeyboardEvents: IHandledKeyboardEvent[] = [
+  { key: 'ArrowDown' },
+  { key: 'ArrowUp' },
+];
+
+const SingleSelectionItemComponent: React.FunctionComponent<ISelectionItemComponentProps> = props => {
+  const [hasFocus, setHasFocus] = React.useState(false);
+  return (
+      <ViewWin32
+        accessible
+        accessibilityLevel={props.level}
+        accessibilityPositionInSet={props.position}
+        accessibilitySetSize={props.size}
+        accessibilityActions={[{ name: 'Select' }]}
+        accessibilityRole="listitem"
+        accessibilityState={{selected: props.isSelected}}
+        onFocus={() => {setHasFocus(true)}}
+        onBlur={() => {setHasFocus(false)}}
+        focusable
+        style={[styles.box, 
+          (props.isSelected) ? {backgroundColor: props.color} : {},
+          (hasFocus) ? styles.border : {}]}
+      >
+        <TextWin32>{props.value.toString()}</TextWin32>
+      </ViewWin32>
+  );
+
+};
+
+const AccessibilityControlsExample: React.FunctionComponent = _props => {
+  const listLength = 3;
+  const controlsRef = React.useRef<ViewWin32>(null);
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [keyTargetHasFocus, setKeyTargetHasFocus] = React.useState(false);
+  return (
+    <View>      
+      <ViewWin32 accessible accessibilityRole="list" ref={controlsRef}>
+      <SingleSelectionItemComponent
+            value={"Label A"}
+            color="#aee8fcff"
+            level={1}
+            position={1}
+            size={3}
+            isSelected={selectedIndex === 0 ? true : false}
+          />
+      <SingleSelectionItemComponent
+          value={"Label B"}
+          color="#aee8fcff"
+          level={1}
+          position={2}
+          size={3}
+          isSelected={selectedIndex === 1 ? true : false}
+        />
+      <SingleSelectionItemComponent
+        value={"Label C"}
+        color="#aee8fcff"
+        level={1}
+        position={3}
+        size={3}
+        isSelected={selectedIndex === 2 ? true : false}
+      />
+      </ViewWin32>
+      
+      <View style={{alignItems:'center'}}><Text>With focus on the FOCUS TARGET View below, press Arrow Key Up ⬆️ or Arrow Key Down ⬇️ to move selection</Text>
+      <ViewWin32
+        accessible
+        focusable
+        accessibilityActions={[{ name: 'Select' }]}
+        accessibilityControls={controlsRef}
+        style={[styles.box, {width:'50%'}, keyTargetHasFocus ? styles.border : {}]}
+        keyDownEvents={handledNativeKeyboardEvents}
+        onFocus={() => {setKeyTargetHasFocus(true)}}
+        onBlur={() => {setKeyTargetHasFocus(false)}}
+        onKeyDown={(event) => {
+        if (event.nativeEvent.key === 'ArrowUp' || event.nativeEvent.key === 'ArrowDown')
+        {
+          const indexChange = (event.nativeEvent.key === 'ArrowUp') ? -1 : 1;
+          
+          setSelectedIndex(
+              (
+                ((selectedIndex === 0) ? listLength : selectedIndex) + indexChange)
+              % listLength);
+        }
+      }}>
+        <Text>FOCUS TARGET</Text>
+      </ViewWin32>
+    </View>
+    </View>
+  );
+};
+
 const VirtualizedFlatListExample: React.FunctionComponent<IFlatListProps> = props => {
   return (
     <ViewWin32 style={styles.listContainer} accessibilityRole="tree">
@@ -394,6 +486,11 @@ export const examples = [
       title: 'FlatList Example',
       description: 'A flat list of headers with n of m support',
       render: () => <FlatListExample renderItem={renderItem} keyExtractor={keyExtractor} />,
+    },
+    {
+      title: 'AccessibilityControls Example',
+      description: 'A flat list of headers with n of m support with accessibilityControls selection',
+      render: () => <AccessibilityControlsExample />,
     },
     {
       title: 'Virtualized FlatList Example',

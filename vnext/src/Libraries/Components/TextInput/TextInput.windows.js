@@ -1113,7 +1113,7 @@ function InternalTextInput(props: Props): React.Node {
 
   const _setNativeRef = setAndForwardRef({
     getForwardedRef: () => props.forwardedRef,
-    setLocalRef: (ref) => {
+    setLocalRef: ref => {
       inputRef.current = ref;
 
       /*
@@ -1407,6 +1407,8 @@ function InternalTextInput(props: Props): React.Node {
       <WindowsTextInput
         ref={_setNativeRef}
         {...props}
+        accessible={accessible}
+        focusable={focusable}
         dataDetectorTypes={props.dataDetectorTypes}
         mostRecentEventCount={mostRecentEventCount}
         onBlur={_onBlur}
@@ -1464,7 +1466,7 @@ ExportedForwardRef.State = {
   blurTextInput: TextInputState.blurTextInput,
 };
 
-type TextInputComponentStatics = $ReadOnly<{|
+export type TextInputComponentStatics = $ReadOnly<{|
   State: $ReadOnly<{|
     currentlyFocusedInput: typeof TextInputState.currentlyFocusedInput,
     currentlyFocusedField: typeof TextInputState.currentlyFocusedField,

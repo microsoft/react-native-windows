@@ -79,7 +79,7 @@ For a primer on our codebase, see ["Repository Contents"](https://github.com/mic
 
 ### 🚧 Fork, Clone, Branch and Create your PR
 
-As is standard for GitHub and open source projects, RNW uses the ["Fork and pull"](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model) model for accepting and integrating code changes.
+As is standard for GitHub and open source projects, RNW uses the ["Fork and pull"](https://docs.github.com/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model) model for accepting and integrating code changes.
 
 Here's what the contribution process looks like:
 
@@ -90,10 +90,25 @@ Here's what the contribution process looks like:
 1. Test your changes.
 1. Open a Pull Request (PR) and address any feedback.
 
-> 👉 If this is your first time working with forks, you may find [GitHub's reference on forks](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) helpful. If this is your first time working with git or GitHub altogether, see the [GitHub Quickstart guide](https://docs.github.com/en/get-started/quickstart) for a walkthrough of setting up git, contributing to projects, and explanations of commonly used terms. 
+> 👉 If this is your first time working with forks, you may find [GitHub's reference on forks](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) helpful. If this is your first time working with git or GitHub altogether, see the [GitHub Quickstart guide](https://docs.github.com/get-started/quickstart) for a walkthrough of setting up git, contributing to projects, and explanations of commonly used terms. 
 
 > ⚛️ For RNW-specific walkthrough on setting up your branch, see the [Setup page](https://github.com/microsoft/react-native-windows/wiki/Setup) in our Wiki. 
 
+### 🔙 **Backporting**
+There are cases when we'll want to port a fix back into one or more of the previous stable releases. If you are working on backporting a fix, your development process will look similar to what's described above, main difference being that your feature branch will need to build off of one of the n-stable branches as the base, instead of main. For example, if you were backporting a change to 0.67-stable you would run the following commands to get your branch set up:
+
+```
+> git fetch upstream
+> git checkout 0.67-stable
+> git pull upstream 0.67-stable
+> git checkout -b backport_branch_name
+```
+
+Then once you've added and tested the desired changes, you'll have to make sure to specify the target stable branch, instead of main, as the base branch when creating your PR.
+
+> Note that in order to preserve stability and compatibility we don't backport all fixes, and all backport changes beyond a certain release (currently 0.66-stable) will go through additional triage to get approved.
+
+For more information, see our [Wiki page on Backporting](https://github.com/microsoft/react-native-windows/wiki/Backporting-a-Change). 
 ### 🧪 Testing
 
 Build and see if your solution works. Consult [Building React-Native-Windows](https://github.com/microsoft/react-native-windows/blob/main/docs/building-rnw.md) if you have problems.

@@ -74,7 +74,7 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
 
     const socket = new WebSocket(this.state.url);
     socket.binaryType = 'arraybuffer';
-    WS_EVENTS.forEach((ev) => socket.addEventListener(ev, this._onSocketEvent));
+    WS_EVENTS.forEach(ev => socket.addEventListener(ev, this._onSocketEvent));
     this.setState({
       socket,
       socketState: socket.readyState,
@@ -150,7 +150,7 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
 
   testConnect: () => void = () => {
     this._connect();
-    this._waitFor(this._socketIsConnected, 5, (connectSucceeded) => {
+    this._waitFor(this._socketIsConnected, 5, connectSucceeded => {
       if (!connectSucceeded) {
         TestModule.markTestPassed(false);
         return;
@@ -161,7 +161,7 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
 
   testSendAndReceive: () => void = () => {
     this._sendTestMessage();
-    this._waitFor(this._receivedTestExpectedResponse, 5, (messageReceived) => {
+    this._waitFor(this._receivedTestExpectedResponse, 5, messageReceived => {
       if (!messageReceived) {
         TestModule.markTestPassed(false);
         return;
@@ -172,7 +172,7 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
 
   testDisconnect: () => void = () => {
     this._disconnect();
-    this._waitFor(this._socketIsDisconnected, 5, (disconnectSucceeded) => {
+    this._waitFor(this._socketIsDisconnected, 5, disconnectSucceeded => {
       // Check correct initialization and readyState (OPEN)
       if (
         this.state.scalarProtocolSocket === null ||

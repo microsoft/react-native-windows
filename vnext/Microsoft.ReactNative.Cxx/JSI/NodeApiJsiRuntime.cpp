@@ -137,6 +137,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::PropNameID createPropNameIDFromAscii(const char *str, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromUtf8(const uint8_t *utf8, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromString(const facebook::jsi::String &str) override;
+  facebook::jsi::PropNameID createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym);
   std::string utf8(const facebook::jsi::PropNameID &id) override;
   bool compare(const facebook::jsi::PropNameID &lhs, const facebook::jsi::PropNameID &rhs) override;
 
@@ -190,7 +191,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   facebook::jsi::Function createFunctionFromHostFunction(
       const facebook::jsi::PropNameID &name,
       unsigned int paramCount,
-      facebook::jsi::HostFunctionType type) override;
+      facebook::jsi::HostFunctionType func) override;
   facebook::jsi::Value call(
       const facebook::jsi::Function &func,
       const facebook::jsi::Value &jsThis,
@@ -475,7 +476,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   void SetProperty(napi_value object, napi_value propertyId, napi_value value, napi_property_attributes attrs) const;
   napi_value CreateArray(size_t length) const;
   void SetElement(napi_value array, uint32_t index, napi_value value) const;
-  static napi_value JsiHostFunctionCallback(napi_env env, napi_callback_info info) noexcept;
+  static napi_value __cdecl JsiHostFunctionCallback(napi_env env, napi_callback_info info) noexcept;
   napi_value CreateExternalFunction(napi_value name, int32_t paramCount, napi_callback callback, void *callbackData);
   napi_value CreateExternalObject(void *data, napi_finalize finalizeCallback) const;
   template <typename T>
@@ -709,6 +710,14 @@ PropNameID NapiJsiRuntime::createPropNameIDFromString(const String &str) {
   napi_ext_ref uniqueStr = GetPropertyIdFromName(GetNapiValue(str));
 
   return MakePointer<PropNameID>(uniqueStr);
+}
+
+PropNameID NapiJsiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
+  // TODO: Support for symbols through the native API in JSC is very limited.
+  // While we could construct a PropNameID here, we would not be able to get a
+  // symbol property through the C++ API.
+  UNREFERENCED_PARAMETER(sym);
+  throw;
 }
 
 string NapiJsiRuntime::utf8(const PropNameID &id) {
@@ -1245,7 +1254,7 @@ size_t NapiJsiRuntime::JsiValueViewArgs::Size() const noexcept {
 #pragma region PropNameIDView
 
 NapiJsiRuntime::PropNameIDView::PropNameIDView(NapiJsiRuntime *runtime, napi_value propertyId) noexcept
-    : m_propertyId{make<PropNameID>(new (std::addressof(m_pointerStore)) NapiPointerValueView{runtime, propertyId})} {}
+    : m_propertyId{make<PropNameID>(new(std::addressof(m_pointerStore)) NapiPointerValueView{runtime, propertyId})} {}
 
 NapiJsiRuntime::PropNameIDView::operator PropNameID const &() const noexcept {
   return m_propertyId;
@@ -1702,7 +1711,7 @@ void NapiJsiRuntime::SetElement(napi_value array, uint32_t index, napi_value val
 }
 
 // The NAPI external function callback used for the JSI host function implementation.
-/*static*/ napi_value NapiJsiRuntime::JsiHostFunctionCallback(napi_env env, napi_callback_info info) noexcept {
+/*static*/ napi_value __cdecl NapiJsiRuntime::JsiHostFunctionCallback(napi_env env, napi_callback_info info) noexcept {
   HostFunctionWrapper *hostFuncWrapper{};
   size_t argc{};
   CHECK_NAPI_ELSE_CRASH(
@@ -1750,15 +1759,11 @@ napi_value NapiJsiRuntime::CreateExternalObject(void *data, napi_finalize finali
 // Wraps up std::unique_ptr as an external object.
 template <typename T>
 napi_value NapiJsiRuntime::CreateExternalObject(unique_ptr<T> &&data) const {
-  napi_value object =
-      CreateExternalObject(data.get(), [](napi_env /*env*/, void *dataToDestroy, void * /*finalizerHint*/) {
-        // We wrap dataToDestroy in a unique_ptr to avoid calling delete explicitly.
-        if (std::is_array<T>::value) {
-          delete[] static_cast<T *>(dataToDestroy);
-        } else {
-          delete static_cast<T *>(dataToDestroy);
-        }
-      });
+  napi_finalize finalize = [](napi_env /*env*/, void *dataToDestroy, void * /*finalizerHint*/) {
+    // We wrap dataToDestroy in a unique_ptr to avoid calling delete explicitly.
+    unique_ptr<T> dataDeleter{static_cast<T *>(dataToDestroy)};
+  };
+  napi_value object = CreateExternalObject(data.get(), finalize);
 
   // We only call data.release() after the CreateExternalObject succeeds.
   // Otherwise, when CreateExternalObject fails and an exception is thrown,
@@ -1807,7 +1812,7 @@ napi_value NapiJsiRuntime::GetHostObjectProxyHandler() {
 // Sets Proxy trap method as a pointer to NapiJsiRuntime instance method.
 template <napi_value (NapiJsiRuntime::*trapMethod)(span<napi_value>), size_t argCount>
 void NapiJsiRuntime::SetProxyTrap(napi_value handler, napi_value propertyName) {
-  auto proxyTrap = [](napi_env env, napi_callback_info info) noexcept {
+  napi_callback proxyTrap = [](napi_env env, napi_callback_info info) noexcept {
     NapiJsiRuntime *runtime{};
     napi_value args[argCount]{};
     size_t actualArgCount{argCount};

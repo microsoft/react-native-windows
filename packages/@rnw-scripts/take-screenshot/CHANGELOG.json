@@ -2,6 +2,69 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Wed, 27 Apr 2022 05:10:22 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.23",
+      "version": "1.0.23",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b",
+            "comment": "Merge"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.3",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.12",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Apr 2022 05:10:39 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.22",
+      "version": "1.0.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.2",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Apr 2022 05:09:57 GMT",
+      "tag": "@rnw-scripts/take-screenshot_v1.0.21",
+      "version": "1.0.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605",
+            "comment": "Fix publish after promotion to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.1",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 09 Feb 2022 06:09:38 GMT",
       "tag": "@rnw-scripts/take-screenshot_v1.0.20",
       "version": "1.0.20",

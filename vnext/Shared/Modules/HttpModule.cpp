@@ -17,7 +17,7 @@ using std::weak_ptr;
 
 namespace {
 
-using Microsoft::React::IHttpResource;
+using Microsoft::React::Networking::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
 

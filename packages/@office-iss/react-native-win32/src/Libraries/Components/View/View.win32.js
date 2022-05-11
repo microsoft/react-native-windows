@@ -75,13 +75,33 @@ const View: React.AbstractComponent<
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
+  // [Windows
+  const childrenWithImportantForAccessibility = children => {
+    return React.Children.map(children, child => {
+      if (React.isValidElement(child)) {
+        if (child.props.children) {
+          return React.cloneElement(child, {
+            accessible: false,
+            children: childrenWithImportantForAccessibility(
+              child.props.children,
+            ),
+          });
+        } else {
+          return React.cloneElement(child, {accessible: false});
+        }
+      }
+      return child;
+    });
+  };
+  // Windows]
+
   return (
     // [Windows
     // In core this is a TextAncestor.Provider value={false} See
     // https://github.com/facebook/react-native/commit/66601e755fcad10698e61d20878d52194ad0e90c
     // But since Views are not currently supported in Text, we do not need the extra provider
     <TextAncestor.Consumer>
-      {(hasTextAncestor) => {
+      {hasTextAncestor => {
         invariant(
           !hasTextAncestor,
           'Nesting of <View> within <Text> is not currently supported.',
@@ -94,6 +114,18 @@ const View: React.AbstractComponent<
             onKeyDownCapture={_keyDownCapture}
             onKeyUp={_keyUp}
             onKeyUpCapture={_keyUpCapture}
+            // [Windows
+            accessible={
+              props.importantForAccessibility === 'no-hide-descendants'
+                ? false
+                : props.accessible
+            }
+            children={
+              props.importantForAccessibility === 'no-hide-descendants'
+                ? childrenWithImportantForAccessibility(props.children)
+                : props.children
+            }
+            // Windows]
           />
         );
       }}

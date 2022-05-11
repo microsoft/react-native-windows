@@ -93,16 +93,6 @@ using AndroidHorizontalScrollContentViewShadowNode = ConcreteViewShadowNode<
     AndroidHorizontalScrollContentViewComponentName,
     AndroidHorizontalScrollContentViewProps>;
 
-extern const char RCTSegmentedControlComponentName[];
-
-/*
- * `ShadowNode` for <RCTSegmentedControl> component.
- */
-using RCTSegmentedControlShadowNode = ConcreteViewShadowNode<
-    RCTSegmentedControlComponentName,
-    RCTSegmentedControlProps,
-RCTSegmentedControlEventEmitter>;
-
 extern const char SwitchComponentName[];
 
 /*

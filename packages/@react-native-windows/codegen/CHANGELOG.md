@@ -1,8 +1,60 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 04 Mar 2022 06:09:13 GMT and should not be manually modified.
+This log was last generated on Wed, 11 May 2022 05:08:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.33
+
+Wed, 11 May 2022 05:08:51 GMT
+
+### Changes
+
+- Add --methodonly to RNW/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.32
+
+Wed, 27 Apr 2022 05:10:23 GMT
+
+### Changes
+
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 0.0.0-canary.31
+
+Mon, 25 Apr 2022 22:50:30 GMT
+
+### Changes
+
+- Update globby of @react-native-windows/codegen to remove glob-parent 3.x dependency (dannyvv@microsoft.com)
+
+## 0.0.0-canary.30
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+
+## 0.0.0-canary.29
+
+Fri, 01 Apr 2022 05:09:56 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+
+## 0.0.0-canary.28
+
+Wed, 09 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Fix turbo module codegen to generate correct import statement and registration (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.27
 

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-out-of-tree-resolver
 
-This log was last generated on Wed, 09 Feb 2022 06:09:37 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Apr 2022 05:10:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.7
+
+Wed, 27 Apr 2022 05:10:25 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.1.12
 
 ## 1.0.6
 

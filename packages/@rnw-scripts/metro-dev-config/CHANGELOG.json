@@ -1,0 +1,20 @@
+{
+  "name": "@rnw-scripts/metro-dev-config",
+  "entries": [
+    {
+      "date": "Wed, 27 Apr 2022 05:10:25 GMT",
+      "tag": "@rnw-scripts/metro-dev-config_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/metro-dev-config",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.12",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          }
+        ]
+      }
+    }
+  ]
+}

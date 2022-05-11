@@ -33,6 +33,9 @@
 #pragma warning(pop)
 
 #include <future>
+#include <mutex>
+
+#include <AppModel.h>
 
 #if _MSC_VER <= 1913
 // VC 19 (2015-2017.6) cannot optimize co_await/cppwinrt usage
@@ -67,13 +70,13 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
 
   HRESULT hr = asyncRequest.ErrorCode();
   if (FAILED(hr)) {
-    std::ostringstream sstream;
+    std::string error;
     if (hr == WININET_E_CANNOT_CONNECT) {
-      sstream << "A connection with the server " << url << " could not be established\n\nIs the packager running?";
+      error = fmt::format("A connection with the server {} could not be established.\n\nIs the packager running?", url);
     } else {
-      sstream << "Error " << std::hex << static_cast<int>(asyncRequest.ErrorCode()) << " downloading " << url;
+      error = fmt::format("Error 0x{:x} downloading {}.", static_cast<int>(asyncRequest.ErrorCode()), url);
     }
-    co_return std::make_pair(sstream.str(), false);
+    co_return std::make_pair(error, false);
   }
 
   winrt::Windows::Web::Http::HttpResponseMessage response = asyncRequest.GetResults();
@@ -86,15 +89,15 @@ std::future<std::pair<std::string, bool>> GetJavaScriptFromServerAsync(const std
   uint32_t len = reader.UnconsumedBufferLength();
   std::string result;
   if (len > 0 || response.IsSuccessStatusCode()) {
-    std::vector<uint8_t> data;
+    std::string data;
     data.resize(len);
-    reader.ReadBytes(winrt::array_view(data.data(), data.data() + len));
-    data.resize(len);
-    result = std::string(data.begin(), data.end());
+    auto buf = reinterpret_cast<uint8_t *>(data.data());
+    static_assert(
+        sizeof(buf[0]) == sizeof(data[0]), "perf optimization relies on uint8_t and char being the same size");
+    reader.ReadBytes(winrt::array_view(buf, buf + len));
+    result = std::move(data);
   } else {
-    std::ostringstream sstream;
-    sstream << "HTTP Error " << static_cast<int>(response.StatusCode()) << " downloading " << url;
-    result = sstream.str();
+    result = fmt::format("HTTP Error {} downloading {}.", static_cast<int>(response.StatusCode()), url);
   }
 
   co_return std::make_pair(std::move(result), response.IsSuccessStatusCode());
@@ -237,34 +240,32 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
-void DevSupportManager::StartInspector(
+void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const std::string &packagerHost,
     [[maybe_unused]] const uint16_t packagerPort) noexcept {
 #ifdef HERMES_ENABLE_DEBUGGER
-  std::string packageName("RNW");
-  if (auto currentPackage = winrt::Windows::ApplicationModel::Package::Current()) {
-    packageName = winrt::to_string(currentPackage.DisplayName());
-  }
+  static std::once_flag once;
+  std::call_once(once, [this, &packagerHost, packagerPort]() {
+    std::string packageName("RNW");
+    wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
+    UINT32 size = ARRAYSIZE(fullName);
+    if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
+      // we are in an unpackaged app
+      packageName = winrt::to_string(fullName);
+    }
 
-  std::string deviceName("RNWHost");
-  auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
-  if (hostNames && hostNames.First() && hostNames.First().Current()) {
-    deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
-  }
+    std::string deviceName("RNWHost");
+    auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
+    if (hostNames && hostNames.First() && hostNames.First().Current()) {
+      deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
+    }
 
-  m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
-      facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
-      m_BundleStatusProvider);
-  m_inspectorPackagerConnection->connectAsync();
-#endif
-}
+    m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
+        facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
+        m_BundleStatusProvider);
+    m_inspectorPackagerConnection->connectAsync();
+  });
 
-void DevSupportManager::StopInspector() noexcept {
-#ifdef HERMES_ENABLE_DEBUGGER
-  if (m_inspectorPackagerConnection) {
-    m_inspectorPackagerConnection->disconnectAsync();
-    m_inspectorPackagerConnection = nullptr;
-  }
 #endif
 }
 

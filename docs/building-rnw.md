@@ -14,7 +14,6 @@
 * Install dependencies, and run JS build steps
     ```cmd
     yarn
-    yarn build
     ```
 Note that react-native-windows is a monorepo and relies on monorepo tools like yarn and lage.  See [this page](monorepo.md) for more details.
 

@@ -20,10 +20,14 @@
     "@rnx-kit/metro-config": "^1.2.27",
     "@rnx-kit/metro-plugin-duplicates-checker": "^1.2.15",
     "@rnx-kit/metro-serializer": "^1.0.11",
-    "metro-config": "^0.67"
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "metro-config": "^0.70.1"
+
+
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.11",
+    "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",
     "eslint": "^7.32.0",
     "prettier": "^2.4.1"

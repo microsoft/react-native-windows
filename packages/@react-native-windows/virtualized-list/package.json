@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/virtualized-list",
-  "version": "0.0.0-canary.31",
+  "version": "0.0.0-canary.42",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,19 +18,20 @@
     "invariant": "^2.2.4"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.11",
+    "@rnw-scripts/eslint-config": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",
     "eslint": "^7.32.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "flow-bin": "^0.171.0",
+    "flow-bin": "^0.176.3",
+
     "prettier": "^2.4.1",
-    "react": "17.0.2",
-    "react-native": "0.0.0-20220213-2008-7cece3423",
-    "react-native-platform-override": "^1.6.6"
+    "react": "18.0.0",
+    "react-native": "0.0.0-20220501-2027-d992ae044",
+    "react-native-platform-override": "^1.6.11"
   },
   "peerDependencies": {
-    "react": "17.0.2",
-    "react-native": "0.0.0-20220213-2008-7cece3423"
+    "react": "18.0.0",
+    "react-native": "0.0.0-20220501-2027-d992ae044"
   },
   "beachball": {
     "defaultNpmTag": "canary",

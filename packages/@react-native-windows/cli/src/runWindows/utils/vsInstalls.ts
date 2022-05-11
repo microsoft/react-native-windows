@@ -96,7 +96,7 @@ export function findLatestVsInstall(opts: {
   let installs = enumerateVsInstalls({...opts, latest: true});
 
   if (opts.prerelease && installs.length > 0) {
-    installs = installs.filter((x) => x.prerelease === 'True');
+    installs = installs.filter(x => x.prerelease === 'True');
   }
 
   if (installs.length > 0) {

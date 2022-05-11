@@ -12,8 +12,8 @@
 #include <limits>
 
 #include <CppWinRTIncludes.h>
-#include <butter/optional.h>
 #include <react/renderer/graphics/ColorComponents.h>
+#include <optional>
 
 namespace facebook {
 namespace react {
@@ -87,7 +87,9 @@ class SharedColor {
     return m_color->m_color;
   }
 
+#ifndef CORE_ABI
   xaml::Media::Brush AsWindowsBrush() const;
+#endif
 
  private:
   std::shared_ptr<Color> m_color;

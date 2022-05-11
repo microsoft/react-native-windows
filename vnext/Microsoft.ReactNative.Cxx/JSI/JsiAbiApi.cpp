@@ -306,6 +306,15 @@ PropNameID JsiAbiRuntime::createPropNameIDFromString(const String &str) try {
   throw;
 }
 
+PropNameID JsiAbiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
+  // TODO: Support for symbols through the native API in JSC is very limited.
+  // While we could construct a PropNameID here, we would not be able to get a
+  // symbol property through the C++ API.
+  UNREFERENCED_PARAMETER(sym);
+  RethrowJsiError();
+  throw;
+}
+
 std::string JsiAbiRuntime::utf8(const PropNameID &propertyId) try {
   std::string dataResult;
   m_runtime.PropertyIdToUtf8(AsJsiPropertyIdRef(propertyId), [&dataResult](array_view<uint8_t const> utf8) {
@@ -994,7 +1003,7 @@ size_t JsiAbiRuntime::ValueRefArray::Size() const noexcept {
 //===========================================================================
 
 JsiAbiRuntime::PropNameIDRef::PropNameIDRef(JsiPropertyIdRef const &data) noexcept
-    : m_propertyId{make<PropNameID>(new (std::addressof(m_pointerStore)) DataPointerValue(data.Data))} {}
+    : m_propertyId{make<PropNameID>(new(std::addressof(m_pointerStore)) DataPointerValue(data.Data))} {}
 
 JsiAbiRuntime::PropNameIDRef::~PropNameIDRef() noexcept {}
 

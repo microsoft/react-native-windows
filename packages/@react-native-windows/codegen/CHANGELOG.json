@@ -2,6 +2,120 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 11 May 2022 05:08:51 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.33",
+      "version": "0.0.0-canary.33",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "f7a69c8cd09188804313593b53ff4c096f130f26",
+            "comment": "Add --methodonly to RNW/codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Apr 2022 05:10:23 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.32",
+      "version": "0.0.0-canary.32",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b",
+            "comment": "Merge"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.3",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.12",
+            "commit": "b8d87e27ee194a45dd6895048a2e40d4cbb9db1b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Apr 2022 22:50:30 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.31",
+      "version": "0.0.0-canary.31",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "dannyvv@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "7289b83061faa1ad41ee584f2ce10161244b2060",
+            "comment": "Update globby of @react-native-windows/codegen to remove glob-parent 3.x dependency"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Apr 2022 05:10:38 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.30",
+      "version": "0.0.0-canary.30",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114",
+            "comment": "Fix Overrides"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.2",
+            "commit": "938b09653f9bf9b089a36caa184204658f15f114"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Apr 2022 05:09:56 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.29",
+      "version": "0.0.0-canary.29",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605",
+            "comment": "Fix publish after promotion to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.1",
+            "commit": "bf81027650625e9e44610f192e194fee8559f605"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 09 Mar 2022 06:09:07 GMT",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.28",
+      "version": "0.0.0-canary.28",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53799235+ZihanChen-MSFT@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "afb7e6c78ac73d700c7369d6f514c34b1b464985",
+            "comment": "Fix turbo module codegen to generate correct import statement and registration"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 04 Mar 2022 06:09:13 GMT",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.27",
       "version": "0.0.0-canary.27",

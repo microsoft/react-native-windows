@@ -32,17 +32,17 @@
   },
   "devDependencies": {
     "@rnw-scripts/beachball-config": "0.0.0",
-    "@rnw-scripts/format-files": "1.0.29",
-    "@rnw-scripts/integrate-rn": "1.1.6",
+    "@rnw-scripts/format-files": "1.0.32",
+    "@rnw-scripts/integrate-rn": "1.1.12",
     "@rnw-scripts/just-task": "2.2.3",
-    "@rnw-scripts/promote-release": "2.0.4",
+    "@rnw-scripts/promote-release": "2.0.8",
     "@rnw-scripts/stamp-version": "0.0.0",
-    "@rnw-scripts/take-screenshot": "1.0.20",
+    "@rnw-scripts/take-screenshot": "1.0.23",
     "beachball": "^2.20.0",
     "husky": "^4.2.5",
-    "react-native-platform-override": "1.6.6",
+    "react-native-platform-override": "1.6.11",
     "unbroken": "1.0.27",
-    "lage": "^0.29.3"
+    "lage": "^1.5.0"
   },
   "resolutions": {
     "kind-of": "6.0.3",
