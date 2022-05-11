@@ -90,6 +90,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiPropertyIdRef CreatePropertyIdFromAscii(array_view<uint8_t const> ascii);
   JsiPropertyIdRef CreatePropertyIdFromUtf8(array_view<uint8_t const> utf8);
   JsiPropertyIdRef CreatePropertyIdFromString(JsiStringRef str);
+  JsiPropertyIdRef CreatePropertyIdFromSymbol(JsiSymbolRef sym);
   hstring PropertyIdToString(JsiPropertyIdRef propertyId);
   void PropertyIdToUtf8(JsiPropertyIdRef propertyId, JsiByteArrayUser const &useUtf8String);
   bool PropertyIdEquals(JsiPropertyIdRef left, JsiPropertyIdRef right);

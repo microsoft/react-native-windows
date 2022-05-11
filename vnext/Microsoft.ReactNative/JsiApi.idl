@@ -246,6 +246,7 @@ namespace Microsoft.ReactNative
     JsiPropertyIdRef CreatePropertyIdFromAscii(UInt8[] ascii);
     JsiPropertyIdRef CreatePropertyIdFromUtf8(UInt8[] utf8);
     JsiPropertyIdRef CreatePropertyIdFromString(JsiStringRef str);
+    JsiPropertyIdRef CreatePropertyIdFromSymbol(JsiSymbolRef sym);
     String PropertyIdToString(JsiPropertyIdRef propertyId);
     void PropertyIdToUtf8(JsiPropertyIdRef propertyId, JsiByteArrayUser useUtf8String);
     Boolean PropertyIdEquals(JsiPropertyIdRef left, JsiPropertyIdRef right);
