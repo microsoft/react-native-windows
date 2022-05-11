@@ -248,7 +248,8 @@ ChakraObject ChakraObject::create() {
   if (JsCreateObject(&value) == JsNoError) {
     return ChakraObject(value);
   } else {
-    throwJSExecutionException("Failed to create a JsValue");
+    assert(false && "JsCreateObject() failed.");
+    std::terminate();
   }
 }
 
