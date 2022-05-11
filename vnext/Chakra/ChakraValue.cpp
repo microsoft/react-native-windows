@@ -245,9 +245,11 @@ std::unordered_map<std::string, std::string> ChakraObject::toJSONMap() const {
 /* static */
 ChakraObject ChakraObject::create() {
   JsValueRef value;
-  JsCreateObject(&value);
-
-  return ChakraObject(value);
+  if (JsCreateObject(&value) == JsNoError) {
+    return ChakraObject(value);
+  } else {
+    throwJSExecutionException("Failed to create a JsValue");
+  }
 }
 
 } // namespace react
