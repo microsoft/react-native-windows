@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Build/dependency fixes",
   "packageName": "@react-native-windows/fs",
   "email": "ngerlem@microsoft.com",
