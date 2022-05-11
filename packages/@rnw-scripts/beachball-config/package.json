@@ -19,7 +19,8 @@
   "dependencies": {
     "@react-native-windows/package-utils": "0.0.0-canary.29",
     "@rnw-scripts/stamp-version": "0.0.0",
-    "find-up": "^4.1.0"
+    "find-up": "^4.1.0",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.1.12",
