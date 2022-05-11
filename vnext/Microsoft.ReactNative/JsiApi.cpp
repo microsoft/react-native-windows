@@ -143,6 +143,7 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   using facebook::jsi::Runtime::createObject;
   using facebook::jsi::Runtime::createPropNameIDFromAscii;
   using facebook::jsi::Runtime::createPropNameIDFromString;
+  using facebook::jsi::Runtime::createPropNameIDFromSymbol;
   using facebook::jsi::Runtime::createPropNameIDFromUtf8;
   using facebook::jsi::Runtime::createStringFromUtf8;
   using facebook::jsi::Runtime::createValueFromJsonUtf8;
@@ -568,6 +569,14 @@ JsiPropertyIdRef JsiRuntime::CreatePropertyIdFromString(JsiStringRef str) try {
   auto strPtr = RuntimeAccessor::AsPointerValue(str);
   return PointerAccessor::MakeJsiPropertyNameIdData(
       m_runtimeAccessor->createPropNameIDFromString(RuntimeAccessor::AsString(&strPtr)));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiPropertyIdRef JsiRuntime::CreatePropertyIdFromSymbol(JsiSymbolRef sym) try {
+  auto symPtr = RuntimeAccessor::AsPointerValue(sym);
+  return PointerAccessor::MakeJsiPropertyNameIdData(
+      m_runtimeAccessor->createPropNameIDFromSymbol(RuntimeAccessor::AsSymbol(&symPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }

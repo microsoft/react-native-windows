@@ -152,7 +152,7 @@
       <Version>1.0.9</Version>
     </PackageReference>
     <PackageReference Include="ReactNative.Hermes.Windows">
-      <Version>0.11.0-ms.2</Version>
+      <Version>0.11.0-ms.6</Version>
     </PackageReference>
   </ItemGroup>
   <ImportGroup Label="ReactNativeWindowsTargets">
