@@ -100,7 +100,6 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   facebook::jsi::PropNameID createPropNameIDFromUtf8(const uint8_t *utf8, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromString(const facebook::jsi::String &str) override;
   facebook::jsi::PropNameID createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) override;
-  ;
   std::string utf8(const facebook::jsi::PropNameID &propertyNameId) override;
   bool compare(const facebook::jsi::PropNameID &left, const facebook::jsi::PropNameID &right) override;
 
