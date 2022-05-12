@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.497",
+  "version": "0.0.0-canary.498",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,8 +26,8 @@
     "@react-native-community/cli": "^8.0.0-alpha.6",
     "@react-native-community/cli-platform-android": "^8.0.0-alpha.3",
     "@react-native-community/cli-platform-ios": "^8.0.0-alpha.3",
-    "@react-native-windows/cli": "0.0.0-canary.128",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.42",
+    "@react-native-windows/cli": "0.0.0-canary.129",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.43",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -59,12 +59,12 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.33",
-    "@rnw-scripts/eslint-config": "1.1.12",
-    "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.6",
+    "@react-native-windows/codegen": "0.0.0-canary.34",
+    "@rnw-scripts/eslint-config": "1.1.13",
+    "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.7",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.0",
-    "@rnw-scripts/just-task": "2.2.3",
+    "@rnw-scripts/just-task": "2.2.4",
     "@types/node": "^14.14.22",
     "@types/react": "^18.0.0",
     "@types/react-native": "^0.66.17",
@@ -77,7 +77,7 @@
     "prettier": "^2.4.1",
     "react": "18.0.0",
     "react-native": "0.0.0-20220501-2027-d992ae044",
-    "react-native-platform-override": "^1.6.11",
+    "react-native-platform-override": "^1.6.12",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"

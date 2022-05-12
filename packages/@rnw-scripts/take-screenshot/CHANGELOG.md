@@ -1,8 +1,19 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Wed, 27 Apr 2022 05:10:22 GMT and should not be manually modified.
+This log was last generated on Thu, 12 May 2022 05:09:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.24
+
+Thu, 12 May 2022 05:09:45 GMT
+
+### Patches
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/just-task to v2.2.4
 
 ## 1.0.23
 

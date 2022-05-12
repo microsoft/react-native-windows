@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use midgard-yarn-strict",
-  "packageName": "react-native-windows",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

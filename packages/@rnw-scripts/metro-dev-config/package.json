@@ -23,12 +23,10 @@
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "metro-config": "^0.70.1"
-
-
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.12",
-    "@rnw-scripts/just-task": "2.2.3",
+    "@rnw-scripts/eslint-config": "1.1.13",
+    "@rnw-scripts/just-task": "2.2.4",
     "eslint": "^7.32.0",
     "prettier": "^2.4.1"
   },

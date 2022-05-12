@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Build/dependency fixes",
-  "packageName": "@rnw-scripts/format-files",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}
