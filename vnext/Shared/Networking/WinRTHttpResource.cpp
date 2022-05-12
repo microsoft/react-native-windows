@@ -282,17 +282,10 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      uint64_t segmentSize = 10 * 1024 * 1024;
-      auto contentLengthHeader = response.Content().Headers().ContentLength();
-
-      uint64_t contentSize = segmentSize;
-      if (contentLengthHeader) {
-        contentSize = contentLengthHeader.Value();
-      }
-
       // #9510 - We currently accumulate all incoming request data in 10MB chunks.
+      uint64_t segmentSize = 64;//10 * 1024 * 1024;
       string responseData;
-      auto length = segmentSize;
+      uint64_t length;
       do {
         co_await reader.LoadAsync(static_cast<uint32_t>(segmentSize));
         length = reader.UnconsumedBufferLength();
