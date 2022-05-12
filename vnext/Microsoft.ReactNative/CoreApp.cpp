@@ -1,39 +1,36 @@
 #include "pch.h"
 #include "CoreApp.h"
-#include <winrt/Windows.Data.Json.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
+#include <fstream>
 #include "ReactApplication.h"
 #include "UI.Xaml.Controls.h"
-#include <fstream>
 
 namespace react = winrt::Microsoft::ReactNative;
 using namespace winrt::Windows::Data::Json;
 
-void SetFromJson(JsonObject json, wchar_t const* key, wchar_t const*& appValue)
-{
+void SetFromJson(JsonObject json, wchar_t const *key, wchar_t const *&appValue) {
   if (json.HasKey(key)) {
     appValue = _wcsdup(json.GetNamedString(key).c_str());
   }
 }
 
-void SetFromJson(JsonObject json, wchar_t const *key, bool& appValue) {
+void SetFromJson(JsonObject json, wchar_t const *key, bool &appValue) {
   if (json.HasKey(key)) {
     appValue = json.GetNamedBoolean(key);
   }
 }
 
-template<typename T>
-std::enable_if_t<std::is_arithmetic_v<T>> SetFromJson(JsonObject json, wchar_t const *key, T&appValue) {
+template <typename T>
+std::enable_if_t<std::is_arithmetic_v<T>> SetFromJson(JsonObject json, wchar_t const *key, T &appValue) {
   if (json.HasKey(key)) {
     appValue = static_cast<T>(json.GetNamedNumber(key));
   }
 }
 
-#define SET_FROM_JSON(key)  \
-  SetFromJson(json, L#key, app->key)
-
+#define SET_FROM_JSON(key) SetFromJson(json, L#key, app->key)
 
 extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *configJson) {
   RNStartCoreApp([](RNCoreApp *app) {
