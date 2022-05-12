@@ -732,7 +732,7 @@
     <ClInclude Include="ReactPointerEventArgs.h" />
     <ClInclude Include="Views\FrameworkElementTransferProperties.h" />
     <ClInclude Include="Views\ReactViewInstance.h" />
-    <ClInclude Include="CoreApp.h" />
+    <ClInclude Include="..\Microsoft.ReactNative.Cxx\CoreApp.h" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="IJSValueReader.idl" />

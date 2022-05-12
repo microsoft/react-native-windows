@@ -179,6 +179,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Microsoft.ReactNative.Cxx\CoreApp.h" />
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Base\CoreNativeModules.h" />
@@ -188,7 +189,6 @@
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="CoreApp.h" />
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h" />
