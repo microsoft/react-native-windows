@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.148",
+  "version": "0.0.0-canary.151",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "license": "MIT",
   "main": "./index.win32.js",
@@ -22,10 +22,10 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "@jest/create-cache-key-function": "^27.0.1",
-    "@react-native-community/cli": "^8.0.0-alpha.4",
+    "@react-native-community/cli": "^8.0.0-alpha.6",
     "@react-native-community/cli-platform-android": "^8.0.0-alpha.3",
     "@react-native-community/cli-platform-ios": "^8.0.0-alpha.3",
-    "@react-native-windows/virtualized-list": "0.0.0-canary.41",
+    "@react-native-windows/virtualized-list": "0.0.0-canary.43",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
@@ -58,8 +58,9 @@
     "ws": "^6.1.4"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.1.12",
-    "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.6",
+    "@rnw-scripts/eslint-config": "1.1.13",
+    "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.0.7",
+    "@rnw-scripts/just-task": "2.2.4",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.0",
     "@types/node": "^14.14.22",
@@ -74,7 +75,7 @@
     "prettier": "^2.4.1",
     "react": "18.0.0",
     "react-native": "0.0.0-20220501-2027-d992ae044",
-    "react-native-platform-override": "^1.6.11",
+    "react-native-platform-override": "^1.6.12",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"
   },

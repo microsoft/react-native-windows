@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "integrate 5-1-22",
+  "comment": "Adding notifications for JS dispatcher",
   "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
+  "email": "email not defined",
   "dependentChangeType": "patch"
 }

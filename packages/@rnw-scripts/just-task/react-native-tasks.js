@@ -8,7 +8,7 @@
 
 const {task} = require('just-scripts');
 
-const copyRNLibaries = require('../../../vnext/Scripts/copyRNLibraries');
+const copyRNLibaries = require('./copyRNLibraries');
 
 task('copyRNLibraries', copyRNLibaries.copyTask(process.cwd()));
 task('cleanRNLibraries', copyRNLibaries.cleanTask(process.cwd()));
