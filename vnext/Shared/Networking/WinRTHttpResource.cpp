@@ -282,7 +282,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      uint64_t segmentSize = 64; //TODO Revert to 10 * 2^20.
+      uint64_t segmentSize = 10 * 1024 * 1024;
       auto contentLengthHeader = response.Content().Headers().ContentLength();
 
       uint64_t contentSize = segmentSize;
@@ -290,7 +290,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         contentSize = contentLengthHeader.Value();
       }
 
-      // #9510 - 10mb limit on fetch
+      // #9510 - We currently accumulate all incoming request data in 10MB chunks.
       string responseData;
       auto length = segmentSize;
       do {
