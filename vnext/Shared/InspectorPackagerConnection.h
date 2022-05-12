@@ -61,7 +61,7 @@ class RemoteConnection final : public facebook::react::IRemoteConnection {
 class RemoteConnection2 final : public facebook::react::IRemoteConnection2 {
  public:
   RemoteConnection2(int64_t pageId, const InspectorPackagerConnection &packagerConnection);
-  void onMessage(std::unique_ptr<facebook::react::IHermesString> message) override;
+  void onMessage(std::string message) override;
   void onDisconnect() override;
 
  private:
