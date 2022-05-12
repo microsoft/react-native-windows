@@ -283,7 +283,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       }
 
       // #9510 - We currently accumulate all incoming request data in 10MB chunks.
-      uint64_t segmentSize = 64;//10 * 1024 * 1024;
+      uint64_t segmentSize = 10 * 1024 * 1024;
       string responseData;
       uint64_t length;
       do {
