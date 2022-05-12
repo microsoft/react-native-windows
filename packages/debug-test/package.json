@@ -1,0 +1,13 @@
+{
+	"name": "debug-test",
+	"version": "0.0.0",
+	"private": "true",
+	"scripts": {
+		"test": "jest"
+	},
+	"devDependencies": {
+		"@react-native-windows/automation": "^0.1.73",
+		"@types/jest": "^26.0.20",
+		"ts-jest": "^26.1.4"
+	}
+}

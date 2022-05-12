@@ -228,7 +228,7 @@ struct WindowData {
       LR"(Samples\mouse)",        LR"(Samples\scrollViewSnapSample)",
       LR"(Samples\simple)",       LR"(Samples\text)",
       LR"(Samples\textinput)",    LR"(Samples\ticTacToe)",
-      LR"(Samples\view)",
+      LR"(Samples\view)",         LR"(Samples\debugTest01)"
   };
 
   static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
