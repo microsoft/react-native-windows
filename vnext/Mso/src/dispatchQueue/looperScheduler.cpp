@@ -8,7 +8,7 @@
 namespace Mso {
 
 struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler> {
-  LooperScheduler() noexcept;
+  LooperScheduler(DispatchQueueSettings const &settings = {}) noexcept;
   ~LooperScheduler() noexcept override;
 
   static void RunLoop(const Mso::WeakPtr<LooperScheduler> &weakSelf) noexcept;
@@ -23,6 +23,7 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
 
  private:
   ManualResetEvent m_wakeUpEvent;
+  DispatchQueueSettings m_settings;
   Mso::WeakPtr<IDispatchQueueService> m_queue;
   std::atomic_bool m_isShutdown{false};
   std::thread m_looperThread; // it must be last in the initialization list
@@ -32,8 +33,8 @@ struct LooperScheduler : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDis
 // LooperScheduler implementation
 //=============================================================================
 
-LooperScheduler::LooperScheduler() noexcept
-    : m_looperThread([weakSelf = Mso::WeakPtr{this}]() noexcept { RunLoop(weakSelf); }) {}
+LooperScheduler::LooperScheduler(DispatchQueueSettings const &settings) noexcept
+    : m_settings(settings), m_looperThread([weakSelf = Mso::WeakPtr{this}]() noexcept { RunLoop(weakSelf); }) {}
 
 LooperScheduler::~LooperScheduler() noexcept {
   AwaitTermination();
@@ -43,19 +44,37 @@ LooperScheduler::~LooperScheduler() noexcept {
   for (;;) {
     if (auto self = weakSelf.GetStrongPtr()) {
       if (auto queue = self->m_queue.GetStrongPtr()) {
+        DispatchQueue q{Mso::CntPtr(queue)};
         DispatchTask task;
         while (queue->TryDequeTask(task)) {
+          if (auto &func = self->m_settings.TaskStarting) {
+            func(q);
+          }
+
           queue->InvokeTask(std::move(task), std::nullopt);
+
+          if (auto &func = self->m_settings.TaskCompleted) {
+            func(q);
+          }
         }
-      }
 
-      if (self->m_isShutdown) {
-        break;
-      }
+        if (self->m_isShutdown) {
+          break;
+        }
 
-      self->m_wakeUpEvent.Wait();
-      self->m_wakeUpEvent.Reset();
-      continue;
+        if (auto &func = self->m_settings.IdleWaitStarting) {
+          func(q);
+        }
+
+        self->m_wakeUpEvent.Wait();
+        self->m_wakeUpEvent.Reset();
+
+        if (auto &func = self->m_settings.IdleWaitCompleted) {
+          func(q);
+        }
+
+        continue;
+      }
     }
 
     break;
@@ -101,8 +120,9 @@ void LooperScheduler::AwaitTermination() noexcept {
 // DispatchQueueStatic::MakeThreadPoolScheduler implementation
 //=============================================================================
 
-/*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeLooperScheduler() noexcept {
-  return Mso::Make<LooperScheduler, IDispatchQueueScheduler>();
+/*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeLooperScheduler(
+    DispatchQueueSettings const &settings) noexcept {
+  return Mso::Make<LooperScheduler, IDispatchQueueScheduler>(settings);
 }
 
 } // namespace Mso

@@ -12,6 +12,7 @@ namespace Mso {
 struct JSCallInvokerScheduler
     : Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, IDispatchQueueScheduler, IJSCallInvokerQueueScheduler> {
   JSCallInvokerScheduler(
+      const Mso::DispatchQueueSettings &settings,
       std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
       Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
       Mso::Promise<void> &&whenQuit) noexcept;
@@ -45,12 +46,13 @@ std::shared_ptr<facebook::react::MessageQueueThread> JSCallInvokerScheduler::Get
 //=============================================================================
 
 JSCallInvokerScheduler::JSCallInvokerScheduler(
+    const Mso::DispatchQueueSettings &settings,
     std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept
     : m_callInvoker(callInvoker) {
   m_jsMessageThread = std::make_shared<Mso::React::MessageDispatchQueue>(
-      Mso::DispatchQueue::MakeLooperQueue(), std::move(errorHandler), std::move(whenQuit));
+      Mso::DispatchQueue::MakeLooperQueue(settings), std::move(errorHandler), std::move(whenQuit));
 }
 
 JSCallInvokerScheduler::~JSCallInvokerScheduler() noexcept {
@@ -91,11 +93,12 @@ void JSCallInvokerScheduler::AwaitTermination() noexcept {
 }
 
 Mso::CntPtr<IDispatchQueueScheduler> MakeJSCallInvokerScheduler(
+    const Mso::DispatchQueueSettings &settings,
     std::shared_ptr<facebook::react::CallInvoker> &&callInvoker,
     Mso::Functor<void(const Mso::ErrorCode &)> &&errorHandler,
     Mso::Promise<void> &&whenQuit) noexcept {
   return Mso::Make<JSCallInvokerScheduler, IDispatchQueueScheduler>(
-      std::move(callInvoker), std::move(errorHandler), std::move(whenQuit));
+      settings, std::move(callInvoker), std::move(errorHandler), std::move(whenQuit));
 }
 
 } // namespace Mso

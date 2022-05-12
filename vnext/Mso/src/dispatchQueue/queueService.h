@@ -81,14 +81,14 @@ struct QueueLocalValueEntry {
 
 struct DispatchQueueStatic : Mso::UnknownObject<Mso::RefCountStrategy::NoRefCount, IDispatchQueueStatic> {
   static DispatchQueueStatic *Instance() noexcept;
-  static Mso::CntPtr<IDispatchQueueScheduler> MakeLooperScheduler() noexcept;
+  static Mso::CntPtr<IDispatchQueueScheduler> MakeLooperScheduler(DispatchQueueSettings const &settings) noexcept;
   static Mso::CntPtr<IDispatchQueueScheduler> MakeThreadPoolScheduler(uint32_t maxThreads) noexcept;
 
  public: // IDispatchQueueStatic
   DispatchQueue CurrentQueue() noexcept override;
   DispatchQueue const &ConcurrentQueue() noexcept override;
   DispatchQueue MakeSerialQueue() noexcept override;
-  DispatchQueue MakeLooperQueue() noexcept override;
+  DispatchQueue MakeLooperQueue(DispatchQueueSettings const &settings) noexcept override;
   DispatchQueue GetCurrentUIThreadQueue() noexcept override;
   DispatchQueue MakeConcurrentQueue(uint32_t maxThreads) noexcept override;
   DispatchQueue MakeCustomQueue(Mso::CntPtr<IDispatchQueueScheduler> &&scheduler) noexcept override;
