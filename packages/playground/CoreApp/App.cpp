@@ -6,23 +6,23 @@
 // or neither to exercise the RNStartCoreAppWithModules, RNStartCoreApp, and RNStartCoreAppFromConfigJson APIs.
 
 #ifdef WITH_MODULES
-#include <winrt/Microsoft.ReactNative.h>
 #include <ModuleRegistration.h>
 #include <NativeModules.h>
+#include <winrt/Microsoft.ReactNative.h>
 
 REACT_MODULE(LogBox)
-struct LogBox
-{
+struct LogBox {
   REACT_INIT(Initialize)
-  void Initialize(const winrt::Microsoft::ReactNative::ReactContext&) noexcept
-  {
+  void Initialize(const winrt::Microsoft::ReactNative::ReactContext &) noexcept {
     MessageBox(nullptr, L"Native Modules work!", L"Success", MB_OK);
   }
 };
 
-struct ThisAppPackageProvider : winrt::implements<ThisAppPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
-  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {    
-    for (auto const *reg = winrt::Microsoft::ReactNative::ModuleRegistration::Head(); reg != nullptr; reg = reg->Next()) {
+struct ThisAppPackageProvider
+    : winrt::implements<ThisAppPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
+    for (auto const *reg = winrt::Microsoft::ReactNative::ModuleRegistration::Head(); reg != nullptr;
+         reg = reg->Next()) {
       packageBuilder.AddModule(reg->ModuleName(), reg->MakeModuleProvider());
     }
   }

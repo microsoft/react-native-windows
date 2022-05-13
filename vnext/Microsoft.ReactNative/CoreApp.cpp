@@ -56,7 +56,9 @@ extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *con
   });
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(void (*launched)(RNCoreApp *), void(*addModules)(RNCoreApp*)) {
+extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(
+    void (*launched)(RNCoreApp *),
+    void (*addModules)(RNCoreApp *)) {
   xaml::Application::Start([launched, addModules](auto &&) {
     winrt::Windows::Foundation::IInspectable outer{nullptr};
     const auto &app = winrt::make<react::implementation::ReactApplication>(outer);
@@ -92,8 +94,8 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(void (*launched)(RNCo
     rnca->packageProvidersAbiCount = 0;
 
     impl_app->LaunchedInternal([rnca, launched](
-                             react::ReactApplication const &app,
-                             const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
+                                   react::ReactApplication const &app,
+                                   const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
       rnca->args = args.Arguments().c_str();
       if (launched) {
         launched(rnca.get());
@@ -122,7 +124,6 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(void (*launched)(RNCo
         } catch (...) {
         }
       }
-
     });
     impl_app->ViewCreatedInternal([](react::ReactApplication const &app, winrt::hstring const &args) {
       auto rootFrame = xaml::Window::Current().Content().as<xaml::Controls::Frame>();
@@ -134,7 +135,6 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(void (*launched)(RNCo
   });
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp*))
-{
+extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *)) {
   RNStartCoreAppWithModules(launched, nullptr);
 }

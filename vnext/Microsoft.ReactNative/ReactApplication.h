@@ -17,8 +17,6 @@ namespace activation = winrt::Windows::ApplicationModel::Activation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-
-
 // NoDefaultCtorReactApplication_base is a copy of the generated ReactApplication_base
 // without the default constructor where it calls a factory for the base type.
 // This is done to fix the aggregation issue in types inheriting from the ReactApplication.
@@ -99,7 +97,7 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
-  using AppLaunchedDelegate = winrt::delegate<void (
+  using AppLaunchedDelegate = winrt::delegate<void(
       winrt::Microsoft::ReactNative::ReactApplication sender,
       winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs args)>;
 
@@ -110,7 +108,8 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
     return m_launched;
   }
 
-  using AppViewCreatedDelegate = winrt::delegate<void (winrt::Microsoft::ReactNative::ReactApplication sender, winrt::hstring args)>;
+  using AppViewCreatedDelegate =
+      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication sender, winrt::hstring args)>;
 
   void ViewCreatedInternal(AppViewCreatedDelegate del) {
     m_viewCreated = del;
@@ -120,7 +119,8 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
     return m_viewCreated;
   }
 
-  using AppPageNavigatedDelegate = winrt::delegate<void (winrt::Microsoft::ReactNative::ReactApplication sender, ReactRootView view)>;
+  using AppPageNavigatedDelegate =
+      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication sender, ReactRootView view)>;
 
   void PageNavigatedInternal(AppPageNavigatedDelegate del) {
     m_pageNavigated = del;
