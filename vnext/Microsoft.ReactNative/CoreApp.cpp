@@ -2,6 +2,7 @@
 #include "CoreApp.h"
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
+#include <winrt/Windows.ApplicationModel.Activation.h>
 #include <winrt/Windows.Data.Json.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 #include <fstream>
@@ -76,37 +77,38 @@ extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *)) {
     rnca->resourcesAbi = nullptr;
     rnca->args = nullptr;
 
-    app.LaunchedInternal(
-        [rnca, launched](react::ReactApplication const &app, const activation::LaunchActivatedEventArgs &args) {
-          rnca->args = args.Arguments().c_str();
-          if (launched) {
-            launched(rnca.get());
-          }
-          app.JavaScriptBundleFile(rnca->jsBundleFile);
+    app.LaunchedInternal([rnca, launched](
+                             react::ReactApplication const &app,
+                             const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
+      rnca->args = args.Arguments().c_str();
+      if (launched) {
+        launched(rnca.get());
+      }
+      app.JavaScriptBundleFile(rnca->jsBundleFile);
 
-          auto settings = app.InstanceSettings();
-          settings.BundleRootPath(rnca->bundleRootPath);
+      auto settings = app.InstanceSettings();
+      settings.BundleRootPath(rnca->bundleRootPath);
 
-          settings.UseWebDebugger(rnca->useWebDebugger);
-          settings.UseFastRefresh(rnca->useFastRefresh);
-          settings.UseDeveloperSupport(rnca->useDeveloperSupport);
-          settings.UseDirectDebugger(rnca->useDirectDebugger);
+      settings.UseWebDebugger(rnca->useWebDebugger);
+      settings.UseFastRefresh(rnca->useFastRefresh);
+      settings.UseDeveloperSupport(rnca->useDeveloperSupport);
+      settings.UseDirectDebugger(rnca->useDirectDebugger);
 
-          settings.EnableDefaultCrashHandler(rnca->enableDefaultCrashHandler);
-          settings.DebuggerPort(rnca->debuggerPort);
-          settings.SourceBundlePort(rnca->sourceBundlePort);
-          settings.SourceBundleHost(rnca->sourceBundleHost);
+      settings.EnableDefaultCrashHandler(rnca->enableDefaultCrashHandler);
+      settings.DebuggerPort(rnca->debuggerPort);
+      settings.SourceBundlePort(rnca->sourceBundlePort);
+      settings.SourceBundleHost(rnca->sourceBundleHost);
 
-          if (auto res = xaml::ResourceDictionary(rnca->resourcesAbi, winrt::take_ownership_from_abi)) {
-            app.Resources(res);
-          } else {
-            try {
-              auto xcr = winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources();
-              app.Resources(xcr);
-            } catch (...) {
-            }
-          }
-        });
+      if (auto res = xaml::ResourceDictionary(rnca->resourcesAbi, winrt::take_ownership_from_abi)) {
+        app.Resources(res);
+      } else {
+        try {
+          auto xcr = winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources();
+          app.Resources(xcr);
+        } catch (...) {
+        }
+      }
+    });
     app.ViewCreatedInternal([](react::ReactApplication const &app, winrt::hstring const &args) {
       auto rootFrame = xaml::Window::Current().Content().as<xaml::Controls::Frame>();
       rootFrame.Navigate(winrt::xaml_typename<react::CoreAppPage>(), winrt::box_value(args));
