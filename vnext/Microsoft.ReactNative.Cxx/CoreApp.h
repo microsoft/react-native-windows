@@ -29,6 +29,8 @@ struct RNCoreApp {
   void *resourcesAbi;
   /// Provides the launch arguments back to the CoreApp callback
   wchar_t const *args;
+  void **packageProvidersAbi;
+  unsigned char packageProvidersAbiCount;
 };
 
 #ifdef __cplusplus
@@ -38,3 +40,6 @@ struct RNCoreApp {
 #endif
 extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *));
 extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *configJson);
+extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(
+    void (*launched)(RNCoreApp *),
+    void (*addModules)(RNCoreApp *));

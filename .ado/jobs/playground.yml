@@ -28,6 +28,10 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
+          - Name: X64DebugCoreApp
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: ..\CoreApp\CoreApp.sln
           # Disabling until WinAppSDK is working e2e
           # - Name: X86DebugWinUI3
           #   BuildConfiguration: Debug
@@ -55,6 +59,10 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
+          - Name: X64DebugCoreApp
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: ..\CoreApp\CoreApp.sln
           # Disabling until WinAppSDK is working e2e
           # - Name: X86DebugWinUI3
           #   BuildConfiguration: Debug

@@ -8,14 +8,6 @@ import "ReactRootView.idl";
 
 namespace Microsoft.ReactNative
 {
-
-  delegate void AppLaunchedDelegate(
-      ReactApplication sender, Windows.ApplicationModel.Activation.LaunchActivatedEventArgs args);
-
-  delegate void AppViewCreatedDelegate(ReactApplication sender, String args);
-
-  delegate void AppPageNavigatedDelegate(ReactApplication sender, ReactRootView view);
-
   [webhosthidden]
   [default_interface]
   DOC_STRING(
@@ -27,10 +19,6 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("Creates a new instance of @ReactApplication")
     ReactApplication();
-
-    AppLaunchedDelegate LaunchedInternal;
-    AppViewCreatedDelegate ViewCreatedInternal;
-    AppPageNavigatedDelegate PageNavigatedInternal;
 
     DOC_STRING(
       "Provides access to your application's @ReactInstanceSettings.\n"

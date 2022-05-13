@@ -56,12 +56,24 @@ extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *con
   });
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *)) {
-  xaml::Application::Start([launched](auto &&) {
+extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(void (*launched)(RNCoreApp *), void(*addModules)(RNCoreApp*)) {
+  xaml::Application::Start([launched, addModules](auto &&) {
     winrt::Windows::Foundation::IInspectable outer{nullptr};
     const auto &app = winrt::make<react::implementation::ReactApplication>(outer);
 
+    const auto impl_app = winrt::get_self<react::implementation::ReactApplication>(app);
+
     auto rnca = std::make_shared<RNCoreApp>();
+
+    if (addModules) {
+      addModules(rnca.get());
+    }
+    for (auto i = 0; i < rnca->packageProvidersAbiCount; i++) {
+      auto provider = winrt::Microsoft::ReactNative::IReactPackageProvider(
+          rnca->packageProvidersAbi[i], winrt::take_ownership_from_abi);
+      app.PackageProviders().Append(provider);
+    }
+
     /// Set default values
     rnca->jsBundleFile = L"index.windows";
     rnca->bundleRootPath = L"ms-appx:///Bundle/";
@@ -76,8 +88,10 @@ extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *)) {
     rnca->sourceBundleHost = L"localhost";
     rnca->resourcesAbi = nullptr;
     rnca->args = nullptr;
+    rnca->packageProvidersAbi = nullptr;
+    rnca->packageProvidersAbiCount = 0;
 
-    app.LaunchedInternal([rnca, launched](
+    impl_app->LaunchedInternal([rnca, launched](
                              react::ReactApplication const &app,
                              const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
       rnca->args = args.Arguments().c_str();
@@ -108,13 +122,19 @@ extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp *)) {
         } catch (...) {
         }
       }
+
     });
-    app.ViewCreatedInternal([](react::ReactApplication const &app, winrt::hstring const &args) {
+    impl_app->ViewCreatedInternal([](react::ReactApplication const &app, winrt::hstring const &args) {
       auto rootFrame = xaml::Window::Current().Content().as<xaml::Controls::Frame>();
       rootFrame.Navigate(winrt::xaml_typename<react::CoreAppPage>(), winrt::box_value(args));
     });
-    app.PageNavigatedInternal([rnca](react::ReactApplication const & /*app*/, react::ReactRootView const &view) {
+    impl_app->PageNavigatedInternal([rnca](react::ReactApplication const & /*app*/, react::ReactRootView const &view) {
       view.ComponentName(rnca->componentName);
     });
   });
+}
+
+extern "C" NORETURN void __cdecl RNStartCoreApp(void (*launched)(RNCoreApp*))
+{
+  RNStartCoreAppWithModules(launched, nullptr);
 }
