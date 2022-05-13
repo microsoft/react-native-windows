@@ -12,7 +12,10 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#include <Shlwapi.h>
 #include <Utils/ValueUtils.h>
+#include <shcore.h>
+#include "BundleUtils.h"
 #include "DynamicAutomationPeer.h"
 #include "Unicode.h"
 #include "XamlView.h"
@@ -163,6 +166,9 @@ void ReactImage::Source(ReactImageSource source) {
       source.sourceFormat = ImageSourceFormat::Svg;
     }
 
+    if (scheme == L"resource") {
+      source.sourceType = ImageSourceType::EmbeddedResource;
+    }
     m_imageSource = source;
 
     SetBackground(true);
@@ -171,13 +177,14 @@ void ReactImage::Source(ReactImageSource source) {
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(
-    ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(ReactImageSource source) {
   switch (source.sourceType) {
     case ImageSourceType::Download:
       co_return co_await GetImageStreamAsync(source);
     case ImageSourceType::InlineData:
       co_return co_await GetImageInlineDataAsync(source);
+    case ImageSourceType::EmbeddedResource:
+      co_return GetStreamFromEmbeddedResource(source);
     default: // ImageSourceType::Uri
       co_return nullptr;
   }
@@ -221,9 +228,10 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   auto currentImageSourceId = ++m_imageSourceId;
 
   const bool fromStream{
-      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData};
+      source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData ||
+      source.sourceType == ImageSourceType::EmbeddedResource};
 
-  winrt::InMemoryRandomAccessStream memoryStream{nullptr};
+  winrt::IRandomAccessStream memoryStream{nullptr};
 
   // get weak reference before any co_await calls
   auto weak_this{get_weak()};
@@ -443,7 +451,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(const ReactImageSource &source) {
   try {
     co_await winrt::resume_background();
 
@@ -480,7 +488,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
   co_return nullptr;
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(const ReactImageSource &source) {
   size_t start = source.uri.find(',');
   if (start == std::string::npos || start + 1 > source.uri.length())
     co_return nullptr;
@@ -503,4 +511,21 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsyn
 
   co_return nullptr;
 }
+
+winrt::Windows::Storage::Streams::IRandomAccessStream GetStreamFromEmbeddedResource(const ReactImageSource &source) {
+  auto uri = winrt::to_hstring(source.uri);
+  const auto &av = GetEmbeddedResource(uri);
+
+  winrt::com_ptr<IStream> istream;
+  istream.attach(SHCreateMemStream(reinterpret_cast<const BYTE *>(av.begin()), av.size()));
+  winrt::check_bool(istream);
+  winrt::Windows::Storage::Streams::IRandomAccessStream ms;
+  winrt::check_hresult(CreateRandomAccessStreamOverStream(
+      istream.get(),
+      BSOS_DEFAULT,
+      winrt::guid_of<winrt::Windows::Storage::Streams::IRandomAccessStream>(),
+      winrt::put_abi(ms)));
+  return ms;
+}
+
 } // namespace Microsoft::ReactNative

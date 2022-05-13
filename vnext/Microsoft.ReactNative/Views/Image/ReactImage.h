@@ -13,7 +13,7 @@
 
 namespace Microsoft::ReactNative {
 
-enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2 };
+enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2, EmbeddedResource = 3 };
 enum class ImageSourceFormat { Bitmap = 0, Svg = 1 };
 
 struct ReactImageSource {
@@ -69,7 +69,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
  private:
   xaml::Media::Stretch ResizeModeToStretch();
   xaml::Media::Stretch ResizeModeToStretch(winrt::Windows::Foundation::Size size);
-  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>
   GetImageMemoryStreamAsync(ReactImageSource source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);
 
@@ -92,7 +92,10 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 
 // Helper functions
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageStreamAsync(ReactImageSource source);
+GetImageStreamAsync(const ReactImageSource &source);
+
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageInlineDataAsync(ReactImageSource source);
+GetImageInlineDataAsync(const ReactImageSource &source);
+
+winrt::Windows::Storage::Streams::IRandomAccessStream GetStreamFromEmbeddedResource(const ReactImageSource &source);
 } // namespace Microsoft::ReactNative

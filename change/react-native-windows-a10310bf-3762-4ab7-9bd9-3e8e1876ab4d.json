@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Expose embedded resource lookup and hook up Image to it",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}

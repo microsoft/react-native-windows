@@ -28,6 +28,7 @@
       <Filter>JSI</Filter>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\..\..\bridging\LongLivedObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)BundleUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -151,6 +152,7 @@
       <Filter>JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)BundleUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">

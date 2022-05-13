@@ -27,5 +27,4 @@ class StorageFileBigString : public facebook::react::JSBigString {
   mutable std::future<std::string> m_futureBuffer;
   mutable std::string m_string;
 };
-
 } // namespace Microsoft::ReactNative
