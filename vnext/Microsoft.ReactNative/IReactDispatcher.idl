@@ -55,17 +55,17 @@ namespace Microsoft.ReactNative
     static IReactPropertyName JSDispatcherProperty { get; };
 
     DOC_STRING(
-      "Gets name of the `JSDispatcherTaskStartingEventName` property for the @IReactNotificationService.\n"
+      "Gets the name of the `JSDispatcherTaskStartingEventName` property for the @IReactNotificationService.\n"
       "This notification name is to be used with IReactNotificationService.")
     static IReactPropertyName JSDispatcherTaskStartingEventName{ get; };
 
     DOC_STRING(
-      "Gets name of the `JSDispatcherIdleWaitStartingEventName` property for the @IReactNotificationService.\n"
+      "Gets the name of the `JSDispatcherIdleWaitStartingEventName` property for the @IReactNotificationService.\n"
       "This notification name is to be used with IReactNotificationService.")
     static IReactPropertyName JSDispatcherIdleWaitStartingEventName{ get; };
 
     DOC_STRING(
-      "Gets name of the `JSDispatcherIdleWaitCompletedEventName` property for the @IReactNotificationService.\n"
+      "Gets the name of the `JSDispatcherIdleWaitCompletedEventName` property for the @IReactNotificationService.\n"
       "This notification name is to be used with IReactNotificationService.")
     static IReactPropertyName JSDispatcherIdleWaitCompletedEventName{ get; };
   }
