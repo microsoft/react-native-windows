@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "throw an error if a Chakra JS object cannot be created",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
