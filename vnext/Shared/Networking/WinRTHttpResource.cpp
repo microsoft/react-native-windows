@@ -283,11 +283,11 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       }
 
       // #9510 - We currently accumulate all incoming request data in 10MB chunks.
-      uint64_t segmentSize = 10 * 1024 * 1024;
+      uint32_t segmentSize = 10 * 1024 * 1024;
       string responseData;
-      uint64_t length;
+      uint32_t length;
       do {
-        co_await reader.LoadAsync(static_cast<uint32_t>(segmentSize));
+        co_await reader.LoadAsync(segmentSize);
         length = reader.UnconsumedBufferLength();
 
         if (coReqArgs->IsText) {
@@ -296,7 +296,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
           responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
         } else {
-          auto buffer = reader.ReadBuffer(static_cast<uint32_t>(length));
+          auto buffer = reader.ReadBuffer(length);
           auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
           responseData += to_string(std::wstring_view(data));
