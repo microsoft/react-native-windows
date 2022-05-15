@@ -67,7 +67,8 @@ static shared_ptr<IHttpResource> CreateHttpResource(
   });
 
   // Explicitly declaring function type to avoid type inference ambiguity.
-  std::function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](int64_t requestId, dynamic &&responseData) {
+  std::function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](
+                                                               int64_t requestId, dynamic &&responseData) {
     SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
   };
   resource->SetOnData(std::move(onDataDynamic));
