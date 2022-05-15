@@ -275,11 +275,25 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 #pragma region IBlobPersistor
 
 winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept {
+  if (offset < 0 || size < 1)
+    return {};
+
   scoped_lock lock{m_mutex};
 
-  auto &data = m_blobs.at(std::move(blobId));
+  auto dataItr = m_blobs.find(std::move(blobId));
+  if (dataItr != m_blobs.cend()) {
+    auto &bytes = (*dataItr).second;
 
-  return winrt::array_view<uint8_t>{data};
+    auto endBound = static_cast<size_t>(offset + size);
+    // Out of bounds.
+    if (endBound > bytes.size())
+      return {};
+
+    return winrt::array_view<uint8_t>(bytes.data() + offset, bytes.data() + endBound );
+  }
+
+  // Not found.
+  return {};
 }
 
 void MemoryBlobPersistor::RemoveMessage(string &&blobId) noexcept {
