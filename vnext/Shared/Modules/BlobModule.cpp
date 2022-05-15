@@ -289,7 +289,7 @@ winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, 
     if (endBound > bytes.size())
       return {};
 
-    return winrt::array_view<uint8_t>(bytes.data() + offset, bytes.data() + endBound );
+    return winrt::array_view<uint8_t>(bytes.data() + offset, bytes.data() + endBound);
   }
 
   // Not found.
