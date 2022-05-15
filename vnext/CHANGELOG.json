@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 13 May 2022 05:09:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.499",
+      "version": "0.0.0-canary.499",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2a7797da8f4f22217f33f97bdc6fb8b0d58f9483",
+            "comment": "throw an error if a Chakra JS object cannot be created"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2d128d8d3e51e4cba8f94965053c6b679602c87d",
+            "comment": "Remove JsiEngineOverride::ChakraCore"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "48a616e8f234468864955a333bcfb44416ea28f9",
+            "comment": "Adding notifications for JS dispatcher"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 May 2022 05:09:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.498",
       "version": "0.0.0-canary.498",
