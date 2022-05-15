@@ -141,10 +141,10 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&resp
   m_onData = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnBlobData(function<void(int64_t requestId, dynamic &&responseData)> &&handler) noexcept
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&responseData)> &&handler) noexcept
 /*override*/
 {
-  m_onBlobData = std::move(handler);
+  m_onDataDynamic = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&errorMessage)> &&handler) noexcept
@@ -180,8 +180,8 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     try {
       if (uriHandler->Supports(uri, coReqArgs->ResponseType)) {
         auto blob = uriHandler->Fetch(uri);
-        if (self->m_onBlobData && self->m_onRequestSuccess) {
-          self->m_onBlobData(coReqArgs->RequestId, std::move(blob));
+        if (self->m_onDataDynamic && self->m_onRequestSuccess) {
+          self->m_onDataDynamic(coReqArgs->RequestId, std::move(blob));
           self->m_onRequestSuccess(coReqArgs->RequestId);
         }
 
@@ -330,8 +330,8 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
           reader.ReadBytes(bytes);
           auto blob = responseHandler->ToResponseData(std::move(bytes));
 
-          if (self->m_onBlobData && self->m_onRequestSuccess) {
-            self->m_onBlobData(coReqArgs->RequestId, std::move(blob));
+          if (self->m_onDataDynamic && self->m_onRequestSuccess) {
+            self->m_onDataDynamic(coReqArgs->RequestId, std::move(blob));
             self->m_onRequestSuccess(coReqArgs->RequestId);
           }
 

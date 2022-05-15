@@ -66,9 +66,11 @@ static shared_ptr<IHttpResource> CreateHttpResource(
     SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
   });
 
-  resource->SetOnBlobData([weakReactInstance](int64_t requestId, dynamic &&responseData) {
+  // Explicitly declaring function type to avoid type inference ambiguity.
+  std::function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](int64_t requestId, dynamic &&responseData) {
     SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
-  });
+  };
+  resource->SetOnData(std::move(onDataDynamic));
 
   resource->SetOnError([weakReactInstance](int64_t requestId, string &&message) {
     dynamic args = dynamic::array(requestId, std::move(message));
