@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 16 May 2022 15:09:01 GMT",
+      "tag": "@office-iss/react-native-win32_v0.69.0-preview.2",
+      "version": "0.69.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "70ed2cf44501f1ac1951638154915bc14f073406",
+            "comment": "Upgrade to @react-native-community/cli@8.0.0-alpha.6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 May 2022 23:30:22 GMT",
       "tag": "@office-iss/react-native-win32_v0.69.0-preview.1",
       "version": "0.69.0-preview.1",
