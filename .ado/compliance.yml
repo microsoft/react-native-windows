@@ -18,11 +18,7 @@ parameters:
 variables:
   - template: variables/windows.yml
   - group: RNW Secrets
-  - name: NugetSecurityAnalysisWarningLevel
-    value: 'warn'
-  - name: skipComponentGovernanceDetection
-    value: true
-  - name: Codeql.SkipTaskAutoInjection
+  - name: Codeql.Enabled
     value: true
 
 trigger: none
