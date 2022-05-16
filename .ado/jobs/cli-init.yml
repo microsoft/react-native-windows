@@ -9,8 +9,10 @@ parameters:
     type: object
   - name: buildNuGetOnly
     type: boolean
+    default: false
   - name: buildWinAppSDKOnly
     type: boolean
+    default: false
   - name: buildMatrix
     type: object
     default:
