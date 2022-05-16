@@ -302,7 +302,7 @@ jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
-        - ${{ if and(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly), eq(coalesce(matrix.useWinAppSDK, false), parameters.buildWinAppSDKOnly))}}:
+        - ${{ if or(eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly), eq(coalesce(matrix.useWinAppSDK, false), parameters.buildWinAppSDKOnly))}}:
           - job: CliInit${{ matrix.Name }}
             displayName: Verify Cli ${{ matrix.Name }}
 
