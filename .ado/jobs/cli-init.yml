@@ -61,12 +61,15 @@ parameters:
           #   platform: x86
           #   projectType: app
           #   additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+          #   additionalRunArguments: --no-deploy
+          #   useWinAppSDK: true
           - Name: X64DebugCsWinUI3
             language: cs
             configuration: Debug
             platform: x64
             projectType: app
             additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+            additionalRunArguments: --no-deploy
             useWinAppSDK: true
           - Name: X86DebugCppHermes
             language: cpp
@@ -157,13 +160,16 @@ parameters:
           #   configuration: Debug
           #   platform: x86
           #   projectType: app
-          #   additionalInitArguments: --useWinUI3 true
+          #   additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+          #   additionalRunArguments: --no-deploy
+          #   useWinAppSDK: true
           - Name: X64DebugCsWinUI3
             language: cs
             configuration: Debug
             platform: x64
             projectType: app
             additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
+            additionalRunArguments: --no-deploy
             useWinAppSDK: true
           - Name: X86DebugCppHermes
             language: cpp
