@@ -60,7 +60,7 @@ parameters:
           #   configuration: Debug
           #   platform: x86
           #   projectType: app
-          #   additionalInitArguments: --useWinUI3 true
+          #   additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
           - Name: X64DebugCsWinUI3
             language: cs
             configuration: Debug
@@ -163,7 +163,7 @@ parameters:
             configuration: Debug
             platform: x64
             projectType: app
-            additionalInitArguments: --useWinUI3 true
+            additionalInitArguments: --useWinUI3 true --nuGetTestFeed $(System.DefaultWorkingDirectory)\NuGetTestFeed
             useWinAppSDK: true
           - Name: X86DebugCppHermes
             language: cpp
@@ -349,3 +349,4 @@ jobs:
                   runWack: ${{ coalesce(matrix.runWack, false) }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
                   useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
+                  useWinAppSDK: ${{ coalesce(matrix.useWinAppSDK, false) }}
