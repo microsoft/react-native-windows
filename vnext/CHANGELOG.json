@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 17 May 2022 05:08:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.500",
+      "version": "0.0.0-canary.500",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "edfed66874d0e01369ab0f90ae8f8a8aa71fe59d",
+            "comment": "update comments in IReactDispatcher.idl"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "305dcf8d0ae10efe1c090b24780ca7c7f09f939d",
+            "comment": "Fix Microsoft.ReactNative.Cxx nuget package missing files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 13 May 2022 05:09:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.499",
       "version": "0.0.0-canary.499",

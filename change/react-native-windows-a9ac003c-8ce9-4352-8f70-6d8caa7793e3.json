@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix Microsoft.ReactNative.Cxx nuget package missing files",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
