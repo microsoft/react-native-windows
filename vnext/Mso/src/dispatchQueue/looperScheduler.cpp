@@ -53,7 +53,7 @@ LooperScheduler::~LooperScheduler() noexcept {
           }
           queue->InvokeTask(std::move(task), std::nullopt);
           if (taskCompleted) {
-            taskStarting(DispatchQueue{Mso::CntPtr(queue)});
+            taskCompleted(DispatchQueue{Mso::CntPtr(queue)});
           }
         }
       }
