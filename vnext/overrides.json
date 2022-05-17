@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220501-2027-d992ae044",
+  "baseVersion": "0.0.0-20220516-2016-4994b8b5d",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "22398587d11b601a2ec98362fa3879779983e898"
+      "baseHash": "545721e61623eb749b7e91f32e80589c037839f2"
     },
     {
       "type": "patch",
@@ -85,7 +85,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "db7ca9a031acc8f10a063f8db0e484e8988cc698",
+      "baseHash": "d0e6e1d4f8895af55fddd861ac1c267e81f1bbb9",
       "issue": 4054
     },
     {
@@ -145,7 +145,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "bbfa56d0a75d228c12d041a37255244fc8479604"
+      "baseHash": "480433148ca7ca473ee08138567dbb40ce958ce0"
     },
     {
       "type": "platform",
@@ -167,7 +167,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "684ad8aef9bc3250f96c52ba188773fdabd4bc99",
+      "baseHash": "821a00b041478c1a6a62afac525c1dd5ea62eb1a",
       "issue": 4578
     },
     {
@@ -261,13 +261,13 @@
       "type": "derived",
       "file": "src/Libraries/Components/SafeAreaView/SafeAreaView.windows.js",
       "baseFile": "Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "d13d67c91a9096989776ba7d7b0f8537c46b87a8"
+      "baseHash": "af7999060b4757bea13165789b02692a84cae2cb"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "567ebad070a2fb9020ef177ee30defba9f0c54ec"
+      "baseHash": "a90dc6359e00399895d4497890bf0737816dbc21"
     },
     {
       "type": "patch",
@@ -340,7 +340,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "282cd9cc008400b06b617543b9f5f8429d91b87e",
+      "baseHash": "801bf4a66452a6e13e5f89dae4e3f362a948f843",
       "issue": 4590
     },
     {
@@ -380,7 +380,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "6eb2a875d4eeb9ab65476661ff3fc4f6c03b329c",
+      "baseHash": "948d12e5f6a2638cb649bfcdc36da719150b7cd7",
       "issue": 0
     },
     {
@@ -394,7 +394,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "7cbd1e3cfa7adab44c9508066bf77e29d2c55b46",
+      "baseHash": "85961f7eaaeb41e8dc36487ff5c4ab0383010aa4",
       "issue": 0
     },
     {
@@ -447,7 +447,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "095340650dff94c140283c08d6b891685f6835ba"
+      "baseHash": "83de31916eff7d7a528ce0881e85b12f728e5cce"
     },
     {
       "type": "derived",

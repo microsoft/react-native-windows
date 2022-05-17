@@ -12,18 +12,9 @@ import Platform from '../../Utilities/Platform';
 import * as React from 'react';
 import View from '../View/View';
 
-import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
 import type {ViewProps} from '../View/ViewPropTypes';
 
-type Props = $ReadOnly<{|
-  ...ViewProps,
-  emulateUnlessSupported?: boolean,
-|}>;
-
-let exported: React.AbstractComponent<
-  Props,
-  React.ElementRef<HostComponent<mixed>>,
->;
+let exported: React.AbstractComponent<ViewProps, React.ElementRef<typeof View>>;
 
 /**
  * Renders nested content and automatically applies paddings reflect the portion
@@ -34,30 +25,11 @@ let exported: React.AbstractComponent<
  * limitation of the screen, such as rounded corners or camera notches (aka
  * sensor housing area on iPhone X).
  */
-// [Win32 - Added win32 to if
-if (Platform.OS === 'android' || Platform.OS === 'win32') {
-  // Win32]
-  exported = React.forwardRef<Props, React.ElementRef<HostComponent<mixed>>>(
-    function SafeAreaView(props, forwardedRef) {
-      const {emulateUnlessSupported, ...localProps} = props;
-      return <View {...localProps} ref={forwardedRef} />;
-    },
-  );
-} else {
-  const RCTSafeAreaViewNativeComponent =
-    require('./RCTSafeAreaViewNativeComponent').default;
 
-  exported = React.forwardRef<Props, React.ElementRef<HostComponent<mixed>>>(
-    function SafeAreaView(props, forwardedRef) {
-      return (
-        <RCTSafeAreaViewNativeComponent
-          emulateUnlessSupported={true}
-          {...props}
-          ref={forwardedRef}
-        />
-      );
-    },
-  );
+if (Platform.OS === 'android' || Platform.OS === 'win32') {
+  exported = View;
+} else {
+  exported = require('./RCTSafeAreaViewNativeComponent').default;
 }
 
 export default exported;
