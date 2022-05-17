@@ -31,9 +31,6 @@ export type AppTheme = {
     listener: (nativeEvent: IHighContrastChangedEvent) => void,
   ): EmitterSubscription;
 
-  /**
-   * @deprecated Use remove method on the EmitterSubscription returned from addListener
-   */
   removeListener(
     eventName: 'highContrastChanged',
     listener: (nativeEvent: IHighContrastChangedEvent) => void,
