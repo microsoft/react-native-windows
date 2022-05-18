@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix crash when enabling Yoga logging",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

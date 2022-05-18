@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 May 2022 05:09:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.501",
+      "version": "0.0.0-canary.501",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a0679d544bd484092888a7d97debbcfeaafe8f5c",
+            "comment": "Fix crash when enabling Yoga logging"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 17 May 2022 05:08:53 GMT",
       "tag": "react-native-windows_v0.0.0-canary.500",
       "version": "0.0.0-canary.500",
