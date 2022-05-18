@@ -19,6 +19,7 @@ namespace Microsoft::React {
 struct IHttpModuleProxy {
   virtual ~IHttpModuleProxy() noexcept {}
 
+  //TODO: Implement custom URI handlers.
   virtual void AddUriHandler(std::shared_ptr<IUriHandler> uriHandler) noexcept = 0;
 
   virtual void AddRequestBodyHandler(std::shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept = 0;

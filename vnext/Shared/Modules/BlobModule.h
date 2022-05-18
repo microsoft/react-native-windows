@@ -6,7 +6,6 @@
 #include <Modules/IBlobPersistor.h>
 #include <Modules/IRequestBodyHandler.h>
 #include <Modules/IResponseHandler.h>
-#include <Modules/IUriHandler.h>
 #include <Modules/IWebSocketModuleContentHandler.h>
 
 // React Native
@@ -63,37 +62,6 @@ class BlobWebSocketModuleContentHandler final : public IWebSocketModuleContentHa
   void Unregister(int64_t socketID) noexcept;
 };
 
-class BlobModuleUriHandler final : public IUriHandler {
-  std::shared_ptr<IBlobPersistor> m_blobPersistor;
-
- public:
-  BlobModuleUriHandler(std::shared_ptr<IBlobPersistor> blobPersistor) noexcept;
-
-#pragma region IUriHandler
-
-  bool Supports(std::string &uri, std::string &responseType) override;
-
-  folly::dynamic Fetch(std::string &uri) override;
-
-#pragma endregion IUriHandler
-
-  /// <summary>
-  /// May throw std::filesystem::filesystem_error.
-  /// </summary>
-  std::vector<uint8_t> GetBytesFromUri(std::string &uri);
-
-  std::string GetMimeTypeFromUri(std::string &uri) noexcept;
-
-  std::string GetNameFromUri(std::string &uri) noexcept;
-
-  std::string GetLastPathSegment(winrt::hstring &path) noexcept;
-
-  /// <returns>
-  /// Last modified time in miliseconds
-  /// </returns>
-  int64_t GetLastModifiedFromUri(std::string &uri) noexcept;
-};
-
 class BlobModuleRequestBodyHandler final : public IRequestBodyHandler {
   std::shared_ptr<IBlobPersistor> m_blobPersistor;
 
@@ -127,7 +95,6 @@ class BlobModuleResponseHandler final : public IResponseHandler {
 class BlobModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<MemoryBlobPersistor> m_blobPersistor;
   std::shared_ptr<BlobWebSocketModuleContentHandler> m_contentHandler;
-  std::shared_ptr<BlobModuleUriHandler> m_uriHandler;
   std::shared_ptr<BlobModuleRequestBodyHandler> m_requestBodyHandler;
   std::shared_ptr<BlobModuleResponseHandler> m_responseHandler;
 

@@ -391,7 +391,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
 void WinRTHttpResource::AddUriHandler(shared_ptr<IUriHandler> uriHandler) noexcept /*override*/
 {
-  m_uriHandler = weak_ptr<IUriHandler>(uriHandler);
+  //TODO: Implement custom URI handling.
 }
 
 void WinRTHttpResource::AddRequestBodyHandler(shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept /*override*/

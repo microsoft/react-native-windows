@@ -135,7 +135,6 @@ BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectab
     : m_sharedState{std::make_shared<SharedState>()},
       m_blobPersistor{std::make_shared<MemoryBlobPersistor>()},
       m_contentHandler{std::make_shared<BlobWebSocketModuleContentHandler>(m_blobPersistor)},
-      m_uriHandler{std::make_shared<BlobModuleUriHandler>(m_blobPersistor)},
       m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
       m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
       m_inspectableProperties{inspectableProperties} {
@@ -166,14 +165,12 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
   return {
       {"addNetworkingHandler",
        [propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()},
-        uriHandler = m_uriHandler,
         requestBodyHandler = m_requestBodyHandler,
         responseHandler = m_responseHandler](dynamic args) {
          auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
 
          if (auto prop = propBag.Get(propId)) {
            if (auto httpHandler = prop.Value().lock()) {
-             httpHandler->AddUriHandler(uriHandler);
              httpHandler->AddRequestBodyHandler(requestBodyHandler);
              httpHandler->AddResponseHandler(responseHandler);
            }
@@ -358,124 +355,6 @@ void BlobWebSocketModuleContentHandler::Unregister(int64_t socketID) noexcept {
 }
 
 #pragma endregion BlobWebSocketModuleContentHandler
-
-#pragma region BlobModuleUriHandler
-
-BlobModuleUriHandler::BlobModuleUriHandler(shared_ptr<IBlobPersistor> blobPersistor) noexcept
-    : m_blobPersistor{blobPersistor} {}
-
-#pragma region IUriHandler
-
-bool BlobModuleUriHandler::Supports(string &uri, string &responseType) /*override*/ {
-  auto uriObj = Uri{winrt::to_hstring(uri)};
-
-  return !(L"http" == uriObj.SchemeName() || L"https" == uriObj.SchemeName()) && blobKey == responseType;
-}
-
-dynamic BlobModuleUriHandler::Fetch(string &uri) /*override*/ {
-  auto data = GetBytesFromUri(uri);
-
-  auto blob = dynamic::object();
-  blob(offsetKey, 0);
-  blob(sizeKey, data.size());
-  blob(typeKey, GetMimeTypeFromUri(uri));
-  blob(blobIdKey, m_blobPersistor->StoreMessage(std::move(data)));
-
-  // Needed for files
-  blob("name", GetNameFromUri(uri));
-  blob("lastModified", GetLastModifiedFromUri(uri));
-
-  return blob;
-}
-
-#pragma endregion IUriHandler
-
-// TODO: Avoid double allocation (malloc() + vector{}}.
-vector<uint8_t> BlobModuleUriHandler::GetBytesFromUri(string &uri) {
-  auto path = fs::weakly_canonical(uri);
-  auto size = fs::file_size(path);
-  auto sharedBuff = shared_ptr<void>{malloc(static_cast<size_t>(size)), free};
-  auto inStream = std::ifstream{path, std::ios::binary};
-  inStream.read(static_cast<char *>(sharedBuff.get()), size);
-  auto asBytePtr = static_cast<uint8_t *>(sharedBuff.get());
-
-  return vector<uint8_t>{asBytePtr, asBytePtr + static_cast<uint32_t>(size)};
-}
-
-/// <remarks>
-/// See
-/// https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/content/ContentResolver.java
-/// </remarks>
-string BlobModuleUriHandler::GetMimeTypeFromUri(string &uri) noexcept {
-  string result{};
-
-  auto uriPath = Uri{winrt::to_hstring(uri)}.Path();
-  auto lastSegment = GetLastPathSegment(uriPath);
-  auto path = std::filesystem::path{lastSegment};
-  if (path.has_extension()) {
-    auto entry = extensionToMime.find(path.extension().string());
-    if (entry != extensionToMime.cend()) {
-      result = (*entry).second;
-    }
-  }
-
-  return result;
-}
-
-string BlobModuleUriHandler::GetNameFromUri(string &uri) noexcept {
-  auto uriObj = Uri{winrt::to_hstring(uri)};
-  auto path = uriObj.Path();
-  if (L"file" == uriObj.SchemeName()) {
-    return GetLastPathSegment(path);
-  }
-
-  // TODO: Lookup "_display_name"
-
-  return GetLastPathSegment(path);
-}
-
-string BlobModuleUriHandler::GetLastPathSegment(winrt::hstring &path) noexcept {
-  auto start = path.size();
-  auto end = start;
-  while (end > 0) {
-    if (path[end - 1] != '/') {
-      start = end - 1;
-      break;
-    } else {
-      end--;
-    }
-  }
-
-  // No name characters found
-  if (start >= end)
-    return {};
-
-  while (start > 0 && path[start - 1] != '/') {
-    start--;
-  }
-
-  return winrt::to_string(path).substr(start, /*count*/ end - start);
-}
-
-int64_t BlobModuleUriHandler::GetLastModifiedFromUri(string &uri) noexcept {
-  int64_t result;
-
-  try {
-    auto path = fs::weakly_canonical(uri);
-    auto lastModified = fs::last_write_time(path);
-    auto timeSince = lastModified.time_since_epoch();
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(timeSince);
-    auto count = duration.count();
-
-    result = static_cast<int64_t>(count);
-  } catch (const fs::filesystem_error &) {
-    result = 0;
-  }
-
-  return result;
-}
-
-#pragma endregion BlobModuleUriHandler
 
 #pragma region BlobModuleRequestBodyHandler
 

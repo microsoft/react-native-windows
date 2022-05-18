@@ -3,8 +3,6 @@
 
 #pragma once
 
-#include <Modules/IHttpModuleProxy.h>
-#include <Modules/IUriHandler.h>
 #include <Networking/IHttpResource.h>
 
 // React Native
