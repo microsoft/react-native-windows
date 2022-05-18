@@ -1,6 +1,9 @@
 variables:
-  # Injection configuration
+  # Task auto-injection configuration
+  Codeql.SkipTaskAutoInjection: true
+  NugetSecurityAnalysisWarningLevel: 'warn'
   runCodesignValidationInjection: false
+  skipComponentGovernanceDetection: true
   
   # Enables `chalk` to show colored output to Azure Pipelines
   FORCE_COLOR: 3
