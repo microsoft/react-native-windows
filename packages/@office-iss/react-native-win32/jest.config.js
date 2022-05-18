@@ -5,7 +5,6 @@ module.exports = {
   transform: {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$':
       '<rootDir>/jest/assetFileTransformer.js',
-    '.*': './jest/preprocessor.js',
   },
   transformIgnorePatterns: [],
   setupFiles: ['./jest/setup.js'],
