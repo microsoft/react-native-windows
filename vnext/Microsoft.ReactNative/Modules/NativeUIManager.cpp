@@ -38,7 +38,7 @@ static int YogaLog(
     YGLogLevel /*level*/,
     const char *format,
     va_list args) {
-  int len = _scprintf(format, args);
+  const int len = _vscprintf(format, args);
   std::string buffer(len + 1, '\0');
   vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
   buffer.resize(len);

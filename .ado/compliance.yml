@@ -18,8 +18,8 @@ parameters:
 variables:
   - template: variables/windows.yml
   - group: RNW Secrets
-  - name: NugetSecurityAnalysisWarningLevel
-    value: 'warn'
+  - name: Codeql.Enabled
+    value: true
 
 trigger: none
 pr: none
@@ -77,25 +77,16 @@ jobs:
       #   inputs:
       #     disableOutputRedirect: true
 
-      # 1ES Component Governance onboarding (Detects open source components). See https://docs.opensource.microsoft.com/tools/cg.html
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Detection'
+      # Initialize CodeQL 3000 Task (https://aka.ms/codeql3000)
+      # Performs static code analysis.
+      - task: CodeQL3000Init@0
+        displayName: "🛡️ Initialize CodeQL"
+        continueOnError: true
 
-      # Build
-
-      - template: templates/msbuild-sln.yml
-        parameters:
-          solutionDir: vnext
-          solutionName: Microsoft.ReactNative.sln
-          buildPlatform: x64
-          buildConfiguration: Release
-
-      # Post-build compliance tasks
-
-      # https://www.1eswiki.com/index.php?title=PoliCheck_Build_Task
+      # PoliCheck Build Task (https://aka.ms/gdn-azdo-policheck)
       # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
-        displayName: 'Run PoliCheck'
+        displayName: '⚖️ Run PoliCheck'
         inputs:
           targetType: F
           targetArgument: $(Build.SourcesDirectory)
@@ -106,13 +97,36 @@ jobs:
           optionsHMENABLE: 0
         continueOnError: true
 
-      # https://www.1eswiki.com/wiki/CredScan_Azure_DevOps_Build_Task
-      # Searches through source code and build outputs for a credential left behind in the open
+      # CredScan Task (https://aka.ms/gdn-azdo-credscan)
+      # Searches through source code and build outputs for credentials left behind in the open.
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
-        displayName: 'Run CredScan'
+        displayName: '⚖️ Run CredScan'
         inputs:
           outputFormat: pre
           # suppressionsFile: LocalSuppressions.json
           batchSize: 20
           debugMode: false
+        continueOnError: true
+
+      # Build RNW
+
+      - template: templates/msbuild-sln.yml
+        parameters:
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.sln
+          buildPlatform: x64
+          buildConfiguration: Release
+
+      # Post-build compliance tasks
+
+      # Component Governance Detection Task (https://docs.opensource.microsoft.com/tools/cg/)
+      # Detects open source you use and alerts you to whether it has security vulnerabilities or legal issues.
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Detection'
+        continueOnError: true
+
+      # Finalize CodeQL 3000 Task (https://aka.ms/codeql3000)
+      # Performs static code analysis.
+      - task: CodeQL3000Finalize@0
+        displayName: "🛡️ Finalize CodeQL"
         continueOnError: true

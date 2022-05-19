@@ -44,6 +44,11 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: true
+      
+      - template: jobs/cli-init.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
           buildWinAppSDKOnly: true
 
   - stage: IntegrationTests
