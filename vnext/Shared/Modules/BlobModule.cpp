@@ -364,7 +364,9 @@ BlobModuleRequestBodyHandler::BlobModuleRequestBodyHandler(shared_ptr<IBlobPersi
 #pragma region IRequestBodyHandler
 
 bool BlobModuleRequestBodyHandler::Supports(dynamic &data) /*override*/ {
-  return !data.at(blobKey).empty();
+  auto itr = data.find(blobKey);
+
+  return itr != data.items().end() && !(*itr).second.empty();
 }
 
 dynamic BlobModuleRequestBodyHandler::ToRequestBody(dynamic &data, string &contentType) /*override*/ {

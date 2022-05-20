@@ -232,19 +232,18 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   IHttpContent content{nullptr};
   auto &data = coReqArgs->Data;
   if (!data.isNull()) {
-    if (auto bodyHandler = self->m_requestBodyHandler.lock()) {
-      if (bodyHandler->Supports(data)) {
-        auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
-        auto blob = bodyHandler->ToRequestBody(data, contentTypeString);
-        auto bytes = blob["bytes"];
-        auto byteVector = vector<uint8_t>(bytes.size());
-        for (auto &byte : bytes) {
-          byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
-        }
-        auto view = winrt::array_view<uint8_t>{byteVector};
-        auto buffer = CryptographicBuffer::CreateFromByteArray(view);
-        content = HttpBufferContent{std::move(buffer)};
+    auto bodyHandler = self->m_requestBodyHandler.lock();
+    if (bodyHandler && bodyHandler->Supports(data)) {
+      auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
+      auto blob = bodyHandler->ToRequestBody(data, contentTypeString);
+      auto bytes = blob["bytes"];
+      auto byteVector = vector<uint8_t>(bytes.size());
+      for (auto &byte : bytes) {
+        byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
       }
+      auto view = winrt::array_view<uint8_t>{byteVector};
+      auto buffer = CryptographicBuffer::CreateFromByteArray(view);
+      content = HttpBufferContent{std::move(buffer)};
     } else if (!data["string"].empty()) {
       content = HttpStringContent{to_hstring(data["string"].asString())};
     } else if (!data["base64"].empty()) {
@@ -389,7 +388,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
 #pragma region IHttpModuleProxy
 
-void WinRTHttpResource::AddUriHandler(shared_ptr<IUriHandler> uriHandler) noexcept /*override*/
+void WinRTHttpResource::AddUriHandler(shared_ptr<IUriHandler> /*uriHandler*/) noexcept /*override*/
 {
   //TODO: Implement custom URI handling.
 }
@@ -411,7 +410,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 #pragma region IHttpResource
 
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make(
-    winrt::Windows::Foundation::IInspectable &inspectableProperties) noexcept {
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
   using namespace winrt::Microsoft::ReactNative;
   using winrt::Windows::Web::Http::HttpClient;
 

@@ -52,6 +52,7 @@ class HttpModule : public facebook::xplat::module::CxxModule {
 
   std::shared_ptr<Networking::IHttpResource> m_resource;
   std::shared_ptr<ModuleHolder> m_holder;
+  bool m_isResourceSetup{false};
 
   // Property bag high level reference.
   winrt::Windows::Foundation::IInspectable m_inspectableProperties;
