@@ -74,7 +74,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          winrt::array_view<uint8_t> bytes;
          try {
            bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::invalid_argument &e) {
+         } catch (const std::exception &e) {
            return reject({e.what()});
          }
 
@@ -119,12 +119,12 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          winrt::array_view<uint8_t> bytes;
          try {
            bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::invalid_argument &e) {
+         } catch (const std::exception &e) {
            return reject({e.what()});
          }
 
-         // TODO:  Handle non-UTF8 encodings
-         //        See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
+         // #9982 - Handle non-UTF8 encodings
+         //         See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
          auto result = string{bytes.cbegin(), bytes.cend()};
 
          resolve({std::move(result)});

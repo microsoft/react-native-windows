@@ -142,7 +142,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
          winrt::array_view<uint8_t> data;
          try {
            data = persistor->ResolveMessage(std::move(blobId), offset, size);
-         } catch (const std::invalid_argument &e) {
+         } catch (const std::exception &e) {
            if (auto sharedState = weakState.lock()) {
              Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
            }
@@ -173,7 +173,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
              try {
                bufferPart = persistor->ResolveMessage(
                    blob[blobIdKey].asString(), blob[offsetKey].asInt(), blob[sizeKey].asInt());
-             } catch (const std::invalid_argument &e) {
+             } catch (const std::exception &e) {
                if (auto sharedState = weakState.lock()) {
                  Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
                }
@@ -217,25 +217,23 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 #pragma region IBlobPersistor
 
 winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
-  if (offset < 0 || size < 1)
+  if (size < 1)
     return {};
 
   scoped_lock lock{m_mutex};
 
   auto dataItr = m_blobs.find(std::move(blobId));
-  if (dataItr != m_blobs.cend()) {
-    auto &bytes = (*dataItr).second;
-
-    auto endBound = static_cast<size_t>(offset + size);
-    // Out of bounds.
-    if (endBound > bytes.size())
-      return {};
-
-    return winrt::array_view<uint8_t>(bytes.data() + offset, bytes.data() + endBound);
-  }
-
   // Not found.
-  throw std::invalid_argument("Blob object not found");
+  if (dataItr == m_blobs.cend())
+    throw std::invalid_argument("Blob object not found");
+
+  auto &bytes = (*dataItr).second;
+  auto endBound = static_cast<size_t>(offset + size);
+  // Out of bounds.
+  if (endBound > bytes.size() || offset >= static_cast<int64_t>(bytes.size()) || offset < 0)
+    throw std::out_of_range("Offset or size out of range");
+
+  return winrt::array_view<uint8_t>(bytes.data() + offset, bytes.data() + endBound);
 }
 
 void MemoryBlobPersistor::RemoveMessage(string &&blobId) noexcept {
