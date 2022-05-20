@@ -21,22 +21,11 @@ namespace Microsoft::React {
 
 class FileReaderModule : public facebook::xplat::module::CxxModule {
  public:
-  enum class MethodId {
-    ReadAsDataURL = 0,
-    ReadAsText = 1,
-    SIZE = 2
-  };
+  enum class MethodId { ReadAsDataURL = 0, ReadAsText = 1, SIZE = 2 };
 
   FileReaderModule(std::weak_ptr<IBlobPersistor> weakBlobPersistor) noexcept;
 
   ~FileReaderModule() noexcept override;
-
-  //struct SharedState {
-  //  /// <summary>
-  //  /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
-  //  /// </summary>
-  //  CxxModule *Module{nullptr};
-  //};
 
 #pragma region CxxModule
 
@@ -59,7 +48,7 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule
 
  private:
-   std::weak_ptr<IBlobPersistor> m_weakBlobPersistor;
+  std::weak_ptr<IBlobPersistor> m_weakBlobPersistor;
 };
 
 } // namespace Microsoft::React

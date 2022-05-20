@@ -322,6 +322,9 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
+      // #9510 - 10mb limit on fetch
+      co_await reader.LoadAsync(10 * 1024 * 1024);
+
       // Let response handler take over, if set
       if (auto responseHandler = self->m_responseHandler.lock()) {
         if (responseHandler->Supports(coReqArgs->ResponseType)) {
@@ -343,8 +346,6 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      // #9510 - 10mb limit on fetch
-      co_await reader.LoadAsync(10 * 1024 * 1024);
       auto length = reader.UnconsumedBufferLength();
 
       if (isText) {
@@ -390,7 +391,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
 void WinRTHttpResource::AddUriHandler(shared_ptr<IUriHandler> /*uriHandler*/) noexcept /*override*/
 {
-  //TODO: Implement custom URI handling.
+  // TODO: Implement custom URI handling.
 }
 
 void WinRTHttpResource::AddRequestBodyHandler(shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept /*override*/

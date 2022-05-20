@@ -29,7 +29,7 @@ using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 constexpr char moduleName[] = "FileReaderModule";
-} //namespace <anonymous>
+} // namespace
 
 namespace Microsoft::React {
 
@@ -39,33 +39,27 @@ FileReaderModule::FileReaderModule(weak_ptr<IBlobPersistor> weakBlobPersistor) n
     : m_weakBlobPersistor{weakBlobPersistor} {}
 
 FileReaderModule::~FileReaderModule() noexcept /*override*/
-{
-}
+{}
 
 #pragma region CxxModule
 
-string FileReaderModule::getName()
-{
+string FileReaderModule::getName() {
   return moduleName;
 }
 
-std::map<string, dynamic> FileReaderModule::getConstants()
-{
+std::map<string, dynamic> FileReaderModule::getConstants() {
   return {};
 }
 
-std::vector<module::CxxModule::Method> FileReaderModule::getMethods()
-{
-  return
-  {
-    {
-      ///
-      /// <param name="args">
-      /// Array of arguments passed from the JavaScript layer.
-      /// [0]  - dynamic blob object { blobId, offset, size[, type] }
-      /// </param>
-      ///
-      "readAsDataURL",
+std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
+  return {
+      {///
+       /// <param name="args">
+       /// Array of arguments passed from the JavaScript layer.
+       /// [0]  - dynamic blob object { blobId, offset, size[, type] }
+       /// </param>
+       ///
+       "readAsDataURL",
        [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
          if (!blobPersistor) {
            return reject({"Could not get BlobModule from ReactApplicationContext"});
@@ -97,54 +91,48 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods()
          result += oss.str();
 
          resolve({std::move(result)});
-      }
-    },
-    {
-      ///
-      /// <param name="args">
-      /// Array of arguments passed from the JavaScript layer.
-      /// [0]  - dynamic blob object { blobId, offset, size }
-      /// [1]  - string encoding
-      /// </param>
-      ///
-      "readAsText",
+       }},
+      {///
+       /// <param name="args">
+       /// Array of arguments passed from the JavaScript layer.
+       /// [0]  - dynamic blob object { blobId, offset, size }
+       /// [1]  - string encoding
+       /// </param>
+       ///
+       "readAsText",
        [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
          if (!blobPersistor) {
            return reject({"Could not get BlobModule from ReactApplicationContext"});
          }
 
          auto blob = jsArgAsObject(args, 0);
-         auto encoding = jsArgAsString(args, 1);//Default: "UTF-8"
+         auto encoding = jsArgAsString(args, 1); // Default: "UTF-8"
 
          auto blobId = blob["blobId"].asString();
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         //TODO: Make ResolveMessage throw
+         // TODO: Make ResolveMessage throw
          auto bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
 
-         //TODO:  Handle non-UTF8 encodings
-         //       See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
+         // TODO:  Handle non-UTF8 encodings
+         //        See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html
          auto result = string{bytes.cbegin(), bytes.cend()};
 
          resolve({std::move(result)});
-      }
-    }
-  };
+       }}};
 }
 
 #pragma endregion CxxModule
 
 #pragma endregion FileReaderModule
 
-/*extern*/ const char* GetFileReaderModuleName() noexcept
-{
+/*extern*/ const char *GetFileReaderModuleName() noexcept {
   return moduleName;
 }
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateFileReaderModule(
-  IInspectable const &inspectableProperties) noexcept {
-
+    IInspectable const &inspectableProperties) noexcept {
   auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
   auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
 
@@ -157,4 +145,4 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods()
   return nullptr;
 }
 
-}//namespace
+} // namespace Microsoft::React

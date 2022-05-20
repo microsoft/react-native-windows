@@ -34,7 +34,8 @@ struct IHttpResource {
 
   static std::shared_ptr<IHttpResource> Make() noexcept;
 
-  static std::shared_ptr<IHttpResource> Make(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+  static std::shared_ptr<IHttpResource> Make(
+      winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
   virtual ~IHttpResource() noexcept {}
 

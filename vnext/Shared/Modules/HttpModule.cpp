@@ -40,7 +40,6 @@ static void SetUpHttpResource(
     shared_ptr<IHttpResource> resource,
     weak_ptr<Instance> weakReactInstance,
     IInspectable &inspectableProperties) {
-
   resource->SetOnRequestSuccess([weakReactInstance](int64_t requestId) {
     auto args = dynamic::array(requestId);
 
