@@ -71,8 +71,12 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         // TODO: Make ResolveMessage throw
-         auto bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
+         winrt::array_view<uint8_t> bytes;
+         try {
+           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
+         } catch (const std::invalid_argument &e) {
+           return reject({e.what()});
+         }
 
          auto result = string{"data:"};
          auto typeItr = blob.find("type");
@@ -112,8 +116,12 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         // TODO: Make ResolveMessage throw
-         auto bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
+         winrt::array_view<uint8_t> bytes;
+         try {
+           bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
+         } catch (const std::invalid_argument &e) {
+           return reject({e.what()});
+         }
 
          // TODO:  Handle non-UTF8 encodings
          //        See https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/nio/charset/Charset.html

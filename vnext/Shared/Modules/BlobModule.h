@@ -30,7 +30,7 @@ class MemoryBlobPersistor final : public IBlobPersistor {
  public:
 #pragma region IBlobPersistor
 
-  winrt::array_view<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) noexcept override;
+  winrt::array_view<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) override;
 
   void RemoveMessage(std::string &&blobId) noexcept override;
 

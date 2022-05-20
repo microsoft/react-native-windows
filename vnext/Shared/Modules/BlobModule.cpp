@@ -197,7 +197,8 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
        }},
 
       {"sendOverSocket",
-       [persistor = m_blobPersistor,
+       [weakState = weak_ptr<SharedState>(m_sharedState),
+        persistor = m_blobPersistor,
         propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()}](dynamic args) {
          auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
          shared_ptr<IWebSocketModuleProxy> wsProxy;
@@ -214,7 +215,15 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
          auto size = blob[sizeKey].getInt();
          auto socketID = jsArgAsInt(args, 1);
 
-         auto data = persistor->ResolveMessage(std::move(blobId), offset, size);
+         winrt::array_view<uint8_t> data;
+         try {
+           data = persistor->ResolveMessage(std::move(blobId), offset, size);
+         } catch (const std::invalid_argument &e) {
+           if (auto sharedState = weakState.lock()) {
+             Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
+           }
+           return;
+         }
 
          auto buffer = CryptographicBuffer::CreateFromByteArray(data);
          auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
@@ -236,8 +245,16 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
            auto type = part[typeKey].asString();
            if (blobKey == type) {
              auto blob = part[dataKey];
-             auto bufferPart =
-                 persistor->ResolveMessage(blob[blobIdKey].asString(), blob[offsetKey].asInt(), blob[sizeKey].asInt());
+             winrt::array_view<uint8_t> bufferPart;
+             try {
+               bufferPart = persistor->ResolveMessage(
+                   blob[blobIdKey].asString(), blob[offsetKey].asInt(), blob[sizeKey].asInt());
+             } catch (const std::invalid_argument &e) {
+               if (auto sharedState = weakState.lock()) {
+                 Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
+               }
+               return;
+             }
 
              buffer.reserve(buffer.size() + bufferPart.size());
              buffer.insert(buffer.end(), bufferPart.begin(), bufferPart.end());
@@ -275,7 +292,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 
 #pragma region IBlobPersistor
 
-winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) noexcept {
+winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
   if (offset < 0 || size < 1)
     return {};
 
@@ -294,7 +311,7 @@ winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, 
   }
 
   // Not found.
-  return {};
+  throw std::invalid_argument("Blob object not found");
 }
 
 void MemoryBlobPersistor::RemoveMessage(string &&blobId) noexcept {

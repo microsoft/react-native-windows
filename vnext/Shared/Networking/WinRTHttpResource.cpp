@@ -235,7 +235,15 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     auto bodyHandler = self->m_requestBodyHandler.lock();
     if (bodyHandler && bodyHandler->Supports(data)) {
       auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
-      auto blob = bodyHandler->ToRequestBody(data, contentTypeString);
+      dynamic blob;
+      try {
+        blob = bodyHandler->ToRequestBody(data, contentTypeString);
+      } catch (const std::invalid_argument &e) {
+        if (self->m_onError) {
+          self->m_onError(coReqArgs->RequestId, e.what());
+        }
+        co_return;
+      }
       auto bytes = blob["bytes"];
       auto byteVector = vector<uint8_t>(bytes.size());
       for (auto &byte : bytes) {
