@@ -226,5 +226,13 @@ TEST_CLASS (RNTesterIntegrationTests) {
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(Blob)
+  TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(Blob) {
+    auto result = m_runner.RunTest("IntegrationTests/BlobTest", "BlobTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
 #pragma endregion Extended Tests
 };
