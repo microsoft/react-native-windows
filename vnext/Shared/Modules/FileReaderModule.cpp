@@ -62,7 +62,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        "readAsDataURL",
        [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
          if (!blobPersistor) {
-           return reject({"Could not get BlobModule from ReactApplicationContext"});
+           return reject({"Could not find Blob persistor"});
          }
 
          auto blob = jsArgAsObject(args, 0);
@@ -106,7 +106,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
        "readAsText",
        [blobPersistor = m_weakBlobPersistor.lock()](dynamic args, Callback resolve, Callback reject) {
          if (!blobPersistor) {
-           return reject({"Could not get BlobModule from ReactApplicationContext"});
+           return reject({"Could not find Blob persistor"});
          }
 
          auto blob = jsArgAsObject(args, 0);
