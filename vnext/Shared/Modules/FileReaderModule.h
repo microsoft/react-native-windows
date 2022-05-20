@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "IBlobPersistor.h"
+
 // React Native
 #include <cxxreact/CxxModule.h>
 
@@ -11,6 +13,7 @@
 
 // Standard Library
 #include <map>
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -24,7 +27,7 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
     SIZE = 2
   };
 
-  FileReaderModule() noexcept;
+  FileReaderModule(std::weak_ptr<IBlobPersistor> weakBlobPersistor) noexcept;
 
   ~FileReaderModule() noexcept override;
 
@@ -56,10 +59,7 @@ class FileReaderModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule
 
  private:
-  /// <summary>
-  /// Keeps members that can be accessed threads other than this module's owner accessible.
-  /// </summary>
-  //std::shared_ptr<SharedState> m_sharedState;
+   std::weak_ptr<IBlobPersistor> m_weakBlobPersistor;
 };
 
 } // namespace Microsoft::React

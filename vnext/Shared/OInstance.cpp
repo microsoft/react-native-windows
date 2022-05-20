@@ -628,7 +628,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetFileReaderModuleName(),
-      []() { return Microsoft::React::CreateFileReaderModule(); },
+      [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
       nativeQueue));
 
   return modules;

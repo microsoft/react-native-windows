@@ -20,7 +20,6 @@
 #include <chrono>
 #include <filesystem>
 #include <fstream>
-#include <unordered_map>
 
 using namespace facebook::xplat;
 
@@ -138,11 +137,16 @@ BlobModule::BlobModule(winrt::Windows::Foundation::IInspectable const &inspectab
       m_requestBodyHandler{std::make_shared<BlobModuleRequestBodyHandler>(m_blobPersistor)},
       m_responseHandler{std::make_shared<BlobModuleResponseHandler>(m_blobPersistor)},
       m_inspectableProperties{inspectableProperties} {
-  auto propId =
-      ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
   auto propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()};
+
+  auto contentHandlerPropId =
+      ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
   auto contentHandler = weak_ptr<IWebSocketModuleContentHandler>{m_contentHandler};
-  propBag.Set(propId, std::move(contentHandler));
+  propBag.Set(contentHandlerPropId, std::move(contentHandler));
+
+  auto blobPersistorPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
+  auto blobPersistor = weak_ptr<IBlobPersistor>{m_blobPersistor};
+  propBag.Set(blobPersistorPropId, std::move(blobPersistor));
 
   m_sharedState->Module = this;
 }
