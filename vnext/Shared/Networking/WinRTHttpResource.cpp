@@ -356,24 +356,30 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      auto length = reader.UnconsumedBufferLength();
+      // #9510 - We currently accumulate all incoming request data in 10MB chunks.
+      uint32_t segmentSize = 10 * 1024 * 1024;
+      string responseData;
+      winrt::Windows::Storage::Streams::IBuffer buffer;
+      uint32_t length;
+      do {
+        co_await reader.LoadAsync(segmentSize);
+        length = reader.UnconsumedBufferLength();
 
-      if (isText) {
-        auto data = vector<uint8_t>(length);
-        reader.ReadBytes(data);
-        auto responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        if (isText) {
+          auto data = std::vector<uint8_t>(length);
+          reader.ReadBytes(data);
 
-        if (self->m_onData) {
-          self->m_onData(coReqArgs->RequestId, std::move(responseData));
+          responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        } else {
+          buffer = reader.ReadBuffer(length);
+          auto data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+          responseData += to_string(std::wstring_view(data));
         }
-      } else {
-        auto buffer = reader.ReadBuffer(length);
-        auto data = CryptographicBuffer::EncodeToBase64String(buffer);
-        auto responseData = to_string(std::wstring_view(data));
+      } while (length > 0);
 
-        if (self->m_onData) {
-          self->m_onData(coReqArgs->RequestId, std::move(responseData));
-        }
+      if (self->m_onData) {
+        self->m_onData(coReqArgs->RequestId, std::move(responseData));
       }
     } else {
       if (self->m_onError) {
