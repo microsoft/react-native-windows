@@ -46,4 +46,7 @@ extern const char *GetBlobModuleName() noexcept;
 extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
     winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
+extern const char *GetFileReaderModuleName() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateFileReaderModule() noexcept;
+
 } // namespace Microsoft::React

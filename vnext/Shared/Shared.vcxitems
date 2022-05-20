@@ -47,6 +47,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp" />
@@ -91,6 +92,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IHttpModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IRequestBodyHandler.h" />
