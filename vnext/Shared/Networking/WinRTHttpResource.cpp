@@ -278,7 +278,9 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     if (!contentEncoding.empty()) {
       if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
         if (self->m_onError)
-          co_return self->m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
+          self->m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
+
+        co_return;
       }
     }
 
