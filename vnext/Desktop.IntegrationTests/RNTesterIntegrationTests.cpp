@@ -227,7 +227,6 @@ TEST_CLASS (RNTesterIntegrationTests) {
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(Blob)
-  TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(Blob) {
     auto result = m_runner.RunTest("IntegrationTests/BlobTest", "BlobTest");
