@@ -23,7 +23,6 @@ parameters:
       name: rnw-pool-8-microsoft
       demands: ImageOverride -equals rnw-img-node16
 
-
 variables:
   - template: variables/windows.yml
   - group: RNW Secrets
@@ -31,8 +30,6 @@ variables:
     value: ''
   - name: SkipGitPushPublishArgs
     value: ''
-  - name: NugetSecurityAnalysisWarningLevel
-    value: 'warn'
   - name: FailCGOnAlert
     value: false
   - name: EnableCodesign

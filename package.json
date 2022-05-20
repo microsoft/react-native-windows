@@ -31,10 +31,19 @@
     ]
   },
   "devDependencies": {
+    "@rnw-scripts/beachball-config": "0.0.0",
+    "@rnw-scripts/format-files": "*",
+    "@rnw-scripts/integrate-rn": "*",
+    "@rnw-scripts/just-task": "*",
+    "@rnw-scripts/promote-release": "*",
+    "@rnw-scripts/stamp-version": "0.0.0",
+    "@rnw-scripts/take-screenshot": "*",
     "beachball": "^2.20.0",
     "husky": "^4.2.5",
+    "react-native-platform-override": "*",
     "unbroken": "1.0.27",
-    "lage": "^1.5.0"
+    "lage": "^1.5.0",
+    "lodash": "^4.17.15"
   },
   "resolutions": {
     "kind-of": "6.0.3",

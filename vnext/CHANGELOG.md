@@ -1,8 +1,60 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 May 2022 05:08:46 GMT and should not be manually modified.
+This log was last generated on Wed, 18 May 2022 05:09:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.501
+
+Wed, 18 May 2022 05:09:23 GMT
+
+### Changes
+
+- Fix crash when enabling Yoga logging (asklar@microsoft.com)
+
+## 0.0.0-canary.500
+
+Tue, 17 May 2022 05:08:53 GMT
+
+### Changes
+
+- update comments in IReactDispatcher.idl (email not defined)
+- Fix Microsoft.ReactNative.Cxx nuget package missing files (jthysell@microsoft.com)
+
+## 0.0.0-canary.499
+
+Fri, 13 May 2022 05:09:02 GMT
+
+### Changes
+
+- throw an error if a Chakra JS object cannot be created (asklar@microsoft.com)
+- Remove JsiEngineOverride::ChakraCore (julio.rocha@microsoft.com)
+- Adding notifications for JS dispatcher (email not defined)
+
+## 0.0.0-canary.498
+
+Thu, 12 May 2022 05:09:46 GMT
+
+### Changes
+
+- Use midgard-yarn-strict (ngerlem@microsoft.com)
+- removes JSI overrides in ReactCommon (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.129
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.43
+- Bump @react-native-windows/codegen to v0.0.0-canary.34
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.7
+- Bump @rnw-scripts/just-task to v2.2.4
+- Bump react-native-platform-override to v1.6.12
+
+## 0.0.0-canary.497
+
+Wed, 11 May 2022 05:08:52 GMT
+
+### Changes
+
+- Upgrade to @react-native-community/cli@8.0.0-alpha.6 (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.33
 
 ## 0.0.0-canary.496
 

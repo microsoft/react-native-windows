@@ -2,6 +2,153 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 May 2022 05:09:23 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.501",
+      "version": "0.0.0-canary.501",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a0679d544bd484092888a7d97debbcfeaafe8f5c",
+            "comment": "Fix crash when enabling Yoga logging"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 May 2022 05:08:53 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.500",
+      "version": "0.0.0-canary.500",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "edfed66874d0e01369ab0f90ae8f8a8aa71fe59d",
+            "comment": "update comments in IReactDispatcher.idl"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "305dcf8d0ae10efe1c090b24780ca7c7f09f939d",
+            "comment": "Fix Microsoft.ReactNative.Cxx nuget package missing files"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 May 2022 05:09:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.499",
+      "version": "0.0.0-canary.499",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2a7797da8f4f22217f33f97bdc6fb8b0d58f9483",
+            "comment": "throw an error if a Chakra JS object cannot be created"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2d128d8d3e51e4cba8f94965053c6b679602c87d",
+            "comment": "Remove JsiEngineOverride::ChakraCore"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "48a616e8f234468864955a333bcfb44416ea28f9",
+            "comment": "Adding notifications for JS dispatcher"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 May 2022 05:09:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.498",
+      "version": "0.0.0-canary.498",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "edf2bf35d8cba11571bb5938fc0f37044e5606d5",
+            "comment": "Use midgard-yarn-strict"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eabfd48b6639d6226c0af7f12f6f4e22583c4be1",
+            "comment": "removes JSI overrides in ReactCommon"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.129",
+            "commit": "a0ce0770a6161c9a8505faa6857df80e3c7c6ad0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.43",
+            "commit": "a0ce0770a6161c9a8505faa6857df80e3c7c6ad0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.34",
+            "commit": "a0ce0770a6161c9a8505faa6857df80e3c7c6ad0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.1.13",
+            "commit": "a0ce0770a6161c9a8505faa6857df80e3c7c6ad0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.7",
+            "commit": "a0ce0770a6161c9a8505faa6857df80e3c7c6ad0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.4",
+            "commit": "a0ce0770a6161c9a8505faa6857df80e3c7c6ad0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.6.12",
+            "commit": "a0ce0770a6161c9a8505faa6857df80e3c7c6ad0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 May 2022 05:08:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.497",
+      "version": "0.0.0-canary.497",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "601ce5567434a9e7b2dac151d45d641f68c7c0a4",
+            "comment": "Upgrade to @react-native-community/cli@8.0.0-alpha.6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.33",
+            "commit": "601ce5567434a9e7b2dac151d45d641f68c7c0a4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 May 2022 05:08:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.496",
       "version": "0.0.0-canary.496",

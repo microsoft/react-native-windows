@@ -2,5 +2,4 @@
     "extends": "@rnw-scripts/ts-config",
     "include": ["src"],
     "exclude": ["node_modules"],
-    "compilerOptions": {"esModuleInterop": true}
 }
