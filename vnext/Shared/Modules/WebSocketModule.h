@@ -3,12 +3,30 @@
 
 #pragma once
 
+#include <Modules/IWebSocketModuleProxy.h>
 #include <Networking/IWebSocketResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
 
+// Windows API
+#include <winrt/Windows.Foundation.h>
+
 namespace Microsoft::React {
+
+class WebSocketModuleProxy final : public IWebSocketModuleProxy {
+  // Property bag high level reference.
+  winrt::Windows::Foundation::IInspectable m_inspectableProps;
+
+ public:
+  WebSocketModuleProxy(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+
+#pragma region IWebSocketModuleProxy
+
+  void SendBinary(std::string &&base64String, int64_t id) noexcept override;
+
+#pragma endregion
+};
 
 ///
 /// Realizes <c>NativeModules</c> projection.
@@ -18,7 +36,7 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
-  WebSocketModule();
+  WebSocketModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties);
 
   ~WebSocketModule() noexcept override;
 
@@ -38,6 +56,9 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
     /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
     /// </summary>
     CxxModule *Module{nullptr};
+
+    // Property bag high level reference.
+    winrt::Windows::Foundation::IInspectable InspectableProps;
   };
 
 #pragma region CxxModule overrides
@@ -74,6 +95,11 @@ class WebSocketModule : public facebook::xplat::module::CxxModule {
   /// Keeps members that can be accessed threads other than this module's owner accessible.
   /// </summary>
   std::shared_ptr<SharedState> m_sharedState;
+
+  /// <summary>
+  /// Exposes a subset of the module's methods.
+  /// </summary>
+  std::shared_ptr<IWebSocketModuleProxy> m_proxy;
 };
 
 } // namespace Microsoft::React

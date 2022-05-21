@@ -50,7 +50,9 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   std::vector<facebook::react::NativeModuleDescription> modules;
 
   modules.emplace_back(
-      "Networking", []() { return Microsoft::React::CreateHttpModule(); }, jsMessageQueue);
+      "Networking",
+      [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
+      jsMessageQueue);
 
   modules.emplace_back(
       "Timing",

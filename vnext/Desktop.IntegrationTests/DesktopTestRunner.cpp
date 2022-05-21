@@ -3,10 +3,6 @@
 
 #include <TestRunner.h>
 
-#include <CreateModules.h>
-#include <IUIManager.h>
-#include <Modules/NetworkingModule.h>
-#include <Modules/WebSocketModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
@@ -28,62 +24,63 @@ using std::vector;
 
 namespace Microsoft::React::Test {
 
-struct TestInstanceCallback : public facebook::react::InstanceCallback {
-  TestInstanceCallback() {}
-  virtual ~TestInstanceCallback() = default;
-  void onBatchComplete() override {}
-  void incrementPendingJSCalls() override {}
-  void decrementPendingJSCalls() override {}
-};
+  struct TestInstanceCallback : public facebook::react::InstanceCallback {
+    TestInstanceCallback() {}
+    virtual ~TestInstanceCallback() = default;
+    void onBatchComplete() override {}
+    void incrementPendingJSCalls() override {}
+    void decrementPendingJSCalls() override {}
+  };
 
-shared_ptr<ITestInstance> TestRunner::GetInstance(
-    string &&jsBundleFile,
-    vector<tuple<string, CxxModule::Provider>> &&cxxModules,
+  shared_ptr<ITestInstance> TestRunner::GetInstance(
+    string&& jsBundleFile,
+    vector<tuple<string, CxxModule::Provider>>&& cxxModules,
     shared_ptr<DevSettings> devSettings) noexcept {
-  auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
-  auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
+    auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
+    auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
 
-  vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
-      {"AsyncLocalStorage",
-       []() -> unique_ptr<CxxModule> {
-         return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
-       },
-       nativeQueue},
+    // See InstanceImpl::GetDefaultNativeModules at OInstance.cpp
+    vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
+        {"AsyncLocalStorage",
+         []() -> unique_ptr<CxxModule> {
+           return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
+         },
+         nativeQueue},
 
       // Apparently mandatory for /IntegrationTests
       {TestAppStateModule::name,
        []() -> unique_ptr<CxxModule> { return std::make_unique<TestAppStateModule>(); },
        nativeQueue},
 
-      // Apparently mandatory for /IntegrationTests
-      {"UIManager", []() -> unique_ptr<CxxModule> { return std::make_unique<TestUIManager>(); }, nativeQueue},
+           // Apparently mandatory for /IntegrationTests
+           {"UIManager", []() -> unique_ptr<CxxModule> { return std::make_unique<TestUIManager>(); }, nativeQueue},
 
-      // Apparently mandatory for /IntegrationTests
-      {TestDeviceInfoModule::name,
-       []() -> unique_ptr<CxxModule> { return std::make_unique<TestDeviceInfoModule>(); },
-       nativeQueue},
+           // Apparently mandatory for /IntegrationTests
+           {TestDeviceInfoModule::name,
+            []() -> unique_ptr<CxxModule> { return std::make_unique<TestDeviceInfoModule>(); },
+            nativeQueue},
 
-      {TestDevSettingsModule::name,
-       []() -> unique_ptr<CxxModule> { return std::make_unique<TestDevSettingsModule>(); },
-       nativeQueue},
+           {TestDevSettingsModule::name,
+            []() -> unique_ptr<CxxModule> { return std::make_unique<TestDevSettingsModule>(); },
+            nativeQueue},
 
-      {TestImageLoaderModule::name,
-       []() -> unique_ptr<CxxModule> { return std::make_unique<TestImageLoaderModule>(); },
-       nativeQueue}};
+           {TestImageLoaderModule::name,
+            []() -> unique_ptr<CxxModule> { return std::make_unique<TestImageLoaderModule>(); },
+            nativeQueue} };
 
-  // <0> string
-  // <1> CxxModule::Provider
-  for (auto &t : cxxModules) {
-    extraModules.emplace_back(std::get<0>(t), std::get<1>(t), nativeQueue);
-  }
+    // <0> string
+    // <1> CxxModule::Provider
+    for (auto& t : cxxModules) {
+      extraModules.emplace_back(std::get<0>(t), std::get<1>(t), nativeQueue);
+    }
 
-  // Update settings.
-  devSettings->platformName = "windows";
+    // Update settings.
+    devSettings->platformName = "windows";
 
-  // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
-  devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
+    // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
+    devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
 
-  auto instanceWrapper = CreateReactInstance(
+    auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),
       "",
       std::move(extraModules),
@@ -92,9 +89,9 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings));
-  instanceWrapper->loadBundle(std::move(jsBundleFile));
+    instanceWrapper->loadBundle(std::move(jsBundleFile));
 
-  return shared_ptr<ITestInstance>(new DesktopTestInstance(std::move(instanceWrapper)));
-}
+    return shared_ptr<ITestInstance>(new DesktopTestInstance(std::move(instanceWrapper)));
+  }
 
 } // namespace Microsoft::React::Test
