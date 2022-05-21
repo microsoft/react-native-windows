@@ -37,7 +37,9 @@ using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
+using Microsoft::React::IWebSocketModuleProxy;
 using Microsoft::React::WebSocketModule;
+using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IWebSocketResource;
 
 constexpr char moduleName[] = "WebSocketModule";

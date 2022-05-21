@@ -18,7 +18,7 @@ struct IBlobPersistor {
   /// When an entry for blobId cannot be found.
   /// </exception>
   ///
-  virtual winrt::array_view<uint8_t const> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) = 0;
+  virtual winrt::array_view<uint8_t> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) = 0;
 
   virtual void RemoveMessage(std::string &&blobId) noexcept = 0;
 

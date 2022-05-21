@@ -25,6 +25,7 @@ using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 
+using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
@@ -71,7 +72,7 @@ static void SetUpHttpResource(
   };
   resource->SetOnData(std::move(onDataDynamic));
 
-  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message, bool isTimeout) {
+  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message) {
     dynamic args = dynamic::array(requestId, std::move(message));
     if (isTimeout) {
       args.push_back(true);
@@ -109,66 +110,67 @@ std::map<string, dynamic> HttpModule::getConstants() {
 // clang-format off
   std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
 
-    return
+  return
+  {
     {
       {
-        "sendRequest",
-        [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args, Callback cxxCallback)
-        {
-          auto holder = weakHolder.lock();
-          if (!holder) {
-            return;
-          }
-
-          auto resource = holder->Module->m_resource;
-          if (!holder->Module->m_isResourceSetup)
-          {
-            SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-            holder->Module->m_isResourceSetup = true;
-          }
-
-          auto params = facebook::xplat::jsArgAsObject(args, 0);
-          IHttpResource::Headers headers;
-          for (auto& header : params["headers"].items()) {
-            headers.emplace(header.first.getString(), header.second.getString());
-          }
-
-          resource->SendRequest(
-            params["method"].asString(),
-            params["url"].asString(),
-            params["requestId"].asInt(),
-            std::move(headers),
-            std::move(params["data"]),
-            params["responseType"].asString(),
-            params["incrementalUpdates"].asBool(),
-            static_cast<int64_t>(params["timeout"].asDouble()),
-            params["withCredentials"].asBool(),
-            [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
-              cxxCallback({requestId});
-            }
-          );
+        auto holder = weakHolder.lock();
+        if (!holder) {
+          return;
         }
-      },
+
+        auto resource = holder->Module->m_resource;
+        if (!holder->Module->m_isResourceSetup)
+        {
+          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
+          holder->Module->m_isResourceSetup = true;
+        }
+
+        auto params = facebook::xplat::jsArgAsObject(args, 0);
+        IHttpResource::Headers headers;
+        for (auto& header : params["headers"].items()) {
+          headers.emplace(header.first.getString(), header.second.getString());
+        }
+
+        resource->SendRequest(
+          params["method"].asString(),
+          params["url"].asString(),
+          params["requestId"].asInt(),
+          std::move(headers),
+          std::move(params["data"]),
+          params["responseType"].asString(),
+          params["incrementalUpdates"].asBool(),
+          static_cast<int64_t>(params["timeout"].asDouble()),
+          params["withCredentials"].asBool(),
+          [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
+            cxxCallback({requestId});
+          }
+        );
+      }
+    },
+    {
+      "abortRequest",
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
       {
-        "abortRequest",
-        [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
+        auto holder = weakHolder.lock();
+        if (!holder)
         {
-          auto holder = weakHolder.lock();
-          if (!holder)
-          {
-            return;
-          }
-
-          auto resource = holder->Module->m_resource;
-          if (!holder->Module->m_isResourceSetup)
-          {
-            SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
-            holder->Module->m_isResourceSetup = true;
-          }
-
-          resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
+          return;
         }
-      },
+
+        auto resource = holder->Module->m_resource;
+        if (!holder->Module->m_isResourceSetup)
+        {
+          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
+          holder->Module->m_isResourceSetup = true;
+        }
+
+        resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
+      }
+    },
+    {
+      "clearCookies",
+      [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
       {
         "clearCookies",
         [weakHolder = weak_ptr<ModuleHolder>(m_holder)](dynamic args)
@@ -186,8 +188,14 @@ std::map<string, dynamic> HttpModule::getConstants() {
             holder->Module->m_isResourceSetup = true;
           }
 
-          resource->ClearCookies();
+        auto resource = holder->Module->m_resource;
+        if (!holder->Module->m_isResourceSetup)
+        {
+          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
+          holder->Module->m_isResourceSetup = true;
         }
+
+        resource->ClearCookies();
       }
     };
   }

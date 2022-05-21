@@ -61,18 +61,6 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
       jsMessageQueue);
 
-  if (!ReactPropertyBag(context->Properties()).Get(HttpUseMonolithicModuleProperty())) {
-    modules.emplace_back(
-        Microsoft::React::GetBlobModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
-        batchingUIMessageQueue);
-
-    modules.emplace_back(
-        Microsoft::React::GetFileReaderModuleName(),
-        [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
-        batchingUIMessageQueue);
-  }
-
   modules.emplace_back(
       "Timing",
       [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },

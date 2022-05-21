@@ -3,9 +3,6 @@
 
 #include <TestRunner.h>
 
-#include <CreateModules.h>
-#include <Modules/NetworkingModule.h>
-#include <Modules/WebSocketModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
@@ -42,13 +39,13 @@ namespace Microsoft::React::Test {
     auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
     auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
 
-    // See InstanceImpl::GetDefaultNativeModules at OInstance.cpp
-    vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
-        {"AsyncLocalStorage",
-         []() -> unique_ptr<CxxModule> {
-           return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
-         },
-         nativeQueue},
+  // See InstanceImpl::GetDefaultNativeModules at OInstance.cpp
+  vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
+      {"AsyncLocalStorage",
+       []() -> unique_ptr<CxxModule> {
+         return /*CreateAsyncStorageModule(L"ReactNativeAsyncStorage")*/ nullptr; // #6882
+       },
+       nativeQueue},
 
       // Apparently mandatory for /IntegrationTests
       {TestAppStateModule::name,
