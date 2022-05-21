@@ -59,6 +59,7 @@ jobs:
             - name: Desktop.IntegrationTests.Filter
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)

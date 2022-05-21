@@ -3,27 +3,29 @@
 
 #pragma once
 
-#include <Networking/IHttpResource.h>
+#include "IBlobPersistor.h"
 
 // React Native
 #include <cxxreact/CxxModule.h>
 
-// Windows API
-#include <winrt/Windows.Foundation.h>
+// Folly
+#include <folly/dynamic.h>
+
+// Standard Library
+#include <map>
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace Microsoft::React {
 
-///
-/// Realizes <c>NativeModules</c> projection.
-/// <remarks>See src\Libraries\Network\RCTNetworkingWinShared.js</remarks>
-///
-class HttpModule : public facebook::xplat::module::CxxModule {
+class FileReaderModule : public facebook::xplat::module::CxxModule {
  public:
-  enum MethodId { SendRequest = 0, AbortRequest = 1, ClearCookies = 2, LAST = ClearCookies };
+  enum class MethodId { ReadAsDataURL = 0, ReadAsText = 1, SIZE = 2 };
 
-  HttpModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+  FileReaderModule(std::weak_ptr<IBlobPersistor> weakBlobPersistor) noexcept;
 
-  ~HttpModule() noexcept override;
+  ~FileReaderModule() noexcept override;
 
 #pragma region CxxModule
 
@@ -46,15 +48,7 @@ class HttpModule : public facebook::xplat::module::CxxModule {
 #pragma endregion CxxModule
 
  private:
-  struct ModuleHolder {
-    HttpModule *Module{nullptr};
-  };
-
-  std::shared_ptr<Networking::IHttpResource> m_resource;
-  std::shared_ptr<ModuleHolder> m_holder;
-  bool m_isResourceSetup{false};
-
-  // Property bag high level reference.
-  winrt::Windows::Foundation::IInspectable m_inspectableProperties;
+  std::weak_ptr<IBlobPersistor> m_weakBlobPersistor;
 };
+
 } // namespace Microsoft::React

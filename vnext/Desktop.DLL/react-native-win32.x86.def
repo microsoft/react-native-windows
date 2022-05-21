@@ -64,7 +64,6 @@ EXPORTS
 ?GetRuntimeOptionString@React@Microsoft@@YA?BV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@ABV34@@Z
 ?makeChakraRuntime@JSI@Microsoft@@YG?AV?$unique_ptr@VRuntime@jsi@facebook@@U?$default_delete@VRuntime@jsi@facebook@@@std@@@std@@$$QAUChakraRuntimeArgs@12@@Z
 ?CreateTimingModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@ABV?$shared_ptr@VMessageQueueThread@react@facebook@@@4@@Z
-??0WebSocketModule@React@Microsoft@@QAE@XZ
 ?CreateAsyncStorageModule@react@facebook@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@PB_W@Z
 ?Make@IHttpResource@Networking@React@Microsoft@@SG?AV?$shared_ptr@UIHttpResource@Networking@React@Microsoft@@@std@@XZ
 ??0NetworkingModule@React@Microsoft@@QAE@XZ
