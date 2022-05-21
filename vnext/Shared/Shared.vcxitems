@@ -45,7 +45,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\AsyncStorageModuleWin32.cpp">
       <ExcludedFromBuild Condition="'$(ApplicationType)' == ''">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\ExceptionsManagerModule.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\HttpModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\I18nModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.cpp" />
@@ -88,6 +91,16 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NapiJsiV8RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\RuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\ScriptStore.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IBlobPersistor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IHttpModuleProxy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IRequestBodyHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IResponseHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IUriHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleContentHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\IWebSocketModuleProxy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\HttpModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />
