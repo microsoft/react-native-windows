@@ -50,7 +50,7 @@ class XHRTest extends React.Component<{...}, State> {
 
   _waitFor = (condition: any, timeout: any, callback: any) => {
     let remaining = timeout;
-    const timeoutFunction = function () {
+    const timeoutFunction = function() {
       if (condition()) {
         callback(true);
         return;
@@ -67,7 +67,7 @@ class XHRTest extends React.Component<{...}, State> {
 
   componentDidMount() {
     this._get();
-    this._waitFor(this._getSucceeded, 5, (doneSucceeded) => {
+    this._waitFor(this._getSucceeded, 5, doneSucceeded => {
       TestModule.markTestPassed(doneSucceeded);
     });
   }

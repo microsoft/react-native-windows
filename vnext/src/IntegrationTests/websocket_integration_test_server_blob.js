@@ -14,7 +14,6 @@
 /* eslint-env node */
 
 const WebSocket = require('ws');
-const Blob = require('node-fetch');
 
 console.log(`\
 WebSocket binary integration test server
@@ -24,9 +23,9 @@ This will send each incoming message back, in binary form.
 `);
 
 const server = new WebSocket.Server({port: 5557});
-server.on('connection', ws => {
+server.on('connection', (ws) => {
   ws.binaryType = 'blob';
-  ws.on('message', message => {
+  ws.on('message', (message) => {
     console.log(message);
 
     ws.send([4, 5, 6, 7]);
