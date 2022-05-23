@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 16 May 2022 15:09:01 GMT and should not be manually modified.
+This log was last generated on Mon, 23 May 2022 15:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.0-preview.3
+
+Mon, 23 May 2022 15:09:38 GMT
+
+### Changes
+
+- Fix Microsoft.ReactNative.Cxx nuget package missing files (jthysell@microsoft.com)
 
 ## 0.69.0-preview.2
 
