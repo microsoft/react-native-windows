@@ -75,11 +75,6 @@
         "resolved": "2.0.211028.7",
         "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
       },
-      "Microsoft.Windows.SDK.BuildTools": {
-        "type": "Transitive",
-        "resolved": "10.0.22000.194",
-        "contentHash": "4L0P3zqut466SIqT3VBeLTNUQTxCBDOrTRymRuROCRJKazcK7ibLz9yAO1nKWRt50ttCj39oAa2Iuz9ZTDmLlg=="
-      },
       "NETStandard.Library": {
         "type": "Transitive",
         "resolved": "2.0.3",
@@ -90,8 +85,8 @@
       },
       "ReactNative.Hermes.Windows": {
         "type": "Transitive",
-        "resolved": "0.11.0-ms.6",
-        "contentHash": "WAVLsSZBV4p/3hNC3W67su7xu3f/ZMSKxu0ON7g2GaKRbkJmH0Qyif1IlzcJwtvR48kuOdfgPu7Bgtz3AY+gqg=="
+        "resolved": "0.11.0-ms.2",
+        "contentHash": "7KGeDHh4QR4ua5+aSNAfuhj1sF2PBJbTHJ9m520xo1GZZRW4cxJlyNDNjW5t/sFGeHWw/Uhs7ZrWE2maL9BOEw=="
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -180,9 +175,8 @@
           "Folly": "1.0.0",
           "Microsoft.UI.Xaml": "2.7.0",
           "Microsoft.Windows.CppWinRT": "2.0.211028.7",
-          "Microsoft.Windows.SDK.BuildTools": "10.0.22000.194",
           "ReactCommon": "1.0.0",
-          "ReactNative.Hermes.Windows": "0.11.0-ms.6",
+          "ReactNative.Hermes.Windows": "0.11.0-ms.2",
           "boost": "1.76.0"
         }
       },
