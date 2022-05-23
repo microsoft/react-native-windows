@@ -9,9 +9,9 @@
 const React = require('react');
 const ReactNative = require('react-native');
 
-const {AppRegistry, View, FileReader} = ReactNative;
+const {AppRegistry, View} = ReactNative;
 
-const {TestModule} = ReactNative.NativeModules;
+const {TestModule, FileReader} = ReactNative.NativeModules;
 
 type State = {
   statusCode: number,
