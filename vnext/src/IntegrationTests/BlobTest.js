@@ -9,7 +9,7 @@
 const React = require('react');
 const ReactNative = require('react-native');
 
-const {AppRegistry, View} = ReactNative;
+const {AppRegistry, View, FileReader} = ReactNative;
 
 const {TestModule} = ReactNative.NativeModules;
 
@@ -178,7 +178,7 @@ class BlobTest extends React.Component<{...}, State> {
 
   componentDidMount() {
     this._get();
-    this._waitFor(this._getSucceeded, 6, doneSucceeded => {
+    this._waitFor(this._getSucceeded, 6, (doneSucceeded) => {
       let reader = new FileReader();
       reader.readAsDataURL(this.state.xhr.response);
       reader.onload = () => {
