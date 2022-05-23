@@ -663,7 +663,6 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   }
 
   if (coRequest.Content()) {
-
     headerItr = coRequest.Content().Headers().First();
     if (headerItr.HasCurrent()) {
       headerNames += (*headerItr).Key();
