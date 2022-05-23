@@ -653,20 +653,22 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   preflightRequest.Headers().Insert(L"Access-Control-Request-Method", coRequest.Method().ToString());
 
   auto headerNames = wstring{};
-  auto headerItr = coRequest.Headers().begin();
-  if (headerItr != coRequest.Headers().end()) {
+
+  auto headerItr = coRequest.Headers().First();
+  if (headerItr.HasCurrent()) {
     headerNames += (*headerItr).Key();
 
-    while (++headerItr != coRequest.Headers().end())
+    while (headerItr.MoveNext())
       headerNames += L", " + (*headerItr).Key();
   }
 
   if (coRequest.Content()) {
-    headerItr = coRequest.Content().Headers().begin();
-    if (headerItr != coRequest.Content().Headers().end()) {
+
+    headerItr = coRequest.Content().Headers().First();
+    if (headerItr.HasCurrent()) {
       headerNames += (*headerItr).Key();
 
-      while (++headerItr != coRequest.Content().Headers().end())
+      while (headerItr.MoveNext())
         headerNames += L", " + (*headerItr).Key();
     }
   }
