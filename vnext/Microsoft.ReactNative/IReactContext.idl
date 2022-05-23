@@ -13,6 +13,18 @@ import "IReactPropertyBag.idl";
 
 namespace Microsoft.ReactNative
 {
+
+  DOC_STRING(
+    "Used to represent the state of the React Native JavaScript instance")
+  enum LoadingState
+  {
+    Loading = 0,
+    Loaded = 1,
+    HasError = 2,
+    Unloaded = 3,
+    Fatal = 4
+  };
+
   [webhosthidden]
   DOC_STRING("An immutable snapshot of the @ReactInstanceSettings used to create the current React instance.")
   interface IReactSettingsSnapshot
@@ -167,5 +179,9 @@ namespace Microsoft.ReactNative
       "The `paramsArgWriter` is a @JSValueArgWriter delegate that receives @IJSValueWriter to serialize "
       "the event parameters.")
     void EmitJSEvent(String eventEmitterName, String eventName, JSValueArgWriter paramsArgWriter);
+
+    DOC_STRING(
+      "Gets the state of the ReactNative instance.")
+    LoadingState LoadingState { get; };
   }
 } // namespace Microsoft.ReactNative

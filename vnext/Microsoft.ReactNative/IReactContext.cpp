@@ -96,6 +96,23 @@ Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
   return m_context->JsiRuntime();
 }
 
+LoadingState ReactContext::LoadingState() noexcept {
+  switch(m_context->State()) {
+    case Mso::React::ReactInstanceState::Loading :
+    case Mso::React::ReactInstanceState::WaitingForDebugger:
+      return LoadingState::Loading;
+    case Mso::React::ReactInstanceState::Loaded:
+      return LoadingState::Loaded;
+    case Mso::React::ReactInstanceState::HasError:
+      return LoadingState::HasError;
+    case Mso::React::ReactInstanceState::Unloaded:
+      return LoadingState::Unloaded;
+    default:
+      assert(false);
+      return LoadingState::HasError;
+  };
+}
+
 #ifndef CORE_ABI
 // Deprecated: Use XamlUIService directly.
 void ReactContext::DispatchEvent(

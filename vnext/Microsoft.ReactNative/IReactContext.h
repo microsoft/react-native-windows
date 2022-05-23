@@ -42,6 +42,8 @@ struct ReactContext : winrt::implements<ReactContext, IReactContext> {
   IReactDispatcher UIDispatcher() noexcept;
   IReactDispatcher JSDispatcher() noexcept;
   IInspectable JSRuntime() noexcept;
+  LoadingState LoadingState() noexcept;
+
 #ifndef CORE_ABI
   void DispatchEvent(
       xaml::FrameworkElement const &view,
