@@ -9,7 +9,7 @@
 const React = require('react');
 const ReactNative = require('react-native');
 
-const {AppRegistry, View} = ReactNative;
+const {AppRegistry, View, FileReader} = ReactNative;
 
 const {TestModule} = ReactNative.NativeModules;
 
@@ -161,7 +161,7 @@ class BlobTest extends React.Component<{...}, State> {
 
   _waitFor = (condition: any, timeout: any, callback: any) => {
     let remaining = timeout;
-    const timeoutFunction = function () {
+    const timeoutFunction = function() {
       if (condition()) {
         callback(true);
         return;
