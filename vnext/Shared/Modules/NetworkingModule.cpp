@@ -261,7 +261,7 @@ void NetworkingModule::NetworkingHelper::SendRequest(
   int64_t requestId = ++s_lastRequestId;
 
   // Enforce supported args
-  assert(responseType == "text" || responseType == "base64");
+  assert(responseType == "text" || responseType == "base64" || responseType == "blob");
 
   // Callback with the requestId
   cb({requestId});
