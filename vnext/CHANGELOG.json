@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 23 May 2022 15:09:38 GMT",
+      "tag": "react-native-windows_v0.69.0-preview.3",
+      "version": "0.69.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be653b8b2542d5ecd9f8f58e0303eaccb85df765",
+            "comment": "Fix Microsoft.ReactNative.Cxx nuget package missing files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 May 2022 15:09:01 GMT",
       "tag": "react-native-windows_v0.69.0-preview.2",
       "version": "0.69.0-preview.2",
