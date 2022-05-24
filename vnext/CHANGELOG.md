@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 May 2022 15:10:52 GMT and should not be manually modified.
+This log was last generated on Tue, 24 May 2022 21:08:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.19
+
+Tue, 24 May 2022 21:08:55 GMT
+
+### Patches
+
+- Implement Blob module (#9352) (julio@rochsquadron.net)
 
 ## 0.66.18
 
