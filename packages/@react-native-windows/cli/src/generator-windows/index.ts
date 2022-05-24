@@ -381,7 +381,7 @@ export async function copyProjectTemplateAndReplace(
     const sharedProjMappings = [];
 
     sharedProjMappings.push({
-      from: path.join(sharedPath, projDir, 'NuGet.Config'),
+      from: path.join(sharedPath, projDir, 'NuGet_Config'),
       to: path.join(windowsDir, 'NuGet.Config'),
     });
 
