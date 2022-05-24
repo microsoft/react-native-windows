@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 #include <CreateModules.h>
+#include <Networking/WinRTWebSocketResource.h>
 #include <QuirkSettings.h>
 #include <React.h>
 #include <ReactPropertyBag.h>
-#include <WinRTWebSocketResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
@@ -17,11 +17,11 @@ using winrt::Microsoft::ReactNative::ReactPropertyBag;
 using winrt::Microsoft::ReactNative::ReactPropertyId;
 using winrt::Microsoft::ReactNative::implementation::QuirkSettings;
 
-namespace Microsoft::React {
+namespace Microsoft::React::Networking {
 
 std::shared_ptr<IWebSocketResource> IWebSocketResource::Make() {
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   return std::make_shared<WinRTWebSocketResource>(std::move(certExceptions));
 }
 
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Networking

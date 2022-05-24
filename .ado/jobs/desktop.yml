@@ -21,9 +21,11 @@ jobs:
       - name: Desktop.IntegrationTests.Filter
         value: >
           (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+          (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
           (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
           (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
-          (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)
+          (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
+          (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
 
       #6799 -
       #       HostFunctionTest              - Crashes under JSI/V8

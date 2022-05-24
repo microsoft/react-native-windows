@@ -37,11 +37,11 @@
 #endif
 
 #include <BatchingMessageQueueThread.h>
+#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
-#include <RuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
@@ -67,14 +67,16 @@ using namespace facebook;
 using namespace Microsoft::JSI;
 
 using std::make_shared;
+using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
 namespace Microsoft::React {
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept {
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
   if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
     return std::make_unique<NetworkingModule>();
   } else {
-    return std::make_unique<HttpModule>();
+    return std::make_unique<HttpModule>(inspectableProperties);
   }
 }
 
@@ -536,18 +538,21 @@ InstanceImpl::~InstanceImpl() {
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
+  auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetHttpModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(); },
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateHttpModule(transitionalProps);
+      },
       nativeQueue));
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetWebSocketModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateWebSocketModule();
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateWebSocketModule(transitionalProps);
       },
       nativeQueue));
 
@@ -608,6 +613,21 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       StatusBarManagerModule::Name,
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
+
+// TODO: Follow up - Blob module not supported in UWP. Need to define property bag lifetime and onwership.
+#if (defined(_MSC_VER) && !defined(WINRT))
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetBlobModuleName(),
+      [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetFileReaderModuleName(),
+      [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+      nativeQueue));
+#endif
 
   return modules;
 }

@@ -6,7 +6,7 @@
 #include "BaseScriptStoreImpl.h"
 #include "MemoryMappedBuffer.h"
 
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 
 // C++/WinRT
 #include <winrt/base.h>

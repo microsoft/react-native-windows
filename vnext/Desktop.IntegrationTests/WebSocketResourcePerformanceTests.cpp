@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <IWebSocketResource.h>
+#include <Networking/IWebSocketResource.h>
 #include <Test/WebSocketServer.h>
 #include <unicode.h>
 
@@ -19,12 +19,21 @@ using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
+using Networking::IWebSocketResource;
 using std::shared_ptr;
 using std::string;
 using std::vector;
 
 // None of these tests are runnable
 TEST_CLASS (WebSocketResourcePerformanceTest) {
+  static uint16_t s_port;
+
+  TEST_METHOD_CLEANUP(MethodCleanup) {
+    // Bug in WebSocketServer does not correctly release TCP port between test methods.
+    // Using a different por per test for now.
+    s_port++;
+  }
+
   // See http://msdn.microsoft.com/en-us/library/ms686701(v=VS.85).aspx
   int32_t GetCurrentThreadCount() {
     DWORD procId = GetCurrentProcessId();
@@ -62,7 +71,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     bool errorFound = false;
     string errorMessage;
 
-    auto server = std::make_shared<Test::WebSocketServer>(5556);
+    auto server = std::make_shared<Test::WebSocketServer>(s_port);
     server->SetMessageFactory([](string &&message) { return message + "_response"; });
     // TODO:  #4493 - Allow TestWebSocketServer to handle multiple incoming messages.
     // server->Start();
@@ -103,7 +112,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
           errorFound = true;
           errorMessage = error.Message;
         });
-        ws->Connect("ws://localhost:5555"); // TODO: Switch to port 5556
+        ws->Connect("ws://localhost:" + std::to_string(s_port));
 
         resources.push_back(std::move(ws));
       } // Create and store WS resources.
@@ -129,3 +138,5 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     Assert::IsTrue(threadsPerResource <= expectedThreadsPerResource);
   }
 };
+
+/*static*/ uint16_t WebSocketResourcePerformanceTest::s_port = 5550;
