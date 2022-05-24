@@ -18,11 +18,22 @@ namespace Microsoft.ReactNative
     "Used to represent the state of the React Native JavaScript instance")
   enum LoadingState
   {
+    DOC_STRING(
+      "The instance is loading the JavaScript bundle and initial instance setup. Calls to run JavaScript functions will be queued to run once the instance is fully loaded."
+    )
     Loading = 0,
+    DOC_STRING(
+      "The instance is in a ready state.  Calls to run JavaScript functions will be run as soon as they are posted to the JavaScript instance."
+    )
     Loaded = 1,
+    DOC_STRING(
+      "The instance has hit an error.  Calls to run JavaScript functions will not be run."
+    )
     HasError = 2,
-    Unloaded = 3,
-    Fatal = 4
+    DOC_STRING(
+      "The instance has successfully unloaded.  Calls to run JavaScript functions will not be run."
+    )
+    Unloaded = 3
   };
 
   [webhosthidden]

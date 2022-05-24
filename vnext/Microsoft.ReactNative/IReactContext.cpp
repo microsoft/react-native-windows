@@ -97,8 +97,8 @@ Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
 }
 
 LoadingState ReactContext::LoadingState() noexcept {
-  switch(m_context->State()) {
-    case Mso::React::ReactInstanceState::Loading :
+  switch (m_context->State()) {
+    case Mso::React::ReactInstanceState::Loading:
     case Mso::React::ReactInstanceState::WaitingForDebugger:
       return LoadingState::Loading;
     case Mso::React::ReactInstanceState::Loaded:
