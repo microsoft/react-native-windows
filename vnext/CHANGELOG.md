@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 18 May 2022 05:09:23 GMT and should not be manually modified.
+This log was last generated on Sat, 21 May 2022 05:08:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.502
+
+Sat, 21 May 2022 05:08:46 GMT
+
+### Changes
+
+- Implement Blob module (julio.rocha@microsoft.com)
+- Allow fetching HTTP content by segments (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.501
 

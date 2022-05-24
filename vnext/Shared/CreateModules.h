@@ -3,9 +3,14 @@
 
 #pragma once
 
+// React Native
 #include <cxxreact/CxxModule.h>
 #include <smartPtr/cntPtr.h>
 
+// Windows API
+#include <winrt/Windows.Foundation.h>
+
+// Standard Library
 #include <memory>
 
 // Forward declarations. Desktop projects can not access <React.h>
@@ -30,9 +35,19 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
 namespace Microsoft::React {
 
 extern const char *GetHttpModuleName() noexcept;
-extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
 extern const char *GetWebSocketModuleName() noexcept;
-extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateWebSocketModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+
+extern const char *GetBlobModuleName() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateBlobModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
+
+extern const char *GetFileReaderModuleName() noexcept;
+extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateFileReaderModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
 } // namespace Microsoft::React
