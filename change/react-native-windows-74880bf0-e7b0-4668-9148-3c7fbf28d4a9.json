@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Compliance: Rename template Nuget.config files to stop triggering multi-feed warnings",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
