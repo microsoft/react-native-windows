@@ -31,6 +31,8 @@ class NapiJsiV8RuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
       void *finalizeHint);
 
   void InitRuntime() noexcept;
+  napi_ext_script_cache InitScriptCache(
+      std::unique_ptr<facebook::jsi::PreparedScriptStore> &&preparedScriptStore) noexcept;
 
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsQueue;

@@ -77,23 +77,94 @@ NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
       m_preparedScriptStore{std::move(preparedScriptStore)} {}
 
 void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
-  napi_env env{};
   napi_ext_env_settings settings{};
   settings.this_size = sizeof(settings);
-  settings.flags.enable_gc_api = true;
   if (m_debuggerPort > 0)
     settings.inspector_port = m_debuggerPort;
 
   settings.flags.enable_inspector = m_useDirectDebugger;
   settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
+  //  TODO: args.debuggerRuntimeName = debuggerRuntimeName_;
   settings.foreground_scheduler = &NapiJsiV8RuntimeHolder::ScheduleTaskCallback;
 
+  napi_ext_script_cache scriptCache = InitScriptCache(std::move(m_preparedScriptStore));
+  settings.script_cache = &scriptCache;
+
+  napi_env env{};
   napi_ext_create_env(&settings, &env);
   // Associate environment to holder.
   napi_set_instance_data(env, this, nullptr /*finalize_cb*/, nullptr /*finalize_hint*/);
 
   m_runtime = MakeNodeApiJsiRuntime(env);
   m_ownThreadId = std::this_thread::get_id();
+}
+
+struct NodeApiJsiBuffer : facebook::jsi::Buffer {
+  explicit NodeApiJsiBuffer(const napi_ext_buffer *buffer)
+      : finalize_(buffer->buffer_object.finalize_cb),
+        bufferObject_(buffer->buffer_object.data),
+        finalizeHint_(buffer->buffer_object.finalize_hint),
+        data_(buffer->data),
+        byteSize_(buffer->byte_size) {}
+
+  ~NodeApiJsiBuffer() override {
+    if (finalize_) {
+      finalize_(nullptr, const_cast<uint8_t *>(data_), const_cast<void *>(finalizeHint_));
+    }
+  }
+
+  const uint8_t *data() const override {
+    return data_;
+  }
+
+  size_t size() const override {
+    return byteSize_;
+  }
+
+ private:
+  const napi_finalize finalize_;
+  const void *bufferObject_;
+  const void *finalizeHint_;
+  const uint8_t *data_;
+  size_t byteSize_;
+};
+
+napi_ext_script_cache NapiJsiV8RuntimeHolder::InitScriptCache(
+    unique_ptr<PreparedScriptStore> &&preparedScriptStore) noexcept {
+  napi_ext_script_cache scriptCache{};
+  scriptCache.cache_object = NativeObjectWrapper<unique_ptr<PreparedScriptStore>>::Wrap(std::move(preparedScriptStore));
+  scriptCache.load_cached_script = [](napi_env env,
+                                      napi_ext_script_cache *script_cache,
+                                      napi_ext_cached_script_metadata *script_metadata,
+                                      napi_ext_buffer *result) -> napi_status {
+    PreparedScriptStore *scriptStore = reinterpret_cast<PreparedScriptStore *>(script_cache->cache_object.data);
+    std::shared_ptr<const facebook::jsi::Buffer> buffer = scriptStore->tryGetPreparedScript(
+        ScriptSignature{script_metadata->source_url, script_metadata->source_hash},
+        JSRuntimeSignature{script_metadata->runtime_name, script_metadata->runtime_version},
+        script_metadata->tag);
+    if (buffer) {
+      result->buffer_object = NativeObjectWrapper<std::shared_ptr<const facebook::jsi::Buffer>>::Wrap(
+          std::shared_ptr<const facebook::jsi::Buffer>{buffer});
+      result->data = buffer->data();
+      result->byte_size = buffer->size();
+    } else {
+      *result = napi_ext_buffer{};
+    }
+    return napi_ok;
+  };
+  scriptCache.store_cached_script = [](napi_env env,
+                                       napi_ext_script_cache *script_cache,
+                                       napi_ext_cached_script_metadata *script_metadata,
+                                       const napi_ext_buffer *buffer) -> napi_status {
+    PreparedScriptStore *scriptStore = reinterpret_cast<PreparedScriptStore *>(script_cache->cache_object.data);
+    scriptStore->persistPreparedScript(
+        std::shared_ptr<const facebook::jsi::Buffer>{new NodeApiJsiBuffer{buffer}},
+        ScriptSignature{script_metadata->source_url, script_metadata->source_hash},
+        JSRuntimeSignature{script_metadata->runtime_name, script_metadata->runtime_version},
+        script_metadata->tag);
+    return napi_ok;
+  };
+  return scriptCache;
 }
 
 #pragma region Microsoft::JSI::RuntimeHolderLazyInit
