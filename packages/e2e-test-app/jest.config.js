@@ -33,7 +33,7 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
-    '^.+\\.[jt]sx?$': defaultTransform,
+    '^.+\\.(jsx|tsx|ts)?$': defaultTransform,
   },
 
   // An array of regexp pattern strings that are matched against all source file paths before transformation.

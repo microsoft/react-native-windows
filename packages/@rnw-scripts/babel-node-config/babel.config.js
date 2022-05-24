@@ -14,7 +14,6 @@ module.exports = {
         targets: {node: '14'},
       },
     ],
-    'module:metro-react-native-babel-preset',
     '@babel/preset-typescript',
   ],
 };
