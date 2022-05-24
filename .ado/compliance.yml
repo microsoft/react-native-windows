@@ -70,6 +70,7 @@ jobs:
 
       # Initialize CodeQL 3000 Task (https://aka.ms/codeql3000)
       # Performs static code analysis.
+      # GitHub repos not supported, see issue #9994.
       - task: CodeQL3000Init@0
         displayName: "🛡️ Initialize CodeQL"
         continueOnError: true
@@ -118,6 +119,7 @@ jobs:
 
       # Finalize CodeQL 3000 Task (https://aka.ms/codeql3000)
       # Performs static code analysis.
+      # GitHub repos not supported, see issue #9994.
       - task: CodeQL3000Finalize@0
         displayName: "🛡️ Finalize CodeQL"
         continueOnError: true
