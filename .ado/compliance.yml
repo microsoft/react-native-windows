@@ -20,10 +20,10 @@ variables:
   - group: RNW Secrets
   - name: Codeql.Enabled
     value: true
-  ${{ if eq(parameters.forceCodeQL, true) }}:
+  - ${{ if eq(parameters.forceCodeQL, true) }}:
     - name: Codeql.Cadence
       value: 0
-  ${{ if eq(parameters.forceCodeQL, false) }}:
+  - ${{ if eq(parameters.forceCodeQL, false) }}:
     - name: Codeql.Cadence
       value: 24
 
