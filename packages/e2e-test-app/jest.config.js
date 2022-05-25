@@ -33,7 +33,10 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
-    '^.+\\.(jsx|tsx|ts)?$': defaultTransform,
+    'node_modules\\\\@?react-native\\\\.*': defaultTransform,
+    '@react-native-windows\\\\tester\\\\.*': defaultTransform,
+    'vnext\\\\.*': defaultTransform,
+    '^.+\\.[jt]sx?$': defaultTransform,
   },
 
   // An array of regexp pattern strings that are matched against all source file paths before transformation.
