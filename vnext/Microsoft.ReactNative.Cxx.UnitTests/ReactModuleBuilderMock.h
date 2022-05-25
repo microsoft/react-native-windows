@@ -194,6 +194,10 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
+  LoadingState LoadingState() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
  private:
   ReactModuleBuilderMock *m_builderMock;
 };
