@@ -1,10 +1,6 @@
 name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
 
 parameters:
-- name: stopOnNoCI
-  displayName: Stop if latest commit is ***NO_CI***
-  type: boolean
-  default: true
 - name: AgentPool
   type: object
   default:
@@ -31,11 +27,6 @@ jobs:
 
     steps:
       - template: templates/prepare-js-env.yml
-
-      - powershell: |
-          Write-Error "Stopping because commit message contains ***NO_CI***."
-        displayName: Stop pipeline if latest commit message contains ***NO_CI***
-        condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
       - template: templates/set-version-vars.yml
         parameters:
@@ -79,6 +70,7 @@ jobs:
 
       # Initialize CodeQL 3000 Task (https://aka.ms/codeql3000)
       # Performs static code analysis.
+      # GitHub repos not supported, see issue #9994.
       - task: CodeQL3000Init@0
         displayName: "🛡️ Initialize CodeQL"
         continueOnError: true
@@ -127,6 +119,7 @@ jobs:
 
       # Finalize CodeQL 3000 Task (https://aka.ms/codeql3000)
       # Performs static code analysis.
+      # GitHub repos not supported, see issue #9994.
       - task: CodeQL3000Finalize@0
         displayName: "🛡️ Finalize CodeQL"
         continueOnError: true
