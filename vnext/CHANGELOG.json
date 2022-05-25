@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 25 May 2022 05:08:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.503",
+      "version": "0.0.0-canary.503",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3bc05e058d255120f60ed265db856654d9c164f4",
+            "comment": "Compliance: Rename template Nuget.config files to stop triggering multi-feed warnings"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.130",
+            "commit": "3bc05e058d255120f60ed265db856654d9c164f4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 May 2022 05:08:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.502",
       "version": "0.0.0-canary.502",

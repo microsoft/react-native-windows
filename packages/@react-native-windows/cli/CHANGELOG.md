@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 12 May 2022 05:09:43 GMT and should not be manually modified.
+This log was last generated on Wed, 25 May 2022 05:08:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.130
+
+Wed, 25 May 2022 05:08:41 GMT
+
+### Changes
+
+- Compliance: Rename template Nuget.config files to stop triggering multi-feed warnings (jthysell@microsoft.com)
 
 ## 0.0.0-canary.129
 
