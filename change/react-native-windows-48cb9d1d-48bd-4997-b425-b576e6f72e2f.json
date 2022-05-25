@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Expose LoadingState on ReactContext",
   "packageName": "react-native-windows",
   "email": "acoates@microsoft.com",
