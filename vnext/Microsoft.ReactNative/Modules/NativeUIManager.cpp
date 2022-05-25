@@ -905,16 +905,17 @@ void NativeUIManager::DoLayout() {
     UpdateExtraLayout(rootTag);
 
     ShadowNodeBase &rootShadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
-    YGNodeRef rootNode = GetYogaNode(rootTag);
-    auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
+    if (YGNodeRef rootNode = GetYogaNode(rootTag)) {
+      auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
 
-    float actualWidth = static_cast<float>(rootElement.ActualWidth());
-    float actualHeight = static_cast<float>(rootElement.ActualHeight());
+      float actualWidth = static_cast<float>(rootElement.ActualWidth());
+      float actualHeight = static_cast<float>(rootElement.ActualHeight());
 
-    // We must always run layout in LTR mode, which might seem unintuitive.
-    // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
-    // which will inherit down the XAML tree, allowing all native controls to pick it up.
-    YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+      // We must always run layout in LTR mode, which might seem unintuitive.
+      // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
+      // which will inherit down the XAML tree, allowing all native controls to pick it up.
+      YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+    }
   }
 
   for (auto &tagToYogaNode : m_tagsToYogaNodes) {
