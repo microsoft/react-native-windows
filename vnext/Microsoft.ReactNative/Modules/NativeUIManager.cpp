@@ -915,6 +915,9 @@ void NativeUIManager::DoLayout() {
       // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
       // which will inherit down the XAML tree, allowing all native controls to pick it up.
       YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+    } else {
+      assert(false);
+      return;
     }
   }
 

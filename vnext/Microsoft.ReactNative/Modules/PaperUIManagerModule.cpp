@@ -140,6 +140,9 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       m_nodeRegistry.addNode(shadow_ptr(node), reactTag);
 
       node->updateProperties(props);
+    } else {
+      assert(false);
+      return;
     }
   }
 
