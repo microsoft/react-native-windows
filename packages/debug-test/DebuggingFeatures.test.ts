@@ -1,18 +1,14 @@
 import * as http from 'http';
 import { CDPDebugger } from './CDPDebugger';
-import * as WebSocket from 'ws';
 import { Metro } from './MetroAutomation';
 import { PlaygroundDebugSettings, selectPackage } from './PlaygroundAutomation'
 import { testLog } from './TestLog';
-import {
-	getDebugTargets,
-	sleep
-} from './TestUtilities';
+import { getDebugTargets } from './TestUtilities';
 
 const metro = new Metro();
 
 beforeAll(async () => {
-	metro.start();
+	await metro.start();
 });
 
 afterAll(() => {
@@ -22,7 +18,8 @@ afterAll(() => {
 // beforeEach(() => {});
 // afterEach(() => {});
 
-function skip_test(msg, fn){}
+// helper to deactivate test methods
+function skipTest(_msg: string, _fn: () => {}){}
 
 test("debug target properties", async () => {
 	testLog.message(`test debug target properties`);
@@ -39,11 +36,10 @@ test("debug target properties", async () => {
 			method: 'GET'
 		};
 
-		let request = null;
-		const dataPromise = new Promise((resolve, reject) => {
-			request = http.request(options, response => response.on('data', data => resolve(data)));
+		const request = http.request(options);
+		const dataPromise = new Promise<Buffer>((resolve, _reject) => {
+			request.on("response", response => response.on("data", data => resolve(data)))
 		});
-
 		request.end();
 
 		const data = await dataPromise;
@@ -66,50 +62,6 @@ test("debug target properties", async () => {
 	}
 });
 
-skip_test("debugger connection", async () => {
-
-	const settings = new PlaygroundDebugSettings({webDebugger: false, directDebugging: true, jsEngine: "Hermes"});
-	await settings.initialize();
-	try {
-		await selectPackage("Samples\\debugTest01");
-
-		const debugTargets = await getDebugTargets();
-		expect(debugTargets.length).toBe(2);
-
-		// testLog.message(`debugTarget0: URL: "${debugTargets[0].webSocketDebuggerUrl}", VM: "${debugTargets[0].vm}"`);
-		// testLog.message(`debugTarget1: URL: "${debugTargets[1].webSocketDebuggerUrl}", VM: "${debugTargets[1].vm}"`);
-		const ws = new WebSocket(debugTargets[0].webSocketDebuggerUrl);
-
-		ws.on('open', () => {
-			testLog.message(`WS on-open: sending Debugger.enable`);
-			ws.send(`{ "id":2, "method":"Debugger.enable", "params":{ "maxScriptsCacheSize":10000000 } }`)
-			testLog.message(`WS on-open: sending Debugger.pause`);
-			ws.send(`{ "id":11, "method":"Debugger.pause", "params":{}}`);
-		});
-
-
-		// 	{ "id":2, "method":"Debugger.enable", "params":{ "maxScriptsCacheSize":10000000 } }
-
-		ws.on('close', () => { testLog.message(`WS on-close`);});
-
-		ws.on('message', (data) => {
-			testLog.message(`WS on-message, typeof ${typeof data}`);
-
-			if(typeof data == 'string') {
-				testLog.message(`WS message data: "${data}"`);
-			}
-		});
-
-		await sleep(5000);
-
-		ws.close();
-
-	}
-	finally {
-		await settings.uninitialize();
-	}
-});
-
 test("enable-disable", async () => {
 	testLog.message(`test enable-disable`);
 
@@ -121,8 +73,8 @@ test("enable-disable", async () => {
 		const debugTargets = await getDebugTargets();
 		const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
 
-		await dbg.DebuggerEnable();
-		await dbg.DebuggerDisable();
+		await dbg.debuggerEnable();
+		await dbg.debuggerDisable();
 		await dbg.checkOutstandingResponses(3000);
 
 		dbg.close();
@@ -143,11 +95,10 @@ test("pause-resume", async () => {
 		const debugTargets = await getDebugTargets();
 		const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
 
-		dbg.DebuggerEnable();
-
+		await dbg.debuggerEnable();
 
 		const pausedEvent = dbg.expectEvent('paused');
-		dbg.DebuggerPause();
+		await dbg.debuggerPause();
 		const eventArgs = await pausedEvent;
 
 		// Example:
@@ -181,7 +132,7 @@ test("pause-resume", async () => {
 		expect(eventArgs.callFrames[0]).toHaveProperty("functionName");
 
 		const resumedEvent = dbg.expectEvent('resumed');
-		dbg.DebuggerResume();
+		await dbg.debuggerResume();
 		await resumedEvent;
 
 		await dbg.checkOutstandingResponses(3000);
@@ -194,7 +145,7 @@ test("pause-resume", async () => {
 	}
 });
 
-skip_test("breakpoint", async () => {
+skipTest("breakpoint", async () => {
 	testLog.message(`test breakpoint`);
 
 	const settings = new PlaygroundDebugSettings({webDebugger: false, directDebugging: true, jsEngine: "Hermes"});
@@ -205,24 +156,24 @@ skip_test("breakpoint", async () => {
 		const debugTargets = await getDebugTargets();
 		const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
 
-		dbg.DebuggerEnable();
+		await dbg.debuggerEnable();
 
 		const pausedEvent = dbg.expectEvent('paused');
-		dbg.DebuggerPause();
+		await dbg.debuggerPause();
 		await pausedEvent;
 
 		// currently not working, submitting to indicate intended API usage
-		const [breakpointId, locations] = await dbg.DebuggerSetBreakpointByUrl(
+		const [breakpointId] = await dbg.debuggerSetBreakpointByUrl(
 			/* url */ "http://localhost:8081/Samples/debugTest01.bundle?platform=windows&dev=true&hot=true&inlineSourceMap=true",
-			/* urlRegex */ null, 
+			/* urlRegex */ "", 
 			/* lineNumber */1392,
 			/* columnNumber */ 0,
-			/* scriptHash */ null);
+			/* scriptHash */ "");
 
 		expect(breakpointId).toBe(123);
 
 		const resumedEvent = dbg.expectEvent('resumed');
-		dbg.DebuggerResume();
+		await dbg.debuggerResume();
 		await resumedEvent;
 
 		await dbg.checkOutstandingResponses(3000);

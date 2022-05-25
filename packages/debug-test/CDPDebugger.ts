@@ -4,10 +4,10 @@ import {
 	shortenIfNeeded,
 	sleep
 } from './TestUtilities';
-import * as WebSocket from 'ws';
+import WebSocket from 'ws';
 
 type CDPMessageHandler = (data: any) => boolean;
-type EventHandler = (...any) => void;
+type EventHandler = (...any: any[]) => void;
 
 export type BreakpointInfo = [
 	breakpointId: string,
@@ -19,7 +19,7 @@ export class CDPDebugger {
 	constructor(url: string) {
 		this.ws = new WebSocket(url);
 
-		this.wsOpened = new Promise((resolve, reject) => {
+		this.wsOpened = new Promise((resolve, _) => {
 			this.ws.on('open', () => { resolve(); });
 		});
 
@@ -72,7 +72,7 @@ export class CDPDebugger {
 	}
 
 	public expectEvent(eventName: string) : Promise<any> {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, _) => {
 			this.on(eventName, eventArgs => resolve(eventArgs));
 		});
 	}
@@ -80,16 +80,22 @@ export class CDPDebugger {
 	/**
 	 * Sends a Debugger.enable CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-enable).
 	 */
-	public async DebuggerEnable(maxScriptsCacheSize: number = 10000000): Promise<void> {
+	public async debuggerEnable(maxScriptsCacheSize: number = 10000000): Promise<void> {
 		const commandId = this.nextCommandId++;
 		
 		// the actual CDP message
-		const command = `{ "id":${commandId}, "method":"Debugger.enable", "params":{ "maxScriptsCacheSize":${maxScriptsCacheSize} } }`;
+		const command = JSON.stringify({
+			id: commandId,
+			method: 'Debugger.enable',
+			params: {
+				maxScriptsCacheSize: maxScriptsCacheSize
+			}
+		});
 
 		// a short description for logging
 		const commandDescription = `Debugger.enable (id: ${commandId})`;
 
-		const resultPromise = new Promise<void>(async (resolve, reject) => {
+		const resultPromise = new Promise<void>((resolve, _) => {
 			const expectedResponse = {"id": commandId, "result": {}};
 			this.expectedResponses.push([
 				`result response for ${commandDescription}`,
@@ -115,17 +121,21 @@ export class CDPDebugger {
 	/**
 	 * Sends a Debugger.disable CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-disable).
 	 */
-	public async DebuggerDisable(): Promise<void> {
+	public async debuggerDisable(): Promise<void> {
 		const commandId = this.nextCommandId++;
 		
 		// the actual CDP message
-		const command = `{ "id":${commandId}, "method":"Debugger.disable", "params":{}}`;
+		const command = JSON.stringify({
+			id: commandId,
+			method: "Debugger.disable",
+			params: {}
+		});
 
 		// a short description for logging
 		const commandDescription = `Debugger.disable (id: ${commandId})`;
 
 		const expectedResponse = {"id": commandId, "result": {}};
-		const resultPromise = new Promise<void>((resolve, reject) => {
+		const resultPromise = new Promise<void>((resolve, _) => {
 			this.expectedResponses.push([
 				`result response for ${commandDescription}`,
 				actualResponse => {
@@ -149,16 +159,20 @@ export class CDPDebugger {
 	/**
 	 * Sends a Debugger.pause CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-pause).
 	 */
-	public async DebuggerPause() : Promise<void> {
+	public async debuggerPause() : Promise<void> {
 		const commandId = this.nextCommandId++;
 		
 		// the actual CDP message
-		const command = `{"id":${commandId}, "method":"Debugger.pause", "params":{}}`;
+		const command = JSON.stringify({
+			id: commandId,
+			method: "Debugger.pause",
+			params:{}
+		});
 
 		// a short description for logging
 		const commandDescription = `Debugger.pause (id: ${commandId})`;
 
-		const resultPromise = new Promise<void>((resolve, reject) => {
+		const resultPromise = new Promise<void>((resolve, _) => {
 			const resultResponse = {"id": commandId, "result": {}};
 			this.expectedResponses.push([
 				`result response for ${commandDescription}`,
@@ -176,7 +190,7 @@ export class CDPDebugger {
 		this.expectedResponses.push([
 			`Debugger.paused response for ${commandDescription}`,
 			response => {
-				if (response.hasOwnProperty("method") && response.method == "Debugger.paused") {
+				if (response.hasOwnProperty("method") && response.method === "Debugger.paused") {
 					this.raise('paused', () => response.params);
 					return true;
 				}
@@ -194,16 +208,22 @@ export class CDPDebugger {
 	/**
 	 * Sends a Debugger.resume CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-resume)
 	 */
-	public async DebuggerResume(): Promise<void> {
+	public async debuggerResume(): Promise<void> {
 		const commandId = this.nextCommandId++;
 
 		// the actual CDP message
-		const command = `{"id":${commandId}, "method":"Debugger.resume", "params":{"terminateOnResume": false}}`;
+		const command = JSON.stringify({
+			id: commandId,
+			method: "Debugger.resume",
+			params: {
+				terminateOnResume: false
+			}
+		});
 
 		// a short description for logging
 		const commandDescription = `Debugger.resume (id: ${commandId})`;
 
-		const resultPromise = new Promise<void>((resolve, reject) => {
+		const resultPromise = new Promise<void>((resolve, _) => {
 			const resultResponse = {"id": commandId, "result": {}};
 			this.expectedResponses.push([
 				`result response for ${commandDescription}`,
@@ -221,7 +241,7 @@ export class CDPDebugger {
 		this.expectedResponses.push([
 			`Debugger.resumed response for ${commandDescription}`,
 			response => {
-				if (response.hasOwnProperty("method") && response.method == "Debugger.resumed") {
+				if (response.hasOwnProperty("method") && response.method === "Debugger.resumed") {
 					this.raise('resumed', () => {});
 					return true;
 				}
@@ -241,16 +261,22 @@ export class CDPDebugger {
 	 * Activates / deactivates all breakpoints on the page.
 	 * @param active 
 	 */
-	 public async DebuggerSetBreakpointIsActive(active: boolean): Promise<void> {
+	 public async debuggerSetBreakpointIsActive(active: boolean): Promise<void> {
 		const commandId = this.nextCommandId++;
 		
 		// the actual CDP message
-		const command = `{"id":${commandId}, "method":"Debugger.setBreakpointIsActive", "params":{"active":${active}}}`;
+		const command = JSON.stringify({
+			id: commandId,
+			method: "Debugger.setBreakpointIsActive",
+			params: {
+				active: active
+			}
+		});
 
 		// a short description for logging
 		const commandDescription = `Debugger.setBreakpointIsActive (id: ${commandId})`;
 
-		const resultPromise = new Promise<void>((resolve, reject) => {
+		const resultPromise = new Promise<void>((resolve, _) => {
 			const resultResponse = {"id": commandId, "result": {}};
 			this.expectedResponses.push([
 				`result response for ${commandDescription}`,
@@ -281,7 +307,7 @@ export class CDPDebugger {
 	 * page reloads.
 	 * @param active 
 	 */
-	 public async DebuggerSetBreakpointByUrl(
+	 public async debuggerSetBreakpointByUrl(
 		url: string,
 		urlRegex: string,
 		lineNumber: number,
@@ -292,23 +318,25 @@ export class CDPDebugger {
 		
 		// the actual CDP message
 		// TODO: pass on urlRegex. scriptHash
-		const command = `{"id":${commandId}, "method":"Debugger.setBreakpointByUrl", "params":{
-			"url":${url},
-			"lineNumber":${lineNumber},
-			"columnNumber":${columnNumber},
-			"condition": ${condition}
-		}}`;
+		const command = JSON.stringify({
+			id: commandId,
+			method: "Debugger.setBreakpointByUrl",
+			params: {
+				url: url,
+				lineNumber: lineNumber,
+				columnNumber: columnNumber,
+				condition: condition
+			}
+		});
 
 		// a short description for logging
 		const commandDescription = `Debugger.setBreakpointByUrl (id: ${commandId})`;
 
-		const expectedResponse1 = {"id": commandId, "result": {}};
-
-		const resultPromise = new Promise<BreakpointInfo>((resolve, reject) => {
+		const resultPromise = new Promise<BreakpointInfo>((resolve, _) => {
 			this.expectedResponses.push([
 				`result response for ${commandDescription}`,
 				response => {
-					if (response.hasOwnProperty("id") && response.id == commandId) {
+					if (response.hasOwnProperty("id") && response.id === commandId) {
 						resolve(response.result);
 						return true;
 					}
@@ -328,18 +356,24 @@ export class CDPDebugger {
 	 * Sends a Debugger.removeBreakpoint CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-removeBreakpoint).
 	 * @param breakpointId Breakpoint identifier (e.g. result of DebuggerSetBreakpointByUrl)
 	 */
-	public async DebuggerRemoveBreakpoint(breakpointId: string): Promise<void> {
+	public async debuggerRemoveBreakpoint(breakpointId: string): Promise<void> {
 		const commandId = this.nextCommandId++;
 		
 		// the actual CDP message
-		const command = `{"id":${commandId}, "method":"Debugger.removeBreakpoint", "params":{"breakpointId":"${breakpointId}"}}`;
+		const command = JSON.stringify({
+			id: commandId,
+			method: "Debugger.removeBreakpoint",
+			params: {
+				breakpointId: breakpointId
+			}
+		});
 
 		// a short description for logging
 		const commandDescription = `Debugger.removeBreakpoint (id: ${commandId})`;
 
 		const expectedResponse1 = {"id": commandId, "result": {}};
 
-		const resultPromise = new Promise<void>((resolve, reject) => {
+		const resultPromise = new Promise<void>((resolve, _) => {
 			this.expectedResponses.push([
 				`result response for ${commandDescription}`,
 				actualResponse => {
@@ -361,40 +395,37 @@ export class CDPDebugger {
 	}
 
 	public async checkOutstandingResponses(timeout: number) {
-		return new Promise<void>(async (resolve, reject) => {
-			const pollPeriod = 500;
-			const retryCount =  Math.ceil(timeout / pollPeriod);
-			const startTime = new Date();
+		const pollPeriod = 500;
+		const retryCount = Math.ceil(timeout / pollPeriod);
+		const startTime = new Date();
 
-			let i = 0;
-			do {
-				if (this.expectedResponses.length == 0) {
-					testLog.message("received all expected responses");
-					resolve();
-					return;
-				}
-
-				if ((new Date()).getTime() - startTime.getTime() >= timeout) break;
-
-				await sleep(pollPeriod);
-			 } while (++i < retryCount);
-
-			for (const [description, unused] of this.expectedResponses) {
-				testLog.message(`missing ${description}`);
+		let i = 0;
+		do {
+			if (this.expectedResponses.length === 0) {
+				testLog.message("received all expected responses");
+				return;
 			}
-			reject();
-		});
+
+			if ((new Date()).getTime() - startTime.getTime() >= timeout) break;
+
+			await sleep(pollPeriod);
+		} while (++i < retryCount);
+
+		for (const [description] of this.expectedResponses) {
+			testLog.message(`missing ${description}`);
+		}
+		throw new Error("missing expected responses (see log file for details)");
 	}
 
 	private logUnexpectedMessage(message: string) {
 		testLog.warning(`received unexpected message '${message}'` + (this.lastCommand ? `, perhaps in response to '${this.lastCommand}'` : ""));
 	}
 
-	private eventHandlers: Map<string, Array<EventHandler>> = new Map();
-	private wsOpened: Promise<void>;
-	private ws: WebSocket;
+	private readonly eventHandlers: Map<string, Array<EventHandler>> = new Map();
+	private readonly wsOpened: Promise<void>;
+	private readonly ws: WebSocket;
 	private nextCommandId: number = 0;
-	private lastCommand: string;
-	private expectedResponses: Array<[string, CDPMessageHandler]> = [];
+	private lastCommand: string = "";
+	private readonly expectedResponses: Array<[string, CDPMessageHandler]> = [];
 
 }

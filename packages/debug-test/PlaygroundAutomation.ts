@@ -16,12 +16,11 @@
 // lookups in this file are conducted "in the plural" using array index index expressions.
 
 import {testLog} from './TestLog'
-import {sleep} from './TestUtilities'
 import {app, AutomationElement} from '@react-native-windows/automation';
 
 async function setCheckedState(checkBox: AutomationElement, checkedState: boolean) {
 	const checkBoxName = await checkBox.getText();
-	if ((await checkBox.isSelected()) != checkedState) {
+	if ((await checkBox.isSelected()) !== checkedState) {
 		// REVIEW: Does this synthesize an actual click? Do we need to scroll this into view or do some other preparatory steps?
 		testLog.message(`changing "${checkBoxName}" checkbox state to ${checkedState}`);
 		return checkBox.click();
@@ -32,20 +31,20 @@ async function setCheckedState(checkBox: AutomationElement, checkedState: boolea
 export async function selectPackage(packageName: string) : Promise<void> {
 	testLog.message(`selecting "${packageName}" bundle`);
 
-	const entryPointComboBox = (await $$('./Window/ComboBox[@AutomationId=\"x_entryPointCombo\"]'))[0];
+	const entryPointComboBox = (await $$('./Window/ComboBox[@AutomationId="x_entryPointCombo"]'))[0];
 	await entryPointComboBox.setValue(packageName);
 
-	const rootComponentComboBox = (await $$('./Window/ComboBox[@AutomationId=\"x_rootComponentNameCombo\"]'))[0];
+	const rootComponentComboBox = (await $$('./Window/ComboBox[@AutomationId="x_rootComponentNameCombo"]'))[0];
 	await rootComponentComboBox.click();
 
-	const loadButton = (await $$('./Window/Button[@AutomationId=\"x_LoadButton\"]'))[0];
+	const loadButton = (await $$('./Window/Button[@AutomationId="x_LoadButton"]'))[0];
 	await loadButton.click();
 
 	// synchronize with the bundle getting loaded
 	await app.waitUntil(async () => {
 		const loadingIndicators = await $$('./Window/Text[@Name="Loading bundle."]');
 
-		if (loadingIndicators.length == 0){
+		if (loadingIndicators.length === 0){
 			testLog.message(`"${packageName}" bundle appears to have loaded`);
 			return true;
 		} else {
@@ -98,7 +97,7 @@ export class PlaygroundDebugSettings {
 
 		settings.webDebugger = webDebugger;
 		settings.directDebugging = directDebugging;
-		settings.debuggerPort = parseInt(debuggerPort);
+		settings.debuggerPort = parseInt(debuggerPort, 10);
 		settings.jsEngine = jsEngine;
 	}
 	
@@ -108,19 +107,19 @@ export class PlaygroundDebugSettings {
 		const webDebuggerCheckBox = (await $$(this.webDebuggerCheckBoxSelector))[0];
 		let restoreWebDebugger = false;
 
-		if (settings.hasOwnProperty('directDebugging')) {
+		if (settings.directDebugging !== undefined) {
 			const directDebuggingCheckBox = (await $$(this.directDebuggingCheckBoxSelector))[0];
 			await setCheckedState(directDebuggingCheckBox, settings.directDebugging);
 		}
 
-		if (settings.hasOwnProperty('debuggerPort')) {
+		if (settings.debuggerPort !== undefined) {
 			
 			const debuggerPortEdit = (await $$(this.debuggerPortEditSelector))[0];
 			const currentPortText = await debuggerPortEdit.getText();
 	
-			if (currentPortText != settings.debuggerPort.toString()){
+			if (currentPortText !== settings.debuggerPort.toString()){
 
-				if (webDebuggerCheckBox.isSelected()) {
+				if (await webDebuggerCheckBox.isSelected()) {
 					// enable port number to be changed
 					await setCheckedState(webDebuggerCheckBox, false);
 					restoreWebDebugger = true; // restore it later (unless it should be off per settings)
@@ -132,8 +131,8 @@ export class PlaygroundDebugSettings {
 
 		const jsEngineComboBox = (await $$(this.jsEngineComboBoxSelector))[0];
 		const oldJsEngine = await jsEngineComboBox.getText();
-		if (settings.hasOwnProperty('jsEngine')) {
-			if (oldJsEngine != settings.jsEngine) {
+		if (settings.jsEngine !== undefined) {
+			if (oldJsEngine !== settings.jsEngine) {
 
 				// expand the JS engine drop list
 				await jsEngineComboBox.click();
@@ -161,7 +160,7 @@ export class PlaygroundDebugSettings {
 			testLog.message(`no JS engine specified, leaving at current setting ("${oldJsEngine}")`)
 		}
 
-		if (settings.hasOwnProperty('webDebugger')) {
+		if (settings.webDebugger !== undefined) {
 			await setCheckedState(webDebuggerCheckBox, settings.webDebugger);
 			restoreWebDebugger = false;
 		}
@@ -171,64 +170,11 @@ export class PlaygroundDebugSettings {
 		}
 	}
 
-	private oldSettings : DebugSettings = {};
-	private newSettings : DebugSettings;
+	private readonly oldSettings : DebugSettings = {};
+	private readonly newSettings : DebugSettings;
 
-	private webDebuggerCheckBoxSelector = './Window/CheckBox[@AutomationId=\"x_UseWebDebuggerCheckBox\"]';
-	private directDebuggingCheckBoxSelector = './Window/CheckBox[@AutomationId=\"x_UseDirectDebuggerCheckBox\"]';
-	private debuggerPortEditSelector = './Window/Edit[@AutomationId=\"x_DebuggerPort\"]';
-	private jsEngineComboBoxSelector = './Window/ComboBox[@AutomationId="x_JsEngine"]';
+	private readonly webDebuggerCheckBoxSelector = './Window/CheckBox[@AutomationId="x_UseWebDebuggerCheckBox"]';
+	private readonly directDebuggingCheckBoxSelector = './Window/CheckBox[@AutomationId="x_UseDirectDebuggerCheckBox"]';
+	private readonly debuggerPortEditSelector = './Window/Edit[@AutomationId="x_DebuggerPort"]';
+	private readonly jsEngineComboBoxSelector = './Window/ComboBox[@AutomationId="x_JsEngine"]';
 }
-
-async function exploreUI() {
-	// const r01 = await $$('Window/Button'); // Unimplemented Command: css selector locator strategy is not supported
-	// testLog.message(`r01.length=${r01.length}`);
-
-	// const r02 = await $$('/Window/Button'); // r02.length = 0
-	// testLog.message(`r02.length = ${r02.length}`);
-
-	// const r03 = await $$('./Window/Button'); // r03.length = 5
-	// testLog.message(`r03.length = ${r03.length}`);
-	// for(const e of r03) {
-	// 	const t = await e.getText();
-	// 	testLog.message(`r03 element ${t}`);
-	// }
-	// =>
-	// r03.length = 5
-	// r03 element Minimize playground // title bar (title bar has control type Window)
-	// r03 element Maximize playground
-	// r03 element Close playground
-	// r03 element Load
-	// r03 element Unload
-
-
-	const jsEngineComboBoxes = await $$('./Window/ComboBox[@AutomationId="x_JsEngine"]');
-	testLog.message(`jsEngineComboBoxes.length ${jsEngineComboBoxes.length}`);
-
-	testLog.message("before getting text");
-	const jsEngine1 = await jsEngineComboBoxes[0].getText();
-	testLog.message("after getting text");
-	testLog.message(`jsEngineCombo before: "${jsEngine1}"`);
-
-
-	const r04 = await $$('./Window/ComboBox[@AutomationId="x_JsEngine"]/ListItem');
-	testLog.message(`r04.length = ${r04.length}`);
-	jsEngineComboBoxes[0].click(); // expand
-	await sleep(1000);
-	const r05 = await $$('./Window/ComboBox[@AutomationId="x_JsEngine"]/ListItem');
-	testLog.message(`r05.length = ${r05.length}`);
-	for(const e of r05) {
-		const t = await e.getText();
-		testLog.message(`r05 element ${t}`);
-	}
-
-	jsEngineComboBoxes[0].click(); // collapse
-	await sleep(1000);
-	const r06 = await $$('./Window/ComboBox[@AutomationId="x_JsEngine"]/ListItem');
-	testLog.message(`r06.length = ${r06.length}`);
-	for(const e of r06) {
-		const t = await e.getText();
-		testLog.message(`r06 element ${t}`);
-	}
-}
-

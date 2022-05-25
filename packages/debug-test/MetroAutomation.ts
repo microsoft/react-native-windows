@@ -4,14 +4,14 @@
 // Each of the methods returns a ChildProcess instance. 
 // fork
 // The child_process.fork() method is a special case of child_process.spawn() used specifically to spawn new Node.js processes. Like child_process.spawn()
-import { ChildProcess, exec, fork, spawn } from 'child_process';
+import { ChildProcess, fork } from 'child_process';
 import * as path from 'path';
 import {testLog} from './TestLog';
 
 export class Metro {
 
 	async start() : Promise<void> {
-		return new Promise((resolve, reject) => {
+		return new Promise((resolve, _reject) => {
 			// TODO: check if Metro is already running
 			// 
 			// If metro is already running, we get
@@ -36,9 +36,9 @@ export class Metro {
 			testLog.message(`Metro process ID ${this.metroProcess.pid}`);
 
 			// trying to sync with Metro being ready to serve packages
-			this.metroProcess.stdout.on('data', data => {
+
+			this.metroProcess.stdout!.on('data', data => {
 				const s = data.toString();
-				// debugger;
 				testLog.message(`Metro stdout "${s}"`);
 				if (s.includes('Welcome to Metro!')) {
 					testLog.message(`Metro appears to be ready`);
@@ -49,10 +49,12 @@ export class Metro {
 	}
 
 	public stop() {
+		if (this.metroProcess === null) throw new Error("metroProcess field is null, has 'start' method not been called?");
+
 		// REVIEW: Better way of ending Metro?
 		const killResult = this.metroProcess.kill('SIGINT');
 		testLog.message(`stopped Metro (${killResult})`);
 	}
 
-	private metroProcess : ChildProcess;
+	private metroProcess : ChildProcess | null = null;
 }

@@ -1,5 +1,5 @@
 
-import * as fs from 'fs'
+import fs from '@react-native-windows/fs';
 
 // REVIEW: Does jest have a more suitable logging facility?
 
@@ -43,5 +43,6 @@ export const testLog = new class {
 		const ms = ("000" + dt.getMilliseconds()).slice(-4)
 		return `${hh}:${mm}:${ss}.${ms}`;
 	}
-	private fileName : string;
+
+	private readonly fileName : string;
 };

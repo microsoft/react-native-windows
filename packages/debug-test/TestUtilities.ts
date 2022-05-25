@@ -13,17 +13,17 @@ export function shortenIfNeeded(s: string, maxLength: number): string {
 }
 
 export class DebugTarget {
-	id:string;
-	title: string;
-	faviconUrl: string;
-	devtoolsFrontendUrl: string;
-	type: string;
-	webSocketDebuggerUrl: string;
-	vm: string;
+	id:string = "";
+	title: string = "";
+	faviconUrl: string = "";
+	devtoolsFrontendUrl: string = "";
+	type: string = "";
+	webSocketDebuggerUrl: string = "";
+	vm: string = "";
 }
 
 export async function getDebugTargets() : Promise<DebugTarget[]> {
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve, _) => {
 		const options : http.RequestOptions = {
 			hostname: 'localhost',
 			port: 8081,
