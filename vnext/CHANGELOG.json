@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 May 2022 05:08:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.504",
+      "version": "0.0.0-canary.504",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "473d3d5534680da412f4401b3b34f357e757d602",
+            "comment": "Expose LoadingState on ReactContext"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f050dcd4906ee3fd4374cce02c0038a2710a1ad1",
+            "comment": "Resolving CodeQL warnings 5/25/22"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "f37a4dd3a2565cb79f6d389cbee9d99599eb770b",
+            "comment": "fix run loop in loopScheduler.cpp"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 25 May 2022 05:08:41 GMT",
       "tag": "react-native-windows_v0.0.0-canary.503",
       "version": "0.0.0-canary.503",
