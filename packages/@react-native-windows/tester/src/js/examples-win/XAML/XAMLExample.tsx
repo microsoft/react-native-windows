@@ -41,6 +41,7 @@ export function XAMLExamples() {
 
   return (
     <View testID="ReactNativeXAMLRoot">
+      <WinUI.Expander content="the content" header={{string: 'header'}} />
       <TextBox text="simple TextBox" />
       <TextBlock
         text="right aligned TextBlock"

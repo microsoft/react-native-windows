@@ -53,4 +53,11 @@ namespace Microsoft.ReactNative
 
     ViewPanel GetPanel();
   }
+
+  [default_interface]
+  [webhosthidden]
+  runtimeclass NativeMeasuringPanel : XAML_NAMESPACE.Controls.ContentControl {
+    NativeMeasuringPanel();
+  }
+
 }

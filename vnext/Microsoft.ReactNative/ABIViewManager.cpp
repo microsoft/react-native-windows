@@ -13,6 +13,60 @@
 #include <Views/ShadowNodeBase.h>
 #include "ReactHost/MsoUtils.h"
 
+#include "NativeMeasuringPanel.g.h"
+#include <Modules/NativeUIManager.h>
+#include <Modules/PaperUIManagerModule.h>
+
+namespace winrt::Microsoft::ReactNative::implementation {
+struct NativeMeasuringPanel : NativeMeasuringPanelT<NativeMeasuringPanel> {
+  using super = xaml::Controls::ContentControl;
+  NativeMeasuringPanel() = default;
+  Size MeasureOverride(Size const &available) {
+    auto parent = this->Parent();
+    auto parentType = winrt::get_class_name(parent);
+    if (auto child = Content().as<xaml::FrameworkElement>()) {
+      auto w = child.Width();
+      auto h = child.Height();
+      child.ClearValue(xaml::FrameworkElement::WidthProperty());
+      child.ClearValue(xaml::FrameworkElement::HeightProperty());
+
+      child.Measure({10000, 10000});
+      auto ret = child.DesiredSize();
+      this->Width(ret.Width);
+      this->Height(ret.Height);
+      child.Width(w);
+      child.Height(h);
+
+      if (ret != m_last && !m_isMeasuring) {
+        m_isMeasuring = true;
+        auto x = 0;
+        auto &ctx = m_shadowNode->GetViewManager()->GetReactContext();
+        if (auto nativeUIManager = ::Microsoft::ReactNative::GetNativeUIManager(ctx).lock()) {
+          nativeUIManager->DirtyYogaNode(m_shadowNode->m_tag);
+          nativeUIManager->ensureInBatch();
+          nativeUIManager->onBatchComplete();
+        }
+        m_isMeasuring = false;
+      }
+      m_last = ret;
+    }
+    return m_last;
+  }
+
+  Size m_last{};
+  ::Microsoft::ReactNative::ShadowNodeBase *m_shadowNode{nullptr};
+  bool m_isMeasuring{false};
+};
+} // namespace winrt::Microsoft::ReactNative::implementation
+
+namespace winrt::Microsoft::ReactNative::factory_implementation {
+struct NativeMeasuringPanel : NativeMeasuringPanelT<NativeMeasuringPanel, implementation::NativeMeasuringPanel> {};
+} // namespace winrt::Microsoft::ReactNative::factory_implementation
+
+#if __has_include("NativeMeasuringPanel.g.cpp")
+#include "NativeMeasuringPanel.g.cpp"
+#endif
+
 namespace winrt::Microsoft::ReactNative {
 
 class ABIShadowNode : public ::Microsoft::ReactNative::ShadowNodeBase {
@@ -22,6 +76,12 @@ class ABIShadowNode : public ::Microsoft::ReactNative::ShadowNodeBase {
   ABIShadowNode(bool needsForceLayout) : m_needsForceLayout(needsForceLayout) {}
   bool NeedsForceLayout() override {
     return m_needsForceLayout;
+  }
+
+  void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
+    Super::createView(props);
+    auto panel = winrt::get_self<implementation::NativeMeasuringPanel>(m_view.as<NativeMeasuringPanel>());
+    panel->m_shadowNode = this;
   }
 
  private:
@@ -43,7 +103,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
       m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()} {
-  if (m_viewManagerWithReactContext) {
+    if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
   if (m_viewManagerWithNativeProperties) {
@@ -56,14 +116,21 @@ const wchar_t *ABIViewManager::GetName() const {
 }
 
 xaml::DependencyObject ABIViewManager::CreateViewCore(
-    int64_t,
+    int64_t tag,
     const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  xaml::DependencyObject created{nullptr};
   if (auto viewCreateProps = m_viewManager.try_as<IViewManagerCreateWithProperties>()) {
     auto view = viewCreateProps.CreateViewWithProperties(
         MakeJSValueTreeReader(winrt::Microsoft::ReactNative::JSValue(props.Copy())));
-    return view.as<xaml::DependencyObject>();
+    created = view.as<xaml::DependencyObject>();
+  } else {
+    created = m_viewManager.CreateView();
   }
-  return m_viewManager.CreateView();
+
+  auto panel = NativeMeasuringPanel();
+
+  panel.Content(created);
+  return panel;
 }
 
 void ABIViewManager::GetExportedViewConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
@@ -118,7 +185,7 @@ void ABIViewManager::UpdateProperties(
   }
 
   if (m_viewManagerWithNativeProperties) {
-    auto view = nodeToUpdate->GetView().as<xaml::FrameworkElement>();
+    auto view = nodeToUpdate->GetView().as<NativeMeasuringPanel>().Content().as<xaml::FrameworkElement>();
 
     if (props.size() > 0) {
       m_viewManagerWithNativeProperties.UpdateProperties(
@@ -178,10 +245,15 @@ void ABIViewManager::GetExportedCustomDirectEventTypeConstants(
 }
 
 void ABIViewManager::AddView(const xaml::DependencyObject &parent, const xaml::DependencyObject &child, int64_t index) {
+  auto parentNMP = parent.as<NativeMeasuringPanel>();
+  auto realParent = parentNMP.Content().as<xaml::FrameworkElement>();
+  auto childNMP = child.as<NativeMeasuringPanel>();
+  auto realChild = childNMP.Content().as<xaml::FrameworkElement>();
+  childNMP.Content(nullptr);
   if (m_viewManagerWithChildren) {
-    m_viewManagerWithChildren.AddView(parent.as<xaml::FrameworkElement>(), child.as<xaml::UIElement>(), index);
+    m_viewManagerWithChildren.AddView(realParent, realChild, index);
   } else {
-    Super::AddView(parent, child, index);
+    Super::AddView(realParent, realChild, index);
   }
 }
 
