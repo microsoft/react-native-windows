@@ -361,5 +361,7 @@ namespace Microsoft.ReactNative.Managed.UnitTests
     {
       m_builder.EmitJSEvent(eventEmitterName, eventName, paramsArgWriter);
     }
+
+    public LoadingState LoadingState { get { throw new NotImplementedException(); } }
   }
 }
