@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "remove JSI overrides",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
