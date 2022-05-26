@@ -3,6 +3,9 @@
   "compilerOptions": {
     "types": ["jest"]
   },
+  "include": [
+    "./*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
