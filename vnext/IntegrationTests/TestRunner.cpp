@@ -4,9 +4,9 @@
 #include "TestRunner.h"
 #include "Unicode.h"
 
+#include <CppRuntimeOptions.h>
 #include <DevSettings.h>
 #include <InstanceManager.h>
-#include <RuntimeOptions.h>
 #include <cxxreact/Instance.h>
 #include "TestInstance.h"
 #include "TestModule.h"

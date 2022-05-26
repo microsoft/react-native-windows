@@ -43,7 +43,7 @@ void MockWebSocketResource::Close(CloseCode code, const string &reason) noexcept
     return Mocks.Close(code, reason);
 }
 
-IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const noexcept /*override*/
+Networking::IWebSocketResource::ReadyState MockWebSocketResource::GetReadyState() const noexcept /*override*/
 {
   if (Mocks.GetReadyState)
     return Mocks.GetReadyState();
