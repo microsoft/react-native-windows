@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update autolinking to not error if a dependency is misconfigured",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
