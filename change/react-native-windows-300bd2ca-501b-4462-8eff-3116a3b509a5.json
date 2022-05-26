@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Change CG registration for folly and fmt from `other` to `git`",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
