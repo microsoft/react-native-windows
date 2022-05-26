@@ -86,8 +86,8 @@ struct InspectorProtocol {
     for (const facebook::react::InspectorPage2 &page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
-      pageDyn["title"] = std::string(page.title->c_str());
-      pageDyn["vm"] = std::string(page.vm->c_str());
+      pageDyn["title"] = std::string(page.title);
+      pageDyn["vm"] = std::string(page.vm);
 
       pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
       pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
@@ -105,8 +105,8 @@ struct InspectorProtocol {
       const facebook::react::InspectorPage2 page = pages->getPage(p);
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
-      pageDyn["title"] = page.title->c_str();
-      pageDyn["vm"] = page.vm->c_str();
+      pageDyn["title"] = page.title;
+      pageDyn["vm"] = page.vm;
 
       pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
       pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
@@ -155,11 +155,10 @@ void RemoteConnection::onDisconnect() {
 RemoteConnection2::RemoteConnection2(int64_t pageId, const InspectorPackagerConnection &packagerConnection)
     : m_packagerConnection(packagerConnection), m_pageId(pageId) {}
 
-void RemoteConnection2::onMessage(std::unique_ptr<facebook::react::IHermesString> message) {
-  std::string msg(message->c_str());
+void RemoteConnection2::onMessage(std::string message) {
   folly::dynamic response = InspectorProtocol::constructResponseForPackager(
       InspectorProtocol::EventType::WrappedEvent,
-      InspectorProtocol::constructVMResponsePayloadForPackager(m_pageId, std::move(msg)));
+      InspectorProtocol::constructVMResponsePayloadForPackager(m_pageId, std::move(message)));
   std::string responsestr = folly::toJson(response);
   m_packagerConnection.sendMessageToPackager(std::move(responsestr));
 }

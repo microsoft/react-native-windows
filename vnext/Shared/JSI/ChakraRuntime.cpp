@@ -311,6 +311,11 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromString(const facebo
   return MakePointer<facebook::jsi::PropNameID>(propertyId);
 }
 
+facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) {
+  const JsPropertyIdRef propSym = GetPropertyIdFromSymbol(GetJsRef(sym));
+  return MakePointer<facebook::jsi::PropNameID>(propSym);
+}
+
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
   return Common::Unicode::Utf16ToUtf8(GetPropertyNameFromId(GetJsRef(id)));
 }
