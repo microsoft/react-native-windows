@@ -1,8 +1,9 @@
 // clang-format off
 #pragma once
 
-#include <IWebSocketResource.h>
+#include <Networking/IWebSocketResource.h>
 
+// Boost Framework
 #include <boost/beast/core/multi_buffer.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/ssl/ssl_stream.hpp>
@@ -23,7 +24,7 @@ struct WebSocketServiceCallbacks
   std::function<void(std::string)> OnMessage;
   std::function<std::string(std::string&&)> MessageFactory;
   std::function<std::vector<std::uint8_t>(std::vector<std::uint8_t>&&)> BinaryMessageFactory;
-  std::function<void(IWebSocketResource::Error&&)> OnError;
+  std::function<void(Networking::IWebSocketResource::Error&&)> OnError;
 };
 
 struct IWebSocketSession
@@ -43,7 +44,7 @@ class BaseWebSocketSession : public IWebSocketSession
   std::vector<std::uint8_t> m_binaryMessage;
   State m_state;
 
-  std::function<void(IWebSocketResource::Error&&)> m_errorHandler;
+  std::function<void(Networking::IWebSocketResource::Error&&)> m_errorHandler;
 
   void Read();
 
@@ -124,7 +125,7 @@ class WebSocketServer : public std::enable_shared_from_this<WebSocketServer>
   void SetOnMessage(std::function<void(std::string)>&& func);
   void SetMessageFactory(std::function<std::string(std::string&&)>&& func);
   void SetMessageFactory(std::function<std::vector<std::uint8_t>(std::vector<std::uint8_t>&&)>&& func);
-  void SetOnError(std::function<void(IWebSocketResource::Error&&)>&& func);
+  void SetOnError(std::function<void(Networking::IWebSocketResource::Error&&)>&& func);
 };
 
 } // namespace Microsoft::React::Test

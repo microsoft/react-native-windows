@@ -3,11 +3,6 @@
 
 #include <TestRunner.h>
 
-#include <CreateModules.h>
-#include <IUIManager.h>
-#include <Modules/NetworkingModule.h>
-#include <Modules/WebSocketModule.h>
-#include <RuntimeOptions.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
 #include "ChakraRuntimeHolder.h"
@@ -44,6 +39,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   auto nativeQueue = Microsoft::ReactNative::MakeJSQueueThread();
   auto jsQueue = Microsoft::ReactNative::MakeJSQueueThread();
 
+  // See InstanceImpl::GetDefaultNativeModules at OInstance.cpp
   vector<tuple<string, CxxModule::Provider, shared_ptr<MessageQueueThread>>> extraModules{
       {"AsyncLocalStorage",
        []() -> unique_ptr<CxxModule> {

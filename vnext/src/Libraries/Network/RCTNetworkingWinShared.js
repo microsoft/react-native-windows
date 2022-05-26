@@ -61,6 +61,11 @@ type RCTNetworkingEventDefinitions = $ReadOnly<{
   ],
 }>;
 
+let _requestId = 1;
+function generateRequestId(): number {
+  return _requestId++;
+}
+
 const RCTNetworking = {
   addListener<K: $Keys<RCTNetworkingEventDefinitions>>(
     eventType: K,
@@ -82,11 +87,13 @@ const RCTNetworking = {
     callback: (requestId: number) => void,
     withCredentials: boolean,
   ) {
+    const requestId = generateRequestId();
     const body = convertRequestBody(data);
     RCTNetworkingNative.sendRequest(
       {
         method,
         url,
+        requestId,
         data: {...body, trackingName},
         headers,
         responseType,

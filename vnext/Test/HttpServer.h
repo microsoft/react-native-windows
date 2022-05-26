@@ -2,6 +2,7 @@
 #pragma once
 
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/strand.hpp>
 #include <boost/beast/core/flat_buffer.hpp>
 #include <boost/beast/core/tcp_stream.hpp>
 #include <boost/beast/http.hpp>
@@ -10,6 +11,40 @@
 
 namespace Microsoft::React::Test
 {
+using DynamicRequest = boost::beast::http::request<boost::beast::http::dynamic_body>;
+
+using DynamicResponse = boost::beast::http::response<boost::beast::http::dynamic_body>;
+
+using EmptyResponse = boost::beast::http::response<boost::beast::http::empty_body>;
+
+using FileResponse = boost::beast::http::response<boost::beast::http::file_body>;
+
+using StringResponse = boost::beast::http::response<boost::beast::http::string_body>;
+
+class ResponseWrapper
+{
+public:
+  enum class ResponseType : size_t { Empty, Dynamic, File, String };
+
+private:
+  std::shared_ptr<void> m_response;
+  ResponseType m_type;
+
+public:
+  ResponseWrapper(DynamicResponse&& response);
+
+  ResponseWrapper(EmptyResponse&& response);
+
+  ResponseWrapper(FileResponse&& response);
+
+  ResponseWrapper(StringResponse&& response);
+
+  ResponseWrapper(ResponseWrapper&&) = default;
+
+  std::shared_ptr<void> Response();
+
+  ResponseType Type();
+};
 
 #pragma region Utility functions
 
@@ -20,10 +55,19 @@ boost::beast::multi_buffer CreateStringResponseBody(std::string&& content);
 struct HttpCallbacks
 {
   std::function<void()> OnResponseSent;
-  std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-      const boost::beast::http::request<boost::beast::http::string_body> &)>
-      OnGet;
   std::function<void()> OnRequest;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnGet;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnPost;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnPatch;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnOptions;
+
+  std::function<ResponseWrapper(const DynamicRequest &)> OnConnect;
+  std::function<ResponseWrapper(const DynamicRequest &)> OnTrace;
+
+  //Not supported by Boost/Beast
+  #if 0
+  std::function<ResponseWrapper(const DynamicRequest &)> OnTrack;   
+  #endif // 0
 };
 
 ///
@@ -34,9 +78,10 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
 {
   boost::beast::tcp_stream m_stream;
   boost::beast::flat_buffer m_buffer;
-  boost::beast::http::request<boost::beast::http::string_body> m_request;
-  std::shared_ptr<boost::beast::http::response<boost::beast::http::dynamic_body>> m_response; // Generic response
+  DynamicRequest m_request;
+  std::shared_ptr<ResponseWrapper> m_response; // Generic response
   HttpCallbacks& m_callbacks;
+  std::function<void(Microsoft::React::Test::ResponseWrapper&&)> m_sendLambda;
 
   void Read();
   void Respond();
@@ -46,7 +91,9 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
   void OnWrite(bool close, boost::system::error_code ec, std::size_t transferred);
 
  public:
-  HttpSession(boost::asio::ip::tcp::socket&& socket, HttpCallbacks &callbacks);
+  HttpSession(boost::asio::ip::tcp::socket&& socket, HttpCallbacks &callbacks,
+    boost::asio::io_context& ioContext
+  );
 
   ~HttpSession();
 
@@ -60,11 +107,11 @@ class HttpSession : public std::enable_shared_from_this<HttpSession>
 ///
 class HttpServer : public std::enable_shared_from_this<HttpServer>
 {
-  std::thread m_contextThread;
-  boost::asio::io_context m_context;
+  size_t m_ioThreadCount;
+  std::vector<std::thread> m_ioThreads;
+  boost::asio::io_context m_ioContext;
   boost::asio::ip::tcp::acceptor m_acceptor;
   HttpCallbacks m_callbacks;
-  std::vector<std::shared_ptr<HttpSession>> m_sessions;
 
   void OnAccept(boost::system::error_code ec, boost::asio::ip::tcp::socket socket);
 
@@ -73,26 +120,17 @@ class HttpServer : public std::enable_shared_from_this<HttpServer>
   // address - Valid IP address string (i.e. "127.0.0.1).
   // port    - TCP port number (i.e. 80).
   ///
-  HttpServer(std::string &&address, std::uint16_t port);
+  HttpServer(std::string &&address, uint16_t port, size_t concurrency = 1);
+  HttpServer(uint16_t port, size_t concurrency = 1);
 
   ~HttpServer();
 
   void Accept();
   void Start();
   void Stop();
-  void Abort();
+  void Abort();//TODO: Remove?
 
-  ///
-  // Callback to invoke after a successful response is sent.
-  ///
-  void SetOnResponseSent(std::function<void()> &&handler) noexcept;
-
-  ///
-  // Function that creates an HTTP response to send to the client on GET
-  // requests.
-  ///
-  void SetOnGet(std::function<boost::beast::http::response<boost::beast::http::dynamic_body>(
-                    const boost::beast::http::request<boost::beast::http::string_body> &)> &&onGet) noexcept;
+  HttpCallbacks& Callbacks();
 };
 
 } // namespace Microsoft::React::Test
