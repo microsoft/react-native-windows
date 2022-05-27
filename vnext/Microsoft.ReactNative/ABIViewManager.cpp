@@ -16,11 +16,41 @@
 #include "NativeMeasuringPanel.g.h"
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <cdebug.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct NativeMeasuringPanel : NativeMeasuringPanelT<NativeMeasuringPanel> {
   using super = xaml::Controls::ContentControl;
   NativeMeasuringPanel() = default;
+
+  static YGSize
+  SelfMeasureFunc(YGNodeRef node, float width, YGMeasureMode widthMode, float height, YGMeasureMode heightMode) {
+    auto context = reinterpret_cast<::Microsoft::ReactNative::YogaContext *>(YGNodeGetContext(node));
+
+    // TODO: VEC context != nullptr, DefaultYogaSelfMeasureFunc expects a context.
+
+    auto view = context->view;
+    auto element = view.as<xaml::UIElement>();
+
+    float constrainToWidth =
+        widthMode == YGMeasureMode::YGMeasureModeUndefined ? std::numeric_limits<float>::max() : width;
+    float constrainToHeight =
+        heightMode == YGMeasureMode::YGMeasureModeUndefined ? std::numeric_limits<float>::max() : height;
+    winrt::Windows::Foundation::Size availableSpace(constrainToWidth, constrainToHeight);
+    element.Measure(availableSpace);
+
+    YGSize desiredSize{element.DesiredSize().Width, element.DesiredSize().Height};
+
+    auto cn = winrt::get_class_name(element);
+    if (cn == L"Microsoft.UI.Xaml.Controls.Expander" || cn == L"Microsoft.ReactNative.NativeMeasuringPanel") {
+      auto content = element.as<xaml::Controls::ContentControl>().Content();
+      cn = winrt::get_class_name(content);
+      auto x = 0;
+    }
+
+    return desiredSize;
+  }
+
   Size MeasureOverride(Size const &available) {
     auto parent = this->Parent();
     auto parentType = winrt::get_class_name(parent);
@@ -30,14 +60,27 @@ struct NativeMeasuringPanel : NativeMeasuringPanelT<NativeMeasuringPanel> {
       child.ClearValue(xaml::FrameworkElement::WidthProperty());
       child.ClearValue(xaml::FrameworkElement::HeightProperty());
 
-      child.Measure({10000, 10000});
-      auto ret = child.DesiredSize();
-      this->Width(ret.Width);
-      this->Height(ret.Height);
-      child.Width(w);
-      child.Height(h);
+      child.Measure(available);
 
-      if (ret != m_last && !m_isMeasuring) {
+      auto ret = child.DesiredSize();
+
+      auto childType = winrt::get_class_name(child);
+      if (childType == L"Microsoft.UI.Xaml.Controls.Expander") {
+        auto tag = m_shadowNode->m_tag;
+        cdebug << "Expander desired size: (" << ret.Width << ", " << ret.Height << ")\n";
+      }
+
+      if (ret.Width != 0 && ret.Height != 0) {
+        this->Width(ret.Width);
+        this->Height(ret.Height);
+        child.Width(ret.Width);
+        child.Height(ret.Height);
+      } else {
+        child.Width(w);
+        child.Height(h);
+      }
+
+      if (ret != m_last && (ret.Width * ret.Height) != 0 && !m_isMeasuring) {
         m_isMeasuring = true;
         auto x = 0;
         auto &ctx = m_shadowNode->GetViewManager()->GetReactContext();
@@ -285,9 +328,11 @@ void ABIViewManager::ReplaceChild(
   }
 }
 
-YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
+
+  YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
   if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
-    return ::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
+      return implementation::NativeMeasuringPanel::SelfMeasureFunc;
+      //::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
   } else {
     return nullptr;
   }
