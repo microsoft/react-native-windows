@@ -100,33 +100,32 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
 }
 
 struct NodeApiJsiBuffer : facebook::jsi::Buffer {
-  explicit NodeApiJsiBuffer(const napi_ext_buffer *buffer)
-      : finalize_(buffer->buffer_object.finalize_cb),
-        bufferObject_(buffer->buffer_object.data),
-        finalizeHint_(buffer->buffer_object.finalize_hint),
-        data_(buffer->data),
-        byteSize_(buffer->byte_size) {}
+  static std::shared_ptr<const facebook::jsi::Buffer> CreateJsiBuffer(const napi_ext_buffer *buffer) {
+    if (buffer && buffer->data) {
+      return std::shared_ptr<const facebook::jsi::Buffer>(new NodeApiJsiBuffer(buffer));
+    } else {
+      return {};
+    }
+  }
+
+  NodeApiJsiBuffer(const napi_ext_buffer *buffer) noexcept : buffer_(*buffer) {}
 
   ~NodeApiJsiBuffer() override {
-    if (finalize_) {
-      finalize_(nullptr, const_cast<uint8_t *>(data_), const_cast<void *>(finalizeHint_));
+    if (buffer_.buffer_object.finalize_cb) {
+      buffer_.buffer_object.finalize_cb(nullptr, buffer_.buffer_object.data, buffer_.buffer_object.finalize_hint);
     }
   }
 
   const uint8_t *data() const override {
-    return data_;
+    return buffer_.data;
   }
 
   size_t size() const override {
-    return byteSize_;
+    return buffer_.byte_size;
   }
 
  private:
-  const napi_finalize finalize_;
-  const void *bufferObject_;
-  const void *finalizeHint_;
-  const uint8_t *data_;
-  size_t byteSize_;
+  napi_ext_buffer buffer_;
 };
 
 napi_ext_script_cache NapiJsiV8RuntimeHolder::InitScriptCache(
@@ -158,7 +157,7 @@ napi_ext_script_cache NapiJsiV8RuntimeHolder::InitScriptCache(
                                        const napi_ext_buffer *buffer) -> napi_status {
     PreparedScriptStore *scriptStore = reinterpret_cast<PreparedScriptStore *>(script_cache->cache_object.data);
     scriptStore->persistPreparedScript(
-        std::shared_ptr<const facebook::jsi::Buffer>{new NodeApiJsiBuffer{buffer}},
+        NodeApiJsiBuffer::CreateJsiBuffer(buffer),
         ScriptSignature{script_metadata->source_url, script_metadata->source_hash},
         JSRuntimeSignature{script_metadata->runtime_name, script_metadata->runtime_version},
         script_metadata->tag);
