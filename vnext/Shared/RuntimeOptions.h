@@ -50,7 +50,10 @@ typedef void(__cdecl *MicrosoftReactGetStringCallback)(const char *buffer, size_
 /// <param name="name">Global key</param>
 /// <param name="callBack">Handler used to access the obtained string</param>
 /// <param name="state">Arbitrary data to pass on to or retrieve from callBack</param>
-void __cdecl MicrosoftReactGetRuntimeOptionString(const char *name, MicrosoftReactGetStringCallback callBack, void *state);
+void __cdecl MicrosoftReactGetRuntimeOptionString(
+    const char *name,
+    MicrosoftReactGetStringCallback callBack,
+    void *state);
 
 #ifdef __cplusplus
 }
