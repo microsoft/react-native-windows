@@ -299,12 +299,11 @@
       <CGManifestText>{
     "Registrations": [ 
         {
-            "Component": { 
-                "Type": "other", 
-                "Other": {
-                  "Name": "folly",
-                  "Version": "$(FollyVersion)",
-                  "DownloadUrl": "https://github.com/facebook/folly/archive/v$(FollyVersion).zip"
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/facebook/folly",
+                  "CommitHash": "$(FollyCommitHash)"
                 }
             },
             "DevelopmentDependency": false
