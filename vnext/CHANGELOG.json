@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 27 May 2022 16:26:29 GMT",
+      "tag": "react-native-windows_v0.66.20",
+      "version": "0.66.20",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Fix RuntimeOptions for RNW Desktop",
+            "author": "vmorozov@microsoft.com",
+            "commit": "927b021179ee739610d6ddc81624f30adb4a2d7b",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 24 May 2022 21:08:55 GMT",
       "tag": "react-native-windows_v0.66.19",
       "version": "0.66.19",
