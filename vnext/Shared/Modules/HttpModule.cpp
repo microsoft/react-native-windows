@@ -5,6 +5,9 @@
 
 #include "HttpModule.h"
 
+#include <Modules/CxxModuleUtilities.h>
+#include <ReactPropertyBag.h>
+
 // React Native
 #include <cxxreact/Instance.h>
 #include <cxxreact/JsArgumentHelpers.h>
@@ -14,21 +17,34 @@ using folly::dynamic;
 using std::shared_ptr;
 using std::string;
 using std::weak_ptr;
+using winrt::Microsoft::ReactNative::IReactPropertyBag;
+using winrt::Microsoft::ReactNative::ReactNonAbiValue;
+using winrt::Microsoft::ReactNative::ReactPropertyBag;
+using winrt::Microsoft::ReactNative::ReactPropertyId;
+using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 
+using Microsoft::React::Modules::SendEvent;
 using Microsoft::React::Networking::IHttpResource;
 
 constexpr char moduleName[] = "Networking";
 
-static void SendEvent(weak_ptr<Instance> weakReactInstance, string &&eventName, dynamic &&args) {
-  if (auto instance = weakReactInstance.lock()) {
-    instance->callJSFunction("RCTDeviceEventEmitter", "emit", dynamic::array(std::move(eventName), std::move(args)));
-  }
-}
+// React event names
+constexpr char completedResponse[] = "didCompleteNetworkResponse";
+constexpr char receivedResponse[] = "didReceiveNetworkResponse";
+constexpr char receivedData[] = "didReceiveNetworkData";
+constexpr char receivedDataProgress[] = "didReceiveNetworkDataProgress";
 
-static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReactInstance) {
-  auto resource = IHttpResource::Make();
+static void SetUpHttpResource(
+    shared_ptr<IHttpResource> resource,
+    weak_ptr<Instance> weakReactInstance,
+    IInspectable &inspectableProperties) {
+  resource->SetOnRequestSuccess([weakReactInstance](int64_t requestId) {
+    auto args = dynamic::array(requestId);
+
+    SendEvent(weakReactInstance, completedResponse, std::move(args));
+  });
 
   resource->SetOnResponse([weakReactInstance](int64_t requestId, IHttpResource::Response &&response) {
     dynamic headers = dynamic::object();
@@ -39,33 +55,39 @@ static shared_ptr<IHttpResource> CreateHttpResource(weak_ptr<Instance> weakReact
     // TODO: Test response content.
     dynamic args = dynamic::array(requestId, response.StatusCode, headers, response.Url);
 
-    SendEvent(weakReactInstance, "didReceiveNetworkResponse", std::move(args));
+    SendEvent(weakReactInstance, receivedResponse, std::move(args));
   });
 
-  resource->SetOnData([weakReactInstance](int64_t requestId, std::string &&responseData) {
-    dynamic args = dynamic::array(requestId, std::move(responseData));
-
-    SendEvent(weakReactInstance, "didReceiveNetworkData", std::move(args));
+  resource->SetOnData([weakReactInstance](int64_t requestId, string &&responseData) {
+    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
 
     // TODO: Move into separate method IF not executed right after onData()
-    SendEvent(weakReactInstance, "didCompleteNetworkResponse", dynamic::array(requestId));
+    SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
   });
+
+  // Explicitly declaring function type to avoid type inference ambiguity.
+  std::function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](
+                                                               int64_t requestId, dynamic &&responseData) {
+    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
+  };
+  resource->SetOnData(std::move(onDataDynamic));
 
   resource->SetOnError([weakReactInstance](int64_t requestId, string &&message) {
     dynamic args = dynamic::array(requestId, std::move(message));
     // TODO: isTimeout errorArgs.push_back(true);
 
-    SendEvent(weakReactInstance, "didCompleteNetworkResponse", std::move(args));
+    SendEvent(weakReactInstance, completedResponse, std::move(args));
   });
-
-  return resource;
 }
 
 } // namespace
 
 namespace Microsoft::React {
 
-HttpModule::HttpModule() noexcept : m_holder{std::make_shared<ModuleHolder>()} {
+HttpModule::HttpModule(IInspectable const &inspectableProperties) noexcept
+    : m_holder{std::make_shared<ModuleHolder>()},
+      m_inspectableProperties{inspectableProperties},
+      m_resource{IHttpResource::Make(inspectableProperties)} {
   m_holder->Module = this;
 }
 
@@ -86,10 +108,6 @@ std::map<string, dynamic> HttpModule::getConstants() {
 // clang-format off
 std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
 
-  auto weakHolder = weak_ptr<ModuleHolder>(m_holder);
-  auto holder = weakHolder.lock();
-  auto weakReactInstance = weak_ptr<Instance>(holder->Module->getInstance());
-
   return
   {
     {
@@ -102,53 +120,32 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        if (!holder->Module->m_isResourceSetup)
         {
-          IHttpResource::BodyData bodyData;
-          auto params = facebook::xplat::jsArgAsObject(args, 0);
-          auto data = params["data"];
-          auto stringData = data["string"];
-          if (!stringData.empty())
-          {
-            bodyData = {IHttpResource::BodyData::Type::String, stringData.getString()};
-          }
-          else
-          {
-            auto base64Data = data["base64"];
-            if (!base64Data.empty())
-            {
-              bodyData = {IHttpResource::BodyData::Type::Base64, base64Data.getString()};
-            }
-            else
-            {
-              auto uriData = data["uri"];
-              if (!uriData.empty())
-              {
-                bodyData = {IHttpResource::BodyData::Type::Uri, uriData.getString()};
-              }
-            }
-          }
-          //TODO: Support FORM data
+          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
+          holder->Module->m_isResourceSetup = true;
+        }
 
-          IHttpResource::Headers headers;
-          for (auto& header : params["headers"].items()) {
-            headers.emplace(header.first.getString(), header.second.getString());
-          }
+        auto params = facebook::xplat::jsArgAsObject(args, 0);
+        IHttpResource::Headers headers;
+        for (auto& header : params["headers"].items()) {
+          headers.emplace(header.first.getString(), header.second.getString());
+        }
 
-          resource->SendRequest(
-            params["method"].asString(),
-            params["url"].asString(),
-            std::move(headers),
-            std::move(bodyData),
-            params["responseType"].asString(),
-            params["incrementalUpdates"].asBool(),
-            static_cast<int64_t>(params["timeout"].asDouble()),
-            false,//withCredentials,
-            [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
-              cxxCallback({requestId});
-            }
-          );
-        } // If resource available
+        resource->SendRequest(
+          params["method"].asString(),
+          params["url"].asString(),
+          params["requestId"].asInt(),
+          std::move(headers),
+          std::move(params["data"]),
+          params["responseType"].asString(),
+          params["incrementalUpdates"].asBool(),
+          static_cast<int64_t>(params["timeout"].asDouble()),
+          params["withCredentials"].asBool(),
+          [cxxCallback = std::move(cxxCallback)](int64_t requestId) {
+            cxxCallback({requestId});
+          }
+        );
       }
     },
     {
@@ -162,10 +159,13 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        if (!holder->Module->m_isResourceSetup)
         {
-          resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
+          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
+          holder->Module->m_isResourceSetup = true;
         }
+
+        resource->AbortRequest(facebook::xplat::jsArgAsInt(args, 0));
       }
     },
     {
@@ -179,10 +179,13 @@ std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods()
         }
 
         auto resource = holder->Module->m_resource;
-        if (resource || (resource = CreateHttpResource(holder->Module->getInstance())))
+        if (!holder->Module->m_isResourceSetup)
         {
-          resource->ClearCookies();
+          SetUpHttpResource(resource, holder->Module->getInstance(), holder->Module->m_inspectableProperties);
+          holder->Module->m_isResourceSetup = true;
         }
+
+        resource->ClearCookies();
       }
     }
   };

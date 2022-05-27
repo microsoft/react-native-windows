@@ -4,6 +4,7 @@
 #include "WinRTHttpResource.h"
 
 #include <CppRuntimeOptions.h>
+#include <ReactPropertyBag.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
 #include <utilities.h>
@@ -17,10 +18,14 @@
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
+using folly::dynamic;
+
 using std::function;
 using std::scoped_lock;
 using std::shared_ptr;
 using std::string;
+using std::vector;
+using std::weak_ptr;
 
 using winrt::fire_and_forget;
 using winrt::hresult_error;
@@ -45,29 +50,25 @@ namespace Microsoft::React::Networking {
 
 #pragma region WinRTHttpResource
 
-// TODO: Check for multi-thread issues if there are multiple instances.
-/*static*/ int64_t WinRTHttpResource::s_lastRequestId = 0;
-
 WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
 
-WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient()) {}
+WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
 #pragma region IHttpResource
 
 void WinRTHttpResource::SendRequest(
     string &&method,
     string &&url,
+    int64_t requestId,
     Headers &&headers,
-    BodyData &&bodyData,
+    dynamic &&data,
     string &&responseType,
     bool useIncrementalUpdates,
     int64_t timeout,
     bool withCredentials,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
-  auto requestId = ++s_lastRequestId;
-
   // Enforce supported args
-  assert(responseType == "text" || responseType == "base64");
+  assert(responseType == "text" || responseType == "base64" | responseType == "blob");
 
   if (callback) {
     callback(requestId);
@@ -82,10 +83,10 @@ void WinRTHttpResource::SendRequest(
     auto concreteArgs = args.as<RequestArgs>();
     concreteArgs->RequestId = requestId;
     concreteArgs->Headers = std::move(headers);
-    concreteArgs->Body = std::move(bodyData);
+    concreteArgs->Data = std::move(data);
     concreteArgs->IncrementalUpdates = useIncrementalUpdates;
     concreteArgs->WithCredentials = withCredentials;
-    concreteArgs->IsText = responseType == "text";
+    concreteArgs->ResponseType = std::move(responseType);
     concreteArgs->Timeout = timeout;
 
     PerformSendRequest(std::move(request), args);
@@ -126,8 +127,8 @@ void WinRTHttpResource::ClearCookies() noexcept /*override*/ {
   // NOT IMPLEMENTED
 }
 
-void WinRTHttpResource::SetOnRequest(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
-  m_onRequest = std::move(handler);
+void WinRTHttpResource::SetOnRequestSuccess(function<void(int64_t requestId)> &&handler) noexcept /*override*/ {
+  m_onRequestSuccess = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response &&response)> &&handler) noexcept
@@ -138,6 +139,12 @@ void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response 
 void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string &&responseData)> &&handler) noexcept
 /*override*/ {
   m_onData = std::move(handler);
+}
+
+void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&responseData)> &&handler) noexcept
+/*override*/
+{
+  m_onDataDynamic = std::move(handler);
 }
 
 void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&errorMessage)> &&handler) noexcept
@@ -166,6 +173,28 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
 
   // Ensure background thread
   co_await winrt::resume_background();
+
+  // If URI handler is available, it takes over request processing.
+  if (auto uriHandler = self->m_uriHandler.lock()) {
+    auto uri = winrt::to_string(coRequest.RequestUri().ToString());
+    try {
+      if (uriHandler->Supports(uri, coReqArgs->ResponseType)) {
+        auto blob = uriHandler->Fetch(uri);
+        if (self->m_onDataDynamic && self->m_onRequestSuccess) {
+          self->m_onDataDynamic(coReqArgs->RequestId, std::move(blob));
+          self->m_onRequestSuccess(coReqArgs->RequestId);
+        }
+
+        co_return;
+      }
+    } catch (const hresult_error &e) {
+      if (self->m_onError)
+        co_return self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(e));
+    } catch (const std::exception &e) {
+      if (self->m_onError)
+        co_return self->m_onError(coReqArgs->RequestId, e.what());
+    }
+  }
 
   HttpMediaTypeHeaderValue contentType{nullptr};
   string contentEncoding;
@@ -201,20 +230,44 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   }
 
   IHttpContent content{nullptr};
-  if (BodyData::Type::String == coReqArgs->Body.Type) {
-    content = HttpStringContent{to_hstring(coReqArgs->Body.Data)};
-  } else if (BodyData::Type::Base64 == coReqArgs->Body.Type) {
-    auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(coReqArgs->Body.Data));
-    content = HttpBufferContent{buffer};
-  } else if (BodyData::Type::Uri == coReqArgs->Body.Type) {
-    auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(coReqArgs->Body.Data)});
-    auto stream = co_await file.OpenReadAsync();
-    content = HttpStreamContent{stream};
-  } else if (BodyData::Type::Form == coReqArgs->Body.Type) {
-    // #9535 - HTTP form data support
-  } else {
-    // BodyData::Type::Empty
-    // TODO: Error => unsupported??
+  auto &data = coReqArgs->Data;
+  if (!data.isNull()) {
+    auto bodyHandler = self->m_requestBodyHandler.lock();
+    if (bodyHandler && bodyHandler->Supports(data)) {
+      auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
+      dynamic blob;
+      try {
+        blob = bodyHandler->ToRequestBody(data, contentTypeString);
+      } catch (const std::invalid_argument &e) {
+        if (self->m_onError) {
+          self->m_onError(coReqArgs->RequestId, e.what());
+        }
+        co_return;
+      }
+      auto bytes = blob["bytes"];
+      auto byteVector = vector<uint8_t>(bytes.size());
+      for (auto &byte : bytes) {
+        byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
+      }
+      auto view = winrt::array_view<uint8_t>{byteVector};
+      auto buffer = CryptographicBuffer::CreateFromByteArray(view);
+      content = HttpBufferContent{std::move(buffer)};
+    } else if (!data["string"].empty()) {
+      content = HttpStringContent{to_hstring(data["string"].asString())};
+    } else if (!data["base64"].empty()) {
+      auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].asString()));
+      content = HttpBufferContent{std::move(buffer)};
+    } else if (!data["uri"].empty()) {
+      auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].asString())});
+      auto stream = co_await file.OpenReadAsync();
+      content = HttpStreamContent{std::move(stream)};
+    } else if (!data["form"].empty()) {
+      // #9535 - HTTP form data support
+      // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
+    } else {
+      // Assume empty request body.
+      // content = HttpStringContent{L""};
+    }
   }
 
   if (content != nullptr) {
@@ -224,12 +277,13 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     }
     if (!contentEncoding.empty()) {
       if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
-        if (m_onError) {
-          m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
-        }
+        if (self->m_onError)
+          self->m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
+
         co_return;
       }
     }
+
     if (!contentLength.empty()) {
       const auto contentLengthHeader = _atoi64(contentLength.c_str());
       content.Headers().ContentLength(contentLengthHeader);
@@ -255,7 +309,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     auto response = sendRequestOp.GetResults();
     if (response) {
       if (self->m_onResponse) {
-        string url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
+        auto url = to_string(response.RequestMessage().RequestUri().AbsoluteUri());
 
         // Gather headers for both the response content and the response itself
         // See Invoke-WebRequest PowerShell cmdlet or Chromium response handling
@@ -278,30 +332,54 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
       auto reader = DataReader{inputStream};
 
-      if (coReqArgs->IsText) {
+      // #9510 - 10mb limit on fetch
+      co_await reader.LoadAsync(10 * 1024 * 1024);
+
+      // Let response handler take over, if set
+      if (auto responseHandler = self->m_responseHandler.lock()) {
+        if (responseHandler->Supports(coReqArgs->ResponseType)) {
+          auto bytes = vector<uint8_t>(reader.UnconsumedBufferLength());
+          reader.ReadBytes(bytes);
+          auto blob = responseHandler->ToResponseData(std::move(bytes));
+
+          if (self->m_onDataDynamic && self->m_onRequestSuccess) {
+            self->m_onDataDynamic(coReqArgs->RequestId, std::move(blob));
+            self->m_onRequestSuccess(coReqArgs->RequestId);
+          }
+
+          co_return;
+        }
+      }
+
+      auto isText = coReqArgs->ResponseType == "text";
+      if (isText) {
         reader.UnicodeEncoding(UnicodeEncoding::Utf8);
       }
 
-      // #9510 - 10mb limit on fetch
-      co_await reader.LoadAsync(10 * 1024 * 1024);
-      auto length = reader.UnconsumedBufferLength();
+      // #9510 - We currently accumulate all incoming request data in 10MB chunks.
+      uint32_t segmentSize = 10 * 1024 * 1024;
+      string responseData;
+      winrt::Windows::Storage::Streams::IBuffer buffer;
+      uint32_t length;
+      do {
+        co_await reader.LoadAsync(segmentSize);
+        length = reader.UnconsumedBufferLength();
 
-      if (coReqArgs->IsText) {
-        std::vector<uint8_t> data(length);
-        reader.ReadBytes(data);
-        string responseData = string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        if (isText) {
+          auto data = std::vector<uint8_t>(length);
+          reader.ReadBytes(data);
 
-        if (self->m_onData) {
-          self->m_onData(coReqArgs->RequestId, std::move(responseData));
+          responseData += string(Common::Utilities::CheckedReinterpretCast<char *>(data.data()), data.size());
+        } else {
+          buffer = reader.ReadBuffer(length);
+          auto data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+          responseData += to_string(std::wstring_view(data));
         }
-      } else {
-        auto buffer = reader.ReadBuffer(length);
-        auto data = CryptographicBuffer::EncodeToBase64String(buffer);
-        auto responseData = to_string(std::wstring_view(data));
+      } while (length > 0);
 
-        if (self->m_onData) {
-          self->m_onData(coReqArgs->RequestId, std::move(responseData));
-        }
+      if (self->m_onData) {
+        self->m_onData(coReqArgs->RequestId, std::move(responseData));
       }
     } else {
       if (self->m_onError) {
@@ -323,23 +401,63 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   }
 
   self->UntrackResponse(coReqArgs->RequestId);
+} // PerformSendRequest
+
+#pragma region IHttpModuleProxy
+
+void WinRTHttpResource::AddUriHandler(shared_ptr<IUriHandler> /*uriHandler*/) noexcept /*override*/
+{
+  // TODO: Implement custom URI handling.
 }
+
+void WinRTHttpResource::AddRequestBodyHandler(shared_ptr<IRequestBodyHandler> requestBodyHandler) noexcept /*override*/
+{
+  m_requestBodyHandler = weak_ptr<IRequestBodyHandler>(requestBodyHandler);
+}
+
+void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> responseHandler) noexcept /*override*/
+{
+  m_responseHandler = weak_ptr<IResponseHandler>(responseHandler);
+}
+
+#pragma endregion IHttpModuleProxy
 
 #pragma endregion WinRTHttpResource
 
 #pragma region IHttpResource
 
-/*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
+/*static*/ shared_ptr<IHttpResource> IHttpResource::Make(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
+  using namespace winrt::Microsoft::ReactNative;
+  using winrt::Windows::Web::Http::HttpClient;
+
+  shared_ptr<WinRTHttpResource> result;
+
   if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
-    return std::make_shared<WinRTHttpResource>();
+    result = std::make_shared<WinRTHttpResource>();
   } else {
     auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
     OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
     auto opFilter = winrt::make<OriginPolicyHttpFilter>();
-    auto client = winrt::Windows::Web::Http::HttpClient{opFilter};
+    auto client = HttpClient{opFilter};
 
-    return std::make_shared<WinRTHttpResource>(std::move(client));
+    result = std::make_shared<WinRTHttpResource>(std::move(client));
   }
+
+  // Register resource as HTTP module proxy.
+  if (inspectableProperties) {
+    auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
+    auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
+    auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
+    propBag.Set(propId, std::move(moduleProxy));
+  }
+
+  return result;
+}
+
+/*static*/ shared_ptr<IHttpResource> IHttpResource::Make() noexcept {
+  auto inspectableProperties = IInspectable{nullptr};
+  return Make(inspectableProperties);
 }
 
 #pragma endregion IHttpResource
