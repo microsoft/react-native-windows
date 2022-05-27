@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 26 May 2022 05:08:36 GMT and should not be manually modified.
+This log was last generated on Fri, 27 May 2022 05:08:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.505
+
+Fri, 27 May 2022 05:08:38 GMT
+
+### Changes
+
+- Change CG registration for folly and fmt from `other` to `git` (jthysell@microsoft.com)
+- fixes focusable visual (email not defined)
 
 ## 0.0.0-canary.504
 
