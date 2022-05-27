@@ -440,6 +440,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
 
  private: // Shared NAPI call helpers
   napi_value RunScript(napi_value script, const char *sourceUrl);
+  napi_value RunScriptBuffer(const std::shared_ptr<const facebook::jsi::Buffer> &buffer, const char *sourceUrl);
   std::vector<uint8_t> SerializeScript(napi_value script, const char *sourceUrl);
   napi_value RunSerializedScript(span<const uint8_t> serialized, napi_value source, const char *sourceUrl);
   napi_ext_ref CreateReference(napi_value value) const;
@@ -620,9 +621,7 @@ NapiJsiRuntime::NapiJsiRuntime(napi_env env) noexcept : m_env{env} {
 
 Value NapiJsiRuntime::evaluateJavaScript(const shared_ptr<const Buffer> &buffer, const string &sourceUrl) {
   EnvScope envScope{m_env};
-  napi_value script = CreateStringUtf8(buffer->data(), buffer->size());
-  napi_value result = RunScript(script, sourceUrl.c_str());
-
+  napi_value result = RunScriptBuffer(buffer, sourceUrl.c_str());
   return ToJsiValue(result);
 }
 
@@ -1402,6 +1401,21 @@ bool NapiJsiRuntime::SetException(string_view message) const noexcept {
 napi_value NapiJsiRuntime::RunScript(napi_value script, const char *sourceUrl) {
   napi_value result{};
   CHECK_NAPI(napi_ext_run_script(m_env, script, sourceUrl, &result));
+
+  return result;
+}
+
+napi_value NapiJsiRuntime::RunScriptBuffer(
+    const std::shared_ptr<const facebook::jsi::Buffer> &buffer,
+    const char *sourceUrl) {
+  napi_ext_buffer napiBuffer{};
+  napiBuffer.buffer_object = NativeObjectWrapper<std::shared_ptr<const facebook::jsi::Buffer>>::Wrap(
+      std::shared_ptr<const facebook::jsi::Buffer>{buffer});
+  napiBuffer.data = buffer->data();
+  napiBuffer.byte_size = buffer->size();
+
+  napi_value result{};
+  CHECK_NAPI(napi_ext_run_script_buffer(m_env, &napiBuffer, sourceUrl, &result));
 
   return result;
 }
