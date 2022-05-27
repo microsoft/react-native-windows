@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "Fix RuntimeOptions for RNW Desktop",
   "packageName": "react-native-windows",
   "email": "vmorozov@microsoft.com",
