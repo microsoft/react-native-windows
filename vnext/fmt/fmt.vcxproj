@@ -111,14 +111,13 @@
     <Message Importance="High" Text="Generating $([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json." Condition="!Exists('$([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json')" />
     <PropertyGroup>
       <CGManifestText>{
-    "Registrations": [ 
+    "Registrations": [
         {
-            "Component": { 
-                "Type": "other", 
-                "Other": {
-                  "Name": "fmt",
-                  "Version": "$(FmtVersion)",
-                  "DownloadUrl": "https://github.com/fmtlib/fmt/archive/refs/tags/$(FmtVersion).zip"
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/fmtlib/fmt",
+                  "CommitHash": "$(FmtCommitHash)"
                 }
             },
             "DevelopmentDependency": false
