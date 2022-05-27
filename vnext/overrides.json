@@ -81,6 +81,10 @@
     },
     {
       "type": "platform",
+      "file": "src/IntegrationTests/BlobTest.js"
+    },
+    {
+      "type": "platform",
       "file": "src/IntegrationTests/DummyTest.js"
     },
     {
@@ -93,7 +97,15 @@
     },
     {
       "type": "platform",
+      "file": "src/IntegrationTests/websocket_integration_test_server_blob.js"
+    },
+    {
+      "type": "platform",
       "file": "src/IntegrationTests/WebSocketBinaryTest.js"
+    },
+    {
+      "type": "platform",
+      "file": "src/IntegrationTests/WebSocketBlobTest.js"
     },
     {
       "type": "platform",

@@ -4,7 +4,6 @@
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
 
-#include <RuntimeOptions.h>
 #include "Unicode.h"
 #include "Utilities.h"
 
