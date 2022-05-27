@@ -6,11 +6,10 @@
  */
 
 import * as http from 'http';
-import {CDPDebugger} from './CDPDebugger';
+import {getDebugTargets, CDPDebugger} from './CDPDebugger';
 import {Metro} from './MetroAutomation';
 import {PlaygroundDebugSettings, selectPackage} from './PlaygroundAutomation';
 import {testLog} from './TestLog';
-import {getDebugTargets} from './TestUtilities';
 
 const metro = new Metro();
 
@@ -22,21 +21,14 @@ afterAll(() => {
   metro.stop();
 });
 
-// beforeEach(() => {});
-// afterEach(() => {});
-
-// helper to deactivate test methods
-function skipTest(_msg: string, _fn: () => {}) {}
-
 test('debug target properties', async () => {
   testLog.message(`test debug target properties`);
 
-  const settings = new PlaygroundDebugSettings({
+  const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
-  await settings.initialize();
   try {
     await selectPackage('Samples\\debugTest01');
 
@@ -70,19 +62,18 @@ test('debug target properties', async () => {
       expect(debugTarget.hasOwnProperty('vm')).toBeTruthy();
     }
   } finally {
-    await settings.uninitialize();
+    await settings.restore();
   }
 });
 
-test('enable-disable', async () => {
-  testLog.message(`test enable-disable`);
+test('enable, disable', async () => {
+  testLog.message(`test enable, disable`);
 
-  const settings = new PlaygroundDebugSettings({
+  const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
-  await settings.initialize();
   try {
     await selectPackage('Samples\\debugTest01');
 
@@ -95,19 +86,18 @@ test('enable-disable', async () => {
 
     dbg.close();
   } finally {
-    await settings.uninitialize();
+    await settings.restore();
   }
 });
 
-test('pause-resume', async () => {
-  testLog.message(`test pause-resume`);
+test('pause, resume', async () => {
+  testLog.message(`test pause, resume`);
 
-  const settings = new PlaygroundDebugSettings({
+  const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
-  await settings.initialize();
   try {
     await selectPackage('Samples\\debugTest01');
 
@@ -158,19 +148,18 @@ test('pause-resume', async () => {
 
     dbg.close();
   } finally {
-    await settings.uninitialize();
+    await settings.restore();
   }
 });
 
-skipTest('breakpoint', async () => {
-  testLog.message(`test breakpoint`);
+test('set, remove breakpoint', async () => {
+  testLog.message(`test set, remove breakpoint`);
 
-  const settings = new PlaygroundDebugSettings({
+  const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
     directDebugging: true,
     jsEngine: 'Hermes',
   });
-  await settings.initialize();
   try {
     await selectPackage('Samples\\debugTest01');
 
@@ -183,8 +172,7 @@ skipTest('breakpoint', async () => {
     await dbg.debuggerPause();
     await pausedEvent;
 
-    // currently not working, submitting to indicate intended API usage
-    const [breakpointId] = await dbg.debuggerSetBreakpointByUrl(
+    const {breakpointId} = await dbg.debuggerSetBreakpointByUrl(
       /* url */ 'http://localhost:8081/Samples/debugTest01.bundle?platform=windows&dev=true&hot=true&inlineSourceMap=true',
       /* urlRegex */ '',
       /* lineNumber */ 1392,
@@ -192,7 +180,9 @@ skipTest('breakpoint', async () => {
       /* scriptHash */ '',
     );
 
-    expect(breakpointId).toBe(123);
+    expect(breakpointId).toBe('1');
+
+    await dbg.debuggerRemoveBreakpoint(breakpointId);
 
     const resumedEvent = dbg.expectEvent('resumed');
     await dbg.debuggerResume();
@@ -202,6 +192,6 @@ skipTest('breakpoint', async () => {
 
     dbg.close();
   } finally {
-    await settings.uninitialize();
+    await settings.restore();
   }
 });

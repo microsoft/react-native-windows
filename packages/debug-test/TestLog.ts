@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
+ * @file Supplemental, file-based logging component for test execution.
+ *
  * @format
  */
 
@@ -9,19 +11,34 @@ import fs from '@react-native-windows/fs';
 
 // REVIEW: Does jest have a more suitable logging facility?
 
-export const testLog = new (class {
+class TestLog {
   constructor() {
-    this.fileName = `${__dirname}/test.${this.formatDateTime(new Date())}.log`;
+    // this.fileName = `${__dirname}/test.${this.formatDateTime(new Date())}.log`;
+    this.fileName = `${process.env.TEMP}/RNW-Debug-Test.${this.formatDateTime(
+      new Date(),
+    )}.log`;
   }
 
+  /**
+   * Logs a message.
+   * @param message Message to log.
+   */
   public message(message: string) {
     this.write(message);
   }
 
+  /**
+   * Logs a warning.
+   * @param message Warning to log
+   */
   public warning(message: string) {
     this.write(`WARNING: ${message}`);
   }
 
+  /**
+   * Logs an error.
+   * @param message Error to log
+   */
   public error(message: string) {
     this.write(`ERROR: ${message}`);
   }
@@ -53,4 +70,6 @@ export const testLog = new (class {
   }
 
   private readonly fileName: string;
-})();
+}
+
+export const testLog = new TestLog();

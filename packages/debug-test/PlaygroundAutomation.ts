@@ -2,6 +2,8 @@
  * Copyright (c) Microsoft Corporation.
  * Licensed under the MIT License.
  *
+ * @file Contains code to automate the RNW UWP Playground application.
+ *
  * @format
  */
 
@@ -40,6 +42,12 @@ async function setCheckedState(
   testLog.message(`"${checkBoxName}" has checkbox state ${checkedState}`);
 }
 
+/**
+ * Selects (loads) a package in the Playground app.
+ *
+ * @param packageName Name of the package to load.
+ * @returns Promise indicating that the package was loaded.
+ */
 export async function selectPackage(packageName: string): Promise<void> {
   testLog.message(`selecting "${packageName}" bundle`);
 
@@ -79,7 +87,10 @@ export async function selectPackage(packageName: string): Promise<void> {
   );
 }
 
-type DebugSettings = {
+/**
+ * Debug settings for the Playground app.
+ */
+export type DebugSettings = {
   // value representing the "Web Debugger" checkbox
   webDebugger?: boolean;
 
@@ -93,21 +104,33 @@ type DebugSettings = {
   jsEngine?: string;
 };
 
+/**
+ * RAII-style class to set and restore debug settings in the Playground app.
+ */
 export class PlaygroundDebugSettings {
-  public constructor(settings: DebugSettings) {
+  private constructor(settings: DebugSettings) {
     this.newSettings = settings;
   }
 
-  public destructor() {}
-
-  public async initialize() {
-    await this.fetchSettings(this.oldSettings);
+  /**
+   * Saves the current debug settings and effects the desired debug settings.
+   * @param settings Desired debug settings.
+   */
+  public static async set(
+    settings: DebugSettings,
+  ): Promise<PlaygroundDebugSettings> {
+    const obj = new PlaygroundDebugSettings(settings);
+    await obj.fetchSettings(obj.oldSettings);
     testLog.message('adjusting settings...');
-    await this.adjustSettings(this.newSettings);
+    await obj.adjustSettings(obj.newSettings);
     testLog.message('...done adjusting settings');
+    return obj;
   }
 
-  public async uninitialize() {
+  /**
+   * Restores initial debug settings.
+   */
+  public async restore() {
     testLog.message('restoring settings...');
     await this.adjustSettings(this.oldSettings);
     testLog.message('...done restoring settings');
