@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix RuntimeOptions for RNW Desktop",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
