@@ -10,6 +10,7 @@
 // https://jestjs.io/docs/en/configuration.html
 
 const assetTransform = 'react-native-windows/jest/assetFileTransformer.js';
+const reactNativeTransform = './custom-transformer.js';
 const defaultTransform = [
   'babel-jest',
   require('@rnw-scripts/babel-node-config'),
@@ -33,11 +34,13 @@ module.exports = {
   // A map from regular expressions to paths to transformers
   transform: {
     '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
-    'node_modules\\\\@?react-native\\\\.*': defaultTransform,
-    '@react-native-windows\\\\tester\\\\.*': defaultTransform,
-    'vnext\\\\.*': defaultTransform,
+    'node_modules\\\\@?react-native\\\\.*': reactNativeTransform,
+    '@react-native-windows\\\\tester\\\\.*': reactNativeTransform,
+    'vnext\\\\.*': reactNativeTransform,
     '^.+\\.[jt]sx?$': defaultTransform,
   },
+
+  snapshotResolver: 'react-native-windows/jest-snapshot-resolver.js',
 
   // An array of regexp pattern strings that are matched against all source file paths before transformation.
   // If the file path matches any of the patterns, it will not be transformed.
@@ -51,7 +54,7 @@ module.exports = {
 
   // A list of paths to modules that run some code to configure or set up the testing framework
   // before each test file in the suite is executed
-  setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
+  setupFilesAfterEnv: ['./jest.setup.js'],
 
   testEnvironmentOptions: {
     app: 'RNTesterApp',

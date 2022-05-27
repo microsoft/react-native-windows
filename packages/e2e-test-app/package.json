@@ -44,6 +44,7 @@
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.70.1",
+    "metro-react-native-babel-transformer": "^0.71.0",
     "prettier": "^2.4.1",
     "react-test-renderer": "^18.0.0",
     "sanitize-filename": "^1.6.3",
