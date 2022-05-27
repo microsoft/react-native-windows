@@ -240,7 +240,7 @@ TouchEventHandler::ReactPointer TouchEventHandler::CreateReactPointer(
   auto point = args.GetCurrentPoint(sourceElement);
   auto props = point.Properties();
 
-  ReactPointer pointer;
+  ReactPointer pointer{};
   pointer.target = tag;
   pointer.identifier = m_touchId++;
   pointer.pointerId = point.PointerId();

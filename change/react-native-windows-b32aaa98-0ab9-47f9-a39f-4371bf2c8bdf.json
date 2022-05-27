@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Expose LoadingState on ReactContext",
+  "comment": "Fix RuntimeOptions for RNW Desktop",
   "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
+  "email": "vmorozov@microsoft.com",
   "dependentChangeType": "patch"
 }

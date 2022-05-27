@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Support PreparedScriptStore for V8 Node-API.",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -10,12 +10,22 @@ parameters:
     Large:
       name: rnw-pool-8-microsoft
       demands: ImageOverride -equals rnw-img-node16
+- name: forceCodeQL
+  displayName: Force CodeQL to rebuild databases
+  type: boolean
+  default: false
 
 variables:
   - template: variables/windows.yml
   - group: RNW Secrets
   - name: Codeql.Enabled
     value: true
+  - ${{ if eq(parameters.forceCodeQL, true) }}:
+    - name: Codeql.Cadence
+      value: 0
+  - ${{ if eq(parameters.forceCodeQL, false) }}:
+    - name: Codeql.Cadence
+      value: 120 # In hours, default to only run every 5 days
 
 trigger: none
 pr: none
@@ -24,6 +34,7 @@ jobs:
   - job: RnwUniversalCompliance
     displayName: RNW Universal Compliance
     pool: ${{ parameters.AgentPool.Large }}
+    timeoutInMinutes: 360 # Compliance tasks recommend to 3x usual build timeout
 
     steps:
       - template: templates/prepare-js-env.yml

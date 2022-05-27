@@ -43,38 +43,45 @@ LooperScheduler::~LooperScheduler() noexcept {
 /*static*/ void LooperScheduler::RunLoop(const Mso::WeakPtr<LooperScheduler> &weakSelf) noexcept {
   for (;;) {
     if (auto self = weakSelf.GetStrongPtr()) {
-      if (auto queue = self->m_queue.GetStrongPtr()) {
-        DispatchQueue q{Mso::CntPtr(queue)};
-        DispatchTask task;
-        while (queue->TryDequeTask(task)) {
-          if (auto &func = self->m_settings.TaskStarting) {
-            func(q);
+      if (auto queue = DispatchQueue{self->m_queue.GetStrongPtr()}) {
+        for (;;) {
+          DispatchTask task;
+          if (!(*GetRawState(queue))->TryDequeTask(task)) {
+            break;
           }
 
-          queue->InvokeTask(std::move(task), std::nullopt);
+          if (auto &func = self->m_settings.TaskStarting) {
+            func(queue);
+          }
+
+          (*GetRawState(queue))->InvokeTask(std::move(task), std::nullopt);
 
           if (auto &func = self->m_settings.TaskCompleted) {
-            func(q);
+            func(queue);
           }
         }
-
-        if (self->m_isShutdown) {
-          break;
-        }
-
-        if (auto &func = self->m_settings.IdleWaitStarting) {
-          func(q);
-        }
-
-        self->m_wakeUpEvent.Wait();
-        self->m_wakeUpEvent.Reset();
-
-        if (auto &func = self->m_settings.IdleWaitCompleted) {
-          func(q);
-        }
-
-        continue;
       }
+
+      if (self->m_isShutdown) {
+        break;
+      }
+
+      if (auto &func = self->m_settings.IdleWaitStarting) {
+        if (auto queue = DispatchQueue{self->m_queue.GetStrongPtr()}) {
+          func(queue);
+        }
+      }
+
+      self->m_wakeUpEvent.Wait();
+      self->m_wakeUpEvent.Reset();
+
+      if (auto &func = self->m_settings.IdleWaitCompleted) {
+        if (auto queue = DispatchQueue{self->m_queue.GetStrongPtr()}) {
+          func(queue);
+        }
+      }
+
+      continue;
     }
 
     break;
