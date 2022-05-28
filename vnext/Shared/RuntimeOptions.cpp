@@ -94,7 +94,7 @@ void __cdecl MicrosoftReactSetRuntimeOptionString(const char *name, const char *
     g_runtimeOptionStrings.erase(name);
 }
 
-const bool __cdecl MicrosoftReactGetRuntimeOptionBool(const char *name) noexcept {
+bool __cdecl MicrosoftReactGetRuntimeOptionBool(const char *name) noexcept {
   scoped_lock lock{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionInts.find(name);
   if (itr != g_runtimeOptionInts.end())
@@ -103,7 +103,7 @@ const bool __cdecl MicrosoftReactGetRuntimeOptionBool(const char *name) noexcept
   return false;
 }
 
-const int32_t __cdecl MicrosoftReactGetRuntimeOptionInt(const char *name) noexcept {
+int32_t __cdecl MicrosoftReactGetRuntimeOptionInt(const char *name) noexcept {
   scoped_lock lock{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionInts.find(name);
   if (itr != g_runtimeOptionInts.end())
@@ -112,7 +112,10 @@ const int32_t __cdecl MicrosoftReactGetRuntimeOptionInt(const char *name) noexce
   return 0;
 }
 
-void MicrosoftReactGetRuntimeOptionString(const char *name, MicrosoftReactGetStringCallback callBack, void *state) {
+void __cdecl MicrosoftReactGetRuntimeOptionString(
+    const char *name,
+    MicrosoftReactGetStringCallback callBack,
+    void *state) {
   scoped_lock lock{g_runtimeOptionsMutex};
   auto itr = g_runtimeOptionStrings.find(name);
   if (itr != g_runtimeOptionStrings.cend()) {
