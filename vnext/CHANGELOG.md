@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 27 May 2022 16:26:29 GMT and should not be manually modified.
+This log was last generated on Mon, 30 May 2022 15:09:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.21
+
+Mon, 30 May 2022 15:09:34 GMT
+
+### Patches
+
+- [0.66] Change CG registration for folly and fmt from `other` to `git` (jthysell@microsoft.com)
+- Expose LoadingState on ReactContext (acoates@microsoft.com)
+- Support PreparedScriptStore for V8 Node-API. (vmorozov@microsoft.com)
 
 ## 0.66.20
 
