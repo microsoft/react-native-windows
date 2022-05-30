@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 07 Feb 2022 16:12:32 GMT and should not be manually modified.
+This log was last generated on Mon, 30 May 2022 15:09:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.65.13
+
+Mon, 30 May 2022 15:09:30 GMT
+
+### Patches
+
+- [0.65] Change CG registration for folly and fmt from `other` to `git` (jthysell@microsoft.com)
 
 ## 0.65.12
 
