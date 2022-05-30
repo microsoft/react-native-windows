@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 May 2022 15:09:33 GMT",
+      "tag": "react-native-windows_v0.67.10",
+      "version": "0.67.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1d8934a3235695ce7ef5796976a2e5c0413d3ef8",
+            "comment": "Expose LoadingState on ReactContext"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6d6015d5f24540e355160a5be62af1cc1a3903b0",
+            "comment": "Support PreparedScriptStore for V8 Node-API."
+          },
+          {
+            "author": "julio@rochsquadron.net",
+            "package": "react-native-windows",
+            "commit": "932c3b9e6732b83d60b608d3d44fed7f4cc6a6de",
+            "comment": "Implement Blob module (#9352)"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "13824a0805d2e9bd2eef44852029b193daf56664",
+            "comment": "Fix RuntimeOptions for RNW Desktop"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "93498b92be5a6900b06b35b20c4e81ba18a10647",
+            "comment": "[0.67] Change CG registration for folly and fmt from `other` to `git`"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 May 2022 15:10:57 GMT",
       "tag": "react-native-windows_v0.67.9",
       "version": "0.67.9",
