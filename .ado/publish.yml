@@ -52,7 +52,9 @@ jobs:
       - template: templates/checkout-full.yml
 
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
-        displayName: 'Run Credential Scanner'
+        displayName: '⚖️ Run CredScan'
+        inputs:
+          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
 
       - powershell: gci env:/BUILD_*
         displayName: Show build information
