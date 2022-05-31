@@ -96,7 +96,7 @@ jobs:
           result: PoliCheck.xml
           optionsFC: 1
           optionsXS: 1
-          # optionsUEPath: $(Build.SourcesDirectory)\PolicheckExclusions.xml
+          optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PolicheckExclusions.xml
           optionsHMENABLE: 0
         continueOnError: true
 
@@ -106,7 +106,7 @@ jobs:
         displayName: '⚖️ Run CredScan'
         inputs:
           outputFormat: pre
-          # suppressionsFile: LocalSuppressions.json
+          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
           batchSize: 20
           debugMode: false
         continueOnError: true
