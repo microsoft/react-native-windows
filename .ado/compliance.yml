@@ -96,7 +96,7 @@ jobs:
           result: PoliCheck.xml
           optionsFC: 1
           optionsXS: 1
-          optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PolicheckExclusions.xml
+          optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckExclusions.xml
           optionsHMENABLE: 0
         continueOnError: true
 
