@@ -27,7 +27,7 @@ JsValueRef __stdcall nowHookJNF(
     void * /*callbackState*/) {
   assert(argumentCount == 1);
   double now = nowHook != nullptr ? nowHook() : 0;
-  JsValueRef value;
+  JsValueRef value = nullptr;
   CHAKRA_ASSERTDO(JsDoubleToNumber(now, &value));
   return value;
 }

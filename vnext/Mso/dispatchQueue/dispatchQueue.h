@@ -22,6 +22,7 @@ using DispatchTask = VoidFunctor;
 // Forward declarations
 struct DispatchLocalValueGuard;
 struct DispatchQueue;
+struct DispatchQueueSettings;
 struct DispatchSuspendGuard;
 struct DispatchTaskBatch;
 template <typename TInvoke, typename TCancel>
@@ -85,6 +86,13 @@ struct DispatchLocalValueGuard {
   void **m_tlsValue;
 };
 
+struct DispatchQueueSettings {
+  Mso::Functor<void(DispatchQueue const &)> TaskStarting;
+  Mso::Functor<void(DispatchQueue const &)> TaskCompleted;
+  Mso::Functor<void(DispatchQueue const &)> IdleWaitStarting;
+  Mso::Functor<void(DispatchQueue const &)> IdleWaitCompleted;
+};
+
 //! Serial or concurrent dispatch queue main API.
 //! Use Post or InvokeElsePost to post tasks for invocation.
 //! Use BeginTaskBatching to start tasks batching in current thread for the dispatch queue.
@@ -117,7 +125,7 @@ struct DispatchQueue {
   static DispatchQueue MakeSerialQueue() noexcept;
 
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
-  static DispatchQueue MakeLooperQueue() noexcept;
+  static DispatchQueue MakeLooperQueue(DispatchQueueSettings const &settings = {}) noexcept;
 
   //! Get a dispatch queue for the current UI thread. The result is null if the UI thread has no system UI thread
   //! dispatcher.
@@ -417,7 +425,7 @@ struct IDispatchQueueStatic : IUnknown {
   virtual DispatchQueue MakeSerialQueue() noexcept = 0;
 
   //! Create new looper DispatchQueue on top of new std::thread. It owns the thread until shutdown.
-  virtual DispatchQueue MakeLooperQueue() noexcept = 0;
+  virtual DispatchQueue MakeLooperQueue(DispatchQueueSettings const &settings) noexcept = 0;
 
   //! Get a dispatch queue for the current UI thread. The result is null if the UI thread has no system UI thread
   //! dispatcher.
@@ -545,8 +553,8 @@ inline /*static*/ DispatchQueue DispatchQueue::MakeSerialQueue() noexcept {
   return IDispatchQueueStatic::Instance()->MakeSerialQueue();
 }
 
-inline /*static*/ DispatchQueue DispatchQueue::MakeLooperQueue() noexcept {
-  return IDispatchQueueStatic::Instance()->MakeLooperQueue();
+inline /*static*/ DispatchQueue DispatchQueue::MakeLooperQueue(DispatchQueueSettings const &settings) noexcept {
+  return IDispatchQueueStatic::Instance()->MakeLooperQueue(settings);
 }
 
 inline /*static*/ DispatchQueue DispatchQueue::GetCurrentUIThreadQueue() noexcept {

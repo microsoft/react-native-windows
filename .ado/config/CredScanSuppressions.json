@@ -1,0 +1,9 @@
+{
+    "tool": "Credential Scanner",
+    "suppressions": [
+        {
+            "file": "\\node_modules\\react-native\\template\\android\\app\\debug.keystore",
+            "_justification": "Debug secret created and consumed by third-party library"
+        }
+    ]
+}

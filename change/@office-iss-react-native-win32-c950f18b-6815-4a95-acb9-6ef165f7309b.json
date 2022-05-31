@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Build/dependency fixes",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "ngerlem@microsoft.com",
-  "dependentChangeType": "patch"
-}

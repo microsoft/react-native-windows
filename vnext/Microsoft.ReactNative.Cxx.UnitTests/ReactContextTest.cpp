@@ -107,6 +107,10 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
+  LoadingState LoadingState() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   std::wstring Module;
   std::wstring Method;
   JSValue Args;

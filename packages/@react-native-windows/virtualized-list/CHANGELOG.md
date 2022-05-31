@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Tue, 10 May 2022 05:08:46 GMT and should not be manually modified.
+This log was last generated on Thu, 12 May 2022 05:09:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.43
+
+Thu, 12 May 2022 05:09:44 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/just-task to v2.2.4
+- Bump react-native-platform-override to v1.6.12
 
 ## 0.0.0-canary.42
 

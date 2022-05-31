@@ -142,8 +142,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     resource->SendRequest(
       string{http::to_string(clientArgs.Method).data()},
       string{server1Args.Url},
+      0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      { IHttpResource::BodyData::Type::String, "REQUEST_CONTENT" },
+      {},                         /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
       1000,                       /*timeout*/
@@ -195,8 +196,9 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     resource->SendRequest(
       string{http::to_string(clientArgs.Method).data()},
       string{serverArgs.Url},
+      0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      { IHttpResource::BodyData::Type::String, "REQUEST_CONTENT" },
+      {},                         /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
       1000,                       /*timeout*/
@@ -290,10 +292,12 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     resource->SendRequest(
       "TRACE",
       url,
+      0,                          /*requestId*/
       {
         {"ValidHeader", "AnyValue"}
       },
-      {} /*bodyData*/,
+      {},                         /*data*/
+      //{} /*bodyData*/,
       "text",
       false /*useIncrementalUpdates*/,
       1000 /*timeout*/,

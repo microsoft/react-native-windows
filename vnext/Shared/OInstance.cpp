@@ -67,14 +67,16 @@ using namespace facebook;
 using namespace Microsoft::JSI;
 
 using std::make_shared;
+using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
 namespace Microsoft::React {
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept {
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
   if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
     return std::make_unique<NetworkingModule>();
   } else {
-    return std::make_unique<HttpModule>();
+    return std::make_unique<HttpModule>(inspectableProperties);
   }
 }
 
@@ -353,7 +355,6 @@ InstanceImpl::InstanceImpl(
 #endif
         }
         case JSIEngineOverride::Chakra:
-        case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
@@ -541,18 +542,21 @@ InstanceImpl::~InstanceImpl() {
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
+  auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetHttpModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(); },
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateHttpModule(transitionalProps);
+      },
       nativeQueue));
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetWebSocketModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateWebSocketModule();
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateWebSocketModule(transitionalProps);
       },
       nativeQueue));
 
@@ -612,6 +616,18 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       m_innerInstance,
       StatusBarManagerModule::Name,
       []() { return std::make_unique<StatusBarManagerModule>(); },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetBlobModuleName(),
+      [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+      nativeQueue));
+
+  modules.push_back(std::make_unique<CxxNativeModule>(
+      m_innerInstance,
+      Microsoft::React::GetFileReaderModuleName(),
+      [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
       nativeQueue));
 
   return modules;

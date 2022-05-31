@@ -1,8 +1,83 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Wed, 11 May 2022 05:08:52 GMT and should not be manually modified.
+This log was last generated on Sat, 28 May 2022 05:08:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.118
+
+Sat, 28 May 2022 05:08:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.80
+
+## 0.0.117
+
+Fri, 27 May 2022 05:08:38 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.79
+
+## 0.0.116
+
+Thu, 26 May 2022 05:08:37 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.78
+
+## 0.0.115
+
+Wed, 25 May 2022 05:08:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.77
+
+## 0.0.114
+
+Sat, 21 May 2022 05:08:46 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.76
+
+## 0.0.113
+
+Wed, 18 May 2022 05:09:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.75
+
+## 0.0.112
+
+Tue, 17 May 2022 05:08:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.74
+
+## 0.0.111
+
+Fri, 13 May 2022 05:09:03 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.73
+
+## 0.0.110
+
+Thu, 12 May 2022 05:09:43 GMT
+
+### Patches
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.1.72
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/just-task to v2.2.4
 
 ## 0.0.109
 

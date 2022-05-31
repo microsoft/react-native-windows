@@ -679,7 +679,26 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 void ReactInstanceWin::InitJSMessageThread() noexcept {
   m_instance.Exchange(std::make_shared<facebook::react::Instance>());
 
+  winrt::Microsoft::ReactNative::IReactNotificationService service = m_reactContext->Notifications();
+  Mso::DispatchQueueSettings queueSettings{};
+  queueSettings.TaskStarting = [service](Mso::DispatchQueue const &) noexcept {
+    service.SendNotification(
+        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherTaskStartingEventName(), nullptr, nullptr);
+  };
+  queueSettings.IdleWaitStarting = [service](Mso::DispatchQueue const &) noexcept {
+    service.SendNotification(
+        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitStartingEventName(),
+        nullptr,
+        nullptr);
+  };
+  queueSettings.IdleWaitCompleted = [service](Mso::DispatchQueue const &) noexcept {
+    service.SendNotification(
+        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitCompletedEventName(),
+        nullptr,
+        nullptr);
+  };
   auto scheduler = Mso::MakeJSCallInvokerScheduler(
+      queueSettings,
       m_instance.Load()->getJSCallInvoker(),
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));

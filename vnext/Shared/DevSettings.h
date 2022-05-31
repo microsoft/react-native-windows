@@ -24,7 +24,11 @@ namespace react {
 enum class JSIEngineOverride : int32_t {
   Default = 0, // No JSI, will use the legacy ExecutorFactory
   Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
+
+#if 0 // Deprecated
   ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
+#endif
+
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
   V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
