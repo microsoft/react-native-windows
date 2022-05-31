@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 28 May 2022 05:08:33 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.506",
+      "version": "0.0.0-canary.506",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7709186ad868ff8c98f140eb2af9871e392b99d7",
+            "comment": "Support PreparedScriptStore for V8 Node-API."
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ae050ffd04143557a120ea24738e66c6cbb72e37",
+            "comment": "Fix RuntimeOptions for RNW Desktop"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 27 May 2022 05:08:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.505",
       "version": "0.0.0-canary.505",

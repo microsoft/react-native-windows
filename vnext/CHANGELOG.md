@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 27 May 2022 05:08:38 GMT and should not be manually modified.
+This log was last generated on Sat, 28 May 2022 05:08:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.506
+
+Sat, 28 May 2022 05:08:33 GMT
+
+### Changes
+
+- Support PreparedScriptStore for V8 Node-API. (vmorozov@microsoft.com)
+- Fix RuntimeOptions for RNW Desktop (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.505
 
