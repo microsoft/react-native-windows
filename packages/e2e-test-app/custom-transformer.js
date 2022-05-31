@@ -8,16 +8,18 @@
 
 'use strict';
 
+const generate = require('@babel/generator').default;
 const transformer = require('metro-react-native-babel-transformer');
 module.exports = {
-  process(file /*: string */) /*: {code: string, ...} */ {
-    transformer.transform({
+  process(src /*: string */, file /*: string */) /*: {code: string, ...} */ {
+    const {ast} = transformer.transform({
       filename: file,
       options: {
         inlineRequires: true,
       },
+      src,
     });
 
-    return transformer;
+    return generate(ast, {}, src);
   },
 };

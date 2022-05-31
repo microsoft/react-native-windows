@@ -54,7 +54,7 @@ module.exports = {
 
   // A list of paths to modules that run some code to configure or set up the testing framework
   // before each test file in the suite is executed
-  setupFilesAfterEnv: ['./jest.setup.js'],
+  setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
     app: 'RNTesterApp',
