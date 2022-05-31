@@ -8,17 +8,11 @@
  */
 
 import fs from '@react-native-windows/fs';
+import {formatDateTime} from './Utilities';
 
 // REVIEW: Does jest have a more suitable logging facility?
 
-class TestLog {
-  constructor() {
-    // this.fileName = `${__dirname}/test.${this.formatDateTime(new Date())}.log`;
-    this.fileName = `${process.env.TEMP}/RNW-Debug-Test.${this.formatDateTime(
-      new Date(),
-    )}.log`;
-  }
-
+export const testLog = new (class {
   /**
    * Logs a message.
    * @param message Message to log.
@@ -51,16 +45,6 @@ class TestLog {
     });
   }
 
-  private formatDateTime(dt: Date) {
-    const YYYY = ('000' + dt.getFullYear()).slice(-4);
-    const MM = ('0' + (dt.getMonth() + 1)).slice(-2);
-    const DD = ('0' + dt.getDate()).slice(-2);
-    const hh = ('0' + dt.getHours()).slice(-2);
-    const mm = ('0' + dt.getMinutes()).slice(-2);
-    const ss = ('0' + dt.getSeconds()).slice(-2);
-    return `${YYYY}${MM}${DD}-${hh}${mm}${ss}`;
-  }
-
   private formatTime(dt: Date) {
     const hh = ('0' + dt.getHours()).slice(-2);
     const mm = ('0' + dt.getMinutes()).slice(-2);
@@ -69,7 +53,10 @@ class TestLog {
     return `${hh}:${mm}:${ss}.${ms}`;
   }
 
-  private readonly fileName: string;
-}
-
-export const testLog = new TestLog();
+  /**
+   * Path and name of the test log file. Default value intended to be overwritten by a test-suite-specific name.
+   */
+  public fileName: string = `${process.env.TEMP}/test.${formatDateTime(
+    new Date(),
+  )}.log`;
+})();

@@ -8,8 +8,15 @@
 import * as http from 'http';
 import {getDebugTargets, CDPDebugger} from './CDPDebugger';
 import {Metro} from './MetroAutomation';
+import * as path from 'path';
 import {PlaygroundDebugSettings, selectPackage} from './PlaygroundAutomation';
 import {testLog} from './TestLog';
+import {formatDateTime} from './Utilities';
+
+testLog.fileName = `${process.env.TEMP}/${path.basename(
+  __filename,
+  '.ts',
+)}.${formatDateTime(new Date())}.log`;
 
 const metro = new Metro();
 
