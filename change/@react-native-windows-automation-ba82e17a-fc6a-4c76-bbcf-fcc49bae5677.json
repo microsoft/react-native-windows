@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "create tests and test utilities for RNW debugging features",
+  "packageName": "@react-native-windows/automation",
+  "email": "aeulitz@microsoft.com",
+  "dependentChangeType": "none"
+}
