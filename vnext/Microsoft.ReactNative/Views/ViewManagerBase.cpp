@@ -63,6 +63,11 @@ YGSize DefaultYogaSelfMeasureFunc(
   try {
     winrt::Windows::Foundation::Size availableSpace(constrainToWidth, constrainToHeight);
 
+    auto cn = winrt::get_class_name(element);
+    if (cn == L"Microsoft.ReactNative.NativeMeasuringPanel") {
+      auto x = 0;
+    }
+
     // Clear out current size so it doesn't constrain the measurement
     auto widthProp = xaml::FrameworkElement::WidthProperty();
     auto heightProp = xaml::FrameworkElement::HeightProperty();
@@ -357,8 +362,17 @@ void ViewManagerBase::SetLayoutProps(
   ViewPanel::SetLeft(element, left);
   ViewPanel::SetTop(element, top);
 
-  fe.Width(width);
-  fe.Height(height);
+  if (RequiresNativeLayout()) {
+    auto x = 0;
+    auto s = fe.DesiredSize();
+    auto [w, h] = fe.ActualSize();
+    return;
+
+  } else 
+  {
+    fe.Width(width);
+    fe.Height(height);
+  }
 
   // Fire Events
   if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {

@@ -129,12 +129,20 @@ winrt::Size ViewPanel::MeasureOverride(winrt::Size /*availableSize*/) {
   // All children are given as much size as they'd like
   winrt::Size childConstraint(INFINITY, INFINITY);
 
-  for (xaml::UIElement child : Children())
+  winrt::Size nativeSize{};
+  for (xaml::UIElement child : Children()) {
     child.Measure(childConstraint);
+    //if (winrt::get_class_name(child) == L"Microsoft.ReactNative.NativeMeasuringPanel") {
+      const auto childSize = child.DesiredSize();
+      nativeSize.Width = std::max(nativeSize.Width, childSize.Width);
+      nativeSize.Height += childSize.Height;
+   // }
+  }
 
   // ViewPanels never choose their size, that is completely up to the parent -
   // so return no size
-  return winrt::Size(0, 0);
+  return nativeSize;
+  //return winrt::Size(0, 0);
 }
 
 winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
@@ -160,7 +168,8 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
       // We expect elements to have been arranged by yoga which means their
       // Width & Height are set
       xaml::FrameworkElement fe = child.try_as<xaml::FrameworkElement>();
-      if (fe != nullptr) {
+      bool isNative = winrt::get_class_name(child) == L"Microsoft.ReactNative.NativeMeasuringPanel";
+      if (fe != nullptr && !isNative) {
         childWidth = fe.Width();
         childHeight = fe.Height();
       }
@@ -178,6 +187,7 @@ winrt::Size ViewPanel::ArrangeOverride(winrt::Size finalSize) {
     float adjustedLeft = static_cast<float>(ViewPanel::GetLeft(child)) - outerBorderLeft;
     float adjustedTop = static_cast<float>(ViewPanel::GetTop(child)) - outerBorderTop;
 
+    
     child.Arrange(
         winrt::Rect(adjustedLeft, adjustedTop, static_cast<float>(childWidth), static_cast<float>(childHeight)));
   }

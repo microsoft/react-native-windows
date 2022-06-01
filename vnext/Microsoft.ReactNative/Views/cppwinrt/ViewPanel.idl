@@ -56,7 +56,7 @@ namespace Microsoft.ReactNative
 
   [default_interface]
   [webhosthidden]
-  runtimeclass NativeMeasuringPanel : XAML_NAMESPACE.Controls.ContentControl {
+  runtimeclass NativeMeasuringPanel : XAML_NAMESPACE.Controls.Grid {
     NativeMeasuringPanel();
   }
 
