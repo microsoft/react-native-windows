@@ -4,4 +4,5 @@ steps:
     inputs:
       alertWarningLevel: Medium
       scanType: 'Register'
+      ignoreDirectories: 'node_modules\react-native\template' # Addresses improper check-in of Gemfile.lock
       failOnAlert: $(FailCGOnAlert)
