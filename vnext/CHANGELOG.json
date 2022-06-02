@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 May 2022 15:09:21 GMT",
+      "tag": "react-native-windows_v0.69.0-preview.4",
+      "version": "0.69.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c8c5bdac3c25318f1bb6866983d37df6ad2a1dc7",
+            "comment": "Change CG registration for folly and fmt from `other` to `git`"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "80b4e4bdcb429d5dd9fddd36bbef6521827610a8",
+            "comment": "remove JSI overrides"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b07314f087a64b491c1a44c7d5d7a4c0a06948ef",
+            "comment": "Support PreparedScriptStore for V8 Node-API."
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0f30a882f13adf5b91fb8207500e7ea69a4a9dd",
+            "comment": "Expose LoadingState on ReactContext"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "59a037b68c485e6a4ee165ea5694cef78c75bf41",
+            "comment": "Fix RuntimeOptions for RNW Desktop"
+          },
+          {
+            "author": "julio@rochsquadron.net",
+            "package": "react-native-windows",
+            "commit": "21024877a48d15456a8b7f5fdfd3ab022646d213",
+            "comment": "Implement Blob module (#9352)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 May 2022 15:09:38 GMT",
       "tag": "react-native-windows_v0.69.0-preview.3",
       "version": "0.69.0-preview.3",
