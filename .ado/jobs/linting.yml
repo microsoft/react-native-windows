@@ -19,7 +19,9 @@ jobs:
       - template: ../templates/checkout-shallow.yml
 
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
-        displayName: 'Run Credential Scanner'
+        displayName: '⚖️ Run CredScan'
+        inputs:
+          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
 
       - template: ../templates/prepare-js-env.yml
 

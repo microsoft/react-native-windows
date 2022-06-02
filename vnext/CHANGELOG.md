@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 28 May 2022 05:08:33 GMT and should not be manually modified.
+This log was last generated on Thu, 02 Jun 2022 05:08:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.507
+
+Thu, 02 Jun 2022 05:08:55 GMT
+
+### Changes
+
+- Update NuGet config files to reduce Secure Supply Chain Analysis warnings (jthysell@microsoft.com)
 
 ## 0.0.0-canary.506
 

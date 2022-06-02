@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 02 Jun 2022 05:08:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.507",
+      "version": "0.0.0-canary.507",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a815159e75b2561f6cdd2fdd87832796db9ac72f",
+            "comment": "Update NuGet config files to reduce Secure Supply Chain Analysis warnings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 28 May 2022 05:08:33 GMT",
       "tag": "react-native-windows_v0.0.0-canary.506",
       "version": "0.0.0-canary.506",
