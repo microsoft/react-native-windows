@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.69.0-rc.0",
+  "baseVersion": "0.69.0-rc.3",
   "overrides": [
     {
       "type": "copy",
