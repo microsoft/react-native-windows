@@ -325,6 +325,19 @@ void ViewManagerBase::NotifyUnimplementedProperty(
 #endif // DEBUG
 }
 
+static xaml::DependencyObject UnwrapNativeView(xaml::DependencyObject o) {
+  if (auto grid = o.try_as<xaml::Controls::Grid>()) {
+    if (grid.Children().Size() == 1) {
+      if (auto panel = grid.Children().GetAt(0).try_as<winrt::Microsoft::ReactNative::NativeMeasuringPanel>()) {
+        if (panel.Children().Size() == 1) {
+          return panel.Children().GetAt(0);
+        }
+      }
+    }
+  }
+  return nullptr;
+}
+
 void ViewManagerBase::SetLayoutProps(
     ShadowNodeBase &nodeToUpdate,
     const XamlView &viewToUpdate,
@@ -341,6 +354,10 @@ void ViewManagerBase::SetLayoutProps(
         return;
       }
     }
+  }
+
+  if (auto unwrapped = UnwrapNativeView(viewToUpdate)) {
+    auto cn = winrt::get_class_name(unwrapped);
   }
 
   auto element = viewToUpdate.as<xaml::UIElement>();
