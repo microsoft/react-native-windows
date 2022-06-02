@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": "true",
 	"scripts": {
-		"test": "jest",
+		"debugtest": "jest",
 		"lint": "rnw-scripts lint",
 		"lint:fix": "rnw-scripts lint:fix"
 	},
