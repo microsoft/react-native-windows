@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Fri, 03 Jun 2022 05:08:28 GMT",
+      "tag": "@react-native-windows/automation_v0.1.92",
+      "version": "0.1.92",
+      "comments": {
+        "none": [
+          {
+            "author": "aeulitz@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "c8c839a9429ab37c81da74507dd4155f4c7a5efd",
+            "comment": "create tests and test utilities for RNW debugging features"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Jun 2022 05:08:56 GMT",
       "tag": "@react-native-windows/automation_v0.1.92",
       "version": "0.1.92",
