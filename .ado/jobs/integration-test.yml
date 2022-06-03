@@ -10,6 +10,11 @@ parameters:
     default:
       - BuildEnvironment: PullRequest
         Matrix:
+          - Name: Arm64Debug
+            BuildPlatform: ARM64
+            BuildConfiguration: Debug
+            DeployOptions: --no-deploy # We don't have Arm agents
+            UseHermes: false
           - Name: X64Debug
             BuildPlatform: x64
             BuildConfiguration: Debug
@@ -20,6 +25,11 @@ parameters:
             BuildConfiguration: Release
             DeployOptions: --deploy-from-layout # We avoid certs for AppX generation
             UseHermes: true
+          - Name: X86Debug
+            BuildPlatform: x86
+            BuildConfiguration: Debug
+            DeployOptions:
+            UseHermes: false
       - BuildEnvironment: Continuous
         Matrix:
           - Name: Arm64Debug
