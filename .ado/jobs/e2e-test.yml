@@ -11,15 +11,22 @@ jobs:
   - job: E2ETest
     displayName: E2E Test App
     strategy:
-      matrix:
-        # Arm E2E does not build on non-arm agents
-        # Arm64:
-        #   BuildPlatform: ARM64
-        x64:
-          BuildPlatform: x64
-        x86:
-          BuildPlatform: x86
+      ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+          # Arm E2E does not build on non-arm agents
+          # Arm64:
+          #   BuildPlatform: ARM64
+          x64:
+            BuildPlatform: x64
+          x86:
+            BuildPlatform: x86
+        # End Continuous only
         ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+          # Arm E2E does not build on non-arm agents
+          # Arm64:
+          #   BuildPlatform: ARM64
+          x64:
+            BuildPlatform: x64
+            DeployOption: --deploy-from-layout
           x86:
             BuildPlatform: x86
             DeployOption: --deploy-from-layout
