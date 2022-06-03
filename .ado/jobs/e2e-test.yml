@@ -13,11 +13,19 @@ parameters:
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
-            DeployOptions: --deploy-from-layout
+            DeployOptions:
             UseHermes: false
           - Name: X64Hermes
             BuildPlatform: x64
-            DeployOptions: --deploy-from-layout
+            DeployOptions:
+            UseHermes: true
+          - Name: X86Chakra
+            BuildPlatform: x86
+            DeployOptions:
+            UseHermes: false
+          - Name: X86Hermes
+            BuildPlatform: x86
+            DeployOptions:
             UseHermes: true
       - BuildEnvironment: Continuous
         Matrix:
