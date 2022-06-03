@@ -1036,13 +1036,13 @@ function convertPointerEventToMouseEvent(input: PointerEvent): MouseEvent {
   } = input.nativeEvent;
   // Windows]
   return {
-    ...synthEvent,
+    ...input,
     nativeEvent: {
       clientX,
       clientY,
       pageX: clientX,
       pageY: clientY,
-      timestamp,
+      timestamp: input.timeStamp,
       // [Windows
       target:
         input.nativeEvent.target ??

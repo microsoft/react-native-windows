@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220516-2016-4994b8b5d",
+  "baseVersion": "0.0.0-20220603-2051-11141b8b3",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "545721e61623eb749b7e91f32e80589c037839f2"
+      "baseHash": "9be4f8d311bf05345f77d3281bec4c3ff14c1b8b"
     },
     {
       "type": "patch",
@@ -279,7 +279,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "a90dc6359e00399895d4497890bf0737816dbc21"
+      "baseHash": "8f43acf9edea7e518119e6bd3cd2ddf3b3ac4e53"
     },
     {
       "type": "patch",
@@ -406,7 +406,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizeUtils-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizeUtils-test.js",
-      "baseHash": "85961f7eaaeb41e8dc36487ff5c4ab0383010aa4",
+      "baseHash": "6495ce722e6a7d44bb1527bf56b426a2c446ff9d",
       "issue": 0
     },
     {
@@ -452,7 +452,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "87349e7a4175694c25df80538885fac1e0df96d1",
+      "baseHash": "a95da72539dafb69b7e0126110949720547b9a09",
       "issue": 4379
     },
     {
@@ -488,7 +488,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-      "baseHash": "d9fb8f9555d98ec994eaa472fce31594d37ddfd6"
+      "baseHash": "cdb7a19ab99f0e74e46331476f523fae1d62a02b"
     },
     {
       "type": "copy",
