@@ -16,38 +16,35 @@ jobs:
         - template: ../variables/vs2019.yml
       displayName: Verify Cli
       strategy:
-        matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-          # Start Continuous only
-          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            Arm64DebugCpp:
-              language: cpp
-              configuration: Debug
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-            Arm64DebugCs:
-              language: cs
-              configuration: Debug
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-            Arm64ReleaseCpp:
-              language: cpp
-              configuration: Release
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-            Arm64ReleaseCs:
-              language: cs
-              configuration: Release
-              platform: arm64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments: --no-deploy # We don't have Arm agents
-          # End Continuous only
+        matrix:
+          Arm64DebugCpp:
+            language: cpp
+            configuration: Debug
+            platform: arm64
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          Arm64DebugCs:
+            language: cs
+            configuration: Debug
+            platform: arm64
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          Arm64ReleaseCpp:
+            language: cpp
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          Arm64ReleaseCs:
+            language: cs
+            configuration: Release
+            platform: arm64
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments: --no-deploy # We don't have Arm agents
           X64ReleaseCpp:
             language: cpp
             configuration: Release
@@ -76,38 +73,34 @@ jobs:
             projectType: app
             additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
             additionalRunArguments:
-          # Start Continuous only
-          ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-            X86ReleaseCpp:
-              language: cpp
-              configuration: Release
-              platform: x86
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-            X86ReleaseCs:
-              language: cs
-              configuration: Release
-              platform: x86
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-            X64DebugCpp:
-              language: cpp
-              configuration: Debug
-              platform: x64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-            X64DebugCs:
-              language: cs
-              configuration: Debug
-              platform: x64
-              projectType: app
-              additionalInitArguments:
-              additionalRunArguments:
-          # End Continuous only
-
+          X86ReleaseCpp:
+            language: cpp
+            configuration: Release
+            platform: x86
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments:
+          X86ReleaseCs:
+            language: cs
+            configuration: Release
+            platform: x86
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments:
+          X64DebugCpp:
+            language: cpp
+            configuration: Debug
+            platform: x64
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments:
+          X64DebugCs:
+            language: cs
+            configuration: Debug
+            platform: x64
+            projectType: app
+            additionalInitArguments:
+            additionalRunArguments:
           X86DebugCppLib:
             language: cpp
             configuration: Debug
@@ -122,7 +115,6 @@ jobs:
             projectType: lib
             additionalInitArguments:
             additionalRunArguments: --no-autolink --no-deploy
-
           X86DebugCppWinUI3:
             language: cpp
             configuration: Debug
