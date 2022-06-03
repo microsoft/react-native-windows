@@ -16,32 +16,26 @@ jobs:
       - template: variables/vs2019.yml
     displayName: Universal PR
     strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        X64Debug:
+      matrix:
+        - Name: Arm64Debug
           BuildConfiguration: Debug
-          BuildPlatform: x64
-        X64Release:
+          BuildPlatform: ARM64
+        - Name: Arm64Release
           BuildConfiguration: Release
-          BuildPlatform: x64
-        X86Debug:
+          BuildPlatform: ARM64
+        - Name: X64Debug
           BuildConfiguration: Debug
-          BuildPlatform: x86
+          BuildPlatform: X64
+        - Name: X64Release
+          BuildConfiguration: Release
+          BuildPlatform: X64
+        - Name: X86Debug
+          BuildConfiguration: Debug
+          BuildPlatform: X86
           LayoutHeaders: true
-        X86Release:
+        - Name: X86Release
           BuildConfiguration: Release
-          BuildPlatform: x86
-        ArmDebug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM
-        ArmRelease:
-          BuildConfiguration: Release
-          BuildPlatform: ARM
-        Arm64Debug:
-          BuildConfiguration: Debug
-          BuildPlatform: ARM64
-        Arm64Release:
-          BuildConfiguration: Release
-          BuildPlatform: ARM64
+          BuildPlatform: X86
     pool:
       vmImage: $(VmImage)
     timeoutInMinutes: 60
