@@ -11,7 +11,8 @@ jobs:
   - job: E2ETest
     displayName: E2E Test App
     strategy:
-      ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
+      matrix:
+        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
           # Arm E2E does not build on non-arm agents
           # Arm64:
           #   BuildPlatform: ARM64
