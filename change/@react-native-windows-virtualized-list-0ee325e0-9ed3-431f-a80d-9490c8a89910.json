@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate 5-16-22",
+  "packageName": "@react-native-windows/virtualized-list",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}

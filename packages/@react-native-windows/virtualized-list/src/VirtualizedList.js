@@ -31,16 +31,17 @@ import type {ScrollResponderType} from 'react-native/Libraries/Components/Scroll
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
 import type {
   ViewabilityConfig,
-  ViewToken,
   ViewabilityConfigCallbackPair,
+  ViewToken,
 } from './ViewabilityHelper';
+
 import type {LayoutEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 import {
+  type ChildListState,
+  type ListDebugInfo,
   VirtualizedListCellContextProvider,
   VirtualizedListContext,
   VirtualizedListContextProvider,
-  type ChildListState,
-  type ListDebugInfo,
 } from './VirtualizedListContext.js';
 
 type Item = any;
@@ -1192,14 +1193,22 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   _averageCellLength = 0;
   // Maps a cell key to the set of keys for all outermost child lists within that cell
   _cellKeysToChildListKeys: Map<string, Set<string>> = new Map();
-  _cellRefs = {};
+  _cellRefs: {[string]: null | CellRenderer} = {};
   _fillRateHelper: FillRateHelper;
-  _frames = {};
+  _frames: {
+    [string]: {
+      inLayout?: boolean,
+      index: number,
+      length: number,
+      offset: number,
+    },
+  } = {};
   _footerLength = 0;
-  _hasDoneInitialScroll = false;
+  // Used for preventing scrollToIndex from being called multiple times for initialScrollIndex
+  _hasTriggeredInitialScrollToIndex = false;
   _hasInteracted = false;
   _hasMore = false;
-  _hasWarned = {};
+  _hasWarned: {[string]: boolean} = {};
   _headerLength = 0;
   _hiPriInProgress: boolean = false; // flag to prevent infinite hiPri cell limit update
   _highestMeasuredFrameIndex = 0;
@@ -1222,6 +1231,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     timestamp: 0,
     velocity: 0,
     visibleLength: 0,
+    zoomScale: 1,
   };
   _scrollRef: ?React.ElementRef<any> = null;
   _sentEndForContentLength = 0;
@@ -1532,7 +1542,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       height > 0 &&
       this.props.initialScrollIndex != null &&
       this.props.initialScrollIndex > 0 &&
-      !this._hasDoneInitialScroll
+      !this._hasTriggeredInitialScrollToIndex
     ) {
       if (this.props.contentOffset == null) {
         this.scrollToIndex({
@@ -1540,7 +1550,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           index: this.props.initialScrollIndex,
         });
       }
-      this._hasDoneInitialScroll = true;
+      this._hasTriggeredInitialScrollToIndex = true;
     }
     if (this.props.onContentSizeChange) {
       this.props.onContentSizeChange(width, height);
@@ -1618,6 +1628,9 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       );
       this._hasWarned.perf = true;
     }
+
+    const zoomScale = e.nativeEvent.zoomScale;
+
     this._scrollMetrics = {
       contentLength,
       dt,
@@ -1626,6 +1639,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       timestamp,
       velocity,
       visibleLength,
+      zoomScale,
     };
     this._updateViewableItems(this.props.data);
     if (!this.props) {
@@ -1747,6 +1761,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
         | $TEMPORARY$object<{first: number, last: number}>
       );
       const {contentLength, offset, visibleLength} = this._scrollMetrics;
+      const distanceFromEnd = contentLength - visibleLength - offset;
       if (!isVirtualizationDisabled) {
         // If we run this with bogus data, we'll force-render window {first: 0, last: 0},
         // and wipe out the initialNumToRender rendered elements.
@@ -1757,7 +1772,17 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           // we'll wipe out the initialNumToRender rendered elements starting at initialScrollIndex.
           // So let's wait until we've scrolled the view to the right place. And until then,
           // we will trust the initialScrollIndex suggestion.
-          if (!this.props.initialScrollIndex || this._hasDoneInitialScroll) {
+
+          // Thus, we want to recalculate the windowed render limits if any of the following hold:
+          // - initialScrollIndex is undefined or is 0
+          // - initialScrollIndex > 0 AND scrolling is complete
+          // - initialScrollIndex > 0 AND the end of the list is visible (this handles the case
+          //   where the list is shorter than the visible area)
+          if (
+            !this.props.initialScrollIndex ||
+            this._scrollMetrics.offset ||
+            Math.abs(distanceFromEnd) < Number.EPSILON
+          ) {
             newState = computeWindowedRenderLimits(
               this.props.data,
               this.props.getItemCount,
@@ -1770,7 +1795,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           }
         }
       } else {
-        const distanceFromEnd = contentLength - visibleLength - offset;
         const renderAhead =
           distanceFromEnd < onEndReachedThreshold * visibleLength
             ? maxToRenderPerBatchOrDefault(this.props.maxToRenderPerBatch)
@@ -1864,15 +1888,15 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       'Tried to get frame for out of range index ' + index,
     );
     const item = getItem(data, index);
-    let frame = item && this._frames[this._keyExtractor(item, index)];
+    const frame = item && this._frames[this._keyExtractor(item, index)];
     if (!frame || frame.index !== index) {
       if (getItemLayout) {
-        frame = getItemLayout(data, index);
+        /* $FlowFixMe[prop-missing] (>=0.63.0 site=react_native_fb) This comment
+         * suppresses an error found when Flow v0.63 was deployed. To see the error
+         * delete this comment and run Flow. */
+        return getItemLayout(data, index);
       }
     }
-    /* $FlowFixMe[prop-missing] (>=0.63.0 site=react_native_fb) This comment
-     * suppresses an error found when Flow v0.63 was deployed. To see the error
-     * delete this comment and run Flow. */
     return frame;
   };
 

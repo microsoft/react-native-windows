@@ -23,9 +23,9 @@
   },
   "peerDependencies": {
     "eslint": "*",
+    "jest": "*",
     "prettier": "*",
-    "typescript": "*",
-    "jest": "*"
+    "typescript": "*"
   },
   "peerDependenciesMeta": {
     "jest": {

@@ -40,10 +40,10 @@ function AccessibilityInfoExample(props): React.Node {
   let myElement = React.createRef();
 
   React.useEffect(() => {
-    AccessibilityInfo.isReduceMotionEnabled().done(isEnabled => {
+    AccessibilityInfo.isReduceMotionEnabled().then(isEnabled => {
       setIsReduceMotionEnabled(isEnabled);
     });
-    AccessibilityInfo.isScreenReaderEnabled().done(isEnabled => {
+    AccessibilityInfo.isScreenReaderEnabled().then(isEnabled => {
       setIsScreenReaderEnabled(isEnabled);
     });
   }, [setIsReduceMotionEnabled, setIsScreenReaderEnabled]);

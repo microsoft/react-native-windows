@@ -18,12 +18,13 @@
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "react": "18.0.0",
-    "react-native": "0.0.0-20220501-2027-d992ae044",
+    "react-native": "0.0.0-20220516-2016-4994b8b5d",
     "react-native-windows": "^0.0.0-canary.507",
     "react-native-xaml": "^0.0.63"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
+    "@babel/generator": "^7.18.2",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
@@ -44,6 +45,7 @@
     "eslint": "^7.32.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.70.1",
+    "metro-react-native-babel-transformer": "^0.71.0",
     "prettier": "^2.4.1",
     "react-test-renderer": "^18.0.0",
     "sanitize-filename": "^1.6.3",
