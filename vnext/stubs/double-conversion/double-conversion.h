@@ -7,8 +7,8 @@
 #pragma once
 
 #include <glog/logging.h>
-#include <sstream>
 #include <charconv>
+#include <sstream>
 
 static inline void nyi() {
   int *a = nullptr;
