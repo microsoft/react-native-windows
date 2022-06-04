@@ -128,12 +128,11 @@ class StringToDoubleConverter {
     // nyi();
   }
 
-  double StringToDouble(const char *s, int l, int *consumed) {
-    size_t idx = 0;
+  double StringToDouble(const char *buf, int length, int *consumed) {
     double d{};
-    auto ret = std::from_chars(s, s + l, d);
+    auto ret = std::from_chars(buf, buf + length, d);
     if (ret.ec == std::errc{}) {
-      *consumed = static_cast<int>(ret.ptr - s);
+      *consumed = static_cast<int>(ret.ptr - buf);
     } else {
       *consumed = 0;
       assert(false && "Conversion to double failed");
@@ -141,12 +140,11 @@ class StringToDoubleConverter {
     return d;
   }
 
-  float StringToFloat(const char *s, int l, int *consumed) {
-    size_t idx = 0;
+  float StringToFloat(const char *buf, int length, int *consumed) {
     float f{};
-    auto ret = std::from_chars(s, s + l, f);
+    auto ret = std::from_chars(buf, buf + length, f);
     if (ret.ec == std::errc{}) {
-      *consumed = static_cast<int>(ret.ptr - s);
+      *consumed = static_cast<int>(ret.ptr - buf);
     } else {
       *consumed = 0;
       assert(false && "Conversion to float failed");
