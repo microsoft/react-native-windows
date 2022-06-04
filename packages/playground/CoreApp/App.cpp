@@ -4,8 +4,10 @@
 // This app demonstrates the usage of the Microsoft.ReactNative CoreApp APIs
 // use the preprocessor defines WITH_MODULES (true/false), FROM_JSON (true/false),
 // or neither to exercise the RNStartCoreAppWithModules, RNStartCoreApp, and RNStartCoreAppFromConfigJson APIs.
+#define DEFINE_MODULES
+#define FROM_JSON
 
-#ifdef WITH_MODULES
+#ifdef DEFINE_MODULES
 #include <ModuleRegistration.h>
 #include <NativeModules.h>
 #include <winrt/Microsoft.ReactNative.h>
@@ -27,11 +29,19 @@ struct ThisAppPackageProvider
     }
   }
 };
+
+extern "C" __declspec(dllexport) void *__cdecl MySpecialPackageProvider() {
+  auto provider = winrt::make<ThisAppPackageProvider>();
+  void *abi{nullptr};
+  winrt::copy_to_abi(provider, abi);
+  return abi;
+}
+
 #endif
 
 #ifdef FROM_JSON
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {
-  RNStartCoreAppFromConfigJson(L"app.config.json");
+  RNStartCoreAppFromConfigJson(L"app.config.json", nullptr);
 }
 #else
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {

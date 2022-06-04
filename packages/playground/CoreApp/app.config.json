@@ -2,5 +2,11 @@
   "componentName": "RNTesterApp",
   "jsBundleFile": "Samples\\rntester",
   "useDeveloperSupport": true,
-  "useWebDebugger":  false
+  "useWebDebugger": false,
+  "nativeModules": [
+    {
+      "moduleContainer": "",
+      "factory": "MySpecialPackageProvider"
+    }
+  ]
 }
