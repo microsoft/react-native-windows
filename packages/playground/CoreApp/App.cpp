@@ -5,6 +5,8 @@
 // use the preprocessor defines WITH_MODULES (true/false), FROM_JSON (true/false),
 // or neither to exercise the RNStartCoreAppWithModules, RNStartCoreApp, and RNStartCoreAppFromConfigJson APIs.
 #define DEFINE_MODULES
+
+//#define WITH_MODULES
 #define FROM_JSON
 
 #ifdef DEFINE_MODULES

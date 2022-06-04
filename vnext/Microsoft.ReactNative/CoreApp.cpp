@@ -87,21 +87,21 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, core
 }
 
 void SetFromJson(JsonObject json, wchar_t const *key, wchar_t const *&appValue) {
-  if (json.HasKey(key)) {
-    appValue = _wcsdup(json.GetNamedString(key).c_str());
+  if (auto v = json.TryLookup(key); v && v.ValueType() == JsonValueType::String) {
+    appValue = _wcsdup(v.GetString().c_str());
   }
 }
 
 void SetFromJson(JsonObject json, wchar_t const *key, bool &appValue) {
-  if (json.HasKey(key)) {
-    appValue = json.GetNamedBoolean(key);
+  if (auto v = json.TryLookup(key); v && v.ValueType() == JsonValueType::Boolean) {
+    appValue = v.GetBoolean();
   }
 }
 
 template <typename T>
 std::enable_if_t<std::is_arithmetic_v<T>> SetFromJson(JsonObject json, wchar_t const *key, T &appValue) {
-  if (json.HasKey(key)) {
-    appValue = static_cast<T>(json.GetNamedNumber(key));
+  if (auto v = json.TryLookup(key); v && v.ValueType() == JsonValueType::Number) {
+    appValue = static_cast<T>(v.GetNumber());
   }
 }
 
@@ -129,96 +129,56 @@ extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *con
   SET_FROM_JSON(sourceBundlePort);
   SET_FROM_JSON(sourceBundleHost);
 
-  if (json.HasKey(L"nativeModules")) {
-    auto nativeModules = json.GetNamedArray(L"nativeModules");
-    app->packageProvidersAbiCount = static_cast<decltype(app->packageProvidersAbiCount)>(nativeModules.Size());
-    app->packageProvidersAbi = new void *[nativeModules.Size()];
-    auto idx = 0;
-    for (const auto &nm_value : nativeModules) {
-      //  IJsonValue has a GetObject method which gets shadowed by GDI's GetObject -> GetObjectW macro
-      auto nm = nm_value.GetObject();
-      auto container = nm.GetNamedString(L"moduleContainer");
-      auto factoryName = winrt::to_string(nm.GetNamedString(L"factory"));
+  if (auto v = json.TryLookup(L"nativeModules"); v && v.ValueType() == JsonValueType::Array) {
+    auto nativeModules = v.GetArray();
+    decltype(app->packageProvidersAbiCount) countAdded = 0;
+    const auto count = static_cast<decltype(countAdded)>(nativeModules.Size());
 
-      HMODULE mod{};
-      if (container != L"") {
-        mod = LoadLibrary(container.c_str());
-      } else {
-        mod = GetModuleHandle(nullptr);
-      }
+    app->packageProvidersAbi = new void *[count];
+    for (std::remove_const_t<decltype(count)> index = 0; index < count; index++) {
+      if (auto nm_value = nativeModules.GetAt(index); nm_value.ValueType() == JsonValueType::Object) {
+        auto nm = nm_value.GetObject();
 
-      if (mod) {
-        auto factory = reinterpret_cast<void *(__cdecl *)()>(GetProcAddress(mod, factoryName.c_str()));
-        auto packageProviderAbi = factory();
-        app->packageProvidersAbi[idx++] = packageProviderAbi;
+        const wchar_t *container{nullptr};
+        SetFromJson(nm, L"moduleContainer", container);
+
+        const wchar_t *factoryName{nullptr};
+        SetFromJson(nm, L"factory", factoryName);
+
+        HMODULE mod{};
+        if (container != nullptr) {
+          mod = reinterpret_cast<HMODULE>(WINRT_IMPL_LoadLibraryW(container));
+        } else {
+          mod = GetModuleHandle(nullptr);
+        }
+
+        if (mod) {
+          if (auto factory = reinterpret_cast<void *(__cdecl *)()>(
+                  WINRT_IMPL_GetProcAddress(mod, winrt::to_string(factoryName).c_str()))) {
+            auto packageProviderAbi = factory();
+            app->packageProvidersAbi[countAdded++] = packageProviderAbi;
+          } else {
+            assert(false && "Could not find native module factory function");
+          }
+        } else {
+          assert(false && "Could not find native module library");
+        }
       }
     }
+    app->packageProvidersAbiCount = countAdded;
   }
-
+    
   RNStartCoreAppWithCoreApp(app, launched);
 }
 
 NORETURN void __cdecl RNStartCoreAppWithModules(coreAppCallback launched, coreAppCallback addModules) {
-  xaml::Application::Start([launched, addModules](auto &&) {
-    winrt::Windows::Foundation::IInspectable outer{nullptr};
-    const auto &app = winrt::make<react::implementation::ReactApplication>(outer);
+  auto rnca = std::make_shared<RNCoreApp>();
 
-    const auto impl_app = winrt::get_self<react::implementation::ReactApplication>(app);
-
-    auto rnca = std::make_shared<RNCoreApp>();
-
-    RNCoreApp_SetDefaults(rnca.get());
-
-    if (addModules) {
-      addModules(rnca.get());
-    }
-
-    for (auto i = 0; i < rnca->packageProvidersAbiCount; i++) {
-      auto provider = winrt::Microsoft::ReactNative::IReactPackageProvider(
-          rnca->packageProvidersAbi[i], winrt::take_ownership_from_abi);
-      app.PackageProviders().Append(provider);
-    }
-
-    impl_app->LaunchedInternal([rnca, launched](
-                                   react::ReactApplication const &app,
-                                   const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
-      rnca->args = args.Arguments().c_str();
-      if (launched) {
-        launched(rnca.get());
-      }
-      app.JavaScriptBundleFile(rnca->jsBundleFile);
-
-      auto settings = app.InstanceSettings();
-      settings.BundleRootPath(rnca->bundleRootPath);
-
-      settings.UseWebDebugger(rnca->useWebDebugger);
-      settings.UseFastRefresh(rnca->useFastRefresh);
-      settings.UseDeveloperSupport(rnca->useDeveloperSupport);
-      settings.UseDirectDebugger(rnca->useDirectDebugger);
-
-      settings.EnableDefaultCrashHandler(rnca->enableDefaultCrashHandler);
-      settings.DebuggerPort(rnca->debuggerPort);
-      settings.SourceBundlePort(rnca->sourceBundlePort);
-      settings.SourceBundleHost(rnca->sourceBundleHost);
-
-      if (auto res = xaml::ResourceDictionary(rnca->resourcesAbi, winrt::take_ownership_from_abi)) {
-        app.Resources(res);
-      } else {
-        try {
-          auto xcr = winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources();
-          app.Resources(xcr);
-        } catch (...) {
-        }
-      }
-    });
-    impl_app->ViewCreatedInternal([](react::ReactApplication const &app, winrt::hstring const &args) {
-      auto rootFrame = xaml::Window::Current().Content().as<xaml::Controls::Frame>();
-      rootFrame.Navigate(winrt::xaml_typename<react::CoreAppPage>(), winrt::box_value(args));
-    });
-    impl_app->PageNavigatedInternal([rnca](react::ReactApplication const & /*app*/, react::ReactRootView const &view) {
-      view.ComponentName(rnca->componentName);
-    });
-  });
+  RNCoreApp_SetDefaults(rnca.get());
+  if (addModules) {
+    addModules(rnca.get());
+  }
+  RNStartCoreAppWithCoreApp(rnca.get(), launched);
 }
 
 extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched) {
