@@ -109,11 +109,11 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
       return turboModuleManager->getModule(name);
     };
-    
+
     TurboModuleBinding::install(
         *runtimeHolder_->getRuntime(), std::function(binding), TurboModuleBindingMode::HostObject, nullptr);
 
-    //init TurboModule
+    // init TurboModule
     for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
       turboModuleManager->getModule(moduleName);
     }

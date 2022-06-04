@@ -158,7 +158,7 @@ export interface NativeMouseEvent extends NativeUIEvent {
    */
   +relatedTarget: null | number | React.ElementRef<HostComponent<mixed>>;
 
-  // [Windows   
+  // [Windows
   +isLeftButton: boolean;
   +isRightButton: boolean;
   +isMiddleButton: boolean;
