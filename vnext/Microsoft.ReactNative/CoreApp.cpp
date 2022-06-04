@@ -167,7 +167,7 @@ extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *con
     }
     app->packageProvidersAbiCount = countAdded;
   }
-    
+
   RNStartCoreAppWithCoreApp(app, launched);
 }
 
