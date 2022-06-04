@@ -14,22 +14,19 @@ jobs:
         value: $(Build.BinariesDirectory)\$(BuildPlatform)\$(BuildConfiguration)\BuildLogs
     displayName: Sample Apps
     strategy:
-      matrix: # Why we only build some flavors: https://github.com/microsoft/react-native-windows/issues/4308
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          Arm64Debug:
-            BuildConfiguration: Debug
-            BuildPlatform: ARM64
-            DeployOption: --no-deploy # We don't have Arm agents
-          Arm64Release:
-            BuildConfiguration: Release
-            BuildPlatform: ARM64
-            DeployOption: --no-deploy # We don't have Arm agents
-          X64Debug:
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            DeployOption:
-        # End Continuous only
+      matrix:
+        Arm64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: ARM64
+          DeployOption: --no-deploy # We don't have Arm agents
+        Arm64Release:
+          BuildConfiguration: Release
+          BuildPlatform: ARM64
+          DeployOption: --no-deploy # We don't have Arm agents
+        X64Debug:
+          BuildConfiguration: Debug
+          BuildPlatform: x64
+          DeployOption:
         X64Release:
           BuildConfiguration: Release
           BuildPlatform: x64
@@ -38,13 +35,10 @@ jobs:
           BuildConfiguration: Debug
           BuildPlatform: x86
           DeployOption:
-        # Start Continuous only
-        ${{ if eq(parameters.buildEnvironment, 'Continuous') }}:
-          X86Release:
-            BuildConfiguration: Release
-            BuildPlatform: x86
-            DeployOption:
-        # End Continuous only
+        X86Release:
+          BuildConfiguration: Release
+          BuildPlatform: x86
+          DeployOption:
     timeoutInMinutes: 60
     cancelTimeoutInMinutes: 5
     pool: $(AgentPool.Medium)
