@@ -16,6 +16,8 @@ struct RNCoreApp {
   bool useDeveloperSupport;
   /// default value: false
   bool useDirectDebugger;
+  /// default value: true
+  bool requestInlineSourceMap;
 
   /// default value: false
   bool enableDefaultCrashHandler;
@@ -26,11 +28,18 @@ struct RNCoreApp {
   /// default value: L"localhost"
   wchar_t const *sourceBundleHost;
 
+  /// default value: "chakra", possible values: "chakra", "hermes"
+  wchar_t const *jsEngine;
+
+  /// default value: nullptr
+  wchar_t const *viewName;
+
   void *resourcesAbi;
   /// Provides the launch arguments back to the CoreApp callback
   wchar_t const *args;
   void **packageProvidersAbi;
   unsigned char packageProvidersAbiCount;
+  void *propertiesAbi;
 };
 
 #ifdef __cplusplus

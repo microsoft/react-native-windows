@@ -191,6 +191,15 @@ IInspectable ReactPropertyBag::Set(IReactPropertyName const &propertyName, IInsp
   return result;
 }
 
+Collections::IVector<IReactPropertyName> ReactPropertyBag::Names() noexcept {
+  std::scoped_lock lock{m_mutex};
+  auto v = winrt::single_threaded_vector<IReactPropertyName>();
+  for (const auto &e : m_entries) {
+    v.Append(e.first);
+  }
+  return v;
+}
+
 /*static*/ IReactPropertyNamespace ReactPropertyBagHelper::GlobalNamespace() noexcept {
   return ReactPropertyNamespace::GlobalNamespace().as<IReactPropertyNamespace>();
 }
