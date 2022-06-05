@@ -107,15 +107,46 @@ std::enable_if_t<std::is_arithmetic_v<T>> SetFromJson(JsonObject json, wchar_t c
 
 #define SET_FROM_JSON(key) SetFromJson(json, L#key, app->key)
 
-extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *configJson, coreAppCallback launched) {
-  std::wifstream appConfigJson(configJson);
+JsonObject LoadJsonFromFile(wchar_t const* jsoncPath) {
+  std::wifstream appConfigJson(jsoncPath);
   winrt::check_bool(appConfigJson.good());
   std::wostringstream out;
   out << appConfigJson.rdbuf();
-  auto json = JsonObject::Parse(out.str());
+  auto input = out.str();
+
+  // strip comments from jsonc since WinRT's JsonObject doesn't support them
+  // see https://github.com/microsoft/vscode/blob/432349e1eb4a90eccd1039c61f719e6f54c77607/src/vs/base/common/stripComments.js
+  auto comments = std::wregex(
+      LR"(("[^"\\]*(?:\\.[^"\\]*)*")|('[^'\\]*(?:\\.[^'\\]*)*')|(\/\*[^\/\*]*(?:(?:\*|\/)[^\/\*]*)*?\*\/)|(\/{2,}.*?(?:(?:\r?\n)|$)))");
+  std::wstring stripped;
+  std::size_t previous = 0;
+  for (auto it = std::wsregex_iterator(input.begin(), input.end(), comments); it != std::wsregex_iterator(); ++it) {
+    auto match = *it;
+    stripped += input.substr(previous, match.position() - previous);
+    if (match[3].matched) {
+      // do nothing
+    } else if (match[4].matched) {
+      if (*(match[4].second - 1) == L'\n') {
+        stripped += *(match[4].second - 2) == L'\r' ? L"\r\n" : L"\n";
+      }
+    } else {
+      stripped += match.str();
+    }
+
+    previous = match.position() + match.length();
+  }
+
+  stripped += input.substr(previous);
+
+  auto json = JsonObject::Parse(stripped);
+  return json;
+}
+
+extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *configJson, coreAppCallback launched) {
   auto app = new RNCoreApp();
   RNCoreApp_SetDefaults(app);
 
+  auto json = LoadJsonFromFile(configJson);
   SET_FROM_JSON(jsBundleFile);
   SET_FROM_JSON(bundleRootPath);
   SET_FROM_JSON(componentName);
