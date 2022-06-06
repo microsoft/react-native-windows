@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 16 May 2022 15:09:01 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jun 2022 15:09:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.0-preview.3
+
+Mon, 06 Jun 2022 15:09:03 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.69.0-preview.2
 
 ## 0.69.0-preview.2
 
