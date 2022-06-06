@@ -165,6 +165,7 @@ export interface NativeMouseEvent extends NativeUIEvent {
   +isBarrelButtonPressed: boolean;
   +isHorizontalScrollWheel: boolean;
   +isEraser: boolean;
+  +target: ?number;
   // Windows]
 }
 
