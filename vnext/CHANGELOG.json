@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 Jun 2022 15:07:27 GMT",
+      "tag": "react-native-windows_v0.68.5",
+      "version": "0.68.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "48035227+tudorms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5851bb76134dffea14cfd6ca9e34733049492077",
+            "comment": "Hermes version bump"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 May 2022 15:08:00 GMT",
       "tag": "react-native-windows_v0.68.4",
       "version": "0.68.4",

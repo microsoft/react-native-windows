@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Hermes version bump",
-  "packageName": "react-native-windows",
-  "email": "48035227+tudorms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

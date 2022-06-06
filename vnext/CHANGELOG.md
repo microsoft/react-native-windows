@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 May 2022 15:08:00 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Jun 2022 15:07:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.5
+
+Mon, 06 Jun 2022 15:07:27 GMT
+
+### Patches
+
+- Hermes version bump (48035227+tudorms@users.noreply.github.com)
 
 ## 0.68.4
 
