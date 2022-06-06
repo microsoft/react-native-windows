@@ -56,4 +56,3 @@ extern "C" void RNCoreApp_SetDefaults(RNCoreApp *rnca);
 
 extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched);
 extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *configJson, coreAppCallback launched);
-extern "C" NORETURN void __cdecl RNStartCoreAppWithModules(coreAppCallback launched, coreAppCallback addModules);

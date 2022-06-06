@@ -8,8 +8,8 @@
 // or neither to exercise the RNStartCoreAppWithModules, RNStartCoreApp, and RNStartCoreAppFromConfigJson APIs.
 #define DEFINE_MODULES
 
-// #define WITH_MODULES
-#define FROM_JSON
+#define WITH_MODULES
+// #define FROM_JSON
 
 #ifdef DEFINE_MODULES
 #include <ModuleRegistration.h>
@@ -47,28 +47,17 @@ int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/
 #else
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {
 
-#ifdef WITH_MODULES
-  RNStartCoreAppWithModules(
-      [](RNCoreApp *app) {
-        app->componentName = L"RNTesterApp";
-        app->jsBundleFile = LR"(Samples\rntester)";
-        app->useDeveloperSupport = true;
-        app->useWebDebugger = false;
-      },
-      [](RNCoreApp *app) {
-        app->packageProvidersAbi = new void *[1];
-        app->packageProvidersAbiCount = 1;
-        auto provider = winrt::make<ThisAppPackageProvider>();
-        app->packageProvidersAbi[0] = nullptr;
-        winrt::copy_to_abi(provider, app->packageProvidersAbi[0]);
-      });
-#else
   RNStartCoreApp([](RNCoreApp *app) {
     app->componentName = L"RNTesterApp";
     app->jsBundleFile = LR"(Samples\rntester)";
     app->useDeveloperSupport = true;
     app->useWebDebugger = false;
-  });
+
+#ifdef WITH_MODULES
+    app->packageProvidersAbi = new void *[1];
+    app->packageProvidersAbiCount = 1;
+    app->packageProvidersAbi[0] = MySpecialPackageProvider();
 #endif
+      });
 }
 #endif

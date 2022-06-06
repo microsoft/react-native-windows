@@ -48,18 +48,18 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, core
 
     const auto impl_app = winrt::get_self<react::implementation::ReactApplication>(app);
 
-    for (auto i = 0; i < rnca->packageProvidersAbiCount; i++) {
-      auto provider = winrt::Microsoft::ReactNative::IReactPackageProvider(
-          rnca->packageProvidersAbi[i], winrt::take_ownership_from_abi);
-      app.PackageProviders().Append(provider);
-    }
-
     impl_app->LaunchedInternal([rnca, launched](
                                    react::ReactApplication const &app,
                                    const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
       rnca->args = args.Arguments().c_str();
       if (launched) {
         launched(rnca);
+      }
+
+      for (auto i = 0; i < rnca->packageProvidersAbiCount; i++) {
+        auto provider = winrt::Microsoft::ReactNative::IReactPackageProvider(
+            rnca->packageProvidersAbi[i], winrt::take_ownership_from_abi);
+        app.PackageProviders().Append(provider);
       }
 
       if (rnca->viewName) {
@@ -291,16 +291,9 @@ extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *con
   RNStartCoreAppWithCoreApp(app, launched);
 }
 
-NORETURN void __cdecl RNStartCoreAppWithModules(coreAppCallback launched, coreAppCallback addModules) {
+extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched) {
   auto rnca = std::make_shared<RNCoreApp>();
 
   RNCoreApp_SetDefaults(rnca.get());
-  if (addModules) {
-    addModules(rnca.get());
-  }
   RNStartCoreAppWithCoreApp(rnca.get(), launched);
-}
-
-extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched) {
-  RNStartCoreAppWithModules(launched, nullptr);
 }

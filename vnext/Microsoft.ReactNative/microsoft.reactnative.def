@@ -4,4 +4,3 @@ DllGetActivationFactory = WINRT_GetActivationFactory    PRIVATE
 
 RNStartCoreApp
 RNStartCoreAppFromConfigJson
-RNStartCoreAppWithModules
