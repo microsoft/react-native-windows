@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Sat, 04 Jun 2022 05:10:04 GMT",
+      "tag": "@rnw-scripts/babel-node-config_v2.0.6",
+      "version": "2.0.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "5dff9fb894d2e274467a37fcac5219eca8ad0ebd",
+            "comment": "integrate 5-16-22"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 May 2022 05:09:44 GMT",
       "tag": "@rnw-scripts/babel-node-config_v2.0.5",
       "version": "2.0.5",
