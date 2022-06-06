@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 #pragma once
 #include "CoreAppPage.g.h"
 #include <UI.Xaml.Markup.h>

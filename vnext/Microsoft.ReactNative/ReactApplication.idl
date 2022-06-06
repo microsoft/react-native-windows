@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import "ReactNativeHost.idl";
-import "ReactRootView.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 

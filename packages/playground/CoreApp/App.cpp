@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 #include "pch.h"
 #include "CoreApp.h"
 
@@ -25,10 +27,7 @@ struct LogBox {
 struct ThisAppPackageProvider
     : winrt::implements<ThisAppPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    for (auto const *reg = winrt::Microsoft::ReactNative::ModuleRegistration::Head(); reg != nullptr;
-         reg = reg->Next()) {
-      packageBuilder.AddModule(reg->ModuleName(), reg->MakeModuleProvider());
-    }
+    winrt::Microsoft::ReactNative::AddAttributedModules(packageBuilder);
   }
 };
 
