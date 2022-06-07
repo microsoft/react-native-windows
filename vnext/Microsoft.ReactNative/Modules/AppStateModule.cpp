@@ -15,6 +15,7 @@ namespace Microsoft::ReactNative {
 void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
   m_active = true;
+  m_focused = true;
 
   // We need to register for notifications from the XAML thread.
   if (auto dispatcher = reactContext.UIDispatcher()) {
@@ -51,9 +52,9 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
                 winrt::Windows::UI::Core::WindowActivatedEventArgs args) {
               if (auto strongThis = weakThis.lock()) {
                 if (args.WindowActivationState() == winrt::Windows::UI::Core::CoreWindowActivationState::Deactivated) {
-                  strongThis->SetActive(false);
+                  strongThis->SetFocused(false);
                 } else {
-                  strongThis->SetActive(true);
+                  strongThis->SetFocused(true);
                 }
               }
             });
@@ -69,7 +70,7 @@ void AppState::GetCurrentAppState(
     std::function<void(AppStateChangeArgs const &)> const &success,
     std::function<void(React::JSValue const &)> const &error) noexcept {
   AppStateChangeArgs args;
-  args.app_state = m_active ? "active" : "background";
+  args.app_state = m_active && m_focused ? "active" : "background";
   success(args);
 }
 
@@ -82,12 +83,17 @@ void AppState::RemoveListeners(double /*count*/) noexcept {
 }
 
 ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
-  return {m_active ? "active" : "background"};
+  return {m_active && m_focused ? "active" : "background"};
 }
 
 void AppState::SetActive(bool active) noexcept {
   m_active = active;
-  m_context.JSDispatcher().Post([this]() { AppStateDidChange({m_active ? "active" : "background"}); });
+  m_context.JSDispatcher().Post([this]() { AppStateDidChange({m_active && m_focused ? "active" : "background"}); });
+}
+
+void AppState::SetFocused(bool focused) noexcept {
+  m_focused = focused;
+  m_context.JSDispatcher().Post([this]() { AppStateDidChange({m_active && m_focused ? "active" : "background"}); });
 }
 
 } // namespace Microsoft::ReactNative
