@@ -185,7 +185,7 @@ static void SetPackageProviders(const JsonObject &json, RNCoreApp *app) {
     decltype(app->packageProvidersAbiCount) countAdded = 0;
     const auto count = static_cast<decltype(countAdded)>(nativeModules.Size());
 
-    app->packageProvidersAbi = CoTaskMemAlloc(sizeof(void *) * count);
+    app->packageProvidersAbi = reinterpret_cast<void **>(CoTaskMemAlloc(sizeof(void *) * count));
     for (std::remove_const_t<decltype(count)> index = 0; index < count; index++) {
       if (auto nm_value = nativeModules.GetAt(index); nm_value.ValueType() == JsonValueType::Object) {
         auto nm = nm_value.GetObject();

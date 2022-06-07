@@ -56,7 +56,8 @@ int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/
 
 #ifdef WITH_MODULES
         app->packageProvidersAbiCount = 1;
-        app->packageProvidersAbi = CoTaskMemAlloc(sizeof(void *) * app->packageProvidersAbiCount);
+        app->packageProvidersAbi =
+            reinterpret_cast<void **>(CoTaskMemAlloc(sizeof(void *) * app->packageProvidersAbiCount));
         app->packageProvidersAbi[0] = MySpecialPackageProvider();
 #endif
       },
