@@ -38,16 +38,11 @@ JsErrorCode JsPointerToStringUtf8(
   if (stringValue == nullptr) {
     return JsErrorNullArgument;
   }
-#if defined(USE_EDGEMODE_JSRT)
   // JsCreateString is not supported in universal chakra engine
   // So we convert the utf8 string to utf16 first and call JsPointerToString to
   // convert the string to JsValueRef
   std::wstring wstr = Microsoft::Common::Unicode::Utf8ToUtf16(stringValue, stringLength);
   return JsPointerToString(wstr.c_str(), wstr.size(), string);
-
-#else
-  return JsCreateString(stringValue, stringLength, string);
-#endif
 }
 
 JsErrorCode JsStringToStdStringUtf8(_In_ JsValueRef stringValue, std::string &string) {

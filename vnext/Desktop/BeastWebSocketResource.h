@@ -13,7 +13,9 @@
 #include "IWebSocketResource.h"
 #include "Utils.h"
 
-namespace Microsoft::React::Beast {
+namespace Microsoft::React {
+
+namespace Beast {
 
 template <
     typename SocketLayer = boost::beast::tcp_stream,
@@ -156,7 +158,7 @@ class BaseWebSocketResource : public IWebSocketResource {
   /// <summary>
   /// <see cref="IWebSocketResource::Connect" />
   /// </summary>
-  void Connect(const Protocols &protocols, const Options &options) noexcept override;
+  void Connect(std::string &&url, const Protocols &protocols, const Options &options) noexcept override;
 
   /// <summary>
   /// <see cref="IWebSocketResource::Ping" />
@@ -341,4 +343,81 @@ class TestWebSocketResource : public BaseWebSocketResource<
 
 } // namespace Test
 
-} // namespace Microsoft::React::Beast
+} // namespace Beast
+
+class BeastWebSocketResource : public IWebSocketResource, public std::enable_shared_from_this<BeastWebSocketResource> {
+  std::function<void()> m_connectHandler;
+  std::function<void()> m_pingHandler;
+  std::function<void(std::size_t)> m_writeHandler;
+  std::function<void(std::size_t, const std::string &, bool)> m_readHandler;
+  std::function<void(CloseCode, const std::string &)> m_closeHandler;
+  std::function<void(Error &&)> m_errorHandler;
+
+  std::shared_ptr<IWebSocketResource> m_concreteResource;
+
+ public:
+  BeastWebSocketResource() noexcept;
+
+#pragma region IWebSocketResource
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::Connect" />
+  /// </summary>
+  void Connect(std::string &&url, const Protocols &protocols, const Options &options) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::Ping" />
+  /// </summary>
+  void Ping() noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::Send" />
+  /// </summary>
+  void Send(std::string &&message) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::SendBinary" />
+  /// </summary>
+  void SendBinary(std::string &&base64String) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::Close" />
+  /// </summary>
+  void Close(CloseCode code, const std::string &reason) noexcept override;
+
+  ReadyState GetReadyState() const noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::SetOnConnect" />
+  /// </summary>
+  void SetOnConnect(std::function<void()> &&handler) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::SetOnPing" />
+  /// </summary>
+  void SetOnPing(std::function<void()> &&handler) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::SetOnSend" />
+  /// </summary>
+  void SetOnSend(std::function<void(std::size_t)> &&handler) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::SetOnMessage" />
+  /// </summary>
+  void SetOnMessage(std::function<void(std::size_t, const std::string &, bool isBinary)> &&handler) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::SetOnClose" />
+  /// </summary>
+  void SetOnClose(std::function<void(CloseCode, const std::string &)> &&handler) noexcept override;
+
+  /// <summary>
+  /// <see cref="IWebSocketResource::SetOnError" />
+  /// </summary>
+  void SetOnError(std::function<void(Error &&)> &&handler) noexcept override;
+
+#pragma endregion IWebSocketResource
+};
+
+} // namespace Microsoft::React

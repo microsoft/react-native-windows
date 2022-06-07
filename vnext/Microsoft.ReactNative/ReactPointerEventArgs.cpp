@@ -15,6 +15,12 @@ PointerEventKind ReactPointerEventArgs::Kind() const noexcept {
   return m_kind;
 }
 
+void ReactPointerEventArgs::Kind(PointerEventKind kind) noexcept {
+  // The only event type change that is supported is CaptureLost to End.
+  assert(kind == PointerEventKind::End && m_kind == PointerEventKind::CaptureLost);
+  m_kind = kind;
+}
+
 winrt::IInspectable ReactPointerEventArgs::Target() const noexcept {
   return m_target;
 }

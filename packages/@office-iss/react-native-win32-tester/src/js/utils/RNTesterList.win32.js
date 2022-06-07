@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -12,6 +12,8 @@
 
 import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+
 const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
@@ -23,7 +25,10 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples/Button/ButtonExample'),
   },
-  ,
+  {
+    key: 'AccessibilityExampleWin32',
+    module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
+  },
   /*
   {
     key: 'FlatListExampleIndex',
@@ -53,11 +58,13 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'NewAppScreenExample',
     module: require('../examples/NewAppScreen/NewAppScreenExample'),
   },
+  */
   {
     key: 'PressableExample',
     category: 'UI',
-    module: require('../examples/Pressable/PressableExample'),
+    module: require('../examples-win32/Pressable/PressableExample'),
   },
+  /*
   {
     key: 'TouchableWin32Example',
     module: require('@office-iss/react-native-win32/Libraries/Components/Touchable/Tests/TouchableWin32Test'),
@@ -82,6 +89,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/Switch/SwitchExample'),
   },
   {
+    key: 'TextInputs with key prop',
+    module: require('../examples/TextInput/TextInputKeyProp'),
+  },
+  {
     key: 'TouchableExample',
     category: 'UI',
     module: require('../examples/Touchable/TouchableExample'),
@@ -95,6 +106,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/View/ViewExample'),
   },
+  //{
+  //  key: 'NewArchitectureExample',
+  //  category: 'UI',
+  //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
+  //},
   {
     key: 'ViewWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Components/View/Tests/ViewWin32Test'),
@@ -245,6 +261,14 @@ if (global.__turboModuleProxy) {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
+
+if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
+  APIs.push({
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
   });
 }
 

@@ -24,6 +24,17 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
 
  protected:
   void OnViewCreated(XamlView view) override;
+
+  void OnPropertiesUpdated(ShadowNodeBase *node) override;
+
+ private:
+  void IsAccessible(bool accessible);
+  bool IsAccessible();
+  void IsFocusable(bool focusable);
+  bool IsFocusable();
+
+  bool m_isAccessible = true;
+  bool m_isFocusable = true;
 };
 
 } // namespace Microsoft::ReactNative

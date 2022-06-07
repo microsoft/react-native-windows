@@ -9,6 +9,8 @@
 
 import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+
 const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
@@ -116,6 +118,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/TextInput/TextInputExample'),
   },
   {
+    key: 'TextInputs with key prop',
+    module: require('../examples/TextInput/TextInputKeyProp'),
+  },
+  {
     key: 'TouchableExample',
     category: 'UI',
     module: require('../examples/Touchable/TouchableExample'),
@@ -134,6 +140,16 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/View/ViewExample'),
   },
+  //{
+  //  key: 'NewArchitectureExample',
+  //  category: 'UI',
+  //  module: require('../examples/NewArchitecture/NewArchitectureExample'),
+  //},
+  {
+    key: 'XAML',
+    category: 'UI',
+    module: require('../examples-win/XAML/XAMLExample'),
+  },
   {
     key: 'LegacyControlStyleTest',
     module: require('../examples-win/LegacyTests/ControlStyleTestPage'),
@@ -149,6 +165,14 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'LegacyImageTest',
     module: require('../examples-win/LegacyTests/ImageTestPage'),
+  },
+  {
+    key: 'LegacySelectableTextTest',
+    module: require('../examples-win/LegacyTests/SelectableTextTestPage'),
+  },
+  {
+    key: 'LegacyTextHitTestTest',
+    module: require('../examples-win/LegacyTests/TextHitTestPage'),
   },
 ];
 
@@ -224,6 +248,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Dimensions/DimensionsExample'),
   },
   {
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
+  },
+  {
     key: 'KeyboardExample',
     module: require('../examples-win/Keyboard/KeyboardExample'),
   },
@@ -251,6 +280,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'MouseExample',
     category: 'Basic',
     module: require('../examples-win/Mouse/MouseExample'),
+  },
+  {
+    key: 'MouseClickExample',
+    category: 'Basic',
+    module: require('../examples-win/Mouse/MouseClickExample'),
   },
   {
     key: 'NativeAnimationsExample',
@@ -310,6 +344,14 @@ if (global.__turboModuleProxy) {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
+
+if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
+  APIs.push({
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
   });
 }
 

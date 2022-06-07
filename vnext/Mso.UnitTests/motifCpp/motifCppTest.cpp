@@ -5,7 +5,7 @@
 #include "motifCpp/testCheck.h"
 
 // Uncomment to see errors
-//#define MOTIF_TEST_SHOW_ERRORS
+// #define MOTIF_TEST_SHOW_ERRORS
 
 TEST_CLASS (MotifCppTest) {
 #ifdef MOTIF_TEST_SHOW_ERRORS

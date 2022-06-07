@@ -77,17 +77,20 @@ NapiJsiV8RuntimeHolder::NapiJsiV8RuntimeHolder(
       m_preparedScriptStore{std::move(preparedScriptStore)} {}
 
 void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
-  napi_env env{};
   napi_ext_env_settings settings{};
   settings.this_size = sizeof(settings);
-  settings.flags.enable_gc_api = true;
   if (m_debuggerPort > 0)
     settings.inspector_port = m_debuggerPort;
 
   settings.flags.enable_inspector = m_useDirectDebugger;
   settings.flags.wait_for_debugger = m_debuggerBreakOnNextLine;
+  //  TODO: args.debuggerRuntimeName = debuggerRuntimeName_;
   settings.foreground_scheduler = &NapiJsiV8RuntimeHolder::ScheduleTaskCallback;
 
+  napi_ext_script_cache scriptCache = InitScriptCache(std::move(m_preparedScriptStore));
+  settings.script_cache = &scriptCache;
+
+  napi_env env{};
   napi_ext_create_env(&settings, &env);
   // Associate environment to holder.
   napi_set_instance_data(env, this, nullptr /*finalize_cb*/, nullptr /*finalize_hint*/);
@@ -96,7 +99,78 @@ void NapiJsiV8RuntimeHolder::InitRuntime() noexcept {
   m_ownThreadId = std::this_thread::get_id();
 }
 
-#pragma region facebook::jsi::RuntimeHolderLazyInit
+struct NodeApiJsiBuffer : facebook::jsi::Buffer {
+  static std::shared_ptr<const facebook::jsi::Buffer> CreateJsiBuffer(const napi_ext_buffer *buffer) {
+    if (buffer && buffer->data) {
+      return std::shared_ptr<const facebook::jsi::Buffer>(new NodeApiJsiBuffer(buffer));
+    } else {
+      return {};
+    }
+  }
+
+  NodeApiJsiBuffer(const napi_ext_buffer *buffer) noexcept : buffer_(*buffer) {}
+
+  ~NodeApiJsiBuffer() override {
+    if (buffer_.buffer_object.finalize_cb) {
+      buffer_.buffer_object.finalize_cb(nullptr, buffer_.buffer_object.data, buffer_.buffer_object.finalize_hint);
+    }
+  }
+
+  const uint8_t *data() const override {
+    return buffer_.data;
+  }
+
+  size_t size() const override {
+    return buffer_.byte_size;
+  }
+
+ private:
+  napi_ext_buffer buffer_;
+};
+
+napi_ext_script_cache NapiJsiV8RuntimeHolder::InitScriptCache(
+    unique_ptr<PreparedScriptStore> &&preparedScriptStore) noexcept {
+  napi_ext_script_cache scriptCache{};
+  scriptCache.cache_object = NativeObjectWrapper<unique_ptr<PreparedScriptStore>>::Wrap(std::move(preparedScriptStore));
+  scriptCache.load_cached_script = [](napi_env env,
+                                      napi_ext_script_cache *script_cache,
+                                      napi_ext_cached_script_metadata *script_metadata,
+                                      napi_ext_buffer *result) -> napi_status {
+    PreparedScriptStore *scriptStore = reinterpret_cast<PreparedScriptStore *>(script_cache->cache_object.data);
+    std::shared_ptr<const facebook::jsi::Buffer> buffer = scriptStore->tryGetPreparedScript(
+        ScriptSignature{script_metadata->source_url, script_metadata->source_hash},
+        JSRuntimeSignature{script_metadata->runtime_name, script_metadata->runtime_version},
+        script_metadata->tag);
+    if (buffer) {
+      result->buffer_object = NativeObjectWrapper<std::shared_ptr<const facebook::jsi::Buffer>>::Wrap(
+          std::shared_ptr<const facebook::jsi::Buffer>{buffer});
+      result->data = buffer->data();
+      result->byte_size = buffer->size();
+    } else {
+      *result = napi_ext_buffer{};
+    }
+    return napi_ok;
+  };
+  scriptCache.store_cached_script = [](napi_env env,
+                                       napi_ext_script_cache *script_cache,
+                                       napi_ext_cached_script_metadata *script_metadata,
+                                       const napi_ext_buffer *buffer) -> napi_status {
+    PreparedScriptStore *scriptStore = reinterpret_cast<PreparedScriptStore *>(script_cache->cache_object.data);
+    scriptStore->persistPreparedScript(
+        NodeApiJsiBuffer::CreateJsiBuffer(buffer),
+        ScriptSignature{script_metadata->source_url, script_metadata->source_hash},
+        JSRuntimeSignature{script_metadata->runtime_name, script_metadata->runtime_version},
+        script_metadata->tag);
+    return napi_ok;
+  };
+  return scriptCache;
+}
+
+#pragma region Microsoft::JSI::RuntimeHolderLazyInit
+
+facebook::react::JSIEngineOverride NapiJsiV8RuntimeHolder::getRuntimeType() noexcept {
+  return facebook::react::JSIEngineOverride::V8NodeApi;
+}
 
 shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
 {
@@ -112,6 +186,6 @@ shared_ptr<Runtime> NapiJsiV8RuntimeHolder::getRuntime() noexcept /*override*/
   return m_runtime;
 }
 
-#pragma endregion facebook::jsi::RuntimeHolderLazyInit
+#pragma endregion Microsoft::JSI::RuntimeHolderLazyInit
 
 } // namespace Microsoft::JSI

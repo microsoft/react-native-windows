@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -9,15 +9,14 @@
  */
 
 const NativeModules = require('../BatchedBridge/NativeModules');
+const defineLazyObjectProperty = require('../Utilities/defineLazyObjectProperty');
 const Platform = require('../Utilities/Platform');
 const UIManagerProperties = require('./UIManagerProperties');
-
-const defineLazyObjectProperty = require('../Utilities/defineLazyObjectProperty');
 
 import NativeUIManager from './NativeUIManager';
 // import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes'; [Windows]
 
-const viewManagerConfigs = {};
+const viewManagerConfigs: {[string]: any | null} = {};
 
 const triedLoadingConfig = new Set();
 
@@ -38,9 +37,8 @@ function getViewManagerConfig(viewManagerName: string): any {
     NativeUIManager.getConstantsForViewManager
   ) {
     try {
-      viewManagerConfigs[
-        viewManagerName
-      ] = NativeUIManager.getConstantsForViewManager(viewManagerName);
+      viewManagerConfigs[viewManagerName] =
+        NativeUIManager.getConstantsForViewManager(viewManagerName);
     } catch (e) {
       console.error(
         "NativeUIManager.getConstantsForViewManager('" +
@@ -122,7 +120,7 @@ function lazifyViewManagerConfig(viewName) {
     defineLazyObjectProperty(viewConfig, 'Constants', {
       get: () => {
         const viewManager = NativeModules[viewConfig.Manager];
-        const constants = {};
+        const constants: {[string]: mixed} = {};
         viewManager &&
           Object.keys(viewManager).forEach(key => {
             const value = viewManager[key];
@@ -136,7 +134,7 @@ function lazifyViewManagerConfig(viewName) {
     defineLazyObjectProperty(viewConfig, 'Commands', {
       get: () => {
         const viewManager = NativeModules[viewConfig.Manager];
-        const commands = {};
+        const commands: {[string]: number} = {};
         let index = 0;
         viewManager &&
           Object.keys(viewManager).forEach(key => {

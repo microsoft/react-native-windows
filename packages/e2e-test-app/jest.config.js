@@ -10,7 +10,7 @@
 // https://jestjs.io/docs/en/configuration.html
 
 const assetTransform = 'react-native-windows/jest/assetFileTransformer.js';
-const reactNativeTransform = 'react-native-windows/jest/preprocessor.js';
+const reactNativeTransform = './custom-transformer.js';
 const defaultTransform = [
   'babel-jest',
   require('@rnw-scripts/babel-node-config'),
@@ -39,6 +39,8 @@ module.exports = {
     'vnext\\\\.*': reactNativeTransform,
     '^.+\\.[jt]sx?$': defaultTransform,
   },
+
+  snapshotResolver: 'react-native-windows/jest-snapshot-resolver.js',
 
   // An array of regexp pattern strings that are matched against all source file paths before transformation.
   // If the file path matches any of the patterns, it will not be transformed.

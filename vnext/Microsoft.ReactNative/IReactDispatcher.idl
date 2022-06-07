@@ -53,5 +53,20 @@ namespace Microsoft.ReactNative
       "Generally you can use @IReactContext.JSDispatcher to get the value of this property for "
       "a specific React instance.")
     static IReactPropertyName JSDispatcherProperty { get; };
+
+    DOC_STRING(
+      "Gets the name of the `JSDispatcherTaskStartingEventName` property for the @IReactNotificationService.\n"
+      "This notification name is to be used with IReactNotificationService.")
+    static IReactPropertyName JSDispatcherTaskStartingEventName{ get; };
+
+    DOC_STRING(
+      "Gets the name of the `JSDispatcherIdleWaitStartingEventName` property for the @IReactNotificationService.\n"
+      "This notification name is to be used with IReactNotificationService.")
+    static IReactPropertyName JSDispatcherIdleWaitStartingEventName{ get; };
+
+    DOC_STRING(
+      "Gets the name of the `JSDispatcherIdleWaitCompletedEventName` property for the @IReactNotificationService.\n"
+      "This notification name is to be used with IReactNotificationService.")
+    static IReactPropertyName JSDispatcherIdleWaitCompletedEventName{ get; };
   }
 } // namespace ReactNative

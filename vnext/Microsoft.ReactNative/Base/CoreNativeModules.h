@@ -3,7 +3,6 @@
 
 #pragma once
 
-#include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
 #include <React.h>
 #include <Shared/NativeModuleProvider.h>
@@ -27,7 +26,6 @@ struct ViewManagerProvider;
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread> &jsMessageQueue,
-    std::shared_ptr<AppTheme> &&appTheme,
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
     Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
 

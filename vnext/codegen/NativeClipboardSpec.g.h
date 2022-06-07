@@ -15,7 +15,7 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct ClipboardSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(Promise<React::JSValue>) noexcept>{0, L"getString"},
+      Method<void(Promise<::React::JSValue>) noexcept>{0, L"getString"},
       Method<void(std::string) noexcept>{1, L"setString"},
   };
 
@@ -26,8 +26,8 @@ struct ClipboardSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "getString",
-          "    REACT_METHOD(getString) void getString(React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(getString) static void getString(React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(getString) void getString(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(getString) static void getString(::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "setString",

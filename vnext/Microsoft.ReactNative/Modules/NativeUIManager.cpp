@@ -38,7 +38,7 @@ static int YogaLog(
     YGLogLevel /*level*/,
     const char *format,
     va_list args) {
-  int len = _scprintf(format, args);
+  const int len = _vscprintf(format, args);
   std::string buffer(len + 1, '\0');
   vsnprintf_s(&buffer[0], len + 1, _TRUNCATE, format, args);
   buffer.resize(len);
@@ -173,11 +173,9 @@ struct RootShadowNode final : public ShadowNodeBase {
   }
 
   void AddView(ShadowNode &child, int64_t index) override {
-    auto panel(GetView().as<winrt::Panel>());
-    if (panel != nullptr) {
-      auto childView = static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>();
-      panel.Children().InsertAt(static_cast<uint32_t>(index), childView);
-    }
+    auto panel(GetView().as<winrt::Microsoft::ReactNative::ReactRootView>());
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactRootView>(panel)->AddView(
+        static_cast<uint32_t>(index), static_cast<ShadowNodeBase &>(child).GetView().as<xaml::UIElement>());
   }
 };
 
@@ -238,7 +236,7 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_yogaConfig));
 
   auto element = view.as<xaml::FrameworkElement>();
-  element.Tag(winrt::PropertyValue::CreateInt64(shadowNode.m_tag));
+  Microsoft::ReactNative::SetTag(element, shadowNode.m_tag);
 
   // Add listener to size change so we can redo the layout when that happens
   m_sizeChangedVector.push_back(
@@ -458,6 +456,8 @@ static void StyleYogaNode(
         wrap = YGWrapNoWrap;
       else if (value == "wrap")
         wrap = YGWrapWrap;
+      else if (value == "wrap-reverse")
+        wrap = YGWrapWrapReverse;
       else
         assert(false);
 
@@ -905,16 +905,20 @@ void NativeUIManager::DoLayout() {
     UpdateExtraLayout(rootTag);
 
     ShadowNodeBase &rootShadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
-    YGNodeRef rootNode = GetYogaNode(rootTag);
-    auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
+    if (YGNodeRef rootNode = GetYogaNode(rootTag)) {
+      auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
 
-    float actualWidth = static_cast<float>(rootElement.ActualWidth());
-    float actualHeight = static_cast<float>(rootElement.ActualHeight());
+      float actualWidth = static_cast<float>(rootElement.ActualWidth());
+      float actualHeight = static_cast<float>(rootElement.ActualHeight());
 
-    // We must always run layout in LTR mode, which might seem unintuitive.
-    // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
-    // which will inherit down the XAML tree, allowing all native controls to pick it up.
-    YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+      // We must always run layout in LTR mode, which might seem unintuitive.
+      // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
+      // which will inherit down the XAML tree, allowing all native controls to pick it up.
+      YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+    } else {
+      assert(false);
+      return;
+    }
   }
 
   for (auto &tagToYogaNode : m_tagsToYogaNodes) {
@@ -980,7 +984,7 @@ void NativeUIManager::measure(
   int64_t childTag = rootTag;
   while (true) {
     auto &currNode = m_host->GetShadowNodeForTag(rootTag);
-    if (currNode.m_parent == -1)
+    if (currNode.m_parent == InvalidTag)
       break;
     ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
     if (rootNode.IsWindowed()) {
@@ -1072,7 +1076,7 @@ void NativeUIManager::findSubviewIn(
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto view = node.GetView();
 
-  auto rootUIView = view.as<xaml::UIElement>();
+  auto rootUIView = view.try_as<xaml::UIElement>();
   if (rootUIView == nullptr) {
     m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;
@@ -1094,9 +1098,9 @@ void NativeUIManager::findSubviewIn(
 
   for (const auto &elem : hitTestElements) {
     if (foundElement = elem.try_as<xaml::FrameworkElement>()) {
-      auto tag = foundElement.Tag();
-      if (tag != nullptr) {
-        foundTag = tag.as<winrt::IPropertyValue>().GetInt64();
+      auto tag = GetTag(foundElement);
+      if (tag != InvalidTag) {
+        foundTag = tag;
         break;
       }
     }

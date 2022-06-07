@@ -35,7 +35,7 @@
 // - method (required) - the method name the macro is attached to.
 //
 // REACT_INIT annotates a method that is called when a native module is initialized.
-// It must have 'IReactContext const &' parameter.
+// It must have 'ReactContext const &' parameter.
 // It must be an instance method.
 #define REACT_INIT(method) INTERNAL_REACT_MEMBER_2_ARGS(InitMethod, method)
 
@@ -280,7 +280,7 @@ struct IsPromise<ReactPromise<T>> : std::true_type {};
 template <class TArgsTuple>
 constexpr size_t GetPromiseCount() noexcept {
   if constexpr (
-      std::tuple_size_v<TArgsTuple> > 0 &&
+      std::tuple_size_v < TArgsTuple >> 0 &&
       IsPromise<TupleElementOrVoid<std::tuple_size_v<TArgsTuple> - 1, TArgsTuple>>::value) {
     return 1;
   } else {
@@ -301,7 +301,7 @@ constexpr void ValidateCoroutineArg() noexcept {
     static_assert(
         !std::is_reference_v<TArg> && !std::is_pointer_v<TArg>,
         "Coroutine parameter must be passed by value for safe access"
-#ifndef __APPLE__
+#ifndef __clang__
         ": " __FUNCSIG__
 #endif
     );
@@ -1091,7 +1091,7 @@ template <class TModule, int I, class TMethodSpec>
 struct ReactMethodVerifier {
   static constexpr bool Verify() noexcept {
     ReactMethodVerifier verifier{};
-    ReactMemberInfoIterator<TModule>{}.GetMemberInfo<I>(verifier);
+    ReactMemberInfoIterator<TModule>{}.template GetMemberInfo<I>(verifier);
     return verifier.m_result;
   }
 
@@ -1109,7 +1109,7 @@ template <class TModule, int I, class TMethodSpec>
 struct ReactSyncMethodVerifier {
   static constexpr bool Verify() noexcept {
     ReactSyncMethodVerifier verifier{};
-    ReactMemberInfoIterator<TModule>{}.GetMemberInfo<I>(verifier);
+    ReactMemberInfoIterator<TModule>{}.template GetMemberInfo<I>(verifier);
     return verifier.m_result;
   }
 
@@ -1282,9 +1282,24 @@ struct ReactModuleTraits {
   static constexpr FactoryType *Factory = GetReactModuleFactory((TModule *)nullptr, 0);
 };
 
+template <class TModule, typename = void>
+struct ReactModuleSpecOrVoid {
+  using Type = void;
+};
+
+template <class TModule>
+struct ReactModuleSpecOrVoid<TModule, std::enable_if_t<(sizeof(typename TModule::ModuleSpec) >= 0)>> {
+  using Type = typename TModule::ModuleSpec;
+};
+
 // Create a module provider for TModule type.
+// If TModule::ModuleSpec exists, it ensures that the module satisfies the spec.
 template <class TModule>
 inline ReactModuleProvider MakeModuleProvider() noexcept {
+  using TModuleSpec = typename ReactModuleSpecOrVoid<TModule>::Type;
+  if constexpr (!std::is_same_v<void, TModuleSpec>) {
+    TModuleSpec::template ValidateModule<TModule>();
+  }
   return [](IReactModuleBuilder const &moduleBuilder) noexcept {
     auto [moduleWrapper, module] = ReactModuleTraits<TModule>::Factory();
     ReactModuleBuilder builder{module, moduleBuilder};
@@ -1294,10 +1309,14 @@ inline ReactModuleProvider MakeModuleProvider() noexcept {
   };
 }
 
-// Create a module provider for TModule type that satisfies the TModuleSpec.
-template <class TModule, class TModuleSpec>
+// Create a module provider for TModule type.
+// It is the same to MakeModuleProvider but it requires TModule::ModuleSpec to exist.
+template <class TModule>
 inline ReactModuleProvider MakeTurboModuleProvider() noexcept {
-  TModuleSpec::template ValidateModule<TModule>();
+  using TModuleSpec = typename ReactModuleSpecOrVoid<TModule>::Type;
+  static_assert(
+      !std::is_same_v<void, TModuleSpec>,
+      "TModule::ModuleSpec must exist and it specifies the specification for this module.");
   return MakeModuleProvider<TModule>();
 }
 

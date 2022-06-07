@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <_NormalizedPlatform Condition="'$(Platform)' == 'Win32'">x86</_NormalizedPlatform>
+    <_NormalizedPlatform Condition="'$(Platform)' != 'Win32'">$(Platform)</_NormalizedPlatform>
+  </PropertyGroup>
+
+  <!--
+    AppX bundling logic has a bug causing it to rebuild the project as x64 when
+    specifying x86 configuration. Only build the configuration we asked for in
+    debug builds, but build everything by default in release builds.
+  -->
+  <PropertyGroup Condition="'$(AppxBundlePlatforms)' == ''">
+    <AppxBundlePlatforms Condition="'$(Configuration)' == 'Debug'">$(_NormalizedPlatform)</AppxBundlePlatforms>
+    <AppxBundlePlatforms Condition="'$(Configuration)' == 'Release'">x86|x64|arm64</AppxBundlePlatforms>
+  </PropertyGroup>
+
+</Project>

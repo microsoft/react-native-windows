@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,7 +20,6 @@ import {Commands as iOSTextInputCommands} from '../../Components/TextInput/RCTSi
 import {Commands as WindowsTextInputCommands} from '../../Components/TextInput/WindowsTextInputNativeComponent';
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
-import {UIManager} from 'react-native';
 type ComponentRef = React.ElementRef<HostComponent<mixed>>;
 
 let currentlyFocusedInputRef: ?ComponentRef = null;
@@ -75,7 +74,7 @@ function blurField(textFieldID: ?number) {
 /**
  * @param {number} TextInputID id of the text field to focus
  * Focuses the specified text field
- * noop if the text field was already focused
+ * noop if the text field was already focused or if the field is not editable
  */
 function focusTextInput(textField: ?ComponentRef) {
   if (typeof textField === 'number') {
@@ -97,7 +96,15 @@ function focusTextInput(textField: ?ComponentRef) {
     focusInput(textField);
     WindowsTextInputCommands.focus(textField);
     // Windows]
-  } else if (currentlyFocusedInputRef !== textField && textField != null) {
+  } else if (textField != null) {
+    const fieldCanBeFocused =
+      currentlyFocusedInputRef !== textField &&
+      // $FlowFixMe - `currentProps` is missing in `NativeMethods`
+      textField.currentProps?.editable !== false;
+
+    if (!fieldCanBeFocused) {
+      return;
+    }
     focusInput(textField);
     if (Platform.OS === 'ios') {
       // This isn't necessarily a single line text input

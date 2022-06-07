@@ -4,20 +4,25 @@ import {type HostComponent} from '../Renderer/shims/ReactNativeTypes';
 import createReactNativeComponentClass from '../Renderer/shims/createReactNativeComponentClass';
 import {type ProcessedColorValue} from '../StyleSheet/processColor';
 import {type TextProps} from './TextProps';
+import {type PressEvent} from '../Types/CoreEventTypes';
 
 type NativeTextProps = $ReadOnly<{
   ...TextProps,
   isHighlighted?: ?boolean,
   selectionColor?: ?ProcessedColorValue,
+  onClick?: ?(event: PressEvent) => mixed,
+  // This is only needed for platforms that optimize text hit testing, e.g.,
+  // react-native-windows. It can be used to only hit test virtual text spans
+  // that have pressable events attached to them.
+  isPressable?: ?boolean,
 }>;
 
-export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComponentClass(
-  'RCTText',
-  () => ({
-    // $FlowFixMe[incompatible-call]
+export const NativeText: HostComponent<NativeTextProps> =
+  (createReactNativeComponentClass('RCTText', () => ({
     validAttributes: {
       ...ReactNativeViewAttributes.UIView,
       isHighlighted: true,
+      isPressable: true,
       numberOfLines: true,
       ellipsizeMode: true,
       allowFontScaling: true,
@@ -49,18 +54,17 @@ export const NativeText: HostComponent<NativeTextProps> = (createReactNativeComp
       },
     },
     uiViewClassName: 'RCTText',
-  }),
-): any);
+  })): any);
 
 export const NativeVirtualText: HostComponent<NativeTextProps> =
   !global.RN$Bridgeless &&
   UIManager.getViewManagerConfig('RCTVirtualText') == null
     ? NativeText
     : (createReactNativeComponentClass('RCTVirtualText', () => ({
-        // $FlowFixMe[incompatible-call]
         validAttributes: {
           ...ReactNativeViewAttributes.UIView,
           isHighlighted: true,
+          isPressable: true,
           maxFontSizeMultiplier: true,
         },
         uiViewClassName: 'RCTVirtualText',

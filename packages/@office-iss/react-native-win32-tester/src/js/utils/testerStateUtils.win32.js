@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,13 +10,16 @@
 
 // import {AsyncStorage} from 'react-native'; [Win32] #6316
 
-import RNTesterList from './RNTesterList';
-
 import type {
-  ExamplesList,
-  RNTesterState,
   ComponentList,
+  ExamplesList,
+  RNTesterModuleInfo,
+  RNTesterState,
+  SectionData,
 } from '../types/RNTesterTypes';
+
+import RNTesterList from './RNTesterList';
+import {AsyncStorage} from 'react-native';
 
 export const Screens = {
   COMPONENTS: 'components',
@@ -34,7 +37,11 @@ export const initialState: RNTesterState = {
 };
 
 const filterEmptySections = (examplesList: ExamplesList): any => {
-  const filteredSections = {};
+  const filteredSections: {
+    ['apis' | 'bookmarks' | 'components']: Array<
+      SectionData<RNTesterModuleInfo>,
+    >,
+  } = {};
   const sectionKeys = Object.keys(examplesList);
 
   sectionKeys.forEach(key => {

@@ -4,7 +4,7 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import chalk from 'chalk';
 import prompts from 'prompts';
 import path from 'path';
@@ -122,7 +122,7 @@ export async function copyAndReplace(
           contentChanged = 'changed';
         }
       } catch (err) {
-        if (err.code === 'ENOENT') {
+        if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
           contentChanged = 'new';
         } else {
           throw err;
@@ -153,7 +153,7 @@ export async function copyAndReplace(
           contentChanged = 'changed';
         }
       } catch (err) {
-        if (err.code === 'ENOENT') {
+        if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
           contentChanged = 'new';
         } else {
           throw err;

@@ -16,7 +16,7 @@ namespace Microsoft::ReactNativeSpecs {
 struct HeadlessJsTaskSupportSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(double) noexcept>{0, L"notifyTaskFinished"},
-      Method<void(double, Promise<React::JSValue>) noexcept>{1, L"notifyTaskRetry"},
+      Method<void(double, Promise<::React::JSValue>) noexcept>{1, L"notifyTaskRetry"},
   };
 
   template <class TModule>
@@ -31,8 +31,8 @@ struct HeadlessJsTaskSupportSpec : winrt::Microsoft::ReactNative::TurboModuleSpe
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "notifyTaskRetry",
-          "    REACT_METHOD(notifyTaskRetry) void notifyTaskRetry(double taskId, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n"
-          "    REACT_METHOD(notifyTaskRetry) static void notifyTaskRetry(double taskId, React::ReactPromise<React::JSValue> &&result) noexcept { /* implementation */ }}\n");
+          "    REACT_METHOD(notifyTaskRetry) void notifyTaskRetry(double taskId, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(notifyTaskRetry) static void notifyTaskRetry(double taskId, ::React::ReactPromise<::React::JSValue> &&result) noexcept { /* implementation */ }}\n");
   }
 };
 

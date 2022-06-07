@@ -15,6 +15,8 @@ namespace Microsoft::ReactNative {
 // PropertyBag so that the I18nModule can return the constants synchronously.
 REACT_MODULE(I18nManager)
 struct I18nManager {
+  using ModuleSpec = ReactNativeSpecs::I18nManagerSpec;
+
   static void InitI18nInfo(const React::ReactPropertyBag &propertyBag) noexcept;
   static bool IsRTL(const React::ReactPropertyBag &propertyBag) noexcept;
 

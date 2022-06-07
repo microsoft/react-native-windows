@@ -30,15 +30,9 @@ void NodeRegistry::PrintNode(std::stringstream &ss, int indent, EmptyUINode *nod
 
 EmptyUINode::EmptyUINode(int64_t tag, const std::string &className) : m_tag(tag), m_className(className) {}
 
-EmptyUIManager::EmptyUIManager(
-    std::unique_ptr<std::vector<std::unique_ptr<IViewManager>>> viewManagers,
-    std::shared_ptr<NodeRegistry> nodeRegistry)
-    : m_viewManagers(std::move(viewManagers)), m_nodeRegistry(nodeRegistry) {}
+EmptyUIManager::EmptyUIManager(std::shared_ptr<NodeRegistry> nodeRegistry) : m_nodeRegistry(nodeRegistry) {}
 
-void EmptyUIManager::PopulateViewManagerConstants(std::map<std::string, folly::dynamic> &constants) {
-  for (auto &&vm : *m_viewManagers)
-    constants.emplace(std::make_pair(std::string(vm->GetName()), vm->GetConstants()));
-}
+void EmptyUIManager::PopulateViewManagerConstants(std::map<std::string, folly::dynamic> &constants) {}
 
 std::shared_ptr<EmptyUINode> EmptyUIManager::addRootView(int64_t rootViewTag) {
   auto root = std::make_shared<EmptyUINode>(rootViewTag, std::string("ROOT"));

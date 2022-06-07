@@ -5,6 +5,7 @@
 #include <cxxreact/CxxModule.h>
 #include <functional/functor.h>
 
+#include "../../codegen/NativeDevSettingsSpec.g.h"
 #include <NativeModules.h>
 #include <ReactHost/React.h>
 
@@ -12,6 +13,8 @@ namespace Microsoft::ReactNative {
 
 REACT_MODULE(DevSettings)
 struct DevSettings {
+  using ModuleSpec = ReactNativeSpecs::DevSettingsSpec;
+
   REACT_INIT(Initialize) void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(reload) void reload() noexcept;

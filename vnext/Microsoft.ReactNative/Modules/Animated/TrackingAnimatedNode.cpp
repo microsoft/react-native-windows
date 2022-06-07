@@ -27,6 +27,9 @@ void TrackingAnimatedNode::Update() {
 void TrackingAnimatedNode::StartAnimation() {
   if (auto const strongManager = m_manager.lock()) {
     if (auto const toValueNode = strongManager->GetValueAnimatedNode(m_toValueId)) {
+      // In case the animation is already running, we need to stop it to free up the
+      // animationId key in the active animations map in the animation manager.
+      strongManager->StopAnimation(m_animationId, true);
       toValueNode->AddActiveTrackingNode(m_tag);
       m_animationConfig.insert(static_cast<folly::StringPiece>(s_toValueIdName), toValueNode->Value());
       strongManager->StartTrackingAnimatedNode(

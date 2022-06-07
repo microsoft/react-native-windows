@@ -14,11 +14,9 @@
 #define STRING_(s) #s
 #define STRING(s) STRING_(s)
 
-namespace facebook {
-namespace jsi {
+namespace Microsoft::JSI {
 struct RuntimeHolderLazyInit;
-}
-} // namespace facebook
+} // namespace Microsoft::JSI
 
 namespace facebook {
 namespace react {
@@ -26,7 +24,11 @@ namespace react {
 enum class JSIEngineOverride : int32_t {
   Default = 0, // No JSI, will use the legacy ExecutorFactory
   Chakra = 1, // Use the JSIExecutorFactory with ChakraRuntime
+
+#if 0 // Deprecated
   ChakraCore = 2, // Use the JSIExecutorFactory with ChakraCoreRuntime
+#endif
+
   Hermes = 3, // Use the JSIExecutorFactory with Hermes
   V8 = 4, // Use the JSIExecutorFactory with V8
   V8Lite = 5, // Use the JSIExecutorFactory with V8Lite
@@ -81,7 +83,7 @@ struct DevSettings {
   /// instance. This object should in general be used only from the JS engine
   /// thread, unless the specific runtime implementation explicitly guarantees
   /// reentrancy.
-  std::shared_ptr<jsi::RuntimeHolderLazyInit> jsiRuntimeHolder;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
 
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
@@ -91,6 +93,8 @@ struct DevSettings {
   std::function<void()> showDevMenuCallback;
 
   bool inlineSourceMap{true};
+
+  bool enableDefaultCrashHandler{false};
 };
 
 } // namespace react

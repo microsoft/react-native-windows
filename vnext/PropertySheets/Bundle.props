@@ -39,7 +39,7 @@
     <BundlerExtraArgs Condition="'$(BundlerExtraArgs)' == '' AND '$(UseHermes)' == 'true'">--minify false</BundlerExtraArgs>
 
     <!-- Command to use to create a bundle -->
-    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx --no-install react-native bundle</BundleCliCommand>
+    <BundleCliCommand Condition="'$(BundleCliCommand)' == ''">npx react-native bundle</BundleCliCommand>
 
     <!-- This should be the app package root, this is where the bundle command will be run from -->
     <BundleCommandWorkingDir Condition="'$(BundleCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</BundleCommandWorkingDir>

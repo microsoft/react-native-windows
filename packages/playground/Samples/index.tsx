@@ -611,8 +611,7 @@ export default class Bootstrap extends React.Component<
             <Image
               style={{width: 50, height: 50}}
               source={{
-                uri:
-                  'http://facebook.github.io/react-native/img/header_logo.png',
+                uri: 'http://facebook.github.io/react-native/img/header_logo.png',
               }}
               onLoadStart={() => {
                 console.log('image onLoadStart!');
@@ -634,8 +633,7 @@ export default class Bootstrap extends React.Component<
               source={{
                 width: 66,
                 height: 58,
-                uri:
-                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
+                uri: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAzCAYAAAA6oTAqAAAAEXRFWHRTb2Z0d2FyZQBwbmdjcnVzaEB1SfMAAABQSURBVGje7dSxCQBACARB+2/ab8BEeQNhFi6WSYzYLYudDQYGBgYGBgYGBgYGBgYGBgZmcvDqYGBgmhivGQYGBgYGBgYGBgYGBgYGBgbmQw+P/eMrC5UTVAAAAABJRU5ErkJggg==',
               }}
             />
           </View>

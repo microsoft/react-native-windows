@@ -5,13 +5,12 @@
 
 #include "IReactDispatcher.h"
 #include "IReactInstanceInternal.h"
-#include "ReactContext.h"
+#include "MsoReactContext.h"
 #include "ReactNativeHeaders.h"
 #include "React_win.h"
 #include "activeObject/activeObject.h"
 
 #ifndef CORE_ABI
-#include <Modules/AppThemeModuleUwp.h>
 #include <Modules/AppearanceModule.h>
 #include <Modules/I18nManagerModule.h>
 #include <Views/ExpressionAnimationStore.h>
@@ -78,9 +77,12 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::string BundleRootPath() const noexcept;
   std::string SourceBundleHost() const noexcept;
   uint16_t SourceBundlePort() const noexcept;
+  bool RequestInlineSourceMap() const noexcept;
   std::string JavaScriptBundleFile() const noexcept;
   bool UseDeveloperSupport() const noexcept;
   JSIEngine JsiEngine() const noexcept;
+
+  static void CrashHandler(int fileDescriptor) noexcept;
 
  private:
   friend MakePolicy;
@@ -124,6 +126,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void DrainJSCallQueue() noexcept;
   void AbandonJSCallQueue() noexcept;
 
+  void InstanceCrashHandler(int fileDescriptor) noexcept;
+
   struct JSCallEntry {
     std::string ModuleName;
     std::string MethodName;
@@ -131,7 +135,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   };
 
 #if defined(USE_V8)
-  static std::string getApplicationLocalFolder();
+  static std::string getApplicationTempFolder();
 #endif
 
  private: // immutable fields
@@ -178,14 +182,16 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
 
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
 #ifndef CORE_ABI
-  std::shared_ptr<Microsoft::ReactNative::AppTheme> m_appTheme;
   Mso::CntPtr<Microsoft::ReactNative::AppearanceChangeListener> m_appearanceListener;
 #endif
   Mso::CntPtr<Mso::React::IDispatchQueue2> m_uiQueue;
   std::deque<JSCallEntry> m_jsCallQueue;
 
-  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
   winrt::Microsoft::ReactNative::JsiRuntime m_jsiRuntime{nullptr};
+
+  static std::mutex s_registryMutex; // protects access to s_instanceRegistry
+  static std::vector<ReactInstanceWin *> s_instanceRegistry;
 };
 
 } // namespace Mso::React

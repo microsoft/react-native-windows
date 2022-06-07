@@ -5,10 +5,10 @@
  * @format
  */
 
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import {hashContent} from '../Hash';
 
-(async function() {
-  const content = await fs.promises.readFile(process.argv[2]);
+(async function () {
+  const content = await fs.readFile(process.argv[2]);
   console.log(hashContent(content));
 })();

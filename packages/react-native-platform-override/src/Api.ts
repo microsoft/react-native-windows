@@ -10,7 +10,7 @@
 
 import * as Serialized from './Serialized';
 import _ from 'lodash';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import OverrideFactory, {OverrideFactoryImpl} from './OverrideFactory';
@@ -32,6 +32,7 @@ import {getInstalledRNVersion} from './PackageUtils';
 // reach into our guts to import them.
 export * from './OverrideFactory';
 export * from './Override';
+export * from './refFromVersion';
 export {UpgradeResult, ValidationError};
 
 const MAX_CONCURRENT_TASKS = 30;
@@ -160,7 +161,7 @@ export async function upgradeOverrides(
   const upgradeResults = await mapLimit<Override, UpgradeResult>(
     outOfDateOverrides,
     MAX_CONCURRENT_TASKS,
-    async override => {
+    async (override: any) => {
       const upgradeResult = await override
         .upgradeStrategy()
         .upgrade(
@@ -209,7 +210,7 @@ export async function upgradeOverrides(
  */
 async function checkFileExists(friendlyName: string, filePath: string) {
   try {
-    await fs.promises.access(filePath);
+    await fs.access(filePath);
   } catch (ex) {
     throw new Error(`Could not find ${friendlyName} at path '${filePath}'`);
   }

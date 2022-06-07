@@ -20,9 +20,9 @@ struct NetworkingIOSSpec_sendRequest_query {
     REACT_FIELD(url)
     std::string url;
     REACT_FIELD(data)
-    React::JSValue data;
+    ::React::JSValue data;
     REACT_FIELD(headers)
-    React::JSValue headers;
+    ::React::JSValue headers;
     REACT_FIELD(responseType)
     std::string responseType;
     REACT_FIELD(incrementalUpdates)

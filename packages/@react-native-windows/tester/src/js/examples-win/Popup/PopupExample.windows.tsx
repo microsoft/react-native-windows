@@ -17,7 +17,7 @@ class AnchoredPopupExample extends React.Component<
   {},
   IAnchoredPopupExampleState
 > {
-  private readonly _textInput: React.RefObject<TextInput>;
+  private readonly _textInput: React.RefObject<any>;
 
   public state: IAnchoredPopupExampleState = {
     showPopup: false,
@@ -138,13 +138,13 @@ export const description =
 export const examples = [
   {
     title: 'Popup Anchor to text input w/ light dismiss',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <AnchoredPopupExample />;
     },
   },
   {
     title: 'Popup centered on screen',
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <PopupPlacementExample />;
     },
   },

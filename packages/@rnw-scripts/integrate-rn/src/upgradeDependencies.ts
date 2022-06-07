@@ -262,11 +262,7 @@ export function calcPackageDependencies(
  * Sort an object by keys
  */
 function sortByKeys<T>(obj: Record<string, T>): Record<string, T> {
-  return _(obj)
-    .toPairs()
-    .sortBy(0)
-    .fromPairs()
-    .value();
+  return _(obj).toPairs().sortBy(0).fromPairs().value();
 }
 
 /**
@@ -288,7 +284,7 @@ function syncReactNativeDependencies(
   const newDeps = {
     ..._.pick(pkg.dependencies, extraDeps),
     ...reactNativePackageDiff.newPackage.dependencies,
-  };
+  } as Record<string, string>;
   if (Object.keys(newDeps).length === 0) {
     delete pkg.dependencies;
   } else {
@@ -302,7 +298,7 @@ function syncReactNativeDependencies(
   const newPeerDeps = {
     ..._.pick(pkg.peerDependencies, extraPeerDeps),
     ...reactNativePackageDiff.newPackage.peerDependencies,
-  };
+  } as Record<string, string>;
   if (Object.keys(newPeerDeps).length === 0) {
     delete pkg.peerDependencies;
   } else {
@@ -372,9 +368,19 @@ function ensureValidReactNativePeerDep(
     // Semver satisfaction logic for * is too strict, so we need to special
     // case it https://github.com/npm/node-semver/issues/130
     peerDep === '*' ||
-    (semver.prerelease(semver.minVersion(peerDep)!) === null &&
+    (semver.prerelease(newReactNativeVersion) === null &&
+      semver.prerelease(semver.minVersion(peerDep)!) === null &&
       semver.satisfies(newReactNativeVersion, peerDep))
   ) {
+    return;
+  }
+
+  // Prerelease builds can have breaking changes, requiring a strict peerDependency. Non-prerelease versions should have
+  // a loose peerDependency to allow in-place updates without warnings.
+  if (semver.prerelease(newReactNativeVersion) === null) {
+    pkg.peerDependencies['react-native'] = `^${semver.major(
+      newReactNativeVersion,
+    )}.${semver.minor(newReactNativeVersion)}.0`;
     return;
   }
 

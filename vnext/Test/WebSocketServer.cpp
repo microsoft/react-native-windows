@@ -17,8 +17,8 @@ using std::function;
 using std::string;
 using std::vector;
 
-using Error = Microsoft::React::IWebSocketResource::Error;
-using ErrorType = Microsoft::React::IWebSocketResource::ErrorType;
+using Error = Microsoft::React::Networking::IWebSocketResource::Error;
+using ErrorType = Microsoft::React::Networking::IWebSocketResource::ErrorType;
 
 namespace Microsoft::React::Test
 {

@@ -35,7 +35,7 @@ function getPossibleMethodSignatures(
   const args = translateArgs(funcType.params, aliases, baseAliasName);
   if (isMethodReturnPromise(funcType)) {
     // TODO: type of the promise could be provided in the future
-    args.push('React::ReactPromise<React::JSValue> &&result');
+    args.push('::React::ReactPromise<::React::JSValue> &&result');
   }
 
   // TODO: be much more exhastive on the possible method signatures that can be used..
@@ -100,7 +100,7 @@ function renderProperties(
 
       if (isMethodReturnPromise(funcType)) {
         // TODO: type of the promise could be provided in the future
-        traversedArgs.push('Promise<React::JSValue>');
+        traversedArgs.push('Promise<::React::JSValue>');
       }
 
       if (tuple) {

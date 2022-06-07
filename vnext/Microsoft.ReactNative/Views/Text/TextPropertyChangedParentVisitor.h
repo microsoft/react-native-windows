@@ -13,6 +13,7 @@ enum class PropertyChangeType : std::uint_fast8_t {
   Text = 1 << 0,
   AddHighlight = 1 << 1,
   RemoveHighlight = 1 << 2,
+  AddPressable = 1 << 3,
 };
 
 DEFINE_ENUM_FLAG_OPERATORS(PropertyChangeType);

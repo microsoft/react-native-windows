@@ -306,6 +306,13 @@ PropNameID JsiAbiRuntime::createPropNameIDFromString(const String &str) try {
   throw;
 }
 
+PropNameID JsiAbiRuntime::createPropNameIDFromSymbol(const Symbol &sym) try {
+  return MakePropNameID(m_runtime.CreatePropertyIdFromSymbol(AsJsiSymbolRef(sym)));
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
 std::string JsiAbiRuntime::utf8(const PropNameID &propertyId) try {
   std::string dataResult;
   m_runtime.PropertyIdToUtf8(AsJsiPropertyIdRef(propertyId), [&dataResult](array_view<uint8_t const> utf8) {
@@ -994,7 +1001,7 @@ size_t JsiAbiRuntime::ValueRefArray::Size() const noexcept {
 //===========================================================================
 
 JsiAbiRuntime::PropNameIDRef::PropNameIDRef(JsiPropertyIdRef const &data) noexcept
-    : m_propertyId{make<PropNameID>(new (std::addressof(m_pointerStore)) DataPointerValue(data.Data))} {}
+    : m_propertyId{make<PropNameID>(new(std::addressof(m_pointerStore)) DataPointerValue(data.Data))} {}
 
 JsiAbiRuntime::PropNameIDRef::~PropNameIDRef() noexcept {}
 

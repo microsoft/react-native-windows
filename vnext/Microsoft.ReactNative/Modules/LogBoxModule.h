@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include "../../codegen/NativeLogBoxSpec.g.h"
 #include <NativeModules.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
@@ -11,6 +12,8 @@ namespace Microsoft::ReactNative {
 
 REACT_MODULE(LogBox)
 struct LogBox : public std::enable_shared_from_this<LogBox> {
+  using ModuleSpec = ReactNativeSpecs::LogBoxSpec;
+
   REACT_INIT(Initialize)
   void Initialize(React::ReactContext const &reactContext) noexcept;
 

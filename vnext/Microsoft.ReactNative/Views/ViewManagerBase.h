@@ -78,10 +78,9 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   virtual YGMeasureFunc GetYogaCustomMeasureFunc() const;
   virtual bool RequiresYogaNode() const;
   bool IsNativeControlWithSelfLayout() const;
+  void MarkDirty(int64_t tag);
 
-  virtual void OnPointerEvent(
-      ShadowNodeBase * /*node*/,
-      const winrt::Microsoft::ReactNative::ReactPointerEventArgs & /*args*/) {}
+  virtual void OnPointerEvent(ShadowNodeBase *node, const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args);
 
   const Mso::React::IReactContext &GetReactContext() const {
     return *m_context;
@@ -93,6 +92,8 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
       const winrt::Microsoft::ReactNative::JSValueArgWriter &eventDataWriter) const noexcept;
 
   virtual void TransferProperties(const XamlView &oldView, const XamlView &newView);
+
+  virtual void OnDropViewInstance(const XamlView &view) {}
 
  protected:
   virtual XamlView CreateViewCore(int64_t tag, const winrt::Microsoft::ReactNative::JSValueObject &props) = 0;

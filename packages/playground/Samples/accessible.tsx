@@ -15,6 +15,7 @@ import {
   findNodeHandle,
   TouchableHighlight,
 } from 'react-native';
+import {ViewWindows} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
@@ -30,37 +31,28 @@ export default class Bootstrap extends React.Component<
   render() {
     return (
       <View style={styles.container}>
-        <View
-          style={styles.item}
-          accessibilityLabel="FIRST ITEM"
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            focusable: true,
-          }}>
+        <View style={styles.item} accessibilityLabel="FIRST ITEM" focusable>
           <Text style={styles.text}>Welcome to React Native! (FIRST ITEM)</Text>
         </View>
-        <View
+        <ViewWindows
           style={styles.item}
           accessibilityLabel="SECOND ITEM"
-          {...{
-            // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            enableFocusRing: false,
-            focusable: true,
-          }}>
+          focusable
+          enableFocusRing={false}>
           <Text style={styles.text}>No focus visual (SECOND ITEM)</Text>
-        </View>
-        <View
+        </ViewWindows>
+        <ViewWindows
           style={styles.item}
           accessibilityLabel="THIRD ITEM"
+          focusable
+          enableFocusRing={false}
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
             onFocus: () => this.setState({displayText: 'FOCUSED'}),
             onBlur: () => this.setState({displayText: 'BLURRED'}),
-            enableFocusRing: false,
-            focusable: true,
           }}>
           <Text style={styles.text}>{this.state.displayText}</Text>
-        </View>
+        </ViewWindows>
         <TouchableHighlight
           style={styles.item}
           accessibilityLabel="TEST Announce For Accessibility"

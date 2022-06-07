@@ -1,0 +1,7 @@
+# Checkout the full commit history of the repo. Needed for tools like
+# beachball.
+steps:
+  - checkout: self
+    clean: false
+    submodules: false
+    lfs: false

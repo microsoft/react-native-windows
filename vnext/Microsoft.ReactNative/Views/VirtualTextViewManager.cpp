@@ -29,6 +29,8 @@ void VirtualTextShadowNode::AddView(ShadowNode &child, int64_t index) {
     const auto &childTextNode = static_cast<VirtualTextShadowNode &>(childNode);
     propertyChangeType |=
         childTextNode.hasDescendantTextHighlighter ? PropertyChangeType::AddHighlight : PropertyChangeType::None;
+    propertyChangeType |=
+        childTextNode.hasDescendantPressable ? PropertyChangeType::AddPressable : PropertyChangeType::None;
   }
   Super::AddView(child, index);
   NotifyAncestorsTextPropertyChanged(this, propertyChangeType);
@@ -52,6 +54,17 @@ const wchar_t *VirtualTextViewManager::GetName() const {
 
 XamlView VirtualTextViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
   return winrt::Span();
+}
+
+void VirtualTextViewManager::UpdateProperties(
+    ShadowNodeBase *nodeToUpdate,
+    winrt::Microsoft::ReactNative::JSValueObject &props) {
+  // This could be optimized further, but rather than paying a penalty to mark
+  // the node dirty for each relevant property in UpdateProperty (which should
+  // be reasonably cheap given it just does an O(1) lookup of the Yoga node
+  // for the tag, for now this just marks the node dirty for any prop update.
+  MarkDirty(nodeToUpdate->m_tag);
+  Super::UpdateProperties(nodeToUpdate, props);
 }
 
 bool VirtualTextViewManager::UpdateProperty(
@@ -87,7 +100,20 @@ bool VirtualTextViewManager::UpdateProperty(
           node->backgroundColor ? PropertyChangeType::AddHighlight : PropertyChangeType::RemoveHighlight;
       NotifyAncestorsTextPropertyChanged(node, propertyChangeType);
     }
+  } else if (propertyName == "isPressable") {
+    auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+    node->isPressable = propertyValue.AsBoolean();
+    if (node->isPressable) {
+      NotifyAncestorsTextPropertyChanged(node, PropertyChangeType::AddPressable);
+    }
   } else {
+    const auto isRegisteringMouseEvent =
+        (propertyName == "onMouseEnter" || propertyName == "onMouseLeave") && propertyValue.AsBoolean();
+    if (isRegisteringMouseEvent) {
+      auto node = static_cast<VirtualTextShadowNode *>(nodeToUpdate);
+      NotifyAncestorsTextPropertyChanged(node, PropertyChangeType::AddPressable);
+    }
+
     return Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
   }
 

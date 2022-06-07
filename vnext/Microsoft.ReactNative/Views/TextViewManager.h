@@ -21,10 +21,15 @@ class TextViewManager : public FrameworkElementViewManager {
   void AddView(const XamlView &parent, const XamlView &child, int64_t index) override;
   void RemoveAllChildren(const XamlView &parent) override;
   void RemoveChildAt(const XamlView &parent, int64_t index) override;
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
   YGMeasureFunc GetYogaCustomMeasureFunc() const override;
 
+  void OnPointerEvent(ShadowNodeBase *node, const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args) override;
+
   static void UpdateTextHighlighters(ShadowNodeBase *node, bool highlightAdded);
+
+  static void SetDescendantPressable(ShadowNodeBase *node);
 
   static TextTransform GetTextTransformValue(ShadowNodeBase *node);
 

@@ -38,7 +38,7 @@ void ReactPackageBuilder::AddViewManager(
 void ReactPackageBuilder::AddTurboModule(
     hstring const &moduleName,
     ReactModuleProvider const &moduleProvider) noexcept {
-  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider);
+  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
 }
 
 } // namespace winrt::Microsoft::ReactNative

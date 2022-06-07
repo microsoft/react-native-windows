@@ -7,6 +7,10 @@ using namespace facebook::react;
 
 namespace Microsoft::React::Test {
 
+facebook::react::JSIEngineOverride ChakraRuntimeHolder::getRuntimeType() noexcept {
+  return facebook::react::JSIEngineOverride::Chakra;
+}
+
 std::shared_ptr<facebook::jsi::Runtime> ChakraRuntimeHolder::getRuntime() noexcept {
   std::call_once(once_flag_, [this]() { initRuntime(); });
 

@@ -67,14 +67,22 @@ global.__fbBatchedBridge.registerLazyCallableModule('SampleModuleCpp', () => new
 
 class SampleApp extends Component {
   componentDidMount() {
-    this.timedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
     this.timedEventCppSub = SampleModuleCppEmitter.addListener('TimedEventCpp', getCallback('SampleModuleCpp.TimedEventCpp() => '));
     this.EmitJSEvent1CppSub = SampleModuleCppEmitter.addListener('EmitJSEvent1Cpp', getCallback('SampleModuleCpp.EmitJSEvent1Cpp => '));
     this.EmitJSEvent2CppSub = SampleModuleCppEmitter.addListener('EmitJSEvent2Cpp', getCallback2('SampleModuleCpp.EmitJSEvent2Cpp => '));
     this.EmitJSEvent3CppSub = SampleModuleCppEmitter.addListener('EmitJSEvent3Cpp', getCallback2('SampleModuleCpp.EmitJSEvent3Cpp => '));
-    this.EmitJSEvent1CSSub = SampleModuleCppEmitter.addListener('EmitJSEvent1CS', getCallback('SampleModuleCS.EmitJSEvent1CS => '));
-    this.EmitJSEvent2CSSub = SampleModuleCppEmitter.addListener('EmitJSEvent2CS', getCallback2('SampleModuleCS.EmitJSEvent2CS => '));
-    this.EmitJSEvent3CSSub = SampleModuleCppEmitter.addListener('EmitJSEvent3CS', getCallback2('SampleModuleCS.EmitJSEvent3CS => '));
+    this.JSEventArg0CppSub = SampleModuleCppEmitter.addListener('JSEventArg0Cpp', getCallback('SampleModuleCpp.JSEventArg0Cpp => '));
+    this.JSEventArg1CppSub = SampleModuleCppEmitter.addListener('JSEventArg1Cpp', getCallback('SampleModuleCpp.JSEventArg1Cpp => '));
+    this.JSEventArg2CppSub = SampleModuleCppEmitter.addListener('JSEventArg2Cpp', getCallback2('SampleModuleCpp.JSEventArg2Cpp => '));
+
+    this.timedEventCSSub = SampleModuleCSEmitter.addListener('TimedEventCS', getCallback('SampleModuleCS.TimedEventCS() => '));
+    this.EmitJSEvent1CSSub = SampleModuleCSEmitter.addListener('EmitJSEvent1CS', getCallback('SampleModuleCS.EmitJSEvent1CS => '));
+    this.EmitJSEvent2CSSub = SampleModuleCSEmitter.addListener('EmitJSEvent2CS', getCallback2('SampleModuleCS.EmitJSEvent2CS => '));
+    this.EmitJSEvent3CSSub = SampleModuleCSEmitter.addListener('EmitJSEvent3CS', getCallback2('SampleModuleCS.EmitJSEvent3CS => '));
+    this.JSEventArg0CSSub = SampleModuleCSEmitter.addListener('JSEventArg0CS', getCallback('SampleModuleCS.JSEventArg0CS => '));
+    this.JSEventArg1CSSub = SampleModuleCSEmitter.addListener('JSEventArg1CS', getCallback('SampleModuleCS.JSEventArg1CS => '));
+    this.JSEventArg2CSSub = SampleModuleCSEmitter.addListener('JSEventArg2CS', getCallback2('SampleModuleCS.JSEventArg2CS => '));
+
     this.openURLSub = Linking.addListener('url', (event) => log('Open URL => ' + event.url));
 
     Linking.getInitialURL()
@@ -84,13 +92,21 @@ class SampleApp extends Component {
 
   componentWillUnmount() {
     this.timedEventCSSub.remove();
-    this.timedEventCppSub.remove();
     this.EmitJSEvent1CppSub.remove();
     this.EmitJSEvent2CppSub.remove();
     this.EmitJSEvent3CppSub.remove();
+    this.JSEventArg0CppSub.remove();
+    this.JSEventArg1CppSub.remove();
+    this.JSEventArg2CppSub.remove();
+
+    this.timedEventCppSub.remove();
     this.EmitJSEvent1CSSub.remove();
     this.EmitJSEvent2CSSub.remove();
     this.EmitJSEvent3CSSub.remove();
+    this.JSEventArg0CSSub.remove();
+    this.JSEventArg1CSSub.remove();
+    this.JSEventArg2CSSub.remove();
+
     this.openURLSub.remove();
   }
 
@@ -186,6 +202,9 @@ class SampleApp extends Component {
     NativeModules.SampleModuleCS.EmitJSEvent1(43);
     NativeModules.SampleModuleCS.EmitJSEvent2(8, 52);
     NativeModules.SampleModuleCS.EmitJSEvent3(15, 79);
+    NativeModules.SampleModuleCS.EmitJSEventArg0();
+    NativeModules.SampleModuleCS.EmitJSEventArg1(7);
+    NativeModules.SampleModuleCS.EmitJSEventArg2(42, 15);
 
     //TODO: make sync method accessible only in non-web debugger scenarios
     //log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
@@ -268,6 +287,9 @@ class SampleApp extends Component {
     NativeModules.SampleModuleCpp.EmitJSEvent1(42);
     NativeModules.SampleModuleCpp.EmitJSEvent2(7, 51);
     NativeModules.SampleModuleCpp.EmitJSEvent3(14, 78);
+    NativeModules.SampleModuleCpp.EmitJSEventArg0();
+    NativeModules.SampleModuleCpp.EmitJSEventArg1(7);
+    NativeModules.SampleModuleCpp.EmitJSEventArg2(42, 15);
 
     //TODO: make sync method accessible only in non-web debugger scenarios
     //log('SampleModuleCpp.SyncReturnMethod => ' + NativeModules.SampleModuleCpp.SyncReturnMethod());

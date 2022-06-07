@@ -313,7 +313,7 @@ class RefCountedObject : public TBaseType0, public TBaseTypes... {
 
  protected:
   template <typename... TArgs>
-  RefCountedObject(TArgs &&... args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
+  RefCountedObject(TArgs &&...args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
 
   virtual ~RefCountedObject() = default;
 
@@ -351,7 +351,7 @@ class RefCountedObject<Mso::SimpleRefCountPolicy<TDeleter, TAllocator>, TBaseTyp
 
  protected:
   template <typename... TArgs>
-  RefCountedObject(TArgs &&... args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
+  RefCountedObject(TArgs &&...args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
 
   virtual ~RefCountedObject() = default;
 
@@ -382,7 +382,7 @@ class RefCountedObject<Mso::WeakRefCountPolicy<TDeleter, TAllocator>, TBaseType0
 
  protected:
   template <typename... TArgs>
-  RefCountedObject(TArgs &&... args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
+  RefCountedObject(TArgs &&...args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
 
   virtual ~RefCountedObject() = default;
 };
@@ -396,7 +396,7 @@ class RefCountedObject<Mso::RefCountStrategy::NoRefCount, TBaseType0, TBaseTypes
   MSO_OBJECT_NOREFCOUNT(RefCountedObject);
 
   template <typename... TArgs>
-  RefCountedObject(TArgs &&... args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
+  RefCountedObject(TArgs &&...args) noexcept : TBaseType0(std::forward<TArgs>(args)...) {}
 
   void AddRef() const noexcept override {}
   void Release() const noexcept override {}

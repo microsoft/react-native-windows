@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include "../../codegen/NativeClipboardSpec.g.h"
 #include <NativeModules.h>
 
 namespace Microsoft::ReactNative {
 
 REACT_MODULE(Clipboard)
 struct Clipboard {
+  using ModuleSpec = ReactNativeSpecs::ClipboardSpec;
+
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 

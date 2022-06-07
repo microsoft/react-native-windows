@@ -20,7 +20,6 @@ namespace winrt {
 using namespace Windows::UI;
 using namespace xaml;
 using namespace xaml::Controls;
-using namespace xaml::Documents;
 using namespace xaml::Input;
 using namespace Windows::Foundation;
 using namespace xaml::Media;
@@ -33,7 +32,7 @@ class TouchEventHandler {
   TouchEventHandler(const Mso::React::IReactContext &context, bool fabric);
   virtual ~TouchEventHandler();
 
-  void AddTouchHandlers(XamlView xamlView);
+  void AddTouchHandlers(XamlView xamlView, XamlView rootView = nullptr, bool handledEventsToo = false);
   void RemoveTouchHandlers();
   winrt::Microsoft::ReactNative::BatchingEventEmitter &BatchingEmitter() noexcept;
 
@@ -44,12 +43,18 @@ class TouchEventHandler {
   void OnPointerCaptureLost(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
   void OnPointerExited(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
   void OnPointerMoved(const winrt::IInspectable &, const winrt::PointerRoutedEventArgs &args);
-  winrt::event_revoker<winrt::IUIElement> m_pressedRevoker;
-  winrt::event_revoker<winrt::IUIElement> m_releasedRevoker;
-  winrt::event_revoker<winrt::IUIElement> m_canceledRevoker;
-  winrt::event_revoker<winrt::IUIElement> m_captureLostRevoker;
-  winrt::event_revoker<winrt::IUIElement> m_exitedRevoker;
-  winrt::event_revoker<winrt::IUIElement> m_movedRevoker;
+  winrt::IInspectable m_pressedHandler;
+  winrt::IInspectable m_releasedHandler;
+  winrt::IInspectable m_canceledHandler;
+  winrt::IInspectable m_captureLostHandler;
+  winrt::IInspectable m_exitedHandler;
+  winrt::IInspectable m_movedHandler;
+
+#ifdef USE_WINUI3
+  using PointerDeviceType = winrt::Microsoft::UI::Input::PointerDeviceType;
+#else
+  using PointerDeviceType = winrt::Windows::Devices::Input::PointerDeviceType;
+#endif
 
   struct ReactPointer {
     int64_t target = 0;
@@ -58,8 +63,7 @@ class TouchEventHandler {
     uint64_t timestamp = 0;
     winrt::Point positionRoot = {0, 0};
     winrt::Point positionView = {0, 0};
-    winrt::Windows::Devices::Input::PointerDeviceType deviceType{
-        winrt::Windows::Devices::Input::PointerDeviceType::Mouse};
+    PointerDeviceType deviceType{PointerDeviceType::Mouse};
     float pressure = 0;
     bool isLeftButton = false;
     bool isRightButton = false;
@@ -81,14 +85,16 @@ class TouchEventHandler {
       xaml::UIElement sourceElement,
       std::vector<int64_t> &&newViews);
 
+  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
 #ifdef USE_FABRIC
   facebook::react::Touch TouchForPointer(const ReactPointer &pointer) noexcept;
+  static bool IsEndishEventType(TouchEventType eventType) noexcept;
 #endif
-  enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
   void OnPointerConcluded(TouchEventType eventType, const winrt::PointerRoutedEventArgs &args);
   void DispatchTouchEvent(TouchEventType eventType, size_t pointerIndex);
   bool DispatchBackEvent();
-  const char *GetPointerDeviceTypeName(winrt::Windows::Devices::Input::PointerDeviceType deviceType) noexcept;
+  const char *GetPointerDeviceTypeName(PointerDeviceType deviceType) noexcept;
+
   winrt::Microsoft::ReactNative::PointerEventKind GetPointerEventKind(TouchEventType eventType) noexcept;
   const wchar_t *GetTouchEventTypeName(TouchEventType eventType) noexcept;
 
@@ -108,12 +114,9 @@ class TouchEventHandler {
       const winrt::Microsoft::ReactNative::ReactPointerEventArgs &args,
       std::vector<int64_t> *pTagsForBranch,
       xaml::UIElement *pSourceElement);
-  winrt::IPropertyValue TestHit(
-      const winrt::Collections::IVectorView<xaml::Documents::Inline> &inlines,
-      const winrt::Point &pointerPos,
-      bool &isHit);
 
   XamlView m_xamlView;
+  XamlView m_rootView;
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   bool m_fabric;
   std::shared_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;

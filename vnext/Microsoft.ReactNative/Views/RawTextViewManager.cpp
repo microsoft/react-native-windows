@@ -43,6 +43,7 @@ bool RawTextViewManager::UpdateProperty(
     return true;
 
   if (propertyName == "text") {
+    MarkDirty(nodeToUpdate->m_tag);
     run.Text(asHstring(propertyValue));
     static_cast<RawTextShadowNode *>(nodeToUpdate)->originalText = winrt::hstring{};
     ApplyTextTransformToChild(nodeToUpdate);

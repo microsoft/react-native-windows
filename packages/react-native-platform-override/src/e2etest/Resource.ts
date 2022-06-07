@@ -6,7 +6,7 @@
  */
 
 import crypto from 'crypto';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import os from 'os';
 import path from 'path';
@@ -29,8 +29,8 @@ export async function acquireSratchDirectory(): Promise<
     'e2etest',
     crypto.randomBytes(16).toString('hex'),
   );
-  await fs.promises.mkdir(dir, {recursive: true});
-  return [dir, async () => fs.promises.rmdir(dir, {recursive: true})];
+  await fs.mkdir(dir, {recursive: true});
+  return [dir, async () => fs.rmdir(dir, {recursive: true})];
 }
 
 /**
@@ -47,7 +47,7 @@ export async function usingScratchDirectory<T>(
  * Helper to acquire an isolated GitReactFileRepository whuch ust be deleted
  * using the returned callback.
  */
-export async function acquireGitRepo<T>(): Promise<
+export async function acquireGitRepo(): Promise<
   [GitReactFileRepository, () => Promise<void>]
 > {
   const [dir, dispose] = await acquireSratchDirectory();
@@ -81,8 +81,8 @@ export async function usingFiles<T>(
         const src = path.join(collateralPath, override);
         const dst = path.join(targetDirectory, override);
 
-        await fs.promises.mkdir(path.dirname(dst), {recursive: true});
-        return await fs.promises.copyFile(src, dst);
+        await fs.mkdir(path.dirname(dst), {recursive: true});
+        return await fs.copyFile(src, dst);
       }),
     );
 
@@ -100,9 +100,9 @@ export async function usingRepository<T>(
 ): Promise<T> {
   const collateralPath = path.join(__dirname, 'collateral');
   const srcRepo = path.join(collateralPath, sourceFolder);
-  const srcFiles = (
-    await globby(['**/*'], {cwd: srcRepo, absolute: true})
-  ).map(f => path.relative(collateralPath, f));
+  const srcFiles = (await globby(['**/*'], {cwd: srcRepo, absolute: true})).map(
+    f => path.relative(collateralPath, f),
+  );
 
   return await usingFiles(srcFiles, async (repo, baseDir) => {
     return await fn(repo, path.join(baseDir, sourceFolder));

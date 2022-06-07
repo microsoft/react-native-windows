@@ -58,16 +58,16 @@ struct RuntimeAccessor;
 
 struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiRuntime(
-      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+      std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> &&runtimeHolder,
       std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept;
   ~JsiRuntime() noexcept;
 
   static ReactNative::JsiRuntime FromRuntime(facebook::jsi::Runtime &runtime) noexcept;
   static ReactNative::JsiRuntime GetOrCreate(
-      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
       std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
   static ReactNative::JsiRuntime Create(
-      std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+      std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
       std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept;
 
  public: // JsiRuntime
@@ -90,6 +90,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   JsiPropertyIdRef CreatePropertyIdFromAscii(array_view<uint8_t const> ascii);
   JsiPropertyIdRef CreatePropertyIdFromUtf8(array_view<uint8_t const> utf8);
   JsiPropertyIdRef CreatePropertyIdFromString(JsiStringRef str);
+  JsiPropertyIdRef CreatePropertyIdFromSymbol(JsiSymbolRef sym);
   hstring PropertyIdToString(JsiPropertyIdRef propertyId);
   void PropertyIdToUtf8(JsiPropertyIdRef propertyId, JsiByteArrayUser const &useUtf8String);
   bool PropertyIdEquals(JsiPropertyIdRef left, JsiPropertyIdRef right);
@@ -168,7 +169,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   void SetError(facebook::jsi::JSINativeException const &nativeException) noexcept;
 
  private:
-  std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> m_runtimeHolder;
+  std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> m_runtimeHolder;
   std::shared_ptr<facebook::jsi::Runtime> m_runtime;
   RuntimeAccessor *m_runtimeAccessor{};
   std::mutex m_mutex;

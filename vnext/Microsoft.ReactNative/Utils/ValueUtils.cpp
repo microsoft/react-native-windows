@@ -9,6 +9,7 @@
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
+#include "XamlUtils.h"
 
 #include <JSValue.h>
 #include <folly/dynamic.h>
@@ -84,7 +85,7 @@ struct BrushCache {
         {L"SystemListAccentHighColor", {nullptr}}};
 
     m_uiSettings = winrt::Windows::UI::ViewManagement::UISettings();
-    auto dq = winrt::system::DispatcherQueue::GetForCurrentThread();
+    auto dq = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
     m_uiSettings.ColorValuesChanged([this, dq](auto &&sender, auto &&args) {
       dq.TryEnqueue([this]() {
         for (auto &entry : m_map) {
@@ -157,7 +158,7 @@ xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSV
 }
 
 winrt::Color ColorFromNumber(DWORD argb) noexcept {
-  return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
+  return xaml::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
@@ -305,7 +306,7 @@ REACTWINDOWS_API_(bool) IsValidColorValue(const winrt::Microsoft::ReactNative::J
 
 REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
   std::chrono::milliseconds dur((int64_t)ms);
-  return winrt::TimeSpan::duration(dur);
+  return dur;
 }
 
 // C# provides System.Uri.TryCreate, but no native equivalent seems to exist

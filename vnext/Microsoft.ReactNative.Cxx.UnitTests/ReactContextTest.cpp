@@ -99,7 +99,15 @@ struct ReactContextStub : implements<ReactContextStub, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
+  bool RequestInlineSourceMap() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
   hstring JavaScriptBundleFile() noexcept {
+    VerifyElseCrashSz(false, "Not implemented");
+  }
+
+  LoadingState LoadingState() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }
 

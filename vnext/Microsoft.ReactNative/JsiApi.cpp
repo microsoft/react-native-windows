@@ -143,6 +143,7 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   using facebook::jsi::Runtime::createObject;
   using facebook::jsi::Runtime::createPropNameIDFromAscii;
   using facebook::jsi::Runtime::createPropNameIDFromString;
+  using facebook::jsi::Runtime::createPropNameIDFromSymbol;
   using facebook::jsi::Runtime::createPropNameIDFromUtf8;
   using facebook::jsi::Runtime::createStringFromUtf8;
   using facebook::jsi::Runtime::createValueFromJsonUtf8;
@@ -395,7 +396,7 @@ facebook::jsi::JSError const &jsError) {                             \
 }
 
 /*static*/ ReactNative::JsiRuntime JsiRuntime::GetOrCreate(
-    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+    std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
     std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
   {
     std::scoped_lock lock{s_mutex};
@@ -409,7 +410,7 @@ facebook::jsi::JSError const &jsError) {                             \
 }
 
 /*static*/ ReactNative::JsiRuntime JsiRuntime::Create(
-    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
+    std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> const &jsiRuntimeHolder,
     std::shared_ptr<facebook::jsi::Runtime> const &jsiRuntime) noexcept {
   // There are some functions that we cannot do using JSI such as
   // defining a property or using Symbol as a key.
@@ -445,7 +446,7 @@ ReactNative::JsiRuntime JsiRuntime::MakeChakraRuntime() {
 }
 
 JsiRuntime::JsiRuntime(
-    std::shared_ptr<facebook::jsi::RuntimeHolderLazyInit> &&runtimeHolder,
+    std::shared_ptr<::Microsoft::JSI::RuntimeHolderLazyInit> &&runtimeHolder,
     std::shared_ptr<facebook::jsi::Runtime> &&runtime) noexcept
     : m_runtimeHolder{std::move(runtimeHolder)},
       m_runtime{std::move(runtime)},
@@ -568,6 +569,14 @@ JsiPropertyIdRef JsiRuntime::CreatePropertyIdFromString(JsiStringRef str) try {
   auto strPtr = RuntimeAccessor::AsPointerValue(str);
   return PointerAccessor::MakeJsiPropertyNameIdData(
       m_runtimeAccessor->createPropNameIDFromString(RuntimeAccessor::AsString(&strPtr)));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiPropertyIdRef JsiRuntime::CreatePropertyIdFromSymbol(JsiSymbolRef sym) try {
+  auto symPtr = RuntimeAccessor::AsPointerValue(sym);
+  return PointerAccessor::MakeJsiPropertyNameIdData(
+      m_runtimeAccessor->createPropNameIDFromSymbol(RuntimeAccessor::AsSymbol(&symPtr)));
 } catch (JSI_SET_ERROR) {
   throw;
 }

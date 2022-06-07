@@ -5,7 +5,7 @@
  */
 
 import {totalmem, EOL} from 'os';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import child_process from 'child_process';
 import chalk from 'chalk';
@@ -19,6 +19,7 @@ import {
   newSpinner,
   newSuccess,
   newError,
+  powershell,
 } from './commandWithProgress';
 import {execSync} from 'child_process';
 import {BuildArch, BuildConfig} from '../runWindowsOptions';
@@ -49,11 +50,32 @@ export default class MSBuildTools {
       this.msbuildPath(),
       'msbuild.exe',
     )}" "${slnFile}" /t:Clean`;
-    const results = child_process
-      .execSync(cmd)
-      .toString()
-      .split(EOL);
+    const results = child_process.execSync(cmd).toString().split(EOL);
     results.forEach(result => console.log(chalk.white(result)));
+  }
+
+  async restorePackageConfigs(
+    slnFile: any,
+    buildArch: BuildArch,
+    buildType: BuildConfig,
+  ) {
+    const text = 'Restoring NuGet packages ';
+    const spinner = newSpinner(text);
+    await commandWithProgress(
+      spinner,
+      text,
+      path.join(this.msbuildPath(), 'msbuild.exe'),
+      [
+        slnFile,
+        '/t:Restore',
+        '/p:RestoreProjectStyle=PackagesConfig',
+        '/p:RestorePackagesConfig=true',
+        `/p:Platform=${buildArch}`,
+        `/p:Configuration=${buildType}`,
+      ],
+      true,
+      'MSBuildError',
+    );
   }
 
   async buildProject(
@@ -116,7 +138,7 @@ export default class MSBuildTools {
     try {
       checkRequirements.isWinSdkPresent('10.0');
     } catch (e) {
-      newError(e.message);
+      newError((e as Error).message);
       throw e;
     }
 
@@ -138,18 +160,33 @@ export default class MSBuildTools {
       );
     } catch (e) {
       let error = e;
-      if (!e) {
-        const firstMessage = (await fs.promises.readFile(errorLog))
-          .toString()
-          .split(EOL)[0];
-        error = new CodedError('MSBuildError', firstMessage);
-        error.logfile = errorLog;
+      if (e instanceof CodedError) {
+        const origCodedError = e as CodedError;
+        if (origCodedError.type === 'MSBuildError') {
+          // Try to parse msbuild errors from errorLog
+          const errorLogContents = (await fs.readFile(errorLog))
+            .toString()
+            .split(EOL)
+            .filter(s => s)
+            .map(s => s.trim());
+          if (errorLogContents.length > 0) {
+            const firstMessage = errorLogContents[0];
+            error = new CodedError(
+              'MSBuildError',
+              firstMessage,
+              origCodedError.data,
+            );
+            // Hide error messages in a field that won't automatically get reported
+            // with telemetry but is still available to be parsed and sanitized
+            (error as any).msBuildErrorMessages = errorLogContents;
+          }
+        }
       }
       throw error;
     }
     // If we have no errors, delete the error log when we're done
-    if ((await fs.promises.stat(errorLog)).size === 0) {
-      await fs.promises.unlink(errorLog);
+    if ((await fs.stat(errorLog)).size === 0) {
+      await fs.unlink(errorLog);
     }
   }
 
@@ -193,9 +230,11 @@ export default class MSBuildTools {
     );
 
     if (fs.existsSync(toolsPath)) {
-      newSuccess(
-        `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
-      );
+      if (verbose) {
+        newSuccess(
+          `Found compatible MSBuild at ${toolsPath} (${vsInstallation.installationVersion})`,
+        );
+      }
       return new MSBuildTools(
         minVersion,
         vsInstallation.installationPath,
@@ -248,6 +287,54 @@ export default class MSBuildTools {
 
     return results;
   }
+
+  evaluateMSBuildProperties(
+    solutionFile: string,
+    projectFile: string,
+    propertyNames?: string[],
+    extraMsBuildProps?: Record<string, string>,
+  ): Record<string, string> {
+    const spinner = newSpinner('Running Eval-MsBuildProperties.ps1');
+
+    try {
+      const msbuildEvalScriptPath = path.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'powershell',
+        'Eval-MsBuildProperties.ps1',
+      );
+
+      let command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${msbuildEvalScriptPath}" -SolutionFile '${solutionFile}' -ProjectFile '${projectFile}' -MSBuildPath '${this.msbuildPath()}'`;
+
+      if (propertyNames && propertyNames.length > 0) {
+        command += ` -PropertyNames '${propertyNames.join(',')}'`;
+      }
+
+      if (extraMsBuildProps) {
+        command += " -ExtraMSBuildProps '";
+        for (const extraProp in extraMsBuildProps) {
+          if (!(extraProp in Object.prototype)) {
+            command += `,${extraProp}=${extraMsBuildProps[extraProp]}`;
+          }
+        }
+        command += "'";
+      }
+
+      const commandOutput = execSync(command).toString();
+      spinner.succeed();
+
+      const properties = JSON.parse(commandOutput) as Record<string, string>;
+      spinner.succeed();
+      return properties;
+    } catch (e) {
+      spinner.fail(
+        'Running Eval-MsBuildProperties.ps1 failed: ' + (e as Error).message,
+      );
+      throw e;
+    }
+  }
 }
 
 function getVCToolsByArch(buildArch: BuildArch): string {
@@ -272,7 +359,8 @@ function getSDK10InstallationFolder(): string {
     return folder;
   }
 
-  const re = /\\Microsoft SDKs\\Windows\\v10.0\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
+  const re =
+    /\\Microsoft SDKs\\Windows\\v10.0\s*InstallationFolder\s+REG_SZ\s+(.*)/gim;
   const match = re.exec(output);
   if (match) {
     return match[1];

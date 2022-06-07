@@ -465,7 +465,7 @@ class SafeAreaViewProps final : public ViewProps {
 
 #pragma mark - Props
 
-  bool emulateUnlessSupported{false};
+  
 };
 
 class AndroidHorizontalScrollContentViewProps final : public ViewProps {
@@ -475,23 +475,7 @@ class AndroidHorizontalScrollContentViewProps final : public ViewProps {
 
 #pragma mark - Props
 
-  
-};
-
-class RCTSegmentedControlProps final : public ViewProps {
- public:
-  RCTSegmentedControlProps() = default;
-  RCTSegmentedControlProps(const PropsParserContext& context, const RCTSegmentedControlProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  std::vector<std::string> values{};
-  int selectedIndex{0};
-  bool enabled{true};
-  SharedColor tintColor{};
-  SharedColor textColor{};
-  SharedColor backgroundColor{};
-  bool momentary{false};
+  bool removeClippedSubviews{false};
 };
 
 class SliderProps final : public ViewProps {

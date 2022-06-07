@@ -26,21 +26,11 @@ std::tuple<float, double> DecayAnimationDriver::GetValueAndVelocityForTime(doubl
                          42.0f); // we don't need the velocity, so set it to a dummy value
 }
 
-bool DecayAnimationDriver::IsAnimationDone(double currentValue, double /*currentVelocity*/) {
-  return (std::abs(ToValue() - currentValue) < 0.1);
-}
-
-double DecayAnimationDriver::ToValue() {
-  auto const startValue = [this]() {
-    if (auto const manager = m_manager.lock()) {
-      if (auto const valueNode = manager->GetValueAnimatedNode(m_animatedValueTag)) {
-        return valueNode->Value();
-      }
-    }
-    return 0.0;
-  }();
-
-  return m_startValue + m_velocity / (1 - m_deceleration);
+bool DecayAnimationDriver::IsAnimationDone(
+    double currentValue,
+    std::optional<double> previousValue,
+    double /*currentVelocity*/) {
+  return previousValue.has_value() && std::abs(currentValue - previousValue.value()) < 0.1;
 }
 
 } // namespace Microsoft::ReactNative

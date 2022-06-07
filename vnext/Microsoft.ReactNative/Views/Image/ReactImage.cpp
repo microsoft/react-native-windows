@@ -13,6 +13,7 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include <Utils/ValueUtils.h>
+#include "DynamicAutomationPeer.h"
 #include "Unicode.h"
 #include "XamlView.h"
 #include "cdebug.h"
@@ -25,6 +26,7 @@ using namespace xaml;
 using namespace xaml::Media;
 using namespace xaml::Media::Imaging;
 using namespace Windows::Web::Http;
+using namespace xaml::Automation::Peers;
 } // namespace winrt
 
 using Microsoft::Common::Unicode::Utf8ToUtf16;
@@ -44,6 +46,8 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
     if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->AvailableSize(finalSize);
     }
+  } else if (auto brush{Background().try_as<winrt::ImageBrush>()}) {
+    brush.Stretch(ResizeModeToStretch(finalSize));
   }
 
   return finalSize;
@@ -55,6 +59,10 @@ winrt::event_token ReactImage::OnLoadEnd(winrt::EventHandler<bool> const &handle
 
 void ReactImage::OnLoadEnd(winrt::event_token const &token) noexcept {
   m_onLoadEndEvent.remove(token);
+}
+
+winrt::AutomationPeer ReactImage::OnCreateAutomationPeer() {
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::DynamicAutomationPeer>(*this);
 }
 
 void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
@@ -71,7 +79,7 @@ void ReactImage::ResizeMode(facebook::react::ImageResizeMode value) {
     } else if (auto brush{Background().try_as<ReactImageBrush>()}) {
       brush->ResizeMode(value);
     } else if (auto bitmapBrush{Background().as<winrt::ImageBrush>()}) {
-      bitmapBrush.Stretch(ResizeModeToStretch(m_resizeMode));
+      bitmapBrush.Stretch(ResizeModeToStretch());
     }
   }
 }
@@ -112,8 +120,12 @@ void ReactImage::TintColor(winrt::Color value) {
   }
 }
 
-winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode value) {
-  switch (value) {
+winrt::Stretch ReactImage::ResizeModeToStretch() {
+  return ResizeModeToStretch({static_cast<float>(ActualWidth()), static_cast<float>(ActualHeight())});
+}
+
+winrt::Stretch ReactImage::ResizeModeToStretch(winrt::Size size) {
+  switch (m_resizeMode) {
     case facebook::react::ImageResizeMode::Cover:
       return winrt::Stretch::UniformToFill;
     case facebook::react::ImageResizeMode::Stretch:
@@ -121,7 +133,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(facebook::react::ImageResizeMode 
     case facebook::react::ImageResizeMode::Contain:
       return winrt::Stretch::Uniform;
     default: // ResizeMode::Center || ResizeMode::Repeat
-      if (m_imageSource.height < ActualHeight() && m_imageSource.width < ActualWidth()) {
+      if (m_imageSource.height < size.Height && m_imageSource.width < size.Width) {
         return winrt::Stretch::None;
       } else {
         return winrt::Stretch::Uniform;
@@ -172,7 +184,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
 }
 template <typename TImage>
 std::wstring GetUriFromImage(const TImage &image) {
-  return image.UriSource().ToString().c_str();
+  return image.UriSource() ? image.UriSource().ToString().c_str() : L"<no Uri available>";
 }
 template <>
 std::wstring GetUriFromImage(const winrt::Uri &uri) {
@@ -181,7 +193,9 @@ std::wstring GetUriFromImage(const winrt::Uri &uri) {
 
 template <typename TImage>
 void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
+#ifdef DEBUG
   cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")\n";
+#endif
 }
 
 // TSourceFailedEventArgs can be either LoadedImageSourceLoadCompletedEventArgs or
@@ -191,10 +205,12 @@ void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args
 template <typename TImage, typename TSourceFailedEventArgs>
 void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
   // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.loadedimagesourceloadstatus
+#ifdef DEBUG
   constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
   const auto status = (int)args.Status();
   assert(0 <= status && status < ARRAYSIZE(statusNames));
   cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")\n";
+#endif
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
@@ -243,7 +259,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       compositionBrush->TintColor(strong_this->m_tintColor);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
-                                      : uri ? winrt::LoadedImageSurface::StartLoadFromUri(uri) : nullptr;
+          : uri                       ? winrt::LoadedImageSurface::StartLoadFromUri(uri)
+                                      : nullptr;
 
       m_sizeChangedRevoker = strong_this->SizeChanged(
           winrt::auto_revoke, [compositionBrush](const auto &, const winrt::SizeChangedEventArgs &args) {
@@ -300,13 +317,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       bool createImageBrush{!imageBrush};
       if (createImageBrush) {
         imageBrush = winrt::ImageBrush{};
-
-        strong_this->m_imageBrushOpenedRevoker =
-            imageBrush.ImageOpened(winrt::auto_revoke, [weak_this, imageBrush](const auto &, const auto &) {
-              if (auto strong_this{weak_this.get()}) {
-                imageBrush.Stretch(strong_this->ResizeModeToStretch(strong_this->m_resizeMode));
-              }
-            });
+        imageBrush.Stretch(strong_this->ResizeModeToStretch());
       }
 
       if (source.sourceFormat == ImageSourceFormat::Svg) {
@@ -336,7 +347,22 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         }
 
         if (fromStream) {
-          co_await svgImageSource.SetSourceAsync(memoryStream);
+          try {
+            co_await svgImageSource.SetSourceAsync(memoryStream);
+          } catch (const winrt::hresult_error &) {
+            /*
+                winrt::hresult_canceled
+                If the app changes the image source again via SetSourceAsync, SetSource or UriSource while a
+               SetSourceAsync call is already in progress, the pending SetSourceAsync action will throw a
+               TaskCanceledException and set the Status to Canceled.
+
+                WINCODEC_ERR_BADIMAGE
+                In low memory situations (most likely on lower-memory phones), it is possible for an exception to be
+               raised with the message "The image is unrecognized" and an HRESULT of 0x88982F60. While this exception
+               ordinarily indicates bad data, if your app is close to its memory limit then the cause of the exception
+               is likely to be low memory. In that case, we recommend that you free memory and try again.
+            */
+          }
         } else {
           svgImageSource.UriSource(uri);
         }
@@ -356,6 +382,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                   if (auto bitmap{imageBrush.ImageSource().try_as<winrt::BitmapImage>()}) {
                     strong_this->m_imageSource.height = bitmap.PixelHeight();
                     strong_this->m_imageSource.width = bitmap.PixelWidth();
+                    imageBrush.Stretch(strong_this->ResizeModeToStretch());
                   }
 
                   strong_this->m_onLoadEndEvent(*strong_this, true);
@@ -378,7 +405,22 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         }
 
         if (fromStream) {
-          co_await bitmapImage.SetSourceAsync(memoryStream);
+          try {
+            co_await bitmapImage.SetSourceAsync(memoryStream);
+          } catch (const winrt::hresult_error &) {
+            /*
+                winrt::hresult_canceled
+                If the app changes the image source again via SetSourceAsync, SetSource or UriSource while a
+               SetSourceAsync call is already in progress, the pending SetSourceAsync action will throw a
+               TaskCanceledException and set the Status to Canceled.
+
+                WINCODEC_ERR_BADIMAGE
+                In low memory situations (most likely on lower-memory phones), it is possible for an exception to be
+               raised with the message "The image is unrecognized" and an HRESULT of 0x88982F60. While this exception
+               ordinarily indicates bad data, if your app is close to its memory limit then the cause of the exception
+               is likely to be low memory. In that case, we recommend that you free memory and try again.
+            */
+          }
         } else {
           bitmapImage.UriSource(uri);
 

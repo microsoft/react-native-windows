@@ -9,10 +9,8 @@
  * Executes actions, attempting to group by a given key
  */
 export default class BatchingQueue<TKey> {
-  private readonly keyedQueues: Map<
-    TKey,
-    Array<() => Promise<void>>
-  > = new Map();
+  private readonly keyedQueues: Map<TKey, Array<() => Promise<void>>> =
+    new Map();
   private currentKey?: TKey;
 
   enqueue<T>(key: TKey, action: () => Promise<T>): Promise<T> {

@@ -53,6 +53,10 @@ uint16_t ReactSettingsSnapshot::SourceBundlePort() const noexcept {
   return m_settings->SourceBundlePort();
 }
 
+bool ReactSettingsSnapshot::RequestInlineSourceMap() const noexcept {
+  return m_settings->RequestInlineSourceMap();
+}
+
 hstring ReactSettingsSnapshot::JavaScriptBundleFile() const noexcept {
   return winrt::to_hstring(m_settings->JavaScriptBundleFile());
 }
@@ -90,6 +94,23 @@ IReactDispatcher ReactContext::JSDispatcher() noexcept {
 
 Windows::Foundation::IInspectable ReactContext::JSRuntime() noexcept {
   return m_context->JsiRuntime();
+}
+
+LoadingState ReactContext::LoadingState() noexcept {
+  switch (m_context->State()) {
+    case Mso::React::ReactInstanceState::Loading:
+    case Mso::React::ReactInstanceState::WaitingForDebugger:
+      return LoadingState::Loading;
+    case Mso::React::ReactInstanceState::Loaded:
+      return LoadingState::Loaded;
+    case Mso::React::ReactInstanceState::HasError:
+      return LoadingState::HasError;
+    case Mso::React::ReactInstanceState::Unloaded:
+      return LoadingState::Unloaded;
+    default:
+      assert(false);
+      return LoadingState::HasError;
+  };
 }
 
 #ifndef CORE_ABI

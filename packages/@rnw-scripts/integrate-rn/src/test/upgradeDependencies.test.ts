@@ -577,7 +577,7 @@ test('Out-of-tree platform (RN peerDependency prerelease to release)', () => {
     ...olderReactNative,
     peerDependencies: {
       ...olderReactNative.peerDependencies,
-      'react-native': '^0.63.0-rc.1',
+      'react-native': '0.63.0-rc.1',
     },
     packageName: 'react-native-windows',
     outOfTreePlatform: true,
@@ -622,7 +622,7 @@ test('Out-of-tree platform (RN peerDependency version unsatisfied)', () => {
     dependencies: newerReactNative.dependencies,
     peerDependencies: {
       ...newerReactNative.peerDependencies,
-      'react-native': '0.63.5',
+      'react-native': '^0.63.0',
     },
     devDependencies: newerReactNative.devDependencies,
   });

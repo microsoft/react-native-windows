@@ -59,17 +59,17 @@ test('Console Output', () => {
 
   logger.close();
 
-  expect(stripAnsiColors(loggerOuptput)).toBe(
-    `i Commits: foo
+  expect(stripAnsiColors(loggerOuptput)).toMatch(
+    new RegExp(`. Commits: foo
 - Updating dependencies
-√ Dependencies updated
+. Dependencies updated
 - Updating overrides
-‼ Out of date overrides
+. Out of date overrides
 - A
 - B
 - yarn build
-× yarn build
-`,
+. yarn build
+`),
   );
 });
 

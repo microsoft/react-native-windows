@@ -54,7 +54,7 @@ Search the [existing issues](https://github.com/microsoft/react-native-windows/i
 - Ensure the [appropriate template](https://github.com/microsoft/react-native-windows/issues/new/choose) is used when filing your issue(s).
 
 ## Contributing
-See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/docs/contributing.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
+See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
 
 [good first issue](https://github.com/microsoft/react-native-windows/labels/good%20first%20issue) and [help wanted](https://github.com/microsoft/react-native-windows/labels/help%20wanted) are great starting points for PRs.
 

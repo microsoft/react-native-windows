@@ -15,6 +15,7 @@ bool isColorMeaningful(SharedColor const &color) noexcept {
   return colorComponentsFromColor(color).alpha > 0;
 }
 
+#ifndef CORE_ABI
 xaml::Media::Brush SharedColor::AsWindowsBrush() const {
   if (!m_color)
     return nullptr;
@@ -23,6 +24,7 @@ xaml::Media::Brush SharedColor::AsWindowsBrush() const {
   }
   return xaml::Media::SolidColorBrush(m_color->m_color);
 }
+#endif // CORE_ABI
 
 SharedColor colorFromComponents(ColorComponents components) {
   float ratio = 255;
@@ -33,7 +35,7 @@ SharedColor colorFromComponents(ColorComponents components) {
       (int)round(components.blue * ratio) & 0xff));
 }
 
-ColorComponents colorComponentsFromColor(SharedColor sharedColor) {
+ColorComponents colorComponentsFromColor(SharedColor const &sharedColor) {
   float ratio = 255;
   auto color = sharedColor.AsWindowsColor();
   return ColorComponents{

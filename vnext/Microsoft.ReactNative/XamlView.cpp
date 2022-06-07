@@ -23,13 +23,6 @@ xaml::XamlRoot TryGetXamlRoot(const XamlView &view) {
   return root;
 }
 
-comp::Compositor GetCompositor(const XamlView &view) {
-  if (auto window = xaml::Window::Current()) {
-    return window.Compositor();
-  }
-  return GetCompositor();
-}
-
 thread_local comp::Compositor tlsCompositor{nullptr};
 
 void SetCompositor(const comp::Compositor &compositor) {
@@ -41,9 +34,9 @@ void SetCompositor(const comp::Compositor &compositor) {
   }
 }
 
-comp::Compositor GetCompositor() {
-  if (!IsXamlIsland()) {
-    return xaml::Window::Current().Compositor();
+comp::Compositor GetCompositor(const XamlView &view) {
+  if (auto window = xaml::Window::Current()) {
+    return window.Compositor();
   }
 #ifndef USE_WINUI3
   assert(tlsCompositor != nullptr);

@@ -4,5 +4,30 @@
  * @format
  */
 
-export {Telemetry, isMSFTInternal, getDiskFreeSpace} from './telemetry';
-export {CodedError, CodedErrorType, CodedErrors} from './CodedError';
+export {
+  Telemetry,
+  TelemetryOptions,
+  CommandStartInfo,
+  CommandEndInfo,
+} from './telemetry';
+
+export {CodedError, CodedErrorType, CodedErrors} from './utils/errorUtils';
+
+export {
+  yargsOptionsToOptions,
+  commanderNameToOptionName,
+  commanderOptionsToOptions,
+  optionsToArgs,
+  OptionSanitizer,
+  YargsOptionsType,
+  CommanderOptionsType,
+} from './utils/optionUtils';
+
+export {
+  configToProjectInfo,
+  getProjectFileFromConfig,
+  AppProjectInfo,
+  DependencyProjectInfo,
+} from './utils/projectUtils';
+
+export {getVersionOfNpmPackage} from './utils/versionUtils';

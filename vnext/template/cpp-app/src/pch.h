@@ -7,6 +7,7 @@
 #include <unknwn.h>
 #include <windows.h>
 #include <CppWinRTIncludes.h>
+#include <VersionMacros.h>
 #include <winrt/Windows.ApplicationModel.Activation.h>
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>

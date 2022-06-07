@@ -1,0 +1,8 @@
+# Checkout the state of the repo at the time of the commit being tested,
+# without full history.
+steps:
+  - checkout: self
+    fetchDepth: 10 # Buffer to avoid race condition with AZP jobs started against merge branch
+    clean: false
+    submodules: false
+    lfs: false

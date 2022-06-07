@@ -61,7 +61,7 @@ void JsiWriter::WriteDouble(double value) noexcept {
 }
 
 void JsiWriter::WriteString(const winrt::hstring &value) noexcept {
-  WriteValue({m_runtime, facebook::jsi::String::createFromUtf8(m_runtime, winrt::to_string(value))});
+  WriteValue({facebook::jsi::String::createFromUtf8(m_runtime, winrt::to_string(value))});
 }
 
 void JsiWriter::WriteObjectBegin() noexcept {
@@ -161,18 +161,6 @@ JsiWriter::Container JsiWriter::Pop() noexcept {
 
 void JsiWriter::Push(Container &&container) noexcept {
   m_containers.push_back(std::move(container));
-}
-
-/*static*/ facebook::jsi::Value JsiWriter::ToJsiValue(
-    facebook::jsi::Runtime &runtime,
-    JSValueArgWriter const &argWriter) noexcept {
-  if (argWriter) {
-    IJSValueWriter jsiWriter = winrt::make<JsiWriter>(runtime);
-    argWriter(jsiWriter);
-    return jsiWriter.as<JsiWriter>()->MoveResult();
-  }
-
-  return {};
 }
 
 } // namespace winrt::Microsoft::ReactNative

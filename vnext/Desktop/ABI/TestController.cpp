@@ -15,7 +15,7 @@
 #include "RedBoxErrorInfo.h"
 #include "TestController.h"
 
-#include <ReactHost/ReactContext.h>
+#include <ReactHost/MsoReactContext.h>
 
 #include "Microsoft.Internal.TestController.g.cpp"
 

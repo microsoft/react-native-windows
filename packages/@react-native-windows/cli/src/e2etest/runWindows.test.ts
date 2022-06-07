@@ -4,32 +4,49 @@
  * @format
  */
 
-import {getAnonymizedProjectName} from '../runWindows/runWindows';
-import {runWindowsOptions} from '../runWindows/runWindowsOptions';
+import {commanderNameToOptionName} from '@react-native-windows/telemetry';
 
-test('getAnonymizedProjectName - Project Exists', async () => {
-  const fooName = await getAnonymizedProjectName(
-    `${__dirname}/projects/FooPackage`,
+import {
+  runWindowsOptions,
+  RunWindowsOptions,
+} from '../runWindows/runWindowsOptions';
+
+// eslint-disable-next-line complexity
+function validateOptionName(
+  name: string,
+  optionName: keyof RunWindowsOptions,
+): boolean {
+  // Do not add a default case here. Every item must explicitly return true
+  switch (optionName) {
+    case 'release':
+    case 'root':
+    case 'arch':
+    case 'singleproc':
+    case 'emulator':
+    case 'device':
+    case 'target':
+    case 'remoteDebugging':
+    case 'logging':
+    case 'packager':
+    case 'bundle':
+    case 'launch':
+    case 'autolink':
+    case 'build':
+    case 'deploy':
+    case 'deployFromLayout':
+    case 'sln':
+    case 'proj':
+    case 'msbuildprops':
+    case 'buildLogDirectory':
+    case 'info':
+    case 'directDebugging':
+    case 'telemetry':
+      return true;
+  }
+  throw new Error(
+    `Unable to find ${optionName} to match '${name}' in RunWindowsOptions.`,
   );
-  const barName = await getAnonymizedProjectName(
-    `${__dirname}/projects/BarPackage`,
-  );
-
-  expect(typeof fooName).toBe('string');
-  expect(typeof barName).toBe('string');
-
-  expect(fooName!.length).toBeGreaterThan(0);
-  expect(barName!.length).toBeGreaterThan(0);
-
-  expect(fooName).not.toBe(barName);
-});
-
-test('getAnonymizedProjectName - Project Doesnt Exist', async () => {
-  const emptyPackageName = await getAnonymizedProjectName(
-    `${__dirname}/projects/BlankApp`,
-  );
-  expect(emptyPackageName).toBeNull();
-});
+}
 
 test('runWindowsOptions - validate options', () => {
   for (const commandOption of runWindowsOptions) {
@@ -50,5 +67,14 @@ test('runWindowsOptions - validate options', () => {
     // Validate description
     expect(commandOption.description).not.toBeNull();
     expect(commandOption.description!).toBe(commandOption.description!.trim());
+
+    // Validate all command options are present in RunWindowsOptions
+    const optionName = commanderNameToOptionName(commandOption.name);
+    expect(
+      validateOptionName(
+        commandOption.name,
+        optionName as keyof RunWindowsOptions,
+      ),
+    ).toBe(true);
   }
 });

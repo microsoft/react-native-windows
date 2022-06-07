@@ -79,15 +79,19 @@ export default class MockFileRepository implements FileRepository {
   }
 }
 
-export class MockReactFileRepository extends MockFileRepository
-  implements ReactFileRepository {
+export class MockReactFileRepository
+  extends MockFileRepository
+  implements ReactFileRepository
+{
   getVersion(): string {
     return '0.61.5';
   }
 }
 
-export class MockWritableFileRepository extends MockFileRepository
-  implements WritableFileRepository {
+export class MockWritableFileRepository
+  extends MockFileRepository
+  implements WritableFileRepository
+{
   async writeFile(filename: string, content: Buffer) {
     const matchFile = this.files.find(file => file.filename === filename);
     if (matchFile) {

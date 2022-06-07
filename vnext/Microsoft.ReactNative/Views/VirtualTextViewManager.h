@@ -16,6 +16,8 @@ struct VirtualTextShadowNode final : public ShadowNodeBase {
   using Super = ShadowNodeBase;
   TextTransform textTransform{TextTransform::Undefined};
   bool hasDescendantTextHighlighter{false};
+  bool hasDescendantPressable{false};
+  bool isPressable{false};
   std::optional<winrt::Windows::UI::Color> backgroundColor;
   std::optional<winrt::Windows::UI::Color> foregroundColor;
 
@@ -40,6 +42,8 @@ class VirtualTextViewManager : public ViewManagerBase {
   void RemoveChildAt(const XamlView &parent, int64_t index) override;
 
   bool RequiresYogaNode() const override;
+
+  void UpdateProperties(ShadowNodeBase *nodeToUpdate, winrt::Microsoft::ReactNative::JSValueObject &props);
 
  protected:
   bool UpdateProperty(

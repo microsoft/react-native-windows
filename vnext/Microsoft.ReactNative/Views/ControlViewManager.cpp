@@ -12,6 +12,8 @@
 #include <JSValueWriter.h>
 #include <Utils/PropertyUtils.h>
 
+#include <UI.Xaml.Automation.Peers.h>
+
 #ifdef USE_WINUI3
 #define TAB_INDEX_PROPERTY xaml::UIElement::TabIndexProperty
 #define TAB_STOP_PROPERTY xaml::UIElement::IsTabStopProperty
@@ -80,11 +82,18 @@ bool ControlViewManager::UpdateProperty(
       }
     } else if (propertyName == "focusable") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+        IsFocusable(propertyValue.AsBoolean());
         control.IsTabStop(propertyValue.AsBoolean());
       } else if (propertyValue.IsNull()) {
         control.ClearValue(TAB_STOP_PROPERTY());
+        IsFocusable(false);
       }
     } else {
+      if (propertyName == "accessible") {
+        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+          IsAccessible(propertyValue.AsBoolean());
+        }
+      }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
@@ -96,12 +105,35 @@ bool ControlViewManager::UpdateProperty(
   return ret;
 }
 
+void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
+  auto control(node->GetView().as<xaml::Controls::Control>());
+
+  if (IsAccessible() != IsFocusable()) {
+    control.IsTabStop(false);
+    xaml::Automation::AutomationProperties::SetAccessibilityView(
+        control, xaml::Automation::Peers::AccessibilityView::Raw);
+  }
+}
+
 void ControlViewManager::OnViewCreated(XamlView view) {
   // Set the default cornerRadius to 0 for Control: WinUI usually default cornerRadius to 2
   // Only works on >= RS5 because Control.CornerRadius is only supported >= RS5
   if (auto control = view.try_as<xaml::Controls::IControl7>()) {
     control.CornerRadius({0, 0, 0, 0});
   }
+}
+
+void ControlViewManager::IsAccessible(bool accessible) {
+  m_isAccessible = accessible;
+}
+bool ControlViewManager::IsAccessible() {
+  return m_isAccessible;
+}
+void ControlViewManager::IsFocusable(bool focusable) {
+  m_isFocusable = focusable;
+}
+bool ControlViewManager::IsFocusable() {
+  return m_isFocusable;
 }
 
 } // namespace Microsoft::ReactNative

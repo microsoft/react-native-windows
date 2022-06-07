@@ -11,10 +11,10 @@
 
 import _ from 'lodash';
 import chalk from 'chalk';
-import fs from 'fs';
+import fs from '@react-native-windows/fs';
 import path from 'path';
 import semver from 'semver';
-import simplegit from 'simple-git/promise';
+import simplegit from 'simple-git';
 import util from 'util';
 import yargs from 'yargs';
 
@@ -144,7 +144,7 @@ async function readChangelogs(): Promise<Changelog[]> {
   return Promise.all(
     changelogs.map(async changelog => {
       const fullPath = path.join(repoRoot, changelog);
-      return JSON.parse((await fs.promises.readFile(fullPath)).toString());
+      return await fs.readJsonFile<Changelog>(fullPath);
     }),
   );
 }

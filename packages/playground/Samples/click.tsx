@@ -28,23 +28,25 @@ export default class Bootstrap extends React.Component {
     return (
       <View
         style={{backgroundColor: 'blue', margin: 10, width: 120}}
+        focusable
         {...{
           // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
           onClick: this.onLargeIncrement,
-          focusable: true,
         }}>
         <TouchableHighlight
           style={{backgroundColor: 'orange', margin: 15}}
+          onPress={this.onMediumIncrement}
           {...{
             // Use weird format as work around for the fact that these props are not part of the @types/react-native yet
-            onPress: this.onMediumIncrement,
             focusable: true,
           }}>
           <TouchableHighlight
             style={{backgroundColor: 'azure', margin: 15}}
             onPress={this.onSmallIncrement}>
             <View style={{margin: 5}}>
-              <Text>{this.state.ticker.toString()}</Text>
+              <Text style={{color: 'black'}}>
+                {this.state.ticker.toString()}
+              </Text>
             </View>
           </TouchableHighlight>
         </TouchableHighlight>

@@ -12,6 +12,7 @@ module.exports = {
     'jest/no-disabled-tests': 'off',
     'react-native/no-inline-styles': 'off',
     'no-void': 'off',
+    'no-undef': 'off'
   },
   env: {
     node: true,
@@ -70,6 +71,12 @@ module.exports = {
         'guard-for-in': 'error',
         'no-constructor-return': 'error',
         'no-useless-concat': 'error',
+        'no-restricted-imports': [
+          'error', {
+            name: 'fs',
+            message: 'Please use `@react-native-windows/fs` instead of `fs`'
+          }
+        ],
         'no-var': 'error',
         'prefer-arrow-callback': 'error',
         'prefer-const': 'error',

@@ -86,8 +86,8 @@ struct InspectorProtocol {
     for (const facebook::react::InspectorPage2 &page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
-      pageDyn["title"] = std::string(page.title->c_str());
-      pageDyn["vm"] = std::string(page.vm->c_str());
+      pageDyn["title"] = std::string(page.title);
+      pageDyn["vm"] = std::string(page.vm);
 
       pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
       pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
@@ -105,8 +105,8 @@ struct InspectorProtocol {
       const facebook::react::InspectorPage2 page = pages->getPage(p);
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
-      pageDyn["title"] = page.title->c_str();
-      pageDyn["vm"] = page.vm->c_str();
+      pageDyn["title"] = page.title;
+      pageDyn["vm"] = page.vm;
 
       pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSucess;
       pageDyn["bundleUpdateTimestamp"] = bundleStatus.m_updateTimestamp;
@@ -155,11 +155,10 @@ void RemoteConnection::onDisconnect() {
 RemoteConnection2::RemoteConnection2(int64_t pageId, const InspectorPackagerConnection &packagerConnection)
     : m_packagerConnection(packagerConnection), m_pageId(pageId) {}
 
-void RemoteConnection2::onMessage(std::unique_ptr<facebook::react::IHermesString> message) {
-  std::string msg(message->c_str());
+void RemoteConnection2::onMessage(std::string message) {
   folly::dynamic response = InspectorProtocol::constructResponseForPackager(
       InspectorProtocol::EventType::WrappedEvent,
-      InspectorProtocol::constructVMResponsePayloadForPackager(m_pageId, std::move(msg)));
+      InspectorProtocol::constructVMResponsePayloadForPackager(m_pageId, std::move(message)));
   std::string responsestr = folly::toJson(response);
   m_packagerConnection.sendMessageToPackager(std::move(responsestr));
 }
@@ -196,7 +195,8 @@ InspectorPackagerConnection::InspectorPackagerConnection(
 winrt::fire_and_forget InspectorPackagerConnection::disconnectAsync() {
   co_await winrt::resume_background();
   std::string reason("Explicit close");
-  m_packagerWebSocketConnection->Close(Microsoft::React::WinRTWebSocketResource::CloseCode::GoingAway, reason);
+  m_packagerWebSocketConnection->Close(
+      Microsoft::React::Networking::WinRTWebSocketResource::CloseCode::GoingAway, reason);
   co_return;
 }
 
@@ -205,9 +205,9 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
 
   std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult> certExceptions;
   m_packagerWebSocketConnection =
-      std::make_shared<Microsoft::React::WinRTWebSocketResource>(m_url, std::move(certExceptions));
+      std::make_shared<Microsoft::React::Networking::WinRTWebSocketResource>(std::move(certExceptions));
 
-  m_packagerWebSocketConnection->SetOnError([](const Microsoft::React::IWebSocketResource::Error &err) {
+  m_packagerWebSocketConnection->SetOnError([](const Microsoft::React::Networking::IWebSocketResource::Error &err) {
     facebook::react::tracing::error(err.Message.c_str());
   });
 
@@ -268,9 +268,9 @@ winrt::fire_and_forget InspectorPackagerConnection::connectAsync() {
         }
       });
 
-  Microsoft::React::IWebSocketResource::Protocols protocols;
-  Microsoft::React::IWebSocketResource::Options options;
-  m_packagerWebSocketConnection->Connect(protocols, options);
+  Microsoft::React::Networking::IWebSocketResource::Protocols protocols;
+  Microsoft::React::Networking::IWebSocketResource::Options options;
+  m_packagerWebSocketConnection->Connect(std::string{m_url}, protocols, options);
 
   co_return;
 }

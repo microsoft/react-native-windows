@@ -110,9 +110,7 @@ export default class IntegrationTestRunner {
     await this.testClient.close();
   }
 
-  private static async connectToHostWithRetry(): Promise<
-    IntegrationTestClient
-  > {
+  private static async connectToHostWithRetry(): Promise<IntegrationTestClient> {
     const spinner = ora('Waiting for test host to start');
 
     while (true) {

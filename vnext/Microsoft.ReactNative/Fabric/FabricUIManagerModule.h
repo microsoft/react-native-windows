@@ -65,7 +65,9 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   bool m_followUpTransactionRequired{false};
 
   ComponentViewRegistry m_registry;
+#ifndef CORE_ABI
   std::unordered_map<facebook::react::SurfaceId, XamlView> m_surfaceRegistry;
+#endif // CORE_ABI
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(
@@ -78,9 +80,9 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
       const facebook::react::ShadowNode &oldShadowNode,
       const facebook::react::ShadowNode &newShadowNode) override;
   virtual void schedulerDidDispatchCommand(
-      const facebook::react::ShadowView &shadowView,
+      facebook::react::ShadowView const &shadowView,
       std::string const &commandName,
-      folly::dynamic const args) override;
+      folly::dynamic const &arg) override;
   virtual void schedulerDidSetIsJSResponder(
       facebook::react::ShadowView const &shadowView,
       bool isJSResponder,

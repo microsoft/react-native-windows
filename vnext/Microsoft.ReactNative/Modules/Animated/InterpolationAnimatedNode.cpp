@@ -30,7 +30,7 @@ void InterpolationAnimatedNode::OnDetachedFromNode([[maybe_unused]] int64_t anim
   assert(m_parentTag == animatedNodeTag);
   m_parentTag = s_parentTagUnset;
   m_propertySet.StopAnimation(s_valueName);
-  m_propertySet.StopAnimation(s_valueName);
+  m_propertySet.StopAnimation(s_offsetName);
   m_rawValueAnimation = nullptr;
   m_offsetAnimation = nullptr;
 }

@@ -10,11 +10,7 @@
 
 #include <folly/dynamic.h>
 
-#if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
-#else
-#include <ChakraCore.h>
-#endif
 
 #include "Utf8DebugExtensions.h"
 
@@ -182,7 +178,7 @@ class ChakraObject {
   }
 
   static ChakraObject getGlobalObject() {
-    JsValueRef value;
+    JsValueRef value = nullptr;
     JsGetGlobalObject(&value);
     return ChakraObject(value);
   }

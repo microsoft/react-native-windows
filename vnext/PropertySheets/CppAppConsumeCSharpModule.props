@@ -18,12 +18,14 @@
     <DotNetNativeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\2.2.8-rel-28605-00\build\Microsoft.Net.Native.Compiler.props')">2.2.8-rel-28605-00</DotNetNativeVersion>
     <DotNetNativeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\2.2.9-rel-29512-01\build\Microsoft.Net.Native.Compiler.props')">2.2.9-rel-29512-01</DotNetNativeVersion>
     <DotNetNativeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\2.2.10-rel-29722-00\build\Microsoft.Net.Native.Compiler.props')">2.2.10-rel-29722-00</DotNetNativeVersion>
+    <DotNetNativeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.Native.Compiler\2.2.11-rel-30601-02\build\Microsoft.Net.Native.Compiler.props')">2.2.11-rel-30601-02</DotNetNativeVersion>
 
     <DotNetNativeRuntimeVersion>DOTNET_NATIVE_RUNTIME_VERSION_NOT_SET</DotNetNativeRuntimeVersion>
     <DotNetNativeRuntimeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\2.2.7-rel-27913-00\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')">2.2.7-rel-27913-00</DotNetNativeRuntimeVersion>
     <DotNetNativeRuntimeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\2.2.7-rel-28605-00\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')">2.2.7-rel-28605-00</DotNetNativeRuntimeVersion>
     <DotNetNativeRuntimeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\2.2.8-rel-29512-01\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')">2.2.8-rel-29512-01</DotNetNativeRuntimeVersion>
     <DotNetNativeRuntimeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\2.2.8-rel-29722-00\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')">2.2.8-rel-29722-00</DotNetNativeRuntimeVersion>
+    <DotNetNativeRuntimeVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary\2.2.8-rel-30601-02\build\runtime.win10-x86.Microsoft.Net.Native.SharedLibrary.props')">2.2.8-rel-30601-02</DotNetNativeRuntimeVersion>
     
     <!-- The name 'DotNetNativeVersion' is critical for restoring the right .NET framework libraries -->
     <UWPCoreRuntimeSdkVersion>UWP_CORE_RUNTIME_SDK_VERSION_NOT_SET</UWPCoreRuntimeSdkVersion>
@@ -31,6 +33,7 @@
     <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.10\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.10</UWPCoreRuntimeSdkVersion>
     <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.11\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.11</UWPCoreRuntimeSdkVersion>
     <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.12\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.12</UWPCoreRuntimeSdkVersion>
+    <UWPCoreRuntimeSdkVersion Condition="Exists('$(MSBuildProgramFiles32)\Microsoft SDKs\UWPNuGetPackages\Microsoft.Net.UWPCoreRuntimeSdk\2.2.13\build\Microsoft.Net.UWPCoreRuntimeSdk.props')">2.2.13</UWPCoreRuntimeSdkVersion>
     <!-- End Custom .NET Native properties -->
   </PropertyGroup>
 

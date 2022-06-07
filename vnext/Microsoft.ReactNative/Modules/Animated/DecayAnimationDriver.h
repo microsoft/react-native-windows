@@ -16,11 +16,9 @@ class DecayAnimationDriver : public CalculatedAnimationDriver {
       const folly::dynamic &config,
       const std::shared_ptr<NativeAnimatedNodeManager> &manager);
 
-  double ToValue() override;
-
  protected:
   std::tuple<float, double> GetValueAndVelocityForTime(double time) override;
-  bool IsAnimationDone(double currentValue, double currentVelocity) override;
+  bool IsAnimationDone(double currentValue, std::optional<double> previousValue, double currentVelocity) override;
 
  private:
   double m_velocity{0};

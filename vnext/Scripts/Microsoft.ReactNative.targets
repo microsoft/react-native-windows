@@ -8,7 +8,7 @@
     <_rnwFolder>$(MSBuildThisFileDirectory)..\..\runtimes\win10-$(Native-Platform)\native\</_rnwFolder>
   </PropertyGroup>
   
-  <ItemGroup Condition="'$(TargetPlatformIdentifier)' == 'UAP'">
+  <ItemGroup>
     <Reference Include="$(MSBuildThisFileDirectory)..\..\lib\uap10.0\Microsoft.ReactNative.winmd" Private="false">
       <Implementation>Microsoft.ReactNative.dll</Implementation>
     </Reference>

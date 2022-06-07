@@ -86,11 +86,11 @@ Future<void> MakeCompletedFuture() noexcept;
 
 //! Create an instance of completed Mso::Future<T> from a value created in-place.
 template <class T, class... TArgs>
-Future<T> MakeCompletedFutureEmplaced(TArgs &&... args) noexcept;
+Future<T> MakeCompletedFutureEmplaced(TArgs &&...args) noexcept;
 
 //! Create an instance of completed Mso::Future<T> from a value created in-place.
 template <class T, class U, class... TArgs>
-Future<T> MakeCompletedFutureEmplaced(std::initializer_list<U> il, TArgs &&... args) noexcept;
+Future<T> MakeCompletedFutureEmplaced(std::initializer_list<U> il, TArgs &&...args) noexcept;
 
 //! Create an instance of succeeded Mso::Future<T> from a provided value.
 template <class T>
@@ -101,11 +101,11 @@ Future<void> MakeSucceededFuture() noexcept;
 
 //! Create an instance of completed Mso::Future<T> from a value created in-place.
 template <class T, class... TArgs>
-Future<T> MakeSucceededFutureEmplaced(TArgs &&... args) noexcept;
+Future<T> MakeSucceededFutureEmplaced(TArgs &&...args) noexcept;
 
 //! Create an instance of completed Mso::Future<T> from a value created in-place.
 template <class T, class U, class... TArgs>
-Future<T> MakeSucceededFutureEmplaced(std::initializer_list<U> il, TArgs &&... args) noexcept;
+Future<T> MakeSucceededFutureEmplaced(std::initializer_list<U> il, TArgs &&...args) noexcept;
 
 //! Create an instance of Mso::Future<T> with error code.
 template <class T>
@@ -169,7 +169,7 @@ LIBLET_PUBLICAPI Future<void> WhenAll(const std::vector<Future<void>> &futures) 
 //! Each future may have its own return type.
 //! Returns Future<std::tuple<Ts...>>.
 template <class T0, class... Ts>
-Future<std::tuple<T0, Ts...>> WhenAll(const Future<T0> &future0, const Future<Ts> &... futures) noexcept;
+Future<std::tuple<T0, Ts...>> WhenAll(const Future<T0> &future0, const Future<Ts> &...futures) noexcept;
 
 //=============================================================================
 // Mso::WhenAny overloads.
@@ -315,19 +315,19 @@ struct Promise {
 
   /// Sets the value in-place and completes the Promise. It can be called only once. Otherwise it crashes the app.
   template <class... TArgs>
-  void EmplaceValue(TArgs &&... args) const noexcept;
+  void EmplaceValue(TArgs &&...args) const noexcept;
 
   /// Sets the value in-place and completes the PromiseGroup. It can be called only once. Otherwise it VECs.
   template <class TArg, class... TArgs>
-  void EmplaceValue(std::initializer_list<TArg> init, TArgs &&... args) const noexcept;
+  void EmplaceValue(std::initializer_list<TArg> init, TArgs &&...args) const noexcept;
 
   /// Tries to set the value in-place if Promise is not completed or abandoned yet. Returns true on success.
   template <class... TArgs>
-  bool TryEmplaceValue(TArgs &&... args) const noexcept;
+  bool TryEmplaceValue(TArgs &&...args) const noexcept;
 
   /// Tries to set the value in-place if PromiseGroup is not completed or abandoned yet. Returns true on success.
   template <class TArg, class... TArgs>
-  bool TryEmplaceValue(std::initializer_list<TArg> init, TArgs &&... args) const noexcept;
+  bool TryEmplaceValue(std::initializer_list<TArg> init, TArgs &&...args) const noexcept;
 
   /// Tries to set Promise to Failed state with a CancellationError. Returns true if cancel succeeded.
   bool TryCancel() const noexcept;
@@ -809,19 +809,19 @@ struct PromiseGroup {
 
   /// Sets the value in-place and completes the PromiseGroup. It can be called only once. Otherwise it VECs.
   template <class... TArgs>
-  void EmplaceValue(TArgs &&... args) const noexcept;
+  void EmplaceValue(TArgs &&...args) const noexcept;
 
   /// Sets the value in-place and completes the PromiseGroup. It can be called only once. Otherwise it VECs.
   template <class TArg, class... TArgs>
-  void EmplaceValue(std::initializer_list<TArg> init, TArgs &&... args) const noexcept;
+  void EmplaceValue(std::initializer_list<TArg> init, TArgs &&...args) const noexcept;
 
   /// Tries to set the value in-place if PromiseGroup is not completed or abandoned yet. Returns true on success.
   template <class... TArgs>
-  bool TryEmplaceValue(TArgs &&... args) const noexcept;
+  bool TryEmplaceValue(TArgs &&...args) const noexcept;
 
   /// Tries to set the value in-place if PromiseGroup is not completed or abandoned yet. Returns true on success.
   template <class TArg, class... TArgs>
-  bool TryEmplaceValue(std::initializer_list<TArg> init, TArgs &&... args) const noexcept;
+  bool TryEmplaceValue(std::initializer_list<TArg> init, TArgs &&...args) const noexcept;
 
   /// Tries to set Promise to Failed state with the provided error code. It crashes app if error code cannot be set.
   void SetError(const ErrorCode &errorCode) const noexcept;

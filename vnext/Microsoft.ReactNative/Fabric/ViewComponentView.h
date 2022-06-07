@@ -14,6 +14,7 @@ struct BaseComponentView : IComponentView {
   virtual const xaml::FrameworkElement Element() const noexcept = 0;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
+  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
 
  protected:
   facebook::react::SharedViewEventEmitter m_eventEmitter;

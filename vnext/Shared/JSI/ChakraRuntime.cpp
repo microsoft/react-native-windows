@@ -4,7 +4,6 @@
 #include "ChakraRuntime.h"
 #include "ChakraRuntimeFactory.h"
 
-#include <RuntimeOptions.h>
 #include "Unicode.h"
 #include "Utilities.h"
 
@@ -16,14 +15,10 @@
 #include <sstream>
 #include <unordered_set>
 
-#ifdef CHAKRACORE
-#include <ChakraCore.h>
-#else
 #ifndef USE_EDGEMODE_JSRT
 #define USE_EDGEMODE_JSRT
 #endif
 #include <jsrt.h>
-#endif
 
 namespace Microsoft::JSI {
 
@@ -121,7 +116,7 @@ void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
   if (runtimeArgs().jsQueue) {
     JsAddRef(funcRef, nullptr);
     runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
-      JsValueRef undefinedValue;
+      JsValueRef undefinedValue = nullptr;
       JsGetUndefinedValue(&undefinedValue);
       ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
       JsRelease(funcRef, nullptr);
@@ -314,6 +309,11 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromUtf8(const uint8_t 
 facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromString(const facebook::jsi::String &str) {
   const JsPropertyIdRef propertyId = GetPropertyIdFromName(StringToPointer(GetJsRef(str)).data());
   return MakePointer<facebook::jsi::PropNameID>(propertyId);
+}
+
+facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) {
+  const JsPropertyIdRef propSym = GetPropertyIdFromSymbol(GetJsRef(sym));
+  return MakePointer<facebook::jsi::PropNameID>(propSym);
 }
 
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
@@ -976,7 +976,7 @@ ChakraRuntime::JsiValueViewArgs::JsiValueViewArgs(JsValueRef *args, size_t argCo
   JsiValueView::StoreType *const pointerStore =
       m_heapPointerStore ? m_heapPointerStore.get() : m_stackPointerStore.data();
   facebook::jsi::Value *const jsiArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
-  for (uint32_t i = 0; i < m_size; ++i) {
+  for (size_t i = 0; i < m_size; ++i) {
     jsiArgs[i] = JsiValueView::InitValue(args[i], std::addressof(pointerStore[i]));
   }
 }
@@ -995,7 +995,7 @@ size_t ChakraRuntime::JsiValueViewArgs::Size() const noexcept {
 
 ChakraRuntime::PropNameIDView::PropNameIDView(JsPropertyIdRef propertyId) noexcept
     : m_propertyId{
-          make<facebook::jsi::PropNameID>(new (std::addressof(m_pointerStore)) ChakraPointerValueView(propertyId))} {}
+          make<facebook::jsi::PropNameID>(new(std::addressof(m_pointerStore)) ChakraPointerValueView(propertyId))} {}
 
 ChakraRuntime::PropNameIDView::~PropNameIDView() noexcept {}
 
@@ -1011,15 +1011,7 @@ std::once_flag ChakraRuntime::s_runtimeVersionInitFlag;
 uint64_t ChakraRuntime::s_runtimeVersion = 0;
 
 std::unique_ptr<facebook::jsi::Runtime> makeChakraRuntime(ChakraRuntimeArgs &&args) noexcept {
-#ifdef CHAKRACORE
-  if (React::GetRuntimeOptionBool("JSI.ForceSystemChakra")) {
-    return MakeSystemChakraRuntime(std::move(args));
-  } else {
-    return MakeChakraCoreRuntime(std::move(args));
-  }
-#else
   return MakeSystemChakraRuntime(std::move(args));
-#endif // CHAKRACORE
 }
 
 } // namespace Microsoft::JSI

@@ -1,0 +1,59 @@
+# Steps template for building any React Native Windows variant.
+
+parameters:
+  debug: false
+
+  # NuGet & MSBuild
+  solutionDir:
+  solutionName:
+  msbuildVersion: 16.0
+  msBuildArchitecture: x64
+  preferredToolArchitecture: x64
+  platformToolset: v142
+  buildPlatform: x64
+  buildConfiguration: Debug
+  msbuildArguments: ''
+  warnAsError: true
+
+steps:
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=BuildLogDirectory]$(Build.BinariesDirectory)\${{ parameters.buildPlatform }}\${{ parameters.buildConfiguration }}\BuildLogs"
+      Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]/warnaserror"
+    displayName: Set Log directory and warn as error
+
+  - powershell: |
+      Write-Host "##vso[task.setvariable variable=MsBuildWarnAsErrorArgument]"
+    condition: not(eq('${{parameters.warnAsError}}', 'true'))
+    displayName: Disable WarnAsError
+
+  - task: VSBuild@1
+    displayName: VSBuild ${{parameters.solutionName}}
+    inputs:
+      solution: ${{parameters.solutionDir}}/${{parameters.solutionName}}
+      vsVersion: ${{parameters.msbuildVersion}}
+      msbuildArchitecture: ${{parameters.msBuildArchitecture}}
+      platform: ${{ parameters.buildPlatform }}
+      configuration: ${{ parameters.buildConfiguration }}
+      clean: false # Optional
+      maximumCpuCount: true
+      restoreNugetPackages: false # Optional
+      createLogFile: true
+      logFileVerbosity: detailed
+      msbuildArgs:
+        /restore
+        /p:PreferredToolArchitecture=${{parameters.preferredToolArchitecture}}
+        /p:PlatformToolset=${{parameters.platformToolset}}
+        /p:PublishToolDuringBuild=true
+        /p:EnableSourceLink=true
+        /p:RestoreLockedMode=true
+        /p:RestoreForceEvaluate=true
+        /bl:$(BuildLogDirectory)\MsBuild.binlog
+        /flp1:errorsonly;logfile=$(BuildLogDirectory)\MsBuild.err
+        /flp2:warningsonly;logfile=$(BuildLogDirectory)\MsBuild.wrn
+        /flp3:verbosity=diagnostic;logfile=$(BuildLogDirectory)\MsBuild.log
+        $(MsBuildWarnAsErrorArgument)
+        ${{parameters.msbuildArguments}}
+
+  - template: upload-build-logs.yml
+    parameters:
+      buildLogDirectory: $(BuildLogDirectory)

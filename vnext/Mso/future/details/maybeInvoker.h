@@ -15,7 +15,7 @@ namespace Mso::Futures {
 template <class TResult, bool isNoExcept>
 struct MaybeInvoker {
   template <class TCallback, class... TArgs>
-  static auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  static auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     OACR_WARNING_SUPPRESS(UNNECESSARY_TRY_CATCH, "Here we only execute lambdas that have no noexcept");
     try {
       return Mso::Maybe<TResult>(callback(std::forward<TArgs>(args)...));
@@ -29,7 +29,7 @@ struct MaybeInvoker {
 template <class TResult>
 struct MaybeInvoker<TResult, /*isNoExcept:*/ true> {
   template <class TCallback, class... TArgs>
-  static auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  static auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     return Mso::Maybe<TResult>(callback(std::forward<TArgs>(args)...));
   }
 };
@@ -38,7 +38,7 @@ struct MaybeInvoker<TResult, /*isNoExcept:*/ true> {
 template <>
 struct MaybeInvoker<void, /*isNoExcept:*/ false> {
   template <class TCallback, class... TArgs>
-  static auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  static auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     OACR_WARNING_SUPPRESS(UNNECESSARY_TRY_CATCH, "Here we only execute lambdas that have no noexcept");
     try {
       callback(std::forward<TArgs>(args)...);
@@ -53,7 +53,7 @@ struct MaybeInvoker<void, /*isNoExcept:*/ false> {
 template <>
 struct MaybeInvoker<void, /*isNoExcept:*/ true> {
   template <class TCallback, class... TArgs>
-  static auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  static auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     callback(std::forward<TArgs>(args)...);
     return Mso::Maybe<void>();
   }
@@ -63,7 +63,7 @@ struct MaybeInvoker<void, /*isNoExcept:*/ true> {
 template <class T>
 struct MaybeInvoker<Mso::Maybe<T>, /*isNoExcept:*/ false> {
   template <class TCallback, class... TArgs>
-  static auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  static auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     OACR_WARNING_SUPPRESS(UNNECESSARY_TRY_CATCH, "Here we only execute lambdas that have no noexcept");
     try {
       return callback(std::forward<TArgs>(args)...);
@@ -77,7 +77,7 @@ struct MaybeInvoker<Mso::Maybe<T>, /*isNoExcept:*/ false> {
 template <class T>
 struct MaybeInvoker<Mso::Maybe<T>, /*isNoExcept:*/ true> {
   template <class TCallback, class... TArgs>
-  static auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  static auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     return callback(std::forward<TArgs>(args)...);
   }
 };

@@ -14,7 +14,7 @@ module.exports = {
    * @param {string} filename file name to find
    * @returns Path of a directory that contains 'filename'
    */
-  getDirectoryNameOfFileAbove: function(dir, filename) {
+  getDirectoryNameOfFileAbove: function (dir, filename) {
     const {root} = path.parse(dir);
     let currentDir = dir;
     do {

@@ -100,6 +100,21 @@ static void GetAccessibilityValueProps(const winrt::Microsoft::ReactNative::IJSV
   writer.WriteObjectEnd();
 }
 
+inline float ToRadians(const winrt::Microsoft::ReactNative::JSValue &value) {
+  if ((value.Type() == winrt::Microsoft::ReactNative::JSValueType::Double)) {
+    return value.AsSingle();
+  }
+  assert(value.Type() == winrt::Microsoft::ReactNative::JSValueType::String);
+
+  auto stringValue = value.AsString();
+  char *suffixStart;
+  double num = strtod(stringValue.c_str(), &suffixStart);
+  if (0 == strncmp(suffixStart, "deg", 3)) {
+    return static_cast<float>(num * M_PI / 180.0f);
+  }
+  return static_cast<float>(num); // assume suffix is "rad"
+}
+
 void FrameworkElementViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetNativeProps(writer);
 
@@ -140,27 +155,84 @@ bool FrameworkElementViewManager::UpdateProperty(
       if (element.try_as<xaml::IUIElement10>()) // Works on 19H1+
       {
         if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Array) {
-          assert(propertyValue.AsArray().size() == 16);
-          winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
-          transformMatrix.m11 = static_cast<float>(propertyValue[0].AsDouble());
-          transformMatrix.m12 = static_cast<float>(propertyValue[1].AsDouble());
-          transformMatrix.m13 = static_cast<float>(propertyValue[2].AsDouble());
-          transformMatrix.m14 = static_cast<float>(propertyValue[3].AsDouble());
-          transformMatrix.m21 = static_cast<float>(propertyValue[4].AsDouble());
-          transformMatrix.m22 = static_cast<float>(propertyValue[5].AsDouble());
-          transformMatrix.m23 = static_cast<float>(propertyValue[6].AsDouble());
-          transformMatrix.m24 = static_cast<float>(propertyValue[7].AsDouble());
-          transformMatrix.m31 = static_cast<float>(propertyValue[8].AsDouble());
-          transformMatrix.m32 = static_cast<float>(propertyValue[9].AsDouble());
-          transformMatrix.m33 = static_cast<float>(propertyValue[10].AsDouble());
-          transformMatrix.m34 = static_cast<float>(propertyValue[11].AsDouble());
-          transformMatrix.m41 = static_cast<float>(propertyValue[12].AsDouble());
-          transformMatrix.m42 = static_cast<float>(propertyValue[13].AsDouble());
-          transformMatrix.m43 = static_cast<float>(propertyValue[14].AsDouble());
-          transformMatrix.m44 = static_cast<float>(propertyValue[15].AsDouble());
+          winrt::Windows::Foundation::Numerics::float4x4 transformMatrix{
+              winrt::Windows::Foundation::Numerics::float4x4::identity()};
+          for (const auto &transform : propertyValue.AsArray()) {
+            for (const auto &operation : transform.AsObject()) {
+              const std::string &transformType = operation.first;
+              const auto &innerValue = operation.second;
+
+              if (transformType == "matrix") {
+                assert(innerValue.AsArray().size() == 16);
+                winrt::Windows::Foundation::Numerics::float4x4 innerMatrix;
+                innerMatrix.m11 = static_cast<float>(innerValue[0].AsDouble());
+                innerMatrix.m12 = static_cast<float>(innerValue[1].AsDouble());
+                innerMatrix.m13 = static_cast<float>(innerValue[2].AsDouble());
+                innerMatrix.m14 = static_cast<float>(innerValue[3].AsDouble());
+                innerMatrix.m21 = static_cast<float>(innerValue[4].AsDouble());
+                innerMatrix.m22 = static_cast<float>(innerValue[5].AsDouble());
+                innerMatrix.m23 = static_cast<float>(innerValue[6].AsDouble());
+                innerMatrix.m24 = static_cast<float>(innerValue[7].AsDouble());
+                innerMatrix.m31 = static_cast<float>(innerValue[8].AsDouble());
+                innerMatrix.m32 = static_cast<float>(innerValue[9].AsDouble());
+                innerMatrix.m33 = static_cast<float>(innerValue[10].AsDouble());
+                innerMatrix.m34 = static_cast<float>(innerValue[11].AsDouble());
+                innerMatrix.m41 = static_cast<float>(innerValue[12].AsDouble());
+                innerMatrix.m42 = static_cast<float>(innerValue[13].AsDouble());
+                innerMatrix.m43 = static_cast<float>(innerValue[14].AsDouble());
+                innerMatrix.m44 = static_cast<float>(innerValue[15].AsDouble());
+                transformMatrix = transformMatrix * innerMatrix;
+              } else if (transformType == "perspective") {
+                auto innerMatrix = winrt::Windows::Foundation::Numerics::float4x4::identity();
+                innerMatrix.m34 = -1 / innerValue.AsSingle();
+                transformMatrix = transformMatrix * innerMatrix;
+              } else if (transformType == "rotateX") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_x(ToRadians(innerValue));
+              } else if (transformType == "rotateY") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_y(ToRadians(innerValue));
+              } else if (transformType == "rotate" || transformType == "rotateZ") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_z(ToRadians(innerValue));
+              } else if (transformType == "scale") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_scale(
+                                      innerValue.AsSingle(), innerValue.AsSingle(), 1);
+              } else if (transformType == "scaleX") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_scale(innerValue.AsSingle(), 1, 1);
+              } else if (transformType == "scaleY") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_scale(1, innerValue.AsSingle(), 1);
+              } else if (transformType == "translate") {
+                auto &params = innerValue.AsArray();
+                transformMatrix =
+                    transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_translation(
+                        params[0].AsSingle(), params[1].AsSingle(), params.size() > 2 ? params[2].AsSingle() : 0.f);
+              } else if (transformType == "translateX") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_translation(innerValue.AsSingle(), 0.f, 0.f);
+              } else if (transformType == "translateY") {
+                transformMatrix = transformMatrix *
+                    winrt::Windows::Foundation::Numerics::make_float4x4_translation(0.f, innerValue.AsSingle(), 0.f);
+              } else if (transformType == "skewX") {
+                transformMatrix =
+                    transformMatrix *
+                    winrt::Windows::Foundation::Numerics::float4x4(
+                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(innerValue.AsSingle(), 0.f));
+              } else if (transformType == "skewY") {
+                transformMatrix =
+                    transformMatrix *
+                    winrt::Windows::Foundation::Numerics::float4x4(
+                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(0.f, innerValue.AsSingle()));
+              }
+            }
+          }
 
           if (!element.IsLoaded()) {
-            element.Loaded([=](auto sender, auto &&) -> auto {
+            element.Loaded([=](auto sender, auto &&) -> auto{
               ApplyTransformMatrix(sender.as<xaml::UIElement>(), nodeToUpdate, transformMatrix);
             });
           } else {
@@ -172,75 +244,6 @@ bool FrameworkElementViewManager::UpdateProperty(
       } else {
         cdebug << "[Dim down] " << propertyName << "\n";
       }
-    } else if (propertyName == "width") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double width = propertyValue.AsDouble();
-        if (width >= 0)
-          element.Width(width);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::WidthProperty());
-      }
-
-    } else if (propertyName == "height") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double height = propertyValue.AsDouble();
-        if (height >= 0)
-          element.Height(height);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::HeightProperty());
-      }
-    } else if (propertyName == "minWidth") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double minWidth = propertyValue.AsDouble();
-        if (minWidth >= 0)
-          element.MinWidth(minWidth);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MinWidthProperty());
-      }
-    } else if (propertyName == "maxWidth") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double maxWidth = propertyValue.AsDouble();
-        if (maxWidth >= 0)
-          element.MaxWidth(maxWidth);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MaxWidthProperty());
-      }
-
-    } else if (propertyName == "minHeight") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double minHeight = propertyValue.AsDouble();
-        if (minHeight >= 0)
-          element.MinHeight(minHeight);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MinHeightProperty());
-      }
-    } else if (propertyName == "maxHeight") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-          propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-        double maxHeight = propertyValue.AsDouble();
-        if (maxHeight >= 0)
-          element.MaxHeight(maxHeight);
-        // else
-        // TODO report error
-      } else if (propertyValue.IsNull()) {
-        element.ClearValue(xaml::FrameworkElement::MaxHeightProperty());
-      }
-
     } else if (propertyName == "accessibilityHint") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto value = asHstring(propertyValue);
@@ -262,8 +265,13 @@ bool FrameworkElementViewManager::UpdateProperty(
       AnnounceLiveRegionChangedIfNeeded(element);
     } else if (propertyName == "accessible") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-        if (!propertyValue.AsBoolean())
-          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::Peers::AccessibilityView::Raw);
+        if (propertyValue.AsBoolean()) {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Content);
+        } else {
+          xaml::Automation::AutomationProperties::SetAccessibilityView(element, winrt::AccessibilityView::Raw);
+        }
+      } else if (propertyValue.IsNull()) {
+        element.ClearValue(xaml::Automation::AutomationProperties::AccessibilityViewProperty());
       }
     } else if (propertyName == "accessibilityLiveRegion") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
@@ -409,13 +417,30 @@ bool FrameworkElementViewManager::UpdateProperty(
           const std::string &innerName = pair.first;
           const auto &innerValue = pair.second;
 
-          if (innerName == "selected")
+          auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+
+          if (innerName == "selected") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Selected)] =
                 innerValue.AsBoolean();
-          else if (innerName == "disabled")
+            const auto prevSelectedState = DynamicAutomationProperties::GetAccessibilityStateSelected(element);
+            if (peer != nullptr && prevSelectedState != innerValue.AsBoolean()) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::SelectionItemPatternIdentifiers::IsSelectedProperty(),
+                  winrt::box_value(prevSelectedState),
+                  winrt::box_value(innerValue.AsBoolean()));
+            }
+          } else if (innerName == "disabled") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Disabled)] =
                 innerValue.AsBoolean();
-          else if (innerName == "checked") {
+            const auto prevDisabledState = DynamicAutomationProperties::GetAccessibilityStateDisabled(element);
+
+            if (peer != nullptr && prevDisabledState != innerValue.AsBoolean()) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::AutomationElementIdentifiers::IsEnabledProperty(),
+                  winrt::box_value(!prevDisabledState),
+                  winrt::box_value(!innerValue.AsBoolean()));
+            }
+          } else if (innerName == "checked") {
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Checked)] =
                 innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean && innerValue.AsBoolean();
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked)] =
@@ -423,6 +448,30 @@ bool FrameworkElementViewManager::UpdateProperty(
             // If the state is "mixed" we'll just set both Checked and Unchecked to false,
             // then later in the IToggleProvider implementation it will return the Intermediate state
             // due to both being set to false (see  DynamicAutomationPeer::ToggleState()).
+            const auto prevCheckedState = DynamicAutomationProperties::GetAccessibilityStateChecked(element);
+            const auto prevUncheckedState = DynamicAutomationProperties::GetAccessibilityStateUnchecked(element);
+
+            if (peer != nullptr) {
+              if (prevCheckedState !=
+                      states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Checked)] ||
+                  prevUncheckedState !=
+                      states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Unchecked)]) {
+                // Checking if either state has changed here to catch changes involving "mixed" state.
+                const auto oldValue = prevCheckedState ? winrt::ToggleState::On : winrt::ToggleState::Off;
+                if (innerValue.Type() != winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+                  peer.RaisePropertyChangedEvent(
+                      winrt::TogglePatternIdentifiers::ToggleStateProperty(),
+                      winrt::box_value(oldValue),
+                      winrt::box_value(winrt::ToggleState::Indeterminate));
+                } else {
+                  const auto newValue = innerValue.AsBoolean() ? winrt::ToggleState::On : winrt::ToggleState::Off;
+                  peer.RaisePropertyChangedEvent(
+                      winrt::TogglePatternIdentifiers::ToggleStateProperty(),
+                      winrt::box_value(oldValue),
+                      winrt::box_value(newValue));
+                }
+              }
+            }
           } else if (innerName == "busy")
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Busy)] =
                 !innerValue.IsNull() && innerValue.AsBoolean();
@@ -431,6 +480,19 @@ bool FrameworkElementViewManager::UpdateProperty(
                 !innerValue.IsNull() && innerValue.AsBoolean();
             states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)] =
                 innerValue.IsNull() || !innerValue.AsBoolean();
+
+            const auto prevExpandedState = DynamicAutomationProperties::GetAccessibilityStateExpanded(element);
+
+            if (peer != nullptr && prevExpandedState != innerValue.AsBoolean()) {
+              const auto newValue =
+                  innerValue.AsBoolean() ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
+              const auto oldValue =
+                  prevExpandedState ? winrt::ExpandCollapseState::Expanded : winrt::ExpandCollapseState::Collapsed;
+              peer.RaisePropertyChangedEvent(
+                  winrt::ExpandCollapsePatternIdentifiers::ExpandCollapseStateProperty(),
+                  winrt::box_value(oldValue),
+                  winrt::box_value(newValue));
+            }
           }
         }
       }
@@ -449,9 +511,6 @@ bool FrameworkElementViewManager::UpdateProperty(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Expanded)]);
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
-      if (auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element)) {
-        peer.RaiseAutomationEvent(xaml::Automation::Peers::AutomationEvents::LiveRegionChanged);
-      }
     } else if (propertyName == "accessibilityValue") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {

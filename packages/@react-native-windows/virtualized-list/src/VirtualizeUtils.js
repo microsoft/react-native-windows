@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -20,19 +20,18 @@ import invariant from 'invariant';
 export function elementsThatOverlapOffsets(
   offsets: Array<number>,
   itemCount: number,
-  getFrameMetrics: (
-    index: number,
-  ) => {
+  getFrameMetrics: (index: number) => {
     length: number,
     offset: number,
     ...
   },
+  zoomScale: number = 1,
 ): Array<number> {
   const out = [];
   let outLength = 0;
   for (let ii = 0; ii < itemCount; ii++) {
     const frame = getFrameMetrics(ii);
-    const trailingOffset = frame.offset + frame.length;
+    const trailingOffset = (frame.offset + frame.length) * zoomScale;
     for (let kk = 0; kk < offsets.length; kk++) {
       if (out[kk] == null && trailingOffset >= offsets[kk]) {
         out[kk] = ii;
@@ -96,9 +95,7 @@ export function computeWindowedRenderLimits(
     last: number,
     ...
   },
-  getFrameMetricsApprox: (
-    index: number,
-  ) => {
+  getFrameMetricsApprox: (index: number) => {
     length: number,
     offset: number,
     ...
@@ -108,6 +105,7 @@ export function computeWindowedRenderLimits(
     offset: number,
     velocity: number,
     visibleLength: number,
+    zoomScale: number,
     ...
   },
 ): {
@@ -119,7 +117,7 @@ export function computeWindowedRenderLimits(
   if (itemCount === 0) {
     return prev;
   }
-  const {offset, velocity, visibleLength} = scrollMetrics;
+  const {offset, velocity, visibleLength, zoomScale = 1} = scrollMetrics;
 
   // Start with visible area, then compute maximum overscan region by expanding from there, biased
   // in the direction of scroll. Total overscan area is capped, which should cap memory consumption
@@ -140,7 +138,8 @@ export function computeWindowedRenderLimits(
   );
   const overscanEnd = Math.max(0, visibleEnd + leadFactor * overscanLength);
 
-  const lastItemOffset = getFrameMetricsApprox(itemCount - 1).offset;
+  const lastItemOffset =
+    getFrameMetricsApprox(itemCount - 1).offset * zoomScale;
   if (lastItemOffset < overscanBegin) {
     // Entire list is before our overscan window
     return {
@@ -154,6 +153,7 @@ export function computeWindowedRenderLimits(
     [overscanBegin, visibleBegin, visibleEnd, overscanEnd],
     itemCount,
     getFrameMetricsApprox,
+    zoomScale,
   );
   overscanFirst = overscanFirst == null ? 0 : overscanFirst;
   first = first == null ? Math.max(0, overscanFirst) : first;

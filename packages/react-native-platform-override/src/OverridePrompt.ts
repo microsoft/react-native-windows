@@ -59,9 +59,7 @@ export async function overrideFromDetails(
   }
 }
 
-export async function promptForOverrideDetails(): Promise<
-  OverridePromptAnswers
-> {
+export async function promptForOverrideDetails(): Promise<OverridePromptAnswers> {
   return inquirer.prompt([
     {
       type: 'list',
@@ -69,8 +67,7 @@ export async function promptForOverrideDetails(): Promise<
       message: 'Override type:',
       choices: [
         {
-          name:
-            'Derived from upstream            (E.g. a Windows implementation of an existing component)',
+          name: 'Derived from upstream            (E.g. a Windows implementation of an existing component)',
           value: 'derived',
           short: 'Derived',
         },
@@ -80,8 +77,7 @@ export async function promptForOverrideDetails(): Promise<
           short: 'Patch',
         },
         {
-          name:
-            'Independent platform logic       (E.g. Windows-specific modules)',
+          name: 'Independent platform logic       (E.g. Windows-specific modules)',
           value: 'platform',
           short: 'Platform',
         },

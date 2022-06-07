@@ -244,9 +244,8 @@ export function dependencyConfigWindows(
       if (project.directDependency) {
         // Calculating more (auto) items
 
-        const projectNamespace = configUtils.getProjectNamespace(
-          projectContents,
-        );
+        const projectNamespace =
+          configUtils.getProjectNamespace(projectContents);
 
         if (projectNamespace !== null) {
           const cppNamespace = projectNamespace!.replace(/\./g, '::');
@@ -278,7 +277,11 @@ export function dependencyConfigWindows(
         projectContents,
       );
 
-      if (projectType === 'dynamiclibrary' || projectType === 'winmdobj') {
+      if (
+        projectType === 'dynamiclibrary' ||
+        projectType === 'winmdobj' ||
+        projectType === 'library'
+      ) {
         const projectLang = configUtils.getProjectLanguage(projectFile);
 
         const projectName = configUtils.getProjectName(
@@ -288,9 +291,8 @@ export function dependencyConfigWindows(
 
         const projectGuid = configUtils.getProjectGuid(projectContents);
 
-        const projectNamespace = configUtils.getProjectNamespace(
-          projectContents,
-        );
+        const projectNamespace =
+          configUtils.getProjectNamespace(projectContents);
 
         const directDependency = true;
 

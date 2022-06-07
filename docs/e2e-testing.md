@@ -33,13 +33,23 @@ module.exports = {
 
 **Running all tests**
 
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn start`
+> 
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest`
 
 
 **Running a specific test**
 
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn start`
+> 
 ⚠ Only the test filename (without the rest of the path) should be included.
 > C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest visitAllPages.test.ts`
+
+**Break on app start**
+
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn start`
+> 
+> C:\repo\react-native-windows\packages\e2e-test-app> `yarn e2etest:debug visitAllPages.test.ts`
 
 ## Debugging E2E Tests in CI
 ### Increasing verbosity
@@ -81,8 +91,8 @@ inspect and manipulate a test application, allowing clients to connect to it usi
 
 ### WebDriverIO
 
-WebDriverIO is a JavaScript library which connects to WinAppDriver using the WebDriver protocol. It provides global
-APIs for querying the application UI tree such as selectors (see below) and a global `browser` object to manipulate the
+WebDriverIO is a JavaScript library which connects to WinAppDriver using the WebDriver protocol. It provides [global
+APIs](https://webdriver.io/docs/api) for querying the application UI tree such as selectors (see below) and a global `browser` object to manipulate the
 test application.
 
 ### Jest
@@ -119,7 +129,7 @@ describe('FancyWidget', () => {
 
 Before adding a custom page, consider whether the change can be made to an existing RNTester page and upstreamed. If needed, new examples may be integrated into the Windows fork of RNTester, [`@react-native-windows/tester`](../packages/@react-native-windows/tester).
 
-Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://app.pluralsight.com/library/courses/using-react-hooks) to learn more about Hooks)
+Hooks are recommended to author the test page. (see [https://reactjs.org/docs/hooks-intro.html](https://reactjs.org/docs/hooks-intro.html) and this [Pluralsight course](https://www.pluralsight.com/courses/using-react-hooks) to learn more about Hooks)
 
 ```js
 // ControlStyleTestPage.tsx

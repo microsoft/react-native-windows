@@ -30,7 +30,7 @@ namespace Details {
 template <typename T>
 struct Emplacer {
   template <typename... Args>
-  static void Place(_Inout_updates_bytes_all_(sizeof(T)) void *mem, Args &&... args) noexcept {
+  static void Place(_Inout_updates_bytes_all_(sizeof(T)) void *mem, Args &&...args) noexcept {
     new (mem) T(std::forward<Args>(args)...);
   }
 };
@@ -38,7 +38,7 @@ struct Emplacer {
 template <typename T, size_t N>
 struct Emplacer<T[N]> {
   template <typename... Args>
-  static void Place(void *mem, Args &&... args) {
+  static void Place(void *mem, Args &&...args) {
     new (mem) T[N]{std::forward<Args>(args)...};
   }
 };
@@ -116,14 +116,18 @@ Disambiguator used to ensure a throwing new
 new (Mso::Memory::throwNew) Zoo();
 */
 OACR_WARNING_SUPPRESS(SPECIFY_SELECTANY, "Not needed for marker type")
-static const struct throwNew_t { throwNew_t() noexcept = default; } throwNew;
+static const struct throwNew_t {
+  throwNew_t() noexcept = default;
+} throwNew;
 
 /**
 Disambiguator used to ensure a crashing new
 new (Mso::Memory::failFast) Zoo();
 */
 OACR_WARNING_SUPPRESS(SPECIFY_SELECTANY, "Not needed for marker type")
-static const struct failFast_t { failFast_t() noexcept = default; } failFast;
+static const struct failFast_t {
+  failFast_t() noexcept = default;
+} failFast;
 
 /**
 Construct a object of type `T` stored at `mem`.
@@ -131,7 +135,7 @@ Construct a object of type `T` stored at `mem`.
 Arguments are forwarded to constructor of `T`.
 */
 template <typename T, typename... Args>
-static void Place(__inout_bcount(sizeof(T)) void *mem, Args &&... args) {
+static void Place(__inout_bcount(sizeof(T)) void *mem, Args &&...args) {
   Details::Emplacer<T>::Place(mem, std::forward<Args>(args)...);
 }
 
@@ -187,7 +191,9 @@ namespace NoThrow {
         new (Mso::Memory::NoThrow::MarkingLeak) Zoo();
 */
 OACR_WARNING_SUPPRESS(SPECIFY_SELECTANY, "Not needed for marker type")
-static const struct MarkingLeak_t { MarkingLeak_t() noexcept = default; } MarkingLeak;
+static const struct MarkingLeak_t {
+  MarkingLeak_t() noexcept = default;
+} MarkingLeak;
 
 } // namespace NoThrow
 } // namespace Memory
@@ -205,7 +211,7 @@ Allocates object T by passing args to its constructor.
 */
 template <typename T, typename... TArgs>
 OACR_WARNING_SUPPRESS(NULL_ON_NON_POINTER, "false positive")
-_Ret_notnull_ T *New(TArgs &&... t) {
+_Ret_notnull_ T *New(TArgs &&...t) {
   Debug(Mso::Memory::AutoShutdownLeakScope scope);
   T *pT = new (std::nothrow) T(std::forward<TArgs>(t)...);
   if (pT == nullptr)

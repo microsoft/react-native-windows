@@ -289,7 +289,7 @@ inline Future<void> WhenAll(Future<void> (&futures)[size]) noexcept {
 }
 
 template <class T0, class... Ts>
-Future<std::tuple<T0, Ts...>> WhenAll(const Future<T0> &future0, const Future<Ts> &... futures) noexcept {
+Future<std::tuple<T0, Ts...>> WhenAll(const Future<T0> &future0, const Future<Ts> &...futures) noexcept {
   using ResultType = std::tuple<T0, Ts...>;
   using TaskType = Mso::Futures::WhenAllFutureTask<void>;
   const size_t taskSize = TaskType::GetTaskSize(1 + sizeof...(Ts));

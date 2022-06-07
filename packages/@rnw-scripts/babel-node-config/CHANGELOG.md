@@ -1,8 +1,40 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Jun 2022 05:10:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.0.6
+
+Sat, 04 Jun 2022 05:10:04 GMT
+
+### Patches
+
+- integrate 5-16-22 (tatianakapos@microsoft.com)
+
+## 2.0.5
+
+Thu, 12 May 2022 05:09:44 GMT
+
+### Patches
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+
+## 2.0.4
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Patches
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+
+## 2.0.3
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Patches
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 2.0.2
 

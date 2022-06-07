@@ -64,10 +64,10 @@ template <class T>
 void WriteProperties(IJSValueWriter const &writer, T const &value) noexcept;
 
 template <class... TArgs>
-void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexcept;
+void WriteArgs(IJSValueWriter const &writer, TArgs const &...args) noexcept;
 
 template <class... TArgs>
-JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept;
+JSValueArgWriter MakeJSValueArgWriter(TArgs &&...args) noexcept;
 
 IJSValueWriter MakeJSValueTreeWriter() noexcept;
 
@@ -264,7 +264,7 @@ inline void WriteProperties(IJSValueWriter const &writer, T const &value) noexce
 }
 
 template <class... TArgs>
-inline void WriteArgs(IJSValueWriter const &writer, TArgs const &... args) noexcept {
+inline void WriteArgs(IJSValueWriter const &writer, TArgs const &...args) noexcept {
   writer.WriteArrayBegin();
   (WriteValue(writer, args), ...);
   writer.WriteArrayEnd();
@@ -276,7 +276,7 @@ inline JSValueArgWriter MakeJSValueArgWriter(T &&argWriter) noexcept {
 }
 
 template <class... TArgs>
-inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&... args) noexcept {
+inline JSValueArgWriter MakeJSValueArgWriter(TArgs &&...args) noexcept {
   return [&args...](IJSValueWriter const &writer) noexcept { WriteArgs(writer, args...); };
 }
 
@@ -286,7 +286,7 @@ inline JSValueArgWriter MakeJSValueWriter(T &&argWriter) noexcept {
 }
 
 template <class... TArgs>
-inline JSValueArgWriter MakeJSValueWriter(TArgs &&... args) noexcept {
+inline JSValueArgWriter MakeJSValueWriter(TArgs &&...args) noexcept {
   return [&args...](IJSValueWriter const &[[maybe_unused]] writer) noexcept { (WriteValue(writer, args), ...); };
 }
 

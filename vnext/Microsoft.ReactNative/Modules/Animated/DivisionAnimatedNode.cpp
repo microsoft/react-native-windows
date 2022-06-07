@@ -11,7 +11,7 @@ DivisionAnimatedNode::DivisionAnimatedNode(
     int64_t tag,
     const folly::dynamic &config,
     const std::shared_ptr<NativeAnimatedNodeManager> &manager)
-    : ValueAnimatedNode(tag, config, manager) {
+    : ValueAnimatedNode(tag, manager) {
   for (const auto &inputNode : config.find(s_inputName).dereference().second) {
     if (m_firstInput == s_firstInputUnset) {
       m_firstInput = static_cast<int64_t>(inputNode.asDouble());
@@ -30,7 +30,7 @@ DivisionAnimatedNode::DivisionAnimatedNode(
       for (const auto tag : nodes) {
         const auto identifier = L"n" + std::to_wstring(tag);
         anim.SetReferenceParameter(identifier, manager->GetValueAnimatedNode(tag)->PropertySet());
-        expr = expr + L" / (" + identifier + L"." + s_valueName + L" " + identifier + L"." + s_offsetName + L")";
+        expr = expr + L" / (" + identifier + L"." + s_valueName + L" + " + identifier + L"." + s_offsetName + L")";
       }
       return expr;
     }());

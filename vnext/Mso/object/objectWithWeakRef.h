@@ -65,18 +65,14 @@
 // CntPtr and get a pointer to the ObjectWeakRef using the base ObjectWithWeakRef class.
 //
 
-#define MSO_OBJECT_WEAKREFCOUNT(TObject)                                        \
- public:                                                                        \
-  Mso::ObjectWeakRef &GetWeakRef() const noexcept {                             \
-    return *Mso::Details::GetWeakRef(this);                                     \
-  }                                                                             \
-  bool IsUniqueRef() const noexcept {                                           \
-    return GetWeakRef().IsUniqueRef();                                          \
-  }                                                                             \
-  Debug(uint32_t RefCount() const noexcept { return GetWeakRef().RefCount(); }) \
-                                                                                \
-      template <typename UseMsoMakeInsteadOfOperatorNew>                        \
-      void *operator new(size_t, UseMsoMakeInsteadOfOperatorNew * = nullptr);   \
+#define MSO_OBJECT_WEAKREFCOUNT(TObject)                                                      \
+ public:                                                                                      \
+  Mso::ObjectWeakRef &GetWeakRef() const noexcept { return *Mso::Details::GetWeakRef(this); } \
+  bool IsUniqueRef() const noexcept { return GetWeakRef().IsUniqueRef(); }                    \
+  Debug(uint32_t RefCount() const noexcept { return GetWeakRef().RefCount(); })               \
+                                                                                              \
+      template <typename UseMsoMakeInsteadOfOperatorNew>                                      \
+      void *operator new(size_t, UseMsoMakeInsteadOfOperatorNew * = nullptr);                 \
   MSO_NO_COPY_CTOR_AND_ASSIGNMENT(TObject)
 
 namespace Mso {
@@ -315,7 +311,7 @@ template <
     typename TResult = T,
     typename TContainer = ObjectWeakRefContainer<T, ObjectWeakRef>,
     typename... TArgs>
-inline Mso::CntPtr<TResult> MakeWeakRefObject(TArgs &&... args) noexcept(T::MakePolicy::IsNoExcept) {
+inline Mso::CntPtr<TResult> MakeWeakRefObject(TArgs &&...args) noexcept(T::MakePolicy::IsNoExcept) {
   typename T::RefCountPolicy::template MemoryGuard<T, TContainer> memoryGuard = {};
   T::RefCountPolicy::AllocateMemory(memoryGuard);
   VerifyAllocElseCrashTag(memoryGuard.ObjMemory, 0x0111774a /* tag_bex3k */);
@@ -344,7 +340,7 @@ template <
     typename TContainer = ObjectWeakRefContainer<T, ObjectWeakRef>,
     typename TAllocArg,
     typename... TArgs>
-inline Mso::CntPtr<TResult> MakeAllocWeakRefObject(TAllocArg &&allocArg, TArgs &&... args) noexcept(
+inline Mso::CntPtr<TResult> MakeAllocWeakRefObject(TAllocArg &&allocArg, TArgs &&...args) noexcept(
     T::MakePolicy::IsNoExcept) {
   typename T::RefCountPolicy::template MemoryGuard<T, TContainer> memoryGuard = {};
   T::RefCountPolicy::AllocateMemory(memoryGuard, std::forward<TAllocArg>(allocArg));

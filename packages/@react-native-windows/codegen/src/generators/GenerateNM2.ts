@@ -43,7 +43,13 @@ struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 } // namespace ::_NAMESPACE_::
 `;
 
-export function createNM2Generator({namespace}: {namespace: string}) {
+export function createNM2Generator({
+  namespace,
+  methodonly,
+}: {
+  namespace: string;
+  methodonly: boolean;
+}) {
   return (
     _libraryName: string,
     schema: SchemaType,
@@ -79,7 +85,7 @@ ${methods[0]}
 
         // prepare constants
         const constants = generateValidateConstants(nativeModule, aliases);
-        if (constants !== undefined) {
+        if (constants !== undefined && !methodonly) {
           tuples = `
   static constexpr auto constants = std::tuple{
 ${constants[0]}
@@ -98,8 +104,8 @@ ${errors}`;
           `Native${preferredModuleName}Spec.g.h`,
           moduleTemplate
             .replace(/::_MODULE_ALIASED_STRUCTS_::/g, traversedAliasedStructs)
-            .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substr(1))
-            .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substr(1))
+            .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substring(1))
+            .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substring(1))
             .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)
             .replace(/::_MODULE_NAME_::/g, preferredModuleName)
             .replace(/::_NAMESPACE_::/g, namespace),

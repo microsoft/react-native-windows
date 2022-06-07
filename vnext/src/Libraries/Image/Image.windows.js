@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -8,7 +8,6 @@
  * @format
  */
 
-import DeprecatedImagePropType from '../DeprecatedPropTypes/DeprecatedImagePropType';
 import * as React from 'react';
 import StyleSheet from '../StyleSheet/StyleSheet';
 
@@ -37,7 +36,7 @@ function getSize(
     .then(([width, height]) => success(width, height))
     .catch(
       failure ||
-        function() {
+        function () {
           console.warn('Failed to get size for image ' + uri);
         },
     );
@@ -50,12 +49,12 @@ function getSizeWithHeaders(
   failure?: (error: any) => void,
 ): any {
   return NativeImageLoaderIOS.getSizeWithHeaders(uri, headers)
-    .then(function(sizes) {
+    .then(function (sizes) {
       success(sizes.width, sizes.height);
     })
     .catch(
       failure ||
-        function() {
+        function () {
           console.warn('Failed to get size for image: ' + uri);
         },
     );
@@ -90,14 +89,13 @@ async function queryCache(
   return await NativeImageLoaderIOS.queryCache(urls);
 }
 
-type ImageComponentStatics = $ReadOnly<{|
+export type ImageComponentStatics = $ReadOnly<{|
   getSize: typeof getSize,
   getSizeWithHeaders: typeof getSizeWithHeaders,
   prefetch: typeof prefetch,
   prefetchWithMetadata: typeof prefetchWithMetadata,
   queryCache: typeof queryCache,
   resolveAssetSource: typeof resolveAssetSource,
-  propTypes: typeof DeprecatedImagePropType,
 |}>;
 
 /**
@@ -105,9 +103,9 @@ type ImageComponentStatics = $ReadOnly<{|
  * including network images, static resources, temporary local images, and
  * images from local disk, such as the camera roll.
  *
- * See https://reactnative.dev/docs/image.html
+ * See https://reactnative.dev/docs/image
  */
-let Image = (props: ImagePropsType, forwardedRef) => {
+const BaseImage = (props: ImagePropsType, forwardedRef) => {
   const source = resolveAssetSource(props.source) || {
     uri: undefined,
     width: undefined,
@@ -129,11 +127,7 @@ let Image = (props: ImagePropsType, forwardedRef) => {
     }
   }
 
-  // $FlowFixMe[incompatible-use]
-  // $FlowFixMe[incompatible-type]
   const resizeMode = props.resizeMode || style.resizeMode || 'cover';
-  // $FlowFixMe[prop-missing]
-  // $FlowFixMe[incompatible-use]
   const tintColor = style.tintColor;
 
   if (props.src != null) {
@@ -166,7 +160,6 @@ let Image = (props: ImagePropsType, forwardedRef) => {
                   {...props}
                   ref={forwardedRef}
                   style={style}
-                  // $FlowFixMe[incompatible-type]
                   resizeMode={resizeMode}
                   tintColor={tintColor}
                   source={sources}
@@ -181,11 +174,12 @@ let Image = (props: ImagePropsType, forwardedRef) => {
   );
 };
 
-Image = React.forwardRef<
+const ImageForwardRef = React.forwardRef<
   ImagePropsType,
   React.ElementRef<typeof ImageViewNativeComponent>,
->(Image);
+>(BaseImage);
 
+let Image = ImageForwardRef;
 if (ImageInjection.unstable_createImageComponent != null) {
   Image = ImageInjection.unstable_createImageComponent(Image);
 }
@@ -195,7 +189,7 @@ Image.displayName = 'Image';
 /**
  * Retrieve the width and height (in pixels) of an image prior to displaying it.
  *
- * See https://reactnative.dev/docs/image.html#getsize
+ * See https://reactnative.dev/docs/image#getsize
  */
 /* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
  * suppresses an error found when Flow v0.89 was deployed. To see the error,
@@ -206,7 +200,7 @@ Image.getSize = getSize;
  * Retrieve the width and height (in pixels) of an image prior to displaying it
  * with the ability to provide the headers for the request.
  *
- * See https://reactnative.dev/docs/image.html#getsizewithheaders
+ * See https://reactnative.dev/docs/image#getsizewithheaders
  */
 /* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
  * suppresses an error found when Flow v0.89 was deployed. To see the error,
@@ -217,7 +211,7 @@ Image.getSizeWithHeaders = getSizeWithHeaders;
  * Prefetches a remote image for later use by downloading it to the disk
  * cache.
  *
- * See https://reactnative.dev/docs/image.html#prefetch
+ * See https://reactnative.dev/docs/image#prefetch
  */
 /* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
  * suppresses an error found when Flow v0.89 was deployed. To see the error,
@@ -228,7 +222,7 @@ Image.prefetch = prefetch;
  * Prefetches a remote image for later use by downloading it to the disk
  * cache, and adds metadata for queryRootName and rootTag.
  *
- * See https://reactnative.dev/docs/image.html#prefetch
+ * See https://reactnative.dev/docs/image#prefetch
  */
 /* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
  * suppresses an error found when Flow v0.89 was deployed. To see the error,
@@ -238,7 +232,7 @@ Image.prefetchWithMetadata = prefetchWithMetadata;
 /**
  * Performs cache interrogation.
  *
- *  See https://reactnative.dev/docs/image.html#querycache
+ *  See https://reactnative.dev/docs/image#querycache
  */
 /* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
  * suppresses an error found when Flow v0.89 was deployed. To see the error,
@@ -248,14 +242,12 @@ Image.queryCache = queryCache;
 /**
  * Resolves an asset reference into an object.
  *
- * See https://reactnative.dev/docs/image.html#resolveassetsource
+ * See https://reactnative.dev/docs/image#resolveassetsource
  */
 /* $FlowFixMe[prop-missing] (>=0.89.0 site=react_native_ios_fb) This comment
  * suppresses an error found when Flow v0.89 was deployed. To see the error,
  * delete this comment and run Flow. */
 Image.resolveAssetSource = resolveAssetSource;
-
-Image.propTypes = DeprecatedImagePropType;
 
 const styles = StyleSheet.create({
   base: {

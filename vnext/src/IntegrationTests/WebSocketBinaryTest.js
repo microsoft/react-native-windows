@@ -52,7 +52,7 @@ class WebSocketBinaryTest extends React.Component<{...}, State> {
 
   _waitFor = (condition: any, timeout: any, callback: any) => {
     let remaining = timeout;
-    const timeoutFunction = function() {
+    const timeoutFunction = function () {
       if (condition()) {
         callback(true);
         return;

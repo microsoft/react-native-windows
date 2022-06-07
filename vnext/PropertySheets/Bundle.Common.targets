@@ -5,7 +5,7 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-     <ReactNativePackageDir Condition="'$(ReactNativePackageDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativePackageDir>
+     <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativeDir>
   </PropertyGroup>
 
   <Target Name="MakeBundle" BeforeTargets="PrepareForBuild" 
@@ -22,6 +22,6 @@
     <Exec Command='$(HermesCompilerCommand) -emit-binary -out "$(BundleOutputFile).hbc" "$(BundleOutputFile)" $(HermesCompilerFlags) -output-source-map' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
     <Move SourceFiles="$(BundleOutputFile).hbc" DestinationFiles="$(BundleOutputFile)" />
     <Move SourceFiles="$(BundleOutputFile).hbc.map" DestinationFiles="$(HermesSourceMap)" />
-    <Exec Command='node "$(ReactNativePackageDir)\scripts\compose-source-maps.js" "$(PackagerSourceMap)" "$(HermesSourceMap)" -o "$(BundleSourceMap)"' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
+    <Exec Command='node "$(ReactNativeDir)\scripts\compose-source-maps.js" "$(PackagerSourceMap)" "$(HermesSourceMap)" -o "$(BundleSourceMap)"' ConsoleToMSBuild="true" WorkingDirectory="$(BundleCommandWorkingDir)" />
   </Target>
 </Project>

@@ -148,6 +148,7 @@ type ButtonProps = $ReadOnly<{|
   onAccessibilityAction?: ?(event: AccessibilityActionEvent) => mixed,
   accessibilityState?: ?AccessibilityState,
   accessibilityHint?: ?string,
+  accessibilityLanguage?: ?Stringish,
 
   // [Windows
   /**
@@ -298,6 +299,7 @@ class Button extends React.Component<
       accessible,
       accessibilityActions,
       accessibilityHint,
+      accessibilityLanguage,
       onAccessibilityAction,
       tabIndex,
     } = this.props;
@@ -340,8 +342,10 @@ class Button extends React.Component<
     if (Platform.OS === 'windows') {
       return (
         <Touchable
+          accessible={accessible}
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={accessibilityHint}
+          accessibilityLanguage={accessibilityLanguage}
           accessibilityRole="button"
           accessibilityState={accessibilityState}
           hasTVPreferredFocus={hasTVPreferredFocus}
@@ -355,7 +359,11 @@ class Button extends React.Component<
           onPress={onPress}
           tabIndex={tabIndex}
           touchSoundDisabled={touchSoundDisabled}
-          underlayColor={PlatformColor('ButtonBackgroundPressed')}
+          underlayColor={
+            color
+              ? PlatformColor('SolidBackgroundFillColorBaseBrush')
+              : PlatformColor('ButtonBackgroundPressed')
+          }
           onShowUnderlay={() => {
             this.setState({pressed: true});
           }}
@@ -363,24 +371,12 @@ class Button extends React.Component<
             this.setState({pressed: false});
           }}
           style={
-            this.state.pressed
-              ? [
-                  buttonStyles,
-                  {
-                    borderColor: PlatformColor('ButtonBorderBrushPressed'),
-                    borderBottomWidth: 1,
-                  },
-                ]
+            color
+              ? {borderRadius: 3}
+              : this.state.pressed
+              ? [buttonStyles, styles.buttonPressed]
               : this.state.hover
-              ? [
-                  buttonStyles,
-                  {
-                    backgroundColor: PlatformColor(
-                      'ButtonBackgroundPointerOver',
-                    ),
-                    borderColor: PlatformColor('ButtonBorderBrushPointerOver'),
-                  },
-                ]
+              ? [buttonStyles, styles.buttonHover]
               : buttonStyles
           }
           onMouseEnter={() => {
@@ -389,27 +385,52 @@ class Button extends React.Component<
           onMouseLeave={() => {
             if (!disabled) this.setState({hover: false});
           }}>
-          <Text
+          <View
             style={
-              this.state.pressed
-                ? [
-                    textStyles,
-                    {
-                      color: PlatformColor('ButtonForegroundPressed'),
-                    },
-                  ]
-                : this.state.hover
-                ? [
-                    textStyles,
-                    {
-                      color: PlatformColor('ButtonForegroundPointerOver'),
-                    },
-                  ]
-                : textStyles
-            }
-            disabled={disabled}>
-            {formattedTitle}
-          </Text>
+              color
+                ? this.state.pressed
+                  ? [buttonStyles, styles.buttonPressed]
+                  : buttonStyles
+                : {}
+            }>
+            <View
+              style={
+                color
+                  ? this.state.hover
+                    ? [
+                        styles.buttonHover,
+                        {
+                          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        },
+                      ]
+                    : {}
+                  : {}
+              }>
+              <Text
+                style={
+                  color
+                    ? textStyles
+                    : this.state.pressed
+                    ? [
+                        textStyles,
+                        {
+                          color: PlatformColor('ButtonForegroundPressed'),
+                        },
+                      ]
+                    : this.state.hover
+                    ? [
+                        textStyles,
+                        {
+                          color: PlatformColor('ButtonForegroundPointerOver'),
+                        },
+                      ]
+                    : textStyles
+                }
+                disabled={disabled}>
+                {formattedTitle}
+              </Text>
+            </View>
+          </View>
         </Touchable>
       );
     } else {
@@ -509,6 +530,17 @@ const styles = StyleSheet.create({
     },
     // Windows]
   }),
+  // [Windows
+  buttonHover: {
+    backgroundColor: PlatformColor('ButtonBackgroundPointerOver'),
+    borderColor: PlatformColor('ButtonBorderBrushPointerOver'),
+    borderRadius: 3,
+  },
+  buttonPressed: {
+    borderColor: PlatformColor('ButtonBorderBrushPressed'),
+    borderBottomWidth: 1,
+  },
+  // Windows]
 });
 
 module.exports = Button;

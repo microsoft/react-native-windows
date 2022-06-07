@@ -13,6 +13,7 @@
 
 #include <Views/FrameworkElementViewManager.h>
 #include <Views/ShadowNodeBase.h>
+#include <XamlView.h>
 #include "ReactHost/React.h"
 
 #include "winrt/Microsoft.ReactNative.h"
@@ -67,6 +68,8 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
 
   void OnPointerEvent(::Microsoft::ReactNative::ShadowNodeBase *node, const ReactPointerEventArgs &args) override;
 
+  void OnDropViewInstance(const ::Microsoft::ReactNative::XamlView &view);
+
  protected:
   xaml::DependencyObject CreateViewCore(int64_t, const winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
@@ -80,6 +83,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   IViewManagerWithChildren m_viewManagerWithChildren;
   IViewManagerRequiresNativeLayout m_viewManagerRequiresNativeLayout;
   IViewManagerWithPointerEvents m_viewManagerWithPointerEvents;
+  IViewManagerWithDropViewInstance m_viewManagerWithDropViewInstance;
 
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };

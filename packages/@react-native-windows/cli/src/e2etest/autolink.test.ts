@@ -5,10 +5,15 @@
  */
 
 import path from 'path';
+import {commanderNameToOptionName} from '@react-native-windows/telemetry';
 import {projectConfigWindows} from '../config/projectConfig';
-import {AutolinkWindows, autolinkOptions} from '../runWindows/utils/autolink';
+import {
+  AutolinkWindows,
+  autolinkOptions,
+  AutoLinkOptions,
+} from '../runWindows/utils/autolink';
 import {DOMParser} from '@xmldom/xmldom';
-import {ensureWinUI3Project} from './projectConfig.utils';
+import {ensureCppAppProject, ensureWinUI3Project} from './projectConfig.utils';
 
 test('autolink with no windows project', () => {
   expect(() => {
@@ -171,8 +176,7 @@ test('one invalid cs autolink dependency', () => {
     {
       check: true,
       logging: false,
-      proj:
-        'projects/SimpleCSharpApp/windows/SimpleCSharpApp/SimpleCSharpApp.csproj',
+      proj: 'projects/SimpleCSharpApp/windows/SimpleCSharpApp/SimpleCSharpApp.csproj',
     },
   );
   const replacements = autolink.getCsReplacements();
@@ -248,8 +252,7 @@ test('one valid cs autolink dependency', () => {
     {
       check: true,
       logging: false,
-      proj:
-        'projects/SimpleCSharpApp/windows/SimpleCSharpApp/SimpleCSharpApp.csproj',
+      proj: 'projects/SimpleCSharpApp/windows/SimpleCSharpApp/SimpleCSharpApp.csproj',
     },
   );
   const replacements = autolink.getCsReplacements();
@@ -261,9 +264,15 @@ test('one valid cs autolink dependency', () => {
 
 test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=false in ExperimentalFeatures.props', async done => {
   const folder = path.resolve('src/e2etest/projects/WithWinUI3');
+
+  // Create project with UseWinUI3 == false in ExperimentalFeatures.props
+  await ensureCppAppProject(folder, 'WithWinUI3', false, false, false);
+
   const rnc = require(path.join(folder, 'react-native.config.js'));
 
   const config = projectConfigWindows(folder, rnc.project.windows)!;
+  // Set useWinUI3=true in react-native.config.js
+  config.useWinUI3 = true;
 
   const al = new AutolinkTest(
     {windows: config},
@@ -286,10 +295,10 @@ test('ensureXAMLDialect - useWinUI3=true in react-native.config.js, useWinUI3=fa
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).toContain('Microsoft.WinUI');
+  expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
 
@@ -323,10 +332,10 @@ test('ensureXAMLDialect - useWinUI3=false in react-native.config.js, useWinUI3=t
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
+  expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
 
@@ -360,10 +369,10 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=tru
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WinUI" version="3.0.0-preview3.201113.0" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).toContain('Microsoft.WinUI');
+  expect(al.packagesConfig).toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
 
@@ -385,101 +394,23 @@ test('ensureXAMLDialect - useWinUI3 not in react-native.config.js, useWinUI3=fal
     },
   );
   al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
-  al.packagesConfig = `<packages><package id="SuperPkg" version="42"/><package id="Microsoft.WinUI"/></packages>`;
+  al.packagesConfig = `<packages><package id="SuperPkg" version="42"/><package id="Microsoft.WindowsAppSDK"/></packages>`;
 
   const exd = await al.ensureXAMLDialect();
   expect(exd).toBeTruthy();
 
-  const expectedExperimentalFeatures =
-    '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>';
+  const expectedExperimentalFeatures = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3></PropertyGroup></Project>`;
   expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
 
   // example packages.config:
   // <packages>
   //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WinUI" version="3.0.0-preview4.210210.4" targetFramework="native"/>
+  //   <package id="Microsoft.WindowsAppSDK" version="1.0.0" targetFramework="native"/>
   // </packages>
   //
-  expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
+  expect(al.packagesConfig).not.toContain('Microsoft.WindowsAppSDK');
   expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
   expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
-
-  done();
-});
-
-test('ensureXAMLDialect - WinUI2xVersion specified in ExperimentalFeatures.props', async done => {
-  const folder = path.resolve('src/e2etest/projects/WithWinUI3');
-  const rnc = require(path.join(folder, 'react-native.config.js'));
-
-  const config = projectConfigWindows(folder, rnc.project.windows)!;
-  delete config.useWinUI3;
-  const al = new AutolinkTest(
-    {windows: config},
-    {},
-    {
-      check: false,
-      logging: false,
-    },
-  );
-  al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.6.0-test</WinUI2xVersion></PropertyGroup></Project>`;
-  al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
-
-  const exd = await al.ensureXAMLDialect();
-  expect(exd).toBeTruthy();
-
-  const expectedExperimentalFeatures =
-    '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>false</UseWinUI3><WinUI2xVersion>2.6.0-test</WinUI2xVersion></PropertyGroup></Project>';
-  expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
-
-  // example packages.config:
-  // <packages>
-  //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.UI.XAML" version="2.6.0-test" targetFramework="native"/>
-  // </packages>
-  //
-  expect(al.packagesConfig).toContain('Microsoft.UI.Xaml');
-  expect(al.packagesConfig).toContain('2.6.0-test');
-  expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
-  expect(al.packagesConfig).not.toContain('Microsoft.WinUI');
-
-  done();
-});
-
-test('ensureXAMLDialect - WinUI3Version specified in ExperimentalFeatures.props', async done => {
-  const folder = path.resolve('src/e2etest/projects/WithWinUI3');
-  const rnc = require(path.join(folder, 'react-native.config.js'));
-
-  const config = projectConfigWindows(folder, rnc.project.windows)!;
-
-  const al = new AutolinkTest(
-    {windows: config},
-    {},
-    {
-      check: false,
-      logging: false,
-    },
-  );
-  al.experimentalFeaturesProps = `<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3><WinUI3Version>3.0.0-test</WinUI3Version></PropertyGroup></Project>`;
-  al.packagesConfig = `<packages><package id="SuperPkg" version="42"/></packages>`;
-
-  const exd = await al.ensureXAMLDialect();
-  expect(exd).toBeTruthy();
-
-  const expectedExperimentalFeatures =
-    '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003"><PropertyGroup><UseWinUI3>true</UseWinUI3><WinUI3Version>3.0.0-test</WinUI3Version></PropertyGroup></Project>';
-  expect(al.experimentalFeaturesProps).toEqual(expectedExperimentalFeatures);
-
-  // example packages.config:
-  // <packages>
-  //   <package id="SuperPkg" version="42"/>
-  //   <package id="Microsoft.WinUI" version="3.0.0-test" targetFramework="native"/>
-  // </packages>
-  //
-
-  expect(al.packagesConfig).toContain('Microsoft.WinUI');
-  expect(al.packagesConfig).toContain('3.0.0-test');
-  expect(al.packagesConfig).toContain('<package id="SuperPkg" version="42"/>');
-  expect(al.packagesConfig).not.toContain('Microsoft.UI.Xaml');
 
   done();
 });
@@ -516,8 +447,7 @@ test('Indirect autolink dependency', () => {
     {
       check: true,
       logging: false,
-      proj:
-        'projects/WithIndirectDependency/windows/WithIndirectDependency/WithIndirectDependency.vcxproj',
+      proj: 'projects/WithIndirectDependency/windows/WithIndirectDependency/WithIndirectDependency.vcxproj',
     },
   );
   const replacements = autolink.getCppReplacements();
@@ -528,13 +458,30 @@ test('Indirect autolink dependency', () => {
   );
 });
 
+function validateOptionName(
+  name: string,
+  optionName: keyof AutoLinkOptions,
+): boolean {
+  // Do not add a default case here. Every item must explicitly return true
+  switch (optionName) {
+    case 'check':
+    case 'logging':
+    case 'sln':
+    case 'proj':
+    case 'telemetry':
+      return true;
+  }
+  throw new Error(
+    `Unable to find ${optionName} to match '${name}' in AutoLinkOptions.`,
+  );
+}
+
 test('autolinkOptions - validate options', () => {
   for (const commandOption of autolinkOptions) {
     // Validate names
     expect(commandOption.name).not.toBeNull();
     expect(commandOption.name.startsWith('--')).toBe(true);
     expect(commandOption.name).toBe(commandOption.name.trim());
-
     // Validate defaults
     if (
       !commandOption.name.endsWith(' [string]') &&
@@ -543,9 +490,17 @@ test('autolinkOptions - validate options', () => {
       // Commander ignores defaults for flags, so leave undefined to prevent confusion
       expect(commandOption.default).toBeUndefined();
     }
-
     // Validate description
     expect(commandOption.description).not.toBeNull();
     expect(commandOption.description!).toBe(commandOption.description!.trim());
+
+    // Validate all command options are present in AutoLinkOptions
+    const optionName = commanderNameToOptionName(commandOption.name);
+    expect(
+      validateOptionName(
+        commandOption.name,
+        optionName as keyof AutoLinkOptions,
+      ),
+    ).toBe(true);
   }
 });

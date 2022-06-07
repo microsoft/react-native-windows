@@ -7,6 +7,7 @@
 #pragma once
 
 #include <glog/logging.h>
+#include <charconv>
 #include <sstream>
 
 static inline void nyi() {
@@ -127,19 +128,27 @@ class StringToDoubleConverter {
     // nyi();
   }
 
-  double StringToDouble(const char *s, int l, int *consumed) {
-    size_t idx = 0;
-    std::string str(s, l);
-    double d = std::stod(str.c_str(), &idx);
-    *consumed = static_cast<int>(idx);
+  double StringToDouble(const char *buf, int length, int *consumed) {
+    double d{};
+    auto ret = std::from_chars(buf, buf + length, d);
+    if (ret.ec == std::errc{}) {
+      *consumed = static_cast<int>(ret.ptr - buf);
+    } else {
+      *consumed = 0;
+      assert(false && "Conversion to double failed");
+    }
     return d;
   }
 
   float StringToFloat(const char *buf, int length, int *consumed) {
-    size_t idx = 0;
-    std::string str(buf, length);
-    float f = std::stof(str, &idx);
-    *consumed = static_cast<int>(idx);
+    float f{};
+    auto ret = std::from_chars(buf, buf + length, f);
+    if (ret.ec == std::errc{}) {
+      *consumed = static_cast<int>(ret.ptr - buf);
+    } else {
+      *consumed = 0;
+      assert(false && "Conversion to float failed");
+    }
     return f;
   }
 };

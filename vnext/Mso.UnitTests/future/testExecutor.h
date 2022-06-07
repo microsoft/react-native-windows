@@ -66,7 +66,7 @@ struct MockExecutorOnCancel {
   }
 
   template <class Callback, class... TArgs>
-  auto Invoke(Callback &&callback, TArgs &&... args) noexcept {
+  auto Invoke(Callback &&callback, TArgs &&...args) noexcept {
     TestCheckFail("Must not be invoked");
     return callback(std::forward<TArgs>(args)...);
   }
@@ -83,7 +83,7 @@ struct MockInlineExecutor {
   }
 
   template <class Callback, class... TArgs>
-  auto Invoke(Callback &&callback, TArgs &&... args) noexcept {
+  auto Invoke(Callback &&callback, TArgs &&...args) noexcept {
     return callback(std::forward<TArgs>(args)...);
   }
 };

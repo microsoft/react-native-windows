@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -35,7 +35,7 @@ type Options = {
 /**
  * Launches an alert dialog with the specified title and message.
  *
- * See https://reactnative.dev/docs/alert.html
+ * See https://reactnative.dev/docs/alert
  */
 class Alert {
   static alert(

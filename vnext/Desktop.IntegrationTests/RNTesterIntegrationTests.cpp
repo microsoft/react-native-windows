@@ -3,7 +3,7 @@
 
 #include <CppUnitTest.h>
 
-#include <RuntimeOptions.h>
+#include <CppRuntimeOptions.h>
 #include <Test/WebSocketServer.h>
 #include "TestRunner.h"
 
@@ -23,11 +23,14 @@ std::wstring ToString<TestStatus>(const TestStatus &status) {
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
 TEST_MODULE_INITIALIZE(InitModule) {
-  Microsoft::React::SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
-  Microsoft::React::SetRuntimeOptionBool("UseBeastWebSocket", false);
+  using Microsoft::React::SetRuntimeOptionBool;
+
+  SetRuntimeOptionBool("WebSocket.AcceptSelfSigned", true);
+  SetRuntimeOptionBool("UseBeastWebSocket", false);
+  SetRuntimeOptionBool("Http.UseMonolithicModule", false);
 
   // WebSocketJSExecutor can't register native log hooks.
-  Microsoft::React::SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
+  SetRuntimeOptionBool("RNTester.UseWebDebugger", false);
 }
 
 TEST_CLASS (RNTesterIntegrationTests) {
@@ -185,10 +188,12 @@ TEST_CLASS (RNTesterIntegrationTests) {
   TEST_METHOD(WebSocket) {
     // Should behave the same as IntegrationTests/websocket_integration_test_server.js
     auto server = std::make_shared<WebSocketServer>(5555, false /*useTLS*/);
-    server->SetMessageFactory([](std::string &&message) -> std::string { return message + "_response"; });
+    server->SetMessageFactory([](string &&message) -> string { return message + "_response"; });
     server->Start();
 
     TestComponent("WebSocketTest");
+
+    server->Stop();
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(AccessibilityManager)
@@ -210,6 +215,21 @@ TEST_CLASS (RNTesterIntegrationTests) {
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(WebSocketBinary) {
     auto result = m_runner.RunTest("IntegrationTests/WebSocketBinaryTest", "WebSocketBinaryTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(WebSocketBlob)
+  TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(WebSocketBlob) {
+    auto result = m_runner.RunTest("IntegrationTests/WebSocketBlobTest", "WebSocketBlobTest");
+    Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
+  }
+
+  BEGIN_TEST_METHOD_ATTRIBUTE(Blob)
+  END_TEST_METHOD_ATTRIBUTE()
+  TEST_METHOD(Blob) {
+    auto result = m_runner.RunTest("IntegrationTests/BlobTest", "BlobTest");
     Assert::AreEqual(TestStatus::Passed, result.Status, result.Message.c_str());
   }
 

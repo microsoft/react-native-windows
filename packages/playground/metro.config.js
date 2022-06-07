@@ -1,3 +1,5 @@
+const {makeMetroConfig} = require('@rnw-scripts/metro-dev-config');
+
 /**
  * Metro configuration for React Native
  * https://github.com/facebook/react-native
@@ -6,8 +8,6 @@
  */
 const fs = require('fs');
 const path = require('path');
-const exclusionList = require('metro-config/src/defaults/exclusionList');
-const {resolve} = require('metro-resolver');
 
 const rnwPath = fs.realpathSync(
   path.dirname(require.resolve('react-native-windows/package.json')),
@@ -15,13 +15,6 @@ const rnwPath = fs.realpathSync(
 
 const rnwTesterPath = fs.realpathSync(
   path.dirname(require.resolve('@react-native-windows/tester/package.json')),
-);
-
-const virtualizedListPath = fs.realpathSync(
-  path.resolve(
-    require.resolve('@react-native-windows/virtualized-list/package.json'),
-    '..',
-  ),
 );
 
 const devPackages = {
@@ -58,13 +51,26 @@ function devResolve(packageName, originDir, moduleName) {
 
   // For each potential extension we need to check for the file in either src and root
   for (const extension of extensions) {
-    const potentialSrcModuleName =
-      path.resolve(originDirSrc, moduleName) + extension;
+    // Start with the src folder
+    let potentialSrcModuleName = path.resolve(originDirSrc, moduleName);
+    if (fs.existsSync(potentialSrcModuleName) &&
+        fs.statSync(potentialSrcModuleName).isDirectory()) {
+      potentialSrcModuleName = path.resolve(potentialSrcModuleName, 'index');
+    }
+    potentialSrcModuleName += extension;
+
     if (fs.existsSync(potentialSrcModuleName)) {
       return potentialSrcModuleName;
     }
 
-    const potentialModuleName = path.resolve(originDir, moduleName) + extension;
+    // Next check under root folder
+    let potentialModuleName = path.resolve(originDir, moduleName);
+    if (fs.existsSync(potentialModuleName) &&
+        fs.statSync(potentialModuleName).isDirectory()) {
+      potentialModuleName = path.resolve(potentialModuleName, 'index');
+    }
+    potentialModuleName += extension;
+
     if (fs.existsSync(potentialModuleName)) {
       return potentialModuleName;
     }
@@ -79,25 +85,15 @@ function devResolve(packageName, originDir, moduleName) {
  */
 function devResolveRequest(
   context,
-  _realModuleName /* string */,
-  platform /* string */,
   moduleName /* string */,
+  platform /* string */,
 ) {
-  const backupResolveRequest = context.resolveRequest;
-  delete context.resolveRequest;
-
-  try {
-    const modifiedModuleName =
+  const modifiedModuleName =
       tryResolveDevPackage(moduleName) ||
       tryResolveDevAbsoluteImport(moduleName) ||
       tryResolveDevRelativeImport(context.originModulePath, moduleName) ||
       moduleName;
-    return resolve(context, modifiedModuleName, platform);
-  } catch (e) {
-    throw e;
-  } finally {
-    context.resolveRequest = backupResolveRequest;
-  }
+      return context.resolveRequest(context, modifiedModuleName, platform);
 }
 
 function tryResolveDevPackage(moduleName) /*: string | null*/ {
@@ -148,57 +144,8 @@ function tryResolveDevRelativeImport(
   return null;
 }
 
-module.exports = {
-  // WatchFolders is only needed due to the yarn workspace layout of node_modules, we need to watch the symlinked locations separately
-  watchFolders: [
-    // Include hoisted modules
-    path.resolve(__dirname, '../..', 'node_modules'),
-    // Include react-native-windows
-    rnwPath,
-    rnwTesterPath,
-    // Add virtualized-list dependency, whose unsymlinked representation is not in node_modules, only in our repo
-    virtualizedListPath,
-  ],
-
+module.exports = makeMetroConfig({
   resolver: {
-    extraNodeModules: {
-      // Redirect react-native-windows to avoid symlink (metro doesn't like symlinks)
-      'react-native-windows': rnwPath,
-      '@react-native-windows/tester': rnwTesterPath,
-      '@react-native-windows/virtualized-list': virtualizedListPath,
-    },
-    blockList: exclusionList([
-      // This stops "react-native run-windows" from causing the metro server to crash if its already running
-      new RegExp(
-        `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
-      ),
-      // This prevents "react-native run-windows" from hitting: EBUSY: resource busy or locked, open msbuild.ProjectImports.zip or other files produced by msbuild
-      new RegExp(`${rnwPath}/build/.*`),
-      new RegExp(`${rnwPath}/target/.*`),
-      /.*\.ProjectImports\.zip/,
-      /.*.tlog/,
-    ]),
     resolveRequest: devResolveRequest,
   },
-
-  // Metro doesn't currently handle assets from other packages within a monorepo.  This is the current workaround people use
-  server: {
-    enhanceMiddleware: middleware => {
-      return (req, res, next) => {
-        if (req.url.startsWith('/vnext')) {
-          req.url = req.url.replace('/vnext', '/assets/../../vnext');
-        }
-        return middleware(req, res, next);
-      };
-    },
-  },
-
-  transformer: {
-    getTransformOptions: async () => ({
-      transform: {
-        experimentalImportSupport: false,
-        inlineRequires: true,
-      },
-    }),
-  },
-};
+});

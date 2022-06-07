@@ -7,6 +7,7 @@
 
 #include "ViewControl.h"
 
+#include <UI.Xaml.Automation.Peers.h>
 #include "DynamicAutomationProperties.h"
 
 #include <JSValueWriter.h>
@@ -125,6 +126,14 @@ class ViewShadowNode : public ShadowNodeBase {
 
     if (IsControl())
       GetControl().IsTabStop(m_isFocusable);
+  }
+
+  bool IsAccessible() const {
+    return m_isAccessible;
+  }
+
+  void IsAccessible(bool isAccessible) {
+    m_isAccessible = isAccessible;
   }
 
   bool IsHitTestBrushRequired() const {
@@ -251,6 +260,7 @@ class ViewShadowNode : public ShadowNodeBase {
   bool m_enableFocusRing = true;
   bool m_onClick = false;
   bool m_isFocusable = false;
+  bool m_isAccessible = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 
   xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};
@@ -378,8 +388,6 @@ void ViewViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
 
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"pointerEvents", L"string");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"onClick", L"function");
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onMouseEnter", L"function");
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"onMouseLeave", L"function");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"enableFocusRing", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"tabIndex", L"number");
@@ -406,12 +414,6 @@ bool ViewViewManager::UpdateProperty(
         bool clipChildren = propertyValue.AsString() == "hidden";
         pPanel.ClipChildren(clipChildren);
       }
-    } else if (propertyName == "pointerEvents") {
-      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        bool hitTestable = propertyValue.AsString() != "none";
-        if (const auto element = nodeToUpdate->GetView().try_as<xaml::UIElement>())
-          element.IsHitTestVisible(hitTestable);
-      }
     } else if (propertyName == "focusable") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
         pViewShadowNode->IsFocusable(propertyValue.AsBoolean());
@@ -428,6 +430,11 @@ bool ViewViewManager::UpdateProperty(
         pViewShadowNode->TabIndex(std::numeric_limits<std::int32_t>::max());
       }
     } else {
+      if (propertyName == "accessible") {
+        if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
+          pViewShadowNode->IsAccessible(propertyValue.AsBoolean());
+        }
+      }
       ret = Super::UpdateProperty(nodeToUpdate, propertyName, propertyValue);
     }
   }
@@ -439,12 +446,12 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto *viewShadowNode = static_cast<ViewShadowNode *>(node);
   auto panel = viewShadowNode->GetViewPanel();
 
-  if (panel.Background() == nullptr) {
+  if (panel.ReadLocalValue(ViewPanel::ViewBackgroundProperty()) == xaml::DependencyProperty::UnsetValue()) {
     // In XAML, a null background means no hit-test will happen.
     // We actually want hit-testing to happen if the app has registered
     // for mouse events, so detect that case and add a transparent background.
     if (viewShadowNode->IsHitTestBrushRequired()) {
-      panel.Background(EnsureTransparentBrush());
+      panel.ViewBackground(EnsureTransparentBrush());
     }
     // Note:  Technically we could detect when the transparent brush is
     // no longer needed, but this adds complexity and it can't hurt to
@@ -571,6 +578,12 @@ void ViewViewManager::TryUpdateView(
 
   if (useControl)
     pViewShadowNode->GetControl().Content(visualRoot);
+
+  if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
+    pViewShadowNode->GetControl().IsTabStop(false);
+    xaml::Automation::AutomationProperties::SetAccessibilityView(
+        pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
+  }
 }
 
 void ViewViewManager::SetLayoutProps(

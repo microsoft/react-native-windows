@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include "../../codegen/NativeAccessibilityInfoSpec.g.h"
 #include <NativeModules.h>
 
 namespace Microsoft::ReactNative {
 
 REACT_MODULE(AccessibilityInfo)
 struct AccessibilityInfo : public std::enable_shared_from_this<AccessibilityInfo> {
+  using ModuleSpec = ReactNativeSpecs::AccessibilityInfoSpec;
+
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -25,6 +28,9 @@ struct AccessibilityInfo : public std::enable_shared_from_this<AccessibilityInfo
 
   REACT_METHOD(getRecommendedTimeoutMillis)
   void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const &onSuccess) noexcept;
+
+  REACT_METHOD(isAccessibilityServiceEnabled)
+  void isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept;
 
  private:
   React::ReactContext m_context;

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+  Licensed under the MIT License.
+
+  Assigns preprocessor definitions mirroring package version MSBuild props
+  previously imported from "PackageVersion.g.props".
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <ClCompile>
+
+      <PreprocessorDefinitions>
+        RNW_VERSION=$(ReactNativeWindowsVersion);
+        RNW_MAJOR=$(ReactNativeWindowsMajor);
+        RNW_MINOR=$(ReactNativeWindowsMinor);
+        RNW_PATCH=$(ReactNativeWindowsPatch);
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(ReactNativeWindowsCanary)' == 'true'">
+        RNW_CANARY;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+
+    </ClCompile>
+    <Midl>
+
+      <PreprocessorDefinitions>
+        RNW_VERSION=$(ReactNativeWindowsVersion);
+        RNW_MAJOR=$(ReactNativeWindowsMajor);
+        RNW_MINOR=$(ReactNativeWindowsMinor);
+        RNW_PATCH=$(ReactNativeWindowsPatch);
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(ReactNativeWindowsCanary)' == 'true'">
+        RNW_CANARY;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+
+    </Midl>
+  </ItemDefinitionGroup>
+</Project>

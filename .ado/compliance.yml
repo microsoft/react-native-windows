@@ -1,0 +1,136 @@
+name: 0.0.$(Date:yyMM.d)$(Rev:rrr)
+
+parameters:
+- name: AgentPool
+  type: object
+  default:
+    Medium:
+      name: rnw-pool-4-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+    Large:
+      name: rnw-pool-8-microsoft
+      demands: ImageOverride -equals rnw-img-node16
+- name: forceCodeQL
+  displayName: Force CodeQL to rebuild databases
+  type: boolean
+  default: false
+
+variables:
+  - template: variables/windows.yml
+  - group: RNW Secrets
+  - name: Codeql.Enabled
+    value: true
+  - ${{ if eq(parameters.forceCodeQL, true) }}:
+    - name: Codeql.Cadence
+      value: 0
+  - ${{ if eq(parameters.forceCodeQL, false) }}:
+    - name: Codeql.Cadence
+      value: 120 # In hours, default to only run every 5 days
+
+trigger: none
+pr: none
+
+jobs:
+  - job: RnwUniversalCompliance
+    displayName: RNW Universal Compliance
+    pool: ${{ parameters.AgentPool.Large }}
+    timeoutInMinutes: 360 # Compliance tasks recommend to 3x usual build timeout
+
+    steps:
+      - template: templates/prepare-js-env.yml
+
+      - template: templates/set-version-vars.yml
+        parameters:
+          buildEnvironment: Continuous
+
+      - template: templates/publish-version-vars.yml
+
+      - template: templates/prepare-build-env.yml
+        parameters:
+          platform: x64
+          configuration: Release
+          buildEnvironment: Continuous
+
+      - template: templates/apply-published-version-vars.yml
+
+      # Pre-build compliance tasks
+
+      # - powershell: |
+      #     $customProps = "<?xml version=`"1.0`" encoding=`"utf-8`"?>
+      #     <Project ToolsVersion=`"4.0`" xmlns=`"http://schemas.microsoft.com/developer/msbuild/2003`">
+      #       <!-- This file is read by XES, which we use in our Release builds. -->
+      #       <PropertyGroup Label=`"Version`">
+      #         <XesUseOneStoreVersioning>true</XesUseOneStoreVersioning>
+      #         <XesBaseYearForStoreVersion>2022</XesBaseYearForStoreVersion>
+      #         <VersionMajor>$env:RNW_PKG_VERSION_MAJOR</VersionMajor>
+      #         <VersionMinor>$env:RNW_PKG_VERSION_MINOR</VersionMinor>
+      #         <VersionInfoProductName>React-Native-Windows</VersionInfoProductName>
+      #       </PropertyGroup>
+      #     </Project>"
+      #     $customPropsFile = Join-Path (Get-Location) "custom.props"
+      #     Write-Host "Outputting to $customPropsFile"
+      #     Write-Host $customProps
+      #     Set-Content $customPropsFile -Value $customProps
+      #   displayName: Create custom.props file
+      #   workingDirectory: $(Build.SourcesDirectory)
+
+      # - task: PkgESSetupBuild@12
+      #   displayName: Package ES - Setup Build
+      #   inputs:
+      #     disableOutputRedirect: true
+
+      # Initialize CodeQL 3000 Task (https://aka.ms/codeql3000)
+      # Performs static code analysis.
+      # GitHub repos not supported, see issue #9994.
+      - task: CodeQL3000Init@0
+        displayName: "🛡️ Initialize CodeQL"
+        continueOnError: true
+
+      # PoliCheck Build Task (https://aka.ms/gdn-azdo-policheck)
+      # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
+        displayName: '⚖️ Run PoliCheck'
+        inputs:
+          targetType: F
+          targetArgument: $(Build.SourcesDirectory)
+          result: PoliCheck.xml
+          optionsFC: 1
+          optionsXS: 1
+          optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckExclusions.xml
+          optionsHMENABLE: 0
+        continueOnError: true
+
+      # CredScan Task (https://aka.ms/gdn-azdo-credscan)
+      # Searches through source code and build outputs for credentials left behind in the open.
+      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+        displayName: '⚖️ Run CredScan'
+        inputs:
+          outputFormat: pre
+          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+          batchSize: 20
+          debugMode: false
+        continueOnError: true
+
+      # Build RNW
+
+      - template: templates/msbuild-sln.yml
+        parameters:
+          solutionDir: vnext
+          solutionName: Microsoft.ReactNative.sln
+          buildPlatform: x64
+          buildConfiguration: Release
+
+      # Post-build compliance tasks
+
+      # Component Governance Detection Task (https://docs.opensource.microsoft.com/tools/cg/)
+      # Detects open source you use and alerts you to whether it has security vulnerabilities or legal issues.
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Detection'
+        continueOnError: true
+
+      # Finalize CodeQL 3000 Task (https://aka.ms/codeql3000)
+      # Performs static code analysis.
+      # GitHub repos not supported, see issue #9994.
+      - task: CodeQL3000Finalize@0
+        displayName: "🛡️ Finalize CodeQL"
+        continueOnError: true

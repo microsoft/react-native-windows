@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump xmldom to 0.7.0 in @react-native-windows/cli.",
-  "packageName": "@react-native-windows/cli",
-  "email": "yicyao@microsoft.com",
-  "dependentChangeType": "patch"
-}

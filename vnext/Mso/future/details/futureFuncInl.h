@@ -32,14 +32,14 @@ inline Future<void> MakeCompletedFuture() noexcept {
 }
 
 template <class T, class... TArgs>
-inline Future<T> MakeCompletedFutureEmplaced(TArgs &&... args) noexcept {
+inline Future<T> MakeCompletedFutureEmplaced(TArgs &&...args) noexcept {
   Promise<T> promise;
   promise.EmplaceValue(std::forward<TArgs>(args)...);
   return promise.AsFuture();
 }
 
 template <class T, class U, class... TArgs>
-inline Future<T> MakeCompletedFutureEmplaced(std::initializer_list<U> il, TArgs &&... args) noexcept {
+inline Future<T> MakeCompletedFutureEmplaced(std::initializer_list<U> il, TArgs &&...args) noexcept {
   Promise<T> promise;
   promise.EmplaceValue(il, std::forward<TArgs>(args)...);
   return promise.AsFuture();
@@ -59,14 +59,14 @@ inline Future<void> MakeSucceededFuture() noexcept {
 }
 
 template <class T, class... TArgs>
-inline Future<T> MakeSucceededFutureEmplaced(TArgs &&... args) noexcept {
+inline Future<T> MakeSucceededFutureEmplaced(TArgs &&...args) noexcept {
   Promise<T> promise;
   promise.EmplaceValue(std::forward<TArgs>(args)...);
   return promise.AsFuture();
 }
 
 template <class T, class U, class... TArgs>
-inline Future<T> MakeSucceededFutureEmplaced(std::initializer_list<U> il, TArgs &&... args) noexcept {
+inline Future<T> MakeSucceededFutureEmplaced(std::initializer_list<U> il, TArgs &&...args) noexcept {
   Promise<T> promise;
   promise.EmplaceValue(il, std::forward<TArgs>(args)...);
   return promise.AsFuture();

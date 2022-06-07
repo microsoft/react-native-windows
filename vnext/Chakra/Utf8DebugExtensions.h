@@ -3,13 +3,7 @@
 
 #pragma once
 
-#if defined(USE_EDGEMODE_JSRT)
 #include <jsrt.h>
-#else
-#include <ChakraCore.h>
-#include <cstdint> //for uint16_t in <ChakraCore.h>
-#endif
-
 #include <string>
 #if _HAS_CXX17
 #include <string_view>

@@ -7,7 +7,6 @@ Several packages are organized into specific package scopes:
 - `@office-iss`: Office internal packages
 - `@react-native`: Copies of private upstream packages already using the `@react-native` scope. E.g. `@react-native/tester` for the RNTester package.
 - `@react-native-windows`: Internal packages used by react-native-windows itself. Versioned and published alongside RNW.
-- `@rnw-bots`: Bot infrastructure for the react-native-windows repo. Published as part of the main branch.
 - `@rnw-scripts`: Scripts for repository tooling. Published as part of the main branch.
 
 ## Unscoped packages

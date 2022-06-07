@@ -1,5 +1,5 @@
 /**
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -205,6 +205,28 @@ function PropagationSample() {
   );
 }
 
+function SpellCheckSample() {
+  const [spellCheckEnabled, setSpellCheckEnabled] = useState(true);
+  return (
+    <>
+      <Text>Spell Check Enabled:</Text>
+      <Switch
+        /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
+         * found when making Flow check .android.js files. */
+        value={spellCheckEnabled}
+        /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
+         * found when making Flow check .android.js files. */
+        onValueChange={setSpellCheckEnabled}
+      />
+      <TextInput
+        placeholder="Type text to test spell check functionality."
+        style={[styles.singleLineWithHeightTextInput]}
+        spellCheck={spellCheckEnabled}
+      />
+    </>
+  );
+}
+
 const styles = StyleSheet.create({
   multiline: {
     height: 60,
@@ -226,7 +248,7 @@ exports.examples = ([
   ...TextInputSharedExamples,
   {
     title: 'Colors and text inputs',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -276,7 +298,7 @@ exports.examples = ([
   },
   {
     title: 'Font Weight',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -308,7 +330,7 @@ exports.examples = ([
   },
   {
     title: 'Text input, themes and heights',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <TextInput
           placeholder="If you set height, beware of padding set from themes"
@@ -319,7 +341,7 @@ exports.examples = ([
   },
   {
     title: 'letterSpacing',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -344,7 +366,7 @@ exports.examples = ([
   },
   {
     title: 'Passwords',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -364,7 +386,7 @@ exports.examples = ([
   },
   {
     title: 'Editable',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <TextInput
           defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
@@ -376,7 +398,7 @@ exports.examples = ([
   },
   {
     title: 'Multiline',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -418,7 +440,7 @@ exports.examples = ([
   {
     title: 'Fixed number of lines',
     platform: 'android',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -437,7 +459,7 @@ exports.examples = ([
   },
   {
     title: 'Auto-expanding',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <AutogrowingTextInputExample
@@ -461,7 +483,7 @@ exports.examples = ([
   },
   {
     title: 'Return key',
-    render: function(): React.Node {
+    render: function (): React.Node {
       const returnKeyTypes = [
         'none',
         'go',
@@ -502,7 +524,7 @@ exports.examples = ([
   },
   {
     title: 'Inline Images',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <TextInput
@@ -526,20 +548,20 @@ exports.examples = ([
   },
   {
     title: 'Toggle Default Padding',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <ToggleDefaultPaddingExample />;
     },
   },
   {
     title: 'onPressIn, onPressOut events',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <PressInOutEvents />;
     },
   },
   // [Windows
   {
     title: 'Clear text on submit',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return (
         <View>
           <Text>Default submit key (Enter):</Text>
@@ -570,8 +592,14 @@ exports.examples = ([
   },
   {
     title: 'Stop propagation sample',
-    render: function(): React.Node {
+    render: function (): React.Node {
       return <PropagationSample />;
+    },
+  },
+  {
+    title: 'Toggle spell check',
+    render: function (): React.Node {
+      return <SpellCheckSample />;
     },
   },
   // Windows]

@@ -8,6 +8,9 @@ using ReactNativePicker;
 // Namespaces from @react-native-windows/automation-channel
 using AutomationChannel;
 
+// Namespaces from react-native-xaml
+using ReactNativeXaml;
+
 namespace Microsoft.ReactNative.Managed
 {
     internal static class AutolinkedNativeModules
@@ -18,6 +21,8 @@ namespace Microsoft.ReactNative.Managed
             packageProviders.Add(new ReactNativePicker.ReactPackageProvider());
             // IReactPackageProviders from @react-native-windows/automation-channel
             packageProviders.Add(new AutomationChannel.ReactPackageProvider());
+            // IReactPackageProviders from react-native-xaml
+            packageProviders.Add(new ReactNativeXaml.ReactPackageProvider());
         }
     }
 }

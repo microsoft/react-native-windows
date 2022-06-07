@@ -47,14 +47,6 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
     panel->m_propertiesChanged = true;
 }
 
-/*static*/ void ViewPanel::PositionPropertyChanged(
-    xaml::DependencyObject sender,
-    xaml::DependencyPropertyChangedEventArgs e) {
-  auto element{sender.as<xaml::UIElement>()};
-  if (element != nullptr)
-    InvalidateForArrange(element);
-}
-
 /*static*/ xaml::DependencyProperty ViewPanel::ViewBackgroundProperty() {
   static xaml::DependencyProperty s_viewBackgroundProperty = xaml::DependencyProperty::Register(
       L"ViewBackground",
@@ -96,23 +88,11 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
 }
 
 /*static*/ xaml::DependencyProperty ViewPanel::TopProperty() {
-  static xaml::DependencyProperty s_topProperty = xaml::DependencyProperty::RegisterAttached(
-      L"Top",
-      winrt::xaml_typename<double>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(winrt::box_value((double)0), ViewPanel::PositionPropertyChanged));
-
-  return s_topProperty;
+  return xaml::Controls::Canvas::TopProperty();
 }
 
 /*static*/ xaml::DependencyProperty ViewPanel::LeftProperty() {
-  static xaml::DependencyProperty s_LeftProperty = xaml::DependencyProperty::RegisterAttached(
-      L"Left",
-      winrt::xaml_typename<double>(),
-      viewPanelTypeName,
-      winrt::PropertyMetadata(winrt::box_value((double)0), ViewPanel::PositionPropertyChanged));
-
-  return s_LeftProperty;
+  return xaml::Controls::Canvas::LeftProperty();
 }
 
 /*static*/ xaml::DependencyProperty ViewPanel::ClipChildrenProperty() {
@@ -135,7 +115,7 @@ winrt::AutomationPeer ViewPanel::OnCreateAutomationPeer() {
   InvalidateForArrange(element);
 }
 
-void ViewPanel::InvalidateForArrange(xaml::UIElement element) {
+void ViewPanel::InvalidateForArrange(const xaml::DependencyObject &element) {
   // If the element's position has changed, we must invalidate the parent for arrange,
   // as it's the parent's responsibility to arrange its children.
   if (auto parent = VisualTreeHelper::GetParent(element)) {

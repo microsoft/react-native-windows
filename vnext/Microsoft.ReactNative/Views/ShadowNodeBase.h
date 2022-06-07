@@ -16,6 +16,8 @@ namespace Microsoft::ReactNative {
 
 class ViewManagerBase;
 
+enum class PointerEventsKind : uint8_t { Auto = 0, BoxNone, BoxOnly, None };
+
 enum class ShadowEdges : uint8_t {
   Left = 0,
   Top,
@@ -127,6 +129,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   bool m_onLayoutRegistered = false;
   bool m_onMouseEnterRegistered = false;
   bool m_onMouseLeaveRegistered = false;
+
+  // Pointer events
+  PointerEventsKind m_pointerEvents = PointerEventsKind::Auto;
 
   // Support Keyboard
  public:

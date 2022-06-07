@@ -1,8 +1,189 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 29 Sep 2021 05:06:54 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.35
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @rnw-scripts/jest-unittest-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 0.0.0-canary.34
+
+Thu, 12 May 2022 05:09:43 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-unittest-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.2.4
+
+## 0.0.0-canary.33
+
+Wed, 11 May 2022 05:08:51 GMT
+
+### Changes
+
+- Add --methodonly to RNW/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.32
+
+Wed, 27 Apr 2022 05:10:23 GMT
+
+### Changes
+
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 0.0.0-canary.31
+
+Mon, 25 Apr 2022 22:50:30 GMT
+
+### Changes
+
+- Update globby of @react-native-windows/codegen to remove glob-parent 3.x dependency (dannyvv@microsoft.com)
+
+## 0.0.0-canary.30
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+
+## 0.0.0-canary.29
+
+Fri, 01 Apr 2022 05:09:56 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+
+## 0.0.0-canary.28
+
+Wed, 09 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Fix turbo module codegen to generate correct import statement and registration (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.27
+
+Fri, 04 Mar 2022 06:09:13 GMT
+
+### Changes
+
+- Generate fabric eventemitter.cpp (acoates@microsoft.com)
+
+## 0.0.0-canary.26
+
+Thu, 24 Feb 2022 06:07:47 GMT
+
+### Changes
+
+- Add TypeScript turbo module definition as new codegen traget (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.25
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.0-canary.24
+
+Tue, 08 Feb 2022 18:21:23 GMT
+
+### Changes
+
+- Fix TurboModule codegen document (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.23
+
+Sat, 29 Jan 2022 06:08:58 GMT
+
+### Changes
+
+- Add document for turbo module codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.22
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 0.0.0-canary.21
+
+Thu, 18 Nov 2021 06:11:20 GMT
+
+### Changes
+
+- Use '@react-native-windows/fs' (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 0.0.0-canary.20
+
+Thu, 04 Nov 2021 05:07:29 GMT
+
+### Changes
+
+- Codegen prints `::React::JSValue` instead of `React::JSValue` (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.20
+
+Thu, 04 Nov 2021 05:07:08 GMT
+
+### Changes
+
+- Codegen prints `::React::JSValue` instead of `React::JSValue` (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.19
+
+Sat, 23 Oct 2021 05:06:49 GMT
+
+### Changes
+
+- Only generate component files if a component is specified (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.18
+
+Fri, 22 Oct 2021 05:06:46 GMT
+
+### Changes
+
+- Built files not included in published package (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.17
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.16
 

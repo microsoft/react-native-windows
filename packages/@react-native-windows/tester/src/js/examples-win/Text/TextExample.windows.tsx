@@ -20,7 +20,7 @@ import {
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
 
-export class Entity extends React.Component<{}> {
+export class Entity extends React.Component<React.PropsWithChildren<{}>> {
   public render() {
     return (
       <Text style={{fontWeight: 'bold', color: '#527fe4'}}>
@@ -752,8 +752,8 @@ export class TextExample extends React.Component<
           <Text>
             This text contains an inline image{' '}
             {/*
-            <Image source={require('./flux.png')} />.*/} Neat,
-            huh?
+            <Image source={require('./flux.png')} />.*/}{' '}
+            Neat, huh?
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text shadow">
@@ -897,7 +897,7 @@ export const title = 'Text';
 export const description = 'Base component for rendering styled text.';
 export const examples = [
   {
-    render: function(): JSX.Element {
+    render: function (): JSX.Element {
       return <TextExample />;
     },
   },

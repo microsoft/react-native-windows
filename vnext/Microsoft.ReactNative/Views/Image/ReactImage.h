@@ -39,6 +39,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 
   // Overrides
   winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
+  xaml::Automation::Peers::AutomationPeer OnCreateAutomationPeer();
 
   // Events
   winrt::event_token OnLoadEnd(winrt::Windows::Foundation::EventHandler<bool> const &handler);
@@ -66,7 +67,8 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   void TintColor(winrt::Windows::UI::Color value);
 
  private:
-  xaml::Media::Stretch ResizeModeToStretch(facebook::react::ImageResizeMode value);
+  xaml::Media::Stretch ResizeModeToStretch();
+  xaml::Media::Stretch ResizeModeToStretch(winrt::Windows::Foundation::Size size);
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
   GetImageMemoryStreamAsync(ReactImageSource source);
   winrt::fire_and_forget SetBackground(bool fireLoadEndEvent);

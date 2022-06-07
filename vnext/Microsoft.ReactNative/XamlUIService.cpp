@@ -37,7 +37,7 @@ void XamlUIService::DispatchEvent(
     JSValueArgWriter const &eventDataArgWriter) noexcept {
   auto paramsWriter = winrt::make_self<DynamicWriter>();
   paramsWriter->WriteArrayBegin();
-  paramsWriter->WriteInt64(unbox_value<int64_t>(view.Tag()));
+  paramsWriter->WriteInt64(::Microsoft::ReactNative::GetTag(view));
   paramsWriter->WriteString(eventName);
   if (eventDataArgWriter) {
     eventDataArgWriter(*paramsWriter);

@@ -35,13 +35,13 @@ Today we support the following projects as a NuGet package:
    1. open terminal for your enlsitment
    1. push vnext
    1. yarn link
-      > if it fails with already being registred for anotehr enlistment you can run `yarn unlink`
+      > if it fails with already being registered for another enlistment you can run `yarn unlink`
 1. Generate a test project
    1. open terminal in a test folder
    1. `npx react-native init MyProj`
    1. cd `MyProj`
    1. Apply the react-native-windows template:
-      1. `node z:\src\r3\packages\react-native-windows-init\lib-commonjs\Cli.js --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
+      1. `node z:\src\r3\packages\react-native-windows-init\bin.js --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
          > See below for a breakdown of the arguments:
 1. Deal with npm / nuget version mismatch
    1. The nuget package checks to see if there is a version match between the nuget package and the npm package.

@@ -23,6 +23,8 @@ ScrollViewComponentView::ScrollViewComponentView() {
   // m_props = defaultProps;
 
   m_element.Content(m_contentPanel);
+  m_contentPanel.VerticalAlignment(xaml::VerticalAlignment::Top);
+  m_contentPanel.HorizontalAlignment(xaml::HorizontalAlignment::Left);
 
   m_scrollViewerViewChangingRevoker =
       m_element.ViewChanging(winrt::auto_revoke, [this](const auto &sender, const auto &args) {

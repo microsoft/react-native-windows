@@ -1,8 +1,190 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Wed, 08 Sep 2021 05:08:53 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.43
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @rnw-scripts/jest-unittest-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 0.0.0-canary.42
+
+Thu, 12 May 2022 05:09:44 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-unittest-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.2.4
+
+## 0.0.0-canary.41
+
+Wed, 27 Apr 2022 05:10:24 GMT
+
+### Changes
+
+- Fix telemetery e2e tests (jthysell@microsoft.com)
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 0.0.0-canary.40
+
+Mon, 25 Apr 2022 22:50:29 GMT
+
+### Changes
+
+- Telemetry updates to meet server-side requirements (jthysell@microsoft.com)
+
+## 0.0.0-canary.39
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Changes
+
+- Reenable Telemetry tests (jthysell@microsoft.com)
+
+## 0.0.0-canary.38
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Changes
+
+- Disable unstable telemetry tests (jthysell@microsoft.com)
+
+## 0.0.0-canary.37
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+
+## 0.0.0-canary.36
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Changes
+
+- Stop Telemetry background threads running after test completion (jthysell@microsoft.com)
+
+## 0.0.0-canary.35
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+
+## 0.0.0-canary.34
+
+Thu, 10 Feb 2022 06:07:57 GMT
+
+### Changes
+
+- Normalize package reference for WinUI between C# and C++ templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.33
+
+Wed, 09 Feb 2022 06:09:36 GMT
+
+### Changes
+
+- Bump minimum Node version to 14 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.2
+- Bump @rnw-scripts/eslint-config to v1.1.11
+- Bump @rnw-scripts/jest-unittest-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.2.3
+- Bump @rnw-scripts/ts-config to v2.0.2
+
+## 0.0.0-canary.32
+
+Thu, 27 Jan 2022 06:11:44 GMT
+
+### Changes
+
+- exports getVersionOfNpmPackage for use in CLI (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.31
+
+Thu, 06 Jan 2022 04:18:32 GMT
+
+### Changes
+
+- Update when telemetry populates NPM package versions (jthysell@microsoft.com)
+
+## 0.0.0-canary.30
+
+Fri, 03 Dec 2021 06:12:10 GMT
+
+### Changes
+
+- Integrate 11/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v1.0.1
+- Bump @rnw-scripts/eslint-config to v1.1.10
+- Bump @rnw-scripts/jest-unittest-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.2.2
+
+## 0.0.0-canary.29
+
+Fri, 26 Nov 2021 06:09:53 GMT
+
+### Changes
+
+- Fix telemetry path sanitization to handle our packages in the npx cache (jthysell@microsoft.com)
+
+## 0.0.0-canary.28
+
+Thu, 25 Nov 2021 06:09:24 GMT
+
+### Changes
+
+- Block old telemetry events from firing (jthysell@microsoft.com)
+
+## 0.0.0-canary.27
+
+Wed, 24 Nov 2021 06:08:49 GMT
+
+### Changes
+
+- Update telemetry unittest timeouts (jthysell@microsoft.com)
+
+## 0.0.0-canary.26
+
+Tue, 23 Nov 2021 06:09:26 GMT
+
+### Changes
+
+- Add environment variable overrides to specify telemetry setup string and proxy (jthysell@microsoft.com)
+
+## 0.0.0-canary.25
+
+Thu, 18 Nov 2021 06:11:20 GMT
+
+### Changes
+
+- Telemetry Refactor (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v1.0.0
+- Bump @rnw-scripts/eslint-config to v1.1.9
+
+## 0.0.0-canary.24
+
+Thu, 21 Oct 2021 05:08:01 GMT
+
+### Changes
+
+- Update to typescript 4 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.23
 

@@ -45,6 +45,7 @@ export type ARIARole =
   | 'dialog'
   | 'group'
   | 'link'
+  | 'listitem'
   | 'menu'
   | 'menubar'
   | 'menuitem'
@@ -126,12 +127,6 @@ export type AccessibilityActionInfo = Readonly<{
   name: AccessibilityActionName;
   label?: string;
 }>;
-
-export type AccessibilityActionEvent = RN.NativeSyntheticEvent<
-  Readonly<{
-    actionName: string;
-  }>
-  >;
 
 export type AccessibilityState = RN.AccessibilityState & { multiselectable?: boolean, required?: boolean };
 
@@ -217,6 +212,7 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   accessibilitySetSize?: number;
   animationClass?: string;
   focusable?: boolean;
+  enableFocusRing?: boolean;
 
   /**
    * The onBlur event occurs when an element loses focus.  The opposite of onBlur is onFocus.  Note that in React

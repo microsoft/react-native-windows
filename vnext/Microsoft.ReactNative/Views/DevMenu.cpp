@@ -110,7 +110,6 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   devMenu.FastRefreshText().Text(
       Mso::React::ReactOptions::UseFastRefresh(m_context->Properties()) ? L"Disable Fast Refresh"
                                                                         : L"Enable Fast Refresh");
-
   if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     devMenu.SamplingProfilerText().Text(
         !Microsoft::ReactNative::HermesSamplingProfiler::IsStarted() ? L"Start Hermes sampling profiler"
@@ -206,8 +205,8 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
         winrt::auto_revoke,
-        [wkThis = weak_from_this()](
-            auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept -> winrt::fire_and_forget {
+        [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept
+        -> winrt::fire_and_forget {
           if (auto strongThis = wkThis.lock()) {
             strongThis->Hide();
             if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {

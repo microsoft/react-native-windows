@@ -8,6 +8,7 @@ const execaPath = require.resolve('execa', { paths: [cliDir] });
 const execa = require(execaPath);
 
 import type {HealthCheckCategory} from '@react-native-community/cli-types';
+import { powershell } from './runWindows/utils/commandWithProgress';
 
 export function getHealthChecks(): HealthCheckCategory[] | undefined {
   // #8471: There are known cases where the dependencies script will error out.
@@ -36,7 +37,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
         'react-native-windows/package.json',
         {paths: [process.cwd()]})), 'Scripts/rnw-dependencies.ps1');
     
-    const rnwDeps = execSync(`powershell -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`, {stdio: 'pipe'});
+    const rnwDeps = execSync(`${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -ListChecks`, {stdio: 'pipe'});
     const deps = rnwDeps.toString().trim().split('\n');
     return [
       {
@@ -56,7 +57,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
               getDiagnostics: async () => {
                 let needsToBeFixed = true;
                 try {
-                  await execa(`powershell -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -Check ${id}`);
+                  await execa(`${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -NoPrompt -Check ${id}`);
                   needsToBeFixed = false;
                 } catch {
                 }
@@ -65,7 +66,7 @@ function getHealthChecksUnsafe(): HealthCheckCategory[] | undefined {
                 }
               },
               runAutomaticFix: async ({ loader, logManualInstallation }) => {
-                const command = `powershell -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
+                const command = `${powershell} -ExecutionPolicy Unrestricted -NoProfile "${rnwDepScriptPath}" -Check ${id}`;
                 try {
                   const { exitCode } = await execa(command, { stdio: 'inherit' });
                   if (exitCode) {

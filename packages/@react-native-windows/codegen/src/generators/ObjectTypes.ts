@@ -39,10 +39,10 @@ export function translateField(
           `${baseAliasName}_element`,
         )}>`;
       } else {
-        return `React::JSValueArray`;
+        return `::React::JSValueArray`;
       }
     case 'GenericObjectTypeAnnotation':
-      return 'React::JSValue';
+      return '::React::JSValue';
     case 'ObjectTypeAnnotation':
       return getAnonymousAliasCppName(aliases, baseAliasName, type);
     case 'ReservedTypeAnnotation': {

@@ -38,20 +38,28 @@ namespace Microsoft.ReactNative.Managed.CodeGen
       return InvocationStatement(SyntaxFactory.IdentifierName(methodName), arguments);
     }
 
-    internal static ExpressionSyntax MemberAccessExpression(SyntaxToken instance, SyntaxToken method)
+    internal static ExpressionSyntax MemberAccessExpression(ExpressionSyntax instance, SyntaxToken member)
+    {
+      return SyntaxFactory.MemberAccessExpression(
+        SyntaxKind.SimpleMemberAccessExpression,
+        instance,
+        SyntaxFactory.IdentifierName(member));
+    }
+
+    internal static ExpressionSyntax MemberAccessExpression(SyntaxToken instance, SyntaxToken member)
     {
       return SyntaxFactory.MemberAccessExpression(
         SyntaxKind.SimpleMemberAccessExpression,
         SyntaxFactory.IdentifierName(instance),
-        SyntaxFactory.IdentifierName(method));
+        SyntaxFactory.IdentifierName(member));
     }
 
-    internal static ExpressionSyntax MemberAccessExpression(ISymbol type, SyntaxToken method)
+    internal static ExpressionSyntax MemberAccessExpression(ISymbol type, SyntaxToken member)
     {
       return SyntaxFactory.MemberAccessExpression(
         SyntaxKind.SimpleMemberAccessExpression,
         type.ToTypeSyntax(),
-        SyntaxFactory.IdentifierName(method));
+        SyntaxFactory.IdentifierName(member));
     }
 
     internal static StatementSyntax LocalDeclarationStatement(ISymbol type, SyntaxToken variableName, ExpressionSyntax initializer)

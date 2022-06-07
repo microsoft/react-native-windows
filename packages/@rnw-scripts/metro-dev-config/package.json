@@ -1,0 +1,36 @@
+{
+  "name": "@rnw-scripts/metro-dev-config",
+  "version": "0.0.0",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/microsoft/react-native-windows.git",
+    "directory": "packages/@rnw-scripts/metro-dev-config"
+  },
+  "license": "MIT",
+  "main": "metro.dev.config.js",
+  "files": [
+    "lib-commonjs"
+  ],
+  "scripts": {
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix"
+  },
+  "dependencies": {
+    "@rnx-kit/metro-config": "^1.2.27",
+    "@rnx-kit/metro-plugin-duplicates-checker": "^1.2.15",
+    "@rnx-kit/metro-serializer": "^1.0.11",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "metro-config": "^0.70.1"
+  },
+  "devDependencies": {
+    "@rnw-scripts/eslint-config": "1.1.13",
+    "@rnw-scripts/just-task": "2.2.5",
+    "eslint": "^7.32.0",
+    "prettier": "^2.4.1"
+  },
+  "engines": {
+    "node": ">= 12.0.0"
+  }
+}
