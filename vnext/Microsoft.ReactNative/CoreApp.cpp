@@ -61,6 +61,7 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, core
             rnca->packageProvidersAbi[i], winrt::take_ownership_from_abi);
         app.PackageProviders().Append(provider);
       }
+      CoTaskMemFree(rnca->packageProvidersAbi);
 
       if (rnca->viewName) {
         auto view = winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
@@ -184,7 +185,7 @@ static void SetPackageProviders(const JsonObject &json, RNCoreApp *app) {
     decltype(app->packageProvidersAbiCount) countAdded = 0;
     const auto count = static_cast<decltype(countAdded)>(nativeModules.Size());
 
-    app->packageProvidersAbi = new void *[count];
+    app->packageProvidersAbi = CoTaskMemAlloc(sizeof(void *) * count);
     for (std::remove_const_t<decltype(count)> index = 0; index < count; index++) {
       if (auto nm_value = nativeModules.GetAt(index); nm_value.ValueType() == JsonValueType::Object) {
         auto nm = nm_value.GetObject();

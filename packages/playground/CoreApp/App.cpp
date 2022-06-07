@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
+#include <combaseapi.h>
 #include "CoreApp.h"
 
 // This app demonstrates the usage of the Microsoft.ReactNative CoreApp APIs
@@ -54,8 +55,8 @@ int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/
         app->useWebDebugger = false;
 
 #ifdef WITH_MODULES
-        app->packageProvidersAbi = new void *[1];
         app->packageProvidersAbiCount = 1;
+        app->packageProvidersAbi = CoTaskMemAlloc(sizeof(void *) * app->packageProvidersAbiCount);
         app->packageProvidersAbi[0] = MySpecialPackageProvider();
 #endif
       },

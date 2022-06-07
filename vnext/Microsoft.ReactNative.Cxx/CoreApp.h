@@ -39,6 +39,7 @@ struct RNCoreApp {
   void *resourcesAbi;
   /// Provides the launch arguments back to the CoreApp callback
   wchar_t const *args;
+  /// Allocate with CoTaskMemAlloc, will be freed by the framework
   void **packageProvidersAbi;
   unsigned char packageProvidersAbiCount;
   void *propertiesAbi;
