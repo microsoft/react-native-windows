@@ -618,6 +618,8 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
 
+// #10036 - Blob module not supported in UWP. Need to define property bag lifetime and onwership.
+#if (defined(_MSC_VER) && !defined(WINRT))
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetBlobModuleName(),
@@ -629,6 +631,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       Microsoft::React::GetFileReaderModuleName(),
       [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
       nativeQueue));
+#endif
 
   return modules;
 }
