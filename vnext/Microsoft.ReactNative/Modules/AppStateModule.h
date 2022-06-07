@@ -7,6 +7,9 @@
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
 
+
+#include <winrt/Windows.UI.Core.h>
+
 namespace Microsoft::ReactNative {
 
 REACT_MODULE(AppState)
@@ -44,6 +47,7 @@ struct AppState : public std::enable_shared_from_this<AppState> {
 #ifndef USE_WINUI3
   xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
   xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
+  winrt::Windows::UI::Core::CoreWindow::Activated_revoker m_activatedEventRevoker;
 #endif
 };
 

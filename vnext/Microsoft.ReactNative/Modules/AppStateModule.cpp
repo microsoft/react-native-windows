@@ -8,6 +8,8 @@
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "Unicode.h"
 
+using namespace winrt::Windows::UI::Core;
+
 namespace Microsoft::ReactNative {
 
 void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
@@ -18,6 +20,7 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
   if (auto dispatcher = reactContext.UIDispatcher()) {
     dispatcher.Post([this]() {
       auto currentApp = xaml::TryGetCurrentApplication();
+      CoreWindow window = CoreWindow::GetForCurrentThread();
 
       if (!IsWinUI3Island() && currentApp != nullptr) {
 #ifndef USE_WINUI3
@@ -38,6 +41,20 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
                 winrt::Windows::ApplicationModel::LeavingBackgroundEventArgs const & /*e*/) noexcept {
               if (auto strongThis = weakThis.lock()) {
                 strongThis->SetActive(true);
+              }
+            });
+
+        m_activatedEventRevoker = window.Activated(
+            winrt::auto_revoke,
+            [weakThis = weak_from_this()](
+                winrt::Windows::UI::Core::CoreWindow /*sender*/,
+                winrt::Windows::UI::Core::WindowActivatedEventArgs args) {
+              if (auto strongThis = weakThis.lock()) {
+                if (args.WindowActivationState() == winrt::Windows::UI::Core::CoreWindowActivationState::Deactivated) {
+                  strongThis->SetActive(false);
+                } else {
+                  strongThis->SetActive(true);
+                }
               }
             });
 #endif
