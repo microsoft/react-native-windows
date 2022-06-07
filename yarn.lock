@@ -2162,12 +2162,12 @@
     workspace-tools "^0.18.3"
 
 "@rnx-kit/metro-plugin-duplicates-checker@^1.2.15":
-  version "1.2.15"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-1.2.15.tgz#7015c4cba99b4505346d4aa70779b85f693bebfd"
-  integrity sha512-g4zOW6b5W30wWq9dh9XxzdYjIeqv6xgrPKtxoSYh4qpOYSw5JbMLaLF0+zyKmvy+db+xfBNhFZPfVaKmCo6g+Q==
+  version "1.2.16"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-plugin-duplicates-checker/-/metro-plugin-duplicates-checker-1.2.16.tgz#5e20e17e53ed6ca5a613978be325abf1bc826905"
+  integrity sha512-fcXQbmDA7es7aSqZH0whVXyoPGgA7yy8I8193K18TRCHF6U1LoK/ZnjHAaHTzrcyq2NhrpwkDWwFoDTCFjYWjw==
   dependencies:
     "@rnx-kit/console" "^1.0.11"
-    "@rnx-kit/tools-node" "^1.2.6"
+    "@rnx-kit/tools-node" "^1.2.7"
 
 "@rnx-kit/metro-serializer@^1.0.11":
   version "1.0.11"
@@ -2181,7 +2181,7 @@
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-language/-/tools-language-1.2.6.tgz#ced63a53ce9821d14acb57a927237e5c39801387"
   integrity sha512-8pq4JlFIkOqjwkN6amYebQ2CTAa1EeYjSBurGh8upYZtqUZBXDOK7FUAx+OVHs/7qQfmF2lU7QpqA7DZGv4xJA==
 
-"@rnx-kit/tools-node@^1.2.6", "@rnx-kit/tools-node@^1.2.7":
+"@rnx-kit/tools-node@^1.2.7":
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-1.2.7.tgz#ae702763d26fc9b5a0984c5fddd90e38e03b06a1"
   integrity sha512-vgURBJttO8z1nSrJm3KWgzEO3/oat5Rn/Fx2b9XyEf7y2CzJh1fwf48XddDnzmSKFNd/SihP7hDcVcEqZ/evCQ==
