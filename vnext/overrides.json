@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/YGValue.h",
       "baseFile": "ReactCommon/yoga/yoga/YGValue.h",
-      "baseHash": "1beec1c755f33ebbd4ab9ec5e138cd1a3cfba3ee"
+      "baseHash": "0b6b49a41787b7f5caee1792af488c66d33db3d8"
     },
     {
       "type": "patch",
