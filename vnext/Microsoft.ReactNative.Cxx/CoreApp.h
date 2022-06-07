@@ -50,9 +50,12 @@ struct RNCoreApp {
 #define NORETURN _Noreturn
 #endif
 
-typedef void(__cdecl *coreAppCallback)(RNCoreApp *);
+typedef void(__cdecl *coreAppCallback)(RNCoreApp *, void *);
 
 extern "C" void RNCoreApp_SetDefaults(RNCoreApp *rnca);
 
-extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched);
-extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *configJson, coreAppCallback launched);
+extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched, void *data);
+extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(
+    wchar_t const *configJson,
+    coreAppCallback launched,
+    void *data);

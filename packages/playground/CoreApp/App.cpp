@@ -42,22 +42,23 @@ extern "C" __declspec(dllexport) void *__cdecl MySpecialPackageProvider() {
 
 #ifdef FROM_JSON
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {
-  RNStartCoreAppFromConfigJson(L"app.config.json", nullptr);
+  RNStartCoreAppFromConfigJson(L"app.config.json", nullptr, nullptr);
 }
 #else
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {
-
-  RNStartCoreApp([](RNCoreApp *app) {
-    app->componentName = L"RNTesterApp";
-    app->jsBundleFile = LR"(Samples\rntester)";
-    app->useDeveloperSupport = true;
-    app->useWebDebugger = false;
+  RNStartCoreApp(
+      [](RNCoreApp *app, void *) {
+        app->componentName = L"RNTesterApp";
+        app->jsBundleFile = LR"(Samples\rntester)";
+        app->useDeveloperSupport = true;
+        app->useWebDebugger = false;
 
 #ifdef WITH_MODULES
-    app->packageProvidersAbi = new void *[1];
-    app->packageProvidersAbiCount = 1;
-    app->packageProvidersAbi[0] = MySpecialPackageProvider();
+        app->packageProvidersAbi = new void *[1];
+        app->packageProvidersAbiCount = 1;
+        app->packageProvidersAbi[0] = MySpecialPackageProvider();
 #endif
-      });
+      },
+      nullptr);
 }
 #endif

@@ -41,19 +41,19 @@ void RNCoreApp_SetDefaults(RNCoreApp *rnca) {
   rnca->propertiesAbi = nullptr;
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, coreAppCallback launched) {
-  xaml::Application::Start([rnca, launched](auto &&) {
+extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, coreAppCallback launched, void *data) {
+  xaml::Application::Start([rnca, launched, data](auto &&) {
     winrt::Windows::Foundation::IInspectable outer{nullptr};
     const auto &app = winrt::make<react::implementation::ReactApplication>(outer);
 
     const auto impl_app = winrt::get_self<react::implementation::ReactApplication>(app);
 
-    impl_app->LaunchedInternal([rnca, launched](
+    impl_app->LaunchedInternal([rnca, launched, data](
                                    react::ReactApplication const &app,
                                    const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
       rnca->args = args.Arguments().c_str();
       if (launched) {
-        launched(rnca);
+        launched(rnca, data);
       }
 
       for (auto i = 0; i < rnca->packageProvidersAbiCount; i++) {
@@ -264,7 +264,10 @@ static void SetProperties(const JsonObject &json, RNCoreApp *app) {
   }
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *configJson, coreAppCallback launched) {
+extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(
+    wchar_t const *configJson,
+    coreAppCallback launched,
+    void *data) {
   auto app = new RNCoreApp();
   RNCoreApp_SetDefaults(app);
 
@@ -288,12 +291,12 @@ extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(wchar_t const *con
 
   SetPackageProviders(json, app);
   SetProperties(json, app);
-  RNStartCoreAppWithCoreApp(app, launched);
+  RNStartCoreAppWithCoreApp(app, launched, data);
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched) {
+extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched, void *data) {
   auto rnca = std::make_shared<RNCoreApp>();
 
   RNCoreApp_SetDefaults(rnca.get());
-  RNStartCoreAppWithCoreApp(rnca.get(), launched);
+  RNStartCoreAppWithCoreApp(rnca.get(), launched, data);
 }
