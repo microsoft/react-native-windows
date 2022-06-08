@@ -179,7 +179,6 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Microsoft.ReactNative.Cxx\CoreApp.h" />
     <ClInclude Include="ABICxxModule.h" />
     <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Base\CoreNativeModules.h" />
