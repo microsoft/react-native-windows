@@ -1185,9 +1185,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.10.2", "@babel/runtime@^7.16.3", "@babel/runtime@^7.8.4":
-  version "7.17.9"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.17.9.tgz#d19fbf802d01a8cb6cf053a64e472d42c434ba72"
-  integrity sha512-lSiBBvodq29uShpWGNbgFdKYNiFDo5/HIYsaCEY9ff4sb10x9jizo2+pRrSyF4jKZCXqgzuqBOQKbUm90gQwJg==
+  version "7.18.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.3.tgz#c7b654b57f6f63cf7f8b418ac9ca04408c4579f4"
+  integrity sha512-38Y8f7YUhce/K7RMwTp7m0uCumpv9hZkitCbBClqQIow1qSbCvGkcegKOXpEWCQLfWmevgRiWokZ1GkpfhbZug==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1217,9 +1217,9 @@
     globals "^11.1.0"
 
 "@babel/types@^7.0.0", "@babel/types@^7.11.5", "@babel/types@^7.16.0", "@babel/types@^7.16.7", "@babel/types@^7.16.8", "@babel/types@^7.17.0", "@babel/types@^7.18.0", "@babel/types@^7.18.2", "@babel/types@^7.3.0", "@babel/types@^7.3.3", "@babel/types@^7.4.4", "@babel/types@^7.7.0":
-  version "7.18.2"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.18.2.tgz#191abfed79ebe6f4242f643a9a5cbaa36b10b091"
-  integrity sha512-0On6B8A4/+mFUto5WERt3EEuG1NznDirvwca1O8UwXQHVY8g3R7OzYgxXdOfMwLO08UrpUD/2+3Bclyq+/C94Q==
+  version "7.18.4"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.18.4.tgz#27eae9b9fd18e9dccc3f9d6ad051336f307be354"
+  integrity sha512-ThN1mBcMq5pG/Vm2IcBmPPfyPXbd8S02rS+OBIDENdufvqC7Z/jHPCv9IcP01277aKtDI8g/2XysBN4hA8niiw==
   dependencies:
     "@babel/helper-validator-identifier" "^7.16.7"
     to-fast-properties "^2.0.0"
@@ -2144,9 +2144,9 @@
     chalk "^4.1.0"
 
 "@rnx-kit/jest-preset@^0.1.0":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.9.tgz#f5591f71a9a95564306be53f4691cc3b807fa901"
-  integrity sha512-0nol1Hqi41gxFuVMlLatba1XmFG60Hs9s2gGuLgCIR4tkZw+Peaq/s66y2x7P9lD4aJVrbEmgFgPulXHn83G+g==
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.10.tgz#192700ee423ffa04c6877b01c767187a1d3adcc5"
+  integrity sha512-kwD9nAUswNwhksfCd7hZsEG69iygF3Li08wHCuBIZrYGc29aYAB/iZBk6zCmaJs8KWOg1Vq32wgkgvph96ViUA==
   dependencies:
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
@@ -2438,9 +2438,9 @@
   integrity sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==
 
 "@types/mustache@^4.1.1":
-  version "4.1.2"
-  resolved "https://registry.yarnpkg.com/@types/mustache/-/mustache-4.1.2.tgz#d0e158013c81674a5b6d8780bc3fe234e1804eaf"
-  integrity sha512-c4OVMMcyodKQ9dpwBwh3ofK9P6U9ZktKU9S+p33UqwMNN1vlv2P0zJZUScTshnx7OEoIIRcCFNQ904sYxZz8kg==
+  version "4.1.3"
+  resolved "https://registry.yarnpkg.com/@types/mustache/-/mustache-4.1.3.tgz#467119da74ef48d9dd21c0a2f6dd398e1337421f"
+  integrity sha512-Bc3wzdDGfHE8kcf6HsDwqq/IDUginRlWLHbs8dYFAo/2jj91lip6/XJFgKvcCbFO6aEVpOBT1RGF72LZgNIbKQ==
 
 "@types/node-fetch@*", "@types/node-fetch@^2.5.0", "@types/node-fetch@^2.5.8":
   version "2.6.1"
