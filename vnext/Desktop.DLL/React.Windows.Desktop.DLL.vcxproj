@@ -104,16 +104,25 @@
     <Link>
       <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64'">
     <Link>
       <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">
     <Link>
       <ModuleDefinitionFile>react-native-win32.x86.def</ModuleDefinitionFile>
     </Link>
+    <ClCompile>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
