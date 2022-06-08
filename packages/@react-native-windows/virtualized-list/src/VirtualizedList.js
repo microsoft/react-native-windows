@@ -1271,6 +1271,7 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           refreshControl={
             props.refreshControl == null ? (
               <RefreshControl
+                // $FlowFixMe[incompatible-type]
                 refreshing={props.refreshing}
                 onRefresh={onRefresh}
                 progressViewOffset={props.progressViewOffset}
@@ -1629,8 +1630,8 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       this._hasWarned.perf = true;
     }
 
-    const zoomScale = e.nativeEvent.zoomScale;
-
+    // For invalid negative values (w/ RTL), set this to 1.
+    const zoomScale = e.nativeEvent.zoomScale < 0 ? 1 : e.nativeEvent.zoomScale;
     this._scrollMetrics = {
       contentLength,
       dt,
