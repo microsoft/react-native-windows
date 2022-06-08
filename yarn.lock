@@ -2144,9 +2144,9 @@
     chalk "^4.1.0"
 
 "@rnx-kit/jest-preset@^0.1.0":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.9.tgz#f5591f71a9a95564306be53f4691cc3b807fa901"
-  integrity sha512-0nol1Hqi41gxFuVMlLatba1XmFG60Hs9s2gGuLgCIR4tkZw+Peaq/s66y2x7P9lD4aJVrbEmgFgPulXHn83G+g==
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.10.tgz#192700ee423ffa04c6877b01c767187a1d3adcc5"
+  integrity sha512-kwD9nAUswNwhksfCd7hZsEG69iygF3Li08wHCuBIZrYGc29aYAB/iZBk6zCmaJs8KWOg1Vq32wgkgvph96ViUA==
   dependencies:
     "@babel/preset-env" "^7.0.0"
     "@babel/preset-typescript" "^7.0.0"
