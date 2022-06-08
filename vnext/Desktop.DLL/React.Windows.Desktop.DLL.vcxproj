@@ -77,7 +77,7 @@
         RN_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
-      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /ZH:SHA_256</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
