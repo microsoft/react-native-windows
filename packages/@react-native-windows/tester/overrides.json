@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.0.0-20220603-2051-11141b8b3",
+  "baseVersion": "0.0.0-20220608-2049-77e6bff62",
   "overrides": [
     {
       "type": "patch",

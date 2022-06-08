@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220603-2051-11141b8b3",
+  "baseVersion": "0.0.0-20220608-2049-77e6bff62",
   "overrides": [
     {
       "type": "derived",
@@ -423,7 +423,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "ff335415e43399b3cdaf4fd2dd2063d495f39ec5"
+      "baseHash": "5c1a9a2a8cf15fd51fbba8cd6189d0dd05047f96"
     },
     {
       "type": "platform",
