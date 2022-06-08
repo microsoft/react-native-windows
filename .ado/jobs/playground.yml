@@ -147,41 +147,51 @@ jobs:
                   msbuildArgs:
                     /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
 
-            # Execute debug feature tests
-            #
-            # This step loose-file-deploys the UWP Playground app and uses it as an RNW host for a series
-            # of debug feature tests. In the future, these tests should be performed against a host app
-            # better suited for automated tests (probably the E2E test app).
-            - powershell: |
-                $appRecipeToolPath = Join-Path (Get-CimInstance MSFT_VSInstance | Sort-Object -Property 'Version' -Descending)[0].InstallLocation "Common7\IDE\DeployAppRecipe.exe"
-                if (!(Test-Path $appRecipeToolPath)) { throw "can't find '$appRecipeToolPath'" }
-                $platDirs = @{ "x64" = "x64\"; "x86" = ""} # map from ADO BuildPlatform arg to VS build output dir part 
-                $appRecipePath = "$(Build.SourcesDirectory)\packages\playground\windows\$($platDirs['${{ matrix.BuildPlatform }}'])${{ matrix.BuildConfiguration }}\playground\playground.build.appxrecipe"
-                if (!(Test-Path $appRecipePath)) { throw "can't find '$appRecipePath'" }
-                &$appRecipeToolPath $appRecipePath
-                if (!(Get-AppxPackage 'RNPlayground')) {throw "RNPlayground app does not appear to be installed"}
-                Set-Location "$(Build.SourcesDirectory)\packages\debug-test"
-                $env:DEBUGTEST_LOGFOLDER = "$($env:AGENT_TEMPDIRECTORY)\DebugTestLogs"
-                yarn debugtest
-              displayName: Run Debug Feature Tests
-              # skip this step for the Win32 Playground app and for release builds
-              condition: and(endsWith('${{ matrix.Name }}', 'Universal'), eq('${{ matrix.BuildConfiguration }}', 'Debug'))
-              timeoutInMinutes: 5
+            - ${{if and(endsWith(matrix.Name, 'Universal'), eq(matrix.BuildConfiguration, 'Debug')) }}:
+              # Execute debug feature tests (skip this step for the Win32 Playground app and for release builds)
+              
+              # Need to re-setup ProcDump a 2nd time for this to work correctly
+              - powershell: |
+                    Write-Host "##vso[task.setvariable variable=CrashDumpRootPath]$(Build.StagingDirectory)\DebugTestCrashDumps"
+                    New-Item -Path '$(Build.StagingDirectory)\DebugTestCrashDumps' -ItemType Directory
+                displayName: Set CrashDumpRootPath
 
-            - powershell: |
-                foreach ($logFile in (ls "$env:AGENT_TEMPDIRECTORY\DebugTestLogs\*.log")) {
-                  Write-Host "logFile: '$logFile'"
-                  Get-Content $logFile | ForEach-Object {Write-Host "##[debug]$_"}
-                }
-              displayName: Incorporate Log File Content into ADO Log Stream
-              condition: failed()
+              - task: PowerShell@2
+                displayName: Setup ProcDump as AeDebug
+                inputs:
+                  targetType: filePath # filePath | inline
+                  filePath: $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1
+                  arguments: "-ProcDumpArgs @('-mm', '-i', '$(CrashDumpRootPath)') -ProcDumpInstallPath '$(ProcDumpPath)' -Verbose"
 
-            - task: PublishBuildArtifacts@1
-              displayName: Publish Debug Test Logs
-              condition: failed()
-              inputs:
-                pathToPublish: '$(Agent.TempDirectory)\DebugTestLogs'
-                artifactName: Debug Test Logs
+              # This step loose-file-deploys the UWP Playground app and uses it as an RNW host for a series
+              # of debug feature tests. In the future, these tests should be performed against a host app
+              # better suited for automated tests (probably the E2E test app).
+              - powershell: |
+                  $appRecipeToolPath = Join-Path (Get-CimInstance MSFT_VSInstance | Sort-Object -Property 'Version' -Descending)[0].InstallLocation "Common7\IDE\DeployAppRecipe.exe"
+                  if (!(Test-Path $appRecipeToolPath)) { throw "can't find '$appRecipeToolPath'" }
+                  $platDirs = @{ "x64" = "x64\"; "x86" = ""} # map from ADO BuildPlatform arg to VS build output dir part 
+                  $appRecipePath = "$(Build.SourcesDirectory)\packages\playground\windows\$($platDirs['${{ matrix.BuildPlatform }}'])${{ matrix.BuildConfiguration }}\playground\playground.build.appxrecipe"
+                  if (!(Test-Path $appRecipePath)) { throw "can't find '$appRecipePath'" }
+                  &$appRecipeToolPath $appRecipePath
+                  if (!(Get-AppxPackage 'RNPlayground')) {throw "RNPlayground app does not appear to be installed"}
+                  Set-Location "$(Build.SourcesDirectory)\packages\debug-test"
+                  $env:DEBUGTEST_LOGFOLDER = "$(Build.StagingDirectory)\DebugTestLogs"
+                  yarn debugtest
+                displayName: Run Debug Feature Tests
+                timeoutInMinutes: 5
+
+              - powershell: |
+                  foreach ($logFile in (ls "$(Build.StagingDirectory)\DebugTestLogs\*.log")) {
+                    Write-Host "logFile: '$logFile'"
+                    Get-Content $logFile | ForEach-Object {Write-Host "##[debug]$_"}
+                  }
+                displayName: Incorporate Log File Content into ADO Log Stream
+                condition: failed()
+
+              - template: ../templates/upload-build-logs.yml
+                parameters:
+                  artifactName: 'DebugTest $(Agent.JobName)-$(System.JobAttempt)'
+                  buildLogDirectory: '$(Build.StagingDirectory)\DebugTestLogs'
 
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/cleanup-certificate.yml
@@ -191,10 +201,5 @@ jobs:
                 displayName: Upload App Package
                 inputs:
                   pathtoPublish: 'packages/playground/windows/AppPackages/playground'
-                  artifactName: 'Playground ${matrix.Name} AppX Package (Attempt $(System.JobAttempt))'
-
-            - task: PublishBuildArtifacts@1
-              displayName: Upload crash dumps
-              inputs:
-                pathtoPublish: '$(Build.StagingDirectory)/CrashDumps/'
-                artifactName: 'Playground ${matrix.Name} Crash Dumps (Attempt $(System.JobAttempt))'
+                  artifactName: 'Playground-${{ matrix.Name }}-$(System.JobAttempt)'
+                condition: succeededOrFailed()
