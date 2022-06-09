@@ -7,7 +7,6 @@
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>
 
-
 #include <winrt/Windows.UI.Core.h>
 
 namespace Microsoft::ReactNative {

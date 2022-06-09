@@ -21,10 +21,11 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
   if (auto dispatcher = reactContext.UIDispatcher()) {
     dispatcher.Post([this]() {
       auto currentApp = xaml::TryGetCurrentApplication();
-      CoreWindow window = CoreWindow::GetForCurrentThread();
 
       if (!IsWinUI3Island() && currentApp != nullptr) {
 #ifndef USE_WINUI3
+        CoreWindow window = CoreWindow::GetForCurrentThread();
+
         m_enteredBackgroundRevoker = currentApp.EnteredBackground(
             winrt::auto_revoke,
             [weakThis = weak_from_this()](
