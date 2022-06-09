@@ -619,17 +619,20 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
 
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetBlobModuleName(),
-      [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
-      nativeQueue));
+  // #10036 - Blob module not supported in UWP. Need to define property bag lifetime and onwership.
+  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule")) {
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetBlobModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+        nativeQueue));
 
-  modules.push_back(std::make_unique<CxxNativeModule>(
-      m_innerInstance,
-      Microsoft::React::GetFileReaderModuleName(),
-      [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
-      nativeQueue));
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetFileReaderModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+        nativeQueue));
+  }
 
   return modules;
 }
