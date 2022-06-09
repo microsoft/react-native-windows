@@ -43,7 +43,9 @@ function vsWhere(args: string[], verbose?: boolean): any[] {
     );
   }
 
-  const cmdline = `"${vsWherePath}" ${args.join(' ')} -format json -utf8`;
+  const cmdline = `cmd /c chcp 65001>nul && "${vsWherePath}" ${args.join(
+    ' ',
+  )} -format json -utf8`;
   const json = JSON.parse(execSync(cmdline).toString('utf8'));
 
   for (const entry of json) {
