@@ -2021,12 +2021,12 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.2.27":
-  version "1.2.31"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.31.tgz#827e99d95399b625d638728f57b60dfc4dfce1d8"
-  integrity sha512-fbdrN4ZvdSsG5xnOjbiycmLozl3iDcALKwjVSeb1CDsufIl1+LKkW5tWWtpTYlxGRddQwf4y2a2nomjSk2Zpuw==
+  version "1.2.33"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.33.tgz#91b7d056a37ea076bfea3adc2824bef27b508ec2"
+  integrity sha512-fOZTE3g5KA4OgnHxcNVtj6+KVEWv9trJFP+1VWUjKlGna5WwcEx5RsQMMVW2VJWCCc5GFjru8NYFyjAf2eLsZw==
   dependencies:
     "@rnx-kit/babel-preset-metro-react-native" "^1.0.17"
-    "@rnx-kit/tools-node" "^1.2.7"
+    "@rnx-kit/tools-node" "^1.3.0"
     workspace-tools "^0.18.3"
 
 "@rnx-kit/metro-plugin-duplicates-checker@^1.2.15":
@@ -2049,10 +2049,10 @@
   resolved "https://registry.yarnpkg.com/@rnx-kit/tools-language/-/tools-language-1.2.6.tgz#ced63a53ce9821d14acb57a927237e5c39801387"
   integrity sha512-8pq4JlFIkOqjwkN6amYebQ2CTAa1EeYjSBurGh8upYZtqUZBXDOK7FUAx+OVHs/7qQfmF2lU7QpqA7DZGv4xJA==
 
-"@rnx-kit/tools-node@^1.2.7":
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-1.2.7.tgz#ae702763d26fc9b5a0984c5fddd90e38e03b06a1"
-  integrity sha512-vgURBJttO8z1nSrJm3KWgzEO3/oat5Rn/Fx2b9XyEf7y2CzJh1fwf48XddDnzmSKFNd/SihP7hDcVcEqZ/evCQ==
+"@rnx-kit/tools-node@^1.2.7", "@rnx-kit/tools-node@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/tools-node/-/tools-node-1.3.0.tgz#8eb7a513ad9d2bba625cc9b1c5e9b033bb09045c"
+  integrity sha512-aUlKjcETkS3p6y2va4iFSpgUQ1QbzwxV54EgurGsJZ6FVv64LBc2FzgEVEVZ9IFwT/aVlc7JK4foC2LhT4rc5Q==
   dependencies:
     "@rnx-kit/tools-language" "^1.2.6"
     find-up "^5.0.0"
