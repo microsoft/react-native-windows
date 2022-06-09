@@ -2,6 +2,54 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Jun 2022 05:09:48 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.511",
+      "version": "0.0.0-canary.511",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c8b1cae46b586d81561df23c2071bad15a3afa5b",
+            "comment": "integrate-6-3-22"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0cb8b8351ebee75ba48546d7321569ed4da3ce35",
+            "comment": "Change the definition of YGUndefined from NAN to __builtin_nanf(\"0\")"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2983a5b6013eb992a657e1457af69ebfa8443413",
+            "comment": "Do not use Blob/FileReader modules on UWP"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.45",
+            "commit": "72b5d9301e9878448c0d1a2bf8e3b238adfa9c1b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jun 2022 05:09:16 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.510",
+      "version": "0.0.0-canary.510",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "21ab9a8db526c0d8aaf080a3ece555eef11ebbc1",
+            "comment": "Bump Hermes package version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 05 Jun 2022 05:09:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.509",
       "version": "0.0.0-canary.509",

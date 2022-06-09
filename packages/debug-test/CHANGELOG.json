@@ -2,6 +2,36 @@
   "name": "debug-test",
   "entries": [
     {
+      "date": "Thu, 09 Jun 2022 05:09:48 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.1.96",
+            "commit": "72b5d9301e9878448c0d1a2bf8e3b238adfa9c1b"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Jun 2022 05:09:16 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.1.95",
+            "commit": "88efbff0a74ed2197f57453bbaf97c176f40205c"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 05 Jun 2022 05:09:00 GMT",
       "tag": "debug-test_v0.0.0",
       "version": "0.0.0",
