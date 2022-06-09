@@ -1957,13 +1957,6 @@
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.2.0.tgz#e96ecc0808bdf2a706a263b422864bee5a0e6b76"
   integrity sha512-zhzXsppY9t6TU39WMx/x1L1PyP3dPgGhtav7Yo8nlfihNGIAFwHnNcNuyC8CLdWxKj9n2+Z6+ZR6r/Kda82JnA==
 
-"@react-native-windows/virtualized-list@0.0.0-canary.43":
-  version "0.0.0-canary.43"
-  resolved "https://registry.yarnpkg.com/@react-native-windows/virtualized-list/-/virtualized-list-0.0.0-canary.43.tgz#276fbc01cb7fdfa722207140dd92bd302ae69fe6"
-  integrity sha512-/z96pncNhoBgffrLcEtA4SvrrdC+AguuzLf0P25/KqFdIfhsD6gU6ywb8nN8GYQeTHEXhMdfwUhT3g39Bp6e/w==
-  dependencies:
-    invariant "^2.2.4"
-
 "@react-native/assets@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
