@@ -126,9 +126,9 @@ PullToRefreshViewProps::PullToRefreshViewProps(
 SafeAreaViewProps::SafeAreaViewProps(
     const PropsParserContext &context,
     const SafeAreaViewProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
 
-    emulateUnlessSupported(convertRawProp(context, rawProps, "emulateUnlessSupported", sourceProps.emulateUnlessSupported, {false}))
+    
       {}
 AndroidHorizontalScrollContentViewProps::AndroidHorizontalScrollContentViewProps(
     const PropsParserContext &context,

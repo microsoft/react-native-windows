@@ -1,8 +1,56 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 28 May 2022 05:08:33 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Jun 2022 05:09:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.511
+
+Thu, 09 Jun 2022 05:09:48 GMT
+
+### Changes
+
+- integrate-6-3-22 (tatianakapos@microsoft.com)
+- Change the definition of YGUndefined from NAN to __builtin_nanf("0") (30809111+acoates-ms@users.noreply.github.com)
+- Do not use Blob/FileReader modules on UWP (julio.rocha@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.45
+
+## 0.0.0-canary.510
+
+Wed, 08 Jun 2022 05:09:16 GMT
+
+### Changes
+
+- Bump Hermes package version (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.509
+
+Sun, 05 Jun 2022 05:09:00 GMT
+
+### Changes
+
+- Make double-conversion FP conversions be locale-invariant (asklar@microsoft.com)
+
+## 0.0.0-canary.508
+
+Sat, 04 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- integrate 5-16-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.131
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.44
+- Bump @react-native-windows/codegen to v0.0.0-canary.35
+- Bump @rnw-scripts/just-task to v2.2.5
+- Bump react-native-platform-override to v1.6.13
+
+## 0.0.0-canary.507
+
+Thu, 02 Jun 2022 05:08:55 GMT
+
+### Changes
+
+- Update NuGet config files to reduce Secure Supply Chain Analysis warnings (jthysell@microsoft.com)
 
 ## 0.0.0-canary.506
 

@@ -2,6 +2,39 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Sat, 04 Jun 2022 05:10:05 GMT",
+      "tag": "@rnw-scripts/promote-release_v2.0.10",
+      "version": "2.0.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.34",
+            "commit": "5dff9fb894d2e274467a37fcac5219eca8ad0ebd"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.5",
+            "commit": "5dff9fb894d2e274467a37fcac5219eca8ad0ebd"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.31",
+            "commit": "5dff9fb894d2e274467a37fcac5219eca8ad0ebd"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @rnw-scripts/just-task to v2.2.5",
+            "commit": "5dff9fb894d2e274467a37fcac5219eca8ad0ebd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 12 May 2022 05:09:45 GMT",
       "tag": "@rnw-scripts/promote-release_v2.0.9",
       "version": "2.0.9",

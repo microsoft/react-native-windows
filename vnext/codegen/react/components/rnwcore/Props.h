@@ -465,7 +465,7 @@ class SafeAreaViewProps final : public ViewProps {
 
 #pragma mark - Props
 
-  bool emulateUnlessSupported{false};
+  
 };
 
 class AndroidHorizontalScrollContentViewProps final : public ViewProps {

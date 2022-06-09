@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update NuGet config files to reduce Secure Supply Chain Analysis warnings",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
