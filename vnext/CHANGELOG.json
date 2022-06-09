@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Jun 2022 04:18:35 GMT",
+      "tag": "react-native-windows_v0.66.22",
+      "version": "0.66.22",
+      "comments": {
+        "patch": [
+          {
+            "comment": "Enable Blob module with runtime option",
+            "author": "julio.rocha@microsoft.com",
+            "commit": "acda9008283ce5637feacebedec2f82603e15eb6",
+            "package": "react-native-windows"
+          },
+          {
+            "comment": "Change the definition of YGUndefined from NAN to __builtin_nanf(\"0\")",
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "commit": "11cf0605630d8998ee90a2cfd3bcf07044569f62",
+            "package": "react-native-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 May 2022 15:09:34 GMT",
       "tag": "react-native-windows_v0.66.21",
       "version": "0.66.21",

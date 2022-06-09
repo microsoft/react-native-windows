@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 May 2022 15:09:34 GMT and should not be manually modified.
+This log was last generated on Thu, 09 Jun 2022 04:18:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.22
+
+Thu, 09 Jun 2022 04:18:35 GMT
+
+### Patches
+
+- Enable Blob module with runtime option (julio.rocha@microsoft.com)
+- Change the definition of YGUndefined from NAN to __builtin_nanf("0") (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.66.21
 
