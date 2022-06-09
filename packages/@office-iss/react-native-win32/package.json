@@ -50,9 +50,9 @@
     "react-native-codegen": "^0.70.0",
     "react-native-gradle-plugin": "^0.0.7",
     "react-refresh": "^0.4.0",
-    "react-shallow-renderer": "16.14.1",
+    "react-shallow-renderer": "^16.15.0",
     "regenerator-runtime": "^0.13.2",
-    "scheduler": "^0.21.0",
+    "scheduler": "^0.22.0",
     "stacktrace-parser": "^0.1.3",
     "use-sync-external-store": "^1.0.0",
     "whatwg-fetch": "^3.0.0",
@@ -74,15 +74,15 @@
     "jscodeshift": "^0.13.1",
     "just-scripts": "^1.3.3",
     "prettier": "^2.4.1",
-    "react": "18.0.0",
-    "react-native": "0.0.0-20220603-2051-11141b8b3",
+    "react": "18.1.0",
+    "react-native": "0.0.0-20220608-2049-77e6bff62",
     "react-native-platform-override": "^1.6.13",
     "react-shallow-renderer": "16.14.1",
     "typescript": "^4.4.4"
   },
   "peerDependencies": {
-    "react": "18.0.0",
-    "react-native": "0.0.0-20220603-2051-11141b8b3"
+    "react": "18.1.0",
+    "react-native": "0.0.0-20220608-2049-77e6bff62"
   },
   "beachball": {
     "defaultNpmTag": "canary",

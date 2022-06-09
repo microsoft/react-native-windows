@@ -24,13 +24,13 @@
     "eslint-plugin-prettier": "^4.0.0",
     "flow-bin": "^0.179.0",
     "prettier": "^2.4.1",
-    "react": "18.0.0",
-    "react-native": "0.0.0-20220603-2051-11141b8b3",
+    "react": "18.1.0",
+    "react-native": "0.0.0-20220608-2049-77e6bff62",
     "react-native-platform-override": "^1.6.13"
   },
   "peerDependencies": {
     "react": "18.0.0",
-    "react-native": "0.0.0-20220603-2051-11141b8b3"
+    "react-native": "0.0.0-20220608-2049-77e6bff62"
   },
   "beachball": {
     "defaultNpmTag": "canary",
