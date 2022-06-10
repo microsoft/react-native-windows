@@ -8,16 +8,13 @@
 #include "CoreAppPage.g.cpp"
 #endif
 
-using namespace winrt;
-using namespace Windows::UI::Xaml;
-
 namespace winrt::Microsoft::ReactNative::implementation {
 CoreAppPage::CoreAppPage() {
   InitializeComponent();
   auto app = xaml::Application::Current().as<winrt::Microsoft::ReactNative::ReactApplication>();
-  auto impl_app = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactApplication>(app);
-  auto page_navigated = impl_app->PageNavigatedInternal();
-  page_navigated(app, ReactRootView());
+  auto implApp = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactApplication>(app);
+  auto pageNavigated = implApp->PageNavigatedInternal();
+  pageNavigated(app, ReactRootView());
   ReactRootView().ReactNativeHost(app.Host());
 }
 

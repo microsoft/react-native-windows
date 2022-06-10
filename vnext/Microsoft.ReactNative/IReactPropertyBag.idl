@@ -63,8 +63,8 @@ namespace Microsoft.ReactNative
       "If the new value is null, then the property is removed.")
     Object Set(IReactPropertyName name, Object value);
 
-    DOC_STRING("Gets the list of property names in the property bag")
-    IVector<IReactPropertyName> Names { get; };
+    DOC_STRING("Copies the properties from another property bag")
+    void CopyFrom(IReactPropertyBag other);
   }
 
   [webhosthidden]

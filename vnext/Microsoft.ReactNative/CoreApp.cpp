@@ -17,58 +17,58 @@ namespace react = winrt::Microsoft::ReactNative;
 using namespace winrt::Windows::Data::Json;
 using namespace std::literals;
 
-void RNCoreApp_SetDefaults(RNCoreApp *rnca) {
+void RNCoreAppSetDefaults(RNCoreApp *appSettings) {
   /// Set default values
-  rnca->jsBundleFile = L"index.windows";
-  rnca->bundleRootPath = L"ms-appx:///Bundle/";
-  rnca->componentName = L"";
-  rnca->useWebDebugger = true;
-  rnca->useFastRefresh = true;
-  rnca->useDeveloperSupport = true;
-  rnca->useDirectDebugger = false;
-  rnca->enableDefaultCrashHandler = false;
-  rnca->debuggerPort = 9229;
-  rnca->sourceBundlePort = 8081;
-  rnca->sourceBundleHost = L"localhost";
-  rnca->requestInlineSourceMap = true;
-  rnca->jsEngine = L"chakra";
-  rnca->viewName = nullptr;
+  appSettings->jsBundleFile = L"index.windows";
+  appSettings->bundleRootPath = L"ms-appx:///Bundle/";
+  appSettings->componentName = L"";
+  appSettings->useWebDebugger = true;
+  appSettings->useFastRefresh = true;
+  appSettings->useDeveloperSupport = true;
+  appSettings->useDirectDebugger = false;
+  appSettings->enableDefaultCrashHandler = false;
+  appSettings->debuggerPort = 9229;
+  appSettings->sourceBundlePort = 8081;
+  appSettings->sourceBundleHost = L"localhost";
+  appSettings->requestInlineSourceMap = true;
+  appSettings->jsEngine = L"chakra";
+  appSettings->viewName = nullptr;
 
-  rnca->resourcesAbi = nullptr;
-  rnca->args = nullptr;
-  rnca->packageProvidersAbi = nullptr;
-  rnca->packageProvidersAbiCount = 0;
-  rnca->propertiesAbi = nullptr;
+  appSettings->resourcesAbi = nullptr;
+  appSettings->args = nullptr;
+  appSettings->packageProvidersAbi = nullptr;
+  appSettings->packageProvidersAbiCount = 0;
+  appSettings->propertiesAbi = nullptr;
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, coreAppCallback launched, void *data) {
-  xaml::Application::Start([rnca, launched, data](auto &&) {
+NORETURN void RNCoreAppStartInternal(RNCoreApp *appSettings, RNCoreAppCallback launched, void *data) {
+  xaml::Application::Start([appSettings, launched, data](auto &&) {
     winrt::Windows::Foundation::IInspectable outer{nullptr};
-    const auto &app = winrt::make<react::implementation::ReactApplication>(outer);
+    const auto app = winrt::make<react::implementation::ReactApplication>(outer);
 
-    const auto impl_app = winrt::get_self<react::implementation::ReactApplication>(app);
+    const auto implApp = winrt::get_self<react::implementation::ReactApplication>(app);
 
-    impl_app->LaunchedInternal([rnca, launched, data](
-                                   react::ReactApplication const &app,
-                                   const winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs &args) {
-      rnca->args = args.Arguments().c_str();
+    implApp->LaunchedInternal([appSettings, launched, data](
+                                  react::ReactApplication const &app,
+                                  winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &args) {
+      appSettings->args = args.Arguments().c_str();
       if (launched) {
-        launched(rnca, data);
+        launched(appSettings, data);
       }
 
-      for (auto i = 0; i < rnca->packageProvidersAbiCount; i++) {
+      for (auto i = 0; i < appSettings->packageProvidersAbiCount; i++) {
         auto provider = winrt::Microsoft::ReactNative::IReactPackageProvider(
-            rnca->packageProvidersAbi[i], winrt::take_ownership_from_abi);
+            appSettings->packageProvidersAbi[i], winrt::take_ownership_from_abi);
         app.PackageProviders().Append(provider);
       }
-      CoTaskMemFree(rnca->packageProvidersAbi);
+      CoTaskMemFree(appSettings->packageProvidersAbi);
 
-      if (rnca->viewName) {
+      if (appSettings->viewName) {
         auto view = winrt::Windows::UI::ViewManagement::ApplicationView::GetForCurrentView();
-        view.Title(rnca->viewName);
+        view.Title(appSettings->viewName);
       }
 
-      app.JavaScriptBundleFile(rnca->jsBundleFile);
+      app.JavaScriptBundleFile(appSettings->jsBundleFile);
 
       auto settings = app.InstanceSettings();
       constexpr std::pair<std::wstring_view, react::JSIEngine> engines[] = {
@@ -76,33 +76,32 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, core
           {L"hermes"sv, react::JSIEngine::Hermes},
           {L"v8"sv, react::JSIEngine::V8}};
 
-      if (auto it = std::find_if(
-              std::begin(engines), std::end(engines), [rnca](const auto &c) { return c.first == rnca->jsEngine; })) {
+      if (auto it = std::find_if(std::begin(engines), std::end(engines), [appSettings](const auto &c) {
+            return c.first == appSettings->jsEngine;
+          })) {
         settings.JSIEngineOverride(it->second);
       }
 
-      settings.BundleRootPath(rnca->bundleRootPath);
+      settings.BundleRootPath(appSettings->bundleRootPath);
 
-      settings.UseWebDebugger(rnca->useWebDebugger);
-      settings.UseFastRefresh(rnca->useFastRefresh);
-      settings.UseDeveloperSupport(rnca->useDeveloperSupport);
-      settings.UseDirectDebugger(rnca->useDirectDebugger);
-      settings.RequestInlineSourceMap(rnca->requestInlineSourceMap);
+      settings.UseWebDebugger(appSettings->useWebDebugger);
+      settings.UseFastRefresh(appSettings->useFastRefresh);
+      settings.UseDeveloperSupport(appSettings->useDeveloperSupport);
+      settings.UseDirectDebugger(appSettings->useDirectDebugger);
+      settings.RequestInlineSourceMap(appSettings->requestInlineSourceMap);
 
-      settings.EnableDefaultCrashHandler(rnca->enableDefaultCrashHandler);
-      settings.DebuggerPort(rnca->debuggerPort);
-      settings.SourceBundlePort(rnca->sourceBundlePort);
-      settings.SourceBundleHost(rnca->sourceBundleHost);
+      settings.EnableDefaultCrashHandler(appSettings->enableDefaultCrashHandler);
+      settings.DebuggerPort(appSettings->debuggerPort);
+      settings.SourceBundlePort(appSettings->sourceBundlePort);
+      settings.SourceBundleHost(appSettings->sourceBundleHost);
 
-      if (rnca->propertiesAbi) {
-        if (auto props = react::IReactPropertyBag(rnca->propertiesAbi, winrt::take_ownership_from_abi)) {
-          for (const auto &propName : props.Names()) {
-            settings.Properties().Set(propName, props.Get(propName));
-          }
+      if (appSettings->propertiesAbi) {
+        if (auto props = react::IReactPropertyBag(appSettings->propertiesAbi, winrt::take_ownership_from_abi)) {
+          settings.Properties().CopyFrom(props);
         }
       }
 
-      if (auto res = xaml::ResourceDictionary(rnca->resourcesAbi, winrt::take_ownership_from_abi)) {
+      if (auto res = xaml::ResourceDictionary(appSettings->resourcesAbi, winrt::take_ownership_from_abi)) {
         app.Resources(res);
       } else {
         try {
@@ -112,13 +111,14 @@ extern "C" NORETURN void __cdecl RNStartCoreAppWithCoreApp(RNCoreApp *rnca, core
         }
       }
     });
-    impl_app->ViewCreatedInternal([](react::ReactApplication const &app, winrt::hstring const &args) {
+    implApp->ViewCreatedInternal([](react::ReactApplication const &app, winrt::hstring const &args) {
       auto rootFrame = xaml::Window::Current().Content().as<xaml::Controls::Frame>();
       rootFrame.Navigate(winrt::xaml_typename<react::CoreAppPage>(), winrt::box_value(args));
     });
-    impl_app->PageNavigatedInternal([rnca](react::ReactApplication const & /*app*/, react::ReactRootView const &view) {
-      view.ComponentName(rnca->componentName);
-    });
+    implApp->PageNavigatedInternal(
+        [appSettings](react::ReactApplication const & /*appSettings*/, react::ReactRootView const &view) {
+          view.ComponentName(appSettings->componentName);
+        });
   });
 }
 
@@ -141,7 +141,7 @@ std::enable_if_t<std::is_arithmetic_v<T>> SetFromJson(JsonObject json, wchar_t c
   }
 }
 
-#define SET_FROM_JSON(key) SetFromJson(json, L#key, app->key)
+#define SET_FROM_JSON(key) SetFromJson(json, L#key, appSettings->key)
 
 JsonObject LoadJsonFromFile(wchar_t const *jsoncPath) {
   std::wifstream appConfigJson(jsoncPath);
@@ -179,7 +179,7 @@ JsonObject LoadJsonFromFile(wchar_t const *jsoncPath) {
   return json;
 }
 
-static void SetPackageProviders(const JsonObject &json, RNCoreApp *app) {
+static void SetPackageProviders(JsonObject const &json, RNCoreApp *app) {
   if (auto v = json.TryLookup(L"nativeModules"); v && v.ValueType() == JsonValueType::Array) {
     auto nativeModules = v.GetArray();
     decltype(app->packageProvidersAbiCount) countAdded = 0;
@@ -190,10 +190,10 @@ static void SetPackageProviders(const JsonObject &json, RNCoreApp *app) {
       if (auto nm_value = nativeModules.GetAt(index); nm_value.ValueType() == JsonValueType::Object) {
         auto nm = nm_value.GetObject();
 
-        const wchar_t *container{nullptr};
+        wchar_t const *container{nullptr};
         SetFromJson(nm, L"moduleContainer", container);
 
-        const wchar_t *factoryName{nullptr};
+        wchar_t const *factoryName{nullptr};
         SetFromJson(nm, L"factory", factoryName);
 
         HMODULE mod{};
@@ -220,7 +220,7 @@ static void SetPackageProviders(const JsonObject &json, RNCoreApp *app) {
   }
 }
 
-static void SetProperties(const JsonObject &json, RNCoreApp *app) {
+static void SetProperties(JsonObject const &json, RNCoreApp *app) {
   react::IReactPropertyBag bag{nullptr};
   if (auto v = json.TryLookup(L"properties"); v && v.ValueType() == JsonValueType::Object) {
     auto props = v.GetObject();
@@ -265,12 +265,12 @@ static void SetProperties(const JsonObject &json, RNCoreApp *app) {
   }
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(
+extern "C" NORETURN void __cdecl RNCoreAppStartFromConfigJson(
     wchar_t const *configJson,
-    coreAppCallback launched,
+    RNCoreAppCallback launched,
     void *data) {
-  auto app = new RNCoreApp();
-  RNCoreApp_SetDefaults(app);
+  auto appSettings = std::make_shared<RNCoreApp>();
+  RNCoreAppSetDefaults(appSettings.get());
 
   auto json = LoadJsonFromFile(configJson);
   SET_FROM_JSON(jsBundleFile);
@@ -290,14 +290,14 @@ extern "C" NORETURN void __cdecl RNStartCoreAppFromConfigJson(
 
   SET_FROM_JSON(viewName);
 
-  SetPackageProviders(json, app);
-  SetProperties(json, app);
-  RNStartCoreAppWithCoreApp(app, launched, data);
+  SetPackageProviders(json, appSettings.get());
+  SetProperties(json, appSettings.get());
+  RNCoreAppStartInternal(appSettings.get(), launched, data);
 }
 
-extern "C" NORETURN void __cdecl RNStartCoreApp(coreAppCallback launched, void *data) {
-  auto rnca = std::make_shared<RNCoreApp>();
+extern "C" NORETURN void __cdecl RNCoreAppStart(RNCoreAppCallback launched, void *data) {
+  auto appSettings = std::make_shared<RNCoreApp>();
 
-  RNCoreApp_SetDefaults(rnca.get());
-  RNStartCoreAppWithCoreApp(rnca.get(), launched, data);
+  RNCoreAppSetDefaults(appSettings.get());
+  RNCoreAppStartInternal(appSettings.get(), launched, data);
 }

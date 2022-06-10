@@ -14,7 +14,7 @@ struct ReactPropertyBag : implements<ReactPropertyBag, IReactPropertyBag> {
   IInspectable GetOrCreate(IReactPropertyName const &name, ReactCreatePropertyValue const &createValue) noexcept;
   IInspectable Set(IReactPropertyName const &name, IInspectable const &value) noexcept;
 
-  winrt::Windows::Foundation::Collections::IVector<IReactPropertyName> Names() noexcept;
+  void CopyFrom(IReactPropertyBag const &) noexcept;
 
  private:
   std::mutex m_mutex;

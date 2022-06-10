@@ -75,7 +75,7 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base :
 
 struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, xaml::Markup::IXamlMetadataProvider> {
  public: // ReactApplication ABI API
-  ReactApplication() = default;
+  ReactApplication();
   ReactApplication(IInspectable const &outer) noexcept;
 
   ReactNative::ReactInstanceSettings InstanceSettings() noexcept;
@@ -91,57 +91,36 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
- public:
   void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
   void OnLaunched(activation::LaunchActivatedEventArgs const &e);
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
   using AppLaunchedDelegate = winrt::delegate<void(
-      winrt::Microsoft::ReactNative::ReactApplication sender,
-      winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs args)>;
+      winrt::Microsoft::ReactNative::ReactApplication const &sender,
+      winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &args)>;
 
-  void LaunchedInternal(AppLaunchedDelegate del) {
-    m_launched = del;
-  }
-  AppLaunchedDelegate LaunchedInternal() {
-    return m_launched;
-  }
+  void LaunchedInternal(AppLaunchedDelegate delegate) noexcept;
+  AppLaunchedDelegate LaunchedInternal() const noexcept;
 
   using AppViewCreatedDelegate =
-      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication sender, winrt::hstring args)>;
+      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication const &sender, winrt::hstring const &args)>;
 
-  void ViewCreatedInternal(AppViewCreatedDelegate del) {
-    m_viewCreated = del;
-  }
+  void ViewCreatedInternal(AppViewCreatedDelegate delegate) noexcept;
 
-  AppViewCreatedDelegate ViewCreatedInternal() {
-    return m_viewCreated;
-  }
+  AppViewCreatedDelegate ViewCreatedInternal() const noexcept;
 
   using AppPageNavigatedDelegate =
-      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication sender, ReactRootView view)>;
+      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication const &sender, ReactRootView const &view)>;
 
-  void PageNavigatedInternal(AppPageNavigatedDelegate del) {
-    m_pageNavigated = del;
-  }
+  void PageNavigatedInternal(AppPageNavigatedDelegate delegate) noexcept;
 
-  AppPageNavigatedDelegate PageNavigatedInternal() {
-    return m_pageNavigated;
-  }
+  AppPageNavigatedDelegate PageNavigatedInternal() const noexcept;
 
-  XamlMetaDataProvider m_provider;
+  xaml::Markup::IXamlType GetXamlType(winrt::hstring const &name) const;
 
-  xaml::Markup::IXamlType GetXamlType(winrt::hstring const &name) {
-    return m_provider.GetXamlType(name);
-  }
-
-  xaml::Markup::IXamlType GetXamlType(::winrt::Windows::UI::Xaml::Interop::TypeName const &type) {
-    return m_provider.GetXamlType(type);
-  }
-  ::winrt::com_array<xaml::Markup::XmlnsDefinition> GetXmlnsDefinitions() {
-    return m_provider.GetXmlnsDefinitions();
-  }
+  xaml::Markup::IXamlType GetXamlType(::winrt::Windows::UI::Xaml::Interop::TypeName const &type) const;
+  ::winrt::com_array<xaml::Markup::XmlnsDefinition> GetXmlnsDefinitions() const;
 
  private:
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
@@ -152,6 +131,8 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, x
   AppLaunchedDelegate m_launched;
   AppViewCreatedDelegate m_viewCreated;
   AppPageNavigatedDelegate m_pageNavigated;
+
+  XamlMetaDataProvider m_provider;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

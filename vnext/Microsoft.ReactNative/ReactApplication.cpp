@@ -28,6 +28,8 @@ using namespace xaml::Navigation;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+ReactApplication::ReactApplication() = default;
+
 ReactApplication::ReactApplication(IInspectable const &outer) noexcept : ReactApplication{} {
   // The factory is usually called in the base generated class. We call it here to pass correct
   // 'outer' interface to enable inheritance from the ReactApplication class in user code.
@@ -223,6 +225,42 @@ void ReactApplication::OnSuspending(
 /// <param name="e">Details about the navigation failure</param>
 void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &e) {
   throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
+}
+
+void ReactApplication::LaunchedInternal(ReactApplication::AppLaunchedDelegate delegate) noexcept {
+  m_launched = delegate;
+}
+
+ReactApplication::AppLaunchedDelegate ReactApplication::LaunchedInternal() const noexcept {
+  return m_launched;
+}
+
+void ReactApplication::ViewCreatedInternal(ReactApplication::AppViewCreatedDelegate delegate) noexcept {
+  m_viewCreated = delegate;
+}
+
+ReactApplication::AppViewCreatedDelegate ReactApplication::ViewCreatedInternal() const noexcept {
+  return m_viewCreated;
+}
+
+void ReactApplication::PageNavigatedInternal(ReactApplication::AppPageNavigatedDelegate delegate) noexcept {
+  m_pageNavigated = delegate;
+}
+
+ReactApplication::AppPageNavigatedDelegate ReactApplication::PageNavigatedInternal() const noexcept {
+  return m_pageNavigated;
+}
+
+xaml::Markup::IXamlType ReactApplication::GetXamlType(winrt::hstring const &name) const {
+  return m_provider.GetXamlType(name);
+}
+
+xaml::Markup::IXamlType ReactApplication::GetXamlType(::winrt::Windows::UI::Xaml::Interop::TypeName const &type) const {
+  return m_provider.GetXamlType(type);
+}
+
+::winrt::com_array<xaml::Markup::XmlnsDefinition> ReactApplication::GetXmlnsDefinitions() const {
+  return m_provider.GetXmlnsDefinitions();
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

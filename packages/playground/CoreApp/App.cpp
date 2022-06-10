@@ -6,7 +6,7 @@
 
 // This app demonstrates the usage of the Microsoft.ReactNative CoreApp APIs
 // use the preprocessor defines WITH_MODULES (true/false), FROM_JSON (true/false),
-// or neither to exercise the RNStartCoreAppWithModules, RNStartCoreApp, and RNStartCoreAppFromConfigJson APIs.
+// or neither to exercise the RNCoreAppStart, and RNCoreAppStartFromConfigJson APIs.
 #define DEFINE_MODULES
 
 #define WITH_MODULES
@@ -43,11 +43,11 @@ extern "C" __declspec(dllexport) void *__cdecl MySpecialPackageProvider() {
 
 #ifdef FROM_JSON
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {
-  RNStartCoreAppFromConfigJson(L"app.config.json", nullptr, nullptr);
+  RNCoreAppStartFromConfigJson(L"app.config.json", nullptr, nullptr);
 }
 #else
 int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/, _In_ int /*showCommand*/) {
-  RNStartCoreApp(
+  RNCoreAppStart(
       [](RNCoreApp *app, void *) {
         app->componentName = L"RNTesterApp";
         app->jsBundleFile = LR"(Samples\rntester)";
