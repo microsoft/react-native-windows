@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed metro config when using `--useDevMode`",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
