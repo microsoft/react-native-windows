@@ -1,8 +1,30 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Jun 2022 05:09:16 GMT and should not be manually modified.
+This log was last generated on Fri, 10 Jun 2022 05:09:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.512
+
+Fri, 10 Jun 2022 05:09:59 GMT
+
+### Changes
+
+- Use logical OR to assert HTTP responseType (julio.rocha@microsoft.com)
+- Fixed metro config when using `--useDevMode` (jthysell@microsoft.com)
+- Integrate 6/8 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.46
+
+## 0.0.0-canary.511
+
+Thu, 09 Jun 2022 05:09:48 GMT
+
+### Changes
+
+- integrate-6-3-22 (tatianakapos@microsoft.com)
+- Change the definition of YGUndefined from NAN to __builtin_nanf("0") (30809111+acoates-ms@users.noreply.github.com)
+- Do not use Blob/FileReader modules on UWP (julio.rocha@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.45
 
 ## 0.0.0-canary.510
 

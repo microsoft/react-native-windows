@@ -68,7 +68,7 @@ void WinRTHttpResource::SendRequest(
     bool withCredentials,
     std::function<void(int64_t)> &&callback) noexcept /*override*/ {
   // Enforce supported args
-  assert(responseType == "text" || responseType == "base64" | responseType == "blob");
+  assert(responseType == "text" || responseType == "base64" || responseType == "blob");
 
   if (callback) {
     callback(requestId);

@@ -52,6 +52,7 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(double, std::string, double) noexcept>{20, L"removeAnimatedEventFromView"},
       Method<void(std::string) noexcept>{21, L"addListener"},
       Method<void(double) noexcept>{22, L"removeListeners"},
+      Method<void(::React::JSValueArray) noexcept>{23, L"queueAndExecuteBatchedOperations"},
   };
 
   template <class TModule>
@@ -173,6 +174,11 @@ struct AnimatedModuleSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "removeListeners",
           "    REACT_METHOD(removeListeners) void removeListeners(double count) noexcept { /* implementation */ }}\n"
           "    REACT_METHOD(removeListeners) static void removeListeners(double count) noexcept { /* implementation */ }}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          23,
+          "queueAndExecuteBatchedOperations",
+          "    REACT_METHOD(queueAndExecuteBatchedOperations) void queueAndExecuteBatchedOperations(::React::JSValueArray && operationsAndArgs) noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(queueAndExecuteBatchedOperations) static void queueAndExecuteBatchedOperations(::React::JSValueArray && operationsAndArgs) noexcept { /* implementation */ }}\n");
   }
 };
 
