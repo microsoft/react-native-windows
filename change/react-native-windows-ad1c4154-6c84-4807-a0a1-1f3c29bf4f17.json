@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "binskim/compliance fixes to win32 dll",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
