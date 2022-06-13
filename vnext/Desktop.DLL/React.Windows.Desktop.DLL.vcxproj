@@ -77,6 +77,7 @@
         RN_EXPORT=;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /ZH:SHA_256</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -104,25 +105,16 @@
     <Link>
       <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>
     </Link>
-    <ClCompile>
-      <ControlFlowGuard>Guard</ControlFlowGuard>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='ARM64'">
     <Link>
       <ModuleDefinitionFile>react-native-win32.x64.def</ModuleDefinitionFile>
     </Link>
-    <ClCompile>
-      <ControlFlowGuard>Guard</ControlFlowGuard>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="('$(Platform)'=='Win32' OR '$(Platform)'=='x86')">
     <Link>
       <ModuleDefinitionFile>react-native-win32.x86.def</ModuleDefinitionFile>
     </Link>
-    <ClCompile>
-      <ControlFlowGuard>Guard</ControlFlowGuard>
-    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
