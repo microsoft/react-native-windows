@@ -118,46 +118,7 @@ inline float ToRadians(const winrt::Microsoft::ReactNative::JSValue &value) {
 static void MultiplyInto(
     winrt::Windows::Foundation::Numerics::float4x4 &m,
     winrt::Windows::Foundation::Numerics::float4x4 o) {
-  // The `float4x4` type has an `operator*` implementation for matrix
-  // multiplication. However, the result of the multiplication differs from the
-  // result computed in:
-  // https://github.com/facebook/react-native/blob/master/Libraries/Utilities/MatrixMath.js
-
-  float a00 = m.m11, a01 = m.m12, a02 = m.m13, a03 = m.m14, a10 = m.m21, a11 = m.m22, a12 = m.m23, a13 = m.m24,
-        a20 = m.m31, a21 = m.m32, a22 = m.m33, a23 = m.m34, a30 = m.m41, a31 = m.m42, a32 = m.m43, a33 = m.m44;
-
-  float b0 = o.m11, b1 = o.m12, b2 = o.m13, b3 = o.m14;
-  m.m11 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  m.m12 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  m.m13 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  m.m14 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-
-  b0 = o.m21;
-  b1 = o.m22;
-  b2 = o.m23;
-  b3 = o.m24;
-  m.m21 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  m.m22 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  m.m23 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  m.m24 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-
-  b0 = o.m31;
-  b1 = o.m32;
-  b2 = o.m33;
-  b3 = o.m34;
-  m.m31 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  m.m32 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  m.m33 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  m.m34 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-
-  b0 = o.m41;
-  b1 = o.m42;
-  b2 = o.m43;
-  b3 = o.m44;
-  m.m41 = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  m.m42 = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  m.m43 = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  m.m44 = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
+  m = o * m;
 }
 
 void FrameworkElementViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
