@@ -2,6 +2,54 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 14 Jun 2022 05:09:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.513",
+      "version": "0.0.0-canary.513",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff1f6230c22014f4c2d00f5084e5b567634b6f13",
+            "comment": "binskim/compliance fixes to win32 dll"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Jun 2022 05:09:59 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.512",
+      "version": "0.0.0-canary.512",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0b3834a1b8fa0dd03b0b9ecd61d187d36c02d980",
+            "comment": "Use logical OR to assert HTTP responseType"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6688554a96e3df80111c2eec9c11279351ba0e5f",
+            "comment": "Fixed metro config when using `--useDevMode`"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "72aca533cbb597d07e8ddc744f6dac9d260afbe2",
+            "comment": "Integrate 6/8"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.46",
+            "commit": "6688554a96e3df80111c2eec9c11279351ba0e5f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 Jun 2022 05:09:48 GMT",
       "tag": "react-native-windows_v0.0.0-canary.511",
       "version": "0.0.0-canary.511",

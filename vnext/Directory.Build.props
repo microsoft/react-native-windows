@@ -19,8 +19,8 @@
     <FollyVersion>2021.06.28.00</FollyVersion>
     <FollyCommitHash>f434460f8a98e85f3ddb75390ddd1cc330c8f658</FollyCommitHash>
     <!-- When bumping the fmt version, be sure to bump the git hash of that version's commit too. -->
-    <FmtVersion>7.1.3</FmtVersion>
-    <FmtCommitHash>7bdf0628b1276379886c7f6dda2cef2b3b374f0b</FmtCommitHash>
+    <FmtVersion>8.0.0</FmtVersion>
+    <FmtCommitHash>9e8b86fd2d9806672cc73133d21780dd182bfd24</FmtCommitHash>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
