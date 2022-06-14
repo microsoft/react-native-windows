@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 14 Jun 2022 05:09:02 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.513",
+      "version": "0.0.0-canary.513",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ff1f6230c22014f4c2d00f5084e5b567634b6f13",
+            "comment": "binskim/compliance fixes to win32 dll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Jun 2022 05:09:59 GMT",
       "tag": "react-native-windows_v0.0.0-canary.512",
       "version": "0.0.0-canary.512",
