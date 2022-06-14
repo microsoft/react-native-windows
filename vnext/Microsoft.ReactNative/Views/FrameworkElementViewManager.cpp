@@ -236,21 +236,25 @@ bool FrameworkElementViewManager::UpdateProperty(
                     transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_rotation_x(ToRadians(innerValue)));
               } else if (transformType == "rotateY") {
-                MultiplyInto(transformMatrix,
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_rotation_y(ToRadians(innerValue)));
               } else if (transformType == "rotate" || transformType == "rotateZ") {
                 MultiplyInto(
                     transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_rotation_z(ToRadians(innerValue)));
               } else if (transformType == "scale") {
-                MultiplyInto(transformMatrix,
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_scale(
-                                      innerValue.AsSingle(), innerValue.AsSingle(), 1));
+                        innerValue.AsSingle(), innerValue.AsSingle(), 1));
               } else if (transformType == "scaleX") {
-                MultiplyInto(transformMatrix,
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_scale(innerValue.AsSingle(), 1, 1));
               } else if (transformType == "scaleY") {
-                MultiplyInto(transformMatrix,
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_scale(1, innerValue.AsSingle(), 1));
               } else if (transformType == "translate") {
                 auto &params = innerValue.AsArray();
