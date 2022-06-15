@@ -41,23 +41,10 @@ class Alert {
     buttons?: Buttons,
     options?: Options,
   ): void {
-    if (Platform.OS === 'ios') {
-      Alert.prompt(
-        title,
-        message,
-        buttons,
-        'default',
-        undefined,
-        undefined,
-        options,
-      );
-    } else if (Platform.OS === 'android') {
-      const NativeDialogManagerAndroid =
-        require('../NativeModules/specs/NativeDialogManagerAndroid').default;
-      if (!NativeDialogManagerAndroid) {
-        return;
-      }
-      const constants = NativeDialogManagerAndroid.getConstants();
+    if (!NativeDialogManagerWindows) {
+      return;
+    }
+    const constants = NativeDialogManagerWindows.getConstants();
 
     const config: DialogOptions = {
       title: title || '',
@@ -128,47 +115,9 @@ class Alert {
     keyboardType?: string,
     options?: Options,
   ): void {
-    if (Platform.OS === 'ios') {
-      let callbacks = [];
-      const buttons = [];
-      let cancelButtonKey;
-      let destructiveButtonKey;
-      if (typeof callbackOrButtons === 'function') {
-        callbacks = [callbackOrButtons];
-      } else if (Array.isArray(callbackOrButtons)) {
-        callbackOrButtons.forEach((btn, index) => {
-          callbacks[index] = btn.onPress;
-          if (btn.style === 'cancel') {
-            cancelButtonKey = String(index);
-          } else if (btn.style === 'destructive') {
-            destructiveButtonKey = String(index);
-          }
-          if (btn.text || index < (callbackOrButtons || []).length - 1) {
-            const btnDef: {[number]: string} = {};
-            btnDef[index] = btn.text || '';
-            buttons.push(btnDef);
-          }
-        });
-      }
-
-      RCTAlertManager.alertWithArgs(
-        {
-          title: title || '',
-          message: message || undefined,
-          buttons,
-          type: type || undefined,
-          defaultValue,
-          cancelButtonKey,
-          destructiveButtonKey,
-          keyboardType,
-          userInterfaceStyle: options?.userInterfaceStyle || undefined,
-        },
-        (id, value) => {
-          const cb = callbacks[id];
-          cb && cb(value);
-        },
-      );
-    }
+    throw new Error(
+      'Alert.prompt not currently implemented in react-native-windows',
+    );
   }
 }
 
