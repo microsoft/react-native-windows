@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220608-2049-77e6bff62",
+  "baseVersion": "0.0.0-20220614-2054-bcc69dfb3",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "9be4f8d311bf05345f77d3281bec4c3ff14c1b8b"
+      "baseHash": "895c71b88766d95270375497adde5b28f17b8c8c"
     },
     {
       "type": "derived",
@@ -25,6 +25,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
+      "baseVersion": "0.0.0-20220608-2049-77e6bff62",
       "baseHash": "480433148ca7ca473ee08138567dbb40ce958ce0"
     },
     {
