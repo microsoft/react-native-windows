@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 14 Jun 2022 05:09:02 GMT and should not be manually modified.
+This log was last generated on Wed, 15 Jun 2022 05:09:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.514
+
+Wed, 15 Jun 2022 05:09:02 GMT
+
+### Changes
+
+- Fix use of [[maybe_unused]] attribute (vmorozov@microsoft.com)
+- yarn format (erozell@outlook.com)
 
 ## 0.0.0-canary.513
 
