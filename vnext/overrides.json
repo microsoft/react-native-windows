@@ -163,8 +163,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseVersion": "0.0.0-20220608-2049-77e6bff62",
-      "baseHash": "480433148ca7ca473ee08138567dbb40ce958ce0"
+      "baseHash": "8c2e0c05b6138dd3834ea8b3d85b8838d37ae427"
     },
     {
       "type": "platform",
@@ -489,8 +488,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseVersion": "0.0.0-20220608-2049-77e6bff62",
-      "baseHash": "0fb47268362b2544900a7cfff8640f542d597cba"
+      "baseHash": "64b609f0a802d9d1a0e41749499a9141fb209f10"
     },
     {
       "type": "patch",

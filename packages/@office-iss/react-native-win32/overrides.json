@@ -25,8 +25,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseVersion": "0.0.0-20220608-2049-77e6bff62",
-      "baseHash": "480433148ca7ca473ee08138567dbb40ce958ce0"
+      "baseHash": "8c2e0c05b6138dd3834ea8b3d85b8838d37ae427"
     },
     {
       "type": "patch",
