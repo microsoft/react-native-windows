@@ -44,9 +44,7 @@ function vsWhere(args: string[], verbose?: boolean): any[] {
   }
 
   const cmdline = `"${vsWherePath}" ${args.join(' ')} -format json -utf8`;
-  const json = JSON.parse(
-    execSync(cmdline, {encoding: 'utf8'}).toString('utf8'),
-  );
+  const json = JSON.parse(execSync(cmdline, {encoding: 'utf8'}).toString());
 
   for (const entry of json) {
     entry.prerelease = entry.catalog.productMilestoneIsPreRelease;
