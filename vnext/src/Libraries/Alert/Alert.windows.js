@@ -24,6 +24,7 @@ export type Buttons = Array<{
 
 type Options = {
   cancelable?: ?boolean,
+  userInterfaceStyle?: 'unspecified' | 'light' | 'dark',
   onDismiss?: ?() => void,
   ...
 };
@@ -112,6 +113,7 @@ class Alert {
     type?: ?AlertType = 'plain-text',
     defaultValue?: string,
     keyboardType?: string,
+    options?: Options,
   ): void {
     throw new Error(
       'Alert.prompt not currently implemented in react-native-windows',
