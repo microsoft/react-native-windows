@@ -287,7 +287,7 @@ inline JSValueArgWriter MakeJSValueWriter(T &&argWriter) noexcept {
 
 template <class... TArgs>
 inline JSValueArgWriter MakeJSValueWriter(TArgs &&...args) noexcept {
-  return [&args...](IJSValueWriter const &[[maybe_unused]] writer) noexcept { (WriteValue(writer, args), ...); };
+  return [&args...]([[maybe_unused]] IJSValueWriter const &writer) noexcept { (WriteValue(writer, args), ...); };
 }
 
 } // namespace winrt::Microsoft::ReactNative
