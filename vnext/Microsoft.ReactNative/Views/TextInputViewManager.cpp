@@ -712,9 +712,39 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
         auto oldValue = textBox.Text();
         auto newValue = asHstring(text);
         if (oldValue != newValue) {
-          textBox.Text(newValue);
+          if (!textBox.IsReadOnly()) {
+            uint32_t diffStartIndex = 0;
+            uint32_t diffEndIndex = 0;
+            // Replacing the entire string with the new value resets the text history.
+            // Generally speaking, this is undesirable. To mitigate this issue, we can
+            // replace text using the XAML TextBox::SelectedText property, which retains
+            // undo / redo history. To do so, we use a simple algorithm that finds a
+            // single diff in the values:
+            // 1. Find first character that mismatches iterating forwards
+            while (diffStartIndex < oldValue.size() && diffStartIndex < newValue.size() &&
+                   oldValue[diffStartIndex] == newValue[diffStartIndex])
+              diffStartIndex++;
+            // 2. Find last character the mismatches beyond the first mismatch iterating backwards
+            while (diffEndIndex < oldValue.size() - diffStartIndex && diffEndIndex < newValue.size() - diffStartIndex &&
+                   oldValue[oldValue.size() - diffEndIndex - 1] == newValue[newValue.size() - diffEndIndex - 1])
+              diffEndIndex++;
+            // 3. Select the range between the start and end index in the "old value"
+            textBox.SelectionStart(diffStartIndex);
+            textBox.SelectionLength(oldValue.size() - diffStartIndex - diffEndIndex);
+            // 4. Replace the selected text with the range between start and end index in the "new value"
+            // Copies the substring view into a new winrt::hstring due to occasional crash
+            winrt::hstring replacementValue{std::wstring_view{newValue}.substr(diffStartIndex, newValue.size() - diffStartIndex - diffEndIndex)};
+            textBox.SelectedText(replacementValue);
+          } else {
+            textBox.Text(newValue);
+          }
+
+          // Update selection based on the following algorithm:
+          // 1. If the new value is the same length as the old value, retain the selection state (start and length)
+          // 2. Else set the selection start to the end of the string
           if (oldValue.size() == newValue.size()) {
             textBox.SelectionStart(oldCursor);
+            textBox.SelectionLength(oldSelectionLength);
           } else {
             textBox.SelectionStart(newValue.size());
           }
