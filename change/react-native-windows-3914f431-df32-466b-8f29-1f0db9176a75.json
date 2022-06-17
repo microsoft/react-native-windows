@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix use of [[maybe_unused]] attribute",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
