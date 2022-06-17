@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 17 Jun 2022 05:10:04 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.515",
+      "version": "0.0.0-canary.515",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4b2b9ced05f9fefa5faaa3c6ec582236ffbfd500",
+            "comment": "Integrate 6/14"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.47",
+            "commit": "4b2b9ced05f9fefa5faaa3c6ec582236ffbfd500"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 Jun 2022 05:09:02 GMT",
       "tag": "react-native-windows_v0.0.0-canary.514",
       "version": "0.0.0-canary.514",

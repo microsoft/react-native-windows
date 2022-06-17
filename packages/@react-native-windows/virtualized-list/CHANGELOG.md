@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Fri, 10 Jun 2022 05:09:59 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Jun 2022 05:10:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.47
+
+Fri, 17 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- Integrate 6/14 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.46
 
