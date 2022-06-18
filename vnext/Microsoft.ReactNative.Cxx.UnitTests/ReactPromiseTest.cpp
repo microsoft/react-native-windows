@@ -13,8 +13,7 @@ TEST_CLASS (ReactPromiseTest) {
     bool isSucceded = false;
     bool isFailed = false;
     ReactPromise<void> promise(
-        [&isSucceded]() noexcept { isSucceded = true; },
-        [&isFailed](ReactError const &) noexcept { isFailed = true; });
+        [&isSucceded]() noexcept { isSucceded = true; }, [&isFailed](ReactError const &) noexcept { isFailed = true; });
     promise.Resolve();
 
     TestCheck(isSucceded);

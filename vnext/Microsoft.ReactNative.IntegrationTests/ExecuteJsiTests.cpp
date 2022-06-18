@@ -110,7 +110,7 @@ struct TestExecuteJsiModule {
         });
     ExecuteJsi(
         m_reactContext,
-        [](Runtime &rt) { TestEventService::LogEvent("testExecuteJsiPromise completed", nullptr); },
+        [](Runtime &) { TestEventService::LogEvent("testExecuteJsiPromise completed", nullptr); },
         &callResult);
   }
 

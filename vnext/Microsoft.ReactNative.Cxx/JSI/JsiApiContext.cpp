@@ -20,8 +20,7 @@ facebook::jsi::Runtime *TryGetOrCreateContextRuntime(ReactContext const &context
 
   // The JSI runtime is not available if we do Web debugging when JS is running in web browser.
   JsiRuntime abiJsiRuntime = context.Handle().JSRuntime().as<JsiRuntime>();
-  if (!abiJsiRuntime)
-  {
+  if (!abiJsiRuntime) {
     return nullptr;
   }
 
@@ -61,8 +60,7 @@ facebook::jsi::Runtime *TryGetOrCreateContextRuntime(ReactContext const &context
 // Calls TryGetOrCreateContextRuntime to get JSI runtime.
 // It crashes when TryGetOrCreateContextRuntime returns null.
 // Note: deprecated in favor of TryGetOrCreateContextRuntime.
-[[deprecated]] facebook::jsi::Runtime& GetOrCreateContextRuntime(ReactContext const& context) noexcept
-{
+[[deprecated]] facebook::jsi::Runtime &GetOrCreateContextRuntime(ReactContext const &context) noexcept {
   facebook::jsi::Runtime *runtime = TryGetOrCreateContextRuntime(context);
   VerifyElseCrashSz(runtime, "JSI runtime is not available");
   return *runtime;
