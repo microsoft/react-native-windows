@@ -140,6 +140,7 @@ package-lock.json
 
 # Visual C++ cache files
 ipch/
+*.ipch
 *.aps
 *.ncb
 *.opendb
