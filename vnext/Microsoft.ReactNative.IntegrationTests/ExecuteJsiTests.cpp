@@ -136,7 +136,7 @@ TEST_CLASS (ExecuteJsiTests) {
           TestReactNativeHostHolder(L"ExecuteJsiTests", [&onDestroyed](ReactNativeHost const &host) noexcept {
             host.PackageProviders().Append(winrt::make<TestPackageProvider>());
             onDestroyed = host.InstanceSettings().InstanceDestroyed(
-                [](winrt::Windows::Foundation::IInspectable const &obj, InstanceDestroyedEventArgs const &args) {
+                [](winrt::Windows::Foundation::IInspectable const &, InstanceDestroyedEventArgs const &args) {
                   OnInstanceDestroyed(args.Context());
                 });
           });

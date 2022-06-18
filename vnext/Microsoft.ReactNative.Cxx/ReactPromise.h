@@ -5,6 +5,7 @@
 // vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
+#include <functional>
 #include "JSValueReader.h"
 #include "JSValueTreeReader.h"
 #include "JSValueTreeWriter.h"
