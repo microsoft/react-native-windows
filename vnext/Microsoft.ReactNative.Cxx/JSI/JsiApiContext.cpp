@@ -10,16 +10,20 @@ extern "C" IMAGE_DOS_HEADER __ImageBase;
 
 namespace winrt::Microsoft::ReactNative {
 
-// Get JSI Runtime from the current JS dispatcher thread.
-// If it is not found, then create it and store it in the context.Properties().
-// Make sure that the JSI runtime holder is removed when the instance is unloaded.
-facebook::jsi::Runtime &GetOrCreateContextRuntime(ReactContext const &context) noexcept {
+// Try to get JSI Runtime for the current JS dispatcher thread.
+// If it is not found, then create it based on context JSI runtime and store it in the context.Properties().
+// The function returns nullptr if the current context does not have JSI runtime.
+// It makes sure that the JSI runtime holder is removed when the instance is unloaded.
+facebook::jsi::Runtime *TryGetOrCreateContextRuntime(ReactContext const &context) noexcept {
   ReactDispatcher jsDispatcher = context.JSDispatcher();
   VerifyElseCrashSz(jsDispatcher.HasThreadAccess(), "Must be in JS thread");
 
   // The JSI runtime is not available if we do Web debugging when JS is running in web browser.
   JsiRuntime abiJsiRuntime = context.Handle().JSRuntime().as<JsiRuntime>();
-  VerifyElseCrashSz(abiJsiRuntime, "JSI runtime is not available");
+  if (!abiJsiRuntime)
+  {
+    return nullptr;
+  }
 
   // See if the JSI runtime was previously created.
   JsiAbiRuntime *runtime = JsiAbiRuntime::GetFromJsiRuntime(abiJsiRuntime);
@@ -51,6 +55,16 @@ facebook::jsi::Runtime &GetOrCreateContextRuntime(ReactContext const &context) n
         });
   }
 
+  return runtime;
+}
+
+// Calls TryGetOrCreateContextRuntime to get JSI runtime.
+// It crashes when TryGetOrCreateContextRuntime returns null.
+// Note: deprecated in favor of TryGetOrCreateContextRuntime.
+[[deprecated]] facebook::jsi::Runtime& GetOrCreateContextRuntime(ReactContext const& context) noexcept
+{
+  facebook::jsi::Runtime *runtime = TryGetOrCreateContextRuntime(context);
+  VerifyElseCrashSz(runtime, "JSI runtime is not available");
   return *runtime;
 }
 
