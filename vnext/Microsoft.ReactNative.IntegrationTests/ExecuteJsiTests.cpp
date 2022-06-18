@@ -174,7 +174,7 @@ TEST_CLASS (ExecuteJsiTests) {
         });
     ExecuteJsi(
         reactContext,
-        [](Runtime &rt) { TestEventService::LogEvent("OnInstanceDestroyed completed", nullptr); },
+        [](Runtime &) { TestEventService::LogEvent("OnInstanceDestroyed completed", nullptr); },
         &callResult);
   }
 };
