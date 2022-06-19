@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 19 Jun 2022 05:09:01 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.516",
+      "version": "0.0.0-canary.516",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "89fa1e3387fb04b0d8fb55dcd57e67b04b961535",
+            "comment": "Fix ExecuteJsi on instance shutdown"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Jun 2022 05:10:04 GMT",
       "tag": "react-native-windows_v0.0.0-canary.515",
       "version": "0.0.0-canary.515",
