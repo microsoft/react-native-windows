@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 20 Jun 2022 15:10:07 GMT",
+      "tag": "react-native-windows_v0.69.0-preview.7",
+      "version": "0.69.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4c1b60960152b9374dd214bb85a3c2239ab05fac",
+            "comment": "Fix use of [[maybe_unused]] attribute"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3b398b22684b48c654c550655c7ed9bbe7867b30",
+            "comment": "yarn format"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "05212a7189cb59f5dcade72b4354c3001178600b",
+            "comment": "Fix ExecuteJsi on instance shutdown"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jun 2022 15:10:55 GMT",
       "tag": "react-native-windows_v0.69.0-preview.6",
       "version": "0.69.0-preview.6",

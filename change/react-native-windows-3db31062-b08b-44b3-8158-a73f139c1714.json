@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "yarn format",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
