@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 09 Jun 2022 04:18:35 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Jun 2022 17:40:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.23
+
+Fri, 17 Jun 2022 17:40:57 GMT
+
+### Patches
+
+- Fix use of [[maybe_unused]] attribute (vmorozov@microsoft.com)
 
 ## 0.66.22
 
