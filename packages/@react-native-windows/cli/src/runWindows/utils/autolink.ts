@@ -416,29 +416,23 @@ export class AutolinkWindows {
           );
           verboseMessage(windowsDependency, this.options.logging);
 
-          let dependencyIsValid = true;
+          let dependencyIsValid = false;
 
-          dependencyIsValid = !!(
-            dependencyIsValid &&
+          const hasValidSourceDir =
             'sourceDir' in windowsDependency &&
-            windowsDependency.sourceDir &&
-            !windowsDependency.sourceDir.startsWith('Error: ')
-          );
+            windowsDependency.sourceDir !== undefined &&
+            !windowsDependency.sourceDir.startsWith('Error: ');
 
-          if (
+          const hasProjectsInProjectsArray =
             'projects' in windowsDependency &&
-            Array.isArray(windowsDependency.projects)
-          ) {
-            if (
-              windowsDependency.projects.length === 0 &&
-              dependencyName.includes('react-native')
-            ) {
-              // the dependency is probably a react native module, but we didn't find a module project
-              throw new CodedError(
-                'Autolinking',
-                `Found a Windows solution for ${dependencyName} but no React Native for Windows native module projects`,
-              );
-            }
+            Array.isArray(windowsDependency.projects) &&
+            windowsDependency.projects.length > 0;
+
+          if (hasValidSourceDir && hasProjectsInProjectsArray) {
+            // Module is source-based and has projects
+            dependencyIsValid = true;
+
+            // Validate each source project
             windowsDependency.projects.forEach((project) => {
               const itemsToCheck: Array<keyof ProjectDependency> = [
                 'projectFile',
