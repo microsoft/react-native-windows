@@ -156,7 +156,7 @@
 
                 - task: BinSkim@3
                   displayName: Run Binskim Analysis
-                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), eq('${{ matrix.FastBuild }}', 'false'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
+                  condition: and(succeeded(), eq('${{ matrix.BuildConfiguration }}', 'Release'), ne('${{ matrix.BuildPlatform }}', 'ARM64'))
                   inputs:
                       InputType: 'Basic'
                       Function: 'analyze'
