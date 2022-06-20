@@ -21,7 +21,7 @@ const DeviceIdRegKey = 'MachineId';
 export async function deviceId(): Promise<string> {
   try {
     const output = execSync(
-      `reg.exe query ${DeviceIdRegPath} /v ${DeviceIdRegKey}`,
+      `${process.env.windir}\\System32\\reg.exe query ${DeviceIdRegPath} /v ${DeviceIdRegKey}`,
     ).toString();
 
     const result = output.match(/\{([0-9A-Fa-f-]{36})\}/);
