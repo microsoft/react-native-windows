@@ -139,6 +139,7 @@ TEST_CLASS (ExecuteJsiTests) {
                 [](winrt::Windows::Foundation::IInspectable const &, InstanceDestroyedEventArgs const &args) {
                   OnInstanceDestroyed(args.Context());
                 });
+            return true;
           });
 
       TestEventService::ObserveEvents({
