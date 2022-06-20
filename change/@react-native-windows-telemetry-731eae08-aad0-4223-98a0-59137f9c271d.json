@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update source of DeviceID for telemetry",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
