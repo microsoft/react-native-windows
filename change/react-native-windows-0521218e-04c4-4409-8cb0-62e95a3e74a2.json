@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Bump Hermes package version",
+  "comment": "Enable Blob module with runtime option",
   "packageName": "react-native-windows",
-  "email": "tudor.mihai@microsoft.com",
+  "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
 }
