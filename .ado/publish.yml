@@ -322,6 +322,17 @@ jobs:
         inputs:
           versionSpec: ">=5.8.0"
 
+      # The signing tools require .net 5
+      - task: UseDotNet@2
+        displayName: 'Use .NET Core sdk 5.x'
+        inputs:
+          packageType: sdk
+          version: '5.x'
+
+      - script: |
+          dotnet --info
+        displayName: 'Display .NET Core info'
+
       - template: templates/prep-and-pack-nuget.yml
         parameters:
           publishCommitId: $(publishCommitId)
