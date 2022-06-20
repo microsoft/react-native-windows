@@ -40,6 +40,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/CompactValue.h",
+      "baseFile": "ReactCommon/yoga/yoga/CompactValue.h",
+      "baseHash": "493638f3a2cdf828c46bbb523240588c0ddedec1",
+      "issue": 10145
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "7fb642367afa73af956c2d8f918826c4a859fa89",
