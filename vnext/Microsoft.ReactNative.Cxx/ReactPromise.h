@@ -5,6 +5,11 @@
 // vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
+#include <functional>
+#include "JSValueReader.h"
+#include "JSValueTreeReader.h"
+#include "JSValueTreeWriter.h"
+#include "JSValueWriter.h"
 #include "ReactError.h"
 #include "winrt/Microsoft.ReactNative.h"
 
@@ -35,6 +40,7 @@ struct ReactPromiseBase {
 
  protected:
   bool TrySetState(State newState) const noexcept;
+  static MethodResultCallback GetRejectResultCallback(std::function<void(ReactError const &)> const &reject) noexcept;
 
  protected:
   const std::shared_ptr<std::atomic<State>> m_state;
@@ -47,6 +53,10 @@ template <class T>
 struct ReactPromise : ReactPromiseBase {
   using ReactPromiseBase::ReactPromiseBase;
 
+  ReactPromise(
+      std::function<void(T const &)> const &resolve,
+      std::function<void(ReactError const &)> const &reject) noexcept;
+
   // Successfully resolve the IReactPromise with an optional value.
   void Resolve(T const &value) const noexcept;
 };
@@ -55,9 +65,26 @@ template <>
 struct ReactPromise<void> : ReactPromiseBase {
   using ReactPromiseBase::ReactPromiseBase;
 
+  ReactPromise(std::function<void()> const &resolve, std::function<void(ReactError const &)> const &reject) noexcept;
+
   // Successfully resolve the IReactPromise with an optional value.
   void Resolve() const noexcept;
 };
+
+template <class T>
+ReactPromise<T>::ReactPromise(
+    std::function<void(T const &)> const &resolve,
+    std::function<void(ReactError const &)> const &reject) noexcept
+    : ReactPromiseBase(
+          winrt::make<JSValueTreeWriter>(),
+          [resolve](IJSValueWriter const &outputWriter) noexcept {
+            winrt::com_ptr<JSValueTreeWriter> writer = outputWriter.as<JSValueTreeWriter>();
+            auto reader = winrt::make<JSValueTreeReader>(writer->TakeValue());
+            T result{};
+            ReadArgs(reader, result);
+            resolve(result);
+          },
+          GetRejectResultCallback(reject)) {}
 
 // Successfully resolve the ReactPromise with an optional value.
 template <class T>

@@ -6,7 +6,6 @@
 
 #include "pch.h"
 #include "ReactPromise.h"
-#include "JSValueWriter.h"
 
 namespace winrt::Microsoft::ReactNative {
 
@@ -104,6 +103,27 @@ bool ReactPromiseBase::TrySetState(State newState) const noexcept {
 
   return false;
 }
+
+/*static*/ MethodResultCallback ReactPromiseBase::GetRejectResultCallback(
+    std::function<void(ReactError const &)> const &reject) noexcept {
+  return [reject](IJSValueWriter const &outputWriter) noexcept {
+    winrt::com_ptr<JSValueTreeWriter> writer = outputWriter.as<JSValueTreeWriter>();
+    JSValue jsValue = writer->TakeValue();
+    ReactError err{};
+    err.Code = jsValue.AsArray()[0].AsObject()[ErrorMapKeyCode].AsString();
+    err.Message = jsValue.AsArray()[0].AsObject()[ErrorMapKeyMessage].AsString();
+    err.UserInfo = jsValue.AsArray()[0].AsObject()[ErrorMapKeyUserInfo].AsObject().Copy();
+    reject(err);
+  };
+}
+
+ReactPromise<void>::ReactPromise(
+    std::function<void()> const &resolve,
+    std::function<void(ReactError const &)> const &reject) noexcept
+    : ReactPromiseBase(
+          winrt::make<JSValueTreeWriter>(),
+          [resolve](IJSValueWriter const & /*outputWriter*/) noexcept { resolve(); },
+          GetRejectResultCallback(reject)) {}
 
 // Successfully resolve the ReactPromise<void>.
 void ReactPromise<void>::Resolve() const noexcept {

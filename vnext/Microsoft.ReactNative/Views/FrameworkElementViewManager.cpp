@@ -115,6 +115,12 @@ inline float ToRadians(const winrt::Microsoft::ReactNative::JSValue &value) {
   return static_cast<float>(num); // assume suffix is "rad"
 }
 
+static void MultiplyInto(
+    winrt::Windows::Foundation::Numerics::float4x4 &m,
+    winrt::Windows::Foundation::Numerics::float4x4 o) {
+  m = o * m;
+}
+
 void FrameworkElementViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetNativeProps(writer);
 
@@ -181,52 +187,60 @@ bool FrameworkElementViewManager::UpdateProperty(
                 innerMatrix.m42 = static_cast<float>(innerValue[13].AsDouble());
                 innerMatrix.m43 = static_cast<float>(innerValue[14].AsDouble());
                 innerMatrix.m44 = static_cast<float>(innerValue[15].AsDouble());
-                transformMatrix = transformMatrix * innerMatrix;
+                MultiplyInto(transformMatrix, innerMatrix);
               } else if (transformType == "perspective") {
                 auto innerMatrix = winrt::Windows::Foundation::Numerics::float4x4::identity();
                 innerMatrix.m34 = -1 / innerValue.AsSingle();
-                transformMatrix = transformMatrix * innerMatrix;
+                MultiplyInto(transformMatrix, innerMatrix);
               } else if (transformType == "rotateX") {
-                transformMatrix = transformMatrix *
-                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_x(ToRadians(innerValue));
+                MultiplyInto(
+                    transformMatrix,
+                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_x(ToRadians(innerValue)));
               } else if (transformType == "rotateY") {
-                transformMatrix = transformMatrix *
-                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_y(ToRadians(innerValue));
+                MultiplyInto(
+                    transformMatrix,
+                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_y(ToRadians(innerValue)));
               } else if (transformType == "rotate" || transformType == "rotateZ") {
-                transformMatrix = transformMatrix *
-                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_z(ToRadians(innerValue));
+                MultiplyInto(
+                    transformMatrix,
+                    winrt::Windows::Foundation::Numerics::make_float4x4_rotation_z(ToRadians(innerValue)));
               } else if (transformType == "scale") {
-                transformMatrix = transformMatrix *
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_scale(
-                                      innerValue.AsSingle(), innerValue.AsSingle(), 1);
+                        innerValue.AsSingle(), innerValue.AsSingle(), 1));
               } else if (transformType == "scaleX") {
-                transformMatrix = transformMatrix *
-                    winrt::Windows::Foundation::Numerics::make_float4x4_scale(innerValue.AsSingle(), 1, 1);
+                MultiplyInto(
+                    transformMatrix,
+                    winrt::Windows::Foundation::Numerics::make_float4x4_scale(innerValue.AsSingle(), 1, 1));
               } else if (transformType == "scaleY") {
-                transformMatrix = transformMatrix *
-                    winrt::Windows::Foundation::Numerics::make_float4x4_scale(1, innerValue.AsSingle(), 1);
+                MultiplyInto(
+                    transformMatrix,
+                    winrt::Windows::Foundation::Numerics::make_float4x4_scale(1, innerValue.AsSingle(), 1));
               } else if (transformType == "translate") {
                 auto &params = innerValue.AsArray();
-                transformMatrix =
-                    transformMatrix *
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::make_float4x4_translation(
-                        params[0].AsSingle(), params[1].AsSingle(), params.size() > 2 ? params[2].AsSingle() : 0.f);
+                        params[0].AsSingle(), params[1].AsSingle(), params.size() > 2 ? params[2].AsSingle() : 0.f));
               } else if (transformType == "translateX") {
-                transformMatrix = transformMatrix *
-                    winrt::Windows::Foundation::Numerics::make_float4x4_translation(innerValue.AsSingle(), 0.f, 0.f);
+                MultiplyInto(
+                    transformMatrix,
+                    winrt::Windows::Foundation::Numerics::make_float4x4_translation(innerValue.AsSingle(), 0.f, 0.f));
               } else if (transformType == "translateY") {
-                transformMatrix = transformMatrix *
-                    winrt::Windows::Foundation::Numerics::make_float4x4_translation(0.f, innerValue.AsSingle(), 0.f);
+                MultiplyInto(
+                    transformMatrix,
+                    winrt::Windows::Foundation::Numerics::make_float4x4_translation(0.f, innerValue.AsSingle(), 0.f));
               } else if (transformType == "skewX") {
-                transformMatrix =
-                    transformMatrix *
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::float4x4(
-                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(innerValue.AsSingle(), 0.f));
+                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(innerValue.AsSingle(), 0.f)));
               } else if (transformType == "skewY") {
-                transformMatrix =
-                    transformMatrix *
+                MultiplyInto(
+                    transformMatrix,
                     winrt::Windows::Foundation::Numerics::float4x4(
-                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(0.f, innerValue.AsSingle()));
+                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(0.f, innerValue.AsSingle())));
               }
             }
           }
