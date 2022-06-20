@@ -733,7 +733,8 @@ void TextInputShadowNode::SetText(const winrt::Microsoft::ReactNative::JSValue &
             textBox.SelectionLength(oldValue.size() - diffStartIndex - diffEndIndex);
             // 4. Replace the selected text with the range between start and end index in the "new value"
             // Copies the substring view into a new winrt::hstring due to occasional crash
-            winrt::hstring replacementValue{std::wstring_view{newValue}.substr(diffStartIndex, newValue.size() - diffStartIndex - diffEndIndex)};
+            winrt::hstring replacementValue{
+                std::wstring_view{newValue}.substr(diffStartIndex, newValue.size() - diffStartIndex - diffEndIndex)};
             textBox.SelectedText(replacementValue);
           } else {
             textBox.Text(newValue);
