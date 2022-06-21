@@ -10,6 +10,8 @@
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.UI.Core.h>
+#include "CompHelpers.h"
+#include "CompositionContextHelper.h"
 #include "ReactNativeHost.h"
 
 #ifdef USE_FABRIC
@@ -111,26 +113,25 @@ void CompRootView::ReactNativeHost(ReactNative::ReactNativeHost const &value) no
   }
 }
 
-winrt::Windows::UI::Composition::Compositor CompRootView::Compositor() noexcept {
-  return m_compContext ? m_compContext->Compositor() : nullptr;
-}
-
-void CompRootView::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
-  if (Compositor() != value) {
-    assert(!Compositor());
-    m_compContext = std::make_shared<::Microsoft::ReactNative::CompContext>(value);
-  }
-}
-
-std::shared_ptr<::Microsoft::ReactNative::CompContext> CompRootView::CompContext() noexcept {
+winrt::Microsoft::ReactNative::Composition::ICompositionContext CompRootView::CompositionContext() noexcept {
   return m_compContext;
 }
 
-winrt::Windows::UI::Composition::Visual CompRootView::RootVisual() noexcept {
+void CompRootView::CompositionContext(
+    winrt::Microsoft::ReactNative::Composition::ICompositionContext const &value) noexcept {
+  m_compContext = value;
+  ;
+}
+
+winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionContext> CompRootView::CompContext() noexcept {
+  return m_compContext.as<::Microsoft::ReactNative::Composition::ICompositionContext>();
+}
+
+winrt::Microsoft::ReactNative::Composition::ICompositionVisual CompRootView::RootVisual() noexcept {
   return m_rootVisual;
 }
 
-void CompRootView::RootVisual(winrt::Windows::UI::Composition::Visual const &value) noexcept {
+void CompRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::ICompositionVisual const &value) noexcept {
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
     m_rootVisual = value;
@@ -193,8 +194,8 @@ void CompRootView::ReloadView() noexcept {
   }
 }
 
-winrt::Windows::UI::Composition::Visual CompRootView::GetVisual() const noexcept {
-  return m_rootVisual;
+winrt::com_ptr<::Microsoft::ReactNative::Composition::IVisual> CompRootView::GetVisual() const noexcept {
+  return m_rootVisual.as<::Microsoft::ReactNative::Composition::IVisual>();
 }
 
 std::string CompRootView::JSComponentName() const noexcept {
@@ -317,11 +318,9 @@ void CompRootView::UninitRootView() noexcept {
   m_isInitialized = false;
 }
 
-void CompRootView::ClearLoadingUI() noexcept {
-}
+void CompRootView::ClearLoadingUI() noexcept {}
 
-void CompRootView::EnsureLoadingUI() noexcept {
-}
+void CompRootView::EnsureLoadingUI() noexcept {}
 
 void CompRootView::ShowInstanceLoaded() noexcept {
   if (m_rootVisual) {
@@ -335,16 +334,13 @@ void CompRootView::ShowInstanceLoaded() noexcept {
   }
 }
 
-void CompRootView::ShowInstanceError() noexcept {
-}
+void CompRootView::ShowInstanceError() noexcept {}
 
-void CompRootView::ShowInstanceWaiting() noexcept {
-}
+void CompRootView::ShowInstanceWaiting() noexcept {}
 
 void CompRootView::ShowInstanceLoading() noexcept {
   if (!m_context->SettingsSnapshot().UseDeveloperSupport())
     return;
-
 }
 
 Mso::React::IReactViewHost *CompRootView::ReactViewHost() noexcept {

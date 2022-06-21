@@ -4,37 +4,47 @@
 
 #pragma once
 
-#include "CompParagraphComponentView.h"
+#include <Composition/CompositionSwitcher.h>
 
-#include <Utils/ValueUtils.h>
-#include <Windows.Graphics.DirectX.Direct3D11.interop.h>
-#include <d2d1_1.h>
-#include <d3d11.h>
-#include <d3d11_4.h>
-#include <dwrite.h>
-#include <unicode.h>
-#include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
+#include <winrt/Windows.UI.Composition.h>
 
 namespace Microsoft::ReactNative {
 
-bool CheckForDeviceRemoved(HRESULT hr);
+namespace Composition {
 
-struct CompContext {
-  CompContext(winrt::Windows::UI::Composition::Compositor const &compositor);
-
-  winrt::Windows::UI::Composition::Compositor Compositor() const noexcept;
-  winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept;
-  winrt::com_ptr<ID3D11Device> D3DDevice() noexcept;
-  winrt::com_ptr<ID2D1Device> D2DDevice() noexcept;
-  winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept;
-
- private:
-  winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
-  winrt::com_ptr<ID2D1Factory1> m_d2dFactory;
-  winrt::com_ptr<ID3D11Device> m_d3dDevice;
-  winrt::com_ptr<ID2D1Device> m_d2dDevice;
-  winrt::Windows::UI::Composition::CompositionGraphicsDevice m_compositionGraphicsDevice{nullptr};
-  winrt::com_ptr<ID3D11DeviceContext> m_d3dDeviceContext;
+// WinComp specific interface to extract the inner composition object
+MSO_STRUCT_GUID(ICompositionVisual, "2F7F7E82-0BEA-4Cf8-9531-E81338754187")
+struct ICompositionVisual : public IUnknown {
+  virtual winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept = 0;
 };
+
+// WinComp specific interface to extract the inner composition shadow object
+MSO_STRUCT_GUID(ICompositionDropShadow, "C6474C79-B99A-4312-8FE6-7BC0C9594E5C")
+struct ICompositionDropShadow : public IUnknown {
+  virtual winrt::Windows::UI::Composition::DropShadow InnerShadow() const noexcept = 0;
+};
+
+// WinComp specific interface to extract the inner composition brush object
+MSO_STRUCT_GUID(ICompositionBrush, "CFD63CA2-856E-4D5D-B2E2-68B982407051")
+struct ICompositionBrush : public IUnknown {
+  virtual winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept = 0;
+};
+
+// WinComp specific interface to extract the drawing surface object
+MSO_STRUCT_GUID(ICompositionDrawingSurfaceInner, "985963C3-1133-43CA-BAD2-AC4C893C3A1F")
+struct ICompositionDrawingSurfaceInner : public IUnknown {
+  virtual winrt::Windows::UI::Composition::ICompositionSurface Inner() const noexcept = 0;
+};
+
+winrt::Windows::UI::Composition::Visual CompVisualFromVisual(
+    const winrt::com_ptr<Composition::IVisual> &visual) noexcept;
+winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(const winrt::com_ptr<IDropShadow> &shadow) noexcept;
+winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(const winrt::com_ptr<IBrush> &brush) noexcept;
+winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
+    const winrt::com_ptr<ICompositionDrawingSurface> &surface) noexcept;
+
+} // namespace Composition
+
+bool CheckForDeviceRemoved(HRESULT hr);
 
 } // namespace Microsoft::ReactNative

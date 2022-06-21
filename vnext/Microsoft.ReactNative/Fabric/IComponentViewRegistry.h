@@ -27,7 +27,7 @@ struct IComponentViewRegistry {
       facebook::react::Tag tag
 #ifdef USE_WINCOMP
       ,
-      const std::shared_ptr<Microsoft::ReactNative::CompContext> &compContext
+      const winrt::com_ptr<Composition::ICompositionContext> &compContext
 #endif
       ) noexcept = 0;
   virtual ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept = 0;

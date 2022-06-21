@@ -279,5 +279,9 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\WinComp\CompositionContextHelper.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
   </ItemGroup>
 </Project>

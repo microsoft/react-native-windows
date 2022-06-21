@@ -22,13 +22,13 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   hstring ComponentName() noexcept;
   void ComponentName(hstring const &value) noexcept;
 
-  // property Compositor
-  winrt::Windows::UI::Composition::Compositor Compositor() noexcept;
-  void Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept;
+  // property CompositionContext
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext CompositionContext() noexcept;
+  void CompositionContext(winrt::Microsoft::ReactNative::Composition::ICompositionContext const &value) noexcept;
 
   // property RootVisual
-  winrt::Windows::UI::Composition::Visual RootVisual() noexcept;
-  void RootVisual(winrt::Windows::UI::Composition::Visual const &value) noexcept;
+  winrt::Microsoft::ReactNative::Composition::ICompositionVisual RootVisual() noexcept;
+  void RootVisual(winrt::Microsoft::ReactNative::Composition::ICompositionVisual const &value) noexcept;
 
   // property InitialProps
   ReactNative::JSValueArgWriter InitialProps() noexcept;
@@ -50,9 +50,9 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 
-s public: // ICompRootView
-  winrt::Windows::UI::Composition::Visual GetVisual() const noexcept override;
-  std::shared_ptr<::Microsoft::ReactNative::CompContext> CompContext() noexcept override;
+ public: // ICompRootView
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::IVisual> GetVisual() const noexcept override;
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionContext> CompContext() noexcept override;
 
  public: // IReactRootView
   std::string JSComponentName() const noexcept override;
@@ -70,7 +70,7 @@ s public: // ICompRootView
 
  private:
   ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
-  std::shared_ptr<::Microsoft::ReactNative::CompContext> m_compContext;
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext{nullptr};
   hstring m_componentName;
   ReactNative::JSValueArgWriter m_initialPropsWriter;
   bool m_isPerspectiveEnabled{true};
@@ -86,7 +86,7 @@ s public: // ICompRootView
   Mso::CntPtr<Mso::React::IReactViewHost> m_reactViewHost;
   std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
   std::shared_ptr<::Microsoft::ReactNative::CompEventHandler> m_compEventHandler;
-  winrt::Windows::UI::Composition::Visual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ICompositionVisual m_rootVisual{nullptr};
   void UpdateRootViewInternal() noexcept;
   void ClearLoadingUI() noexcept;
   void EnsureLoadingUI() noexcept;

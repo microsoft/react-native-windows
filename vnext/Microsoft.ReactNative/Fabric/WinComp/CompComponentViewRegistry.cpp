@@ -35,24 +35,22 @@ void CompComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactC
 ComponentViewDescriptor const &CompComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
-    const std::shared_ptr<CompContext> &compContext) noexcept {
+    const winrt::com_ptr<Composition::ICompositionContext> &compContext) noexcept {
   // TODO implement recycled components like core does
 
   std::shared_ptr<CompBaseComponentView> view;
 
   if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
-    view = std::make_shared<CompParagraphComponentView>();
+    view = std::make_shared<CompParagraphComponentView>(compContext, tag);
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
-    view = std::make_shared<CompScrollViewComponentView>();
+    view = std::make_shared<CompScrollViewComponentView>(compContext, tag);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
-    view = std::make_shared<CompImageComponentView>(m_context);
+    view = std::make_shared<CompImageComponentView>(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::CompWindowsTextInputShadowNode::Handle()) {
-    view = std::make_shared<CompWindowsTextInputComponentView>(m_context);
+    view = std::make_shared<CompWindowsTextInputComponentView>(compContext, tag, m_context);
   } else {
-    view = std::make_shared<CompViewComponentView>();
+    view = std::make_shared<CompViewComponentView>(compContext, tag);
   }
-  view->CompContext(compContext);
-  view->Tag(tag);
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});
   return it.first->second;

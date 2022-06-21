@@ -19,35 +19,41 @@ namespace Microsoft::ReactNative {
 struct CompScrollViewComponentView;
 
 struct CompScrollViewComponentView : CompBaseComponentView {
-  struct ScrollInteractionTrackerOwner : public winrt::implements<
-                                             ScrollInteractionTrackerOwner,
-                                             winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner> {
-    ScrollInteractionTrackerOwner(CompScrollViewComponentView *outer);
+  /*
+struct ScrollInteractionTrackerOwner : public winrt::implements<
+                                           ScrollInteractionTrackerOwner,
+                                           winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner> {
+  ScrollInteractionTrackerOwner(CompScrollViewComponentView *outer);
 
-    void CustomAnimationStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerCustomAnimationStateEnteredArgs args) noexcept;
-    void IdleStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerIdleStateEnteredArgs args) noexcept;
-    void InertiaStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaStateEnteredArgs args) noexcept;
-    void InteractingStateEntered(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs args) noexcept;
-    void RequestIgnored(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs args) noexcept;
-    void ValuesChanged(
-        winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept;
+  void CustomAnimationStateEntered(
+      winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerCustomAnimationStateEnteredArgs args) noexcept;
+  void IdleStateEntered(
+      winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerIdleStateEnteredArgs args) noexcept;
+  void InertiaStateEntered(
+      winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaStateEnteredArgs args) noexcept;
+  void InteractingStateEntered(
+      winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs args) noexcept;
+  void RequestIgnored(
+      winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs args) noexcept;
+  void ValuesChanged(
+      winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
+      winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept;
 
-   private:
-    CompScrollViewComponentView *m_outer;
-  };
+ private:
+  CompScrollViewComponentView *m_outer;
+};
 
-  CompScrollViewComponentView();
+*/
+
+  using Super = CompBaseComponentView;
+  CompScrollViewComponentView(
+      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      facebook::react::Tag tag);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -66,9 +72,8 @@ struct CompScrollViewComponentView : CompBaseComponentView {
   facebook::react::SharedProps props() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
-  const winrt::Windows::UI::Composition::Visual Visual() const noexcept override;
+  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
 
-  const winrt::Windows::UI::Composition::ContainerVisual ContentVisual() const noexcept;
   // void OnPointerDown(const winrt::Windows::UI::Input::PointerPoint &pp) noexcept override;
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
@@ -77,10 +82,7 @@ struct CompScrollViewComponentView : CompBaseComponentView {
   void updateContentVisualSize() noexcept;
 
   facebook::react::Size m_contentSize;
-  winrt::Windows::UI::Composition::Visual m_visual{nullptr};
-  winrt::Windows::UI::Composition::ContainerVisual m_contentVisual{nullptr};
-  winrt::Windows::UI::Composition::Interactions::InteractionTracker m_interactionTracker{nullptr};
-  winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
+  winrt::com_ptr<Composition::IScrollerVisual> m_visual;
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;

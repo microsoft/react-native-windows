@@ -18,7 +18,7 @@ class CompComponentViewRegistry final : public IComponentViewRegistry {
   ComponentViewDescriptor const &dequeueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,
-      const std::shared_ptr<Microsoft::ReactNative::CompContext> &compContext) noexcept override;
+      const winrt::com_ptr<Composition::ICompositionContext> &compContext) noexcept override;
   ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept override;
   std::shared_ptr<IComponentView> findComponentViewWithTag(facebook::react::Tag tag) const noexcept override;
   void enqueueComponentViewWithComponentHandle(

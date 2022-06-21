@@ -77,8 +77,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 #endif
   struct SurfaceInfo {
 #ifdef USE_WINCOMP
-    winrt::Windows::UI::Composition::Visual rootVisual{nullptr};
-    std::shared_ptr<CompContext> compContext;
+    winrt::com_ptr<Composition::IVisual> rootVisual{nullptr};
+    winrt::com_ptr<Composition::ICompositionContext> compContext;
 #else
     XamlView xamlView;
 #endif

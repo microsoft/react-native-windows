@@ -27,8 +27,11 @@ extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICIma
 
 namespace Microsoft::ReactNative {
 
-CompImageComponentView::CompImageComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_context(reactContext) {
+CompImageComponentView::CompImageComponentView(
+    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : Super(compContext, tag), m_context(reactContext) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 
@@ -203,7 +206,7 @@ void CompImageComponentView::updateProps(
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {
-    m_visual.Opacity(newImageProps.opacity);
+    m_visual->Opacity(newImageProps.opacity);
   }
 
   if (oldImageProps.sources != newImageProps.sources) {
@@ -245,7 +248,7 @@ void CompImageComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    m_visual->IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   // m_needsBorderUpdate = true;
@@ -253,10 +256,10 @@ void CompImageComponentView::updateLayoutMetrics(
 
   updateBorderLayoutMetrics(*m_props);
 
-  m_visual.Size(
+  m_visual->Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
+  m_visual->Offset({
       layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
@@ -282,62 +285,48 @@ void CompImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMas
   ensureDrawingSurface();
 }
 
+void CompImageComponentView::OnRenderingDeviceLost() noexcept {
+  // Draw the text again
+  DrawImage();
+}
+
 void CompImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurfaceInterop && m_wicbmp) {
     winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
 
-    drawingSurface = CompositionGraphicsDevice().CreateDrawingSurface(
+    m_drawingSurfaceInterop = m_compContext->CreateDrawingSurface(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
-    // Cache the interop pointer, since that's what we always use.
-    drawingSurface.as(m_drawingSurfaceInterop);
-
     DrawImage();
 
-    // If the rendering device is lost, the application will recreate and replace it. We then
-    // own redrawing our pixels.
-    if (!m_renderDeviceReplacedToken) {
-      m_renderDeviceReplacedToken = CompositionGraphicsDevice().RenderingDeviceReplaced(
-          [this](
-              winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
-              winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
-            // Draw the text again
-            DrawImage();
-            return S_OK;
-          });
-    }
-
-    winrt::Windows::UI::Composition::ICompositionSurface surface;
-    m_drawingSurfaceInterop.as(surface);
-    auto surfaceBrush = Compositor().CreateSurfaceBrush(surface);
+    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop);
 
     const auto &imageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
     switch (imageProps.resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
-        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::Fill);
+        surfaceBrush->Stretch(Composition::CompositionStretch::Fill);
         break;
       case facebook::react::ImageResizeMode::Cover:
-        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::UniformToFill);
+        surfaceBrush->Stretch(Composition::CompositionStretch::UniformToFill);
         break;
       case facebook::react::ImageResizeMode::Contain:
-        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::Uniform);
+        surfaceBrush->Stretch(Composition::CompositionStretch::Uniform);
         break;
       case facebook::react::ImageResizeMode::Center:
-        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::None);
+        surfaceBrush->Stretch(Composition::CompositionStretch::None);
         break;
       case facebook::react::ImageResizeMode::Repeat:
-        surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::UniformToFill);
+        surfaceBrush->Stretch(Composition::CompositionStretch::UniformToFill);
         // TODO - Hook up repeat
         break;
       default:
         assert(false);
     }
-
-    m_visual.Brush(surfaceBrush);
+    m_visual->Brush(surfaceBrush);
   }
 }
 
@@ -350,9 +339,8 @@ void CompImageComponentView::DrawImage() noexcept {
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 
-  if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(
-          nullptr, __uuidof(ID2D1DeviceContext), d2dDeviceContext.put_void(), &offset))) {
-    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
+  if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+    const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
 
     winrt::com_ptr<ID2D1Bitmap1> bitmap;
     winrt::check_hresult(d2dDeviceContext->CreateBitmapFromWicBitmap(m_wicbmp.get(), nullptr, bitmap.put()));
@@ -405,12 +393,11 @@ facebook::react::Tag CompImageComponentView::hitTest(facebook::react::Point pt, 
 
 void CompImageComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = Compositor().CreateSpriteVisual();
-    m_brush = Compositor().CreateSurfaceBrush();
+    m_visual = m_compContext->CreateSpriteVisual();
   }
 }
 
-const winrt::Windows::UI::Composition::Visual CompImageComponentView::Visual() const noexcept {
+const winrt::com_ptr<Composition::ISpriteVisual> CompImageComponentView::Visual() const noexcept {
   return m_visual;
 }
 

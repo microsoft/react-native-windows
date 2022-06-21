@@ -11,12 +11,16 @@
 #include <react/renderer/components/text/ParagraphProps.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "CompHelpers.h"
 #include "CompViewComponentView.h"
 
 namespace Microsoft::ReactNative {
 
 struct CompParagraphComponentView : CompBaseComponentView {
-  CompParagraphComponentView();
+  using Super = CompBaseComponentView;
+  CompParagraphComponentView(
+      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      facebook::react::Tag tag);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -34,8 +38,9 @@ struct CompParagraphComponentView : CompBaseComponentView {
   void prepareForRecycle() noexcept override;
   facebook::react::SharedProps props() noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
+  void OnRenderingDeviceLost() noexcept override;
 
-  const winrt::Windows::UI::Composition::Visual Visual() const noexcept override;
+  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
 
  private:
   void ensureVisual() noexcept;
@@ -44,15 +49,13 @@ struct CompParagraphComponentView : CompBaseComponentView {
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
 
   std::shared_ptr<facebook::react::ParagraphProps const> m_props;
-  winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
-  winrt::com_ptr<::IDWriteTextLayout> m_textLayout{nullptr};
+  winrt::com_ptr<Composition::ISpriteVisual> m_visual;
+  winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
-  winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop{nullptr};
-  winrt::com_ptr<winrt::Windows::UI::Composition::ICompositionGraphicsDevice> _compositionGraphicsDevice{nullptr};
-  winrt::event_token m_renderDeviceReplacedToken;
+  winrt::com_ptr<Composition::ICompositionDrawingSurface> m_drawingSurfaceInterop;
 };
 
 } // namespace Microsoft::ReactNative

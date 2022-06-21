@@ -10,6 +10,7 @@
 #include <Views/Image/ReactImage.h>
 #include <wincodec.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "CompHelpers.h"
 #include "CompViewComponentView.h"
 
 #pragma warning(push)
@@ -23,7 +24,11 @@
 namespace Microsoft::ReactNative {
 
 struct CompImageComponentView : CompBaseComponentView {
-  CompImageComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  using Super = CompBaseComponentView;
+  CompImageComponentView(
+      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -39,9 +44,10 @@ struct CompImageComponentView : CompBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedProps props() noexcept override;
+  void OnRenderingDeviceLost() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
-  const winrt::Windows::UI::Composition::Visual Visual() const noexcept override;
+  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
 
  private:
   void ensureVisual() noexcept;
@@ -51,11 +57,10 @@ struct CompImageComponentView : CompBaseComponentView {
   void DrawImage() noexcept;
 
   facebook::react::SharedViewProps m_props;
-  winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
-  winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
+
+  winrt::com_ptr<Microsoft::ReactNative::Composition::ISpriteVisual> m_visual;
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop{nullptr};
-  winrt::event_token m_renderDeviceReplacedToken;
+  winrt::com_ptr<Composition::ICompositionDrawingSurface> m_drawingSurfaceInterop;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
   bool m_reloadImage{false};

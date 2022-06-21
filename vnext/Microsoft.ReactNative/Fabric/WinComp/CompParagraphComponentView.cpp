@@ -14,7 +14,10 @@
 
 namespace Microsoft::ReactNative {
 
-CompParagraphComponentView::CompParagraphComponentView() {
+CompParagraphComponentView::CompParagraphComponentView(
+    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    facebook::react::Tag tag)
+    : Super(compContext, tag) {
   static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
   m_props = defaultProps;
 }
@@ -80,15 +83,15 @@ void CompParagraphComponentView::updateLayoutMetrics(
   ensureVisual();
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    m_visual->IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   m_layoutMetrics = layoutMetrics;
 
-  m_visual.Size(
+  m_visual->Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual.Offset({
+  m_visual->Offset({
       layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
@@ -128,10 +131,8 @@ facebook::react::Tag CompParagraphComponentView::hitTest(facebook::react::Point 
 
 void CompParagraphComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    // Create a sprite visual
-    winrt::Windows::UI::Composition::SpriteVisual spriteVisual{nullptr};
-    spriteVisual = Compositor().CreateSpriteVisual();
-    m_visual = spriteVisual;
+    m_visual = m_compContext->CreateSpriteVisual();
+    ;
   }
 }
 
@@ -166,6 +167,10 @@ void CompParagraphComponentView::updateTextAlignment(
   }
   // TODO
   // m_textFormat->SetTextAlignment(alignment);
+}
+
+void CompParagraphComponentView::OnRenderingDeviceLost() noexcept {
+  DrawText();
 }
 
 void CompParagraphComponentView::updateVisualBrush() noexcept {
@@ -208,33 +213,15 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
           m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
           m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
       winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
-      drawingSurface = CompositionGraphicsDevice().CreateDrawingSurface(
+      m_drawingSurfaceInterop = m_compContext->CreateDrawingSurface(
           surfaceSize,
           winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
           winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
-
-      // Cache the interop pointer, since that's what we always use.
-      drawingSurface.as(m_drawingSurfaceInterop);
     }
 
     DrawText();
 
-    // If the rendering device is lost, the application will recreate and replace it. We then
-    // own redrawing our pixels.
-    if (!m_renderDeviceReplacedToken) {
-      m_renderDeviceReplacedToken = CompositionGraphicsDevice().RenderingDeviceReplaced(
-          [this](
-              winrt::Windows::UI::Composition::ICompositionGraphicsDevice source,
-              winrt::Windows::UI::Composition::IRenderingDeviceReplacedEventArgs args) {
-            // Draw the text again
-            DrawText();
-            return S_OK;
-          });
-    }
-
-    winrt::Windows::UI::Composition::ICompositionSurface surface;
-    m_drawingSurfaceInterop.as(surface);
-    auto surfaceBrush = Compositor().CreateSurfaceBrush(surface);
+    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop);
 
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
@@ -265,10 +252,10 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
     }
     */
     // TODO Using brush alignment to align the text makes it blury...
-    surfaceBrush.HorizontalAlignmentRatio(horizAlignment);
-    surfaceBrush.VerticalAlignmentRatio(0.f);
-    surfaceBrush.Stretch(winrt::Windows::UI::Composition::CompositionStretch::None);
-    m_visual.Brush(surfaceBrush);
+    surfaceBrush->HorizontalAlignmentRatio(horizAlignment);
+    surfaceBrush->VerticalAlignmentRatio(0.f);
+    surfaceBrush->Stretch(Composition::CompositionStretch::None);
+    m_visual->Brush(surfaceBrush);
   }
 
   if (m_requireRedraw) {
@@ -292,8 +279,7 @@ void CompParagraphComponentView::DrawText() noexcept {
   winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
 
-  if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(
-          nullptr, __uuidof(ID2D1DeviceContext), d2dDeviceContext.put_void(), &offset))) {
+  if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
 
     // Create a solid color brush for the text. A more sophisticated application might want
@@ -406,7 +392,7 @@ void CompParagraphComponentView::DrawText() noexcept {
   }
 }
 
-const winrt::Windows::UI::Composition::Visual CompParagraphComponentView::Visual() const noexcept {
+const winrt::com_ptr<Composition::ISpriteVisual> CompParagraphComponentView::Visual() const noexcept {
   return m_visual;
 }
 

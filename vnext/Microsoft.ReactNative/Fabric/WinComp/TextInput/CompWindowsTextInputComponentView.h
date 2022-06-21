@@ -10,6 +10,7 @@
 #include <textserv.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "../CompHelpers.h"
 #include "../CompViewComponentView.h"
 #include "../ComponentView.h"
 #include "CompWindowsTextInputProps.h"
@@ -23,7 +24,10 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   friend CompTextHost;
 
   using Super = CompBaseComponentView;
-  CompWindowsTextInputComponentView(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  CompWindowsTextInputComponentView(
+      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -43,8 +47,8 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   void parent(IComponentView *parent) noexcept override;
-
-  const winrt::Windows::UI::Composition::Visual Visual() const noexcept override;
+  void OnRenderingDeviceLost() noexcept override;
+  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
 
  private:
   struct DrawBlock {
@@ -56,7 +60,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   facebook::react::AttributedString getAttributedString() const;
   void ensureVisual() noexcept;
   void ensureDrawingSurface() noexcept;
-  void DrawImage() noexcept;
+  void DrawText() noexcept;
   void DrawCaret(bool show) noexcept;
   void UpdateCharFormat() noexcept;
   void UpdateParaFormat() noexcept;
@@ -66,11 +70,10 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   std::string GetTextFromRichEdit() const noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
-  winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
-  winrt::Windows::UI::Composition::SpriteVisual m_caretVisual{nullptr};
-  winrt::Windows::UI::Composition::ScalarKeyFrameAnimation m_caretOpacityAnimation{nullptr};
+  winrt::com_ptr<Composition::ISpriteVisual> m_visual;
+  winrt::com_ptr<Composition::IVisual> m_caretVisual;
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop{nullptr};
+  winrt::com_ptr<Composition::ICompositionDrawingSurface> m_drawingSurfaceInterop{nullptr};
 
   // Used by ITextHost impl
   CHARFORMAT2W m_cf;
@@ -78,7 +81,6 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
 
   winrt::com_ptr<ITextHost> m_textHost;
   winrt::com_ptr<ITextServices2> m_textServices;
-  winrt::event_token m_renderDeviceReplacedToken;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
   std::shared_ptr<facebook::react::CompWindowsTextInputProps const> m_props;
   std::shared_ptr<facebook::react::CompWindowsTextInputShadowNode::ConcreteState const> m_state;

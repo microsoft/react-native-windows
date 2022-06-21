@@ -1,0 +1,37 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition
+{
+  [webhosthidden]
+  DOC_STRING("Used to provide an abstraction over WinComp or other compositor implementations. Generally this would be created by calling @CompositionContextHelper.CreateContext")
+  interface ICompositionContext { 
+    Int64 Handle();
+  }
+
+  [webhosthidden]
+  DOC_STRING("Used to provide an implementation agnostic abstraction over a specific composition visual. Generally this would be created by calling @CompositionContextHelper.CreateVisual")
+  interface ICompositionVisual {
+    Int64 Handle();
+  }
+
+  [webhosthidden]
+  [default_interface]
+  DOC_STRING("A helper static class for @IRedBoxHandler.")
+  static runtimeclass CompositionContextHelper
+  {
+    DOC_STRING(
+      "This provides access to the default @IRedBoxHandler. "
+      "This can be used to display the default `RedBox` as part of a custom `RedBoxHandler` implementation.")
+    static ICompositionContext CreateContext(Windows.UI.Composition.Compositor compositor);
+
+    DOC_STRING(
+      "This provides access to the default @IRedBoxHandler. "
+      "This can be used to display the default `RedBox` as part of a custom `RedBoxHandler` implementation.")
+    static ICompositionVisual CreateVisual(Windows.UI.Composition.Visual visual);
+  }
+
+} // namespace Microsoft.ReactNative.Composition

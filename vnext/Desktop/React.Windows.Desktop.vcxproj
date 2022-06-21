@@ -126,6 +126,9 @@
       -->
       <PreprocessorDefinitions>CORE_ABI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
+    <Midl>
+      <PreprocessorDefinitions Condition="'$(UseWinComp)' == 'true'">USE_WINCOMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
   </ItemDefinitionGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactCommunity.cpp.props" />
   <ItemGroup>
@@ -151,6 +154,7 @@
     <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
     <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
+    <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompositionContext.idl" />
     <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompRootView.idl" />
   </ItemGroup>
   <ItemGroup>

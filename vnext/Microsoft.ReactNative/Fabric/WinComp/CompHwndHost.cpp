@@ -10,6 +10,7 @@
 #include <dispatchQueue/dispatchQueue.h>
 #include <windowsx.h>
 #include <winrt/Windows.UI.Core.h>
+#include "CompositionContextHelper.h"
 #include "ReactNativeHost.h"
 
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
@@ -28,7 +29,7 @@ winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget CompHwndHost::Targ
 void CompHwndHost::CreateDesktopWindowTarget(HWND window) {
   namespace abi = ABI::Windows::UI::Composition::Desktop;
 
-  auto interop = m_compRootView.Compositor().as<abi::ICompositorDesktopInterop>();
+  auto interop = m_compositor.as<abi::ICompositorDesktopInterop>();
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
   check_hresult(interop->CreateDesktopWindowTarget(
       window, false, reinterpret_cast<abi::IDesktopWindowTarget **>(put_abi(target))));
@@ -36,7 +37,7 @@ void CompHwndHost::CreateDesktopWindowTarget(HWND window) {
 }
 
 void CompHwndHost::CreateCompositionRoot() {
-  auto root = m_compRootView.Compositor().CreateContainerVisual();
+  auto root = m_compositor.CreateContainerVisual();
   root.RelativeSizeAdjustment({1.0f, 1.0f});
   root.Offset({0, 0, 0});
   m_target.Root(root);
@@ -48,7 +49,9 @@ void CompHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
 
   m_compRootView = winrt::Microsoft::ReactNative::CompRootView();
-  m_compRootView.Compositor(std::move(m_compositor));
+  m_compRootView.CompositionContext(
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateContext(
+          m_compositor));
 
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();
@@ -60,7 +63,8 @@ void CompHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_compRootView.ReactNativeHost(std::move(m_reactNativeHost));
 
   m_compRootView.ScaleFactor(ScaleFactor());
-  m_compRootView.RootVisual(RootVisual());
+  m_compRootView.RootVisual(
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(RootVisual()));
 
   UpdateSize();
 }
@@ -137,15 +141,11 @@ void CompHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &value) no
 }
 
 winrt::Windows::UI::Composition::Compositor CompHwndHost::Compositor() const noexcept {
-  return m_compRootView ? m_compRootView.Compositor() : m_compositor;
+  return m_compositor;
 }
 
 void CompHwndHost::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
-  if (m_compRootView) {
-    m_compRootView.Compositor(value);
-  } else {
-    m_compositor = value;
-  }
+  m_compositor = value;
 }
 
 void CompHwndHost::EnsureTarget() noexcept {

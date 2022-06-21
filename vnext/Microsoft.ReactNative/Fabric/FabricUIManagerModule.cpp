@@ -283,7 +283,7 @@ void FabricUIManager::startSurface(
 #endif
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
-    self->m_registry.dequeueComponentViewWithComponentHandle(
+    auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
         facebook::react::RootShadowNode::Handle(),
         surfaceId
 #ifdef USE_WINCOMP
@@ -291,6 +291,18 @@ void FabricUIManager::startSurface(
         self->m_surfaceRegistry.at(surfaceId).compContext
 #endif
     );
+
+#ifdef USE_WINCOMP
+    self->m_surfaceRegistry.at(surfaceId).rootVisual->InsertAt(
+        static_cast<const CompBaseComponentView &>(*rootComponentViewDescriptor.view).Visual(), 0);
+#else
+    auto children = self->m_surfaceRegistry.at(surfaceId).xamlView.as<xaml::Controls::Panel>().Children();
+
+    uint32_t index;
+    if (!children.IndexOf(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element(), index)) {
+      children.Append(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element());
+    }
+#endif
   });
 
   facebook::react::LayoutContext context;
@@ -343,32 +355,7 @@ void FabricUIManager::constraintSurfaceLayout(
   m_surfaceManager->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
 }
 
-void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
-  auto rootComponentViewDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
-
-#if USE_WINCOMP
-  auto containerChildren =
-      m_surfaceRegistry.at(surfaceId).rootVisual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
-
-  // Do not add the root again if its already in the tree
-  auto existingChild = containerChildren.First();
-  do {
-    if (existingChild.Current() ==
-        static_cast<const CompBaseComponentView &>(*rootComponentViewDescriptor.view).Visual()) {
-      return;
-    }
-  } while (existingChild.MoveNext());
-
-  containerChildren.InsertAtTop(static_cast<const CompBaseComponentView &>(*rootComponentViewDescriptor.view).Visual());
-#else
-  auto children = m_surfaceRegistry.at(surfaceId).xamlView.as<xaml::Controls::Panel>().Children();
-
-  uint32_t index;
-  if (!children.IndexOf(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element(), index)) {
-    children.Append(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element());
-  }
-#endif
-}
+void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {}
 
 struct RemoveDeleteMetadata {
   facebook::react::Tag tag;
@@ -522,39 +509,32 @@ void FabricUIManager::schedulerDidFinishTransaction(
 void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
     facebook::react::SurfaceId surfaceId,
     const facebook::react::ShadowNode &shadowView) {
-  /*
-    if (m_context.UIDispatcher().HasThreadAccess()) {
-    m_registry.dequeueComponentViewWithComponentHandle(shadowView.componentHandle, surfaceId);
+  // iOS does not do this optimization, but Android does.  It maybe that android's allocations are more expensive due to
+  // the Java boundary.
+  // TODO: We should do some perf tests to see if this is worth doing.
+
+  if (m_context.UIDispatcher().HasThreadAccess()) {
+    m_registry.dequeueComponentViewWithComponentHandle(
+        shadowView.getComponentHandle(),
+        surfaceId
+#ifdef USE_WINCOMP
+        ,
+        m_surfaceRegistry.at(surfaceId).compContext
+#endif
+    );
   } else {
-      m_context.UIDispatcher().Post(
-        [componentHandle = shadowView.componentHandle, surfaceId, self = shared_from_this()]() {
-          self->m_registry.dequeueComponentViewWithComponentHandle(componentHandle, surfaceId);
-          });
+    m_context.UIDispatcher().Post(
+        [componentHandle = shadowView.getComponentHandle(), surfaceId, self = shared_from_this()]() {
+          self->m_registry.dequeueComponentViewWithComponentHandle(
+              componentHandle,
+              surfaceId
+#ifdef USE_WINCOMP
+              ,
+              self->m_surfaceRegistry.at(surfaceId).compContext
+#endif
+          );
+        });
   }
-  */
-
-  // Not needed on iOS.. so maybe not needed in windows?
-  /*
-  bool isLayoutableShadowNode = shadowView.layoutMetrics != facebook::react::EmptyLayoutMetrics;
-
-  shadowView.props
-
-  local_ref<ReadableMap::javaobject> props =
-      castReadableMap(ReadableNativeMap::newObjectCxxArgs(shadowView.props->rawProps));
-  auto component = getPlatformComponentName(shadowView);
-
-  preallocateView(
-      localJavaUIManager,
-      surfaceId,
-      shadowView.tag,
-      component.get(),
-      props.get(),
-      (javaStateWrapper != nullptr ? javaStateWrapper.get() : nullptr),
-      isLayoutableShadowNode);
-
-  assert(false);
-
-  */
 }
 
 void FabricUIManager::schedulerDidCloneShadowNode(

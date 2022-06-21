@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import "CompositionContext.idl";
 import "IJSValueWriter.idl";
 import "ReactNativeHost.idl";
 #include "NamespaceRedirect.h"
@@ -27,10 +28,10 @@ namespace Microsoft.ReactNative
     ReactNativeHost ReactNativeHost { get; set; };
 
     DOC_STRING("The Compositor associated with the @CompRootView. It must be set to show any React UI elements.")
-    Windows.UI.Composition.Compositor Compositor {get; set; };
+    Microsoft.ReactNative.Composition.ICompositionContext CompositionContext { get; set; };
 
     DOC_STRING("The RootVisual associated with the @CompRootView. It must be set to show any React UI elements.")
-    Windows.UI.Composition.Visual RootVisual {get; set; };
+    Microsoft.ReactNative.Composition.ICompositionVisual RootVisual { get; set; };
 
     Windows.Foundation.Size Size {get; set; };
 
