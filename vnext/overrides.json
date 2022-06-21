@@ -85,11 +85,10 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/CompactValue.h",
       "baseFile": "ReactCommon/yoga/yoga/CompactValue.h",
-      "baseHash": "493638f3a2cdf828c46bbb523240588c0ddedec1",
+      "baseHash": "88e0b04337e5457ab792218d9a0a786a0551c7ec",
       "issue": 10145
     },
     {
->>>>>>> 088360db6 (Stop using /fp:strict to build yoga.cpp (#8725))
       "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
