@@ -7,10 +7,11 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
+  Pressable,
   ListRenderItemInfo,
 } from 'react-native';
 import { ViewWin32 } from '@office-iss/react-native-win32';
-import { IHandledKeyboardEvent, Pressable, TextWin32 } from '@office-iss/react-native-win32';
+import { IHandledKeyboardEvent, TextWin32 } from '@office-iss/react-native-win32';
 
 const styles = StyleSheet.create({
   border: {
