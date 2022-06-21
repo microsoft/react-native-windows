@@ -6,8 +6,8 @@
 #include <DynamicWriter.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
+#include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
-#include <Modules\NativeUIManager.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
 #include "ShadowNodeBase.h"
