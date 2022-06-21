@@ -95,7 +95,7 @@ void CompBaseComponentView::ensureBorderVisual() noexcept {
 void CompBaseComponentView::updateBorderProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
-      // TODO borders using Switcher (and more complete implementation in general)
+  // TODO borders using Switcher (and more complete implementation in general)
   /*
 if (oldViewProps.borderColors != newViewProps.borderColors) {
 if (newViewProps.borderColors.all) {
@@ -115,7 +115,7 @@ if (newViewProps.borderColors.all) {
 }
 
 void CompBaseComponentView::updateBorderLayoutMetrics(const facebook::react::ViewProps &viewProps) noexcept {
-      // TODO borders using Switcher (and more complete implementation in general)
+  // TODO borders using Switcher (and more complete implementation in general)
   /*
   if (m_borderVisual) {
     m_borderGeometry.Size(
@@ -145,11 +145,11 @@ void CompBaseComponentView::updateBorderLayoutMetrics(const facebook::react::Vie
 }
 
 void CompBaseComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
-      // TODO borders using Switcher (and more complete implementation in general)
-      /*
-  if (m_borderVisual)
-    index++;
-    */
+  // TODO borders using Switcher (and more complete implementation in general)
+  /*
+if (m_borderVisual)
+index++;
+*/
 }
 
 void CompBaseComponentView::OnRenderingDeviceLost() noexcept {}
@@ -160,7 +160,7 @@ CompViewComponentView::CompViewComponentView(
     : Super(compContext, tag) {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
-  m_visual = m_compContext->CreateSpriteVisual();
+  m_compContext->CreateSpriteVisual(m_visual.put());
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -175,7 +175,7 @@ void CompViewComponentView::mountChildComponentView(const IComponentView &childC
 
   const_cast<IComponentView &>(childComponentView).parent(this);
 
-  m_visual->InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual->InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get(), index);
 }
 
 void CompViewComponentView::unmountChildComponentView(
@@ -186,7 +186,7 @@ void CompViewComponentView::unmountChildComponentView(
   indexOffsetForBorder(index);
 
   const_cast<IComponentView &>(childComponentView).parent(nullptr);
-  m_visual->Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
+  m_visual->Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get());
 }
 
 void CompViewComponentView::updateProps(
@@ -197,8 +197,8 @@ void CompViewComponentView::updateProps(
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      auto brush = m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color);
-      m_visual->Brush(brush);
+      winrt::com_ptr<Composition::IBrush> brush;
+      m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color, brush.put());
     } else {
       m_visual->Brush(nullptr);
     }
@@ -214,13 +214,14 @@ void CompViewComponentView::updateProps(
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
       oldViewProps.shadowRadius != newViewProps.shadowRadius) {
-    auto shadow = m_compContext->CreateDropShadow();
+    winrt::com_ptr<Composition::IDropShadow> shadow;
+    m_compContext->CreateDropShadow(shadow.put());
     shadow->Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
     shadow->Opacity(newViewProps.shadowOpacity);
     shadow->BlurRadius(newViewProps.shadowRadius);
     if (newViewProps.shadowColor)
       shadow->Color(newViewProps.shadowColor.AsWindowsColor());
-    m_visual->Shadow(shadow);
+    m_visual->Shadow(shadow.get());
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -295,8 +296,7 @@ void CompViewComponentView::updateLayoutMetrics(
   });
 }
 
-void CompViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-}
+void CompViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 
 void CompViewComponentView::prepareForRecycle() noexcept {}
 facebook::react::SharedProps CompViewComponentView::props() noexcept {

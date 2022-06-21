@@ -294,16 +294,16 @@ void CompImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurfaceInterop && m_wicbmp) {
-    winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
-
-    m_drawingSurfaceInterop = m_compContext->CreateDrawingSurface(
+    m_compContext->CreateDrawingSurface(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied,
+        m_drawingSurfaceInterop.put());
 
     DrawImage();
 
-    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop);
+    winrt::com_ptr<Composition::ISurfaceBrush> surfaceBrush;
+    m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get(), surfaceBrush.put());
 
     const auto &imageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
     switch (imageProps.resizeMode) {
@@ -326,7 +326,7 @@ void CompImageComponentView::ensureDrawingSurface() noexcept {
       default:
         assert(false);
     }
-    m_visual->Brush(surfaceBrush);
+    m_visual->Brush(surfaceBrush.get());
   }
 }
 
@@ -393,7 +393,7 @@ facebook::react::Tag CompImageComponentView::hitTest(facebook::react::Point pt, 
 
 void CompImageComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = m_compContext->CreateSpriteVisual();
+    m_compContext->CreateSpriteVisual(m_visual.put());
   }
 }
 

@@ -2,7 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-// These interfaces provide an abstraction that allows us to target either WinComp, or Office's AirSpace composition layers
+// These interfaces provide an abstraction that allows us to target either WinComp, or Office's AirSpace composition
+// layers
 
 #pragma once
 
@@ -46,8 +47,8 @@ struct IDropShadow : public IUnknown {
 
 MSO_STRUCT_GUID(IVisual, "2FD536CA-289D-42F8-9540-D65BB20D2419")
 struct IVisual : public IUnknown {
-  virtual void InsertAt(const winrt::com_ptr<IVisual> &visual, uint32_t index) noexcept = 0;
-  virtual void Remove(const winrt::com_ptr<IVisual> &visual) noexcept = 0;
+  virtual void InsertAt(IVisual *visual, uint32_t index) noexcept = 0;
+  virtual void Remove(IVisual *visual) noexcept = 0;
   virtual void Opacity(float opacity) noexcept = 0;
   virtual void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept = 0;
   virtual void RotationAngle(float rotation) noexcept = 0;
@@ -58,14 +59,14 @@ struct IVisual : public IUnknown {
 
 MSO_STRUCT_GUID(ISpriteVisual, "00D8A172-5727-4A69-B97F-B588656D7AF5")
 struct ISpriteVisual : public IVisual {
-  virtual void Brush(const winrt::com_ptr<IBrush> &visual) noexcept = 0;
-  virtual void Shadow(const winrt::com_ptr<IDropShadow> &shadow) noexcept = 0;
+  virtual void Brush(IBrush *brush) noexcept = 0;
+  virtual void Shadow(IDropShadow *shadow) noexcept = 0;
 };
 
 MSO_STRUCT_GUID(IScrollerVisual, "DF33137A-3436-43FC-86EF-FC3B54370C84")
 struct IScrollerVisual : public ISpriteVisual {
-  virtual void Brush(const winrt::com_ptr<IBrush> &brush) noexcept = 0;
-  // TODO use proper event?
+  virtual void Brush(IBrush *brush) noexcept = 0;
+  // TODO use proper event
   virtual void SetOnScrollCallback(
       std::function<void(winrt::Windows::Foundation::Numerics::float2)> &&callback) noexcept = 0;
   virtual void ContentSize(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept = 0;
@@ -80,22 +81,18 @@ struct IRenderingDeviceReplacedListener : IUnknown {
 
 MSO_STRUCT_GUID(ICompositionContext, "80B91D79-CDD2-405A-8440-8891F71DC2E0")
 struct ICompositionContext : IUnknown {
-  virtual winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept = 0;
-  virtual winrt::com_ptr<ID3D11Device> D3DDevice() noexcept = 0;
-  virtual winrt::com_ptr<ID2D1Device> D2DDevice() noexcept = 0;
-
-  virtual winrt::com_ptr<Composition::ICompositionDrawingSurface> CreateDrawingSurface(
+  virtual void CreateDrawingSurface(
       winrt::Windows::Foundation::Size surfaceSize,
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
-      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept = 0;
+      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode,
+      ICompositionDrawingSurface **drawingSurfaceOut) noexcept = 0;
 
-  virtual winrt::com_ptr<Composition::ISpriteVisual> CreateSpriteVisual() noexcept = 0;
-  virtual winrt::com_ptr<Composition::IScrollerVisual> CreateScrollerVisual() noexcept = 0;
-  virtual winrt::com_ptr<Composition::IVisual> CreateCaratVisual() noexcept = 0;
-  virtual winrt::com_ptr<Composition::IDropShadow> CreateDropShadow() noexcept = 0;
-  virtual winrt::com_ptr<Composition::IBrush> CreateColorBrush(winrt::Windows::UI::Color color) noexcept = 0;
-  virtual winrt::com_ptr<Composition::ISurfaceBrush> CreateSurfaceBrush(
-      const winrt::com_ptr<Composition::ICompositionDrawingSurface> &surface) noexcept = 0;
+  virtual void CreateSpriteVisual(ISpriteVisual **visualOut) noexcept = 0;
+  virtual void CreateScrollerVisual(IScrollerVisual **scrollerOut) noexcept = 0;
+  virtual void CreateCaratVisual(IVisual **visualOut) noexcept = 0;
+  virtual void CreateDropShadow(IDropShadow **shadowOut) noexcept = 0;
+  virtual void CreateColorBrush(winrt::Windows::UI::Color color, IBrush **brushOut) noexcept = 0;
+  virtual void CreateSurfaceBrush(ICompositionDrawingSurface *surface, ISurfaceBrush **surfaceBrushOut) noexcept = 0;
 
   // TODO Add and hook up to rootnode - to notify the tree
   // virtual void add_RenderingDeviceReplaced(const IRenderingDeviceReplacedListener& listener) noexcept = 0;

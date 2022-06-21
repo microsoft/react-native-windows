@@ -136,21 +136,29 @@ struct DeviceLostHelper {
 
 namespace Composition {
 
-winrt::Windows::UI::Composition::Visual CompVisualFromVisual(const winrt::com_ptr<IVisual> &visual) noexcept {
-  return visual ? visual.as<ICompositionVisual>()->InnerVisual() : nullptr;
+winrt::Windows::UI::Composition::Visual CompVisualFromVisual(IVisual *visual) noexcept {
+  winrt::com_ptr<ICompositionVisual> s;
+  winrt::check_hresult(visual->QueryInterface(winrt::guid_of<ICompositionVisual>(), s.put_void()));
+  return s ? s->InnerVisual() : nullptr;
 }
 
-winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(const winrt::com_ptr<IDropShadow> &shadow) noexcept {
-  return shadow ? shadow.as<ICompositionDropShadow>()->InnerShadow() : nullptr;
+winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(IDropShadow *shadow) noexcept {
+  winrt::com_ptr<ICompositionDropShadow> s;
+  winrt::check_hresult(shadow->QueryInterface(winrt::guid_of<ICompositionDropShadow>(), s.put_void()));
+  return s ? s->InnerShadow() : nullptr;
 }
 
-winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(const winrt::com_ptr<IBrush> &brush) noexcept {
-  return brush ? brush.as<ICompositionBrush>()->InnerBrush() : nullptr;
+winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(IBrush *brush) noexcept {
+  winrt::com_ptr<ICompositionBrush> s;
+  winrt::check_hresult(brush->QueryInterface(winrt::guid_of<ICompositionBrush>(), s.put_void()));
+  return s ? s->InnerBrush() : nullptr;
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
-    const winrt::com_ptr<ICompositionDrawingSurface> &surface) noexcept {
-  return surface ? surface.as<ICompositionDrawingSurfaceInner>()->Inner() : nullptr;
+    ICompositionDrawingSurface *surface) noexcept {
+  winrt::com_ptr<ICompositionDrawingSurfaceInner> s;
+  winrt::check_hresult(surface->QueryInterface(winrt::guid_of<ICompositionDrawingSurfaceInner>(), s.put_void()));
+  return s ? s->Inner() : nullptr;
 }
 
 } // namespace Composition

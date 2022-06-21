@@ -36,12 +36,11 @@ struct ICompositionDrawingSurfaceInner : public IUnknown {
   virtual winrt::Windows::UI::Composition::ICompositionSurface Inner() const noexcept = 0;
 };
 
-winrt::Windows::UI::Composition::Visual CompVisualFromVisual(
-    const winrt::com_ptr<Composition::IVisual> &visual) noexcept;
-winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(const winrt::com_ptr<IDropShadow> &shadow) noexcept;
-winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(const winrt::com_ptr<IBrush> &brush) noexcept;
+winrt::Windows::UI::Composition::Visual CompVisualFromVisual(Composition::IVisual *visual) noexcept;
+winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(IDropShadow *shadow) noexcept;
+winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(IBrush *brush) noexcept;
 winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
-    const winrt::com_ptr<ICompositionDrawingSurface> &surface) noexcept;
+    ICompositionDrawingSurface *surface) noexcept;
 
 } // namespace Composition
 

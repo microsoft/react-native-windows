@@ -129,7 +129,7 @@ void CompScrollViewComponentView::mountChildComponentView(
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
   const_cast<IComponentView &>(childComponentView).parent(this);
 
-  m_visual->InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual->InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get(), index);
 }
 
 void CompScrollViewComponentView::unmountChildComponentView(
@@ -137,7 +137,7 @@ void CompScrollViewComponentView::unmountChildComponentView(
     uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
-  m_visual->Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
+  m_visual->Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get());
   const_cast<IComponentView &>(childComponentView).parent(nullptr);
 }
 
@@ -150,12 +150,13 @@ void CompScrollViewComponentView::updateProps(
   ensureVisual();
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
+    winrt::com_ptr<Composition::IBrush> brush;
     if (newViewProps.backgroundColor) {
-      auto brush = m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color);
-      m_visual->Brush(brush);
+      m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color, brush.put());
+      m_visual->Brush(brush.get());
     } else {
-      auto brush = m_compContext->CreateColorBrush({0, 0, 0, 0});
-      m_visual->Brush(brush);
+      m_compContext->CreateColorBrush({0, 0, 0, 0}, brush.put());
+      m_visual->Brush(brush.get());
     }
   }
 
@@ -295,7 +296,7 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
 
 void CompScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = m_compContext->CreateScrollerVisual();
+    m_compContext->CreateScrollerVisual(m_visual.put());
 
     m_visual->SetOnScrollCallback([this](winrt::Windows::Foundation::Numerics::float2 position) {
       auto eventEmitter = GetEventEmitter();

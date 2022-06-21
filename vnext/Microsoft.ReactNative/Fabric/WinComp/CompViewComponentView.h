@@ -52,11 +52,11 @@ struct CompBaseComponentView : public IComponentView {
   IComponentView *m_parent{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;
 
-/*
-  winrt::Windows::UI::Composition::ShapeVisual m_borderVisual{nullptr};
-  winrt::Windows::UI::Composition::CompositionSpriteShape m_borderShape{nullptr};
-  winrt::Windows::UI::Composition::CompositionRoundedRectangleGeometry m_borderGeometry{nullptr};
-  */
+  /*
+    winrt::Windows::UI::Composition::ShapeVisual m_borderVisual{nullptr};
+    winrt::Windows::UI::Composition::CompositionSpriteShape m_borderShape{nullptr};
+    winrt::Windows::UI::Composition::CompositionRoundedRectangleGeometry m_borderGeometry{nullptr};
+    */
 };
 
 struct CompViewComponentView : public CompBaseComponentView {

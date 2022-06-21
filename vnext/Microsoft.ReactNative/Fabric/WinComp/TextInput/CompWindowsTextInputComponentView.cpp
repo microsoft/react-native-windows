@@ -931,12 +931,11 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurfaceInterop) {
-    winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
-
-    m_drawingSurfaceInterop = m_compContext->CreateDrawingSurface(
+    m_compContext->CreateDrawingSurface(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied,
+        m_drawingSurfaceInterop.put());
 
     auto rcClient = getClientRect();
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
@@ -947,11 +946,12 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
     DrawText();
 
-    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop);
+    winrt::com_ptr<Composition::ISurfaceBrush> surfaceBrush;
+    m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get(), surfaceBrush.put());
     surfaceBrush->HorizontalAlignmentRatio(0.f);
     surfaceBrush->VerticalAlignmentRatio(0.f);
     surfaceBrush->Stretch(Composition::CompositionStretch::None);
-    m_visual->Brush(surfaceBrush);
+    m_visual->Brush(surfaceBrush.get());
   }
 }
 
@@ -1059,7 +1059,7 @@ facebook::react::Tag CompWindowsTextInputComponentView::hitTest(
 void CompWindowsTextInputComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     HrEnsureRichEd20Loaded();
-    m_visual = m_compContext->CreateSpriteVisual();
+    m_compContext->CreateSpriteVisual(m_visual.put());
     m_textHost = winrt::make<CompTextHost>(this);
     winrt::com_ptr<IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
@@ -1067,30 +1067,8 @@ void CompWindowsTextInputComponentView::ensureVisual() noexcept {
   }
 
   if (!m_caretVisual) {
-    m_caretVisual = m_compContext->CreateCaratVisual();
-    /*
-    m_caretVisual = Compositor().CreateSpriteVisual();
-    m_caretVisual.Brush(Compositor().CreateColorBrush(winrt::Windows::UI::Colors::Black()));
-    m_caretVisual.Opacity(1.0f);
-    m_caretVisual.RelativeSizeAdjustment({0.0f, 1.0f});
-
-    // Blinking animation
-    constexpr float ftCaretFadePct = 0.2385714285714f;
-    constexpr float stayVisFrame = (1.0f - ftCaretFadePct) / 2.0f;
-    constexpr float fadeVisFrame = ftCaretFadePct / 2.0f;
-
-    m_caretOpacityAnimation = Compositor().CreateScalarKeyFrameAnimation();
-    m_caretOpacityAnimation.InsertKeyFrame(0.0f, 1.0f);
-    m_caretOpacityAnimation.InsertKeyFrame(stayVisFrame, 1.0f);
-    m_caretOpacityAnimation.InsertKeyFrame(
-        stayVisFrame + fadeVisFrame, 0.0f, Compositor().CreateLinearEasingFunction());
-    m_caretOpacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame + stayVisFrame, 0.0f);
-    m_caretOpacityAnimation.InsertKeyFrame(1.0f, 1.0f, Compositor().CreateLinearEasingFunction());
-    m_caretOpacityAnimation.Duration(std::chrono::milliseconds{1000});
-    m_caretOpacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
-    */
-
-    m_visual->InsertAt(m_caretVisual, 0);
+    m_compContext->CreateCaratVisual(m_caretVisual.put());
+    m_visual->InsertAt(m_caretVisual.get(), 0);
   }
 }
 

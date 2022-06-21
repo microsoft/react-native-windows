@@ -5,14 +5,13 @@
 #include "Composition.CompositionContextHelper.g.cpp"
 #endif
 
-#include "CompHelpers.h"
 #include <windows.ui.composition.interop.h>
-#include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
+#include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.Composition.interactions.h>
+#include "CompHelpers.h"
 
 namespace Microsoft::ReactNative::Composition {
-
 
 struct CompositionDrawingSurface
     : public winrt::implements<CompositionDrawingSurface, ICompositionDrawingSurface, ICompositionDrawingSurfaceInner> {
@@ -45,30 +44,25 @@ struct CompDropShadow : public winrt::implements<CompDropShadow, IDropShadow, IC
     return m_shadow;
   }
 
-  void Offset(winrt::Windows::Foundation::Numerics::float3 const& offset) noexcept override
-  {
+  void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept override {
     m_shadow.Offset(offset);
   }
 
-  void Opacity(float opacity) noexcept override
-  {
+  void Opacity(float opacity) noexcept override {
     m_shadow.Opacity(opacity);
   }
 
-  void BlurRadius(float radius) noexcept override
-  {
+  void BlurRadius(float radius) noexcept override {
     m_shadow.BlurRadius(radius);
   }
 
-  void Color(winrt::Windows::UI::Color color) noexcept override
-  {
+  void Color(winrt::Windows::UI::Color color) noexcept override {
     m_shadow.Color(color);
   }
 
  private:
   winrt::Windows::UI::Composition::DropShadow m_shadow;
 };
-
 
 struct CompBrush : public winrt::implements<CompBrush, IBrush, ICompositionBrush> {
   CompBrush(winrt::Windows::UI::Composition::CompositionBrush const &brush) : m_brush(brush) {}
@@ -81,28 +75,24 @@ struct CompBrush : public winrt::implements<CompBrush, IBrush, ICompositionBrush
   winrt::Windows::UI::Composition::CompositionBrush m_brush;
 };
 
-struct CompSurfaceBrush : public winrt::implements<CompSurfaceBrush, ISurfaceBrush, ICompositionBrush>
-{
-  CompSurfaceBrush(const winrt::Windows::UI::Composition::Compositor & compositor, const winrt::com_ptr<ICompositionDrawingSurface>& drawingSurfaceInterop)
-      : m_brush(compositor.CreateSurfaceBrush(CompDrawingSurfaceFromDrawingSurface(drawingSurfaceInterop)))
-  {
-  }
+struct CompSurfaceBrush : public winrt::implements<CompSurfaceBrush, ISurfaceBrush, ICompositionBrush> {
+  CompSurfaceBrush(
+      const winrt::Windows::UI::Composition::Compositor &compositor,
+      ICompositionDrawingSurface *drawingSurfaceInterop)
+      : m_brush(compositor.CreateSurfaceBrush(CompDrawingSurfaceFromDrawingSurface(drawingSurfaceInterop))) {}
 
   winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept {
     return m_brush;
   }
 
-  void HorizontalAlignmentRatio(float ratio) noexcept
-  {
+  void HorizontalAlignmentRatio(float ratio) noexcept {
     m_brush.HorizontalAlignmentRatio(ratio);
   }
-  void VerticalAlignmentRatio(float ratio) noexcept
-  {
+  void VerticalAlignmentRatio(float ratio) noexcept {
     m_brush.VerticalAlignmentRatio(ratio);
   }
 
-  void Stretch(CompositionStretch mode) noexcept
-  {
+  void Stretch(CompositionStretch mode) noexcept {
     static_assert(
         static_cast<CompositionStretch>(winrt::Windows::UI::Composition::CompositionStretch::None) ==
         CompositionStretch::None);
@@ -116,22 +106,21 @@ struct CompSurfaceBrush : public winrt::implements<CompSurfaceBrush, ISurfaceBru
         static_cast<CompositionStretch>(winrt::Windows::UI::Composition::CompositionStretch::UniformToFill) ==
         CompositionStretch::UniformToFill);
 
-    m_brush.Stretch(static_cast < winrt::Windows::UI::Composition::CompositionStretch>(mode));
+    m_brush.Stretch(static_cast<winrt::Windows::UI::Composition::CompositionStretch>(mode));
   }
 
  private:
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush;
 };
 
-
 struct CompVisual : public winrt::implements<
-                              CompVisual,
-                              IVisual,
-                              ICompositionVisual,
-                              winrt::Microsoft::ReactNative::Composition::ICompositionVisual> {
+                        CompVisual,
+                        IVisual,
+                        ICompositionVisual,
+                        winrt::Microsoft::ReactNative::Composition::ICompositionVisual> {
   CompVisual(winrt::Windows::UI::Composition::Visual const &visual) : m_visual(visual) {}
 
-     // Work around winrt ICompositionVisual not being able to be an empty interface
+  // Work around winrt ICompositionVisual not being able to be an empty interface
   int64_t Handle() const noexcept {
     return 0;
   }
@@ -140,7 +129,7 @@ struct CompVisual : public winrt::implements<
     return m_visual;
   }
 
-  void InsertAt(const winrt::com_ptr<IVisual> &visual, uint32_t index) noexcept override {
+  void InsertAt(IVisual *visual, uint32_t index) noexcept override {
     auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
     auto compVisual = CompVisualFromVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
@@ -153,7 +142,7 @@ struct CompVisual : public winrt::implements<
     containerChildren.InsertAbove(compVisual, insertAfter.Current());
   }
 
-  void Remove(const winrt::com_ptr<IVisual> &visual) noexcept override {
+  void Remove(IVisual *visual) noexcept override {
     auto compVisual = CompVisualFromVisual(visual);
     auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
     containerChildren.Remove(compVisual);
@@ -194,7 +183,7 @@ struct CompSpriteVisual : public winrt::implements<CompSpriteVisual, ISpriteVisu
     return m_visual;
   }
 
-  void InsertAt(const winrt::com_ptr<IVisual> &visual, uint32_t index) noexcept override {
+  void InsertAt(IVisual *visual, uint32_t index) noexcept override {
     auto containerChildren = m_visual.Children();
     auto compVisual = CompVisualFromVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
@@ -207,13 +196,13 @@ struct CompSpriteVisual : public winrt::implements<CompSpriteVisual, ISpriteVisu
     containerChildren.InsertAbove(compVisual, insertAfter.Current());
   }
 
-  void Remove(const winrt::com_ptr<IVisual> &visual) noexcept override {
+  void Remove(IVisual *visual) noexcept override {
     auto compVisual = CompVisualFromVisual(visual);
     auto containerChildren = m_visual.Children();
     containerChildren.Remove(compVisual);
   }
 
-  void Brush(const winrt::com_ptr<IBrush> &brush) noexcept override {
+  void Brush(IBrush *brush) noexcept override {
     m_visual.Brush(CompBrushFromBrush(brush));
   }
 
@@ -233,7 +222,7 @@ struct CompSpriteVisual : public winrt::implements<CompSpriteVisual, ISpriteVisu
     m_visual.IsVisible(isVisible);
   }
 
-  void Size(winrt::Windows::Foundation::Numerics::float2 const & size) noexcept override {
+  void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept override {
     m_visual.Size(size);
   }
 
@@ -241,15 +230,13 @@ struct CompSpriteVisual : public winrt::implements<CompSpriteVisual, ISpriteVisu
     m_visual.Offset(offset);
   }
 
-  void Shadow(const winrt::com_ptr<IDropShadow>& shadow) noexcept override
-  {
+  void Shadow(IDropShadow *shadow) noexcept override {
     m_visual.Shadow(CompShadowFromShadow(shadow));
   }
 
  private:
   winrt::Windows::UI::Composition::SpriteVisual m_visual;
 };
-
 
 struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScrollerVisual, ICompositionVisual> {
   struct ScrollInteractionTrackerOwner : public winrt::implements<
@@ -269,25 +256,21 @@ struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScroll
         winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaStateEnteredArgs args) noexcept {}
     void InteractingStateEntered(
         winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
-        winrt::Windows::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs args) noexcept {
-    }
+        winrt::Windows::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs args) noexcept {}
     void RequestIgnored(
         winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
         winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs args) noexcept {}
     void ValuesChanged(
         winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
         winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept {
-           
-          m_outer->m_scrollCallback({args.Position().x, args.Position().y});
-        }
+      m_outer->m_scrollCallback({args.Position().x, args.Position().y});
+    }
 
    private:
     CompScrollerVisual *m_outer;
   };
 
-
   CompScrollerVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {
-
     auto compositor = m_visual.Compositor();
     m_contentVisual = compositor.CreateSpriteVisual();
 
@@ -329,7 +312,7 @@ struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScroll
     return m_visual;
   }
 
-  void InsertAt(const winrt::com_ptr<IVisual> &visual, uint32_t index) noexcept override {
+  void InsertAt(IVisual *visual, uint32_t index) noexcept override {
     auto containerChildren = m_contentVisual.Children();
     auto compVisual = CompVisualFromVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
@@ -342,14 +325,14 @@ struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScroll
     containerChildren.InsertAbove(compVisual, insertAfter.Current());
   }
 
-  void Remove(const winrt::com_ptr<IVisual> &visual) noexcept override {
+  void Remove(IVisual *visual) noexcept override {
     auto compVisual = CompVisualFromVisual(visual);
     auto containerChildren = m_contentVisual.Children();
     containerChildren.Remove(compVisual);
   }
 
-  void Brush(const winrt::com_ptr<IBrush> &visual) noexcept override {
-    // TODO
+  void Brush(IBrush *brush) noexcept override {
+    m_visual.Brush(CompBrushFromBrush(brush));
   }
 
   void Opacity(float opacity) noexcept override {
@@ -368,7 +351,7 @@ struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScroll
     m_visual.IsVisible(isVisible);
   }
 
-  void Size(winrt::Windows::Foundation::Numerics::float2 const & size) noexcept override {
+  void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept override {
     m_visual.Size(size);
   }
 
@@ -376,7 +359,7 @@ struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScroll
     m_visual.Offset(offset);
   }
 
-  void Shadow(const winrt::com_ptr<IDropShadow> &shadow) noexcept override {
+  void Shadow(IDropShadow *shadow) noexcept override {
     m_visual.Shadow(CompShadowFromShadow(shadow));
   }
 
@@ -391,7 +374,7 @@ struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScroll
   }
 
   winrt::Windows::Foundation::Numerics::float3 const ScrollPosition() noexcept override {
-      return m_interactionTracker.Position();
+    return m_interactionTracker.Position();
   }
 
   void ScrollBy(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept override {
@@ -406,152 +389,155 @@ struct CompScrollerVisual : public winrt::implements<CompScrollerVisual, IScroll
   winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
 };
 
-struct CompContext
-    : winrt::
-          implements<CompContext, winrt::Microsoft::ReactNative::Composition::ICompositionContext, ICompositionContext> {
+struct CompContext : winrt::implements<
+                         CompContext,
+                         winrt::Microsoft::ReactNative::Composition::ICompositionContext,
+                         ICompositionContext> {
   CompContext(winrt::Windows::UI::Composition::Compositor const &compositor) : m_compositor(compositor) {}
 
-   // Work around winrt ICompositionContext not being able to be an empty interface
- int64_t Handle() const noexcept {
+  // Work around winrt ICompositionContext not being able to be an empty interface
+  int64_t Handle() const noexcept {
     return 0;
   }
 
-winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept {
-  if (!m_d2dFactory) {
-    // Initialize Direct2D resources.
+  winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept {
+    if (!m_d2dFactory) {
+      // Initialize Direct2D resources.
+      // #if defined(_DEBUG)
+      //     D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_INFORMATION};
+      // #else
+      D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_NONE};
+      // #endif
+
+      D2D1CreateFactory(
+          D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &d2d1FactoryOptions, m_d2dFactory.put_void());
+    }
+    return m_d2dFactory;
+  }
+
+  winrt::com_ptr<ID3D11Device> D3DDevice() noexcept {
+    // This flag adds support for surfaces with a different color channel ordering than the API default.
+    // You need it for compatibility with Direct2D.
+    UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
+
     // #if defined(_DEBUG)
-    //     D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_INFORMATION};
-    // #else
-    D2D1_FACTORY_OPTIONS d2d1FactoryOptions{D2D1_DEBUG_LEVEL_NONE};
+    //   creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
     // #endif
 
-    D2D1CreateFactory(
-        D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &d2d1FactoryOptions, m_d2dFactory.put_void());
+    // This array defines the set of DirectX hardware feature levels this app  supports.
+    // The ordering is important and you should  preserve it.
+    // Don't forget to declare your app's minimum required feature level in its
+    // description.  All apps are assumed to support 9.1 unless otherwise stated.
+    D3D_FEATURE_LEVEL featureLevels[] = {
+        D3D_FEATURE_LEVEL_11_1,
+        D3D_FEATURE_LEVEL_11_0,
+        D3D_FEATURE_LEVEL_10_1,
+        D3D_FEATURE_LEVEL_10_0,
+        D3D_FEATURE_LEVEL_9_3,
+        D3D_FEATURE_LEVEL_9_2,
+        D3D_FEATURE_LEVEL_9_1};
+    if (!m_d3dDevice) {
+      D3D11CreateDevice(
+          nullptr, // specify null to use the default adapter
+          D3D_DRIVER_TYPE_HARDWARE,
+          0,
+          creationFlags, // optionally set debug and Direct2D compatibility flags
+          featureLevels, // list of feature levels this app can support
+          ARRAYSIZE(featureLevels), // number of possible feature levels
+          D3D11_SDK_VERSION,
+          m_d3dDevice.put(), // returns the Direct3D device created
+          nullptr /*&m_featureLevel*/, // returns feature level of device created
+          nullptr /*&context*/ // returns the device immediate context
+      );
+    }
+    return m_d3dDevice;
   }
-  return m_d2dFactory;
-}
-winrt::com_ptr<ID3D11Device> D3DDevice() noexcept {
-  // This flag adds support for surfaces with a different color channel ordering than the API default.
-  // You need it for compatibility with Direct2D.
-  UINT creationFlags = D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
-  // #if defined(_DEBUG)
-  //   creationFlags |= D3D11_CREATE_DEVICE_DEBUG;
-  // #endif
+  winrt::com_ptr<ID2D1Device> D2DDevice() noexcept {
+    if (!m_d2dDevice) {
+      winrt::com_ptr<IDXGIDevice> dxgiDevice;
+      // Obtain the underlying DXGI device of the Direct3D11 device.
+      D3DDevice().as(dxgiDevice);
 
-  // This array defines the set of DirectX hardware feature levels this app  supports.
-  // The ordering is important and you should  preserve it.
-  // Don't forget to declare your app's minimum required feature level in its
-  // description.  All apps are assumed to support 9.1 unless otherwise stated.
-  D3D_FEATURE_LEVEL featureLevels[] = {
-      D3D_FEATURE_LEVEL_11_1,
-      D3D_FEATURE_LEVEL_11_0,
-      D3D_FEATURE_LEVEL_10_1,
-      D3D_FEATURE_LEVEL_10_0,
-      D3D_FEATURE_LEVEL_9_3,
-      D3D_FEATURE_LEVEL_9_2,
-      D3D_FEATURE_LEVEL_9_1};
-  if (!m_d3dDevice) {
-    D3D11CreateDevice(
-        nullptr, // specify null to use the default adapter
-        D3D_DRIVER_TYPE_HARDWARE,
-        0,
-        creationFlags, // optionally set debug and Direct2D compatibility flags
-        featureLevels, // list of feature levels this app can support
-        ARRAYSIZE(featureLevels), // number of possible feature levels
-        D3D11_SDK_VERSION,
-        m_d3dDevice.put(), // returns the Direct3D device created
-        nullptr /*&m_featureLevel*/, // returns feature level of device created
-        nullptr /*&context*/ // returns the device immediate context
-    );
+      // Obtain the Direct2D device for 2-D rendering.
+      winrt::check_hresult(D2DFactory()->CreateDevice(dxgiDevice.get(), m_d2dDevice.put()));
+    }
+    return m_d2dDevice;
   }
-  return m_d3dDevice;
-}
 
-winrt::com_ptr<ID2D1Device> D2DDevice() noexcept {
-  if (!m_d2dDevice) {
-    winrt::com_ptr<IDXGIDevice> dxgiDevice;
-    // Obtain the underlying DXGI device of the Direct3D11 device.
-    D3DDevice().as(dxgiDevice);
-
-    // Obtain the Direct2D device for 2-D rendering.
-    winrt::check_hresult(D2DFactory()->CreateDevice(dxgiDevice.get(), m_d2dDevice.put()));
+  void CreateDrawingSurface(
+      winrt::Windows::Foundation::Size surfaceSize,
+      winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
+      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode,
+      Composition::ICompositionDrawingSurface **drawingSurfaceOut) noexcept {
+    winrt::make<Composition::CompositionDrawingSurface>(
+        CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode))
+        .copy_to(drawingSurfaceOut);
   }
-  return m_d2dDevice;
-}
 
-winrt::com_ptr<Composition::ICompositionDrawingSurface> CreateDrawingSurface(
-    winrt::Windows::Foundation::Size surfaceSize,
-    winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
-    winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
-  return winrt::make<Composition::CompositionDrawingSurface>(
-      CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
-}
-
-winrt::com_ptr<Composition::ISpriteVisual> CreateSpriteVisual() noexcept {
-  return winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual());
-}
-
-winrt::com_ptr<Composition::IScrollerVisual> CreateScrollerVisual() noexcept {
-  return winrt::make<Composition::CompScrollerVisual>(m_compositor.CreateSpriteVisual());
-}
-
-winrt::com_ptr<Composition::IDropShadow> CreateDropShadow() noexcept
-{
-  return winrt::make<Composition::CompDropShadow>(m_compositor.CreateDropShadow());
-}
-
-winrt::com_ptr<Composition::IBrush> CreateColorBrush(winrt::Windows::UI::Color color) noexcept {
-  return winrt::make<Composition::CompBrush>(m_compositor.CreateColorBrush(color));
-}
-
-winrt::com_ptr<Composition::ISurfaceBrush> CreateSurfaceBrush(
-    const winrt::com_ptr<Composition::ICompositionDrawingSurface> &surface) noexcept {
-  return winrt::make<Composition::CompSurfaceBrush>(m_compositor, surface);
-}
-
-winrt::com_ptr<Composition::IVisual> CreateCaratVisual() noexcept {
-  auto compVisual = m_compositor.CreateSpriteVisual();
-  auto carat = winrt::make<Composition::CompSpriteVisual>(compVisual);
-
-  compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
-  compVisual.Opacity(1.0f);
-  compVisual.RelativeSizeAdjustment({0.0f, 1.0f});
-
-  // Blinking animation
-  constexpr float ftCaretFadePct = 0.2385714285714f;
-  constexpr float stayVisFrame = (1.0f - ftCaretFadePct) / 2.0f;
-  constexpr float fadeVisFrame = ftCaretFadePct / 2.0f;
-
-  auto opacityAnimation = m_compositor.CreateScalarKeyFrameAnimation();
-  opacityAnimation.InsertKeyFrame(0.0f, 1.0f);
-  opacityAnimation.InsertKeyFrame(stayVisFrame, 1.0f);
-  opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame, 0.0f, m_compositor.CreateLinearEasingFunction());
-  opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame + stayVisFrame, 0.0f);
-  opacityAnimation.InsertKeyFrame(1.0f, 1.0f, m_compositor.CreateLinearEasingFunction());
-  opacityAnimation.Duration(std::chrono::milliseconds{1000});
-  opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
-
-  return carat;
-}
-
-
-winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {
-  if (!m_compositionGraphicsDevice) {
-    // To create a composition graphics device, we need to QI for another interface
-
-    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositorInterop> compositorInterop{
-        m_compositor.as<ABI::Windows::UI::Composition::ICompositorInterop>()};
-
-    // Create a graphics device backed by our D3D device
-    winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
-    winrt::check_hresult(
-        compositorInterop->CreateGraphicsDevice(D2DDevice().get(), compositionGraphicsDeviceIface.put()));
-
-    compositionGraphicsDeviceIface.as(m_compositionGraphicsDevice);
+  void CreateSpriteVisual(Composition::ISpriteVisual **visualOut) noexcept {
+    winrt::make<Composition::CompSpriteVisual>(m_compositor.CreateSpriteVisual()).copy_to(visualOut);
   }
-  return m_compositionGraphicsDevice;
-}
+
+  void CreateScrollerVisual(Composition::IScrollerVisual **scrollerOut) noexcept {
+    winrt::make<Composition::CompScrollerVisual>(m_compositor.CreateSpriteVisual()).copy_to(scrollerOut);
+  }
+
+  void CreateDropShadow(Composition::IDropShadow **shadowOut) noexcept {
+    winrt::make<Composition::CompDropShadow>(m_compositor.CreateDropShadow()).copy_to(shadowOut);
+  }
+
+  void CreateColorBrush(winrt::Windows::UI::Color color, Composition::IBrush **brushOut) noexcept {
+    winrt::make<Composition::CompBrush>(m_compositor.CreateColorBrush(color)).copy_to(brushOut);
+  }
+
+  void CreateSurfaceBrush(
+      Composition::ICompositionDrawingSurface *surface,
+      Composition::ISurfaceBrush **surfaceBrushOut) noexcept {
+    winrt::make<Composition::CompSurfaceBrush>(m_compositor, surface).copy_to(surfaceBrushOut);
+  }
+
+  void CreateCaratVisual(Composition::IVisual **visualOut) noexcept {
+    auto compVisual = m_compositor.CreateSpriteVisual();
+    auto carat = winrt::make<Composition::CompSpriteVisual>(compVisual);
+
+    compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
+    compVisual.Opacity(1.0f);
+    compVisual.RelativeSizeAdjustment({0.0f, 1.0f});
+
+    // Blinking animation
+    constexpr float ftCaretFadePct = 0.2385714285714f;
+    constexpr float stayVisFrame = (1.0f - ftCaretFadePct) / 2.0f;
+    constexpr float fadeVisFrame = ftCaretFadePct / 2.0f;
+
+    auto opacityAnimation = m_compositor.CreateScalarKeyFrameAnimation();
+    opacityAnimation.InsertKeyFrame(0.0f, 1.0f);
+    opacityAnimation.InsertKeyFrame(stayVisFrame, 1.0f);
+    opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame, 0.0f, m_compositor.CreateLinearEasingFunction());
+    opacityAnimation.InsertKeyFrame(stayVisFrame + fadeVisFrame + stayVisFrame, 0.0f);
+    opacityAnimation.InsertKeyFrame(1.0f, 1.0f, m_compositor.CreateLinearEasingFunction());
+    opacityAnimation.Duration(std::chrono::milliseconds{1000});
+    opacityAnimation.IterationBehavior(winrt::Windows::UI::Composition::AnimationIterationBehavior::Forever);
+
+    carat.as<Composition::IVisual>().copy_to(visualOut);
+  }
+
+  winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept {
+    if (!m_compositionGraphicsDevice) {
+      // To create a composition graphics device, we need to QI for another interface
+
+      winrt::com_ptr<ABI::Windows::UI::Composition::ICompositorInterop> compositorInterop{
+          m_compositor.as<ABI::Windows::UI::Composition::ICompositorInterop>()};
+
+      // Create a graphics device backed by our D3D device
+      winrt::com_ptr<ABI::Windows::UI::Composition::ICompositionGraphicsDevice> compositionGraphicsDeviceIface;
+      winrt::check_hresult(
+          compositorInterop->CreateGraphicsDevice(D2DDevice().get(), compositionGraphicsDeviceIface.put()));
+
+      compositionGraphicsDeviceIface.as(m_compositionGraphicsDevice);
+    }
+    return m_compositionGraphicsDevice;
+  }
 
  private:
   winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
@@ -562,21 +548,18 @@ winrt::Windows::UI::Composition::CompositionGraphicsDevice CompositionGraphicsDe
   winrt::com_ptr<ID3D11DeviceContext> m_d3dDeviceContext;
 };
 
-
 } // namespace Microsoft::ReactNative::Composition
-
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-  ICompositionContext CompositionContextHelper::CreateContext(
-      winrt::Windows::UI::Composition::Compositor const &compositor) noexcept {
-    return winrt::make<::Microsoft::ReactNative::Composition::CompContext>(compositor);
-  }
+ICompositionContext CompositionContextHelper::CreateContext(
+    winrt::Windows::UI::Composition::Compositor const &compositor) noexcept {
+  return winrt::make<::Microsoft::ReactNative::Composition::CompContext>(compositor);
+}
 
-  ICompositionVisual CompositionContextHelper::CreateVisual(
-      winrt::Windows::UI::Composition::Visual const &visual) noexcept {
-    return winrt::make<::Microsoft::ReactNative::Composition::CompVisual>(visual).as<ICompositionVisual>();
-  }
-
+ICompositionVisual CompositionContextHelper::CreateVisual(
+    winrt::Windows::UI::Composition::Visual const &visual) noexcept {
+  return winrt::make<::Microsoft::ReactNative::Composition::CompVisual>(visual).as<ICompositionVisual>();
+}
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

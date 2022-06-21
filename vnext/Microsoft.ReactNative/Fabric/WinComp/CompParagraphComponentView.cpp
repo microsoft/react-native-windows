@@ -131,8 +131,7 @@ facebook::react::Tag CompParagraphComponentView::hitTest(facebook::react::Point 
 
 void CompParagraphComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = m_compContext->CreateSpriteVisual();
-    ;
+    m_compContext->CreateSpriteVisual(m_visual.put());
   }
 }
 
@@ -212,16 +211,17 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
       winrt::Windows::Foundation::Size surfaceSize = {
           m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
           m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
-      winrt::Windows::UI::Composition::ICompositionDrawingSurface drawingSurface;
-      m_drawingSurfaceInterop = m_compContext->CreateDrawingSurface(
+      m_compContext->CreateDrawingSurface(
           surfaceSize,
           winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied,
+          m_drawingSurfaceInterop.put());
     }
 
     DrawText();
 
-    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop);
+    winrt::com_ptr<Composition::ISurfaceBrush> surfaceBrush;
+    m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get(), surfaceBrush.put());
 
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
@@ -255,7 +255,7 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
     surfaceBrush->HorizontalAlignmentRatio(horizAlignment);
     surfaceBrush->VerticalAlignmentRatio(0.f);
     surfaceBrush->Stretch(Composition::CompositionStretch::None);
-    m_visual->Brush(surfaceBrush);
+    m_visual->Brush(surfaceBrush.get());
   }
 
   if (m_requireRedraw) {
