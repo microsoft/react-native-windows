@@ -135,6 +135,7 @@
     </ClCompile>
     <ClCompile Include="ReactContextTest.cpp" />
     <ClCompile Include="ReactModuleBuilderMock.cpp" />
+    <ClCompile Include="ReactPromiseTest.cpp" />
     <ClCompile Include="TurboModuleTest.cpp" />
   </ItemGroup>
   <ItemGroup>
