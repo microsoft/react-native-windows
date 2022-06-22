@@ -52,7 +52,7 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
 
  public: // ICompRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionContext> CompContext() noexcept override;
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext CompContext() noexcept override;
 
  public: // IReactRootView
   std::string JSComponentName() const noexcept override;

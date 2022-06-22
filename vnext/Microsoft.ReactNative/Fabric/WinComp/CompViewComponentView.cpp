@@ -26,7 +26,7 @@ void SetFocusedComponent(CompBaseComponentView *value) noexcept {
 }
 
 CompBaseComponentView::CompBaseComponentView(
-    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : m_tag(tag), m_compContext(compContext) {}
 
@@ -155,12 +155,12 @@ index++;
 void CompBaseComponentView::OnRenderingDeviceLost() noexcept {}
 
 CompViewComponentView::CompViewComponentView(
-    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
-  m_visual = m_compContext->CreateSpriteVisual();
+  m_visual = m_compContext.CreateSpriteVisual();
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -197,7 +197,7 @@ void CompViewComponentView::updateProps(
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_visual.Brush(m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color));
+      m_visual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
     } else {
       m_visual.Brush(nullptr);
     }
@@ -213,7 +213,7 @@ void CompViewComponentView::updateProps(
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
       oldViewProps.shadowRadius != newViewProps.shadowRadius) {
-    auto shadow = m_compContext->CreateDropShadow();
+    auto shadow = m_compContext.CreateDropShadow();
     shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
     shadow.Opacity(newViewProps.shadowOpacity);
     shadow.BlurRadius(newViewProps.shadowRadius);

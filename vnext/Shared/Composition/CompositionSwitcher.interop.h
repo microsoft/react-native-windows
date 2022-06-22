@@ -10,8 +10,8 @@
 #include <d2d1_1.h>
 #include <d3d11.h>
 #include <d3d11_4.h>
-#include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 
 namespace Microsoft::ReactNative::Composition {
 
@@ -26,6 +26,7 @@ struct IRenderingDeviceReplacedListener : IUnknown {
   virtual void OnRenderingDeviceLost() = 0;
 };
 
+/*
 MSO_STRUCT_GUID(ICompositionContext, "80B91D79-CDD2-405A-8440-8891F71DC2E0")
 struct ICompositionContext : IUnknown {
   virtual void CreateDrawingSurface(
@@ -38,12 +39,14 @@ struct ICompositionContext : IUnknown {
   virtual winrt::Microsoft::ReactNative::Composition::ScrollVisual CreateScrollerVisual() noexcept = 0;
   virtual winrt::Microsoft::ReactNative::Composition::IVisual CreateCaratVisual() noexcept = 0;
   virtual winrt::Microsoft::ReactNative::Composition::IDropShadow CreateDropShadow() noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::Composition::IBrush CreateColorBrush(winrt::Windows::UI::Color color) noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::Composition::SurfaceBrush CreateSurfaceBrush(ICompositionDrawingSurfaceInterop *surface) noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::Composition::IBrush CreateColorBrush(winrt::Windows::UI::Color color) noexcept
+= 0; virtual winrt::Microsoft::ReactNative::Composition::SurfaceBrush
+CreateSurfaceBrush(ICompositionDrawingSurfaceInterop *surface) noexcept = 0;
 
   // TODO Add and hook up to rootnode - to notify the tree
   // virtual void add_RenderingDeviceReplaced(const IRenderingDeviceReplacedListener& listener) noexcept = 0;
   // virtual void remove_RenderingDeviceReplaced(const IRenderingDeviceReplacedListener& listener) noexcept = 0;
 };
+*/
 
 } // namespace Microsoft::ReactNative::Composition

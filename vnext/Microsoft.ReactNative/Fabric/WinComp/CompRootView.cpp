@@ -123,8 +123,8 @@ void CompRootView::CompositionContext(
   ;
 }
 
-winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionContext> CompRootView::CompContext() noexcept {
-  return m_compContext.as<::Microsoft::ReactNative::Composition::ICompositionContext>();
+winrt::Microsoft::ReactNative::Composition::ICompositionContext CompRootView::CompContext() noexcept {
+  return m_compContext;
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual CompRootView::RootVisual() noexcept {

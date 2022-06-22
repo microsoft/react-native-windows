@@ -16,7 +16,7 @@
 namespace Microsoft::ReactNative {
 
 CompParagraphComponentView::CompParagraphComponentView(
-    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {
   static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
@@ -132,7 +132,7 @@ facebook::react::Tag CompParagraphComponentView::hitTest(facebook::react::Point 
 
 void CompParagraphComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = m_compContext->CreateSpriteVisual();
+    m_visual = m_compContext.CreateSpriteVisual();
   }
 }
 
@@ -196,32 +196,31 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
     requireNewBrush = true;
   }
 
-  if (requireNewBrush || !m_drawingSurfaceInterop) {
+  if (requireNewBrush || !m_drawingSurface) {
     if (!m_textLayout) { // Empty Text element
-      m_drawingSurfaceInterop = nullptr;
+      m_drawingSurface = nullptr;
     } else {
       // Create the surface just big enough to hold the formatted text block.
       DWRITE_TEXT_METRICS metrics;
       winrt::check_hresult(m_textLayout->GetMetrics(&metrics));
 
       if (metrics.width == 0 || metrics.height == 0) {
-        m_drawingSurfaceInterop = nullptr;
+        m_drawingSurface = nullptr;
         return;
       }
 
       winrt::Windows::Foundation::Size surfaceSize = {
           m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
           m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
-      m_compContext->CreateDrawingSurface(
+      m_drawingSurface = m_compContext.CreateDrawingSurface(
           surfaceSize,
           winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied,
-          m_drawingSurfaceInterop.put());
+          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
     }
 
     DrawText();
 
-    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get());
+    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
 
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
@@ -265,7 +264,7 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
 
 // Renders the text into our composition surface
 void CompParagraphComponentView::DrawText() noexcept {
-  if (!m_drawingSurfaceInterop)
+  if (!m_drawingSurface)
     return;
 
   if (m_layoutMetrics.frame.size.width == 0 || m_layoutMetrics.frame.size.height == 0) {
@@ -279,7 +278,10 @@ void CompParagraphComponentView::DrawText() noexcept {
   winrt::com_ptr<ID2D1DeviceContext> d2dDeviceContext;
   POINT offset;
 
-  if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
+  m_drawingSurface.as(drawingSurfaceInterop);
+
+  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
 
     // Create a solid color brush for the text. A more sophisticated application might want
@@ -387,7 +389,7 @@ void CompParagraphComponentView::DrawText() noexcept {
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.
-    winrt::check_hresult(m_drawingSurfaceInterop->EndDraw());
+    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
     m_requireRedraw = false;
   }
 }

@@ -35,7 +35,7 @@ void CompComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactC
 ComponentViewDescriptor const &CompComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
-    const winrt::com_ptr<Composition::ICompositionContext> &compContext) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept {
   // TODO implement recycled components like core does
 
   std::shared_ptr<CompBaseComponentView> view;

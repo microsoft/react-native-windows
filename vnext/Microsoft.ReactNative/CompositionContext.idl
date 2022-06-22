@@ -8,13 +8,6 @@ import "CompositionSwitcher.idl";
 namespace Microsoft.ReactNative.Composition
 {
   [webhosthidden]
-  DOC_STRING("Used to provide an abstraction over WinComp or other compositor implementations. Generally this would be created by calling @CompositionContextHelper.CreateContext")
-  [uuid("fddf89da-0171-4d79-83fc-b1ec136b74ad")] // uuid needed for empty interfaces
-  interface ICompositionContext { 
-    Int64 Handle(); // TODO delete this method , add version
-  }
-
-  [webhosthidden]
   [default_interface]
   DOC_STRING("A helper static class for @IRedBoxHandler.")
   static runtimeclass CompositionContextHelper

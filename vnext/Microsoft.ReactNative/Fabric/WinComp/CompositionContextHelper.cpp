@@ -17,9 +17,11 @@
 
 namespace Microsoft::ReactNative::Composition {
 
-struct CompositionDrawingSurface
-    : public winrt::
-          implements<CompositionDrawingSurface, ICompositionDrawingSurfaceInterop, ICompositionDrawingSurfaceInner> {
+struct CompositionDrawingSurface : public winrt::implements<
+                                       CompositionDrawingSurface,
+                                       winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface,
+                                       ICompositionDrawingSurfaceInterop,
+                                       ICompositionDrawingSurfaceInner> {
   CompositionDrawingSurface(winrt::Windows::UI::Composition::CompositionDrawingSurface const &drawingSurface) {
     drawingSurface.as(m_drawingSurfaceInterop);
   }
@@ -87,7 +89,7 @@ struct CompSurfaceBrush
     : winrt::Microsoft::ReactNative::Composition::implementation::SurfaceBrushT<CompSurfaceBrush, ICompositionBrush> {
   CompSurfaceBrush(
       const winrt::Windows::UI::Composition::Compositor &compositor,
-      ICompositionDrawingSurfaceInterop *drawingSurfaceInterop)
+      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface& drawingSurfaceInterop)
       : m_brush(compositor.CreateSurfaceBrush(CompDrawingSurfaceFromDrawingSurface(drawingSurfaceInterop))) {}
 
   winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept {
@@ -384,8 +386,8 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   winrt::event_token ScrollPositionChanged(
-      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs> const
-          &handler) {
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs> const &handler) {
     return m_scrollPositionChangedEvent.add(handler);
   }
 
@@ -408,11 +410,11 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
  private:
   void FireScrollPositionChanged(winrt::Windows::Foundation::Numerics::float2 position) {
-    m_scrollPositionChangedEvent(
-        *this, winrt::make<CompScrollPositionChangedArgs>(position));
+    m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
   }
 
-  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs>>
+  winrt::event<
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs>>
       m_scrollPositionChangedEvent;
   winrt::Windows::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Windows::UI::Composition::SpriteVisual m_contentVisual{nullptr};
@@ -420,16 +422,8 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
 };
 
-struct CompContext : winrt::implements<
-                         CompContext,
-                         winrt::Microsoft::ReactNative::Composition::ICompositionContext,
-                         ICompositionContext> {
+struct CompContext : winrt::implements<CompContext, winrt::Microsoft::ReactNative::Composition::ICompositionContext> {
   CompContext(winrt::Windows::UI::Composition::Compositor const &compositor) : m_compositor(compositor) {}
-
-  // Work around winrt ICompositionContext not being able to be an empty interface
-  int64_t Handle() const noexcept {
-    return 0;
-  }
 
   winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept {
     if (!m_d2dFactory) {
@@ -496,14 +490,12 @@ struct CompContext : winrt::implements<
     return m_d2dDevice;
   }
 
-  void CreateDrawingSurface(
+  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface CreateDrawingSurface(
       winrt::Windows::Foundation::Size surfaceSize,
       winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
-      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode,
-      Composition::ICompositionDrawingSurfaceInterop **drawingSurfaceOut) noexcept {
-    winrt::make<Composition::CompositionDrawingSurface>(
-        CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode))
-        .copy_to(drawingSurfaceOut);
+      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode) noexcept {
+    return winrt::make<Composition::CompositionDrawingSurface>(
+        CompositionGraphicsDevice().CreateDrawingSurface(surfaceSize, pixelFormat, alphaMode));
   }
 
   winrt::Microsoft::ReactNative::Composition::SpriteVisual CreateSpriteVisual() noexcept {
@@ -523,7 +515,7 @@ struct CompContext : winrt::implements<
   }
 
   winrt::Microsoft::ReactNative::Composition::SurfaceBrush CreateSurfaceBrush(
-      Composition::ICompositionDrawingSurfaceInterop *surface) noexcept {
+      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface& surface) noexcept {
     return winrt::make<Composition::CompSurfaceBrush>(m_compositor, surface);
   }
 

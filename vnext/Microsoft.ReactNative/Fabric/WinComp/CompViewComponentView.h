@@ -19,7 +19,9 @@ CompBaseComponentView *GetFocusedComponent() noexcept;
 void SetFocusedComponent(CompBaseComponentView *value) noexcept;
 
 struct CompBaseComponentView : public IComponentView {
-  CompBaseComponentView(const winrt::com_ptr<Composition::ICompositionContext> &compContext, facebook::react::Tag tag);
+  CompBaseComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag);
 
   virtual winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept = 0;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
@@ -45,7 +47,7 @@ struct CompBaseComponentView : public IComponentView {
   virtual void OnRenderingDeviceLost() noexcept;
 
  protected:
-  const winrt::com_ptr<Composition::ICompositionContext> m_compContext;
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   const facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   std::vector<const IComponentView *> m_children;
@@ -61,7 +63,9 @@ struct CompBaseComponentView : public IComponentView {
 
 struct CompViewComponentView : public CompBaseComponentView {
   using Super = CompBaseComponentView;
-  CompViewComponentView(const winrt::com_ptr<Composition::ICompositionContext> &compContext, facebook::react::Tag tag);
+  CompViewComponentView(
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      facebook::react::Tag tag);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;

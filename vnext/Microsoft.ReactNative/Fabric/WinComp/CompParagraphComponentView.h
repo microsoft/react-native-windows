@@ -19,7 +19,7 @@ namespace Microsoft::ReactNative {
 struct CompParagraphComponentView : CompBaseComponentView {
   using Super = CompBaseComponentView;
   CompParagraphComponentView(
-      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
@@ -55,7 +55,7 @@ struct CompParagraphComponentView : CompBaseComponentView {
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
+  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
 };
 
 } // namespace Microsoft::ReactNative

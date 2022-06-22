@@ -454,7 +454,7 @@ facebook::react::AttributedString CompWindowsTextInputComponentView::getAttribut
 }
 
 CompWindowsTextInputComponentView::CompWindowsTextInputComponentView(
-    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(compContext, tag), m_context(reactContext) {
@@ -774,7 +774,7 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
   unsigned int newHeight = static_cast<unsigned int>(layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor);
 
   if (newWidth != m_imgWidth || newHeight != m_imgHeight) {
-    m_drawingSurfaceInterop = nullptr; // Invalidate surface if we get a size change
+    m_drawingSurface = nullptr; // Invalidate surface if we get a size change
   }
 
   m_imgWidth = newWidth;
@@ -930,12 +930,11 @@ void CompWindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
 void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
-  if (!m_drawingSurfaceInterop) {
-    m_compContext->CreateDrawingSurface(
+  if (!m_drawingSurface) {
+    m_drawingSurface = m_compContext.CreateDrawingSurface(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied,
-        m_drawingSurfaceInterop.put());
+        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     auto rcClient = getClientRect();
     winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
@@ -946,7 +945,7 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
     DrawText();
 
-    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get());
+    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
     surfaceBrush.HorizontalAlignmentRatio(0.f);
     surfaceBrush.VerticalAlignmentRatio(0.f);
     surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
@@ -988,7 +987,7 @@ void CompWindowsTextInputComponentView::DrawText() noexcept {
     return;
   }
 
-  if (!m_drawingSurfaceInterop)
+  if (!m_drawingSurface)
     return;
 
   // Begin our update of the surface pixels. If this is our first update, we are required
@@ -999,8 +998,11 @@ void CompWindowsTextInputComponentView::DrawText() noexcept {
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
+  m_drawingSurface.as(drawingSurfaceInterop);
+
   m_drawing = true;
-  if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
     const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
@@ -1026,7 +1028,7 @@ void CompWindowsTextInputComponentView::DrawText() noexcept {
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.
-    auto hrEndDraw = m_drawingSurfaceInterop->EndDraw();
+    auto hrEndDraw = drawingSurfaceInterop->EndDraw();
     winrt::check_hresult(hrEndDraw);
   }
   m_drawing = false;
@@ -1058,7 +1060,7 @@ facebook::react::Tag CompWindowsTextInputComponentView::hitTest(
 void CompWindowsTextInputComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     HrEnsureRichEd20Loaded();
-    m_visual = m_compContext->CreateSpriteVisual();
+    m_visual = m_compContext.CreateSpriteVisual();
     m_textHost = winrt::make<CompTextHost>(this);
     winrt::com_ptr<IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
@@ -1066,7 +1068,7 @@ void CompWindowsTextInputComponentView::ensureVisual() noexcept {
   }
 
   if (!m_caretVisual) {
-    m_caretVisual = m_compContext->CreateCaratVisual();
+    m_caretVisual = m_compContext.CreateCaratVisual();
     m_visual.InsertAt(m_caretVisual, 0);
   }
 }

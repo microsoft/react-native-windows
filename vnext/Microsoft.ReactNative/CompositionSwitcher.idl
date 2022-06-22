@@ -72,6 +72,29 @@ namespace Microsoft.ReactNative.Composition
     void ScrollBy(Windows.Foundation.Numerics.Vector3 offset);
   }
 
+  [webhosthidden]
+  [uuid("a74bfffc-7f2d-432f-8291-654782ab0d52")] // uuid needed for empty interfaces
+  [version(1)]
+  interface ICompositionDrawingSurface
+  {
+  }
 
+  [webhosthidden]
+  interface ICompositionContext
+  {
+    ICompositionDrawingSurface CreateDrawingSurface(Windows.Foundation.Size surfaceSize,
+      Windows.Graphics.DirectX.DirectXPixelFormat pixelFormat,
+      Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
+
+    SpriteVisual CreateSpriteVisual();
+    ScrollVisual CreateScrollerVisual();
+    IVisual CreateCaratVisual();
+    IDropShadow CreateDropShadow();
+    IBrush CreateColorBrush(Windows.UI.Color color);
+    SurfaceBrush CreateSurfaceBrush(ICompositionDrawingSurface surface);
+
+    // TODO Add and hook up to rootnode - to notify the tree
+    // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;
+  }
 
 } // namespace Microsoft.ReactNative.Composition

@@ -26,7 +26,7 @@ namespace Microsoft::ReactNative {
 struct CompImageComponentView : CompBaseComponentView {
   using Super = CompBaseComponentView;
   CompImageComponentView(
-      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -60,7 +60,7 @@ struct CompImageComponentView : CompBaseComponentView {
 
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
+  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
   bool m_reloadImage{false};

@@ -28,7 +28,7 @@ extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICIma
 namespace Microsoft::ReactNative {
 
 CompImageComponentView::CompImageComponentView(
-    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(compContext, tag), m_context(reactContext) {
@@ -202,7 +202,7 @@ void CompImageComponentView::updateProps(
   updateBorderProps(oldImageProps, newImageProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor) {
-    m_drawingSurfaceInterop = nullptr; // TODO dont need to nuke the surface just to redraw...
+    m_drawingSurface = nullptr; // TODO dont need to nuke the surface just to redraw...
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {
@@ -293,16 +293,15 @@ void CompImageComponentView::OnRenderingDeviceLost() noexcept {
 void CompImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
-  if (!m_drawingSurfaceInterop && m_wicbmp) {
-    m_compContext->CreateDrawingSurface(
+  if (!m_drawingSurface && m_wicbmp) {
+    m_drawingSurface = m_compContext.CreateDrawingSurface(
         {static_cast<float>(m_imgWidth), static_cast<float>(m_imgHeight)},
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied,
-        m_drawingSurfaceInterop.put());
+        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
     DrawImage();
 
-    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get());
+    auto surfaceBrush = m_compContext.CreateSurfaceBrush(m_drawingSurface);
 
     const auto &imageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
     switch (imageProps.resizeMode) {
@@ -338,7 +337,10 @@ void CompImageComponentView::DrawImage() noexcept {
 
   assert(m_context.UIDispatcher().HasThreadAccess());
 
-  if (CheckForDeviceRemoved(m_drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> drawingSurfaceInterop;
+  m_drawingSurface.as(drawingSurfaceInterop);
+
+  if (CheckForDeviceRemoved(drawingSurfaceInterop->BeginDraw(d2dDeviceContext.put(), &offset))) {
     const auto &paragraphProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
 
     winrt::com_ptr<ID2D1Bitmap1> bitmap;
@@ -359,7 +361,7 @@ void CompImageComponentView::DrawImage() noexcept {
 
     // Our update is done. EndDraw never indicates rendering device removed, so any
     // failure here is unexpected and, therefore, fatal.
-    winrt::check_hresult(m_drawingSurfaceInterop->EndDraw());
+    winrt::check_hresult(drawingSurfaceInterop->EndDraw());
   }
 }
 
@@ -392,7 +394,7 @@ facebook::react::Tag CompImageComponentView::hitTest(facebook::react::Point pt, 
 
 void CompImageComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = m_compContext->CreateSpriteVisual();
+    m_visual = m_compContext.CreateSpriteVisual();
   }
 }
 

@@ -25,7 +25,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
 
   using Super = CompBaseComponentView;
   CompWindowsTextInputComponentView(
-      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -73,7 +73,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::IVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface m_drawingSurface{nullptr};
 
   // Used by ITextHost impl
   CHARFORMAT2W m_cf;

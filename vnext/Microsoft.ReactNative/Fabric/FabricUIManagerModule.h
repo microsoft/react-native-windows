@@ -78,7 +78,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   struct SurfaceInfo {
 #ifdef USE_WINCOMP
     winrt::Microsoft::ReactNative::Composition::IVisual rootVisual{nullptr};
-    winrt::com_ptr<Composition::ICompositionContext> compContext;
+    winrt::Microsoft::ReactNative::Composition::ICompositionContext compContext;
 #else
     XamlView xamlView;
 #endif

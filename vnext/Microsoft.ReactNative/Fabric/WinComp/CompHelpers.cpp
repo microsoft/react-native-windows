@@ -158,9 +158,9 @@ winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
-    ICompositionDrawingSurfaceInterop *surface) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &surface) noexcept {
   winrt::com_ptr<ICompositionDrawingSurfaceInner> s;
-  winrt::check_hresult(surface->QueryInterface(winrt::guid_of<ICompositionDrawingSurfaceInner>(), s.put_void()));
+  surface.as(s);
   return s ? s->Inner() : nullptr;
 }
 

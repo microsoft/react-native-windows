@@ -21,7 +21,7 @@
 namespace Microsoft::ReactNative {
 
 CompScrollViewComponentView::CompScrollViewComponentView(
-    const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {
   // static auto const defaultProps = std::make_shared<facebook::react::TextProps const>();
@@ -151,9 +151,9 @@ void CompScrollViewComponentView::updateProps(
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      m_visual.Brush(m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color));
+      m_visual.Brush(m_compContext.CreateColorBrush((*newViewProps.backgroundColor).m_color));
     } else {
-      m_visual.Brush(m_compContext->CreateColorBrush({0, 0, 0, 0}));
+      m_visual.Brush(m_compContext.CreateColorBrush({0, 0, 0, 0}));
     }
   }
 
@@ -293,7 +293,7 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
 
 void CompScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_visual = m_compContext->CreateScrollerVisual();
+    m_visual = m_compContext.CreateScrollerVisual();
     m_scrollPositionChangedRevoker = m_visual.ScrollPositionChanged(
         winrt::auto_revoke,
         [this](

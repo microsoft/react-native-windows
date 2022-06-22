@@ -43,7 +43,7 @@ winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(
 winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(
     const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept;
 winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
-    ICompositionDrawingSurfaceInterop *surface) noexcept;
+    const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &surface) noexcept;
 
 } // namespace Composition
 

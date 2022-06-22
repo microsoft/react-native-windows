@@ -52,7 +52,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 
   using Super = CompBaseComponentView;
   CompScrollViewComponentView(
-      const winrt::com_ptr<Composition::ICompositionContext> &compContext,
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
