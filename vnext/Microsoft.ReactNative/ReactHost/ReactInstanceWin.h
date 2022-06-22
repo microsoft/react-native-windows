@@ -153,7 +153,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   const bool m_useDirectDebugger : 1;
   const bool m_useWebDebugger : 1;
 
-  const Mso::CntPtr<ReactContext> m_reactContext;
+  const Mso::CntPtr<::Mso::React::ReactContext> m_reactContext;
 
   std::atomic<bool> m_isLoaded{false};
   std::atomic<bool> m_isDestroyed{false};
