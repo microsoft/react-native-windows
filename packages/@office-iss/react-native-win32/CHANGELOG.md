@@ -1,8 +1,85 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 27 Apr 2022 05:10:23 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Jun 2022 05:10:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.155
+
+Fri, 17 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- Integrate 6/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.47
+
+## 0.0.0-canary.154
+
+Fri, 10 Jun 2022 05:09:59 GMT
+
+### Changes
+
+- Integrate 6/8 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.46
+
+## 0.0.0-canary.153
+
+Thu, 09 Jun 2022 05:09:48 GMT
+
+### Changes
+
+- integrate-6-3-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.45
+
+## 0.0.0-canary.152
+
+Sat, 04 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- integrate 5-16-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.44
+- Bump @rnw-scripts/just-task to v2.2.5
+- Bump react-native-platform-override to v1.6.13
+
+## 0.0.0-canary.151
+
+Thu, 12 May 2022 05:09:43 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.43
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.7
+- Bump @rnw-scripts/just-task to v2.2.4
+- Bump react-native-platform-override to v1.6.12
+
+## 0.0.0-canary.150
+
+Wed, 11 May 2022 05:08:51 GMT
+
+### Changes
+
+- Upgrade to @react-native-community/cli@8.0.0-alpha.6 (jthysell@microsoft.com)
+
+## 0.0.0-canary.149
+
+Tue, 10 May 2022 05:08:46 GMT
+
+### Changes
+
+- integrate 5-1-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.42
+
+## 0.0.0-canary.148
+
+Mon, 02 May 2022 21:26:42 GMT
+
+### Changes
+
+- Implement no-hide-accessibility (34109996+chiaramooney@users.noreply.github.com)
+- Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example (patboyd@microsoft.com)
 
 ## 0.0.0-canary.147
 

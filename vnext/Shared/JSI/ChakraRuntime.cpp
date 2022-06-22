@@ -116,7 +116,7 @@ void ChakraRuntime::PromiseContinuation(JsValueRef funcRef) noexcept {
   if (runtimeArgs().jsQueue) {
     JsAddRef(funcRef, nullptr);
     runtimeArgs().jsQueue->runOnQueue([this, funcRef]() {
-      JsValueRef undefinedValue;
+      JsValueRef undefinedValue = nullptr;
       JsGetUndefinedValue(&undefinedValue);
       ChakraVerifyJsErrorElseThrow(JsCallFunction(funcRef, &undefinedValue, 1, nullptr));
       JsRelease(funcRef, nullptr);
@@ -309,6 +309,11 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromUtf8(const uint8_t 
 facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromString(const facebook::jsi::String &str) {
   const JsPropertyIdRef propertyId = GetPropertyIdFromName(StringToPointer(GetJsRef(str)).data());
   return MakePointer<facebook::jsi::PropNameID>(propertyId);
+}
+
+facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) {
+  const JsPropertyIdRef propSym = GetPropertyIdFromSymbol(GetJsRef(sym));
+  return MakePointer<facebook::jsi::PropNameID>(propSym);
 }
 
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
@@ -971,7 +976,7 @@ ChakraRuntime::JsiValueViewArgs::JsiValueViewArgs(JsValueRef *args, size_t argCo
   JsiValueView::StoreType *const pointerStore =
       m_heapPointerStore ? m_heapPointerStore.get() : m_stackPointerStore.data();
   facebook::jsi::Value *const jsiArgs = m_heapArgs ? m_heapArgs.get() : m_stackArgs.data();
-  for (uint32_t i = 0; i < m_size; ++i) {
+  for (size_t i = 0; i < m_size; ++i) {
     jsiArgs[i] = JsiValueView::InitValue(args[i], std::addressof(pointerStore[i]));
   }
 }

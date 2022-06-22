@@ -86,7 +86,7 @@ const bubblingEventTypes = {
     },
   },
 
-  // Pointer Events
+  // Experimental/Work in Progress Pointer Events (not yet ready for use)
   topPointerCancel: {
     phasedRegistrationNames: {
       captured: 'onPointerCancelCapture',
@@ -123,6 +123,18 @@ const bubblingEventTypes = {
       captured: 'onPointerLeave2Capture',
       bubbled: 'onPointerLeave2',
       skipBubbling: true,
+    },
+  },
+  topPointerOver: {
+    phasedRegistrationNames: {
+      captured: 'onPointerOverCapture',
+      bubbled: 'onPointerOver',
+    },
+  },
+  topPointerOut: {
+    phasedRegistrationNames: {
+      captured: 'onPointerOutCapture',
+      bubbled: 'onPointerOut',
     },
   },
 };
@@ -315,6 +327,8 @@ const validAttributesForEventProps = ConditionallyIgnoredEventHandlers({
   onPointerEnter2: true,
   onPointerMove2: true,
   onPointerLeave2: true,
+  onPointerOver: true,
+  onPointerOut: true,
 });
 
 /**

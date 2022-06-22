@@ -89,7 +89,7 @@ struct CompSurfaceBrush
     : winrt::Microsoft::ReactNative::Composition::implementation::SurfaceBrushT<CompSurfaceBrush, ICompositionBrush> {
   CompSurfaceBrush(
       const winrt::Windows::UI::Composition::Compositor &compositor,
-      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface& drawingSurfaceInterop)
+      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &drawingSurfaceInterop)
       : m_brush(compositor.CreateSurfaceBrush(CompDrawingSurfaceFromDrawingSurface(drawingSurfaceInterop))) {}
 
   winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept {
@@ -515,7 +515,7 @@ struct CompContext : winrt::implements<CompContext, winrt::Microsoft::ReactNativ
   }
 
   winrt::Microsoft::ReactNative::Composition::SurfaceBrush CreateSurfaceBrush(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface& surface) noexcept {
+      const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &surface) noexcept {
     return winrt::make<Composition::CompSurfaceBrush>(m_compositor, surface);
   }
 

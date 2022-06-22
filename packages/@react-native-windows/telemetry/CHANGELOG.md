@@ -1,8 +1,38 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Wed, 27 Apr 2022 05:10:24 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Jun 2022 05:09:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.44
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Changes
+
+- Update source of DeviceID for telemetry (jthysell@microsoft.com)
+
+## 0.0.0-canary.43
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @rnw-scripts/jest-unittest-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 0.0.0-canary.42
+
+Thu, 12 May 2022 05:09:44 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-unittest-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.2.4
 
 ## 0.0.0-canary.41
 

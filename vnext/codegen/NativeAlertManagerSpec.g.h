@@ -31,6 +31,8 @@ struct AlertManagerSpec_Args {
     std::optional<std::string> destructiveButtonKey;
     REACT_FIELD(keyboardType)
     std::optional<std::string> keyboardType;
+    REACT_FIELD(userInterfaceStyle)
+    std::optional<std::string> userInterfaceStyle;
 };
 
 struct AlertManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {

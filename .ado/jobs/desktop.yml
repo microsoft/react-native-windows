@@ -63,6 +63,7 @@ jobs:
             - name: Desktop.IntegrationTests.Filter
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::AsyncStorage)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
@@ -173,12 +174,17 @@ jobs:
 
             - task: BinSkim@3
               displayName: Run Binskim Analysis
+              condition: eq('${{ matrix.BuildConfiguration }}', 'Release')
               inputs:
                   InputType: 'Basic'
                   Function: 'analyze'
-                  AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\\React.Windows.Desktop.DLL\*.dll'
+                  # Scanning v8jsi.dll in x64/x86 only, because PDBs are stripped in ARM64
+                  ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
+                    AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\\React.Windows.Desktop.DLL\*.dll'
+                  ${{ else }}:
+                    AnalyzeTarget: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\\React.Windows.Desktop.DLL\react-native-win32.dll'
                   AnalyzeVerbose: true
-                  toolVersion: 'LatestPreRelease'
+                  toolVersion: 'Latest'
               continueOnError: true
 
             - template: ../templates/publish-build-artifacts.yml

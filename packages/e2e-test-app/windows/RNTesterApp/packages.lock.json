@@ -22,9 +22,9 @@
       },
       "ReactNative.Hermes.Windows": {
         "type": "Direct",
-        "requested": "[0.11.0-ms.2, )",
-        "resolved": "0.11.0-ms.2",
-        "contentHash": "U+0FecIUFhmuLDNGT+kIhQdzoIgOvaGHU5gQOl66G5JdbO8xpful+E5OH/NL9Ue6N1l+ecqTH9shGrVDsdG5ow=="
+        "requested": "[0.11.0-ms.6, )",
+        "resolved": "0.11.0-ms.6",
+        "contentHash": "7KGeDHh4QR4ua5+aSNAfuhj1sF2PBJbTHJ9m520xo1GZZRW4cxJlyNDNjW5t/sFGeHWw/Uhs7ZrWE2maL9BOEw=="
       },
       "XamlTreeDump": {
         "type": "Direct",
@@ -56,7 +56,7 @@
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
         "resolved": "2.1.0",
-        "contentHash": "GmkKfoyerqmsHMn7OZj0AKpcBabD+GaafqphvX2Mw406IwiJRy1pKcKqdCfKJfYmkRyJ6+e+RaUylgdJoDa1jQ=="
+        "contentHash": "ok+RPAtESz/9MUXeIEz6Lv5XAGQsaNmEYXMsgVALj4D7kqC8gveKWXWXbufLySR2fWrwZf8smyN5RmHu0e4BHA=="
       },
       "NETStandard.Library": {
         "type": "Transitive",

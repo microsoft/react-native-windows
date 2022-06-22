@@ -8,7 +8,6 @@ const {makeMetroConfig} = require('@rnw-scripts/metro-dev-config');
  */
 const fs = require('fs');
 const path = require('path');
-const {resolve} = require('metro-resolver');
 
 const rnwPath = fs.realpathSync(
   path.dirname(require.resolve('react-native-windows/package.json')),
@@ -52,13 +51,26 @@ function devResolve(packageName, originDir, moduleName) {
 
   // For each potential extension we need to check for the file in either src and root
   for (const extension of extensions) {
-    const potentialSrcModuleName =
-      path.resolve(originDirSrc, moduleName) + extension;
+    // Start with the src folder
+    let potentialSrcModuleName = path.resolve(originDirSrc, moduleName);
+    if (fs.existsSync(potentialSrcModuleName) &&
+        fs.statSync(potentialSrcModuleName).isDirectory()) {
+      potentialSrcModuleName = path.resolve(potentialSrcModuleName, 'index');
+    }
+    potentialSrcModuleName += extension;
+
     if (fs.existsSync(potentialSrcModuleName)) {
       return potentialSrcModuleName;
     }
 
-    const potentialModuleName = path.resolve(originDir, moduleName) + extension;
+    // Next check under root folder
+    let potentialModuleName = path.resolve(originDir, moduleName);
+    if (fs.existsSync(potentialModuleName) &&
+        fs.statSync(potentialModuleName).isDirectory()) {
+      potentialModuleName = path.resolve(potentialModuleName, 'index');
+    }
+    potentialModuleName += extension;
+
     if (fs.existsSync(potentialModuleName)) {
       return potentialModuleName;
     }
@@ -73,25 +85,15 @@ function devResolve(packageName, originDir, moduleName) {
  */
 function devResolveRequest(
   context,
-  _realModuleName /* string */,
-  platform /* string */,
   moduleName /* string */,
+  platform /* string */,
 ) {
-  const backupResolveRequest = context.resolveRequest;
-  delete context.resolveRequest;
-
-  try {
-    const modifiedModuleName =
+  const modifiedModuleName =
       tryResolveDevPackage(moduleName) ||
       tryResolveDevAbsoluteImport(moduleName) ||
       tryResolveDevRelativeImport(context.originModulePath, moduleName) ||
       moduleName;
-    return resolve(context, modifiedModuleName, platform);
-  } catch (e) {
-    throw e;
-  } finally {
-    context.resolveRequest = backupResolveRequest;
-  }
+      return context.resolveRequest(context, modifiedModuleName, platform);
 }
 
 function tryResolveDevPackage(moduleName) /*: string | null*/ {

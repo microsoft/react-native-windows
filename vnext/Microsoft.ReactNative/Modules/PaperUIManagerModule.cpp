@@ -6,8 +6,8 @@
 #include <DynamicWriter.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
+#include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
-#include <Modules\NativeUIManager.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
 #include "ShadowNodeBase.h"
@@ -126,20 +126,24 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
 
   void createView(int64_t reactTag, std::string viewName, int64_t rootTag, React::JSValueObject &&props) noexcept {
     m_nativeUIManager->ensureInBatch();
-    auto viewManager = GetViewManager(viewName);
-    auto node = viewManager->createShadow();
-    node->m_className = std::move(viewName);
-    node->m_tag = reactTag;
-    node->m_rootTag = rootTag;
-    node->m_viewManager = viewManager;
+    if (auto viewManager = GetViewManager(viewName)) {
+      auto node = viewManager->createShadow();
+      node->m_className = std::move(viewName);
+      node->m_tag = reactTag;
+      node->m_rootTag = rootTag;
+      node->m_viewManager = viewManager;
 
-    node->createView(props);
+      node->createView(props);
 
-    m_nativeUIManager->CreateView(*node, props);
+      m_nativeUIManager->CreateView(*node, props);
 
-    m_nodeRegistry.addNode(shadow_ptr(node), reactTag);
+      m_nodeRegistry.addNode(shadow_ptr(node), reactTag);
 
-    node->updateProperties(props);
+      node->updateProperties(props);
+    } else {
+      assert(false);
+      return;
+    }
   }
 
   void updateView(int64_t reactTag, std::string viewName, React::JSValueObject &&props) noexcept {

@@ -80,7 +80,7 @@ steps:
   - ${{ if eq(parameters.useWinAppSDK, true) }}:
     - template: prep-and-pack-nuget.yml
       parameters:
-        artifactName: ReactWindows
+        artifactName: WindowsAppSDK
         npmVersion: $(npmVersion)
         packMicrosoftReactNativeWindowsAppSDK: true
         slices: 

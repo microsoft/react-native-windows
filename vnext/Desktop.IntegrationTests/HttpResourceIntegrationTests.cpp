@@ -73,8 +73,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        {} /*header*/,
-        {} /*bodyData*/,
+        0, /*requestId*/
+        {}, /*header*/
+        {}, /*data*/
         "text",
         false,
         1000 /*timeout*/,
@@ -128,13 +129,14 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
+        0, /*requestId*/
         {
             {"Content-Type", "application/json"},
             {"Content-Encoding", "ASCII"},
             {"name3", "value3"},
             {"name4", "value4"},
         },
-        {} /*bodyData*/,
+        {}, /*data*/
         "text",
         false,
         1000 /*timeout*/,
@@ -170,7 +172,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       promise.set_value();
     });
 
-    resource->SendRequest("GET", "http://nonexistinghost", {}, {}, "text", false, 1000, false, [](int64_t) {});
+    resource->SendRequest("GET", "http://nonexistinghost", 0, {}, {}, "text", false, 1000, false, [](int64_t) {});
 
     promise.get_future().wait();
 
@@ -238,8 +240,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "OPTIONS",
         string{url},
-        {} /*headers*/,
-        {} /*bodyData*/,
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
         "text",
         false,
         1000 /*timeout*/,
@@ -248,8 +251,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        {} /*headers*/,
-        {} /*bodyData*/,
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
         "text",
         false,
         1000 /*timeout*/,
@@ -330,8 +334,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        {} /*headers*/,
-        {} /*bodyData*/,
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
         "text",
         false, /*useIncrementalUpdates*/
         1000 /*timeout*/,

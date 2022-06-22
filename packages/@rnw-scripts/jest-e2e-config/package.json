@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-e2e-config",
-  "version": "1.1.8",
+  "version": "1.1.10",
   "license": "MIT",
   "main": "jest.e2e.config.js",
   "repository": {
@@ -9,7 +9,7 @@
     "directory": "packages/@rnw-scripts/jest-e2e-config"
   },
   "dependencies": {
-    "@rnw-scripts/babel-node-config": "2.0.4"
+    "@rnw-scripts/babel-node-config": "2.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",

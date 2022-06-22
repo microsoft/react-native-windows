@@ -12,6 +12,8 @@
 
 import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+
 const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
@@ -22,6 +24,10 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'ButtonExample',
     category: 'UI',
     module: require('../examples/Button/ButtonExample'),
+  },
+  {
+    key: 'AccessibilityExampleWin32',
+    module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
   },
   /*
   {
@@ -184,11 +190,6 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Dimensions/DimensionsExample'),
   },
   {
-    key: 'W3C PointerEvents',
-    category: 'Experimental',
-    module: require('../examples/Experimental/W3CPointerEventsExample').default,
-  },
-  {
     key: 'LayoutEventsExample',
     category: 'UI',
     module: require('../examples/Layout/LayoutEventsExample'),
@@ -260,6 +261,14 @@ if (global.__turboModuleProxy) {
     key: 'TurboModuleExample',
     category: 'Basic',
     module: require('../examples/TurboModule/TurboModuleExample'),
+  });
+}
+
+if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
+  APIs.push({
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
   });
 }
 

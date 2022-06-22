@@ -1,8 +1,234 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 29 Apr 2022 05:09:50 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Jun 2022 05:09:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.518
+
+Wed, 22 Jun 2022 05:09:33 GMT
+
+### Changes
+
+- Minor fix for clang compile (erozell@outlook.com)
+
+## 0.0.0-canary.517
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Changes
+
+- Stop compiling yoga.cpp with /fp:strict. Doing so caused layout issues if Yoga code ran with the processor's rounding mode set to round down, due to NAN being defined in math.h as: ``` (float)(INFINITY * 0.0f) ``` Which macro-expands to: ``` (float)(((float)(1e+300 * 1e+300)) * 0.0f) ``` Which evaluates as follows: ``` (float)(((float)(inf.double)) * 0.0f) (float)(FLT_MAX * 0.0f) // Casting an infinite double to a float yields                         // FLT_MAX! (float)0.0f ``` (hpratt@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.132
+
+## 0.0.0-canary.516
+
+Sun, 19 Jun 2022 05:09:01 GMT
+
+### Changes
+
+- Fix ExecuteJsi on instance shutdown (vmorozov@microsoft.com)
+
+## 0.0.0-canary.515
+
+Fri, 17 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- Integrate 6/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.47
+
+## 0.0.0-canary.514
+
+Wed, 15 Jun 2022 05:09:02 GMT
+
+### Changes
+
+- Fix use of [[maybe_unused]] attribute (vmorozov@microsoft.com)
+- yarn format (erozell@outlook.com)
+
+## 0.0.0-canary.513
+
+Tue, 14 Jun 2022 05:09:02 GMT
+
+### Changes
+
+- binskim/compliance fixes to win32 dll (agnel@microsoft.com)
+
+## 0.0.0-canary.512
+
+Fri, 10 Jun 2022 05:09:59 GMT
+
+### Changes
+
+- Use logical OR to assert HTTP responseType (julio.rocha@microsoft.com)
+- Fixed metro config when using `--useDevMode` (jthysell@microsoft.com)
+- Integrate 6/8 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.46
+
+## 0.0.0-canary.511
+
+Thu, 09 Jun 2022 05:09:48 GMT
+
+### Changes
+
+- integrate-6-3-22 (tatianakapos@microsoft.com)
+- Change the definition of YGUndefined from NAN to __builtin_nanf("0") (30809111+acoates-ms@users.noreply.github.com)
+- Do not use Blob/FileReader modules on UWP (julio.rocha@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.45
+
+## 0.0.0-canary.510
+
+Wed, 08 Jun 2022 05:09:16 GMT
+
+### Changes
+
+- Bump Hermes package version (tudor.mihai@microsoft.com)
+
+## 0.0.0-canary.509
+
+Sun, 05 Jun 2022 05:09:00 GMT
+
+### Changes
+
+- Make double-conversion FP conversions be locale-invariant (asklar@microsoft.com)
+
+## 0.0.0-canary.508
+
+Sat, 04 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- integrate 5-16-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.131
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.44
+- Bump @react-native-windows/codegen to v0.0.0-canary.35
+- Bump @rnw-scripts/just-task to v2.2.5
+- Bump react-native-platform-override to v1.6.13
+
+## 0.0.0-canary.507
+
+Thu, 02 Jun 2022 05:08:55 GMT
+
+### Changes
+
+- Update NuGet config files to reduce Secure Supply Chain Analysis warnings (jthysell@microsoft.com)
+
+## 0.0.0-canary.506
+
+Sat, 28 May 2022 05:08:33 GMT
+
+### Changes
+
+- Support PreparedScriptStore for V8 Node-API. (vmorozov@microsoft.com)
+- Fix RuntimeOptions for RNW Desktop (vmorozov@microsoft.com)
+
+## 0.0.0-canary.505
+
+Fri, 27 May 2022 05:08:38 GMT
+
+### Changes
+
+- Change CG registration for folly and fmt from `other` to `git` (jthysell@microsoft.com)
+- fixes focusable visual (email not defined)
+
+## 0.0.0-canary.504
+
+Thu, 26 May 2022 05:08:36 GMT
+
+### Changes
+
+- Expose LoadingState on ReactContext (acoates@microsoft.com)
+- Resolving CodeQL warnings 5/25/22 (jthysell@microsoft.com)
+- fix run loop in loopScheduler.cpp (email not defined)
+
+## 0.0.0-canary.503
+
+Wed, 25 May 2022 05:08:41 GMT
+
+### Changes
+
+- Compliance: Rename template Nuget.config files to stop triggering multi-feed warnings (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.130
+
+## 0.0.0-canary.502
+
+Sat, 21 May 2022 05:08:46 GMT
+
+### Changes
+
+- Implement Blob module (julio.rocha@microsoft.com)
+- Allow fetching HTTP content by segments (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.501
+
+Wed, 18 May 2022 05:09:23 GMT
+
+### Changes
+
+- Fix crash when enabling Yoga logging (asklar@microsoft.com)
+
+## 0.0.0-canary.500
+
+Tue, 17 May 2022 05:08:53 GMT
+
+### Changes
+
+- update comments in IReactDispatcher.idl (email not defined)
+- Fix Microsoft.ReactNative.Cxx nuget package missing files (jthysell@microsoft.com)
+
+## 0.0.0-canary.499
+
+Fri, 13 May 2022 05:09:02 GMT
+
+### Changes
+
+- throw an error if a Chakra JS object cannot be created (asklar@microsoft.com)
+- Remove JsiEngineOverride::ChakraCore (julio.rocha@microsoft.com)
+- Adding notifications for JS dispatcher (email not defined)
+
+## 0.0.0-canary.498
+
+Thu, 12 May 2022 05:09:46 GMT
+
+### Changes
+
+- Use midgard-yarn-strict (ngerlem@microsoft.com)
+- removes JSI overrides in ReactCommon (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.129
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.43
+- Bump @react-native-windows/codegen to v0.0.0-canary.34
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.7
+- Bump @rnw-scripts/just-task to v2.2.4
+- Bump react-native-platform-override to v1.6.12
+
+## 0.0.0-canary.497
+
+Wed, 11 May 2022 05:08:52 GMT
+
+### Changes
+
+- Upgrade to @react-native-community/cli@8.0.0-alpha.6 (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.33
+
+## 0.0.0-canary.496
+
+Tue, 10 May 2022 05:08:46 GMT
+
+### Changes
+
+- integrate 5-1-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.42
+
+## 0.0.0-canary.495
+
+Mon, 02 May 2022 21:26:43 GMT
+
+### Changes
+
+- Implement no-hide-accessibility (34109996+chiaramooney@users.noreply.github.com)
+- Stop exporting data blocks from react-native-win32.dll (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.494
 

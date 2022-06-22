@@ -28,7 +28,7 @@ let _highContrastColors = {
   WindowTextColor: '',
 };
 
-type AppThemeListener = (nativeEvent: AppThemeData) => void;
+type AppThemeEvent = (nativeEvent: AppThemeData) => void;
 const eventEmitter = new EventEmitter<{
   highContrastChanged: [AppThemeData],
 }>();
@@ -36,6 +36,8 @@ const eventEmitter = new EventEmitter<{
 type NativeAppThemeEventDefinitions = {
   highContrastChanged: [AppThemeData],
 };
+
+const _notifHandlers = new Map();
 
 if (NativeAppTheme) {
   _isHighContrast = NativeAppTheme.getConstants().isHighContrast;
@@ -69,15 +71,19 @@ module.exports = {
    */
   addListener(
     eventName: 'highContrastChanged',
-    listener: AppThemeListener,
+    event: AppThemeEvent,
   ): EventSubscription {
-    return eventEmitter.addListener(eventName, listener);
+    const listener = eventEmitter.addListener(eventName, event);
+    _notifHandlers.set(eventName, listener);
+    return listener;
   },
 
-  removeListener(
-    eventName: 'highContrastChanged',
-    listener: AppThemeListener,
-  ): void {
-    eventEmitter.removeListener(eventName, listener);
+  removeListener(eventName: 'highContrastChanged', event: AppThemeEvent): void {
+    const listener = _notifHandlers.get(eventName);
+    if (!listener) {
+      return;
+    }
+    listener.remove();
+    _notifHandlers.delete(eventName);
   },
 };

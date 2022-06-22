@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win32/**"
   ],
-  "baseVersion": "0.0.0-20220415-2010-3c1a81446",
+  "baseVersion": "0.0.0-20220614-2054-bcc69dfb3",
   "overrides": [
     {
       "type": "patch",
@@ -41,20 +41,20 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "62fe00f98d30430c44bd31104a10c0fd1d08b6f6"
+      "baseHash": "d12b4947135ada2dcb1c68835f53d7f0beff8a4e"
     },
     {
       "type": "patch",
       "file": "src/js/utils/RNTesterStatePersister.win32.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterStatePersister.js",
-      "baseHash": "6fb9577f3e71647e8789062afa715b93dfa3e61c",
+      "baseHash": "8e3103678e35de2f12b73b6aedbd26e81dcc3797",
       "issue": 6316
     },
     {
       "type": "patch",
       "file": "src/js/utils/testerStateUtils.win32.js",
       "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
-      "baseHash": "6c02fb4c53ae1a9f0afa058f928c516cbe74d6c3",
+      "baseHash": "304453e496b2569b36f602fa0fb0d521756da3ff",
       "issue": 6316
     },
     {

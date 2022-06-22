@@ -1,8 +1,61 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Wed, 27 Apr 2022 05:10:24 GMT and should not be manually modified.
+This log was last generated on Fri, 17 Jun 2022 05:10:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.47
+
+Fri, 17 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- Integrate 6/14 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.46
+
+Fri, 10 Jun 2022 05:09:59 GMT
+
+### Changes
+
+- Integrate 6/8 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.45
+
+Thu, 09 Jun 2022 05:09:48 GMT
+
+### Changes
+
+- integrate-6-3-22 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.44
+
+Sat, 04 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- integrate 5-16-22 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/just-task to v2.2.5
+- Bump react-native-platform-override to v1.6.13
+
+## 0.0.0-canary.43
+
+Thu, 12 May 2022 05:09:44 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/just-task to v2.2.4
+- Bump react-native-platform-override to v1.6.12
+
+## 0.0.0-canary.42
+
+Tue, 10 May 2022 05:08:46 GMT
+
+### Changes
+
+- integrate 5-1-22 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.41
 
