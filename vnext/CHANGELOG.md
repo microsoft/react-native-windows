@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sun, 19 Jun 2022 05:09:01 GMT and should not be manually modified.
+This log was last generated on Wed, 22 Jun 2022 05:09:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.518
+
+Wed, 22 Jun 2022 05:09:33 GMT
+
+### Changes
+
+- Minor fix for clang compile (erozell@outlook.com)
+
+## 0.0.0-canary.517
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Changes
+
+- Stop compiling yoga.cpp with /fp:strict. Doing so caused layout issues if Yoga code ran with the processor's rounding mode set to round down, due to NAN being defined in math.h as: ``` (float)(INFINITY * 0.0f) ``` Which macro-expands to: ``` (float)(((float)(1e+300 * 1e+300)) * 0.0f) ``` Which evaluates as follows: ``` (float)(((float)(inf.double)) * 0.0f) (float)(FLT_MAX * 0.0f) // Casting an infinite double to a float yields                         // FLT_MAX! (float)0.0f ``` (hpratt@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.132
 
 ## 0.0.0-canary.516
 
