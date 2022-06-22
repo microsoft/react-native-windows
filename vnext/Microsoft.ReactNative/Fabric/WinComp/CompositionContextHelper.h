@@ -15,7 +15,7 @@ struct CompositionContextHelper : CompositionContextHelperT<CompositionContextHe
   CompositionContextHelper() = default;
 
   static ICompositionContext CreateContext(winrt::Windows::UI::Composition::Compositor const &compositor) noexcept;
-  static ICompositionVisual CreateVisual(winrt::Windows::UI::Composition::Visual const &visual) noexcept;
+  static IVisual CreateVisual(winrt::Windows::UI::Composition::Visual const &visual) noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -48,7 +48,7 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   void parent(IComponentView *parent) noexcept override;
   void OnRenderingDeviceLost() noexcept override;
-  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
   struct DrawBlock {
@@ -70,10 +70,10 @@ struct CompWindowsTextInputComponentView : CompBaseComponentView {
   std::string GetTextFromRichEdit() const noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
-  winrt::com_ptr<Composition::ISpriteVisual> m_visual;
-  winrt::com_ptr<Composition::IVisual> m_caretVisual;
+  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::com_ptr<Composition::ICompositionDrawingSurface> m_drawingSurfaceInterop{nullptr};
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop{nullptr};
 
   // Used by ITextHost impl
   CHARFORMAT2W m_cf;

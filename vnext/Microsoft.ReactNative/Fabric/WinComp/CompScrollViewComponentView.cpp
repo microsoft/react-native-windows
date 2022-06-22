@@ -129,7 +129,7 @@ void CompScrollViewComponentView::mountChildComponentView(
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
   const_cast<IComponentView &>(childComponentView).parent(this);
 
-  m_visual->InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get(), index);
+  m_visual.InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual(), index);
 }
 
 void CompScrollViewComponentView::unmountChildComponentView(
@@ -137,7 +137,7 @@ void CompScrollViewComponentView::unmountChildComponentView(
     uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
-  m_visual->Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get());
+  m_visual.Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
   const_cast<IComponentView &>(childComponentView).parent(nullptr);
 }
 
@@ -150,13 +150,10 @@ void CompScrollViewComponentView::updateProps(
   ensureVisual();
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    winrt::com_ptr<Composition::IBrush> brush;
     if (newViewProps.backgroundColor) {
-      m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color, brush.put());
-      m_visual->Brush(brush.get());
+      m_visual.Brush(m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color));
     } else {
-      m_compContext->CreateColorBrush({0, 0, 0, 0}, brush.put());
-      m_visual->Brush(brush.get());
+      m_visual.Brush(m_compContext->CreateColorBrush({0, 0, 0, 0}));
     }
   }
 
@@ -195,16 +192,16 @@ void CompScrollViewComponentView::updateLayoutMetrics(
   ensureVisual();
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual->IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   // m_needsBorderUpdate = true;
   m_layoutMetrics = layoutMetrics;
 
-  m_visual->Size(
+  m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual->Offset({
+  m_visual.Offset({
       layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
@@ -213,7 +210,7 @@ void CompScrollViewComponentView::updateLayoutMetrics(
 }
 
 void CompScrollViewComponentView::updateContentVisualSize() noexcept {
-  m_visual->ContentSize(
+  m_visual.ContentSize(
       {std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
        std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
 }
@@ -276,8 +273,8 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
   facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Point ptContent{
-      ptViewport.x + m_visual->ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
-      ptViewport.y + m_visual->ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
+      ptViewport.x + m_visual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
+      ptViewport.y + m_visual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
   if (std::any_of(m_children.rbegin(), m_children.rend(), [ptContent, delta](auto child) {
         return const_cast<CompBaseComponentView *>(static_cast<const CompBaseComponentView *>(child))
@@ -287,7 +284,7 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
 
   if (ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    m_visual->ScrollBy({0, static_cast<float>(-delta), 0});
+    m_visual.ScrollBy({0, static_cast<float>(-delta), 0});
     return true;
   }
 
@@ -296,22 +293,26 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
 
 void CompScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_compContext->CreateScrollerVisual(m_visual.put());
-
-    m_visual->SetOnScrollCallback([this](winrt::Windows::Foundation::Numerics::float2 position) {
-      auto eventEmitter = GetEventEmitter();
-      if (eventEmitter) {
-        facebook::react::ScrollViewMetrics scrollMetrics;
-        scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
-        scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
-        scrollMetrics.contentOffset.x = position.x / m_layoutMetrics.pointScaleFactor;
-        scrollMetrics.contentOffset.y = position.y / m_layoutMetrics.pointScaleFactor;
-        scrollMetrics.zoomScale = 1.0;
-        scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
-        scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
-        std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)->onScroll(scrollMetrics);
-      }
-    });
+    m_visual = m_compContext->CreateScrollerVisual();
+    m_scrollPositionChangedRevoker = m_visual.ScrollPositionChanged(
+        winrt::auto_revoke,
+        [this](
+            winrt::IInspectable const & /*sender*/,
+            winrt::Microsoft::ReactNative::Composition::ScrollPositionChangedArgs const &args) {
+          auto eventEmitter = GetEventEmitter();
+          if (eventEmitter) {
+            facebook::react::ScrollViewMetrics scrollMetrics;
+            scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
+            scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
+            scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
+            scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
+            scrollMetrics.zoomScale = 1.0;
+            scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
+            scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
+            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+                ->onScroll(scrollMetrics);
+          }
+        });
   }
 }
 
@@ -320,8 +321,8 @@ facebook::react::Tag CompScrollViewComponentView::hitTest(facebook::react::Point
   facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Point ptContent{
-      ptViewport.x + m_visual->ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
-      ptViewport.y + m_visual->ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
+      ptViewport.x + m_visual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
+      ptViewport.y + m_visual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
   facebook::react::Tag tag;
   if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptContent, &localPt](auto child) {
@@ -339,7 +340,7 @@ facebook::react::Tag CompScrollViewComponentView::hitTest(facebook::react::Point
   return -1;
 }
 
-const winrt::com_ptr<Composition::ISpriteVisual> CompScrollViewComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompScrollViewComponentView::Visual() const noexcept {
   return m_visual;
 }
 

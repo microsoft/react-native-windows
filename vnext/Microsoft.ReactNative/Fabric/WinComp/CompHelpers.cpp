@@ -136,26 +136,29 @@ struct DeviceLostHelper {
 
 namespace Composition {
 
-winrt::Windows::UI::Composition::Visual CompVisualFromVisual(IVisual *visual) noexcept {
+winrt::Windows::UI::Composition::Visual CompVisualFromVisual(
+    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
   winrt::com_ptr<ICompositionVisual> s;
-  winrt::check_hresult(visual->QueryInterface(winrt::guid_of<ICompositionVisual>(), s.put_void()));
+  visual.as(s);
   return s ? s->InnerVisual() : nullptr;
 }
 
-winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(IDropShadow *shadow) noexcept {
+winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(
+    const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
   winrt::com_ptr<ICompositionDropShadow> s;
-  winrt::check_hresult(shadow->QueryInterface(winrt::guid_of<ICompositionDropShadow>(), s.put_void()));
+  shadow.as(s);
   return s ? s->InnerShadow() : nullptr;
 }
 
-winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(IBrush *brush) noexcept {
+winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(
+    const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
   winrt::com_ptr<ICompositionBrush> s;
-  winrt::check_hresult(brush->QueryInterface(winrt::guid_of<ICompositionBrush>(), s.put_void()));
+  brush.as(s);
   return s ? s->InnerBrush() : nullptr;
 }
 
 winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
-    ICompositionDrawingSurface *surface) noexcept {
+    ICompositionDrawingSurfaceInterop *surface) noexcept {
   winrt::com_ptr<ICompositionDrawingSurfaceInner> s;
   winrt::check_hresult(surface->QueryInterface(winrt::guid_of<ICompositionDrawingSurfaceInner>(), s.put_void()));
   return s ? s->Inner() : nullptr;

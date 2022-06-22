@@ -155,6 +155,7 @@
     <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
     <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
     <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompositionContext.idl" />
+    <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompositionSwitcher.idl" />
     <Midl Condition="'$(UseWinComp)' == 'true'" Include="..\Microsoft.ReactNative\CompRootView.idl" />
   </ItemGroup>
   <ItemGroup>

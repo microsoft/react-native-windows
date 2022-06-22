@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <Composition/CompositionSwitcher.h>
+#include <Composition/CompositionSwitcher.interop.h>
 
 #include <winrt/Windows.UI.Composition.h>
 
@@ -36,11 +36,14 @@ struct ICompositionDrawingSurfaceInner : public IUnknown {
   virtual winrt::Windows::UI::Composition::ICompositionSurface Inner() const noexcept = 0;
 };
 
-winrt::Windows::UI::Composition::Visual CompVisualFromVisual(Composition::IVisual *visual) noexcept;
-winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(IDropShadow *shadow) noexcept;
-winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(IBrush *brush) noexcept;
+winrt::Windows::UI::Composition::Visual CompVisualFromVisual(
+    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept;
+winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(
+    const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept;
+winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(
+    const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept;
 winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
-    ICompositionDrawingSurface *surface) noexcept;
+    ICompositionDrawingSurfaceInterop *surface) noexcept;
 
 } // namespace Composition
 

@@ -21,7 +21,7 @@ void SetFocusedComponent(CompBaseComponentView *value) noexcept;
 struct CompBaseComponentView : public IComponentView {
   CompBaseComponentView(const winrt::com_ptr<Composition::ICompositionContext> &compContext, facebook::react::Tag tag);
 
-  virtual const winrt::com_ptr<Microsoft::ReactNative::Composition::ISpriteVisual> Visual() const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept = 0;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
@@ -82,11 +82,11 @@ struct CompViewComponentView : public CompBaseComponentView {
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
 
-  const winrt::com_ptr<Microsoft::ReactNative::Composition::ISpriteVisual> Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
   facebook::react::SharedViewProps m_props;
-  winrt::com_ptr<Microsoft::ReactNative::Composition::ISpriteVisual> m_visual;
+  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   // winrt::Windows::UI::Composition::Visual m_visual{nullptr};
 };
 

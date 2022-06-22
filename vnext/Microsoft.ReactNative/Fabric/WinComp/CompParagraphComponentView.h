@@ -40,7 +40,7 @@ struct CompParagraphComponentView : CompBaseComponentView {
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   void OnRenderingDeviceLost() noexcept override;
 
-  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
   void ensureVisual() noexcept;
@@ -49,13 +49,13 @@ struct CompParagraphComponentView : CompBaseComponentView {
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
 
   std::shared_ptr<facebook::react::ParagraphProps const> m_props;
-  winrt::com_ptr<Composition::ISpriteVisual> m_visual;
+  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
-  winrt::com_ptr<Composition::ICompositionDrawingSurface> m_drawingSurfaceInterop;
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
 };
 
 } // namespace Microsoft::ReactNative

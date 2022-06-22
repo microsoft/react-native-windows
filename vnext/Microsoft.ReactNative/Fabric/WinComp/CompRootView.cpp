@@ -127,11 +127,11 @@ winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionContext> CompR
   return m_compContext.as<::Microsoft::ReactNative::Composition::ICompositionContext>();
 }
 
-winrt::Microsoft::ReactNative::Composition::ICompositionVisual CompRootView::RootVisual() noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompRootView::RootVisual() noexcept {
   return m_rootVisual;
 }
 
-void CompRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::ICompositionVisual const &value) noexcept {
+void CompRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept {
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
     m_rootVisual = value;
@@ -194,8 +194,8 @@ void CompRootView::ReloadView() noexcept {
   }
 }
 
-winrt::com_ptr<::Microsoft::ReactNative::Composition::IVisual> CompRootView::GetVisual() const noexcept {
-  return m_rootVisual.as<::Microsoft::ReactNative::Composition::IVisual>();
+winrt::Microsoft::ReactNative::Composition::IVisual CompRootView::GetVisual() const noexcept {
+  return m_rootVisual;
 }
 
 std::string CompRootView::JSComponentName() const noexcept {

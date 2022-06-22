@@ -89,7 +89,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   std::shared_ptr<::Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
   xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
   xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
-  xaml::FrameworkElement::SizeChanged_revoker m_rootSizeChangedRevoker{};
   winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_waitingTextBlock{nullptr};
   winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};

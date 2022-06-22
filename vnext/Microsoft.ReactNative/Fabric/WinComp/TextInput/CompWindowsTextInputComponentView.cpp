@@ -752,7 +752,7 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual->IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
@@ -780,10 +780,10 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
   m_imgWidth = newWidth;
   m_imgHeight = newHeight;
 
-  m_visual->Size(
+  m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual->Offset({
+  m_visual.Offset({
       layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
@@ -946,12 +946,11 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
     DrawText();
 
-    winrt::com_ptr<Composition::ISurfaceBrush> surfaceBrush;
-    m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get(), surfaceBrush.put());
-    surfaceBrush->HorizontalAlignmentRatio(0.f);
-    surfaceBrush->VerticalAlignmentRatio(0.f);
-    surfaceBrush->Stretch(Composition::CompositionStretch::None);
-    m_visual->Brush(surfaceBrush.get());
+    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get());
+    surfaceBrush.HorizontalAlignmentRatio(0.f);
+    surfaceBrush.VerticalAlignmentRatio(0.f);
+    surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    m_visual.Brush(surfaceBrush);
   }
 }
 
@@ -959,10 +958,10 @@ void CompWindowsTextInputComponentView::DrawCaret(bool show) noexcept {
   ensureVisual();
 
   if (show && !m_caretShown) {
-    m_caretVisual->IsVisible(true);
+    m_caretVisual.IsVisible(true);
     // m_caretVisual.StartAnimation(L"opacity", m_caretOpacityAnimation);
   } else if (!show && m_caretShown) {
-    m_caretVisual->IsVisible(false);
+    m_caretVisual.IsVisible(false);
     // m_caretVisual.Opacity(0.0f);
   }
 
@@ -972,14 +971,14 @@ void CompWindowsTextInputComponentView::DrawCaret(bool show) noexcept {
   if (show) {
     long xPos;
     winrt::check_hresult(m_textServices->TxGetCurTargetX(&xPos));
-    m_caretVisual->Size(
+    m_caretVisual.Size(
         {2.0f * m_layoutMetrics.pointScaleFactor,
          (0.0f - m_layoutMetrics.borderWidth.top - m_layoutMetrics.borderWidth.bottom) *
              m_layoutMetrics.pointScaleFactor});
 
     auto rcClient = getClientRect();
     xPos -= rcClient.left;
-    m_caretVisual->Offset({static_cast<float>(xPos), 0.0f, 0.0f});
+    m_caretVisual.Offset({static_cast<float>(xPos), 0.0f, 0.0f});
   }
 }
 
@@ -1059,7 +1058,7 @@ facebook::react::Tag CompWindowsTextInputComponentView::hitTest(
 void CompWindowsTextInputComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     HrEnsureRichEd20Loaded();
-    m_compContext->CreateSpriteVisual(m_visual.put());
+    m_visual = m_compContext->CreateSpriteVisual();
     m_textHost = winrt::make<CompTextHost>(this);
     winrt::com_ptr<IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
@@ -1067,12 +1066,12 @@ void CompWindowsTextInputComponentView::ensureVisual() noexcept {
   }
 
   if (!m_caretVisual) {
-    m_compContext->CreateCaratVisual(m_caretVisual.put());
-    m_visual->InsertAt(m_caretVisual.get(), 0);
+    m_caretVisual = m_compContext->CreateCaratVisual();
+    m_visual.InsertAt(m_caretVisual, 0);
   }
 }
 
-const winrt::com_ptr<Composition::ISpriteVisual> CompWindowsTextInputComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompWindowsTextInputComponentView::Visual() const noexcept {
   return m_visual;
 }
 

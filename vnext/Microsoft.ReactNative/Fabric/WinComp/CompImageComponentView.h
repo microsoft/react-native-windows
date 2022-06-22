@@ -47,7 +47,7 @@ struct CompImageComponentView : CompBaseComponentView {
   void OnRenderingDeviceLost() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
-  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
  private:
   void ensureVisual() noexcept;
@@ -58,9 +58,9 @@ struct CompImageComponentView : CompBaseComponentView {
 
   facebook::react::SharedViewProps m_props;
 
-  winrt::com_ptr<Microsoft::ReactNative::Composition::ISpriteVisual> m_visual;
+  winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  winrt::com_ptr<Composition::ICompositionDrawingSurface> m_drawingSurfaceInterop;
+  winrt::com_ptr<Composition::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
   bool m_reloadImage{false};

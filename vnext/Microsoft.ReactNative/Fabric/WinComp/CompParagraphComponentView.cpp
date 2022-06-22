@@ -10,6 +10,7 @@
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
 #include "CompHelpers.h"
 
 namespace Microsoft::ReactNative {
@@ -83,15 +84,15 @@ void CompParagraphComponentView::updateLayoutMetrics(
   ensureVisual();
 
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual->IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   m_layoutMetrics = layoutMetrics;
 
-  m_visual->Size(
+  m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual->Offset({
+  m_visual.Offset({
       layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
@@ -131,7 +132,7 @@ facebook::react::Tag CompParagraphComponentView::hitTest(facebook::react::Point 
 
 void CompParagraphComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    m_compContext->CreateSpriteVisual(m_visual.put());
+    m_visual = m_compContext->CreateSpriteVisual();
   }
 }
 
@@ -220,8 +221,7 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
 
     DrawText();
 
-    winrt::com_ptr<Composition::ISurfaceBrush> surfaceBrush;
-    m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get(), surfaceBrush.put());
+    auto surfaceBrush = m_compContext->CreateSurfaceBrush(m_drawingSurfaceInterop.get());
 
     // The surfaceBrush's size is based on the size the text takes up, which maybe smaller than the total visual
     // So we need to align the brush within the visual to match the text alignment.
@@ -252,10 +252,10 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
     }
     */
     // TODO Using brush alignment to align the text makes it blury...
-    surfaceBrush->HorizontalAlignmentRatio(horizAlignment);
-    surfaceBrush->VerticalAlignmentRatio(0.f);
-    surfaceBrush->Stretch(Composition::CompositionStretch::None);
-    m_visual->Brush(surfaceBrush.get());
+    surfaceBrush.HorizontalAlignmentRatio(horizAlignment);
+    surfaceBrush.VerticalAlignmentRatio(0.f);
+    surfaceBrush.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    m_visual.Brush(surfaceBrush);
   }
 
   if (m_requireRedraw) {
@@ -392,7 +392,7 @@ void CompParagraphComponentView::DrawText() noexcept {
   }
 }
 
-const winrt::com_ptr<Composition::ISpriteVisual> CompParagraphComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompParagraphComponentView::Visual() const noexcept {
   return m_visual;
 }
 

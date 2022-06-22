@@ -31,7 +31,7 @@ namespace Microsoft.ReactNative
     Microsoft.ReactNative.Composition.ICompositionContext CompositionContext { get; set; };
 
     DOC_STRING("The RootVisual associated with the @CompRootView. It must be set to show any React UI elements.")
-    Microsoft.ReactNative.Composition.ICompositionVisual RootVisual { get; set; };
+    Microsoft.ReactNative.Composition.IVisual RootVisual { get; set; };
 
     Windows.Foundation.Size Size {get; set; };
 

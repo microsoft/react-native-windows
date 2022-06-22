@@ -72,7 +72,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   facebook::react::SharedProps props() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
-  const winrt::com_ptr<Composition::ISpriteVisual> Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
   // void OnPointerDown(const winrt::Windows::UI::Input::PointerPoint &pp) noexcept override;
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;
@@ -82,7 +82,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void updateContentVisualSize() noexcept;
 
   facebook::react::Size m_contentSize;
-  winrt::com_ptr<Composition::IScrollerVisual> m_visual;
+  winrt::Microsoft::ReactNative::Composition::ScrollVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ScrollVisual::ScrollPositionChanged_revoker
+      m_scrollPositionChangedRevoker{};
 
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;

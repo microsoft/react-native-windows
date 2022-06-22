@@ -160,7 +160,7 @@ CompViewComponentView::CompViewComponentView(
     : Super(compContext, tag) {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
-  m_compContext->CreateSpriteVisual(m_visual.put());
+  m_visual = m_compContext->CreateSpriteVisual();
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -175,7 +175,7 @@ void CompViewComponentView::mountChildComponentView(const IComponentView &childC
 
   const_cast<IComponentView &>(childComponentView).parent(this);
 
-  m_visual->InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get(), index);
+  m_visual.InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual(), index);
 }
 
 void CompViewComponentView::unmountChildComponentView(
@@ -186,7 +186,7 @@ void CompViewComponentView::unmountChildComponentView(
   indexOffsetForBorder(index);
 
   const_cast<IComponentView &>(childComponentView).parent(nullptr);
-  m_visual->Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual().get());
+  m_visual.Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
 }
 
 void CompViewComponentView::updateProps(
@@ -197,15 +197,14 @@ void CompViewComponentView::updateProps(
 
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     if (newViewProps.backgroundColor) {
-      winrt::com_ptr<Composition::IBrush> brush;
-      m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color, brush.put());
+      m_visual.Brush(m_compContext->CreateColorBrush((*newViewProps.backgroundColor).m_color));
     } else {
-      m_visual->Brush(nullptr);
+      m_visual.Brush(nullptr);
     }
   }
 
   if (oldViewProps.opacity != newViewProps.opacity) {
-    m_visual->Opacity(newViewProps.opacity);
+    m_visual.Opacity(newViewProps.opacity);
   }
 
   updateBorderProps(oldViewProps, newViewProps);
@@ -214,23 +213,22 @@ void CompViewComponentView::updateProps(
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
       oldViewProps.shadowRadius != newViewProps.shadowRadius) {
-    winrt::com_ptr<Composition::IDropShadow> shadow;
-    m_compContext->CreateDropShadow(shadow.put());
-    shadow->Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
-    shadow->Opacity(newViewProps.shadowOpacity);
-    shadow->BlurRadius(newViewProps.shadowRadius);
+    auto shadow = m_compContext->CreateDropShadow();
+    shadow.Offset({newViewProps.shadowOffset.width, newViewProps.shadowOffset.height, 0});
+    shadow.Opacity(newViewProps.shadowOpacity);
+    shadow.BlurRadius(newViewProps.shadowRadius);
     if (newViewProps.shadowColor)
-      shadow->Color(newViewProps.shadowColor.AsWindowsColor());
-    m_visual->Shadow(shadow.get());
+      shadow.Color(newViewProps.shadowColor.AsWindowsColor());
+    m_visual.Shadow(shadow);
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
   if (oldViewProps.transform != newViewProps.transform) {
     for (const auto &operation : newViewProps.transform.operations) {
       if (operation.type == facebook::react::TransformOperationType::Scale)
-        m_visual->Scale({operation.x, operation.y, operation.z});
+        m_visual.Scale({operation.x, operation.y, operation.z});
       else if (operation.type == facebook::react::TransformOperationType::Rotate)
-        m_visual->RotationAngle(operation.z);
+        m_visual.RotationAngle(operation.z);
     }
   }
 
@@ -279,17 +277,17 @@ void CompViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
   if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    m_visual->IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
+    m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
   m_layoutMetrics = layoutMetrics;
 
   updateBorderLayoutMetrics(*m_props);
 
-  m_visual->Size(
+  m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  m_visual->Offset({
+  m_visual.Offset({
       layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
       layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
       0.0f,
@@ -304,8 +302,7 @@ facebook::react::SharedProps CompViewComponentView::props() noexcept {
   return {};
 }
 
-const winrt::com_ptr<Microsoft::ReactNative::Composition::ISpriteVisual> CompViewComponentView::Visual()
-    const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompViewComponentView::Visual() const noexcept {
   return m_visual;
 }
 

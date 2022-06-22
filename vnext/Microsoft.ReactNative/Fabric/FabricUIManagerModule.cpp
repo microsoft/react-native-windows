@@ -293,8 +293,8 @@ void FabricUIManager::startSurface(
     );
 
 #ifdef USE_WINCOMP
-    self->m_surfaceRegistry.at(surfaceId).rootVisual->InsertAt(
-        static_cast<const CompBaseComponentView &>(*rootComponentViewDescriptor.view).Visual().get(), 0);
+    self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
+        static_cast<const CompBaseComponentView &>(*rootComponentViewDescriptor.view).Visual(), 0);
 #else
     auto children = self->m_surfaceRegistry.at(surfaceId).xamlView.as<xaml::Controls::Panel>().Children();
 
