@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Jun 2022 05:09:33 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.518",
+      "version": "0.0.0-canary.518",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "c9b3d15f06ba9327d0cb9aa0745755abdedc75b1",
+            "comment": "Minor fix for clang compile"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Jun 2022 05:09:36 GMT",
       "tag": "react-native-windows_v0.0.0-canary.517",
       "version": "0.0.0-canary.517",
