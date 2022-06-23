@@ -141,13 +141,12 @@ bool ImageViewManager::UpdateProperty(
        propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
     reactImage->BlurRadius(propertyValue.AsSingle());
   } else if (propertyName == "tintColor") {
-    if (propertyValue.IsNull()) {
-      reactImage->TintColor(winrt::Colors::Transparent());
-    } else if (IsValidColorValue(propertyValue)) {
-      if (auto brush = SolidColorBrushFrom(propertyValue)) {
-        reactImage->TintColor(brush.Color());
-      }
+    const auto isValidColorValue = IsValidColorValue(propertyValue);
+    if (isValidColorValue || propertyValue.IsNull()) {
+      const auto color = isValidColorValue ? SolidColorBrushFrom(propertyValue).Color() : winrt::Colors::Transparent();
+      reactImage->TintColor(color);
     }
+
     // Override default accessibility behavior
   } else if (propertyName == "accessible" && propertyValue.IsNull()) {
     xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
