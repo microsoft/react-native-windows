@@ -15,6 +15,7 @@
 #include <Threading/MessageQueueThreadFactory.h>
 
 // Shared
+#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 
 namespace Microsoft::ReactNative {
@@ -50,11 +51,24 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
       jsMessageQueue);
 
+  if (!Microsoft::React::GetRuntimeOptionBool("Http.UseMonolithicModule")) {
+    modules.emplace_back(
+        Microsoft::React::GetBlobModuleName(),
+        [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
+        jsMessageQueue);
+
+    modules.emplace_back(
+        Microsoft::React::GetFileReaderModuleName(),
+        [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
+        jsMessageQueue);
+  }
+
   modules.emplace_back(
       "Timing",
       [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
       batchingUIMessageQueue);
 
+  // TODO: For reviewers - Why does this factory move the context object?
   modules.emplace_back(
       NativeAnimatedModule::name,
       [context = std::move(context)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(context)); },
