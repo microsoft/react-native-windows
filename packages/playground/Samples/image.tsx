@@ -5,7 +5,15 @@
  */
 import React from 'react';
 import {Picker} from '@react-native-picker/picker';
-import {AppRegistry, Image, View, Text, Switch, StyleSheet, PlatformColor} from 'react-native';
+import {
+  AppRegistry,
+  Image,
+  View,
+  Text,
+  Switch,
+  StyleSheet,
+  PlatformColor,
+} from 'react-native';
 
 const largeImageUri =
   'https://cdn.freebiesupply.com/logos/large/2x/react-logo-png-transparent.png';
@@ -112,7 +120,7 @@ export default class Bootstrap extends React.Component<
             <Picker.Item label="None" value="transparent" />
             <Picker.Item label="Purple" value="purple" />
             <Picker.Item label="Green" value="green" />
-            <Picker.Item label="SystemAccentColor" value="platformcolor"/>
+            <Picker.Item label="SystemAccentColor" value="platformcolor" />
           </Picker>
         </View>
         <View style={styles.rowContainer}>
@@ -131,7 +139,9 @@ export default class Bootstrap extends React.Component<
             style={[
               styles.image,
               this.state.includeBorder ? styles.imageWithBorder : {},
-              this.state.tintColor === "platformcolor" ? styles.imageWithPlatformColor : {tintColor: this.state.tintColor},
+              this.state.tintColor === 'platformcolor'
+                ? styles.imageWithPlatformColor
+                : {tintColor: this.state.tintColor},
             ]}
             source={
               this.state.selectedSource === 'svg'
