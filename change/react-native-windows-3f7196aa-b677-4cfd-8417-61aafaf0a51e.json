@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Disambiguate ReactContext in ReactInstanceWin",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
