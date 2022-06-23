@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Stop using /fp:strict to build yoga.cpp",
+  "packageName": "react-native-windows",
+  "email": "hpratt@microsoft.com",
+  "dependentChangeType": "patch"
+}
