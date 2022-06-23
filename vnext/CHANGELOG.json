@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 23 Jun 2022 05:09:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.519",
+      "version": "0.0.0-canary.519",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3857727addf3adb0962b3970d91976ee866ee75b",
+            "comment": "Disambiguate ReactContext in ReactInstanceWin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jun 2022 05:09:33 GMT",
       "tag": "react-native-windows_v0.0.0-canary.518",
       "version": "0.0.0-canary.518",
