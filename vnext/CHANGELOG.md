@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 06 Jun 2022 15:07:27 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Jun 2022 15:08:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.6
+
+Mon, 20 Jun 2022 15:08:27 GMT
+
+### Patches
+
+- Fix use of [[maybe_unused]] attribute (vmorozov@microsoft.com)
+- Fix ExecuteJsi on instance shutdown (vmorozov@microsoft.com)
 
 ## 0.68.5
 

@@ -1,8 +1,16 @@
 # Change Log - playground
 
-This log was last generated on Mon, 06 Jun 2022 15:07:27 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Jun 2022 15:08:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.54
+
+Mon, 20 Jun 2022 15:08:28 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.68.6
 
 ## 0.0.54
 
