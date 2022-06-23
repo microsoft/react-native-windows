@@ -146,7 +146,6 @@ bool ImageViewManager::UpdateProperty(
       const auto color = isValidColorValue ? SolidColorBrushFrom(propertyValue).Color() : winrt::Colors::Transparent();
       reactImage->TintColor(color);
     }
-
     // Override default accessibility behavior
   } else if (propertyName == "accessible" && propertyValue.IsNull()) {
     xaml::Automation::AutomationProperties::SetAccessibilityView(*reactImage, winrt::AccessibilityView::Raw);
