@@ -621,7 +621,10 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
 
-  // #10036 - Blob module not supported in UWP. Need to define property bag lifetime and onwership.
+  // These modules are instantiated separately in MSRN (Universal Windows).
+  // When there are module name colisions, the last one registered is used.
+  // If this code is enabled, we will have unused module instances.
+  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
 #if (defined(_MSC_VER) && !defined(WINRT))
   if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule") &&
       !Microsoft::React::GetRuntimeOptionBool("Http.UseMonolithicModule")) {

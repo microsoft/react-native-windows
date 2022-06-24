@@ -20,7 +20,11 @@
 
 namespace Microsoft::ReactNative {
 
+using winrt::Microsoft::ReactNative::ReactPropertyBag;
+
 namespace {
+
+using winrt::Microsoft::ReactNative::ReactPropertyId;
 
 bool HasPackageIdentity() noexcept {
   static const bool hasPackageIdentity = []() noexcept {
@@ -34,6 +38,11 @@ bool HasPackageIdentity() noexcept {
   }();
 
   return hasPackageIdentity;
+}
+
+ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
+  static ReactPropertyId<bool> propId{L"Http.UseMonolithicModule"};
+  return propId;
 }
 
 } // namespace
@@ -51,16 +60,16 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [props = context->Properties()]() { return Microsoft::React::CreateHttpModule(props); },
       jsMessageQueue);
 
-  if (!Microsoft::React::GetRuntimeOptionBool("Http.UseMonolithicModule")) {
+  if (!ReactPropertyBag(context->Properties()).Get(HttpUseMonolithicModuleProperty())) {
     modules.emplace_back(
         Microsoft::React::GetBlobModuleName(),
         [props = context->Properties()]() { return Microsoft::React::CreateBlobModule(props); },
-        jsMessageQueue);
+        batchingUIMessageQueue);
 
     modules.emplace_back(
         Microsoft::React::GetFileReaderModuleName(),
         [props = context->Properties()]() { return Microsoft::React::CreateFileReaderModule(props); },
-        jsMessageQueue);
+        batchingUIMessageQueue);
   }
 
   modules.emplace_back(
@@ -68,7 +77,8 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
       [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
       batchingUIMessageQueue);
 
-  // TODO: For reviewers - Why does this factory move the context object?
+  // Note: `context` is moved to remove the reference from the current scope.
+  // This should either be the last usage of `context`, or the std::move call should happen later in this method.
   modules.emplace_back(
       NativeAnimatedModule::name,
       [context = std::move(context)]() mutable { return std::make_unique<NativeAnimatedModule>(std::move(context)); },
