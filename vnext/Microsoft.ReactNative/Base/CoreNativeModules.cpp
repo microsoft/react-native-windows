@@ -40,7 +40,9 @@ bool HasPackageIdentity() noexcept {
 }
 
 ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
-  static ReactPropertyId<bool> propId{L"Http.UseMonolithicModule"};
+  static ReactPropertyId<bool> propId{
+      L"ReactNative.Http"
+      L"UseMonolithicModule"};
   return propId;
 }
 
