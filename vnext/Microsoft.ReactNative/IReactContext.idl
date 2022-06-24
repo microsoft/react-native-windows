@@ -141,12 +141,12 @@ namespace Microsoft.ReactNative
     IReactSettingsSnapshot SettingsSnapshot { get; };
 
     DOC_STRING(
-      "Gets @IReactPropertyBag shared with the @ReactInstanceSettings.Properties.\n"
+      "Gets the @IReactPropertyBag shared with the @ReactInstanceSettings.Properties.\n"
       "It can be used to share values and state between components and the applications.")
     IReactPropertyBag Properties { get; };
 
     DOC_STRING(
-      "Gets @IReactNotificationService shared with the @ReactInstanceSettings.Notifications.\n"
+      "Gets the @IReactNotificationService shared with the @ReactInstanceSettings.Notifications.\n"
       "It can be used to send notifications events between components and the application.\n"
       "All notification subscriptions added to the @IReactContext.Notifications are automatically removed "
       "after the @IReactContext is destroyed.\n"
