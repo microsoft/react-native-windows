@@ -15,7 +15,6 @@
 #include <Threading/MessageQueueThreadFactory.h>
 
 // Shared
-#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 
 namespace Microsoft::ReactNative {
