@@ -14,4 +14,4 @@ inline bool HasPackageIdentity() noexcept {
   return isPackagedApp;
 }
 
-} // namespace winrt::Microsoft::ReactNative
+} // namespace Microsoft::ReactNative
