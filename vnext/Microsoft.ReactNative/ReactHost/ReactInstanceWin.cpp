@@ -469,7 +469,7 @@ void ReactInstanceWin::Initialize() noexcept {
             case JSIEngine::V8:
 #if defined(USE_V8)
             {
-              if (HasPackageIdentity()) {
+              if (Microsoft::ReactNative::HasPackageIdentity()) {
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
               } else {
