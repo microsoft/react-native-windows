@@ -5,12 +5,12 @@
 #include "MoveOnCopy.h"
 #include "MsoUtils.h"
 
+#include <AppModelHelpers.h>
 #include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
 #include <comUtil/qiCast.h>
-
 #ifndef CORE_ABI
 #include <XamlUIService.h>
 #endif
@@ -469,8 +469,7 @@ void ReactInstanceWin::Initialize() noexcept {
             case JSIEngine::V8:
 #if defined(USE_V8)
             {
-              uint32_t length{0};
-              if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
+              if (HasPackageIdentity()) {
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
               } else {
