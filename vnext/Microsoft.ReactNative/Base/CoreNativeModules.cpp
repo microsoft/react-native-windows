@@ -5,6 +5,7 @@
 #include "CoreNativeModules.h"
 
 // Modules
+#include <AppModelHelpers.h>
 #include <AsyncStorageModule.h>
 #include <Modules/Animated/NativeAnimatedModule.h>
 #include <Modules/AppearanceModule.h>
@@ -24,20 +25,6 @@ using winrt::Microsoft::ReactNative::ReactPropertyBag;
 namespace {
 
 using winrt::Microsoft::ReactNative::ReactPropertyId;
-
-bool HasPackageIdentity() noexcept {
-  static const bool hasPackageIdentity = []() noexcept {
-    auto packageStatics = winrt::get_activation_factory<winrt::Windows::ApplicationModel::IPackageStatics>(
-        winrt::name_of<winrt::Windows::ApplicationModel::Package>());
-    auto abiPackageStatics = static_cast<winrt::impl::abi_t<winrt::Windows::ApplicationModel::IPackageStatics> *>(
-        winrt::get_abi(packageStatics));
-    winrt::com_ptr<winrt::impl::abi_t<winrt::Windows::ApplicationModel::IPackage>> dummy;
-    return abiPackageStatics->get_Current(winrt::put_abi(dummy)) !=
-        winrt::impl::hresult_from_win32(APPMODEL_ERROR_NO_PACKAGE);
-  }();
-
-  return hasPackageIdentity;
-}
 
 ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
   static ReactPropertyId<bool> propId{
