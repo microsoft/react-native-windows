@@ -38,16 +38,12 @@ struct AppState : public std::enable_shared_from_this<AppState> {
 
  private:
   void SetActive(bool active) noexcept;
-  void SetFocused(bool active) noexcept;
 
   std::mutex m_stateMutex;
   std::atomic<bool> m_active;
-  std::atomic<bool> m_focused;
   char const *m_lastState{nullptr};
   React::ReactContext m_context;
 #ifndef USE_WINUI3
-  xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
-  xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;
   winrt::Windows::UI::Core::CoreWindow::Activated_revoker m_activatedEventRevoker;
 #endif
 };
