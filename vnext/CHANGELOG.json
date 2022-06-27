@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Jun 2022 05:09:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.522",
+      "version": "0.0.0-canary.522",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bba9c1d27d76c2734acc540caf8476c48e298910",
+            "comment": "Enable Blob module in UWP"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Jun 2022 05:09:00 GMT",
       "tag": "react-native-windows_v0.0.0-canary.521",
       "version": "0.0.0-canary.521",
