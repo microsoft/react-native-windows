@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Jun 2022 15:08:17 GMT",
+      "tag": "react-native-windows_v0.68.7",
+      "version": "0.68.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "hpratt@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d5d46ce2b96a9dd1b86f0f6af9078dbe6314733c",
+            "comment": "Stop compiling yoga.cpp with /fp:strict. Doing so caused layout issues if Yoga code ran with the processor's rounding mode set to round down, due to NAN being defined in math.h as: ``` (float)(INFINITY * 0.0f) ``` Which macro-expands to: ``` (float)(((float)(1e+300 * 1e+300)) * 0.0f) ``` Which evaluates as follows: ``` (float)(((float)(inf.double)) * 0.0f) (float)(FLT_MAX * 0.0f) // Casting an infinite double to a float yields                         // FLT_MAX! (float)0.0f ```"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e228d6627bb4a2805df4f981355213a0bf311964",
+            "comment": "Enable Blob module with runtime option"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba",
+            "comment": "Promote 0.68 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.3",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.1",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.68.1",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jun 2022 15:08:27 GMT",
       "tag": "react-native-windows_v0.68.6",
       "version": "0.68.6",

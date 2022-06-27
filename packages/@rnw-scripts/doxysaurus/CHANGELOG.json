@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Mon, 27 Jun 2022 15:08:18 GMT",
+      "tag": "@rnw-scripts/doxysaurus_v0.1.11",
+      "version": "0.1.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.68.1",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Apr 2022 15:12:12 GMT",
       "tag": "@rnw-scripts/doxysaurus_v0.1.11",
       "version": "0.1.11",

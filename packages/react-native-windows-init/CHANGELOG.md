@@ -1,8 +1,18 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Mon, 02 May 2022 15:08:22 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Jun 2022 15:08:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.82
+
+Mon, 27 Jun 2022 15:08:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.68.1
+- Bump @react-native-windows/telemetry to v0.68.3
+- Bump @react-native-windows/cli to v0.68.3
 
 ## 1.1.82
 
