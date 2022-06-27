@@ -78,20 +78,19 @@ jobs:
         displayName: Enable No-Publish
         condition: ${{ parameters.skipGitPush }}
 
-      - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***" --no-git-tags
-        displayName: Beachball Publish (Main Branch)
-        condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
-
       - script: npx beachball publish $(SkipNpmPublishArgs) $(SkipGitPushPublishArgs) --branch origin/$(Build.SourceBranchName) -n $(npmAuthToken) -yes --bump-deps --verbose --access public --message "applying package updates ***NO_CI***"
-        displayName: Beachball Publish (Stable Branch)
-        condition: and(succeeded(), ne(variables['Build.SourceBranchName'], 'main'))
+        displayName: Beachball Publish
 
       # Beachball reverts to local state after publish, but we want the updates it added
       - script: git pull origin ${{ variables['Build.SourceBranchName'] }}
         displayName: git pull
 
+      - script: npx @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
+        displayName: Create GitHub Releases (local version)
+        condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ eq(variables['Build.SourceBranchName'], 'main') }} )
+
       - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
-        displayName: Create GitHub Releases for New Tags (Stable Branch)
+        displayName: Create GitHub Releases (latest published version)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
 
       - template: templates/set-version-vars.yml
