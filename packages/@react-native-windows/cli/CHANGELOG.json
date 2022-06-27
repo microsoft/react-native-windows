@@ -2,6 +2,39 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 27 Jun 2022 15:09:48 GMT",
+      "tag": "@react-native-windows/cli_v0.69.0",
+      "version": "0.69.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb",
+            "comment": "Integrate 0.69.0"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.69.0",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.69.0",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.69.0",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 May 2022 23:30:22 GMT",
       "tag": "@react-native-windows/cli_v0.69.0-preview.1",
       "version": "0.69.0-preview.1",

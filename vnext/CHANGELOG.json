@@ -2,6 +2,59 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 Jun 2022 15:09:49 GMT",
+      "tag": "react-native-windows_v0.69.0",
+      "version": "0.69.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a0c6fa13329acc239af261e586a77cdd1ae9e742",
+            "comment": "Enable Blob module with runtime option"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb",
+            "comment": "Integrate 0.69.0"
+          },
+          {
+            "author": "hpratt@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "85a3a87c3db2430a2579295cbbb162db1629bd09",
+            "comment": "Stop using /fp:strict to build yoga.cpp"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.69.0",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.69.0",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.69.0",
+            "commit": "34b26bb3e1b807958458a386c94ae8b70cea5fbb"
+          }
+        ],
+        "none": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9fdf399fd1183b59806dc97636024236676e3848",
+            "comment": "Reset Commits"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jun 2022 15:10:07 GMT",
       "tag": "react-native-windows_v0.69.0-preview.7",
       "version": "0.69.0-preview.7",
