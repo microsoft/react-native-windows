@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 Jun 2022 05:08:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.523",
+      "version": "0.0.0-canary.523",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "754bc415d967979b5e9ad76815e88cfdd949639b",
+            "comment": "Centralize getting package identity"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Jun 2022 05:09:12 GMT",
       "tag": "react-native-windows_v0.0.0-canary.522",
       "version": "0.0.0-canary.522",

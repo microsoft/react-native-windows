@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Centralize getting package identity",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}
