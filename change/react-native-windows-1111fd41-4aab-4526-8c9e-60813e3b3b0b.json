@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix crash when adding a key to a resource dictionary that already existed",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
