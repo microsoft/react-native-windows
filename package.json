@@ -47,12 +47,14 @@
     "**/@react-native/repo-config/jest-junit": "^13.0.0",
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/tester/ws": "^6.2.2",
+    "**/@react-native-community/cli-tools/shell-quote": "1.7.3",
     "**/detox/ws": "^5.2.3",
     "z-schema": "^5.0.2"
   },
   "resolutions.justification": {
     "@react-native-community/cli-server-api": "https://github.com/react-native-community/cli/issues/1564",
     "**/clang-format/async": "CVE-2021-43138 in older async, but updating clang-format will require formatting changes",
+    "**/@react-native-community/cli-tools/shell-quote": "CVE-2021-42740",
     "z-schema": "CVE-2021-3765 in validator. z-schema is used by rush which is a dependency of lage so should not be executed in this repo"
   }
 }
