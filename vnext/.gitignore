@@ -99,5 +99,8 @@ temp
 /README.md
 /LICENCE
 
+# Dynamically contructed as part of build
+/cgmanifest.json
+
 # Keep the template certificates
 !template/**/*.pfx
