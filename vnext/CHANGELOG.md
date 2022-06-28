@@ -1,8 +1,31 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 Jun 2022 15:10:55 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Jun 2022 15:09:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.0
+
+Mon, 27 Jun 2022 15:09:49 GMT
+
+### Patches
+
+- Enable Blob module with runtime option (julio.rocha@microsoft.com)
+- Integrate 0.69.0 (34109996+chiaramooney@users.noreply.github.com)
+- Stop using /fp:strict to build yoga.cpp (hpratt@microsoft.com)
+- Bump @react-native-windows/cli to v0.69.0
+- Bump @react-native-windows/virtualized-list to v0.69.0
+- Bump @react-native-windows/codegen to v0.69.0
+
+## 0.69.0-preview.7
+
+Mon, 20 Jun 2022 15:10:07 GMT
+
+### Changes
+
+- Fix use of [[maybe_unused]] attribute (vmorozov@microsoft.com)
+- yarn format (erozell@outlook.com)
+- Fix ExecuteJsi on instance shutdown (vmorozov@microsoft.com)
 
 ## 0.69.0-preview.6
 
