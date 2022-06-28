@@ -14,3 +14,6 @@
 /rntypes
 /src/rntypes
 /rn-get-polyfills.js
+
+# Dynamically contructed as part of build
+/cgmanifest.json

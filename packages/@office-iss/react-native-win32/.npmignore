@@ -13,3 +13,4 @@
 /webpack.config.js
 /webpack.serve.config.js
 node_modules
+/cgmanifest.json
