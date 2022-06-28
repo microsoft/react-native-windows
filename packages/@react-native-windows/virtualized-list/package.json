@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/virtualized-list",
-  "version": "0.68.0",
+  "version": "0.68.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -33,7 +33,7 @@
     "react-native": "0.68.0"
   },
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.68-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",

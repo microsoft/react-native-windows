@@ -2,6 +2,33 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 27 Jun 2022 15:08:16 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.1",
+      "version": "0.68.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba",
+            "comment": "Promote 0.68 to legacy"
+          },
+          {
+            "author": "patboyd@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "5d959da1e71fad8b88c63a57c9e29bdc28a8be97",
+            "comment": "Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.1",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Apr 2022 15:12:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.68.0",
       "version": "0.68.0",

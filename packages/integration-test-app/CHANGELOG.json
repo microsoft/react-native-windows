@@ -2,6 +2,33 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 27 Jun 2022 15:08:18 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/fs to v0.68.1",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.68.7",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          },
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.68.1",
+            "commit": "3a5573a4a97254f92c09e7ff73936744601a6dba"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jun 2022 15:08:28 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",
