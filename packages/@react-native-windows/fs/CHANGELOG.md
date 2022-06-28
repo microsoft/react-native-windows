@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Wed, 04 May 2022 23:30:23 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Jun 2022 15:09:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.0
+
+Mon, 27 Jun 2022 15:09:48 GMT
+
+### Patches
+
+- Integrate 0.69.0 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.69.0-preview.1
 

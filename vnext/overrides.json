@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.69.0-rc.6",
+  "baseVersion": "0.69.0",
   "overrides": [
     {
       "type": "derived",
@@ -73,6 +73,13 @@
       "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "95a6fd14e80719f9796942ffe59dd850a56d544c",
       "issue": 9791
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/CompactValue.h",
+      "baseFile": "ReactCommon/yoga/yoga/CompactValue.h",
+      "baseHash": "4c22c7d0ecadeecb97a9694ffaa508442d973470",
+      "issue": 10145
     },
     {
       "type": "patch",
