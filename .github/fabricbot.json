@@ -1,0 +1,2360 @@
+{
+  "version": "1.0",
+  "tasks": [
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "config": {
+        "taskName": "Add needs triage label to new issues",
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Needs: Triage :mag:"
+            }
+          }
+        ],
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ]
+      },
+      "id": "iok53aI-x"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssueCommentResponder",
+      "version": "1.0",
+      "config": {
+        "taskName": "Replace needs author feedback label with needs attention label when the author comments on an issue",
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "created"
+              }
+            },
+            {
+              "name": "isActivitySender",
+              "parameters": {
+                "user": {
+                  "type": "author"
+                }
+              }
+            },
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "Needs: Author Feedback"
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Needs: Attention :wave:"
+            }
+          },
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          }
+        ],
+        "eventType": "issue",
+        "eventNames": [
+          "issue_comment"
+        ]
+      },
+      "id": "ppQ6nHO193"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "config": {
+        "taskName": "Remove no recent activity label from issues",
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "operator": "not",
+              "operands": [
+                {
+                  "name": "isAction",
+                  "parameters": {
+                    "action": "closed"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "no-recent-activity"
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ],
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ]
+      },
+      "id": "5_v1kLgxQU"
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "config": {
+        "taskName": "Close stale issues",
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isIssue",
+            "parameters": {}
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "noActivitySince",
+            "parameters": {
+              "days": 7
+            }
+          }
+        ],
+        "actions": [
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      },
+      "id": "B6-z8mkdRX"
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "config": {
+        "taskName": "Add no recent activity label to issues",
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isIssue",
+            "parameters": {}
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "noActivitySince",
+            "parameters": {
+              "days": 7
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "This issue has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **7 days**. It will be closed if no further activity occurs **within 7 days of this comment**."
+            }
+          }
+        ]
+      },
+      "id": "BcIybN-jzf"
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "config": {
+        "taskName": "Close duplicate issues",
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              0,
+              3,
+              6,
+              9,
+              12,
+              15,
+              18,
+              21
+            ],
+            "timezoneOffset": -8
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isIssue",
+            "parameters": {}
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "Resolution: Duplicate"
+            }
+          },
+          {
+            "name": "noActivitySince",
+            "parameters": {
+              "days": 1
+            }
+          }
+        ],
+        "actions": [
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "This issue has been marked as duplicate and has not had any activity for **1 day**. It will be closed for housekeeping purposes."
+            }
+          },
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      },
+      "id": "5Cw2FZxpj3",
+      "disabled": false
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "PullRequestReviewResponder",
+      "version": "1.0",
+      "config": {
+        "taskName": "Add needs author feedback label to pull requests when changes are requested",
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "submitted"
+              }
+            },
+            {
+              "name": "isReviewState",
+              "parameters": {
+                "state": "changes_requested"
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          }
+        ],
+        "eventType": "pull_request",
+        "eventNames": [
+          "pull_request_review"
+        ]
+      },
+      "id": "IqHZkmBcJR"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "PullRequestResponder",
+      "version": "1.0",
+      "config": {
+        "taskName": "Remove needs author feedback label when the author responds to a pull request",
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isActivitySender",
+              "parameters": {
+                "user": {
+                  "type": "author"
+                }
+              }
+            },
+            {
+              "operator": "not",
+              "operands": [
+                {
+                  "name": "isAction",
+                  "parameters": {
+                    "action": "closed"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "Needs: Author Feedback"
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          }
+        ],
+        "eventType": "pull_request",
+        "eventNames": [
+          "pull_request",
+          "issues",
+          "project_card"
+        ]
+      },
+      "id": "k0IT1OFO70"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "PullRequestResponder",
+      "version": "1.0",
+      "config": {
+        "taskName": "Remove no recent activity label from pull requests",
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "operator": "not",
+              "operands": [
+                {
+                  "name": "isAction",
+                  "parameters": {
+                    "action": "closed"
+                  }
+                }
+              ]
+            },
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "no-recent-activity"
+              }
+            }
+          ]
+        },
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ],
+        "eventType": "pull_request",
+        "eventNames": [
+          "pull_request",
+          "issues",
+          "project_card"
+        ]
+      },
+      "id": "SNcCBi7_Vp"
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "config": {
+        "taskName": "Close stale pull requests",
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              2,
+              5,
+              8,
+              11,
+              14,
+              17,
+              20,
+              23
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              2,
+              5,
+              8,
+              11,
+              14,
+              17,
+              20,
+              23
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              2,
+              5,
+              8,
+              11,
+              14,
+              17,
+              20,
+              23
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              2,
+              5,
+              8,
+              11,
+              14,
+              17,
+              20,
+              23
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              2,
+              5,
+              8,
+              11,
+              14,
+              17,
+              20,
+              23
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              2,
+              5,
+              8,
+              11,
+              14,
+              17,
+              20,
+              23
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              2,
+              5,
+              8,
+              11,
+              14,
+              17,
+              20,
+              23
+            ],
+            "timezoneOffset": -8
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isPr",
+            "parameters": {}
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "noActivitySince",
+            "parameters": {
+              "days": 7
+            }
+          }
+        ],
+        "actions": [
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      },
+      "id": "3z9PutcByv"
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "config": {
+        "taskName": "Add no recent activity label to pull requests",
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              1,
+              4,
+              7,
+              10,
+              13,
+              16,
+              19,
+              22
+            ],
+            "timezoneOffset": -8
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isPr",
+            "parameters": {}
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "noActivitySince",
+            "parameters": {
+              "days": 7
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ],
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          },
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "This pull request has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **7 days**. It will be closed if no further activity occurs **within 7 days of this comment**."
+            }
+          }
+        ]
+      },
+      "id": "Gotz9zRFn2"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "AutoMerge",
+      "subCapability": "AutoMerge",
+      "version": "1.0",
+      "config": {
+        "taskName": "Automatically merge pull requests",
+        "label": "AutoMerge",
+        "silentMode": false,
+        "minMinutesOpen": "600",
+        "mergeType": "squash",
+        "deleteBranches": true,
+        "removeLabelOnPush": true,
+        "allowAutoMergeInstructionsWithoutLabel": true
+      },
+      "id": "NVVc3cFTJq"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "CodeFlowLink",
+      "subCapability": "CodeFlowLink",
+      "version": "1.0",
+      "id": "FRUYGzcnJ",
+      "config": {
+        "taskName": "Add CodeFlow link"
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssueCommentResponder",
+      "version": "1.0",
+      "config": {
+        "eventType": "issue",
+        "eventNames": [
+          "issue_comment"
+        ],
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "no-recent-activity"
+              }
+            }
+          ]
+        },
+        "taskName": "Remove no recent activity label when an issue is commented on",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ]
+      },
+      "id": "BvbkC5mZb"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "PullRequestCommentResponder",
+      "version": "1.0",
+      "config": {
+        "eventType": "pull_request",
+        "eventNames": [
+          "issue_comment"
+        ],
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isActivitySender",
+              "parameters": {
+                "user": {
+                  "type": "author"
+                }
+              }
+            },
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "Needs: Author Feedback"
+              }
+            }
+          ]
+        },
+        "taskName": "Remove needs author feedback label when the author comments on a pull request",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          }
+        ]
+      },
+      "id": "HrIZxUgYik"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "PullRequestReviewResponder",
+      "version": "1.0",
+      "config": {
+        "eventType": "pull_request",
+        "eventNames": [
+          "pull_request_review"
+        ],
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isActivitySender",
+              "parameters": {
+                "user": {
+                  "type": "author"
+                }
+              }
+            },
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "Needs: Author Feedback"
+              }
+            }
+          ]
+        },
+        "taskName": "Remove needs author feedback label when the author responds to a pull request review comment",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          }
+        ]
+      },
+      "id": "N8HbReyhDP"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "PullRequestCommentResponder",
+      "version": "1.0",
+      "config": {
+        "eventType": "pull_request",
+        "eventNames": [
+          "issue_comment"
+        ],
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "no-recent-activity"
+              }
+            }
+          ]
+        },
+        "taskName": "Remove no recent activity label when a pull request is commented on",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ]
+      },
+      "id": "EbZxHLUI0d"
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "PullRequestReviewResponder",
+      "version": "1.0",
+      "config": {
+        "eventType": "pull_request",
+        "eventNames": [
+          "pull_request_review"
+        ],
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "hasLabel",
+              "parameters": {
+                "label": "no-recent-activity"
+              }
+            }
+          ]
+        },
+        "taskName": "Remove no recent activity label when a pull request is reviewed",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "no-recent-activity"
+            }
+          }
+        ]
+      },
+      "id": "RLJUIIW14A"
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "id": "Xml_ysXV4",
+      "config": {
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              2,
+              8,
+              14,
+              20
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              2,
+              8,
+              14,
+              20
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              2,
+              8,
+              14,
+              20
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              2,
+              8,
+              14,
+              20
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              2,
+              8,
+              14,
+              20
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              2,
+              8,
+              14,
+              20
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              2,
+              8,
+              14,
+              20
+            ],
+            "timezoneOffset": -7
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": ".NET Archive"
+            }
+          }
+        ],
+        "taskName": ".NET Archive",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": ".NET Archive"
+            }
+          },
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "We are not investing in new features or lower priority bug fixes on the C# implementation of React Native for Windows (previously known as \"vCurrent\"). All investment moving forward is in the C++ infrastructure (previously known as \"vNext\") and that is the only option as of 0.61 (and was the default as of 0.60). If this issue is still relevant on the modern implementation please open a new issue. If this issue is of significant severity for a vCurrent app and vNext is not an option, re-open with justification."
+            }
+          },
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "id": "fGzZMLaiA",
+      "config": {
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              0,
+              6,
+              12,
+              18
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              0,
+              6,
+              12,
+              18
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              0,
+              6,
+              12,
+              18
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              0,
+              6,
+              12,
+              18
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              0,
+              6,
+              12,
+              18
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              0,
+              6,
+              12,
+              18
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              0,
+              6,
+              12,
+              18
+            ],
+            "timezoneOffset": -7
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "hasLabel",
+            "parameters": {
+              "label": "WPF Archive"
+            }
+          },
+          {
+            "name": "isOpen",
+            "parameters": {}
+          }
+        ],
+        "taskName": "WPF Archive",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "WPF Archive"
+            }
+          },
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "We are not investing in new features or lower priority bug fixes for the WPF implementation of React Native for Windows. All investment is now in UWP XAML. If this issue is still relevant on the UWP XAML implementation please open a new issue. If this issue is of significant severity for a WPF app and UWP XAML is not an option, re-open with justification."
+            }
+          },
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "kFx4LR68F",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            },
+            {
+              "operator": "and",
+              "operands": [
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "aschultz"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "lamxdoan"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "stecrain"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "JakovS"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Partner: Xbox"
+            }
+          }
+        ],
+        "taskName": "Label issues filed by Xbox"
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "Uz7Qo7B1Y",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            },
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "Tatious"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "namrog84"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Label issues filed by Stream",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Partner: Stream"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "ODsG8IFzY",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "labelAdded",
+              "parameters": {
+                "label": "Needs: Environment Info"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "actions": [
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "This issue lacks the environment info requested in the bug template. Please edit your issue report to add this information.\n\nIf you are using latest version:\n1. `npx react-native --version`:\n2. `npx react-native run-windows --info`:\n\nOtherwise if `--info` doesn't exist:\n1. `react-native -v`:\n2. `npm ls rnpm-plugin-windows`:\n3. `npm ls react-native-windows`:\n4. `node -v`:\n5. `npm -v`:\n6. `yarn --version`<!-- (if you use Yarn) -->:"
+            }
+          },
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Triage :mag:"
+            }
+          }
+        ],
+        "taskName": "Needs Environment Info"
+      }
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "id": "5sU29MTQ1",
+      "config": {
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Needs: Triage :mag:"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Invalid Triage"
+            }
+          },
+          {
+            "name": "isIssue",
+            "parameters": {}
+          },
+          {
+            "name": "notPartOfAnyMilestone",
+            "parameters": {}
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Needs: Attention :wave:"
+            }
+          }
+        ],
+        "taskName": "Check for invalid triage state (Milestone)",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Invalid Triage"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "dazyjQEoL",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            },
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "TheSavior"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "fmsanchez"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "AkshatGiri"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "sahrens"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "jackerghan"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "appden"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "lyahdav"
+                  }
+                },
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "rozele"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Label issues filed by Facebook",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Partner: Facebook"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "FCdXOwpmZ",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "labelAdded",
+              "parameters": {
+                "label": "Needs: Verify on Latest Version"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "actions": [
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "This issue is reported on an older version of React Native for Windows than is current, and is believed to be fixed in the latest version. Please try to update to the latest version and confirm if your issue still occurs.\nPer-version documentation is available [here](https://microsoft.github.io/react-native-windows/versions)\n"
+            }
+          },
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Triage :mag:"
+            }
+          }
+        ],
+        "taskName": "Needs Verify on Latest Version"
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "LabelSync",
+      "subCapability": "LabelSync",
+      "version": "1.0",
+      "id": "UAK9yZiPp",
+      "config": {
+        "taskName": "Copy issue labels to PR",
+        "labelPatterns": [
+          {
+            "pattern": "Area:"
+          },
+          {
+            "pattern": "Platform:"
+          },
+          {
+            "pattern": "Breaking Change"
+          },
+          {
+            "pattern": "Backport"
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "x-Rmyq2uN",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "labelAdded",
+              "parameters": {
+                "label": "Resolution: For StackOverflow"
+              }
+            },
+            {
+              "name": "isOpen",
+              "parameters": {}
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Resolution for StackOverflow",
+        "actions": [
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "We use github to track issues exclusive to React Native for Windows. This issue seems to pertain to something outside of that scope. Please try asking over on [Stack Overflow](https://stackoverflow.com/questions/tagged/uwp) as it is better suited for general Windows platform questions."
+            }
+          },
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      },
+      "disabled": false
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "EI5QGWxrH",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            },
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "joshyAbraham"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Label issues opened by 3rd party",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Partner: 3P"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "sXA-ZYyvr",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "closed"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Remove triage status on closed issues",
+        "actions": [
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Triage :mag:"
+            }
+          },
+          {
+            "name": "removeLabel",
+            "parameters": {
+              "label": "Needs: Attention :wave:"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssueCommentResponder",
+      "version": "1.0",
+      "id": "aZQOmHJYa",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "operator": "not",
+              "operands": [
+                {
+                  "name": "isOpen",
+                  "parameters": {}
+                }
+              ]
+            },
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "created"
+              }
+            },
+            {
+              "operator": "not",
+              "operands": [
+                {
+                  "name": "isCloseAndComment",
+                  "parameters": {}
+                }
+              ]
+            },
+            {
+              "operator": "and",
+              "operands": [
+                {
+                  "operator": "not",
+                  "operands": [
+                    {
+                      "name": "activitySenderHasPermissions",
+                      "parameters": {
+                        "permissions": "write"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "operator": "not",
+                  "operands": [
+                    {
+                      "name": "activitySenderHasPermissions",
+                      "parameters": {
+                        "permissions": "admin"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issue_comment"
+        ],
+        "taskName": "Handle comments on closed issues",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Needs: Attention :wave:"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "dqb3psPwC",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            },
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "KAnder425"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Label issues filed by Office",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Partner: Office"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "scheduled",
+      "capabilityId": "ScheduledSearch",
+      "subCapability": "ScheduledSearch",
+      "version": "1.1",
+      "id": "s6d4XXCda",
+      "config": {
+        "frequency": [
+          {
+            "weekDay": 0,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 1,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 2,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 3,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 4,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 5,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          },
+          {
+            "weekDay": 6,
+            "hours": [
+              13
+            ],
+            "timezoneOffset": -7
+          }
+        ],
+        "searchTerms": [
+          {
+            "name": "isOpen",
+            "parameters": {}
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Invalid Triage"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Needs: Triage :mag:"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Needs: Attention :wave:"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "Needs: Author Feedback"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "bug"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "enhancement"
+            }
+          },
+          {
+            "name": "noLabel",
+            "parameters": {
+              "label": "question"
+            }
+          },
+          {
+            "name": "isIssue",
+            "parameters": {}
+          }
+        ],
+        "taskName": "Check for invalid triage state (un-categorized)",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Invalid Triage"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "i5dxnOwel",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            },
+            {
+              "operator": "or",
+              "operands": [
+                {
+                  "name": "isActivitySender",
+                  "parameters": {
+                    "user": "stratospheres"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Issues filed by Shell",
+        "actions": [
+          {
+            "name": "addLabel",
+            "parameters": {
+              "label": "Partner: Microsoft"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "bzebyDXDb",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "isAction",
+              "parameters": {
+                "action": "opened"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Holiday OOF",
+        "actions": [
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "Many of our core contributors are taking some much needed vacation throughout December 2021. Thank you for being patient while we relax, recharge, and return to a normal responsiveness in January 2022. In the meantime feel free to continue to pose questions, open issues, and make feature requests - you just may not get a response right away."
+            }
+          }
+        ]
+      },
+      "disabled": true
+    },
+    {
+      "taskType": "trigger",
+      "capabilityId": "IssueResponder",
+      "subCapability": "IssuesOnlyResponder",
+      "version": "1.0",
+      "id": "E5gnqksatXaSz0lPqtaSd",
+      "config": {
+        "conditions": {
+          "operator": "and",
+          "operands": [
+            {
+              "name": "labelAdded",
+              "parameters": {
+                "label": "Resolution: Won't Fix"
+              }
+            }
+          ]
+        },
+        "eventType": "issue",
+        "eventNames": [
+          "issues",
+          "project_card"
+        ],
+        "taskName": "Resolve won't fix",
+        "actions": [
+          {
+            "name": "addReply",
+            "parameters": {
+              "comment": "There is no immediate intention to take a fix for this issue. In an intent to create clear expectations, the issue has been closed. The issue still exists and may be referred to and commented on. If additional justification is made, it may be reactivated in the future."
+            }
+          },
+          {
+            "name": "closeIssue",
+            "parameters": {}
+          }
+        ]
+      }
+    }
+  ],
+  "userGroups": []
+}
