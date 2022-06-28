@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 20 Jun 2022 15:08:27 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Jun 2022 15:08:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.7
+
+Mon, 27 Jun 2022 15:08:17 GMT
+
+### Patches
+
+- Stop compiling yoga.cpp with /fp:strict. Doing so caused layout issues if Yoga code ran with the processor's rounding mode set to round down, due to NAN being defined in math.h as: ``` (float)(INFINITY * 0.0f) ``` Which macro-expands to: ``` (float)(((float)(1e+300 * 1e+300)) * 0.0f) ``` Which evaluates as follows: ``` (float)(((float)(inf.double)) * 0.0f) (float)(FLT_MAX * 0.0f) // Casting an infinite double to a float yields                         // FLT_MAX! (float)0.0f ``` (hpratt@microsoft.com)
+- Enable Blob module with runtime option (julio.rocha@microsoft.com)
+- Promote 0.68 to legacy (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.68.3
+- Bump @react-native-windows/virtualized-list to v0.68.1
+- Bump @react-native-windows/codegen to v0.68.1
 
 ## 0.68.6
 

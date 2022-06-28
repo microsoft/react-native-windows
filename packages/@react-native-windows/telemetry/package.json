@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.68.2",
+  "version": "0.68.3",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -18,7 +18,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.68.0",
+    "@react-native-windows/fs": "0.68.1",
     "@xmldom/xmldom": "^0.7.5",
     "applicationinsights": "^2.3.1",
     "ci-info": "^3.2.0",
@@ -49,7 +49,7 @@
     "lib-commonjs"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.68-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",

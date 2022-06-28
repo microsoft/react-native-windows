@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 04 Apr 2022 15:12:10 GMT and should not be manually modified.
+This log was last generated on Mon, 27 Jun 2022 15:08:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.1
+
+Mon, 27 Jun 2022 15:08:16 GMT
+
+### Patches
+
+- Promote 0.68 to legacy (34109996+chiaramooney@users.noreply.github.com)
+- Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example (patboyd@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.68.1
 
 ## 0.68.0
 

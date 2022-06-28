@@ -1,7 +1,7 @@
 {
   "name": "@react-native-windows/fs",
   "description": "A minimal-dependency drop-in replacement to `fs` with changes for resiliency, promises, and convenience.",
-  "version": "0.68.0",
+  "version": "0.68.1",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -39,7 +39,7 @@
   },
   "promoteRelease": true,
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.68-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
