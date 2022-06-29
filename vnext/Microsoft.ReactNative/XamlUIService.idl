@@ -45,11 +45,18 @@ namespace Microsoft.ReactNative
       "to have access to functionality related to accessibility.")
     static void SetAccessibleRoot(IReactPropertyBag properties, XAML_NAMESPACE.FrameworkElement accessibleRoot);
 
+    DOC_STRING("Sets the default @Windows.UI.Xaml.FrameworkElement that will act as a proxy to the window size for the app.")
+    static void SetWindowSizingRoot(IReactPropertyBag properties, XAML_NAMESPACE.FrameworkElement sizingRoot);
+
     DOC_STRING("Retrieves the default @Windows.UI.Xaml.XamlRoot for the app.")
     static XAML_NAMESPACE.XamlRoot GetXamlRoot(IReactPropertyBag properties);
 
     DOC_STRING("Retrieves the default @Windows.UI.Xaml.FrameworkElement that will be used for the app for accessibility purposes (e.g. to announce).")
     static XAML_NAMESPACE.FrameworkElement GetAccessibleRoot(IReactPropertyBag properties);
+
+    DOC_STRING(
+        "Retrieves the default @Windows.UI.Xaml.FrameworkElement that will act as a proxy to the window size for the app.")
+    static XAML_NAMESPACE.FrameworkElement GetWindowSizingRoot(IReactPropertyBag properties);
 
     DOC_STRING(
       "Gets the window handle HWND (as an UInt64) used as the XAML Island window for the current React instance.")

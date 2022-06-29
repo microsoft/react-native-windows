@@ -28,8 +28,13 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   static void SetAccessibleRoot(
       IReactPropertyBag const &properties,
       xaml::FrameworkElement const &accessibleRoot) noexcept;
+  static void SetWindowSizingRoot(
+      IReactPropertyBag const &properties,
+      xaml::FrameworkElement const &sizingRoot) noexcept;
+
   static xaml::XamlRoot GetXamlRoot(IReactPropertyBag const &properties) noexcept;
   static xaml::FrameworkElement GetAccessibleRoot(IReactPropertyBag const &properties) noexcept;
+  static xaml::FrameworkElement GetWindowSizingRoot(IReactPropertyBag const &properties) noexcept;
 
   static void SetIslandWindowHandle(IReactPropertyBag const &properties, uint64_t hwnd) noexcept;
   static uint64_t GetIslandWindowHandle(IReactPropertyBag const &properties) noexcept;

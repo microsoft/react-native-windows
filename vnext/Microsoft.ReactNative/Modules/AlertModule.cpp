@@ -74,48 +74,29 @@ void Alert::ProcessPendingAlertRequests() noexcept {
     if (xamlRoot) {
       useXamlRootForThemeBugWorkaround = true;
       dialog.XamlRoot(xamlRoot);
-      auto rootChangedToken = xamlRoot.Changed([=](auto &&, auto &&) {
-        const auto rootSize = xamlRoot.Size();
-        const auto popupRoot = xaml::Media::VisualTreeHelper::GetParent(dialog);
-        const auto nChildren = xaml::Media::VisualTreeHelper::GetChildrenCount(popupRoot);
-        xaml::Shapes::Rectangle smoke = nullptr;
-        xaml::Controls::ContentDialog assertDialog = nullptr;
-        for (int32_t i = 0; i < nChildren - 1; ++i) {
-          smoke = xaml::Media::VisualTreeHelper::GetChild(popupRoot, i).try_as<xaml::Shapes::Rectangle>();
-          assertDialog =
-              xaml::Media::VisualTreeHelper::GetChild(popupRoot, i + 1).try_as<xaml::Controls::ContentDialog>();
-          if (smoke && assertDialog == dialog) {
-            break;
-          }
-        }
-
-        if (smoke && assertDialog == dialog) {
-          smoke.Width(rootSize.Width);
-          smoke.Height(rootSize.Height);
-          dialog.Width(rootSize.Width);
-          dialog.Height(rootSize.Height);
-        }
-      });
-
-      dialog.Closed([=](auto &&, auto &&) { xamlRoot.Changed(rootChangedToken); });
     }
   }
 
   // Workaround XAML bug with ContentDialog and dark theme:
   // https://github.com/microsoft/microsoft-ui-xaml/issues/2331
-  dialog.Opened([useXamlRootForThemeBugWorkaround](winrt::IInspectable const &sender, auto &&) {
-    auto contentDialog = sender.as<xaml::Controls::ContentDialog>();
-    auto popups = xaml::Media::VisualTreeHelper::GetOpenPopupsForXamlRoot(contentDialog.XamlRoot());
-
-    auto contentAsFrameworkElement = useXamlRootForThemeBugWorkaround
-        ? contentDialog.XamlRoot().Content().try_as<xaml::FrameworkElement>()
-        : xaml::Window::Current().Content().try_as<xaml::FrameworkElement>();
-    if (contentAsFrameworkElement) {
-      for (uint32_t i = 0; i < popups.Size(); i++) {
-        popups.GetAt(i).RequestedTheme(contentAsFrameworkElement.ActualTheme());
-      }
-    }
-  });
+  dialog.Opened(
+      [weakThis = weak_from_this(), useXamlRootForThemeBugWorkaround](winrt::IInspectable const &sender, auto &&) {
+        auto contentDialog = sender.as<xaml::Controls::ContentDialog>();
+        auto popups = xaml::Media::VisualTreeHelper::GetOpenPopupsForXamlRoot(contentDialog.XamlRoot());
+        if (Is19H1OrHigher()) {
+          if (const auto strongThis = weakThis.lock()) {
+            strongThis->FixContentDialogSize(contentDialog);
+          }
+        }
+        auto contentAsFrameworkElement = useXamlRootForThemeBugWorkaround
+            ? contentDialog.XamlRoot().Content().try_as<xaml::FrameworkElement>()
+            : xaml::Window::Current().Content().try_as<xaml::FrameworkElement>();
+        if (contentAsFrameworkElement) {
+          for (uint32_t i = 0; i < popups.Size(); i++) {
+            popups.GetAt(i).RequestedTheme(contentAsFrameworkElement.ActualTheme());
+          }
+        }
+      });
 
   const auto hasCloseButton = dialog.CloseButtonText().size() > 0;
   auto asyncOp = dialog.ShowAsync();
@@ -140,6 +121,42 @@ void Alert::ProcessPendingAlertRequests() noexcept {
         pendingAlerts.pop();
         ProcessPendingAlertRequests();
       });
+}
+
+void SetContentDialogSize(xaml::FrameworkElement const &sizingRoot, xaml::Controls::ContentDialog const &dialog) {
+  const auto popupRoot = xaml::Media::VisualTreeHelper::GetParent(dialog);
+  const auto nChildren = xaml::Media::VisualTreeHelper::GetChildrenCount(popupRoot);
+  xaml::Shapes::Rectangle smoke = nullptr;
+  xaml::Controls::ContentDialog assertDialog = nullptr;
+  for (int32_t i = 0; i < nChildren - 1; ++i) {
+    smoke = xaml::Media::VisualTreeHelper::GetChild(popupRoot, i).try_as<xaml::Shapes::Rectangle>();
+    assertDialog = xaml::Media::VisualTreeHelper::GetChild(popupRoot, i + 1).try_as<xaml::Controls::ContentDialog>();
+    if (smoke && assertDialog == dialog) {
+      break;
+    }
+  }
+
+  if (smoke && assertDialog == dialog) {
+    smoke.Width(sizingRoot.ActualWidth());
+    smoke.Height(sizingRoot.ActualHeight());
+    dialog.Width(sizingRoot.ActualWidth());
+    dialog.Height(sizingRoot.ActualHeight());
+    dialog.MaxWidth(sizingRoot.ActualWidth());
+    dialog.MaxHeight(sizingRoot.ActualHeight());
+  }
+}
+
+void Alert::FixContentDialogSize(xaml::Controls::ContentDialog const &dialog) noexcept {
+  auto sizingRoot = React::XamlUIService::GetWindowSizingRoot(m_context.Properties().Handle());
+  if (!sizingRoot) {
+    sizingRoot = dialog.XamlRoot().Content().try_as<xaml::FrameworkElement>();
+  }
+
+  if (sizingRoot) {
+    SetContentDialogSize(sizingRoot, dialog);
+    const auto rootChangedToken = sizingRoot.SizeChanged([=](auto &&...) { SetContentDialogSize(sizingRoot, dialog); });
+    dialog.Closed([=](auto &&, auto &&) { sizingRoot.SizeChanged(rootChangedToken); });
+  }
 }
 
 Alert::Constants Alert::GetConstants() noexcept {

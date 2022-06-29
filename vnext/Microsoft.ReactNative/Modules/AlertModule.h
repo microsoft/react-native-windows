@@ -44,6 +44,7 @@ struct Alert : public std::enable_shared_from_this<Alert> {
   std::queue<AlertRequest> pendingAlerts{};
 
   void ProcessPendingAlertRequests() noexcept;
+  void FixContentDialogSize(xaml::Controls::ContentDialog const &dialog) noexcept;
 };
 
 } // namespace Microsoft::ReactNative

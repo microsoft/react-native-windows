@@ -80,6 +80,11 @@ ReactPropertyId<xaml::FrameworkElement> AccessibleRootProperty() noexcept {
   return propId;
 }
 
+ReactPropertyId<xaml::FrameworkElement> SizingRootProperty() noexcept {
+  static ReactPropertyId<xaml::FrameworkElement> propId{L"ReactNative.UIManager", L"SizingRoot"};
+  return propId;
+}
+
 /*static*/ void XamlUIService::SetXamlRoot(
     IReactPropertyBag const &properties,
     xaml::XamlRoot const &xamlRoot) noexcept {
@@ -92,12 +97,22 @@ ReactPropertyId<xaml::FrameworkElement> AccessibleRootProperty() noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(AccessibleRootProperty(), accessibleRoot);
 }
 
+/*static*/ void XamlUIService::SetWindowSizingRoot(
+    IReactPropertyBag const &properties,
+    xaml::FrameworkElement const &sizingRoot) noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Set(SizingRootProperty(), sizingRoot);
+}
+
 /*static*/ xaml::XamlRoot XamlUIService::GetXamlRoot(IReactPropertyBag const &properties) noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(XamlRootProperty());
 }
 
 /*static*/ xaml::FrameworkElement XamlUIService::GetAccessibleRoot(IReactPropertyBag const &properties) noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(AccessibleRootProperty());
+}
+
+/*static*/ xaml::FrameworkElement XamlUIService::GetWindowSizingRoot(IReactPropertyBag const &properties) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(SizingRootProperty());
 }
 
 ReactPropertyId<uint64_t> XamlIslandProperty() noexcept {
