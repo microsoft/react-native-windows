@@ -51,6 +51,7 @@
     "**/@react-native/repo-config/ws": "^6.2.2",
     "**/@react-native/repo-config/shelljs": "^0.8.5",
     "**/@react-native/tester/ws": "^6.2.2",
+    "**/@react-native-community/cli-tools/shell-quote": "1.7.3",
     "**/detox/ws": "^5.2.3"
   }
 }
