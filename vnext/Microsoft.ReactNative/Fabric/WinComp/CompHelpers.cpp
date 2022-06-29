@@ -134,36 +134,4 @@ struct DeviceLostHelper {
   DWORD m_cookie{0};
 };
 
-namespace Composition {
-
-winrt::Windows::UI::Composition::Visual CompVisualFromVisual(
-    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-  winrt::com_ptr<ICompositionVisual> s;
-  visual.as(s);
-  return s ? s->InnerVisual() : nullptr;
-}
-
-winrt::Windows::UI::Composition::DropShadow CompShadowFromShadow(
-    const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
-  winrt::com_ptr<ICompositionDropShadow> s;
-  shadow.as(s);
-  return s ? s->InnerShadow() : nullptr;
-}
-
-winrt::Windows::UI::Composition::CompositionBrush CompBrushFromBrush(
-    const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
-  winrt::com_ptr<ICompositionBrush> s;
-  brush.as(s);
-  return s ? s->InnerBrush() : nullptr;
-}
-
-winrt::Windows::UI::Composition::ICompositionSurface CompDrawingSurfaceFromDrawingSurface(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &surface) noexcept {
-  winrt::com_ptr<ICompositionDrawingSurfaceInner> s;
-  surface.as(s);
-  return s ? s->Inner() : nullptr;
-}
-
-} // namespace Composition
-
 } // namespace Microsoft::ReactNative

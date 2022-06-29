@@ -91,7 +91,6 @@ struct CompViewComponentView : public CompBaseComponentView {
  private:
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::SpriteVisual m_visual{nullptr};
-  // winrt::Windows::UI::Composition::Visual m_visual{nullptr};
 };
 
 } // namespace Microsoft::ReactNative

@@ -9,18 +9,21 @@ namespace Microsoft.ReactNative.Composition
 {
   [webhosthidden]
   [default_interface]
-  DOC_STRING("A helper static class for @IRedBoxHandler.")
+  DOC_STRING("A helper static class for to create a @ICompositionContext based on Windows.Composition Visuals.  And to access the underlying Windows.Composition objects from the abstraction.")
   static runtimeclass CompositionContextHelper
   {
     DOC_STRING(
-      "This provides access to the default @IRedBoxHandler. "
-      "This can be used to display the default `RedBox` as part of a custom `RedBoxHandler` implementation.")
+      "Creates a @ICompositionContext from a Windows.UI.Composition.Compositor")
     static ICompositionContext CreateContext(Windows.UI.Composition.Compositor compositor);
 
     DOC_STRING(
-      "This provides access to the default @IRedBoxHandler. "
-      "This can be used to display the default `RedBox` as part of a custom `RedBoxHandler` implementation.")
+      "Creates a @IVisual from a Windows.UI.Composition.Visual")
     static IVisual CreateVisual(Windows.UI.Composition.Visual visual);
+
+    static Windows.UI.Composition.Visual ExtractVisual(IVisual visual);
+    static Windows.UI.Composition.DropShadow ExtractDropShadow(IDropShadow shadow);
+    static Windows.UI.Composition.CompositionBrush ExtractBrush(IBrush brush);
+    static Windows.UI.Composition.ICompositionSurface ExtractSurface(ICompositionDrawingSurface surface);
   }
 
 } // namespace Microsoft.ReactNative.Composition

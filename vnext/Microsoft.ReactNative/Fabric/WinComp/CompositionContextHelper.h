@@ -16,6 +16,10 @@ struct CompositionContextHelper : CompositionContextHelperT<CompositionContextHe
 
   static ICompositionContext CreateContext(winrt::Windows::UI::Composition::Compositor const &compositor) noexcept;
   static IVisual CreateVisual(winrt::Windows::UI::Composition::Visual const &visual) noexcept;
+  static winrt::Windows::UI::Composition::Visual ExtractVisual(IVisual visual) noexcept;
+  static winrt::Windows::UI::Composition::DropShadow ExtractDropShadow(IDropShadow shadow) noexcept;
+  static winrt::Windows::UI::Composition::CompositionBrush ExtractBrush(IBrush brush) noexcept;
+  static winrt::Windows::UI::Composition::ICompositionSurface ExtractSurface(ICompositionDrawingSurface surface) noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
