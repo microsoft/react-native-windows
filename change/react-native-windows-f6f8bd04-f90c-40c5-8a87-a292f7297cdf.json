@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds optional API for window sizing root",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
