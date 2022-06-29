@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CG: Update Newtonsoft.Json to 13.0.1",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

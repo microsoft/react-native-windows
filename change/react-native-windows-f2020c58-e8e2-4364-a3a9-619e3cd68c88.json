@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes issue when alert is not only descendant of PopupRoot",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

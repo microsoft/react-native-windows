@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 Jun 2022 05:08:25 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 05:09:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.524
+
+Wed, 29 Jun 2022 05:09:22 GMT
+
+### Changes
+
+- CG: Update Newtonsoft.Json to 13.0.1 (jthysell@microsoft.com)
+- Fixes issue when alert is not only descendant of PopupRoot (erozell@outlook.com)
 
 ## 0.0.0-canary.523
 

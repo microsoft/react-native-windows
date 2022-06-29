@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 Jun 2022 05:09:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.524",
+      "version": "0.0.0-canary.524",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f886ae648f90fec3a1843796578963a0362d4cf5",
+            "comment": "CG: Update Newtonsoft.Json to 13.0.1"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e5ba5f611dbc08fcf8f2f56b5a9f2d26b2e9d249",
+            "comment": "Fixes issue when alert is not only descendant of PopupRoot"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 Jun 2022 05:08:25 GMT",
       "tag": "react-native-windows_v0.0.0-canary.523",
       "version": "0.0.0-canary.523",
