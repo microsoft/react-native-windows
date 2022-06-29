@@ -32,7 +32,7 @@ xaml::Media::Brush DefaultBrushStore::GetDefaultBorderBrush() {
 void UpdateResourceBrush(
     const xaml::FrameworkElement &element,
     const std::wstring &resourceName,
-    const xaml::Media::Brush& brush) {
+    const xaml::Media::Brush &brush) {
   // check for null pointers
   if (const auto resources = element.Resources()) {
     auto key = winrt::box_value(resourceName);

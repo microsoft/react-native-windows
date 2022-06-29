@@ -53,6 +53,6 @@ void UpdateToggleSwitchTrackResourceBrushesOff(
 void UpdateResourceBrush(
     const xaml::FrameworkElement &element,
     const std::wstring &resourceName,
-    const xaml::Media::Brush brush);
+    const xaml::Media::Brush &brush);
 
 } // namespace Microsoft::ReactNative
