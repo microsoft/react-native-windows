@@ -11,8 +11,11 @@
 #include <stdint.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.UI.Xaml.h>
 
 #include <Views/ShadowNodeBase.h>
+
+
 
 namespace Microsoft::ReactNative {
 
@@ -139,12 +142,15 @@ bool TryUpdateForeground(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "color") {
+    auto uielement = element.try_as<winrt::Windows::UI::Xaml::UIElement>();
     if (IsValidColorValue(propertyValue)) {
       const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
       UpdateControlForegroundResourceBrushes(element, brush);
+      uielement.HighContrastAdjustment(winrt::Windows::UI::Xaml::ElementHighContrastAdjustment::None);
     } else if (propertyValue.IsNull()) {
       element.ClearValue(T::ForegroundProperty());
+      uielement.HighContrastAdjustment(winrt::Windows::UI::Xaml::ElementHighContrastAdjustment::Application);
       UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 
