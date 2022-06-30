@@ -15,8 +15,6 @@
 
 #include <Views/ShadowNodeBase.h>
 
-
-
 namespace Microsoft::ReactNative {
 
 static double DefaultOrOverride(double defaultValue, double x) {
