@@ -1,8 +1,50 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 23 Jun 2022 05:09:18 GMT and should not be manually modified.
+This log was last generated on Wed, 29 Jun 2022 05:09:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.524
+
+Wed, 29 Jun 2022 05:09:22 GMT
+
+### Changes
+
+- CG: Update Newtonsoft.Json to 13.0.1 (jthysell@microsoft.com)
+- Fixes issue when alert is not only descendant of PopupRoot (erozell@outlook.com)
+
+## 0.0.0-canary.523
+
+Tue, 28 Jun 2022 05:08:25 GMT
+
+### Changes
+
+- Centralize getting package identity (asklar@microsoft.com)
+
+## 0.0.0-canary.522
+
+Mon, 27 Jun 2022 05:09:12 GMT
+
+### Changes
+
+- Enable Blob module in UWP (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.521
+
+Sat, 25 Jun 2022 05:09:00 GMT
+
+### Changes
+
+- Add PlatformColor support for Image's tintColor (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.133
+
+## 0.0.0-canary.520
+
+Fri, 24 Jun 2022 05:09:34 GMT
+
+### Changes
+
+- Update API Docs (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.519
 

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 25 Jun 2022 05:09:00 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.133",
+      "version": "0.0.0-canary.133",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "310c1ed46c858cd0da318b6c3f771da62a55d827",
+            "comment": "Add Workaround for UTF8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 21 Jun 2022 05:09:36 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.132",
       "version": "0.0.0-canary.132",
