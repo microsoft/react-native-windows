@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use interface for ReactImage memory streams",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
