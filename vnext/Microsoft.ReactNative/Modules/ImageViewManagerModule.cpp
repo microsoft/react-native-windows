@@ -45,7 +45,7 @@ winrt::fire_and_forget GetImageSizeAsync(
     bool needsDownload = (scheme == L"http") || (scheme == L"https");
     bool inlineData = scheme == L"data";
 
-    winrt::InMemoryRandomAccessStream memoryStream;
+    winrt::IRandomAccessStream memoryStream;
     if (needsDownload) {
       memoryStream = co_await GetImageStreamAsync(source);
     } else if (inlineData) {
