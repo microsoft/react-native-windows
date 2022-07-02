@@ -29,6 +29,21 @@ xaml::Media::Brush DefaultBrushStore::GetDefaultBorderBrush() {
   return m_defaultBorderBrush;
 }
 
+void InsertBrushCopy(
+  const xaml::ResourceDictionary &resources,
+  const std::wstring &resourceName,
+  const xaml::Media::Brush &brush) {
+
+  if (auto solidBrush = brush.try_as<xaml::Media::SolidColorBrush>()) {
+    auto copyBrush = xaml::Media::SolidColorBrush();
+    copyBrush.Color(solidBrush.Color());
+    resources.Insert(resourceName, copyBrush);
+  } else {
+    assert(false && "InsertBrushCopy only implemented for solid color brushes");
+    resources.Insert(resourceName, brush);
+  }
+}
+
 void UpdateResourceBrush(
     const xaml::FrameworkElement &element,
     const std::wstring &resourceName,
@@ -47,12 +62,11 @@ void UpdateResourceBrush(
         if (colorBrush && resourceColorBrush) {
           resourceColorBrush.Color(colorBrush.Color());
         } else {
-          resources.Remove(key);
-          resources.Insert(key, brush);
+          InsertBrushCopy(resources, key, brush);
         }
       } else {
         // else, add the new brush to the resource directory (will need to reload component to see changes)
-        resources.Insert(key, brush);
+        InsertBrushCopy(resources, key, brush)
       }
       // if the brush is null, remove the resource
     } else {
