@@ -30,10 +30,9 @@ xaml::Media::Brush DefaultBrushStore::GetDefaultBorderBrush() {
 }
 
 void InsertBrushCopy(
-  const xaml::ResourceDictionary &resources,
-  const std::wstring &resourceName,
-  const xaml::Media::Brush &brush) {
-
+    const xaml::ResourceDictionary &resources,
+    const std::wstring &resourceName,
+    const xaml::Media::Brush &brush) {
   if (auto solidBrush = brush.try_as<xaml::Media::SolidColorBrush>()) {
     auto copyBrush = xaml::Media::SolidColorBrush();
     copyBrush.Color(solidBrush.Color());
