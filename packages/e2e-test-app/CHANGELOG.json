@@ -2,6 +2,21 @@
   "name": "e2e-test-app",
   "entries": [
     {
+      "date": "Mon, 04 Jul 2022 15:09:28 GMT",
+      "tag": "e2e-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "e2e-test-app",
+            "comment": "Bump react-native-windows to v0.68.8",
+            "commit": "d34421d53476a7a6f176569cdcaf38d2eace2d77"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Jun 2022 15:08:18 GMT",
       "tag": "e2e-test-app_v0.0.0",
       "version": "0.0.0",
