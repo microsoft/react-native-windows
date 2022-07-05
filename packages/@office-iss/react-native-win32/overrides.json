@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220614-2054-bcc69dfb3",
+  "baseVersion": "0.0.0-20220704-2054-3da3d8232",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "895c71b88766d95270375497adde5b28f17b8c8c"
+      "baseHash": "950a5ad34450c49cde405a0f21c77182795a5fbd"
     },
     {
       "type": "derived",
@@ -25,7 +25,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "8c2e0c05b6138dd3834ea8b3d85b8838d37ae427"
+      "baseHash": "f915bdebd13c9c76d7d76b7a5d85903a308b44fd"
     },
     {
       "type": "patch",
@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "b6e9d331a959f84314be9a0efcf40ce8eca4a6d8",
+      "baseHash": "d1aed2015a28ce41216f8f345a9e1fdabb082935",
       "issue": 6240
     },
     {
@@ -205,7 +205,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "801bf4a66452a6e13e5f89dae4e3f362a948f843",
+      "baseHash": "3e5ddb2e2c7fe2f4c0d3d58d07cc38e2f85d1479",
       "issue": 4320
     },
     {
@@ -382,7 +382,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "a95da72539dafb69b7e0126110949720547b9a09",
+      "baseHash": "f3581c0d32837bc18bbb03fd32ce227ffe7a3ea4",
       "issue": 6240
     },
     {
@@ -405,7 +405,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "83de31916eff7d7a528ce0881e85b12f728e5cce"
+      "baseHash": "689b700b5b0e62cb3c115550d73dd6ed1bf42c3b"
     },
     {
       "type": "derived",

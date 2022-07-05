@@ -286,20 +286,20 @@ const Transitions = Object.freeze({
   },
 });
 
-const isActiveSignal = signal =>
+const isActiveSignal = (signal: TouchState) =>
   signal === 'RESPONDER_ACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
 
-const isActivationSignal = signal =>
+const isActivationSignal = (signal: TouchState) =>
   signal === 'RESPONDER_ACTIVE_PRESS_OUT' ||
   signal === 'RESPONDER_ACTIVE_PRESS_IN';
 
-const isPressInSignal = signal =>
+const isPressInSignal = (signal: TouchState) =>
   signal === 'RESPONDER_INACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_PRESS_IN' ||
   signal === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
 
-const isTerminalSignal = signal =>
+const isTerminalSignal = (signal: TouchSignal) =>
   signal === 'RESPONDER_TERMINATED' || signal === 'RESPONDER_RELEASE';
 
 const DEFAULT_LONG_PRESS_DELAY_MS = 500;
@@ -891,7 +891,14 @@ export default class Pressability {
     }
   }
 
-  _measureCallback = (left, top, width, height, pageX, pageY) => {
+  _measureCallback = (
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+    pageX: number,
+    pageY: number,
+  ) => {
     if (!left && !top && !width && !height && !pageX && !pageY) {
       return;
     }
@@ -1001,7 +1008,11 @@ export default class Pressability {
   }
 }
 
-function normalizeDelay(delay: ?number, min = 0, fallback = 0): number {
+function normalizeDelay(
+  delay: ?number,
+  min: number = 0,
+  fallback: number = 0,
+): number {
   return Math.max(min, delay ?? fallback);
 }
 

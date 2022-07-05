@@ -86,7 +86,7 @@ function TextOnPressBox() {
 function PressableFeedbackEvents() {
   const [eventLog, setEventLog] = useState([]);
 
-  function appendEvent(eventName) {
+  function appendEvent(eventName: string) {
     const limit = 6;
     setEventLog(current => {
       return [eventName].concat(current.slice(0, limit - 1));
@@ -126,7 +126,7 @@ function PressableFeedbackEvents() {
 function PressableDelayEvents() {
   const [eventLog, setEventLog] = useState([]);
 
-  function appendEvent(eventName) {
+  function appendEvent(eventName: string) {
     const limit = 6;
     const newEventLog = eventLog.slice(0, limit - 1);
     newEventLog.unshift(eventName);
