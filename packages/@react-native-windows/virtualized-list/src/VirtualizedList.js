@@ -8,11 +8,6 @@
  * @format
  */
 
-<<<<<<< Upstream
-import type {ScrollResponderType} from '../Components/ScrollView/ScrollView';
-import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
-import type {LayoutEvent, ScrollEvent} from '../Types/CoreEventTypes';
-=======
 const Batchinator = require('react-native/Libraries/Interaction/Batchinator');
 const FillRateHelper = require('./FillRateHelper');
 const ReactNative = require('react-native/Libraries/Renderer/shims/ReactNative');
@@ -34,7 +29,7 @@ import {
 import * as React from 'react';
 import type {ScrollResponderType} from 'react-native/Libraries/Components/ScrollView/ScrollView';
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
->>>>>>> Override
+import type {LayoutEvent, ScrollEvent} from '../Types/CoreEventTypes';
 import type {
   ViewabilityConfig,
   ViewabilityConfigCallbackPair,
