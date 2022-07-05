@@ -31,7 +31,7 @@ xaml::Media::Brush DefaultBrushStore::GetDefaultBorderBrush() {
 
 void InsertBrushCopy(
     const xaml::ResourceDictionary &resources,
-    const winrt::Windows::Foundation::IReference<winrt::hstring> &resourceName,
+    const winrt::Windows::Foundation::IInspectable &resourceName,
     const xaml::Media::Brush &brush) {
   if (auto solidBrush = brush.try_as<xaml::Media::SolidColorBrush>()) {
     auto copyBrush = xaml::Media::SolidColorBrush();
@@ -65,7 +65,7 @@ void UpdateResourceBrush(
         }
       } else {
         // else, add the new brush to the resource directory (will need to reload component to see changes)
-        InsertBrushCopy(resources, key, brush)
+        InsertBrushCopy(resources, key, brush);
       }
       // if the brush is null, remove the resource
     } else {
