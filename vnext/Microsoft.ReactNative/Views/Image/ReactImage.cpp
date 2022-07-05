@@ -171,8 +171,7 @@ void ReactImage::Source(ReactImageSource source) {
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(
-    ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(ReactImageSource source) {
   switch (source.sourceType) {
     case ImageSourceType::Download:
       co_return co_await GetImageStreamAsync(source);
@@ -223,7 +222,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const bool fromStream{
       source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData};
 
-  winrt::InMemoryRandomAccessStream memoryStream{nullptr};
+  winrt::IRandomAccessStream memoryStream{nullptr};
 
   // get weak reference before any co_await calls
   auto weak_this{get_weak()};
@@ -443,7 +442,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImageSource source) {
   try {
     co_await winrt::resume_background();
 
@@ -480,7 +479,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
   co_return nullptr;
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageInlineDataAsync(ReactImageSource source) {
   size_t start = source.uri.find(',');
   if (start == std::string::npos || start + 1 > source.uri.length())
     co_return nullptr;

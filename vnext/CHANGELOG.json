@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Jul 2022 05:08:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.525",
+      "version": "0.0.0-canary.525",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3eeba4d11187dc370429cc3a4e60b668a5ac2fd8",
+            "comment": "Use interface for ReactImage memory streams"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 29 Jun 2022 05:09:22 GMT",
       "tag": "react-native-windows_v0.0.0-canary.524",
       "version": "0.0.0-canary.524",

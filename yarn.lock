@@ -326,10 +326,10 @@
   dependencies:
     "@babel/types" "^7.16.7"
 
-"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.12.13", "@babel/helper-plugin-utils@^7.13.0", "@babel/helper-plugin-utils@^7.14.5", "@babel/helper-plugin-utils@^7.16.7", "@babel/helper-plugin-utils@^7.17.12", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
-  version "7.17.12"
-  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.17.12.tgz#86c2347da5acbf5583ba0a10aed4c9bf9da9cf96"
-  integrity sha512-JDkf04mqtN3y4iAbO1hv9U2ARpPyPL1zqyWs/2WG1pgSq9llHFjStX5jdxb84himgJm+8Ng+x0oiWF/nw/XQKA==
+"@babel/helper-plugin-utils@^7.0.0", "@babel/helper-plugin-utils@^7.10.4", "@babel/helper-plugin-utils@^7.12.13", "@babel/helper-plugin-utils@^7.13.0", "@babel/helper-plugin-utils@^7.14.5", "@babel/helper-plugin-utils@^7.16.7", "@babel/helper-plugin-utils@^7.17.12", "@babel/helper-plugin-utils@^7.18.6", "@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.18.6.tgz#9448974dd4fb1d80fefe72e8a0af37809cd30d6d"
+  integrity sha512-gvZnm1YAAxh13eJdkb9EWHBnF3eAub3XTLCZEehHT2kWxiKVRL64+ae5Y6Ivne0mVHmMYKT+xWgZO+gQhuLUBg==
 
 "@babel/helper-remap-async-to-generator@^7.16.8":
   version "7.16.8"
@@ -434,9 +434,9 @@
   integrity sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==
 
 "@babel/parser@^7.1.0", "@babel/parser@^7.1.6", "@babel/parser@^7.11.5", "@babel/parser@^7.13.16", "@babel/parser@^7.14.0", "@babel/parser@^7.14.7", "@babel/parser@^7.16.4", "@babel/parser@^7.16.7", "@babel/parser@^7.18.5", "@babel/parser@^7.7.0":
-  version "7.18.5"
-  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.18.5.tgz#337062363436a893a2d22faa60be5bb37091c83c"
-  integrity sha512-YZWVaglMiplo7v8f1oMQ5ZPQr0vn7HPeZXxXWsxXJRjGVrzUFn9OxFQl1sb5wzfootjA/yChhW84BV+383FSOw==
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.18.6.tgz#845338edecad65ebffef058d3be851f1d28a63bc"
+  integrity sha512-uQVSa9jJUe/G/304lXspfWVpKpK4euFLgGiMQFOCpM/bgcAdeoHwi/OQz23O9GK2osz26ZiXRRV9aV+Yl1O8tw==
 
 "@babel/plugin-bugfix-safari-id-destructuring-collision-in-function-expression@^7.17.12":
   version "7.17.12"
@@ -971,11 +971,11 @@
     "@babel/types" "^7.17.0"
 
 "@babel/plugin-transform-regenerator@^7.0.0", "@babel/plugin-transform-regenerator@^7.18.0":
-  version "7.18.0"
-  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.18.0.tgz#44274d655eb3f1af3f3a574ba819d3f48caf99d5"
-  integrity sha512-C8YdRw9uzx25HSIzwA7EM7YP0FhCe5wNvJbZzjVNHHPGVcDJ3Aie+qGYYdS1oVQgn+B3eAIJbWFLrJ4Jipv7nw==
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/plugin-transform-regenerator/-/plugin-transform-regenerator-7.18.6.tgz#585c66cb84d4b4bf72519a34cfce761b8676ca73"
+  integrity sha512-poqRI2+qiSdeldcz4wTSTXBRryoq3Gc70ye7m7UD5Ww0nE29IXqMl6r7Nd15WBgRd74vloEMlShtH6CKxVzfmQ==
   dependencies:
-    "@babel/helper-plugin-utils" "^7.17.12"
+    "@babel/helper-plugin-utils" "^7.18.6"
     regenerator-transform "^0.15.0"
 
 "@babel/plugin-transform-reserved-words@^7.17.12":
@@ -5298,9 +5298,9 @@ eslint-plugin-prettier@3.1.2:
     prettier-linter-helpers "^1.0.0"
 
 eslint-plugin-prettier@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-4.0.0.tgz#8b99d1e4b8b24a762472b4567992023619cb98e0"
-  integrity sha512-98MqmCJ7vJodoQK359bqQWaxOE0CS8paAz/GgjaZLyex4TTk3g9HugoO89EqWCrFiOqn9EVvcoo7gZzONCWVwQ==
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-4.2.1.tgz#651cbb88b1dab98bfd42f017a12fa6b2d993f94b"
+  integrity sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -7868,9 +7868,9 @@ kleur@^3.0.2, kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^1.5.0:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-1.6.2.tgz#dd21617894177f9773720de15c6c3baca2be8946"
-  integrity sha512-QpVjiju51kP6Fi2IvalbRc2ldHv7+H4LhSG2nI/4qO/qREN6ca1K/+yKhklELhmqD+XD5ShqnYB9Z8HdHS6c/Q==
+  version "1.6.10"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-1.6.10.tgz#47c1c77d608552a3ba4425e6ceabc162979eeee9"
+  integrity sha512-c1LWerzNmydAjbMmpaYOQjYj6N1MaDUCyDVu6LkfGdztsgxJQZTusBgpI4bdb99Frwxw+kNhK8z19j+IgqeQzg==
   dependencies:
     "@xmldom/xmldom" "^0.8.0"
     abort-controller "^3.0.0"
@@ -7889,7 +7889,7 @@ lage@^1.5.0:
     p-graph "^1.1.1"
     p-limit "^3.1.0"
     p-profiler "^0.2.1"
-    workspace-tools "^0.18.4"
+    workspace-tools "^0.21.0"
     yargs-parser "^18.1.3"
 
 language-subtag-registry@~0.3.2:
@@ -10896,9 +10896,9 @@ signedsource@^1.0.0:
   integrity sha1-HdrOSYF5j5O9gzlzgD2A1S6TrWo=
 
 simple-git@^3.3.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.8.0.tgz#d93500f3d792cec365420c80ddc6cb782edf737d"
-  integrity sha512-nbR1PufcbvCaW90CiAXC1mM7OnEqLzjSOnySnq7Sd2kcVG6GxSa+DhxhFmCgxLv4kWCKmZagkCZSjfNAQTZwaw==
+  version "3.10.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.10.0.tgz#f20031dd121d3c49e215ef0186a102bece3f89b2"
+  integrity sha512-2w35xrS5rVtAW0g67LqtxCZN5cdddz/woQRfS0OJXaljXEoTychZ4jnE+CQgra/wX4ZvHeiChTUMenCwfIYEYw==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
@@ -12218,7 +12218,7 @@ wordwrapjs@^4.0.0:
     reduce-flatten "^2.0.0"
     typical "^5.2.0"
 
-workspace-tools@^0.18.2, workspace-tools@^0.18.3, workspace-tools@^0.18.4:
+workspace-tools@^0.18.2, workspace-tools@^0.18.3:
   version "0.18.4"
   resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.18.4.tgz#a59ca6dc864d07aafc06a9ff4a9ff093456b8765"
   integrity sha512-ZdhlB4NEC3uJ4eW7snyHKOfzMC00HXWO2QbIU3aY8XBdtE+VrU2ajv+oxDUIZfCLD4Wlk3ltWaPt4Jk6IC9bMA==
@@ -12244,6 +12244,19 @@ workspace-tools@^0.19.0:
     multimatch "^4.0.0"
     read-yaml-file "^2.0.0"
     typedoc "^0.22.15"
+
+workspace-tools@^0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/workspace-tools/-/workspace-tools-0.21.0.tgz#eab13d4fac2cace36f6ecef1fe30ed6d912124cb"
+  integrity sha512-ZOGOr42brfDFJcKUz8AonRabORtq0UbuoF6chmcQUwRYmu+Qs85/ZhfflrrMSJLP3yRoqcBe/lvDjGzkWYViww==
+  dependencies:
+    "@yarnpkg/lockfile" "^1.1.0"
+    find-up "^4.1.0"
+    git-url-parse "^11.1.2"
+    globby "^11.0.0"
+    jju "^1.4.0"
+    multimatch "^4.0.0"
+    read-yaml-file "^2.0.0"
 
 wrap-ansi@^6.2.0:
   version "6.2.0"
