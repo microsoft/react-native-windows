@@ -11,7 +11,6 @@
 #include <stdint.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.h>
 
 #include <Views/ShadowNodeBase.h>
 
@@ -145,10 +144,10 @@ bool TryUpdateForeground(
       const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
       UpdateControlForegroundResourceBrushes(element, brush);
-      uielement.HighContrastAdjustment(winrt::Windows::UI::Xaml::ElementHighContrastAdjustment::None);
+      uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::None);
     } else if (propertyValue.IsNull()) {
       element.ClearValue(T::ForegroundProperty());
-      uielement.HighContrastAdjustment(winrt::Windows::UI::Xaml::ElementHighContrastAdjustment::Application);
+      uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::Application);
       UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 
