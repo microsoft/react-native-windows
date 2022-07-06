@@ -33,18 +33,25 @@ export class Metro {
         stdio: 'pipe',
       });
 
+      if (this.metroProcess === null)
+        throw new Error('Metro process did not start correctly');
+
       testLog.message(`Metro process ID ${this.metroProcess.pid}`);
 
-      // trying to sync with Metro being ready to serve packages
+      // keep an eye on Metro
+      this.metroProcess.stdout!.addListener('data', Metro.logMetroOutput);
 
-      this.metroProcess.stdout!.on('data', data => {
+      // trying to sync with Metro being ready to serve packages
+      const findReadyMessage = (data: any) => {
         const s = data.toString();
-        testLog.message(`Metro stdout "${s}"`);
         if (s.includes('Welcome to Metro!')) {
           testLog.message(`Metro appears to be ready`);
+          this.metroProcess!.stdout!.removeListener('data', findReadyMessage);
           resolve();
         }
-      });
+      };
+
+      this.metroProcess.stdout!.addListener('data', findReadyMessage);
     });
   }
 
@@ -55,8 +62,29 @@ export class Metro {
       );
 
     // REVIEW: Better way of ending Metro?
+    this.metroProcess.removeListener('data', Metro.logMetroOutput);
     const killResult = this.metroProcess.kill('SIGINT');
     testLog.message(`stopped Metro (${killResult})`);
+  }
+
+  public isBundleServed(bundleName: string): Promise<void> {
+    return new Promise<void>((resolve, _reject) => {
+      const findBundleName = (data: any) => {
+        const s = data.toString();
+        if (s.includes(bundleName)) {
+          testLog.message(`Metro appears to serve the "${bundleName}" bundle`);
+          this.metroProcess!.stdout!.removeListener('data', findBundleName);
+          resolve();
+        }
+      };
+
+      this.metroProcess!.stdout!.addListener('data', findBundleName);
+    });
+  }
+
+  private static logMetroOutput(data: any) {
+    const s = data.toString();
+    testLog.message(`Metro stdout "${s}"`);
   }
 
   private metroProcess: ChildProcess | null = null;

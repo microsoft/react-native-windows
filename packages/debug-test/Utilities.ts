@@ -7,6 +7,9 @@
  * @format
  */
 
+import fs from '@react-native-windows/fs';
+import {testLog} from './TestLog';
+
 /**
  * Pauses execution for the specified amount of time.
  * @param ms Time, in milliseconds, to pause execution.
@@ -44,4 +47,27 @@ export function formatDateTime(dt: Date) {
   const mm = ('0' + dt.getMinutes()).slice(-2);
   const ss = ('0' + dt.getSeconds()).slice(-2);
   return `${YYYY}${MM}${DD}-${hh}${mm}${ss}`;
+}
+
+export async function saveScreenShot(fileNameSuffix?: string) {
+  let fileNameBase = process.env.DEBUGTEST_LOGFOLDER
+    ? `${process.env.DEBUGTEST_LOGFOLDER}\\Screenshot`
+    : `${process.env.TEMP}\\Screenshot`;
+
+  if (fileNameSuffix) {
+    fileNameBase += ` - ${fileNameSuffix}`;
+  }
+
+  let fileNameCandidate = `${fileNameBase}.png`;
+  for (let i = 2; i < 10000; ++i) {
+    if (!fs.existsSync(fileNameCandidate)) {
+      testLog.message(`saving screenshot as "${fileNameCandidate}"`);
+      return global.browser.saveScreenshot(fileNameCandidate);
+    }
+    fileNameCandidate = `${fileNameBase} (${i}).png`;
+  }
+
+  return Promise.reject(
+    new Error('could not find a file name to save screenshot under'),
+  );
 }
