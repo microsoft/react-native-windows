@@ -33,9 +33,6 @@ export class Metro {
         stdio: 'pipe',
       });
 
-      if (this.metroProcess === null)
-        throw new Error('Metro process did not start correctly');
-
       testLog.message(`Metro process ID ${this.metroProcess.pid}`);
 
       // keep an eye on Metro
