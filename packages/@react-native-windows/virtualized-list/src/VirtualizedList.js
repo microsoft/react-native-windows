@@ -36,7 +36,6 @@ import type {
   ViewToken,
 } from './ViewabilityHelper';
 
-import type {LayoutEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 import {
   type ChildListState,
   type ListDebugInfo,
