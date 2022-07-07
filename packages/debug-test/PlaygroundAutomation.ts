@@ -27,7 +27,6 @@
 import {testLog} from './TestLog';
 import {app, AutomationElement} from '@react-native-windows/automation';
 import {saveScreenShot, sleep} from './Utilities';
-// import fs from '@react-native-windows/fs';
 
 async function setCheckedState(
   checkBox: AutomationElement,
@@ -212,12 +211,6 @@ export async function loadPackage(
   testLog.message(`selecting "${packageName}" bundle`);
 
   await selectPackage(packageName);
-
-  //   const rootComponentComboBox = (
-  //     await $$('./Window/ComboBox[@AutomationId="x_rootComponentNameCombo"]')
-  //   )[0];
-  //   await rootComponentComboBox.click();
-  //   testLog.message(`clicked on root component combo`);
 
   const loadButton = (
     await $$('./Window/Button[@AutomationId="x_LoadButton"]')

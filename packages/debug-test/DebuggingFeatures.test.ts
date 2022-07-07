@@ -18,7 +18,6 @@ import {testLog} from './TestLog';
 import {formatDateTime} from './Utilities';
 import {pid} from 'process';
 import fs from '@react-native-windows/fs';
-//import {AutomationElement} from '@react-native-windows/automation';
 
 // jest does not appear to support custom command-line arguments; making do with environment variables.
 
