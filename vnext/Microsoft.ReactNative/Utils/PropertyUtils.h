@@ -139,7 +139,7 @@ bool TryUpdateForeground(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "color") {
-    auto uielement = element.try_as<winrt::Windows::UI::Xaml::UIElement>();
+    auto uielement = element.try_as<xaml::UIElement>();
     if (IsValidColorValue(propertyValue)) {
       const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
