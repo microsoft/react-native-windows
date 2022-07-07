@@ -5,6 +5,7 @@
 #include "BatchingEventEmitter.h"
 #include "DynamicWriter.h"
 #include "JSValueWriter.h"
+#include <UI.Xaml.Media.h>
 
 namespace winrt::Microsoft::ReactNative {
 

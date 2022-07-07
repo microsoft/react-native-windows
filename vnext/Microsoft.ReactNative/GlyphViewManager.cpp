@@ -8,6 +8,7 @@
 #include "GlyphViewManager.h"
 
 #include <UI.Xaml.Documents.h>
+#include <UI.Xaml.Media.h>
 #include <Utils/ValueUtils.h>
 #include <Views/ShadowNodeBase.h>
 
