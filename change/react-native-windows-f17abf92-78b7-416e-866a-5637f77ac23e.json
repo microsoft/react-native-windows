@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adding missing flags, recommended for reducing binary size",
+  "packageName": "react-native-windows",
+  "email": "agnel@microsoft.com",
+  "dependentChangeType": "patch"
+}
