@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220603-2051-11141b8b3",
+  "baseVersion": "0.0.0-20220614-2054-bcc69dfb3",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "9be4f8d311bf05345f77d3281bec4c3ff14c1b8b"
+      "baseHash": "895c71b88766d95270375497adde5b28f17b8c8c"
     },
     {
       "type": "patch",
@@ -76,9 +76,10 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/YGValue.h",
-      "baseFile": "ReactCommon/yoga/yoga/YGValue.h",
-      "baseHash": "0b6b49a41787b7f5caee1792af488c66d33db3d8"
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/CompactValue.h",
+      "baseFile": "ReactCommon/yoga/yoga/CompactValue.h",
+      "baseHash": "493638f3a2cdf828c46bbb523240588c0ddedec1",
+      "issue": 10145
     },
     {
       "type": "patch",
@@ -163,7 +164,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "480433148ca7ca473ee08138567dbb40ce958ce0"
+      "baseHash": "8c2e0c05b6138dd3834ea8b3d85b8838d37ae427"
     },
     {
       "type": "platform",
@@ -423,7 +424,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "ff335415e43399b3cdaf4fd2dd2063d495f39ec5"
+      "baseHash": "5c1a9a2a8cf15fd51fbba8cd6189d0dd05047f96"
     },
     {
       "type": "platform",
@@ -488,7 +489,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "0fb47268362b2544900a7cfff8640f542d597cba"
+      "baseHash": "64b609f0a802d9d1a0e41749499a9141fb209f10"
     },
     {
       "type": "patch",

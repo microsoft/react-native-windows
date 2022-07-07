@@ -1,8 +1,120 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Thu, 09 Jun 2022 05:09:48 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Jul 2022 05:08:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.137
+
+Fri, 01 Jul 2022 05:08:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.99
+
+## 0.0.136
+
+Wed, 29 Jun 2022 05:09:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.98
+
+## 0.0.135
+
+Tue, 28 Jun 2022 05:08:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.97
+
+## 0.0.134
+
+Mon, 27 Jun 2022 05:09:13 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.96
+
+## 0.0.133
+
+Sat, 25 Jun 2022 05:09:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.95
+
+## 0.0.132
+
+Fri, 24 Jun 2022 05:09:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.94
+
+## 0.0.131
+
+Thu, 23 Jun 2022 05:09:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.93
+
+## 0.0.130
+
+Wed, 22 Jun 2022 05:09:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.92
+
+## 0.0.129
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.91
+
+## 0.0.128
+
+Sun, 19 Jun 2022 05:09:01 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.90
+
+## 0.0.127
+
+Fri, 17 Jun 2022 05:10:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.89
+
+## 0.0.126
+
+Wed, 15 Jun 2022 05:09:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.88
+
+## 0.0.125
+
+Tue, 14 Jun 2022 05:09:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.87
+
+## 0.0.124
+
+Fri, 10 Jun 2022 05:10:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.86
 
 ## 0.0.123
 

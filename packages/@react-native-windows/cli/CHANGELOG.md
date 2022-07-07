@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
+This log was last generated on Sat, 25 Jun 2022 05:09:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.133
+
+Sat, 25 Jun 2022 05:09:00 GMT
+
+### Changes
+
+- Add Workaround for UTF8 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.132
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Changes
+
+- Update autolinking to not error if a dependency is misconfigured (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.44
 
 ## 0.0.0-canary.131
 

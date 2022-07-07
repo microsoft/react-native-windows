@@ -4,10 +4,10 @@
 #include "Utils.h"
 #include <regex>
 
+#include <AppModelHelpers.h>
 #include <DesktopWindowBridge.h>
 #include <ShlObj.h>
 #include <Shlwapi.h>
-#include <appmodel.h>
 #include <winrt/Windows.Storage.h>
 
 #include <sstream>
@@ -56,10 +56,7 @@ std::future<std::string> getUnPackagedApplicationDataPath(const wchar_t *childFo
 } // namespace
 
 std::future<std::string> getApplicationDataPath(const wchar_t *childFolder) {
-  uint32_t length{0};
-  bool isPackagedApp = GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE;
-  std::string appDataPath;
-  if (false) {
+  if (Microsoft::ReactNative::HasPackageIdentity()) {
     co_return co_await getPackagedApplicationDataPath(childFolder);
   } else {
     co_return co_await getUnPackagedApplicationDataPath(childFolder);

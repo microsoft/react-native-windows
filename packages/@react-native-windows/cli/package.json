@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.131",
+  "version": "0.0.0-canary.133",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -19,7 +19,7 @@
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0-canary.5",
     "@react-native-windows/package-utils": "^0.0.0-canary.31",
-    "@react-native-windows/telemetry": "^0.0.0-canary.43",
+    "@react-native-windows/telemetry": "^0.0.0-canary.44",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "@xmldom/xmldom": "^0.7.5",

@@ -1,8 +1,128 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 09 Jun 2022 05:09:48 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Jul 2022 05:08:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.525
+
+Fri, 01 Jul 2022 05:08:41 GMT
+
+### Changes
+
+- Use interface for ReactImage memory streams (erozell@outlook.com)
+
+## 0.0.0-canary.524
+
+Wed, 29 Jun 2022 05:09:22 GMT
+
+### Changes
+
+- CG: Update Newtonsoft.Json to 13.0.1 (jthysell@microsoft.com)
+- Fixes issue when alert is not only descendant of PopupRoot (erozell@outlook.com)
+
+## 0.0.0-canary.523
+
+Tue, 28 Jun 2022 05:08:25 GMT
+
+### Changes
+
+- Centralize getting package identity (asklar@microsoft.com)
+
+## 0.0.0-canary.522
+
+Mon, 27 Jun 2022 05:09:12 GMT
+
+### Changes
+
+- Enable Blob module in UWP (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.521
+
+Sat, 25 Jun 2022 05:09:00 GMT
+
+### Changes
+
+- Add PlatformColor support for Image's tintColor (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.133
+
+## 0.0.0-canary.520
+
+Fri, 24 Jun 2022 05:09:34 GMT
+
+### Changes
+
+- Update API Docs (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.519
+
+Thu, 23 Jun 2022 05:09:18 GMT
+
+### Changes
+
+- Disambiguate ReactContext in ReactInstanceWin (erozell@outlook.com)
+
+## 0.0.0-canary.518
+
+Wed, 22 Jun 2022 05:09:33 GMT
+
+### Changes
+
+- Minor fix for clang compile (erozell@outlook.com)
+
+## 0.0.0-canary.517
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Changes
+
+- Stop compiling yoga.cpp with /fp:strict. Doing so caused layout issues if Yoga code ran with the processor's rounding mode set to round down, due to NAN being defined in math.h as: ``` (float)(INFINITY * 0.0f) ``` Which macro-expands to: ``` (float)(((float)(1e+300 * 1e+300)) * 0.0f) ``` Which evaluates as follows: ``` (float)(((float)(inf.double)) * 0.0f) (float)(FLT_MAX * 0.0f) // Casting an infinite double to a float yields                         // FLT_MAX! (float)0.0f ``` (hpratt@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.132
+
+## 0.0.0-canary.516
+
+Sun, 19 Jun 2022 05:09:01 GMT
+
+### Changes
+
+- Fix ExecuteJsi on instance shutdown (vmorozov@microsoft.com)
+
+## 0.0.0-canary.515
+
+Fri, 17 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- Integrate 6/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.47
+
+## 0.0.0-canary.514
+
+Wed, 15 Jun 2022 05:09:02 GMT
+
+### Changes
+
+- Fix use of [[maybe_unused]] attribute (vmorozov@microsoft.com)
+- yarn format (erozell@outlook.com)
+
+## 0.0.0-canary.513
+
+Tue, 14 Jun 2022 05:09:02 GMT
+
+### Changes
+
+- binskim/compliance fixes to win32 dll (agnel@microsoft.com)
+
+## 0.0.0-canary.512
+
+Fri, 10 Jun 2022 05:09:59 GMT
+
+### Changes
+
+- Use logical OR to assert HTTP responseType (julio.rocha@microsoft.com)
+- Fixed metro config when using `--useDevMode` (jthysell@microsoft.com)
+- Integrate 6/8 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.46
 
 ## 0.0.0-canary.511
 

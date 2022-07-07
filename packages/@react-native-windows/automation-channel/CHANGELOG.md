@@ -1,8 +1,122 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 09 Jun 2022 05:09:48 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Jul 2022 05:08:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.99
+
+Fri, 01 Jul 2022 05:08:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.525
+
+## 0.1.98
+
+Wed, 29 Jun 2022 05:09:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.524
+
+## 0.1.97
+
+Tue, 28 Jun 2022 05:08:25 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.523
+
+## 0.1.96
+
+Mon, 27 Jun 2022 05:09:13 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.522
+
+## 0.1.95
+
+Sat, 25 Jun 2022 05:09:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.521
+
+## 0.1.94
+
+Fri, 24 Jun 2022 05:09:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.520
+
+## 0.1.93
+
+Thu, 23 Jun 2022 05:09:18 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.519
+
+## 0.1.92
+
+Wed, 22 Jun 2022 05:09:33 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.518
+
+## 0.1.91
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.517
+
+## 0.1.90
+
+Sun, 19 Jun 2022 05:09:01 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.516
+
+## 0.1.89
+
+Fri, 17 Jun 2022 05:10:04 GMT
+
+### Patches
+
+- Integrate 6/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.515
+
+## 0.1.88
+
+Wed, 15 Jun 2022 05:09:02 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.514
+
+## 0.1.87
+
+Tue, 14 Jun 2022 05:09:02 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.513
+
+## 0.1.86
+
+Fri, 10 Jun 2022 05:09:59 GMT
+
+### Patches
+
+- Integrate 6/8 (34109996+chiaramooney@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.512
 
 ## 0.1.85
 

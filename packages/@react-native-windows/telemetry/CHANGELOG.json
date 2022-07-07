@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 21 Jun 2022 05:09:36 GMT",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.44",
+      "version": "0.0.0-canary.44",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "e6d4b8ee67e4a236dceaff3a39add1ddc18aa334",
+            "comment": "Update source of DeviceID for telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Jun 2022 05:10:05 GMT",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.43",
       "version": "0.0.0-canary.43",
