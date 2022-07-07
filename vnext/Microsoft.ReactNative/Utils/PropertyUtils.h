@@ -144,10 +144,14 @@ bool TryUpdateForeground(
       const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
       UpdateControlForegroundResourceBrushes(element, brush);
-      uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::None);
+      if (uielement) {
+        uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::None);
+      }
     } else if (propertyValue.IsNull()) {
       element.ClearValue(T::ForegroundProperty());
-      uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::Application);
+      if (uielement) {
+        uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::Application);
+      }
       UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 
