@@ -19,6 +19,7 @@
         "UseExperimentalNuGet": "$(UseExperimentalNuGet)",
         "UseHermes": "$(UseHermes)",
         "UseWinUI3": "$(UseWinUI3)"
+        "UseInactiveAppState": "$(UseInactiveAppState)"
       }
       </MSBuildPropertiesJSON>
     </PropertyGroup>
