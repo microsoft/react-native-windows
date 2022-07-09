@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 08 Jul 2022 05:11:11 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Jul 2022 05:09:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.527
+
+Sat, 09 Jul 2022 05:09:51 GMT
+
+### Changes
+
+- Fix Text Color in High Contrast (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.526
 
