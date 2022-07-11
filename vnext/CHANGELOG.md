@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 04 Jul 2022 15:09:28 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Jul 2022 15:08:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.9
+
+Mon, 11 Jul 2022 15:08:52 GMT
+
+### Patches
+
+- [0.68] CG updates for 6/28/22 (jthysell@microsoft.com)
+- Backport Text Patch (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.68.8
 

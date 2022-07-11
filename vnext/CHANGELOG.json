@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Jul 2022 15:08:52 GMT",
+      "tag": "react-native-windows_v0.68.9",
+      "version": "0.68.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2f721109e4bbb51ae98084f7aaeb633730435327",
+            "comment": "[0.68] CG updates for 6/28/22"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dc087c0c4b33bd02ec1ce0391f2e57cafb84dce4",
+            "comment": "Backport Text Patch"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Jul 2022 15:09:28 GMT",
       "tag": "react-native-windows_v0.68.8",
       "version": "0.68.8",
