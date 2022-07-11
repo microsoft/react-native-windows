@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 04 Jul 2022 15:11:49 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Jul 2022 15:10:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.2
+
+Mon, 11 Jul 2022 15:10:20 GMT
+
+### Patches
+
+- Enable Blob module with runtime option (julio.rocha@microsoft.com)
+- Stop using /fp:strict to build yoga.cpp (hpratt@microsoft.com)
 
 ## 0.69.1
 
