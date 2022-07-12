@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CG: Remove dependency on deprecated `hermes-engine` package",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

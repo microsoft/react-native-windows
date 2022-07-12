@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Tue, 12 Jul 2022 05:10:12 GMT",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.156",
+      "version": "0.0.0-canary.156",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "24b8aafe312aece0f8d3d4049b80f94bc078080b",
+            "comment": "CG: Remove dependency on deprecated `hermes-engine` package"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 17 Jun 2022 05:10:04 GMT",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.155",
       "version": "0.0.0-canary.155",
