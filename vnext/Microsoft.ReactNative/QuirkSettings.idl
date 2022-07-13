@@ -39,5 +39,12 @@ namespace Microsoft.ReactNative
       "these events, including forwarding to JavaScript.  This will allow applications to handle back "
       "navigation in native code, but will prevent the `BackHandler` native module from receiving events.")
     static void SetBackHandlerKind(ReactInstanceSettings settings, BackNavigationHandlerKind kind);
+
+    DOC_STRING(
+      "By default `react-native-windows` will only track `active` and `background` `AppState`. "
+      "Setting this to true enables `react-native-windows` to also track `inactive` `AppState` which [maps closely to iOS.](https://reactnative.dev/docs/appstate)"
+      "`inactive` tracks the [Window.Deactivated Event](https://docs.microsoft.com/en-us/dotnet/api/system.windows.window.deactivated?view=windowsdesktop-6.0)")
+    DOC_DEFAULT("false")
+    static void SetMapWindowDeactivatedToAppStateInactive(ReactInstanceSettings settings, Boolean value);
   }
 } // namespace Microsoft.ReactNative
