@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "BatchingEventEmitter.h"
+#include <UI.Xaml.Media.h>
 #include "DynamicWriter.h"
 #include "JSValueWriter.h"
 

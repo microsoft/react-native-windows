@@ -9,27 +9,60 @@ import * as http from 'http';
 import {getDebugTargets, CDPDebugger} from './CDPDebugger';
 import {Metro} from './MetroAutomation';
 import * as path from 'path';
-import {PlaygroundDebugSettings, selectPackage} from './PlaygroundAutomation';
+import {
+  PlaygroundDebugSettings,
+  loadPackage,
+  primePackageComboBox,
+} from './PlaygroundAutomation';
 import {testLog} from './TestLog';
 import {formatDateTime} from './Utilities';
+import {pid} from 'process';
+import fs from '@react-native-windows/fs';
 
-testLog.fileName = `${process.env.TEMP}/${path.basename(
-  __filename,
-  '.ts',
-)}.${formatDateTime(new Date())}.log`;
+// jest does not appear to support custom command-line arguments; making do with environment variables.
+
+if (process.env.DEBUGTEST_LOGFOLDER) {
+  if (!fs.existsSync(process.env.DEBUGTEST_LOGFOLDER)) {
+    (async () => {
+      try {
+        await fs.mkdir(process.env.DEBUGTEST_LOGFOLDER!);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }
+
+  testLog.setFileName(
+    `${process.env.DEBUGTEST_LOGFOLDER}/${path.basename(
+      __filename,
+      '.ts',
+    )}.${formatDateTime(new Date())}.log`,
+  );
+} else {
+  testLog.setFileName(
+    `${process.env.TEMP}/${path.basename(__filename, '.ts')}.${formatDateTime(
+      new Date(),
+    )}.log`,
+  );
+}
 
 const metro = new Metro();
 
 beforeAll(async () => {
+  testLog.message(`executing beforeAll on PID ${pid}`);
   await metro.start();
+  const window = (await $$('./Window'))[0];
+  await window.maximizeWindow();
+  await primePackageComboBox();
 });
 
 afterAll(() => {
+  testLog.message(`executing afterAll on PID ${pid}`);
   metro.stop();
 });
 
 test('debug target properties', async () => {
-  testLog.message(`test debug target properties`);
+  testLog.message(`executing 'debug target properties' on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
@@ -37,7 +70,8 @@ test('debug target properties', async () => {
     jsEngine: 'Hermes',
   });
   try {
-    await selectPackage('Samples\\debugTest01');
+    const isBundleServed = metro.isBundleServed('debugTest01');
+    await loadPackage('Samples\\debugTest01', isBundleServed);
 
     const options: http.RequestOptions = {
       hostname: 'localhost',
@@ -74,7 +108,7 @@ test('debug target properties', async () => {
 });
 
 test('enable, disable', async () => {
-  testLog.message(`test enable, disable`);
+  testLog.message(`executing 'enable, disable' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
@@ -82,7 +116,8 @@ test('enable, disable', async () => {
     jsEngine: 'Hermes',
   });
   try {
-    await selectPackage('Samples\\debugTest01');
+    const isBundleServed = metro.isBundleServed('debugTest01');
+    await loadPackage('Samples\\debugTest01', isBundleServed);
 
     const debugTargets = await getDebugTargets();
     const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
@@ -98,7 +133,7 @@ test('enable, disable', async () => {
 });
 
 test('pause, resume', async () => {
-  testLog.message(`test pause, resume`);
+  testLog.message(`executing 'pause, resume' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
@@ -106,7 +141,8 @@ test('pause, resume', async () => {
     jsEngine: 'Hermes',
   });
   try {
-    await selectPackage('Samples\\debugTest01');
+    const isBundleServed = metro.isBundleServed('debugTest01');
+    await loadPackage('Samples\\debugTest01', isBundleServed);
 
     const debugTargets = await getDebugTargets();
     const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
@@ -160,7 +196,7 @@ test('pause, resume', async () => {
 });
 
 test('set, remove breakpoint', async () => {
-  testLog.message(`test set, remove breakpoint`);
+  testLog.message(`executing 'set, remove breakpoint' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
     webDebugger: false,
@@ -168,7 +204,8 @@ test('set, remove breakpoint', async () => {
     jsEngine: 'Hermes',
   });
   try {
-    await selectPackage('Samples\\debugTest01');
+    const isBundleServed = metro.isBundleServed('debugTest01');
+    await loadPackage('Samples\\debugTest01', isBundleServed);
 
     const debugTargets = await getDebugTargets();
     const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
