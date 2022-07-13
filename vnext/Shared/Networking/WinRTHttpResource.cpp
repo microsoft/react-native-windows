@@ -303,23 +303,28 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     auto timedOut = std::make_shared<bool>(false);
     //TODO: Look into using AsyncStatus?
     //      https://docs.microsoft.com/en-us/uwp/api/windows.foundation.iasyncoperationwithprogress-2?view=winrt-22621
-    auto sendRequestTimeout = [](auto timedOut) -> ResponseOperation {
-      co_await winrt::resume_after(4s);
+    auto sendRequestTimeout = [](auto timedOut, auto milliseconds) -> ResponseOperation {
+      // Convert milliseconds to "ticks" (10^-7 seconds)
+      co_await winrt::resume_after(winrt::Windows::Foundation::TimeSpan{milliseconds * 10000});
       *timedOut = true;
       co_return nullptr;
-    }(timedOut);
+    }(timedOut, coReqArgs->Timeout);
 
     auto sendRequestAny = winrt::when_any(sendRequestOp, sendRequestTimeout);
     co_await lessthrow_await_adapter<ResponseOperation>{sendRequestAny};
 
+    // Cancel either still unfinished coroutine.
+    sendRequestTimeout.Cancel();
+    sendRequestOp.Cancel();
+
     if (*timedOut) {
       if (self->m_onError) {
-        //winrt::hresult_error(HRESULT_FROM_WIN32(ERROR_TIMEOUT))
         self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)));
       }
       co_return self->UntrackResponse(coReqArgs->RequestId);
     }
 
+    //TODO: REMOVE!
     //co_await lessthrow_await_adapter<ResponseOperation>{sendRequestOp};
     auto result = sendRequestOp.ErrorCode();
     if (result < 0) {
