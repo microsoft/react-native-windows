@@ -61,6 +61,7 @@ class ScrollViewShadowNode : public ShadowNodeBase {
   bool m_isInverted = false;
   bool m_isScrollingEnabled = true;
   bool m_changeViewAfterLoaded = false;
+  bool m_isLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
 
   ScrollViewViewChanger m_viewChanger;
@@ -342,6 +343,7 @@ void ScrollViewShadowNode::AddHandlers(const winrt::ScrollViewer &scrollViewer) 
         m_isScrollingFromInertia = false;
       });
   m_controlLoadedRevoker = scrollViewer.Loaded(winrt::auto_revoke, [this](const auto &sender, const auto &) {
+    m_isLoaded = true;
     if (m_changeViewAfterLoaded) {
       const auto scrollViewer = sender.as<winrt::ScrollViewer>();
       scrollViewer.ChangeView(nullptr, nullptr, static_cast<float>(m_zoomFactor));
@@ -358,6 +360,13 @@ void ScrollViewShadowNode::EmitScrollEvent(
     double y,
     double zoom,
     CoalesceType coalesceType) {
+  // Do not emit scroll events before the ScrollViewer is loaded when in the
+  // context of an inverted VirtualizedList. Emitting the scroll event when the
+  // control has not been loaded sends incorrect values for the `ActualWidth`
+  // and `ActualHeight`, which can mess up the VirtualizedList behavior.
+  if (m_isInverted && !m_isLoaded)
+    return;
+
   const auto scrollViewerNotNull = scrollViewer;
 
   JSValueObject contentOffset{{"x", x}, {"y", y}};
