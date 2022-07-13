@@ -119,12 +119,4 @@ bool IsWinUI3Island() {
 #endif
 }
 
-bool IsInactiveAppStateEnabled() {
-#ifndef USE_INACTIVE_APP_STATE
-  return false;
-#else
-  return true;
-#endif
-}
-
 } // namespace Microsoft::ReactNative

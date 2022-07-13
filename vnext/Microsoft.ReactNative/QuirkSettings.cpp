@@ -40,6 +40,18 @@ EnableBackHandlerKindProperty() noexcept {
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppStateInactiveProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"MapWindowDeactivatedToAppStateInactiveProperty"};
+  return propId;
+}
+
+/*static*/ void QuirkSettings::SetMapWindowDeactivatedToAppStateInactive(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties,
+    bool value) noexcept {
+  properties.Set(MapWindowDeactivatedToAppStateInactiveProperty(), value);
+}
+
 #pragma region IDL interface
 
 /*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(
@@ -60,6 +72,12 @@ EnableBackHandlerKindProperty() noexcept {
   ReactPropertyBag(settings.Properties()).Set(EnableBackHandlerKindProperty(), kind);
 }
 
+/*static*/ void QuirkSettings::SetMapWindowDeactivatedToAppStateInactive(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+  SetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag(settings.Properties()), value);
+}
+
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -74,6 +92,10 @@ EnableBackHandlerKindProperty() noexcept {
     ReactPropertyBag properties) noexcept {
   return properties.Get(EnableBackHandlerKindProperty())
       .value_or(winrt::Microsoft::ReactNative::BackNavigationHandlerKind::JavaScript);
+}
+
+/*static*/ bool QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag properties) noexcept {
+  return properties.Get(MapWindowDeactivatedToAppStateInactiveProperty()).value_or(true);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

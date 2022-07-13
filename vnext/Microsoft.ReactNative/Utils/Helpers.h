@@ -33,6 +33,5 @@ bool Is21H1OrHigher();
 
 bool IsXamlIsland();
 bool IsWinUI3Island();
-bool IsInactiveAppStateEnabled();
 
 } // namespace Microsoft::ReactNative

@@ -7,6 +7,7 @@
 #include <XamlUtils.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
 #include "Unicode.h"
+#include <QuirkSettings.h>
 
 using namespace winrt::Windows::UI::Core;
 
@@ -45,7 +46,8 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
                 strongThis->SetEnteredBackground(false);
               }
             });
-        if (window != nullptr && IsInactiveAppStateEnabled()) {
+        if (window != nullptr &&
+            winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(m_context.Properties())) {
           m_activatedEventRevoker = window.Activated(
               winrt::auto_revoke,
               [weakThis = weak_from_this()](
@@ -90,8 +92,9 @@ ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
 }
 
 void AppState::SetDeactived(bool deactived) noexcept {
-  if (IsInactiveAppStateEnabled()) {
-    m_deactived = deactived;
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(m_context.Properties())){
+    
+      m_deactived = deactived;
     m_context.JSDispatcher().Post([this]() {
       AppStateDidChange({m_enteredBackground ? "background" : m_deactived ? "inactive" : "active"});
     });
