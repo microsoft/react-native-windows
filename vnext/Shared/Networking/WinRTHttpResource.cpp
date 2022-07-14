@@ -307,8 +307,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
         co_return nullptr;
       }(timedOut, coReqArgs->Timeout);
 
-      auto sendRequestAny = winrt::when_any(sendRequestOp, sendRequestTimeout);
-      co_await lessthrow_await_adapter<ResponseOperation>{sendRequestAny};
+      co_await lessthrow_await_adapter<ResponseOperation>{winrt::when_any(sendRequestOp, sendRequestTimeout)};
 
       // Cancel either still unfinished coroutine.
       sendRequestTimeout.Cancel();
