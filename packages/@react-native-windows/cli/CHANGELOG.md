@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 27 Jun 2022 15:09:48 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Jul 2022 15:11:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.1
+
+Mon, 04 Jul 2022 15:11:49 GMT
+
+### Patches
+
+- Update autolinking to not error if a dependency is misconfigured (jthysell@microsoft.com)
 
 ## 0.69.0
 
