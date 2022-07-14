@@ -297,35 +297,33 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
     self->TrackResponse(coReqArgs->RequestId, sendRequestOp);
 
-    // See https://devblogs.microsoft.com/oldnewthing/20220415-00/?p=106486
-    using namespace std::chrono_literals;
-    using winrt::Windows::Foundation::IAsyncAction;
-    auto timedOut = std::make_shared<bool>(false);
-    //TODO: Look into using AsyncStatus?
-    //      https://docs.microsoft.com/en-us/uwp/api/windows.foundation.iasyncoperationwithprogress-2?view=winrt-22621
-    auto sendRequestTimeout = [](auto timedOut, auto milliseconds) -> ResponseOperation {
-      // Convert milliseconds to "ticks" (10^-7 seconds)
-      co_await winrt::resume_after(winrt::Windows::Foundation::TimeSpan{milliseconds * 10000});
-      *timedOut = true;
-      co_return nullptr;
-    }(timedOut, coReqArgs->Timeout);
+    if (coReqArgs->Timeout > 0) {
+      // See https://devblogs.microsoft.com/oldnewthing/20220415-00/?p=106486
+      auto timedOut = std::make_shared<bool>(false);
+      auto sendRequestTimeout = [](auto timedOut, auto milliseconds) -> ResponseOperation {
+        // Convert milliseconds to "ticks" (10^-7 seconds)
+        co_await winrt::resume_after(winrt::Windows::Foundation::TimeSpan{milliseconds * 10000});
+        *timedOut = true;
+        co_return nullptr;
+      }(timedOut, coReqArgs->Timeout);
 
-    auto sendRequestAny = winrt::when_any(sendRequestOp, sendRequestTimeout);
-    co_await lessthrow_await_adapter<ResponseOperation>{sendRequestAny};
+      auto sendRequestAny = winrt::when_any(sendRequestOp, sendRequestTimeout);
+      co_await lessthrow_await_adapter<ResponseOperation>{sendRequestAny};
 
-    // Cancel either still unfinished coroutine.
-    sendRequestTimeout.Cancel();
-    sendRequestOp.Cancel();
+      // Cancel either still unfinished coroutine.
+      sendRequestTimeout.Cancel();
+      sendRequestOp.Cancel();
 
-    if (*timedOut) {
-      if (self->m_onError) {
-        self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)));
+      if (*timedOut) {
+        if (self->m_onError) {
+          self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)));
+        }
+        co_return self->UntrackResponse(coReqArgs->RequestId);
       }
-      co_return self->UntrackResponse(coReqArgs->RequestId);
+    } else {
+      co_await lessthrow_await_adapter<ResponseOperation>{sendRequestOp};
     }
 
-    //TODO: REMOVE!
-    //co_await lessthrow_await_adapter<ResponseOperation>{sendRequestOp};
     auto result = sendRequestOp.ErrorCode();
     if (result < 0) {
       if (self->m_onError) {
