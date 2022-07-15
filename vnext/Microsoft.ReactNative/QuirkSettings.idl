@@ -43,7 +43,7 @@ namespace Microsoft.ReactNative
     DOC_STRING(
       "By default `react-native-windows` will only track `active` and `background` `AppState`. "
       "Setting this to true enables `react-native-windows` to also track `inactive` `AppState` which [maps closely to iOS.](https://reactnative.dev/docs/appstate)"
-      "`inactive` tracks the [Window.Deactivated Event](https://docs.microsoft.com/en-us/dotnet/api/system.windows.window.deactivated?view=windowsdesktop-6.0)")
+      "`inactive` tracks the [Window.Activated Event](https://docs.microsoft.com/uwp/api/windows.ui.core.corewindow.activated) when the window is deactivated.")
     DOC_DEFAULT("false")
     static void SetMapWindowDeactivatedToAppStateInactive(ReactInstanceSettings settings, Boolean value);
   }
