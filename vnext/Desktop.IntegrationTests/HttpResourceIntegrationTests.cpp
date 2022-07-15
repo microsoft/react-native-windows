@@ -364,7 +364,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     int statusCode = 0;
 
     auto server = std::make_shared<HttpServer>(s_port);
-    server->Callbacks().OnGet = [&getPromise](const DynamicRequest &request) -> ResponseWrapper {
+    server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
       DynamicResponse response;
       response.result(http::status::ok);
 
@@ -381,7 +381,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       statusCode = static_cast<int>(response.StatusCode);
       getPromise.set_value();
     });
-    resource->SetOnError([&getPromise, &error, &server](int64_t, string &&errorMessage) {
+    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
       error = std::move(errorMessage);
       getPromise.set_value();
     });
@@ -413,7 +413,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     int statusCode = 0;
 
     auto server = std::make_shared<HttpServer>(s_port);
-    server->Callbacks().OnGet = [&getPromise](const DynamicRequest &request) -> ResponseWrapper {
+    server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
       DynamicResponse response;
       response.result(http::status::ok);
 
@@ -430,7 +430,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       statusCode = static_cast<int>(response.StatusCode);
       getPromise.set_value();
     });
-    resource->SetOnError([&getPromise, &error, &server](int64_t, string &&errorMessage) {
+    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
       error = std::move(errorMessage);
       getPromise.set_value();
     });
