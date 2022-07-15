@@ -95,7 +95,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
 }
 
 /*static*/ bool QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag properties) noexcept {
-  return properties.Get(MapWindowDeactivatedToAppStateInactiveProperty()).value_or(true);
+  return properties.Get(MapWindowDeactivatedToAppStateInactiveProperty()).value_or(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

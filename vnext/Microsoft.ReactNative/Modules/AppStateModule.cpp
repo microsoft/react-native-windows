@@ -15,7 +15,7 @@ namespace Microsoft::ReactNative {
 
 void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
-  m_deactived = false;
+  m_deactivated = false;
   m_enteredBackground = false;
 
   // We need to register for notifications from the XAML thread.
@@ -57,9 +57,9 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
                 if (auto strongThis = weakThis.lock()) {
                   if (args.WindowActivationState() ==
                       winrt::Windows::UI::Core::CoreWindowActivationState::Deactivated) {
-                    strongThis->SetDeactived(true);
+                    strongThis->SetDeactivated(true);
                   } else {
-                    strongThis->SetDeactived(false);
+                    strongThis->SetDeactivated(false);
                   }
                 }
               });
@@ -76,7 +76,7 @@ void AppState::GetCurrentAppState(
     std::function<void(AppStateChangeArgs const &)> const &success,
     std::function<void(React::JSValue const &)> const &error) noexcept {
   AppStateChangeArgs args;
-  args.app_state = m_enteredBackground ? "background" : m_deactived ? "inactive" : "active";
+  args.app_state = m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active");
   success(args);
 }
 
@@ -89,24 +89,23 @@ void AppState::RemoveListeners(double /*count*/) noexcept {
 }
 
 ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
-  return {m_enteredBackground ? "background" : m_deactived ? "inactive" : "active"};
+  return {m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active")};
 }
 
-void AppState::SetDeactived(bool deactived) noexcept {
+void AppState::SetDeactivated(bool deactivated) noexcept {
   if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(
           m_context.Properties())) {
-    m_deactived = deactived;
+    m_deactivated = deactivated;
     m_context.JSDispatcher().Post([this]() {
-      AppStateDidChange({m_enteredBackground ? "background" : m_deactived ? "inactive" : "active"});
+      AppStateDidChange({m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active")});
     });
   }
 }
 
 void AppState::SetEnteredBackground(bool enteredBackground) noexcept {
   m_enteredBackground = enteredBackground;
-  m_context.JSDispatcher().Post([this]() {
-    AppStateDidChange({m_enteredBackground ? "background" : m_deactived ? "inactive" : "active"});
-  });
+  m_context.JSDispatcher().Post(
+      [this]() { AppStateDidChange({m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active")}); });
 }
 
 } // namespace Microsoft::ReactNative

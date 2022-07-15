@@ -37,11 +37,11 @@ struct AppState : public std::enable_shared_from_this<AppState> {
   std::function<void(AppStateChangeArgs const &)> AppStateDidChange;
 
  private:
-  void SetDeactived(bool deactived) noexcept;
+  void SetDeactivated(bool deactivated) noexcept;
   void SetEnteredBackground(bool enteredBackground) noexcept;
 
   std::mutex m_stateMutex;
-  std::atomic<bool> m_deactived;
+  std::atomic<bool> m_deactivated;
   std::atomic<bool> m_enteredBackground;
   char const *m_lastState{nullptr};
   React::ReactContext m_context;
