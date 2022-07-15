@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 
@@ -16,12 +16,12 @@
 
   <ItemGroup>
     <!-- WinUI package name and version are set by WinUI.props -->
-    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
     <!-- Hermes version is set by JSEngine.props -->
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" Condition="$(UseHermes)" />
   </ItemGroup>
 
-  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets" 
+  <Import Project="$(ReactNativeWindowsDir)PropertySheets\ManagedCodeGen\Microsoft.ReactNative.Managed.CodeGen.targets"
           Condition="'$(ReactNativeCodeGenEnabled)' == 'true' and '$(UseExperimentalNuget)' != 'true'" />
 
    <!-- The props file for bundling is not set up to be just defaults, it assumes to be run at the end of the project. -->
@@ -31,17 +31,17 @@
   <Import Project="$(ProjectDir)\AutolinkedNativeModules.g.targets"
           Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.targets')" />
 
-  <Import Project="$(AppxPackageRecipe)"  
+  <Import Project="$(AppxPackageRecipe)"
           Condition="Exists('$(AppxPackageRecipe)') And '$(DeployLayout)'=='true'" />
   <Target Name="Deploy" Condition="'$(DeployLayout)'=='true'">
-    <Error Condition="!Exists('$(AppxPackageRecipe)')" 
+    <Error Condition="!Exists('$(AppxPackageRecipe)')"
            Text="You must first build the project before deploying it. Did not find: $(AppxPackageRecipe)" />
-    <Copy SourceFiles="%(AppxPackagedFile.Identity)" 
+    <Copy SourceFiles="%(AppxPackagedFile.Identity)"
           DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxPackagedFile.PackagePath)" />
-    <Copy SourceFiles="%(AppXManifest.Identity)" 
-          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxManifest.PackagePath)" 
+    <Copy SourceFiles="%(AppXManifest.Identity)"
+          DestinationFiles="$(MSBuildProjectDirectory)\$(OutputPath)Appx\%(AppxManifest.PackagePath)"
           Condition="'%(AppxManifest.SubType)'!='Designer'"/>
-    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(MSBuildProjectDirectory)\$(OutputPath)Appx\AppxManifest.xml" 
+    <Exec Command="powershell -NonInteractive -NoProfile -Command Add-AppxPackage -Register $(MSBuildProjectDirectory)\$(OutputPath)Appx\AppxManifest.xml"
           ContinueOnError="false" />
   </Target>
 
