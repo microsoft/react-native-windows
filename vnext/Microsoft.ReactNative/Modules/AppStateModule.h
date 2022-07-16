@@ -39,6 +39,7 @@ struct AppState : public std::enable_shared_from_this<AppState> {
  private:
   void SetDeactivated(bool deactivated) noexcept;
   void SetEnteredBackground(bool enteredBackground) noexcept;
+  std::string GetAppState() noexcept;
 
   std::mutex m_stateMutex;
   std::atomic<bool> m_deactivated;

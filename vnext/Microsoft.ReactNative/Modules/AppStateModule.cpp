@@ -76,7 +76,7 @@ void AppState::GetCurrentAppState(
     std::function<void(AppStateChangeArgs const &)> const &success,
     std::function<void(React::JSValue const &)> const &error) noexcept {
   AppStateChangeArgs args;
-  args.app_state = m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active");
+  args.app_state = GetAppState();
   success(args);
 }
 
@@ -89,23 +89,24 @@ void AppState::RemoveListeners(double /*count*/) noexcept {
 }
 
 ReactNativeSpecs::AppStateSpec_Constants AppState::GetConstants() noexcept {
-  return {m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active")};
+  return {GetAppState()};
 }
 
 void AppState::SetDeactivated(bool deactivated) noexcept {
   if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(
           m_context.Properties())) {
     m_deactivated = deactivated;
-    m_context.JSDispatcher().Post([this]() {
-      AppStateDidChange({m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active")});
-    });
+    m_context.JSDispatcher().Post([this]() { AppStateDidChange({GetAppState()}); });
   }
 }
 
 void AppState::SetEnteredBackground(bool enteredBackground) noexcept {
   m_enteredBackground = enteredBackground;
-  m_context.JSDispatcher().Post(
-      [this]() { AppStateDidChange({m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active")}); });
+  m_context.JSDispatcher().Post([this]() { AppStateDidChange({GetAppState()}); });
+}
+
+std::string AppState::GetAppState() noexcept {
+  return m_enteredBackground ? "background" : (m_deactivated ? "inactive" : "active");
 }
 
 } // namespace Microsoft::ReactNative
