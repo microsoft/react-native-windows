@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 16 Jul 2022 05:08:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.528",
+      "version": "0.0.0-canary.528",
+      "comments": {
+        "none": [
+          {
+            "author": "dzndlhov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "12d83f9f4e9ae094ea59837a23d40bb1681a81c2",
+            "comment": "Map App Window Focus to RN AppState"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Jul 2022 05:10:12 GMT",
       "tag": "react-native-windows_v0.0.0-canary.528",
       "version": "0.0.0-canary.528",
