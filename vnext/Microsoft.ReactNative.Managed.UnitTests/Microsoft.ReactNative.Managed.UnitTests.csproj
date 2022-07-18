@@ -142,7 +142,7 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>
     </PackageReference>
-    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true' AND '$(OverrideWinUIPackage)'!='true'"/>
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true'"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj">
