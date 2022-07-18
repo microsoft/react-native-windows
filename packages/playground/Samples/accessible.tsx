@@ -19,11 +19,14 @@ import {ViewWindows} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
-  {displayText: string}
+  {displayText: string; counterValue: number}
 > {
   constructor(props: {}) {
     super(props);
-    this.state = {displayText: 'Starting text. (THIRD ITEM)'};
+    this.state = {
+      displayText: 'Starting text. (THIRD ITEM)',
+      counterValue: 0,
+    };
   }
 
   myElement = React.createRef<TextInput>();
@@ -53,6 +56,20 @@ export default class Bootstrap extends React.Component<
           }}>
           <Text style={styles.text}>{this.state.displayText}</Text>
         </ViewWindows>
+        <TouchableHighlight
+          style={styles.item}
+          accessibilityLabel="counter button"
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityValue={{text: `${this.state.counterValue}`}}
+          onPress={() => {
+            this.setState({counterValue: this.state.counterValue + 1});
+          }}>
+          <Text style={styles.text}>
+            Testing acessibilityValue, Click to increase:{' '}
+            {this.state.counterValue}
+          </Text>
+        </TouchableHighlight>
         <TouchableHighlight
           style={styles.item}
           accessibilityLabel="TEST Announce For Accessibility"

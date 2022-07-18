@@ -266,7 +266,7 @@ class AccessibilityStateExamples extends React.Component {
     viewRangeNow: 10,
     viewRangeMax: 125,
     viewRangeMin: 5,
-    viewValueText: 'testText',
+    test: 0,
   };
 
   public render() {
@@ -303,6 +303,7 @@ class AccessibilityStateExamples extends React.Component {
           data={selectableItems}
           renderItem={item => (
             <TouchableHighlight
+              accessible={true}
               style={{
                 width: 100,
                 height: 50,
@@ -427,12 +428,14 @@ class AccessibilityStateExamples extends React.Component {
             backgroundColor: 'gray',
             height: 50,
           }}
+          focusable={true}
+          accessible={true}
+          accessibilityRole="adjustable"
           accessibilityValue={{
-            min: this.state.viewRangeMin,
-            max: this.state.viewRangeMax,
-            now: this.state.viewRangeNow,
-          }}
-          accessibilityRole="adjustable">
+            min: 10,
+            max: 125,
+            now: 50,
+          }}>
           <Text>
             The View's (accessibilityRole == adjustable, ie. Slider) properties
             should be the following according to UIA: Min-{' '}
@@ -442,21 +445,28 @@ class AccessibilityStateExamples extends React.Component {
           </Text>
         </View>
 
-        <Text>
-          The following View exposes the accessibilityValue.Text field
-        </Text>
+        <TouchableHighlight
+          style={{width: 100, height: 50, backgroundColor: 'blue'}}
+          onPress={this.testPress}
+          accessibilityValue={{
+            text: `${this.state.test}`,
+          }}>
+          <Text>The following View exposes the accessibilityValue.Text</Text>
+        </TouchableHighlight>
         <View
+          focusable={true}
+          accessible={true}
           style={{
             backgroundColor: 'gray',
             height: 50,
           }}
           accessibilityValue={{
-            text: this.state.viewValueText,
+            text: `${this.state.test}`,
           }}
           accessibilityRole="combobox">
           <Text>
             The View's properties should be the following according to UIA:
-            Text- {this.state.viewValueText}
+            Text- {`${this.state.test}`}
           </Text>
         </View>
       </View>
@@ -491,6 +501,10 @@ class AccessibilityStateExamples extends React.Component {
 
   private readonly rangePress = () => {
     this.setState({viewRangeNow: this.state.viewRangeNow + 1});
+  };
+
+  private readonly testPress = () => {
+    this.setState({test: this.state.test + 1});
   };
 }
 
