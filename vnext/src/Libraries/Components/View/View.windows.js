@@ -75,25 +75,25 @@ const View: React.AbstractComponent<
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
-    // [Windows
-    const childrenWithImportantForAccessibility = children => {
-      return React.Children.map(children, child => {
-        if (React.isValidElement(child)) {
-          if (child.props.children) {
-            return React.cloneElement(child, {
-              accessible: false,
-              children: childrenWithImportantForAccessibility(
-                child.props.children,
-              ),
-            });
-          } else {
-            return React.cloneElement(child, {accessible: false});
-          }
+  // [Windows
+  const childrenWithImportantForAccessibility = children => {
+    return React.Children.map(children, child => {
+      if (React.isValidElement(child)) {
+        if (child.props.children) {
+          return React.cloneElement(child, {
+            accessible: false,
+            children: childrenWithImportantForAccessibility(
+              child.props.children,
+            ),
+          });
+        } else {
+          return React.cloneElement(child, {accessible: false});
         }
-        return child;
-      });
-    };
-    // Windows]
+      }
+      return child;
+    });
+  };
+  // Windows]
 
   return (
     // [Windows
