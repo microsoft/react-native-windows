@@ -295,7 +295,7 @@ namespace Microsoft::React::Test {
       promise.set_value();
         });
 
-      resource->SendRequest("GET", "http://nonexistinghost", 0, {}, {}, "text", false, 1000, false, [](int64_t) {});
+    resource->SendRequest("GET", "http://nonexistinghost", 0, {}, {}, "text", false, 0, false, [](int64_t) {});
 
       promise.get_future().wait();
 
@@ -475,10 +475,109 @@ namespace Microsoft::React::Test {
       server2->Stop();
       server1->Stop();
 
-      Assert::AreEqual({}, error, L"Error encountered");
-      Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
-      Assert::AreEqual({ "Redirect Content" }, content);
-    }
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), getResponse.StatusCode);
+    Assert::AreEqual({"Redirect Content"}, content);
+  }
+
+  TEST_METHOD(TimeoutSucceeds) {
+    auto port = s_port;
+    string url = "http://localhost:" + std::to_string(port);
+
+    promise<void> getPromise;
+    string error;
+    int statusCode = 0;
+
+    auto server = std::make_shared<HttpServer>(s_port);
+    server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+
+      // Hold response to test client timeout
+      promise<void> timer;
+      timer.get_future().wait_for(std::chrono::milliseconds(2000));
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+      getPromise.set_value();
+    });
+    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
+      error = std::move(errorMessage);
+      getPromise.set_value();
+    });
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
+        "text", /*responseType*/
+        false, /*useIncrementalUpdates*/
+        6000, /*timeout*/
+        false, /*withCredentials*/
+        [](int64_t) {} /*callback*/);
+
+    getPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreEqual({}, error);
+    Assert::AreEqual(200, statusCode);
+  }
+
+  TEST_METHOD(TimeoutFails) {
+    auto port = s_port;
+    string url = "http://localhost:" + std::to_string(port);
+
+    promise<void> getPromise;
+    string error;
+    int statusCode = 0;
+
+    auto server = std::make_shared<HttpServer>(s_port);
+    server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+
+      // Hold response to test client timeout
+      promise<void> timer;
+      timer.get_future().wait_for(std::chrono::milliseconds(4000));
+
+      return {std::move(response)};
+    };
+    server->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+      getPromise.set_value();
+    });
+    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
+      error = std::move(errorMessage);
+      getPromise.set_value();
+    });
+    resource->SendRequest(
+        "GET",
+        std::move(url),
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
+        "text", /*responseType*/
+        false, /*useIncrementalUpdates*/
+        2000, /*timeout*/
+        false, /*withCredentials*/
+        [](int64_t) {} /*callback*/);
+
+    getPromise.get_future().wait();
+    server->Stop();
+
+    Assert::AreEqual({"[0x800705b4] This operation returned because the timeout period expired."}, error);
+    Assert::AreEqual(0, statusCode);
+  }
+};
 
     TEST_METHOD(SimpleRedirectPatchSucceeds) {
       auto port1 = s_port;

@@ -71,6 +71,7 @@ namespace Microsoft::React::Networking {
     /// </param>
     /// <param name="timeout">
     /// Request timeout in miliseconds.
+    /// Note: A value of 0 means no timeout. The resource will await the response indefinitely.
     /// </param>
     /// <param name="withCredentials">
     /// Allow including credentials in request.
