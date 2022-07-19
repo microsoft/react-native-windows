@@ -432,9 +432,9 @@ class AccessibilityStateExamples extends React.Component {
           accessible={true}
           accessibilityRole="adjustable"
           accessibilityValue={{
-            min: 10,
-            max: 125,
-            now: 50,
+            min: this.state.viewRangeMin,
+            max: this.state.viewRangeMax,
+            now: this.state.viewRangeNow,
           }}>
           <Text>
             The View's (accessibilityRole == adjustable, ie. Slider) properties
