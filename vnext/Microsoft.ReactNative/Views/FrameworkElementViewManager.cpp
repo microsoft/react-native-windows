@@ -93,8 +93,8 @@ static void GetAccessibilityStateProps(const winrt::Microsoft::ReactNative::IJSV
 
 static void GetAccessibilityValueProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
   writer.WriteObjectBegin();
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"min", L"boolean");
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"max", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"min", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"max", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"now", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"text", L"string");
   writer.WriteObjectEnd();
