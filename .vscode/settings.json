@@ -3,7 +3,11 @@
     "**/.git": true
   },
   "files.associations": {
-    "**/.ado/**/*.yml": "azure-pipelines"
+    "**/.ado/**/*.yml": "azure-pipelines",
+    "random": "cpp",
+    "filesystem": "cpp",
+    "xstring": "cpp",
+    "*.ipp": "cpp"
   },
   "search.exclude": {
     "**/node_modules": true,
