@@ -266,7 +266,7 @@ class AccessibilityStateExamples extends React.Component {
     viewRangeNow: 10,
     viewRangeMax: 125,
     viewRangeMin: 5,
-    test: 0,
+    viewValueText: 'testText',
   };
 
   public render() {
@@ -303,7 +303,6 @@ class AccessibilityStateExamples extends React.Component {
           data={selectableItems}
           renderItem={item => (
             <TouchableHighlight
-              accessible={true}
               style={{
                 width: 100,
                 height: 50,
@@ -445,23 +444,16 @@ class AccessibilityStateExamples extends React.Component {
           </Text>
         </View>
 
-        <TouchableHighlight
-          style={{width: 100, height: 50, backgroundColor: 'blue'}}
-          onPress={this.testPress}
-          accessibilityValue={{
-            text: `${this.state.test}`,
-          }}>
-          <Text>The following View exposes the accessibilityValue.Text</Text>
-        </TouchableHighlight>
+        <Text>
+          The following View exposes the accessibilityValue.Text field
+        </Text>
         <View
-          focusable={true}
-          accessible={true}
           style={{
             backgroundColor: 'gray',
             height: 50,
           }}
           accessibilityValue={{
-            text: `${this.state.test}`,
+            text: this.state.viewValueText,
           }}
           accessibilityRole="combobox">
           <Text>
@@ -501,10 +493,6 @@ class AccessibilityStateExamples extends React.Component {
 
   private readonly rangePress = () => {
     this.setState({viewRangeNow: this.state.viewRangeNow + 1});
-  };
-
-  private readonly testPress = () => {
-    this.setState({test: this.state.test + 1});
   };
 }
 
