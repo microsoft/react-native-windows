@@ -14,6 +14,7 @@
 #include <boost/algorithm/string.hpp>
 
 // Windows API
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
