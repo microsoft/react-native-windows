@@ -458,7 +458,7 @@ class AccessibilityStateExamples extends React.Component {
           accessibilityRole="combobox">
           <Text>
             The View's properties should be the following according to UIA:
-            Text- {`${this.state.test}`}
+            Text- {this.state.viewValueText}
           </Text>
         </View>
       </View>
