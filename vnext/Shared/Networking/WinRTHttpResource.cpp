@@ -249,7 +249,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       for (auto &byte : bytes) {
         byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
       }
-      auto view = winrt::array_view<uint8_t>{byteVector};
+      auto view = winrt::array_view<uint8_t const>{byteVector};
       auto buffer = CryptographicBuffer::CreateFromByteArray(view);
       content = HttpBufferContent{std::move(buffer)};
     } else if (!data["string"].empty()) {
