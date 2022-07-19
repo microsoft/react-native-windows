@@ -535,13 +535,13 @@ bool FrameworkElementViewManager::UpdateProperty(
               (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
                innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
             DynamicAutomationProperties::SetAccessibilityValueMin(element, innerValue.AsDouble());
-          } else if (
-              innerName == "max" && innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-              innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+          } else if (innerName == "max" &&
+              (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+              innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
             DynamicAutomationProperties::SetAccessibilityValueMax(element, innerValue.AsDouble());
-          } else if (
-              innerName == "now" && innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-              innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
+          } else if (innerName == "now" &&
+              (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+              innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
             DynamicAutomationProperties::SetAccessibilityValueNow(element, innerValue.AsDouble());
           } else if (innerName == "text" && innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
             auto value = asHstring(innerValue);
