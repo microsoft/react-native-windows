@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 Jul 2022 05:09:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.529",
+      "version": "0.0.0-canary.529",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "51857f2d528f4d1bd73f6be3d86df868930453c3",
+            "comment": "Import WinUI package only if OverrideWinUIPackage is not true"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be2f3c3f4d43a85678db5ca6b7b9e1e30f163ec6",
+            "comment": "Implement HTTP client timeout"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 16 Jul 2022 05:08:42 GMT",
       "tag": "react-native-windows_v0.0.0-canary.528",
       "version": "0.0.0-canary.528",
