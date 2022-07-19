@@ -15,7 +15,7 @@
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
 #include <Views/ShadowNodeBase.h>
-#include "DynamicAutomationProperties.h"
+#include "../DynamicAutomationProperties.h"
 #include "ReactImage.h"
 
 namespace winrt {
