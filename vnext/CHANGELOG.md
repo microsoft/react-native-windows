@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 19 Jul 2022 05:09:31 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Jul 2022 05:09:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.530
+
+Wed, 20 Jul 2022 05:09:08 GMT
+
+### Changes
+
+- CoreApp API (asklar@microsoft.com)
 
 ## 0.0.0-canary.529
 
