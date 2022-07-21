@@ -138,7 +138,7 @@ class StringToDoubleConverter {
       assert(false && "Conversion to double failed");
     }
     return d;
-  } 
+  }
 
   float StringToFloat(const char *buf, int length, int *consumed) {
     float f{};
