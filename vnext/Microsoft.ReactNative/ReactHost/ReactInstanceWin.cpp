@@ -611,8 +611,16 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
 
             try {
               instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
+
               if (strongThis->State() != ReactInstanceState::HasError) {
                 strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
+
+                // When loading a bundle synchronously, if the bundle code never calls any native/turbo modules,
+                // then onBatchComplete() will never be called to process the first batch of UI tasks, meaning
+                // the app will never start rendering UI. So we manually call the callback here, just in case.
+                // See https://github.com/microsoft/react-native-windows/issues/10255
+                auto callback = std::make_unique<BridgeUIBatchInstanceCallback>(weakThis);
+                callback->onBatchComplete();
               }
             } catch (...) {
               strongThis->OnReactInstanceLoaded(Mso::ExceptionErrorProvider().MakeErrorCode(std::current_exception()));
