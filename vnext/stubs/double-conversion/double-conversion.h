@@ -128,11 +128,15 @@ class StringToDoubleConverter {
     // nyi();
   }
 
-  double StringToDouble(const char *s, int l, int *consumed) {
-    size_t idx = 0;
-    std::string str(s, l);
-    double d = std::stod(str.c_str(), &idx);
-    *consumed = static_cast<int>(idx);
+  double StringToDouble(const char *buf, int length, int *consumed) {
+    double d{};
+    auto ret = std::from_chars(buf, buf + length, d);
+    if (ret.ec == std::errc{}) {
+      *consumed = static_cast<int>(ret.ptr - buf);
+    } else {
+      *consumed = 0;
+      assert(false && "Conversion to double failed");
+    }
     return d;
   }
 
