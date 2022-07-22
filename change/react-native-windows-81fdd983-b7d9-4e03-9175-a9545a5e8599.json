@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Make double-conversion FP conversions be locale-invariant",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
