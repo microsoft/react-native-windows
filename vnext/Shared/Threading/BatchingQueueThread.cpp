@@ -69,8 +69,13 @@ BatchingQueueThread::BatchingQueueThread(
 void BatchingQueueThread::decoratedNativeCallInvokerReady(
     std::weak_ptr<facebook::react::Instance> wkInstance) noexcept {
   std::scoped_lock lck(m_mutex);
-  m_callInvoker->invokeAsync([wkInstance, this] {
-    if (auto instance = wkInstance.lock()) {
+  if (auto instance = wkInstance.lock()) {
+    // When items were queued in the undecoratedNativeCallInvoker it will not have called
+    // recordTurboModuleAsyncMethodCall. Calling invokeAsync on the decoratedNativeCallInvoker ensures that the new
+    // queue is properly flushed, on the next batch complete
+    auto decoratedCallInvoker = instance->getDecoratedNativeCallInvoker(m_callInvoker);
+    decoratedCallInvoker->invokeAsync([decoratedCallInvoker, wkInstance, this]
+      if (auto instance = wkInstance.lock()) {
       std::scoped_lock lckQuitting(m_mutexQuitting);
 
       // If we are shutting down, then then the mutex is being held in quitSynchronous
@@ -78,10 +83,11 @@ void BatchingQueueThread::decoratedNativeCallInvokerReady(
       // is running. -- and since we are shutting down anyway, we can just skip this work.
       if (!m_quitting) {
         std::scoped_lock lck(m_mutex);
-        m_callInvoker = instance->getDecoratedNativeCallInvoker(m_callInvoker);
+        m_callInvoker = decoratedCallInvoker;
       }
-    }
+      }
   });
+}
 }
 
 BatchingQueueThread::~BatchingQueueThread() noexcept {}
