@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 22 Jul 2022 05:09:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.531",
+      "version": "0.0.0-canary.531",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "6ef492fb7c13e7acfb57d3cf201f5f75fb323976",
+            "comment": "Check for DP::UnsetValue() rather than nullptr"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Jul 2022 05:09:08 GMT",
       "tag": "react-native-windows_v0.0.0-canary.530",
       "version": "0.0.0-canary.530",

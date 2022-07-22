@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Check for DP::UnsetValue() rather than nullptr",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
