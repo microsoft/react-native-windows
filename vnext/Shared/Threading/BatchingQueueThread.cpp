@@ -71,23 +71,23 @@ void BatchingQueueThread::decoratedNativeCallInvokerReady(
   std::scoped_lock lck(m_mutex);
   if (auto instance = wkInstance.lock()) {
     // When items were queued in the undecoratedNativeCallInvoker it will not have called
-    // recordTurboModuleAsyncMethodCall. Calling invokeAsync on the decoratedNativeCallInvoker ensures that the new
-    // queue is properly flushed, on the next batch complete
+    // recordTurboModuleAsyncMethodCall. Calling invokeAsync on the decoratedNativeCallInvoker
+    // ensures that the queue is properly flushed, on the next batch complete
     auto decoratedCallInvoker = instance->getDecoratedNativeCallInvoker(m_callInvoker);
-    decoratedCallInvoker->invokeAsync([decoratedCallInvoker, wkInstance, this]
+    decoratedCallInvoker->invokeAsync([decoratedCallInvoker, wkInstance, this] {
       if (auto instance = wkInstance.lock()) {
-      std::scoped_lock lckQuitting(m_mutexQuitting);
+        std::scoped_lock lckQuitting(m_mutexQuitting);
 
-      // If we are shutting down, then then the mutex is being held in quitSynchronous
-      // Which is waiting for this task to complete, so we cannot take the mutex if quitSynchronous
-      // is running. -- and since we are shutting down anyway, we can just skip this work.
-      if (!m_quitting) {
-        std::scoped_lock lck(m_mutex);
-        m_callInvoker = decoratedCallInvoker;
+        // If we are shutting down, then then the mutex is being held in quitSynchronous
+        // Which is waiting for this task to complete, so we cannot take the mutex if quitSynchronous
+        // is running. -- and since we are shutting down anyway, we can just skip this work.
+        if (!m_quitting) {
+          std::scoped_lock lck(m_mutex);
+          m_callInvoker = decoratedCallInvoker;
+        }
       }
-      }
-  });
-}
+    });
+  }
 }
 
 BatchingQueueThread::~BatchingQueueThread() noexcept {}
