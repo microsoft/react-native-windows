@@ -256,6 +256,48 @@ WinRTHttpResource::PerformSendRequest(HttpMethod&& method, Uri&& rtUri, IInspect
           self->m_onDataDynamic(reqArgs->RequestId, std::move(blob));
           self->m_onRequestSuccess(reqArgs->RequestId);
         }
+        co_return;
+      }
+      auto bytes = blob["bytes"];
+      auto byteVector = vector<uint8_t>(bytes.size());
+      for (auto& byte : bytes) {
+        byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
+      }
+      auto view = winrt::array_view<uint8_t const>{ byteVector };
+      auto buffer = CryptographicBuffer::CreateFromByteArray(view);
+      content = HttpBufferContent{ std::move(buffer) };
+    }
+  else if (!data["string"].empty()) {
+    content = HttpStringContent{ to_hstring(data["string"].asString()) };
+  }
+  else if (!data["base64"].empty()) {
+    auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].asString()));
+    content = HttpBufferContent{ std::move(buffer) };
+  }
+  else if (!data["uri"].empty()) {
+    auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{ to_hstring(data["uri"].asString()) });
+    auto stream = co_await file.OpenReadAsync();
+    content = HttpStreamContent{ std::move(stream) };
+  }
+  else if (!data["form"].empty()) {
+    // #9535 - HTTP form data support
+    // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
+  }
+  else {
+    // Assume empty request body.
+    // content = HttpStringContent{L""};
+  }
+  }
+
+  if (content != nullptr) {
+    // Attach content headers
+    if (contentType) {
+      content.Headers().ContentType(contentType);
+    }
+    if (!contentEncoding.empty()) {
+      if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
+        if (self->m_onError)
+          self->m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
 
         co_return;
       }

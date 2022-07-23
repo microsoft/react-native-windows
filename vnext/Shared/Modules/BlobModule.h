@@ -30,7 +30,7 @@ namespace Microsoft::React {
   public:
 #pragma region IBlobPersistor
 
-    winrt::array_view<uint8_t> ResolveMessage(std::string&& blobId, int64_t offset, int64_t size) override;
+  winrt::array_view<uint8_t const> ResolveMessage(std::string &&blobId, int64_t offset, int64_t size) override;
 
     void RemoveMessage(std::string&& blobId) noexcept override;
 

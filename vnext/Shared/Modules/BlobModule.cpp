@@ -97,10 +97,87 @@ namespace Microsoft::React {
           responseHandler = m_responseHandler](dynamic args) {
            auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
 
-           if (auto prop = propBag.Get(propId)) {
-             if (auto httpHandler = prop.Value().lock()) {
-               httpHandler->AddRequestBodyHandler(requestBodyHandler);
-               httpHandler->AddResponseHandler(responseHandler);
+         if (auto prop = propBag.Get(propId)) {
+           if (auto httpHandler = prop.Value().lock()) {
+             httpHandler->AddRequestBodyHandler(requestBodyHandler);
+             httpHandler->AddResponseHandler(responseHandler);
+           }
+         }
+         // TODO: else emit error?
+       }},
+
+      {"addWebSocketHandler",
+       [contentHandler = m_contentHandler](dynamic args) {
+         auto id = jsArgAsInt(args, 0);
+
+         contentHandler->Register(id);
+       }},
+
+      {"removeWebSocketHandler",
+       [contentHandler = m_contentHandler](dynamic args) {
+         auto id = jsArgAsInt(args, 0);
+
+         contentHandler->Unregister(id);
+       }},
+
+      {"sendOverSocket",
+       [weakState = weak_ptr<SharedState>(m_sharedState),
+        persistor = m_blobPersistor,
+        propBag = ReactPropertyBag{m_inspectableProperties.try_as<IReactPropertyBag>()}](dynamic args) {
+         auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
+         shared_ptr<IWebSocketModuleProxy> wsProxy;
+         if (auto prop = propBag.Get(propId)) {
+           wsProxy = prop.Value().lock();
+         }
+         if (!wsProxy) {
+           return;
+         }
+
+         auto blob = jsArgAsObject(args, 0);
+         auto blobId = blob[blobIdKey].getString();
+         auto offset = blob[offsetKey].getInt();
+         auto size = blob[sizeKey].getInt();
+         auto socketID = jsArgAsInt(args, 1);
+
+         winrt::array_view<uint8_t const> data;
+         try {
+           data = persistor->ResolveMessage(std::move(blobId), offset, size);
+         } catch (const std::exception &e) {
+           if (auto sharedState = weakState.lock()) {
+             Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
+           }
+           return;
+         }
+
+         auto buffer = CryptographicBuffer::CreateFromByteArray(data);
+         auto winrtString = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
+         auto base64String = Common::Unicode::Utf16ToUtf8(std::move(winrtString));
+
+         wsProxy->SendBinary(std::move(base64String), socketID);
+       }},
+
+      {"createFromParts",
+       // As of React Native 0.67, instance is set AFTER CxxModule::getMethods() is invoked.
+       // Use getInstance() directly once
+       // https://github.com/facebook/react-native/commit/1d45b20b6c6ba66df0485cdb9be36463d96cf182 becomes available.
+       [persistor = m_blobPersistor, weakState = weak_ptr<SharedState>(m_sharedState)](dynamic args) {
+         auto parts = jsArgAsArray(args, 0); // Array<Object>
+         auto blobId = jsArgAsString(args, 1);
+         vector<uint8_t> buffer{};
+
+         for (const auto &part : parts) {
+           auto type = part[typeKey].asString();
+           if (blobKey == type) {
+             auto blob = part[dataKey];
+             winrt::array_view<uint8_t const> bufferPart;
+             try {
+               bufferPart = persistor->ResolveMessage(
+                   blob[blobIdKey].asString(), blob[offsetKey].asInt(), blob[sizeKey].asInt());
+             } catch (const std::exception &e) {
+               if (auto sharedState = weakState.lock()) {
+                 Modules::SendEvent(sharedState->Module->getInstance(), "blobFailed", e.what());
+               }
+               return;
              }
            }
            // TODO: else emit error?
@@ -220,9 +297,9 @@ persistor->StoreMessage(std::move(buffer), std::move(blobId));
 
 #pragma region IBlobPersistor
 
-  winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string&& blobId, int64_t offset, int64_t size) {
-    if (size < 1)
-      return {};
+winrt::array_view<uint8_t const> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
+  if (size < 1)
+    return {};
 
     scoped_lock lock{ m_mutex };
 
@@ -237,8 +314,8 @@ persistor->StoreMessage(std::move(buffer), std::move(blobId));
     if (endBound > bytes.size() || offset >= static_cast<int64_t>(bytes.size()) || offset < 0)
       throw std::out_of_range("Offset or size out of range");
 
-    return winrt::array_view<uint8_t>(bytes.data() + offset, bytes.data() + endBound);
-  }
+  return winrt::array_view<uint8_t const>(bytes.data() + offset, bytes.data() + endBound);
+}
 
   void MemoryBlobPersistor::RemoveMessage(string&& blobId) noexcept {
     scoped_lock lock{ m_mutex };
