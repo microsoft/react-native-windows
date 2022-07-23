@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use u8path for bundle loading",
+  "packageName": "react-native-windows",
+  "email": "ericroz@fb.com",
+  "dependentChangeType": "patch"
+}
