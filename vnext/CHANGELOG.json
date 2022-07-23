@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 23 Jul 2022 05:09:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.532",
+      "version": "0.0.0-canary.532",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "b296ceed0d12fa997e1bee14fb9549a03aac76ab",
+            "comment": "Use uint8_t const in IBlobPersistor.h"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "f68cb37404b686ae9bb11edef0f8da3eb2714dd3",
+            "comment": "Fix compiler issue for older versions of C++/WinRT"
+          },
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "f3d8a0c5845fbc435ce156d6f22f4f04886d1312",
+            "comment": "Use u8path for bundle loading"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 22 Jul 2022 05:09:58 GMT",
       "tag": "react-native-windows_v0.0.0-canary.531",
       "version": "0.0.0-canary.531",

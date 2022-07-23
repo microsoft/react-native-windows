@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 22 Jul 2022 05:09:58 GMT and should not be manually modified.
+This log was last generated on Sat, 23 Jul 2022 05:09:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.532
+
+Sat, 23 Jul 2022 05:09:29 GMT
+
+### Changes
+
+- Use uint8_t const in IBlobPersistor.h (erozell@outlook.com)
+- Fix compiler issue for older versions of C++/WinRT (erozell@outlook.com)
+- Use u8path for bundle loading (ericroz@fb.com)
 
 ## 0.0.0-canary.531
 

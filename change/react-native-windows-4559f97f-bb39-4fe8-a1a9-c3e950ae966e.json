@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix compiler issue for older versions of C++/WinRT",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
