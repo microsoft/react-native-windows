@@ -139,7 +139,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
          auto size = blob[sizeKey].getInt();
          auto socketID = jsArgAsInt(args, 1);
 
-         winrt::array_view<uint8_t> data;
+         winrt::array_view<uint8_t const> data;
          try {
            data = persistor->ResolveMessage(std::move(blobId), offset, size);
          } catch (const std::exception &e) {
@@ -169,7 +169,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
            auto type = part[typeKey].asString();
            if (blobKey == type) {
              auto blob = part[dataKey];
-             winrt::array_view<uint8_t> bufferPart;
+             winrt::array_view<uint8_t const> bufferPart;
              try {
                bufferPart = persistor->ResolveMessage(
                    blob[blobIdKey].asString(), blob[offsetKey].asInt(), blob[sizeKey].asInt());
@@ -216,7 +216,7 @@ vector<module::CxxModule::Method> BlobModule::getMethods() {
 
 #pragma region IBlobPersistor
 
-winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
+winrt::array_view<uint8_t const> MemoryBlobPersistor::ResolveMessage(string &&blobId, int64_t offset, int64_t size) {
   if (size < 1)
     return {};
 
@@ -233,7 +233,7 @@ winrt::array_view<uint8_t> MemoryBlobPersistor::ResolveMessage(string &&blobId, 
   if (endBound > bytes.size() || offset >= static_cast<int64_t>(bytes.size()) || offset < 0)
     throw std::out_of_range("Offset or size out of range");
 
-  return winrt::array_view<uint8_t>(bytes.data() + offset, bytes.data() + endBound);
+  return winrt::array_view<uint8_t const>(bytes.data() + offset, bytes.data() + endBound);
 }
 
 void MemoryBlobPersistor::RemoveMessage(string &&blobId) noexcept {
