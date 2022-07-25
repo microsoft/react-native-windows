@@ -1,0 +1,12 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+#include "NamespaceRedirect.h"
+
+namespace Microsoft.ReactNative
+{
+    [default_interface]
+    runtimeclass CoreAppPage : XAML_NAMESPACE.Controls.Page
+    {
+        CoreAppPage();
+    }
+}

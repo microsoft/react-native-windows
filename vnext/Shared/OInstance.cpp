@@ -508,7 +508,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
     } else {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
+      std::string bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
       std::string bundlePath;
@@ -517,7 +517,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
             winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
         bundlePath = winrt::to_string(uri.ToString());
       } else {
-        bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
+        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
       }
 
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);

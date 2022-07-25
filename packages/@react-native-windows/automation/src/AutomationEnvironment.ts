@@ -107,7 +107,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     );
 
     this.webDriverOptions.capabilities = Object.assign(
-      this.webDriverOptions.capabilities,
+      this.webDriverOptions.capabilities!,
       passedOptions.webdriverOptions?.capabilities,
     );
 
