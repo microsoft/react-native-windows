@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix doxysaurus error logging to handle Error objects",
+  "packageName": "@rnw-scripts/doxysaurus",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
