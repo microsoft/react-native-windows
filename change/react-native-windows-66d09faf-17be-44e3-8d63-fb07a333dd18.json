@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Replace all codegen includes without relative path",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
