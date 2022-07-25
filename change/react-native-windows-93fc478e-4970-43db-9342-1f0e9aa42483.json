@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Implement no-hide-accessibility",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
