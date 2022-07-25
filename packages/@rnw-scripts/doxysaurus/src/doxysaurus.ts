@@ -124,7 +124,11 @@ function fireAndForget(asyncFunc: () => Promise<void>): void {
       await asyncFunc();
     } catch (err) {
       try {
-        log.error(err as any);
+        if (err instanceof Error) {
+          log.error(`${err.stack !== undefined ? err.stack : err.message}`);
+        } else {
+          log.error(err as any);
+        }
       } catch (logError) {
         console.error(logError);
       }
