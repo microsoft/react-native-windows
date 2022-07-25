@@ -13,10 +13,15 @@
  * Generates Doxygen documentation XML files.
  */
 
-// @ts-ignore (no typings for doxygen)
-import constants from 'doxygen/lib/constants';
-// @ts-ignore (no typings for doxygen)
-import doxygen from 'doxygen';
+// The doxygen NPM package transitively depends on an insecure version
+// of the file-type NPM package, and upgrading breaks abandonned modules
+// inbetween. Removing the doxysaurus package to resolve the security risk
+// means needing to temporarily stub out the module so this module still
+// "builds", until the functionality can be replaced.
+
+const constants: any = {};
+const doxygen: any = {};
+
 import path from 'path';
 import {exec} from 'child_process';
 import {log} from './logger';
