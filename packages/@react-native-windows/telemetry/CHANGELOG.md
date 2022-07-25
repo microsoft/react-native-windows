@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 27 Jun 2022 15:08:17 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jul 2022 15:10:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.4
+
+Mon, 25 Jul 2022 15:10:45 GMT
+
+### Patches
+
+- [0.68] Update source of DeviceID for telemetry (jthysell@microsoft.com)
 
 ## 0.68.3
 

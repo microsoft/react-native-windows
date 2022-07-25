@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 25 Jul 2022 15:10:45 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.2",
+      "version": "0.68.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "d0bd7fe9bf9784d08828a95bb628cd3dc2f09283",
+            "comment": "Implement no-hide-accessibility"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Jun 2022 15:08:16 GMT",
       "tag": "@office-iss/react-native-win32_v0.68.1",
       "version": "0.68.1",

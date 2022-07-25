@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 11 Jul 2022 15:08:52 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jul 2022 15:10:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.10
+
+Mon, 25 Jul 2022 15:10:45 GMT
+
+### Patches
+
+- Implement no-hide-accessibility (tatianakapos@microsoft.com)
+- Make double-conversion FP conversions be locale-invariant (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.68.5
 
 ## 0.68.9
 

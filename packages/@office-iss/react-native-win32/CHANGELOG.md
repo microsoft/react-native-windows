@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 27 Jun 2022 15:08:16 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jul 2022 15:10:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.2
+
+Mon, 25 Jul 2022 15:10:45 GMT
+
+### Patches
+
+- Implement no-hide-accessibility (tatianakapos@microsoft.com)
 
 ## 0.68.1
 

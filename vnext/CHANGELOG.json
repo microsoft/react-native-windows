@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Jul 2022 15:10:45 GMT",
+      "tag": "react-native-windows_v0.68.10",
+      "version": "0.68.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d0bd7fe9bf9784d08828a95bb628cd3dc2f09283",
+            "comment": "Implement no-hide-accessibility"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3811746180e3056a542aa0dc4f892d978729f04a",
+            "comment": "Make double-conversion FP conversions be locale-invariant"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.68.5",
+            "commit": "d0bd7fe9bf9784d08828a95bb628cd3dc2f09283"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Jul 2022 15:08:52 GMT",
       "tag": "react-native-windows_v0.68.9",
       "version": "0.68.9",
