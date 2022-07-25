@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "../../codegen/NativeUIManagerSpec.g.h"
+#include "codegen/NativeUIManagerSpec.g.h"
 #include <CxxMessageQueue.h>
 #include <INativeUIManager.h>
 #include <NativeModules.h>

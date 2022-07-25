@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "../../codegen/NativeDeviceInfoSpec.g.h"
+#include "codegen/NativeDeviceInfoSpec.g.h"
 #include <NativeModules.h>
 #include <React.h>
 #include <ReactNotificationService.h>
