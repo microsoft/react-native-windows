@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include "CoreNativeModules.h"
+#include "QuirkSettings.h"
 
 // Modules
 #include <AppModelHelpers.h>
@@ -59,10 +60,12 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
 
   // AsyncStorageModule doesn't work without package identity (it indirectly depends on
   // Windows.Storage.StorageFile), so check for package identity before adding it.
+  const auto useSqliteStorage = winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseSqliteAsyncStorage(
+      ReactPropertyBag(context->Properties()));
   modules.emplace_back(
       "AsyncLocalStorage",
-      []() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
-        if (HasPackageIdentity()) {
+      [useSqliteStorage]() -> std::unique_ptr<facebook::xplat::module::CxxModule> {
+        if (HasPackageIdentity() && !useSqliteStorage) {
           return std::make_unique<facebook::react::AsyncStorageModule>(L"asyncStorage");
         } else {
           return std::make_unique<facebook::react::AsyncStorageModuleWin32>();

@@ -58,10 +58,22 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseSqliteAsyncStorageProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"UseSqliteAsyncStorageProperty"};
+  return propId;
+}
+
 /*static*/ void QuirkSettings::SetMapWindowDeactivatedToAppStateInactive(
     winrt::Microsoft::ReactNative::ReactPropertyBag properties,
     bool value) noexcept {
   properties.Set(MapWindowDeactivatedToAppStateInactiveProperty(), value);
+}
+
+/*static*/ void QuirkSettings::SetUseSqliteAsyncStorage(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties,
+    bool value) noexcept {
+  properties.Set(UseSqliteAsyncStorageProperty(), value);
 }
 
 #pragma region IDL interface
@@ -96,6 +108,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
   SetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag(settings.Properties()), value);
 }
 
+/*static*/ void QuirkSettings::SetUseSqliteAsyncStorage(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+  SetUseSqliteAsyncStorage(ReactPropertyBag(settings.Properties()), value);
+}
+
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -118,6 +136,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
 
 /*static*/ bool QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag properties) noexcept {
   return properties.Get(MapWindowDeactivatedToAppStateInactiveProperty()).value_or(false);
+}
+
+/*static*/ bool QuirkSettings::GetUseSqliteAsyncStorage(ReactPropertyBag properties) noexcept {
+  return properties.Get(UseSqliteAsyncStorageProperty()).value_or(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
