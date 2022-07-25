@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 25 Jul 2022 15:12:46 GMT",
+      "tag": "react-native-windows_v0.69.4",
+      "version": "0.69.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "65915583f9d49d6ebd2677b8d9fda6c23ca91fcd",
+            "comment": "Import WinUI package only if OverrideWinUIPackage is not set to \"true\" (#10267)"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c10b6eee77b02bb494c42180889bcd06f3080e29",
+            "comment": "Make double-conversion FP conversions be locale-invariant"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.69.2",
+            "commit": "c10b6eee77b02bb494c42180889bcd06f3080e29"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Jul 2022 15:10:22 GMT",
       "tag": "react-native-windows_v0.69.3",
       "version": "0.69.3",

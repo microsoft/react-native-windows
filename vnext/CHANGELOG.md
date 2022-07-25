@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 18 Jul 2022 15:10:22 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jul 2022 15:12:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.4
+
+Mon, 25 Jul 2022 15:12:46 GMT
+
+### Patches
+
+- Import WinUI package only if OverrideWinUIPackage is not set to "true" (#10267) (julio.rocha@microsoft.com)
+- Make double-conversion FP conversions be locale-invariant (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.69.2
 
 ## 0.69.3
 

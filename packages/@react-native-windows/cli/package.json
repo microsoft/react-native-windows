@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.69.1",
+  "version": "0.69.2",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -19,7 +19,7 @@
   "dependencies": {
     "@react-native-windows/fs": "0.69.0",
     "@react-native-windows/package-utils": "0.69.0",
-    "@react-native-windows/telemetry": "0.69.0",
+    "@react-native-windows/telemetry": "0.69.1",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
     "@typescript-eslint/parser": "^5.20.0",
     "@xmldom/xmldom": "^0.7.5",

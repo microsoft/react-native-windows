@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 25 Jul 2022 15:12:46 GMT",
+      "tag": "@react-native-windows/telemetry_v0.69.1",
+      "version": "0.69.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "ccbf153f4ffa4a3ecb41e977e5d26a0ec720245c",
+            "comment": "Update source of DeviceID for telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 Jun 2022 15:09:48 GMT",
       "tag": "@react-native-windows/telemetry_v0.69.0",
       "version": "0.69.0",
