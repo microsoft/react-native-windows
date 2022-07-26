@@ -9,6 +9,7 @@
 #include <Composition.ScrollVisual.g.h>
 #include <Composition.SpriteVisual.g.h>
 #include <Composition.SurfaceBrush.g.h>
+#include <Windows.Graphics.Interop.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 #include <winrt/Windows.UI.Composition.h>
@@ -16,6 +17,27 @@
 #include "CompHelpers.h"
 
 namespace Microsoft::ReactNative::Composition {
+
+struct GeometrySource : public winrt::implements<
+                            GeometrySource,
+                            winrt::Windows::Graphics::IGeometrySource2D,
+                            ABI::Windows::Graphics::IGeometrySource2DInterop> {
+  GeometrySource(ID2D1Geometry *pGeometry) noexcept {
+    m_geometry.copy_from(pGeometry);
+  }
+
+  IFACEMETHODIMP GetGeometry(ID2D1Geometry **value) noexcept override {
+    m_geometry.copy_to(value);
+    return S_OK;
+  }
+
+  IFACEMETHODIMP TryGetGeometryUsingFactory(ID2D1Factory *, ID2D1Geometry **) noexcept override {
+    return E_NOTIMPL;
+  }
+
+ private:
+  winrt::com_ptr<ID2D1Geometry> m_geometry;
+};
 
 struct CompositionDrawingSurface : public winrt::implements<
                                        CompositionDrawingSurface,
@@ -130,8 +152,11 @@ struct CompSurfaceBrush
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush;
 };
 
-struct CompVisual
-    : public winrt::implements<CompVisual, winrt::Microsoft::ReactNative::Composition::IVisual, ICompositionVisual> {
+struct CompVisual : public winrt::implements<
+                        CompVisual,
+                        winrt::Microsoft::ReactNative::Composition::IVisual,
+                        ICompositionVisual,
+                        IVisualInterop> {
   CompVisual(winrt::Windows::UI::Composition::Visual const &visual) : m_visual(visual) {}
 
   winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept override {
@@ -155,6 +180,23 @@ struct CompVisual
     auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
     auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
     containerChildren.Remove(compVisual);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
+    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto it = containerChildren.First();
+    for (uint32_t i = 0; i < index; i++)
+      it.MoveNext();
+    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
+        it.Current());
+  }
+
+  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
+    auto geometry = winrt::make<GeometrySource>(clippingPath);
+    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
+    auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
+    auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
+    m_visual.Clip(clip);
   }
 
   void Opacity(float opacity) noexcept {
@@ -181,12 +223,19 @@ struct CompVisual
     m_visual.Offset(offset);
   }
 
+  void Offset(
+      winrt::Windows::Foundation::Numerics::float3 offset,
+      winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
+    m_visual.Offset(offset);
+    m_visual.RelativeOffsetAdjustment(relativeAdjustment);
+  }
+
  private:
   winrt::Windows::UI::Composition::Visual m_visual;
 };
 
-struct CompSpriteVisual
-    : winrt::Microsoft::ReactNative::Composition::implementation::SpriteVisualT<CompSpriteVisual, ICompositionVisual> {
+struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementation::
+                              SpriteVisualT<CompSpriteVisual, ICompositionVisual, IVisualInterop> {
   CompSpriteVisual(winrt::Windows::UI::Composition::SpriteVisual const &visual) : m_visual(visual) {}
 
   winrt::Windows::UI::Composition::Visual InnerVisual() const noexcept override {
@@ -210,6 +259,15 @@ struct CompSpriteVisual
     auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
     auto containerChildren = m_visual.Children();
     containerChildren.Remove(compVisual);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
+    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto it = containerChildren.First();
+    for (uint32_t i = 0; i < index; i++)
+      it.MoveNext();
+    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
+        it.Current());
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
@@ -240,6 +298,25 @@ struct CompSpriteVisual
     m_visual.Offset(offset);
   }
 
+  void Offset(
+      winrt::Windows::Foundation::Numerics::float3 offset,
+      winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
+    m_visual.Offset(offset);
+    m_visual.RelativeOffsetAdjustment(relativeAdjustment);
+  }
+
+  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
+    if (!clippingPath) {
+      m_visual.Clip(nullptr);
+      return;
+    }
+    auto geometry = winrt::make<GeometrySource>(clippingPath);
+    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
+    auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
+    auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
+    m_visual.Clip(clip);
+  }
+
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
     m_visual.Shadow(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractDropShadow(shadow));
   }
@@ -262,7 +339,7 @@ struct CompScrollPositionChangedArgs
 };
 
 struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implementation::
-                                ScrollVisualT<CompScrollerVisual, ICompositionVisual> {
+                                ScrollVisualT<CompScrollerVisual, ICompositionVisual, IVisualInterop> {
   struct ScrollInteractionTrackerOwner : public winrt::implements<
                                              ScrollInteractionTrackerOwner,
                                              winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner> {
@@ -355,6 +432,15 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
     containerChildren.Remove(compVisual);
   }
 
+  winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
+    auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
+    auto it = containerChildren.First();
+    for (uint32_t i = 0; i < index; i++)
+      it.MoveNext();
+    return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::CreateVisual(
+        it.Current());
+  }
+
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
     m_visual.Brush(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractBrush(brush));
   }
@@ -381,6 +467,21 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
   void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
     m_visual.Offset(offset);
+  }
+
+  void Offset(
+      winrt::Windows::Foundation::Numerics::float3 offset,
+      winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
+    m_visual.Offset(offset);
+    m_visual.RelativeOffsetAdjustment(relativeAdjustment);
+  }
+
+  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
+    auto geometry = winrt::make<GeometrySource>(clippingPath);
+    auto path = winrt::Windows::UI::Composition::CompositionPath(geometry);
+    auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
+    auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
+    m_visual.Clip(clip);
   }
 
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
@@ -424,7 +525,10 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   winrt::Windows::UI::Composition::Interactions::VisualInteractionSource m_visualInteractionSource{nullptr};
 };
 
-struct CompContext : winrt::implements<CompContext, winrt::Microsoft::ReactNative::Composition::ICompositionContext> {
+struct CompContext : winrt::implements<
+                         CompContext,
+                         winrt::Microsoft::ReactNative::Composition::ICompositionContext,
+                         ICompositionContextInterop> {
   CompContext(winrt::Windows::UI::Composition::Compositor const &compositor) : m_compositor(compositor) {}
 
   winrt::com_ptr<ID2D1Factory1> D2DFactory() noexcept {
@@ -440,6 +544,10 @@ struct CompContext : winrt::implements<CompContext, winrt::Microsoft::ReactNativ
           D2D1_FACTORY_TYPE_SINGLE_THREADED, __uuidof(ID2D1Factory1), &d2d1FactoryOptions, m_d2dFactory.put_void());
     }
     return m_d2dFactory;
+  }
+
+  void D2DFactory(ID2D1Factory1 **outD2DFactory) noexcept {
+    D2DFactory().copy_to(outD2DFactory);
   }
 
   winrt::com_ptr<ID3D11Device> D3DDevice() noexcept {
@@ -582,6 +690,8 @@ ICompositionContext CompositionContextHelper::CreateContext(
 }
 
 IVisual CompositionContextHelper::CreateVisual(winrt::Windows::UI::Composition::Visual const &visual) noexcept {
+  if (auto spriteVisual = visual.try_as<winrt::Windows::UI::Composition::SpriteVisual>())
+    return winrt::make<::Microsoft::ReactNative::Composition::CompSpriteVisual>(spriteVisual);
   return winrt::make<::Microsoft::ReactNative::Composition::CompVisual>(visual);
 }
 

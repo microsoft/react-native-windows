@@ -37,22 +37,34 @@ struct CompBaseComponentView : public IComponentView {
   virtual int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   RECT getClientRect() const noexcept override;
 
-  void ensureBorderVisual() noexcept;
   void indexOffsetForBorder(uint32_t &index) const noexcept;
   void updateBorderProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps) noexcept;
-  void updateBorderLayoutMetrics(const facebook::react::ViewProps &viewProps) noexcept;
+  void updateBorderLayoutMetrics(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept;
 
   virtual void OnRenderingDeviceLost() noexcept;
 
  protected:
+  std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> FindSpecialBorderLayers() const noexcept;
+  bool TryUpdateSpecialBorderLayers(
+      std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> &spBorderVisuals,
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept;
+  void UpdateSpecialBorderLayers(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept;
+
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   const facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   std::vector<const IComponentView *> m_children;
   IComponentView *m_parent{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;
+  bool m_needsBorderUpdate{false};
+  uint8_t m_numBorderVisuals{0};
 
   /*
     winrt::Windows::UI::Composition::ShapeVisual m_borderVisual{nullptr};

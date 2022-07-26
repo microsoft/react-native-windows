@@ -664,17 +664,7 @@ void CompWindowsTextInputComponentView::updateProps(
     }
   }
 
-  if (oldViewProps.borderColors != newViewProps.borderColors) {
-    if (newViewProps.borderColors.all) {
-      m_element.BorderBrush(SolidColorBrushFrom(*newViewProps.borderColors.all));
-    } else {
-      m_element.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::BorderBrushProperty());
-    }
-  }
 
-  if (oldViewProps.borderStyles != newViewProps.borderStyles) {
-    m_needsBorderUpdate = true;
-  }
   */
   // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
 }
@@ -764,10 +754,9 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
         &res));
   }
 
-  // m_needsBorderUpdate = true;
-  m_layoutMetrics = layoutMetrics;
+  updateBorderLayoutMetrics(layoutMetrics, *m_props);
 
-  updateBorderLayoutMetrics(*m_props);
+  m_layoutMetrics = layoutMetrics;
 
   // TODO should ceil?
   unsigned int newWidth = static_cast<unsigned int>(layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor);

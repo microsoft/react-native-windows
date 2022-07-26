@@ -41,12 +41,14 @@ namespace Microsoft.ReactNative.Composition
   {
     void InsertAt(IVisual visual, Int32 index);
     void Remove(IVisual visual);
+    IVisual GetAt(UInt32 index);
     void Opacity(Single opacity);
     void Scale(Windows.Foundation.Numerics.Vector3 scale);
     void RotationAngle(Single angle);
     void IsVisible(Boolean isVisible);
     void Size(Windows.Foundation.Numerics.Vector2 size);
     void Offset(Windows.Foundation.Numerics.Vector3 offset);
+    void Offset(Windows.Foundation.Numerics.Vector3 offset, Windows.Foundation.Numerics.Vector3 relativeAdjustment);
   }
 
   [webhosthidden]

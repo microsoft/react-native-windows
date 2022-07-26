@@ -251,10 +251,9 @@ void CompImageComponentView::updateLayoutMetrics(
     m_visual.IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  // m_needsBorderUpdate = true;
-  m_layoutMetrics = layoutMetrics;
+  updateBorderLayoutMetrics(layoutMetrics, *m_props);
 
-  updateBorderLayoutMetrics(*m_props);
+  m_layoutMetrics = layoutMetrics;
 
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,

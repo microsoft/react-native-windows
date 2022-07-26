@@ -26,27 +26,14 @@ struct IRenderingDeviceReplacedListener : IUnknown {
   virtual void OnRenderingDeviceLost() = 0;
 };
 
-/*
-MSO_STRUCT_GUID(ICompositionContext, "80B91D79-CDD2-405A-8440-8891F71DC2E0")
-struct ICompositionContext : IUnknown {
-  virtual void CreateDrawingSurface(
-      winrt::Windows::Foundation::Size surfaceSize,
-      winrt::Windows::Graphics::DirectX::DirectXPixelFormat pixelFormat,
-      winrt::Windows::Graphics::DirectX::DirectXAlphaMode alphaMode,
-      ICompositionDrawingSurfaceInterop **drawingSurfaceOut) noexcept = 0;
-
-  virtual winrt::Microsoft::ReactNative::Composition::SpriteVisual CreateSpriteVisual() noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::Composition::ScrollVisual CreateScrollerVisual() noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::Composition::IVisual CreateCaratVisual() noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::Composition::IDropShadow CreateDropShadow() noexcept = 0;
-  virtual winrt::Microsoft::ReactNative::Composition::IBrush CreateColorBrush(winrt::Windows::UI::Color color) noexcept
-= 0; virtual winrt::Microsoft::ReactNative::Composition::SurfaceBrush
-CreateSurfaceBrush(ICompositionDrawingSurfaceInterop *surface) noexcept = 0;
-
-  // TODO Add and hook up to rootnode - to notify the tree
-  // virtual void add_RenderingDeviceReplaced(const IRenderingDeviceReplacedListener& listener) noexcept = 0;
-  // virtual void remove_RenderingDeviceReplaced(const IRenderingDeviceReplacedListener& listener) noexcept = 0;
+MSO_STRUCT_GUID(IVisualInterop, "50E66581-E917-45F4-AC22-1BC953CFA2A8")
+struct IVisualInterop : IUnknown {
+  virtual void SetClippingPath(ID2D1Geometry *clippingPath) noexcept = 0;
 };
-*/
+
+MSO_STRUCT_GUID(ICompositionContextInterop, "4742F122-3EE0-48AA-9EA9-44A00147B55F")
+struct ICompositionContextInterop : IUnknown {
+  virtual void D2DFactory(ID2D1Factory1 **outD2DFactory) noexcept = 0;
+};
 
 } // namespace Microsoft::ReactNative::Composition
