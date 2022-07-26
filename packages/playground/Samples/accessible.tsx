@@ -19,13 +19,14 @@ import {ViewWindows} from 'react-native-windows';
 
 export default class Bootstrap extends React.Component<
   {},
-  {displayText: string; counterValue: number}
+  {displayText: string; counterValue: number; sliderValue: number}
 > {
   constructor(props: {}) {
     super(props);
     this.state = {
       displayText: 'Starting text. (THIRD ITEM)',
       counterValue: 0,
+      sliderValue: 0,
     };
   }
 
@@ -58,7 +59,7 @@ export default class Bootstrap extends React.Component<
         </ViewWindows>
         <TouchableHighlight
           style={styles.item}
-          accessibilityLabel="counter button"
+          accessibilityLabel="counter"
           accessible={true}
           accessibilityRole="button"
           accessibilityValue={{text: `${this.state.counterValue}`}}
@@ -66,8 +67,26 @@ export default class Bootstrap extends React.Component<
             this.setState({counterValue: this.state.counterValue + 1});
           }}>
           <Text style={styles.text}>
-            Testing acessibilityValue, Click to increase:{' '}
+            Testing acessibilityValue:text, Click to increase:{' '}
             {this.state.counterValue}
+          </Text>
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={styles.item}
+          accessibilityLabel="button imitating slider control"
+          accessible={true}
+          accessibilityRole="adjustable"
+          accessibilityValue={{
+            min: 0,
+            max: 100,
+            now: this.state.sliderValue,
+          }}
+          onPress={() => {
+            this.setState({sliderValue: this.state.sliderValue + 1});
+          }}>
+          <Text style={styles.text}>
+            Testing acessibilityValue:min/max/now, click to increase:{' '}
+            {this.state.sliderValue}
           </Text>
         </TouchableHighlight>
         <TouchableHighlight
