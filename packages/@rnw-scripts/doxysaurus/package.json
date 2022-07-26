@@ -14,7 +14,6 @@
     "doxysaurus": "./bin.js"
   },
   "dependencies": {
-    "doxygen": "^0.4.0",
     "github-slugger": "^1.3.0",
     "mustache": "^4.0.1",
     "source-map-support": "^0.5.19",
