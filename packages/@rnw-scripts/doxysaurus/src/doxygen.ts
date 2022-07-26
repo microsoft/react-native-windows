@@ -14,8 +14,8 @@
  */
 
 // The doxygen NPM package transitively depends on an insecure version
-// of the file-type NPM package, and upgrading breaks abandonned modules
-// inbetween. Removing the doxygen package to resolve the security risk
+// of the file-type NPM package, and upgrading breaks abandoned modules
+// in-between. Removing the doxygen package to resolve the security risk
 // means needing to temporarily stub out the module so *this* module still
 // "builds", until the functionality can be replaced.
 
@@ -74,8 +74,8 @@ function generateDoxygenConfig(
 // This is a not exported method that we need for the runAsync implementation.
 // The code is modified for TypeScript, eslint, and the different __dirname.
 function doxygenExecutablePath(version?: string): string {
-  // const dirName = __dirname; -- we must use the doxygen package path
-  const dirName = path.dirname(require.resolve('doxygen/package.json'));
+  const dirName = __dirname;
+  // const dirName = path.dirname(require.resolve('doxygen/package.json')); // Can't use this without the doxygen package
 
   const doxygenFolder =
     process.platform === constants.platform.macOS.identifier
