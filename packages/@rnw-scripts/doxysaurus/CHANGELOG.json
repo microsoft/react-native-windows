@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Tue, 26 Jul 2022 05:08:50 GMT",
+      "tag": "@rnw-scripts/doxysaurus_v0.1.18",
+      "version": "0.1.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/doxysaurus",
+            "commit": "c4ed11d1c0ad57e1b2e0675a032476764fb52fe5",
+            "comment": "Fix doxysaurus error logging to handle Error objects"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 Jun 2022 05:10:05 GMT",
       "tag": "@rnw-scripts/doxysaurus_v0.1.17",
       "version": "0.1.17",
