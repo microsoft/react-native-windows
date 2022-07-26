@@ -61,7 +61,8 @@ namespace Microsoft.ReactNative
     Min = 0,
     Max,
     Now,
-    Text
+    Text,
+    CountValues
   };
 
   delegate void AccessibilityInvokeEventHandler();
