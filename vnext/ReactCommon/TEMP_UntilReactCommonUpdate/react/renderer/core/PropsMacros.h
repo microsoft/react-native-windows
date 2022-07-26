@@ -18,7 +18,7 @@
 #endif
 
 #define CONSTEXPR_RAW_PROPS_KEY_HASH(s)                   \
-  []{                                                    \
+  []{                                                     \
     CLANG_PRAGMA("clang diagnostic push")                 \
     CLANG_PRAGMA("clang diagnostic ignored \"-Wshadow\"") \
     return folly::hash::fnv32_buf(s, sizeof(s) - 1);      \

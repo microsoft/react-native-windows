@@ -8,7 +8,6 @@
  */
 
 import fs from '@react-native-windows/fs';
-import {formatDateTime} from './Utilities';
 
 // REVIEW: Does jest have a more suitable logging facility?
 
@@ -40,9 +39,13 @@ export const testLog = new (class {
   private write(message: string) {
     // console.log(message);
     const time = new Date();
-    fs.writeFileSync(this.fileName, `${this.formatTime(time)}: ${message}\n`, {
-      flag: 'a',
-    });
+    fs.writeFileSync(
+      this.getFileName(),
+      `${this.formatTime(time)}: ${message}\n`,
+      {
+        flag: 'a',
+      },
+    );
   }
 
   private formatTime(dt: Date) {
@@ -53,10 +56,28 @@ export const testLog = new (class {
     return `${hh}:${mm}:${ss}.${ms}`;
   }
 
-  /**
-   * Path and name of the test log file. Default value intended to be overwritten by a test-suite-specific name.
-   */
-  public fileName: string = `${process.env.TEMP}/test.${formatDateTime(
-    new Date(),
-  )}.log`;
+  private getFileName(): string {
+    if (this._fileName === '') {
+      throw new Error(
+        'log file name needs to get set prior to first logging call',
+      );
+    }
+    return this._fileName;
+  }
+
+  public setFileName(fileName: string) {
+    if (this._fileName === '') {
+      this._fileName = fileName;
+      if (fs.existsSync(this._fileName)) {
+        fs.unlinkSync(this._fileName);
+        this.message('a log file with this path existed and was overwritten');
+      }
+    } else {
+      throw new Error(
+        `log file name is being reassigned, old value "${this._fileName}", new value "${fileName}"`,
+      );
+    }
+  }
+
+  private _fileName: string = '';
 })();

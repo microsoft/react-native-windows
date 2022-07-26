@@ -1,8 +1,68 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Jul 2022 05:08:41 GMT and should not be manually modified.
+This log was last generated on Sat, 23 Jul 2022 05:09:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.532
+
+Sat, 23 Jul 2022 05:09:29 GMT
+
+### Changes
+
+- Use uint8_t const in IBlobPersistor.h (erozell@outlook.com)
+- Fix compiler issue for older versions of C++/WinRT (erozell@outlook.com)
+- Use u8path for bundle loading (ericroz@fb.com)
+
+## 0.0.0-canary.531
+
+Fri, 22 Jul 2022 05:09:58 GMT
+
+### Changes
+
+- Check for DP::UnsetValue() rather than nullptr (erozell@outlook.com)
+
+## 0.0.0-canary.530
+
+Wed, 20 Jul 2022 05:09:08 GMT
+
+### Changes
+
+- CoreApp API (asklar@microsoft.com)
+
+## 0.0.0-canary.529
+
+Tue, 19 Jul 2022 05:09:31 GMT
+
+### Changes
+
+- Import WinUI package only if OverrideWinUIPackage is not true (julio.rocha@microsoft.com)
+- Implement HTTP client timeout (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.528
+
+Tue, 12 Jul 2022 05:10:12 GMT
+
+### Changes
+
+- Explicitly add headers for clang build (erozell@outlook.com)
+- CG: Remove dependency on deprecated `hermes-engine` package (jthysell@microsoft.com)
+
+## 0.0.0-canary.527
+
+Sat, 09 Jul 2022 05:09:51 GMT
+
+### Changes
+
+- Fix Text Color in High Contrast (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.526
+
+Fri, 08 Jul 2022 05:11:11 GMT
+
+### Changes
+
+- adding missing flags, recommended for reducing binary size (agnel@microsoft.com)
 
 ## 0.0.0-canary.525
 

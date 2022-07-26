@@ -17,7 +17,7 @@ void TransferProperty(
     xaml::DependencyProperty oldViewDP,
     xaml::DependencyProperty newViewDP) {
   auto oldValue = oldView.ReadLocalValue(oldViewDP);
-  if (oldValue != nullptr) {
+  if (oldValue != xaml::DependencyProperty::UnsetValue()) {
     oldView.ClearValue(oldViewDP);
     newView.SetValue(newViewDP, oldValue);
   }

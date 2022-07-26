@@ -5,6 +5,8 @@
 
 #include "ReactApplication.g.h"
 #include <CppWinRTIncludes.h>
+#include <UI.Xaml.Markup.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include "ReactNativeHost.h"
 
 #ifdef USE_WINUI3
@@ -71,7 +73,7 @@ struct __declspec(empty_bases) NoDefaultCtorReactApplication_base :
   }
 };
 
-struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
+struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication, xaml::Markup::IXamlMetadataProvider> {
  public: // ReactApplication ABI API
   ReactApplication();
   ReactApplication(IInspectable const &outer) noexcept;
@@ -89,17 +91,48 @@ struct ReactApplication : NoDefaultCtorReactApplication_base<ReactApplication> {
   hstring JavaScriptBundleFile() noexcept;
   void JavaScriptBundleFile(hstring const &value) noexcept;
 
- public:
   void OnActivated(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
   void OnLaunched(activation::LaunchActivatedEventArgs const &e);
   void OnSuspending(IInspectable const &, Windows::ApplicationModel::SuspendingEventArgs const &);
   void OnNavigationFailed(IInspectable const &, xaml::Navigation::NavigationFailedEventArgs const &);
 
+  using AppLaunchedDelegate = winrt::delegate<void(
+      winrt::Microsoft::ReactNative::ReactApplication const &sender,
+      winrt::Windows::ApplicationModel::Activation::LaunchActivatedEventArgs const &args)>;
+
+  void LaunchedInternal(AppLaunchedDelegate delegate) noexcept;
+  AppLaunchedDelegate LaunchedInternal() const noexcept;
+
+  using AppViewCreatedDelegate =
+      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication const &sender, winrt::hstring const &args)>;
+
+  void ViewCreatedInternal(AppViewCreatedDelegate delegate) noexcept;
+
+  AppViewCreatedDelegate ViewCreatedInternal() const noexcept;
+
+  using AppPageNavigatedDelegate =
+      winrt::delegate<void(winrt::Microsoft::ReactNative::ReactApplication const &sender, ReactRootView const &view)>;
+
+  void PageNavigatedInternal(AppPageNavigatedDelegate delegate) noexcept;
+
+  AppPageNavigatedDelegate PageNavigatedInternal() const noexcept;
+
+  xaml::Markup::IXamlType GetXamlType(winrt::hstring const &name) const;
+
+  xaml::Markup::IXamlType GetXamlType(::winrt::Windows::UI::Xaml::Interop::TypeName const &type) const;
+  ::winrt::com_array<xaml::Markup::XmlnsDefinition> GetXmlnsDefinitions() const;
+
  private:
-  ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
-  ReactNative::ReactNativeHost m_host{nullptr};
+  winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
 
   void OnCreate(Windows::ApplicationModel::Activation::IActivatedEventArgs const &e);
+
+  AppLaunchedDelegate m_launched;
+  AppViewCreatedDelegate m_viewCreated;
+  AppPageNavigatedDelegate m_pageNavigated;
+
+  XamlMetaDataProvider m_provider;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
@@ -109,7 +142,9 @@ namespace winrt::Microsoft::ReactNative::factory_implementation {
 // Override the CreateInstance method to pass baseInterface to the ReactApplication constructor
 // to support correct COM aggregation that is need to inherit from the ReactApplication.
 struct ReactApplication : ReactApplicationT<ReactApplication, implementation::ReactApplication> {
-  auto CreateInstance(IInspectable const &baseInterface, IInspectable &innerInterface) {
+  auto CreateInstance(
+      winrt::Windows::Foundation::IInspectable const &baseInterface,
+      winrt::Windows::Foundation::IInspectable &innerInterface) {
     return impl::composable_factory<implementation::ReactApplication>::template CreateInstance<
         Microsoft::ReactNative::ReactApplication>(baseInterface, innerInterface, baseInterface);
   }

@@ -168,7 +168,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
     <ClCompile Include="Yoga.cpp" />
-    <ClCompile Include="TEMP_UntilReactCommonUpdate\react\renderer\components\text\BaseTextProps.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">

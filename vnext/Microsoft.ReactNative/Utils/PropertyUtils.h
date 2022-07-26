@@ -139,12 +139,19 @@ bool TryUpdateForeground(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "color") {
+    auto uielement = element.try_as<xaml::UIElement>();
     if (IsValidColorValue(propertyValue)) {
       const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
       UpdateControlForegroundResourceBrushes(element, brush);
+      if (uielement) {
+        uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::None);
+      }
     } else if (propertyValue.IsNull()) {
       element.ClearValue(T::ForegroundProperty());
+      if (uielement) {
+        uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::Application);
+      }
       UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 

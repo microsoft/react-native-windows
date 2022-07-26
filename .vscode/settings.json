@@ -7,7 +7,8 @@
     "random": "cpp",
     "filesystem": "cpp",
     "xstring": "cpp",
-    "*.ipp": "cpp"
+    "*.ipp": "cpp",
+    "xlocmon": "cpp"
   },
   "search.exclude": {
     "**/node_modules": true,

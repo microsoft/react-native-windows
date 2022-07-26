@@ -13,25 +13,21 @@
 #include <react/renderer/graphics/conversions.h>
 
 #define GET_FIELD_VALUE(field, fieldName, defaultValue, rawValue) \
-  (rawValue.hasValue() ? ({                                       \
+  (rawValue.hasValue() ? ([&rawValue,&context]{                   \
     decltype(defaultValue) res;                                   \
     fromRawValue(context, rawValue, res);                         \
-    res;                                                          \
-  })                                                              \
-                       : defaultValue)
+    return res;                                                   \
+  }())                                                            \
+                       : defaultValue);
 
 #define REBUILD_FIELD_SWITCH_CASE(                                   \
     defaults, rawValue, property, field, fieldName)                  \
-  case []{                                                          \
-    CLANG_PRAGMA("clang diagnostic push")                            \
-    CLANG_PRAGMA("clang diagnostic ignored \"-Wshadow\"")            \
-    return folly::hash::fnv32_buf(fieldName, sizeof(fieldName) - 1); \
-    CLANG_PRAGMA("clang diagnostic pop")                             \
-    }(): {                                                          \
+  case CONSTEXPR_RAW_PROPS_KEY_HASH(fieldName): {                    \
     property.field =                                                 \
         GET_FIELD_VALUE(field, fieldName, defaults.field, rawValue); \
     return;                                                          \
   }
+
 
 namespace facebook {
 namespace react {
@@ -232,16 +228,8 @@ void BaseTextProps::setProp(
   static auto defaults = TextAttributes{};
 
   switch (hash) {
-    case []{                                                          
-    CLANG_PRAGMA("clang diagnostic push")                            
-    CLANG_PRAGMA("clang diagnostic ignored \"-Wshadow\"")            
-    return folly::hash::fnv32_buf("color", 4); 
-    CLANG_PRAGMA("clang diagnostic pop")                             
-    }(): {                                                          
-    textAttributes.field =                                                
-        GET_FIELD_VALUE(foregroundColor, "color", defaults.field, value);
-    return;                                                          
-    }
+    REBUILD_FIELD_SWITCH_CASE(
+        defaults, value, textAttributes, foregroundColor, "color");
     REBUILD_FIELD_SWITCH_CASE(
         defaults, value, textAttributes, fontFamily, "fontFamily");
     REBUILD_FIELD_SWITCH_CASE(

@@ -26,6 +26,12 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
 
   static bool GetEnableFabric(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
+  static void SetMapWindowDeactivatedToAppStateInactive(
+      winrt::Microsoft::ReactNative::ReactPropertyBag properties,
+      bool value) noexcept;
+  static bool GetMapWindowDeactivatedToAppStateInactive(
+      winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
 #pragma region Public API - part of IDL interface
   static void SetMatchAndroidAndIOSStretchBehavior(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
@@ -35,6 +41,10 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
   static void SetBackHandlerKind(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
       winrt::Microsoft::ReactNative::BackNavigationHandlerKind kind) noexcept;
+
+  static void SetMapWindowDeactivatedToAppStateInactive(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      bool value) noexcept;
 #pragma endregion Public API - part of IDL interface
 };
 
