@@ -15,8 +15,8 @@
 
 // The doxygen NPM package transitively depends on an insecure version
 // of the file-type NPM package, and upgrading breaks abandonned modules
-// inbetween. Removing the doxysaurus package to resolve the security risk
-// means needing to temporarily stub out the module so this module still
+// inbetween. Removing the doxygen package to resolve the security risk
+// means needing to temporarily stub out the module so *this* module still
 // "builds", until the functionality can be replaced.
 
 const constants: any = {};
