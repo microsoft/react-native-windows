@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix crash in DynamicAutomationPeer::GetContentName",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
