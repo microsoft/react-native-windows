@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Additional fix required for UTF-8 characters in bundle path",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
