@@ -810,7 +810,10 @@ export default class Pressability {
 
     if (isPressInSignal(prevState) && signal === 'LONG_PRESS_DETECTED') {
       const {onLongPress} = this._config;
-      if (onLongPress != null && this._isDefaultPressButton(getTouchFromPressEvent(event).button)) {
+      if (
+        onLongPress != null &&
+        this._isDefaultPressButton(getTouchFromPressEvent(event).button)
+      ) {
         onLongPress(event);
       }
     }
