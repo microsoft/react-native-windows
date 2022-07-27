@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Jul 2022 15:10:45 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jul 2022 17:10:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.11
+
+Wed, 27 Jul 2022 17:10:54 GMT
+
+### Patches
+
+- Stop exporting data blocks from react-native-win32.dll (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.68.10
 
