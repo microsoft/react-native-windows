@@ -29,7 +29,7 @@ import {
 import * as React from 'react';
 import type {ScrollResponderType} from 'react-native/Libraries/Components/ScrollView/ScrollView';
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
-import type {LayoutEvent, ScrollEvent} from '../Types/CoreEventTypes';
+import type {LayoutEvent, ScrollEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 import type {
   ViewabilityConfig,
   ViewabilityConfigCallbackPair,
