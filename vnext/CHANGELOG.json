@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 27 Jul 2022 05:09:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.533",
+      "version": "0.0.0-canary.533",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "2d8fe023fb7910b1036a41038e5d3ca9855f893e",
+            "comment": "Additional fix required for UTF-8 characters in bundle path"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Jul 2022 05:09:29 GMT",
       "tag": "react-native-windows_v0.0.0-canary.532",
       "version": "0.0.0-canary.532",
