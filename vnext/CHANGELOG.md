@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 Jul 2022 05:09:29 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jul 2022 05:09:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.533
+
+Wed, 27 Jul 2022 05:09:29 GMT
+
+### Changes
+
+- Additional fix required for UTF-8 characters in bundle path (erozell@outlook.com)
 
 ## 0.0.0-canary.532
 

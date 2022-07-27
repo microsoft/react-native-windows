@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Wed, 27 Jul 2022 05:09:28 GMT",
+      "tag": "@rnw-scripts/doxysaurus_v0.1.19",
+      "version": "0.1.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/doxysaurus",
+            "commit": "a7b7cd82b25713f9f3f1fb1bc932c9ad1e89035d",
+            "comment": "CG updates for 7/25/22"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 26 Jul 2022 05:08:50 GMT",
       "tag": "@rnw-scripts/doxysaurus_v0.1.18",
       "version": "0.1.18",
