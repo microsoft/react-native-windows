@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Include import lib in the M.RN nuget package to export CoreApp APIs",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
