@@ -86,11 +86,11 @@ jobs:
         displayName: git pull
 
       - script: npx @rnw-scripts/create-github-releases --yes --authToken $(githubAuthToken)
-        displayName: Create GitHub Releases (local version)
+        displayName: Create GitHub Releases (New Canary Version)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ eq(variables['Build.SourceBranchName'], 'main') }} )
 
       - script: npx --yes @rnw-scripts/create-github-releases@latest --yes --authToken $(githubAuthToken)
-        displayName: Create GitHub Releases (latest published version)
+        displayName: Create GitHub Releases (New Stable Version)
         condition: and(succeeded(), ${{ not(parameters.skipGitPush) }}, ${{ ne(variables['Build.SourceBranchName'], 'main') }} )
 
       - template: templates/set-version-vars.yml
