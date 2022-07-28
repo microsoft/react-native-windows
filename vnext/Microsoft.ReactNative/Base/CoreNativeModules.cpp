@@ -12,8 +12,9 @@
 #include <Modules/AsyncStorageModuleWin32.h>
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
-#include <Modules/PaperUIManagerModule.h>
+#include <Modules/XamlTimingModule.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <QuirkSettings.h>
 
 // Shared
 #include <CreateModules.h>
@@ -60,10 +61,18 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         batchingUIMessageQueue);
   }
 
+
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseLegacyTimingModule(ReactPropertyBag(context->Properties()))) {
+  modules.emplace_back(
+      "Timing",
+      [batchingUIMessageQueue]() { return CreateXamlTimingModule(batchingUIMessageQueue); },
+      batchingUIMessageQueue);
+  } else {
   modules.emplace_back(
       "Timing",
       [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
       batchingUIMessageQueue);
+  }
 
   // Note: `context` is moved to remove the reference from the current scope.
   // This should either be the last usage of `context`, or the std::move call should happen later in this method.

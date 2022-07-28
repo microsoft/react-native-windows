@@ -31,6 +31,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       bool value) noexcept;
   static bool GetMapWindowDeactivatedToAppStateInactive(
       winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+  static bool GetUseLegacyTimingModule(
+      winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
 #pragma region Public API - part of IDL interface
   static void SetMatchAndroidAndIOSStretchBehavior(
@@ -43,6 +45,10 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       winrt::Microsoft::ReactNative::BackNavigationHandlerKind kind) noexcept;
 
   static void SetMapWindowDeactivatedToAppStateInactive(
+      winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+      bool value) noexcept;
+
+  static void SetUseLegacyTimingModule(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
       bool value) noexcept;
 #pragma endregion Public API - part of IDL interface

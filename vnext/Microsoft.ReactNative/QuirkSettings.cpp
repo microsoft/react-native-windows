@@ -46,6 +46,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseLegacyTimingModuleProperty() noexcept {
+  static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
+      L"ReactNative.QuirkSettings", L"UseLegacyTimingModule"};
+  return propId;
+}
+
 /*static*/ void QuirkSettings::SetMapWindowDeactivatedToAppStateInactive(
     winrt::Microsoft::ReactNative::ReactPropertyBag properties,
     bool value) noexcept {
@@ -78,6 +84,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
   SetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag(settings.Properties()), value);
 }
 
+/*static*/ void QuirkSettings::SetUseLegacyTimingModule(
+    winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
+    bool value) noexcept {
+      ReactPropertyBag(settings.Properties()).Set(UseLegacyTimingModuleProperty(), value);
+}
+
 #pragma endregion IDL interface
 
 /*static*/ bool QuirkSettings::GetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag properties) noexcept {
@@ -96,6 +108,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
 
 /*static*/ bool QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag properties) noexcept {
   return properties.Get(MapWindowDeactivatedToAppStateInactiveProperty()).value_or(false);
+}
+
+/*static*/ bool QuirkSettings::GetUseLegacyTimingModule(ReactPropertyBag properties) noexcept {
+  return properties.Get(UseLegacyTimingModuleProperty()).value_or(false);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

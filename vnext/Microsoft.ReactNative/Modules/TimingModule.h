@@ -3,96 +3,116 @@
 
 #pragma once
 
-#include <CppWinRTIncludes.h>
+#include <InstanceManager.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/MessageQueueThread.h>
 
-#include <folly/dynamic.h>
+#include <chrono>
 #include <memory>
 #include <vector>
 
-#include <winrt/Windows.Foundation.h>
-namespace Microsoft::ReactNative {
+#include <windows.h>
 
-typedef winrt::Windows::Foundation::DateTime TDateTime;
-typedef winrt::Windows::Foundation::TimeSpan TTimeSpan;
+namespace facebook {
+namespace react {
 
-class TimingModule;
+using DateTime = std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds>;
+using TimeSpan = std::chrono::milliseconds;
 
+// Timer struct which holds timer id, target time, period between target time
+// and scheduling time and whether it needs to be repeated. Example:
+//           std::chrono::time_point targetTime =
+//           std::chrono::system_clock::now()+100ms; Timer timer = {12345,
+//           targetTime, 100ms, false};
 struct Timer {
-  Timer(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat) {
-    Id = id;
-    TargetTime = targetTime;
-    Period = period;
-    Repeat = repeat;
-  }
-
-  bool operator<(const Timer &timer) const {
-    return timer.TargetTime < TargetTime;
-  }
-
-  bool operator==(int64_t id) const {
-    return id == Id;
-  }
-
-  int64_t Id;
-  TDateTime TargetTime;
-  TTimeSpan Period;
+  uint64_t Id;
+  DateTime DueTime;
+  TimeSpan Period;
   bool Repeat;
 };
 
+// operator for push_heap and pop_heap
+bool operator<(const Timer &leftTimer, const Timer &rightTimer);
+
+// operator for find
+bool operator==(const Timer &leftTimer, const uint64_t id);
+
+// This class is a implementation of max heap to store Timer objects.
+// The front timer has the smallest due time.
+// Example:
+//           TimerQueue tq;
+//           tq.Push(Timer{1234, now()+100ms, 100ms, false});
+//           tq.Push(Timer{1235, now()+20ms, 20ms, false});
+//           tq.Push(Timer{1236, now()+50ms, 50ms, false});
+//           tq.Pop(); //pops timer id: 1235
+//           printf("%u", tq.Front().Id); // print 1236
 class TimerQueue {
  public:
-  TimerQueue();
-
-  void Push(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat);
+  void Push(Timer timer);
   void Pop();
   Timer &Front();
-  void Remove(int64_t id);
-
-  bool IsEmpty();
+  const Timer &Front() const;
+  bool Remove(uint64_t id);
+  bool IsEmpty() const;
 
  private:
+  // This vector is maintained as a max heap, where the front Timer has the
+  // smallest due time.
   std::vector<Timer> m_timerVector;
 };
 
+// Helper class which implements createTimer, deleteTimer and setSendIdleEvents
+// for actual TimingModule Example:
+//           Timing timing;
+//           timing.createTimer(instance, id, duration, jsScheduleTime, repeat);
+//           timing.delete(id);
 class Timing : public std::enable_shared_from_this<Timing> {
  public:
-  Timing(TimingModule *parent);
-  void Disconnect();
-
-  void createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat);
-  void deleteTimer(int64_t id);
-  void setSendIdleEvents(bool sendIdleEvents);
-
- private:
-  std::weak_ptr<facebook::react::Instance> getInstance() noexcept;
-  void OnTick();
-  winrt::dispatching::DispatcherQueueTimer EnsureDispatcherTimer();
-  void StartRendering();
-  void StartDispatcherTimer();
-  void StopTicks();
+  Timing(const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) : m_nativeThread(nativeThread) {}
+  ~Timing();
+  void createTimer(
+      std::weak_ptr<facebook::react::Instance> instance,
+      uint64_t id,
+      double duration,
+      double jsSchedulingTime,
+      bool repeat) noexcept;
+  void deleteTimer(uint64_t id) noexcept;
+  void setSendIdleEvents(bool sendIdleEvents) noexcept;
 
  private:
-  TimingModule *m_parent;
+  static VOID CALLBACK
+  ThreadpoolTimerCallback(PTP_CALLBACK_INSTANCE Instance, PVOID Parameter, PTP_TIMER Timer) noexcept;
+  void OnTimerRaised() noexcept;
+  void SetInstance(std::weak_ptr<facebook::react::Instance> instance) noexcept;
+  void SetKernelTimer(DateTime dueTime) noexcept;
+  void InitializeKernelTimer() noexcept;
+  void TimersChanged() noexcept;
+  void StopKernelTimer() noexcept;
+  bool KernelTimerIsAboutToFire() noexcept;
   TimerQueue m_timerQueue;
-  xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
-  winrt::dispatching::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
-  bool m_usingRendering{false};
+  PTP_TIMER m_threadpoolTimer = NULL;
+  DateTime m_dueTime;
+
+  std::weak_ptr<facebook::react::Instance> m_wkInstance;
+  std::weak_ptr<facebook::react::MessageQueueThread> m_nativeThread;
 };
 
+// Native timing module class. It communicates with JS side to manage timers.
+// Example:
+//           // On JS side
+//           const {Timing} = require('NativeModules');
+//           Timing.createTimer(id, duration || 0, Date.now(), /* recurring */
+//           false); Timing.deleteTimer(timerID);
 class TimingModule : public facebook::xplat::module::CxxModule {
  public:
-  TimingModule();
-  ~TimingModule();
-  std::string getName();
-  virtual auto getConstants() -> std::map<std::string, folly::dynamic>;
-  virtual auto getMethods() -> std::vector<Method>;
-
-  static const char *name;
+  TimingModule(std::shared_ptr<Timing> &&timing);
+  std::string getName() override;
+  virtual std::map<std::string, folly::dynamic> getConstants() noexcept override;
+  virtual std::vector<Method> getMethods() noexcept override;
 
  private:
   std::shared_ptr<Timing> m_timing;
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace react
+} // namespace facebook

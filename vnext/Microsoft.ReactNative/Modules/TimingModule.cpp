@@ -2,48 +2,35 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#undef Check
 
+#undef Check
+using namespace std;
+
+#include <CreateModules.h>
+
+#include <folly/dynamic.h>
+#include <cassert>
 #include "TimingModule.h"
 
-#include <InstanceManager.h>
-#include <UI.Xaml.Media.h>
-#include <Utils/ValueUtils.h>
-
-#include <cxxreact/CxxModule.h>
 #include <cxxreact/Instance.h>
-
 #include <cxxreact/JsArgumentHelpers.h>
-
-#include <unknwnbase.h>
 
 using namespace facebook::xplat;
 using namespace folly;
-namespace winrt {
-using namespace Windows::Foundation;
-using namespace xaml::Media;
-} // namespace winrt
-using namespace std;
 
-namespace Microsoft::ReactNative {
+namespace facebook {
+namespace react {
 
-//
-// IsAnimationFrameRequest
-//
-static bool IsAnimationFrameRequest(TTimeSpan period, bool repeat) {
-  return !repeat && period == std::chrono::milliseconds(1);
+bool operator<(const Timer &leftTimer, const Timer &rightTimer) {
+  return rightTimer.DueTime < leftTimer.DueTime;
 }
 
-//
-// TimerQueue
-//
-
-TimerQueue::TimerQueue() {
-  std::make_heap(m_timerVector.begin(), m_timerVector.end());
+bool operator==(const Timer &leftTimer, const uint64_t id) {
+  return id == leftTimer.Id;
 }
 
-void TimerQueue::Push(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat) {
-  m_timerVector.emplace_back(id, targetTime, period, repeat);
+void TimerQueue::Push(Timer timer) {
+  m_timerVector.push_back(timer);
   std::push_heap(m_timerVector.begin(), m_timerVector.end());
 }
 
@@ -56,212 +43,254 @@ Timer &TimerQueue::Front() {
   return m_timerVector.front();
 }
 
-void TimerQueue::Remove(int64_t id) {
+const Timer &TimerQueue::Front() const {
+  return m_timerVector.front();
+}
+
+bool TimerQueue::Remove(uint64_t id) {
   // TODO: This is very inefficient, but doing this with a heap is inherently
   // hard. If performance is not good
   //	enough for the scenarios then a different structure is probably needed.
   auto found = std::find(m_timerVector.begin(), m_timerVector.end(), id);
-  if (found != m_timerVector.end())
+  if (found != m_timerVector.end()) {
     m_timerVector.erase(found);
-
+  } else {
+    return false;
+  }
   std::make_heap(m_timerVector.begin(), m_timerVector.end());
+  return true;
 }
 
-bool TimerQueue::IsEmpty() {
+bool TimerQueue::IsEmpty() const {
   return m_timerVector.empty();
 }
 
-//
-// Timing
-//
-
-Timing::Timing(TimingModule *parent) : m_parent(parent) {}
-
-void Timing::Disconnect() {
-  m_parent = nullptr;
-  StopTicks();
+/*static*/ void Timing::ThreadpoolTimerCallback(PTP_CALLBACK_INSTANCE, PVOID Parameter, PTP_TIMER) noexcept {
+  static_cast<Timing *>(Parameter)->OnTimerRaised();
 }
 
-std::weak_ptr<facebook::react::Instance> Timing::getInstance() noexcept {
-  if (!m_parent)
-    return std::weak_ptr<facebook::react::Instance>();
+void Timing::OnTimerRaised() noexcept {
+  if (auto inst = m_wkInstance.lock()) {
+    if (auto nativeThread = m_nativeThread.lock()) {
+      // Make sure we execute it on native thread for native modules
+      // Capture weak_ptr "this" because callback will be executed on native
+      // thread even if "this" is destroyed.
+      nativeThread->runOnQueue([weakThis = std::weak_ptr<Timing>(shared_from_this())]() {
+        auto strongThis = weakThis.lock();
+        if (!strongThis) {
+          return;
+        }
 
-  return m_parent->getInstance();
-}
+        if ((!strongThis->m_threadpoolTimer) || strongThis->m_timerQueue.IsEmpty()) {
+          return;
+        }
 
-void Timing::OnTick() {
-  std::vector<int64_t> readyTimers;
-  auto now = TDateTime::clock::now();
+        folly::dynamic readyTimers = folly::dynamic::array();
+        auto now = std::chrono::system_clock::now();
+        auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
 
-  auto emittedAnimationFrame = false;
-  while (!m_timerQueue.IsEmpty() && m_timerQueue.Front().TargetTime < now) {
-    // Pop first timer from the queue and add it to list of timers ready to fire
-    Timer next = m_timerQueue.Front();
-    m_timerQueue.Pop();
-    readyTimers.push_back(next.Id);
+        // Fire timers which will be expired in 10ms
+        while (!strongThis->m_timerQueue.IsEmpty() && now_ms > strongThis->m_timerQueue.Front().DueTime - 10ms) {
+          // Pop first timer from the queue and add it to list of timers ready
+          // to fire
+          auto next = strongThis->m_timerQueue.Front();
+          strongThis->m_timerQueue.Pop();
 
-    // If timer is repeating push it back onto the queue for the next repetition
-    if (next.Repeat)
-      m_timerQueue.Push(next.Id, now + next.Period, next.Period, true);
-    else if (IsAnimationFrameRequest(next.Period, next.Repeat))
-      emittedAnimationFrame = true;
-  }
+          // VSO:1916882 potential overflow
+          readyTimers.push_back(next.Id);
 
-  if (m_timerQueue.IsEmpty()) {
-    StopTicks();
-  } else if (!m_usingRendering || !emittedAnimationFrame) {
-    // If we're using a rendering callback, check if any animation frame
-    // requests were emitted in this tick. If not, start the dispatcher timer.
-    // This extra frame gives JS a chance to enqueue an additional animation
-    // frame request before switching tick schedulers.
-    StartDispatcherTimer();
-  }
+          // If timer is repeating push it back onto the queue for the next
+          // repetition 'next.Period' being greater than 10ms is intended to
+          // prevent infinite loops
+          if (next.Repeat)
+            strongThis->m_timerQueue.Push(Timer{next.Id, now_ms + next.Period, next.Period, true});
+        }
 
-  if (!readyTimers.empty()) {
-    if (auto instance = getInstance().lock()) {
-      // Package list of Timer Ids to fire in a dynamic array to pass as
-      // parameter
-      folly::dynamic params = folly::dynamic::array();
-      for (size_t i = 0, c = readyTimers.size(); i < c; ++i)
-        params.push_back(folly::dynamic(readyTimers[i]));
+        if (!readyTimers.empty()) {
+          if (auto instance = strongThis->m_wkInstance.lock()) {
+            instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(std::move(readyTimers)));
+          }
+        }
 
-      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
-    }
-  }
-}
-
-winrt::dispatching::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
-  if (!m_dispatcherQueueTimer) {
-    const auto queue = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
-    m_dispatcherQueueTimer = queue.CreateTimer();
-    m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
-      if (auto pThis = wkThis.lock()) {
-        pThis->OnTick();
-      }
-    });
-  }
-
-  return m_dispatcherQueueTimer;
-}
-
-void Timing::StartRendering() {
-  if (m_dispatcherQueueTimer)
-    m_dispatcherQueueTimer.Stop();
-
-  m_rendering.revoke();
-  m_usingRendering = true;
-  m_rendering = xaml::Media::CompositionTarget::Rendering(
-      winrt::auto_revoke,
-      [wkThis = std::weak_ptr(this->shared_from_this())](
-          const winrt::IInspectable &, const winrt::IInspectable & /*args*/) {
-        if (auto pThis = wkThis.lock()) {
-          pThis->OnTick();
+        if (!strongThis->m_timerQueue.IsEmpty()) {
+          strongThis->SetKernelTimer(strongThis->m_timerQueue.Front().DueTime);
+        } else {
+          strongThis->m_dueTime = DateTime::max();
         }
       });
-}
-
-void Timing::StartDispatcherTimer() {
-  const auto &nextTimer = m_timerQueue.Front();
-  m_rendering.revoke();
-  m_usingRendering = false;
-  auto timer = EnsureDispatcherTimer();
-  timer.Interval(std::max(nextTimer.TargetTime - TDateTime::clock::now(), TTimeSpan::zero()));
-  timer.Start();
-}
-
-void Timing::StopTicks() {
-  m_rendering.revoke();
-  m_usingRendering = false;
-  if (m_dispatcherQueueTimer)
-    m_dispatcherQueueTimer.Stop();
-}
-
-void Timing::createTimer(int64_t id, double duration, double jsSchedulingTime, bool repeat) {
-  if (duration == 0 && !repeat) {
-    if (auto instance = getInstance().lock()) {
-      folly::dynamic params = folly::dynamic::array(id);
-      instance->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(params));
+    } else {
+      assert(false && "m_nativeThread.lock failed");
     }
+  }
+}
 
+void Timing::createTimer(
+    std::weak_ptr<facebook::react::Instance> instance,
+    uint64_t id,
+    double duration,
+    double jsSchedulingTime,
+    bool repeat) noexcept {
+  SetInstance(instance);
+  auto now = std::chrono::system_clock::now();
+  auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+
+  // Convert double duration to std::chrono::duration
+  auto period = TimeSpan{(int64_t)duration};
+  // Convert int64_t scheduletime to std::chrono::time_point
+  DateTime scheduledTime = DateTime(TimeSpan((int64_t)jsSchedulingTime));
+  // Calculate the initial due time -- scheduleTime plus duration
+  auto initialDueTime = scheduledTime + period;
+
+  if (scheduledTime + period <= now_ms && !repeat) {
+    if (auto inst = m_wkInstance.lock()) {
+      inst->callJSFunction("JSTimers", "callTimers", folly::dynamic::array(folly::dynamic::array(id)));
+    } else {
+      assert(false && "m_wkInstance.lock failed");
+    }
     return;
   }
 
-  // Convert double duration in ms to TimeSpan
-  auto period = TimeSpanFromMs(duration);
-  const int64_t msFrom1601to1970 = 11644473600000;
-  TDateTime scheduledTime(TimeSpanFromMs(jsSchedulingTime + msFrom1601to1970));
-  auto initialTargetTime = scheduledTime + period;
-  m_timerQueue.Push(id, initialTargetTime, period, repeat);
-  if (!m_usingRendering) {
-    if (IsAnimationFrameRequest(period, repeat)) {
-      StartRendering();
-    } else if (initialTargetTime <= m_timerQueue.Front().TargetTime) {
-      StartDispatcherTimer();
+  // Make sure duration is always larger than 16ms to avoid unnecessary wakeups.
+  period = TimeSpan{duration < 16 ? 16 : (int64_t)duration};
+  m_timerQueue.Push(Timer{id, initialDueTime, period, repeat});
+
+  TimersChanged();
+}
+
+void Timing::TimersChanged() noexcept {
+  if (m_timerQueue.IsEmpty()) {
+    // TimerQueue is empty.
+    // Stop the kernel timer only when it is about to fire
+    if (KernelTimerIsAboutToFire()) {
+      StopKernelTimer();
     }
+    return;
+  }
+  // If front timer has the same target time as ThreadpoolTimer,
+  // we will keep ThreadpoolTimer unchanged.
+  if (m_timerQueue.Front().DueTime == m_dueTime) {
+    // do nothing
+  }
+  // If current front timer's due time is earlier than current
+  // ThreadpoolTimer's, we need to reset the ThreadpoolTimer to current front
+  // timer
+  else if (m_timerQueue.Front().DueTime < m_dueTime) {
+    SetKernelTimer(m_timerQueue.Front().DueTime);
+  }
+  // If current front timer's due time is later than current kernel timer's,
+  // we will reset kernel timer only when it is about to fire
+  else if (KernelTimerIsAboutToFire()) {
+    SetKernelTimer(m_timerQueue.Front().DueTime);
   }
 }
 
-void Timing::deleteTimer(int64_t id) {
-  m_timerQueue.Remove(id);
+bool Timing::KernelTimerIsAboutToFire() noexcept {
+  // Here we assume if kernel timer is going to fire within 2 frames (about
+  // 33ms), we return true I am not sure the 2 frames assumption is good enough.
+  // We may need adjustment after performance analysis.
+  auto now = std::chrono::system_clock::now();
+  auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+  if (m_dueTime - now_ms <= 33ms)
+    return true;
+  return false;
+}
+
+void Timing::SetInstance(std::weak_ptr<facebook::react::Instance> instance) noexcept {
+  if (m_wkInstance.expired())
+    m_wkInstance = instance;
+}
+
+void Timing::SetKernelTimer(DateTime dueTime) noexcept {
+  m_dueTime = dueTime;
+  FILETIME FileDueTime;
+  ULARGE_INTEGER ulDueTime;
+  auto now = std::chrono::system_clock::now();
+  auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
+  TimeSpan period = dueTime - now_ms;
+  ulDueTime.QuadPart = (ULONGLONG) - (period.count() * 10000);
+  FileDueTime.dwHighDateTime = ulDueTime.HighPart;
+  FileDueTime.dwLowDateTime = ulDueTime.LowPart;
+
+  if (!m_threadpoolTimer) {
+    InitializeKernelTimer();
+  }
+
+  SetThreadpoolTimer(m_threadpoolTimer, &FileDueTime, 0, 0);
+}
+
+void Timing::InitializeKernelTimer() noexcept {
+  // Create ThreadPoolTimer
+  m_threadpoolTimer = CreateThreadpoolTimer(&Timing::ThreadpoolTimerCallback, static_cast<PVOID>(this), NULL);
+  assert(m_threadpoolTimer && "CreateThreadpoolTimer failed.");
+}
+
+void Timing::deleteTimer(uint64_t id) noexcept {
   if (m_timerQueue.IsEmpty())
-    StopTicks();
+    return;
+  if (m_timerQueue.Remove(id)) {
+    TimersChanged();
+  }
 }
 
-void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) {
-  // TODO: Implement.
+void Timing::StopKernelTimer() noexcept {
+  // Cancel pending callbacks
+  SetThreadpoolTimer(m_threadpoolTimer, NULL, 0, 0);
+  m_dueTime = DateTime::max();
 }
 
-//
-// TimingModule
-//
-const char *TimingModule::name = "Timing";
-
-TimingModule::TimingModule() : m_timing(std::make_shared<Timing>(this)) {}
-
-TimingModule::~TimingModule() {
-  if (m_timing != nullptr)
-    m_timing->Disconnect();
+void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) noexcept {
+  // It seems we don't need this API. Leave it empty for now.
+  assert(false && "not implemented"); 
 }
+
+Timing::~Timing() {
+  if (m_threadpoolTimer) {
+    StopKernelTimer();
+    WaitForThreadpoolTimerCallbacks(m_threadpoolTimer, true);
+    CloseThreadpoolTimer(m_threadpoolTimer);
+  }
+}
+
+TimingModule::TimingModule(std::shared_ptr<Timing> &&timing) : m_timing(std::move(timing)) {}
 
 std::string TimingModule::getName() {
-  return name;
+  return "Timing";
 }
 
-auto TimingModule::getConstants() -> std::map<std::string, dynamic> {
+std::map<std::string, dynamic> TimingModule::getConstants() noexcept {
   return {};
 }
 
-auto TimingModule::getMethods() -> std::vector<Method> {
-  std::shared_ptr<Timing> timing(m_timing);
+std::vector<module::CxxModule::Method> TimingModule::getMethods() noexcept {
   return {
       Method(
           "createTimer",
-          [timing](dynamic args) // int64_t id, double duration, double
-                                 // jsSchedulingTime, bool repeat
+          [this](dynamic args) // int64_t id, int64_t duration, double
+                               // jsSchedulingTime, bool repeat
           {
-            timing->createTimer(
-                jsArgAsInt(args, 0), jsArgAsDouble(args, 1), jsArgAsDouble(args, 2), jsArgAsBool(args, 3));
+            m_timing->createTimer(
+                getInstance(),
+                jsArgAsInt(args, 0),
+                jsArgAsDouble(args, 1),
+                jsArgAsDouble(args, 2),
+                jsArgAsBool(args, 3));
           }),
       Method(
           "deleteTimer",
-          [timing](dynamic args) // int64_t code, const std::string& reason,
-                                 // int64_t id
-          { timing->deleteTimer(jsArgAsInt(args, 0)); }),
+          [this](dynamic args) // int64_t code, const std::string& reason,
+                               // int64_t id
+          { m_timing->deleteTimer(jsArgAsInt(args, 0)); }),
       Method(
           "setSendIdleEvents",
-          [timing](dynamic args) // const std::string& message, int64_t id
-          { timing->setSendIdleEvents(jsArgAsBool(args, 0)); }),
+          [this](dynamic args) // const std::string& message, int64_t id
+          { m_timing->setSendIdleEvents(jsArgAsBool(args, 0)); }),
   };
 }
 
-} // namespace Microsoft::ReactNative
-
-namespace facebook {
-namespace react {
-
 std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
-    const std::shared_ptr<facebook::react::MessageQueueThread> &) noexcept {
-  return std::make_unique<Microsoft::ReactNative::TimingModule>();
+    const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept {
+  auto module = std::make_unique<TimingModule>(std::make_shared<Timing>(nativeThread));
+  return std::move(module);
 }
 
 } // namespace react

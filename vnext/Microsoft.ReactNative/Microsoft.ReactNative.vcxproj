@@ -266,6 +266,7 @@
     <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\ReactRootViewTagGenerator.h" />
     <ClInclude Include="Modules\TimingModule.h" />
+    <ClInclude Include="Modules\XamlTimingModule.h" />
     <ClInclude Include="Modules\PaperUIManagerModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="ReactHost\IReactInstance.h" />
@@ -507,6 +508,7 @@
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />
+    <ClCompile Include="Modules\XamlTimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="NativeModulesProvider.cpp" />
     <ClCompile Include="ReactPointerEventArgs.cpp">
