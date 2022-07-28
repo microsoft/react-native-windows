@@ -13,8 +13,7 @@
 
 #include <windows.h>
 
-namespace facebook {
-namespace react {
+namespace Microsoft::ReactNative {
 
 using DateTime = std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds>;
 using TimeSpan = std::chrono::milliseconds;
@@ -114,5 +113,4 @@ class TimingModule : public facebook::xplat::module::CxxModule {
   std::shared_ptr<Timing> m_timing;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::ReactNative

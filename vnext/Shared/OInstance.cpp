@@ -571,7 +571,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       "Timing",
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return react::CreateTimingModule(nativeQueue); },
+      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::ReactNative::CreateTimingModule(nativeQueue); },
       nativeQueue));
 #endif
 

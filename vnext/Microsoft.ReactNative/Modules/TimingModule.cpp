@@ -18,8 +18,7 @@ using namespace std;
 using namespace facebook::xplat;
 using namespace folly;
 
-namespace facebook {
-namespace react {
+namespace Microsoft::ReactNative {
 
 bool operator<(const Timer &leftTimer, const Timer &rightTimer) {
   return rightTimer.DueTime < leftTimer.DueTime;
@@ -293,5 +292,4 @@ std::unique_ptr<facebook::xplat::module::CxxModule> CreateTimingModule(
   return std::move(module);
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace Microsoft::ReactNative

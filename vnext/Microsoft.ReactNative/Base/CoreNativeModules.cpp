@@ -71,7 +71,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   } else {
     modules.emplace_back(
         "Timing",
-        [uiMessageQueue]() { return facebook::react::CreateTimingModule(uiMessageQueue); },
+        [uiMessageQueue]() { return Microsoft::ReactNative::CreateTimingModule(uiMessageQueue); },
         batchingUIMessageQueue);
   }
 
