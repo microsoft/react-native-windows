@@ -189,6 +189,19 @@ void ImageViewManager::setSource(winrt::Grid grid, const winrt::Microsoft::React
   reactImage->Source(sources[0]);
 }
 
+void ImageViewManager::SetLayoutProps(
+    ShadowNodeBase &nodeToUpdate,
+    const XamlView &viewToUpdate,
+    float left,
+    float top,
+    float width,
+    float height) {
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+  if (viewToUpdate.ReadLocalValue(winrt::Grid::CornerRadiusProperty()) != xaml::DependencyProperty::UnsetValue()) {
+    UpdateCornerRadiusOnElement(&nodeToUpdate, viewToUpdate.as<winrt::Grid>());
+  }
+}
+
 void ImageViewManager::GetExportedCustomDirectEventTypeConstants(
     const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetExportedCustomDirectEventTypeConstants(writer);

@@ -20,6 +20,11 @@ static double DefaultOrOverride(double defaultValue, double x) {
   return x != c_UndefinedEdge ? x : defaultValue;
 };
 
+static double DefaultOrOverrideWithClamp(double defaultValue, double x, double clamp) {
+  const auto value = DefaultOrOverride(defaultValue, x);
+  return clamp >= 0 ? std::min(value, clamp) : value;
+};
+
 static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
     {"borderLeftWidth", ShadowEdges::Left},
     {"borderTopWidth", ShadowEdges::Top},
@@ -56,7 +61,9 @@ inline xaml::Thickness GetThickness(double thicknesses[(int)ShadowEdges::CountEd
   return thickness;
 }
 
-inline xaml::CornerRadius GetCornerRadius(double cornerRadii[(int)ShadowCorners::CountCorners]) {
+inline xaml::CornerRadius GetCornerRadius(
+    double cornerRadii[(int)ShadowCorners::CountCorners],
+    double maxCornerRadius) {
   xaml::CornerRadius cornerRadius;
   const double defaultRadius = std::max<double>(0, cornerRadii[(int)ShadowCorners::AllCorners]);
   double topStartRadius =
@@ -68,10 +75,10 @@ inline xaml::CornerRadius GetCornerRadius(double cornerRadii[(int)ShadowCorners:
   double bottomEndRadius =
       DefaultOrOverride(cornerRadii[(int)ShadowCorners::BottomRight], cornerRadii[(int)ShadowCorners::BottomEnd]);
 
-  cornerRadius.TopLeft = DefaultOrOverride(defaultRadius, topStartRadius);
-  cornerRadius.TopRight = DefaultOrOverride(defaultRadius, topEndRadius);
-  cornerRadius.BottomLeft = DefaultOrOverride(defaultRadius, bottomStartRadius);
-  cornerRadius.BottomRight = DefaultOrOverride(defaultRadius, bottomEndRadius);
+  cornerRadius.TopLeft = DefaultOrOverrideWithClamp(defaultRadius, topStartRadius, maxCornerRadius);
+  cornerRadius.TopRight = DefaultOrOverrideWithClamp(defaultRadius, topEndRadius, maxCornerRadius);
+  cornerRadius.BottomLeft = DefaultOrOverrideWithClamp(defaultRadius, bottomStartRadius, maxCornerRadius);
+  cornerRadius.BottomRight = DefaultOrOverrideWithClamp(defaultRadius, bottomEndRadius, maxCornerRadius);
 
   return cornerRadius;
 }
@@ -129,7 +136,7 @@ inline void UpdateCornerRadiusValueOnNode(
 
 template <class T>
 void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
-  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius);
+  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, node->m_maxCornerRadius);
   element.CornerRadius(cornerRadius);
 }
 

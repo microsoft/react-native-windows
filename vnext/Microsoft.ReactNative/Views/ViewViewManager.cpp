@@ -598,13 +598,22 @@ void ViewViewManager::SetLayoutProps(
   // Do this first so that it is setup properly before any events are fired by
   // the Super implementation
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(&nodeToUpdate);
+  auto pPanel = pViewShadowNode->GetViewPanel();
   if (pViewShadowNode->IsControl()) {
-    auto pPanel = pViewShadowNode->GetViewPanel();
     pPanel.Width(width);
     pPanel.Height(height);
   }
 
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+  if (pPanel.ReadLocalValue(ViewPanel::CornerRadiusProperty()) != xaml::DependencyProperty::UnsetValue()) {
+    // Rather than use ViewPanel::FinalizeProperties, only perform the explicit
+    // logic required to propagate the CornerRadius value to the Border parent.
+    auto border = pPanel.GetOuterBorder();
+    if (border) {
+      UpdateCornerRadiusOnElement(&nodeToUpdate, pPanel);
+      border.CornerRadius(pPanel.CornerRadius());
+    }
+  }
 }
 
 xaml::Media::SolidColorBrush ViewViewManager::EnsureTransparentBrush() {

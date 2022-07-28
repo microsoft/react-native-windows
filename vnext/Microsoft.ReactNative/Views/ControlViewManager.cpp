@@ -105,6 +105,21 @@ bool ControlViewManager::UpdateProperty(
   return ret;
 }
 
+void ControlViewManager::SetLayoutProps(
+    ShadowNodeBase &nodeToUpdate,
+    const XamlView &viewToUpdate,
+    float left,
+    float top,
+    float width,
+    float height) {
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+  if (viewToUpdate.try_as<xaml::Controls::IControl7>() &&
+      viewToUpdate.ReadLocalValue(xaml::Controls::Control::CornerRadiusProperty()) !=
+          xaml::DependencyProperty::UnsetValue()) {
+    UpdateCornerRadiusOnElement(&nodeToUpdate, viewToUpdate.as<xaml::Controls::Control>());
+  }
+}
+
 void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto control(node->GetView().as<xaml::Controls::Control>());
 

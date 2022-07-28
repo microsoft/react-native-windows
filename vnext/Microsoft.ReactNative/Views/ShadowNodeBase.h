@@ -124,6 +124,7 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   double m_padding[(int)ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
   double m_border[(int)ShadowEdges::CountEdges] = INIT_UNDEFINED_EDGES;
   double m_cornerRadius[(int)ShadowCorners::CountCorners] = INIT_UNDEFINED_CORNERS;
+  double m_maxCornerRadius = c_UndefinedEdge;
 
   // Bound event types
   bool m_onLayoutRegistered = false;
