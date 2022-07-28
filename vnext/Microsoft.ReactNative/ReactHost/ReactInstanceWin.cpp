@@ -441,7 +441,11 @@ void ReactInstanceWin::Initialize() noexcept {
           // Acquire default modules and then populate with custom modules.
           // Note that some of these have custom thread affinity.
           std::vector<facebook::react::NativeModuleDescription> cxxModules = Microsoft::ReactNative::GetCoreModules(
-              m_batchingUIThread, m_jsMessageThread.Load(), std::move(m_appearanceListener), m_reactContext);
+              m_batchingUIThread,
+              m_uiMessageThread.Load(),
+              m_jsMessageThread.Load(),
+              std::move(m_appearanceListener),
+              m_reactContext);
 #endif
 
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();

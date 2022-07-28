@@ -38,6 +38,7 @@ ReactPropertyId<bool> HttpUseMonolithicModuleProperty() noexcept {
 
 std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
     const std::shared_ptr<facebook::react::MessageQueueThread> &batchingUIMessageQueue,
+    const std::shared_ptr<facebook::react::MessageQueueThread> &uiMessageQueue,
     const std::shared_ptr<facebook::react::MessageQueueThread>
         &jsMessageQueue, // JS engine thread (what we use for external modules)
     Mso::CntPtr<AppearanceChangeListener> &&appearanceListener,
@@ -70,7 +71,7 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
   } else {
     modules.emplace_back(
         "Timing",
-        [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
+        [uiMessageQueue]() { return facebook::react::CreateTimingModule(uiMessageQueue); },
         batchingUIMessageQueue);
   }
 
