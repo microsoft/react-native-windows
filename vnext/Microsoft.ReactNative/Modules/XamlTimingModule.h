@@ -102,4 +102,3 @@ extern std::unique_ptr<facebook::xplat::module::CxxModule> CreateXamlTimingModul
     const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) noexcept;
 
 } // namespace Microsoft::ReactNative
-

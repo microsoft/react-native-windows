@@ -240,7 +240,7 @@ void Timing::StopKernelTimer() noexcept {
 
 void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) noexcept {
   // It seems we don't need this API. Leave it empty for now.
-  assert(false && "not implemented"); 
+  assert(false && "not implemented");
 }
 
 Timing::~Timing() {

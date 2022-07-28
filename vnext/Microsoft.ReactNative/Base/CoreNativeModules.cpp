@@ -13,8 +13,8 @@
 #include <Modules/ClipboardModule.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/XamlTimingModule.h>
-#include <Threading/MessageQueueThreadFactory.h>
 #include <QuirkSettings.h>
+#include <Threading/MessageQueueThreadFactory.h>
 
 // Shared
 #include <CreateModules.h>
@@ -61,17 +61,17 @@ std::vector<facebook::react::NativeModuleDescription> GetCoreModules(
         batchingUIMessageQueue);
   }
 
-
-  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseLegacyTimingModule(ReactPropertyBag(context->Properties()))) {
-  modules.emplace_back(
-      "Timing",
-      [batchingUIMessageQueue]() { return CreateXamlTimingModule(batchingUIMessageQueue); },
-      batchingUIMessageQueue);
+  if (winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetUseLegacyTimingModule(
+          ReactPropertyBag(context->Properties()))) {
+    modules.emplace_back(
+        "Timing",
+        [batchingUIMessageQueue]() { return CreateXamlTimingModule(batchingUIMessageQueue); },
+        batchingUIMessageQueue);
   } else {
-  modules.emplace_back(
-      "Timing",
-      [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
-      batchingUIMessageQueue);
+    modules.emplace_back(
+        "Timing",
+        [batchingUIMessageQueue]() { return facebook::react::CreateTimingModule(batchingUIMessageQueue); },
+        batchingUIMessageQueue);
   }
 
   // Note: `context` is moved to remove the reference from the current scope.

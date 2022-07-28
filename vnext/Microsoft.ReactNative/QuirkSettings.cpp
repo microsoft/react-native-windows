@@ -87,7 +87,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseLegacyTimingModuleProper
 /*static*/ void QuirkSettings::SetUseLegacyTimingModule(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
-      ReactPropertyBag(settings.Properties()).Set(UseLegacyTimingModuleProperty(), value);
+  ReactPropertyBag(settings.Properties()).Set(UseLegacyTimingModuleProperty(), value);
 }
 
 #pragma endregion IDL interface
