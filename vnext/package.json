@@ -92,7 +92,8 @@
       "major",
       "minor",
       "patch"
-    ]
+    ],
+    "gitTags": true
   },
   "files": [
     "/codegen",

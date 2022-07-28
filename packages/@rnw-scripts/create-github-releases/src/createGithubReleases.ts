@@ -28,6 +28,8 @@ const RNW_REPO = {
   repo: 'react-native-windows',
 };
 
+const ELIGIBLE_PACKAGES = ['react-native-windows'];
+
 /**
  * Representation the JSON chanelog comment obejct
  */
@@ -157,6 +159,13 @@ function needsRelease(
   localTags: string[],
   githubReleases: Array<{tag_name: string}>,
 ) {
+  if (
+    !ELIGIBLE_PACKAGES.includes(release.packageName) ||
+    release.version.prerelease[0] === 'canary'
+  ) {
+    return false;
+  }
+
   const releaseTags = githubReleases.map(r => r.tag_name);
   return localTags.includes(release.tag) && !releaseTags.includes(release.tag);
 }

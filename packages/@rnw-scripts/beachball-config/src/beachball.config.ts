@@ -8,14 +8,19 @@
 import {execSync} from 'child_process';
 import {findRepoPackageSync} from '@react-native-windows/package-utils';
 
-import type {BeachballOptions} from 'beachball/lib/types/BeachballOptions';
+import type {RepoOptions} from 'beachball/lib/types/BeachballOptions';
 import type {ChangeInfo} from 'beachball/lib/types/ChangeInfo';
  
-const Options: BeachballOptions = {
+const Options: RepoOptions = {
   ...require("@rnw-scripts/generated-beachball-config"),
    
-  // Do not generate tags for monorepo packages by default, to avoid a GitHub
-  // release for every package.
+  // Do not generate tags for monorepo packages by default. May be overridden in
+  // a package's "package.json" by adding:
+  // ```
+  // "beachball": {
+  //   "gitTags": true
+  // }
+  // ```
   gitTags: false,
 
   hooks: {
