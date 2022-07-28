@@ -2006,9 +2006,9 @@
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
 "@react-native/eslint-plugin-specs@>0.0.2":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.0.4.tgz#5a1116365271c57dd29e903d60487d954e09e7e6"
-  integrity sha512-tfbIt7CB46xHOKDE5/o402FSftGXZufv7X7B2TSXOrwDosWXOf7gvpH/AAdaawaN0PcDbtS3yKW3mZPvST5n4w==
+  version "0.71.0"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.71.0.tgz#43ce226946b43aa970a9fbc2fe02707ee0d8dc1e"
+  integrity sha512-f3nOcFzf+NoxqRidhTWaicIXBFKhocbq9K11j3g11SSkiYdcQyApFZAgU+zL59/5SyDhNZeKrU3G1mBr05vxTA==
   dependencies:
     "@babel/core" "^7.14.0"
     "@babel/eslint-parser" "^7.18.2"
