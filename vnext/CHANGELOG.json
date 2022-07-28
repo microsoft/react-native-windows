@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 28 Jul 2022 21:39:43 GMT",
+      "tag": "react-native-windows_v0.68.12",
+      "version": "0.68.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "acoates@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dd756e330c026209f23531fd7b58bd3fd390f30f",
+            "comment": "Add additional export for desktop x86 dll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Jul 2022 17:10:54 GMT",
       "tag": "react-native-windows_v0.68.11",
       "version": "0.68.11",

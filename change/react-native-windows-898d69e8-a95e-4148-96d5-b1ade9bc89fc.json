@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add additional export for desktop x86 dll",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch"
-}
