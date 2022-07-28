@@ -4,6 +4,9 @@
 #include "memoryApi/memoryApi.h"
 #include <cstdlib>
 #include <memory>
+#ifdef DEBUG
+#include <windows.h>
+#endif
 
 #if !__clang__ && !__GNUC__
 #pragma detect_mismatch("Allocator", "Crt")

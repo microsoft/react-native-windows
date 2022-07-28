@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds windows.h include to memoryApi.cpp",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
