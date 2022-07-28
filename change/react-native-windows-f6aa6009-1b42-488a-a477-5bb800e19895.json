@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "CompactValue.h override fixes",
+  "comment": "Adds windows.h include to memoryApi.cpp",
   "packageName": "react-native-windows",
-  "email": "hpratt@microsoft.com",
+  "email": "erozell@outlook.com",
   "dependentChangeType": "patch"
 }

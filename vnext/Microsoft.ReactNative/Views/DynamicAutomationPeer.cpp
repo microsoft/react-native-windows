@@ -312,13 +312,15 @@ winrt::hstring DynamicAutomationPeer::GetContentName() const {
 
   try {
     if (auto const &viewControl = Owner().try_as<winrt::Microsoft::ReactNative::ViewControl>()) {
-      auto viewPanel = viewControl.GetPanel();
-
-      for (auto const &child : viewPanel.Children()) {
-        if (auto const &textBlock = child.try_as<winrt::TextBlock>()) {
-          name = name.empty() ? textBlock.Text() : (L" " + name + textBlock.Text());
-        } else if (auto const &stringableName = child.try_as<winrt::IStringable>()) {
-          name = (name.empty() ? L"" : L" ") + name + stringableName.ToString();
+      // It's possible that the ViewPanel is null, perhaps when this is invoked around the same time
+      // that a View is being unmounted, causing a fast fail for EXCEPTION_ACCESS_VIOLATION_READ.
+      if (auto viewPanel = viewControl.GetPanel()) {
+        for (auto const &child : viewPanel.Children()) {
+          if (auto const &textBlock = child.try_as<winrt::TextBlock>()) {
+            name = name.empty() ? textBlock.Text() : (L" " + name + textBlock.Text());
+          } else if (auto const &stringableName = child.try_as<winrt::IStringable>()) {
+            name = (name.empty() ? L"" : L" ") + name + stringableName.ToString();
+          }
         }
       }
     }

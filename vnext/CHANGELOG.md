@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 Jul 2022 05:09:29 GMT and should not be manually modified.
+This log was last generated on Thu, 28 Jul 2022 05:09:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.534
+
+Thu, 28 Jul 2022 05:09:10 GMT
+
+### Changes
+
+- Fix crash in DynamicAutomationPeer::GetContentName (erozell@outlook.com)
+- CompactValue.h override fixes (hpratt@microsoft.com)
 
 ## 0.0.0-canary.533
 
