@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "CompactValue.h override fixes",
-  "packageName": "react-native-windows",
-  "email": "hpratt@microsoft.com",
-  "dependentChangeType": "patch"
-}
