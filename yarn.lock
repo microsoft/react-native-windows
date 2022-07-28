@@ -9939,9 +9939,9 @@ react-is@^18.1.0:
   integrity sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==
 
 react-native-codegen@*, react-native-codegen@^0.70.0:
-  version "0.70.0"
-  resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.70.0.tgz#16982d81e99c178941c225e3e0e7fc5a1db3b84b"
-  integrity sha512-fIRxPES9vHnIkzo52a36pYRePfiXXxSOtiMC50II0u/A3ozfJUUCmTjUDu1Z9iTahPpCUcxGIdACJrHu85ygDQ==
+  version "0.70.3"
+  resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.70.3.tgz#83f5df704f4856d89c136c963d326d051d30c4e0"
+  integrity sha512-OYEXmlfhk9BcvukuQ6LxcbyigPqv91/HVPsUWr6tjBp9mpiqkBdQnSebH7kSq+ork1EguOpVKd+l3Qe61odMHQ==
   dependencies:
     "@babel/parser" "^7.14.0"
     flow-parser "^0.121.0"
