@@ -54,6 +54,13 @@ Get-ChildItem -Path $FollyRoot -Name -Recurse -Include $patterns | ForEach-Objec
 	-Force
 }
 
+# Folly overrides
+Get-ChildItem -Path $FollyRoot -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
+	-Path        $ReactWindowsRoot\Folly\TEMP_UntilFollyUpdate\$_ `
+	-Destination (New-Item -ItemType Directory $TargetRoot\inc\folly\$(Split-Path $_) -Force) `
+	-Force
+}
+
 # stubs headers
 Get-ChildItem -Path $ReactWindowsRoot\stubs -Name -Recurse -Include $patterns | ForEach-Object { Copy-Item `
 	-Path        $ReactWindowsRoot\stubs\$_ `
