@@ -4,7 +4,7 @@
         <title>React Native for Windows + macOS Blog</title>
         <link>https://microsoft.github.io/react-native-windows/blog</link>
         <description>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</description>
-        <lastBuildDate>Fri, 11 Feb 2022 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 29 Jul 2022 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -12,6 +12,13 @@
             <url>https://microsoft.github.io/react-native-windows/img/header_logo.svg</url>
             <link>https://microsoft.github.io/react-native-windows/blog</link>
         </image>
+        <item>
+            <title><![CDATA[Streamlining app creation with React Native for Windows CoreApp]]></title>
+            <link>https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html</link>
+            <guid>https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html</guid>
+            <pubDate>Fri, 29 Jul 2022 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>React Native builds on top of the native platform for every OS it runs on; on Windows, this translates to producing a Universal Windows Platform (UWP) app.</p> <p>We heard from some of our customers that build times for these types of apps can be pretty lon...</p>]]></description>
+        </item>
         <item>
             <title><![CDATA[React Native for Windows is helping Settings improve more quickly]]></title>
             <link>https://microsoft.github.io/react-native-windows/blog/2022/02/11/settings.html</link>

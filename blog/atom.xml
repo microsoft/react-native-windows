@@ -2,11 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://microsoft.github.io/react-native-windows/blog</id>
     <title>React Native for Windows + macOS Blog</title>
-    <updated>2022-02-11T06:00:00.000Z</updated>
+    <updated>2022-07-29T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://microsoft.github.io/react-native-windows/blog"/>
     <subtitle>The best place to stay up-to-date with the latest React Native for Windows + macOS news and events.</subtitle>
     <logo>https://microsoft.github.io/react-native-windows/img/header_logo.svg</logo>
+    <entry>
+        <title type="html"><![CDATA[Streamlining app creation with React Native for Windows CoreApp]]></title>
+        <id>https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html</id>
+        <link href="https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html"/>
+        <updated>2022-07-29T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>React Native builds on top of the native platform for every OS it runs on; on Windows, this translates to producing a Universal Windows Platform (UWP) app.</p> <p>We heard from some of our customers that build times for these types of apps can be pretty lon...</p>]]></summary>
+        <author>
+            <name>Alexander Sklar</name>
+            <uri>https://twitter.com/alexsklar</uri>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[React Native for Windows is helping Settings improve more quickly]]></title>
         <id>https://microsoft.github.io/react-native-windows/blog/2022/02/11/settings.html</id>
