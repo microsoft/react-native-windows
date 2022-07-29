@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Initialize TextTransformParentVisitor state",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

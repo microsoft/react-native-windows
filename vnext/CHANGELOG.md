@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 28 Jul 2022 05:09:10 GMT and should not be manually modified.
+This log was last generated on Fri, 29 Jul 2022 05:09:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.535
+
+Fri, 29 Jul 2022 05:09:46 GMT
+
+### Changes
+
+- Adds header to fix clang build in FileReaderModule (erozell@outlook.com)
+- Initialize TextTransformParentVisitor state (erozell@outlook.com)
+- Restore Some Git Tags (ngerlem@microsoft.com)
+- Allow batches to complete during load (30809111+acoates-ms@users.noreply.github.com)
+- Only fire `onLongPress` for left clicks (erozell@outlook.com)
+- Include import lib in the M.RN nuget package to export CoreApp APIs (asklar@microsoft.com)
+- Adds windows.h include to memoryApi.cpp (erozell@outlook.com)
 
 ## 0.0.0-canary.534
 

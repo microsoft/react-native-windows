@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds header to fix clang build in FileReaderModule",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
