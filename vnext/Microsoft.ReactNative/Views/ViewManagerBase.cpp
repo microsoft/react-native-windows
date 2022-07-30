@@ -353,27 +353,21 @@ void ViewManagerBase::SetLayoutProps(
   const bool layoutHasChanged = left != ViewPanel::GetLeft(element) || top != ViewPanel::GetTop(element) ||
       width != fe.Width() || height != fe.Height();
 
-  if (layoutHasChanged) {
-    // Set Position & Size Properties
-    ViewPanel::SetLeft(element, left);
-    ViewPanel::SetTop(element, top);
+  // Set Position & Size Properties
+  ViewPanel::SetLeft(element, left);
+  ViewPanel::SetTop(element, top);
 
-    fe.Width(width);
-    fe.Height(height);
+  fe.Width(width);
+  fe.Height(height);
 
-    // Update the maximum corner radius, as we should clamp to 50% of the
-    // minimum dimension of width and height.
-    nodeToUpdate.m_maxCornerRadius = std::min(width, height) * 0.5;
+  // Fire Events
+  if (layoutHasChanged && nodeToUpdate.m_onLayoutRegistered) {
+    int64_t tag = GetTag(viewToUpdate);
+    React::JSValueObject layout{{"x", left}, {"y", top}, {"height", height}, {"width", width}};
 
-    // Fire Events
-    if (nodeToUpdate.m_onLayoutRegistered) {
-      int64_t tag = GetTag(viewToUpdate);
-      React::JSValueObject layout{{"x", left}, {"y", top}, {"height", height}, {"width", width}};
+    React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
 
-      React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
-
-      m_batchingEventEmitter->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
-    }
+    m_batchingEventEmitter->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
   }
 }
 

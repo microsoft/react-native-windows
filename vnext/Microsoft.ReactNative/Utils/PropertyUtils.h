@@ -21,8 +21,7 @@ static double DefaultOrOverride(double defaultValue, double x) {
 };
 
 static double DefaultOrOverrideWithClamp(double defaultValue, double x, double clamp) {
-  const auto value = DefaultOrOverride(defaultValue, x);
-  return clamp >= 0 ? std::min(value, clamp) : value;
+  return std::min(DefaultOrOverride(defaultValue, x), clamp);
 };
 
 static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
@@ -136,7 +135,13 @@ inline void UpdateCornerRadiusValueOnNode(
 
 template <class T>
 void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
-  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, node->m_maxCornerRadius);
+  auto maxCornerRadius = std::numeric_limits<double>::max();
+  if (element.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) != xaml::DependencyProperty::UnsetValue() &&
+      element.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) != xaml::DependencyProperty::UnsetValue()) {
+    // Clamp CornerRadius to 50% of the minimum dimension between width and height.
+    maxCornerRadius = std::min(element.Width(), element.Height()) * 0.5;
+  }
+  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, maxCornerRadius);
   element.CornerRadius(cornerRadius);
 }
 
