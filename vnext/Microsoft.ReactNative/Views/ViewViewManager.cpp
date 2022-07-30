@@ -610,7 +610,8 @@ void ViewViewManager::SetLayoutProps(
     // logic required to propagate the CornerRadius value to the Border parent.
     auto border = pPanel.GetOuterBorder();
     if (border) {
-      UpdateCornerRadiusOnElement(&nodeToUpdate, pPanel);
+      const auto maxCornerRadius = std::min(width, height) / 2;
+      UpdateCornerRadiusOnElement(&nodeToUpdate, pPanel, maxCornerRadius);
       border.CornerRadius(pPanel.CornerRadius());
     }
   }

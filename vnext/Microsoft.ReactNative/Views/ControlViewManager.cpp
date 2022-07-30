@@ -116,7 +116,8 @@ void ControlViewManager::SetLayoutProps(
   if (viewToUpdate.try_as<xaml::Controls::IControl7>() &&
       viewToUpdate.ReadLocalValue(xaml::Controls::Control::CornerRadiusProperty()) !=
           xaml::DependencyProperty::UnsetValue()) {
-    UpdateCornerRadiusOnElement(&nodeToUpdate, viewToUpdate.as<xaml::Controls::Control>());
+    const auto maxCornerRadius = std::min(width, height) / 2;
+    UpdateCornerRadiusOnElement(&nodeToUpdate, viewToUpdate.as<xaml::Controls::Control>(), maxCornerRadius);
   }
 }
 

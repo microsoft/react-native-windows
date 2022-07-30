@@ -198,7 +198,8 @@ void ImageViewManager::SetLayoutProps(
     float height) {
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
   if (viewToUpdate.ReadLocalValue(winrt::Grid::CornerRadiusProperty()) != xaml::DependencyProperty::UnsetValue()) {
-    UpdateCornerRadiusOnElement(&nodeToUpdate, viewToUpdate.as<winrt::Grid>());
+    const auto maxCornerRadius = std::min(width, height) / 2;
+    UpdateCornerRadiusOnElement(&nodeToUpdate, viewToUpdate.as<winrt::Grid>(), maxCornerRadius);
   }
 }
 

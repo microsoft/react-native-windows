@@ -134,15 +134,20 @@ inline void UpdateCornerRadiusValueOnNode(
 }
 
 template <class T>
+void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element, double maxCornerRadius) {
+  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, maxCornerRadius);
+  element.CornerRadius(cornerRadius);
+}
+
+template <class T>
 void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
   auto maxCornerRadius = std::numeric_limits<double>::max();
   if (element.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) != xaml::DependencyProperty::UnsetValue() &&
       element.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) != xaml::DependencyProperty::UnsetValue()) {
     // Clamp CornerRadius to 50% of the minimum dimension between width and height.
-    maxCornerRadius = std::min(element.Width(), element.Height()) * 0.5;
+    maxCornerRadius = std::min(element.Width(), element.Height()) / 2;
   }
-  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, maxCornerRadius);
-  element.CornerRadius(cornerRadius);
+  UpdateCornerRadiusOnElement(node, element, maxCornerRadius);
 }
 
 template <class T>
