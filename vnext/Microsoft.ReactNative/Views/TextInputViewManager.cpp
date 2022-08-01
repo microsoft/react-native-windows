@@ -134,6 +134,7 @@ class TextInputShadowNode : public ShadowNodeBase {
   void SetText(const winrt::Microsoft::ReactNative::JSValue &text);
   void SetSelection(int64_t start, int64_t end);
   winrt::Shape FindCaret(xaml::DependencyObject element);
+  bool IsTextBox();
 
   bool m_initialUpdateComplete = false;
   bool m_autoFocus = false;
@@ -141,7 +142,6 @@ class TextInputShadowNode : public ShadowNodeBase {
   bool m_shouldSelectTextOnFocus = false;
   bool m_contextMenuHidden = false;
   bool m_hideCaret = false;
-  bool m_isTextBox = true;
   bool m_shouldClearTextOnSubmit = false;
 
   winrt::Microsoft::ReactNative::JSValue m_placeholderTextColor;
@@ -190,6 +190,7 @@ void TextInputShadowNode::dispatchTextInputChangeEvent(winrt::hstring newText) {
 void TextInputShadowNode::registerEvents() {
   auto control = GetView().as<xaml::Controls::Control>();
   auto tag = m_tag;
+  auto isTextBox = IsTextBox();
 
   // TextChanged is implemented as async event in Xaml. If Javascript is like
   // this:
@@ -203,7 +204,7 @@ void TextInputShadowNode::registerEvents() {
   //
   // TextChanging is used to drop the Javascript response of 'A' and expect
   // another TextChanged event with correct event count.
-  if (m_isTextBox) {
+  if (isTextBox) {
     m_passwordBoxPasswordChangedRevoker = {};
     m_passwordBoxPasswordChangingRevoker = {};
     auto textBox = control.as<xaml::Controls::TextBox>();
@@ -223,7 +224,7 @@ void TextInputShadowNode::registerEvents() {
     }
   }
 
-  if (m_isTextBox) {
+  if (isTextBox) {
     m_passwordBoxContextMenuOpeningRevoker = {};
     auto textBox = control.as<xaml::Controls::TextBox>();
     m_textBoxContextMenuOpeningRevoker =
@@ -245,7 +246,7 @@ void TextInputShadowNode::registerEvents() {
 
   m_controlGotFocusRevoker = control.GotFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
     if (m_shouldClearTextOnFocus) {
-      if (m_isTextBox) {
+      if (isTextBox) {
         control.as<xaml::Controls::TextBox>().ClearValue(xaml::Controls::TextBox::TextProperty());
       } else {
         control.as<xaml::Controls::PasswordBox>().ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
@@ -253,7 +254,7 @@ void TextInputShadowNode::registerEvents() {
     }
 
     if (m_shouldSelectTextOnFocus) {
-      if (m_isTextBox) {
+      if (isTextBox) {
         control.as<xaml::Controls::TextBox>().SelectAll();
       } else {
         control.as<xaml::Controls::PasswordBox>().SelectAll();
@@ -269,7 +270,7 @@ void TextInputShadowNode::registerEvents() {
   m_controlLostFocusRevoker = control.LostFocus(winrt::auto_revoke, [=](auto &&, auto &&) {
     folly::dynamic eventDataBlur = folly::dynamic::object("target", tag);
     folly::dynamic eventDataEndEditing = {};
-    if (m_isTextBox) {
+    if (isTextBox) {
       eventDataEndEditing =
           folly::dynamic::object("target", tag)("text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
     } else {
@@ -284,7 +285,7 @@ void TextInputShadowNode::registerEvents() {
 
   registerPreviewKeyDown();
 
-  if (m_isTextBox) {
+  if (isTextBox) {
     auto textBox = control.as<xaml::Controls::TextBox>();
     m_textBoxSelectionChangedRevoker = textBox.SelectionChanged(winrt::auto_revoke, [=](auto &&, auto &&) {
       folly::dynamic selectionData = folly::dynamic::object("start", textBox.SelectionStart())(
@@ -297,7 +298,7 @@ void TextInputShadowNode::registerEvents() {
 
   m_controlSizeChangedRevoker =
       control.SizeChanged(winrt::auto_revoke, [=](auto &&, winrt::SizeChangedEventArgs const &args) {
-        if (m_isTextBox) {
+        if (isTextBox) {
           if (control.as<xaml::Controls::TextBox>().TextWrapping() == xaml::TextWrapping::Wrap) {
             folly::dynamic contentSizeData =
                 folly::dynamic::object("width", args.NewSize().Width)("height", args.NewSize().Height);
@@ -371,9 +372,10 @@ void TextInputShadowNode::registerEvents() {
 void TextInputShadowNode::registerPreviewKeyDown() {
   auto control = GetView().as<xaml::Controls::Control>();
   auto tag = m_tag;
+  auto isTextBox = IsTextBox();
   m_controlPreviewKeyDownRevoker =
       control.PreviewKeyDown(winrt::auto_revoke, [=](auto &&, xaml::Input::KeyRoutedEventArgs const &args) {
-        auto isMultiline = m_isTextBox && control.as<xaml::Controls::TextBox>().AcceptsReturn();
+        auto isMultiline = isTextBox && control.as<xaml::Controls::TextBox>().AcceptsReturn();
         auto shouldSubmit = !args.Handled();
         if (shouldSubmit) {
           if (!isMultiline && m_submitKeyEvents.size() == 0) {
@@ -395,7 +397,7 @@ void TextInputShadowNode::registerPreviewKeyDown() {
 
         if (shouldSubmit) {
           folly::dynamic eventDataSubmitEditing = {};
-          if (m_isTextBox) {
+          if (isTextBox) {
             eventDataSubmitEditing = folly::dynamic::object("target", tag)(
                 "text", HstringToDynamic(control.as<xaml::Controls::TextBox>().Text()));
           } else {
@@ -407,7 +409,7 @@ void TextInputShadowNode::registerPreviewKeyDown() {
               tag, "topTextInputSubmitEditing", std::move(eventDataSubmitEditing));
 
           if (m_shouldClearTextOnSubmit) {
-            if (m_isTextBox) {
+            if (isTextBox) {
               control.as<xaml::Controls::TextBox>().ClearValue(xaml::Controls::TextBox::TextProperty());
             } else {
               control.as<xaml::Controls::PasswordBox>().ClearValue(xaml::Controls::PasswordBox::PasswordProperty());
@@ -438,6 +440,10 @@ xaml::Shapes::Shape TextInputShadowNode::FindCaret(xaml::DependencyObject elemen
   }
 
   return nullptr;
+}
+
+bool TextInputShadowNode::IsTextBox() {
+  return !!GetView().try_as<xaml::Controls::TextBox>();
 }
 
 // hacking solution to hide the caret
@@ -477,6 +483,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
   auto hasKeyDownEvents = false;
 
   auto markDirty = false;
+  auto isTextBox = IsTextBox();
   for (auto &pair : props) {
     const std::string &propertyName = pair.first;
     const auto &propertyValue = pair.second;
@@ -524,10 +531,10 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
       markDirty = true;
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
         if (propertyValue.AsBoolean()) {
-          if (m_isTextBox) {
+          if (isTextBox) {
             xaml::Controls::PasswordBox newPasswordBox;
             ReparentView(newPasswordBox);
-            m_isTextBox = false;
+            isTextBox = false;
             registerEvents();
             control = newPasswordBox.as<xaml::Controls::Control>();
             passwordBox = newPasswordBox;
@@ -536,10 +543,10 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
             }
           }
         } else {
-          if (!m_isTextBox) {
+          if (!isTextBox) {
             xaml::Controls::TextBox newTextBox;
             ReparentView(newTextBox);
-            m_isTextBox = true;
+            isTextBox = true;
             registerEvents();
             control = newTextBox.as<xaml::Controls::Control>();
             textBox = newTextBox;
@@ -554,59 +561,59 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
           propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
         control.SetValue(
-            m_isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
+            isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
                         : xaml::Controls::PasswordBox::MaxLengthProperty(),
             winrt::PropertyValue::CreateInt32(propertyValue.AsInt32()));
       } else if (propertyValue.IsNull()) {
         control.ClearValue(
-            m_isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
+            isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
                         : xaml::Controls::PasswordBox::MaxLengthProperty());
       }
     } else if (propertyName == "placeholder") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         control.SetValue(
-            m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
+            isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                         : xaml::Controls::PasswordBox::PlaceholderTextProperty(),
             winrt::PropertyValue::CreateString(asHstring(propertyValue)));
       } else if (propertyValue.IsNull()) {
         control.ClearValue(
-            m_isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
+            isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
                         : xaml::Controls::PasswordBox::PlaceholderTextProperty());
       }
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
         control.SetValue(
-            m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
+            isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
                         : xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
             SolidColorBrushFrom(propertyValue));
       } else if (propertyValue.IsNull())
         control.ClearValue(
-            m_isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
+            isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
                         : xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
     } else if (propertyName == "keyboardType") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-        auto inputScopeNameVaue = parseKeyboardType(propertyValue, m_isTextBox);
+        auto inputScopeNameVaue = parseKeyboardType(propertyValue, isTextBox);
         auto scope = xaml::Input::InputScope();
         auto scopeName = xaml::Input::InputScopeName(inputScopeNameVaue);
         auto names = scope.Names();
         names.Append(scopeName);
         control.SetValue(
-            m_isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
+            isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
                         : xaml::Controls::PasswordBox::InputScopeProperty(),
             scope);
       } else if (propertyValue.IsNull())
         control.ClearValue(
-            m_isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
+            isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
                         : xaml::Controls::PasswordBox::InputScopeProperty());
     } else if (propertyName == "placeholderTextColor") {
       m_placeholderTextColor = nullptr;
-      if (textBox.try_as<xaml::Controls::ITextBox6>() && m_isTextBox) {
+      if (textBox.try_as<xaml::Controls::ITextBox6>() && isTextBox) {
         if (IsValidColorValue(propertyValue)) {
           m_placeholderTextColor = propertyValue.Copy();
           textBox.PlaceholderForeground(SolidColorBrushFrom(propertyValue));
         } else if (propertyValue.IsNull())
           textBox.ClearValue(xaml::Controls::TextBox::PlaceholderForegroundProperty());
-      } else if (m_isTextBox != true && IsValidColorValue(propertyValue)) {
+      } else if (isTextBox != true && IsValidColorValue(propertyValue)) {
         setPasswordBoxPlaceholderForeground(passwordBox, propertyValue);
       }
     } else if (propertyName == "clearTextOnSubmit") {
@@ -624,13 +631,13 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         m_autoFocus = propertyValue.AsBoolean();
     } else if (propertyName == "editable") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean) {
-        m_isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean()) : passwordBox.IsEnabled(propertyValue.AsBoolean());
+        isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean()) : passwordBox.IsEnabled(propertyValue.AsBoolean());
       } else if (propertyValue.IsNull()) {
-        m_isTextBox ? textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty())
+        isTextBox ? textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty())
                     : passwordBox.ClearValue(xaml::Controls::Control::IsEnabledProperty());
       }
     } else {
-      if (m_isTextBox) { // Applicable properties for TextBox
+      if (isTextBox) { // Applicable properties for TextBox
         if (TryUpdateTextAlignment(textBox, propertyName, propertyValue)) {
           continue;
         } else if (propertyName == "multiline") {
@@ -676,7 +683,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
           }
         }
       } else { // Applicable properties for PasswordBox
-        if (propertyName == "text" && !m_isTextBox) {
+        if (propertyName == "text" && !isTextBox) {
           markDirty = true;
           SetText(propertyValue);
         }
@@ -828,9 +835,19 @@ ShadowNode *TextInputViewManager::createShadow() const {
   return new TextInputShadowNode();
 }
 
-XamlView TextInputViewManager::CreateViewCore(int64_t /*tag*/, const winrt::Microsoft::ReactNative::JSValueObject &) {
-  xaml::Controls::TextBox textBox;
-  return textBox;
+XamlView TextInputViewManager::CreateViewCore(
+    int64_t /*tag*/,
+    const winrt::Microsoft::ReactNative::JSValueObject &props) {
+  const auto secureTextEntry = props.find("secureTextEntry");
+  if (secureTextEntry != props.end() &&
+      secureTextEntry->second.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean &&
+      secureTextEntry->second.AsBoolean()) {
+    xaml::Controls::PasswordBox passwordBox;
+    return passwordBox;
+  } else {
+    xaml::Controls::TextBox textBox;
+    return textBox;
+  }
 }
 
 YGMeasureFunc TextInputViewManager::GetYogaCustomMeasureFunc() const {
