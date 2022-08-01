@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 29 Jul 2022 05:09:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.535",
+      "version": "0.0.0-canary.535",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0b4b818f9a2148c2fa9e792dddeb9f6929149a06",
+            "comment": "Adds header to fix clang build in FileReaderModule"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "68913bee0748b41973d4a182c04f42ef6076e968",
+            "comment": "Initialize TextTransformParentVisitor state"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6211949087a1c9d6a8a1974e770fe7e84f10e36c",
+            "comment": "Restore Some Git Tags"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "25f385109cf83b5decdef2100440f899f3998641",
+            "comment": "Allow batches to complete during load"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "977c1bf8aac1616768d87c91f8b5b764f8e60018",
+            "comment": "Only fire `onLongPress` for left clicks"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1d43306b8a2c2bcb1e134528ae0a2e93e91632d5",
+            "comment": "Include import lib in the M.RN nuget package to export CoreApp APIs"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "aa0177fa6c0e9fd5b98391e32a47d73aba39b442",
+            "comment": "Adds windows.h include to memoryApi.cpp"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 28 Jul 2022 05:09:10 GMT",
       "tag": "react-native-windows_v0.0.0-canary.534",
       "version": "0.0.0-canary.534",

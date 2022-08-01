@@ -2006,9 +2006,9 @@
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
 "@react-native/eslint-plugin-specs@>0.0.2":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.0.4.tgz#5a1116365271c57dd29e903d60487d954e09e7e6"
-  integrity sha512-tfbIt7CB46xHOKDE5/o402FSftGXZufv7X7B2TSXOrwDosWXOf7gvpH/AAdaawaN0PcDbtS3yKW3mZPvST5n4w==
+  version "0.71.0"
+  resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin-specs/-/eslint-plugin-specs-0.71.0.tgz#43ce226946b43aa970a9fbc2fe02707ee0d8dc1e"
+  integrity sha512-f3nOcFzf+NoxqRidhTWaicIXBFKhocbq9K11j3g11SSkiYdcQyApFZAgU+zL59/5SyDhNZeKrU3G1mBr05vxTA==
   dependencies:
     "@babel/core" "^7.14.0"
     "@babel/eslint-parser" "^7.18.2"
@@ -6648,9 +6648,9 @@ invert-kv@^3.0.0:
   integrity sha512-CYdFeFexxhv/Bcny+Q0BfOV+ltRlJcd4BBZBYFX/O0u4npJrgZtIcjokegtiSMAvlMTJ+Koq0GBCc//3bueQxw==
 
 io-ts@^2.1.1:
-  version "2.2.16"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.16.tgz#597dffa03db1913fc318c9c6df6931cb4ed808b2"
-  integrity sha512-y5TTSa6VP6le0hhmIyN0dqEXkrZeJLeC5KApJq6VLci3UEKF80lZ+KuoUs02RhBxNWlrqSNxzfI7otLX1Euv8Q==
+  version "2.2.17"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.17.tgz#19531c9d49abcebc935d85d282e1db95adb01901"
+  integrity sha512-RkQY06h6rRyADVEI46OCAUYTP2p18Vdtz9Movi19Mmj7SJ1NhN/yGyW7CxlcBVxh95WKg2YSbTmcUPqqeLuhXw==
 
 ioredis@^4.28.0, ioredis@^4.28.5:
   version "4.28.5"
@@ -10045,9 +10045,9 @@ react-is@^18.1.0:
   integrity sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==
 
 react-native-codegen@*, react-native-codegen@^0.70.0:
-  version "0.70.0"
-  resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.70.0.tgz#16982d81e99c178941c225e3e0e7fc5a1db3b84b"
-  integrity sha512-fIRxPES9vHnIkzo52a36pYRePfiXXxSOtiMC50II0u/A3ozfJUUCmTjUDu1Z9iTahPpCUcxGIdACJrHu85ygDQ==
+  version "0.70.3"
+  resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.70.3.tgz#83f5df704f4856d89c136c963d326d051d30c4e0"
+  integrity sha512-OYEXmlfhk9BcvukuQ6LxcbyigPqv91/HVPsUWr6tjBp9mpiqkBdQnSebH7kSq+ork1EguOpVKd+l3Qe61odMHQ==
   dependencies:
     "@babel/parser" "^7.14.0"
     flow-parser "^0.121.0"
