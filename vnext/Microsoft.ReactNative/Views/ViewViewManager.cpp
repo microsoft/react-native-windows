@@ -413,8 +413,8 @@ bool ViewViewManager::UpdateProperty(
       // default behavior of `UpdateCornerRadiusOnElement` to check for the
       // clamp dimension from only the ViewPanel.
       const xaml::FrameworkElement sizingElement = pViewShadowNode->IsControl() ? pViewShadowNode->GetControl()
-          : pViewShadowNode->HasOuterBorder()                     ? pPanel.GetOuterBorder().as<xaml::FrameworkElement>()
-                                                                  : pPanel;
+          : pViewShadowNode->HasOuterBorder() ? pPanel.GetOuterBorder().as<xaml::FrameworkElement>()
+                                              : pPanel;
       if (sizingElement.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) !=
               xaml::DependencyProperty::UnsetValue() &&
           sizingElement.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) !=
