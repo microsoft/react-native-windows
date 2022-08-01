@@ -126,12 +126,11 @@ export const windowsInitOptions = initOptions({
   },
   template: {
     type: 'string',
-    describe:
-    '[Experimental] Specify a project template to use',
+    describe: '[Experimental] Specify a project template to use',
     hidden: true,
     default: undefined,
     conflicts: ['language', 'projectType', 'experimentalNuGetDependency'],
-  }
+  },
 });
 
 const yargsParser = yargs
