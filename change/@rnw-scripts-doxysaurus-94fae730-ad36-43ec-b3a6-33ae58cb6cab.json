@@ -1,7 +1,7 @@
 {
-  "type": "patch",
+  "type": "none",
   "comment": "[0.69] CG updates for 7/25/22",
   "packageName": "@rnw-scripts/doxysaurus",
   "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
