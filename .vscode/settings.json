@@ -8,7 +8,17 @@
     "filesystem": "cpp",
     "xstring": "cpp",
     "*.ipp": "cpp",
-    "xlocmon": "cpp"
+    "xlocmon": "cpp",
+    "chrono": "cpp",
+    "complex": "cpp",
+    "functional": "cpp",
+    "optional": "cpp",
+    "regex": "cpp",
+    "system_error": "cpp",
+    "type_traits": "cpp",
+    "xlocnum": "cpp",
+    "xtr1common": "cpp",
+    "format": "cpp"
   },
   "search.exclude": {
     "**/node_modules": true,
