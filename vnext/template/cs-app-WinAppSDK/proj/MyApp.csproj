@@ -33,11 +33,11 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0" />
   </ItemGroup>
   <ItemGroup>
-    {{#csNugetPackages}}
+    {{#nugetPackages}}
     <PackageReference Include="{{ id }}">
       <Version>{{ version }}</Version>
     </PackageReference>
-    {{/csNugetPackages}}
+    {{/nugetPackages}}
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
     <!-- Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging

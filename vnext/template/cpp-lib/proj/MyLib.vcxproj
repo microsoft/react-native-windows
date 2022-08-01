@@ -133,9 +133,9 @@
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
-    {{#cppNugetPackages}}
+    {{#nugetPackages}}
     <PackageReference Include="{{ id }}" Version="{{ version }}" />
-    {{/cppNugetPackages}}
+    {{/nugetPackages}}
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ReactNativeWindowsTargets">

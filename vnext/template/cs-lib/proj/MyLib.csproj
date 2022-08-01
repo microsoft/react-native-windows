@@ -106,11 +106,11 @@
     <Compile Include="ReactPackageProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    {{#csNugetPackages}}
+    {{#nugetPackages}}
     <PackageReference Include="{{ id }}">
       <Version>{{ version }}</Version>
     </PackageReference>
-    {{/csNugetPackages}}
+    {{/nugetPackages}}
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '16.0' ">
     <VisualStudioVersion>16.0</VisualStudioVersion>

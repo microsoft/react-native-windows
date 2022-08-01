@@ -46,6 +46,7 @@ export interface GenerateOptions {
   useDevMode: boolean;
   verbose: boolean;
   telemetry: boolean;
+  template?: string;
 }
 
 /**

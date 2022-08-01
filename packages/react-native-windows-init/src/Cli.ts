@@ -72,7 +72,7 @@ export const windowsInitOptions = initOptions({
     type: 'string',
     describe: 'The language the project is written in.',
     choices: ['cs', 'cpp'],
-    default: 'cpp',
+    default: undefined,
   },
   overwrite: {
     type: 'boolean',
@@ -83,14 +83,14 @@ export const windowsInitOptions = initOptions({
     type: 'string',
     describe: 'The type of project to initialize (supported on 0.64+)',
     choices: ['app', 'lib'],
-    default: 'app',
+    default: undefined,
   },
   experimentalNuGetDependency: {
     type: 'boolean',
     describe:
       '[Experimental] change to start consuming a NuGet containing a pre-built dll version of Microsoft.ReactNative',
     hidden: true,
-    default: false,
+    default: undefined,
   },
   useHermes: {
     type: 'boolean',
@@ -124,6 +124,14 @@ export const windowsInitOptions = initOptions({
     default: undefined, // This must be undefined because we define the conflicts field below. Defining a default here will break the version option
     conflicts: 'version',
   },
+  template: {
+    type: 'string',
+    describe:
+    '[Experimental] Specify a project template to use',
+    hidden: true,
+    default: undefined,
+    conflicts: ['language', 'projectType', 'experimentalNuGetDependency'],
+  }
 });
 
 const yargsParser = yargs
@@ -615,17 +623,18 @@ export async function reactNativeWindowsInit(args?: string[]) {
     await Telemetry.populateNpmPackageVersions();
 
     await generateWindows(process.cwd(), name, ns, {
-      language: options.language as 'cs' | 'cpp',
+      language: (options.language || 'cpp') as 'cs' | 'cpp',
       overwrite: options.overwrite,
       verbose: options.verbose,
-      projectType: options.projectType as 'lib' | 'app',
-      experimentalNuGetDependency: options.experimentalNuGetDependency,
+      projectType: (options.projectType || 'app') as 'lib' | 'app',
+      experimentalNuGetDependency: options.experimentalNuGetDependency || false,
       useWinUI3: options.useWinUI3,
       useHermes: options.useHermes,
       useDevMode: useDevMode,
       nuGetTestVersion: options.nuGetTestVersion,
       nuGetTestFeed: options.nuGetTestFeed,
       telemetry: options.telemetry,
+      template: options.template,
     });
 
     // Now that the project has been generated, add project info
