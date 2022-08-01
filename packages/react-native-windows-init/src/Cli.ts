@@ -367,6 +367,7 @@ function optionSanitizer(key: keyof WindowsInitOptions, value: any): any {
     case 'useHermes':
     case 'useWinUI3':
     case 'useDevMode':
+    case 'template':
       return value === undefined ? false : value;
   }
 }
@@ -514,7 +515,10 @@ export async function reactNativeWindowsInit(args?: string[]) {
     const useDevMode = !!(options.useDevMode as unknown); // TS assumes the type is undefined
     let version = options.version;
 
-    if (options.useWinUI3 && options.experimentalNuGetDependency) {
+    if (
+      options.useWinUI3 &&
+      !!(options.experimentalNuGetDependency as unknown)
+    ) {
       throw new CodedError(
         'IncompatibleOptions',
         "Error: Incompatible options specified. Options '--useWinUI3' and '--experimentalNuGetDependency' are incompatible",
@@ -622,11 +626,12 @@ export async function reactNativeWindowsInit(args?: string[]) {
     await Telemetry.populateNpmPackageVersions();
 
     await generateWindows(process.cwd(), name, ns, {
-      language: (options.language || 'cpp') as 'cs' | 'cpp',
+      language: ((options.language as unknown) || 'cpp') as 'cs' | 'cpp',
       overwrite: options.overwrite,
       verbose: options.verbose,
-      projectType: (options.projectType || 'app') as 'lib' | 'app',
-      experimentalNuGetDependency: options.experimentalNuGetDependency || false,
+      projectType: ((options.projectType as unknown) || 'app') as 'lib' | 'app',
+      experimentalNuGetDependency:
+        !!(options.experimentalNuGetDependency as unknown) || false,
       useWinUI3: options.useWinUI3,
       useHermes: options.useHermes,
       useDevMode: useDevMode,

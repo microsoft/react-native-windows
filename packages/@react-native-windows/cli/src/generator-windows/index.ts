@@ -82,7 +82,7 @@ export async function copyProjectTemplateAndReplace(
     );
   }
 
-  let templateJson: any = undefined;
+  let templateJson: any;
   if (options.template) {
     const templatePath = path.join(srcRootPath, options.template);
     if (fs.existsSync(templatePath)) {
@@ -92,7 +92,9 @@ export async function copyProjectTemplateAndReplace(
         Object.assign(options, templateJson.options);
       }
     } else {
-      throw new CodedError("InvalidConfig", `No such template found`, { detail: { templateName: options.template } });
+      throw new CodedError('InvalidConfig', `No such template found`, {
+        detail: {templateName: options.template},
+      });
     }
   }
 
@@ -176,8 +178,14 @@ export async function copyProjectTemplateAndReplace(
   }
 
   const projDir = 'proj';
-  const srcPath = path.join(srcRootPath, options.template || `${language}-${realProjectType}`);
-  const sharedPath = path.join(srcRootPath, options.template || `shared-${projectType}`);
+  const srcPath = path.join(
+    srcRootPath,
+    options.template || `${language}-${realProjectType}`,
+  );
+  const sharedPath = path.join(
+    srcRootPath,
+    options.template || `shared-${projectType}`,
+  );
   const projectGuid = existingProjectGuid || uuid.v4();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
@@ -202,8 +210,9 @@ export async function copyProjectTemplateAndReplace(
     },
   ];
 
-  const nugetPackages: NugetPackage = templateJson?.nugetPackages ||
-   (options.language === 'cpp' ? cppNugetPackages : csNugetPackages);
+  const nugetPackages: NugetPackage =
+    templateJson?.nugetPackages ||
+    (options.language === 'cpp' ? cppNugetPackages : csNugetPackages);
 
   const templateVars: Record<string, any> = {
     useMustache: true,

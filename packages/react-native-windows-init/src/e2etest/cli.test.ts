@@ -26,6 +26,7 @@ function validateOptionName(
     case 'nuGetTestVersion':
     case 'nuGetTestFeed':
     case 'useDevMode':
+    case 'template':
       return true;
   }
   throw new Error(
