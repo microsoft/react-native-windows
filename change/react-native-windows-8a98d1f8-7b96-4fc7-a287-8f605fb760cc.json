@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "pluggable templates, coreapp-cpp template",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
