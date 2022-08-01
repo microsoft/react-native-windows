@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update custom targets in Folly.vcxproj and fmt.vcxproj",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
