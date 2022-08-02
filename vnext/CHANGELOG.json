@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Aug 2022 05:08:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.536",
+      "version": "0.0.0-canary.536",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5bce642d260089bffbc581afe55e5d22cf7ec8bd",
+            "comment": "Update custom targets in Folly.vcxproj and fmt.vcxproj"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 29 Jul 2022 05:09:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.535",
       "version": "0.0.0-canary.535",
