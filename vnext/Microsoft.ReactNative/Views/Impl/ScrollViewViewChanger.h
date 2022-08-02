@@ -22,11 +22,14 @@ class ScrollViewViewChanger {
  private:
   bool m_inverted{false};
   bool m_horizontal{false};
-  bool m_isScrollingToEnd{false};
-  bool m_wasViewAnchoringEnabled{false};
-  double m_targetScrollToEndOffset{0.0};
+  bool m_wasScrollAnchoringEnabled{false};
+  std::optional<double> m_targetScrollToEndOffset{std::nullopt};
 
-  static void SetContentScrollAnchors(const xaml::Controls::ScrollViewer &scrollViewer, bool enabled);
+  inline bool IsScrollToEndActive() {
+    return m_targetScrollToEndOffset.has_value();
+  }
+
+  static void UpdateScrollAnchoringEnabled(const xaml::Controls::ScrollViewer &scrollViewer, bool enabled);
   bool
   IsScrollingToEnd(const xaml::Controls::ScrollViewer &scrollViewer, double horizontalOffset, double verticalOffset);
 };

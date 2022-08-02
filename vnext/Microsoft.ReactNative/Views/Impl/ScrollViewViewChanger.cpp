@@ -22,17 +22,16 @@ void ScrollViewViewChanger::Inverted(bool inverted) {
 }
 
 void ScrollViewViewChanger::ScrollToEnd(const xaml::Controls::ScrollViewer &scrollViewer, bool animated) {
-  m_isScrollingToEnd = animated && m_inverted;
-  if (m_isScrollingToEnd) {
-    // Disable scroll anchoring while scrolling to end
-    ScrollViewUWPImplementation(scrollViewer).ContentAnchoringEnabled(false);
-    SetContentScrollAnchors(scrollViewer, false);
+  if (m_inverted) {
+    UpdateScrollAnchoringEnabled(scrollViewer, false);
   }
 
   if (m_horizontal) {
-    scrollViewer.ChangeView(scrollViewer.ScrollableWidth(), nullptr, nullptr, !animated);
+    m_targetScrollToEndOffset = scrollViewer.ScrollableWidth();
+    scrollViewer.ChangeView(m_targetScrollToEndOffset.value(), nullptr, nullptr, !animated);
   } else {
-    scrollViewer.ChangeView(nullptr, scrollViewer.ScrollableHeight(), nullptr, !animated);
+    m_targetScrollToEndOffset = scrollViewer.ScrollableHeight();
+    scrollViewer.ChangeView(nullptr, m_targetScrollToEndOffset.value(), nullptr, !animated);
   }
 }
 
@@ -41,23 +40,17 @@ void ScrollViewViewChanger::OnViewChanging(
     const xaml::Controls::ScrollViewerViewChangingEventArgs &args) {
   // For non-inverted views, a ScrollViewer.ViewChanging event always emits an `onScroll` event
   if (m_inverted) {
-    // For inverted views, we need to detect if we're scrolling to or away from the bottom edge to enable or disable
-    // view anchoring
-    const auto scrollingToEnd =
-        IsScrollingToEnd(scrollViewer, args.NextView().HorizontalOffset(), args.NextView().VerticalOffset());
-
-    // Do not update scroll anchoring while scrolling to end
-    if (!m_isScrollingToEnd) {
-      ScrollViewUWPImplementation(scrollViewer).ContentAnchoringEnabled(!scrollingToEnd);
-      if (m_wasViewAnchoringEnabled && scrollingToEnd) {
-        // If scrolling to anchor edge, turn off view anchoring
-        SetContentScrollAnchors(scrollViewer, false);
-        m_wasViewAnchoringEnabled = false;
-      } else if (!m_wasViewAnchoringEnabled && !scrollingToEnd) {
-        // If scrolling away from anchor edge, turn on view anchoring
-        SetContentScrollAnchors(scrollViewer, true);
-        m_wasViewAnchoringEnabled = true;
-      }
+    // Do not update scroll anchoring during ScrollToEnd
+    if (!IsScrollToEndActive()) {
+      // For inverted views, we need to detect if we're scrolling to or away from the bottom edge to enable or disable
+      // view anchoring
+      const auto scrollingToEnd =
+          IsScrollingToEnd(scrollViewer, args.NextView().HorizontalOffset(), args.NextView().VerticalOffset());
+      UpdateScrollAnchoringEnabled(scrollViewer, !scrollingToEnd);
+    } else if (IsScrollingToEnd(scrollViewer, m_targetScrollToEndOffset.value(), m_targetScrollToEndOffset.value())) {
+      // If we were previously in an active ScrollToEnd command, we may need to
+      // restart the operation if the content size has changed
+      ScrollToEnd(scrollViewer, true);
     }
   }
 }
@@ -66,25 +59,32 @@ void ScrollViewViewChanger::OnViewChanged(
     const xaml::Controls::ScrollViewer &scrollViewer,
     const xaml::Controls::ScrollViewerViewChangedEventArgs &args) {
   // Stop tracking scroll-to-end once the ScrollView comes to rest
-  if (!args.IsIntermediate() && m_isScrollingToEnd) {
-    m_isScrollingToEnd = false;
-    if (!IsScrollingToEnd(scrollViewer, scrollViewer.HorizontalOffset(), scrollViewer.VerticalOffset())) {
-      ScrollViewUWPImplementation(scrollViewer).ContentAnchoringEnabled(true);
-      SetContentScrollAnchors(scrollViewer, true);
+  if (!args.IsIntermediate()) {
+    m_targetScrollToEndOffset = std::nullopt;
+    if (m_inverted) {
+      const auto scrolledToEnd =
+          IsScrollingToEnd(scrollViewer, scrollViewer.HorizontalOffset(), scrollViewer.VerticalOffset());
+      UpdateScrollAnchoringEnabled(!scrolledToEnd);
     }
   }
 }
 
-void ScrollViewViewChanger::SetContentScrollAnchors(const xaml::Controls::ScrollViewer &scrollViewer, bool enabled) {
-  const auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
-  auto panel = snapPointManager->Content().as<xaml::Controls::Panel>();
-  for (auto child : panel.Children()) {
-    const auto childElement = child.as<xaml::UIElement>();
-    if (winrt::unbox_value<bool>(childElement.GetValue(ViewViewManager::CanBeScrollAnchorProperty()))) {
-      if (enabled) {
-        childElement.CanBeScrollAnchor(true);
-      } else {
-        childElement.ClearValue(xaml::UIElement::CanBeScrollAnchorProperty());
+void ScrollViewViewChanger::UpdateScrollAnchoringEnabled(
+    const xaml::Controls::ScrollViewer &scrollViewer,
+    bool enabled) {
+  if (m_wasScrollAnchoringEnabled != enabled) {
+    m_wasScrollAnchoringEnabled = enabled;
+    ScrollViewUWPImplementation(scrollViewer).ContentAnchoringEnabled(enabled);
+    const auto snapPointManager = scrollViewer.Content().as<SnapPointManagingContentControl>();
+    auto panel = snapPointManager->Content().as<xaml::Controls::Panel>();
+    for (auto child : panel.Children()) {
+      const auto childElement = child.as<xaml::UIElement>();
+      if (winrt::unbox_value<bool>(childElement.GetValue(ViewViewManager::CanBeScrollAnchorProperty()))) {
+        if (enabled) {
+          childElement.CanBeScrollAnchor(true);
+        } else {
+          childElement.ClearValue(xaml::UIElement::CanBeScrollAnchorProperty());
+        }
       }
     }
   }
