@@ -300,6 +300,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/NativeAnimation/NativeAnimationsExample'),
   },
   {
+    key: 'CompositionBugsExample',
+    category: 'UI',
+    module: require('../examples-win/NativeAnimation/CompositionBugsExample'),
+  },
+  {
     key: 'PanResponderExample',
     category: 'Basic',
     module: require('../examples/PanResponder/PanResponderExample'),
