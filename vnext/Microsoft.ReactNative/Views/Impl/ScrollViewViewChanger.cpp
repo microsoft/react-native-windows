@@ -47,7 +47,7 @@ void ScrollViewViewChanger::OnViewChanging(
       const auto scrollingToEnd =
           IsScrollingToEnd(scrollViewer, args.NextView().HorizontalOffset(), args.NextView().VerticalOffset());
       UpdateScrollAnchoringEnabled(scrollViewer, !scrollingToEnd);
-    } else if (IsScrollingToEnd(scrollViewer, m_targetScrollToEndOffset.value(), m_targetScrollToEndOffset.value())) {
+    } else if (!IsScrollingToEnd(scrollViewer, m_targetScrollToEndOffset.value(), m_targetScrollToEndOffset.value())) {
       // If we were previously in an active ScrollToEnd command, we may need to
       // restart the operation if the content size has changed
       ScrollToEnd(scrollViewer, true);
@@ -64,7 +64,7 @@ void ScrollViewViewChanger::OnViewChanged(
     if (m_inverted) {
       const auto scrolledToEnd =
           IsScrollingToEnd(scrollViewer, scrollViewer.HorizontalOffset(), scrollViewer.VerticalOffset());
-      UpdateScrollAnchoringEnabled(!scrolledToEnd);
+      UpdateScrollAnchoringEnabled(scrollViewer, !scrolledToEnd);
     }
   }
 }

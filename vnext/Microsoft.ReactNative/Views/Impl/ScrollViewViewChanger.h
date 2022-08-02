@@ -29,7 +29,7 @@ class ScrollViewViewChanger {
     return m_targetScrollToEndOffset.has_value();
   }
 
-  static void UpdateScrollAnchoringEnabled(const xaml::Controls::ScrollViewer &scrollViewer, bool enabled);
+  void UpdateScrollAnchoringEnabled(const xaml::Controls::ScrollViewer &scrollViewer, bool enabled);
   bool
   IsScrollingToEnd(const xaml::Controls::ScrollViewer &scrollViewer, double horizontalOffset, double verticalOffset);
 };

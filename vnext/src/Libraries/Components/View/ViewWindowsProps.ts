@@ -81,5 +81,5 @@ export interface IViewWindowsProps extends IKeyboardProps, ViewProps {
   /**
    * Indicates that view must not be used as scroll anchor candidate.
    */
-  overflowAnchor?: "none" | "auto";
+  overflowAnchor?: 'none' | 'auto';
 }
