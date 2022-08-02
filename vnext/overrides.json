@@ -306,6 +306,13 @@
     },
     {
       "type": "patch",
+      "file": "src/Libraries/Components/Touchable/Touchable.windows.js",
+      "baseFile": "Libraries/Components/Touchable/Touchable.js",
+      "baseHash": "0ac4d0233073bf34f54088ebbdf008825e3235dc",
+      "issue": 0
+    },
+    {
+      "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "Libraries/Components/Touchable/TouchableHighlight.js",
       "baseHash": "b73cf5a72709ec421e63e8b41e50c37b329e4e8c"

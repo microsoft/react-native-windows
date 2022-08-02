@@ -14,6 +14,7 @@
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
+<PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/TouchableNativeFeedback.js
 <PROJECT_ROOT>/Libraries/Components/View/ReactNativeViewAttributes.js
 <PROJECT_ROOT>/Libraries/Components/View/View.js

@@ -144,6 +144,13 @@
       "file": "src/Libraries/Components/Touchable/Tests/TouchableWin32Test.tsx"
     },
     {
+      "type": "patch",
+      "file": "src/Libraries/Components/Touchable/Touchable.win32.js",
+      "baseFile": "Libraries/Components/Touchable/Touchable.js",
+      "baseHash": "0ac4d0233073bf34f54088ebbdf008825e3235dc",
+      "issue": 0
+    },
+    {
       "type": "platform",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.Props.ts"
     },
