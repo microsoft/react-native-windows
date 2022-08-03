@@ -209,7 +209,7 @@ void ViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) no
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps ViewComponentView::props() noexcept {
+facebook::react::Props::Shared ViewComponentView::props() noexcept {
   assert(false);
   return {};
 }
