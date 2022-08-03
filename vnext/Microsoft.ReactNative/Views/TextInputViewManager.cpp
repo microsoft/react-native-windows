@@ -561,35 +561,34 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
           propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
         control.SetValue(
-            isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
-                        : xaml::Controls::PasswordBox::MaxLengthProperty(),
+            isTextBox ? xaml::Controls::TextBox::MaxLengthProperty() : xaml::Controls::PasswordBox::MaxLengthProperty(),
             winrt::PropertyValue::CreateInt32(propertyValue.AsInt32()));
       } else if (propertyValue.IsNull()) {
         control.ClearValue(
             isTextBox ? xaml::Controls::TextBox::MaxLengthProperty()
-                        : xaml::Controls::PasswordBox::MaxLengthProperty());
+                      : xaml::Controls::PasswordBox::MaxLengthProperty());
       }
     } else if (propertyName == "placeholder") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         control.SetValue(
             isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
-                        : xaml::Controls::PasswordBox::PlaceholderTextProperty(),
+                      : xaml::Controls::PasswordBox::PlaceholderTextProperty(),
             winrt::PropertyValue::CreateString(asHstring(propertyValue)));
       } else if (propertyValue.IsNull()) {
         control.ClearValue(
             isTextBox ? xaml::Controls::TextBox::PlaceholderTextProperty()
-                        : xaml::Controls::PasswordBox::PlaceholderTextProperty());
+                      : xaml::Controls::PasswordBox::PlaceholderTextProperty());
       }
     } else if (propertyName == "selectionColor") {
       if (IsValidColorValue(propertyValue)) {
         control.SetValue(
             isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
-                        : xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
+                      : xaml::Controls::PasswordBox::SelectionHighlightColorProperty(),
             SolidColorBrushFrom(propertyValue));
       } else if (propertyValue.IsNull())
         control.ClearValue(
             isTextBox ? xaml::Controls::TextBox::SelectionHighlightColorProperty()
-                        : xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
+                      : xaml::Controls::PasswordBox::SelectionHighlightColorProperty());
     } else if (propertyName == "keyboardType") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto inputScopeNameVaue = parseKeyboardType(propertyValue, isTextBox);
@@ -599,12 +598,12 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         names.Append(scopeName);
         control.SetValue(
             isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
-                        : xaml::Controls::PasswordBox::InputScopeProperty(),
+                      : xaml::Controls::PasswordBox::InputScopeProperty(),
             scope);
       } else if (propertyValue.IsNull())
         control.ClearValue(
             isTextBox ? xaml::Controls::TextBox::InputScopeProperty()
-                        : xaml::Controls::PasswordBox::InputScopeProperty());
+                      : xaml::Controls::PasswordBox::InputScopeProperty());
     } else if (propertyName == "placeholderTextColor") {
       m_placeholderTextColor = nullptr;
       if (textBox.try_as<xaml::Controls::ITextBox6>() && isTextBox) {
@@ -634,7 +633,7 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
         isTextBox ? textBox.IsReadOnly(!propertyValue.AsBoolean()) : passwordBox.IsEnabled(propertyValue.AsBoolean());
       } else if (propertyValue.IsNull()) {
         isTextBox ? textBox.ClearValue(xaml::Controls::TextBox::IsReadOnlyProperty())
-                    : passwordBox.ClearValue(xaml::Controls::Control::IsEnabledProperty());
+                  : passwordBox.ClearValue(xaml::Controls::Control::IsEnabledProperty());
       }
     } else {
       if (isTextBox) { // Applicable properties for TextBox
