@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add import lib if the app sets the UseRNCoreApp property",
-  "packageName": "react-native-windows",
-  "email": "asklar@microsoft.com",
-  "dependentChangeType": "patch"
-}

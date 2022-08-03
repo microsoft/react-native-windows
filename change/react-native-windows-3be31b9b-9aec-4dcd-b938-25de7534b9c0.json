@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove call to nyi() in TransformableText",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

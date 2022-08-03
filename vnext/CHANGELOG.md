@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 02 Aug 2022 05:08:55 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Aug 2022 05:09:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.537
+
+Wed, 03 Aug 2022 05:09:41 GMT
+
+### Changes
+
+- Remove call to nyi() in TransformableText (erozell@outlook.com)
+- Add import lib if the app sets the UseRNCoreApp property (asklar@microsoft.com)
+- Integrate 7/4 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.48
 
 ## 0.0.0-canary.536
 
