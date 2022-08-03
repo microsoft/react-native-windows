@@ -235,12 +235,12 @@ bool FrameworkElementViewManager::UpdateProperty(
                 MultiplyInto(
                     transformMatrix,
                     winrt::Windows::Foundation::Numerics::float4x4(
-                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(innerValue.AsSingle(), 0.f)));
+                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(ToRadians(innerValue), 0.f)));
               } else if (transformType == "skewY") {
                 MultiplyInto(
                     transformMatrix,
                     winrt::Windows::Foundation::Numerics::float4x4(
-                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(0.f, innerValue.AsSingle())));
+                        winrt::Windows::Foundation::Numerics::make_float3x2_skew(0.f, ToRadians(innerValue))));
               }
             }
           }
