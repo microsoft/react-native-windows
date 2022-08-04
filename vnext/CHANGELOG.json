@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Aug 2022 05:09:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.538",
+      "version": "0.0.0-canary.538",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "864bbb2718c8ca10065bfd0c86321ae020256f0d",
+            "comment": "Update nuget feed declarations"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1370f161ab84146d8c466f38b23559392c371ca",
+            "comment": "Update Folly to v2021.07.22.0"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "b53838c95c2bdec70d082282d7545a0a024573dc",
+            "comment": "Fix skew transforms for string values"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 03 Aug 2022 05:09:41 GMT",
       "tag": "react-native-windows_v0.0.0-canary.537",
       "version": "0.0.0-canary.537",
