@@ -12,7 +12,7 @@ class TextTransformParentVisitor : public TextParentVisitor {
   using Super = TextParentVisitor;
 
  public:
-  TextTransform textTransform;
+  TextTransform textTransform{TextTransform::Undefined};
 
  protected:
   void VisitText(ShadowNodeBase *node) override;

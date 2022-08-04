@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jul 2022 05:09:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.19
+
+Wed, 27 Jul 2022 05:09:28 GMT
+
+### Patches
+
+- CG updates for 7/25/22 (jthysell@microsoft.com)
+
+## 0.1.18
+
+Tue, 26 Jul 2022 05:08:50 GMT
+
+### Patches
+
+- Fix doxysaurus error logging to handle Error objects (jthysell@microsoft.com)
 
 ## 0.1.17
 

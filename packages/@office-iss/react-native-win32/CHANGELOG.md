@@ -1,8 +1,25 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 17 Jun 2022 05:10:04 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Aug 2022 05:09:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.157
+
+Wed, 03 Aug 2022 05:09:40 GMT
+
+### Changes
+
+- Integrate 7/4 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.48
+
+## 0.0.0-canary.156
+
+Tue, 12 Jul 2022 05:10:12 GMT
+
+### Changes
+
+- CG: Remove dependency on deprecated `hermes-engine` package (jthysell@microsoft.com)
 
 ## 0.0.0-canary.155
 

@@ -508,7 +508,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
     } else {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
+      std::string bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).u8string();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
       std::string bundlePath;
@@ -517,7 +517,7 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
             winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
         bundlePath = winrt::to_string(uri.ToString());
       } else {
-        bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
+        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
       }
 
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
@@ -545,6 +545,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
   std::vector<std::unique_ptr<NativeModule>> modules;
   auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
+#if (defined(_MSC_VER) && !defined(WINRT))
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetHttpModuleName(),
@@ -552,6 +553,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
         return Microsoft::React::CreateHttpModule(transitionalProps);
       },
       nativeQueue));
+#endif
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
@@ -619,8 +621,13 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
 
-  // #10036 - Blob module not supported in UWP. Need to define property bag lifetime and onwership.
-  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule")) {
+  // These modules are instantiated separately in MSRN (Universal Windows).
+  // When there are module name colisions, the last one registered is used.
+  // If this code is enabled, we will have unused module instances.
+  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
+#if (defined(_MSC_VER) && !defined(WINRT))
+  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule") &&
+      !Microsoft::React::GetRuntimeOptionBool("Http.UseMonolithicModule")) {
     modules.push_back(std::make_unique<CxxNativeModule>(
         m_innerInstance,
         Microsoft::React::GetBlobModuleName(),
@@ -633,6 +640,7 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
         [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
         nativeQueue));
   }
+#endif
 
   return modules;
 }

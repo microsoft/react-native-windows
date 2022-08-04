@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220614-2054-bcc69dfb3",
+  "baseVersion": "0.0.0-20220704-2054-3da3d8232",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "895c71b88766d95270375497adde5b28f17b8c8c"
+      "baseHash": "950a5ad34450c49cde405a0f21c77182795a5fbd"
     },
     {
       "type": "patch",
@@ -92,14 +92,14 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "d0e6e1d4f8895af55fddd861ac1c267e81f1bbb9",
+      "baseHash": "89357552712de54b8d0387c8ad9bc5a4b3896cbb",
       "issue": 4054
     },
     {
       "type": "patch",
       "file": "src/babel-plugin-codegen/GenerateViewConfigJs.js",
       "baseFile": "packages/react-native-codegen/src/generators/components/GenerateViewConfigJs.js",
-      "baseHash": "5fcc6fbfb6a0fd658334ef68078be6aa215e8090",
+      "baseHash": "9215ab389087d779d1f7dc5cf02fff7532ff4ed2",
       "issue": 5430
     },
     {
@@ -164,7 +164,7 @@
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.windows.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "8c2e0c05b6138dd3834ea8b3d85b8838d37ae427"
+      "baseHash": "f915bdebd13c9c76d7d76b7a5d85903a308b44fd"
     },
     {
       "type": "platform",
@@ -256,7 +256,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "b6e9d331a959f84314be9a0efcf40ce8eca4a6d8"
+      "baseHash": "d1aed2015a28ce41216f8f345a9e1fdabb082935"
     },
     {
       "type": "derived",
@@ -303,6 +303,13 @@
       "file": "src/Libraries/Components/ToastAndroid/ToastAndroid.windows.js",
       "baseFile": "Libraries/Components/ToastAndroid/ToastAndroid.ios.js",
       "baseHash": "081bef4803b72c50eb6e8379451201afbde9806e"
+    },
+    {
+      "type": "patch",
+      "file": "src/Libraries/Components/Touchable/Touchable.windows.js",
+      "baseFile": "Libraries/Components/Touchable/Touchable.js",
+      "baseHash": "0ac4d0233073bf34f54088ebbdf008825e3235dc",
+      "issue": 0
     },
     {
       "type": "patch",
@@ -359,7 +366,7 @@
       "type": "patch",
       "file": "src/Libraries/Image/Image.windows.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "801bf4a66452a6e13e5f89dae4e3f362a948f843",
+      "baseHash": "3e5ddb2e2c7fe2f4c0d3d58d07cc38e2f85d1479",
       "issue": 4590
     },
     {
@@ -459,14 +466,14 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "a95da72539dafb69b7e0126110949720547b9a09",
+      "baseHash": "f3581c0d32837bc18bbb03fd32ce227ffe7a3ea4",
       "issue": 4379
     },
     {
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "83de31916eff7d7a528ce0881e85b12f728e5cce"
+      "baseHash": "689b700b5b0e62cb3c115550d73dd6ed1bf42c3b"
     },
     {
       "type": "derived",
@@ -489,7 +496,7 @@
       "type": "derived",
       "file": "src/Libraries/Text/Text.windows.js",
       "baseFile": "Libraries/Text/Text.js",
-      "baseHash": "64b609f0a802d9d1a0e41749499a9141fb209f10"
+      "baseHash": "08e95f246f30662723fdf19702bf7e4dab780fbc"
     },
     {
       "type": "patch",

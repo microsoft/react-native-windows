@@ -5,12 +5,12 @@
 #include "MoveOnCopy.h"
 #include "MsoUtils.h"
 
+#include <AppModelHelpers.h>
 #include <Base/CoreNativeModules.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
 #include <appModel.h>
 #include <comUtil/qiCast.h>
-
 #ifndef CORE_ABI
 #include <XamlUIService.h>
 #endif
@@ -132,7 +132,8 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
   virtual ~BridgeUIBatchInstanceCallback() = default;
   void onBatchComplete() override {
     if (auto instance = m_wkInstance.GetStrongPtr()) {
-      if (instance->IsLoaded()) {
+      auto state = instance->State();
+      if (state != ReactInstanceState::HasError && state != ReactInstanceState::Unloaded) {
         if (instance->UseWebDebugger()) {
           // While using a CxxModule for UIManager (which we do when running under webdebugger)
           // We need to post the batch complete to the NativeQueue to ensure that the UIManager
@@ -471,8 +472,7 @@ void ReactInstanceWin::Initialize() noexcept {
             case JSIEngine::V8:
 #if defined(USE_V8)
             {
-              uint32_t length{0};
-              if (GetCurrentPackageFullName(&length, nullptr) != APPMODEL_ERROR_NO_PACKAGE) {
+              if (Microsoft::ReactNative::HasPackageIdentity()) {
                 preparedScriptStore =
                     std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
               } else {

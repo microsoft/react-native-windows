@@ -191,6 +191,15 @@ IInspectable ReactPropertyBag::Set(IReactPropertyName const &propertyName, IInsp
   return result;
 }
 
+void ReactPropertyBag::CopyFrom(IReactPropertyBag const &other) noexcept {
+  std::scoped_lock lock{m_mutex};
+  auto otherImpl = winrt::get_self<ReactPropertyBag>(other);
+  std::scoped_lock otherLock{otherImpl->m_mutex};
+  for (auto const &entry : otherImpl->m_entries) {
+    m_entries.emplace(entry);
+  }
+}
+
 /*static*/ IReactPropertyNamespace ReactPropertyBagHelper::GlobalNamespace() noexcept {
   return ReactPropertyNamespace::GlobalNamespace().as<IReactPropertyNamespace>();
 }

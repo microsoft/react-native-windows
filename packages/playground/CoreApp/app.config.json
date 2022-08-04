@@ -1,0 +1,33 @@
+{
+  // the React component name
+  "componentName": "RNTesterApp",
+  // the path to the JS bundle, relative to bundleRootPath. Default value: "index.windows"
+  "jsBundleFile": "Samples\\rntester",
+  // "bundleRootPath": "ms-appx:///Bundle/",
+  "useWebDebugger": false,
+  // "useFastRefresh": true,
+  "useDeveloperSupport": true,
+  // "useDirectDebugger": false,
+  // "enableDefaultCrashHandler": false,
+  // "debuggerPort": 9229,
+  // "sourceBundlePort": 8081,
+  // "sourceBundleHost": "localhost",
+  // "jsEngine" : "chakra", // possible options are "chakra", "hermes", "v8"
+  "jsEngine": "hermes",
+  // "viewName": null,
+  "nativeModules": [
+    {
+      // "moduleContainer": "CoreApp.exe",
+      "factory": "MySpecialPackageProvider"
+    }
+  ]
+  /*
+  ,
+  "properties": {
+    "someString": "string value",
+    "someNumber": 42.5,
+    "someBoolean": true,
+    "namespace1.namespace2.foo": 22
+  }
+  */
+}

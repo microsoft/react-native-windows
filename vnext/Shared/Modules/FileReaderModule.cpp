@@ -4,6 +4,7 @@
 #include "FileReaderModule.h"
 
 #include <ReactPropertyBag.h>
+#include <sstream>
 
 // Boost Library
 #include <boost/archive/iterators/base64_from_binary.hpp>
@@ -71,7 +72,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         winrt::array_view<uint8_t> bytes;
+         winrt::array_view<uint8_t const> bytes;
          try {
            bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
          } catch (const std::exception &e) {
@@ -116,7 +117,7 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
          auto offset = blob["offset"].asInt();
          auto size = blob["size"].asInt();
 
-         winrt::array_view<uint8_t> bytes;
+         winrt::array_view<uint8_t const> bytes;
          try {
            bytes = blobPersistor->ResolveMessage(std::move(blobId), offset, size);
          } catch (const std::exception &e) {

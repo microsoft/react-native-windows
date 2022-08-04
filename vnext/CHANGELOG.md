@@ -1,8 +1,186 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 22 Jun 2022 05:09:33 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Aug 2022 05:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.538
+
+Thu, 04 Aug 2022 05:09:38 GMT
+
+### Changes
+
+- Update nuget feed declarations (jthysell@microsoft.com)
+- Update Folly to v2021.07.22.0 (jthysell@microsoft.com)
+- Fix skew transforms for string values (erozell@outlook.com)
+
+## 0.0.0-canary.537
+
+Wed, 03 Aug 2022 05:09:41 GMT
+
+### Changes
+
+- Remove call to nyi() in TransformableText (erozell@outlook.com)
+- Add import lib if the app sets the UseRNCoreApp property (asklar@microsoft.com)
+- Integrate 7/4 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.48
+
+## 0.0.0-canary.536
+
+Tue, 02 Aug 2022 05:08:55 GMT
+
+### Changes
+
+- Update custom targets in Folly.vcxproj and fmt.vcxproj (jthysell@microsoft.com)
+
+## 0.0.0-canary.535
+
+Fri, 29 Jul 2022 05:09:46 GMT
+
+### Changes
+
+- Adds header to fix clang build in FileReaderModule (erozell@outlook.com)
+- Initialize TextTransformParentVisitor state (erozell@outlook.com)
+- Restore Some Git Tags (ngerlem@microsoft.com)
+- Allow batches to complete during load (30809111+acoates-ms@users.noreply.github.com)
+- Only fire `onLongPress` for left clicks (erozell@outlook.com)
+- Include import lib in the M.RN nuget package to export CoreApp APIs (asklar@microsoft.com)
+- Adds windows.h include to memoryApi.cpp (erozell@outlook.com)
+
+## 0.0.0-canary.534
+
+Thu, 28 Jul 2022 05:09:10 GMT
+
+### Changes
+
+- Fix crash in DynamicAutomationPeer::GetContentName (erozell@outlook.com)
+- CompactValue.h override fixes (hpratt@microsoft.com)
+
+## 0.0.0-canary.533
+
+Wed, 27 Jul 2022 05:09:29 GMT
+
+### Changes
+
+- Additional fix required for UTF-8 characters in bundle path (erozell@outlook.com)
+
+## 0.0.0-canary.532
+
+Sat, 23 Jul 2022 05:09:29 GMT
+
+### Changes
+
+- Use uint8_t const in IBlobPersistor.h (erozell@outlook.com)
+- Fix compiler issue for older versions of C++/WinRT (erozell@outlook.com)
+- Use u8path for bundle loading (ericroz@fb.com)
+
+## 0.0.0-canary.531
+
+Fri, 22 Jul 2022 05:09:58 GMT
+
+### Changes
+
+- Check for DP::UnsetValue() rather than nullptr (erozell@outlook.com)
+
+## 0.0.0-canary.530
+
+Wed, 20 Jul 2022 05:09:08 GMT
+
+### Changes
+
+- CoreApp API (asklar@microsoft.com)
+
+## 0.0.0-canary.529
+
+Tue, 19 Jul 2022 05:09:31 GMT
+
+### Changes
+
+- Import WinUI package only if OverrideWinUIPackage is not true (julio.rocha@microsoft.com)
+- Implement HTTP client timeout (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.528
+
+Tue, 12 Jul 2022 05:10:12 GMT
+
+### Changes
+
+- Explicitly add headers for clang build (erozell@outlook.com)
+- CG: Remove dependency on deprecated `hermes-engine` package (jthysell@microsoft.com)
+
+## 0.0.0-canary.527
+
+Sat, 09 Jul 2022 05:09:51 GMT
+
+### Changes
+
+- Fix Text Color in High Contrast (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.526
+
+Fri, 08 Jul 2022 05:11:11 GMT
+
+### Changes
+
+- adding missing flags, recommended for reducing binary size (agnel@microsoft.com)
+
+## 0.0.0-canary.525
+
+Fri, 01 Jul 2022 05:08:41 GMT
+
+### Changes
+
+- Use interface for ReactImage memory streams (erozell@outlook.com)
+
+## 0.0.0-canary.524
+
+Wed, 29 Jun 2022 05:09:22 GMT
+
+### Changes
+
+- CG: Update Newtonsoft.Json to 13.0.1 (jthysell@microsoft.com)
+- Fixes issue when alert is not only descendant of PopupRoot (erozell@outlook.com)
+
+## 0.0.0-canary.523
+
+Tue, 28 Jun 2022 05:08:25 GMT
+
+### Changes
+
+- Centralize getting package identity (asklar@microsoft.com)
+
+## 0.0.0-canary.522
+
+Mon, 27 Jun 2022 05:09:12 GMT
+
+### Changes
+
+- Enable Blob module in UWP (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.521
+
+Sat, 25 Jun 2022 05:09:00 GMT
+
+### Changes
+
+- Add PlatformColor support for Image's tintColor (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.133
+
+## 0.0.0-canary.520
+
+Fri, 24 Jun 2022 05:09:34 GMT
+
+### Changes
+
+- Update API Docs (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.519
+
+Thu, 23 Jun 2022 05:09:18 GMT
+
+### Changes
+
+- Disambiguate ReactContext in ReactInstanceWin (erozell@outlook.com)
 
 ## 0.0.0-canary.518
 

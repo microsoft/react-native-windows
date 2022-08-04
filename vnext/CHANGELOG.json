@@ -2,6 +2,429 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Aug 2022 05:09:38 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.538",
+      "version": "0.0.0-canary.538",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "864bbb2718c8ca10065bfd0c86321ae020256f0d",
+            "comment": "Update nuget feed declarations"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1370f161ab84146d8c466f38b23559392c371ca",
+            "comment": "Update Folly to v2021.07.22.0"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "b53838c95c2bdec70d082282d7545a0a024573dc",
+            "comment": "Fix skew transforms for string values"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Aug 2022 05:09:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.537",
+      "version": "0.0.0-canary.537",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "41e12b57b1fd8ee402a8ceccf1b05e52a7d9088a",
+            "comment": "Remove call to nyi() in TransformableText"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a4e3b6ddea368f38b71b0a776b2952bd1653c44f",
+            "comment": "Add import lib if the app sets the UseRNCoreApp property"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d521a4704a276ec138073c14f5e37d0094fca7f2",
+            "comment": "Integrate 7/4"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.48",
+            "commit": "a4e3b6ddea368f38b71b0a776b2952bd1653c44f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 02 Aug 2022 05:08:55 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.536",
+      "version": "0.0.0-canary.536",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5bce642d260089bffbc581afe55e5d22cf7ec8bd",
+            "comment": "Update custom targets in Folly.vcxproj and fmt.vcxproj"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 29 Jul 2022 05:09:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.535",
+      "version": "0.0.0-canary.535",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0b4b818f9a2148c2fa9e792dddeb9f6929149a06",
+            "comment": "Adds header to fix clang build in FileReaderModule"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "68913bee0748b41973d4a182c04f42ef6076e968",
+            "comment": "Initialize TextTransformParentVisitor state"
+          },
+          {
+            "author": "ngerlem@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6211949087a1c9d6a8a1974e770fe7e84f10e36c",
+            "comment": "Restore Some Git Tags"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "25f385109cf83b5decdef2100440f899f3998641",
+            "comment": "Allow batches to complete during load"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "977c1bf8aac1616768d87c91f8b5b764f8e60018",
+            "comment": "Only fire `onLongPress` for left clicks"
+          },
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1d43306b8a2c2bcb1e134528ae0a2e93e91632d5",
+            "comment": "Include import lib in the M.RN nuget package to export CoreApp APIs"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "aa0177fa6c0e9fd5b98391e32a47d73aba39b442",
+            "comment": "Adds windows.h include to memoryApi.cpp"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Jul 2022 05:09:10 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.534",
+      "version": "0.0.0-canary.534",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7d5cefc3d9b159f08ffd26688adbfc4ce379d66b",
+            "comment": "Fix crash in DynamicAutomationPeer::GetContentName"
+          },
+          {
+            "author": "hpratt@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0fd8704b0519d508d87f8a1098c6a4509cf1c210",
+            "comment": "CompactValue.h override fixes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Jul 2022 05:09:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.533",
+      "version": "0.0.0-canary.533",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "2d8fe023fb7910b1036a41038e5d3ca9855f893e",
+            "comment": "Additional fix required for UTF-8 characters in bundle path"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Jul 2022 05:09:29 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.532",
+      "version": "0.0.0-canary.532",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "b296ceed0d12fa997e1bee14fb9549a03aac76ab",
+            "comment": "Use uint8_t const in IBlobPersistor.h"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "f68cb37404b686ae9bb11edef0f8da3eb2714dd3",
+            "comment": "Fix compiler issue for older versions of C++/WinRT"
+          },
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "f3d8a0c5845fbc435ce156d6f22f4f04886d1312",
+            "comment": "Use u8path for bundle loading"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Jul 2022 05:09:58 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.531",
+      "version": "0.0.0-canary.531",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "6ef492fb7c13e7acfb57d3cf201f5f75fb323976",
+            "comment": "Check for DP::UnsetValue() rather than nullptr"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Jul 2022 05:09:08 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.530",
+      "version": "0.0.0-canary.530",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c4455cd94662e5d9511e8e79216c944ca89973ee",
+            "comment": "CoreApp API"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 19 Jul 2022 05:09:31 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.529",
+      "version": "0.0.0-canary.529",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "51857f2d528f4d1bd73f6be3d86df868930453c3",
+            "comment": "Import WinUI package only if OverrideWinUIPackage is not true"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be2f3c3f4d43a85678db5ca6b7b9e1e30f163ec6",
+            "comment": "Implement HTTP client timeout"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Jul 2022 05:08:42 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.528",
+      "version": "0.0.0-canary.528",
+      "comments": {
+        "none": [
+          {
+            "author": "dzndlhov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "12d83f9f4e9ae094ea59837a23d40bb1681a81c2",
+            "comment": "Map App Window Focus to RN AppState"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Jul 2022 05:10:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.528",
+      "version": "0.0.0-canary.528",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e5e02d6046b1906cf154f2eacf8873fdd0afd4d1",
+            "comment": "Explicitly add headers for clang build"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "24b8aafe312aece0f8d3d4049b80f94bc078080b",
+            "comment": "CG: Remove dependency on deprecated `hermes-engine` package"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Jul 2022 05:09:51 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.527",
+      "version": "0.0.0-canary.527",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "93ee50236d9187f117c9ea75c0933bb661980b53",
+            "comment": "Fix Text Color in High Contrast"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Jul 2022 05:11:11 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.526",
+      "version": "0.0.0-canary.526",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4085229675cfcc632a1a5eb20ed2826f97e347ed",
+            "comment": "adding missing flags, recommended for reducing binary size"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Jul 2022 05:08:41 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.525",
+      "version": "0.0.0-canary.525",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3eeba4d11187dc370429cc3a4e60b668a5ac2fd8",
+            "comment": "Use interface for ReactImage memory streams"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Jun 2022 05:09:22 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.524",
+      "version": "0.0.0-canary.524",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f886ae648f90fec3a1843796578963a0362d4cf5",
+            "comment": "CG: Update Newtonsoft.Json to 13.0.1"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e5ba5f611dbc08fcf8f2f56b5a9f2d26b2e9d249",
+            "comment": "Fixes issue when alert is not only descendant of PopupRoot"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 28 Jun 2022 05:08:25 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.523",
+      "version": "0.0.0-canary.523",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "754bc415d967979b5e9ad76815e88cfdd949639b",
+            "comment": "Centralize getting package identity"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 27 Jun 2022 05:09:12 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.522",
+      "version": "0.0.0-canary.522",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bba9c1d27d76c2734acc540caf8476c48e298910",
+            "comment": "Enable Blob module in UWP"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 25 Jun 2022 05:09:00 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.521",
+      "version": "0.0.0-canary.521",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "22adc186f621c738b2269efbe72317ec48f0631d",
+            "comment": "Add PlatformColor support for Image's tintColor"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.133",
+            "commit": "22adc186f621c738b2269efbe72317ec48f0631d"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 24 Jun 2022 05:09:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.520",
+      "version": "0.0.0-canary.520",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0266f65ffeb0eef353612f9fedb89e3d5bfc6abb",
+            "comment": "Update API Docs"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 Jun 2022 05:09:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.519",
+      "version": "0.0.0-canary.519",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3857727addf3adb0962b3970d91976ee866ee75b",
+            "comment": "Disambiguate ReactContext in ReactInstanceWin"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 22 Jun 2022 05:09:33 GMT",
       "tag": "react-native-windows_v0.0.0-canary.518",
       "version": "0.0.0-canary.518",

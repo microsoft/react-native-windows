@@ -29,7 +29,7 @@ namespace Microsoft::ReactNative {
 
 #ifdef USE_WINCOMP
 winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
-    const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept;
+    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept;
 #endif // USE_WINCOMP
 
 winrt::fire_and_forget GetImageSizeAsync(
@@ -53,7 +53,7 @@ winrt::fire_and_forget GetImageSizeAsync(
     bool needsDownload = (scheme == L"http") || (scheme == L"https");
     bool inlineData = scheme == L"data";
 
-    winrt::InMemoryRandomAccessStream memoryStream;
+    winrt::IRandomAccessStream memoryStream;
     if (needsDownload) {
       memoryStream = co_await GetImageStreamAsync(source);
     } else if (inlineData) {

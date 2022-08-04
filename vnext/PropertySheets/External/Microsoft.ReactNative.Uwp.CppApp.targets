@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+<!--
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 
@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <!-- WinUI package name and version are set by WinUI.props -->
-    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" />
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
     <!-- Hermes version is set by JSEngine.props -->
     <PackageReference Include="ReactNative.Hermes.Windows" Version="$(HermesVersion)" Condition="$(UseHermes)" />
   </ItemGroup>

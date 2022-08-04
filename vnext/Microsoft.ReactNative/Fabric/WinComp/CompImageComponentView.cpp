@@ -136,7 +136,7 @@ void CompImageComponentView::beginDownloadImage() noexcept {
 }
 
 winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
-    const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &results) noexcept {
+    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
   winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
   winrt::com_ptr<IWICImagingFactory> imagingFactory;
   winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));

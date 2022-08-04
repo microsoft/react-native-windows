@@ -89,8 +89,8 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 };
 
 // Helper functions
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
-GetImageStreamAsync(ReactImageSource source);
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::InMemoryRandomAccessStream>
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream> GetImageStreamAsync(
+    ReactImageSource source);
+winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>
 GetImageInlineDataAsync(ReactImageSource source);
 } // namespace Microsoft::ReactNative
