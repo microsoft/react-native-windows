@@ -1,9 +1,6 @@
 {
   "type": "prerelease",
-  "comment": {
-    "title": "",
-    "value": ""
-  },
+  "comment": "Remove incorrect typename keyword in helpers.h function template",
   "packageName": "react-native-windows",
   "email": "45952631+JonCavesMSFT@users.noreply.github.com",
   "dependentChangeType": "patch"
