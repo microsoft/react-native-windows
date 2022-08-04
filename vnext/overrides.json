@@ -68,6 +68,13 @@
       "baseHash": "86ac95fb195394bc314b2481907026d2568a0c45"
     },
     {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/hermes/inspector/chrome/ConnectionDemux.cpp",
+      "baseFile": "ReactCommon/hermes/inspector/chrome/ConnectionDemux.cpp",
+      "baseHash": "41dc97319f19389ff5af38a70c5c428de83c3ef6",
+      "issue": 10370
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",

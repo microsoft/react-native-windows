@@ -239,3 +239,43 @@ test('set, remove breakpoint', async () => {
     await settings.restore();
   }
 });
+
+// Regression test for the fix for RNW:9662 (https://github.com/microsoft/react-native-windows/issues/9662,
+// this test would fail prior to the fix).
+test.only('reload after continue', async () => {
+  testLog.message(`executing 'pause, resume' test on PID ${pid}`);
+
+  const settings = await PlaygroundDebugSettings.set({
+    webDebugger: false,
+    directDebugging: true,
+    jsEngine: 'Hermes',
+  });
+  try {
+    const isBundleServed0 = metro.isBundleServed('debugTest01');
+    await loadPackage('Samples\\debugTest01', isBundleServed0);
+
+    const debugTargets = await getDebugTargets();
+    const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
+
+    await dbg.debuggerEnable();
+
+    const pausedEvent = dbg.expectEvent('paused');
+    await dbg.debuggerPause();
+    await pausedEvent;
+
+    const resumedEvent = dbg.expectEvent('resumed');
+    await dbg.debuggerResume();
+    await resumedEvent;
+
+    const isBundleServed1 = metro.isBundleServed('debugTest01');
+
+    // without the fix, this re-load would hang
+    await loadPackage('Samples\\debugTest01', isBundleServed1);
+
+    await dbg.checkOutstandingResponses(3000);
+
+    dbg.close();
+  } finally {
+    await settings.restore();
+  }
+});
