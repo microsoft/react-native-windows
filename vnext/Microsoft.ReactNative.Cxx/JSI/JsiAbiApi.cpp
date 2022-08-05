@@ -263,6 +263,13 @@ Runtime::PointerValue *JsiAbiRuntime::cloneSymbol(const Runtime::PointerValue *p
   throw;
 }
 
+Runtime::PointerValue *JsiAbiRuntime::cloneBigInt(const Runtime::PointerValue *pv) try {
+  return new BigIntPointerValue{make_weak(m_runtime), m_runtime.CloneBigInt(AsJsiBigIntRef(pv))};
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
 Runtime::PointerValue *JsiAbiRuntime::cloneString(const Runtime::PointerValue *pv) try {
   return new StringPointerValue{make_weak(m_runtime), m_runtime.CloneString(AsJsiStringRef(pv))};
 } catch (hresult_error const &) {
@@ -623,6 +630,13 @@ bool JsiAbiRuntime::strictEquals(const Symbol &a, const Symbol &b) const try {
   throw;
 }
 
+bool JsiAbiRuntime::strictEquals(const BigInt &a, const BigInt &b) const try {
+  return m_runtime.BigIntStrictEquals(AsJsiBigIntRef(a), AsJsiBigIntRef(b));
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
 bool JsiAbiRuntime::strictEquals(const String &a, const String &b) const try {
   return m_runtime.StringStrictEquals(AsJsiStringRef(a), AsJsiStringRef(b));
 } catch (hresult_error const &) {
@@ -686,6 +700,10 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   return SymbolPointerValue::GetData(pv);
 }
 
+/*static*/ JsiBigIntRef const &JsiAbiRuntime::AsJsiBigIntRef(PointerValue const *pv) noexcept {
+  return BigIntPointerValue::GetData(pv);
+}
+
 /*static*/ JsiStringRef const &JsiAbiRuntime::AsJsiStringRef(PointerValue const *pv) noexcept {
   return StringPointerValue::GetData(pv);
 }
@@ -700,6 +718,10 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
 
 /*static*/ JsiSymbolRef const &JsiAbiRuntime::AsJsiSymbolRef(Symbol const &symbol) noexcept {
   return SymbolPointerValue::GetData(getPointerValue(symbol));
+}
+
+/*static*/ JsiBigIntRef const &JsiAbiRuntime::AsJsiBigIntRef(BigInt const &bigInt) noexcept {
+  return BigIntPointerValue::GetData(getPointerValue(bigInt));
 }
 
 /*static*/ JsiStringRef const &JsiAbiRuntime::AsJsiStringRef(String const &str) noexcept {
@@ -725,6 +747,8 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   switch (valuePtr->Kind) {
     case JsiValueKind::Symbol:
       return {valuePtr->Kind, SymbolPointerValue::GetData(getPointerValue(value)).Data};
+    case JsiValueKind::BigInt:
+      return {valuePtr->Kind, BigIntPointerValue::GetData(getPointerValue(value)).Data};
     case JsiValueKind::String:
       return {valuePtr->Kind, StringPointerValue::GetData(getPointerValue(value)).Data};
     case JsiValueKind::Object:
@@ -750,6 +774,8 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   switch (valuePtr->Kind) {
     case JsiValueKind::Symbol:
       return {valuePtr->Kind, SymbolPointerValue::Detach(getPointerValue(value)).Data};
+    case JsiValueKind::BigInt:
+      return {valuePtr->Kind, BigIntPointerValue::Detach(getPointerValue(value)).Data};
     case JsiValueKind::String:
       return {valuePtr->Kind, StringPointerValue::Detach(getPointerValue(value)).Data};
     case JsiValueKind::Object:
@@ -761,6 +787,10 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
 
 Runtime::PointerValue *JsiAbiRuntime::MakeSymbolValue(JsiSymbolRef &&symbol) const noexcept {
   return new SymbolPointerValue{make_weak(m_runtime), std::move(symbol)};
+}
+
+Runtime::PointerValue *JsiAbiRuntime::MakeBigIntValue(JsiBigIntRef &&bigInt) const noexcept {
+  return new BigIntPointerValue{make_weak(m_runtime), std::move(bigInt)};
 }
 
 Runtime::PointerValue *JsiAbiRuntime::MakeStringValue(JsiStringRef &&str) const noexcept {
@@ -777,6 +807,10 @@ Runtime::PointerValue *JsiAbiRuntime::MakePropNameIDValue(JsiPropertyIdRef &&pro
 
 Symbol JsiAbiRuntime::MakeSymbol(JsiSymbolRef &&symbol) const noexcept {
   return make<Symbol>(MakeSymbolValue(std::move(symbol)));
+}
+
+BigInt JsiAbiRuntime::MakeBigInt(JsiBigIntRef &&bigInt) const noexcept {
+  return make<BigInt>(MakeBigIntValue(std::move(bigInt)));
 }
 
 String JsiAbiRuntime::MakeString(JsiStringRef &&str) const noexcept {
@@ -815,6 +849,8 @@ Value JsiAbiRuntime::MakeValue(JsiValueRef &&value) const noexcept {
       return Value(*reinterpret_cast<double *>(&value.Data));
     case JsiValueKind::Symbol:
       return Value(MakeSymbol(JsiSymbolRef{value.Data}));
+    case JsiValueKind::BigInt:
+      return Value(MakeBigInt(JsiBigIntRef{value.Data}));
     case JsiValueKind::String:
       return Value(MakeString(JsiStringRef{value.Data}));
     case JsiValueKind::Object:
@@ -858,6 +894,32 @@ void JsiAbiRuntime::SymbolPointerValue::invalidate() {
 }
 
 /*static*/ JsiSymbolRef JsiAbiRuntime::SymbolPointerValue::Detach(PointerValue const *pv) noexcept {
+  return {std::exchange(static_cast<DataPointerValue *>(const_cast<PointerValue *>(pv))->m_data, 0)};
+}
+
+//===========================================================================
+// JsiAbiRuntime::BigIntPointerValue implementation
+//===========================================================================
+
+JsiAbiRuntime::BigIntPointerValue::BigIntPointerValue(
+    winrt::weak_ref<JsiRuntime> &&weakRuntime,
+    JsiBigIntRef &&bigInt) noexcept
+    : DataPointerValue{std::move(weakRuntime), std::exchange(bigInt.Data, 0)} {}
+
+void JsiAbiRuntime::BigIntPointerValue::invalidate() {
+  if (m_data) {
+    if (auto runtime = m_weakRuntime.get()) {
+      m_weakRuntime = nullptr;
+      runtime.ReleaseBigInt({m_data});
+    }
+  }
+}
+
+/*static*/ JsiBigIntRef const &JsiAbiRuntime::BigIntPointerValue::GetData(PointerValue const *pv) noexcept {
+  return *reinterpret_cast<JsiBigIntRef const *>(&static_cast<DataPointerValue const *>(pv)->m_data);
+}
+
+/*static*/ JsiBigIntRef JsiAbiRuntime::BigIntPointerValue::Detach(PointerValue const *pv) noexcept {
   return {std::exchange(static_cast<DataPointerValue *>(const_cast<PointerValue *>(pv))->m_data, 0)};
 }
 
