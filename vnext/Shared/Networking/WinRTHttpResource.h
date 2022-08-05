@@ -38,6 +38,12 @@ class WinRTHttpResource : public IHttpResource,
 
   void UntrackResponse(int64_t requestId) noexcept;
 
+  winrt::Windows::Foundation::IAsyncOperation<
+  winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
+      winrt::Windows::Web::Http::HttpMethod &&method,
+      winrt::Windows::Foundation::Uri &&uri,
+      winrt::Windows::Foundation::IInspectable const &args) noexcept;
+
   winrt::fire_and_forget PerformSendRequest(
       winrt::Windows::Web::Http::HttpRequestMessage &&request,
       winrt::Windows::Foundation::IInspectable const &args) noexcept;
