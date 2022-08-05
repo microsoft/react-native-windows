@@ -242,7 +242,7 @@ test('set, remove breakpoint', async () => {
 
 // Regression test for the fix for RNW:9662 (https://github.com/microsoft/react-native-windows/issues/9662,
 // this test would fail prior to the fix).
-test.only('reload after continue', async () => {
+test('reload after continue', async () => {
   testLog.message(`executing 'pause, resume' test on PID ${pid}`);
 
   const settings = await PlaygroundDebugSettings.set({
