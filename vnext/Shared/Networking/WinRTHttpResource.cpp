@@ -281,15 +281,17 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   m_responses.erase(requestId);
 }
 
-fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&request, IInspectable const &args) noexcept {
+fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&requestOld, IInspectable const &args) noexcept {
   // Keep references after coroutine suspension.
   auto self = shared_from_this();
-  auto coRequest = std::move(request);
+  auto coRequestOld = std::move(requestOld);
   auto coArgs = args;
   auto coReqArgs = coArgs.as<RequestArgs>();
 
   // Ensure background thread
   co_await winrt::resume_background();
+
+  auto coRequest = co_await CreateRequest(HttpMethod(coRequestOld.Method()), Uri{coRequestOld.RequestUri()}, coArgs);
 
   // If URI handler is available, it takes over request processing.
   if (auto uriHandler = self->m_uriHandler.lock()) {
@@ -313,6 +315,7 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     }
   }
 
+#ifdef ERASME
   HttpMediaTypeHeaderValue contentType{nullptr};
   string contentEncoding;
   string contentLength;
@@ -409,8 +412,12 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     coRequest.Content(content);
   }
 
+#endif // ERASME
+
   try {
+#ifdef ERASME
     coRequest.Properties().Insert(L"RequestArgs", coArgs);
+#endif // ERASME
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
     self->TrackResponse(coReqArgs->RequestId, sendRequestOp);
 
