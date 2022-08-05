@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 03 Aug 2022 05:09:41 GMT and should not be manually modified.
+This log was last generated on Thu, 04 Aug 2022 05:09:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.538
+
+Thu, 04 Aug 2022 05:09:38 GMT
+
+### Changes
+
+- Update nuget feed declarations (jthysell@microsoft.com)
+- Update Folly to v2021.07.22.0 (jthysell@microsoft.com)
+- Fix skew transforms for string values (erozell@outlook.com)
 
 ## 0.0.0-canary.537
 
