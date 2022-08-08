@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable ABIViewManager to opt out of NeedsForceLayout",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
