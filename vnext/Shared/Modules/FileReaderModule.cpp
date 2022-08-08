@@ -4,6 +4,7 @@
 #include "FileReaderModule.h"
 
 #include <ReactPropertyBag.h>
+#include <sstream>
 
 // Boost Library
 #include <boost/archive/iterators/base64_from_binary.hpp>

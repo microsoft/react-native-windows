@@ -151,7 +151,6 @@
       <Filter>yoga\event</Filter>
     </ClCompile>
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
-    <ClCompile Include=".\Yoga.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp">
@@ -163,12 +162,12 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp">
       <Filter>react\renderer\debug</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp">
-      <Filter>react\renderer\telemetry</Filter>
-    </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
+    <ClCompile Include="Yoga.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -279,9 +278,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h">
-      <Filter>turbomodule\core</Filter>
-    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
@@ -296,5 +292,7 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\brdiging\CallbackWrapper.h" />
   </ItemGroup>
 </Project>

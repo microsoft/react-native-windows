@@ -1,8 +1,68 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 27 Jul 2022 05:09:29 GMT and should not be manually modified.
+This log was last generated on Fri, 05 Aug 2022 05:09:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.539
+
+Fri, 05 Aug 2022 05:09:19 GMT
+
+### Changes
+
+- Remove incorrect typename keyword in helpers.h function template (45952631+JonCavesMSFT@users.noreply.github.com)
+
+## 0.0.0-canary.538
+
+Thu, 04 Aug 2022 05:09:38 GMT
+
+### Changes
+
+- Update nuget feed declarations (jthysell@microsoft.com)
+- Update Folly to v2021.07.22.0 (jthysell@microsoft.com)
+- Fix skew transforms for string values (erozell@outlook.com)
+
+## 0.0.0-canary.537
+
+Wed, 03 Aug 2022 05:09:41 GMT
+
+### Changes
+
+- Remove call to nyi() in TransformableText (erozell@outlook.com)
+- Add import lib if the app sets the UseRNCoreApp property (asklar@microsoft.com)
+- Integrate 7/4 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.48
+
+## 0.0.0-canary.536
+
+Tue, 02 Aug 2022 05:08:55 GMT
+
+### Changes
+
+- Update custom targets in Folly.vcxproj and fmt.vcxproj (jthysell@microsoft.com)
+
+## 0.0.0-canary.535
+
+Fri, 29 Jul 2022 05:09:46 GMT
+
+### Changes
+
+- Adds header to fix clang build in FileReaderModule (erozell@outlook.com)
+- Initialize TextTransformParentVisitor state (erozell@outlook.com)
+- Restore Some Git Tags (ngerlem@microsoft.com)
+- Allow batches to complete during load (30809111+acoates-ms@users.noreply.github.com)
+- Only fire `onLongPress` for left clicks (erozell@outlook.com)
+- Include import lib in the M.RN nuget package to export CoreApp APIs (asklar@microsoft.com)
+- Adds windows.h include to memoryApi.cpp (erozell@outlook.com)
+
+## 0.0.0-canary.534
+
+Thu, 28 Jul 2022 05:09:10 GMT
+
+### Changes
+
+- Fix crash in DynamicAutomationPeer::GetContentName (erozell@outlook.com)
+- CompactValue.h override fixes (hpratt@microsoft.com)
 
 ## 0.0.0-canary.533
 

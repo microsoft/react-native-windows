@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
+This log was last generated on Fri, 29 Jul 2022 05:09:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.3.0
+
+Fri, 29 Jul 2022 05:09:46 GMT
+
+### Minor changes
+
+- Restore Some Git Tags (ngerlem@microsoft.com)
 
 ## 1.2.1
 

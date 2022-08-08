@@ -3,13 +3,13 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-20220614-2054-bcc69dfb3",
+  "baseVersion": "0.0.0-20220704-2054-3da3d8232",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "895c71b88766d95270375497adde5b28f17b8c8c"
+      "baseHash": "950a5ad34450c49cde405a0f21c77182795a5fbd"
     },
     {
       "type": "copy",
@@ -27,13 +27,13 @@
       "type": "copy",
       "file": "src/ViewabilityHelper.js",
       "baseFile": "Libraries/Lists/ViewabilityHelper.js",
-      "baseHash": "aa9647837dd2fe6d4f6c5710751d0acf0014680f"
+      "baseHash": "25d41013afe88fa728eac9e529433a752086eadd"
     },
     {
       "type": "patch",
       "file": "src/VirtualizedList.js",
       "baseFile": "Libraries/Lists/VirtualizedList.js",
-      "baseHash": "29281ee1bd71e9a987fce0c366695553a7944d8b",
+      "baseHash": "903d02cc4f1e68d2eced2c626f143d58ed31ca58",
       "issue": 8120
     },
     {
