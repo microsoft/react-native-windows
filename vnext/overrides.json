@@ -502,12 +502,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
-<<<<<<< HEAD
-      "baseVersion": "0.0.0-20220704-2054-3da3d8232",
-      "baseHash": "cdb7a19ab99f0e74e46331476f523fae1d62a02b"
-=======
       "baseHash": "5bf8e4d80cf27ac6a3268977895276d5736b3138"
->>>>>>> fd9c50c52c08cb1d7c4d62f056f8e236c327eb76
     },
     {
       "type": "copy",
