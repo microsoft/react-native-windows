@@ -138,11 +138,11 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
 
   using facebook::jsi::Runtime::call;
   using facebook::jsi::Runtime::callAsConstructor;
+  using facebook::jsi::Runtime::cloneBigInt;
   using facebook::jsi::Runtime::cloneObject;
   using facebook::jsi::Runtime::clonePropNameID;
   using facebook::jsi::Runtime::cloneString;
   using facebook::jsi::Runtime::cloneSymbol;
-  using facebook::jsi::Runtime::cloneBigInt;
   using facebook::jsi::Runtime::compare;
   using facebook::jsi::Runtime::createArray;
   using facebook::jsi::Runtime::createFunctionFromHostFunction;

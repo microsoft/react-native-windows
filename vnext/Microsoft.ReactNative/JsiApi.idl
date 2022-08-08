@@ -65,9 +65,9 @@ namespace Microsoft.ReactNative
     Boolean,
     Number,
     Symbol,
-    BigInt,
     String,
     Object,
+    BigInt
   };
 
   [experimental, webhosthidden]
