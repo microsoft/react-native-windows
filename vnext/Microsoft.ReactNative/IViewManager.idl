@@ -56,6 +56,11 @@ namespace Microsoft.ReactNative
     Boolean RequiresNativeLayout { get; };
   }
 
+  [webhosthidden] DOC_STRING("Enables a view manager to require native layout but not force layout.")
+  interface IViewManagerDisableForceLayout {
+    Boolean DisableForceLayout { get; };
+  }
+
   [webhosthidden]
   DOC_STRING(
     "Enables a view manager to create views whose behavior depend on the the property values passed to the view manager at creation time. "

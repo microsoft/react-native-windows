@@ -40,6 +40,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
+      m_viewManagerDisableForceLayout{viewManager.try_as<IViewManagerDisableForceLayout>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
       m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()} {
@@ -239,7 +240,8 @@ void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
   return new ABIShadowNode(
-      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout());
+      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout() &&
+      (!m_viewManagerDisableForceLayout || !m_viewManagerDisableForceLayout.DisableForceLayout()));
 }
 
 } // namespace winrt::Microsoft::ReactNative
