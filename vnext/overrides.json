@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220710-2050-b834d5869",
+  "baseVersion": "0.0.0-20220714-2051-8af7870c6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "9fb0d67f768c703eb2bbb8c3cfa89c4195cd5b05"
+      "baseHash": "fb425c3818276b4141f4c1877d4f0629f10e18ba"
     },
     {
       "type": "patch",
@@ -92,7 +92,7 @@
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "IntegrationTests",
-      "baseHash": "89357552712de54b8d0387c8ad9bc5a4b3896cbb",
+      "baseHash": "f15ff3d921e0a1a0de946642cbf8e7f6e675a2fc",
       "issue": 4054
     },
     {
@@ -286,7 +286,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "8f43acf9edea7e518119e6bd3cd2ddf3b3ac4e53"
+      "baseHash": "40e5d8415243c15dc31bab4f1246f42d5d52e679"
     },
     {
       "type": "patch",
@@ -502,8 +502,12 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
+<<<<<<< HEAD
       "baseVersion": "0.0.0-20220704-2054-3da3d8232",
       "baseHash": "cdb7a19ab99f0e74e46331476f523fae1d62a02b"
+=======
+      "baseHash": "5bf8e4d80cf27ac6a3268977895276d5736b3138"
+>>>>>>> fd9c50c52c08cb1d7c4d62f056f8e236c327eb76
     },
     {
       "type": "copy",

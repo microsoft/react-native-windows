@@ -86,7 +86,7 @@ void TextComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) no
   // m_element.FinalizeProperties();
 }
 void TextComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps TextComponentView::props() noexcept {
+facebook::react::Props::Shared TextComponentView::props() noexcept {
   assert(false);
   return {};
 }

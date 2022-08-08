@@ -82,6 +82,7 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   bool IsInspectable();
 
   JsiSymbolRef CloneSymbol(JsiSymbolRef symbol);
+  JsiBigIntRef CloneBigInt(JsiBigIntRef bigInt);
   JsiStringRef CloneString(JsiStringRef str);
   JsiObjectRef CloneObject(JsiObjectRef obj);
   JsiPropertyIdRef ClonePropertyId(JsiPropertyIdRef propertyId);
@@ -142,11 +143,13 @@ struct JsiRuntime : JsiRuntimeT<JsiRuntime> {
   void PopScope(JsiScopeState scopeState);
 
   bool SymbolStrictEquals(JsiSymbolRef left, JsiSymbolRef right);
+  bool BigIntStrictEquals(JsiBigIntRef left, JsiBigIntRef right);
   bool StringStrictEquals(JsiStringRef left, JsiStringRef right);
   bool ObjectStrictEquals(JsiObjectRef left, JsiObjectRef right);
   bool InstanceOf(JsiObjectRef obj, JsiObjectRef constructor);
 
   void ReleaseSymbol(JsiSymbolRef const &symbol);
+  void ReleaseBigInt(JsiBigIntRef const &bigInt);
   void ReleaseString(JsiStringRef const &str);
   void ReleaseObject(JsiObjectRef const &obj);
   void ReleasePropertyId(JsiPropertyIdRef const &propertyId);

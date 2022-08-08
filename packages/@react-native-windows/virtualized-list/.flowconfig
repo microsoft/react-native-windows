@@ -34,6 +34,7 @@
 emoji=true
 
 exact_by_default=true
+exact_empty_objects=true
 
 format.bracket_spacing=false
 

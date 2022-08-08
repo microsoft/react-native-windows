@@ -63,6 +63,11 @@ struct PointerAccessor : facebook::jsi::Pointer {
     return {reinterpret_cast<uint64_t>(std::exchange(accessor.ptr_, nullptr))};
   }
 
+  static JsiBigIntRef MakeJsiBigIntData(facebook::jsi::BigInt &&bigInt) {
+    auto &&accessor = AsPointerAccessor(std::move(bigInt));
+    return {reinterpret_cast<uint64_t>(std::exchange(accessor.ptr_, nullptr))};
+  }
+
   static JsiStringRef MakeJsiStringData(facebook::jsi::String &&str) {
     auto &&accessor = AsPointerAccessor(std::move(str));
     return {reinterpret_cast<uint64_t>(std::exchange(accessor.ptr_, nullptr))};
@@ -133,6 +138,7 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
 
   using facebook::jsi::Runtime::call;
   using facebook::jsi::Runtime::callAsConstructor;
+  using facebook::jsi::Runtime::cloneBigInt;
   using facebook::jsi::Runtime::cloneObject;
   using facebook::jsi::Runtime::clonePropNameID;
   using facebook::jsi::Runtime::cloneString;
@@ -182,6 +188,10 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
     return *reinterpret_cast<facebook::jsi::Symbol const *>(ptr);
   }
 
+  static facebook::jsi::BigInt const &AsBigInt(facebook::jsi::Runtime::PointerValue const **ptr) noexcept {
+    return *reinterpret_cast<facebook::jsi::BigInt const *>(ptr);
+  }
+
   static facebook::jsi::String const &AsString(facebook::jsi::Runtime::PointerValue const **ptr) noexcept {
     return *reinterpret_cast<facebook::jsi::String const *>(ptr);
   }
@@ -211,6 +221,10 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   }
 
   static JsiSymbolRef MakeJsiSymbolData(facebook::jsi::Runtime::PointerValue *pointerValue) {
+    return {reinterpret_cast<uint64_t>(pointerValue)};
+  }
+
+  static JsiBigIntRef MakeJsiBigIntData(facebook::jsi::Runtime::PointerValue *pointerValue) {
     return {reinterpret_cast<uint64_t>(pointerValue)};
   }
 
@@ -518,6 +532,13 @@ bool JsiRuntime::IsInspectable() try { return m_runtimeAccessor->isInspectable()
 JsiSymbolRef JsiRuntime::CloneSymbol(JsiSymbolRef symbol) try {
   return PointerAccessor::MakeJsiSymbolData(m_runtimeAccessor->make<facebook::jsi::Symbol>(
       m_runtimeAccessor->cloneSymbol(RuntimeAccessor::AsPointerValue(symbol))));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
+JsiBigIntRef JsiRuntime::CloneBigInt(JsiBigIntRef bigInt) try {
+  return PointerAccessor::MakeJsiBigIntData(m_runtimeAccessor->make<facebook::jsi::BigInt>(
+      m_runtimeAccessor->cloneBigInt(RuntimeAccessor::AsPointerValue(bigInt))));
 } catch (JSI_SET_ERROR) {
   throw;
 }
@@ -920,6 +941,14 @@ bool JsiRuntime::SymbolStrictEquals(JsiSymbolRef left, JsiSymbolRef right) try {
   throw;
 }
 
+bool JsiRuntime::BigIntStrictEquals(JsiBigIntRef left, JsiBigIntRef right) try {
+  auto leftPtr = RuntimeAccessor::AsPointerValue(left);
+  auto rightPtr = RuntimeAccessor::AsPointerValue(right);
+  return m_runtimeAccessor->strictEquals(RuntimeAccessor::AsBigInt(&leftPtr), RuntimeAccessor::AsBigInt(&rightPtr));
+} catch (JSI_SET_ERROR) {
+  throw;
+}
+
 bool JsiRuntime::StringStrictEquals(JsiStringRef left, JsiStringRef right) try {
   auto leftPtr = RuntimeAccessor::AsPointerValue(left);
   auto rightPtr = RuntimeAccessor::AsPointerValue(right);
@@ -947,6 +976,11 @@ bool JsiRuntime::InstanceOf(JsiObjectRef obj, JsiObjectRef constructor) try {
 void JsiRuntime::ReleaseSymbol(JsiSymbolRef const &symbolData) {
   auto symbol =
       RuntimeAccessor::make<facebook::jsi::Symbol>(reinterpret_cast<RuntimeAccessor::PointerValue *>(symbolData.Data));
+}
+
+void JsiRuntime::ReleaseBigInt(JsiBigIntRef const &bigIntData) {
+  auto bigInt =
+      RuntimeAccessor::make<facebook::jsi::BigInt>(reinterpret_cast<RuntimeAccessor::PointerValue *>(bigIntData.Data));
 }
 
 void JsiRuntime::ReleaseString(JsiStringRef const &stringData) {

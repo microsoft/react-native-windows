@@ -46,8 +46,8 @@
     "pretty-format": "^26.5.2",
     "promise": "^8.0.3",
     "react-devtools-core": "4.24.0",
-    "react-native-codegen": "^0.70.0",
-    "react-native-gradle-plugin": "^0.0.7",
+    "react-native-codegen": "^0.70.1",
+    "react-native-gradle-plugin": "^0.70.0",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "^16.15.0",
     "regenerator-runtime": "^0.13.2",
@@ -76,7 +76,7 @@
     "metro-config": "^0.70.1",
     "prettier": "^2.4.1",
     "react": "18.1.0",
-    "react-native": "0.0.0-20220710-2050-b834d5869",
+    "react-native": "0.0.0-20220714-2051-8af7870c6",
     "react-native-platform-override": "^1.6.13",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -84,7 +84,7 @@
   },
   "peerDependencies": {
     "react": "18.1.0",
-    "react-native": "0.0.0-20220710-2050-b834d5869"
+    "react-native": "0.0.0-20220714-2051-8af7870c6"
   },
   "beachball": {
     "defaultNpmTag": "canary",
