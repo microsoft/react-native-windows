@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220704-2054-3da3d8232",
+  "baseVersion": "0.0.0-20220710-2050-b834d5869",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "950a5ad34450c49cde405a0f21c77182795a5fbd"
+      "baseHash": "9fb0d67f768c703eb2bbb8c3cfa89c4195cd5b05"
     },
     {
       "type": "patch",
@@ -308,7 +308,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/Touchable.windows.js",
       "baseFile": "Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "0ac4d0233073bf34f54088ebbdf008825e3235dc",
+      "baseHash": "c1e6ce77fc27bfc4b39a87e6519bda6d55ded8f1",
       "issue": 0
     },
     {
@@ -352,7 +352,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "d2a2c68a374e334a4ff211353c534a795433bd7d"
+      "baseHash": "acfad8aae28439dad8792c141b5be321b3ef83b1"
     },
     {
       "type": "platform",
@@ -431,7 +431,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "5c1a9a2a8cf15fd51fbba8cd6189d0dd05047f96"
+      "baseHash": "a0dca36e4c9d6c7ad4890cc0a34ec02cbbab9405"
     },
     {
       "type": "platform",
@@ -466,7 +466,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "Libraries/Pressability/Pressability.js",
-      "baseHash": "f3581c0d32837bc18bbb03fd32ce227ffe7a3ea4",
+      "baseHash": "487a7a4e21fbf611503fc0093fc629fdde62e720",
       "issue": 4379
     },
     {
@@ -489,7 +489,7 @@
       "type": "patch",
       "file": "src/Libraries/StyleSheet/processTransform.windows.js",
       "baseFile": "Libraries/StyleSheet/processTransform.js",
-      "baseHash": "cf8b6fd7e28565a689d0ae1252801b54bccf6c7f",
+      "baseHash": "038d42bba39060567bbe906f905ad798cb35293a",
       "issue": 9797
     },
     {
@@ -502,6 +502,7 @@
       "type": "patch",
       "file": "src/Libraries/Types/CoreEventTypes.windows.js",
       "baseFile": "Libraries/Types/CoreEventTypes.js",
+      "baseVersion": "0.0.0-20220704-2054-3da3d8232",
       "baseHash": "cdb7a19ab99f0e74e46331476f523fae1d62a02b"
     },
     {
