@@ -455,7 +455,9 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     if (result == HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION)) {
 
       //TODO: Clone original request!
-      auto redirRequestOp = self->m_client.SendRequestAsync(coRequest);
+      //auto coRequest = co_await CreateRequest(HttpMethod(coRequestOld.Method()), Uri{coRequestOld.RequestUri()}, coArgs);
+      auto coRequest2 = co_await CreateRequest(HttpMethod(coRequest.Method()), Uri{coRequest.RequestUri()}, coArgs);
+      auto redirRequestOp = self->m_client.SendRequestAsync(coRequest2);
       co_await lessthrow_await_adapter<ResponseOperation>{redirRequestOp};
       result = redirRequestOp.ErrorCode();
     }
