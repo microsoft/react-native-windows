@@ -292,6 +292,9 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
   co_await winrt::resume_background();
 
   auto coRequest = co_await CreateRequest(HttpMethod(coRequestOld.Method()), Uri{coRequestOld.RequestUri()}, coArgs);
+  if (!coRequest) {
+    co_return;
+  }
 
   // If URI handler is available, it takes over request processing.
   if (auto uriHandler = self->m_uriHandler.lock()) {
