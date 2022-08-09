@@ -50,7 +50,8 @@ namespace Microsoft.ReactNative
     void GetData(JsiByteArrayUser useBytes);
   };
 
-  // Type of the JavaScript value. It is currently matching the full JavaScript set of types except for the BigInt type.
+  // Type of the JavaScript value. It is currently matching the full JavaScript set of types.
+  // This list MUST stay in sync with the order/values in ReactCommon\jsi\jsi\jsi.h or JSI will break.
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
@@ -65,9 +66,9 @@ namespace Microsoft.ReactNative
     Boolean,
     Number,
     Symbol,
+    BigInt,
     String,
     Object,
-    BigInt
   };
 
   [experimental, webhosthidden]
