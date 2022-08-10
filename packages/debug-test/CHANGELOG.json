@@ -2,6 +2,21 @@
   "name": "debug-test",
   "entries": [
     {
+      "date": "Wed, 10 Aug 2022 05:16:49 GMT",
+      "tag": "debug-test_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "debug-test",
+            "comment": "Bump @react-native-windows/automation to v0.1.125",
+            "commit": "ec96f996a957c244f5cb5cb3747bf1c1aa918f0a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 05 Aug 2022 05:09:19 GMT",
       "tag": "debug-test_v0.0.0",
       "version": "0.0.0",

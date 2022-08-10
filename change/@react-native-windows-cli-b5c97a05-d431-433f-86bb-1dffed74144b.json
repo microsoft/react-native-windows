@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update autolinking to update project paths in solution files",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
