@@ -132,7 +132,8 @@ struct BrushCache {
     }
 
     assert(false && "Resource is not a Color or Brush");
-    return xaml::Media::SolidColorBrush(winrt::Colors::Transparent());;
+    return xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
+    ;
   }
 
   xaml::Media::Brush RegisterBrush(winrt::hstring resourceName, const xaml::Media::Brush &brush) {
