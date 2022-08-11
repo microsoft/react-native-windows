@@ -88,7 +88,7 @@ namespace Microsoft.ReactNative
     )
     void OnPointerEvent(Object view, ReactPointerEventArgs args);
   };
-  
+
   [webhosthidden]
   DOC_STRING(
     "Enables view managers to track when views are "
@@ -116,5 +116,46 @@ namespace Microsoft.ReactNative
         "when the final layout has not changed, so this method may be called "
         "without a corresponding `onLayout` event in JavaScript.")
     void OnLayout(XAML_NAMESPACE.FrameworkElement view, Single left, Single top, Single width, Single height);
+  };
+
+  [experimental]
+  DOC_STRING(
+      "An experimental API. It may be removed or changed in a future version. "
+      "Used by @IViewManagerWithNativeLayout for the measurement callback measure mode parameter."
+  )
+  enum YogaMeasureMode {
+    Undefined,
+    Exactly,
+    AtMost,
+  };
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(
+      "An experimental API. It may be removed or changed in a future version. "
+      "Used by @IViewManagerWithNativeLayout for the measurement callback return value."
+  )
+  struct YogaSize {
+    Single Width;
+    Single Height;
+  };
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(
+    "An experimental API. It may be removed or changed in a future version. "
+    "Enables view managers to implement custom Yoga leaf node measurement."
+  )
+  interface IViewManagerWithNativeLayout {
+    DOC_STRING(
+      "An experimental API. It may be removed or changed in a future version. "
+      "Yoga measurement callback for ABI view managers."
+    )
+    YogaSize Measure(
+        XAML_NAMESPACE.FrameworkElement view,
+        Single width,
+        YogaMeasureMode widthMode,
+        Single height,
+        YogaMeasureMode heightMode);
   };
 } // namespace Microsoft.ReactNative

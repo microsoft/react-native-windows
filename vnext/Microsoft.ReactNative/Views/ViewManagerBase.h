@@ -18,12 +18,6 @@ struct IReactInstance;
 struct ShadowNodeBase;
 struct ShadowNode;
 
-struct YogaContext {
-  YogaContext(const XamlView &view_) : view(view_) {}
-
-  XamlView view;
-};
-
 REACTWINDOWS_EXPORT YGSize DefaultYogaSelfMeasureFunc(
     YGNodeRef node,
     float width,
@@ -117,5 +111,12 @@ class REACTWINDOWS_EXPORT ViewManagerBase : public IViewManager {
   std::shared_ptr<winrt::Microsoft::ReactNative::BatchingEventEmitter> m_batchingEventEmitter;
 };
 #pragma warning(pop)
+
+struct YogaContext {
+  YogaContext(const XamlView &view_, ViewManagerBase *viewManager_) : view(view_), viewManager(viewManager_) {}
+
+  XamlView view;
+  ViewManagerBase *viewManager;
+};
 
 } // namespace Microsoft::ReactNative

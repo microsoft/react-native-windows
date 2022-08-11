@@ -15,6 +15,18 @@
 
 namespace winrt::Microsoft::ReactNative {
 
+YGSize ABIYogaSelfMeasureTrampoline(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
+  const auto context = reinterpret_cast<::Microsoft::ReactNative::YogaContext *>(YGNodeGetContext(node));
+  const auto viewManager = static_cast<ABIViewManager *>(context->viewManager);
+  const auto size = viewManager->ABIYogaSelfMeasureFunc(node, width, widthMode, height, heightMode);
+  return size;
+}
+
 class ABIShadowNode : public ::Microsoft::ReactNative::ShadowNodeBase {
   using Super = ShadowNodeBase;
 
@@ -40,6 +52,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
+      m_viewManagerWithNativeLayout{viewManager.try_as<IViewManagerWithNativeLayout>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
       m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()},
@@ -117,7 +130,8 @@ void ABIViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValu
 void ABIViewManager::UpdateProperties(
     ::Microsoft::ReactNative::ShadowNodeBase *nodeToUpdate,
     winrt::Microsoft::ReactNative::JSValueObject &props) {
-  if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
+  if ((m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) ||
+      m_viewManagerWithNativeLayout) {
     MarkDirty(nodeToUpdate->m_tag);
   }
 
@@ -218,7 +232,9 @@ void ABIViewManager::ReplaceChild(
 }
 
 YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
-  if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
+  if (m_viewManagerWithNativeLayout) {
+    return ABIYogaSelfMeasureTrampoline;
+  } else if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
     return ::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
   } else {
     return nullptr;
@@ -253,6 +269,39 @@ void ABIViewManager::SetLayoutProps(
   }
   // Call the base method to handle `SetLayoutProps` behavior
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+}
+
+static YogaMeasureMode ToABIMeasureMode(YGMeasureMode measureMode) {
+  switch (measureMode) {
+    case YGMeasureMode::YGMeasureModeUndefined:
+      return YogaMeasureMode::Undefined;
+    case YGMeasureMode::YGMeasureModeExactly:
+      return YogaMeasureMode::Exactly;
+    case YGMeasureMode::YGMeasureModeAtMost:
+      return YogaMeasureMode::AtMost;
+    default:
+      throw std::exception("Not implemented");
+  }
+}
+
+static YGSize ToYGSize(YogaSize size) {
+  return {size.Width, size.Height};
+}
+
+YGSize ABIViewManager::ABIYogaSelfMeasureFunc(
+    YGNodeRef node,
+    float width,
+    YGMeasureMode widthMode,
+    float height,
+    YGMeasureMode heightMode) {
+  assert(m_viewManagerWithNativeLayout);
+  const auto context = reinterpret_cast<::Microsoft::ReactNative::YogaContext *>(YGNodeGetContext(node));
+  const auto view = context->view.as<xaml::FrameworkElement>();
+  const auto abiWidthMode = ToABIMeasureMode(widthMode);
+  const auto abiHeightMode = ToABIMeasureMode(heightMode);
+  const auto abiSize = m_viewManagerWithNativeLayout.Measure(view, width, abiWidthMode, height, abiHeightMode);
+  const auto size = ToYGSize(abiSize);
+  return size;
 }
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
