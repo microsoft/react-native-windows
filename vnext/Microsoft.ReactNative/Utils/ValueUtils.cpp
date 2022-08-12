@@ -117,17 +117,21 @@ struct BrushCache {
       return RegisterBrush(resourceName, brush);
     }
 
-    winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName))};
+    const auto appResources{winrt::Application::Current().Resources()};
+    const auto boxedResourceName{winrt::box_value(resourceName)};
+    if (appResources.HasKey(boxedResourceName)) {
+      winrt::IInspectable resource{appResources.Lookup(boxedResourceName)};
 
-    if (auto brush = resource.try_as<xaml::Media::Brush>()) {
-      return RegisterBrush(resourceName, brush);
-    } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
-      auto brush = xaml::Media::SolidColorBrush(color.value());
-      return RegisterBrush(resourceName, brush);
+      if (auto brush = resource.try_as<xaml::Media::Brush>()) {
+        return RegisterBrush(resourceName, brush);
+      } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
+        auto brush = xaml::Media::SolidColorBrush(color.value());
+        return RegisterBrush(resourceName, brush);
+      }
     }
 
     assert(false && "Resource is not a Color or Brush");
-    return nullptr;
+    return xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
   }
 
   xaml::Media::Brush RegisterBrush(winrt::hstring resourceName, const xaml::Media::Brush &brush) {

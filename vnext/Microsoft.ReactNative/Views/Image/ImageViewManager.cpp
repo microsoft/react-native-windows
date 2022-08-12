@@ -143,7 +143,7 @@ bool ImageViewManager::UpdateProperty(
   } else if (propertyName == "tintColor") {
     const auto isValidColorValue = IsValidColorValue(propertyValue);
     if (isValidColorValue || propertyValue.IsNull()) {
-      const auto color = isValidColorValue ? ColorFrom(propertyValue) : winrt::Colors::Transparent();
+      const auto color = isValidColorValue ? SolidColorBrushFrom(propertyValue).Color() : winrt::Colors::Transparent();
       reactImage->TintColor(color);
     }
     // Override default accessibility behavior
