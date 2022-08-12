@@ -28,6 +28,8 @@
 #include "Unicode.h"
 #include "cdebug.h"
 
+#include <magic_enum.hpp>
+
 namespace winrt {
 using namespace xaml;
 using namespace xaml::Controls;
@@ -526,8 +528,8 @@ bool FrameworkElementViewManager::UpdateProperty(
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
     } else if (propertyName == "accessibilityValue") {
-      auto textValue = static_cast<winrt::hstring>(L"");
-      double values[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::CountValues) - 1] = {};
+      winrt::hstring textValue;
+      double values[static_cast<int32_t>(magic_enum::enum_count<winrt::Microsoft::ReactNative::AccessibilityValue>() - 1)] = {};
 
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {
