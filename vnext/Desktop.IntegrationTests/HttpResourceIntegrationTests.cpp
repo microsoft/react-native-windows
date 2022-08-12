@@ -279,14 +279,14 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Response Body"}, content);
   }
 
-  TEST_METHOD(SimpleRedirectSucceeds) {
+  TEST_METHOD(RedirectGetSucceeds) {
     auto port1 = s_port;
     auto port2 = ++s_port;
     string url = "http://localhost:" + std::to_string(port1);
 
-    promise<void> getResponsePromise;
-    promise<void> getContentPromise;
-    IHttpResource::Response getResponse;
+    promise<void> responsePromise;
+    promise<void> contentPromise;
+    IHttpResource::Response responseResult;
     string content;
     string error;
 
@@ -311,23 +311,23 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server2->Start();
 
     auto resource = IHttpResource::Make();
-    resource->SetOnResponse([&getResponse, &getResponsePromise](int64_t, IHttpResource::Response response) {
+    resource->SetOnResponse([&responseResult, &responsePromise](int64_t, IHttpResource::Response response) {
       if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
-        getResponse = response;
-        getResponsePromise.set_value();
+        responseResult = response;
+        responsePromise.set_value();
       }
     });
-    resource->SetOnData([&getContentPromise, &content](int64_t, string &&responseData) {
+    resource->SetOnData([&contentPromise, &content](int64_t, string &&responseData) {
       content = std::move(responseData);
 
       if (!content.empty())
-        getContentPromise.set_value();
+        contentPromise.set_value();
     });
-    resource->SetOnError([&getResponsePromise, &getContentPromise, &error, &server1](int64_t, string &&message) {
+    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message) {
       error = std::move(message);
 
-      getResponsePromise.set_value();
-      getContentPromise.set_value();
+      responsePromise.set_value();
+      contentPromise.set_value();
     });
 
     //clang-format off
@@ -344,14 +344,90 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         [](int64_t) {});
     //clang-format on
 
-    getResponsePromise.get_future().wait();
-    getContentPromise.get_future().wait();
+    responsePromise.get_future().wait();
+    contentPromise.get_future().wait();
 
     server2->Stop();
     server1->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
-    Assert::AreEqual(static_cast<int64_t>(200), getResponse.StatusCode);
+    Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
+    Assert::AreEqual({"Redirect Content"}, content);
+  }
+
+  TEST_METHOD(RedirectPatchSucceeds) {
+    auto port1 = s_port;
+    auto port2 = ++s_port;
+    string url = "http://localhost:" + std::to_string(port1);
+
+    promise<void> responsePromise;
+    promise<void> contentPromise;
+    IHttpResource::Response responseResult;
+    string content;
+    string error;
+
+    auto server1 = make_shared<HttpServer>(port1);
+    server1->Callbacks().OnPatch = [port2](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::moved_permanently);
+      response.set(http::field::location, {"http://localhost:" + std::to_string(port2)});
+
+      return {std::move(response)};
+    };
+    auto server2 = make_shared<HttpServer>(port2);
+    server2->Callbacks().OnPatch = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Redirect Content");
+
+      return {std::move(response)};
+    };
+
+    server1->Start();
+    server2->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&responseResult, &responsePromise](int64_t, IHttpResource::Response response) {
+      if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        responseResult = response;
+        responsePromise.set_value();
+      }
+    });
+    resource->SetOnData([&contentPromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
+
+      if (!content.empty())
+        contentPromise.set_value();
+    });
+    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message) {
+      error = std::move(message);
+
+      responsePromise.set_value();
+      contentPromise.set_value();
+    });
+
+    //clang-format off
+    resource->SendRequest(
+        "PATCH",
+        std::move(url),
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
+        "text",
+        false, /*useIncrementalUpdates*/
+        0 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    responsePromise.get_future().wait();
+    contentPromise.get_future().wait();
+
+    server2->Stop();
+    server1->Stop();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
     Assert::AreEqual({"Redirect Content"}, content);
   }
 
