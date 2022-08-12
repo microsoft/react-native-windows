@@ -279,7 +279,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Response Body"}, content);
   }
 
-  TEST_METHOD(RedirectGetSucceeds) {
+  TEST_METHOD(SimpleRedirectGetSucceeds) {
     auto port1 = s_port;
     auto port2 = ++s_port;
     string url = "http://localhost:" + std::to_string(port1);
@@ -355,7 +355,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Redirect Content"}, content);
   }
 
-  TEST_METHOD(RedirectPatchSucceeds) {
+  TEST_METHOD(SimpleRedirectPatchSucceeds) {
     auto port1 = s_port;
     auto port2 = ++s_port;
     string url = "http://localhost:" + std::to_string(port1);
