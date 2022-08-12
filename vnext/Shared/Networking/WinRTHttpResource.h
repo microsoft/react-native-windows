@@ -45,8 +45,9 @@ class WinRTHttpResource : public IHttpResource,
       winrt::Windows::Foundation::IInspectable const &args) noexcept;
 
   winrt::fire_and_forget PerformSendRequest(
-      winrt::Windows::Web::Http::HttpRequestMessage &&request,
-      winrt::Windows::Foundation::IInspectable const &args) noexcept;
+    winrt::Windows::Web::Http::HttpMethod &&method,
+    winrt::Windows::Foundation::Uri &&uri,
+    winrt::Windows::Foundation::IInspectable const &args) noexcept;
 
  public:
   WinRTHttpResource() noexcept;

@@ -194,7 +194,6 @@ void WinRTHttpResource::SendRequest(
   try {
     HttpMethod httpMethod{to_hstring(std::move(method))};
     Uri uri{to_hstring(std::move(url))};
-    HttpRequestMessage request{httpMethod, uri};
 
     auto args = winrt::make<RequestArgs>();
     auto concreteArgs = args.as<RequestArgs>();
@@ -206,7 +205,7 @@ void WinRTHttpResource::SendRequest(
     concreteArgs->ResponseType = std::move(responseType);
     concreteArgs->Timeout = timeout;
 
-    PerformSendRequest(std::move(request), args);
+    PerformSendRequest(std::move(httpMethod), std::move(uri), args);
   } catch (std::exception const &e) {
     if (m_onError) {
       m_onError(requestId, e.what());
@@ -281,17 +280,18 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   m_responses.erase(requestId);
 }
 
-fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&requestOld, IInspectable const &args) noexcept {
+fire_and_forget WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri&& rtUri, IInspectable const &args) noexcept {
   // Keep references after coroutine suspension.
   auto self = shared_from_this();
-  auto coRequestOld = std::move(requestOld);
   auto coArgs = args;
   auto coReqArgs = coArgs.as<RequestArgs>();
+  auto coMethod = std::move(method);
+  auto coUri = std::move(rtUri);
 
   // Ensure background thread
   co_await winrt::resume_background();
 
-  auto coRequest = co_await CreateRequest(HttpMethod(coRequestOld.Method()), Uri{coRequestOld.RequestUri()}, coArgs);
+  auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), coArgs);
   if (!coRequest) {
     co_return;
   }
@@ -454,8 +454,6 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
     // Handle "The HTTP redirect request must be confirmed by the user"
     if (result == HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION)) {
 
-      //TODO: Clone original request!
-      //auto coRequest = co_await CreateRequest(HttpMethod(coRequestOld.Method()), Uri{coRequestOld.RequestUri()}, coArgs);
       auto coRequest2 = co_await CreateRequest(HttpMethod(coRequest.Method()), Uri{coRequest.RequestUri()}, coArgs);
       auto redirRequestOp = self->m_client.SendRequestAsync(coRequest2);
       co_await lessthrow_await_adapter<ResponseOperation>{redirRequestOp};
