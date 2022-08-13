@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds Systrace to view management APIs for UIManager",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
