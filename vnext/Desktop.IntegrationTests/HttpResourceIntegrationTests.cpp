@@ -34,6 +34,8 @@ using Test::EmptyResponse;
 using Test::HttpServer;
 using Test::ResponseWrapper;
 
+namespace Microsoft::React::Test {
+
 TEST_CLASS (HttpResourceIntegrationTest) {
   static uint16_t s_port;
 
@@ -531,3 +533,5 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 };
 
 /*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;
+
+} // namespace Microsoft::React::Test
