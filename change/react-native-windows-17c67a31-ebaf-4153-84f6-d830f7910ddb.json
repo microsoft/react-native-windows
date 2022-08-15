@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix relative include path for Views/Image",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
