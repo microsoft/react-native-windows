@@ -74,6 +74,11 @@ inline xaml::CornerRadius GetCornerRadius(
   double bottomEndRadius =
       DefaultOrOverride(cornerRadii[(int)ShadowCorners::BottomRight], cornerRadii[(int)ShadowCorners::BottomEnd]);
 
+  // These values are clamped to 50% of the minimum of width or height
+  // dimension for cross-platform consistency with iOS, Android, and Web. We
+  // should revisit this clamping behavior if RN ever supports percentage
+  // values for the borderRadius prop as the default XAML behavior is
+  // consistent with Web behavior in this case.
   cornerRadius.TopLeft = DefaultOrOverrideWithClamp(defaultRadius, topStartRadius, maxCornerRadius);
   cornerRadius.TopRight = DefaultOrOverrideWithClamp(defaultRadius, topEndRadius, maxCornerRadius);
   cornerRadius.BottomLeft = DefaultOrOverrideWithClamp(defaultRadius, bottomStartRadius, maxCornerRadius);
