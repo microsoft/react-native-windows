@@ -241,9 +241,45 @@ WinRTHttpResource::PerformSendRequest(HttpMethod&& method, Uri&& rtUri, IInspect
   string contentEncoding;
   string contentLength;
 
-  auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), props);
-  if (!coRequest) {
-    co_return;
+  // Headers are generally case-insensitive
+  // https://www.ietf.org/rfc/rfc2616.txt section 4.2
+  for (auto& header : coReqArgs->Headers) {
+    if (boost::iequals(header.first.c_str(), "Content-Type")) {
+      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
+      if (!success && m_onError) {
+        co_return m_onError(coReqArgs->RequestId, "Failed to parse Content-Type");
+      }
+    }
+    else if (boost::iequals(header.first.c_str(), "Content-Encoding")) {
+      contentEncoding = header.second;
+    }
+    else if (boost::iequals(header.first.c_str(), "Content-Length")) {
+      contentLength = header.second;
+    }
+    else if (boost::iequals(header.first.c_str(), "Authorization")) {
+      bool success =
+        coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+      if (!success && m_onError) {
+        co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
+      }
+    }
+    else if (boost::iequals(header.first.c_str(), "User-Agent")) {
+      bool success =
+        coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+      if (!success && m_onError) {
+        co_return m_onError(coReqArgs->RequestId, "Failed to append User-Agent");
+      }
+    }
+    else {
+      try {
+        coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
+      }
+      catch (hresult_error const& e) {
+        if (self->m_onError) {
+          co_return self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(e));
+        }
+      }
+    }
   }
 
   // If URI handler is available, it takes over request processing.
