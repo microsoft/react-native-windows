@@ -740,7 +740,7 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   return reinterpret_cast<JsiWeakObjectRef const &>(ObjectPointerValue::GetData(getPointerValue(weakObject)));
 }
 
-/*static*/ JsiValueRef JsiAbiRuntime::AsJsiValueRef(Value const &value) noexcept 
+/*static*/ JsiValueRef JsiAbiRuntime::AsJsiValueRef(Value const &value) noexcept {
   // We assume that the JsiValueRef and Value have the same layout.
   auto valuePtr = reinterpret_cast<JsiValueRef const *>(&value);
   // Fix up the data part
