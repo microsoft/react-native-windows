@@ -10,10 +10,10 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ReactNativeWindowsVersion>0.69.4</ReactNativeWindowsVersion>
+    <ReactNativeWindowsVersion>0.69.5</ReactNativeWindowsVersion>
     <ReactNativeWindowsMajor>0</ReactNativeWindowsMajor>
     <ReactNativeWindowsMinor>69</ReactNativeWindowsMinor>
-    <ReactNativeWindowsPatch>4</ReactNativeWindowsPatch>
+    <ReactNativeWindowsPatch>5</ReactNativeWindowsPatch>
     <ReactNativeWindowsCanary>false</ReactNativeWindowsCanary>
   </PropertyGroup>
 </Project>

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 15 Aug 2022 15:09:31 GMT",
+      "tag": "react-native-windows_v0.69.5",
+      "version": "0.69.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ea2bb63d43e78eeb2e832c5a53edfe01d8e2c74a",
+            "comment": "Add PlatformColor support for Image's tintColor"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Jul 2022 15:12:46 GMT",
       "tag": "react-native-windows_v0.69.4",
       "version": "0.69.4",

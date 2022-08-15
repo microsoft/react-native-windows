@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add PlatformColor support for Image's tintColor",
-  "packageName": "react-native-windows",
-  "email": "agnel@microsoft.com",
-  "dependentChangeType": "patch"
-}

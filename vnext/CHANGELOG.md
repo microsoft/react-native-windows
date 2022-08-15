@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 25 Jul 2022 15:12:46 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Aug 2022 15:09:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.5
+
+Mon, 15 Aug 2022 15:09:31 GMT
+
+### Patches
+
+- Add PlatformColor support for Image's tintColor (agnel@microsoft.com)
 
 ## 0.69.4
 
