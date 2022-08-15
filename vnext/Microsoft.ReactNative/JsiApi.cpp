@@ -43,6 +43,50 @@ struct JsiBufferWrapper : facebook::jsi::Buffer {
 // Helper methods
 //===========================================================================
 
+/*static*/ FacebookJsiValueKind JsiValueKindHelper::ToValueKind(JsiValueKind const &kind) noexcept {
+  switch (kind) {
+    case JsiValueKind::Undefined:
+      return FacebookJsiValueKind::UndefinedKind;
+    case JsiValueKind::Null:
+      return FacebookJsiValueKind::NullKind;
+    case JsiValueKind::Boolean:
+      return FacebookJsiValueKind::BooleanKind;
+    case JsiValueKind::Number:
+      return FacebookJsiValueKind::NumberKind;
+    case JsiValueKind::Symbol:
+      return FacebookJsiValueKind::SymbolKind;
+    case JsiValueKind::String:
+      return FacebookJsiValueKind::StringKind;
+    case JsiValueKind::Object:
+      return FacebookJsiValueKind::ObjectKind;
+    case JsiValueKind::BigInt:
+      return FacebookJsiValueKind::BigIntKind;
+  }
+  return FacebookJsiValueKind::UndefinedKind;
+}
+
+/*static*/ JsiValueKind JsiValueKindHelper::ToJsiValueKind(FacebookJsiValueKind const &kind) noexcept {
+  switch (kind) {
+    case FacebookJsiValueKind::UndefinedKind:
+      return JsiValueKind::Undefined;
+    case FacebookJsiValueKind::NullKind:
+      return JsiValueKind::Null;
+    case FacebookJsiValueKind::BooleanKind:
+      return JsiValueKind::Boolean;
+    case FacebookJsiValueKind::NumberKind:
+      return JsiValueKind::Number;
+    case FacebookJsiValueKind::SymbolKind:
+      return JsiValueKind::Symbol;
+    case FacebookJsiValueKind::BigIntKind:
+      return JsiValueKind::BigInt;
+    case FacebookJsiValueKind::StringKind:
+      return JsiValueKind::String;
+    case FacebookJsiValueKind::ObjectKind:
+      return JsiValueKind::Object;
+  }
+  return JsiValueKind::Undefined;
+}
+
 // PointerAccessor allows accessing protected ptr_ value of facebook::jsi::Pointer.
 // It contains all functions that use the protected ptr_ value.
 struct PointerAccessor : facebook::jsi::Pointer {
@@ -107,19 +151,19 @@ struct ValueAccessor {
   static JsiValueRef ToJsiValueData(facebook::jsi::Value const &value) noexcept {
     ValueAccessor const &accessor = reinterpret_cast<ValueAccessor const &>(value);
     return {
-        static_cast<JsiValueKind>(static_cast<int32_t>(accessor.m_kind)),
+        JsiValueKindHelper::ToJsiValueKind(accessor.m_kind),
         *reinterpret_cast<uint64_t const *>(&accessor.m_data)};
   }
 
   static JsiValueRef MakeJsiValueData(facebook::jsi::Value &&value) {
     ValueAccessor &&accessor = reinterpret_cast<ValueAccessor &&>(value);
     return {
-        static_cast<JsiValueKind>(static_cast<int32_t>(std::exchange(accessor.m_kind, UndefinedKind))),
+        JsiValueKindHelper::ToJsiValueKind(std::exchange(accessor.m_kind, UndefinedKind)),
         *reinterpret_cast<uint64_t *>(&accessor.m_data)};
   }
 
  private:
-  enum ValueKind { UndefinedKind } m_kind;
+  enum FacebookJsiValueKind m_kind;
   double m_data;
 
   static_assert(sizeof(m_data) == sizeof(uint64_t), "Value data should fit in a 64-bit register");
@@ -217,6 +261,7 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   }
 
   static facebook::jsi::Value const *AsValue(JsiValueRef const &data) noexcept {
+    // TODO: Need to fix JSI kind mapping
     return reinterpret_cast<facebook::jsi::Value const *>(&data);
   }
 
@@ -246,10 +291,12 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
   }
 
   static JsiValueRef const *AsJsiValueData(facebook::jsi::Value const *value) noexcept {
-    return reinterpret_cast<Microsoft::ReactNative::JsiValueRef const *>(value);
+    auto ref = ValueAccessor::ToJsiValueData(*value);
+    return &ref;
   }
 
   static facebook::jsi::Value &&ToValue(JsiValueRef &&value) noexcept {
+    // TODO: Need to fix JSI kind mapping
     return reinterpret_cast<facebook::jsi::Value &&>(value);
   }
 

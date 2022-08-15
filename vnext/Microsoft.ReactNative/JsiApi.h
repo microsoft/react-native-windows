@@ -18,6 +18,24 @@ class Pointer;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+// CODESYNC: ReactCommon\jsi\jsi\jsi.h
+enum FacebookJsiValueKind {
+  UndefinedKind,
+  NullKind,
+  BooleanKind,
+  NumberKind,
+  SymbolKind,
+  BigIntKind,
+  StringKind,
+  ObjectKind,
+  PointerKind = SymbolKind,
+};
+
+struct JsiValueKindHelper final {
+  static FacebookJsiValueKind ToValueKind(JsiValueKind const &kind) noexcept;
+  static JsiValueKind ToJsiValueKind(FacebookJsiValueKind const &kind) noexcept;
+};
+
 struct JsiError : JsiErrorT<JsiError> {
   JsiError() = default;
 
