@@ -529,7 +529,8 @@ bool FrameworkElementViewManager::UpdateProperty(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
     } else if (propertyName == "accessibilityValue") {
       winrt::hstring textValue;
-      double numericValues[static_cast<int32_t>(magic_enum::enum_count<winrt::Microsoft::ReactNative::AccessibilityValue>() - 1)] = {};
+      double numericValues[static_cast<int32_t>(
+          magic_enum::enum_count<winrt::Microsoft::ReactNative::AccessibilityValue>() - 1)] = {};
 
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {
