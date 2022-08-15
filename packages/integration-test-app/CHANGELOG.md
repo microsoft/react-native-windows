@@ -1,8 +1,16 @@
 # Change Log - integration-test-app
 
-This log was last generated on Thu, 28 Jul 2022 21:39:43 GMT and should not be manually modified.
+This log was last generated on Mon, 15 Aug 2022 15:08:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 15 Aug 2022 15:08:06 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.68.13
 
 ## 0.0.0
 
