@@ -219,6 +219,12 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpRequestMessage &&reque
       if (!success && m_onError) {
         co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
       }
+    } else if (boost::iequals(header.first.c_str(), "User-Agent")) {
+      bool success =
+          coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+      if (!success && m_onError) {
+        co_return m_onError(coReqArgs->RequestId, "Failed to append User-Agent");
+      }
     } else {
       try {
         coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
