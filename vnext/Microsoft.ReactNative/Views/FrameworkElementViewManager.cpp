@@ -28,7 +28,7 @@
 #include "Unicode.h"
 #include "cdebug.h"
 
-#include <magic_enum.hpp>
+#include <magic_enum/magic_enum.hpp>
 
 namespace winrt {
 using namespace xaml;
