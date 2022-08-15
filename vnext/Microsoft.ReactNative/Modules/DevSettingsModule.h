@@ -5,7 +5,7 @@
 #include <cxxreact/CxxModule.h>
 #include <functional/functor.h>
 
-#include "../../codegen/NativeDevSettingsSpec.g.h"
+#include "codegen/NativeDevSettingsSpec.g.h"
 #include <NativeModules.h>
 #include <ReactHost/React.h>
 

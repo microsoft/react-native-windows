@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "../../codegen/NativeAccessibilityInfoSpec.g.h"
+#include "codegen/NativeAccessibilityInfoSpec.g.h"
 #include <NativeModules.h>
 
 namespace Microsoft::ReactNative {
