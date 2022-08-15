@@ -12,6 +12,7 @@
 #include <boost/lexical_cast/try_lexical_convert.hpp>
 
 // Windows API
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 
 // Standard Library

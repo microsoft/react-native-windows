@@ -31,7 +31,7 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher, Mso::Reac
 
   static IReactDispatcher CreateSerialDispatcher() noexcept;
 
-  static Mso::CntPtr<IDispatchQueue2> GetUIDispatchQueue2(IReactPropertyBag const &properties) noexcept;
+  static Mso::CntPtr<Mso::React::IDispatchQueue2> GetUIDispatchQueue2(IReactPropertyBag const &properties) noexcept;
   static IReactDispatcher UIThreadDispatcher() noexcept;
   static IReactPropertyName UIDispatcherProperty() noexcept;
   static IReactDispatcher GetUIDispatcher(IReactPropertyBag const &properties) noexcept;
@@ -42,8 +42,8 @@ struct ReactDispatcher : implements<ReactDispatcher, IReactDispatcher, Mso::Reac
   static IReactPropertyName JSDispatcherIdleWaitStartingEventName() noexcept;
   static IReactPropertyName JSDispatcherIdleWaitCompletedEventName() noexcept;
 
-  void Post(Mso::DispatchTask &&task) const noexcept override;
-  void InvokeElsePost(Mso::DispatchTask &&task) const noexcept override;
+  void Post(Mso::DispatchTask &&task) const noexcept;
+  void InvokeElsePost(Mso::DispatchTask &&task) const noexcept;
 
  private:
   Mso::DispatchQueue m_queue;

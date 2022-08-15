@@ -67,7 +67,8 @@ class TextShadowNode final : public ShadowNodeBase {
     }
 
     auto addInline = true;
-    if (index == 0) {
+    // Only convert to fast text when exactly one child is attached to the root Text node
+    if (index == 0 && m_children.size() == 1) {
       auto run = childNode.GetView().try_as<winrt::Run>();
       if (run != nullptr) {
         m_firstChildNode = &child;
@@ -75,7 +76,8 @@ class TextShadowNode final : public ShadowNodeBase {
         textBlock.Text(run.Text());
         addInline = false;
       }
-    } else if (index == 1 && m_firstChildNode != nullptr) {
+    } else if (m_firstChildNode != nullptr) {
+      assert(m_children.size() == 2);
       auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
       textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
       Super::AddView(*m_firstChildNode, 0);
@@ -101,7 +103,8 @@ class TextShadowNode final : public ShadowNodeBase {
   }
 
   void RemoveChildAt(int64_t indexToRemove) override {
-    if (indexToRemove == 0 && m_firstChildNode) {
+    if (m_firstChildNode) {
+      assert(indexToRemove == 0);
       auto textBlock = this->GetView().as<xaml::Controls::TextBlock>();
       textBlock.ClearValue(xaml::Controls::TextBlock::TextProperty());
       m_firstChildNode = nullptr;

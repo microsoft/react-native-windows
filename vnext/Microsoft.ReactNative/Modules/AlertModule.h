@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "../../codegen/NativeDialogManagerWindowsSpec.g.h"
+#include "codegen/NativeDialogManagerWindowsSpec.g.h"
 #include <NativeModules.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>

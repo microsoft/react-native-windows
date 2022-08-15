@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds missing headers for HttpRequestHeaderCollection",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

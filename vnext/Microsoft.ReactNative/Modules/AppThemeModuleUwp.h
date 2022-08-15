@@ -9,7 +9,7 @@
 #include <cxxreact/MessageQueueThread.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
-#include "../../codegen/NativeAppThemeSpec.g.h"
+#include "codegen/NativeAppThemeSpec.g.h"
 #include <NativeModules.h>
 
 namespace Microsoft::ReactNative {

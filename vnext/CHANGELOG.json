@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 13 Aug 2022 05:09:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.541",
+      "version": "0.0.0-canary.541",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "4d25e66c555f3859fa221591f6a609abfa11593b",
+            "comment": "Adds Systrace to view management APIs for UIManager"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Aug 2022 05:16:49 GMT",
       "tag": "react-native-windows_v0.0.0-canary.540",
       "version": "0.0.0-canary.540",
