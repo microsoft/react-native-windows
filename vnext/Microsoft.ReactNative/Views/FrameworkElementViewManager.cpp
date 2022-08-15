@@ -529,7 +529,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
     } else if (propertyName == "accessibilityValue") {
       winrt::hstring textValue;
-      double values[static_cast<int32_t>(magic_enum::enum_count<winrt::Microsoft::ReactNative::AccessibilityValue>() - 1)] = {};
+      double numericValues[static_cast<int32_t>(magic_enum::enum_count<winrt::Microsoft::ReactNative::AccessibilityValue>() - 1)] = {};
 
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {
@@ -541,7 +541,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           if (innerName == "min" &&
               (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
                innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
-            values[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Min)] =
+            numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Min)] =
                 innerValue.AsDouble();
 
             const auto prevMinValue = DynamicAutomationProperties::GetAccessibilityValueMin(element);
@@ -555,7 +555,7 @@ bool FrameworkElementViewManager::UpdateProperty(
               innerName == "max" &&
               (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
                innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
-            values[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Max)] =
+            numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Max)] =
                 innerValue.AsDouble();
 
             const auto prevMaxValue = DynamicAutomationProperties::GetAccessibilityValueMax(element);
@@ -569,7 +569,7 @@ bool FrameworkElementViewManager::UpdateProperty(
               innerName == "now" &&
               (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
                innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
-            values[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Now)] =
+            numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Now)] =
                 innerValue.AsDouble();
 
             const auto prevNowValue = DynamicAutomationProperties::GetAccessibilityValueNow(element);
@@ -594,11 +594,11 @@ bool FrameworkElementViewManager::UpdateProperty(
       }
 
       DynamicAutomationProperties::SetAccessibilityValueMin(
-          element, values[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Min)]);
+          element, numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Min)]);
       DynamicAutomationProperties::SetAccessibilityValueMax(
-          element, values[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Max)]);
+          element, numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Max)]);
       DynamicAutomationProperties::SetAccessibilityValueNow(
-          element, values[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Now)]);
+          element, numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Now)]);
       DynamicAutomationProperties::SetAccessibilityValueText(element, textValue);
     } else if (propertyName == "testID") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
