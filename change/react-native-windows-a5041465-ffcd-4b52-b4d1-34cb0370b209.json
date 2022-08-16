@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use programmatic focus for UIManager.focus",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

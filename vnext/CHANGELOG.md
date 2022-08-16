@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 13 Aug 2022 05:09:03 GMT and should not be manually modified.
+This log was last generated on Tue, 16 Aug 2022 05:09:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.542
+
+Tue, 16 Aug 2022 05:09:21 GMT
+
+### Changes
+
+- Fix relative include path for Views/Image (erozell@outlook.com)
+- Fix XamlRoot crashes in FlyoutViewManager (erozell@outlook.com)
+- Fixes clang compile issues for IReactDispatcher.h (erozell@outlook.com)
+- Replace all codegen includes without relative path (erozell@outlook.com)
+- Fixes various issues with fast text optimization (erozell@outlook.com)
+- Use programmatic focus for UIManager.focus (erozell@outlook.com)
+- Skip user agent HTTP header validation (erozell@outlook.com)
+- Adds missing headers for HttpRequestHeaderCollection (erozell@outlook.com)
+- Adds gesture cancellation to pointer event handling (erozell@outlook.com)
 
 ## 0.0.0-canary.541
 

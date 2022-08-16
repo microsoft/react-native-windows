@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adds gesture cancellation to pointer event handling",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

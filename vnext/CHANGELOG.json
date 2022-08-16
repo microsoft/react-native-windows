@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 16 Aug 2022 05:09:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.542",
+      "version": "0.0.0-canary.542",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7ee236336feca8128dbc28f1ad77f882ac5241b8",
+            "comment": "Fix relative include path for Views/Image"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "c5ac562e76c18f04e8ce361e52c628f8b63c1ba3",
+            "comment": "Fix XamlRoot crashes in FlyoutViewManager"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "59ffbf569a4092e8ea3228d13a90fd03c07ddb72",
+            "comment": "Fixes clang compile issues for IReactDispatcher.h"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0a87387649c6e1b3658794bd3f005cd74c96ef39",
+            "comment": "Replace all codegen includes without relative path"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "24bde0e59278c50233d7a2e83c96cf07047ac273",
+            "comment": "Fixes various issues with fast text optimization"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "571e6e65fc47b361c326fe4916f5df4c78bf943b",
+            "comment": "Use programmatic focus for UIManager.focus"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "a8f1ec1d28dbe2b3c6f2cf2ca535c702da600954",
+            "comment": "Skip user agent HTTP header validation"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3fe31e306fdf64aa22f40bb5e61a05057c0b3915",
+            "comment": "Adds missing headers for HttpRequestHeaderCollection"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "1231233e28db588635c4f436484f6443a21acbb3",
+            "comment": "Adds gesture cancellation to pointer event handling"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 13 Aug 2022 05:09:03 GMT",
       "tag": "react-native-windows_v0.0.0-canary.541",
       "version": "0.0.0-canary.541",
