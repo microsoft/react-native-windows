@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes various issues with fast text optimization",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
