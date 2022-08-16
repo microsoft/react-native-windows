@@ -4,8 +4,11 @@
 #include "pch.h"
 #include "Threading/BatchingQueueThread.h"
 #include <cxxreact/Instance.h>
+#include <cxxreact/SystraceSection.h>
 #include <eventWaitHandle/eventWaitHandle.h>
 #include <cassert>
+
+using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
@@ -36,7 +39,9 @@ void BatchingQueueCallInvoker::EnsureQueue() noexcept {
 void BatchingQueueCallInvoker::PostBatch() noexcept {
   if (m_taskQueue) {
     m_queueThread->runOnQueue([taskQueue{std::move(m_taskQueue)}]() noexcept {
+      SystraceSection s1("BatchingQueueCallInvoker::PostBatch");
       for (auto &task : *taskQueue) {
+        SystraceSection s2("BatchingQueueCallInvoker::PostBatch::Task");
         task();
         task = nullptr;
       }

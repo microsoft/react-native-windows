@@ -63,7 +63,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
-  bool m_useWebDebugger{true};
+  bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
@@ -468,5 +468,5 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
 
-  return RunPlayground(showCmd, true);
+  return RunPlayground(showCmd, false);
 }
