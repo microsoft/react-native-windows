@@ -181,7 +181,7 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'WindowsStoreAppUtils.ps1',
   );
   execSync(
-    `${powershell} -NoProfile Unblock-File "'${windowsStoreAppUtilsPath}'"`,
+    `${powershell} -NoProfile Unblock-File '${windowsStoreAppUtilsPath}'`,
   );
   popd();
   return windowsStoreAppUtilsPath;
