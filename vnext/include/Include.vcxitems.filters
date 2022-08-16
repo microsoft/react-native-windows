@@ -16,9 +16,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Shared\AsyncStorageModuleWin32Config.h">
       <Filter>Shared</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Shared\magic_enum.hpp">
-      <Filter>Shared</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Shared">

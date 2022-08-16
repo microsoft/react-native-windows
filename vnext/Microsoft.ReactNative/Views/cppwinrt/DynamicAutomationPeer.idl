@@ -56,6 +56,7 @@ namespace Microsoft.ReactNative
     CountStates
   };
 
+  // When adding a new numeric value, make sure to increment 'numericValuesCount' in FrameworkElementViewManager
   enum AccessibilityValue
   {
     Min = 0,
