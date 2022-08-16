@@ -180,8 +180,9 @@ function getWindowsStoreAppUtils(options: RunWindowsOptions) {
     'powershell',
     'WindowsStoreAppUtils.ps1',
   );
+  //execSync(`"${windowsStoreAppUtilsPath}" -replace ' ', '` '`,);
   execSync(
-    `${powershell} -NoProfile Unblock-File "${windowsStoreAppUtilsPath}"`,
+    `${powershell} -NoProfile Unblock-File "'${windowsStoreAppUtilsPath}'"`,
   );
   popd();
   return windowsStoreAppUtilsPath;
