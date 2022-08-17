@@ -8,77 +8,163 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 //=============================================================================
-// ReactNotificationSubscription implementation
+// IReactNotificationSubscription implementation
 //=============================================================================
 
-ReactNotificationSubscription::ReactNotificationSubscription(
-    IReactNotificationSubscription const &parentSubscription,
-    weak_ref<ReactNotificationService> &&notificationService,
-    IReactPropertyName const &notificationName,
-    IReactDispatcher const &dispatcher) noexcept
-    : m_parentSubscription{parentSubscription},
-      m_notificationService{std::move(notificationService)},
-      m_notificationName{notificationName},
-      m_dispatcher{dispatcher} {}
+// Common interface to share functionality between ReactNotificationSubscription and ReactNotificationSubscriptionView
+MSO_GUID(IReactNotificationSubscriptionPrivate, "09437980-3508-4690-930c-7c310e205e6b")
+struct IReactNotificationSubscriptionPrivate : ::IUnknown {
+  virtual void SetParent(IReactNotificationSubscription const &parentSubscription) noexcept = 0;
+  virtual void CallHandler(IInspectable const &sender, IInspectable const &data) noexcept = 0;
+};
 
-ReactNotificationSubscription::ReactNotificationSubscription(
-    weak_ref<ReactNotificationService> &&notificationService,
-    IReactPropertyName const &notificationName,
-    IReactDispatcher const &dispatcher,
-    ReactNotificationHandler const &handler) noexcept
-    : m_notificationService{std::move(notificationService)},
-      m_notificationName{notificationName},
-      m_dispatcher{dispatcher},
-      m_handler{handler} {}
+// The Notification subscription class.
+// Instances of this class are stored in the "child" notification services.
+struct ReactNotificationSubscription
+    : implements<ReactNotificationSubscription, IReactNotificationSubscription, IReactNotificationSubscriptionPrivate> {
+  ReactNotificationSubscription(
+      weak_ref<ReactNotificationService> &&notificationService,
+      IReactPropertyName const &notificationName,
+      IReactDispatcher const &dispatcher,
+      ReactNotificationHandler const &handler) noexcept
+      : m_notificationService{std::move(notificationService)},
+        m_notificationName{notificationName},
+        m_dispatcher{dispatcher},
+        m_handler{handler} {}
 
-ReactNotificationSubscription::~ReactNotificationSubscription() noexcept {
-  Unsubscribe();
-}
-
-IReactNotificationService ReactNotificationSubscription::NotificationService() const noexcept {
-  return m_notificationService.get().as<IReactNotificationService>();
-}
-
-IReactPropertyName ReactNotificationSubscription::NotificationName() const noexcept {
-  return m_notificationName;
-}
-
-IReactDispatcher ReactNotificationSubscription::Dispatcher() const noexcept {
-  return m_dispatcher;
-}
-
-bool ReactNotificationSubscription::IsSubscribed() const noexcept {
-  return m_isSubscribed;
-}
-
-void ReactNotificationSubscription::Unsubscribe() noexcept {
-  if (m_parentSubscription) {
-    m_parentSubscription.Unsubscribe();
+  ~ReactNotificationSubscription() noexcept {
+    Unsubscribe();
   }
 
-  if (m_isSubscribed.exchange(false)) {
-    if (auto notificationService = m_notificationService.get()) {
-      notificationService->Unsubscribe(*this);
+ public: // IReactNotificationSubscription implementation
+  IReactNotificationService NotificationService() const noexcept {
+    return m_notificationService.get().as<IReactNotificationService>();
+  }
+
+  IReactPropertyName NotificationName() const noexcept {
+    return m_notificationName;
+  }
+
+  IReactDispatcher Dispatcher() const noexcept {
+    return m_dispatcher;
+  }
+
+  bool IsSubscribed() const noexcept {
+    return m_isSubscribed;
+  }
+
+  void Unsubscribe() noexcept {
+    if (m_parentSubscription) {
+      m_parentSubscription.Unsubscribe();
+    }
+
+    if (m_isSubscribed.exchange(false)) {
+      if (auto notificationService = m_notificationService.get()) {
+        notificationService->Unsubscribe(*this);
+      }
     }
   }
-}
 
-void ReactNotificationSubscription::CallHandler(
-    IInspectable const &sender,
-    IReactNotificationArgs const &args) noexcept {
-  VerifyElseCrashSz(!m_parentSubscription, "CallHandler must not be called on the child subscription.");
-  if (IsSubscribed()) {
-    if (m_dispatcher) {
-      m_dispatcher.Post([thisPtr = get_strong(), sender, args]() noexcept {
-        if (thisPtr->IsSubscribed()) {
-          thisPtr->m_handler(sender, args);
-        }
-      });
+ public: // IReactNotificationSubscriptionPrivate implementation
+  void SetParent(IReactNotificationSubscription const &parentSubscription) noexcept override {
+    m_parentSubscription = parentSubscription;
+  }
+
+  void CallHandler(IInspectable const &sender, IInspectable const &data) noexcept override {
+    auto args = make<ReactNotificationArgs>(*this, data);
+    if (IsSubscribed()) {
+      if (m_dispatcher) {
+        m_dispatcher.Post([thisPtr = get_strong(), sender, args]() noexcept {
+          if (thisPtr->IsSubscribed()) {
+            thisPtr->m_handler(sender, args);
+          }
+        });
+      } else {
+        m_handler(sender, args);
+      }
+    }
+  }
+
+ private:
+  IReactNotificationSubscription m_parentSubscription{nullptr};
+  const weak_ref<ReactNotificationService> m_notificationService{nullptr};
+  const IReactPropertyName m_notificationName{nullptr};
+  const IReactDispatcher m_dispatcher{nullptr};
+  const ReactNotificationHandler m_handler{nullptr};
+  std::atomic_bool m_isSubscribed{true};
+};
+
+// The notification subscription view to wrap up child notification service.
+// Instances of this class are stored in the parent notification services.
+struct ReactNotificationSubscriptionView : implements<
+                                               ReactNotificationSubscriptionView,
+                                               IReactNotificationSubscription,
+                                               IReactNotificationSubscriptionPrivate> {
+  ReactNotificationSubscriptionView(
+      weak_ref<ReactNotificationService> &&notificationService,
+      IReactNotificationSubscription const &childSubscription) noexcept
+      : m_notificationService{std::move(notificationService)}, m_childSubscription{weak_ref(childSubscription)} {
+    childSubscription.as<IReactNotificationSubscriptionPrivate>()->SetParent(*this);
+  }
+
+  ~ReactNotificationSubscriptionView() noexcept {
+    Unsubscribe();
+  }
+
+ public: // IReactNotificationSubscription implementation
+  IReactNotificationService NotificationService() const noexcept {
+    return m_notificationService.get().as<IReactNotificationService>();
+  }
+
+  IReactPropertyName NotificationName() const noexcept {
+    if (auto childSubscription = m_childSubscription.get()) {
+      return childSubscription.NotificationName();
     } else {
-      m_handler(sender, args);
+      return IReactPropertyName{nullptr};
     }
   }
-}
+
+  IReactDispatcher Dispatcher() const noexcept {
+    if (auto childSubscription = m_childSubscription.get()) {
+      return childSubscription.Dispatcher();
+    } else {
+      return IReactDispatcher{nullptr};
+    }
+  }
+
+  bool IsSubscribed() const noexcept {
+    return m_isSubscribed;
+  }
+
+  void Unsubscribe() noexcept {
+    if (m_parentSubscription) {
+      m_parentSubscription.Unsubscribe();
+    }
+
+    if (m_isSubscribed.exchange(false)) {
+      if (auto notificationService = m_notificationService.get()) {
+        notificationService->Unsubscribe(*this);
+      }
+    }
+  }
+
+ public: // IReactNotificationSubscriptionPrivate implementation
+  void SetParent(IReactNotificationSubscription const &parentSubscription) noexcept override {
+    m_parentSubscription = parentSubscription;
+  }
+
+  void CallHandler(IInspectable const &sender, IInspectable const &data) noexcept override {
+    if (auto childSubscription = m_childSubscription.get()) {
+      childSubscription.as<IReactNotificationSubscriptionPrivate>()->CallHandler(sender, data);
+    }
+  }
+
+ private:
+  IReactNotificationSubscription m_parentSubscription{nullptr};
+  weak_ref<IReactNotificationSubscription> m_childSubscription{nullptr};
+  const weak_ref<ReactNotificationService> m_notificationService{nullptr};
+  std::atomic_bool m_isSubscribed{true};
+};
 
 //=============================================================================
 // ReactNotificationService implementation
@@ -146,20 +232,40 @@ IReactNotificationSubscription ReactNotificationService::Subscribe(
     IReactPropertyName const &notificationName,
     IReactDispatcher const &dispatcher,
     ReactNotificationHandler const &handler) noexcept {
+  IReactNotificationSubscription subscription =
+      make<ReactNotificationSubscription>(get_weak(), notificationName, dispatcher, handler);
+  AddSubscription(notificationName, subscription);
+
   // Make sure that parent notification service also subscribes to this notification.
-  auto parentSubscription = m_parentNotificationService
-      ? m_parentNotificationService.Subscribe(notificationName, dispatcher, handler)
-      : IReactNotificationSubscription{nullptr};
-  auto subscription = parentSubscription
-      ? make<ReactNotificationSubscription>(parentSubscription, get_weak(), notificationName, dispatcher)
-      : make<ReactNotificationSubscription>(get_weak(), notificationName, dispatcher, handler);
+  if (m_parentNotificationService) {
+    get_self<ReactNotificationService>(m_parentNotificationService)
+        ->AddChildSubscription(notificationName, subscription);
+  }
+  return subscription;
+}
+
+void ReactNotificationService::AddSubscription(
+    IReactPropertyName const &notificationName,
+    IReactNotificationSubscription const &subscription) noexcept {
   ModifySubscriptions(
       notificationName, [&subscription](std::vector<IReactNotificationSubscription> const &snapshot) noexcept {
         auto newSnapshot = std::vector<IReactNotificationSubscription>(snapshot);
         newSnapshot.push_back(subscription);
         return newSnapshot;
       });
-  return subscription;
+}
+
+void ReactNotificationService::AddChildSubscription(
+    IReactPropertyName const &notificationName,
+    IReactNotificationSubscription const &childSubscription) noexcept {
+  auto subscription = make<ReactNotificationSubscriptionView>(get_weak(), childSubscription);
+  AddSubscription(notificationName, subscription);
+
+  // Do a recursive call to the parent service.
+  if (m_parentNotificationService) {
+    get_self<ReactNotificationService>(m_parentNotificationService)
+        ->AddChildSubscription(notificationName, subscription);
+  }
 }
 
 void ReactNotificationService::Unsubscribe(IReactNotificationSubscription const &subscription) noexcept {
@@ -213,8 +319,7 @@ void ReactNotificationService::SendNotification(
     // Call notification handlers outside of lock.
     if (currentSnapshotPtr) {
       for (auto &subscription : *currentSnapshotPtr) {
-        auto args = make<ReactNotificationArgs>(subscription, data);
-        get_self<ReactNotificationSubscription>(subscription)->CallHandler(sender, args);
+        subscription.as<IReactNotificationSubscriptionPrivate>()->CallHandler(sender, data);
       }
     }
   }
