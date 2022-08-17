@@ -42,7 +42,8 @@ struct NotificationTestModule {
         notifyModuleFromApp,
         [subscriptionHolder](IInspectable const & /*sender*/, ReactNotificationArgs<int> const &args) noexcept {
           TestEventService::LogEvent("NotifyModuleFromApp", args.Data());
-          TestEventService::LogEvent("CheckModuleSubscription", args.Subscription() == subscriptionHolder->Subscription);
+          TestEventService::LogEvent(
+              "CheckModuleSubscription", args.Subscription() == subscriptionHolder->Subscription);
 
           // Unsubscribe after the first notification.
           args.Subscription().Unsubscribe();
