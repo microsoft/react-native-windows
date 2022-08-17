@@ -15,7 +15,9 @@ namespace winrt::Microsoft::ReactNative::implementation {
 MSO_GUID(IReactNotificationSubscriptionPrivate, "09437980-3508-4690-930c-7c310e205e6b")
 struct IReactNotificationSubscriptionPrivate : ::IUnknown {
   virtual void SetParent(IReactNotificationSubscription const &parentSubscription) noexcept = 0;
-  virtual void CallHandler(IInspectable const &sender, IInspectable const &data) noexcept = 0;
+  virtual void CallHandler(
+      Windows::Foundation::IInspectable const &sender,
+      Windows::Foundation::IInspectable const &data) noexcept = 0;
 };
 
 // The Notification subscription class.
