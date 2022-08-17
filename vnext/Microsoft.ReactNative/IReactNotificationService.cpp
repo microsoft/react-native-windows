@@ -250,6 +250,9 @@ IReactNotificationSubscription ReactNotificationService::Subscribe(
     IReactPropertyName const &notificationName,
     IReactDispatcher const &dispatcher,
     ReactNotificationHandler const &handler) noexcept {
+  VerifyElseCrashSz(notificationName, "notificationName must be not null");
+  VerifyElseCrashSz(handler, "handler must be not null");
+
   IReactNotificationSubscription subscription =
       make<ReactNotificationSubscription>(m_mutex, get_weak(), notificationName, dispatcher, handler);
   AddSubscription(notificationName, subscription);
