@@ -23,11 +23,13 @@ struct IReactNotificationSubscriptionPrivate : ::IUnknown {
 struct ReactNotificationSubscription
     : implements<ReactNotificationSubscription, IReactNotificationSubscription, IReactNotificationSubscriptionPrivate> {
   ReactNotificationSubscription(
+      Mso::RefCountedPtr<std::mutex> const &mutex,
       weak_ref<ReactNotificationService> &&notificationService,
       IReactPropertyName const &notificationName,
       IReactDispatcher const &dispatcher,
       ReactNotificationHandler const &handler) noexcept
-      : m_notificationService{std::move(notificationService)},
+      : m_mutex{mutex},
+        m_notificationService{std::move(notificationService)},
         m_notificationName{notificationName},
         m_dispatcher{dispatcher},
         m_handler{handler} {}
@@ -50,7 +52,7 @@ struct ReactNotificationSubscription
   }
 
   bool IsSubscribed() const noexcept {
-    return m_isSubscribed;
+    return GetHandler() != nullptr;
   }
 
   void Unsubscribe() noexcept {
@@ -58,7 +60,17 @@ struct ReactNotificationSubscription
       m_parentSubscription.Unsubscribe();
     }
 
-    if (m_isSubscribed.exchange(false)) {
+    bool isSubscribed{false};
+    {
+      std::scoped_lock lock{*m_mutex};
+      if (m_handler) {
+        isSubscribed = true;
+        // Remove handler to free any objects captured by it.
+        m_handler = nullptr;
+      }
+    }
+
+    if (isSubscribed) {
       if (auto notificationService = m_notificationService.get()) {
         notificationService->Unsubscribe(*this);
       }
@@ -72,26 +84,32 @@ struct ReactNotificationSubscription
 
   void CallHandler(IInspectable const &sender, IInspectable const &data) noexcept override {
     auto args = make<ReactNotificationArgs>(*this, data);
-    if (IsSubscribed()) {
+    if (auto handler = GetHandler()) {
       if (m_dispatcher) {
         m_dispatcher.Post([thisPtr = get_strong(), sender, args]() noexcept {
-          if (thisPtr->IsSubscribed()) {
-            thisPtr->m_handler(sender, args);
+          if (auto handler = thisPtr->GetHandler()) {
+            handler(sender, args);
           }
         });
       } else {
-        m_handler(sender, args);
+        handler(sender, args);
       }
     }
   }
 
  private:
+  ReactNotificationHandler GetHandler() const noexcept {
+    std::scoped_lock lock{*m_mutex};
+    return m_handler;
+  }
+
+ private:
+  Mso::RefCountedPtr<std::mutex> m_mutex;
   IReactNotificationSubscription m_parentSubscription{nullptr};
   const weak_ref<ReactNotificationService> m_notificationService{nullptr};
   const IReactPropertyName m_notificationName{nullptr};
   const IReactDispatcher m_dispatcher{nullptr};
-  const ReactNotificationHandler m_handler{nullptr};
-  std::atomic_bool m_isSubscribed{true};
+  ReactNotificationHandler m_handler{nullptr};
 };
 
 // The notification subscription view to wrap up child notification service.
@@ -161,7 +179,7 @@ struct ReactNotificationSubscriptionView : implements<
 
  private:
   IReactNotificationSubscription m_parentSubscription{nullptr};
-  weak_ref<IReactNotificationSubscription> m_childSubscription{nullptr};
+  const weak_ref<IReactNotificationSubscription> m_childSubscription{nullptr};
   const weak_ref<ReactNotificationService> m_notificationService{nullptr};
   std::atomic_bool m_isSubscribed{true};
 };
@@ -185,7 +203,7 @@ void ReactNotificationService::ModifySubscriptions(
   // Get the current snapshot under the lock
   SubscriptionSnapshotPtr currentSnapshotPtr;
   {
-    std::scoped_lock lock{m_mutex};
+    std::scoped_lock lock{*m_mutex};
     auto it = m_subscriptions.find(notificationName);
     if (it != m_subscriptions.end()) {
       currentSnapshotPtr = it->second;
@@ -199,7 +217,7 @@ void ReactNotificationService::ModifySubscriptions(
 
     // Try to set the new snapshot under the lock
     SubscriptionSnapshotPtr snapshotPtr;
-    std::scoped_lock lock{m_mutex};
+    std::scoped_lock lock{*m_mutex};
     auto it = m_subscriptions.find(notificationName);
     if (it != m_subscriptions.end()) {
       snapshotPtr = it->second;
@@ -233,14 +251,9 @@ IReactNotificationSubscription ReactNotificationService::Subscribe(
     IReactDispatcher const &dispatcher,
     ReactNotificationHandler const &handler) noexcept {
   IReactNotificationSubscription subscription =
-      make<ReactNotificationSubscription>(get_weak(), notificationName, dispatcher, handler);
+      make<ReactNotificationSubscription>(m_mutex, get_weak(), notificationName, dispatcher, handler);
   AddSubscription(notificationName, subscription);
-
-  // Make sure that parent notification service also subscribes to this notification.
-  if (m_parentNotificationService) {
-    get_self<ReactNotificationService>(m_parentNotificationService)
-        ->AddChildSubscription(notificationName, subscription);
-  }
+  AddSubscriptionToParent(notificationName, subscription);
   return subscription;
 }
 
@@ -255,17 +268,21 @@ void ReactNotificationService::AddSubscription(
       });
 }
 
-void ReactNotificationService::AddChildSubscription(
+void ReactNotificationService::AddSubscriptionToParent(
+    IReactPropertyName const &notificationName,
+    IReactNotificationSubscription const &subscription) noexcept {
+  if (m_parentNotificationService) {
+    get_self<ReactNotificationService>(m_parentNotificationService)
+        ->AddSubscriptionFromChild(notificationName, subscription);
+  }
+}
+
+void ReactNotificationService::AddSubscriptionFromChild(
     IReactPropertyName const &notificationName,
     IReactNotificationSubscription const &childSubscription) noexcept {
   auto subscription = make<ReactNotificationSubscriptionView>(get_weak(), childSubscription);
   AddSubscription(notificationName, subscription);
-
-  // Do a recursive call to the parent service.
-  if (m_parentNotificationService) {
-    get_self<ReactNotificationService>(m_parentNotificationService)
-        ->AddChildSubscription(notificationName, subscription);
-  }
+  AddSubscriptionToParent(notificationName, subscription);
 }
 
 void ReactNotificationService::Unsubscribe(IReactNotificationSubscription const &subscription) noexcept {
@@ -286,7 +303,7 @@ void ReactNotificationService::UnsubscribeAll() noexcept {
   // The subscription will call the parent Unsubscribe on its own.
   decltype(m_subscriptions) subscriptions;
   {
-    std::scoped_lock lock{m_mutex};
+    std::scoped_lock lock{*m_mutex};
     subscriptions = std::move(m_subscriptions);
   }
 
@@ -309,7 +326,7 @@ void ReactNotificationService::SendNotification(
     SubscriptionSnapshotPtr currentSnapshotPtr;
 
     {
-      std::scoped_lock lock{m_mutex};
+      std::scoped_lock lock{*m_mutex};
       auto it = m_subscriptions.find(notificationName);
       if (it != m_subscriptions.end()) {
         currentSnapshotPtr = it->second;

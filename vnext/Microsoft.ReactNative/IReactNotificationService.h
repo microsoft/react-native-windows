@@ -94,14 +94,16 @@ struct ReactNotificationService : implements<ReactNotificationService, IReactNot
   void AddSubscription(
       IReactPropertyName const &notificationName,
       IReactNotificationSubscription const &subscription) noexcept;
-
-  void AddChildSubscription(
+  void AddSubscriptionToParent(
+      IReactPropertyName const &notificationName,
+      IReactNotificationSubscription const &subscription) noexcept;
+  void AddSubscriptionFromChild(
       IReactPropertyName const &notificationName,
       IReactNotificationSubscription const &childSubscription) noexcept;
 
  private:
   const IReactNotificationService m_parentNotificationService;
-  std::mutex m_mutex;
+  Mso::RefCountedPtr<std::mutex> m_mutex{Mso::Make_RefCounted<std::mutex>()};
   std::unordered_map<IReactPropertyName, SubscriptionSnapshotPtr> m_subscriptions;
 };
 
