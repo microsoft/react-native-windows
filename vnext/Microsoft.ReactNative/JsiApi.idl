@@ -65,9 +65,10 @@ namespace Microsoft.ReactNative
     Boolean,
     Number,
     Symbol,
+    BigInt, // TODO: Temporary to test the PR, do NOT commit this!
     String,
     Object,
-    BigInt,
+    // BigInt, // TODO: This is where we WANT to put the new enum
   };
 
   [experimental, webhosthidden]
