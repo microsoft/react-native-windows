@@ -744,7 +744,7 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   // We assume that the JsiValueRef and Value have the same layout.
   auto valuePtr = reinterpret_cast<JsiValueRef const *>(&value);
   // Fix up the data part
-  // TODO: Need to fix JSI kind mapping
+  // TODO: JSIVALUECONVERSION - Need to fix JSI kind mapping
   switch (valuePtr->Kind) {
     case JsiValueKind::Symbol:
       return {valuePtr->Kind, SymbolPointerValue::GetData(getPointerValue(value)).Data};
@@ -772,7 +772,7 @@ void JsiAbiRuntime::SetJsiError(std::exception const &nativeException) noexcept 
   // data alive. Thus, we must detach the value.
   // We assume that the JsiValueRef and Value have the same layout.
   auto valuePtr = reinterpret_cast<JsiValueRef *>(&value);
-  // TODO: Need to fix JSI kind mapping
+  // TODO: JSIVALUECONVERSION - Need to fix JSI kind mapping
   switch (valuePtr->Kind) {
     case JsiValueKind::Symbol:
       return {valuePtr->Kind, SymbolPointerValue::Detach(getPointerValue(value)).Data};
@@ -1028,7 +1028,7 @@ JsiAbiRuntime::ValueRef::InitValueRef(JsiValueRef const &data, Value *value, Sto
   // We assume that the JsiValueRef and Value have the same layout.
   auto valueAsDataPtr = reinterpret_cast<JsiValueRef *>(value);
   valueAsDataPtr->Kind = data.Kind;
-  // TODO: Need to fix JSI kind mapping
+  // TODO: JSIVALUECONVERSION - Need to fix JSI kind mapping
   switch (valueAsDataPtr->Kind) {
     case JsiValueKind::Symbol:
     case JsiValueKind::String:

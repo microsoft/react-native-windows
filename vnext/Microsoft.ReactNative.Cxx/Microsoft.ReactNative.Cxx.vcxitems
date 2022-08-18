@@ -51,6 +51,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
@@ -92,6 +93,7 @@
   <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />
