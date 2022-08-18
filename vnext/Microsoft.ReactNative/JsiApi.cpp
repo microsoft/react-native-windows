@@ -150,9 +150,7 @@ struct PointerAccessor : facebook::jsi::Pointer {
 struct ValueAccessor {
   static JsiValueRef ToJsiValueData(facebook::jsi::Value const &value) noexcept {
     ValueAccessor const &accessor = reinterpret_cast<ValueAccessor const &>(value);
-    return {
-        JsiValueKindHelper::ToJsiValueKind(accessor.m_kind),
-        *reinterpret_cast<uint64_t const *>(&accessor.m_data)};
+    return {JsiValueKindHelper::ToJsiValueKind(accessor.m_kind), *reinterpret_cast<uint64_t const *>(&accessor.m_data)};
   }
 
   static JsiValueRef MakeJsiValueData(facebook::jsi::Value &&value) {
