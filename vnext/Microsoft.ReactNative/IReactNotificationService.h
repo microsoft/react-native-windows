@@ -91,9 +91,19 @@ struct ReactNotificationService : implements<ReactNotificationService, IReactNot
       IReactPropertyName const &notificationName,
       Mso::FunctorRef<SubscriptionSnapshot(SubscriptionSnapshot const &)> const &modifySnapshot);
 
+  void AddSubscription(
+      IReactPropertyName const &notificationName,
+      IReactNotificationSubscription const &subscription) noexcept;
+  void AddSubscriptionToParent(
+      IReactPropertyName const &notificationName,
+      IReactNotificationSubscription const &subscription) noexcept;
+  void AddSubscriptionFromChild(
+      IReactPropertyName const &notificationName,
+      IReactNotificationSubscription const &childSubscription) noexcept;
+
  private:
   const IReactNotificationService m_parentNotificationService;
-  std::mutex m_mutex;
+  Mso::RefCountedPtr<std::mutex> m_mutex{Mso::Make_RefCounted<std::mutex>()};
   std::unordered_map<IReactPropertyName, SubscriptionSnapshotPtr> m_subscriptions;
 };
 
@@ -101,35 +111,6 @@ struct ReactNotificationServiceHelper {
   ReactNotificationServiceHelper() = default;
 
   static IReactNotificationService CreateNotificationService() noexcept;
-};
-
-struct ReactNotificationSubscription : implements<ReactNotificationSubscription, IReactNotificationSubscription> {
-  ReactNotificationSubscription(
-      IReactNotificationSubscription const &parentSubscription,
-      weak_ref<ReactNotificationService> &&notificationService,
-      IReactPropertyName const &notificationName,
-      IReactDispatcher const &dispatcher) noexcept;
-  ReactNotificationSubscription(
-      weak_ref<ReactNotificationService> &&notificationService,
-      IReactPropertyName const &notificationName,
-      IReactDispatcher const &dispatcher,
-      ReactNotificationHandler const &handler) noexcept;
-  ~ReactNotificationSubscription() noexcept;
-
-  IReactNotificationService NotificationService() const noexcept;
-  IReactPropertyName NotificationName() const noexcept;
-  IReactDispatcher Dispatcher() const noexcept;
-  bool IsSubscribed() const noexcept;
-  void Unsubscribe() noexcept;
-  void CallHandler(IInspectable const &sender, IReactNotificationArgs const &args) noexcept;
-
- private:
-  const IReactNotificationSubscription m_parentSubscription{nullptr};
-  const weak_ref<ReactNotificationService> m_notificationService;
-  const IReactPropertyName m_notificationName;
-  const IReactDispatcher m_dispatcher;
-  const ReactNotificationHandler m_handler;
-  std::atomic_bool m_isSubscribed{true};
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
