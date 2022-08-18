@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "../../codegen/NativeAppStateSpec.g.h"
+#include "codegen/NativeAppStateSpec.g.h"
 #include <NativeModules.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>

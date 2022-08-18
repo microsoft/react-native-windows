@@ -7,6 +7,7 @@
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.h>
 #include <Views/ShadowNodeBase.h>
+#include <cxxreact/SystraceSection.h>
 #include "Modules/I18nManagerModule.h"
 #include "NativeUIManager.h"
 
@@ -23,6 +24,8 @@ using namespace xaml;
 using namespace xaml::Controls;
 using namespace xaml::Media;
 } // namespace winrt
+
+using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
@@ -222,6 +225,7 @@ int64_t NativeUIManager::AddMeasuredRootView(facebook::react::IReactRootView *ro
 }
 
 void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReactRootView *pReactRootView) {
+  SystraceSection s("NativeUIManager::AddRootView");
   auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
   m_tagsToXamlReactControl.emplace(
@@ -244,11 +248,13 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
 }
 
 void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
+  SystraceSection s("NativeUIManager::removeRootView");
   m_tagsToXamlReactControl.erase(shadow.m_tag);
   RemoveView(shadow, true);
 }
 
 void NativeUIManager::onBatchComplete() {
+  SystraceSection s("NativeUIManager::onBatchComplete");
   if (m_inBatch) {
     DoLayout();
     m_inBatch = false;
@@ -768,6 +774,7 @@ static void StyleYogaNode(
 }
 
 void NativeUIManager::CreateView(ShadowNode &shadowNode, React::JSValueObject &props) {
+  SystraceSection s("NativeUIManager::CreateView");
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -859,6 +866,7 @@ void NativeUIManager::ReplaceView(ShadowNode &shadowNode) {
 }
 
 void NativeUIManager::UpdateView(ShadowNode &shadowNode, winrt::Microsoft::ReactNative::JSValueObject &props) {
+  SystraceSection s("NativeUIManager::UpdateView");
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
   auto *pViewManager = node.GetViewManager();
 
@@ -889,20 +897,29 @@ void NativeUIManager::UpdateExtraLayout(int64_t tag) {
 }
 
 void NativeUIManager::DoLayout() {
-  // Process vector of RN controls needing extra layout here.
-  const auto extraLayoutNodes = m_extraLayoutNodes;
-  for (const int64_t tag : extraLayoutNodes) {
-    ShadowNodeBase *node = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
-    if (node) {
-      auto element = node->GetView().as<xaml::FrameworkElement>();
-      element.UpdateLayout();
+  SystraceSection s("NativeUIManager::DoLayout");
+
+  {
+    SystraceSection s("NativeUIManager::DoLayout::UpdateLayout");
+    // Process vector of RN controls needing extra layout here.
+    const auto extraLayoutNodes = m_extraLayoutNodes;
+    for (const int64_t tag : extraLayoutNodes) {
+      ShadowNodeBase *node = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
+      if (node) {
+        auto element = node->GetView().as<xaml::FrameworkElement>();
+        element.UpdateLayout();
+      }
     }
+    // Values need to be cleared from the vector before next call to DoLayout.
+    m_extraLayoutNodes.clear();
   }
-  // Values need to be cleared from the vector before next call to DoLayout.
-  m_extraLayoutNodes.clear();
+
   auto &rootTags = m_host->GetAllRootTags();
   for (int64_t rootTag : rootTags) {
-    UpdateExtraLayout(rootTag);
+    {
+      SystraceSection s("NativeUIManager::DoLayout::UpdateExtraLayout");
+      UpdateExtraLayout(rootTag);
+    }
 
     ShadowNodeBase &rootShadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
     if (YGNodeRef rootNode = GetYogaNode(rootTag)) {
@@ -911,33 +928,39 @@ void NativeUIManager::DoLayout() {
       float actualWidth = static_cast<float>(rootElement.ActualWidth());
       float actualHeight = static_cast<float>(rootElement.ActualHeight());
 
-      // We must always run layout in LTR mode, which might seem unintuitive.
-      // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
-      // which will inherit down the XAML tree, allowing all native controls to pick it up.
-      YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+      {
+        SystraceSection s("NativeUIManager::DoLayout::YGNodeCalculateLayout");
+        // We must always run layout in LTR mode, which might seem unintuitive.
+        // We will flip the root of the tree into RTL by forcing the root XAML node's FlowDirection to RightToLeft
+        // which will inherit down the XAML tree, allowing all native controls to pick it up.
+        YGNodeCalculateLayout(rootNode, actualWidth, actualHeight, YGDirectionLTR);
+      }
     } else {
       assert(false);
       return;
     }
   }
 
-  for (auto &tagToYogaNode : m_tagsToYogaNodes) {
-    int64_t tag = tagToYogaNode.first;
-    YGNodeRef yogaNode = tagToYogaNode.second.get();
+  {
+    SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
+    for (auto &tagToYogaNode : m_tagsToYogaNodes) {
+      int64_t tag = tagToYogaNode.first;
+      YGNodeRef yogaNode = tagToYogaNode.second.get();
 
-    if (!YGNodeGetHasNewLayout(yogaNode))
-      continue;
-    YGNodeSetHasNewLayout(yogaNode, false);
+      if (!YGNodeGetHasNewLayout(yogaNode))
+        continue;
+      YGNodeSetHasNewLayout(yogaNode, false);
 
-    float left = YGNodeLayoutGetLeft(yogaNode);
-    float top = YGNodeLayoutGetTop(yogaNode);
-    float width = YGNodeLayoutGetWidth(yogaNode);
-    float height = YGNodeLayoutGetHeight(yogaNode);
+      float left = YGNodeLayoutGetLeft(yogaNode);
+      float top = YGNodeLayoutGetTop(yogaNode);
+      float width = YGNodeLayoutGetWidth(yogaNode);
+      float height = YGNodeLayoutGetHeight(yogaNode);
 
-    ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-    auto view = shadowNode.GetView();
-    auto pViewManager = shadowNode.GetViewManager();
-    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
+      ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+      auto view = shadowNode.GetView();
+      auto pViewManager = shadowNode.GetViewManager();
+      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
+    }
   }
 }
 
@@ -1119,7 +1142,7 @@ void NativeUIManager::findSubviewIn(
 
 void NativeUIManager::focus(int64_t reactTag) {
   if (auto shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(reactTag))) {
-    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Keyboard);
+    xaml::Input::FocusManager::TryFocusAsync(shadowNode->GetView(), winrt::FocusState::Programmatic);
   }
 }
 

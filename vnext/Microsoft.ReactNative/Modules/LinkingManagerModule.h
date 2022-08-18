@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../../codegen/NativeLinkingManagerSpec.g.h"
+#include "codegen/NativeLinkingManagerSpec.g.h"
 #include <NativeModules.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>

@@ -9,6 +9,7 @@
 #include <UI.Xaml.Media.h>
 #include <Utils/PropertyUtils.h>
 #include <Utils/ResourceBrushUtils.h>
+#include <cxxreact/SystraceSection.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.UI.Xaml.Interop.h>
 
@@ -27,6 +28,8 @@ using namespace winrt::Windows::UI::Xaml::Interop;
 using namespace xaml::Media;
 using namespace Windows::Foundation;
 } // namespace winrt
+
+using namespace facebook::react;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -227,6 +230,7 @@ void ViewPanel::ClipChildren(bool value) {
 }
 
 void ViewPanel::FinalizeProperties() {
+  SystraceSection s("ViewPanel::FinalizeProperties");
   if (!m_propertiesChanged)
     return;
 

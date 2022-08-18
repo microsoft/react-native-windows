@@ -14,6 +14,7 @@
 #include <boost/algorithm/string.hpp>
 
 // Windows API
+#include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
@@ -340,6 +341,12 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri&&
           coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
       if (!success && m_onError) {
         co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
+      }
+    } else if (boost::iequals(header.first.c_str(), "User-Agent")) {
+      bool success =
+          coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
+      if (!success && m_onError) {
+        co_return m_onError(coReqArgs->RequestId, "Failed to append User-Agent");
       }
     } else {
       try {

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 25 Jun 2022 05:09:00 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Aug 2022 05:16:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.134
+
+Wed, 10 Aug 2022 05:16:49 GMT
+
+### Changes
+
+- Update autolinking to update project paths in solution files (jthysell@microsoft.com)
 
 ## 0.0.0-canary.133
 
