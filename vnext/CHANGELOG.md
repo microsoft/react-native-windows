@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 16 Aug 2022 05:09:21 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Aug 2022 05:09:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.543
+
+Thu, 18 Aug 2022 05:09:36 GMT
+
+### Changes
+
+- Fix ReactNotificationService memory leak (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.542
 
