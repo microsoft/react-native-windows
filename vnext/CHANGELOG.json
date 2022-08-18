@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Aug 2022 05:09:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.543",
+      "version": "0.0.0-canary.543",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "047ab1e1e2cf056f88687027710483b4facac5e1",
+            "comment": "Fix ReactNotificationService memory leak"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 16 Aug 2022 05:09:21 GMT",
       "tag": "react-native-windows_v0.0.0-canary.542",
       "version": "0.0.0-canary.542",
