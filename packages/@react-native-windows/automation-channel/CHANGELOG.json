@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 19 Aug 2022 05:09:34 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.1.118",
+      "version": "0.1.118",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.544",
+            "commit": "8582d0423cefc467f2fd46dc2d746d456053450a"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Aug 2022 05:09:36 GMT",
       "tag": "@react-native-windows/automation-channel_v0.1.117",
       "version": "0.1.117",

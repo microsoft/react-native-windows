@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 10 Aug 2022 05:16:49 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Aug 2022 05:09:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.135
+
+Fri, 19 Aug 2022 05:09:34 GMT
+
+### Changes
+
+- Fix Deploy Bug for App Paths Containing Spaces (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.134
 
