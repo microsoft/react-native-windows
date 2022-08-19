@@ -188,7 +188,7 @@ void ScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMa
   // m_element.FinalizeProperties();
 }
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps ScrollViewComponentView::props() noexcept {
+facebook::react::Props::Shared ScrollViewComponentView::props() noexcept {
   assert(false);
   return {};
 }

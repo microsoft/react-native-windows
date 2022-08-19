@@ -69,7 +69,7 @@ void ActivityIndicatorComponentView::updateLayoutMetrics(
 }
 void ActivityIndicatorComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 void ActivityIndicatorComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps ActivityIndicatorComponentView::props() noexcept {
+facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept {
   assert(false);
   return {};
 }

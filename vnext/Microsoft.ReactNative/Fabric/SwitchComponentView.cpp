@@ -97,7 +97,7 @@ void SwitchComponentView::updateLayoutMetrics(
 void SwitchComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 
 void SwitchComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps SwitchComponentView::props() noexcept {
+facebook::react::Props::Shared SwitchComponentView::props() noexcept {
   assert(false);
   return {};
 }

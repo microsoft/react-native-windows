@@ -12,6 +12,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.cpp">
+      <Filter>JSI</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp">
       <Filter>TurboModule</Filter>
     </ClCompile>
@@ -108,6 +111,9 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.h">
       <Filter>JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">

@@ -296,7 +296,7 @@ void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask up
   // m_element.FinalizeProperties();
 }
 void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps WindowsTextInputComponentView::props() noexcept {
+facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
   assert(false);
   return {};
 }
