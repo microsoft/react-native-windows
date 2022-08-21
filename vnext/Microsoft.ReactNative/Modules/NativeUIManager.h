@@ -101,6 +101,7 @@ class NativeUIManager final : public INativeUIManager {
 
  private:
   void DoLayout();
+  void SetLayoutPropsRecursive(int64_t tag);
   void UpdateExtraLayout(int64_t tag);
   YGNodeRef GetYogaNode(int64_t tag) const;
 

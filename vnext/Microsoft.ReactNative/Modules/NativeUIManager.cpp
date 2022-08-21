@@ -939,24 +939,27 @@ void NativeUIManager::DoLayout() {
       assert(false);
       return;
     }
+
+    SetLayoutPropsRecursive(rootTag);
+  }
+}
+
+void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
+  SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
+  ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+  for (const auto child : shadowNode.m_children) {
+    SetLayoutPropsRecursive(child);
   }
 
-  {
-    SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
-    for (auto &tagToYogaNode : m_tagsToYogaNodes) {
-      int64_t tag = tagToYogaNode.first;
-      YGNodeRef yogaNode = tagToYogaNode.second.get();
-
-      if (!YGNodeGetHasNewLayout(yogaNode))
-        continue;
+  const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
+  if (tagToYogaNode != m_tagsToYogaNodes.end()) {
+    YGNodeRef yogaNode = tagToYogaNode->second.get();
+    if (YGNodeGetHasNewLayout(yogaNode)) {
       YGNodeSetHasNewLayout(yogaNode, false);
-
       float left = YGNodeLayoutGetLeft(yogaNode);
       float top = YGNodeLayoutGetTop(yogaNode);
       float width = YGNodeLayoutGetWidth(yogaNode);
       float height = YGNodeLayoutGetHeight(yogaNode);
-
-      ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
       auto view = shadowNode.GetView();
       auto pViewManager = shadowNode.GetViewManager();
       pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
