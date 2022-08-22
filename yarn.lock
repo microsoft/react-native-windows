@@ -1944,21 +1944,6 @@
     semver "^6.3.0"
     shell-quote "^1.7.3"
 
-"@react-native-community/cli-tools@^9.0.0-alpha.10":
-  version "9.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-9.0.0-alpha.10.tgz#5615c8c32d6f265b67882c10f8abdcbb45d9c6cd"
-  integrity sha512-fbGYwHD8vyRLYIcWsGtcoJdZmwDAO6fD2tctwt1VY2lreHvZlSx6xRtReYzumr81I0/Fh4XXWRyrYITyPh14GA==
-  dependencies:
-    appdirsjs "^1.2.4"
-    chalk "^4.1.2"
-    find-up "^5.0.0"
-    mime "^2.4.1"
-    node-fetch "^2.6.0"
-    open "^6.2.0"
-    ora "^5.4.1"
-    semver "^6.3.0"
-    shell-quote "^1.7.3"
-
 "@react-native-community/cli-types@^5.0.1-alpha.0":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-5.0.1.tgz#8c5db4011988b0836d27a5efe230cb34890915dc"
@@ -1972,29 +1957,6 @@
   integrity sha512-pnQVEN9XcYfqIPKwRbzv5HRH3aEjyJYr3V2cOPOaCMuAKU1tWdHXakY1zfui1jTiQG6h6hOkmmMjr3j2vY1ndQ==
   dependencies:
     joi "^17.2.1"
-
-"@react-native-community/cli@^9.0.0-alpha.3":
-  version "9.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-9.0.0-alpha.10.tgz#262e46f9e85d4953a778fd6f366d36a9046eb82b"
-  integrity sha512-JM17o3vyIVvTQgJsHBdjGjBpak6qxCO8hmHG3fthDYBF3KZmYE62Af+m7r7MlHkqPFlsuwqHdQHfD2f5XpwrEA==
-  dependencies:
-    "@react-native-community/cli-clean" "^9.0.0-alpha.10"
-    "@react-native-community/cli-config" "^9.0.0-alpha.10"
-    "@react-native-community/cli-debugger-ui" "^9.0.0-alpha.4"
-    "@react-native-community/cli-doctor" "^9.0.0-alpha.10"
-    "@react-native-community/cli-hermes" "^9.0.0-alpha.10"
-    "@react-native-community/cli-plugin-metro" "^9.0.0-alpha.10"
-    "@react-native-community/cli-server-api" "^9.0.0-alpha.10"
-    "@react-native-community/cli-tools" "^9.0.0-alpha.10"
-    "@react-native-community/cli-types" "^9.0.0-alpha.0"
-    chalk "^4.1.2"
-    commander "^9.4.0"
-    execa "^1.0.0"
-    find-up "^4.1.0"
-    fs-extra "^8.1.0"
-    graceful-fs "^4.1.3"
-    prompts "^2.4.0"
-    semver "^6.3.0"
 
 "@react-native-community/cli@^9.0.0-alpha.3":
   version "9.0.0-alpha.10"
@@ -11114,9 +11076,9 @@ signedsource@^1.0.0:
   integrity sha1-HdrOSYF5j5O9gzlzgD2A1S6TrWo=
 
 simple-git@^3.3.0:
-  version "3.10.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.10.0.tgz#f20031dd121d3c49e215ef0186a102bece3f89b2"
-  integrity sha512-2w35xrS5rVtAW0g67LqtxCZN5cdddz/woQRfS0OJXaljXEoTychZ4jnE+CQgra/wX4ZvHeiChTUMenCwfIYEYw==
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.13.0.tgz#36589e201c28cecaca6f3a898e7257c6610e8588"
+  integrity sha512-VYrs3joeHvWGcN3K135RpGpPjm4AHYeOrclwew6LlfHgq6ozQYIW2yMnmjf4PCgVOuSYCbXkdUjyiFawuJz8MA==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
