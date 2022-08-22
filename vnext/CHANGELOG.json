@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Aug 2022 15:08:28 GMT",
+      "tag": "react-native-windows_v0.68.14",
+      "version": "0.68.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "da5fbd105f308ab5f8756d5c68c166090f839c9d",
+            "comment": "Fix ReactNotificationService memory leak"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Aug 2022 15:08:06 GMT",
       "tag": "react-native-windows_v0.68.13",
       "version": "0.68.13",

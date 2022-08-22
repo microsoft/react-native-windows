@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix ReactNotificationService memory leak",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}
