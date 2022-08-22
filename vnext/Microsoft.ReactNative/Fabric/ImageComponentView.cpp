@@ -126,7 +126,7 @@ void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) n
 }
 
 void ImageComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps ImageComponentView::props() noexcept {
+facebook::react::Props::Shared ImageComponentView::props() noexcept {
   assert(false);
   return {};
 }

@@ -280,6 +280,11 @@ facebook::jsi::Runtime::PointerValue *ChakraRuntime::cloneSymbol(
   return CloneChakraPointerValue(pointerValue);
 }
 
+facebook::jsi::Runtime::PointerValue *ChakraRuntime::cloneBigInt(
+    const facebook::jsi::Runtime::PointerValue *pointerValue) {
+  return CloneChakraPointerValue(pointerValue);
+}
+
 facebook::jsi::Runtime::PointerValue *ChakraRuntime::cloneString(
     const facebook::jsi::Runtime::PointerValue *pointerValue) {
   return CloneChakraPointerValue(pointerValue);
@@ -588,6 +593,10 @@ void ChakraRuntime::popScope([[maybe_unused]] Runtime::ScopeState *state) {
 }
 
 bool ChakraRuntime::strictEquals(const facebook::jsi::Symbol &a, const facebook::jsi::Symbol &b) const {
+  return StrictEquals(GetJsRef(a), GetJsRef(b));
+}
+
+bool ChakraRuntime::strictEquals(const facebook::jsi::BigInt &a, const facebook::jsi::BigInt &b) const {
   return StrictEquals(GetJsRef(a), GetJsRef(b));
 }
 

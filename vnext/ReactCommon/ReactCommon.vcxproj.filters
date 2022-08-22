@@ -22,9 +22,6 @@
     <Filter Include="jsiexecutor\jsireact">
       <UniqueIdentifier>{1072517c-f7e8-419d-a43a-b037bf46e691}</UniqueIdentifier>
     </Filter>
-    <Filter Include="privatedata">
-      <UniqueIdentifier>{20b1bda7-06e8-4ce8-8733-fc404e0afc13}</UniqueIdentifier>
-    </Filter>
     <Filter Include="jsi\jsi">
       <UniqueIdentifier>{9c8e7a7a-c77d-479d-8611-1ece3cdacad7}</UniqueIdentifier>
     </Filter>
@@ -33,12 +30,6 @@
     </Filter>
     <Filter Include="turbomodule\core">
       <UniqueIdentifier>{c4d010df-7391-4171-8658-9048078a5523}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="jscallinvoker">
-      <UniqueIdentifier>{d2eae11a-b021-4d0f-bf0f-cc5a164f2579}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="jscallinvoker\ReactCommon">
-      <UniqueIdentifier>{103aab63-7882-4777-85a5-8fdbbc8e54f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="yoga\event">
       <UniqueIdentifier>{b81cc660-374c-4232-823b-6c76b48564b4}</UniqueIdentifier>
@@ -55,8 +46,38 @@
     <Filter Include="react\renderer\debug">
       <UniqueIdentifier>{cc363422-d654-4288-b8b8-ea8f38aa7604}</UniqueIdentifier>
     </Filter>
-    <Filter Include="react\renderer\mounting">
-      <UniqueIdentifier>{836654a8-cee1-4d6d-ae20-bd2fb86710f7}</UniqueIdentifier>
+    <Filter Include="logger">
+      <UniqueIdentifier>{a6918f44-da21-414d-ad25-d9bdb8f8756b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reactperflogger">
+      <UniqueIdentifier>{f3362933-5f11-4653-929d-e13607d919b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="reactperflogger\reactperflogger">
+      <UniqueIdentifier>{50a825f0-9a6d-454e-94f5-65cf7cad34cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="callinvoker">
+      <UniqueIdentifier>{d2eae11a-b021-4d0f-bf0f-cc5a164f2579}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="callinvoker\ReactCommon">
+      <UniqueIdentifier>{103aab63-7882-4777-85a5-8fdbbc8e54f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\bridging">
+      <UniqueIdentifier>{55de2e00-aeb3-4ab3-a731-6edfc63c4db9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\mapbuffer">
+      <UniqueIdentifier>{297ffef3-6154-41cf-85b1-75eff3d8fba0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\nativemodule">
+      <UniqueIdentifier>{739297af-da89-4523-899d-02b454fc9330}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\nativemodule\samples">
+      <UniqueIdentifier>{d6f7e924-6bcc-49c7-b6c0-59f9199a1bf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\nativemodule\samples\ReactCommon">
+      <UniqueIdentifier>{e3ff0f65-dba6-4a18-8ec5-acfe73178bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="react\renderer\telemetry">
+      <UniqueIdentifier>{40bfe98f-f174-4c03-9296-d371bc230e53}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -120,9 +141,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\JSIDynamic.cpp">
       <Filter>jsi\jsi</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
-      <Filter>privatedata</Filter>
-    </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
@@ -150,9 +168,6 @@
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp">
       <Filter>yoga\event</Filter>
     </ClCompile>
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp">
       <Filter>react\renderer\core</Filter>
     </ClCompile>
@@ -162,12 +177,29 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp">
       <Filter>react\renderer\debug</Filter>
     </ClCompile>
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
     <ClCompile Include="Yoga.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp">
+      <Filter>logger</Filter>
+    </ClCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp">
+      <Filter>reactperflogger\reactperflogger</Filter>
+    </CLCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp">
+      <Filter>react\renderer\mapbuffer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.cpp">
+      <Filter>react\renderer\mapbuffer</Filter>
+    </ClCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp">
+      <Filter>react\nativemodule\samples\ReactCommon</Filter>
+    </CLCompile>
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\SampleTurboCxxModule.cpp">
+      <Filter>react\nativemodule\samples\ReactCommon</Filter>
+    </CLCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp">
+      <Filter>react\renderer\telemetry</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -180,15 +212,6 @@
       <Filter>cxxreact</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.h">
-      <Filter>cxxreact</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Executor.h">
-      <Filter>cxxreact</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorToken.h">
-      <Filter>cxxreact</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorTokenFactory.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.h">
@@ -230,12 +253,6 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\oss-compat-util.h">
-      <Filter>cxxreact</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.h">
-      <Filter>cxxreact</Filter>
-    </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h">
       <Filter>cxxreact</Filter>
     </ClInclude>
@@ -257,9 +274,6 @@
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h">
       <Filter>yoga</Filter>
     </ClInclude>
-    <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h">
-      <Filter>yoga</Filter>
-    </ClInclude>
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h">
       <Filter>yoga</Filter>
     </ClInclude>
@@ -271,9 +285,6 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h">
       <Filter>jsi\jsi</Filter>
-    </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h">
-      <Filter>privatedata</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h">
       <Filter>turbomodule\core</Filter>
@@ -290,9 +301,18 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h">
       <Filter>turbomodule\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\brdiging\CallbackWrapper.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.h">
+      <Filter>cxxreact</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h">
+      <Filter>logger</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h">
+      <Filter>callinvoker\ReactCommon</Filter>
+    </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h">
+      <Filter>react\bridging</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

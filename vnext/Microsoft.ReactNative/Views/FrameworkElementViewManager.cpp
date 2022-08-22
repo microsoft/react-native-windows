@@ -93,8 +93,8 @@ static void GetAccessibilityStateProps(const winrt::Microsoft::ReactNative::IJSV
 
 static void GetAccessibilityValueProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) {
   writer.WriteObjectBegin();
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"min", L"boolean");
-  winrt::Microsoft::ReactNative::WriteProperty(writer, L"max", L"boolean");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"min", L"number");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"max", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"now", L"number");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"text", L"string");
   writer.WriteObjectEnd();
@@ -526,29 +526,79 @@ bool FrameworkElementViewManager::UpdateProperty(
       DynamicAutomationProperties::SetAccessibilityStateCollapsed(
           element, states[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityStates::Collapsed)]);
     } else if (propertyName == "accessibilityValue") {
+      winrt::hstring textValue;
+      const int numericValuesCount = 3;
+      double numericValues[numericValuesCount] = {};
+
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
         for (const auto &pair : propertyValue.AsObject()) {
           const std::string &innerName = pair.first;
           const auto &innerValue = pair.second;
 
+          auto peer = xaml::Automation::Peers::FrameworkElementAutomationPeer::FromElement(element);
+
           if (innerName == "min" &&
               (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
                innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
-            DynamicAutomationProperties::SetAccessibilityValueMin(element, innerValue.AsDouble());
+            numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Min)] =
+                innerValue.AsDouble();
+
+            const auto prevMinValue = DynamicAutomationProperties::GetAccessibilityValueMin(element);
+            if (peer != nullptr && prevMinValue != innerValue.AsDouble()) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::RangeValuePatternIdentifiers::MinimumProperty(),
+                  winrt::box_value(prevMinValue),
+                  winrt::box_value(innerValue.AsDouble()));
+            }
           } else if (
-              innerName == "max" && innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-              innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-            DynamicAutomationProperties::SetAccessibilityValueMax(element, innerValue.AsDouble());
+              innerName == "max" &&
+              (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+               innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
+            numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Max)] =
+                innerValue.AsDouble();
+
+            const auto prevMaxValue = DynamicAutomationProperties::GetAccessibilityValueMax(element);
+            if (peer != nullptr && prevMaxValue != innerValue.AsDouble()) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::RangeValuePatternIdentifiers::MaximumProperty(),
+                  winrt::box_value(prevMaxValue),
+                  winrt::box_value(innerValue.AsDouble()));
+            }
           } else if (
-              innerName == "now" && innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
-              innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64) {
-            DynamicAutomationProperties::SetAccessibilityValueNow(element, innerValue.AsDouble());
+              innerName == "now" &&
+              (innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Double ||
+               innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64)) {
+            numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Now)] =
+                innerValue.AsDouble();
+
+            const auto prevNowValue = DynamicAutomationProperties::GetAccessibilityValueNow(element);
+            if (peer != nullptr && prevNowValue != innerValue.AsDouble()) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::RangeValuePatternIdentifiers::ValueProperty(),
+                  winrt::box_value(prevNowValue),
+                  winrt::box_value(innerValue.AsDouble()));
+            }
           } else if (innerName == "text" && innerValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
-            auto value = asHstring(innerValue);
-            DynamicAutomationProperties::SetAccessibilityValueText(element, value);
+            textValue = asHstring(innerValue);
+
+            const auto prevTextValue = DynamicAutomationProperties::GetAccessibilityValueText(element);
+            if (peer != nullptr && prevTextValue != textValue) {
+              peer.RaisePropertyChangedEvent(
+                  winrt::ValuePatternIdentifiers::ValueProperty(),
+                  winrt::box_value(prevTextValue),
+                  winrt::box_value(textValue));
+            }
           }
         }
       }
+
+      DynamicAutomationProperties::SetAccessibilityValueMin(
+          element, numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Min)]);
+      DynamicAutomationProperties::SetAccessibilityValueMax(
+          element, numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Max)]);
+      DynamicAutomationProperties::SetAccessibilityValueNow(
+          element, numericValues[static_cast<int32_t>(winrt::Microsoft::ReactNative::AccessibilityValue::Now)]);
+      DynamicAutomationProperties::SetAccessibilityValueText(element, textValue);
     } else if (propertyName == "testID") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
         auto value = asHstring(propertyValue);

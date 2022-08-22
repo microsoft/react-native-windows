@@ -22,20 +22,15 @@
       },
       "ReactNative.Hermes.Windows": {
         "type": "Direct",
-        "requested": "[0.12.1, )",
-        "resolved": "0.12.1",
-        "contentHash": "0yjt0Y2pNfqw7qUiV5Q3W8hZ2HuS3HiS135c/ILLXeRXLpQMmfq1NS3oBZ1oMZy94gSfgP9QZ/862T3qUTES1A=="
+        "requested": "[0.12.2, )",
+        "resolved": "0.12.2",
+        "contentHash": "S9AR5puBB7NXhJoBeDj3GBOOX2z3du5gxC/u7rtGb1NaFJxkBX+fEci80ywTT2SYNodticfIxen+FdD2NK4URg=="
       },
       "XamlTreeDump": {
         "type": "Direct",
         "requested": "[1.0.9, )",
         "resolved": "1.0.9",
         "contentHash": "rvh/RZghhSG28PDL1dw56nTZRN0/ViV2TIja/ykU9FHn0gtM8pwtgD8Ebo1nobu0QnSjn8Cg6Ncu39VV19rkrw=="
-      },
-      "boost": {
-        "type": "Transitive",
-        "resolved": "1.76.0",
-        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
@@ -62,16 +57,6 @@
         "type": "Transitive",
         "resolved": "2.1.0",
         "contentHash": "GmkKfoyerqmsHMn7OZj0AKpcBabD+GaafqphvX2Mw406IwiJRy1pKcKqdCfKJfYmkRyJ6+e+RaUylgdJoDa1jQ=="
-      },
-      "Microsoft.Windows.CppWinRT": {
-        "type": "Transitive",
-        "resolved": "2.0.211028.7",
-        "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
-      },
-      "Microsoft.Windows.SDK.BuildTools": {
-        "type": "Transitive",
-        "resolved": "10.0.22000.194",
-        "contentHash": "4L0P3zqut466SIqT3VBeLTNUQTxCBDOrTRymRuROCRJKazcK7ibLz9yAO1nKWRt50ttCj39oAa2Iuz9ZTDmLlg=="
       },
       "NETStandard.Library": {
         "type": "Transitive",
@@ -149,38 +134,10 @@
         "contentHash": "qF6RRZKaflI+LR1YODNyWYjq5YoX8IJ2wx5y8O+AW2xO+1t/Q6Mm+jQ38zJbWnmXbrcOqUYofn7Y3/KC6lTLBQ=="
       },
       "automationchannel": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.ReactNative": "1.0.0",
-          "Microsoft.UI.Xaml": "2.7.0",
-          "Microsoft.Windows.CppWinRT": "2.0.211028.7"
-        }
-      },
-      "common": {
         "type": "Project"
-      },
-      "fmt": {
-        "type": "Project"
-      },
-      "folly": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "1.76.0",
-          "fmt": "1.0.0"
-        }
       },
       "microsoft.reactnative": {
-        "type": "Project",
-        "dependencies": {
-          "Common": "1.0.0",
-          "Folly": "1.0.0",
-          "Microsoft.UI.Xaml": "2.7.0",
-          "Microsoft.Windows.CppWinRT": "2.0.211028.7",
-          "Microsoft.Windows.SDK.BuildTools": "10.0.22000.194",
-          "ReactCommon": "1.0.0",
-          "ReactNative.Hermes.Windows": "0.12.1",
-          "boost": "1.76.0"
-        }
+        "type": "Project"
       },
       "microsoft.reactnative.managed": {
         "type": "Project",
@@ -189,26 +146,11 @@
           "Microsoft.ReactNative": "1.0.0"
         }
       },
-      "reactcommon": {
-        "type": "Project",
-        "dependencies": {
-          "Folly": "1.0.0",
-          "boost": "1.76.0"
-        }
-      },
       "reactnativepicker": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.ReactNative": "1.0.0",
-          "Microsoft.UI.Xaml": "2.7.0"
-        }
+        "type": "Project"
       },
       "reactnativexaml": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.ReactNative": "1.0.0",
-          "Microsoft.UI.Xaml": "2.7.0"
-        }
+        "type": "Project"
       }
     },
     "UAP,Version=v10.0.16299/win10-arm": {

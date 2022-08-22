@@ -427,12 +427,14 @@ class AccessibilityStateExamples extends React.Component {
             backgroundColor: 'gray',
             height: 50,
           }}
+          focusable={true}
+          accessible={true}
+          accessibilityRole="adjustable"
           accessibilityValue={{
             min: this.state.viewRangeMin,
             max: this.state.viewRangeMax,
             now: this.state.viewRangeNow,
-          }}
-          accessibilityRole="adjustable">
+          }}>
           <Text>
             The View's (accessibilityRole == adjustable, ie. Slider) properties
             should be the following according to UIA: Min-{' '}
