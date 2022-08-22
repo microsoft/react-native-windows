@@ -952,18 +952,18 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
   }
 
   const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
-  if (tagToYogaNode != m_tagsToYogaNodes.end()) {
-    YGNodeRef yogaNode = tagToYogaNode->second.get();
-    if (YGNodeGetHasNewLayout(yogaNode)) {
-      YGNodeSetHasNewLayout(yogaNode, false);
-      float left = YGNodeLayoutGetLeft(yogaNode);
-      float top = YGNodeLayoutGetTop(yogaNode);
-      float width = YGNodeLayoutGetWidth(yogaNode);
-      float height = YGNodeLayoutGetHeight(yogaNode);
-      auto view = shadowNode.GetView();
-      auto pViewManager = shadowNode.GetViewManager();
-      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
-    }
+  if (auto yogaNode = GetYogaNode(tag)) {
+    if (!YGNodeGetHasNewLayout(yogaNode))
+      return;
+    YGNodeSetHasNewLayout(yogaNode, false);
+
+    float left = YGNodeLayoutGetLeft(yogaNode);
+    float top = YGNodeLayoutGetTop(yogaNode);
+    float width = YGNodeLayoutGetWidth(yogaNode);
+    float height = YGNodeLayoutGetHeight(yogaNode);
+    auto view = shadowNode.GetView();
+    auto pViewManager = shadowNode.GetViewManager();
+    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
   }
 }
 
