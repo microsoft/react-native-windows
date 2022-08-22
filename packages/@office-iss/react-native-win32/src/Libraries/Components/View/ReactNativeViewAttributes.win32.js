@@ -36,6 +36,7 @@ const UIView = {
   needsOffscreenAlphaCompositing: true,
   style: ReactNativeStyleAttributes,
   // [Windows
+  alwaysShowToolTip: true,
   enableFocusRing: true,
   cursor: true,
   textStyle: true, // Once we flush out our JS theming story this property will no longer be needed
