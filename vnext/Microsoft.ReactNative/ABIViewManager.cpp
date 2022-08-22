@@ -237,6 +237,20 @@ void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView
   }
 }
 
+void ABIViewManager::SetLayoutProps(
+    ::Microsoft::ReactNative::ShadowNodeBase &nodeToUpdate,
+    const ::Microsoft::ReactNative::XamlView &viewToUpdate,
+    float left,
+    float top,
+    float width,
+    float height) {
+  if (m_viewManagerWithOnLayout) {
+    m_viewManagerWithOnLayout.OnLayout(viewToUpdate.as<xaml::FrameworkElement>(), left, top, width, height);
+  }
+  // Call the base method to handle `SetLayoutProps` behavior
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+}
+
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
   return new ABIShadowNode(
       m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout());
