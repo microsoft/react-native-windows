@@ -940,12 +940,14 @@ void NativeUIManager::DoLayout() {
       return;
     }
 
-    SetLayoutPropsRecursive(rootTag);
+    {
+      SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
+      SetLayoutPropsRecursive(rootTag);
+    }
   }
 }
 
 void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
-  SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
   ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
   for (const auto child : shadowNode.m_children) {
     SetLayoutPropsRecursive(child);
