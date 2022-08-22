@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add method to invoke nested Yoga layout",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
