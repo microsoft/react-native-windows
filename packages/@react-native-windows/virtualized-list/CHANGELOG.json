@@ -2,6 +2,21 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Mon, 22 Aug 2022 20:20:07 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.70.0-preview.1",
+      "version": "0.70.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "b4acd4f5d8015a953cde246e1f612f44a0767e97",
+            "comment": "Promote 0.70 to preview"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Aug 2022 05:08:54 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.0.0-canary.49",
       "version": "0.0.0-canary.49",

@@ -2,6 +2,39 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 22 Aug 2022 20:20:06 GMT",
+      "tag": "@react-native-windows/cli_v0.70.0-preview.1",
+      "version": "0.70.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "b4acd4f5d8015a953cde246e1f612f44a0767e97",
+            "comment": "Promote 0.70 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.70.0-preview.1",
+            "commit": "a5034fc1c5336413a381652b8edefc1b4ca76832"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.70.0-preview.1",
+            "commit": "a5034fc1c5336413a381652b8edefc1b4ca76832"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.70.0-preview.1",
+            "commit": "a5034fc1c5336413a381652b8edefc1b4ca76832"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Aug 2022 05:09:34 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.135",
       "version": "0.0.0-canary.135",

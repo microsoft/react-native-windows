@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 19 Aug 2022 05:09:34 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Aug 2022 20:20:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.0-preview.1
+
+Mon, 22 Aug 2022 20:20:06 GMT
+
+### Changes
+
+- Promote 0.70 to preview (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.70.0-preview.1
+- Bump @react-native-windows/package-utils to v0.70.0-preview.1
+- Bump @react-native-windows/telemetry to v0.70.0-preview.1
 
 ## 0.0.0-canary.135
 
