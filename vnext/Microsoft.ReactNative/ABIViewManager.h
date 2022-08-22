@@ -100,7 +100,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   IViewManagerWithExportedEventTypeConstants m_viewManagerWithExportedEventTypeConstants;
   IViewManagerWithChildren m_viewManagerWithChildren;
   IViewManagerRequiresNativeLayout m_viewManagerRequiresNativeLayout;
-  IViewManagerWithNativeLayout m_viewManagerWithNativeLayout;
+  IViewManagerWithMeasure m_viewManagerWithMeasure;
   IViewManagerWithPointerEvents m_viewManagerWithPointerEvents;
   IViewManagerWithDropViewInstance m_viewManagerWithDropViewInstance;
   IViewManagerWithOnLayout m_viewManagerWithOnLayout;

@@ -52,7 +52,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithCommands{viewManager.try_as<IViewManagerWithCommands>()},
       m_viewManagerWithExportedEventTypeConstants{viewManager.try_as<IViewManagerWithExportedEventTypeConstants>()},
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
-      m_viewManagerWithNativeLayout{viewManager.try_as<IViewManagerWithNativeLayout>()},
+      m_viewManagerWithMeasure{viewManager.try_as<IViewManagerWithMeasure>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
       m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()},
@@ -131,7 +131,7 @@ void ABIViewManager::UpdateProperties(
     ::Microsoft::ReactNative::ShadowNodeBase *nodeToUpdate,
     winrt::Microsoft::ReactNative::JSValueObject &props) {
   if ((m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) ||
-      m_viewManagerWithNativeLayout) {
+      m_viewManagerWithMeasure) {
     MarkDirty(nodeToUpdate->m_tag);
   }
 
@@ -232,7 +232,7 @@ void ABIViewManager::ReplaceChild(
 }
 
 YGMeasureFunc ABIViewManager::GetYogaCustomMeasureFunc() const {
-  if (m_viewManagerWithNativeLayout) {
+  if (m_viewManagerWithMeasure) {
     return ABIYogaSelfMeasureTrampoline;
   } else if (m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout()) {
     return ::Microsoft::ReactNative::DefaultYogaSelfMeasureFunc;
@@ -294,12 +294,12 @@ YGSize ABIViewManager::ABIYogaSelfMeasureFunc(
     YGMeasureMode widthMode,
     float height,
     YGMeasureMode heightMode) {
-  assert(m_viewManagerWithNativeLayout);
+  assert(m_viewManagerWithMeasure);
   const auto context = reinterpret_cast<::Microsoft::ReactNative::YogaContext *>(YGNodeGetContext(node));
   const auto view = context->view.as<xaml::FrameworkElement>();
   const auto abiWidthMode = ToABIMeasureMode(widthMode);
   const auto abiHeightMode = ToABIMeasureMode(heightMode);
-  const auto abiSize = m_viewManagerWithNativeLayout.Measure(view, width, abiWidthMode, height, abiHeightMode);
+  const auto abiSize = m_viewManagerWithMeasure.Measure(view, width, abiWidthMode, height, abiHeightMode);
   const auto size = ToYGSize(abiSize);
   return size;
 }

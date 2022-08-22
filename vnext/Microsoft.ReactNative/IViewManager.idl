@@ -121,7 +121,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
       "An experimental API. It may be removed or changed in a future version. "
-      "Used by @IViewManagerWithNativeLayout for the measurement callback measure mode parameter."
+      "Used by @IViewManagerWithMeasure for the measurement callback measure mode parameter."
   )
   enum YogaMeasureMode {
     Undefined,
@@ -133,7 +133,7 @@ namespace Microsoft.ReactNative
   [experimental]
   DOC_STRING(
       "An experimental API. It may be removed or changed in a future version. "
-      "Used by @IViewManagerWithNativeLayout for the measurement callback return value."
+      "Used by @IViewManagerWithMeasure for the measurement callback return value."
   )
   struct YogaSize {
     Single Width;
@@ -146,7 +146,7 @@ namespace Microsoft.ReactNative
     "An experimental API. It may be removed or changed in a future version. "
     "Enables view managers to implement custom Yoga leaf node measurement."
   )
-  interface IViewManagerWithNativeLayout {
+  interface IViewManagerWithMeasure {
     DOC_STRING(
       "An experimental API. It may be removed or changed in a future version. "
       "Yoga measurement callback for ABI view managers."
