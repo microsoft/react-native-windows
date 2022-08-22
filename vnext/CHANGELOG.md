@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 15 Aug 2022 15:09:31 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Aug 2022 15:09:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.6
+
+Mon, 22 Aug 2022 15:09:35 GMT
+
+### Patches
+
+- Fix ReactNotificationService memory leak (vmorozov@microsoft.com)
 
 ## 0.69.5
 
