@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220714-2051-8af7870c6",
+  "baseVersion": "0.70.0-rc.1",
   "overrides": [
     {
       "type": "derived",
@@ -124,6 +124,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
+      "baseVersion": "0.0.0-20220714-2051-8af7870c6",
       "baseHash": "40e5d8415243c15dc31bab4f1246f42d5d52e679"
     },
     {

@@ -3,7 +3,7 @@
     ".flowconfig",
     "src/**"
   ],
-  "baseVersion": "0.0.0-20220714-2051-8af7870c6",
+  "baseVersion": "0.70.0-rc.1",
   "overrides": [
     {
       "type": "derived",

@@ -16,10 +16,13 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             SolutionFile: Playground.sln
+            UploadAppx: true
           - Name: X64ReleaseUniversal
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground.sln
+            RunWack: true
+            UploadAppx: true
           - Name: X64DebugUniversal
             BuildConfiguration: Debug
             BuildPlatform: x64
@@ -44,6 +47,7 @@ parameters:
           #   BuildPlatform: x86
           #   SolutionFile: Playground.sln
           #   BuildWinUI3: true
+          #   UploadAppx: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X86DebugUniversal
