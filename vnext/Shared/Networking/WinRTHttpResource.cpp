@@ -14,11 +14,11 @@
 #include <boost/algorithm/string.hpp>
 
 // Windows API
+#include <WinInet.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
-#include <WinInet.h>
 
 using folly::dynamic;
 
@@ -59,9 +59,10 @@ WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windo
 
 #pragma region IHttpResource
 
-IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(HttpMethod&& method, Uri&& uri, IInspectable const &args) noexcept {
+IAsyncOperation<HttpRequestMessage>
+WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable const &args) noexcept {
   auto coRequest = HttpRequestMessage{std::move(method), std::move(uri)};
-  auto coArgs = args;//TODO: Redundant?
+  auto coArgs = args; // TODO: Redundant?
   auto coReqArgs = args.as<RequestArgs>();
   auto self = shared_from_this();
 
@@ -281,7 +282,8 @@ void WinRTHttpResource::UntrackResponse(int64_t requestId) noexcept {
   m_responses.erase(requestId);
 }
 
-fire_and_forget WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri&& rtUri, IInspectable const &args) noexcept {
+fire_and_forget
+WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspectable const &args) noexcept {
   // Keep references after coroutine suspension.
   auto self = shared_from_this();
   auto coArgs = args;
@@ -460,7 +462,6 @@ fire_and_forget WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri&&
     auto result = sendRequestOp.ErrorCode();
     // Handle "The HTTP redirect request must be confirmed by the user"
     if (result == HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION)) {
-
       auto coRequest2 = co_await CreateRequest(HttpMethod(coRequest.Method()), Uri{coRequest.RequestUri()}, coArgs);
       auto redirRequestOp = self->m_client.SendRequestAsync(coRequest2);
       co_await lessthrow_await_adapter<ResponseOperation>{redirRequestOp};

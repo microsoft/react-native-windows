@@ -17,6 +17,8 @@
 // Standard Library
 #include <future>
 
+#include <WinInet.h>
+
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -33,6 +35,50 @@ using Test::DynamicResponse;
 using Test::EmptyResponse;
 using Test::HttpServer;
 using Test::ResponseWrapper;
+
+auto hEvent = CreateEvent(NULL, FALSE, FALSE, L"ResponseEvent");
+DWORD_PTR hContext;
+
+void ContextCallback(
+    HINTERNET hInternet,
+    DWORD_PTR dwContext,
+    DWORD dwInternetStatus,
+    LPVOID lpvStatusInformation,
+    DWORD dwStatusInformationLength) {
+  int x = 99;
+
+  switch (dwInternetStatus) {
+    case INTERNET_STATUS_HANDLE_CLOSING:
+      SetEvent(hEvent);
+      break;
+
+    case INTERNET_STATUS_HANDLE_CREATED:
+      // Verify valid pointer lpvStatusInformation
+      break;
+
+    case INTERNET_STATUS_RESPONSE_RECEIVED:
+      if (lpvStatusInformation && dwStatusInformationLength == sizeof(DWORD)) {
+        int y = 100;
+        // TODO: response received
+      } else {
+        // TODO: fail
+      }
+      break;
+
+    case INTERNET_STATUS_REDIRECT:
+      break;
+
+    case INTERNET_STATUS_REQUEST_COMPLETE:
+      if (((LPINTERNET_ASYNC_RESULT)lpvStatusInformation)->dwError != ERROR_SUCCESS) {
+        // TODO:fail
+        int aa = 102;
+        return;
+      }
+
+    default:
+      break;
+  }
+}
 
 namespace Microsoft::React::Test {
 
@@ -424,6 +470,85 @@ TEST_CLASS (HttpResourceIntegrationTest) {
 
     responsePromise.get_future().wait();
     contentPromise.get_future().wait();
+
+    server2->Stop();
+    server1->Stop();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
+    Assert::AreEqual({"Redirect Content"}, content);
+  }
+
+  TEST_METHOD(SimpleRedirectWinInetSucceeds) {
+    auto port1 = s_port;
+    auto port2 = ++s_port;
+    string url = "http://localhost:" + std::to_string(port1);
+
+    promise<void> responsePromise;
+    promise<void> contentPromise;
+    IHttpResource::Response responseResult;
+    string content;
+    string error;
+
+    hContext = 100;
+
+    auto responseFunc1 = [port2](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::moved_permanently);
+      response.set(http::field::location, {"http://localhost:" + std::to_string(port2)});
+
+      return {std::move(response)};
+    };
+    auto responseFunc2 = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Redirect Content");
+
+      return {std::move(response)};
+    };
+
+    auto server1 = make_shared<HttpServer>(port1);
+    server1->Callbacks().OnGet = responseFunc2;
+
+    auto server2 = make_shared<HttpServer>(port2);
+    server2->Callbacks().OnGet = responseFunc2;
+
+    server1->Start();
+    server2->Start();
+
+    const wchar_t *acceptTypes[] = {L"text/*", NULL};
+    auto hSession = InternetOpen(L"MyUserAgent", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, INTERNET_FLAG_ASYNC);
+    if (!hSession) {
+      Assert::Fail(L"Couldn't start session");
+    }
+
+    auto hCallback = InternetSetStatusCallback(hSession, (INTERNET_STATUS_CALLBACK)ContextCallback);
+    if (hCallback == INTERNET_INVALID_STATUS_CALLBACK) {
+      Assert::Fail(L"Failed to set callback");
+    }
+
+    auto hConnect = InternetConnect(
+        hSession, L"localhost", static_cast<INTERNET_PORT>(port1), NULL, NULL, INTERNET_SERVICE_HTTP, 0, hContext);
+    if (!hConnect) {
+      Assert::Fail(L"Couldn't connect");
+    }
+
+    auto hRequest = HttpOpenRequest(
+        hConnect, L"GET", L"/", NULL, NULL, acceptTypes, INTERNET_FLAG_RELOAD | INTERNET_FLAG_NO_CACHE_WRITE, hContext);
+    if (!hRequest) {
+      Assert::Fail(L"Couldn't send request");
+    }
+
+    auto bRequestSuccess = HttpSendRequest(hRequest, NULL /*headers*/, 0, NULL /*content*/, 0);
+    auto lErr = GetLastError();
+    if (!bRequestSuccess && lErr != ERROR_IO_PENDING) {
+      // if (!bRequestSuccess) {
+      Assert::Fail(L"Failed to send");
+    }
+
+    WaitForSingleObject(hEvent, INFINITE);
+    // responsePromise.get_future().wait();
+    // contentPromise.get_future().wait();
 
     server2->Stop();
     server1->Stop();
