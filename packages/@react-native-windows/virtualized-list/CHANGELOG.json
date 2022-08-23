@@ -2,6 +2,21 @@
   "name": "@react-native-windows/virtualized-list",
   "entries": [
     {
+      "date": "Tue, 23 Aug 2022 23:36:52 GMT",
+      "tag": "@react-native-windows/virtualized-list_v0.70.0-preview.2",
+      "version": "0.70.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/virtualized-list",
+            "commit": "144a31db1774e3a88528560956483c63e5665b1d",
+            "comment": "Integrate RC 4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Aug 2022 20:20:07 GMT",
       "tag": "@react-native-windows/virtualized-list_v0.70.0-preview.1",
       "version": "0.70.0-preview.1",

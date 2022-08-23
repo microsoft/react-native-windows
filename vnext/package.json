@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.70.0-preview.1",
+  "version": "0.70.0-preview.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
     "@react-native-community/cli-platform-android": "^9.0.0",
     "@react-native-community/cli-platform-ios": "^9.0.0",
     "@react-native-windows/cli": "0.70.0-preview.1",
-    "@react-native-windows/virtualized-list": "0.70.0-preview.1",
+    "@react-native-windows/virtualized-list": "0.70.0-preview.2",
     "@react-native/assets": "1.0.0",
     "@react-native/normalize-color": "2.0.0",
     "@react-native/polyfills": "2.0.0",
