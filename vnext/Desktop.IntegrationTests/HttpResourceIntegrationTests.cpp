@@ -561,6 +561,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Redirect Content"}, content);
   }
 
+  BEGIN_TEST_METHOD_ATTRIBUTE(SimpleRedirectWinInetSucceeds)
+    TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SimpleRedirectWinInetSucceeds) {
     auto port1 = s_port;
     auto port2 = ++s_port;
