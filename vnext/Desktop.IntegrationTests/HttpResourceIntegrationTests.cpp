@@ -37,16 +37,18 @@ using Test::EmptyResponse;
 using Test::HttpServer;
 using Test::ResponseWrapper;
 
-struct RequestContext
-{
+struct RequestContext {
   HINTERNET Session = NULL;
   HINTERNET Connection = NULL;
   HINTERNET Request = NULL;
   DWORD StatusCode = 0;
   DWORD StatusCodeLength = sizeof(StatusCode);
-  char* Content;
+  char *Content;
   DWORD ContentSize = 0;
+  const wchar_t *ErrorMessage;
   HANDLE Event = CreateEvent(NULL, FALSE, FALSE, L"ResponseEvent");
+  CRITICAL_SECTION CriticalSection;
+  bool Complete = false;
 };
 
 void ContextCallback(
@@ -55,119 +57,108 @@ void ContextCallback(
     DWORD dwInternetStatus,
     LPVOID lpvStatusInformation,
     DWORD dwStatusInformationLength) {
-
   auto context = (RequestContext *)dwContext;
   DWORD dwError = 0;
-  LPVOID lpMsgBuf;
-  LPVOID lpDisplayBuf;
-  winrt::hstring msgErr;
-  auto osta = NULL;
-  LPINTERNET_ASYNC_RESULT statusInfo = NULL;
   BYTE contentBuffer[1024];
   DWORD contentBufferLength = sizeof(contentBuffer);
-  DWORD contentLengthLength = sizeof(context->ContentSize);
   DWORD readBytes = 0;
 
   switch (dwInternetStatus) {
-    case INTERNET_STATUS_RESOLVING_NAME:
-      break;
-    case INTERNET_STATUS_NAME_RESOLVED:
-      break;
-    case INTERNET_STATUS_CONNECTING_TO_SERVER:
-      break;
-    case INTERNET_STATUS_CONNECTED_TO_SERVER:
-      break;
-    case INTERNET_STATUS_COOKIE_SENT:
-      break;
-    case INTERNET_STATUS_COOKIE_RECEIVED:
-      break;
-    case INTERNET_STATUS_COOKIE_HISTORY: {
-      // ExitSwitch:
-      break;
-    case INTERNET_STATUS_CLOSING_CONNECTION:
-      break;
-    case INTERNET_STATUS_CONNECTION_CLOSED:
-      break;
-    case INTERNET_STATUS_HANDLE_CLOSING:
-      // Signal the event for closing the handle
-      // only for the Request Handle
-      // if (appContext) {
-      //  SetEvent(appContext->hEvent);
-      //}
-      break;
-    case INTERNET_STATUS_HANDLE_CREATED:
-      // Verify we've a valid pointer
-      if (lpvStatusInformation) {
-        // fprintf(stderr, "Handle %x created\n", ((LPINTERNET_ASYNC_RESULT)lpvStatusInformation)->dwResult);
-      }
-      break;
-    case INTERNET_STATUS_INTERMEDIATE_RESPONSE:
-      break;
-    case INTERNET_STATUS_RECEIVING_RESPONSE:
-      break;
-    case INTERNET_STATUS_RESPONSE_RECEIVED:
-      //// Verify we've a valid pointer with the correct size
-      // if (lpvStatusInformation && dwStatusInformationLength == sizeof(DWORD)) {
-      //   dwBytes = *((LPDWORD)lpvStatusInformation);
-      //   fprintf(stderr, "Status: Response Received (%d Bytes)\n", dwBytes);
-      // } else {
-      //   fprintf(stderr, "Response Received: lpvStatusInformation not valid\n");
-      // }
-      break;
-    case INTERNET_STATUS_REDIRECT:
-      break;
+    // case INTERNET_STATUS_RESOLVING_NAME:
+    //   break;
+    // case INTERNET_STATUS_NAME_RESOLVED:
+    //   break;
+    // case INTERNET_STATUS_CONNECTING_TO_SERVER:
+    //   break;
+    // case INTERNET_STATUS_CONNECTED_TO_SERVER:
+    //   break;
+    // case INTERNET_STATUS_COOKIE_SENT:
+    //   break;
+    // case INTERNET_STATUS_COOKIE_RECEIVED:
+    //   break;
+    // case INTERNET_STATUS_COOKIE_HISTORY: /*{*/
+    //   // ExitSwitch:
+    //   break;
+    // case INTERNET_STATUS_CLOSING_CONNECTION:
+    //   break;
+    // case INTERNET_STATUS_CONNECTION_CLOSED:
+    //   break;
+    // case INTERNET_STATUS_HANDLE_CLOSING:
+    //   break;
+    // case INTERNET_STATUS_HANDLE_CREATED:
+    //   break;
+    // case INTERNET_STATUS_INTERMEDIATE_RESPONSE:
+    //   break;
+    // case INTERNET_STATUS_RECEIVING_RESPONSE:
+    //   break;
+    // case INTERNET_STATUS_RESPONSE_RECEIVED:
+    //   break;
+    // case INTERNET_STATUS_REDIRECT:
+    //   break;
     case INTERNET_STATUS_REQUEST_COMPLETE:
-    // See https://github.com/microsoft/Windows-classic-samples/blob/main/Samples/Win7Samples/web/Wininet/Async/async.c#L389
+      // See
+      // https://github.com/microsoft/Windows-classic-samples/blob/main/Samples/Win7Samples/web/Wininet/Async/async.c#L389
 
       // check for error first
       dwError = ((LPINTERNET_ASYNC_RESULT)lpvStatusInformation)->dwError;
-      statusInfo = (LPINTERNET_ASYNC_RESULT)lpvStatusInformation;
 
       if (dwError != ERROR_SUCCESS) {
-        msgErr = winrt::hresult_error(HRESULT_FROM_WIN32(dwError), winrt::hresult_error::from_abi).message();
+        context->ErrorMessage =
+            winrt::hresult_error(HRESULT_FROM_WIN32(dwError), winrt::hresult_error::from_abi).message().c_str();
         if (dwError == ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION) {
-          osta = ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION;
-        }
-
-        exit(1);
-      }
-
-      HttpQueryInfo(context->Request,
-        HTTP_QUERY_FLAG_NUMBER | HTTP_QUERY_STATUS_CODE,
-        &context->StatusCode,
-        &context->StatusCodeLength,
-        NULL
-      );
-
-      while (InternetReadFile(context->Request, contentBuffer, contentBufferLength, &readBytes)) {
-        if (readBytes == 0)
+          auto bRequestSuccess = HttpSendRequest(context->Request, NULL /*headers*/, 0, NULL /*content*/, 0);
+          auto lErr = GetLastError();
+          if (!bRequestSuccess && lErr != ERROR_IO_PENDING) {
+            exit(1);
+          }
           break;
-        context->ContentSize += readBytes;
+        } else {
+          exit(1);
+        }
       }
-      context->Content = (char *)contentBuffer;
-      context->Content[context->ContentSize] = '\0';
+
+      while (!TryEnterCriticalSection(&context->CriticalSection))
+        continue;
+
+      // EnterCriticalSection(&context->CriticalSection);
+      {
+        if (context->Complete)
+          break;
+
+        HttpQueryInfo(
+            context->Request,
+            HTTP_QUERY_FLAG_NUMBER | HTTP_QUERY_STATUS_CODE,
+            &context->StatusCode,
+            &context->StatusCodeLength,
+            NULL);
+
+        while (InternetReadFile(context->Request, contentBuffer, contentBufferLength, &readBytes)) {
+          if (readBytes == 0) {
+            break;
+          }
+
+          context->ContentSize += readBytes;
+        }
+        context->Content = (char *)contentBuffer;
+        context->Content[context->ContentSize] = '\0';
+        context->Complete = true;
+      }
+      LeaveCriticalSection(&context->CriticalSection);
 
       SetEvent(context->Event);
       break;
-    case INTERNET_STATUS_REQUEST_SENT:
-      // Verify we've a valid pointer with the correct size
-      if (lpvStatusInformation && dwStatusInformationLength == sizeof(DWORD)) {
-        // dwBytes = *((LPDWORD)lpvStatusInformation);
-      } else {
-        fprintf(stderr, "Request sent: lpvStatusInformation not valid\n");
-      }
-      break;
-    case INTERNET_STATUS_DETECTING_PROXY:
-      break;
-    case INTERNET_STATUS_SENDING_REQUEST:
-      break;
-    case INTERNET_STATUS_STATE_CHANGE:
-      break;
-    case INTERNET_STATUS_P3P_HEADER:
-      break;
+    // case INTERNET_STATUS_REQUEST_SENT:
+    //   break;
+    // case INTERNET_STATUS_DETECTING_PROXY:
+    //   break;
+    // case INTERNET_STATUS_SENDING_REQUEST:
+    //   break;
+    // case INTERNET_STATUS_STATE_CHANGE:
+    //   break;
+    // case INTERNET_STATUS_P3P_HEADER:
+    //   break;
     default:
       break;
-    }
   }
 }
 
@@ -575,6 +566,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     auto port2 = ++s_port;
     string url = "http://localhost:" + std::to_string(port1);
     RequestContext context;
+    InitializeCriticalSection(&context.CriticalSection);
 
     auto responseFunc1 = [port2](const DynamicRequest &request) -> ResponseWrapper {
       DynamicResponse response;
@@ -599,11 +591,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server2->Callbacks().OnGet = responseFunc2;
     server2->Callbacks().OnPatch = responseFunc2;
 
-
     server1->Start();
     server2->Start();
 
-    const wchar_t *acceptTypes[] = {L"text/*", NULL};
     auto hSession = InternetOpen(L"MyUserAgent", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, INTERNET_FLAG_ASYNC);
     if (!hSession) {
       Assert::Fail(L"Couldn't start session");
@@ -615,15 +605,28 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     }
 
     auto hConnect = InternetConnect(
-        hSession, L"localhost", static_cast<INTERNET_PORT>(port1), NULL, NULL, INTERNET_SERVICE_HTTP, 0, (DWORD_PTR)&context);
+        hSession,
+        L"localhost",
+        static_cast<INTERNET_PORT>(port1),
+        NULL,
+        NULL,
+        INTERNET_SERVICE_HTTP,
+        0,
+        (DWORD_PTR)&context);
     if (!hConnect) {
       Assert::Fail(L"Couldn't connect");
     }
 
     context.Request = HttpOpenRequest(
-      hConnect, L"GET", L"/", NULL, NULL, acceptTypes,
-        INTERNET_FLAG_RELOAD
-      | INTERNET_FLAG_NO_CACHE_WRITE,
+        hConnect,
+        L"PATCH",
+        L"/",
+        NULL,
+        NULL,
+        NULL /*acceptTypes*/,
+        /*INTERNET_FLAG_RELOAD
+      |*/
+        INTERNET_FLAG_NO_CACHE_WRITE,
         (DWORD_PTR)&context);
     if (!context.Request) {
       Assert::Fail(L"Couldn't send request");
@@ -640,7 +643,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server2->Stop();
     server1->Stop();
 
-    //Assert::AreEqual({}, error, L"Error encountered");
+    // Assert::AreEqual({}, error, L"Error encountered");
     Assert::AreEqual(static_cast<DWORD>(200), context.StatusCode);
     Assert::AreEqual("Redirect Content", context.Content);
   }
