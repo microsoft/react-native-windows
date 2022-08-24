@@ -461,6 +461,8 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
     auto result = sendRequestOp.ErrorCode();
     // Handle "The HTTP redirect request must be confirmed by the user"
+    // https://github.com/dotnet/corefx/pull/22702
+    // See https://github.com/dotnet/corefx/blob/v3.1.28/src/System.Net.Http/src/uap/System/Net/HttpClientHandler.cs
     if (result == HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION)) {
       auto coRequest2 = co_await CreateRequest(HttpMethod(coRequest.Method()), Uri{coRequest.RequestUri()}, coArgs);
       auto redirRequestOp = self->m_client.SendRequestAsync(coRequest2);
