@@ -41,7 +41,11 @@ struct RequestContext
 {
   HINTERNET Session = NULL;
   HINTERNET Connection = NULL;
-  int64_t StatusCode = 0;
+  HINTERNET Request = NULL;
+  DWORD StatusCode = 0;
+  DWORD StatusCodeLength = sizeof(StatusCode);
+  char* Content;
+  DWORD ContentSize = 0;
   HANDLE Event = CreateEvent(NULL, FALSE, FALSE, L"ResponseEvent");
 };
 
@@ -59,6 +63,10 @@ void ContextCallback(
   winrt::hstring msgErr;
   auto osta = NULL;
   LPINTERNET_ASYNC_RESULT statusInfo = NULL;
+  BYTE contentBuffer[1024];
+  DWORD contentBufferLength = sizeof(contentBuffer);
+  DWORD contentLengthLength = sizeof(context->ContentSize);
+  DWORD readBytes = 0;
 
   switch (dwInternetStatus) {
     case INTERNET_STATUS_RESOLVING_NAME:
@@ -123,6 +131,21 @@ void ContextCallback(
 
         exit(1);
       }
+
+      HttpQueryInfo(context->Request,
+        HTTP_QUERY_FLAG_NUMBER | HTTP_QUERY_STATUS_CODE,
+        &context->StatusCode,
+        &context->StatusCodeLength,
+        NULL
+      );
+
+      while (InternetReadFile(context->Request, contentBuffer, contentBufferLength, &readBytes)) {
+        if (readBytes == 0)
+          break;
+        context->ContentSize += readBytes;
+      }
+      context->Content = (char *)contentBuffer;
+      context->Content[context->ContentSize] = '\0';
 
       SetEvent(context->Event);
       break;
@@ -551,13 +574,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     auto port1 = s_port;
     auto port2 = ++s_port;
     string url = "http://localhost:" + std::to_string(port1);
-
-    promise<void> responsePromise;
-    promise<void> contentPromise;
-    IHttpResource::Response responseResult;
-    string content;
-    string error;
-
     RequestContext context;
 
     auto responseFunc1 = [port2](const DynamicRequest &request) -> ResponseWrapper {
@@ -604,31 +620,29 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       Assert::Fail(L"Couldn't connect");
     }
 
-    auto hRequest = HttpOpenRequest(
-      hConnect, L"PATCH", L"/", NULL, NULL, acceptTypes,
+    context.Request = HttpOpenRequest(
+      hConnect, L"GET", L"/", NULL, NULL, acceptTypes,
         INTERNET_FLAG_RELOAD
       | INTERNET_FLAG_NO_CACHE_WRITE,
         (DWORD_PTR)&context);
-    if (!hRequest) {
+    if (!context.Request) {
       Assert::Fail(L"Couldn't send request");
     }
 
-    auto bRequestSuccess = HttpSendRequest(hRequest, NULL /*headers*/, 0, NULL /*content*/, 0);
+    auto bRequestSuccess = HttpSendRequest(context.Request, NULL /*headers*/, 0, NULL /*content*/, 0);
     auto lErr = GetLastError();
     if (!bRequestSuccess && lErr != ERROR_IO_PENDING) {
       Assert::Fail(L"Failed to send");
     }
 
     WaitForSingleObject(context.Event, INFINITE);
-    // responsePromise.get_future().wait();
-    // contentPromise.get_future().wait();
 
     server2->Stop();
     server1->Stop();
 
-    Assert::AreEqual({}, error, L"Error encountered");
-    Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
-    Assert::AreEqual({"Redirect Content"}, content);
+    //Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<DWORD>(200), context.StatusCode);
+    Assert::AreEqual("Redirect Content", context.Content);
   }
 
   TEST_METHOD(TimeoutSucceeds) {
