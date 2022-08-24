@@ -948,9 +948,12 @@ void NativeUIManager::DoLayout() {
 }
 
 void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
-  ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-  for (const auto child : shadowNode.m_children) {
-    SetLayoutPropsRecursive(child);
+  ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));\
+  auto *pViewManager = shadowNode.GetViewManager();
+  if (!pViewManager->IsNativeControlWithSelfLayout()) {
+    for (const auto child : shadowNode.m_children) {
+      SetLayoutPropsRecursive(child);
+    }
   }
 
   const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
