@@ -42,7 +42,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
-      m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>(),
+      m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()},
       m_viewManagerWithOnLayout{viewManager.try_as<IViewManagerWithOnLayout>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
