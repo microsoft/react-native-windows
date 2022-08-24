@@ -88,6 +88,8 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
     return false;
   }
 
+  virtual void CalculateLayoutOnChildren(){};
+
   void YellowBox(const std::string &message) const noexcept;
   void RedBox(const std::string &message) const noexcept;
 

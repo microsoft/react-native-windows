@@ -19,13 +19,22 @@ class ABIShadowNode : public ::Microsoft::ReactNative::ShadowNodeBase {
   using Super = ShadowNodeBase;
 
  public:
-  ABIShadowNode(bool needsForceLayout) : m_needsForceLayout(needsForceLayout) {}
+  ABIShadowNode(bool needsForceLayout, IViewManagerWithChildYogaLayout viewManagerWithChildYogaLayout)
+      : m_needsForceLayout(needsForceLayout), m_viewManagerWithChildYogaLayout(viewManagerWithChildYogaLayout) {}
   bool NeedsForceLayout() override {
     return m_needsForceLayout;
   }
 
+  void CalculateLayoutOnChildren() override {
+    if (m_viewManagerWithChildYogaLayout) {
+      const auto view = GetView().as<xaml::FrameworkElement>();
+      m_viewManagerWithChildYogaLayout.CalculateLayoutOnChildren(view);
+    }
+  }
+
  private:
   bool m_needsForceLayout;
+  IViewManagerWithChildYogaLayout m_viewManagerWithChildYogaLayout;
 };
 
 ABIViewManager::ABIViewManager(
@@ -43,7 +52,7 @@ ABIViewManager::ABIViewManager(
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
       m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()},
-      m_viewManagerWithOnLayout{viewManager.try_as<IViewManagerWithOnLayout>()} {
+      m_viewManagerWithChildYogaLayout{viewManager.try_as<IViewManagerWithChildYogaLayout>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
@@ -256,8 +265,9 @@ void ABIViewManager::SetLayoutProps(
 }
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {
-  return new ABIShadowNode(
-      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout());
+  const bool needsForceLayout =
+      m_viewManagerRequiresNativeLayout && m_viewManagerRequiresNativeLayout.RequiresNativeLayout();
+  return new ABIShadowNode(needsForceLayout, m_viewManagerWithChildYogaLayout);
 }
 
 } // namespace winrt::Microsoft::ReactNative

@@ -929,6 +929,8 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
     for (const auto child : shadowNode.m_children) {
       SetLayoutPropsRecursive(child);
     }
+  } else {
+    shadowNode.CalculateLayoutOnChildren();
   }
 
   const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);

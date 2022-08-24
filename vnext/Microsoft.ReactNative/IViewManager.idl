@@ -88,7 +88,7 @@ namespace Microsoft.ReactNative
     )
     void OnPointerEvent(Object view, ReactPointerEventArgs args);
   };
-  
+
   [webhosthidden]
   DOC_STRING(
     "Enables view managers to track when views are "
@@ -116,5 +116,18 @@ namespace Microsoft.ReactNative
         "when the final layout has not changed, so this method may be called "
         "without a corresponding `onLayout` event in JavaScript.")
     void OnLayout(XAML_NAMESPACE.FrameworkElement view, Single left, Single top, Single width, Single height);
+  };
+
+  [webhosthidden]
+  DOC_STRING(
+    "Interface to handle invoking Yoga layout recursively on children of self-measured views."
+  )
+  interface IViewManagerWithChildYogaLayout {
+    DOC_STRING(
+        "Invoked when recursing through the shadow node tree applying "
+        "Yoga layout updates to allow recalculation of Yoga layout on "
+        "nested sub-trees via @XamlUIService.ApplyYogaLayout."
+    )
+    void CalculateLayoutOnChildren(XAML_NAMESPACE.FrameworkElement view);
   };
 } // namespace Microsoft.ReactNative

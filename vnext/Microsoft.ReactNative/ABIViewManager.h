@@ -93,6 +93,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   IViewManagerWithPointerEvents m_viewManagerWithPointerEvents;
   IViewManagerWithDropViewInstance m_viewManagerWithDropViewInstance;
   IViewManagerWithOnLayout m_viewManagerWithOnLayout;
+  IViewManagerWithChildYogaLayout m_viewManagerWithChildYogaLayout;
 
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };
