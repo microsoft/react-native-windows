@@ -1,8 +1,25 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 17 Jun 2022 17:40:57 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Jul 2022 15:11:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.66.25
+
+Mon, 11 Jul 2022 15:11:26 GMT
+
+### Patches
+
+- [0.66] CG updates for 6/28/22 (jthysell@microsoft.com)
+
+## 0.66.24
+
+Thu, 23 Jun 2022 18:49:07 GMT
+
+### Patches
+
+- Stop compiling yoga.cpp with /fp:strict. Doing so caused layout issues if Yoga code ran with the processor's rounding mode set to round down, due to NAN being defined in math.h as: ``` (float)(INFINITY * 0.0f) ``` Which macro-expands to: ``` (float)(((float)(1e+300 * 1e+300)) * 0.0f) ``` Which evaluates as follows: ``` (float)(((float)(inf.double)) * 0.0f) (float)(FLT_MAX * 0.0f) // Casting an infinite double to a float yields                         // FLT_MAX! (float)0.0f ``` (hpratt@microsoft.com)
+- Fix ExecuteJsi on instance shutdown (vmorozov@microsoft.com)
 
 ## 0.66.23
 
