@@ -75,6 +75,26 @@ const View: React.AbstractComponent<
     props.onKeyUpCapture && props.onKeyUpCapture(event);
   };
 
+  // [Windows
+  const childrenWithImportantForAccessibility = children => {
+    return React.Children.map(children, child => {
+      if (React.isValidElement(child)) {
+        if (child.props.children) {
+          return React.cloneElement(child, {
+            accessible: false,
+            children: childrenWithImportantForAccessibility(
+              child.props.children,
+            ),
+          });
+        } else {
+          return React.cloneElement(child, {accessible: false});
+        }
+      }
+      return child;
+    });
+  };
+  // Windows]
+
   return (
     // [Windows
     // In core this is a TextAncestor.Provider value={false} See
@@ -94,6 +114,18 @@ const View: React.AbstractComponent<
             onKeyDownCapture={_keyDownCapture}
             onKeyUp={_keyUp}
             onKeyUpCapture={_keyUpCapture}
+            // [Windows
+            accessible={
+              props.importantForAccessibility === 'no-hide-descendants'
+                ? false
+                : props.accessible
+            }
+            children={
+              props.importantForAccessibility === 'no-hide-descendants'
+                ? childrenWithImportantForAccessibility(props.children)
+                : props.children
+            }
+            // Windows]
           />
         );
       }}

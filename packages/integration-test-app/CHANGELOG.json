@@ -2,6 +2,96 @@
   "name": "integration-test-app",
   "entries": [
     {
+      "date": "Mon, 25 Jul 2022 15:13:10 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.14",
+            "commit": "1ec4346d9603a24fa6f3e941341c3368c803dbf8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 25 Jul 2022 15:12:24 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.14",
+            "commit": "2dbb5b9f2e1d1f6b083fe3c5f24dad3fe1792378"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Jul 2022 15:11:12 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.13",
+            "commit": "a38c2e043fdc160b55ad7e30e6394ea933d8c3d8"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 11 Jul 2022 15:10:53 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.13",
+            "commit": "9d7ecd90a63f0707fc85fadde8ea31e4ebdb2557"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 27 Jun 2022 15:07:52 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.12",
+            "commit": "62e2da32ef2a29861e9bee154e7921cf73eb5250"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 27 Jun 2022 15:07:38 GMT",
+      "tag": "integration-test-app_v0.0.0",
+      "version": "0.0.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "integration-test-app",
+            "comment": "Bump react-native-windows to v0.67.12",
+            "commit": "d676dce0d3681fac1cdbd5e75a78be7667704193"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 Jun 2022 15:08:18 GMT",
       "tag": "integration-test-app_v0.0.0",
       "version": "0.0.0",

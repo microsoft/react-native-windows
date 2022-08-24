@@ -1,8 +1,56 @@
 # Change Log - e2e-test-app
 
-This log was last generated on Mon, 20 Jun 2022 15:08:18 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Jul 2022 15:13:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0
+
+Mon, 25 Jul 2022 15:13:10 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.67.14
+
+## 0.0.0
+
+Mon, 25 Jul 2022 15:12:24 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.67.14
+
+## 0.0.0
+
+Mon, 11 Jul 2022 15:11:12 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.67.13
+
+## 0.0.0
+
+Mon, 11 Jul 2022 15:10:53 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.67.13
+
+## 0.0.0
+
+Mon, 27 Jun 2022 15:07:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.67.12
+
+## 0.0.0
+
+Mon, 27 Jun 2022 15:07:38 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.67.12
 
 ## 0.0.0
 
