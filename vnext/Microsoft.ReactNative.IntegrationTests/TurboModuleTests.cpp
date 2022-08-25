@@ -7,7 +7,6 @@
 #include <ReactCommon/TurboModuleUtils.h>
 #include <TurboModuleProvider.h> // It is RNW specific
 #include <dispatchQueue/dispatchQueue.h>
-#include <eventWaitHandle/eventWaitHandle.h>
 #include <future/future.h>
 #include <sstream>
 #include <string>
