@@ -106,11 +106,17 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+    // [vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global LongLivedObjectCollection
+    // instance that prevents us from using multiple RN instance in the same process.
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
       return turboModuleManager->getModule(name);
     };
 
     TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::function(binding));
+        *runtimeHolder_->getRuntime(),
+        std::function(binding),
+        TurboModuleBindingMode::HostObject,
+        longLivedObjectCollection_);
 
     // init TurboModule
     for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
@@ -132,17 +138,20 @@ class OJSIExecutorFactory : public JSExecutorFactory {
       std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection,
       bool isProfilingEnabled,
       std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
         turboModuleRegistry_{std::move(turboModuleRegistry)},
+        longLivedObjectCollection_{std::move(longLivedObjectCollection)},
         jsCallInvoker_{std::move(jsCallInvoker)},
         isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
+  std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
   bool isProfilingEnabled_;
@@ -159,6 +168,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -169,6 +179,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
+      std::move(longLivedObjectCollection),
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -198,6 +209,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
+      nullptr,
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -235,12 +247,14 @@ InstanceImpl::InstanceImpl(
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager)
     : m_turboModuleRegistry(std::move(turboModuleRegistry)),
+      m_longLivedObjectCollection(std::move(longLivedObjectCollection)),
       m_jsThread(std::move(jsQueue)),
       m_nativeQueue(nativeQueue),
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
@@ -301,6 +315,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          m_longLivedObjectCollection,
           !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     } else {
@@ -365,6 +380,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          m_longLivedObjectCollection,
           !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     }
