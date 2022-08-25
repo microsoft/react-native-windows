@@ -364,10 +364,6 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   TurboModulesProvider
 -------------------------------------------------------------------------------*/
 
-TurboModulesProvider::TurboModulesProvider(
-    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection) noexcept
-    : m_longLivedObjectCollection(std::move(longLivedObjectCollection)) {}
-
 std::shared_ptr<facebook::react::TurboModule> TurboModulesProvider::getModule(
     const std::string &moduleName,
     const std::shared_ptr<facebook::react::CallInvoker> &callInvoker) noexcept {

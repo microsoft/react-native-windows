@@ -21,7 +21,6 @@ class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
   std::vector<std::string> getEagerInitModuleNames() noexcept override;
 
  public:
-  TurboModulesProvider(std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection) noexcept;
   void SetReactContext(const IReactContext &reactContext) noexcept;
   void AddModuleProvider(
       winrt::hstring const &moduleName,
@@ -30,7 +29,9 @@ class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
   std::shared_ptr<facebook::react::LongLivedObjectCollection> const &LongLivedObjectCollection() noexcept;
 
  private:
-  std::shared_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
+  // To keep a list of deferred asynchronous callbacks and promises.
+  std::shared_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection{
+      std::make_shared<facebook::react::LongLivedObjectCollection>()};
   std::unordered_map<std::string, ReactModuleProvider> m_moduleProviders;
   IReactContext m_reactContext;
 };
