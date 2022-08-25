@@ -1875,11 +1875,11 @@
     ip "^1.1.5"
 
 "@react-native-community/cli-platform-android@^9.0.0-alpha.10", "@react-native-community/cli-platform-android@^9.0.0-alpha.3":
-  version "9.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-9.0.0-alpha.10.tgz#bfd2f8c3241b41b42b46c96a8b67a73ea74c59ae"
-  integrity sha512-+rgrl1d/urp4B02IcuDWELTPY5Ocm2jehwwMCoHmHJoxBHsAc5QYdfFx7PUWZCfbpotHSIG8rlQKG51ZJHeiIQ==
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-9.0.0.tgz#c21b26f456c568687c0e58a6e42ba8b11b607b8a"
+  integrity sha512-4Rp5OUZW/7Qc9hyCd+ZEikuu2k9dW3ssu6KzWygbVc9wY80i4GQmvjfsiUi21o3uPDvL4KUMANmnQqoTOIcVMA==
   dependencies:
-    "@react-native-community/cli-tools" "^9.0.0-alpha.10"
+    "@react-native-community/cli-tools" "^9.0.0"
     chalk "^4.1.2"
     execa "^1.0.0"
     fs-extra "^8.1.0"
@@ -1929,10 +1929,10 @@
     serve-static "^1.13.1"
     ws "^7.5.1"
 
-"@react-native-community/cli-tools@^9.0.0-alpha.10":
-  version "9.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-9.0.0-alpha.10.tgz#5615c8c32d6f265b67882c10f8abdcbb45d9c6cd"
-  integrity sha512-fbGYwHD8vyRLYIcWsGtcoJdZmwDAO6fD2tctwt1VY2lreHvZlSx6xRtReYzumr81I0/Fh4XXWRyrYITyPh14GA==
+"@react-native-community/cli-tools@^9.0.0", "@react-native-community/cli-tools@^9.0.0-alpha.10":
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cli-tools/-/cli-tools-9.0.0.tgz#62d2ce2b253e62b62ff722bc985f6e414a3abf5c"
+  integrity sha512-qv8e9i4ybdRVw2VxolvVGv1mH9lMhstEuMvxvpwqHGNhTyevwpdVevuR5D/lbPz2EXogQpnMdQMLCiDoxxV4Ow==
   dependencies:
     appdirsjs "^1.2.4"
     chalk "^4.1.2"
