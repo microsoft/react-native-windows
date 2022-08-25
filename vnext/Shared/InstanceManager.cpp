@@ -41,6 +41,35 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
+      nullptr,
+      std::move(callback),
+      std::move(jsQueue),
+      std::move(nativeQueue),
+      std::move(devSettings),
+      GetSharedDevManager());
+
+  return inner;
+}
+
+std::shared_ptr<InstanceWrapper> CreateReactInstance(
+    std::shared_ptr<Instance> &&instance,
+    std::string &&jsBundleBasePath,
+    std::vector<
+        std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
+        &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
+    std::unique_ptr<InstanceCallback> &&callback,
+    std::shared_ptr<MessageQueueThread> jsQueue,
+    std::shared_ptr<MessageQueueThread> nativeQueue,
+    std::shared_ptr<DevSettings> devSettings) noexcept {
+  // Now create the instance
+  std::shared_ptr<InstanceWrapper> inner = InstanceImpl::MakeNoBundle(
+      std::move(instance),
+      std::move(jsBundleBasePath),
+      std::move(cxxModules),
+      std::move(turboModuleRegistry),
+      std::move(longLivedObjectCollection),
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
