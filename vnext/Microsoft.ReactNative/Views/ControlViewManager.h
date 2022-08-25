@@ -21,6 +21,13 @@ class REACTWINDOWS_EXPORT ControlViewManager : public FrameworkElementViewManage
       const std::string &propertyName,
       const winrt::Microsoft::ReactNative::JSValue &propertyValue) override;
   void TransferProperties(const XamlView &oldView, const XamlView &newView) override;
+  void SetLayoutProps(
+      ShadowNodeBase &nodeToUpdate,
+      const XamlView &viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height) override;
 
  protected:
   void OnViewCreated(XamlView view) override;
