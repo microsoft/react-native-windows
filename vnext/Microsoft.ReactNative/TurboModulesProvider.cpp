@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+//
 // IMPORTANT: Before updating this file
 // please read react-native-windows repo:
 // vnext/Microsoft.ReactNative.Cxx/README.md
@@ -21,6 +22,7 @@ using namespace winrt;
 using namespace Windows::Foundation;
 
 namespace winrt::Microsoft::ReactNative {
+
 /*-------------------------------------------------------------------------------
   TurboModuleBuilder
 -------------------------------------------------------------------------------*/
@@ -56,10 +58,17 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
   }
 
  public:
-  std::unordered_map<std::string, TurboModuleMethodInfo> m_methods;
-  std::unordered_map<std::string, SyncMethodDelegate> m_syncMethods;
-  std::vector<ConstantProviderDelegate> m_constantProviders;
-  bool m_constantsEvaluated{false};
+  const std::unordered_map<std::string, TurboModuleMethodInfo> &Methods() const noexcept {
+    return m_methods;
+  }
+
+  const std::unordered_map<std::string, SyncMethodDelegate> &SyncMethods() const noexcept {
+    return m_syncMethods;
+  }
+
+  const std::vector<ConstantProviderDelegate> &ConstantProviders() const noexcept {
+    return m_constantProviders;
+  }
 
  private:
   void EnsureMemberNotSet(const std::string &key, bool checkingMethod) noexcept {
@@ -72,6 +81,10 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
 
  private:
   IReactContext m_reactContext;
+  std::unordered_map<std::string, TurboModuleMethodInfo> m_methods;
+  std::unordered_map<std::string, SyncMethodDelegate> m_syncMethods;
+  std::vector<ConstantProviderDelegate> m_constantProviders;
+  bool m_constantsEvaluated{false};
 };
 
 /*-------------------------------------------------------------------------------
@@ -84,11 +97,13 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       const IReactContext &reactContext,
       const std::string &name,
       const std::shared_ptr<facebook::react::CallInvoker> &jsInvoker,
+      std::weak_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
       const ReactModuleProvider &reactModuleProvider)
       : facebook::react::TurboModule(name, jsInvoker),
         m_reactContext(reactContext),
-        m_moduleBuilder(winrt::make<TurboModuleBuilder>(reactContext)),
-        m_providedModule(reactModuleProvider(m_moduleBuilder)) {
+        m_longLivedObjectCollection(std::move(longLivedObjectCollection)),
+        m_moduleBuilder(winrt::make_self<TurboModuleBuilder>(reactContext)),
+        m_providedModule(reactModuleProvider(m_moduleBuilder.as<IReactModuleBuilder>())) {
     if (auto hostObject = m_providedModule.try_as<IJsiHostObject>()) {
       m_hostObjectWrapper = std::make_shared<implementation::HostObjectWrapper>(hostObject);
     }
@@ -99,12 +114,23 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       return m_hostObjectWrapper->getPropertyNames(rt);
     }
 
-    auto turboModuleBuilder = m_moduleBuilder.as<TurboModuleBuilder>();
     std::vector<facebook::jsi::PropNameID> propertyNames;
-    propertyNames.reserve(turboModuleBuilder->m_methods.size());
-    for (auto &methodInfo : turboModuleBuilder->m_methods) {
+    propertyNames.reserve(
+        m_moduleBuilder->Methods().size() + m_moduleBuilder->SyncMethods().size() +
+        (m_moduleBuilder->ConstantProviders().empty() ? 0 : 1));
+
+    for (auto &methodInfo : m_moduleBuilder->Methods()) {
       propertyNames.push_back(facebook::jsi::PropNameID::forAscii(rt, methodInfo.first));
     }
+
+    for (auto &syncMethodInfo : m_moduleBuilder->SyncMethods()) {
+      propertyNames.push_back(facebook::jsi::PropNameID::forAscii(rt, syncMethodInfo.first));
+    }
+
+    if (!m_moduleBuilder->ConstantProviders().empty()) {
+      propertyNames.push_back(facebook::jsi::PropNameID::forAscii(rt, "getConstants"));
+    }
+
     return propertyNames;
   };
 
@@ -114,24 +140,23 @@ class TurboModuleImpl : public facebook::react::TurboModule {
     }
 
     // it is not safe to assume that "runtime" never changes, so members are not cached here
-    auto moduleBuilder = m_moduleBuilder.as<TurboModuleBuilder>();
     std::string key = propName.utf8(runtime);
 
-    if (key == "getConstants" && !moduleBuilder->m_constantProviders.empty()) {
+    if (key == "getConstants" && !m_moduleBuilder->ConstantProviders().empty()) {
       // try to find getConstants if there is any constant
       return facebook::jsi::Function::createFromHostFunction(
           runtime,
           propName,
           0,
-          [moduleBuilder](
+          [moduleBuilder = m_moduleBuilder](
               facebook::jsi::Runtime &rt,
-              const facebook::jsi::Value &thisVal,
-              const facebook::jsi::Value *args,
-              size_t count) {
+              const facebook::jsi::Value & /*thisVal*/,
+              const facebook::jsi::Value * /*args*/,
+              size_t /*count*/) {
             // collect all constants to an object
             auto writer = winrt::make<JsiWriter>(rt);
             writer.WriteObjectBegin();
-            for (auto constantProvider : moduleBuilder->m_constantProviders) {
+            for (auto const &constantProvider : moduleBuilder->ConstantProviders()) {
               constantProvider(writer);
             }
             writer.WriteObjectEnd();
@@ -141,21 +166,21 @@ class TurboModuleImpl : public facebook::react::TurboModule {
 
     {
       // try to find a Method
-      auto it = moduleBuilder->m_methods.find(key);
-      if (it != moduleBuilder->m_methods.end()) {
-        TurboModuleMethodInfo methodInfo = it->second;
+      auto it = m_moduleBuilder->Methods().find(key);
+      if (it != m_moduleBuilder->Methods().end()) {
+        TurboModuleMethodInfo const &methodInfo = it->second;
         switch (methodInfo.ReturnType) {
           case MethodReturnType::Void:
             return facebook::jsi::Function::createFromHostFunction(
                 runtime,
                 propName,
                 0,
-                [methodInfo](
+                [method = methodInfo.Method](
                     facebook::jsi::Runtime &rt,
                     const facebook::jsi::Value & /*thisVal*/,
                     const facebook::jsi::Value *args,
                     size_t argCount) {
-                  methodInfo.Method(winrt::make<JsiReader>(rt, args, argCount), nullptr, nullptr, nullptr);
+                  method(winrt::make<JsiReader>(rt, args, argCount), nullptr, nullptr, nullptr);
                   return facebook::jsi::Value::undefined();
                 });
           case MethodReturnType::Callback:
@@ -163,17 +188,22 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 runtime,
                 propName,
                 0,
-                [jsDispatcher = m_reactContext.JSDispatcher(), methodInfo](
+                [jsDispatcher = m_reactContext.JSDispatcher(),
+                 method = methodInfo.Method,
+                 longLivedObjectCollection = m_longLivedObjectCollection](
                     facebook::jsi::Runtime &rt,
                     const facebook::jsi::Value & /*thisVal*/,
                     const facebook::jsi::Value *args,
                     size_t argCount) {
                   VerifyElseCrash(argCount > 0);
-                  methodInfo.Method(
-                      winrt::make<JsiReader>(rt, args, argCount - 1),
-                      winrt::make<JSDispatcherWriter>(jsDispatcher, rt),
-                      MakeCallback(rt, {rt, args[argCount - 1]}),
-                      nullptr);
+                  if (auto strongLongLivedObjectCollection = longLivedObjectCollection.lock()) {
+                    auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
+                    method(
+                        winrt::make<JsiReader>(rt, args, argCount - 1),
+                        winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder),
+                        MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 1]),
+                        nullptr);
+                  }
                   return facebook::jsi::Value::undefined();
                 });
           case MethodReturnType::TwoCallbacks:
@@ -181,17 +211,22 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 runtime,
                 propName,
                 0,
-                [jsDispatcher = m_reactContext.JSDispatcher(), methodInfo](
+                [jsDispatcher = m_reactContext.JSDispatcher(),
+                 method = methodInfo.Method,
+                 longLivedObjectCollection = m_longLivedObjectCollection](
                     facebook::jsi::Runtime &rt,
                     const facebook::jsi::Value & /*thisVal*/,
                     const facebook::jsi::Value *args,
                     size_t argCount) {
                   VerifyElseCrash(argCount > 1);
-                  methodInfo.Method(
-                      winrt::make<JsiReader>(rt, args, argCount - 2),
-                      winrt::make<JSDispatcherWriter>(jsDispatcher, rt),
-                      MakeCallback(rt, {rt, args[argCount - 2]}),
-                      MakeCallback(rt, {rt, args[argCount - 1]}));
+                  if (auto strongLongLivedObjectCollection = longLivedObjectCollection.lock()) {
+                    auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
+                    method(
+                        winrt::make<JsiReader>(rt, args, argCount - 2),
+                        winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder),
+                        MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 2]),
+                        MakeCallback(rt, strongLongLivedObjectCollection, args[argCount - 1]));
+                  }
                   return facebook::jsi::Value::undefined();
                 });
           case MethodReturnType::Promise:
@@ -199,52 +234,66 @@ class TurboModuleImpl : public facebook::react::TurboModule {
                 runtime,
                 propName,
                 0,
-                [jsDispatcher = m_reactContext.JSDispatcher(), methodInfo](
+                [jsDispatcher = m_reactContext.JSDispatcher(),
+                 method = methodInfo.Method,
+                 longLivedObjectCollection = m_longLivedObjectCollection](
                     facebook::jsi::Runtime &rt,
                     const facebook::jsi::Value & /*thisVal*/,
                     const facebook::jsi::Value *args,
                     size_t count) {
-                  auto argReader = winrt::make<JsiReader>(rt, args, count);
-                  auto argWriter = winrt::make<JSDispatcherWriter>(jsDispatcher, rt);
-                  return facebook::react::createPromiseAsJSIValue(
-                      rt,
-                      [methodInfo, argReader, argWriter](
-                          facebook::jsi::Runtime &runtime, std::shared_ptr<facebook::react::Promise> promise) {
-                        methodInfo.Method(
-                            argReader,
-                            argWriter,
-                            [promise](const IJSValueWriter &writer) {
-                              writer.as<JSDispatcherWriter>()->WithResultArgs([promise](
-                                                                                  facebook::jsi::Runtime &runtime,
-                                                                                  facebook::jsi::Value const *args,
-                                                                                  size_t argCount) {
-                                VerifyElseCrash(argCount == 1);
-                                promise->resolve(args[0]);
+                  if (auto strongLongLivedObjectCollection = longLivedObjectCollection.lock()) {
+                    auto jsiRuntimeHolder = LongLivedJsiRuntime::CreateWeak(strongLongLivedObjectCollection, rt);
+                    auto argReader = winrt::make<JsiReader>(rt, args, count);
+                    auto argWriter = winrt::make<JSDispatcherWriter>(jsDispatcher, jsiRuntimeHolder);
+                    return facebook::react::createPromiseAsJSIValue(
+                        rt,
+                        [method, argReader, argWriter, strongLongLivedObjectCollection](
+                            facebook::jsi::Runtime &runtime, std::shared_ptr<facebook::react::Promise> promise) {
+                          method(
+                              argReader,
+                              argWriter,
+                              [weakResolve = LongLivedJsiFunction::CreateWeak(
+                                   strongLongLivedObjectCollection, runtime, std::move(promise->resolve_))](
+                                  const IJSValueWriter &writer) {
+                                writer.as<JSDispatcherWriter>()->WithResultArgs([weakResolve](
+                                                                                    facebook::jsi::Runtime &runtime,
+                                                                                    facebook::jsi::Value const *args,
+                                                                                    size_t argCount) {
+                                  VerifyElseCrash(argCount == 1);
+                                  if (auto resolveHolder = weakResolve.lock()) {
+                                    resolveHolder->Value().call(runtime, args[0]);
+                                  }
+                                });
+                              },
+                              [weakReject = LongLivedJsiFunction::CreateWeak(
+                                   strongLongLivedObjectCollection, runtime, std::move(promise->reject_))](
+                                  const IJSValueWriter &writer) {
+                                writer.as<JSDispatcherWriter>()->WithResultArgs([weakReject](
+                                                                                    facebook::jsi::Runtime &runtime,
+                                                                                    facebook::jsi::Value const *args,
+                                                                                    size_t argCount) {
+                                  VerifyElseCrash(argCount == 1);
+                                  if (auto rejectHolder = weakReject.lock()) {
+                                    // To match the Android and iOS TurboModule behavior we create the Error object for
+                                    // the Promise rejection the same way as in updateErrorWithErrorData method.
+                                    // See react-native/Libraries/BatchedBridge/NativeModules.js for details.
+                                    auto error = runtime.global()
+                                                     .getPropertyAsFunction(runtime, "Error")
+                                                     .callAsConstructor(runtime, {});
+                                    auto &errorData = args[0];
+                                    if (errorData.isObject()) {
+                                      runtime.global()
+                                          .getPropertyAsObject(runtime, "Object")
+                                          .getPropertyAsFunction(runtime, "assign")
+                                          .call(runtime, error, errorData.getObject(runtime));
+                                    }
+                                    rejectHolder->Value().call(runtime, args[0]);
+                                  }
+                                });
                               });
-                            },
-                            [promise](const IJSValueWriter &writer) {
-                              writer.as<JSDispatcherWriter>()->WithResultArgs([promise](
-                                                                                  facebook::jsi::Runtime &runtime,
-                                                                                  facebook::jsi::Value const *args,
-                                                                                  size_t argCount) {
-                                VerifyElseCrash(argCount == 1);
-                                // To match the Android and iOS TurboModule behavior we create the Error object for
-                                // the Promise rejection the same way as in updateErrorWithErrorData method.
-                                // See react-native/Libraries/BatchedBridge/NativeModules.js for details.
-                                auto error = runtime.global()
-                                                 .getPropertyAsFunction(runtime, "Error")
-                                                 .callAsConstructor(runtime, {});
-                                auto &errorData = args[0];
-                                if (errorData.isObject()) {
-                                  runtime.global()
-                                      .getPropertyAsObject(runtime, "Object")
-                                      .getPropertyAsFunction(runtime, "assign")
-                                      .call(runtime, error, errorData.getObject(runtime));
-                                }
-                                promise->reject_.call(runtime, error);
-                              });
-                            });
-                      });
+                        });
+                  }
+                  return facebook::jsi::Value::undefined();
                 });
           default:
             VerifyElseCrash(false);
@@ -254,8 +303,8 @@ class TurboModuleImpl : public facebook::react::TurboModule {
 
     {
       // try to find a SyncMethod
-      auto it = moduleBuilder->m_syncMethods.find(key);
-      if (it != moduleBuilder->m_syncMethods.end()) {
+      auto it = m_moduleBuilder->SyncMethods().find(key);
+      if (it != m_moduleBuilder->SyncMethods().end()) {
         return facebook::jsi::Function::createFromHostFunction(
             runtime,
             propName,
@@ -287,27 +336,38 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   }
 
  private:
-  static MethodResultCallback MakeCallback(facebook::jsi::Runtime &runtime, facebook::jsi::Value callback) noexcept {
-    auto sharedCallback =
-        std::make_shared<facebook::jsi::Function>(std::move(callback).asObject(runtime).asFunction(runtime));
-    return [sharedCallback = std::move(sharedCallback)](const IJSValueWriter &writer) noexcept {
+  static MethodResultCallback MakeCallback(
+      facebook::jsi::Runtime &rt,
+      const std::shared_ptr<facebook::react::LongLivedObjectCollection> &longLivedObjectCollection,
+      const facebook::jsi::Value &callback) noexcept {
+    auto weakCallback =
+        LongLivedJsiFunction::CreateWeak(longLivedObjectCollection, rt, callback.getObject(rt).getFunction(rt));
+    return [weakCallback = std::move(weakCallback)](const IJSValueWriter &writer) noexcept {
       writer.as<JSDispatcherWriter>()->WithResultArgs(
-          [sharedCallback](facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
-            sharedCallback->call(rt, args, count);
+          [weakCallback](facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t count) {
+            if (auto callback = weakCallback.lock()) {
+              callback->Value().call(rt, args, count);
+            }
           });
     };
   }
 
  private:
   IReactContext m_reactContext;
-  IReactModuleBuilder m_moduleBuilder;
+  winrt::com_ptr<TurboModuleBuilder> m_moduleBuilder;
   IInspectable m_providedModule;
   std::shared_ptr<implementation::HostObjectWrapper> m_hostObjectWrapper;
+  std::weak_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
 };
 
 /*-------------------------------------------------------------------------------
   TurboModulesProvider
 -------------------------------------------------------------------------------*/
+
+TurboModulesProvider::TurboModulesProvider(
+    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection) noexcept
+    : m_longLivedObjectCollection(std::move(longLivedObjectCollection)) {}
+
 std::shared_ptr<facebook::react::TurboModule> TurboModulesProvider::getModule(
     const std::string &moduleName,
     const std::shared_ptr<facebook::react::CallInvoker> &callInvoker) noexcept {
@@ -317,7 +377,8 @@ std::shared_ptr<facebook::react::TurboModule> TurboModulesProvider::getModule(
     return nullptr;
   }
 
-  auto tm = std::make_shared<TurboModuleImpl>(m_reactContext, moduleName, callInvoker, it->second);
+  auto tm = std::make_shared<TurboModuleImpl>(
+      m_reactContext, moduleName, callInvoker, m_longLivedObjectCollection, /*reactModuleProvider*/ it->second);
   return tm;
 }
 
@@ -346,6 +407,11 @@ void TurboModulesProvider::AddModuleProvider(
     // turbo modules should be replaceable before the first time it is requested
     it->second = moduleProvider;
   }
+}
+
+std::shared_ptr<facebook::react::LongLivedObjectCollection> const &
+TurboModulesProvider::LongLivedObjectCollection() noexcept {
+  return m_longLivedObjectCollection;
 }
 
 } // namespace winrt::Microsoft::ReactNative

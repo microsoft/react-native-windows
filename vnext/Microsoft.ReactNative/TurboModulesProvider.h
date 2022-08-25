@@ -6,6 +6,7 @@
 
 #pragma once
 
+#include <ReactCommon/LongLivedObject.h>
 #include <TurboModuleRegistry.h>
 #include "Base/FollyIncludes.h"
 #include "winrt/Microsoft.ReactNative.h"
@@ -20,13 +21,16 @@ class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
   std::vector<std::string> getEagerInitModuleNames() noexcept override;
 
  public:
+  TurboModulesProvider(std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection) noexcept;
   void SetReactContext(const IReactContext &reactContext) noexcept;
   void AddModuleProvider(
       winrt::hstring const &moduleName,
       ReactModuleProvider const &moduleProvider,
       bool overwriteExisting) noexcept;
+  std::shared_ptr<facebook::react::LongLivedObjectCollection> const &LongLivedObjectCollection() noexcept;
 
  private:
+  std::shared_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
   std::unordered_map<std::string, ReactModuleProvider> m_moduleProviders;
   IReactContext m_reactContext;
 };

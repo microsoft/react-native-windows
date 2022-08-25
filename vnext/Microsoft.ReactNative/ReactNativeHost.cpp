@@ -85,7 +85,9 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   auto viewManagersProvider = std::make_shared<ViewManagersProvider>();
 #endif
 
-  auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
+  // LongLivedObjectCollection keeps a list of deferred asynchronous callbacks and promises.
+  auto turboModulesProvider =
+      std::make_shared<TurboModulesProvider>(std::make_shared<facebook::react::LongLivedObjectCollection>());
 
   m_packageBuilder = make<ReactPackageBuilder>(
       modulesProvider,

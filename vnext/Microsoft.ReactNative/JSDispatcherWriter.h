@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include <JSI/LongLivedJsiValue.h>
 #include <functional/functor.h>
 #include "DynamicWriter.h"
 #include "JsiWriter.h"
-#include "folly/dynamic.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace winrt::Microsoft::ReactNative {
@@ -14,7 +14,9 @@ namespace winrt::Microsoft::ReactNative {
 // In case if writing is done outside of JSDispatcher, it uses DynamicWriter to create
 // folly::dynamic which then is written to JsiWriter in JSDispatcher.
 struct JSDispatcherWriter : winrt::implements<JSDispatcherWriter, IJSValueWriter> {
-  JSDispatcherWriter(IReactDispatcher const &jsDispatcher, facebook::jsi::Runtime &jsiRuntime) noexcept;
+  JSDispatcherWriter(
+      IReactDispatcher const &jsDispatcher,
+      std::weak_ptr<LongLivedJsiRuntime> jsiRuntimeHolder) noexcept;
   void WithResultArgs(Mso::Functor<void(facebook::jsi::Runtime &rt, facebook::jsi::Value const *args, size_t argCount)>
                           handler) noexcept;
 
@@ -35,7 +37,7 @@ struct JSDispatcherWriter : winrt::implements<JSDispatcherWriter, IJSValueWriter
 
  private:
   IReactDispatcher m_jsDispatcher;
-  facebook::jsi::Runtime &m_jsiRuntime;
+  std::weak_ptr<LongLivedJsiRuntime> m_jsiRuntimeHolder;
   winrt::com_ptr<DynamicWriter> m_dynamicWriter;
   winrt::com_ptr<JsiWriter> m_jsiWriter;
   IJSValueWriter m_writer;
