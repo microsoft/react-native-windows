@@ -10,6 +10,10 @@ namespace ReactNativeIntegrationTests {
 
 using namespace std::literals::chrono_literals;
 
+//=============================================================================
+// TestEventService implementation
+//=============================================================================
+
 /*static*/ std::mutex TestEventService::s_mutex;
 /*static*/ std::condition_variable TestEventService::s_cv;
 /*static*/ std::queue<TestEvent> TestEventService::s_eventQueue;
@@ -69,6 +73,35 @@ using namespace std::literals::chrono_literals;
       s_hasNewEvent = false;
     }
   }
+}
+
+//=============================================================================
+// TestNotificationService implementation
+//=============================================================================
+
+/*static*/ std::mutex TestNotificationService::s_mutex;
+/*static*/ std::condition_variable TestNotificationService::s_cv;
+/*static*/ std::set<std::string, std::less<>> TestNotificationService::s_events;
+
+/*static*/ void TestNotificationService::Initialize() noexcept {
+  auto lock = std::scoped_lock{s_mutex};
+  s_events = {};
+}
+
+/*static*/ void TestNotificationService::Set(std::string_view eventName) noexcept {
+  auto lock = std::scoped_lock{s_mutex};
+  s_events.insert(std::string(eventName));
+  s_cv.notify_all();
+};
+
+/*static*/ void TestNotificationService::Wait(std::string_view eventName) noexcept {
+  auto lock = std::unique_lock{s_mutex};
+  auto it = s_events.end();
+  s_cv.wait(lock, [&]() {
+    it = s_events.find(eventName);
+    return it != s_events.end();
+  });
+  s_events.erase(it);
 }
 
 } // namespace ReactNativeIntegrationTests
