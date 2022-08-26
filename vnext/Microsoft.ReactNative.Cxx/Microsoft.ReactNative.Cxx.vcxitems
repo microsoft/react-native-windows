@@ -35,6 +35,7 @@
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />

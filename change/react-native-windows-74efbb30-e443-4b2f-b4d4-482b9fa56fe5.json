@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Use LongLivedObjects for TurboModule callbacks",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
