@@ -497,6 +497,7 @@ void ReactInstanceWin::Initialize() noexcept {
                 std::move(bundleRootPath), // bundleRootPath
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
+                m_options.TurboModuleProvider->LongLivedObjectCollection(),
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),
                 m_nativeMessageThread.Load(),

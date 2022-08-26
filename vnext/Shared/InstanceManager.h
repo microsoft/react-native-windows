@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Logging.h>
+#include <ReactCommon/LongLivedObject.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/JSBigString.h>
 #include <map>
@@ -46,6 +47,19 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::unique_ptr<InstanceCallback> &&callback,
+    std::shared_ptr<MessageQueueThread> jsQueue,
+    std::shared_ptr<MessageQueueThread> nativeQueue,
+    std::shared_ptr<DevSettings> devSettings) noexcept;
+
+std::shared_ptr<InstanceWrapper> CreateReactInstance(
+    std::shared_ptr<Instance> &&instance,
+    std::string &&jsBundleRelativePath,
+    std::vector<
+        std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
+        &&cxxModules,
+    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
