@@ -96,8 +96,11 @@ jobs:
           result: PoliCheck.xml
           optionsFC: 1
           optionsXS: 1
-          optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckExclusions.xml
           optionsHMENABLE: 0
+          optionsPE: 1|2|3|4
+          optionsSEV: 1|2|3|4
+          optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckExclusions.xml
+          optionsRulesDBPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckRules.mdb
         continueOnError: true
 
       # CredScan Task (https://aka.ms/gdn-azdo-credscan)
