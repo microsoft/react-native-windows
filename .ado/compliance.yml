@@ -111,6 +111,17 @@ jobs:
           debugMode: false
         continueOnError: true
 
+      # PostAnalysis Task (https://docs.microsoft.com/en-us/azure/security/develop/yaml-configuration#post-analysis-task)
+      # Breaks the build if any of the tasks failed.
+      - task: PostAnalysis@1
+        displayName: "⚖️ Post Analysis"
+        inputs:
+          AllTools: false
+          CredScan: true
+          PoliCheck: true
+          PoliCheckBreakOn: Severity4Above
+          ToolLogsNotFoundAction: "Error"
+
       # Build RNW
 
       - template: templates/msbuild-sln.yml
