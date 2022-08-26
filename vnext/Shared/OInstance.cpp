@@ -112,10 +112,9 @@ class OJSIExecutorFactory : public JSExecutorFactory {
       return turboModuleManager->getModule(name);
     };
 
-    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::function(binding));
+    TurboModuleBinding::install(
         *runtimeHolder_->getRuntime(),
         std::function(binding),
-        TurboModuleBindingMode::HostObject,
         longLivedObjectCollection_);
 
     // init TurboModule
