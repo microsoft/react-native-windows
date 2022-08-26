@@ -1,3 +1,6 @@
+URL not found https://docs.github.com/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model while parsing CONTRIBUTING.md (HTTP 403)
+URL not found https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks while parsing CONTRIBUTING.md (HTTP 403)
+URL not found https://docs.github.com/get-started/quickstart while parsing CONTRIBUTING.md (HTTP 403)
 !**/node_modules
 !vnext/packages
 !vnext/ReactCopies
