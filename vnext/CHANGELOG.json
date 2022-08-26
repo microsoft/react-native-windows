@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Aug 2022 23:36:52 GMT",
+      "tag": "react-native-windows_v0.70.0-preview.2",
+      "version": "0.70.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "144a31db1774e3a88528560956483c63e5665b1d",
+            "comment": "Integrate RC 4"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.70.0-preview.2",
+            "commit": "144a31db1774e3a88528560956483c63e5665b1d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Aug 2022 20:20:07 GMT",
       "tag": "react-native-windows_v0.70.0-preview.1",
       "version": "0.70.0-preview.1",

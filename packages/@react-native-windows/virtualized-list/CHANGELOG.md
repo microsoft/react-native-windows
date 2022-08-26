@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/virtualized-list
 
-This log was last generated on Mon, 22 Aug 2022 20:20:07 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Aug 2022 23:36:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.0-preview.2
+
+Tue, 23 Aug 2022 23:36:52 GMT
+
+### Changes
+
+- Integrate RC 4 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.70.0-preview.1
 
