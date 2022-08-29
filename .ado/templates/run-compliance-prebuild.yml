@@ -45,3 +45,8 @@ steps:
       PoliCheckBreakOn: Severity4Above
       ToolLogsNotFoundAction: "Error"
     continueOnError: ${{ parameters.complianceWarnOnly }}
+
+  # Restore unnecessary changes that were made by the compliance tasks
+  - script: |
+      git restore $(Build.SourcesDirectory)\.ado\config\PoliCheckRules.mdb
+    displayName: "⚖️ Compliance Pre-Build Cleanup"
