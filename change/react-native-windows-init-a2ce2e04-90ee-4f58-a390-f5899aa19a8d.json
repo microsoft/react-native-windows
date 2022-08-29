@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Address PoliCheck issues",
+  "packageName": "react-native-windows-init",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
