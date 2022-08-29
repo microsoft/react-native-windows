@@ -1,5 +1,4 @@
 # Compliance tasks to be run pre build
-
 parameters:
 - name: complianceWarnOnly
   displayName: Convert compliance errors to warnings

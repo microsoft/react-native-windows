@@ -30,8 +30,6 @@ variables:
   - ${{ if eq(parameters.forceCodeQL, false) }}:
     - name: Codeql.Cadence
       value: 120 # In hours, default to only run every 5 days
-  - name: FailCGOnAlert
-    value: true
 
 trigger: none
 pr: none
