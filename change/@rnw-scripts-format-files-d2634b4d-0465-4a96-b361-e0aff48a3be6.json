@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Exclude .mdb from format-files",
+  "packageName": "@rnw-scripts/format-files",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
