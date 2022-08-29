@@ -408,7 +408,23 @@ bool ViewViewManager::UpdateProperty(
     if (TryUpdateBackgroundBrush(pPanel, propertyName, propertyValue)) {
     } else if (TryUpdateBorderProperties(nodeToUpdate, pPanel, propertyName, propertyValue)) {
     } else if (TryUpdateCornerRadiusOnNode(nodeToUpdate, pPanel, propertyName, propertyValue)) {
-      UpdateCornerRadiusOnElement(nodeToUpdate, pPanel);
+      // Do not clamp until a size has been set for the View
+      auto maxCornerRadius = std::numeric_limits<double>::max();
+      // The Width and Height properties are not always set on ViewPanel. In
+      // cases where it is embedded in a Control or outer Border, the values
+      // dimensions are set on those wrapper elements. We cannot depend on the
+      // default behavior of `UpdateCornerRadiusOnElement` to check for the
+      // clamp dimension from only the ViewPanel.
+      const xaml::FrameworkElement sizingElement = pViewShadowNode->IsControl() ? pViewShadowNode->GetControl()
+          : pViewShadowNode->HasOuterBorder() ? pPanel.GetOuterBorder().as<xaml::FrameworkElement>()
+                                              : pPanel;
+      if (sizingElement.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) !=
+              xaml::DependencyProperty::UnsetValue() &&
+          sizingElement.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) !=
+              xaml::DependencyProperty::UnsetValue()) {
+        maxCornerRadius = std::min(sizingElement.Width(), sizingElement.Height()) / 2;
+      }
+      UpdateCornerRadiusOnElement(nodeToUpdate, pPanel, maxCornerRadius);
     } else if (TryUpdateMouseEvents(nodeToUpdate, propertyName, propertyValue)) {
     } else if (propertyName == "onClick") {
       pViewShadowNode->OnClick(!propertyValue.IsNull() && propertyValue.AsBoolean());
@@ -603,13 +619,23 @@ void ViewViewManager::SetLayoutProps(
   // Do this first so that it is setup properly before any events are fired by
   // the Super implementation
   auto *pViewShadowNode = static_cast<ViewShadowNode *>(&nodeToUpdate);
+  auto pPanel = pViewShadowNode->GetViewPanel();
   if (pViewShadowNode->IsControl()) {
-    auto pPanel = pViewShadowNode->GetViewPanel();
     pPanel.Width(width);
     pPanel.Height(height);
   }
 
   Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+  if (pPanel.ReadLocalValue(ViewPanel::CornerRadiusProperty()) != xaml::DependencyProperty::UnsetValue()) {
+    // Rather than use ViewPanel::FinalizeProperties, only perform the explicit
+    // logic required to propagate the CornerRadius value to the Border parent.
+    auto border = pPanel.GetOuterBorder();
+    if (border) {
+      const auto maxCornerRadius = std::min(width, height) / 2;
+      UpdateCornerRadiusOnElement(&nodeToUpdate, pPanel, maxCornerRadius);
+      border.CornerRadius(pPanel.CornerRadius());
+    }
+  }
 }
 
 xaml::Media::SolidColorBrush ViewViewManager::EnsureTransparentBrush() {
