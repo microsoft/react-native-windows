@@ -14,6 +14,10 @@ parameters:
   displayName: Force CodeQL to rebuild databases
   type: boolean
   default: false
+- name: breakOnComplianceFailure
+  displayName: Break build on a compliance task failure
+  type: boolean
+  default: true
 
 variables:
   - template: variables/windows.yml
@@ -55,37 +59,6 @@ jobs:
 
       # Pre-build compliance tasks
 
-      # - powershell: |
-      #     $customProps = "<?xml version=`"1.0`" encoding=`"utf-8`"?>
-      #     <Project ToolsVersion=`"4.0`" xmlns=`"http://schemas.microsoft.com/developer/msbuild/2003`">
-      #       <!-- This file is read by XES, which we use in our Release builds. -->
-      #       <PropertyGroup Label=`"Version`">
-      #         <XesUseOneStoreVersioning>true</XesUseOneStoreVersioning>
-      #         <XesBaseYearForStoreVersion>2022</XesBaseYearForStoreVersion>
-      #         <VersionMajor>$env:RNW_PKG_VERSION_MAJOR</VersionMajor>
-      #         <VersionMinor>$env:RNW_PKG_VERSION_MINOR</VersionMinor>
-      #         <VersionInfoProductName>React-Native-Windows</VersionInfoProductName>
-      #       </PropertyGroup>
-      #     </Project>"
-      #     $customPropsFile = Join-Path (Get-Location) "custom.props"
-      #     Write-Host "Outputting to $customPropsFile"
-      #     Write-Host $customProps
-      #     Set-Content $customPropsFile -Value $customProps
-      #   displayName: Create custom.props file
-      #   workingDirectory: $(Build.SourcesDirectory)
-
-      # - task: PkgESSetupBuild@12
-      #   displayName: Package ES - Setup Build
-      #   inputs:
-      #     disableOutputRedirect: true
-
-      # Initialize CodeQL 3000 Task (https://aka.ms/codeql3000)
-      # Performs static code analysis.
-      # GitHub repos not supported, see issue #9994.
-      - task: CodeQL3000Init@0
-        displayName: "🛡️ Initialize CodeQL"
-        continueOnError: true
-
       # PoliCheck Build Task (https://aka.ms/gdn-azdo-policheck)
       # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
       - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
@@ -120,10 +93,18 @@ jobs:
         displayName: "⚖️ Post Analysis"
         inputs:
           AllTools: false
-          CredScan: true
-          PoliCheck: true
+          CredScan: ${{ parameters.breakOnComplianceFailure }}
+          PoliCheck: ${{ parameters.breakOnComplianceFailure }}
           PoliCheckBreakOn: Severity4Above
           ToolLogsNotFoundAction: "Error"
+        continueOnError: true
+
+      # Initialize CodeQL 3000 Task (https://aka.ms/codeql3000)
+      # Performs static code analysis.
+      # GitHub repos not supported, see issue #9994.
+      - task: CodeQL3000Init@0
+        displayName: "🛡️ Initialize CodeQL"
+        continueOnError: true
 
       # Build RNW
 
