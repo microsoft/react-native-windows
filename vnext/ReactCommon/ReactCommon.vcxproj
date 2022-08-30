@@ -72,10 +72,6 @@
       <DisableSpecificWarnings>4715;4251;4800;4804;4305;4722;%(DisableSpecificWarnings)</DisableSpecificWarnings>
       <PreprocessToFile>false</PreprocessToFile>
       <ForcedIncludeFiles>pch.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <!--
-        Using Strict FloatingPointModel on x64 to workaround a compiler issue, See https://github.com/microsoft/react-native-windows/issues/4122
-      -->
-      <FloatingPointModel Condition="'$(Platform)' == 'x64'">Strict</FloatingPointModel>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -83,9 +79,6 @@
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-    <Import Project="$(SolutionDir)packages\boost.1.76.0.0\build\boost.targets" Condition="Exists('$(SolutionDir)packages\boost.1.76.0.0\build\boost.targets')" />
-  </ImportGroup>
   <ItemGroup>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\instrumentation.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi-inl.h" />
@@ -94,14 +87,12 @@
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Executor.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorToken.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorTokenFactory.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers-inl.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBigString.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSModulesUnbundle.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\MessageQueueThread.h" />
@@ -110,18 +101,14 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModuleProvider.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\oss-compat-util.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
-    <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h" />
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -131,7 +118,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\MethodCall.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\ModuleRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\RAMBundleRegistry.cpp" />
@@ -141,21 +128,18 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\log.cpp"/>
+    <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
     <!-- We should ideally upstream a fix for missing stdexcept, but Yoga hasn't been accepting PRs as of May 2020 -->
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp">
       <ForcedIncludeFiles>stdexcept;%(ForcedIncludeFiles)</ForcedIncludeFiles>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp"/>
-    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp"/>
-    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp"/>
-    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp"/>
-    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp"/>
+    <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\YGStyle.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
@@ -166,20 +150,21 @@
     <!--
       Using a patched copy of Yoga due to https://github.com/microsoft/react-native-windows/issues/3994
     -->
-    <ClCompile Include="Yoga.cpp" AdditionalIncludeDirectories="$(YogaDir)\yoga;%(AdditionalIncludeDirectories)"/>
+    <ClCompile Include="Yoga.cpp" AdditionalIncludeDirectories="$(YogaDir)\yoga;%(AdditionalIncludeDirectories)" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.h" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\bridging\LongLivedObject.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp"/>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\samples\ReactCommon\NativeSampleTurboCxxModuleSpecJSI.cpp" />
@@ -205,5 +190,4 @@
   <Target Name="ApplyReactCommonTemporaryPatch" BeforeTargets="PrepareForBuild">
     <Copy DestinationFiles="@(TemporaryReactCommonPatchFiles->'$(ReactNativeDir)\ReactCommon\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryReactCommonPatchFiles)" />
   </Target>
-
 </Project>

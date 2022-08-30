@@ -37,7 +37,7 @@ const {extensions, directory} = yargs
   })
   .version(false).argv;
 
-const extensionsRegex = new RegExp(extensions.map((e) => `\\.${e}`).join('|'));
+const extensionsRegex = new RegExp(extensions.map(e => `\\.${e}`).join('|'));
 
 (async () => {
   const spinner = ora();

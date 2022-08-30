@@ -5,6 +5,23 @@
 .*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.CodeGen.UnitTests/.*
 .*/node_modules/react-native-windows/Microsoft.ReactNative.Managed.UnitTests/.*
 
+; Ignore templates for 'react-native init'
+<PROJECT_ROOT>/template/.*
+
+; Ignore the Dangerfile
+<PROJECT_ROOT>/bots/dangerfile.js
+
+; Ignore "BUCK" generated dirs
+<PROJECT_ROOT>/\.buckd/
+
+; Flow doesn't support platforms
+.*/Libraries/Utilities/LoadingView.js
+
+.*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
+
+[untyped]
+.*/node_modules/@react-native-community/cli/.*/.*
+
 [libs]
 ../../../node_modules/react-native/interface.js
 ../../../node_modules/react-native/flow/
@@ -17,6 +34,7 @@
 emoji=true
 
 exact_by_default=true
+exact_empty_objects=true
 
 format.bracket_spacing=false
 
@@ -32,6 +50,8 @@ suppress_type=$FlowFixMeProps
 suppress_type=$FlowFixMeState
 suppress_type=$FlowFixMeEmpty
 
+experimental.env_mode=ssa
+
 [lints]
 sketchy-null-number=warn
 sketchy-null-mixed=warn
@@ -41,7 +61,6 @@ nonstrict-import=warn
 deprecated-type=error
 unsafe-getters-setters=warn
 unnecessary-invariant=warn
-signature-verification-failure=warn
 
 [strict]
 deprecated-type
@@ -53,4 +72,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.171.0
+^0.182.0

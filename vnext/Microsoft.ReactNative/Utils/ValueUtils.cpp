@@ -9,6 +9,7 @@
 #include <Utils/ValueUtils.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 #include "Unicode.h"
+#include "XamlUtils.h"
 
 #include <JSValue.h>
 #include <folly/dynamic.h>
@@ -84,7 +85,7 @@ struct BrushCache {
         {L"SystemListAccentHighColor", {nullptr}}};
 
     m_uiSettings = winrt::Windows::UI::ViewManagement::UISettings();
-    auto dq = winrt::system::DispatcherQueue::GetForCurrentThread();
+    auto dq = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
     m_uiSettings.ColorValuesChanged([this, dq](auto &&sender, auto &&args) {
       dq.TryEnqueue([this]() {
         for (auto &entry : m_map) {
@@ -117,17 +118,21 @@ struct BrushCache {
       return RegisterBrush(resourceName, brush);
     }
 
-    winrt::IInspectable resource{winrt::Application::Current().Resources().Lookup(winrt::box_value(resourceName))};
+    const auto appResources{winrt::Application::Current().Resources()};
+    const auto boxedResourceName{winrt::box_value(resourceName)};
+    if (appResources.HasKey(boxedResourceName)) {
+      winrt::IInspectable resource{appResources.Lookup(boxedResourceName)};
 
-    if (auto brush = resource.try_as<xaml::Media::Brush>()) {
-      return RegisterBrush(resourceName, brush);
-    } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
-      auto brush = xaml::Media::SolidColorBrush(color.value());
-      return RegisterBrush(resourceName, brush);
+      if (auto brush = resource.try_as<xaml::Media::Brush>()) {
+        return RegisterBrush(resourceName, brush);
+      } else if (auto color = resource.try_as<winrt::Windows::UI::Color>()) {
+        auto brush = xaml::Media::SolidColorBrush(color.value());
+        return RegisterBrush(resourceName, brush);
+      }
     }
 
     assert(false && "Resource is not a Color or Brush");
-    return nullptr;
+    return xaml::Media::SolidColorBrush(winrt::Colors::Transparent());
   }
 
   xaml::Media::Brush RegisterBrush(winrt::hstring resourceName, const xaml::Media::Brush &brush) {
@@ -157,7 +162,7 @@ xaml::Media::Brush BrushFromColorObject(const winrt::Microsoft::ReactNative::JSV
 }
 
 winrt::Color ColorFromNumber(DWORD argb) noexcept {
-  return winrt::ColorHelper::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
+  return xaml::FromArgb(GetAFromArgb(argb), GetRFromArgb(argb), GetGFromArgb(argb), GetBFromArgb(argb));
 }
 
 REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {

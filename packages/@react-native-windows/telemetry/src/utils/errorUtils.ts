@@ -106,8 +106,13 @@ export function tryGetErrorCode(msg: string): string | undefined {
  * @return The message with any paths anonymized.
  */
 export function sanitizeErrorMessage(msg: string): string {
+  const msBuildErrorMessage =
+    /^\d+:\d+>(.*)(\(\d+,\d+\)): error (\w+\d+): (.*)/g;
+  msg = msg.replace(msBuildErrorMessage, '[$1]$2: error $3: $4');
+
   const cpuThreadId = /^\d+(:\d+)?>/g;
   msg = msg.replace(cpuThreadId, '');
+
   const parts = msg.split(/['[\]"]/g);
   const clean = [];
   const pathRegEx =

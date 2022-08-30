@@ -145,10 +145,7 @@ export class Telemetry {
 
   /** Sets up Telemetry.client. */
   private static setupClient() {
-    appInsights.Configuration.setInternalLogging(
-      Telemetry.isTest,
-      Telemetry.isTest,
-    );
+    appInsights.Configuration.setInternalLogging(false, false);
 
     Telemetry.client = new appInsights.TelemetryClient(
       Telemetry.options.setupString,
@@ -162,6 +159,13 @@ export class Telemetry {
     }
 
     Telemetry.client.config.disableAppInsights = Telemetry.isTest;
+    Telemetry.client.config.disableStatsbeat = true;
+
+    // Despite trying to disable the statsbeat, it might still be running: https://github.com/microsoft/ApplicationInsights-node.js/issues/943
+    // So we want to disable it, and despite the method's typing, getStatsbeat() _can_ return undefined
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    Telemetry.client.getStatsbeat()?.enable(false);
+
     Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
   }
 
@@ -169,6 +173,10 @@ export class Telemetry {
   private static async setupBaseProperties() {
     Telemetry.client!.commonProperties.deviceId =
       await basePropUtils.deviceId();
+    Telemetry.client!.commonProperties.deviceArchitecture =
+      basePropUtils.deviceArchitecture();
+    Telemetry.client!.commonProperties.devicePlatform =
+      basePropUtils.devicePlatform();
     Telemetry.client!.commonProperties.deviceLocale =
       await basePropUtils.deviceLocale();
     Telemetry.client!.commonProperties.deviceNumCPUs = basePropUtils
@@ -187,14 +195,13 @@ export class Telemetry {
     Telemetry.client!.commonProperties.isMsftInternal = basePropUtils
       .isMsftInternal()
       .toString();
+    Telemetry.client!.commonProperties.sampleRate = basePropUtils
+      .sampleRate()
+      .toString();
+    Telemetry.client!.commonProperties.isTest = Telemetry.isTest.toString();
+    Telemetry.client!.commonProperties.sessionId = Telemetry.getSessionId();
 
     Telemetry.client!.config.samplingPercentage = basePropUtils.sampleRate();
-
-    if (Telemetry.isTest) {
-      Telemetry.client!.commonProperties.isTest = true.toString();
-    }
-
-    Telemetry.client!.commonProperties.sessionId = Telemetry.getSessionId();
 
     await Telemetry.populateToolsVersions();
     if (Telemetry.options.populateNpmPackageVersions) {
@@ -253,6 +260,10 @@ export class Telemetry {
           for (const frame of exception.parsedStack) {
             errorUtils.sanitizeErrorStackFrame(frame);
           }
+
+          // Exception message must never be blank, or AI will reject it
+          exception.message = exception.message || '[None]';
+
           // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
           // The message may contain PII information. This can be sanitized, but for now delete it.
           // Note that the type of data.exceptions[0] is always going to be ExceptionDetails. It is not the original thrown exception.
@@ -262,7 +273,7 @@ export class Telemetry {
               exception.message,
             );
           } else {
-            delete exception.message;
+            exception.message = '[Removed]';
           }
         }
       }
@@ -402,9 +413,12 @@ export class Telemetry {
     };
 
     // Set remaining common props
-    Object.assign(props, extraProps);
     props.project = Telemetry.projectProp;
     props.versions = Telemetry.versionsProp;
+
+    // Set extra props
+    props.extraProps = {};
+    Object.assign(props.extraProps, extraProps);
 
     // Fire event
     Telemetry.client!.trackEvent({name: props.eventName, properties: props});
@@ -427,12 +441,24 @@ export class Telemetry {
         : null;
     props.codedError = {
       type: codedError?.type ?? 'Unknown',
-      rawErrorCode: errorUtils.tryGetErrorCode(error.message) ?? '',
       data: codedError?.data ?? {},
     };
 
-    if (codedError?.data) {
-      Object.assign(props.codedError.data, codedError.data);
+    // Copy msBuildErrorMessages into the codedError.data object
+    if ((error as any).msBuildErrorMessages) {
+      // Always grab MSBuild error codes if possible
+      props.codedError.data.msBuildErrors = (error as any).msBuildErrorMessages
+        .map(errorUtils.tryGetErrorCode)
+        .filter((msg: string | undefined) => msg);
+
+      // Grab sanitized MSBuild error messages if we're preserving them
+      if (Telemetry.options.preserveErrorMessages) {
+        props.codedError.data.msBuildErrorMessages = (
+          error as any
+        ).msBuildErrorMessages
+          .map(errorUtils.sanitizeErrorMessage)
+          .filter((msg: string) => msg);
+      }
     }
 
     // Copy miscellaneous system error fields into the codedError.data object
@@ -444,9 +470,12 @@ export class Telemetry {
     }
 
     // Set remaining common props
-    Object.assign(props, extraProps);
     props.project = Telemetry.projectProp;
     props.versions = Telemetry.versionsProp;
+
+    // Set extra props
+    props.extraProps = {};
+    Object.assign(props.extraProps, extraProps);
 
     // Fire event
     Telemetry.client!.trackException({

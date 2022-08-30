@@ -12,6 +12,8 @@
 
 import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+
 const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
@@ -22,6 +24,10 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'ButtonExample',
     category: 'UI',
     module: require('../examples/Button/ButtonExample'),
+  },
+  {
+    key: 'AccessibilityExampleWin32',
+    module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
   },
   /*
   {
@@ -258,9 +264,17 @@ if (global.__turboModuleProxy) {
   });
 }
 
+if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
+  APIs.push({
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
+  });
+}
+
 const Modules: any = {};
 
-APIs.concat(Components).forEach((Example) => {
+APIs.concat(Components).forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 

@@ -124,7 +124,9 @@ export type ImageComponentStatics = $ReadOnly<{|
  *
  * See https://reactnative.dev/docs/image
  */
-let Image = (props: ImagePropsType, forwardedRef) => {
+/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
+ * LTI update could not be added via codemod */
+const BaseImage = (props: ImagePropsType, forwardedRef) => {
   const source = resolveAssetSource(props.source) || {
     uri: undefined,
     width: undefined,
@@ -164,7 +166,7 @@ let Image = (props: ImagePropsType, forwardedRef) => {
   return (
     // [Win32
     <TextAncestor.Consumer>
-      {(hasTextAncestor) => {
+      {hasTextAncestor => {
         invariant(
           !hasTextAncestor,
           'Nesting of <Image> within <Text> is not currently supported.',
@@ -173,7 +175,7 @@ let Image = (props: ImagePropsType, forwardedRef) => {
 
         return (
           <ImageAnalyticsTagContext.Consumer>
-            {(analyticTag) => {
+            {analyticTag => {
               return (
                 <ImageViewNativeComponent
                   {...props}
@@ -193,11 +195,12 @@ let Image = (props: ImagePropsType, forwardedRef) => {
   );
 };
 
-Image = React.forwardRef<
+const ImageForwardRef = React.forwardRef<
   ImagePropsType,
   React.ElementRef<typeof ImageViewNativeComponent>,
->(Image);
+>(BaseImage);
 
+let Image = ImageForwardRef;
 if (ImageInjection.unstable_createImageComponent != null) {
   Image = ImageInjection.unstable_createImageComponent(Image);
 }

@@ -92,6 +92,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
 
  protected:
   PointerValue *cloneSymbol(const PointerValue *pv) override;
+  PointerValue *cloneBigInt(const PointerValue *pv) override;
   PointerValue *cloneString(const PointerValue *pv) override;
   PointerValue *cloneObject(const PointerValue *pv) override;
   PointerValue *clonePropNameID(const PointerValue *pv) override;
@@ -99,6 +100,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   facebook::jsi::PropNameID createPropNameIDFromAscii(const char *str, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromUtf8(const uint8_t *utf8, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromString(const facebook::jsi::String &str) override;
+  facebook::jsi::PropNameID createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) override;
   std::string utf8(const facebook::jsi::PropNameID &propertyNameId) override;
   bool compare(const facebook::jsi::PropNameID &left, const facebook::jsi::PropNameID &right) override;
 
@@ -160,6 +162,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   void popScope(ScopeState *scope) override;
 
   bool strictEquals(const facebook::jsi::Symbol &a, const facebook::jsi::Symbol &b) const override;
+  bool strictEquals(const facebook::jsi::BigInt &a, const facebook::jsi::BigInt &b) const override;
   bool strictEquals(const facebook::jsi::String &a, const facebook::jsi::String &b) const override;
   bool strictEquals(const facebook::jsi::Object &a, const facebook::jsi::Object &b) const override;
   bool instanceOf(const facebook::jsi::Object &o, const facebook::jsi::Function &f) override;
@@ -171,11 +174,13 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
 
  private: // Convert JSI to ABI-safe JSI values
   static JsiSymbolRef const &AsJsiSymbolRef(PointerValue const *pv) noexcept;
+  static JsiBigIntRef const &AsJsiBigIntRef(PointerValue const *pv) noexcept;
   static JsiStringRef const &AsJsiStringRef(PointerValue const *pv) noexcept;
   static JsiObjectRef const &AsJsiObjectRef(PointerValue const *pv) noexcept;
   static JsiPropertyIdRef const &AsJsiPropertyIdRef(PointerValue const *pv) noexcept;
 
   static JsiSymbolRef const &AsJsiSymbolRef(facebook::jsi::Symbol const &symbol) noexcept;
+  static JsiBigIntRef const &AsJsiBigIntRef(facebook::jsi::BigInt const &bigInt) noexcept;
   static JsiStringRef const &AsJsiStringRef(facebook::jsi::String const &str) noexcept;
   static JsiObjectRef const &AsJsiObjectRef(facebook::jsi::Object const &obj) noexcept;
   static JsiPropertyIdRef const &AsJsiPropertyIdRef(facebook::jsi::PropNameID const &propertyId) noexcept;
@@ -187,11 +192,13 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
 
  private: // Convert ABI-safe JSI to JSI values
   PointerValue *MakeSymbolValue(JsiSymbolRef &&symbol) const noexcept;
+  PointerValue *MakeBigIntValue(JsiBigIntRef &&bigInt) const noexcept;
   PointerValue *MakeStringValue(JsiStringRef &&str) const noexcept;
   PointerValue *MakeObjectValue(JsiObjectRef &&obj) const noexcept;
   PointerValue *MakePropNameIDValue(JsiPropertyIdRef &&propertyId) const noexcept;
 
   facebook::jsi::Symbol MakeSymbol(JsiSymbolRef &&symbol) const noexcept;
+  facebook::jsi::BigInt MakeBigInt(JsiBigIntRef &&bigInt) const noexcept;
   facebook::jsi::String MakeString(JsiStringRef &&str) const noexcept;
   facebook::jsi::Object MakeObject(JsiObjectRef &&obj) const noexcept;
   facebook::jsi::PropNameID MakePropNameID(JsiPropertyIdRef &&propertyId) const noexcept;
@@ -222,6 +229,13 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
     void invalidate() override;
     static JsiSymbolRef const &GetData(PointerValue const *pv) noexcept;
     static JsiSymbolRef Detach(PointerValue const *pv) noexcept;
+  };
+
+  struct BigIntPointerValue : DataPointerValue {
+    BigIntPointerValue(winrt::weak_ref<JsiRuntime> &&weakRuntime, JsiBigIntRef &&bigInt) noexcept;
+    void invalidate() override;
+    static JsiBigIntRef const &GetData(PointerValue const *pv) noexcept;
+    static JsiBigIntRef Detach(PointerValue const *pv) noexcept;
   };
 
   struct StringPointerValue : DataPointerValue {

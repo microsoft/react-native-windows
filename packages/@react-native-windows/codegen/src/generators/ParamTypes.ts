@@ -194,7 +194,7 @@ export function translateSpecArgs(
   aliases: AliasMap,
   baseAliasName: string,
 ) {
-  return params.map((param) => {
+  return params.map(param => {
     const translatedParam = translateSpecFunctionParam(
       param,
       aliases,
@@ -209,7 +209,7 @@ export function translateArgs(
   aliases: AliasMap,
   baseAliasName: string,
 ) {
-  return params.map((param) => {
+  return params.map(param => {
     const translatedParam = translateFunctionParam(
       param,
       aliases,

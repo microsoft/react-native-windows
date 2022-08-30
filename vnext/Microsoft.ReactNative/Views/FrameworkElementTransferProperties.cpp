@@ -7,6 +7,7 @@
 #include <UI.Xaml.Controls.h>
 #include "DynamicAutomationProperties.h"
 #include "FrameworkElementTransferProperties.h"
+#include "ViewPanel.h"
 
 namespace Microsoft::ReactNative {
 
@@ -16,7 +17,7 @@ void TransferProperty(
     xaml::DependencyProperty oldViewDP,
     xaml::DependencyProperty newViewDP) {
   auto oldValue = oldView.ReadLocalValue(oldViewDP);
-  if (oldValue != nullptr) {
+  if (oldValue != xaml::DependencyProperty::UnsetValue()) {
     oldView.ClearValue(oldViewDP);
     newView.SetValue(newViewDP, oldValue);
   }
@@ -45,8 +46,18 @@ void TransferFrameworkElementProperties(const xaml::DependencyObject &oldView, c
   TransferProperty(oldView, newView, xaml::FrameworkElement::MaxHeightProperty());
   TransferProperty(oldView, newView, xaml::FrameworkElement::FlowDirectionProperty());
   TransferProperty(oldView, newView, xaml::Controls::Canvas::ZIndexProperty());
-  TransferProperty(oldView, newView, winrt::Microsoft::ReactNative::ViewPanel::LeftProperty());
-  TransferProperty(oldView, newView, winrt::Microsoft::ReactNative::ViewPanel::TopProperty());
+
+  const auto oldUI = oldView.as<xaml::UIElement>();
+  const auto left = winrt::Microsoft::ReactNative::ViewPanel::GetLeft(oldUI);
+  const auto top = winrt::Microsoft::ReactNative::ViewPanel::GetTop(oldUI);
+  oldUI.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::LeftProperty());
+  oldUI.ClearValue(winrt::Microsoft::ReactNative::ViewPanel::TopProperty());
+  winrt::Microsoft::ReactNative::implementation::ViewPanel::InvalidateForArrange(oldView);
+
+  const auto newUI = newView.as<xaml::UIElement>();
+  winrt::Microsoft::ReactNative::ViewPanel::SetLeft(newUI, left);
+  winrt::Microsoft::ReactNative::ViewPanel::SetTop(newUI, top);
+  // ViewPanel::SetLeft and SetTop already invalidate for arrange
 
   // Accessibility Properties
   TransferProperty(oldView, newView, xaml::Automation::AutomationProperties::AutomationIdProperty());

@@ -77,12 +77,12 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
     return winrt::unbox_value<double>(element.GetValue(LeftProperty()));
   }
 
+  static void InvalidateForArrange(const xaml::DependencyObject &element);
+
  private:
   void Remove(xaml::UIElement element) const;
 
   void UpdateClip(winrt::Windows::Foundation::Size &finalSize);
-
-  static void InvalidateForArrange(xaml::UIElement element);
 
  private:
   bool m_propertiesChanged{false};
@@ -93,7 +93,6 @@ struct ViewPanel : ViewPanelT<ViewPanel> {
 
  private:
   static void VisualPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
-  static void PositionPropertyChanged(xaml::DependencyObject sender, xaml::DependencyPropertyChangedEventArgs e);
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

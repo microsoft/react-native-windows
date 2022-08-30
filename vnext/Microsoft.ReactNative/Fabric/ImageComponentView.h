@@ -33,7 +33,7 @@ struct ImageComponentView : BaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::SharedProps props() noexcept override;
+  facebook::react::Props::Shared props() noexcept override;
 
   const xaml::FrameworkElement Element() const noexcept override;
 

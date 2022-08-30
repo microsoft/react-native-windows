@@ -16,7 +16,7 @@ struct FailingExecutor {
   }
 
   template <class TCallback, class... TArgs>
-  auto Invoke(TCallback &&callback, TArgs &&... args) noexcept {
+  auto Invoke(TCallback &&callback, TArgs &&...args) noexcept {
     return callback(std::forward<TArgs>(args)...);
   }
 };

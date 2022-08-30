@@ -1,8 +1,55 @@
 # Change Log - @rnw-scripts/take-screenshot
 
-This log was last generated on Wed, 09 Feb 2022 06:09:38 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.0.25
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 1.0.24
+
+Thu, 12 May 2022 05:09:45 GMT
+
+### Patches
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/just-task to v2.2.4
+
+## 1.0.23
+
+Wed, 27 Apr 2022 05:10:22 GMT
+
+### Patches
+
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 1.0.22
+
+Tue, 12 Apr 2022 05:10:39 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+
+## 1.0.21
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Patches
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
 
 ## 1.0.20
 

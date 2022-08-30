@@ -19,10 +19,13 @@
 #include <Utils/PropertyUtils.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
+#include <cxxreact/SystraceSection.h>
 
 namespace winrt {
 using namespace xaml;
 }
+
+using namespace facebook::react;
 
 namespace Microsoft::ReactNative {
 
@@ -248,7 +251,10 @@ void ViewManagerBase::UpdateProperties(
     }
   }
 
-  OnPropertiesUpdated(nodeToUpdate);
+  {
+    SystraceSection s("ViewManagerBase::OnPropertiesUpdated");
+    OnPropertiesUpdated(nodeToUpdate);
+  }
 }
 
 bool ViewManagerBase::UpdateProperty(

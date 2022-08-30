@@ -21,6 +21,7 @@ const UIView = {
   accessibilityState: true,
   accessibilityValue: true,
   accessibilityHint: true,
+  accessibilityLanguage: true,
   importantForAccessibility: true,
   nativeID: true,
   testID: true,
@@ -35,6 +36,7 @@ const UIView = {
   needsOffscreenAlphaCompositing: true,
   style: ReactNativeStyleAttributes,
   // [Windows
+  alwaysShowToolTip: true,
   enableFocusRing: true,
   cursor: true,
   textStyle: true, // Once we flush out our JS theming story this property will no longer be needed

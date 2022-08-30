@@ -3,6 +3,7 @@
 
 #pragma once
 #include "ReactPropertyBagHelper.g.h"
+#include <winrt/Windows.Foundation.Collections.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
@@ -12,6 +13,8 @@ struct ReactPropertyBag : implements<ReactPropertyBag, IReactPropertyBag> {
   IInspectable Get(IReactPropertyName const &name) noexcept;
   IInspectable GetOrCreate(IReactPropertyName const &name, ReactCreatePropertyValue const &createValue) noexcept;
   IInspectable Set(IReactPropertyName const &name, IInspectable const &value) noexcept;
+
+  void CopyFrom(IReactPropertyBag const &) noexcept;
 
  private:
   std::mutex m_mutex;

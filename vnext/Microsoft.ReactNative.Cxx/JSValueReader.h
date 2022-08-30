@@ -90,7 +90,7 @@ void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept;
 
 bool SkipArrayToEnd(IJSValueReader const &reader) noexcept;
 template <class... TArgs>
-void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &... args) noexcept;
+void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &...args) noexcept;
 
 //===========================================================================
 // IJSValueReader extensions implementation
@@ -432,7 +432,7 @@ inline bool SkipArrayToEnd(IJSValueReader const &reader) noexcept {
 }
 
 template <class... TArgs>
-inline void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &... args) noexcept {
+inline void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &...args) noexcept {
   // Read as many arguments as we can or return default values.
   bool success = reader.ValueType() == JSValueType::Array;
   ((success = success && reader.GetNextArrayItem(), args = success ? ReadValue<TArgs>(reader) : TArgs{}), ...);

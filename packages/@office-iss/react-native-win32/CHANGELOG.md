@@ -1,8 +1,213 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 05 Mar 2022 06:08:58 GMT and should not be manually modified.
+This log was last generated on Sat, 20 Aug 2022 05:08:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.158
+
+Sat, 20 Aug 2022 05:08:53 GMT
+
+### Changes
+
+- Integrate 7/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.49
+
+## 0.0.0-canary.157
+
+Wed, 03 Aug 2022 05:09:40 GMT
+
+### Changes
+
+- Integrate 7/4 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.48
+
+## 0.0.0-canary.156
+
+Tue, 12 Jul 2022 05:10:12 GMT
+
+### Changes
+
+- CG: Remove dependency on deprecated `hermes-engine` package (jthysell@microsoft.com)
+
+## 0.0.0-canary.155
+
+Fri, 17 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- Integrate 6/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.47
+
+## 0.0.0-canary.154
+
+Fri, 10 Jun 2022 05:09:59 GMT
+
+### Changes
+
+- Integrate 6/8 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.46
+
+## 0.0.0-canary.153
+
+Thu, 09 Jun 2022 05:09:48 GMT
+
+### Changes
+
+- integrate-6-3-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.45
+
+## 0.0.0-canary.152
+
+Sat, 04 Jun 2022 05:10:04 GMT
+
+### Changes
+
+- integrate 5-16-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.44
+- Bump @rnw-scripts/just-task to v2.2.5
+- Bump react-native-platform-override to v1.6.13
+
+## 0.0.0-canary.151
+
+Thu, 12 May 2022 05:09:43 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.43
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.7
+- Bump @rnw-scripts/just-task to v2.2.4
+- Bump react-native-platform-override to v1.6.12
+
+## 0.0.0-canary.150
+
+Wed, 11 May 2022 05:08:51 GMT
+
+### Changes
+
+- Upgrade to @react-native-community/cli@8.0.0-alpha.6 (jthysell@microsoft.com)
+
+## 0.0.0-canary.149
+
+Tue, 10 May 2022 05:08:46 GMT
+
+### Changes
+
+- integrate 5-1-22 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.42
+
+## 0.0.0-canary.148
+
+Mon, 02 May 2022 21:26:42 GMT
+
+### Changes
+
+- Implement no-hide-accessibility (34109996+chiaramooney@users.noreply.github.com)
+- Add ListItem as an accessibilityRole type and add a List, ListItem, ControllerFor test example (patboyd@microsoft.com)
+
+## 0.0.0-canary.147
+
+Wed, 27 Apr 2022 05:10:23 GMT
+
+### Changes
+
+- Integrate 4/15 Test (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.41
+- Bump @rnw-scripts/eslint-config to v1.1.12
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.0.6
+- Bump react-native-platform-override to v1.6.11
+
+## 0.0.0-canary.146
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.40
+- Bump react-native-platform-override to v1.6.10
+
+## 0.0.0-canary.145
+
+Thu, 14 Apr 2022 05:09:19 GMT
+
+### Changes
+
+- Integrate RN Nightly Build 4/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.39
+
+## 0.0.0-canary.144
+
+Tue, 12 Apr 2022 05:10:37 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.38
+- Bump react-native-platform-override to v1.6.9
+
+## 0.0.0-canary.143
+
+Sat, 09 Apr 2022 05:10:10 GMT
+
+### Changes
+
+- integrate 4/4 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.37
+
+## 0.0.0-canary.142
+
+Tue, 05 Apr 2022 05:10:13 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.36
+- Bump react-native-platform-override to v1.6.8
+
+## 0.0.0-canary.141
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Changes
+
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.35
+- Bump react-native-platform-override to v1.6.7
+
+## 0.0.0-canary.140
+
+Thu, 31 Mar 2022 05:10:18 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.34
+
+## 0.0.0-canary.139
+
+Tue, 29 Mar 2022 05:09:49 GMT
+
+### Changes
+
+- Integrate 3/11 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.33
+
+## 0.0.0-canary.138
+
+Thu, 17 Mar 2022 05:09:18 GMT
+
+### Changes
+
+- integrates 2/27/22 (email not defined)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.32
+
+## 0.0.0-canary.137
+
+Wed, 09 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Upgrade @types/react-native (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.136
 

@@ -205,8 +205,8 @@ void DevMenuManager::CreateAndShowUI() noexcept {
   if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
     m_samplingProfilerRevoker = devMenu.SamplingProfiler().Click(
         winrt::auto_revoke,
-        [wkThis = weak_from_this()](
-            auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept -> winrt::fire_and_forget {
+        [wkThis = weak_from_this()](auto & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept
+        -> winrt::fire_and_forget {
           if (auto strongThis = wkThis.lock()) {
             strongThis->Hide();
             if (!Microsoft::ReactNative::HermesSamplingProfiler::IsStarted()) {

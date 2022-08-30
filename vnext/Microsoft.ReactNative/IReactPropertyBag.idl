@@ -62,6 +62,9 @@ namespace Microsoft.ReactNative
       "It returns null if the property did not exist.\n"
       "If the new value is null, then the property is removed.")
     Object Set(IReactPropertyName name, Object value);
+
+    DOC_STRING("Copies the properties from another property bag")
+    void CopyFrom(IReactPropertyBag other);
   }
 
   [webhosthidden]

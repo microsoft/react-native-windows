@@ -95,7 +95,7 @@ function CheckVS {
     [String[]]$output = & $vsWhere -version $vsver -requires $vsComponents -property productPath
 
     if (($output.Count -eq 0) -or (!(Test-Path $output[0]))) {
-        Write-Debug No Retail versions of Visual Studio found, trying pre-release...
+        Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
         [String[]]$output = & $vsWhere -version $vsver -requires $vsComponents -property productPath -prerelease
     }
     if ($output.Count -gt 1) {
@@ -184,7 +184,7 @@ function CheckCppWinRT_VSIX {
         [String[]]$vsPath = & $vsWhere -version $vsver -property installationPath;
 
         if (($vsPath.Count -eq 0) -or (!(Test-Path $vsPath[0]))) {
-            Write-Debug No Retail versions of Visual Studio found, trying pre-release...
+            Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
             [String[]]$vsPath = & $vsWhere -version $vsver -property installationPath -prerelease
         }
 
@@ -208,7 +208,7 @@ function InstallCppWinRT_VSIX {
     [String[]]$productPath = & $vsWhere -version $vsver -property productPath
 
     if (($productPath.Count -eq 0) -or (!(Test-Path $productPath[0]))) {
-        Write-Debug No Retail versions of Visual Studio found, trying pre-release...
+        Write-Debug "No Retail versions of Visual Studio found, trying pre-release..."
         [String[]]$productPath = & $vsWhere -version $vsver -property productPath -prerelease
     }
 

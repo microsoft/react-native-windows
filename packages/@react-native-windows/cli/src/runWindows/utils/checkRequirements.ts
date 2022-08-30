@@ -76,7 +76,7 @@ function checkWinSdk(windowsTargetVersion: string): string {
     'windowssdk',
     windowsTargetVersion,
   );
-  const hasSdkInstalled = installedSdks.some((installedSdk) =>
+  const hasSdkInstalled = installedSdks.some(installedSdk =>
     installedSdk.eq(requiredVersion),
   );
 

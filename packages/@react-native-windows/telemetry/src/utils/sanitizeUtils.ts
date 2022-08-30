@@ -69,7 +69,7 @@ export function getAnonymizedPath(
     const rest = filepath.slice(projectRoot.length);
     if (rest.toLowerCase().startsWith(windows)) {
       // We are under the windows path, anonymize with [windows]
-      return `[windows]\\???${ext}(${rest.length - windows.length - 1})`;
+      return `[windows]\\???${ext}(${rest.length - windows.length})`;
     } else {
       // We are just within the projectRoot, anonymize with [project_dir]
       if (rest === '' || rest === '\\') {

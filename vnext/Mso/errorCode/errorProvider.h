@@ -28,7 +28,7 @@ class ErrorProvider final : public IErrorProvider {
   ErrorCode MakeErrorCode(const T &errorInfo) const noexcept;
 
   template <class TValue, class... TArgs>
-  Maybe<TValue> MakeMaybe(TArgs &&... errorArgs) const noexcept;
+  Maybe<TValue> MakeMaybe(TArgs &&...errorArgs) const noexcept;
 
   // TODO: deprecate this method in favor of TryGetErrorInfo
   bool IsOwnedErrorCode(const ErrorCode &errorCode) const noexcept;
@@ -87,7 +87,7 @@ ErrorCode ErrorProvider<T, GuidToken>::MakeErrorCode(const T &errorInfo) const n
 
 template <class T, class GuidToken>
 template <class TValue, class... TArgs>
-Maybe<TValue> ErrorProvider<T, GuidToken>::MakeMaybe(TArgs &&... errorArgs) const noexcept {
+Maybe<TValue> ErrorProvider<T, GuidToken>::MakeMaybe(TArgs &&...errorArgs) const noexcept {
   return Mso::Maybe<TValue>(MakeErrorCode(T(std::forward<TArgs>(errorArgs)...)));
 }
 

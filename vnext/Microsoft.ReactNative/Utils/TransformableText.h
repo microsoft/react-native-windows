@@ -24,7 +24,7 @@ struct TransformableText final {
         dwMapFlags |= LCMAP_TITLECASE;
         break;
       default:
-        nyi();
+        assert(false);
         return originalText;
     }
 

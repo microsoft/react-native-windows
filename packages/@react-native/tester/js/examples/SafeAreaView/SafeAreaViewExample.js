@@ -18,7 +18,6 @@ const {
   Modal,
   SafeAreaView,
   StyleSheet,
-  Switch,
   Text,
   View,
 } = require('react-native');
@@ -27,15 +26,13 @@ class SafeAreaViewExample extends React.Component<
   {...},
   {|
     modalVisible: boolean,
-    emulateUnlessSupported: boolean,
   |},
 > {
   state = {
     modalVisible: false,
-    emulateUnlessSupported: true,
   };
 
-  _setModalVisible = visible => {
+  _setModalVisible = (visible: boolean) => {
     this.setState({modalVisible: visible});
   };
 
@@ -48,20 +45,11 @@ class SafeAreaViewExample extends React.Component<
           animationType="slide"
           supportedOrientations={['portrait', 'landscape']}>
           <View style={styles.modal}>
-            <SafeAreaView
-              style={styles.safeArea}
-              emulateUnlessSupported={this.state.emulateUnlessSupported}>
+            <SafeAreaView style={styles.safeArea}>
               <View style={styles.safeAreaContent}>
                 <Button
                   onPress={this._setModalVisible.bind(this, false)}
                   title="Close"
-                />
-                <Text>emulateUnlessSupported:</Text>
-                <Switch
-                  onValueChange={value =>
-                    this.setState({emulateUnlessSupported: value})
-                  }
-                  value={this.state.emulateUnlessSupported}
                 />
               </View>
             </SafeAreaView>
@@ -70,13 +58,6 @@ class SafeAreaViewExample extends React.Component<
         <Button
           onPress={this._setModalVisible.bind(this, true)}
           title="Present Modal Screen with SafeAreaView"
-        />
-        <Text>emulateUnlessSupported:</Text>
-        <Switch
-          onValueChange={value =>
-            this.setState({emulateUnlessSupported: value})
-          }
-          value={this.state.emulateUnlessSupported}
         />
       </View>
     );
@@ -89,9 +70,12 @@ class IsIPhoneXExample extends React.Component<{...}> {
       <View>
         <Text>
           Is this an iPhone X:{' '}
-          {DeviceInfo.getConstants().isIPhoneX_deprecated
-            ? 'Yeah!'
-            : 'Nope. (Or `isIPhoneX_deprecated` was already removed.)'}
+          {
+            // $FlowFixMe[sketchy-null-bool]
+            DeviceInfo.getConstants().isIPhoneX_deprecated
+              ? 'Yeah!'
+              : 'Nope. (Or `isIPhoneX_deprecated` was already removed.)'
+          }
         </Text>
       </View>
     );

@@ -20,6 +20,12 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground.sln
+          - Name: X64DebugUniversal
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: Playground.sln
+            RunWack: true
+            UploadAppx: true
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86
@@ -28,11 +34,16 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
-          - Name: X86DebugWinUI3
+          - Name: X64DebugCoreApp
             BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground.sln
-            BuildWinUI3: true
+            BuildPlatform: x64
+            SolutionFile: ..\CoreApp\CoreApp.sln
+          # Disabling until WinAppSDK is working e2e
+          # - Name: X86DebugWinUI3
+          #   BuildConfiguration: Debug
+          #   BuildPlatform: x86
+          #   SolutionFile: Playground.sln
+          #   BuildWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X86DebugUniversal
@@ -46,6 +57,12 @@ parameters:
             SolutionFile: Playground.sln
             RunWack: true
             UploadAppx: true
+          - Name: X64DebugUniversal
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: Playground.sln
+            RunWack: true
+            UploadAppx: true
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86
@@ -54,12 +71,17 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
-          - Name: X86DebugWinUI3
+          - Name: X64DebugCoreApp
             BuildConfiguration: Debug
-            BuildPlatform: x86
-            SolutionFile: Playground.sln
-            BuildWinUI3: true
-            UploadAppx: true
+            BuildPlatform: x64
+            SolutionFile: ..\CoreApp\CoreApp.sln
+          # Disabling until WinAppSDK is working e2e
+          # - Name: X86DebugWinUI3
+          #   BuildConfiguration: Debug
+          #   BuildPlatform: x86
+          #   SolutionFile: Playground.sln
+          #   BuildWinUI3: true
+          #   UploadAppx: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -116,6 +138,42 @@ jobs:
                 ${{if eq(config.BuildEnvironment, 'Continuous')}}:
                   msbuildArgs:
                     /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+
+            # Execute debug feature tests
+            #
+            # This step loose-file-deploys the UWP Playground app and uses it as an RNW host for a series
+            # of debug feature tests. In the future, these tests should be performed against a host app
+            # better suited for automated tests (probably the E2E test app).
+            - powershell: |
+                $appRecipeToolPath = Join-Path (Get-CimInstance MSFT_VSInstance | Sort-Object -Property 'Version' -Descending)[0].InstallLocation "Common7\IDE\DeployAppRecipe.exe"
+                if (!(Test-Path $appRecipeToolPath)) { throw "can't find '$appRecipeToolPath'" }
+                $platDirs = @{ "x64" = "x64\"; "x86" = ""} # map from ADO BuildPlatform arg to VS build output dir part 
+                $appRecipePath = "$(Build.SourcesDirectory)\packages\playground\windows\$($platDirs['${{ matrix.BuildPlatform }}'])${{ matrix.BuildConfiguration }}\playground\playground.build.appxrecipe"
+                if (!(Test-Path $appRecipePath)) { throw "can't find '$appRecipePath'" }
+                &$appRecipeToolPath $appRecipePath
+                if (!(Get-AppxPackage 'RNPlayground')) {throw "RNPlayground app does not appear to be installed"}
+                Set-Location "$(Build.SourcesDirectory)\packages\debug-test"
+                $env:DEBUGTEST_LOGFOLDER = "$($env:AGENT_TEMPDIRECTORY)\DebugTestLogs"
+                yarn debugtest
+              displayName: Run Debug Feature Tests
+              # skip this step for the Win32 Playground app and for release builds
+              condition: and(endsWith('${{ matrix.Name }}', 'Universal'), eq('${{ matrix.BuildConfiguration }}', 'Debug'))
+              timeoutInMinutes: 5
+
+            - powershell: |
+                foreach ($logFile in (ls "$env:AGENT_TEMPDIRECTORY\DebugTestLogs\*.log")) {
+                  Write-Host "logFile: '$logFile'"
+                  Get-Content $logFile | ForEach-Object {Write-Host "##[debug]$_"}
+                }
+              displayName: Incorporate Log File Content into ADO Log Stream
+              condition: failed()
+
+            - task: PublishBuildArtifacts@1
+              displayName: Publish Debug Test Logs
+              condition: failed()
+              inputs:
+                pathToPublish: '$(Agent.TempDirectory)\DebugTestLogs'
+                artifactName: Debug Test Logs
 
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/cleanup-certificate.yml

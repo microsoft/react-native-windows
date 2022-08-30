@@ -46,7 +46,7 @@ componentTest('ComponentExample', ({pass, fail}) => {
   return (
     <Image
       source={require('react-native-windows/IntegrationTests/blue_square.png')}
-      onLoad={(evt) => {
+      onLoad={evt => {
         assert.ok(evt.nativeEvent.source);
         pass();
       }}

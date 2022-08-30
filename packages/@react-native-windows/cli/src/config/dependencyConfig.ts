@@ -214,7 +214,7 @@ export function dependencyConfigWindows(
       // Verifying (req) items
       let errorFound = false;
 
-      alwaysRequired.forEach((item) => {
+      alwaysRequired.forEach(item => {
         if (!(item in project)) {
           (project[
             item

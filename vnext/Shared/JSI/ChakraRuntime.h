@@ -56,6 +56,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   // return value must only be used as an argument to the constructor of
   // jsi::Pointer or one of its derived classes.
   PointerValue *cloneSymbol(const PointerValue *pointerValue) override;
+  PointerValue *cloneBigInt(const PointerValue *pointerValue) override;
   PointerValue *cloneString(const PointerValue *pointerValue) override;
   PointerValue *cloneObject(const PointerValue *pointerValue) override;
   PointerValue *clonePropNameID(const PointerValue *pointerValue) override;
@@ -63,6 +64,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   facebook::jsi::PropNameID createPropNameIDFromAscii(const char *str, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromUtf8(const uint8_t *utf8, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromString(const facebook::jsi::String &str) override;
+  facebook::jsi::PropNameID createPropNameIDFromSymbol(const facebook::jsi::Symbol &sym) override;
   std::string utf8(const facebook::jsi::PropNameID &id) override;
   bool compare(const facebook::jsi::PropNameID &lhs, const facebook::jsi::PropNameID &rhs) override;
 
@@ -132,6 +134,7 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
   void popScope(ScopeState *) override;
 
   bool strictEquals(const facebook::jsi::Symbol &a, const facebook::jsi::Symbol &b) const override;
+  bool strictEquals(const facebook::jsi::BigInt &a, const facebook::jsi::BigInt &b) const override;
   bool strictEquals(const facebook::jsi::String &a, const facebook::jsi::String &b) const override;
   bool strictEquals(const facebook::jsi::Object &a, const facebook::jsi::Object &b) const override;
 

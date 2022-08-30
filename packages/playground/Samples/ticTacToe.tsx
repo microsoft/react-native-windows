@@ -59,7 +59,7 @@ export default class Bootstrap extends React.Component<
 
     return (
       <SafeAreaView style={style}>
-        <Board squares={this.state.squares} onMove={(i) => this.onMove(i)} />
+        <Board squares={this.state.squares} onMove={i => this.onMove(i)} />
         <Status
           turn={this.whoseTurn()}
           winner={winner(this.state.squares)}

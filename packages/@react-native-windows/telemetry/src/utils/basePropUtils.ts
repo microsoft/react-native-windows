@@ -5,19 +5,47 @@
  */
 
 import {execSync} from 'child_process';
-import {totalmem, cpus} from 'os';
+import {totalmem, cpus, arch, platform} from 'os';
 
 import ci from 'ci-info';
 import {randomBytes} from 'crypto';
-import {machineId} from 'node-machine-id';
 import osLocale from 'os-locale';
+
+const DeviceIdRegPath = 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\SQMClient';
+const DeviceIdRegKey = 'MachineId';
 
 /**
  * Gets a telemetry-safe stable device ID.
  * @returns A telemetry-safe stable device ID.
  */
 export async function deviceId(): Promise<string> {
-  return await machineId(false);
+  try {
+    const output = execSync(
+      `${process.env.windir}\\System32\\reg.exe query ${DeviceIdRegPath} /v ${DeviceIdRegKey}`,
+    ).toString();
+
+    const result = output.match(/\{([0-9A-Fa-f-]{36})\}/);
+    if (result && result.length > 1) {
+      return `s:${result[1]}`;
+    }
+  } catch {}
+  return '';
+}
+
+/**
+ * Gets the device architecture, like x64/arm64.
+ * @returns The device architecture.
+ */
+export function deviceArchitecture(): string {
+  return arch();
+}
+
+/**
+ * Gets the device platform, like darwin/linux/win32.
+ * @returns The device platform.
+ */
+export function devicePlatform(): string {
+  return platform();
 }
 
 /**

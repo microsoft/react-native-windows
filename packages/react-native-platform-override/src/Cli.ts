@@ -29,7 +29,7 @@ void doMain(async () => {
       .command(
         'validate',
         'Verify that overrides are recorded and up-to-date',
-        (cmdYargs) =>
+        cmdYargs =>
           cmdYargs.options({
             manifest: {
               type: 'string',
@@ -41,7 +41,7 @@ void doMain(async () => {
             },
           }),
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        (cmdArgv) =>
+        cmdArgv =>
           validateManifests({
             manifestPath: cmdArgv.manifest,
             reactNativeVersion: cmdArgv.version,
@@ -50,37 +50,37 @@ void doMain(async () => {
       .command(
         'add <override>',
         'Add an override to the manifest',
-        (cmdYargs) =>
+        cmdYargs =>
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to add'},
           }),
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        (cmdArgv) => addOverride(cmdArgv.override!),
+        cmdArgv => addOverride(cmdArgv.override!),
       )
       .command(
         'remove <override>',
         'Remove an override from the manifest',
-        (cmdYargs) =>
+        cmdYargs =>
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to remove'},
           }),
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        (cmdArgv) => removeOverride(cmdArgv.override!),
+        cmdArgv => removeOverride(cmdArgv.override!),
       )
       .command(
         'diff <override>',
         'Compares an override to the base file of its current version',
-        (cmdYargs) =>
+        cmdYargs =>
           cmdYargs.options({
             override: {type: 'string', describe: 'The override to add'},
           }),
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        (cmdArgv) => diffOverride(cmdArgv.override!),
+        cmdArgv => diffOverride(cmdArgv.override!),
       )
       .command(
         'upgrade',
         'Attempts to automatically merge new changes into out-of-date overrides',
-        (cmdYargs) =>
+        cmdYargs =>
           cmdYargs.options({
             manifest: {
               type: 'string',
@@ -97,7 +97,7 @@ void doMain(async () => {
             },
           }),
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        (cmdArgv) =>
+        cmdArgv =>
           upgrade({
             manifestPath: cmdArgv.manifest,
             reactNativeVersion: cmdArgv.version,
@@ -110,7 +110,7 @@ void doMain(async () => {
         description: 'Optional PAT to use for GitHub API calls',
         type: 'string',
       })
-      .middleware((argv) => {
+      .middleware(argv => {
         if (argv.githubToken) {
           GitReactFileRepository.setGithubToken(argv.githubToken);
         }
@@ -151,7 +151,7 @@ async function validateManifests(opts: {
       if (manifestErrors.length !== 0) {
         errors.push(
           // Add the manifest path to the override name to disambiguate between different packages
-          ...manifestErrors.map((e) => ({
+          ...manifestErrors.map(e => ({
             ...e,
             overrideName: path.join(path.dirname(manifest), e.overrideName),
           })),
@@ -232,7 +232,7 @@ async function diffOverride(overridePath: string) {
 
   const colorizedDiff = diff
     .split('\n')
-    .map((line) =>
+    .map(line =>
       line.startsWith('+')
         ? chalk.green(line)
         : line.startsWith('-')
@@ -290,7 +290,7 @@ function printUpgradeStats(
   allowConflicts: boolean,
 ) {
   const numTotal = results.length;
-  const numConflicts = results.filter((res) => res.hasConflicts).length;
+  const numConflicts = results.filter(res => res.hasConflicts).length;
   const numAutoPatched = numTotal - numConflicts;
 
   if (numTotal === 0) {
@@ -379,14 +379,14 @@ function printErrorType(
   errors: ValidationError[],
   message: string,
 ) {
-  const filteredErrors = errors.filter((err) => err.type === type);
+  const filteredErrors = errors.filter(err => err.type === type);
   filteredErrors.sort((a, b) =>
     a.overrideName.localeCompare(b.overrideName, 'en'),
   );
 
   if (filteredErrors.length > 0) {
     console.error(chalk.red(message));
-    filteredErrors.forEach((err) => {
+    filteredErrors.forEach(err => {
       console.error(` - ${err.overrideName}`);
     });
     console.error();

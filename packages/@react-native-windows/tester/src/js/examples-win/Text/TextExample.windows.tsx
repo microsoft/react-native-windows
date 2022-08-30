@@ -20,7 +20,7 @@ import {
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
 
-export class Entity extends React.Component<{}> {
+export class Entity extends React.Component<React.PropsWithChildren<{}>> {
   public render() {
     return (
       <Text style={{fontWeight: 'bold', color: '#527fe4'}}>
@@ -214,12 +214,12 @@ export class TextHighlightDemo extends React.Component<
         <TextInput
           placeholder="Enter search text"
           value={this.state.search}
-          onChangeText={(text) => this.setState({search: text})}
+          onChangeText={text => this.setState({search: text})}
         />
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{paddingRight: 5}}>Toggle highlight on all text:</Text>
           <Switch
-            onValueChange={(isOn) => this.setState({toggled: isOn})}
+            onValueChange={isOn => this.setState({toggled: isOn})}
             value={this.state.toggled}
           />
         </View>

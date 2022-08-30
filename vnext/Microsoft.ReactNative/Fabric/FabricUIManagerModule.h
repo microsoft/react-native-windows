@@ -65,7 +65,9 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   bool m_followUpTransactionRequired{false};
 
   ComponentViewRegistry m_registry;
+#ifndef CORE_ABI
   std::unordered_map<facebook::react::SurfaceId, XamlView> m_surfaceRegistry;
+#endif // CORE_ABI
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(

@@ -37,11 +37,11 @@
 #endif
 
 #include <BatchingMessageQueueThread.h>
+#include <CppRuntimeOptions.h>
 #include <CreateModules.h>
 #include <DevSettings.h>
 #include <DevSupportManager.h>
 #include <IReactRootView.h>
-#include <RuntimeOptions.h>
 #include <Shlwapi.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
@@ -67,14 +67,16 @@ using namespace facebook;
 using namespace Microsoft::JSI;
 
 using std::make_shared;
+using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
 namespace Microsoft::React {
 
-/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule() noexcept {
+/*extern*/ std::unique_ptr<facebook::xplat::module::CxxModule> CreateHttpModule(
+    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
   if (GetRuntimeOptionBool("Http.UseMonolithicModule")) {
     return std::make_unique<NetworkingModule>();
   } else {
-    return std::make_unique<HttpModule>();
+    return std::make_unique<HttpModule>(inspectableProperties);
   }
 }
 
@@ -104,11 +106,17 @@ class OJSIExecutorFactory : public JSExecutorFactory {
     auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry_, jsCallInvoker_);
 
     // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
+    // [vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global LongLivedObjectCollection
+    // instance that prevents us from using multiple RN instance in the same process.
     auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
       return turboModuleManager->getModule(name);
     };
 
-    TurboModuleBinding::install(*runtimeHolder_->getRuntime(), std::function(binding));
+    TurboModuleBinding::install(
+        *runtimeHolder_->getRuntime(),
+        std::function(binding),
+        TurboModuleBindingMode::HostObject,
+        longLivedObjectCollection_);
 
     // init TurboModule
     for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
@@ -130,17 +138,20 @@ class OJSIExecutorFactory : public JSExecutorFactory {
       std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder,
       NativeLoggingHook loggingHook,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection,
       bool isProfilingEnabled,
       std::shared_ptr<CallInvoker> jsCallInvoker) noexcept
       : runtimeHolder_{std::move(runtimeHolder)},
         loggingHook_{std::move(loggingHook)},
         turboModuleRegistry_{std::move(turboModuleRegistry)},
+        longLivedObjectCollection_{std::move(longLivedObjectCollection)},
         jsCallInvoker_{std::move(jsCallInvoker)},
         isProfilingEnabled_{isProfilingEnabled} {}
 
  private:
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> runtimeHolder_;
   std::shared_ptr<TurboModuleRegistry> turboModuleRegistry_;
+  std::shared_ptr<LongLivedObjectCollection> longLivedObjectCollection_;
   std::shared_ptr<CallInvoker> jsCallInvoker_;
   NativeLoggingHook loggingHook_;
   bool isProfilingEnabled_;
@@ -157,6 +168,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -167,6 +179,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
+      std::move(longLivedObjectCollection),
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -196,6 +209,7 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
+      nullptr,
       std::move(callback),
       std::move(jsQueue),
       std::move(nativeQueue),
@@ -233,12 +247,14 @@ InstanceImpl::InstanceImpl(
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager)
     : m_turboModuleRegistry(std::move(turboModuleRegistry)),
+      m_longLivedObjectCollection(std::move(longLivedObjectCollection)),
       m_jsThread(std::move(jsQueue)),
       m_nativeQueue(nativeQueue),
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
@@ -254,7 +270,7 @@ InstanceImpl::InstanceImpl(
 #endif
 
   if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->StartInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
+    m_devManager->EnsureHermesInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
   }
 
   // Default (common) NativeModules
@@ -299,6 +315,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          m_longLivedObjectCollection,
           !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     } else {
@@ -353,7 +370,6 @@ InstanceImpl::InstanceImpl(
 #endif
         }
         case JSIEngineOverride::Chakra:
-        case JSIEngineOverride::ChakraCore:
         default: // TODO: Add other engines once supported
           m_devSettings->jsiRuntimeHolder =
               std::make_shared<Microsoft::JSI::ChakraRuntimeHolder>(m_devSettings, m_jsThread, nullptr, nullptr);
@@ -363,6 +379,7 @@ InstanceImpl::InstanceImpl(
           m_devSettings->jsiRuntimeHolder,
           m_devSettings->loggingCallback,
           m_turboModuleRegistry,
+          m_longLivedObjectCollection,
           !m_devSettings->useFastRefresh,
           m_innerInstance->getJSCallInvoker());
     }
@@ -405,7 +422,7 @@ bool isHBCBundle(const std::string &bundle) {
   // can be potentially huge.
   // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
   auto header = reinterpret_cast<const BundleHeader *>(&bundle[0]);
-  if (HBCBundleMagicNumber == folly::Endian::little(header->magic)) {
+  if (HBCBundleMagicNumber == header->magic32.value) {
     return true;
   } else {
     return false;
@@ -506,10 +523,18 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
       }
     } else {
 #if (defined(_MSC_VER) && !defined(WINRT))
-      std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / jsBundleRelativePath).string();
+      std::string bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).u8string();
       auto bundleString = FileMappingBigString::fromPath(bundlePath);
 #else
-      std::string bundlePath = (fs::path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).string();
+      std::string bundlePath;
+      if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
+        auto uri = winrt::Windows::Foundation::Uri(
+            winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
+        bundlePath = winrt::to_string(uri.ToString());
+      } else {
+        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).u8string();
+      }
+
       auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
 #endif
       m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(jsBundleRelativePath), synchronously);
@@ -517,17 +542,15 @@ void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool s
   } catch (const std::exception &e) {
     m_devSettings->errorCallback(e.what());
   } catch (const winrt::hresult_error &hrerr) {
-    std::stringstream ss;
-    ss << "[" << std::hex << std::showbase << std::setw(8) << static_cast<uint32_t>(hrerr.code()) << "] "
-       << winrt::to_string(hrerr.message());
+    auto error = fmt::format("[0x{:0>8x}] {}", static_cast<uint32_t>(hrerr.code()), winrt::to_string(hrerr.message()));
 
-    m_devSettings->errorCallback(std::move(ss.str()));
+    m_devSettings->errorCallback(std::move(error));
   }
 }
 
 InstanceImpl::~InstanceImpl() {
-  if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->StopInspector();
+  if (shouldStartHermesInspector(*m_devSettings) && m_devSettings->jsiRuntimeHolder) {
+    m_devSettings->jsiRuntimeHolder->teardown();
   }
   m_nativeQueue->quitSynchronous();
 }
@@ -535,18 +558,23 @@ InstanceImpl::~InstanceImpl() {
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
+  auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
+#if (defined(_MSC_VER) && !defined(WINRT))
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetHttpModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> { return Microsoft::React::CreateHttpModule(); },
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateHttpModule(transitionalProps);
+      },
       nativeQueue));
+#endif
 
   modules.push_back(std::make_unique<CxxNativeModule>(
       m_innerInstance,
       Microsoft::React::GetWebSocketModuleName(),
-      [nativeQueue]() -> std::unique_ptr<xplat::module::CxxModule> {
-        return Microsoft::React::CreateWebSocketModule();
+      [nativeQueue, transitionalProps]() -> std::unique_ptr<xplat::module::CxxModule> {
+        return Microsoft::React::CreateWebSocketModule(transitionalProps);
       },
       nativeQueue));
 
@@ -607,6 +635,27 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
       StatusBarManagerModule::Name,
       []() { return std::make_unique<StatusBarManagerModule>(); },
       nativeQueue));
+
+  // These modules are instantiated separately in MSRN (Universal Windows).
+  // When there are module name colisions, the last one registered is used.
+  // If this code is enabled, we will have unused module instances.
+  // Also, MSRN has a different property bag mechanism incompatible with this method's transitionalProps variable.
+#if (defined(_MSC_VER) && !defined(WINRT))
+  if (Microsoft::React::GetRuntimeOptionBool("Blob.EnableModule") &&
+      !Microsoft::React::GetRuntimeOptionBool("Http.UseMonolithicModule")) {
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetBlobModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateBlobModule(transitionalProps); },
+        nativeQueue));
+
+    modules.push_back(std::make_unique<CxxNativeModule>(
+        m_innerInstance,
+        Microsoft::React::GetFileReaderModuleName(),
+        [transitionalProps]() { return Microsoft::React::CreateFileReaderModule(transitionalProps); },
+        nativeQueue));
+  }
+#endif
 
   return modules;
 }

@@ -14,7 +14,7 @@ let loggerOuptput: string;
 beforeEach(() => {
   loggerOuptput = '';
   outStream = new PassThrough();
-  outStream.on('data', (chunk) => {
+  outStream.on('data', chunk => {
     loggerOuptput += chunk;
   });
 });
@@ -59,17 +59,17 @@ test('Console Output', () => {
 
   logger.close();
 
-  expect(stripAnsiColors(loggerOuptput)).toBe(
-    `i Commits: foo
+  expect(stripAnsiColors(loggerOuptput)).toMatch(
+    new RegExp(`. Commits: foo
 - Updating dependencies
-√ Dependencies updated
+. Dependencies updated
 - Updating overrides
-‼ Out of date overrides
+. Out of date overrides
 - A
 - B
 - yarn build
-× yarn build
-`,
+. yarn build
+`),
   );
 });
 

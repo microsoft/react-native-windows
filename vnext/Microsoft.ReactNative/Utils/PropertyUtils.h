@@ -20,6 +20,10 @@ static double DefaultOrOverride(double defaultValue, double x) {
   return x != c_UndefinedEdge ? x : defaultValue;
 };
 
+static double DefaultOrOverrideWithClamp(double defaultValue, double x, double clamp) {
+  return std::min(DefaultOrOverride(defaultValue, x), clamp);
+};
+
 static const std::unordered_map<std::string, ShadowEdges> edgeTypeMap = {
     {"borderLeftWidth", ShadowEdges::Left},
     {"borderTopWidth", ShadowEdges::Top},
@@ -56,7 +60,9 @@ inline xaml::Thickness GetThickness(double thicknesses[(int)ShadowEdges::CountEd
   return thickness;
 }
 
-inline xaml::CornerRadius GetCornerRadius(double cornerRadii[(int)ShadowCorners::CountCorners]) {
+inline xaml::CornerRadius GetCornerRadius(
+    double cornerRadii[(int)ShadowCorners::CountCorners],
+    double maxCornerRadius) {
   xaml::CornerRadius cornerRadius;
   const double defaultRadius = std::max<double>(0, cornerRadii[(int)ShadowCorners::AllCorners]);
   double topStartRadius =
@@ -68,10 +74,15 @@ inline xaml::CornerRadius GetCornerRadius(double cornerRadii[(int)ShadowCorners:
   double bottomEndRadius =
       DefaultOrOverride(cornerRadii[(int)ShadowCorners::BottomRight], cornerRadii[(int)ShadowCorners::BottomEnd]);
 
-  cornerRadius.TopLeft = DefaultOrOverride(defaultRadius, topStartRadius);
-  cornerRadius.TopRight = DefaultOrOverride(defaultRadius, topEndRadius);
-  cornerRadius.BottomLeft = DefaultOrOverride(defaultRadius, bottomStartRadius);
-  cornerRadius.BottomRight = DefaultOrOverride(defaultRadius, bottomEndRadius);
+  // These values are clamped to 50% of the minimum of width or height
+  // dimension for cross-platform consistency with iOS, Android, and Web. We
+  // should revisit this clamping behavior if RN ever supports percentage
+  // values for the borderRadius prop as the default XAML behavior is
+  // consistent with Web behavior in this case.
+  cornerRadius.TopLeft = DefaultOrOverrideWithClamp(defaultRadius, topStartRadius, maxCornerRadius);
+  cornerRadius.TopRight = DefaultOrOverrideWithClamp(defaultRadius, topEndRadius, maxCornerRadius);
+  cornerRadius.BottomLeft = DefaultOrOverrideWithClamp(defaultRadius, bottomStartRadius, maxCornerRadius);
+  cornerRadius.BottomRight = DefaultOrOverrideWithClamp(defaultRadius, bottomEndRadius, maxCornerRadius);
 
   return cornerRadius;
 }
@@ -128,9 +139,20 @@ inline void UpdateCornerRadiusValueOnNode(
 }
 
 template <class T>
-void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
-  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius);
+void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element, double maxCornerRadius) {
+  xaml::CornerRadius cornerRadius = GetCornerRadius(node->m_cornerRadius, maxCornerRadius);
   element.CornerRadius(cornerRadius);
+}
+
+template <class T>
+void UpdateCornerRadiusOnElement(ShadowNodeBase *node, const T &element) {
+  auto maxCornerRadius = std::numeric_limits<double>::max();
+  if (element.ReadLocalValue(xaml::FrameworkElement::WidthProperty()) != xaml::DependencyProperty::UnsetValue() &&
+      element.ReadLocalValue(xaml::FrameworkElement::HeightProperty()) != xaml::DependencyProperty::UnsetValue()) {
+    // Clamp CornerRadius to 50% of the minimum dimension between width and height.
+    maxCornerRadius = std::min(element.Width(), element.Height()) / 2;
+  }
+  UpdateCornerRadiusOnElement(node, element, maxCornerRadius);
 }
 
 template <class T>
@@ -139,12 +161,19 @@ bool TryUpdateForeground(
     const std::string &propertyName,
     const winrt::Microsoft::ReactNative::JSValue &propertyValue) {
   if (propertyName == "color") {
+    auto uielement = element.try_as<xaml::UIElement>();
     if (IsValidColorValue(propertyValue)) {
       const auto brush = BrushFrom(propertyValue);
       element.Foreground(brush);
       UpdateControlForegroundResourceBrushes(element, brush);
+      if (uielement) {
+        uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::None);
+      }
     } else if (propertyValue.IsNull()) {
       element.ClearValue(T::ForegroundProperty());
+      if (uielement) {
+        uielement.HighContrastAdjustment(xaml::ElementHighContrastAdjustment::Application);
+      }
       UpdateControlForegroundResourceBrushes(element, nullptr);
     }
 

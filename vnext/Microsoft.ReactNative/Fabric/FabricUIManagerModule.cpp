@@ -7,17 +7,23 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
+#ifndef CORE_ABI
 #include <Fabric/ViewComponentView.h>
+#endif // CORE_ABI
 #include <IReactContext.h>
 #include <IReactRootView.h>
+#ifndef CORE_ABI
 #include <IXamlRootView.h>
+#endif // CORE_ABI
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/image/ImageComponentDescriptor.h>
+#ifndef CORE_ABI
 #include <react/renderer/components/slider/SliderComponentDescriptor.h>
+#endif // CORE_ABI
 #include <react/renderer/components/text/ParagraphComponentDescriptor.h>
 #include <react/renderer/components/text/RawTextComponentDescriptor.h>
 #include <react/renderer/components/text/TextComponentDescriptor.h>
@@ -29,6 +35,9 @@
 #include <react/utils/ContextContainer.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
+#ifndef CORE_ABI
+#include "TextInput/WindowsTextInputComponentDescriptor.h"
+#endif // CORE_ABI
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -76,6 +85,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
         return;
       }
 
+#ifndef CORE_ABI
       // TODO: should use something other than CompositionTarget::Rendering ... not sure where to plug this in yet
       // Getting the beat running to unblock basic events
       m_rendering = xaml::Media::CompositionTarget::Rendering(
@@ -87,6 +97,7 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
 
             tick();
           });
+#endif // CORE_ABI
     });
 
     // eventBeatManager->addObserver(*this);
@@ -143,16 +154,20 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
         facebook::react::concreteComponentDescriptorProvider<facebook::react::RawTextComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
+#ifndef CORE_ABI
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::SliderComponentDescriptor>());
+#endif // CORE_ABI
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::SwitchComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
     providerRegistry->add(
-        facebook::react::concreteComponentDescriptorProvider<facebook::react::TextInputComponentDescriptor>());
-    providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
+#ifndef CORE_ABI
+    providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
+#endif // CORE_ABI
     return providerRegistry;
   }();
 
@@ -166,6 +181,10 @@ void FabricUIManager::installFabricUIManager() noexcept {
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
   facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
+
+  // This allows access to our ReactContext from the contextContainer thats passed around the fabric codebase
+  contextContainer->insert("MSRN.ReactContext", m_context);
+
   auto runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
 
   // TODO: T31905686 Create synchronous Event Beat
@@ -205,9 +224,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
   toolbox.runtimeExecutor = runtimeExecutor;
   toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
-  // We currently rely on using XAML elements to perform measure/layout,
-  // which requires that the background thread also be the UI thread
-  /*
   toolbox.backgroundExecutor = [context = m_context,
                                 dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
     if (context.UIDispatcher().HasThreadAccess()) {
@@ -216,15 +232,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
     }
 
     dispatcher.Post(std::move(callback));
-  };
-  */
-  toolbox.backgroundExecutor = [context = m_context](std::function<void()> &&callback) {
-    if (context.UIDispatcher().HasThreadAccess()) {
-      callback();
-      return;
-    }
-
-    context.UIDispatcher().Post(std::move(callback));
   };
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
@@ -241,10 +248,12 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
+#ifndef CORE_ABI
   auto xamlRootView = static_cast<IXamlRootView *>(rootview);
   auto rootFE = xamlRootView->GetXamlView().as<xaml::FrameworkElement>();
 
   m_surfaceRegistry.insert({surfaceId, xamlRootView->GetXamlView()});
+#endif // CORE_ABI
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     self->m_registry.dequeueComponentViewWithComponentHandle(facebook::react::RootShadowNode::Handle(), surfaceId);
@@ -257,6 +266,7 @@ void FabricUIManager::startSurface(
       winrt::Windows::Graphics::Display::DisplayInformation::GetForCurrentView().RawPixelsPerViewPixel());
 
   facebook::react::LayoutConstraints constraints;
+#ifndef CORE_ABI
   constraints.minimumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
   constraints.minimumSize.width = static_cast<facebook::react::Float>(rootFE.ActualWidth());
   constraints.maximumSize.height = static_cast<facebook::react::Float>(rootFE.ActualHeight());
@@ -264,6 +274,7 @@ void FabricUIManager::startSurface(
   constraints.layoutDirection = rootFE.FlowDirection() == xaml::FlowDirection::LeftToRight
       ? facebook::react::LayoutDirection::LeftToRight
       : facebook::react::LayoutDirection::RightToLeft;
+#endif // CORE_ABI
 
   m_surfaceManager->startSurface(
       surfaceId,
@@ -294,12 +305,14 @@ void FabricUIManager::constraintSurfaceLayout(
 
 void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
   auto rootComponentViewDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
+#ifndef CORE_ABI
   auto children = m_surfaceRegistry.at(surfaceId).as<xaml::Controls::Panel>().Children();
 
   uint32_t index;
   if (!children.IndexOf(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element(), index)) {
     children.Append(static_cast<ViewComponentView &>(*rootComponentViewDescriptor.view).Element());
   }
+#endif // CORE_ABI
 }
 
 struct RemoveDeleteMetadata {
@@ -405,15 +418,19 @@ void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::S
   auto surfaceId = mountingCoordinator->getSurfaceId();
 
   mountingCoordinator->getTelemetryController().pullTransaction(
-      [&](facebook::react::MountingTransactionMetadata metadata) {
+      [&](facebook::react::MountingTransaction const &transaction,
+          facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
         //[self.delegate mountingManager:self willMountComponentsWithRootTag:surfaceId];
-        //_observerCoordinator.notifyObserversMountingTransactionWillMount(metadata);
+        // _observerCoordinator.notifyObserversMountingTransactionWillMount(transaction, surfaceTelemetry);
       },
-      [&](facebook::react::ShadowViewMutationList const &mutations) {
-        RCTPerformMountInstructions(mutations, /* _componentViewRegistry, _observerCoordinator,*/ surfaceId);
+      [&](facebook::react::MountingTransaction const &transaction,
+          facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
+        RCTPerformMountInstructions(
+            transaction.getMutations(), /* _componentViewRegistry, _observerCoordinator,*/ surfaceId);
       },
-      [&](facebook::react::MountingTransactionMetadata metadata) {
-        //_observerCoordinator.notifyObserversMountingTransactionDidMount(metadata);
+      [&](facebook::react::MountingTransaction const &transaction,
+          facebook::react::SurfaceTelemetry const &surfaceTelemetry) {
+        //_observerCoordinator.notifyObserversMountingTransactionDidMount(transaction, surfaceTelemetry);
         didMountComponentsWithRootTag(surfaceId);
         //[self.delegate mountingManager:self didMountComponentsWithRootTag:surfaceId];
       });
@@ -501,8 +518,10 @@ void FabricUIManager::schedulerDidDispatchCommand(
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
-            auto descriptor = pThis->m_registry.componentViewDescriptorWithTag(tag);
-            descriptor.view->handleCommand(commandName, args);
+            auto view = pThis->m_registry.findComponentViewWithTag(tag);
+            if (view) {
+              view->handleCommand(commandName, args);
+            }
           }
         });
   }

@@ -2,14 +2,19 @@
 // Licensed under the MIT License.
 
 #include <CppUnitTest.h>
-#include <WinRTWebSocketResource.h>
-#include <winrt/Windows.Foundation.h> // WinRT fundamentals, i.e. coroutines impl.
+
+#include <Networking/WinRTWebSocketResource.h>
 #include "WinRTNetworkingMocks.h"
+
+// Windows API
+#include <winrt/Windows.Foundation.h> // WinRT fundamentals, i.e. coroutines impl.
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking::Sockets;
 
+using Microsoft::React::Networking::IWebSocketResource;
+using Microsoft::React::Networking::WinRTWebSocketResource;
 using std::make_shared;
 using std::shared_ptr;
 using std::string;
@@ -17,8 +22,8 @@ using winrt::event_token;
 using winrt::param::hstring;
 
 using CertExceptions = std::vector<winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>;
-using CloseCode = Microsoft::React::IWebSocketResource::CloseCode;
-using Error = Microsoft::React::IWebSocketResource::Error;
+using CloseCode = IWebSocketResource::CloseCode;
+using Error = IWebSocketResource::Error;
 
 namespace {
 

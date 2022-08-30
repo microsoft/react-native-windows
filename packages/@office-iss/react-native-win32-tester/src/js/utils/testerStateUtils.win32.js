@@ -10,13 +10,16 @@
 
 // import {AsyncStorage} from 'react-native'; [Win32] #6316
 
-import RNTesterList from './RNTesterList';
-
 import type {
-  ExamplesList,
-  RNTesterState,
   ComponentList,
+  ExamplesList,
+  RNTesterModuleInfo,
+  RNTesterState,
+  SectionData,
 } from '../types/RNTesterTypes';
+
+import RNTesterList from './RNTesterList';
+import {AsyncStorage} from 'react-native';
 
 export const Screens = {
   COMPONENTS: 'components',
@@ -34,12 +37,16 @@ export const initialState: RNTesterState = {
 };
 
 const filterEmptySections = (examplesList: ExamplesList): any => {
-  const filteredSections = {};
+  const filteredSections: {
+    ['apis' | 'bookmarks' | 'components']: Array<
+      SectionData<RNTesterModuleInfo>,
+    >,
+  } = {};
   const sectionKeys = Object.keys(examplesList);
 
-  sectionKeys.forEach((key) => {
+  sectionKeys.forEach(key => {
     filteredSections[key] = examplesList[key].filter(
-      (section) => section.data.length > 0,
+      section => section.data.length > 0,
     );
   });
 
@@ -58,35 +65,33 @@ export const getExamplesListWithBookmarksAndRecentlyUsed = ({
     return null;
   }
 
-  const components = RNTesterList.Components.map((componentExample) => ({
+  const components = RNTesterList.Components.map(componentExample => ({
     ...componentExample,
     isBookmarked: bookmarks.components.includes(componentExample.key),
     exampleType: Screens.COMPONENTS,
   }));
 
   const recentlyUsedComponents = recentlyUsed.components
-    .map((recentComponentKey) =>
-      components.find((component) => component.key === recentComponentKey),
+    .map(recentComponentKey =>
+      components.find(component => component.key === recentComponentKey),
     )
     .filter(Boolean);
 
   const bookmarkedComponents = components.filter(
-    (component) => component.isBookmarked,
+    component => component.isBookmarked,
   );
 
-  const apis = RNTesterList.APIs.map((apiExample) => ({
+  const apis = RNTesterList.APIs.map(apiExample => ({
     ...apiExample,
     isBookmarked: bookmarks.apis.includes(apiExample.key),
     exampleType: Screens.APIS,
   }));
 
   const recentlyUsedAPIs = recentlyUsed.apis
-    .map((recentAPIKey) =>
-      apis.find((apiEample) => apiEample.key === recentAPIKey),
-    )
+    .map(recentAPIKey => apis.find(apiEample => apiEample.key === recentAPIKey))
     .filter(Boolean);
 
-  const bookmarkedAPIs = apis.filter((apiEample) => apiEample.isBookmarked);
+  const bookmarkedAPIs = apis.filter(apiEample => apiEample.isBookmarked);
 
   const examplesList: ExamplesList = {
     [Screens.COMPONENTS]: [

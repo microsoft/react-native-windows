@@ -56,7 +56,7 @@ struct ActiveObjectMakePolicy {
   static const bool IsNoExcept{true};
 
   template <typename T, typename TMemoryGuard, typename... TArgs>
-  static void Make(TMemoryGuard &memoryGuard, TArgs &&... args) noexcept;
+  static void Make(TMemoryGuard &memoryGuard, TArgs &&...args) noexcept;
 };
 
 //! Custom deleter to call Finalize() or FinalizeSync() from the associated queue.
@@ -159,7 +159,7 @@ struct ActiveObjectBase : IUnknown {
 //=============================================================================================
 
 template <typename T, typename TMemoryGuard, typename... TArgs>
-/*static*/ void ActiveObjectMakePolicy::Make(TMemoryGuard &memoryGuard, TArgs &&... args) noexcept {
+/*static*/ void ActiveObjectMakePolicy::Make(TMemoryGuard &memoryGuard, TArgs &&...args) noexcept {
   memoryGuard.Obj = ::new (memoryGuard.ObjMemory) T{std::forward<TArgs>(args)...};
   memoryGuard.ObjMemory = nullptr; // Memory is now controlled by the object. Set to null to avoid memory destruction.
 

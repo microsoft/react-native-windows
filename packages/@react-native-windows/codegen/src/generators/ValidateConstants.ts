@@ -14,7 +14,7 @@ export function generateValidateConstants(
   aliases: AliasMap,
 ): [string, string] | undefined {
   const candidates = nativeModule.spec.properties.filter(
-    (prop) => prop.name === 'getConstants',
+    prop => prop.name === 'getConstants',
   );
   if (candidates.length === 0) {
     return undefined;

@@ -47,7 +47,7 @@ export async function usingScratchDirectory<T>(
  * Helper to acquire an isolated GitReactFileRepository whuch ust be deleted
  * using the returned callback.
  */
-export async function acquireGitRepo<T>(): Promise<
+export async function acquireGitRepo(): Promise<
   [GitReactFileRepository, () => Promise<void>]
 > {
   const [dir, dispose] = await acquireSratchDirectory();
@@ -73,11 +73,11 @@ export async function usingFiles<T>(
   overridesToCopy: string[],
   fn: (overrideRepo: WritableFileRepository, baseDir: string) => Promise<T>,
 ): Promise<T> {
-  return await usingScratchDirectory(async (targetDirectory) => {
+  return await usingScratchDirectory(async targetDirectory => {
     const collateralPath = path.join(__dirname, 'collateral');
 
     await Promise.all(
-      overridesToCopy.map(async (override) => {
+      overridesToCopy.map(async override => {
         const src = path.join(collateralPath, override);
         const dst = path.join(targetDirectory, override);
 
@@ -101,7 +101,7 @@ export async function usingRepository<T>(
   const collateralPath = path.join(__dirname, 'collateral');
   const srcRepo = path.join(collateralPath, sourceFolder);
   const srcFiles = (await globby(['**/*'], {cwd: srcRepo, absolute: true})).map(
-    (f) => path.relative(collateralPath, f),
+    f => path.relative(collateralPath, f),
   );
 
   return await usingFiles(srcFiles, async (repo, baseDir) => {

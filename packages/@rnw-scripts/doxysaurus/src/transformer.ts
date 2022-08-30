@@ -276,9 +276,8 @@ export function transformToMarkdown(
                 '[`' + compound.name + '`](' + compound.docId + ')'
               }`;
             } else {
-              memberOverload.summary = member.summary.replace(
-                /^[A-Z]/,
-                (match) => match.toLowerCase(),
+              memberOverload.summary = member.summary.replace(/^[A-Z]/, match =>
+                match.toLowerCase(),
               );
             }
           }

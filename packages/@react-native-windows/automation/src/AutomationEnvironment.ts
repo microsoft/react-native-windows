@@ -107,7 +107,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     );
 
     this.webDriverOptions.capabilities = Object.assign(
-      this.webDriverOptions.capabilities,
+      this.webDriverOptions.capabilities!,
       passedOptions.webdriverOptions?.capabilities,
     );
 
@@ -181,7 +181,7 @@ async function spawnWinAppDriver(
   return new Promise((resolve, reject) => {
     const process = spawn(winappdriverBin, [port.toString()], {stdio: 'pipe'});
 
-    process.stdout.on('data', (data) => {
+    process.stdout.on('data', data => {
       const s = data.toString('utf16le');
       if (s.includes('Press ENTER to exit.')) {
         resolve(process);
@@ -190,11 +190,11 @@ async function spawnWinAppDriver(
       }
     });
 
-    process.stderr.once('data', (err) => {
+    process.stderr.once('data', err => {
       console.warn(err);
     });
 
-    process.once('exit', (exitCode) => {
+    process.once('exit', exitCode => {
       reject(
         new Error(
           `WinAppDriver CLI exited before timeout (exit code: ${exitCode})`,

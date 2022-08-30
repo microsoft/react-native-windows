@@ -90,13 +90,13 @@ export class AutomationClient {
   }
 
   private onEnd() {
-    this.pendingRequests.forEach((req) =>
+    this.pendingRequests.forEach(req =>
       req(null, new Error('Unexpected disconnect from RPC server')),
     );
   }
 
   private onError(error: Error) {
-    this.pendingRequests.forEach((req) => req(null, error));
+    this.pendingRequests.forEach(req => req(null, error));
   }
 
   private onMessage(message: Buffer) {
@@ -150,7 +150,7 @@ export function waitForConnection(opts: {
 
     const onError = (err: Error) => reject(err);
     server.on('error', onError);
-    server.on('connection', (socket) => {
+    server.on('connection', socket => {
       server.off('error', onError);
       resolve(new AutomationClient(socket, server));
     });

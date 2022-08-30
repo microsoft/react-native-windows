@@ -1,8 +1,82 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Fri, 04 Mar 2022 06:09:13 GMT and should not be manually modified.
+This log was last generated on Sat, 04 Jun 2022 05:10:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.35
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @rnw-scripts/jest-unittest-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 0.0.0-canary.34
+
+Thu, 12 May 2022 05:09:43 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-unittest-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.2.4
+
+## 0.0.0-canary.33
+
+Wed, 11 May 2022 05:08:51 GMT
+
+### Changes
+
+- Add --methodonly to RNW/codegen (53799235+ZihanChen-MSFT@users.noreply.github.com)
+
+## 0.0.0-canary.32
+
+Wed, 27 Apr 2022 05:10:23 GMT
+
+### Changes
+
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 0.0.0-canary.31
+
+Mon, 25 Apr 2022 22:50:30 GMT
+
+### Changes
+
+- Update globby of @react-native-windows/codegen to remove glob-parent 3.x dependency (dannyvv@microsoft.com)
+
+## 0.0.0-canary.30
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+
+## 0.0.0-canary.29
+
+Fri, 01 Apr 2022 05:09:56 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+
+## 0.0.0-canary.28
+
+Wed, 09 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Fix turbo module codegen to generate correct import statement and registration (53799235+ZihanChen-MSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.27
 

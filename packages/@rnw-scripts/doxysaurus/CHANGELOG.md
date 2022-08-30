@@ -1,8 +1,74 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Wed, 09 Feb 2022 06:09:37 GMT and should not be manually modified.
+This log was last generated on Wed, 27 Jul 2022 05:09:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.19
+
+Wed, 27 Jul 2022 05:09:28 GMT
+
+### Patches
+
+- CG updates for 7/25/22 (jthysell@microsoft.com)
+
+## 0.1.18
+
+Tue, 26 Jul 2022 05:08:50 GMT
+
+### Patches
+
+- Fix doxysaurus error logging to handle Error objects (jthysell@microsoft.com)
+
+## 0.1.17
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @rnw-scripts/jest-unittest-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 0.1.16
+
+Thu, 12 May 2022 05:09:44 GMT
+
+### Patches
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-unittest-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.2.4
+
+## 0.1.15
+
+Wed, 27 Apr 2022 05:10:24 GMT
+
+### Patches
+
+- Yarn (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 0.1.14
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Patches
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+
+## 0.1.13
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Patches
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
 
 ## 0.1.12
 

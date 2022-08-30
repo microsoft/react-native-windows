@@ -18,9 +18,7 @@
 
 #define MSO_OBJECT_SIMPLEREFCOUNT(TObject)                                                         \
  public:                                                                                           \
-  bool IsUniqueRef() const noexcept {                                                              \
-    return m_refCount.load(std::memory_order_acquire) == 1;                                        \
-  }                                                                                                \
+  bool IsUniqueRef() const noexcept { return m_refCount.load(std::memory_order_acquire) == 1; }    \
   Debug(uint32_t RefCount() const noexcept { return m_refCount.load(std::memory_order_acquire); }) \
                                                                                                    \
       template <typename UseMsoMakeInsteadOfOperatorNew>                                           \
@@ -169,7 +167,7 @@ class RefCountedWrapper : public RefCountedWrapperBase, public T {
   using MakePolicy = Mso::MakePolicy::ThrowCtor;
 
   template <typename... U>
-  RefCountedWrapper(U &&... args) noexcept : T(std::forward<U>(args)...) {}
+  RefCountedWrapper(U &&...args) noexcept : T(std::forward<U>(args)...) {}
 };
 
 /**
@@ -193,7 +191,7 @@ template <typename T>
 using RefCountedPtr = Mso::CntPtr<RefCountedWrapper<T>>;
 
 template <typename T, typename... U>
-RefCountedPtr<T> Make_RefCounted(U &&... args) noexcept {
+RefCountedPtr<T> Make_RefCounted(U &&...args) noexcept {
   return Mso::Make<RefCountedWrapper<T>>(std::forward<U>(args)...);
 }
 

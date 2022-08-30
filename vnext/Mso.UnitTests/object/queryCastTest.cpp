@@ -357,7 +357,7 @@ class QueryCastBase1WithArgs : public IQueryCastBase1 {
 template <typename T>
 struct StructWithBase : public T {
   template <typename... Args>
-  StructWithBase(Args &&... args) : T(std::forward<Args>(args)...) {}
+  StructWithBase(Args &&...args) : T(std::forward<Args>(args)...) {}
 };
 
 // A helper method to call QueryCastTraits::QueryCast.

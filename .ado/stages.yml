@@ -33,7 +33,7 @@ stages:
         parameters:
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/project-reunion.yml
+      - template: jobs/windowsappsdk.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
@@ -44,6 +44,12 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: true
+      
+      - template: jobs/cli-init.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
+          buildWinAppSDKOnly: true
 
   - stage: IntegrationTests
     displayName: Tests 🧪
@@ -90,3 +96,4 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: false
+          buildWinAppSDKOnly: false

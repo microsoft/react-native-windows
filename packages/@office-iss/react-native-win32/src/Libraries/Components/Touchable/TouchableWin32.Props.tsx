@@ -9,7 +9,9 @@ export interface ITouchableWin32State {
   isHovered: boolean;
 }
 
-export interface ITouchableWin32Props extends IViewWin32Props {
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+export interface ITouchableWin32Props extends Omit <IViewWin32Props, 'children'> {
   rejectResponderTermination?: boolean;
   disabled?: boolean;
   touchableHandleActivePressIn?: (e: IPressEvent) => void;

@@ -6,3 +6,4 @@ TestExecuteJsiModule.testSimpleExecuteJsi();
 TestExecuteJsiModule.testHostFunction();
 TestExecuteJsiModule.testHostObject();
 TestExecuteJsiModule.testSameJsiRuntime();
+TestExecuteJsiModule.testExecuteJsiPromise();

@@ -13,7 +13,7 @@
 #include <winrt/Windows.Web.Http.h>
 
 #include <Utils/ValueUtils.h>
-#include "DynamicAutomationPeer.h"
+#include <Views/DynamicAutomationPeer.h>
 #include "Unicode.h"
 #include "XamlView.h"
 #include "cdebug.h"
@@ -171,8 +171,7 @@ void ReactImage::Source(ReactImageSource source) {
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(
-    ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(ReactImageSource source) {
   switch (source.sourceType) {
     case ImageSourceType::Download:
       co_return co_await GetImageStreamAsync(source);
@@ -184,7 +183,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> ReactImage::GetImageMe
 }
 template <typename TImage>
 std::wstring GetUriFromImage(const TImage &image) {
-  return image.UriSource().ToString().c_str();
+  return image.UriSource() ? image.UriSource().ToString().c_str() : L"<no Uri available>";
 }
 template <>
 std::wstring GetUriFromImage(const winrt::Uri &uri) {
@@ -193,7 +192,9 @@ std::wstring GetUriFromImage(const winrt::Uri &uri) {
 
 template <typename TImage>
 void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
+#ifdef DEBUG
   cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")\n";
+#endif
 }
 
 // TSourceFailedEventArgs can be either LoadedImageSourceLoadCompletedEventArgs or
@@ -203,10 +204,12 @@ void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args
 template <typename TImage, typename TSourceFailedEventArgs>
 void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
   // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.loadedimagesourceloadstatus
+#ifdef DEBUG
   constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
   const auto status = (int)args.Status();
   assert(0 <= status && status < ARRAYSIZE(statusNames));
   cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")\n";
+#endif
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
@@ -219,7 +222,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   const bool fromStream{
       source.sourceType == ImageSourceType::Download || source.sourceType == ImageSourceType::InlineData};
 
-  winrt::InMemoryRandomAccessStream memoryStream{nullptr};
+  winrt::IRandomAccessStream memoryStream{nullptr};
 
   // get weak reference before any co_await calls
   auto weak_this{get_weak()};
@@ -255,7 +258,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       compositionBrush->TintColor(strong_this->m_tintColor);
 
       const auto surface = fromStream ? winrt::LoadedImageSurface::StartLoadFromStream(memoryStream)
-                                      : uri ? winrt::LoadedImageSurface::StartLoadFromUri(uri) : nullptr;
+          : uri                       ? winrt::LoadedImageSurface::StartLoadFromUri(uri)
+                                      : nullptr;
 
       m_sizeChangedRevoker = strong_this->SizeChanged(
           winrt::auto_revoke, [compositionBrush](const auto &, const winrt::SizeChangedEventArgs &args) {
@@ -342,7 +346,22 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         }
 
         if (fromStream) {
-          co_await svgImageSource.SetSourceAsync(memoryStream);
+          try {
+            co_await svgImageSource.SetSourceAsync(memoryStream);
+          } catch (const winrt::hresult_error &) {
+            /*
+                winrt::hresult_canceled
+                If the app changes the image source again via SetSourceAsync, SetSource or UriSource while a
+               SetSourceAsync call is already in progress, the pending SetSourceAsync action will throw a
+               TaskCanceledException and set the Status to Canceled.
+
+                WINCODEC_ERR_BADIMAGE
+                In low memory situations (most likely on lower-memory phones), it is possible for an exception to be
+               raised with the message "The image is unrecognized" and an HRESULT of 0x88982F60. While this exception
+               ordinarily indicates bad data, if your app is close to its memory limit then the cause of the exception
+               is likely to be low memory. In that case, we recommend that you free memory and try again.
+            */
+          }
         } else {
           svgImageSource.UriSource(uri);
         }
@@ -385,7 +404,22 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
         }
 
         if (fromStream) {
-          co_await bitmapImage.SetSourceAsync(memoryStream);
+          try {
+            co_await bitmapImage.SetSourceAsync(memoryStream);
+          } catch (const winrt::hresult_error &) {
+            /*
+                winrt::hresult_canceled
+                If the app changes the image source again via SetSourceAsync, SetSource or UriSource while a
+               SetSourceAsync call is already in progress, the pending SetSourceAsync action will throw a
+               TaskCanceledException and set the Status to Canceled.
+
+                WINCODEC_ERR_BADIMAGE
+                In low memory situations (most likely on lower-memory phones), it is possible for an exception to be
+               raised with the message "The image is unrecognized" and an HRESULT of 0x88982F60. While this exception
+               ordinarily indicates bad data, if your app is close to its memory limit then the cause of the exception
+               is likely to be low memory. In that case, we recommend that you free memory and try again.
+            */
+          }
         } else {
           bitmapImage.UriSource(uri);
 
@@ -408,7 +442,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
   }
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImageSource source) {
   try {
     co_await winrt::resume_background();
 
@@ -445,7 +479,7 @@ winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageStreamAsync(Re
   co_return nullptr;
 }
 
-winrt::IAsyncOperation<winrt::InMemoryRandomAccessStream> GetImageInlineDataAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageInlineDataAsync(ReactImageSource source) {
   size_t start = source.uri.find(',');
   if (start == std::string::npos || start + 1 > source.uri.length())
     co_return nullptr;

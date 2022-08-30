@@ -301,7 +301,7 @@ class AccessibilityStateExamples extends React.Component {
         <FlatList
           accessibilityLabel="List of selectable items"
           data={selectableItems}
-          renderItem={(item) => (
+          renderItem={item => (
             <TouchableHighlight
               style={{
                 width: 100,
@@ -427,12 +427,14 @@ class AccessibilityStateExamples extends React.Component {
             backgroundColor: 'gray',
             height: 50,
           }}
+          focusable={true}
+          accessible={true}
+          accessibilityRole="adjustable"
           accessibilityValue={{
             min: this.state.viewRangeMin,
             max: this.state.viewRangeMax,
             now: this.state.viewRangeNow,
-          }}
-          accessibilityRole="adjustable">
+          }}>
           <Text>
             The View's (accessibilityRole == adjustable, ie. Slider) properties
             should be the following according to UIA: Min-{' '}
@@ -508,7 +510,7 @@ class AccessibilityListExamples extends React.Component {
           accessibilityRole="list">
           <FlatList
             data={items}
-            renderItem={(item) => (
+            renderItem={item => (
               <View
                 style={{
                   width: 100,
@@ -531,7 +533,7 @@ class AccessibilityListExamples extends React.Component {
           <Text>The following does the same, but with Touchables.</Text>
           <FlatList
             data={items}
-            renderItem={(item) => (
+            renderItem={item => (
               <TouchableHighlight
                 style={{
                   width: 100,

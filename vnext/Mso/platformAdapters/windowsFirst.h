@@ -14,7 +14,7 @@ typedef unsigned long DWORD;
 #define NOMINMAX
 #endif
 
-//#include <winsock2.h>
+// #include <winsock2.h>
 #include <windows.h>
 
 #endif // defined(MS_TARGET_POSIX)

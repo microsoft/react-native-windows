@@ -76,7 +76,7 @@ export default class IntegrationTestRunner {
           res.message +
           res.callstack
             .map(
-              (frame) =>
+              frame =>
                 `\n    at ${frame.method}(${prettifyFile(frame.file)}:${
                   frame.line
                 }:${frame.column})`,
@@ -124,7 +124,7 @@ export default class IntegrationTestRunner {
       } catch (ex) {
         if (ex.code === 'ECONNREFUSED') {
           spinner.start();
-          await new Promise((resolve) => setTimeout(resolve, 100));
+          await new Promise(resolve => setTimeout(resolve, 100));
         } else {
           throw ex;
         }

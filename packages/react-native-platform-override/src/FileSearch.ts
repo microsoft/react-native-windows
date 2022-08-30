@@ -45,11 +45,11 @@ export async function findAllManifests(): Promise<string[]> {
     return [path.join(packageDir, 'overrides.json')];
   }
 
-  const localPackages = await enumerateRepoPackages((pkg) =>
+  const localPackages = await enumerateRepoPackages(pkg =>
     fs.exists(path.join(pkg.path, 'overrides.json')),
   );
 
-  return localPackages.map((pkg) => path.join(pkg.path, 'overrides.json'));
+  return localPackages.map(pkg => path.join(pkg.path, 'overrides.json'));
 }
 
 /**

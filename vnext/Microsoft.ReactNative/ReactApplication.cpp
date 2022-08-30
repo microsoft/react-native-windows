@@ -114,6 +114,10 @@ void ReactApplication::OnLaunched(activation::LaunchActivatedEventArgs const &e_
       e_;
 #endif // USE_WINUI3
 
+  if (m_launched) {
+    m_launched({*this}, e);
+  }
+
   this->OnCreate(e);
 }
 
@@ -195,6 +199,10 @@ void ReactApplication::OnCreate(Windows::ApplicationModel::Activation::IActivate
   }
 
   Window::Current().Activate();
+
+  if (m_viewCreated) {
+    m_viewCreated({*this}, args);
+  }
 }
 
 /// <summary>
@@ -217,6 +225,42 @@ void ReactApplication::OnSuspending(
 /// <param name="e">Details about the navigation failure</param>
 void ReactApplication::OnNavigationFailed(IInspectable const &, NavigationFailedEventArgs const &e) {
   throw hresult_error(E_FAIL, hstring(L"Failed to load Page ") + e.SourcePageType().Name);
+}
+
+void ReactApplication::LaunchedInternal(ReactApplication::AppLaunchedDelegate delegate) noexcept {
+  m_launched = delegate;
+}
+
+ReactApplication::AppLaunchedDelegate ReactApplication::LaunchedInternal() const noexcept {
+  return m_launched;
+}
+
+void ReactApplication::ViewCreatedInternal(ReactApplication::AppViewCreatedDelegate delegate) noexcept {
+  m_viewCreated = delegate;
+}
+
+ReactApplication::AppViewCreatedDelegate ReactApplication::ViewCreatedInternal() const noexcept {
+  return m_viewCreated;
+}
+
+void ReactApplication::PageNavigatedInternal(ReactApplication::AppPageNavigatedDelegate delegate) noexcept {
+  m_pageNavigated = delegate;
+}
+
+ReactApplication::AppPageNavigatedDelegate ReactApplication::PageNavigatedInternal() const noexcept {
+  return m_pageNavigated;
+}
+
+xaml::Markup::IXamlType ReactApplication::GetXamlType(winrt::hstring const &name) const {
+  return m_provider.GetXamlType(name);
+}
+
+xaml::Markup::IXamlType ReactApplication::GetXamlType(::winrt::Windows::UI::Xaml::Interop::TypeName const &type) const {
+  return m_provider.GetXamlType(type);
+}
+
+::winrt::com_array<xaml::Markup::XmlnsDefinition> ReactApplication::GetXmlnsDefinitions() const {
+  return m_provider.GetXmlnsDefinitions();
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

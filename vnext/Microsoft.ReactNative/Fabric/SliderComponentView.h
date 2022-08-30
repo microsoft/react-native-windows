@@ -13,7 +13,7 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)
-//#include <react/renderer/components/view/ViewProps.h>
+// #include <react/renderer/components/view/ViewProps.h>
 #pragma warning(pop)
 
 namespace Microsoft::ReactNative {
@@ -35,7 +35,7 @@ struct SliderComponentView : BaseComponentView {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::SharedProps props() noexcept override;
+  facebook::react::Props::Shared props() noexcept override;
 
   const xaml::FrameworkElement Element() const noexcept override;
 

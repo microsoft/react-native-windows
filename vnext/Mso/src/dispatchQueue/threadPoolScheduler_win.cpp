@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+#include <utility>
 #include "dispatchQueue/dispatchQueue.h"
 #include "queueService.h"
 
@@ -29,6 +30,13 @@ struct ThreadPoolSchedulerWin : Mso::UnknownObject<IDispatchQueueScheduler> {
   void Shutdown() noexcept override;
   void AwaitTermination() noexcept override;
 
+ public: // Used by test APIs
+  static void EnableThreadPoolWorkTracking(bool enable) noexcept;
+  static void WaitForThreadPoolWorkCompletion() noexcept;
+
+ private: // Used by test APIs
+  static void TrackThreadPoolWork(const std::shared_ptr<TP_WORK> &work) noexcept;
+
  private:
   struct ThreadAccessGuard {
     ThreadAccessGuard(ThreadPoolSchedulerWin *scheduler) noexcept;
@@ -42,12 +50,29 @@ struct ThreadPoolSchedulerWin : Mso::UnknownObject<IDispatchQueueScheduler> {
   };
 
  private:
-  std::unique_ptr<TP_WORK, ThreadPoolWorkDeleter> m_threadPoolWork;
+  std::shared_ptr<TP_WORK> m_threadPoolWork;
   Mso::WeakPtr<IDispatchQueueService> m_queue;
   const uint32_t m_maxThreads{1};
   std::atomic<uint32_t> m_usedThreads{0};
 
   constexpr static uint32_t MaxConcurrentThreads{64};
+
+ private:
+  static std::mutex s_threadPoolWorkMutex;
+  static bool s_enableThreadPoolWorkTracking;
+  static std::vector<std::shared_ptr<TP_WORK>> s_trackedThreadPoolWork;
+};
+
+// Track the ThreadPoolSchedulerWin instance used by current thread.
+// We use it to avoid a deadlock on queue shutdown.
+struct ThreadPoolSchedulerWinContext {
+  ThreadPoolSchedulerWinContext(ThreadPoolSchedulerWin *scheduler) noexcept;
+  ~ThreadPoolSchedulerWinContext() noexcept;
+  static ThreadPoolSchedulerWin *CurrentScheduler() noexcept;
+
+ private:
+  static thread_local ThreadPoolSchedulerWin *tls_scheduler;
+  ThreadPoolSchedulerWin *m_prevScheduler{nullptr};
 };
 
 //=============================================================================
@@ -64,9 +89,15 @@ void ThreadPoolWorkDeleter::operator()(TP_WORK *tpWork) noexcept {
 // ThreadPoolSchedulerWin implementation
 //=============================================================================
 
+std::mutex ThreadPoolSchedulerWin::s_threadPoolWorkMutex;
+bool ThreadPoolSchedulerWin::s_enableThreadPoolWorkTracking{false};
+std::vector<std::shared_ptr<TP_WORK>> ThreadPoolSchedulerWin::s_trackedThreadPoolWork;
+
 ThreadPoolSchedulerWin::ThreadPoolSchedulerWin(uint32_t maxThreads) noexcept
-    : m_threadPoolWork{::CreateThreadpoolWork(WorkCallback, this, nullptr)},
-      m_maxThreads{maxThreads == 0 ? MaxConcurrentThreads : maxThreads} {}
+    : m_threadPoolWork{::CreateThreadpoolWork(WorkCallback, this, nullptr), ThreadPoolWorkDeleter{}},
+      m_maxThreads{maxThreads == 0 ? MaxConcurrentThreads : maxThreads} {
+  TrackThreadPoolWork(m_threadPoolWork);
+}
 
 ThreadPoolSchedulerWin::~ThreadPoolSchedulerWin() noexcept {
   AwaitTermination();
@@ -78,6 +109,7 @@ ThreadPoolSchedulerWin::~ThreadPoolSchedulerWin() noexcept {
     _Inout_ PTP_WORK /*work*/) {
   // The ThreadPoolSchedulerWin is alive here because m_threadPoolWork must be completed before it is destroyed.
   ThreadPoolSchedulerWin *self = static_cast<ThreadPoolSchedulerWin *>(context);
+  ThreadPoolSchedulerWinContext schedulerContext(self);
 
   if (auto queue = self->m_queue.GetStrongPtr()) {
     auto endTime = std::chrono::steady_clock::now() + 100ms;
@@ -129,7 +161,38 @@ void ThreadPoolSchedulerWin::Shutdown() noexcept {
 }
 
 void ThreadPoolSchedulerWin::AwaitTermination() noexcept {
-  ::WaitForThreadpoolWorkCallbacks(m_threadPoolWork.get(), false);
+  // Avoid deadlock when the dispatch queue and ThreadPoolSchedulerWin are released from inside of a task.
+  if (ThreadPoolSchedulerWinContext::CurrentScheduler() != this) {
+    ::WaitForThreadpoolWorkCallbacks(m_threadPoolWork.get(), false);
+  }
+}
+
+void ThreadPoolSchedulerWin::EnableThreadPoolWorkTracking(bool enable) noexcept {
+  std::vector<std::shared_ptr<TP_WORK>> tpWorkToStopTracking;
+  {
+    std::scoped_lock lock{s_threadPoolWorkMutex};
+    s_enableThreadPoolWorkTracking = enable;
+    // Reset all previously tracked work
+    tpWorkToStopTracking = std::move(s_trackedThreadPoolWork);
+  }
+}
+
+void ThreadPoolSchedulerWin::WaitForThreadPoolWorkCompletion() noexcept {
+  std::vector<std::shared_ptr<TP_WORK>> tpWorkToTrack;
+  {
+    std::scoped_lock lock{s_threadPoolWorkMutex};
+    tpWorkToTrack = std::move(s_trackedThreadPoolWork);
+  }
+  for (std::shared_ptr<TP_WORK> &tpWork : tpWorkToTrack) {
+    ::WaitForThreadpoolWorkCallbacks(tpWork.get(), false);
+  }
+}
+
+void ThreadPoolSchedulerWin::TrackThreadPoolWork(const std::shared_ptr<TP_WORK> &tpWork) noexcept {
+  std::scoped_lock lock{s_threadPoolWorkMutex};
+  if (s_enableThreadPoolWorkTracking) {
+    s_trackedThreadPoolWork.push_back(tpWork);
+  }
 }
 
 //=============================================================================
@@ -152,12 +215,41 @@ ThreadPoolSchedulerWin::ThreadAccessGuard::~ThreadAccessGuard() noexcept {
 }
 
 //=============================================================================
+// ThreadPoolSchedulerWinContext implementation
+//=============================================================================
+
+thread_local ThreadPoolSchedulerWin *ThreadPoolSchedulerWinContext::tls_scheduler{nullptr};
+
+ThreadPoolSchedulerWinContext::ThreadPoolSchedulerWinContext(ThreadPoolSchedulerWin *scheduler) noexcept
+    : m_prevScheduler(std::exchange(tls_scheduler, scheduler)) {}
+
+ThreadPoolSchedulerWinContext::~ThreadPoolSchedulerWinContext() noexcept {
+  std::exchange(tls_scheduler, m_prevScheduler);
+}
+
+ThreadPoolSchedulerWin *ThreadPoolSchedulerWinContext::CurrentScheduler() noexcept {
+  return tls_scheduler;
+}
+
+//=============================================================================
 // DispatchQueueStatic::MakeThreadPoolScheduler implementation
 //=============================================================================
 
 /*static*/ Mso::CntPtr<IDispatchQueueScheduler> DispatchQueueStatic::MakeThreadPoolScheduler(
     uint32_t maxThreads) noexcept {
   return Mso::Make<ThreadPoolSchedulerWin, IDispatchQueueScheduler>(maxThreads);
+}
+
+//=============================================================================
+// Test specific functions
+//=============================================================================
+
+void Test_ThreadPoolSchedulerWin_EnableThreadPoolWorkTracking(bool enable) noexcept {
+  ThreadPoolSchedulerWin::EnableThreadPoolWorkTracking(enable);
+}
+
+void Test_ThreadPoolSchedulerWin_WaitForThreadPoolWorkCompletion() noexcept {
+  ThreadPoolSchedulerWin::WaitForThreadPoolWorkCompletion();
 }
 
 } // namespace Mso

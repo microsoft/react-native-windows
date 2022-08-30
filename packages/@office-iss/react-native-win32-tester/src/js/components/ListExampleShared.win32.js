@@ -237,7 +237,7 @@ function pressItem(item: Item): Item {
 function renderSmallSwitchOption(
   label: string,
   value: boolean,
-  setValue: (boolean) => void,
+  setValue: boolean => void,
 ): null | React.Node {
   if (Platform.isTV) {
     return null;

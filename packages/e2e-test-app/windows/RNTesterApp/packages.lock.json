@@ -22,9 +22,9 @@
       },
       "ReactNative.Hermes.Windows": {
         "type": "Direct",
-        "requested": "[0.11.0-ms.2, )",
-        "resolved": "0.11.0-ms.2",
-        "contentHash": "U+0FecIUFhmuLDNGT+kIhQdzoIgOvaGHU5gQOl66G5JdbO8xpful+E5OH/NL9Ue6N1l+ecqTH9shGrVDsdG5ow=="
+        "requested": "[0.12.2, )",
+        "resolved": "0.12.2",
+        "contentHash": "S9AR5puBB7NXhJoBeDj3GBOOX2z3du5gxC/u7rtGb1NaFJxkBX+fEci80ywTT2SYNodticfIxen+FdD2NK4URg=="
       },
       "XamlTreeDump": {
         "type": "Direct",
@@ -147,16 +147,10 @@
         }
       },
       "reactnativepicker": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.ReactNative": "1.0.0"
-        }
+        "type": "Project"
       },
       "reactnativexaml": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.ReactNative": "1.0.0"
-        }
+        "type": "Project"
       }
     },
     "UAP,Version=v10.0.16299/win10-arm": {

@@ -140,9 +140,9 @@ bool DynamicReader::GetBoolean() noexcept {
 }
 
 int64_t DynamicReader::GetInt64() noexcept {
-  return (m_current->type() == folly::dynamic::Type::INT64)
-      ? m_current->getInt()
-      : (m_current->type() == folly::dynamic::Type::DOUBLE) ? static_cast<int64_t>(m_current->getDouble()) : 0;
+  return (m_current->type() == folly::dynamic::Type::INT64) ? m_current->getInt()
+      : (m_current->type() == folly::dynamic::Type::DOUBLE) ? static_cast<int64_t>(m_current->getDouble())
+                                                            : 0;
 }
 
 double DynamicReader::GetDouble() noexcept {

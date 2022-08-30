@@ -43,8 +43,11 @@ function vsWhere(args: string[], verbose?: boolean): any[] {
     );
   }
 
-  const cmdline = `"${vsWherePath}" ${args.join(' ')} -format json -utf8`;
-  const json = JSON.parse(execSync(cmdline).toString('utf8'));
+  const system32 = `${process.env.SystemRoot}\\System32`;
+  const cmdline = `${system32}\\cmd.exe /c ${system32}\\chcp.com 65001>nul && "${vsWherePath}" ${args.join(
+    ' ',
+  )} -format json -utf8`;
+  const json = JSON.parse(execSync(cmdline).toString());
 
   for (const entry of json) {
     entry.prerelease = entry.catalog.productMilestoneIsPreRelease;
@@ -96,7 +99,7 @@ export function findLatestVsInstall(opts: {
   let installs = enumerateVsInstalls({...opts, latest: true});
 
   if (opts.prerelease && installs.length > 0) {
-    installs = installs.filter((x) => x.prerelease === 'True');
+    installs = installs.filter(x => x.prerelease === 'True');
   }
 
   if (installs.length > 0) {

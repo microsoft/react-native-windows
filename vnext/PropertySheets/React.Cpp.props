@@ -19,6 +19,18 @@
 
   <PropertyGroup Label="NuGet">
     <ResolveNuGetPackages>false</ResolveNuGetPackages>
+
+    <!-- https://github.com/NuGet/Home/issues/10511#issuecomment-778400668 -->
+    <AssetTargetFallback>$(AssetTargetFallback);native</AssetTargetFallback>
+
+    <!--
+      Avoid Visual Studio error message:
+      "The project '$(MSBuildProjectName)' ran into a problem during the last operation: The value of the
+      'TargetFrameworkMoniker' and 'NuGetTargetMoniker' properties in the '$(Configuration)|$(Platform)' configuration are both
+      empty. This configuration will not contribute to NuGet restore, which may result in restore and build errors. You may
+      need to reload the solution after fixing the problem."
+    -->
+    <TargetFrameworkMoniker>native,Version=v0.0</TargetFrameworkMoniker>
   </PropertyGroup>
 
   <PropertyGroup Label="Desktop">
@@ -130,6 +142,7 @@
         $(ReactNativeDir)\ReactCommon\jsiexecutor;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\core;
         $(ReactNativeDir)\ReactCommon\react\nativemodule\samples;
+        $(ReactNativeDir)\ReactCommon\react\bridging;
         $(ReactNativeDir)\ReactCommon\reactperflogger;
         $(ReactNativeDir)\ReactCommon\runtimeexecutor;
         %(AdditionalIncludeDirectories);

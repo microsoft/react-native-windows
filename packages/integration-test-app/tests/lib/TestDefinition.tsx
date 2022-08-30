@@ -93,7 +93,7 @@ function wrapTestComponent(Component: TestComponentType): React.FC {
     return (
       <Component
         pass={() => TestModule.markTestPassed(true)}
-        fail={(err) => {
+        fail={err => {
           throw new Error(err);
         }}
       />

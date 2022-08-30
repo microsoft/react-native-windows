@@ -3,10 +3,13 @@
 
 #pragma once
 
-#include "IHttpResource.h"
+#include <Networking/IHttpResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
+
+// Windows API
+#include <winrt/Windows.Foundation.h>
 
 namespace Microsoft::React {
 
@@ -18,7 +21,7 @@ class HttpModule : public facebook::xplat::module::CxxModule {
  public:
   enum MethodId { SendRequest = 0, AbortRequest = 1, ClearCookies = 2, LAST = ClearCookies };
 
-  HttpModule() noexcept;
+  HttpModule(winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept;
 
   ~HttpModule() noexcept override;
 
@@ -47,7 +50,11 @@ class HttpModule : public facebook::xplat::module::CxxModule {
     HttpModule *Module{nullptr};
   };
 
-  std::shared_ptr<IHttpResource> m_resource;
+  std::shared_ptr<Networking::IHttpResource> m_resource;
   std::shared_ptr<ModuleHolder> m_holder;
+  bool m_isResourceSetup{false};
+
+  // Property bag high level reference.
+  winrt::Windows::Foundation::IInspectable m_inspectableProperties;
 };
 } // namespace Microsoft::React

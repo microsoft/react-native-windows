@@ -46,14 +46,14 @@ class Maybe {
   _Allow_implicit_ctor_ Maybe(T &&value) noexcept;
 
   template <class... TArgs>
-  explicit Maybe(InPlaceTag, TArgs &&... args) noexcept;
+  explicit Maybe(InPlaceTag, TArgs &&...args) noexcept;
 
   template <
       class TItem,
       class... TArgs,
       class TDummy =
           typename std::enable_if<std::is_constructible<T, std::initializer_list<TItem> &, TArgs &&...>::value>::type>
-  explicit Maybe(InPlaceTag, std::initializer_list<TItem> il, TArgs &&... args) noexcept;
+  explicit Maybe(InPlaceTag, std::initializer_list<TItem> il, TArgs &&...args) noexcept;
 
   _Allow_implicit_ctor_ Maybe(const ErrorCode &error) noexcept;
   _Allow_implicit_ctor_ Maybe(ErrorCode &&error) noexcept;
@@ -163,13 +163,13 @@ Maybe<T>::Maybe(T &&value) noexcept {
 
 template <class T>
 template <class... TArgs>
-Maybe<T>::Maybe(InPlaceTag, TArgs &&... args) noexcept {
+Maybe<T>::Maybe(InPlaceTag, TArgs &&...args) noexcept {
   ::new (reinterpret_cast<T *>(&reinterpret_cast<char &>(m_value))) T(std::forward<TArgs>(args)...);
 }
 
 template <class T>
 template <class TItem, class... TArgs, class TDummy>
-Maybe<T>::Maybe(InPlaceTag, std::initializer_list<TItem> il, TArgs &&... args) noexcept {
+Maybe<T>::Maybe(InPlaceTag, std::initializer_list<TItem> il, TArgs &&...args) noexcept {
   ::new (reinterpret_cast<T *>(&reinterpret_cast<char &>(m_value))) T(il, std::forward<TArgs>(args)...);
 }
 

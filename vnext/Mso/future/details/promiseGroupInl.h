@@ -103,28 +103,28 @@ inline bool PromiseGroup<T>::TrySetValue(T &&value) const noexcept {
 
 template <class T>
 template <class... TArgs>
-inline void PromiseGroup<T>::EmplaceValue(TArgs &&... args) const noexcept {
+inline void PromiseGroup<T>::EmplaceValue(TArgs &&...args) const noexcept {
   VerifyElseCrashSzTag(!m_state.IsEmpty(), "State is empty.", 0x0150d40b /* tag_bunql */);
   m_state->SetValue<T>(std::forward<TArgs>(args)...);
 }
 
 template <class T>
 template <class TArg, class... TArgs>
-inline void PromiseGroup<T>::EmplaceValue(std::initializer_list<TArg> init, TArgs &&... args) const noexcept {
+inline void PromiseGroup<T>::EmplaceValue(std::initializer_list<TArg> init, TArgs &&...args) const noexcept {
   VerifyElseCrashSzTag(!m_state.IsEmpty(), "State is empty.", 0x0150d40c /* tag_bunqm */);
   m_state->SetValue<T>(init, std::forward<TArgs>(args)...);
 }
 
 template <class T>
 template <class... TArgs>
-inline bool PromiseGroup<T>::TryEmplaceValue(TArgs &&... args) const noexcept {
+inline bool PromiseGroup<T>::TryEmplaceValue(TArgs &&...args) const noexcept {
   VerifyElseCrashSzTag(!m_state.IsEmpty(), "State is empty.", 0x0150d40d /* tag_bunqn */);
   return m_state->TrySetValue<T>(std::forward<TArgs>(args)...);
 }
 
 template <class T>
 template <class TArg, class... TArgs>
-inline bool PromiseGroup<T>::TryEmplaceValue(std::initializer_list<TArg> init, TArgs &&... args) const noexcept {
+inline bool PromiseGroup<T>::TryEmplaceValue(std::initializer_list<TArg> init, TArgs &&...args) const noexcept {
   VerifyElseCrashSzTag(!m_state.IsEmpty(), "State is empty.", 0x0150d40e /* tag_bunqo */);
   return m_state->TrySetValue<T>(init, std::forward<TArgs>(args)...);
 }

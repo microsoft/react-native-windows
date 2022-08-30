@@ -16,8 +16,18 @@ PointerEventKind ReactPointerEventArgs::Kind() const noexcept {
 }
 
 void ReactPointerEventArgs::Kind(PointerEventKind kind) noexcept {
-  // The only event type change that is supported is CaptureLost to End.
-  assert(kind == PointerEventKind::End && m_kind == PointerEventKind::CaptureLost);
+  // The only event type transitions that are supported are:
+  // 1. PointerEventKind::CaptureLost to PointerEventKind::End to support cases
+  //    where XAML firing the CaptureLost event should be treated as a gesture
+  //    completion event, e.g., for pointer events in selectable text that do
+  //    not result in text selection.
+  // 2. PointerEventKind::End to PointerEventKind::Cancel to support cases
+  //    where a custom view manager implementing `IViewManagerWithPointerEvents`
+  //    wants to cancel a gesture, e.g., for a custom drag handle where the end
+  //    of the gesture should not be treated as a completed press event.
+  assert(
+      (kind == PointerEventKind::End && m_kind == PointerEventKind::CaptureLost) ||
+      (kind == PointerEventKind::Cancel && m_kind == PointerEventKind::End));
   m_kind = kind;
 }
 

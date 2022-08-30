@@ -63,7 +63,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
-  bool m_useWebDebugger{true};
+  bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
@@ -218,18 +218,16 @@ struct WindowData {
     return FALSE;
   }
 
-  static constexpr std::wstring_view g_bundleFiles[] = {
-      LR"(Samples\rntester)",     LR"(Samples\accessible)",
-      LR"(Samples\callbackTest)", LR"(Samples\calculator)",
-      LR"(Samples\click)",        LR"(Samples\customViewManager)",
-      LR"(Samples\control)",      LR"(Samples\flexbox)",
-      LR"(Samples\focusTest)",    LR"(Samples\geosample)",
-      LR"(Samples\image)",        LR"(Samples\index)",
-      LR"(Samples\mouse)",        LR"(Samples\scrollViewSnapSample)",
-      LR"(Samples\simple)",       LR"(Samples\text)",
-      LR"(Samples\textinput)",    LR"(Samples\ticTacToe)",
-      LR"(Samples\view)",
-  };
+  static constexpr std::wstring_view g_bundleFiles[] = {LR"(Samples\rntester)",     LR"(Samples\accessible)",
+                                                        LR"(Samples\callbackTest)", LR"(Samples\calculator)",
+                                                        LR"(Samples\click)",        LR"(Samples\customViewManager)",
+                                                        LR"(Samples\control)",      LR"(Samples\flexbox)",
+                                                        LR"(Samples\focusTest)",    LR"(Samples\geosample)",
+                                                        LR"(Samples\image)",        LR"(Samples\index)",
+                                                        LR"(Samples\mouse)",        LR"(Samples\scrollViewSnapSample)",
+                                                        LR"(Samples\simple)",       LR"(Samples\text)",
+                                                        LR"(Samples\textinput)",    LR"(Samples\ticTacToe)",
+                                                        LR"(Samples\view)",         LR"(Samples\debugTest01)"};
 
   static INT_PTR CALLBACK Bundle(HWND hwnd, UINT message, WPARAM wparam, LPARAM /*lparam*/) noexcept {
     switch (message) {
@@ -470,5 +468,5 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
 
-  return RunPlayground(showCmd, true);
+  return RunPlayground(showCmd, false);
 }

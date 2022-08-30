@@ -67,7 +67,7 @@ export const runWindowsOptions: CommandOption[] = [
     name: '--root [string]',
     description:
       'Override the root directory for the windows build which contains the windows folder.',
-    default: (config) => config.root,
+    default: config => config.root,
   },
   {
     name: '--arch [string]',

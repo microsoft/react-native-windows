@@ -28,6 +28,7 @@ export type Buttons = Array<{
 
 type Options = {
   cancelable?: ?boolean,
+  userInterfaceStyle?: 'unspecified' | 'light' | 'dark',
   onDismiss?: ?() => void,
   ...
 };
@@ -50,7 +51,7 @@ class Alert {
       message || '',
       buttons,
       options,
-      (buttonIndex) => {
+      buttonIndex => {
         if (
           buttonIndex >= 0 &&
           buttons &&
@@ -80,6 +81,7 @@ class Alert {
     type?: ?AlertType = 'plain-text',
     defaultValue?: string,
     keyboardType?: string,
+    options?: Options,
   ): void {
     // [Windows
     throw new Error(

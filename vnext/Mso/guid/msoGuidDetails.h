@@ -16,7 +16,7 @@ See the msoGuid.h for the usage guidelines.
 #endif
 
 // Clang compiler must target C++11 or up to support MSO*GUIDs because we rely on constexpr.
-//#if (__cplusplus >= 201103L) && !defined(MSO_GUID_DISABLED)
+// #if (__cplusplus >= 201103L) && !defined(MSO_GUID_DISABLED)
 
 #include "compilerAdapters/compilerFeatures.h"
 #if MS_TARGET_POSIX

@@ -4,7 +4,6 @@
  * @format
  */
 
-import fs from '@react-native-windows/fs';
 import path from 'path';
 
 import {
@@ -12,17 +11,15 @@ import {
   WindowsDependencyConfig,
 } from '../config/dependencyConfig';
 
+import {
+  ensureCppAppProject,
+  ensureCSharpAppProject,
+  tryMkdir,
+  templateRoot,
+  testProjectGuid,
+} from './projectConfig.utils';
+
 import {copyAndReplace} from '../generator-common';
-
-const templateRoot = path.resolve('../../../vnext/template');
-
-const testProjectGuid = '{416476D5-974A-4EE2-8145-4E331297247E}';
-
-async function tryMkdir(dir: string): Promise<void> {
-  try {
-    await fs.mkdir(dir, {recursive: true});
-  } catch (err) {}
-}
 
 type TargetProject = [string, ((folder: string) => Promise<void>)?];
 
@@ -43,33 +40,7 @@ const projects: TargetProject[] = [
   }),
   // New C++ app project based on the template
   project('SimpleCppApp', async (folder: string) => {
-    const windowsDir = path.join(folder, 'windows');
-    await tryMkdir(windowsDir);
-
-    const replacements = {
-      name: 'SimpleCppApp',
-      namespace: 'SimpleCppApp',
-      useMustache: true,
-      projectGuidUpper: testProjectGuid,
-      projectGuidLower: testProjectGuid.toLowerCase(),
-    };
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cpp-app/proj/MyApp.sln'),
-      path.join(windowsDir, 'SimpleCppApp.sln'),
-      replacements,
-      null,
-    );
-
-    const projDir = path.join(windowsDir, 'SimpleCppApp');
-    await tryMkdir(projDir);
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cpp-app/proj/MyApp.vcxproj'),
-      path.join(projDir, 'SimpleCppApp.vcxproj'),
-      replacements,
-      null,
-    );
+    await ensureCppAppProject(folder, 'SimpleCppApp');
   }),
   // New C++ project based on the template
   project('SimpleCppLib', async (folder: string) => {
@@ -103,33 +74,7 @@ const projects: TargetProject[] = [
   }),
   // New C# app project based on the template
   project('SimpleCSharpApp', async (folder: string) => {
-    const windowsDir = path.join(folder, 'windows');
-    await tryMkdir(windowsDir);
-
-    const replacements = {
-      name: 'SimpleCSharpApp',
-      namespace: 'SimpleCSharpApp',
-      useMustache: true,
-      projectGuidUpper: testProjectGuid,
-      projectGuidLower: testProjectGuid.toLowerCase(),
-    };
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cs-app/proj/MyApp.sln'),
-      path.join(windowsDir, 'SimpleCSharpApp.sln'),
-      replacements,
-      null,
-    );
-
-    const projDir = path.join(windowsDir, 'SimpleCSharpApp');
-    await tryMkdir(projDir);
-
-    await copyAndReplace(
-      path.join(templateRoot, 'cs-app/proj/MyApp.csproj'),
-      path.join(projDir, 'SimpleCSharpApp.csproj'),
-      replacements,
-      null,
-    );
+    await ensureCSharpAppProject(folder, 'SimpleCSharpApp');
   }),
   // New C# project based on the template
   project('SimpleCSharpLib', async (folder: string) => {

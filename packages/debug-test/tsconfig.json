@@ -1,0 +1,12 @@
+{
+  "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "types": ["jest"]
+  },
+  "include": [
+    "./*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -15,8 +15,12 @@
       The PR (windows-vs-pr.yml) and CI (publish.yml() turn it back on.
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
-    <FollyVersion>2021.06.28.00</FollyVersion>
-    <FmtVersion>7.1.3</FmtVersion>
+    <!-- When bumping the Folly version, be sure to bump the git hash of that version's commit and build Folly.vcxproj (to update its cgmanifest.json) too. -->
+    <FollyVersion>2021.07.22.00</FollyVersion>
+    <FollyCommitHash>4baba28200d7446c870e96f3cdbeb492f54625d0</FollyCommitHash>
+    <!-- When bumping the fmt version, be sure to bump the git hash of that version's commit and build fmt.vcxproj (to update its cgmanifest.json) too. -->
+    <FmtVersion>8.0.0</FmtVersion>
+    <FmtCommitHash>9e8b86fd2d9806672cc73133d21780dd182bfd24</FmtCommitHash>
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">

@@ -91,8 +91,8 @@ namespace Microsoft.ReactNative
   
   [webhosthidden]
   DOC_STRING(
-    "Enables view managers to track when views are"
-    "removed from their shadow trees. "
+    "Enables view managers to track when views are "
+    "removed from the shadow tree. "
   )
   interface IViewManagerWithDropViewInstance {
     DOC_STRING(

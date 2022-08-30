@@ -3,7 +3,6 @@
 
 #include "pch.h"
 
-#include <RuntimeOptions.h>
 #include "ChakraHelpers.h"
 #include "ChakraUtils.h"
 #include "ChakraValue.h"
@@ -460,7 +459,7 @@ JsValueRef JSValueToStringCopy(JsValueRef obj, JsValueRef *exception) {
 }
 
 JsValueRef ValueMakeUndefined() {
-  JsValueRef value;
+  JsValueRef value = nullptr;
   JsGetUndefinedValue(&value);
   return value;
 }

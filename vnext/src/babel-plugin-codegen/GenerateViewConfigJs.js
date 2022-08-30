@@ -9,6 +9,11 @@
  */
 
 'use strict';
+import type {
+  PropTypeAnnotation,
+  EventTypeShape,
+  ComponentShape,
+} from '../../CodegenSchema';
 
 const j = require('jscodeshift');
 
@@ -43,7 +48,7 @@ ${componentConfig}
 // this multiple times.
 const UIMANAGER_IMPORT = 'const {UIManager} = require("react-native")';
 
-function getReactDiffProcessValue(typeAnnotation) {
+function getReactDiffProcessValue(typeAnnotation: PropTypeAnnotation) {
   switch (typeAnnotation.type) {
     case 'BooleanTypeAnnotation':
     case 'StringTypeAnnotation':
@@ -138,27 +143,17 @@ const DeprecatedComponentNameCheckTemplate = ({
   paperComponentNameDeprecated: string,
 }) =>
   `
-if (global.__nativeComponentRegistry__hasComponent) {
-  if (UIManager.hasViewManagerConfig('${componentName}')) {
-    nativeComponentName = '${componentName}';
-  } else if (UIManager.hasViewManagerConfig('${paperComponentNameDeprecated}')) {
-    nativeComponentName = '${paperComponentNameDeprecated}';
-  } else {
-    throw new Error('Failed to find native component for either "${componentName}" or "${paperComponentNameDeprecated}", with SVC enabled.');
-  }
+if (UIManager.hasViewManagerConfig('${componentName}')) {
+  nativeComponentName = '${componentName}';
+} else if (UIManager.hasViewManagerConfig('${paperComponentNameDeprecated}')) {
+  nativeComponentName = '${paperComponentNameDeprecated}';
 } else {
-  if (UIManager.getViewManagerConfig('${componentName}')) {
-    nativeComponentName = '${componentName}';
-  } else if (UIManager.getViewManagerConfig('${paperComponentNameDeprecated}')) {
-    nativeComponentName = '${paperComponentNameDeprecated}';
-  } else {
-    throw new Error('Failed to find native component for either "${componentName}" or "${paperComponentNameDeprecated}", with SVC disabled.');
-  }
+  throw new Error('Failed to find native component for either "${componentName}" or "${paperComponentNameDeprecated}"');
 }
 `.trim();
 
 // Replicates the behavior of RCTNormalizeInputEventName in RCTEventDispatcher.m
-function normalizeInputEventName(name) {
+function normalizeInputEventName(name: string) {
   if (name.startsWith('on')) {
     return name.replace(/^on/, 'top');
   } else if (!name.startsWith('top')) {
@@ -169,13 +164,16 @@ function normalizeInputEventName(name) {
 }
 
 // Replicates the behavior of viewConfig in RCTComponentData.m
-function getValidAttributesForEvents(events, imports) {
+function getValidAttributesForEvents(
+  events: $ReadOnlyArray<EventTypeShape>,
+  imports: Set<string>,
+) {
   imports.add(
     "const {ConditionallyIgnoredEventHandlers} = require('react-native/Libraries/NativeComponent/ViewConfigIgnore');",
   );
 
   const validAttributes = j.objectExpression(
-    events.map((eventType) => {
+    events.map(eventType => {
       return j.property('init', j.identifier(eventType.name), j.literal(true));
     }),
   );
@@ -185,7 +183,10 @@ function getValidAttributesForEvents(events, imports) {
   ]);
 }
 
-function generateBubblingEventInfo(event, nameOveride) {
+function generateBubblingEventInfo(
+  event: EventTypeShape,
+  nameOveride: void | string,
+) {
   return j.property(
     'init',
     j.identifier(nameOveride || normalizeInputEventName(event.name)),
@@ -206,7 +207,10 @@ function generateBubblingEventInfo(event, nameOveride) {
   );
 }
 
-function generateDirectEventInfo(event, nameOveride) {
+function generateDirectEventInfo(
+  event: EventTypeShape,
+  nameOveride: void | string,
+) {
   return j.property(
     'init',
     j.identifier(nameOveride || normalizeInputEventName(event.name)),
@@ -220,11 +224,16 @@ function generateDirectEventInfo(event, nameOveride) {
   );
 }
 
-function buildViewConfig(schema, componentName, component, imports) {
+function buildViewConfig(
+  schema: SchemaType,
+  componentName: string,
+  component: ComponentShape,
+  imports: Set<string>,
+) {
   const componentProps = component.props;
   const componentEvents = component.events;
 
-  component.extendsProps.forEach((extendProps) => {
+  component.extendsProps.forEach(extendProps => {
     switch (extendProps.type) {
       case 'ReactNativeBuiltInType':
         switch (extendProps.knownTypeName) {
@@ -247,7 +256,7 @@ function buildViewConfig(schema, componentName, component, imports) {
   });
 
   const validAttributes = j.objectExpression([
-    ...componentProps.map((schemaProp) => {
+    ...componentProps.map(schemaProp => {
       return j.property(
         'init',
         j.identifier(schemaProp.name),
@@ -264,7 +273,7 @@ function buildViewConfig(schema, componentName, component, imports) {
   ]);
 
   const bubblingEventNames = component.events
-    .filter((event) => event.bubblingType === 'bubble')
+    .filter(event => event.bubblingType === 'bubble')
     .reduce((bubblingEvents, event) => {
       // We add in the deprecated paper name so that it is in the view config.
       // This means either the old event name or the new event name can fire
@@ -289,7 +298,7 @@ function buildViewConfig(schema, componentName, component, imports) {
       : null;
 
   const directEventNames = component.events
-    .filter((event) => event.bubblingType === 'direct')
+    .filter(event => event.bubblingType === 'direct')
     .reduce((directEvents, event) => {
       // We add in the deprecated paper name so that it is in the view config.
       // This means either the old event name or the new event name can fire
@@ -327,7 +336,12 @@ function buildViewConfig(schema, componentName, component, imports) {
   return j.objectExpression(properties);
 }
 
-function buildCommands(schema, componentName, component, imports) {
+function buildCommands(
+  schema: SchemaType,
+  componentName: string,
+  component: ComponentShape,
+  imports: Set<string>,
+) {
   const commands = component.commands;
 
   if (commands.length === 0) {
@@ -338,14 +352,14 @@ function buildCommands(schema, componentName, component, imports) {
     'const {dispatchCommand} = require("react-native/Libraries/Renderer/shims/ReactNative");',
   );
 
-  const properties = commands.map((command) => {
+  const properties = commands.map(command => {
     const commandName = command.name;
     const params = command.typeAnnotation.params;
 
     const commandNameLiteral = j.literal(commandName);
     const commandNameIdentifier = j.identifier(commandName);
     const arrayParams = j.arrayExpression(
-      params.map((param) => {
+      params.map(param => {
         return j.identifier(param.name);
       }),
     );
@@ -353,7 +367,7 @@ function buildCommands(schema, componentName, component, imports) {
     const expression = j.template
       .expression`dispatchCommand(ref, ${commandNameLiteral}, ${arrayParams})`;
 
-    const functionParams = params.map((param) => {
+    const functionParams = params.map(param => {
       return j.identifier(param.name);
     });
 
@@ -388,7 +402,7 @@ module.exports = {
       const imports = new Set();
 
       const moduleResults = Object.keys(schema.modules)
-        .map((moduleName) => {
+        .map(moduleName => {
           const module = schema.modules[moduleName];
           if (module.type !== 'Component') {
             return;

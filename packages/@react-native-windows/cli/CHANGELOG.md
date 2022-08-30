@@ -1,8 +1,166 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 04 Mar 2022 06:09:13 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Aug 2022 05:09:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.135
+
+Fri, 19 Aug 2022 05:09:34 GMT
+
+### Changes
+
+- Fix Deploy Bug for App Paths Containing Spaces (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.134
+
+Wed, 10 Aug 2022 05:16:49 GMT
+
+### Changes
+
+- Update autolinking to update project paths in solution files (jthysell@microsoft.com)
+
+## 0.0.0-canary.133
+
+Sat, 25 Jun 2022 05:09:00 GMT
+
+### Changes
+
+- Add Workaround for UTF8 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.132
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Changes
+
+- Update autolinking to not error if a dependency is misconfigured (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.44
+
+## 0.0.0-canary.131
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @react-native-windows/package-utils to v0.0.0-canary.31
+- Bump @react-native-windows/telemetry to v0.0.0-canary.43
+- Bump @rnw-scripts/jest-unittest-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 0.0.0-canary.130
+
+Wed, 25 May 2022 05:08:41 GMT
+
+### Changes
+
+- Compliance: Rename template Nuget.config files to stop triggering multi-feed warnings (jthysell@microsoft.com)
+
+## 0.0.0-canary.129
+
+Thu, 12 May 2022 05:09:43 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @react-native-windows/package-utils to v0.0.0-canary.30
+- Bump @react-native-windows/telemetry to v0.0.0-canary.42
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-unittest-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.2.4
+
+## 0.0.0-canary.128
+
+Wed, 27 Apr 2022 05:10:23 GMT
+
+### Changes
+
+- Undo RC Changes (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @react-native-windows/package-utils to v0.0.0-canary.29
+- Bump @react-native-windows/telemetry to v0.0.0-canary.41
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 0.0.0-canary.127
+
+Mon, 25 Apr 2022 22:50:30 GMT
+
+### Changes
+
+- Telemetry updates to meet server-side requirements (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.40
+
+## 0.0.0-canary.126
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.39
+
+## 0.0.0-canary.125
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.38
+
+## 0.0.0-canary.124
+
+Tue, 12 Apr 2022 05:10:37 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+- Bump @react-native-windows/package-utils to v0.0.0-canary.28
+- Bump @react-native-windows/telemetry to v0.0.0-canary.37
+
+## 0.0.0-canary.123
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Changes
+
+- Bump @react-native-windows/telemetry to v0.0.0-canary.36
+
+## 0.0.0-canary.122
+
+Fri, 01 Apr 2022 05:09:58 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
+- Bump @react-native-windows/package-utils to v0.0.0-canary.27
+- Bump @react-native-windows/telemetry to v0.0.0-canary.35
+
+## 0.0.0-canary.121
+
+Tue, 22 Mar 2022 05:09:20 GMT
+
+### Changes
+
+- Update to Windows App SDK 1.0.0 (agnel@microsoft.com)
+
+## 0.0.0-canary.120
+
+Sat, 12 Mar 2022 06:09:07 GMT
+
+### Changes
+
+- Update CLI project config tests with latest templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.119
+
+Thu, 10 Mar 2022 06:09:23 GMT
+
+### Changes
+
+- Pass platform and configuration to restorePackageConfigs (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.118
 

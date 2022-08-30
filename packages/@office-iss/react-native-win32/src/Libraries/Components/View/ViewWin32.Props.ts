@@ -45,6 +45,7 @@ export type ARIARole =
   | 'dialog'
   | 'group'
   | 'link'
+  | 'listitem'
   | 'menu'
   | 'menubar'
   | 'menuitem'
@@ -106,7 +107,8 @@ export type AccessibilityActionName =
   | 'RemoveFromSelection'
   | 'Select'
   | 'Expand'
-  | 'Collapse';
+  | 'Collapse'
+  | 'Toggle';
 
 export type Cursor =
   | 'auto'
@@ -212,6 +214,10 @@ export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>,
   animationClass?: string;
   focusable?: boolean;
   enableFocusRing?: boolean;
+  /*
+  * overrides the default behavior of some components that do not show a tooltip. i.e. components in a menu
+  */
+  alwaysShowToolTip?: boolean;
 
   /**
    * The onBlur event occurs when an element loses focus.  The opposite of onBlur is onFocus.  Note that in React

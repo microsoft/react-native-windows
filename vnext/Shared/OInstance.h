@@ -5,13 +5,18 @@
 
 #pragma once
 
+#include <ReactPropertyBag.h>
+#include <TurboModuleManager.h>
+#include "InstanceManager.h"
+
+// React Native
+#include <ReactCommon/LongLivedObject.h>
+#include <cxxreact/Instance.h>
+
+// Standard Libriary
 #include <memory>
 #include <string>
 #include <vector>
-
-#include <TurboModuleManager.h>
-#include <cxxreact/Instance.h>
-#include "InstanceManager.h"
 
 namespace facebook {
 namespace react {
@@ -28,6 +33,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
           &&cxxModules,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
+      std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
       std::unique_ptr<InstanceCallback> &&callback,
       std::shared_ptr<MessageQueueThread> jsQueue,
       std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -68,19 +74,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
           &&cxxModules,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-      std::unique_ptr<InstanceCallback> &&callback,
-      std::shared_ptr<MessageQueueThread> jsQueue,
-      std::shared_ptr<MessageQueueThread> nativeQueue,
-      std::shared_ptr<DevSettings> devSettings,
-      std::shared_ptr<IDevSupportManager> devManager);
-
-  InstanceImpl(
-      std::shared_ptr<Instance> &&instance,
-      std::string &&jsBundleBasePath,
-      std::string &&jsBundleRelativePath,
-      std::vector<
-          std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
-          &&cxxModules,
+      std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
       std::unique_ptr<InstanceCallback> &&callback,
       std::shared_ptr<MessageQueueThread> jsQueue,
       std::shared_ptr<MessageQueueThread> nativeQueue,
@@ -98,6 +92,7 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
   std::string m_jsBundleBasePath;
   std::shared_ptr<facebook::react::ModuleRegistry> m_moduleRegistry;
   std::shared_ptr<TurboModuleRegistry> m_turboModuleRegistry;
+  std::shared_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
   std::shared_ptr<MessageQueueThread> m_jsThread;
   std::shared_ptr<MessageQueueThread> m_nativeQueue;
 

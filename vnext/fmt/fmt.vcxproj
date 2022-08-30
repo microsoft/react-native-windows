@@ -96,26 +96,37 @@
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <Target Name="DownloadFmt" BeforeTargets="PrepareForBuild">
-    <Message Importance="High" Text="Downloading fmt..." Condition="!Exists('$(FmtDir)..\.fmtzip\fmt-$(FmtVersion).zip')" />
-    <DownloadFile Condition="!Exists('$(FmtDir)..\.fmtzip\fmt-$(FmtVersion).zip')" SourceUrl="https://github.com/fmtlib/fmt/archive/refs/tags/$(FmtVersion).zip" DestinationFileName="fmt-$(FmtVersion).zip" DestinationFolder="$(FmtDir)..\.fmtzip" Retries="10" />
+  <PropertyGroup>
+    <FmtZipDir>$(FmtDir)..\.fmtzip</FmtZipDir>
+    <FmtZipFile>$(FmtZipDir)\fmt-$(FmtVersion).zip</FmtZipFile>
+    <CGManifestFile>$(MSBuildThisFileDirectory)cgmanifest.json</CGManifestFile>
+  </PropertyGroup>
+  <Target Name="DownloadFmt" BeforeTargets="PrepareForBuild" Inputs="$(FmtZipFile)" Outputs="$(FmtZipFile)">
+    <Message Importance="High" Text="Downloading fmt..." />
+    <DownloadFile
+      SourceUrl="https://github.com/fmtlib/fmt/archive/refs/tags/$(FmtVersion).zip"
+      DestinationFileName="$(FmtZipFile)"
+      DestinationFolder="$(FmtZipDir)"
+      Retries="10" />
   </Target>
   <Target Name="UnzipFmt" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFmt">
-    <Message Importance="High" Text="Unzipping fmt to $([MSBuild]::NormalizePath($(FmtDir)..))." Condition="!Exists('$(FmtDir)src\format.cc')" />
-    <Unzip Condition="!Exists('$(FmtDir)')" SourceFiles="$(FmtDir)..\.fmtzip\fmt-$(FmtVersion).zip" DestinationFolder="$([MSBuild]::NormalizePath($(FmtDir)..))" OverwriteReadOnlyFiles="true" />
+    <Message Condition="!Exists('$(FmtDir)src\format.cc')" Importance="High" Text="Unzipping fmt to $([MSBuild]::NormalizePath($(FmtDir)..))."/>
+    <Unzip
+      Condition="!Exists('$(FmtDir)src\format.cc')"
+      SourceFiles="$(FmtZipFile)"
+      DestinationFolder="$([MSBuild]::NormalizePath($(FmtDir)..))"
+      OverwriteReadOnlyFiles="true" />
   </Target>
-  <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFmt">
-    <Message Importance="High" Text="Generating $([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json." Condition="!Exists('$([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json')" />
+  <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFmt" Inputs="$(FmtZipFile)" Outputs="$(CGManifestFile)">
     <PropertyGroup>
       <CGManifestText>{
     "Registrations": [
         {
             "Component": {
-                "Type": "other",
-                "Other": {
-                  "Name": "fmt",
-                  "Version": "$(FmtVersion)",
-                  "DownloadUrl": "https://github.com/fmtlib/fmt/archive/refs/tags/$(FmtVersion).zip"
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/fmtlib/fmt",
+                  "CommitHash": "$(FmtCommitHash)"
                 }
             },
             "DevelopmentDependency": false
@@ -123,17 +134,19 @@
     ]
 }</CGManifestText>
     </PropertyGroup>
+    <Message Importance="High" Text="Generating $(CGManifestFile)." />
     <WriteLinesToFile
-        File="$([MSBuild]::NormalizePath($(FmtDir)..))\cgmanifest.json"
-        Overwrite="true"
-        Lines="$(CGManifestText)" />
+      File="$(CGManifestFile)"
+      Overwrite="true"
+      Lines="$(CGManifestText)" />
   </Target>
   <ItemGroup>
     <TemporaryFmtPatchFiles Include="$(MSBuildThisFileDirectory)\TEMP_UntilFmtUpdate\**\*.*" />
   </ItemGroup>
   <Target Name="Deploy" />
   <!-- Allow temporary patches if needed, while we wait for PRs to land in fmt -->
-  <Target Name="ApplyFmtTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFmt">
+  <Target Name="ApplyFmtTemporaryPatch" BeforeTargets="PrepareForBuild" DependsOnTargets="UnzipFmt" Inputs="@(TemporaryFmtPatchFiles)" Outputs="@(TemporaryFmtPatchFiles->'$(FmtDir)fmt\%(RecursiveDir)%(Filename)%(Extension)')">
+    <Message Importance="High" Text="Applying temporary patches to fmt." />
     <Copy DestinationFiles="@(TemporaryFmtPatchFiles->'$(FmtDir)fmt\%(RecursiveDir)%(Filename)%(Extension)')" SourceFiles="@(TemporaryFmtPatchFiles)" />
   </Target>
 </Project>

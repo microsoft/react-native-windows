@@ -60,7 +60,7 @@ class RCTNetworking extends NativeEventEmitter<$FlowFixMe> {
   ) {
     const body = convertRequestBody(data);
     if (body && body.formData) {
-      body.formData = body.formData.map((part) => ({
+      body.formData = body.formData.map(part => ({
         ...part,
         headers: convertHeadersMapToArray(part.headers),
       }));

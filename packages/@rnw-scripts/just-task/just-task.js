@@ -21,8 +21,13 @@ const {
   task,
   tscTask,
   tscWatchTask,
-  parallel
+  parallel,
+  addResolvePath,
 } = require('just-scripts');
+
+// Allow searching from current directory to be able to resolve peerDependencies
+// when running without hoisting
+addResolvePath(__dirname);
 
 const depcheck = require('depcheck');
 

@@ -68,19 +68,22 @@ void Alert::ProcessPendingAlertRequests() noexcept {
         const auto rootSize = xamlRoot.Size();
         const auto popupRoot = xaml::Media::VisualTreeHelper::GetParent(dialog);
         const auto nChildren = xaml::Media::VisualTreeHelper::GetChildrenCount(popupRoot);
-        if (nChildren == 2) {
-          // The first is supposed to be the smoke screen (Rectangle), and the second the content dialog
-          if (const auto smoke =
-                  xaml::Media::VisualTreeHelper::GetChild(popupRoot, 0).try_as<xaml::Shapes::Rectangle>()) {
-            const auto assertDialog =
-                xaml::Media::VisualTreeHelper::GetChild(popupRoot, 1).try_as<xaml::Controls::ContentDialog>();
-            if (assertDialog == dialog) {
-              smoke.Width(rootSize.Width);
-              smoke.Height(rootSize.Height);
-              dialog.Width(rootSize.Width);
-              dialog.Height(rootSize.Height);
-            }
+        xaml::Shapes::Rectangle smoke = nullptr;
+        xaml::Controls::ContentDialog assertDialog = nullptr;
+        for (int32_t i = 0; i < nChildren - 1; ++i) {
+          smoke = xaml::Media::VisualTreeHelper::GetChild(popupRoot, i).try_as<xaml::Shapes::Rectangle>();
+          assertDialog =
+              xaml::Media::VisualTreeHelper::GetChild(popupRoot, i + 1).try_as<xaml::Controls::ContentDialog>();
+          if (smoke && assertDialog == dialog) {
+            break;
           }
+        }
+
+        if (smoke && assertDialog == dialog) {
+          smoke.Width(rootSize.Width);
+          smoke.Height(rootSize.Height);
+          dialog.Width(rootSize.Width);
+          dialog.Height(rootSize.Height);
         }
       });
 

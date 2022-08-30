@@ -455,7 +455,7 @@ export function toMarkdown(
           (item as DoxDescriptionElement[])
             // Remove all non-meaningful white spaces
             .filter(
-              (element) =>
+              element =>
                 typeof element !== 'object' ||
                 element['#name'] !== '__text__' ||
                 (element._ && (element._.trim() || element._.includes(' '))),

@@ -1,8 +1,99 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Thu, 10 Feb 2022 06:07:57 GMT and should not be manually modified.
+This log was last generated on Tue, 21 Jun 2022 05:09:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.44
+
+Tue, 21 Jun 2022 05:09:36 GMT
+
+### Changes
+
+- Update source of DeviceID for telemetry (jthysell@microsoft.com)
+
+## 0.0.0-canary.43
+
+Sat, 04 Jun 2022 05:10:05 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.5
+- Bump @rnw-scripts/jest-unittest-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.2.5
+
+## 0.0.0-canary.42
+
+Thu, 12 May 2022 05:09:44 GMT
+
+### Changes
+
+- Build/dependency fixes (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.4
+- Bump @rnw-scripts/eslint-config to v1.1.13
+- Bump @rnw-scripts/jest-unittest-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.2.4
+
+## 0.0.0-canary.41
+
+Wed, 27 Apr 2022 05:10:24 GMT
+
+### Changes
+
+- Fix telemetery e2e tests (jthysell@microsoft.com)
+- Merge (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.3
+- Bump @rnw-scripts/eslint-config to v1.1.12
+
+## 0.0.0-canary.40
+
+Mon, 25 Apr 2022 22:50:29 GMT
+
+### Changes
+
+- Telemetry updates to meet server-side requirements (jthysell@microsoft.com)
+
+## 0.0.0-canary.39
+
+Thu, 21 Apr 2022 05:09:33 GMT
+
+### Changes
+
+- Reenable Telemetry tests (jthysell@microsoft.com)
+
+## 0.0.0-canary.38
+
+Wed, 13 Apr 2022 05:09:34 GMT
+
+### Changes
+
+- Disable unstable telemetry tests (jthysell@microsoft.com)
+
+## 0.0.0-canary.37
+
+Tue, 12 Apr 2022 05:10:38 GMT
+
+### Changes
+
+- Fix Overrides (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.2
+
+## 0.0.0-canary.36
+
+Fri, 08 Apr 2022 05:09:52 GMT
+
+### Changes
+
+- Stop Telemetry background threads running after test completion (jthysell@microsoft.com)
+
+## 0.0.0-canary.35
+
+Fri, 01 Apr 2022 05:09:57 GMT
+
+### Changes
+
+- Fix publish after promotion to preview (ngerlem@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.1
 
 ## 0.0.0-canary.34
 

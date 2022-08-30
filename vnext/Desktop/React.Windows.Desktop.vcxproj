@@ -103,13 +103,17 @@
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalIncludeDirectories>
-        %(AdditionalIncludeDirectories);
         "$(ReactNativeWindowsDir)Microsoft.ReactNative";
+        "$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
+        "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
+        "$(ReactNativeWindowsDir)codegen";
+        %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
@@ -230,9 +234,6 @@
       <DependentUpon>..\Microsoft.ReactNative\QuirkSettings.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="CxxReactWin32\JSBigString.cpp" />
-    <ClCompile Include="ShadowNode.cpp" />
-    <ClCompile Include="ShadowNodeRegistry.cpp" />
-    <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="JSBigStringResourceDll.cpp" />
     <ClCompile Include="module.g.cpp" />
     <ClCompile Include="Modules\TimingModule.cpp" />

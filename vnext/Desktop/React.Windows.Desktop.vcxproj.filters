@@ -154,9 +154,6 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ShadowNode.cpp" />
-    <ClCompile Include="ShadowNodeRegistry.cpp" />
-    <ClCompile Include="ViewManager.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSCallInvokerScheduler.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactErrorProvider.cpp" />

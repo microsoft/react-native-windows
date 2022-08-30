@@ -24,5 +24,21 @@
       </PreprocessorDefinitions>
 
     </ClCompile>
+    <Midl>
+
+      <PreprocessorDefinitions>
+        RNW_VERSION=$(ReactNativeWindowsVersion);
+        RNW_MAJOR=$(ReactNativeWindowsMajor);
+        RNW_MINOR=$(ReactNativeWindowsMinor);
+        RNW_PATCH=$(ReactNativeWindowsPatch);
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+
+      <PreprocessorDefinitions Condition="'$(ReactNativeWindowsCanary)' == 'true'">
+        RNW_CANARY;
+        %(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+
+    </Midl>
   </ItemDefinitionGroup>
 </Project>

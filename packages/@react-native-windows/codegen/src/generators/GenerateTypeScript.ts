@@ -18,6 +18,22 @@ import {
   SchemaType,
 } from 'react-native-tscodegen';
 
+interface CodegenNativeModuleSchema extends NativeModuleSchema {
+  optionalTurboModule?: boolean;
+}
+
+export function setOptionalTurboModule(
+  schema: NativeModuleSchema,
+  optional: boolean,
+): void {
+  const cs = <CodegenNativeModuleSchema>schema;
+  cs.optionalTurboModule = optional;
+}
+
+export function getOptionalTurboModule(schema: NativeModuleSchema): boolean {
+  return (<CodegenNativeModuleSchema>schema).optionalTurboModule ?? false;
+}
+
 type ObjectProp = NamedShape<Nullable<NativeModuleBaseTypeAnnotation>>;
 type FunctionParam = NamedShape<Nullable<NativeModuleParamTypeAnnotation>>;
 type FunctionDecl = NamedShape<Nullable<NativeModuleFunctionTypeAnnotation>>;
@@ -30,16 +46,14 @@ const moduleTemplate = `
  * This is a TypeScript turbo module definition file.
  */
 
-// the following import statements are not actually working today
-import {TurboModule} from 'react-native/Libraries/TurboModule/RCTExport';
-import * as TurboModuleRegistry from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import {TurboModule, TurboModuleRegistry} from 'react-native';
 'use strict';
 ::_MODULE_ALIASED_STRUCTS_::
 export interface Spec extends TurboModule {
 ::_MODULE_MEMBERS_::
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('::_MODULE_NAME_::');
+export default TurboModuleRegistry.::_MODULE_GETTER_::<Spec>('::_MODULE_NAME_::');
 `;
 
 function optionalSign<T>(obj: NamedShape<T>): string {
@@ -134,7 +148,7 @@ function tryGetConstantType(
   nativeModule: NativeModuleSchema,
 ): NativeModuleObjectTypeAnnotation | undefined {
   const candidates = nativeModule.spec.properties.filter(
-    (prop) => prop.name === 'getConstants',
+    prop => prop.name === 'getConstants',
   );
   if (candidates.length === 0) {
     return undefined;
@@ -201,7 +215,7 @@ export function generateTypeScript(
       console.log(`Generating ${preferredModuleName}Spec.g.ts`);
 
       const aliasCode = Object.keys(nativeModule.aliases)
-        .map((name) => translateAlias(name, nativeModule.aliases[name]))
+        .map(name => translateAlias(name, nativeModule.aliases[name]))
         .join('');
 
       const constantType = tryGetConstantType(nativeModule);
@@ -211,7 +225,7 @@ export function generateTypeScript(
           : `  getConstants(): ${translateType(constantType)}`;
 
       const methods = nativeModule.spec.properties.filter(
-        (prop) => prop.name !== 'getConstants',
+        prop => prop.name !== 'getConstants',
       );
       const membersCode = methods.map(translateMethod).join('');
 
@@ -220,7 +234,11 @@ export function generateTypeScript(
         moduleTemplate
           .replace(/::_MODULE_ALIASED_STRUCTS_::/g, aliasCode)
           .replace(/::_MODULE_MEMBERS_::/g, constantCode + membersCode)
-          .replace(/::_MODULE_NAME_::/g, preferredModuleName),
+          .replace(/::_MODULE_NAME_::/g, preferredModuleName)
+          .replace(
+            /::_MODULE_GETTER_::/g,
+            getOptionalTurboModule(nativeModule) ? 'get' : 'getEnforcing',
+          ),
       );
     }
   }

@@ -80,7 +80,7 @@ export async function usesTypeScript(projectRoot: string): Promise<boolean> {
  */
 function getDefinedKeys(obj: Record<string, any>): string[] {
   return Object.keys(obj).filter(
-    (value) => obj[value] !== undefined && obj[value] !== null && value,
+    value => obj[value] !== undefined && obj[value] !== null && value,
   );
 }
 

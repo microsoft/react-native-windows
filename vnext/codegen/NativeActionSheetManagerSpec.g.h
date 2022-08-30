@@ -73,6 +73,7 @@ struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(ActionSheetManagerSpec_showActionSheetWithOptions_options, Callback<double>) noexcept>{0, L"showActionSheetWithOptions"},
       Method<void(ActionSheetManagerSpec_showShareActionSheetWithOptions_options, Callback<ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error>, Callback<bool, std::optional<std::string>>) noexcept>{1, L"showShareActionSheetWithOptions"},
+      Method<void() noexcept>{2, L"dismissActionSheet"},
   };
 
   template <class TModule>
@@ -89,6 +90,11 @@ struct ActionSheetManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "showShareActionSheetWithOptions",
           "    REACT_METHOD(showShareActionSheetWithOptions) void showShareActionSheetWithOptions(ActionSheetManagerSpec_showShareActionSheetWithOptions_options && options, std::function<void(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error const &)> const & failureCallback, std::function<void(bool, std::optional<std::string>)> const & successCallback) noexcept { /* implementation */ }}\n"
           "    REACT_METHOD(showShareActionSheetWithOptions) static void showShareActionSheetWithOptions(ActionSheetManagerSpec_showShareActionSheetWithOptions_options && options, std::function<void(ActionSheetManagerSpec_showShareActionSheetWithOptions_failureCallback_error const &)> const & failureCallback, std::function<void(bool, std::optional<std::string>)> const & successCallback) noexcept { /* implementation */ }}\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          2,
+          "dismissActionSheet",
+          "    REACT_METHOD(dismissActionSheet) void dismissActionSheet() noexcept { /* implementation */ }}\n"
+          "    REACT_METHOD(dismissActionSheet) static void dismissActionSheet() noexcept { /* implementation */ }}\n");
   }
 };
 

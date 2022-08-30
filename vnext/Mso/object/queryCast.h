@@ -159,7 +159,7 @@ class DECLSPEC_NOVTABLE QueryCastChain : public T {
 
  protected:
   template <typename... TArgs>
-  QueryCastChain(TArgs &&... args) noexcept : T(std::forward<TArgs>(args)...) {}
+  QueryCastChain(TArgs &&...args) noexcept : T(std::forward<TArgs>(args)...) {}
 
  private:
   // Recursively calls itself while we have two or more base types.
@@ -205,7 +205,7 @@ class DECLSPEC_NOVTABLE QueryCastGuid : public T {
 
  protected:
   template <typename... TArgs>
-  QueryCastGuid(TArgs &&... args) noexcept : T(std::forward<TArgs>(args)...) {}
+  QueryCastGuid(TArgs &&...args) noexcept : T(std::forward<TArgs>(args)...) {}
 };
 
 /// Implements the QueryCast that does not do any query cast for a type.
@@ -221,7 +221,7 @@ class DECLSPEC_NOVTABLE QueryCastHidden : public T {
 
  protected:
   template <typename... TArgs>
-  QueryCastHidden(TArgs &&... args) noexcept : T(std::forward<TArgs>(args)...) {}
+  QueryCastHidden(TArgs &&...args) noexcept : T(std::forward<TArgs>(args)...) {}
 };
 
 /// Delegates the QueryCast implementation to the list of the base types.
@@ -235,7 +235,7 @@ class DECLSPEC_NOVTABLE QueryCastList : public TBase0, public TBases... {
 
  protected:
   template <typename... TArgs>
-  QueryCastList(TArgs &&... args) noexcept : TBase0(std::forward<TArgs>(args)...) {}
+  QueryCastList(TArgs &&...args) noexcept : TBase0(std::forward<TArgs>(args)...) {}
 
  public:
   void *QueryCast(const GUID &riid) noexcept {

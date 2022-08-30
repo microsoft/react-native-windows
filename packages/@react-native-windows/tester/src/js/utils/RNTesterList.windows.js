@@ -9,6 +9,8 @@
 
 import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 
+import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
+
 const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'ActivityIndicatorExample',
@@ -246,6 +248,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     module: require('../examples/Dimensions/DimensionsExample'),
   },
   {
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
+  },
+  {
     key: 'KeyboardExample',
     module: require('../examples-win/Keyboard/KeyboardExample'),
   },
@@ -273,6 +280,11 @@ const APIs: Array<RNTesterModuleInfo> = [
     key: 'MouseExample',
     category: 'Basic',
     module: require('../examples-win/Mouse/MouseExample'),
+  },
+  {
+    key: 'MouseClickExample',
+    category: 'Basic',
+    module: require('../examples-win/Mouse/MouseClickExample'),
   },
   {
     key: 'NativeAnimationsExample',
@@ -335,9 +347,17 @@ if (global.__turboModuleProxy) {
   });
 }
 
+if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
+  APIs.push({
+    key: 'W3C PointerEvents',
+    category: 'Experimental',
+    module: require('../examples/Experimental/W3CPointerEventsExample').default,
+  });
+}
+
 const Modules: any = {};
 
-APIs.concat(Components).forEach((Example) => {
+APIs.concat(Components).forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 

@@ -56,7 +56,7 @@ class FbSystraceSection {
   }
 
   template <typename... RestArg>
-  FbSystraceSection(uint64_t tag, std::string &&profileName, RestArg &&... rest)
+  FbSystraceSection(uint64_t tag, std::string &&profileName, RestArg &&...rest)
       : tag_(tag), profile_name_(std::move(profileName)) {
     id_ = s_id_counter++;
     init(std::forward<RestArg>(rest)...);
@@ -72,7 +72,7 @@ class FbSystraceSection {
   }
 
   template <typename Arg, typename... RestArg>
-  void init(Arg &&arg, RestArg &&... rest) {
+  void init(Arg &&arg, RestArg &&...rest) {
     if constexpr (std::is_convertible_v<Arg, std::string>) {
       args_[index_++] = std::forward<Arg>(arg);
     } else {

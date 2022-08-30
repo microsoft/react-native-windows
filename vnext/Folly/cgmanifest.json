@@ -1,0 +1,14 @@
+{
+    "Registrations": [
+        {
+            "Component": {
+                "Type": "git",
+                "Git": {
+                  "RepositoryUrl": "https://github.com/facebook/folly",
+                  "CommitHash": "4baba28200d7446c870e96f3cdbeb492f54625d0"
+                }
+            },
+            "DevelopmentDependency": false
+        }
+    ]
+}

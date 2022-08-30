@@ -178,7 +178,7 @@ class ChakraObject {
   }
 
   static ChakraObject getGlobalObject() {
-    JsValueRef value;
+    JsValueRef value = nullptr;
     JsGetGlobalObject(&value);
     return ChakraObject(value);
   }

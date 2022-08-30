@@ -80,9 +80,7 @@ class PopupButton extends React.Component<
         <Text style={{padding: 5}}>isLightDismissEnabled: </Text>
         <Switch
           value={this.state.isLightDismissEnabled}
-          onValueChange={(value) =>
-            this.setState({isLightDismissEnabled: value})
-          }
+          onValueChange={value => this.setState({isLightDismissEnabled: value})}
         />
         <Button
           onPress={this._onPress}
@@ -102,9 +100,7 @@ class PopupButton extends React.Component<
             <Switch
               style={{justifyContent: 'center', padding: 20}}
               value={this.state.popupSwitchState}
-              onValueChange={(value) =>
-                this.setState({popupSwitchState: value})
-              }
+              onValueChange={value => this.setState({popupSwitchState: value})}
             />
             <Button onPress={this._onPopupButtonPressed} title="Close" />
           </View>
@@ -648,7 +644,7 @@ export default class Bootstrap extends React.Component<
               marginTop: 15,
             }}>
             <Switch
-              onValueChange={(value) => this.setState({switchIsOn: value})}
+              onValueChange={value => this.setState({switchIsOn: value})}
               value={this.state.switchIsOn}
             />
             <Text>Switch {this.state.switchIsOn ? 'ON' : 'OFF'}</Text>
@@ -724,7 +720,7 @@ export default class Bootstrap extends React.Component<
     this.setState({highlightPressed: !this.state.highlightPressed});
 
     Linking.canOpenURL('https://www.microsoft.com')
-      .then((canOpen) => {
+      .then(canOpen => {
         if (canOpen) {
           void Linking.openURL('https://www.microsoft.com');
         }

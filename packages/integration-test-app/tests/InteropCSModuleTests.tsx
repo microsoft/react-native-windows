@@ -171,7 +171,7 @@ functionTest(
     new Promise((resolve, _) => {
       const eventEmitter = new NativeEventEmitter(testModuleCs);
 
-      eventEmitter.addListener('TestEvent', (x) => {
+      eventEmitter.addListener('TestEvent', x => {
         assert.equal(x, 123);
         resolve();
       });

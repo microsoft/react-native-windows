@@ -24,6 +24,7 @@ export type Buttons = Array<{
 
 type Options = {
   cancelable?: ?boolean,
+  userInterfaceStyle?: 'unspecified' | 'light' | 'dark',
   onDismiss?: ?() => void,
   ...
 };
@@ -70,7 +71,7 @@ class Alert {
       buttonNeutral,
       buttonNegative,
       buttonPositive,
-    ].findIndex((b) => b != null && b.style === 'default');
+    ].findIndex(b => b != null && b.style === 'default');
 
     // XAML has an enum to specify the default button, which is:
     //   None = 0, Primary = 1, Secondary = 2, Close = 3
@@ -88,6 +89,8 @@ class Alert {
       config.buttonPositive = buttonPositive.text || defaultPositiveText;
     }
 
+    /* $FlowFixMe[missing-local-annot] The type annotation(s) required by
+     * Flow's LTI update could not be added via codemod */
     const onAction = (action, buttonKey) => {
       if (action === constants.buttonClicked) {
         if (buttonKey === constants.buttonNeutral) {
@@ -101,7 +104,7 @@ class Alert {
         options && options.onDismiss && options.onDismiss();
       }
     };
-    const onError = (errorMessage) => console.warn(errorMessage);
+    const onError = errorMessage => console.warn(errorMessage);
     NativeDialogManagerWindows.showAlert(config, onError, onAction);
   }
 
@@ -112,6 +115,7 @@ class Alert {
     type?: ?AlertType = 'plain-text',
     defaultValue?: string,
     keyboardType?: string,
+    options?: Options,
   ): void {
     throw new Error(
       'Alert.prompt not currently implemented in react-native-windows',

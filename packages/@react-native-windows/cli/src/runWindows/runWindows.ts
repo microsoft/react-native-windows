@@ -149,7 +149,7 @@ async function runWindows(
       console.log(output.trimEnd());
       console.log('  Installed UWP SDKs:');
       const sdks = MSBuildTools.getAllAvailableUAPVersions();
-      sdks.forEach((version) => console.log('    ' + version));
+      sdks.forEach(version => console.log('    ' + version));
     } catch (ex) {
       runWindowsError =
         ex instanceof Error ? (ex as Error) : new Error(String(ex));
@@ -270,8 +270,9 @@ async function runWindowsInternal(
 
   // Restore packages.config files for dependencies that don't support PackageReference.
   runWindowsPhase = 'RestorePackagesConfig';
+  const buildType = deploy.getBuildConfiguration(options);
   try {
-    await buildTools.restorePackageConfigs(slnFile);
+    await buildTools.restorePackageConfigs(slnFile, options.arch, buildType);
   } catch (e) {
     newError(
       `Couldn't restore found packages.config instances. ${
@@ -316,7 +317,6 @@ async function runWindowsInternal(
     }
 
     // Get build/deploy options
-    const buildType = deploy.getBuildConfiguration(options);
     const msBuildProps = build.parseMsBuildProps(options);
 
     // Disable the autolink check since we just ran it

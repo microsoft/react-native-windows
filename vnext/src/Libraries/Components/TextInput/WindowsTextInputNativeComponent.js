@@ -17,7 +17,7 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 });
 
 const WindowsTextInputComponent: NativeType =
-  requireNativeComponent<mixed>('RCTTextInput');
+  requireNativeComponent<mixed>('WindowsTextInput');
 
 export default WindowsTextInputComponent;
 // [Windows]

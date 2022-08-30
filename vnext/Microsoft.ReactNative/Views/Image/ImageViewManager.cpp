@@ -14,8 +14,8 @@
 #include <IReactInstance.h>
 #include <Utils/PropertyHandlerUtils.h>
 #include <Utils/PropertyUtils.h>
+#include <Views/DynamicAutomationProperties.h>
 #include <Views/ShadowNodeBase.h>
-#include "DynamicAutomationProperties.h"
 #include "ReactImage.h"
 
 namespace winrt {
@@ -143,7 +143,7 @@ bool ImageViewManager::UpdateProperty(
   } else if (propertyName == "tintColor") {
     const auto isValidColorValue = IsValidColorValue(propertyValue);
     if (isValidColorValue || propertyValue.IsNull()) {
-      const auto color = isValidColorValue ? ColorFrom(propertyValue) : winrt::Colors::Transparent();
+      const auto color = isValidColorValue ? SolidColorBrushFrom(propertyValue).Color() : winrt::Colors::Transparent();
       reactImage->TintColor(color);
     }
     // Override default accessibility behavior
@@ -187,6 +187,20 @@ void ImageViewManager::setSource(winrt::Grid grid, const winrt::Microsoft::React
 
   EmitImageEvent(grid, "topLoadStart", sources[0]);
   reactImage->Source(sources[0]);
+}
+
+void ImageViewManager::SetLayoutProps(
+    ShadowNodeBase &nodeToUpdate,
+    const XamlView &viewToUpdate,
+    float left,
+    float top,
+    float width,
+    float height) {
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
+  if (viewToUpdate.ReadLocalValue(winrt::Grid::CornerRadiusProperty()) != xaml::DependencyProperty::UnsetValue()) {
+    const auto maxCornerRadius = std::min(width, height) / 2;
+    UpdateCornerRadiusOnElement(&nodeToUpdate, viewToUpdate.as<winrt::Grid>(), maxCornerRadius);
+  }
 }
 
 void ImageViewManager::GetExportedCustomDirectEventTypeConstants(

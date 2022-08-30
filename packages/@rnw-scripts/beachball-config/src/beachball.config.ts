@@ -8,14 +8,19 @@
 import {execSync} from 'child_process';
 import {findRepoPackageSync} from '@react-native-windows/package-utils';
 
-import type {BeachballOptions} from 'beachball/lib/types/BeachballOptions';
+import type {RepoOptions} from 'beachball/lib/types/BeachballOptions';
 import type {ChangeInfo} from 'beachball/lib/types/ChangeInfo';
  
-const Options: BeachballOptions = {
+const Options: RepoOptions = {
   ...require("@rnw-scripts/generated-beachball-config"),
    
-  // Do not generate tags for monorepo packages by default, to avoid a GitHub
-  // release for every package.
+  // Do not generate tags for monorepo packages by default. May be overridden in
+  // a package's "package.json" by adding:
+  // ```
+  // "beachball": {
+  //   "gitTags": true
+  // }
+  // ```
   gitTags: false,
 
   hooks: {
@@ -29,17 +34,17 @@ const Options: BeachballOptions = {
   },
 
   transform: {
-    changeFiles: (changeInfo) => Array.isArray(changeInfo.changes)
-    ? {...changeInfo, changes: changeInfo.changes.map(transformChangeInfo)}
-    : transformChangeInfo(changeInfo as ChangeInfo),
+    changeFiles: (changeInfo, changeFilePath) => Array.isArray(changeInfo.changes)
+    ? {...changeInfo, changes: changeInfo.changes.map(info => transformChangeInfo(info, changeFilePath))}
+    : transformChangeInfo(changeInfo as ChangeInfo, changeFilePath),
   }
 }
 
-function transformChangeInfo(changeInfo: ChangeInfo) : ChangeInfo {
+function transformChangeInfo(changeInfo: ChangeInfo, changeFilePath: string) : ChangeInfo {
   return {
     ...changeInfo,
     type: correctChangeType(changeInfo),
-    comment: formatComment(changeInfo.comment),
+    comment: correctComment(changeInfo, changeFilePath),
   };
 }
 
@@ -60,9 +65,29 @@ function transformChangeInfo(changeInfo: ChangeInfo) : ChangeInfo {
    return packageJson && packageJson.version.includes('-');
  }
  
- function formatComment(comment: string): string {
-   // Remove versions from messages that look like "[0.xx] Message"
-   return comment.match(/(\s*\[[\d\.]+\]\s*)?((.|\n)*)/)?.[2] ?? comment;
+ function correctComment(changeInfo: ChangeInfo, changeFilePath: string): string {
+  let comment = changeInfo.comment;
+
+  // Validate comment is a string
+  if (typeof comment !== 'string') {
+    // beachball catches and swallows exceptions, so must force exit here
+    console.error(`ERROR: There is an invalid comment detected: '${changeFilePath}': comment is not a string`);
+    process.exit(1);
+  }
+  
+  // Remove versions from messages that look like "[0.xx] Message"
+  comment = comment.match(/(\s*\[[\d\.]+\]\s*)?((.|\n)*)/)?.[2] ?? comment;
+
+  comment = comment.trim();
+
+  // Validate (remaining) comment is not empty
+  if (comment === '') {
+    // beachball catches and swallows exceptions, so must force exit here
+    console.error(`ERROR: There is an invalid comment detected: '${changeFilePath}': comment is blank or whitespace`);
+    process.exit(1);
+  }
+
+  return comment;
  }
 
 module.exports = Options;
