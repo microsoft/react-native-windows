@@ -606,7 +606,6 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
   using namespace winrt::Microsoft::ReactNative;
   using winrt::Windows::Web::Http::HttpClient;
 
-  shared_ptr<WinRTHttpResource> result;
   auto redirFilter = winrt::make<RedirectHttpFilter>();
   HttpClient client;
 
@@ -620,7 +619,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     client = HttpClient{opFilter};
   }
 
-  result = std::make_shared<WinRTHttpResource>(std::move(client));
+  auto result = std::make_shared<WinRTHttpResource>(std::move(client));
 
   // Allow redirect filter to create requests based on the resource's state
   redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_ptr<IWinRTHttpRequestFactory>{result});

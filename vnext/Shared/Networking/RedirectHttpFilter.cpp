@@ -59,6 +59,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
 
   method = coRequest.Method();
 
+  //TODO: Enable autoredirect flag and turn into do-while???
   while (true) {
     //TODO: If cancellable, cancel/throw.
 
@@ -92,10 +93,10 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
 
     if (auto requestFactory = m_requestFactory.lock()) {
       coRequest = co_await requestFactory->CreateRequest(
-          coRequest.Method(), coRequest.RequestUri(), coRequest.Properties().Lookup(L"RequestArgs"));
+        coRequest.Method(), coRequest.RequestUri(), coRequest.Properties().Lookup(L"RequestArgs"));
 
       if (!coRequest) {
-        break;
+        break; // TODO: Throw?
       }
     }
 
