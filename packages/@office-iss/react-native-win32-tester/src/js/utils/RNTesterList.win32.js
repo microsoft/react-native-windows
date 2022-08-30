@@ -16,6 +16,11 @@ import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNat
 
 const Components: Array<RNTesterModuleInfo> = [
   {
+    key: 'Dimensions',
+    category: 'UI',
+    module: require('../examples/Dimensions/DimensionsExample'),
+  },
+  {
     key: 'ActivityIndicatorExample',
     category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
