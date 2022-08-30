@@ -374,7 +374,7 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
   }
 }
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter &&innerFilter) : m_innerFilter{std::move(innerFilter)} {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter const &innerFilter) : m_innerFilter{innerFilter} {}
 
 OriginPolicyHttpFilter::OriginPolicyHttpFilter()
     : OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}

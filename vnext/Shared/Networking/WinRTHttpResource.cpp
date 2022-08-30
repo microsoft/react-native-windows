@@ -57,10 +57,10 @@ WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{s
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
-#pragma region IHttpResource
+#pragma region IWinRTHttpRequestFactory
 
 IAsyncOperation<HttpRequestMessage>
-WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable const &args) noexcept {
+WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable const &args) noexcept /*override*/ {
   auto coRequest = HttpRequestMessage{std::move(method), std::move(uri)};
   auto coArgs = args; // TODO: Redundant?
   auto coReqArgs = args.as<RequestArgs>();
@@ -174,6 +174,10 @@ WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable co
 
   co_return coRequest;
 }
+
+#pragma endregion IWinRTHttpRequestFactory
+
+#pragma region IHttpResource
 
 void WinRTHttpResource::SendRequest(
     string &&method,
@@ -611,12 +615,15 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
   } else {
     auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
     OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>(winrt::make<RedirectHttpFilter>());
+    auto opFilter = winrt::make<OriginPolicyHttpFilter>(redirFilter);
 
     client = HttpClient{opFilter};
   }
 
   result = std::make_shared<WinRTHttpResource>(std::move(client));
+
+  // Allow redirect filter to create requests based on the resource's state
+  redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_ptr<IWinRTHttpRequestFactory>{result});
 
   // Register resource as HTTP module proxy.
   if (inspectableProperties) {

@@ -39,6 +39,11 @@ RedirectHttpFilter::RedirectHttpFilter()
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{},
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
+void RedirectHttpFilter::SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept
+{
+  m_requestFactory = factory;
+}
+
 #pragma region IHttpFilter
 
 ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const& request)
@@ -83,6 +88,15 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
     redirectCount++;
     if (redirectCount > 3 /*TODO: max redirections*/) {
       break;
+    }
+
+    if (auto requestFactory = m_requestFactory.lock()) {
+      coRequest = co_await requestFactory->CreateRequest(
+          coRequest.Method(), coRequest.RequestUri(), coRequest.Properties().Lookup(L"RequestArgs"));
+
+      if (!coRequest) {
+        break;
+      }
     }
 
     auto redirectUri = response.Headers().Location();

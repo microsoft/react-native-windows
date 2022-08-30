@@ -6,6 +6,7 @@
 #include "IHttpResource.h"
 
 #include <Modules/IHttpModuleProxy.h>
+#include "IWinRTHttpRequestFactory.h"
 #include "WinRTTypes.h"
 
 // Windows API
@@ -18,6 +19,7 @@ namespace Microsoft::React::Networking {
 
 class WinRTHttpResource : public IHttpResource,
                           public IHttpModuleProxy,
+                          public IWinRTHttpRequestFactory,
                           public std::enable_shared_from_this<WinRTHttpResource> {
   winrt::Windows::Web::Http::IHttpClient m_client;
   std::mutex m_mutex;
@@ -38,11 +40,6 @@ class WinRTHttpResource : public IHttpResource,
 
   void UntrackResponse(int64_t requestId) noexcept;
 
-  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
-      winrt::Windows::Web::Http::HttpMethod &&method,
-      winrt::Windows::Foundation::Uri &&uri,
-      winrt::Windows::Foundation::IInspectable const &args) noexcept;
-
   winrt::fire_and_forget PerformSendRequest(
       winrt::Windows::Web::Http::HttpMethod &&method,
       winrt::Windows::Foundation::Uri &&uri,
@@ -52,6 +49,15 @@ class WinRTHttpResource : public IHttpResource,
   WinRTHttpResource() noexcept;
 
   WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
+
+#pragma region IWinRTHttpRequestFactory
+
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
+      winrt::Windows::Web::Http::HttpMethod &&method,
+      winrt::Windows::Foundation::Uri &&uri,
+      winrt::Windows::Foundation::IInspectable const &args) noexcept override;
+
+#pragma endregion IWinRTHttpRequestFactory
 
 #pragma region IHttpResource
 

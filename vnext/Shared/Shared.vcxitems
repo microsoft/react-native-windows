@@ -105,6 +105,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\NetworkingModule.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IHttpResource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWebSocketResource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWinRTHttpRequestFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.h" />

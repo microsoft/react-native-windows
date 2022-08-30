@@ -463,6 +463,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.h">
       <Filter>Header Files\Networking</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\IWinRTHttpRequestFactory.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">

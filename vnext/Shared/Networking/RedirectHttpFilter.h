@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "IWinRTHttpRequestFactory.h"
+
 // Windows API
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.h>
@@ -18,12 +20,16 @@ class RedirectHttpFilter
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilterWithNoCredentials;
 
+  std::weak_ptr<IWinRTHttpRequestFactory> m_requestFactory;
+
  public:
   RedirectHttpFilter(
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials);//TODO: noexcept?
 
   RedirectHttpFilter();//TODO: noexcept?
+
+  void SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept;
 
 #pragma region IHttpFilter
 

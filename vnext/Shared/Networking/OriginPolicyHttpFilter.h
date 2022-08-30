@@ -75,7 +75,7 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpResponseMessage const &response,
       bool removeAll);
 
-  OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter);
+  OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::IHttpFilter const &innerFilter);
 
   OriginPolicyHttpFilter();
 
