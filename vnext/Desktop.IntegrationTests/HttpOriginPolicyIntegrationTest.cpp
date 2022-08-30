@@ -236,7 +236,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsForbiddenMethodSucceeds)
     // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
     // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-19041#properties
-    TEST_IGNORE()
+    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsForbiddenMethodSucceeds)
   {
@@ -598,7 +598,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   //TODO: Seems to redirect to exact same resource. Implement second resource in same server.
   // Redirects a cross origin request to cross origin request on the same server
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
-    TEST_IGNORE()
+    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginToCrossOriginRedirectSucceeds)
   {
@@ -671,7 +671,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
     // [0x80072f88] The HTTP redirect request must be confirmed by the user
     //TODO: Figure out manual redirection.
-    //TEST_IGNORE()
+    ////TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
   {
@@ -795,7 +795,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
     //TODO: Fails if run after FullCorsCrossOriginWithCredentialsFails
-    TEST_IGNORE()
+    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
   {
@@ -819,7 +819,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // "Host" is one of the forbidden headers for fetch
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsRequestWithHostHeaderFails)
     // "Host" is not an accepted request header in WinRT.
-    TEST_IGNORE()
+    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsRequestWithHostHeaderFails)
   {
@@ -856,7 +856,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }// RequestWithProxyAuthorizationHeaderFails
 
   BEGIN_TEST_METHOD_ATTRIBUTE(ExceedingRedirectLimitFails)
-    TEST_IGNORE()
+    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ExceedingRedirectLimitFails)
   {
