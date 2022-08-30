@@ -33,7 +33,6 @@ using std::weak_ptr;
 using winrt::fire_and_forget;
 using winrt::hresult_error;
 using winrt::to_hstring;
-using winrt::to_string;
 using winrt::Windows::Foundation::IAsyncOperation;
 using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Foundation::Uri;
@@ -461,15 +460,15 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     }
 
     auto result = sendRequestOp.ErrorCode();
-    // Handle "The HTTP redirect request must be confirmed by the user"
-    // https://github.com/dotnet/corefx/pull/22702
-    // See https://github.com/dotnet/corefx/blob/v3.1.28/src/System.Net.Http/src/uap/System/Net/HttpClientHandler.cs
-    if (result == HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION)) {
-      auto coRequest2 = co_await CreateRequest(HttpMethod(coRequest.Method()), Uri{coRequest.RequestUri()}, coArgs);
-      auto redirRequestOp = self->m_client.SendRequestAsync(coRequest2);
-      co_await lessthrow_await_adapter<ResponseOperation>{redirRequestOp};
-      result = redirRequestOp.ErrorCode();
-    }
+    //// Handle "The HTTP redirect request must be confirmed by the user"
+    //// https://github.com/dotnet/corefx/pull/22702
+    //// See https://github.com/dotnet/corefx/blob/v3.1.28/src/System.Net.Http/src/uap/System/Net/HttpClientHandler.cs
+    //if (result == HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION)) {
+    //  auto coRequest2 = co_await CreateRequest(HttpMethod(coRequest.Method()), Uri{coRequest.RequestUri()}, coArgs);
+    //  auto redirRequestOp = self->m_client.SendRequestAsync(coRequest2);
+    //  co_await lessthrow_await_adapter<ResponseOperation>{redirRequestOp};
+    //  result = redirRequestOp.ErrorCode();
+    //}
 
     if (result < 0) {
       if (self->m_onError) {
@@ -546,7 +545,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
           buffer = reader.ReadBuffer(length);
           auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
-          responseData += to_string(std::wstring_view(data));
+          responseData += winrt::to_string(std::wstring_view(data));
         }
       } while (length > 0);
 

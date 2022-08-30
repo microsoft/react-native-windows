@@ -12,6 +12,9 @@ namespace Microsoft::React::Networking {
 class RedirectHttpFilter
   : public winrt::implements<RedirectHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter>
 {
+  //TODO: Quote
+  //  We need two different WinRT filters because we need to remove credentials during redirection requests
+  //  and WinRT doesn't allow changing the filter properties after the first request.
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilterWithNoCredentials;
 

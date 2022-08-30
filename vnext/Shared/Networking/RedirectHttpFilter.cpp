@@ -5,7 +5,14 @@
 
 #include "WinRTTypes.h"
 
+// Windows API
+#include <winrt/Windows.Web.Http.Headers.h>
+
+using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
+using winrt::Windows::Web::Http::HttpResponseMessage;
+using winrt::Windows::Web::Http::HttpStatusCode;
+using winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
 
 namespace Microsoft::React::Networking {
@@ -13,17 +20,105 @@ namespace Microsoft::React::Networking {
 #pragma region RedirectHttpFilter
 
 RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials)
-    : m_innerFilter{std::move(innerFilter)}, m_innerFilterWithNoCredentials{std::move(innerFilterWithNoCredentials)} {}
+    : m_innerFilter{std::move(innerFilter)},
+      m_innerFilterWithNoCredentials{std::move(innerFilterWithNoCredentials)} {
+
+  // Prevent automatic redirections.
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.AllowAutoRedirect(false);
+    baseFilter.AllowUI(false);
+  }
+  if (auto baseFilter = m_innerFilterWithNoCredentials.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.AllowAutoRedirect(false);
+    baseFilter.AllowUI(false);
+  }
+}
 
 RedirectHttpFilter::RedirectHttpFilter()
-    : m_innerFilter{winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}},
-      m_innerFilterWithNoCredentials{winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}} {}
+    : RedirectHttpFilter(
+          winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{},
+          winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 #pragma region IHttpFilter
 
 ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const& request)
 {
-  return nullptr;
+  auto redirectCount = 0;
+  HttpMethod method{nullptr};
+  bool skipContentIfPresent = false;//TODO: Delte? Do we need manual HTTP content creation?
+  HttpResponseMessage response{nullptr};
+
+  //TODO: Ensure request is not null
+
+  auto coRequest = request;
+
+  method = coRequest.Method();
+
+  while (true) {
+    //TODO: If cancellable, cancel/throw.
+
+    if (response) {
+      response = nullptr;
+    }
+
+    //TODO: Convert request?
+
+    // Send subsequent requests through the filter that doesn't have the credentials included in the first request
+    response = co_await (redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
+
+    //TODO: Convert response?
+
+    // TODO: Process cookies.
+
+    // Stop redirecting when a non-redirect status is responded.
+    if (response.StatusCode() != HttpStatusCode::MultipleChoices &&
+        response.StatusCode() != HttpStatusCode::MovedPermanently &&
+        response.StatusCode() != HttpStatusCode::Found &&             // Redirect
+        response.StatusCode() != HttpStatusCode::SeeOther &&          // RedirectMethod
+        response.StatusCode() != HttpStatusCode::TemporaryRedirect && // RedirectKeepVerb
+        response.StatusCode() != HttpStatusCode::PermanentRedirect) {
+      break;
+    }
+
+    redirectCount++;
+    if (redirectCount > 3 /*TODO: max redirections*/) {
+      break;
+    }
+
+    auto redirectUri = response.Headers().Location();
+    if (!redirectUri) {
+      break;
+    }
+
+    //TODO: Ensure absolute URI
+
+    if (redirectUri.SchemeName() != L"http" && redirectUri.SchemeName() != L"https") {
+      break;
+    }
+
+    // Do not "downgrade" from HTTPS to HTTP
+    if (coRequest.RequestUri().SchemeName() == L"https" && redirectUri.SchemeName() == L"http") {
+      break;
+    }
+
+    //TODO: Quote source
+    // Follow HTTP RFC 7231 rules. In general, 3xx responses
+    // except for 307 and 308 will keep verb except POST becomes GET.
+    // 307 and 308 responses have all verbs stay the same.
+    // https://tools.ietf.org/html/rfc7231#section-6.4
+    if (response.StatusCode() != HttpStatusCode::TemporaryRedirect &&
+        response.StatusCode() != HttpStatusCode::PermanentRedirect &&
+        method != HttpMethod::Post()) {
+      method = HttpMethod::Get();
+      skipContentIfPresent = true;
+    }
+
+    coRequest.RequestUri(redirectUri);
+  } // while(true)
+
+  response.RequestMessage(coRequest);
+
+  co_return response;
 }
 
 #pragma endregion IHttpFilter
