@@ -39,7 +39,7 @@
     "@types/node": "^14.14.22",
     "@types/semver": "^7.3.3",
     "babel-jest": "^26.3.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.19.0",
     "jest": "^26.6.3",
     "lookpath": "^1.2.1",
     "prettier": "^2.4.1",

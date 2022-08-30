@@ -7,31 +7,31 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.0.0-20220714-2051-8af7870c6",
+  "baseVersion": "0.0.0-20220729-2025-a21a1f845",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "fb425c3818276b4141f4c1877d4f0629f10e18ba"
+      "baseHash": "80da3e01a99821e4813d04b0a8226c74f9c89217"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "index.js",
-      "baseHash": "2a0bd511c691be2ac3da45a3c77250aaf55414e1"
+      "baseHash": "5ec87ef7736ad3b7d03f627ff5ac6475ce0bc6bf"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Alert/Alert.win32.js",
       "baseFile": "Libraries/Alert/Alert.js",
-      "baseHash": "f915bdebd13c9c76d7d76b7a5d85903a308b44fd"
+      "baseHash": "51fc12aa32c2ea6e5613bfcf45a845e73d519be3"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "821a00b041478c1a6a62afac525c1dd5ea62eb1a",
+      "baseHash": "318fa0b04d231c747d95bc4fb34a9a4152009786",
       "issue": 4578
     },
     {
@@ -66,13 +66,6 @@
     {
       "type": "platform",
       "file": "src/Libraries/Components/EnterString.win32.tsx"
-    },
-    {
-      "type": "copy",
-      "file": "src/Libraries/Components/MaskedView/MaskedViewIOS.win32.js",
-      "baseFile": "Libraries/Components/MaskedView/MaskedViewIOS.android.js",
-      "baseHash": "22608421eb48a1c0eb0c26e68ae00a0a5be6e71d",
-      "issue": 4378
     },
     {
       "type": "patch",
@@ -124,7 +117,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.tsx",
       "baseFile": "Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "40e5d8415243c15dc31bab4f1246f42d5d52e679"
+      "baseHash": "44fadc4a6bc51291e44f6bb8d7f38563e63bcbff"
     },
     {
       "type": "patch",
@@ -190,7 +183,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "acfad8aae28439dad8792c141b5be321b3ef83b1",
+      "baseHash": "52170daa86f15afc549b4f284371e4c4154aa3dd",
       "issue": 6240
     },
     {
@@ -212,7 +205,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "Libraries/Image/Image.ios.js",
-      "baseHash": "3e5ddb2e2c7fe2f4c0d3d58d07cc38e2f85d1479",
+      "baseHash": "bb18293e3169fc7a32dd85e1c53835dcbddb33fe",
       "issue": 4320
     },
     {
@@ -278,7 +271,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/CellRenderMask-test.js",
       "baseFile": "Libraries/Lists/__tests__/CellRenderMask-test.js",
-      "baseHash": "bfb778c766301230ffb3b2aab0c25954e993419a"
+      "baseHash": "ac27afe639dc574d8d3e78eb12912b3dbc0333bb"
     },
     {
       "type": "copy",
@@ -311,7 +304,7 @@
       "type": "copy",
       "file": "src/Libraries/Lists/__tests__/VirtualizedList-test.js",
       "baseFile": "Libraries/Lists/__tests__/VirtualizedList-test.js",
-      "baseHash": "948d12e5f6a2638cb649bfcdc36da719150b7cd7",
+      "baseHash": "ee51a288629bcc3f043204a4cc99a3567bc7f736",
       "issue": 0
     },
     {
@@ -357,7 +350,7 @@
       "type": "derived",
       "file": "src/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "a0dca36e4c9d6c7ad4890cc0a34ec02cbbab9405"
+      "baseHash": "54969c94ee141ce38ac1a0c5a16aa01bf27c66fe"
     },
     {
       "type": "derived",
@@ -456,7 +449,7 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "78cc11a8ac198bce4b7be8297b1d10dcfa643952",
+      "baseHash": "796868f6764037baf433afd88053bb51f3194ddc",
       "issue": 4629
     },
     {

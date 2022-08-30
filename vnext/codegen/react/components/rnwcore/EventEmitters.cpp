@@ -79,7 +79,6 @@ void AndroidDrawerLayoutEventEmitter::onDrawerClose(OnDrawerClose event) const {
 }
 
 
-
 void AndroidSwipeRefreshLayoutEventEmitter::onRefresh(OnRefresh event) const {
   dispatchEvent("refresh", [event=std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);

@@ -29,6 +29,8 @@ struct AlertManagerSpec_Args {
     std::optional<std::string> cancelButtonKey;
     REACT_FIELD(destructiveButtonKey)
     std::optional<std::string> destructiveButtonKey;
+    REACT_FIELD(preferredButtonKey)
+    std::optional<std::string> preferredButtonKey;
     REACT_FIELD(keyboardType)
     std::optional<std::string> keyboardType;
     REACT_FIELD(userInterfaceStyle)

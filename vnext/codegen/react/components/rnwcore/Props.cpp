@@ -68,13 +68,6 @@ AndroidDrawerLayoutProps::AndroidDrawerLayoutProps(
     drawerLockMode(convertRawProp(context, rawProps, "drawerLockMode", sourceProps.drawerLockMode, {AndroidDrawerLayoutDrawerLockMode::Unlocked})),
     statusBarBackgroundColor(convertRawProp(context, rawProps, "statusBarBackgroundColor", sourceProps.statusBarBackgroundColor, {}))
       {}
-RCTMaskedViewProps::RCTMaskedViewProps(
-    const PropsParserContext &context,
-    const RCTMaskedViewProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
-
-    
-      {}
 AndroidProgressBarProps::AndroidProgressBarProps(
     const PropsParserContext &context,
     const AndroidProgressBarProps &sourceProps,

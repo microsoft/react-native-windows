@@ -100,14 +100,6 @@ class AndroidDrawerLayoutEventEmitter : public ViewEventEmitter {
 
   void onDrawerClose(OnDrawerClose value) const;
 };
-class RCTMaskedViewEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  
-
-  
-};
 class AndroidProgressBarEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

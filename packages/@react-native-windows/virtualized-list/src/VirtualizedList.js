@@ -26,6 +26,7 @@ import {
   computeWindowedRenderLimits,
 } from './VirtualizeUtils';
 
+import * as VirtualizedListInjection from './VirtualizedListInjection';
 import * as React from 'react';
 import type {ScrollResponderType} from 'react-native/Libraries/Components/ScrollView/ScrollView';
 import type {ViewStyleProp} from 'react-native/Libraries/StyleSheet/StyleSheet';
@@ -304,7 +305,7 @@ type OptionalProps = {|
   legacyImplementation?: empty,
 |};
 
-type Props = {|
+export type Props = {|
   ...React.ElementConfig<typeof ScrollView>,
   ...RequiredProps,
   ...OptionalProps,
@@ -636,10 +637,11 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   _registerAsNestedChild = (childList: {
     cellKey: string,
     key: string,
-    ref: VirtualizedList,
+    ref: React.ElementRef<typeof React.Component>,
     parentDebugInfo: ListDebugInfo,
     ...
   }): ?ChildListState => {
+    const specificRef = ((childList.ref: any): VirtualizedList);
     // Register the mapping between this child key and the cellKey for its cell
     const childListsInCell =
       this._cellKeysToChildListKeys.get(childList.cellKey) || new Set();
@@ -653,19 +655,20 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           'list. You must pass a unique listKey prop to each sibling list.\n\n' +
           describeNestedLists({
             ...childList,
+            ref: specificRef,
             // We're called from the child's componentDidMount, so it's safe to
             // read the child's props here (albeit weird).
-            horizontal: !!childList.ref.props.horizontal,
+            horizontal: !!specificRef.props.horizontal,
           }),
       );
     }
     this._nestedChildLists.set(childList.key, {
-      ref: childList.ref,
+      ref: specificRef,
       state: null,
     });
 
     if (this._hasInteracted) {
-      childList.ref.recordInteraction();
+      specificRef.recordInteraction();
     }
   };
 
@@ -2217,4 +2220,6 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = VirtualizedList;
+module.exports = (VirtualizedListInjection.getOrDefault(
+  VirtualizedList,
+): typeof VirtualizedList);
