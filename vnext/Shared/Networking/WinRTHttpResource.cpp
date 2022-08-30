@@ -9,6 +9,7 @@
 #include <Utils/WinRTConversions.h>
 #include <utilities.h>
 #include "OriginPolicyHttpFilter.h"
+#include "RedirectHttpFilter.h"
 
 // Boost Libraries
 #include <boost/algorithm/string.hpp>
@@ -609,7 +610,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
   } else {
     auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
     OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>();
+    auto opFilter = winrt::make<OriginPolicyHttpFilter>(winrt::make<RedirectHttpFilter>());
     auto client = HttpClient{opFilter};
 
     result = std::make_shared<WinRTHttpResource>(std::move(client));
