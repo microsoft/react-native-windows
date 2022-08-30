@@ -107,7 +107,8 @@ export type AccessibilityActionName =
   | 'RemoveFromSelection'
   | 'Select'
   | 'Expand'
-  | 'Collapse';
+  | 'Collapse'
+  | 'Toggle';
 
 export type Cursor =
   | 'auto'
