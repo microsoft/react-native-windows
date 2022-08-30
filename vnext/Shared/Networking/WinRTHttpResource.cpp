@@ -604,17 +604,20 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
   using winrt::Windows::Web::Http::HttpClient;
 
   shared_ptr<WinRTHttpResource> result;
+  auto redirFilter = winrt::make<RedirectHttpFilter>();
+  HttpClient client;
 
   if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
-    result = std::make_shared<WinRTHttpResource>();
+    client = HttpClient{redirFilter};
   } else {
     auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
     OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
     auto opFilter = winrt::make<OriginPolicyHttpFilter>(winrt::make<RedirectHttpFilter>());
-    auto client = HttpClient{opFilter};
 
-    result = std::make_shared<WinRTHttpResource>(std::move(client));
+    client = HttpClient{opFilter};
   }
+
+  result = std::make_shared<WinRTHttpResource>(std::move(client));
 
   // Register resource as HTTP module proxy.
   if (inspectableProperties) {
