@@ -289,7 +289,7 @@ void UISchedulerWinRT::AwaitTermination() noexcept {
     return queue;
   }
 
-  winrt::Windows::System::DispatcherQueue dispatcher{nullptr};
+  decltype(DispatcherQueue::GetForCurrentThread()) dispatcher{nullptr};
   try {
     dispatcher = DispatcherQueue::GetForCurrentThread();
   } catch (winrt::hresult_error const &) {
