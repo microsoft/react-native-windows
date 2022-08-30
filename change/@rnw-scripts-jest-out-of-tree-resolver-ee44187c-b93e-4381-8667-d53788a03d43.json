@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "integrate 7/29/22",
+  "packageName": "@rnw-scripts/jest-out-of-tree-resolver",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
