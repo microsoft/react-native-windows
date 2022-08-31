@@ -21,16 +21,16 @@ Windows::UI::Color XamlHelper::ColorFrom(JSValueArgWriter const &valueProvider) 
   return ::Microsoft::ReactNative::ColorFrom(value);
 }
 
-xaml::DependencyProperty XamlUIService::ReactTagProperty() noexcept {
+xaml::DependencyProperty XamlHelper::ReactTagProperty() noexcept {
   return ::Microsoft::ReactNative::ReactTagProperty();
 }
 
 
-int64_t XamlHelper::GetReactTag(xaml::DependencyObject dependencyObject) noexcept {
+int64_t XamlHelper::GetReactTag(xaml::DependencyObject const& dependencyObject) noexcept {
   return ::Microsoft::ReactNative::GetTag(dependencyObject);
 }
 
-void XamlHelper::SetReactTag(xaml::DependencyObject dependencyObject, int64_t tag) noexcept {
+void XamlHelper::SetReactTag(xaml::DependencyObject const& dependencyObject, int64_t tag) noexcept {
   return ::Microsoft::ReactNative::SetTag(dependencyObject, tag);
 }
 

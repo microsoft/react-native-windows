@@ -26,10 +26,6 @@ xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noex
   return nullptr;
 }
 
-int64_t XamlUIService::ReactTagFromElement(xaml::DependencyObject dependencyObject) noexcept {
-  return ::Microsoft::ReactNative::GetTag(dependencyObject);
-}
-
 /*static*/ winrt::Microsoft::ReactNative::XamlUIService XamlUIService::FromContext(IReactContext context) {
   return context.Properties()
       .Get(XamlUIService::XamlUIServiceProperty().Handle())

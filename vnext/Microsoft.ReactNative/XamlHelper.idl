@@ -25,6 +25,6 @@ namespace Microsoft.ReactNative
     static Int64 GetReactTag(XAML_NAMESPACE.DependencyObject dependencyObject);
 
     DOC_STRING("Sets the react tag for a XAML element.")
-    static void GetReactTag(XAML_NAMESPACE.DependencyObject dependencyObject, Int64 tag);
+    static void SetReactTag(XAML_NAMESPACE.DependencyObject dependencyObject, Int64 tag);
   };
 } // namespace Microsoft.ReactNative
