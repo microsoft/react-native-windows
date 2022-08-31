@@ -14,8 +14,8 @@ struct XamlHelper : XamlHelperT<XamlHelper> {
   static Windows::UI::Color ColorFrom(JSValueArgWriter const &valueProvider) noexcept;
 
   static xaml::DependencyProperty ReactTagProperty() noexcept;
-  static int64_t GetReactTag(xaml::DependencyObject const& dependencyObject) noexcept;
-  static void SetReactTag(xaml::DependencyObject const& dependencyObject, int64_t tag) noexcept;
+  static int64_t GetReactTag(xaml::DependencyObject const &dependencyObject) noexcept;
+  static void SetReactTag(xaml::DependencyObject const &dependencyObject, int64_t tag) noexcept;
 
   static folly::dynamic GetFollyDynamicFromValueProvider(JSValueArgWriter const &valueProvider) noexcept;
 };
