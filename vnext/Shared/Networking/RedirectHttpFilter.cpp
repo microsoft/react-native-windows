@@ -19,7 +19,7 @@ namespace Microsoft::React::Networking {
 
 #pragma region RedirectHttpFilter
 
-RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials)
+RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
     : m_innerFilter{std::move(innerFilter)},
       m_innerFilterWithNoCredentials{std::move(innerFilterWithNoCredentials)} {
 
@@ -34,7 +34,7 @@ RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&
   }
 }
 
-RedirectHttpFilter::RedirectHttpFilter()
+RedirectHttpFilter::RedirectHttpFilter() noexcept
     : RedirectHttpFilter(
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{},
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}

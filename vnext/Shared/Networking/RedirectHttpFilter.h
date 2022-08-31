@@ -25,9 +25,9 @@ class RedirectHttpFilter
  public:
   RedirectHttpFilter(
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
-      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials);//TODO: noexcept?
+      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
 
-  RedirectHttpFilter();//TODO: noexcept?
+  RedirectHttpFilter() noexcept;
 
   void SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept;
 
