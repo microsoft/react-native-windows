@@ -15,10 +15,6 @@ struct XamlUIService : XamlUIServiceT<XamlUIService> {
   XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept;
   static ReactPropertyId<XamlUIService> XamlUIServiceProperty() noexcept;
 
-  static xaml::DependencyProperty ReactTagProperty() noexcept;
-
-  int64_t ReactTagFromElement(xaml::DependencyObject dependencyObject) noexcept;
-
   xaml::DependencyObject ElementFromReactTag(int64_t reactTag) noexcept;
   static winrt::Microsoft::ReactNative::XamlUIService FromContext(IReactContext context);
   void DispatchEvent(

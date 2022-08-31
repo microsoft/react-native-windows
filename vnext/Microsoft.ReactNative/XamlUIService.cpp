@@ -15,10 +15,6 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 XamlUIService::XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context(context) {}
 
-xaml::DependencyProperty XamlUIService::ReactTagProperty() noexcept {
-  return ::Microsoft::ReactNative::ReactTagProperty();
-}
-
 xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noexcept {
   if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
     auto shadowNode = uiManager->getHost()->FindShadowNodeForTag(reactTag);
