@@ -46,7 +46,7 @@
     <ResolveNuGetPackages>false</ResolveNuGetPackages>
   </PropertyGroup>
 
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\ReactTag.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NewAPIDeclarations.props" />
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Generated\PackageVersion.g.props" />
 </Project>
