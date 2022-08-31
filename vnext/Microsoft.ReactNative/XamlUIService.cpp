@@ -9,10 +9,15 @@
 #include "DynamicWriter.h"
 #include "ShadowNodeBase.h"
 #include "Views/ShadowNodeBase.h"
+#include "XamlView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 XamlUIService::XamlUIService(Mso::CntPtr<Mso::React::IReactContext> &&context) noexcept : m_context(context) {}
+
+xaml::DependencyProperty XamlUIService::ReactTagProperty() noexcept {
+  return ::Microsoft::ReactNative::ReactTagProperty();
+}
 
 xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noexcept {
   if (auto uiManager = ::Microsoft::ReactNative::GetNativeUIManager(*m_context).lock()) {
@@ -23,6 +28,10 @@ xaml::DependencyObject XamlUIService::ElementFromReactTag(int64_t reactTag) noex
     return static_cast<::Microsoft::ReactNative::ShadowNodeBase *>(shadowNode)->GetView();
   }
   return nullptr;
+}
+
+int64_t XamlUIService::ReactTagFromElement(xaml::DependencyObject dependencyObject) noexcept {
+  return ::Microsoft::ReactNative::GetTag(dependencyObject);
 }
 
 /*static*/ winrt::Microsoft::ReactNative::XamlUIService XamlUIService::FromContext(IReactContext context) {
