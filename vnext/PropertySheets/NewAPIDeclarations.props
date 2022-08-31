@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>(DefineConstants);RNW_REACTTAG_API</DefineConstants>
+    <DefineConstants>RNW_REACTTAG_API;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
