@@ -14,10 +14,10 @@ parameters:
   displayName: Force CodeQL to rebuild databases
   type: boolean
   default: false
-- name: breakOnComplianceFailure
-  displayName: Break build on a compliance task failure
+- name: complianceWarnOnly
+  displayName: Convert compliance errors to warnings
   type: boolean
-  default: true
+  default: true # Let's get all results in this pipeline
 
 variables:
   - template: variables/windows.yml
@@ -59,52 +59,15 @@ jobs:
 
       # Pre-build compliance tasks
 
-      # PoliCheck Build Task (https://aka.ms/gdn-azdo-policheck)
-      # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
-      - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
-        displayName: '⚖️ Run PoliCheck'
-        inputs:
-          targetType: F
-          targetArgument: $(Build.SourcesDirectory)
-          result: PoliCheck.xml
-          optionsFC: 1
-          optionsXS: 1
-          optionsHMENABLE: 0
-          optionsPE: 1|2|3|4
-          optionsSEV: 1|2|3|4
-          optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckExclusions.xml
-          optionsRulesDBPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckRules.mdb
-        continueOnError: true
-
-      # CredScan Task (https://aka.ms/gdn-azdo-credscan)
-      # Searches through source code and build outputs for credentials left behind in the open.
-      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
-        displayName: '⚖️ Run CredScan'
-        inputs:
-          outputFormat: pre
-          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
-          batchSize: 20
-          debugMode: false
-        continueOnError: true
-
-      # PostAnalysis Task (https://docs.microsoft.com/en-us/azure/security/develop/yaml-configuration#post-analysis-task)
-      # Breaks the build if any of the tasks failed.
-      - task: PostAnalysis@1
-        displayName: "⚖️ Post Analysis"
-        inputs:
-          AllTools: false
-          CredScan: ${{ parameters.breakOnComplianceFailure }}
-          PoliCheck: ${{ parameters.breakOnComplianceFailure }}
-          PoliCheckBreakOn: Severity4Above
-          ToolLogsNotFoundAction: "Error"
-        continueOnError: true
+      - template: templates/run-compliance-prebuild.yml
+        parameters:
+          complianceWarnOnly: ${{ parameters.complianceWarnOnly }}
 
       # Initialize CodeQL 3000 Task (https://aka.ms/codeql3000)
       # Performs static code analysis.
-      # GitHub repos not supported, see issue #9994.
       - task: CodeQL3000Init@0
         displayName: "🛡️ Initialize CodeQL"
-        continueOnError: true
+        continueOnError: ${{ parameters.complianceWarnOnly }}
 
       # Build RNW
 
@@ -117,15 +80,12 @@ jobs:
 
       # Post-build compliance tasks
 
-      # Component Governance Detection Task (https://docs.opensource.microsoft.com/tools/cg/)
-      # Detects open source you use and alerts you to whether it has security vulnerabilities or legal issues.
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Detection'
-        continueOnError: true
+      - template: templates/run-compliance-postbuild.yml
+        parameters:
+          complianceWarnOnly: ${{ parameters.complianceWarnOnly }}
 
       # Finalize CodeQL 3000 Task (https://aka.ms/codeql3000)
       # Performs static code analysis.
-      # GitHub repos not supported, see issue #9994.
       - task: CodeQL3000Finalize@0
         displayName: "🛡️ Finalize CodeQL"
-        continueOnError: true
+        continueOnError: ${{ parameters.complianceWarnOnly }}

@@ -4366,7 +4366,7 @@ Wed, 03 Jun 2020 00:05:25 GMT
 
 - Deprecate acceptsKeyboardFocus (kaigu@microsoft.com)
 - Remove react-native-community/cli dependency from template (acoates@microsoft.com)
-- Code Cleanup: Some low haning fruit lint fixes (dannyvv@microsoft.com)
+- Code Cleanup: Some easy lint fixes (dannyvv@microsoft.com)
 - Allow paremeterization of buildLogDirectory for msbuild task when using run-windows (dannyvv@microsoft.com)
 - Minor autolinking template update prep (jthysell@microsoft.com)
 
@@ -4392,7 +4392,7 @@ Sun, 31 May 2020 00:05:21 GMT
 
 ### Changes
 
-- blacklist all ProjectImports.zip (asklar@microsoft.com)
+- blocklist all ProjectImports.zip (asklar@microsoft.com)
 - docs CI (asklar@microsoft.com)
 
 ## 0.0.0-master.79
@@ -4768,7 +4768,7 @@ Fri, 17 Apr 2020 00:04:27 GMT
 ### Changes
 
 - run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now. (asklar@winse.microsoft.com)
-- Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows (acoates@microsoft.com)
+- Add msbuild.ProjectImports.zip to default blocklist to avoid metro error on run-windows (acoates@microsoft.com)
 - implement accessibilityState (kmelmon@microsoft.com)
 
 ## 0.0.0-master.41

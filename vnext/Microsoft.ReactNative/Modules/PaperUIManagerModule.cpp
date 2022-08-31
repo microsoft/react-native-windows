@@ -113,7 +113,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     writer.WriteObjectEnd();
 
     auto val = TakeJSValue(writer);
-    return std::move(val.AsObject().Copy()); // Lame why do we need to copy?
+    return std::move(val.AsObject().Copy()); // Why do we need to copy?
   }
 
   void ConstantsViaConstantsProvider(winrt::Microsoft::ReactNative::ReactConstantProvider &constants) noexcept {
