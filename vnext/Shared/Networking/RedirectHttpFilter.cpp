@@ -44,18 +44,18 @@ void RedirectHttpFilter::SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactor
   m_requestFactory = factory;
 }
 
-//#pragma region IHttpBaseProtocolFilter
-//
-//bool RedirectHttpFilter::AllowAutoRedirect() const
-//{
-//  return m_allowAutoRedirect;
-//}
-//
-//void RedirectHttpFilter::AllowAutoRedirect(bool value) {
-//  m_allowAutoRedirect = value;
-//}
-//
-//#pragma endregion IHttpBaseProtocolFilter
+#pragma region IHttpBaseProtocolFilter
+
+bool RedirectHttpFilter::AllowAutoRedirect() const
+{
+  return m_allowAutoRedirect;
+}
+
+void RedirectHttpFilter::AllowAutoRedirect(bool value) const {
+  //m_allowAutoRedirect = value;
+}
+
+#pragma endregion IHttpBaseProtocolFilter
 
 #pragma region IHttpFilter
 

@@ -20,6 +20,8 @@
 #include <WinInet.h>
 #include <winrt/base.h>
 
+#include <Networking/RedirectHttpFilter.h>
+
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -483,6 +485,17 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({}, error, L"Error encountered");
     Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
     Assert::AreEqual({"Redirect Content"}, content);
+  }
+
+  //TODO: delete
+  TEST_METHOD(QueryIf) {
+    winrt::Windows::Web::Http::Filters::IHttpFilter f = winrt::make<Networking::RedirectHttpFilter>();
+
+    auto iFilter = f.try_as<winrt::Windows::Web::Http::Filters::IHttpFilter>();
+    Assert::IsTrue(iFilter != nullptr);
+
+    auto bFilter = f.try_as<winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter>();
+    Assert::IsTrue(bFilter != nullptr);
   }
 
   TEST_METHOD(SimpleRedirectPatchSucceeds) {
