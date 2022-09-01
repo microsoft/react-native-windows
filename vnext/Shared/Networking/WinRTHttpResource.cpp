@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#undef WINRT_LEAN_AND_MEAN
+
 #include "WinRTHttpResource.h"
 
 #include <CppRuntimeOptions.h>

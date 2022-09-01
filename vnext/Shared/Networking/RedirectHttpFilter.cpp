@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+#undef WINRT_LEAN_AND_MEAN
+
 #include "RedirectHttpFilter.h"
 
 #include "WinRTTypes.h"
@@ -51,8 +53,8 @@ bool RedirectHttpFilter::AllowAutoRedirect() const
   return m_allowAutoRedirect;
 }
 
-void RedirectHttpFilter::AllowAutoRedirect(bool value) const {
-  //m_allowAutoRedirect = value;
+void RedirectHttpFilter::AllowAutoRedirect(bool value) {
+  m_allowAutoRedirect = value;
 }
 
 #pragma endregion IHttpBaseProtocolFilter

@@ -10,36 +10,13 @@
 // Windows API
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.h>
-//
-//#include <winrt/Windows.Foundation.Collections.h>
-//#include <winrt/Windows.Security.Credentials.h>
-//#include <winrt/Windows.Security.Cryptography.Certificates.h>
 
 namespace Microsoft::React::Networking {
 
-class MyFilter : public winrt::implements<MyFilter, winrt::Windows::Web::Http::Filters::IHttpFilter>
-{
- public:
-#pragma region IHttpFilter
-
-  winrt::Windows::Foundation::IAsyncOperationWithProgress<
-      winrt::Windows::Web::Http::HttpResponseMessage,
-      winrt::Windows::Web::Http::HttpProgress>
-  SendRequestAsync(winrt::Windows::Web::Http::HttpRequestMessage const &request);
-
-#pragma endregion IHttpFilter
-};
-
-//class MyControl : public winrt::implements<MyControl, winrt::Windows::Web::Http::Filters::IHttpCacheControl>
-//{
-// public:
-//};
-
 class RedirectHttpFilter : public winrt::implements<
           RedirectHttpFilter,
-          winrt::Windows::Web::Http::Filters::IHttpFilter>,
-      winrt::impl::require<RedirectHttpFilter, winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter> /*,
-  public winrt::implements<RedirectHttpFilter, winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter>*/ {
+          winrt::Windows::Web::Http::Filters::IHttpFilter,
+          winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter> {
   //TODO: Quote
   //  We need two different WinRT filters because we need to remove credentials during redirection requests
   //  and WinRT doesn't allow changing the filter properties after the first request.
@@ -70,7 +47,7 @@ class RedirectHttpFilter : public winrt::implements<
 #pragma region IHttpBaseProtocolFilter
 
   bool AllowAutoRedirect() const;
-  void AllowAutoRedirect(bool value) const;
+  void AllowAutoRedirect(bool value);
 
   bool AllowUI() const {return false;}
   void AllowUI(bool value) const {}
@@ -100,9 +77,6 @@ class RedirectHttpFilter : public winrt::implements<
 
   bool UseProxy() const { return false;}
   void UseProxy(bool value) const {}
-#if 0
-#endif // 0
-
 
 #pragma endregion IHttpBaseProtocolFilter
 

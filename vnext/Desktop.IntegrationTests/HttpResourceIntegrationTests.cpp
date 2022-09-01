@@ -4,6 +4,8 @@
 // C4996: 'gethostbyaddr': Use getnameinfo() or GetNameInfoW() instead
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
+#undef WINRT_LEAN_AND_MEAN//TODO:Remove
+
 #include <CppUnitTest.h>
 
 #include <Networking/IHttpResource.h>
@@ -17,10 +19,10 @@
 // Standard Library
 #include <future>
 
-#include <WinInet.h>
-#include <winrt/base.h>
-
+//TODO:Remove
 #include <Networking/RedirectHttpFilter.h>
+
+using namespace winrt::Windows::Web::Http::Filters;
 
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -52,117 +54,6 @@ struct RequestContext {
   CRITICAL_SECTION CriticalSection;
   bool Complete = false;
 };
-
-void ContextCallback(
-    HINTERNET hInternet,
-    DWORD_PTR dwContext,
-    DWORD dwInternetStatus,
-    LPVOID lpvStatusInformation,
-    DWORD dwStatusInformationLength) {
-  auto context = (RequestContext *)dwContext;
-  DWORD dwError = 0;
-  BYTE contentBuffer[1024];
-  DWORD contentBufferLength = sizeof(contentBuffer);
-  DWORD readBytes = 0;
-
-  switch (dwInternetStatus) {
-    // case INTERNET_STATUS_RESOLVING_NAME:
-    //   break;
-    // case INTERNET_STATUS_NAME_RESOLVED:
-    //   break;
-    // case INTERNET_STATUS_CONNECTING_TO_SERVER:
-    //   break;
-    // case INTERNET_STATUS_CONNECTED_TO_SERVER:
-    //   break;
-    // case INTERNET_STATUS_COOKIE_SENT:
-    //   break;
-    // case INTERNET_STATUS_COOKIE_RECEIVED:
-    //   break;
-    // case INTERNET_STATUS_COOKIE_HISTORY: /*{*/
-    //   // ExitSwitch:
-    //   break;
-    // case INTERNET_STATUS_CLOSING_CONNECTION:
-    //   break;
-    // case INTERNET_STATUS_CONNECTION_CLOSED:
-    //   break;
-    // case INTERNET_STATUS_HANDLE_CLOSING:
-    //   break;
-    // case INTERNET_STATUS_HANDLE_CREATED:
-    //   break;
-    // case INTERNET_STATUS_INTERMEDIATE_RESPONSE:
-    //   break;
-    // case INTERNET_STATUS_RECEIVING_RESPONSE:
-    //   break;
-    // case INTERNET_STATUS_RESPONSE_RECEIVED:
-    //   break;
-    // case INTERNET_STATUS_REDIRECT:
-    //   break;
-    case INTERNET_STATUS_REQUEST_COMPLETE:
-      // See
-      // https://github.com/microsoft/Windows-classic-samples/blob/main/Samples/Win7Samples/web/Wininet/Async/async.c#L389
-
-      // check for error first
-      dwError = ((LPINTERNET_ASYNC_RESULT)lpvStatusInformation)->dwError;
-
-      if (dwError != ERROR_SUCCESS) {
-        context->ErrorMessage =
-            winrt::hresult_error(HRESULT_FROM_WIN32(dwError), winrt::hresult_error::from_abi).message().c_str();
-        if (dwError == ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION) {
-          auto bRequestSuccess = HttpSendRequest(context->Request, NULL /*headers*/, 0, NULL /*content*/, 0);
-          auto lErr = GetLastError();
-          if (!bRequestSuccess && lErr != ERROR_IO_PENDING) {
-            exit(1);
-          }
-          break;
-        } else {
-          exit(1);
-        }
-      }
-
-      while (!TryEnterCriticalSection(&context->CriticalSection))
-        continue;
-
-      // EnterCriticalSection(&context->CriticalSection);
-      {
-        if (context->Complete)
-          break;
-
-        HttpQueryInfo(
-            context->Request,
-            HTTP_QUERY_FLAG_NUMBER | HTTP_QUERY_STATUS_CODE,
-            &context->StatusCode,
-            &context->StatusCodeLength,
-            NULL);
-
-        while (InternetReadFile(context->Request, contentBuffer, contentBufferLength, &readBytes)) {
-          if (readBytes == 0) {
-            break;
-          }
-
-          context->ContentSize += readBytes;
-        }
-        context->Content = (char *)contentBuffer;
-        context->Content[context->ContentSize] = '\0';
-        context->Complete = true;
-      }
-      LeaveCriticalSection(&context->CriticalSection);
-
-      SetEvent(context->Event);
-      break;
-    // case INTERNET_STATUS_REQUEST_SENT:
-    //   break;
-    // case INTERNET_STATUS_DETECTING_PROXY:
-    //   break;
-    // case INTERNET_STATUS_SENDING_REQUEST:
-    //   break;
-    // case INTERNET_STATUS_STATE_CHANGE:
-    //   break;
-    // case INTERNET_STATUS_P3P_HEADER:
-    //   break;
-    default:
-      break;
-  }
-}
 
 namespace Microsoft::React::Test {
 
@@ -487,15 +378,26 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Redirect Content"}, content);
   }
 
-  //TODO: delete
+  //TODO: Remove
   TEST_METHOD(QueryIf) {
-    winrt::Windows::Web::Http::Filters::IHttpFilter f = winrt::make<Networking::RedirectHttpFilter>();
+    using namespace winrt::Windows::Web::Http::Filters;
 
-    auto iFilter = f.try_as<winrt::Windows::Web::Http::Filters::IHttpFilter>();
+
+    IHttpFilter f0 = HttpBaseProtocolFilter{};
+    auto if0 = f0.try_as<IHttpFilter>();
+    Assert::IsTrue(if0 != nullptr);
+    auto bf0 = f0.try_as<IHttpBaseProtocolFilter>();
+    Assert::IsTrue(bf0 != nullptr);
+    bf0.AllowAutoRedirect(true);
+
+    auto f = winrt::make<Networking::RedirectHttpFilter>();
+
+    auto iFilter = f.try_as<IHttpFilter>();
     Assert::IsTrue(iFilter != nullptr);
 
-    auto bFilter = f.try_as<winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter>();
+    auto bFilter = f.try_as<IHttpBaseProtocolFilter>();
     Assert::IsTrue(bFilter != nullptr);
+    bFilter.AllowAutoRedirect(false);
   }
 
   TEST_METHOD(SimpleRedirectPatchSucceeds) {
@@ -572,96 +474,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({}, error, L"Error encountered");
     Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
     Assert::AreEqual({"Redirect Content"}, content);
-  }
-
-  BEGIN_TEST_METHOD_ATTRIBUTE(SimpleRedirectWinInetSucceeds)
-    TEST_IGNORE()
-  END_TEST_METHOD_ATTRIBUTE()
-  TEST_METHOD(SimpleRedirectWinInetSucceeds) {
-    auto port1 = s_port;
-    auto port2 = ++s_port;
-    string url = "http://localhost:" + std::to_string(port1);
-    RequestContext context;
-    InitializeCriticalSection(&context.CriticalSection);
-
-    auto responseFunc1 = [port2](const DynamicRequest &request) -> ResponseWrapper {
-      DynamicResponse response;
-      response.result(http::status::moved_permanently);
-      response.set(http::field::location, {"http://localhost:" + std::to_string(port2)});
-
-      return {std::move(response)};
-    };
-    auto responseFunc2 = [](const DynamicRequest &request) -> ResponseWrapper {
-      DynamicResponse response;
-      response.result(http::status::ok);
-      response.body() = Test::CreateStringResponseBody("Redirect Content");
-
-      return {std::move(response)};
-    };
-
-    auto server1 = make_shared<HttpServer>(port1);
-    auto server2 = make_shared<HttpServer>(port2);
-
-    server1->Callbacks().OnGet = responseFunc1;
-    server1->Callbacks().OnPatch = responseFunc1;
-    server2->Callbacks().OnGet = responseFunc2;
-    server2->Callbacks().OnPatch = responseFunc2;
-
-    server1->Start();
-    server2->Start();
-
-    auto hSession = InternetOpen(L"MyUserAgent", INTERNET_OPEN_TYPE_DIRECT, NULL, NULL, INTERNET_FLAG_ASYNC);
-    if (!hSession) {
-      Assert::Fail(L"Couldn't start session");
-    }
-
-    auto hCallback = InternetSetStatusCallback(hSession, (INTERNET_STATUS_CALLBACK)ContextCallback);
-    if (hCallback == INTERNET_INVALID_STATUS_CALLBACK) {
-      Assert::Fail(L"Failed to set callback");
-    }
-
-    auto hConnect = InternetConnect(
-        hSession,
-        L"localhost",
-        static_cast<INTERNET_PORT>(port1),
-        NULL,
-        NULL,
-        INTERNET_SERVICE_HTTP,
-        0,
-        (DWORD_PTR)&context);
-    if (!hConnect) {
-      Assert::Fail(L"Couldn't connect");
-    }
-
-    context.Request = HttpOpenRequest(
-        hConnect,
-        L"PATCH",
-        L"/",
-        NULL,
-        NULL,
-        NULL /*acceptTypes*/,
-        /*INTERNET_FLAG_RELOAD
-      |*/
-        INTERNET_FLAG_NO_CACHE_WRITE,
-        (DWORD_PTR)&context);
-    if (!context.Request) {
-      Assert::Fail(L"Couldn't send request");
-    }
-
-    auto bRequestSuccess = HttpSendRequest(context.Request, NULL /*headers*/, 0, NULL /*content*/, 0);
-    auto lErr = GetLastError();
-    if (!bRequestSuccess && lErr != ERROR_IO_PENDING) {
-      Assert::Fail(L"Failed to send");
-    }
-
-    WaitForSingleObject(context.Event, INFINITE);
-
-    server2->Stop();
-    server1->Stop();
-
-    // Assert::AreEqual({}, error, L"Error encountered");
-    Assert::AreEqual(static_cast<DWORD>(200), context.StatusCode);
-    Assert::AreEqual("Redirect Content", context.Content);
   }
 
   TEST_METHOD(TimeoutSucceeds) {
