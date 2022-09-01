@@ -26,18 +26,15 @@ namespace Microsoft.ReactNative
     DOC_STRING("Adds a custom native module. See @ReactModuleProvider.")
     void AddModule(String moduleName, ReactModuleProvider moduleProvider);
 
+    DOC_STRING("Adds a custom native module. See @ReactModuleProvider. This will register the"
+    "module as a TurboModule unless the application is running using WebDebbugging, in which"
+    "case it will revert to a legacy NativeModule.\n"
+    "NOTE: TurboModules using JSI directly will not run correctly while using WebDebugging")
+    void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
+
 #ifndef CORE_ABI
     DOC_STRING("Adds a custom view manager. See @ReactViewManagerProvider.")
     void AddViewManager(String viewManagerName, ReactViewManagerProvider viewManagerProvider);
 #endif
-  }
-
-  [webhosthidden]
-  [experimental]
-  DOC_STRING("Experimental extensions to the @IReactPackageBuilder.")
-  interface IReactPackageBuilderExperimental requires IReactPackageBuilder
-  {
-    DOC_STRING("Adds a custom TurboModule that directly uses the JS Engine API (JSI).")
-    void AddTurboModule(String moduleName, ReactModuleProvider moduleProvider);
   }
 } // namespace Microsoft.ReactNative

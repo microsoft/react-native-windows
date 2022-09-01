@@ -1,15 +1,15 @@
-import { NativeModules } from 'react-native';
+import { TurboModuleRegistry } from 'react-native';
 
 class TestHostModuleFunctions {
     addValues(a, b) {
-        NativeModules.TestHostModule.returnResult(a + b);
+      TurboModuleRegistry.get('TestHostModule').returnResult(a + b);
     }
 }
 
 // Accessing TestHostModule has a side effect of initializing global.__fbBatchedBridge
-if (NativeModules.TestHostModule) {
+if (TurboModuleRegistry.get('TestHostModule')) {
   global.__fbBatchedBridge.registerLazyCallableModule('TestHostModuleFunctions', () => new TestHostModuleFunctions());
 
   // Start running tests.
-  NativeModules.TestHostModule.startTests();
+  TurboModuleRegistry.get('TestHostModule').startTests();
 }

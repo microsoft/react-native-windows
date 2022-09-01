@@ -16,15 +16,18 @@ import {
   Linking,
 } from 'react-native';
 
-import { NativeModules, NativeEventEmitter } from 'react-native';
+import { NativeEventEmitter, TurboModuleRegistry } from 'react-native';
 
 import {MyComp} from './myComp';
 
 import {default as MyModule} from './NativeMyModule';
 
+const SampleModuleCS = TurboModuleRegistry.get('SampleModuleCS');
+const SampleModuleCpp = TurboModuleRegistry.get('SampleModuleCpp');
+
 // Creating event emitters
-const SampleModuleCSEmitter = new NativeEventEmitter(NativeModules.SampleModuleCS);
-const SampleModuleCppEmitter = new NativeEventEmitter(NativeModules.SampleModuleCpp);
+const SampleModuleCSEmitter = new NativeEventEmitter(SampleModuleCS);
+const SampleModuleCppEmitter = new NativeEventEmitter(SampleModuleCpp);
 
 const CustomUserControlCS = requireNativeComponent('CustomUserControlCS');
 const CustomUserControlCpp = requireNativeComponent('CustomUserControlCpp');
@@ -34,7 +37,7 @@ const CircleCpp = requireNativeComponent('CircleCpp');
 
 var log = function(result) {
   console.log(result);
-  NativeModules.DebugConsole.Log('' + result);
+  TurboModuleRegistry.get('DebugConsole').Log('' + result);
 };
 
 var getCallback = function(prefix) {
@@ -117,98 +120,98 @@ class SampleApp extends Component {
 
     // SampleModuleCS constants
 
-    log(`SampleModuleCS.NumberConstant: ${NativeModules.SampleModuleCS.NumberConstant}`);
-    log(`SampleModuleCS.StringConstant: ${NativeModules.SampleModuleCS.StringConstant}`);
+    log(`SampleModuleCS.NumberConstant: ${SampleModuleCS.NumberConstant}`);
+    log(`SampleModuleCS.StringConstant: ${SampleModuleCS.StringConstant}`);
 
-    log(`SampleModuleCS.NumberConstantViaProvider: ${NativeModules.SampleModuleCS.NumberConstantViaProvider}`);
-    log(`SampleModuleCS.StringConstantViaProvider: ${NativeModules.SampleModuleCS.StringConstantViaProvider}`);
+    log(`SampleModuleCS.NumberConstantViaProvider: ${SampleModuleCS.NumberConstantViaProvider}`);
+    log(`SampleModuleCS.StringConstantViaProvider: ${SampleModuleCS.StringConstantViaProvider}`);
 
     // SampleModuleCS method calls
 
-    NativeModules.SampleModuleCS.VoidMethod();
+    SampleModuleCS.VoidMethod();
 
-    NativeModules.SampleModuleCS.VoidMethodWithArgs(numberArg);
+    SampleModuleCS.VoidMethodWithArgs(numberArg);
 
-    NativeModules.SampleModuleCS.ReturnMethod(getCallback('SampleModuleCS.ReturnMethod => '));
+    SampleModuleCS.ReturnMethod(getCallback('SampleModuleCS.ReturnMethod => '));
 
-    NativeModules.SampleModuleCS.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCS.ReturnMethodWithArgs => '));
+    SampleModuleCS.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCS.ReturnMethodWithArgs => '));
 
-    NativeModules.SampleModuleCS.ExplicitCallbackMethod(getCallback('SampleModuleCS.ExplicitCallbackMethod => '));
+    SampleModuleCS.ExplicitCallbackMethod(getCallback('SampleModuleCS.ExplicitCallbackMethod => '));
 
-    NativeModules.SampleModuleCS.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCS.ExplicitCallbackMethodWithArgs => '));
+    SampleModuleCS.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCS.ExplicitCallbackMethodWithArgs => '));
 
-    NativeModules.SampleModuleCS.TwoCallbacksMethod(/*shouldSucceed:*/true,
+    SampleModuleCS.TwoCallbacksMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCS.TwoCallbacksMethod success => '),
       getCallback('SampleModuleCS.TwoCallbacksMethod fail => '));
 
-    NativeModules.SampleModuleCS.TwoCallbacksMethod(/*shouldSucceed:*/false,
+    SampleModuleCS.TwoCallbacksMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCS.TwoCallbacksMethod success => '),
       getCallback('SampleModuleCS.TwoCallbacksMethod fail => '));
 
-    NativeModules.SampleModuleCS.TwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+    SampleModuleCS.TwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCS.TwoCallbacksAsyncMethod success => '),
       getCallback('SampleModuleCS.TwoCallbacksAsyncMethod fail => '));
 
-    NativeModules.SampleModuleCS.TwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+    SampleModuleCS.TwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCS.TwoCallbacksAsyncMethod success => '),
       getCallback('SampleModuleCS.TwoCallbacksAsyncMethod fail => '));
 
-    NativeModules.SampleModuleCS.ReverseTwoCallbacksMethod(/*shouldSucceed:*/true,
+    SampleModuleCS.ReverseTwoCallbacksMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCS.ReverseTwoCallbacksMethod fail => '),
       getCallback('SampleModuleCS.ReverseTwoCallbacksMethod success => '));
 
-    NativeModules.SampleModuleCS.ReverseTwoCallbacksMethod(/*shouldSucceed:*/false,
+    SampleModuleCS.ReverseTwoCallbacksMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCS.ReverseTwoCallbacksMethod fail => '),
       getCallback('SampleModuleCS.ReverseTwoCallbacksMethod success => '));
 
-    NativeModules.SampleModuleCS.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+    SampleModuleCS.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod fail => '),
       getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod success => '));
 
-    NativeModules.SampleModuleCS.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+    SampleModuleCS.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod fail => '),
       getCallback('SampleModuleCS.ReverseTwoCallbacksAsyncMethod success => '));
 
-    var promise1 = NativeModules.SampleModuleCS.ExplicitPromiseMethod();
+    var promise1 = SampleModuleCS.ExplicitPromiseMethod();
     promise1.then(getCallback('SampleModuleCS.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCS.ExplicitPromiseMethod catch => '));
 
-    var promise2 = NativeModules.SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
+    var promise2 = SampleModuleCS.ExplicitPromiseMethodWithArgs(numberArg);
     promise2.then(getCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCS.ExplicitPromiseMethodWithArgs catch => '));
 
-    var promise3 = NativeModules.SampleModuleCS.NegateAsyncPromise(5);
+    var promise3 = SampleModuleCS.NegateAsyncPromise(5);
     promise3.then(getCallback('SampleModuleCS.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCS.NegateAsyncPromise catch => '));
 
-    var promise4 = NativeModules.SampleModuleCS.NegateAsyncPromise(-5);
+    var promise4 = SampleModuleCS.NegateAsyncPromise(-5);
     promise4.then(getCallback('SampleModuleCS.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCS.NegateAsyncPromise catch => '));
 
-    NativeModules.SampleModuleCS.callDistanceFunction({x: 22, y: 23}, {x: 55, y: 65});
+    SampleModuleCS.callDistanceFunction({x: 22, y: 23}, {x: 55, y: 65});
 
-    NativeModules.SampleModuleCS.TaskNoArgs()
+    SampleModuleCS.TaskNoArgs()
       .then(getCallback('SampleModuleCS.TaskNoArgs then => '))
       .catch(getErrorCallback('SampleModuleCS.TaskNoArgs catch => '));
 
-    NativeModules.SampleModuleCS.TaskTwoArgs(11, 200)
+    SampleModuleCS.TaskTwoArgs(11, 200)
       .then(getCallback('SampleModuleCS.TaskTwoArgs then => '))
       .catch(getErrorCallback('SampleModuleCS.TaskTwoArgs catch => '));
 
-    NativeModules.SampleModuleCS.TaskOfTNoArgs()
+    SampleModuleCS.TaskOfTNoArgs()
       .then(getCallback('SampleModuleCS.TaskOfTNoArgs then => '))
       .catch(getErrorCallback('SampleModuleCS.TaskOfTNoArgs catch => '));
 
-    NativeModules.SampleModuleCS.TaskOfTTwoArgs(11, 200)
+    SampleModuleCS.TaskOfTTwoArgs(11, 200)
       .then(getCallback('SampleModuleCS.TaskOfTTwoArgs then => '))
       .catch(getErrorCallback('SampleModuleCS.TaskOfTTwoArgs catch => '));
 
-    NativeModules.SampleModuleCS.EmitJSEvent1(43);
-    NativeModules.SampleModuleCS.EmitJSEvent2(8, 52);
-    NativeModules.SampleModuleCS.EmitJSEvent3(15, 79);
-    NativeModules.SampleModuleCS.EmitJSEventArg0();
-    NativeModules.SampleModuleCS.EmitJSEventArg1(7);
-    NativeModules.SampleModuleCS.EmitJSEventArg2(42, 15);
+    SampleModuleCS.EmitJSEvent1(43);
+    SampleModuleCS.EmitJSEvent2(8, 52);
+    SampleModuleCS.EmitJSEvent3(15, 79);
+    SampleModuleCS.EmitJSEventArg0();
+    SampleModuleCS.EmitJSEventArg1(7);
+    SampleModuleCS.EmitJSEventArg2(42, 15);
 
     //TODO: make sync method accessible only in non-web debugger scenarios
-    //log('SampleModuleCS.SyncReturnMethod => ' + NativeModules.SampleModuleCS.SyncReturnMethod());
-    //log('SampleModuleCS.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
+    //log('SampleModuleCS.SyncReturnMethod => ' + SampleModuleCS.SyncReturnMethod());
+    //log('SampleModuleCS.SyncReturnMethodWithArgs => ' + SampleModuleCS.SyncReturnMethodWithArgs(numberArg));
   }
 
   onPressSampleModuleCpp() {
@@ -218,82 +221,82 @@ class SampleApp extends Component {
 
     // SampleModuleCpp constants
 
-    log(`SampleModuleCpp.NumberConstant: ${NativeModules.SampleModuleCpp.NumberConstant}`);
-    log(`SampleModuleCpp.StringConstant: ${NativeModules.SampleModuleCpp.StringConstant}`);
+    log(`SampleModuleCpp.NumberConstant: ${SampleModuleCpp.NumberConstant}`);
+    log(`SampleModuleCpp.StringConstant: ${SampleModuleCpp.StringConstant}`);
 
-    log(`SampleModuleCpp.NumberConstantViaProvider: ${NativeModules.SampleModuleCpp.NumberConstantViaProvider}`);
-    log(`SampleModuleCpp.StringConstantViaProvider: ${NativeModules.SampleModuleCpp.StringConstantViaProvider}`);
+    log(`SampleModuleCpp.NumberConstantViaProvider: ${SampleModuleCpp.NumberConstantViaProvider}`);
+    log(`SampleModuleCpp.StringConstantViaProvider: ${SampleModuleCpp.StringConstantViaProvider}`);
 
     // SampleModuleCpp method calls
 
-    NativeModules.SampleModuleCpp.VoidMethod();
+    SampleModuleCpp.VoidMethod();
 
-    NativeModules.SampleModuleCpp.VoidMethodWithArgs(numberArg);
+    SampleModuleCpp.VoidMethodWithArgs(numberArg);
 
-    NativeModules.SampleModuleCpp.ReturnMethod(getCallback('SampleModuleCpp.ReturnMethod => '));
+    SampleModuleCpp.ReturnMethod(getCallback('SampleModuleCpp.ReturnMethod => '));
 
-    NativeModules.SampleModuleCpp.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCpp.ReturnMethodWithArgs => '));
+    SampleModuleCpp.ReturnMethodWithArgs(numberArg, getCallback('SampleModuleCpp.ReturnMethodWithArgs => '));
 
-    NativeModules.SampleModuleCpp.ExplicitCallbackMethod(getCallback('SampleModuleCpp.ExplicitCallbackMethod => '));
+    SampleModuleCpp.ExplicitCallbackMethod(getCallback('SampleModuleCpp.ExplicitCallbackMethod => '));
 
-    NativeModules.SampleModuleCpp.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCpp.ExplicitCallbackMethodWithArgs => '));
+    SampleModuleCpp.ExplicitCallbackMethodWithArgs(numberArg, getCallback('SampleModuleCpp.ExplicitCallbackMethodWithArgs => '));
 
-    NativeModules.SampleModuleCpp.TwoCallbacksMethod(/*shouldSucceed:*/true,
+    SampleModuleCpp.TwoCallbacksMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCpp.TwoCallbacksMethod success => '),
       getCallback('SampleModuleCpp.TwoCallbacksMethod fail => '));
 
-    NativeModules.SampleModuleCpp.TwoCallbacksMethod(/*shouldSucceed:*/false,
+    SampleModuleCpp.TwoCallbacksMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCpp.TwoCallbacksMethod success => '),
       getCallback('SampleModuleCpp.TwoCallbacksMethod fail => '));
 
-    NativeModules.SampleModuleCpp.TwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+    SampleModuleCpp.TwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod success => '),
       getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod fail => '));
 
-    NativeModules.SampleModuleCpp.TwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+    SampleModuleCpp.TwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod success => '),
       getCallback('SampleModuleCpp.TwoCallbacksAsyncMethod fail => '));
 
-    NativeModules.SampleModuleCpp.ReverseTwoCallbacksMethod(/*shouldSucceed:*/true,
+    SampleModuleCpp.ReverseTwoCallbacksMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod fail => '),
       getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod success => '));
 
-    NativeModules.SampleModuleCpp.ReverseTwoCallbacksMethod(/*shouldSucceed:*/false,
+    SampleModuleCpp.ReverseTwoCallbacksMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod fail => '),
       getCallback('SampleModuleCpp.ReverseTwoCallbacksMethod success => '));
 
-    NativeModules.SampleModuleCpp.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
+    SampleModuleCpp.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/true,
       getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod fail => '),
       getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod success => '));
 
-    NativeModules.SampleModuleCpp.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
+    SampleModuleCpp.ReverseTwoCallbacksAsyncMethod(/*shouldSucceed:*/false,
       getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod fail => '),
       getCallback('SampleModuleCpp.ReverseTwoCallbacksAsyncMethod success => '));
 
-    var promise1 = NativeModules.SampleModuleCpp.ExplicitPromiseMethod();
+    var promise1 = SampleModuleCpp.ExplicitPromiseMethod();
     promise1.then(getCallback('SampleModuleCpp.ExplicitPromiseMethod then => ')).catch(getErrorCallback('SampleModuleCpp.ExplicitPromiseMethod catch => '));
 
-    var promise2 = NativeModules.SampleModuleCpp.ExplicitPromiseMethodWithArgs(numberArg);
+    var promise2 = SampleModuleCpp.ExplicitPromiseMethodWithArgs(numberArg);
     promise2.then(getCallback('SampleModuleCpp.ExplicitPromiseMethodWithArgs then => ')).catch(getErrorCallback('SampleModuleCpp.ExplicitPromiseMethodWithArgs catch => '));
 
-    var promise3 = NativeModules.SampleModuleCpp.NegateAsyncPromise(5);
+    var promise3 = SampleModuleCpp.NegateAsyncPromise(5);
     promise3.then(getCallback('SampleModuleCpp.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCpp.NegateAsyncPromise catch => '));
 
-    var promise4 = NativeModules.SampleModuleCpp.NegateAsyncPromise(-5);
+    var promise4 = SampleModuleCpp.NegateAsyncPromise(-5);
     promise4.then(getCallback('SampleModuleCpp.NegateAsyncPromise then => ')).catch(getErrorCallback('SampleModuleCpp.NegateAsyncPromise catch => '));
 
-    NativeModules.SampleModuleCpp.callDistanceFunction({x: 2, y: 3}, {x: 5, y: 6});
+    SampleModuleCpp.callDistanceFunction({x: 2, y: 3}, {x: 5, y: 6});
 
-    NativeModules.SampleModuleCpp.EmitJSEvent1(42);
-    NativeModules.SampleModuleCpp.EmitJSEvent2(7, 51);
-    NativeModules.SampleModuleCpp.EmitJSEvent3(14, 78);
-    NativeModules.SampleModuleCpp.EmitJSEventArg0();
-    NativeModules.SampleModuleCpp.EmitJSEventArg1(7);
-    NativeModules.SampleModuleCpp.EmitJSEventArg2(42, 15);
+    SampleModuleCpp.EmitJSEvent1(42);
+    SampleModuleCpp.EmitJSEvent2(7, 51);
+    SampleModuleCpp.EmitJSEvent3(14, 78);
+    SampleModuleCpp.EmitJSEventArg0();
+    SampleModuleCpp.EmitJSEventArg1(7);
+    SampleModuleCpp.EmitJSEventArg2(42, 15);
 
     //TODO: make sync method accessible only in non-web debugger scenarios
-    //log('SampleModuleCpp.SyncReturnMethod => ' + NativeModules.SampleModuleCpp.SyncReturnMethod());
-    //log('SampleModuleCpp.SyncReturnMethodWithArgs => ' + NativeModules.SampleModuleCpp.SyncReturnMethodWithArgs(numberArg));
+    //log('SampleModuleCpp.SyncReturnMethod => ' + SampleModuleCpp.SyncReturnMethod());
+    //log('SampleModuleCpp.SyncReturnMethodWithArgs => ' + SampleModuleCpp.SyncReturnMethodWithArgs(numberArg));
   }
 
   onPressCustomUserControlCS() {
@@ -334,12 +337,12 @@ class SampleApp extends Component {
 
   onReloadSampleModuleCS() {
     log('SampleApp.onReloadSampleModuleCS()');
-    NativeModules.SampleModuleCS.ReloadInstance();
+    SampleModuleCS.ReloadInstance();
   }
 
   onReloadSampleModuleCpp() {
     log('SampleApp.onReloadSampleModuleCpp()');
-    NativeModules.SampleModuleCpp.ReloadInstance();
+    SampleModuleCpp.ReloadInstance();
   }
 
   render() {
@@ -356,8 +359,8 @@ class SampleApp extends Component {
 
         <Button onPress={() => { MyModule.voidFunc(); }} title="Call MyModule tests"/>
 
-        <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={NativeModules.SampleModuleCS == null} />
-        <Button onPress={() => { this.onPressSampleModuleCpp(); }} title="Call SampleModuleCpp!" disabled={NativeModules.SampleModuleCpp == null} />
+        <Button onPress={() => { this.onPressSampleModuleCS(); }} title="Call SampleModuleCS!" disabled={SampleModuleCS == null} />
+        <Button onPress={() => { this.onPressSampleModuleCpp(); }} title="Call SampleModuleCpp!" disabled={SampleModuleCpp == null} />
 
         <CustomUserControlCS style={styles.customcontrol} label="CustomUserControlCS!" ref={(ref) => { this._CustomUserControlCSRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCS(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCS(); }} title="Call CustomUserControlCS Commands!" />
@@ -365,8 +368,8 @@ class SampleApp extends Component {
         <CustomUserControlCpp style={styles.customcontrol} label="CustomUserControlCpp!" ref={(ref) => { this._CustomUserControlCppRef = ref; }} onLabelChanged={(evt) => { this.onLabelChangedCustomUserControlCpp(evt); }} />
         <Button onPress={() => { this.onPressCustomUserControlCpp(); }} title="Call CustomUserControlCpp Commands!" />
 
-        <Button onPress={() => { this.onReloadSampleModuleCS(); }} title="Reload from SampleModuleCS" disabled={NativeModules.SampleModuleCS == null} />
-        <Button onPress={() => { this.onReloadSampleModuleCpp(); }} title="Reload from SampleModuleCpp" disabled={NativeModules.SampleModuleCpp == null} />
+        <Button onPress={() => { this.onReloadSampleModuleCS(); }} title="Reload from SampleModuleCS" disabled={SampleModuleCS == null} />
+        <Button onPress={() => { this.onReloadSampleModuleCpp(); }} title="Reload from SampleModuleCpp" disabled={SampleModuleCpp == null} />
 
         <CircleCS style={styles.circle}>
           <View style={styles.box}>

@@ -551,8 +551,7 @@ struct CppTurboModule {
 
 struct CppTurboModulePackageProvider : winrt::implements<CppTurboModulePackageProvider, IReactPackageProvider> {
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-    auto experimental = packageBuilder.as<IReactPackageBuilderExperimental>();
-    experimental.AddTurboModule(L"CppTurboModule", MakeTurboModuleProvider<CppTurboModule>());
+    packageBuilder.AddTurboModule(L"CppTurboModule", MakeTurboModuleProvider<CppTurboModule>());
   }
 };
 
