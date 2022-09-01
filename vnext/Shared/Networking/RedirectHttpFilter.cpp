@@ -10,6 +10,10 @@
 // Windows API
 #include <winrt/Windows.Web.Http.Headers.h>
 
+using winrt::Windows::Foundation::Collections::IVector;
+using winrt::Windows::Security::Credentials::PasswordCredential;
+using winrt::Windows::Security::Cryptography::Certificates::Certificate;
+using winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult;
 using winrt::Windows::Web::Http::HttpMethod;
 using winrt::Windows::Web::Http::HttpRequestMessage;
 using winrt::Windows::Web::Http::HttpResponseMessage;
@@ -57,6 +61,113 @@ void RedirectHttpFilter::AllowAutoRedirect(bool value) {
   m_allowAutoRedirect = value;
 }
 
+bool RedirectHttpFilter::AllowUI() const {
+  return false;
+}
+void RedirectHttpFilter::AllowUI(bool value) const {}
+
+bool RedirectHttpFilter::AutomaticDecompression() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.AutomaticDecompression();
+  }
+
+  return false;
+}
+void RedirectHttpFilter::AutomaticDecompression(bool value) const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.AutomaticDecompression(value);
+  }
+}
+
+winrt::Windows::Web::Http::Filters::HttpCacheControl RedirectHttpFilter::CacheControl() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.CacheControl();
+  }
+
+  return nullptr;
+}
+
+winrt::Windows::Web::Http::HttpCookieManager RedirectHttpFilter::CookieManager() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.CookieManager();
+  }
+
+  return nullptr;
+}
+
+Certificate RedirectHttpFilter::ClientCertificate() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.ClientCertificate();
+  }
+
+  return nullptr;
+}
+void RedirectHttpFilter::ClientCertificate(Certificate const &value) const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.ClientCertificate(value);
+  }
+}
+
+IVector<ChainValidationResult> RedirectHttpFilter::IgnorableServerCertificateErrors() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.IgnorableServerCertificateErrors();
+  }
+
+  return nullptr;
+}
+
+uint32_t RedirectHttpFilter::MaxConnectionsPerServer() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.MaxConnectionsPerServer();
+  }
+
+  return 0;
+}
+void RedirectHttpFilter::MaxConnectionsPerServer(uint32_t value) const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.MaxConnectionsPerServer(value);
+  }
+}
+
+PasswordCredential RedirectHttpFilter::ProxyCredential() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.ProxyCredential();
+  }
+
+  return nullptr;
+}
+void RedirectHttpFilter::ProxyCredential(PasswordCredential const &value) const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.ProxyCredential(value);
+  }
+}
+
+PasswordCredential RedirectHttpFilter::ServerCredential() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.ServerCredential();
+  }
+
+  return nullptr;
+}
+void RedirectHttpFilter::ServerCredential(PasswordCredential const &value) const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.ServerCredential(value);
+  }
+}
+
+bool RedirectHttpFilter::UseProxy() const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    return baseFilter.UseProxy();
+  }
+
+  return false;
+}
+void RedirectHttpFilter::UseProxy(bool value) const {
+  if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
+    baseFilter.UseProxy(value);
+  }
+}
+
 #pragma endregion IHttpBaseProtocolFilter
 
 #pragma region IHttpFilter
@@ -71,11 +182,13 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
   //TODO: Ensure request is not null
 
   auto coRequest = request;
+  auto coAllowAutoRedirect = m_allowAutoRedirect;
+  auto coRequestFactory = m_requestFactory;
 
   method = coRequest.Method();
 
   //TODO: Enable autoredirect flag and turn into do-while???
-  while (true) {
+  do {
     //TODO: If cancellable, cancel/throw.
 
     if (response) {
@@ -106,7 +219,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
       break;
     }
 
-    if (auto requestFactory = m_requestFactory.lock()) {
+    if (auto requestFactory = coRequestFactory.lock()) {
       coRequest = co_await requestFactory->CreateRequest(
         coRequest.Method(), coRequest.RequestUri(), coRequest.Properties().Lookup(L"RequestArgs"));
 
@@ -144,7 +257,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
     }
 
     coRequest.RequestUri(redirectUri);
-  } // while(true)
+  } while (coAllowAutoRedirect);
 
   response.RequestMessage(coRequest);
 

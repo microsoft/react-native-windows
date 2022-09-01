@@ -41,20 +41,6 @@ using Test::EmptyResponse;
 using Test::HttpServer;
 using Test::ResponseWrapper;
 
-struct RequestContext {
-  HINTERNET Session = NULL;
-  HINTERNET Connection = NULL;
-  HINTERNET Request = NULL;
-  DWORD StatusCode = 0;
-  DWORD StatusCodeLength = sizeof(StatusCode);
-  char *Content;
-  DWORD ContentSize = 0;
-  const wchar_t *ErrorMessage;
-  HANDLE Event = CreateEvent(NULL, FALSE, FALSE, L"ResponseEvent");
-  CRITICAL_SECTION CriticalSection;
-  bool Complete = false;
-};
-
 namespace Microsoft::React::Test {
 
 TEST_CLASS (HttpResourceIntegrationTest) {
