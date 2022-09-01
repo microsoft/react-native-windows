@@ -76,6 +76,12 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
+      "baseFile": "ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
+      "baseHash": "a21a1f845bd854f01cac905a4737a360cca0cd12"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/Yoga.cpp",
       "baseFile": "ReactCommon/yoga/yoga/Yoga.cpp",
       "baseHash": "729d787e88fb911e603ca321a3bbc7340699fe9c",

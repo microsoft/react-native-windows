@@ -321,6 +321,46 @@ facebook::jsi::PropNameID ChakraRuntime::createPropNameIDFromSymbol(const facebo
   return MakePointer<facebook::jsi::PropNameID>(propSym);
 }
 
+// new
+
+facebook::jsi::BigInt ChakraRuntime::createBigIntFromInt64(int64_t val){
+  throw;
+} 
+
+facebook::jsi::BigInt ChakraRuntime::createBigIntFromUint64(uint64_t val){
+  throw facebook::jsi::JSINativeException("getHostObject() can only be called with HostObjects.");
+} 
+
+bool ChakraRuntime::bigintIsInt64(const facebook::jsi::BigInt &) {
+  throw;
+}
+
+bool ChakraRuntime::bigintIsUint64(const facebook::jsi::BigInt &){
+  throw facebook::jsi::JSINativeException("getHostObject() can only be called with HostObjects.");
+}
+
+uint64_t ChakraRuntime::truncate(const facebook::jsi::BigInt &){
+  throw facebook::jsi::JSINativeException("getHostObject() can only be called with HostObjects.");
+}
+
+facebook::jsi::String ChakraRuntime::bigintToString(const facebook::jsi::BigInt &, int) {
+  throw facebook::jsi::JSINativeException("getHostObject() can only be called with HostObjects.");
+}
+
+bool ChakraRuntime::hasNativeState(const facebook::jsi::Object &){
+  throw facebook::jsi::JSINativeException("getHostObject() can only be called with HostObjects.");
+}
+
+std::shared_ptr<facebook::jsi::NativeState> ChakraRuntime::getNativeState(const facebook::jsi::Object &){
+  throw facebook::jsi::JSINativeException("getHostObject() can only be called with HostObjects.");
+} 
+
+void ChakraRuntime::setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) {
+  throw facebook::jsi::JSINativeException("getHostObject() can only be called with HostObjects.");
+} 
+
+///
+
 std::string ChakraRuntime::utf8(const facebook::jsi::PropNameID &id) {
   return Common::Unicode::Utf16ToUtf8(GetPropertyNameFromId(GetJsRef(id)));
 }

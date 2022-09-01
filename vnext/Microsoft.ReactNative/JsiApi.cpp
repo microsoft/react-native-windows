@@ -195,6 +195,18 @@ struct RuntimeAccessor : facebook::jsi::Runtime {
     return *reinterpret_cast<facebook::jsi::BigInt const *>(ptr);
   }
 
+  // new 
+
+  static uint64_t const &asUint64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
+     return {reinterpret_cast<uint64_t>(pointerValue)};
+  }
+
+  static int64_t const &asInt64(facebook::jsi::Runtime::PointerValue *pointerValue) noexcept {
+    return {reinterpret_cast<int64_t>(pointerValue)};
+  }
+
+  //
+
   static facebook::jsi::String const &AsString(facebook::jsi::Runtime::PointerValue const **ptr) noexcept {
     return *reinterpret_cast<facebook::jsi::String const *>(ptr);
   }
@@ -954,6 +966,7 @@ bool JsiRuntime::BigIntStrictEquals(JsiBigIntRef left, JsiBigIntRef right) try {
 } catch (JSI_SET_ERROR) {
   throw;
 }
+
 
 bool JsiRuntime::StringStrictEquals(JsiStringRef left, JsiStringRef right) try {
   auto leftPtr = RuntimeAccessor::AsPointerValue(left);

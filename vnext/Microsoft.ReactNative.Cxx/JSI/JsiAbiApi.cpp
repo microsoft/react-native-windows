@@ -320,6 +320,82 @@ PropNameID JsiAbiRuntime::createPropNameIDFromSymbol(const Symbol &sym) try {
   throw;
 }
 
+// new
+
+BigInt JsiAbiRuntime::createBigIntFromInt64(int64_t val) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+BigInt JsiAbiRuntime::createBigIntFromUint64(uint64_t val) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+bool JsiAbiRuntime::bigintIsInt64(const BigInt &) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+bool JsiAbiRuntime::bigintIsUint64(const BigInt &) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+uint64_t JsiAbiRuntime::truncate(const BigInt &) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+String JsiAbiRuntime::bigintToString(const BigInt &, int) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+bool JsiAbiRuntime::hasNativeState(const Object &) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+std::shared_ptr<NativeState> JsiAbiRuntime::getNativeState(const Object &) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+void JsiAbiRuntime::setNativeState(const Object &, std::shared_ptr<NativeState> state) try {
+  RethrowJsiError();
+  throw;
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+///
+
 std::string JsiAbiRuntime::utf8(const PropNameID &propertyId) try {
   std::string dataResult;
   m_runtime.PropertyIdToUtf8(AsJsiPropertyIdRef(propertyId), [&dataResult](array_view<uint8_t const> utf8) {
