@@ -18,12 +18,9 @@ jobs:
     steps:
       - template: ../templates/checkout-shallow.yml
 
-      - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
-        displayName: '⚖️ Run CredScan'
-        inputs:
-          suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
-
       - template: ../templates/prepare-js-env.yml
+
+      - template: ../templates/run-compliance-prebuild.yml
 
       - script: yarn format:verify
         displayName: yarn format:verify

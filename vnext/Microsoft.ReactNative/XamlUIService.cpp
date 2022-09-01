@@ -9,6 +9,7 @@
 #include "DynamicWriter.h"
 #include "ShadowNodeBase.h"
 #include "Views/ShadowNodeBase.h"
+#include "XamlView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
