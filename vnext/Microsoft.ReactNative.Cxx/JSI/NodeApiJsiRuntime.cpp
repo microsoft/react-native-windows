@@ -142,6 +142,21 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   std::string utf8(const facebook::jsi::PropNameID &id) override;
   bool compare(const facebook::jsi::PropNameID &lhs, const facebook::jsi::PropNameID &rhs) override;
 
+  // new
+
+  facebook::jsi::BigInt createBigIntFromInt64(int64_t value) override;
+  facebook::jsi::BigInt createBigIntFromUint64(uint64_t value) override;
+  bool bigintIsInt64(const facebook::jsi::BigInt &) override;
+  bool bigintIsUint64(const facebook::jsi::BigInt &) override;
+  uint64_t truncate(const facebook::jsi::BigInt &) override;
+  facebook::jsi::String bigintToString(const facebook::jsi::BigInt &, int) override;
+
+  bool hasNativeState(const facebook::jsi::Object &) override;
+  std::shared_ptr<facebook::jsi::NativeState> getNativeState(const facebook::jsi::Object &) override;
+  void setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) override;
+
+  //
+
   std::string symbolToString(const facebook::jsi::Symbol &s) override;
 
   facebook::jsi::String createStringFromAscii(const char *str, size_t length) override;
@@ -725,6 +740,46 @@ PropNameID NapiJsiRuntime::createPropNameIDFromSymbol(const Symbol &sym) {
   napi_ext_ref propSym = GetPropertyIdFromSymbol(GetNapiValue(sym));
   return MakePointer<PropNameID>(propSym);
 }
+
+// new
+
+ facebook::jsi::BigInt NapiJsiRuntime::createBigIntFromInt64(int64_t val){
+  throw JSINativeException("TODO");
+}
+
+facebook::jsi::BigInt NapiJsiRuntime::createBigIntFromUint64(uint64_t val){
+  throw JSINativeException("TODO");
+}
+
+bool NapiJsiRuntime::bigintIsInt64(const facebook::jsi::BigInt &){
+  throw JSINativeException("TODO");
+}
+
+bool NapiJsiRuntime::bigintIsUint64(const facebook::jsi::BigInt &){
+  throw JSINativeException("TODO");
+}
+
+uint64_t NapiJsiRuntime::truncate(const facebook::jsi::BigInt &){
+throw JSINativeException("TODO");
+}
+
+String NapiJsiRuntime::bigintToString(const facebook::jsi::BigInt &, int){
+  throw JSINativeException("TODO");
+}
+
+bool NapiJsiRuntime::hasNativeState(const facebook::jsi::Object &){
+  throw JSINativeException("TODO");
+}
+
+std::shared_ptr<facebook::jsi::NativeState> NapiJsiRuntime::getNativeState(const facebook::jsi::Object &){
+  throw JSINativeException("TODO");
+}
+
+void NapiJsiRuntime::setNativeState(const Object &, std::shared_ptr<facebook::jsi::NativeState> state){
+  throw JSINativeException("TODO");
+}
+
+//
 
 string NapiJsiRuntime::utf8(const PropNameID &id) {
   EnvScope scope{m_env};
