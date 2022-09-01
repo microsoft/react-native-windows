@@ -59,14 +59,14 @@ var getErrorCallback = function(prefix) {
 };
 
 // To demo JS function calls we define a class and then register it as a callable module
-class SampleModuleCpp {
+class SampleModuleCppModule {
   calcDistance(point1, point2) {
     log('SampleApp.calcDistance()');
     const distance = Math.hypot(point1.x - point2.x, point1.y - point2.y);
     log(`Distance between (${point1.x}, ${point1.y}) and (${point2.x}, ${point2.y}) is ${distance}`);
   }
 }
-global.__fbBatchedBridge.registerLazyCallableModule('SampleModuleCpp', () => new SampleModuleCpp());
+global.__fbBatchedBridge.registerLazyCallableModule('SampleModuleCpp', () => new SampleModuleCppModule());
 
 class SampleApp extends Component {
   componentDidMount() {
