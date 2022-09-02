@@ -120,6 +120,7 @@
   <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFmt" Inputs="$(FmtZipFile)" Outputs="$(CGManifestFile)">
     <PropertyGroup>
       <CGManifestText>{
+    "$schema": "https://json.schemastore.org/component-detection-manifest.json",
     "Registrations": [
         {
             "Component": {

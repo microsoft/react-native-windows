@@ -291,6 +291,7 @@
   <Target Name="WriteCGManifest" BeforeTargets="PrepareForBuild" DependsOnTargets="DownloadFolly" Inputs="$(FollyZipFile)" Outputs="$(CGManifestFile)">
     <PropertyGroup>
       <CGManifestText>{
+    "$schema": "https://json.schemastore.org/component-detection-manifest.json",
     "Registrations": [
         {
             "Component": {
