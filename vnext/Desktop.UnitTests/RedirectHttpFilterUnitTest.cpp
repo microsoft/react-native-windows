@@ -41,11 +41,9 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
 
     auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
     auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
-    //TODO: Setup mocks.
+    // TODO: Setup mocks to avoid constructor exception
 
-    //auto filter = winrt::make<Networking::RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
-    auto filter = winrt::make<Networking::RedirectHttpFilter>(
-        /*winrt::make<MockHttpBaseFilter>(), winrt::make<MockHttpBaseFilter>()*/);
+    auto filter = winrt::make<Networking::RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
   }
 };
 
