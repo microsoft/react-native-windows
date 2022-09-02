@@ -18,7 +18,7 @@ struct ReactPackageBuilder : winrt::implements<ReactPackageBuilder, IReactPackag
       std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
       std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
-      bool useTurboModulesByDefault) noexcept;
+      bool isWebDebugging) noexcept;
 
  public: // IReactPackageBuilder
   void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
