@@ -7,12 +7,16 @@
 
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Networking::Sockets;
+using namespace winrt::Windows::Security::Cryptography::Certificates;
 using namespace winrt::Windows::Storage::Streams;
+using namespace winrt::Windows::Web::Http;
 
 using std::exception;
 using winrt::auto_revoke_t;
 using winrt::event_token;
 using winrt::param::hstring;
+using winrt::Windows::Foundation::Collections::IVector;
+using winrt::Windows::Security::Credentials::PasswordCredential;
 
 namespace Microsoft::React::Test {
 
@@ -370,5 +374,123 @@ void MockMessageWebSocketControl::MessageType(SocketMessageType const &value) co
 #pragma endregion MockMessageWebsocketControl
 
 #endif // 0
+
+#pragma region MockHttpBaseFilter
+
+MockHttpBaseFilter::MockHttpBaseFilter() noexcept {}
+
+#pragma region IHttpFilter
+
+IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> MockHttpBaseFilter::SendRequestAsync(
+  HttpRequestMessage const& request)
+{
+  throw exception("Not implemented");
+}
+
+#pragma endregion IHttpFilter
+
+#pragma region IHttpBaseProtocolFilter
+
+bool MockHttpBaseFilter::AllowAutoRedirect() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::AllowAutoRedirect(bool value) const
+{
+  throw exception("Not implemented");
+}
+
+bool MockHttpBaseFilter::AllowUI() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::AllowUI(bool value) const
+{
+  throw exception("Not implemented");
+}
+
+bool MockHttpBaseFilter::AutomaticDecompression() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::AutomaticDecompression(bool value) const
+{
+  throw exception("Not implemented");
+}
+
+Filters::HttpCacheControl MockHttpBaseFilter::CacheControl() const
+{
+  throw exception("Not implemented");
+}
+                                                     
+HttpCookieManager MockHttpBaseFilter::CookieManager() const
+{
+  throw exception("Not implemented");
+}
+
+Certificate MockHttpBaseFilter::ClientCertificate() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::ClientCertificate(
+  Certificate const& value) const
+{
+  throw exception("Not implemented");
+}
+
+IVector<
+    ChainValidationResult>
+  MockHttpBaseFilter::IgnorableServerCertificateErrors() const
+{
+  throw exception("Not implemented");
+}
+
+uint32_t MockHttpBaseFilter::MaxConnectionsPerServer() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::MaxConnectionsPerServer(uint32_t value) const
+{
+  throw exception("Not implemented");
+}
+
+PasswordCredential MockHttpBaseFilter::ProxyCredential() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::ProxyCredential(PasswordCredential const& value) const
+{
+  throw exception("Not implemented");
+}
+
+PasswordCredential MockHttpBaseFilter::ServerCredential() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::ServerCredential(PasswordCredential const& value) const
+{
+  throw exception("Not implemented");
+}
+
+bool MockHttpBaseFilter::UseProxy() const
+{
+  throw exception("Not implemented");
+}
+
+void MockHttpBaseFilter::UseProxy(bool value) const
+{
+  throw exception("Not implemented");
+}
+
+#pragma endregion IHttpBaseProtocolFilter
+
+#pragma endregion MockHttpBaseFilter
 
 } // namespace Microsoft::React::Test
