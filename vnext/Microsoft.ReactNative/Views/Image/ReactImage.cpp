@@ -53,7 +53,7 @@ winrt::Size ReactImage::ArrangeOverride(winrt::Size finalSize) {
   return finalSize;
 }
 
-winrt::event_token ReactImage::OnLoadEnd(winrt::EventHandler<bool> const &handler) {
+winrt::event_token ReactImage::OnLoadEnd(winrt::EventHandler<winrt::hstring> const &handler) {
   return m_onLoadEndEvent.add(handler);
 }
 
@@ -143,7 +143,7 @@ winrt::Stretch ReactImage::ResizeModeToStretch(winrt::Size size) {
 
 void ReactImage::Source(ReactImageSource source) {
   if (source.uri.length() == 0) {
-    m_onLoadEndEvent(*this, false);
+    m_onLoadEndEvent(*this, L"Empty URI");
     return;
   }
 
@@ -166,8 +166,8 @@ void ReactImage::Source(ReactImageSource source) {
     m_imageSource = source;
 
     SetBackground(true);
-  } catch (winrt::hresult_error const &) {
-    m_onLoadEndEvent(*this, false);
+  } catch (winrt::hresult_error const &err) {
+    m_onLoadEndEvent(*this, L"Failed to initialize ReactImage from source: " + err.message());
   }
 }
 
@@ -181,10 +181,12 @@ std::wstring GetUriFromImage(const winrt::Uri &uri) {
 }
 
 template <typename TImage>
-void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
+std::wstring ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args) {
+  std::wstring error{L"Failed to load image (" + args.ErrorMessage() + L")"};
 #ifdef DEBUG
-  cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << args.ErrorMessage().c_str() << L")\n";
+  cdebug << error << L": " << GetUriFromImage(image) << L"\n";
 #endif
+  return error;
 }
 
 // TSourceFailedEventArgs can be either LoadedImageSourceLoadCompletedEventArgs or
@@ -192,14 +194,20 @@ void ImageFailed(const TImage &image, const xaml::ExceptionRoutedEventArgs &args
 // and the type of status are both enums with the same meaning
 // See LoadedImageSourceLoadStatus and SvgImageSourceLoadStatus.
 template <typename TImage, typename TSourceFailedEventArgs>
-void ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
+std::wstring ImageFailed(const TImage &image, const TSourceFailedEventArgs &args) {
   // https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.loadedimagesourceloadstatus
-#ifdef DEBUG
   constexpr std::wstring_view statusNames[] = {L"Success", L"NetworkError", L"InvalidFormat", L"Other"};
   const auto status = (int)args.Status();
+
+  std::wstringstream error{L"Failed to load image"};
+  if (0 <= status && status < ARRAYSIZE(statusNames)) {
+    error << L" (" << statusNames[status] << L")";
+  }
+#ifdef DEBUG
   assert(0 <= status && status < ARRAYSIZE(statusNames));
-  cdebug << L"Failed to load image " << GetUriFromImage(image) << L" (" << statusNames[status] << L")\n";
+  cdebug << error.str() << L": " << GetUriFromImage(image) << L")\n";
 #endif
+  return error.str();
 }
 
 winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
@@ -224,15 +232,15 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
       // Fire failed load event if we're not loading from URI and the memory stream is null.
       if (!memoryStream) {
         if (auto strong_this{weak_this.get()}) {
-          strong_this->m_onLoadEndEvent(*strong_this, false);
+          strong_this->m_onLoadEndEvent(*strong_this, L"Failed to get image memory stream");
         }
         co_return;
       }
     }
-  } catch (winrt::hresult_error const &) {
+  } catch (winrt::hresult_error const &err) {
     const auto strong_this{weak_this.get()};
     if (strong_this && fireLoadEndEvent) {
-      strong_this->m_onLoadEndEvent(*strong_this, false);
+      strong_this->m_onLoadEndEvent(*strong_this, L"Failed to set background: " + err.message());
     }
     co_return;
   }
@@ -269,7 +277,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                 winrt::LoadedImageSurface const & /*sender*/,
                 winrt::LoadedImageSourceLoadCompletedEventArgs const &args) {
               if (auto strong_this{weak_this.get()}) {
-                bool succeeded{false};
+                std::wstring error;
                 if (args.Status() == winrt::LoadedImageSourceLoadStatus::Success) {
                   winrt::Size size{surface.DecodedPhysicalSize()};
                   strong_this->m_imageSource.height = size.Height;
@@ -290,13 +298,12 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                   compositionBrush->TintColor(strong_this->m_tintColor);
 
                   strong_this->Background(compositionBrush.as<winrt::XamlCompositionBrushBase>());
-                  succeeded = true;
                 } else {
-                  ImageFailed(uri, args);
+                  error = ImageFailed(uri, args);
                 }
 
                 if (fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, succeeded);
+                  strong_this->m_onLoadEndEvent(*strong_this, error);
                 }
 
                 strong_this->m_sizeChangedRevoker.revoke();
@@ -321,17 +328,17 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
               svgImageSource.Opened(winrt::auto_revoke, [weak_this, fireLoadEndEvent](const auto &, const auto &) {
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                  strong_this->m_onLoadEndEvent(*strong_this, L"");
                 }
               });
 
           strong_this->m_svgImageSourceOpenFailedRevoker = svgImageSource.OpenFailed(
               winrt::auto_revoke, [weak_this, fireLoadEndEvent, svgImageSource](const auto &, const auto &args) {
                 auto strong_this{weak_this.get()};
+                auto error = ImageFailed(svgImageSource, args);
                 if (strong_this && fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, false);
+                  strong_this->m_onLoadEndEvent(*strong_this, error);
                 }
-                ImageFailed(svgImageSource, args);
               });
 
           imageBrush.ImageSource(svgImageSource);
@@ -376,7 +383,7 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
                     imageBrush.Stretch(strong_this->ResizeModeToStretch());
                   }
 
-                  strong_this->m_onLoadEndEvent(*strong_this, true);
+                  strong_this->m_onLoadEndEvent(*strong_this, L"");
                 }
               });
 
@@ -385,11 +392,11 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
               [imageBrush, weak_this, fireLoadEndEvent, bitmapImage](const auto &, const auto &args) {
                 imageBrush.Opacity(1);
 
+                auto error = ImageFailed(bitmapImage, args);
                 auto strong_this{weak_this.get()};
                 if (strong_this && fireLoadEndEvent) {
-                  strong_this->m_onLoadEndEvent(*strong_this, false);
+                  strong_this->m_onLoadEndEvent(*strong_this, error);
                 }
-                ImageFailed(bitmapImage, args);
               });
 
           imageBrush.ImageSource(bitmapImage);
