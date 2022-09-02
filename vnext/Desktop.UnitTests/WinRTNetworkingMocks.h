@@ -250,10 +250,10 @@ struct MockHttpBaseFilter : public winrt::implements<
 #pragma region IHttpBaseProtocolFilter
 
     std::function<bool() /*const*/> GetAllowAutoRedirect;
-    std::function<void(bool value) /*const*/> SetAllowAutoRedirect;
+    std::function<void(bool value) /*const*/> SetAllowAutoRedirect{[](bool) {}};
 
     std::function<bool() /*const*/> GetAllowUI;
-    std::function<void(bool value) /*const*/> SetAllowUI;
+    std::function<void(bool value) /*const*/> SetAllowUI{[](bool) {}};
 
     std::function<bool() /*const*/> GetAutomaticDecompression;
     std::function<void(bool value) /*const*/> SetAutomaticDecompression;
