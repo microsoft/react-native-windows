@@ -93,7 +93,7 @@ struct CompViewComponentView : public CompBaseComponentView {
   void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
 
-  facebook::react::SharedProps props() noexcept override;
+  facebook::react::Props::Shared props() noexcept override;
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt) const noexcept override;
   bool ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept override;

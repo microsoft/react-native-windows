@@ -122,6 +122,7 @@ class FlyoutShadowNode : public ShadowNodeBase {
   winrt::Popup GetFlyoutParentPopup() const;
   winrt::FlyoutPresenter GetFlyoutPresenter() const;
   void OnShowFlyout();
+  void LogErrorAndClose(const string &error);
   xaml::FrameworkElement m_targetElement = nullptr;
   winrt::Flyout m_flyout = nullptr;
   bool m_isLightDismissEnabled = true;
@@ -404,7 +405,13 @@ winrt::Flyout FlyoutShadowNode::GetFlyout() {
 void FlyoutShadowNode::OnShowFlyout() {
   AdjustDefaultFlyoutStyle(50000, 50000);
   if (m_isFlyoutShowOptionsSupported) {
-    m_flyout.ShowAt(m_targetElement, m_showOptions);
+    if (!m_targetElement && m_targetTag > 0) {
+      LogErrorAndClose("The target view unmounted before flyout could be shown.");
+    } else if (m_targetElement && m_flyout.XamlRoot() != m_targetElement.XamlRoot()) {
+      LogErrorAndClose("The target view window lost focus before flyout could be shown.");
+    } else {
+      m_flyout.ShowAt(m_targetElement, m_showOptions);
+    }
   } else {
     winrt::FlyoutBase::ShowAttachedFlyout(m_targetElement);
   }
@@ -412,6 +419,11 @@ void FlyoutShadowNode::OnShowFlyout() {
   if (auto popup = GetFlyoutParentPopup()) {
     popup.IsLightDismissEnabled(m_isLightDismissEnabled);
   }
+}
+
+void FlyoutShadowNode::LogErrorAndClose(const std::string &error) {
+  GetViewManager()->GetReactContext().CallJSFunction("RCTLog", "logToConsole", folly::dynamic::array("error", error));
+  OnFlyoutClosed(GetViewManager()->GetReactContext(), m_tag, false);
 }
 
 void FlyoutShadowNode::SetTargetFrameworkElement() {

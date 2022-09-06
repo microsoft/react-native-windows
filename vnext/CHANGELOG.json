@@ -2,6 +2,171 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 20 Aug 2022 05:08:54 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.545",
+      "version": "0.0.0-canary.545",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "agnel@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0a49d9c313261cae2876122cd28bb1110219fb60",
+            "comment": "fix accessibilityValue not working, ensure narrator announces changes"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "409648078984fc75c56d990aa2c151f419131eb3",
+            "comment": "Integrate 7/14"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.0.0-canary.49",
+            "commit": "0a49d9c313261cae2876122cd28bb1110219fb60"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 19 Aug 2022 05:09:34 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.544",
+      "version": "0.0.0-canary.544",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.135",
+            "commit": "8582d0423cefc467f2fd46dc2d746d456053450a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Aug 2022 05:09:36 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.543",
+      "version": "0.0.0-canary.543",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "047ab1e1e2cf056f88687027710483b4facac5e1",
+            "comment": "Fix ReactNotificationService memory leak"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 16 Aug 2022 05:09:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.542",
+      "version": "0.0.0-canary.542",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7ee236336feca8128dbc28f1ad77f882ac5241b8",
+            "comment": "Fix relative include path for Views/Image"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "c5ac562e76c18f04e8ce361e52c628f8b63c1ba3",
+            "comment": "Fix XamlRoot crashes in FlyoutViewManager"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "59ffbf569a4092e8ea3228d13a90fd03c07ddb72",
+            "comment": "Fixes clang compile issues for IReactDispatcher.h"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0a87387649c6e1b3658794bd3f005cd74c96ef39",
+            "comment": "Replace all codegen includes without relative path"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "24bde0e59278c50233d7a2e83c96cf07047ac273",
+            "comment": "Fixes various issues with fast text optimization"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "571e6e65fc47b361c326fe4916f5df4c78bf943b",
+            "comment": "Use programmatic focus for UIManager.focus"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "a8f1ec1d28dbe2b3c6f2cf2ca535c702da600954",
+            "comment": "Skip user agent HTTP header validation"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3fe31e306fdf64aa22f40bb5e61a05057c0b3915",
+            "comment": "Adds missing headers for HttpRequestHeaderCollection"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "1231233e28db588635c4f436484f6443a21acbb3",
+            "comment": "Adds gesture cancellation to pointer event handling"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 13 Aug 2022 05:09:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.541",
+      "version": "0.0.0-canary.541",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "4d25e66c555f3859fa221591f6a609abfa11593b",
+            "comment": "Adds Systrace to view management APIs for UIManager"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Aug 2022 05:16:49 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.540",
+      "version": "0.0.0-canary.540",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.134",
+            "commit": "ec96f996a957c244f5cb5cb3747bf1c1aa918f0a"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 05 Aug 2022 05:09:19 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.539",
+      "version": "0.0.0-canary.539",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "45952631+JonCavesMSFT@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b7dc564e3105aac2291b670baa01e946e6362dd7",
+            "comment": "Remove incorrect typename keyword in helpers.h function template"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Aug 2022 05:09:38 GMT",
       "tag": "react-native-windows_v0.0.0-canary.538",
       "version": "0.0.0-canary.538",
@@ -11384,7 +11549,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Code Cleanup: Some low haning fruit lint fixes",
+            "comment": "Code Cleanup: Some easy lint fixes",
             "author": "dannyvv@microsoft.com",
             "commit": "7361c32af8cce87267be33c1d1cfc9fb6368274c",
             "package": "react-native-windows"
@@ -11455,7 +11620,7 @@
       "comments": {
         "prerelease": [
           {
-            "comment": "blacklist all ProjectImports.zip",
+            "comment": "blocklist all ProjectImports.zip",
             "author": "asklar@microsoft.com",
             "commit": "e2d328a545a2520f760dbd0c782e2da20f0eb355",
             "package": "react-native-windows"
@@ -12631,7 +12796,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows",
+            "comment": "Add msbuild.ProjectImports.zip to default blocklist to avoid metro error on run-windows",
             "author": "acoates@microsoft.com",
             "commit": "83f6067f50abd97e6bb2f59d41afe9dad04e26d0",
             "package": "react-native-windows"

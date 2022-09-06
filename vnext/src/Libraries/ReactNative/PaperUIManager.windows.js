@@ -96,7 +96,7 @@ UIManagerJS.getConstants = getConstants;
 //  },
 // $FlowFixMe
 UIManagerJS.getViewManagerConfig = getViewManagerConfig;
-
+// $FlowFixMe
 UIManagerJS.hasViewManagerConfig = (viewManagerName: string) =>
   getViewManagerConfig(viewManagerName) != null;
 
@@ -178,7 +178,7 @@ if (!global.nativeCallSyncHook) {
             `Accessing view manager configs directly off UIManager via UIManager['${viewManagerName}'] ` +
               `is no longer supported. Use UIManager.getViewManagerConfig('${viewManagerName}') instead.`,
           );
-
+          // $FlowFixMe
           return UIManagerJS.getViewManagerConfig(viewManagerName);
         },
       });

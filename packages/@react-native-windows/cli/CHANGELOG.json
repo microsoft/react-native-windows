@@ -2,6 +2,36 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 19 Aug 2022 05:09:34 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.135",
+      "version": "0.0.0-canary.135",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "8582d0423cefc467f2fd46dc2d746d456053450a",
+            "comment": "Fix Deploy Bug for App Paths Containing Spaces"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Aug 2022 05:16:49 GMT",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.134",
+      "version": "0.0.0-canary.134",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ec96f996a957c244f5cb5cb3747bf1c1aa918f0a",
+            "comment": "Update autolinking to update project paths in solution files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 25 Jun 2022 05:09:00 GMT",
       "tag": "@react-native-windows/cli_v0.0.0-canary.133",
       "version": "0.0.0-canary.133",

@@ -2,7 +2,7 @@
 // Questions:
 // - Should we approximate the existing API as closely as possible (a) or should we re-design the
 //   API using IDL/WinRT/COM idioms (b)? Examples for (b) are delegates, property accessors and
-//   events. (a) might help developers to orient themselves quicker, simplify migration to the new
+//   events. (a) might help developers to get started quicker, simplify migration to the new
 //   ABI and reduce refactoring-related defects. (b) should get us closer to the "final" API and
 //   might foster programming paradigms that reduce defects.
 

@@ -31,10 +31,19 @@ struct NotificationTestModule {
   void Initialize(ReactContext const &reactContext) noexcept {
     m_reactContext = reactContext;
 
+    // Check that lambda receives correct subscription
+    struct SubscriptionHolder {
+      ReactNotificationSubscription Subscription{nullptr};
+    };
+    auto subscriptionHolder = std::make_shared<SubscriptionHolder>();
+
     // Subscribe to a notification from the app.
-    reactContext.Notifications().Subscribe(
-        notifyModuleFromApp, [](IInspectable const & /*sender*/, ReactNotificationArgs<int> const &args) noexcept {
+    subscriptionHolder->Subscription = reactContext.Notifications().Subscribe(
+        notifyModuleFromApp,
+        [subscriptionHolder](IInspectable const & /*sender*/, ReactNotificationArgs<int> const &args) noexcept {
           TestEventService::LogEvent("NotifyModuleFromApp", args.Data());
+          TestEventService::LogEvent(
+              "CheckModuleSubscription", args.Subscription() == subscriptionHolder->Subscription);
 
           // Unsubscribe after the first notification.
           args.Subscription().Unsubscribe();
@@ -301,12 +310,20 @@ TEST_CLASS (ReactNotificationServiceTests) {
         TestReactNativeHostHolder(L"ReactNotificationServiceTests", [](ReactNativeHost const &host) noexcept {
           host.PackageProviders().Append(winrt::make<NotificationTestPackageProvider>());
 
+          // Check that lambda receives correct subscription
+          struct SubscriptionHolder {
+            ReactNotificationSubscription Subscription{nullptr};
+          };
+          auto subscriptionHolder = std::make_shared<SubscriptionHolder>();
+
           // Subscribe to a notification from module to app.
-          ReactNotificationService::Subscribe(
+          subscriptionHolder->Subscription = ReactNotificationService::Subscribe(
               host.InstanceSettings().Notifications(),
               notifyAppFromModule,
-              [](IInspectable const &, ReactNotificationArgs<int> const &args) {
+              [subscriptionHolder](IInspectable const &, ReactNotificationArgs<int> const &args) {
                 TestEventService::LogEvent("NotifyAppFromModule", args.Data());
+                TestEventService::LogEvent(
+                    "CheckAppSubscription", args.Subscription() == subscriptionHolder->Subscription);
 
                 // Send a notification from app to the module.
                 args.Subscription().NotificationService().SendNotification(notifyModuleFromApp, 42);
@@ -319,7 +336,9 @@ TEST_CLASS (ReactNotificationServiceTests) {
     TestEventService::ObserveEvents({
         TestEvent{"Test started", nullptr},
         TestEvent{"NotifyAppFromModule", 15},
+        TestEvent{"CheckAppSubscription", true},
         TestEvent{"NotifyModuleFromApp", 42},
+        TestEvent{"CheckModuleSubscription", true},
         TestEvent{"Test ended", nullptr},
     });
   }

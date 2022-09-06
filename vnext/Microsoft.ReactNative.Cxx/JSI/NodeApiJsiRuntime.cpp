@@ -131,6 +131,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
 
  protected:
   PointerValue *cloneSymbol(const PointerValue *pointerValue) override;
+  PointerValue *cloneBigInt(const PointerValue *pointerValue) override;
   PointerValue *cloneString(const PointerValue *pointerValue) override;
   PointerValue *cloneObject(const PointerValue *pointerValue) override;
   PointerValue *clonePropNameID(const PointerValue *pointerValue) override;
@@ -206,6 +207,7 @@ struct NapiJsiRuntime : facebook::jsi::Runtime {
   void popScope(ScopeState *) override;
 
   bool strictEquals(const facebook::jsi::Symbol &a, const facebook::jsi::Symbol &b) const override;
+  bool strictEquals(const facebook::jsi::BigInt &a, const facebook::jsi::BigInt &b) const override;
   bool strictEquals(const facebook::jsi::String &a, const facebook::jsi::String &b) const override;
   bool strictEquals(const facebook::jsi::Object &a, const facebook::jsi::Object &b) const override;
 
@@ -673,6 +675,12 @@ Runtime::PointerValue *NapiJsiRuntime::cloneSymbol(const Runtime::PointerValue *
   return CloneNapiPointerValue(pointerValue);
 }
 
+Runtime::PointerValue *NapiJsiRuntime::cloneBigInt(const Runtime::PointerValue *pointerValue) {
+  EnvScope scope{m_env};
+
+  return CloneNapiPointerValue(pointerValue);
+}
+
 Runtime::PointerValue *NapiJsiRuntime::cloneString(const Runtime::PointerValue *pointerValue) {
   EnvScope scope{m_env};
 
@@ -1000,6 +1008,12 @@ void NapiJsiRuntime::popScope(Runtime::ScopeState *state) {
 }
 
 bool NapiJsiRuntime::strictEquals(const Symbol &a, const Symbol &b) const {
+  EnvScope scope{m_env};
+
+  return StrictEquals(GetNapiValue(a), GetNapiValue(b));
+}
+
+bool NapiJsiRuntime::strictEquals(const BigInt &a, const BigInt &b) const {
   EnvScope scope{m_env};
 
   return StrictEquals(GetNapiValue(a), GetNapiValue(b));

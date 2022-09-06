@@ -1,0 +1,14 @@
+# Compliance tasks to be run post build
+parameters:
+- name: complianceWarnOnly
+  displayName: Convert compliance errors to warnings
+  type: boolean
+  default: false
+
+steps:
+  # Component Governance Detection Task (https://docs.opensource.microsoft.com/tools/cg/)
+  # Detects open source you use and alerts you to whether it has security vulnerabilities or legal issues.
+  # TODO: Reconcile with existing component-governance.yml template
+  - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+    displayName: '⚖️ Component Governance Detection'
+    continueOnError: ${{ parameters.complianceWarnOnly }}

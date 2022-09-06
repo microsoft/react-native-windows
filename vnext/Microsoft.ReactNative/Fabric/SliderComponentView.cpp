@@ -95,7 +95,7 @@ void SliderComponentView::updateLayoutMetrics(
 void SliderComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 
 void SliderComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps SliderComponentView::props() noexcept {
+facebook::react::Props::Shared SliderComponentView::props() noexcept {
   assert(false);
   return {};
 }

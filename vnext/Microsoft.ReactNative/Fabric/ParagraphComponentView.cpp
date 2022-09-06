@@ -148,7 +148,7 @@ void ParagraphComponentView::updateLayoutMetrics(
 }
 void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 void ParagraphComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps ParagraphComponentView::props() noexcept {
+facebook::react::Props::Shared ParagraphComponentView::props() noexcept {
   assert(false);
   return {};
 }

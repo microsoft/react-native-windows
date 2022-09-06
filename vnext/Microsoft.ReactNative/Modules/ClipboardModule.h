@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "../../codegen/NativeClipboardSpec.g.h"
+#include "codegen/NativeClipboardSpec.g.h"
 #include <NativeModules.h>
 
 namespace Microsoft::ReactNative {

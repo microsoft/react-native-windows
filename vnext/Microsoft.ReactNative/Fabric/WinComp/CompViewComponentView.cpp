@@ -1034,7 +1034,7 @@ void CompViewComponentView::updateLayoutMetrics(
 void CompViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 
 void CompViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps CompViewComponentView::props() noexcept {
+facebook::react::Props::Shared CompViewComponentView::props() noexcept {
   assert(false);
   return {};
 }

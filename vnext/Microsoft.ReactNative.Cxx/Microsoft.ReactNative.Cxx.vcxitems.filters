@@ -12,6 +12,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.cpp">
+      <Filter>JSI</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TurboModuleProvider.cpp">
       <Filter>TurboModule</Filter>
     </ClCompile>
@@ -27,7 +30,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.cpp">
       <Filter>JSI</Filter>
     </ClCompile>
-    <ClCompile Include="$(TurboModule_SourcePath)\..\..\bridging\LongLivedObject.cpp" />
+    <ClCompile Include="$(Bridging_SourcePath)\LongLivedObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
@@ -110,6 +113,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h">
       <Filter>JSI</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.h">
+      <Filter>JSI</Filter>
+    </ClInclude>
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h">
       <Filter>JSI</Filter>
     </ClInclude>
@@ -152,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h">
+      <Filter>TurboModule</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="JSI">

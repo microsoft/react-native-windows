@@ -179,7 +179,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityValueMinPrope
       L"AccessibilityValueMin",
       winrt::xaml_typename<double>(),
       dynamicAutomationTypeName,
-      winrt::PropertyMetadata(winrt::box_value(0)));
+      winrt::PropertyMetadata(winrt::box_value(0.0)));
 
   return s_AccessibilityValueMinProperty;
 }
@@ -197,7 +197,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityValueMaxPrope
       L"AccessibilityValueMax",
       winrt::xaml_typename<double>(),
       dynamicAutomationTypeName,
-      winrt::PropertyMetadata(winrt::box_value(0)));
+      winrt::PropertyMetadata(winrt::box_value(0.0)));
 
   return s_AccessibilityValueMaxProperty;
 }
@@ -215,7 +215,7 @@ xaml::DependencyProperty DynamicAutomationProperties::AccessibilityValueNowPrope
       L"AccessibilityValueNow",
       winrt::xaml_typename<double>(),
       dynamicAutomationTypeName,
-      winrt::PropertyMetadata(winrt::box_value(0)));
+      winrt::PropertyMetadata(winrt::box_value(0.0)));
 
   return s_AccessibilityValueNowProperty;
 }

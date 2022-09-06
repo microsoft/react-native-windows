@@ -56,6 +56,8 @@ namespace Microsoft.ReactNative
     CountStates
   };
 
+  // When adding a new numeric value, make sure to increment 'numericValuesCount' in FrameworkElementViewManager
+  // updateProperties depends on Min, Max, Now values being 0-2 for indexing. Be careful not to break that logic when adding new values.
   enum AccessibilityValue
   {
     Min = 0,

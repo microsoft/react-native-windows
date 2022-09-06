@@ -22,23 +22,32 @@ export const dotNetCoreProjectTypeGuid =
  * Checks is the given block of lines exists within an array of lines.
  * @param lines The array of lines to search.
  * @param block The block of lines to search for.
- * @return True if the block of lines does exist within lines.
+ * @return The starting index the block within lines, if it exists.
  */
-function linesContainsBlock(lines: string[], block: string[]): boolean {
+function linesContainsBlock(
+  lines: string[],
+  block: (string | RegExp)[],
+): number {
   if (block.length > 0) {
-    const startIndex = lines.indexOf(block[0]);
+    const startIndex = lines.findIndex(s =>
+      block[0] instanceof RegExp ? s.match(block[0]) : s === block[0],
+    );
 
     if (startIndex >= 0) {
       for (let i = 1; i < block.length; i++) {
-        if (lines[startIndex + i] !== block[i]) {
-          return false;
+        if (
+          block[i] instanceof RegExp
+            ? !lines[startIndex + i].match(block[i])
+            : lines[startIndex + i] !== block[i]
+        ) {
+          return -1;
         }
       }
-      return true;
+      return startIndex;
     }
   }
 
-  return false;
+  return -1;
 }
 
 /**
@@ -50,6 +59,22 @@ function linesContainsBlock(lines: string[], block: string[]): boolean {
 function insertBlockIntoLines(lines: string[], block: string[], index: number) {
   for (let i = 0; i < block.length; i++) {
     lines.splice(index + i, 0, block[i]);
+  }
+}
+
+/**
+ * Overwrite the lines at the given index with the block.
+ * @param lines The destionation array of lines to.
+ * @param block The source block of lines.
+ * @param index The index to perform the pverwrite.
+ */
+function overwriteLinesWithBlock(
+  lines: string[],
+  block: string[],
+  index: number,
+) {
+  for (let i = 0; i < block.length; i++) {
+    lines[index + i] = block[i];
   }
 }
 
@@ -140,13 +165,33 @@ export function addProjectToSolution(
     'EndProject',
   ];
 
-  if (!linesContainsBlock(slnLines, projectEntryBlock)) {
+  const projectEntryBlockRegex = [
+    new RegExp(
+      `Project\\("${projectTypeGuid}"\\) = "${project.projectName}", "(.*)", "${projectGuid}"`,
+    ),
+    'EndProject',
+  ];
+
+  const blockIndex = linesContainsBlock(slnLines, projectEntryBlockRegex);
+
+  if (blockIndex < 0) {
+    // Regex didn't match, insert
     if (verbose) {
-      console.log(chalk.yellow('Missing project entry block.'));
+      console.log(chalk.yellow('Missing project entry block, inserting.'));
     }
 
     const globalIndex = slnLines.indexOf('Global');
     insertBlockIntoLines(slnLines, projectEntryBlock, globalIndex);
+    contentsChanged = true;
+  } else if (linesContainsBlock(slnLines, projectEntryBlock) < 0) {
+    // Regex matched but project path has changed, so correct it
+    if (verbose) {
+      console.log(
+        chalk.yellow('Existing project entry block found, overwriting.'),
+      );
+    }
+
+    overwriteLinesWithBlock(slnLines, projectEntryBlock, blockIndex);
     contentsChanged = true;
   }
 

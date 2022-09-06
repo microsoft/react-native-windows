@@ -1,8 +1,64 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Thu, 04 Aug 2022 05:09:38 GMT and should not be manually modified.
+This log was last generated on Sat, 20 Aug 2022 05:08:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.157
+
+Sat, 20 Aug 2022 05:08:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.119
+
+## 0.0.156
+
+Fri, 19 Aug 2022 05:09:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.118
+
+## 0.0.155
+
+Thu, 18 Aug 2022 05:09:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.117
+
+## 0.0.154
+
+Tue, 16 Aug 2022 05:09:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.116
+
+## 0.0.153
+
+Sat, 13 Aug 2022 05:09:03 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.115
+
+## 0.0.152
+
+Wed, 10 Aug 2022 05:16:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.114
+
+## 0.0.151
+
+Fri, 05 Aug 2022 05:09:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.1.113
 
 ## 0.0.150
 

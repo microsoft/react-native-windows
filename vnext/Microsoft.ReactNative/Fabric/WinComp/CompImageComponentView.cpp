@@ -365,7 +365,7 @@ void CompImageComponentView::DrawImage() noexcept {
 }
 
 void CompImageComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps CompImageComponentView::props() noexcept {
+facebook::react::Props::Shared CompImageComponentView::props() noexcept {
   assert(false);
   return {};
 }

@@ -1,8 +1,74 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Aug 2022 05:09:38 GMT and should not be manually modified.
+This log was last generated on Sat, 20 Aug 2022 05:08:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.545
+
+Sat, 20 Aug 2022 05:08:54 GMT
+
+### Changes
+
+- fix accessibilityValue not working, ensure narrator announces changes (agnel@microsoft.com)
+- Integrate 7/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/virtualized-list to v0.0.0-canary.49
+
+## 0.0.0-canary.544
+
+Fri, 19 Aug 2022 05:09:34 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.135
+
+## 0.0.0-canary.543
+
+Thu, 18 Aug 2022 05:09:36 GMT
+
+### Changes
+
+- Fix ReactNotificationService memory leak (vmorozov@microsoft.com)
+
+## 0.0.0-canary.542
+
+Tue, 16 Aug 2022 05:09:21 GMT
+
+### Changes
+
+- Fix relative include path for Views/Image (erozell@outlook.com)
+- Fix XamlRoot crashes in FlyoutViewManager (erozell@outlook.com)
+- Fixes clang compile issues for IReactDispatcher.h (erozell@outlook.com)
+- Replace all codegen includes without relative path (erozell@outlook.com)
+- Fixes various issues with fast text optimization (erozell@outlook.com)
+- Use programmatic focus for UIManager.focus (erozell@outlook.com)
+- Skip user agent HTTP header validation (erozell@outlook.com)
+- Adds missing headers for HttpRequestHeaderCollection (erozell@outlook.com)
+- Adds gesture cancellation to pointer event handling (erozell@outlook.com)
+
+## 0.0.0-canary.541
+
+Sat, 13 Aug 2022 05:09:03 GMT
+
+### Changes
+
+- Adds Systrace to view management APIs for UIManager (erozell@outlook.com)
+
+## 0.0.0-canary.540
+
+Wed, 10 Aug 2022 05:16:49 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.134
+
+## 0.0.0-canary.539
+
+Fri, 05 Aug 2022 05:09:19 GMT
+
+### Changes
+
+- Remove incorrect typename keyword in helpers.h function template (45952631+JonCavesMSFT@users.noreply.github.com)
 
 ## 0.0.0-canary.538
 
@@ -4300,7 +4366,7 @@ Wed, 03 Jun 2020 00:05:25 GMT
 
 - Deprecate acceptsKeyboardFocus (kaigu@microsoft.com)
 - Remove react-native-community/cli dependency from template (acoates@microsoft.com)
-- Code Cleanup: Some low haning fruit lint fixes (dannyvv@microsoft.com)
+- Code Cleanup: Some easy lint fixes (dannyvv@microsoft.com)
 - Allow paremeterization of buildLogDirectory for msbuild task when using run-windows (dannyvv@microsoft.com)
 - Minor autolinking template update prep (jthysell@microsoft.com)
 
@@ -4326,7 +4392,7 @@ Sun, 31 May 2020 00:05:21 GMT
 
 ### Changes
 
-- blacklist all ProjectImports.zip (asklar@microsoft.com)
+- blocklist all ProjectImports.zip (asklar@microsoft.com)
 - docs CI (asklar@microsoft.com)
 
 ## 0.0.0-master.79
@@ -4702,7 +4768,7 @@ Fri, 17 Apr 2020 00:04:27 GMT
 ### Changes
 
 - run_wdio.js will run the tests but also set the exit code to zero/non-zero on success/failure respectively. This is important to break the CI/PR build on test failures, which we weren't doing until now. (asklar@winse.microsoft.com)
-- Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows (acoates@microsoft.com)
+- Add msbuild.ProjectImports.zip to default blocklist to avoid metro error on run-windows (acoates@microsoft.com)
 - implement accessibilityState (kmelmon@microsoft.com)
 
 ## 0.0.0-master.41

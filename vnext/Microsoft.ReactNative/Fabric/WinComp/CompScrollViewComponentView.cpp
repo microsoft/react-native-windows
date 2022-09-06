@@ -219,7 +219,7 @@ void CompScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask upda
   // m_element.FinalizeProperties();
 }
 void CompScrollViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps CompScrollViewComponentView::props() noexcept {
+facebook::react::Props::Shared CompScrollViewComponentView::props() noexcept {
   assert(false);
   return {};
 }

@@ -103,7 +103,7 @@ void CompParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updat
   updateVisualBrush();
 }
 void CompParagraphComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps CompParagraphComponentView::props() noexcept {
+facebook::react::Props::Shared CompParagraphComponentView::props() noexcept {
   assert(false);
   return {};
 }

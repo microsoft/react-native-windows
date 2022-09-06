@@ -87,14 +87,12 @@
     <ClInclude Include="..\stubs\sys\time.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\CxxNativeModule.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Executor.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorToken.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ExecutorTokenFactory.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers-inl.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JsArgumentHelpers.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBigString.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSBundleType.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSIndexedRAMBundle.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSModulesUnbundle.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\MessageQueueThread.h" />
@@ -103,18 +101,14 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeModuleProvider.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\NativeToJsBridge.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\oss-compat-util.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\Platform.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\ReactMarker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\RecoverableError.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\cxxreact\SystraceSection.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
-    <ClInclude Include="$(YogaDir)\yoga\YGNodeList.h" />
     <ClInclude Include="$(YogaDir)\yoga\Yoga.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -134,9 +128,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSIExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\privatedata\PrivateDataBase.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\log.cpp" />
     <!-- We should ideally upstream a fix for missing stdexcept, but Yoga hasn't been accepting PRs as of May 2020 -->
@@ -166,7 +157,7 @@
     </ClCompile>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\callinvoker\ReactCommon\CallInvoker.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\LongLivedObject.h" />
-    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\brdiging\CallbackWrapper.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboCxxModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.h" />

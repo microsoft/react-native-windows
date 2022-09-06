@@ -602,5 +602,5 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   g_compositor = winrt::Windows::UI::Composition::Compositor();
 #endif
-  return RunPlayground(showCmd, true);
+  return RunPlayground(showCmd, false);
 }

@@ -39,6 +39,7 @@
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\NodeApiJsiRuntime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />
     <ClInclude Include="$(CallInvoker_SourcePath)\ReactCommon\CallInvoker.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Crash.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReactHandleHelper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSValueReader.h" />
@@ -92,6 +94,7 @@
   <ItemGroup Condition="'$(BuildMSRNCxx)' != 'false'">
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiAbiApi.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiApiContext.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JsiValueHelpers.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValue.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSValueTreeWriter.cpp" />

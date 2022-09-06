@@ -50,7 +50,7 @@ namespace Microsoft.ReactNative
     void GetData(JsiByteArrayUser useBytes);
   };
 
-  // Type of the JavaScript value. It is currently matching the full JavaScript set of types except for the BigInt type.
+  // Type of the JavaScript value. It is currently matching the full JavaScript set of types.
   [experimental]
   DOC_STRING(
     "An experimental API. Do not use it directly. "
@@ -65,8 +65,10 @@ namespace Microsoft.ReactNative
     Boolean,
     Number,
     Symbol,
+    BigInt, // TODO: JSIVALUECONVERSION - This is where RN wants to put the new enum
     String,
     Object,
+    // BigInt, // TODO: JSIVALUECONVERSION - This is where we WANT to put the new enum
   };
 
   [experimental, webhosthidden]
@@ -93,6 +95,19 @@ namespace Microsoft.ReactNative
   {
     UInt64 Data;
   };
+
+  [experimental]
+  DOC_STRING(
+    "An experimental API. Do not use it directly. "
+    "It may be removed or changed in a future version. Instead, use the JSI API that uses this API internally.\n"
+    "See the `ExecuteJsi` method in `JsiApiContext.h` of the `Microsoft.ReactNative.Cxx` shared project, "
+    "or the examples of the JSI-based TurboModules in the `Microsoft.ReactNative.IntegrationTests` project.\n"
+    "Note that the JSI is defined only for C++ code. We plan to add the .Net support in future.")
+  struct JsiBigIntRef
+  {
+    UInt64 Data;
+  };
+
 
   [experimental]
   DOC_STRING(
@@ -238,6 +253,7 @@ namespace Microsoft.ReactNative
     Boolean IsInspectable { get; };
 
     JsiSymbolRef CloneSymbol(JsiSymbolRef symbol);
+    JsiBigIntRef CloneBigInt (JsiBigIntRef bigInt);
     JsiStringRef CloneString(JsiStringRef str);
     JsiObjectRef CloneObject(JsiObjectRef obj);
     JsiPropertyIdRef ClonePropertyId(JsiPropertyIdRef propertyId);
@@ -297,12 +313,14 @@ namespace Microsoft.ReactNative
     void PopScope(JsiScopeState scopeState);
 
     Boolean SymbolStrictEquals(JsiSymbolRef left, JsiSymbolRef right);
+    Boolean BigIntStrictEquals(JsiBigIntRef left, JsiBigIntRef right);
     Boolean StringStrictEquals(JsiStringRef left, JsiStringRef right);
     Boolean ObjectStrictEquals(JsiObjectRef left, JsiObjectRef right);
 
     Boolean InstanceOf(JsiObjectRef obj, JsiObjectRef constructor);
 
     void ReleaseSymbol(JsiSymbolRef symbol);
+    void ReleaseBigInt(JsiBigIntRef bigInt);
     void ReleaseString(JsiStringRef str);
     void ReleaseObject(JsiObjectRef obj);
     void ReleasePropertyId(JsiPropertyIdRef propertyId);

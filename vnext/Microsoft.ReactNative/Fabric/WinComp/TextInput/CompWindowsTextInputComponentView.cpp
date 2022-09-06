@@ -833,7 +833,7 @@ void CompWindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMas
   ensureDrawingSurface();
 }
 void CompWindowsTextInputComponentView::prepareForRecycle() noexcept {}
-facebook::react::SharedProps CompWindowsTextInputComponentView::props() noexcept {
+facebook::react::Props::Shared CompWindowsTextInputComponentView::props() noexcept {
   assert(false);
   return {};
 }
