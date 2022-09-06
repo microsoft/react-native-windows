@@ -5,3 +5,4 @@ steps:
     clean: false
     submodules: false
     lfs: false
+    persistCredentials: true
