@@ -426,7 +426,7 @@ void SetBorderLayerPropertiesCommon(
       D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
 
   pRT->GetTransform(&originalTransform);
-  translationTransform = originalTransform * translationTransform;
+  // translationTransform = originalTransform * translationTransform;
 
   pRT->SetTransform(translationTransform);
   DrawShape(pRT.get(), shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
@@ -740,17 +740,16 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
     std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
-
   auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
   // We only handle a single borderStyle for now
   auto borderStyle = borderMetrics.borderStyles.left;
 
-  if (borderMetrics.borderColors.isUniform() && borderMetrics.borderColors.left &&
-      !facebook::react::isColorMeaningful(borderMetrics.borderColors.left))
-    return false;
-
-  if (borderMetrics.borderWidths.isUniform() && !borderMetrics.borderWidths.left)
-    return false;
+  if (borderMetrics.borderColors.isUniform()) {
+    if (!borderMetrics.borderWidths.left)
+      return false;
+    if (!facebook::react::isColorMeaningful(borderMetrics.borderColors.left))
+      return false;
+  }
 
   // Create the special border layers if they don't exist yet
   if (!spBorderVisuals[0]) {
@@ -874,7 +873,10 @@ void CompBaseComponentView::updateBorderLayoutMetrics(
         m_compContext,
         borderMetrics.borderRadii,
         {0, 0, 0, 0},
-        {0, 0, layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
+        {0,
+         0,
+         layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+         layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 
     Visual().as<Composition::IVisualInterop>()->SetClippingPath(pathGeometry.get());
   }
