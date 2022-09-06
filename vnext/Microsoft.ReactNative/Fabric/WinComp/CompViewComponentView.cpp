@@ -388,6 +388,9 @@ void SetBorderLayerPropertiesCommon(
   // Clear with transparency
   pRT->Clear();
 
+  // Testing
+  // pRT->Clear({1.0f, 0, 0, 0.3f});
+
   if (!facebook::react::isColorMeaningful(borderColor)) {
     return;
   }
@@ -426,7 +429,7 @@ void SetBorderLayerPropertiesCommon(
       D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
 
   pRT->GetTransform(&originalTransform);
-  // translationTransform = originalTransform * translationTransform;
+  translationTransform = originalTransform * translationTransform;
 
   pRT->SetTransform(translationTransform);
   DrawShape(pRT.get(), shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
@@ -736,11 +739,48 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
   return nullptr;
 }
 
+// We dont want half pixel borders, or border radii - they lead to blurry borders
+// Also apply scale factor to the radii at this point
+void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) {
+  // Always round radii down to avoid spikey circles
+  borderRadii.topLeft = std::floor(borderRadii.topLeft * scaleFactor);
+  borderRadii.topRight = std::floor(borderRadii.topRight * scaleFactor);
+  borderRadii.bottomLeft = std::floor(borderRadii.bottomLeft * scaleFactor);
+  borderRadii.bottomRight = std::floor(borderRadii.bottomRight * scaleFactor);
+}
+
+void pixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetrics, float scaleFactor) {
+  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left > 0 && borderMetrics.borderWidths.left< scaleFactor)
+      ? scaleFactor
+      : std::floor(borderMetrics.borderWidths.left * scaleFactor) / scaleFactor;
+  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top > 0 && borderMetrics.borderWidths.top < scaleFactor)
+      ? scaleFactor
+      : std::floor(borderMetrics.borderWidths.top * scaleFactor) / scaleFactor;
+  borderMetrics.borderWidths.right =
+      (borderMetrics.borderWidths.right > 0 && borderMetrics.borderWidths.right < scaleFactor)
+      ? scaleFactor
+      : std::floor(borderMetrics.borderWidths.right * scaleFactor) / scaleFactor;
+  borderMetrics.borderWidths.bottom =
+      (borderMetrics.borderWidths.bottom > 0 && borderMetrics.borderWidths.bottom < scaleFactor)
+      ? scaleFactor
+      : std::floor(borderMetrics.borderWidths.bottom * scaleFactor) / scaleFactor;
+}
+
+facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    const facebook::react::ViewProps &viewProps) {
+  auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
+
+  pixelRoundBorderRadii(borderMetrics.borderRadii, layoutMetrics.pointScaleFactor);
+  pixelRoundBorderWidths(borderMetrics, layoutMetrics.pointScaleFactor);
+  return borderMetrics;
+}
+
 bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
     std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
-  auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
+  auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
   // We only handle a single borderStyle for now
   auto borderStyle = borderMetrics.borderStyles.left;
 
@@ -863,7 +903,9 @@ void CompBaseComponentView::updateBorderProps(
 void CompBaseComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
-  auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
+  auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
+
+  pixelRoundBorderRadii(borderMetrics.borderRadii, layoutMetrics.pointScaleFactor);
 
   if (borderMetrics.borderRadii.topLeft == 0 && borderMetrics.borderRadii.topRight == 0 &&
       borderMetrics.borderRadii.bottomLeft == 0 && borderMetrics.borderRadii.bottomRight == 0) {
