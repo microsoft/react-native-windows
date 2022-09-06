@@ -1,0 +1,52 @@
+# Compliance tasks to be run pre build
+parameters:
+- name: complianceWarnOnly
+  displayName: Convert compliance errors to warnings
+  type: boolean
+  default: false
+
+steps:
+  # PoliCheck Build Task (https://aka.ms/gdn-azdo-policheck)
+  # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
+    displayName: '⚖️ Run PoliCheck'
+    inputs:
+      targetType: F
+      targetArgument: $(Build.SourcesDirectory)
+      result: PoliCheck.xml
+      optionsFC: 1
+      optionsXS: 1
+      optionsHMENABLE: 0
+      optionsPE: 1|2|3|4
+      optionsSEV: 1|2|3|4
+      optionsUEPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckExclusions.xml
+      optionsRulesDBPath: $(Build.SourcesDirectory)\.ado\config\PoliCheckRules.mdb
+    continueOnError: ${{ parameters.complianceWarnOnly }}
+
+  # CredScan Task (https://aka.ms/gdn-azdo-credscan)
+  # Searches through source code and build outputs for credentials left behind in the open.
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@3
+    displayName: '⚖️ Run CredScan'
+    inputs:
+      outputFormat: pre
+      suppressionsFile: $(Build.SourcesDirectory)\.ado\config\CredScanSuppressions.json
+      batchSize: 20
+      debugMode: false
+    continueOnError: ${{ parameters.complianceWarnOnly }}
+
+  # PostAnalysis Task (https://docs.microsoft.com/en-us/azure/security/develop/yaml-configuration#post-analysis-task)
+  # Breaks the build if any of the tasks failed.
+  - task: PostAnalysis@1
+    displayName: "⚖️ Compliance Pre-Build Analysis"
+    inputs:
+      AllTools: false
+      CredScan: true
+      PoliCheck: true
+      PoliCheckBreakOn: Severity4Above
+      ToolLogsNotFoundAction: "Error"
+    continueOnError: ${{ parameters.complianceWarnOnly }}
+
+  # Restore unnecessary changes that were made by the compliance tasks
+  - script: |
+      git restore $(Build.SourcesDirectory)\.ado\config\PoliCheckRules.mdb
+    displayName: "⚖️ Compliance Pre-Build Cleanup"

@@ -11549,7 +11549,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Code Cleanup: Some low haning fruit lint fixes",
+            "comment": "Code Cleanup: Some easy lint fixes",
             "author": "dannyvv@microsoft.com",
             "commit": "7361c32af8cce87267be33c1d1cfc9fb6368274c",
             "package": "react-native-windows"
@@ -11620,7 +11620,7 @@
       "comments": {
         "prerelease": [
           {
-            "comment": "blacklist all ProjectImports.zip",
+            "comment": "blocklist all ProjectImports.zip",
             "author": "asklar@microsoft.com",
             "commit": "e2d328a545a2520f760dbd0c782e2da20f0eb355",
             "package": "react-native-windows"
@@ -12796,7 +12796,7 @@
             "package": "react-native-windows"
           },
           {
-            "comment": "Add msbuild.ProjectImports.zip to default blacklist to avoid metro error on run-windows",
+            "comment": "Add msbuild.ProjectImports.zip to default blocklist to avoid metro error on run-windows",
             "author": "acoates@microsoft.com",
             "commit": "83f6067f50abd97e6bb2f59d41afe9dad04e26d0",
             "package": "react-native-windows"

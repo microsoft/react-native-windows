@@ -460,7 +460,7 @@ winrt::IPropertyValue TestHit(
         return resTag;
 
       if (isHit) {
-        tag = el.GetValue(xaml::FrameworkElement::TagProperty()).try_as<winrt::IPropertyValue>();
+        tag = el.GetValue(ReactTagProperty()).try_as<winrt::IPropertyValue>();
         if (tag) {
           return tag;
         }
@@ -500,7 +500,7 @@ bool TagFromOriginalSource(const winrt::PointerRoutedEventArgs &args, int64_t *p
   winrt::IPropertyValue tag(nullptr);
 
   while (sourceElement) {
-    auto tagValue = sourceElement.ReadLocalValue(xaml::FrameworkElement::TagProperty());
+    auto tagValue = sourceElement.ReadLocalValue(ReactTagProperty());
     if (tagValue != xaml::DependencyProperty::UnsetValue()) {
       tag = tagValue.try_as<winrt::IPropertyValue>();
       // If a TextBlock was the UIElement event source, perform a more accurate hit test,

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Add $schema to cgmanifest.json",
+  "packageName": "react-native-windows",
+  "email": "jamie.magee@microsoft.com",
+  "dependentChangeType": "none"
+}
