@@ -235,15 +235,11 @@ void FabricUIManager::installFabricUIManager() noexcept {
                                         facebook::react::ContextContainer::Shared const &contextContainer)
       -> facebook::react::ComponentDescriptorRegistry::Shared {
     auto registry = sharedProviderRegistry()->createComponentDescriptorRegistry({eventDispatcher, contextContainer});
-    // Enabling the fallback component will require us to run the view component codegen to generate
-    // UnimplementedNativeViewComponentDescriptor
-    /*
     auto mutableRegistry = std::const_pointer_cast<facebook::react::ComponentDescriptorRegistry>(registry);
     mutableRegistry->setFallbackComponentDescriptor(
         std::make_shared<facebook::react::UnimplementedNativeViewComponentDescriptor>(
             facebook::react::ComponentDescriptorParameters{
                 eventDispatcher, contextContainer, nullptr}));
-    */
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
