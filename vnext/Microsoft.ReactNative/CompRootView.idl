@@ -9,15 +9,9 @@ import "ReactNativeHost.idl";
 
 namespace Microsoft.ReactNative
 {
-  
-//  [webhosthidden]
-//  struct PointerPressedArgs {
-    //Int32 X;
-    //Int32 Y;
-  //};
-
   [default_interface]
   [webhosthidden]
+  [experimental]
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
   runtimeclass CompRootView
   {

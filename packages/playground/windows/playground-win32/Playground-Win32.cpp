@@ -39,7 +39,6 @@
 
 #ifdef USE_WINCOMP
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
-#include "../../../../vnext/codegen/NativeLogBoxSpec.g.h"
 #include <DispatcherQueue.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
@@ -52,6 +51,7 @@ namespace hosting = xaml::Hosting;
 
 #ifdef USE_WINCOMP
 // Work around crash in DeviceInfo when running outside of XAML environment
+// TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
 REACT_MODULE(DeviceInfo)
 struct DeviceInfo {
   using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;

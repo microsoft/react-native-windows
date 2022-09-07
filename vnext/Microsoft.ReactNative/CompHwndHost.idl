@@ -10,7 +10,10 @@ namespace Microsoft.ReactNative
 {
   [default_interface]
   [webhosthidden]
-  DOC_STRING("An HWND based host of RNW running on windows composition.")
+  [experimental]
+  DOC_STRING("An HWND based host of RNW running on windows composition."
+  "Provided as an ease of use function - most of the time HWND-less hosting would be preferable."
+  "In the long term this is likely to be replaced with a more modern hosting interface.")
   runtimeclass CompHwndHost
   {
     DOC_STRING("Creates a new instance of @CompHwndHost.")
