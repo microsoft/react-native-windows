@@ -52,7 +52,7 @@
     "src"
   ],
   "beachball": {
-    "defaultNpmTag": "latest",
+    "defaultNpmTag": "v0.69-stable",
     "disallowedChangeTypes": [
       "major",
       "minor",
