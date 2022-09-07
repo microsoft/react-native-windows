@@ -25,8 +25,9 @@ namespace Microsoft::React::Networking {
 
 #pragma region RedirectHttpFilter
 
-RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
-    : m_innerFilter{std::move(innerFilter)},
+RedirectHttpFilter::RedirectHttpFilter(size_t maxRedirects, IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
+    : m_maximumRedirects{maxRedirects},
+      m_innerFilter{std::move(innerFilter)},
       m_innerFilterWithNoCredentials{std::move(innerFilterWithNoCredentials)} {
 
   // Prevent automatic redirections.
@@ -39,6 +40,12 @@ RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&
     baseFilter.AllowUI(false);
   }
 }
+
+RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
+    : RedirectHttpFilter(
+          20,
+          std::move(innerFilter),
+          std::move(innerFilterWithNoCredentials)) {}
 
 RedirectHttpFilter::RedirectHttpFilter() noexcept
     : RedirectHttpFilter(
@@ -183,6 +190,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
 
   auto coRequest = request;
   auto coAllowAutoRedirect = m_allowAutoRedirect;
+  auto coMaxRedirects = m_maximumRedirects;
   auto coRequestFactory = m_requestFactory;
 
   method = coRequest.Method();
@@ -215,7 +223,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
     }
 
     redirectCount++;
-    if (redirectCount > 3 /*TODO: max redirections*/) {
+    if (redirectCount > coMaxRedirects) {
       break;
     }
 

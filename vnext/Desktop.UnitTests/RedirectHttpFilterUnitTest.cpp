@@ -12,10 +12,8 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Web::Http;
 
-using std::make_shared;
-//using std::promise;//TODO: keep?
-using std::string;
-
+using Microsoft::React::Networking::RedirectHttpFilter;
+using Microsoft::React::Networking::ResponseOperation;
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter;
 using winrt::Windows::Web::Http::Filters::IHttpFilter;
@@ -29,7 +27,6 @@ std::wstring ToString<HttpStatusCode>(const HttpStatusCode &status) {
 
 } // namespace Microsoft::VisualStudio::CppUnitTestFramework
 
-
 namespace Microsoft::React::Test {
 
 TEST_CLASS (RedirectHttpFilterUnitTest) {
@@ -41,7 +38,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
 
   TEST_METHOD(QueryInterfacesSucceeds)
   {
-    auto filter = winrt::make<Networking::RedirectHttpFilter>();
+    auto filter = winrt::make<RedirectHttpFilter>();
 
     auto iFilter = filter.try_as<IHttpFilter>();
     Assert::IsFalse(iFilter == nullptr);
@@ -50,13 +47,12 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
   }
 
   TEST_METHOD(AutomaticRedirectSucceeds) {
-    auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
-    auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
-
     auto url1 = L"http://initialhost";
     auto url2 = L"http://redirecthost";
+    auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
+    auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
     mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> Networking::ResponseOperation {
+        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
       HttpResponseMessage response{};
 
       if (request.RequestUri().Host() == L"initialhost") {
@@ -71,7 +67,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
     mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [](HttpRequestMessage const &request) -> Networking::ResponseOperation {
+        [](HttpRequestMessage const &request) -> ResponseOperation {
       HttpResponseMessage response;
 
       if (request.RequestUri().Host() == L"redirecthost") {
@@ -86,7 +82,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
     };
 
 
-    auto filter = winrt::make<Networking::RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
+    auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
     auto client = HttpClient{filter};
     auto request = HttpRequestMessage{HttpMethod::Get(), Uri{url1}};
     auto sendOp = client.SendRequestAsync(request);
@@ -102,14 +98,12 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
   }
 
   TEST_METHOD(ManualRedirectSucceeds) {
-    auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
-    auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
-
     auto url1 = L"http://initialhost";
     auto url2 = L"http://redirecthost";
-    auto mockPtr1{mockFilter1.as<MockHttpBaseFilter>()};
+    auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
+    auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
     mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> Networking::ResponseOperation {
+        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
       HttpResponseMessage response{};
 
       if (request.RequestUri().Host() == L"initialhost") {
@@ -125,7 +119,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
 
-    auto filter = winrt::make<Networking::RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
+    auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
     // Disable automatic redirect
     filter.try_as<IHttpBaseProtocolFilter>().AllowAutoRedirect(false);
 
@@ -148,6 +142,56 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
     contentOp.get();
     auto content = contentOp.GetResults();
     Assert::AreEqual(L"Response Content", content.c_str());
+  }
+
+  TEST_METHOD(TooManyRedirectsFails)
+  {
+    auto url1 = L"http://initialhost";
+    auto url2 = L"http://redirecthost";
+    auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
+    auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
+
+    mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
+        [&url2](HttpRequestMessage const &request) -> ResponseOperation { HttpResponseMessage response;
+
+    auto uri2 = Uri{url2 + winrt::to_hstring(L"?redirCount=1")};
+      response.Headers().Location(uri2);
+      response.StatusCode(HttpStatusCode::MovedPermanently);
+      response.Content(HttpStringContent{L""});
+
+      co_return response;
+    };
+    mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
+        [&url2](HttpRequestMessage const &request) -> ResponseOperation { HttpResponseMessage response;
+
+      auto query = request.RequestUri().QueryParsed().GetFirstValueByName(L"redirCount");
+      auto redirCount = std::stoi(query.c_str());
+      if (redirCount >= 3) {
+        response.StatusCode(HttpStatusCode::Ok);
+        response.Content(HttpStringContent{L"Response Content"});
+      } else {
+        redirCount++;
+        response.Headers().Location(Uri{url2 + winrt::to_hstring(L"?redirCount=") + winrt::to_hstring(redirCount)});
+        response.StatusCode(HttpStatusCode::MovedPermanently);
+        response.Content(HttpStringContent{L"Redirecting: " + winrt::to_hstring(redirCount)});
+      }
+
+      co_return response;
+    };
+
+    auto filter = winrt::make<RedirectHttpFilter>(2, std::move(mockFilter1), std::move(mockFilter2));
+    auto client = HttpClient{filter};
+    auto request = HttpRequestMessage(HttpMethod::Get(), Uri{url1});
+    auto sendOp = client.SendRequestAsync(request);
+    sendOp.get();
+    auto response = sendOp.GetResults();
+
+    Assert::AreEqual(HttpStatusCode::MovedPermanently, response.StatusCode());
+
+    auto contentOp = response.Content().ReadAsStringAsync();
+    contentOp.get();
+    auto content = contentOp.GetResults();
+    Assert::AreEqual(L"Redirecting: 3", content.c_str());
   }
 };
 

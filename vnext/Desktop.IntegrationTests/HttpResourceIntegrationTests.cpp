@@ -19,11 +19,6 @@
 // Standard Library
 #include <future>
 
-//TODO:Remove
-#include <Networking/RedirectHttpFilter.h>
-
-using namespace winrt::Windows::Web::Http::Filters;
-
 using namespace Microsoft::React;
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -362,28 +357,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({}, error, L"Error encountered");
     Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
     Assert::AreEqual({"Redirect Content"}, content);
-  }
-
-  //TODO: Remove
-  TEST_METHOD(QueryIf) {
-    using namespace winrt::Windows::Web::Http::Filters;
-
-
-    IHttpFilter f0 = HttpBaseProtocolFilter{};
-    auto if0 = f0.try_as<IHttpFilter>();
-    Assert::IsTrue(if0 != nullptr);
-    auto bf0 = f0.try_as<IHttpBaseProtocolFilter>();
-    Assert::IsTrue(bf0 != nullptr);
-    bf0.AllowAutoRedirect(true);
-
-    auto f = winrt::make<Networking::RedirectHttpFilter>();
-
-    auto iFilter = f.try_as<IHttpFilter>();
-    Assert::IsTrue(iFilter != nullptr);
-
-    auto bFilter = f.try_as<IHttpBaseProtocolFilter>();
-    Assert::IsTrue(bFilter != nullptr);
-    bFilter.AllowAutoRedirect(false);
   }
 
   TEST_METHOD(SimpleRedirectPatchSucceeds) {

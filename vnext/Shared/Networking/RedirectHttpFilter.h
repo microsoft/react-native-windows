@@ -26,11 +26,16 @@ class RedirectHttpFilter : public winrt::implements<
 
   std::weak_ptr<IWinRTHttpRequestFactory> m_requestFactory;
   bool m_allowAutoRedirect{true};
+  size_t m_maximumRedirects;
 
  public:
-  RedirectHttpFilter(
+  RedirectHttpFilter(size_t maxRedirects,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
+
+  RedirectHttpFilter(
+    winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
+    winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
 
   RedirectHttpFilter() noexcept;
 
