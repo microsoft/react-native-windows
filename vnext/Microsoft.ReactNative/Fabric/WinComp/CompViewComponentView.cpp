@@ -461,7 +461,7 @@ void SetBorderLayerProperties(
         anchorPoint,
         anchorOffset,
         strokeWidth,
-        borderColor ? borderColor : facebook::react::blackColor(),
+        borderColor,
         borderStyle);
   } else {
     // if (VisualVersion::IsUseWinCompClippingRegionEnabled())
@@ -470,7 +470,7 @@ void SetBorderLayerProperties(
       layer.Size({textureRect.right - textureRect.left, textureRect.bottom - textureRect.top});
 
       layer.Brush(
-          compContext.CreateColorBrush((borderColor ? borderColor : facebook::react::blackColor()).AsWindowsColor()));
+          compContext.CreateColorBrush(borderColor.AsWindowsColor()));
 
       winrt::com_ptr<ID2D1Factory1> spD2dFactory;
       compContext.as<Composition::ICompositionContextInterop>()->D2DFactory(spD2dFactory.put());
@@ -749,7 +749,7 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
 
 // We dont want half pixel borders, or border radii - they lead to blurry borders
 // Also apply scale factor to the radii at this point
-void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) {
+void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
   // Always round radii down to avoid spikey circles
   borderRadii.topLeft = std::floor(borderRadii.topLeft * scaleFactor);
   borderRadii.topRight = std::floor(borderRadii.topRight * scaleFactor);
@@ -757,30 +757,41 @@ void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scal
   borderRadii.bottomRight = std::floor(borderRadii.bottomRight * scaleFactor);
 }
 
-void pixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetrics, float scaleFactor) {
-  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left > 0 && borderMetrics.borderWidths.left< scaleFactor)
-      ? scaleFactor
-      : std::floor(borderMetrics.borderWidths.left * scaleFactor) / scaleFactor;
-  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top > 0 && borderMetrics.borderWidths.top < scaleFactor)
-      ? scaleFactor
-      : std::floor(borderMetrics.borderWidths.top * scaleFactor) / scaleFactor;
-  borderMetrics.borderWidths.right =
-      (borderMetrics.borderWidths.right > 0 && borderMetrics.borderWidths.right < scaleFactor)
-      ? scaleFactor
-      : std::floor(borderMetrics.borderWidths.right * scaleFactor) / scaleFactor;
-  borderMetrics.borderWidths.bottom =
-      (borderMetrics.borderWidths.bottom > 0 && borderMetrics.borderWidths.bottom < scaleFactor)
-      ? scaleFactor
-      : std::floor(borderMetrics.borderWidths.bottom * scaleFactor) / scaleFactor;
+void scaleAndPixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetrics, float scaleFactor) noexcept {
+  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0) ? 0.f : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
+  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top == 0) ? 0.f : std::max(1.f, std::round(borderMetrics.borderWidths.top * scaleFactor));
+  borderMetrics.borderWidths.right = (borderMetrics.borderWidths.right == 0)
+      ? 0.f
+      : std::max(1.f, std::round(borderMetrics.borderWidths.right * scaleFactor));
+  borderMetrics.borderWidths.bottom = (borderMetrics.borderWidths.bottom == 0)
+      ? 0.f
+      : std::max(1.f, std::round(borderMetrics.borderWidths.bottom * scaleFactor));
+}
+
+// react-native uses black as a default color when none is specified.
+void assignDefaultBlackBorders(facebook::react::BorderMetrics &borderMetrics) noexcept {
+  if (!borderMetrics.borderColors.left) {
+    borderMetrics.borderColors.left = facebook::react::blackColor();
+  }
+  if (!borderMetrics.borderColors.top) {
+    borderMetrics.borderColors.top = facebook::react::blackColor();
+  }
+  if (!borderMetrics.borderColors.right) {
+    borderMetrics.borderColors.right = facebook::react::blackColor();
+  }
+  if (!borderMetrics.borderColors.bottom) {
+    borderMetrics.borderColors.bottom = facebook::react::blackColor();
+  }
 }
 
 facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
-    const facebook::react::ViewProps &viewProps) {
+    const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
 
   pixelRoundBorderRadii(borderMetrics.borderRadii, layoutMetrics.pointScaleFactor);
-  pixelRoundBorderWidths(borderMetrics, layoutMetrics.pointScaleFactor);
+  scaleAndPixelRoundBorderWidths(borderMetrics, layoutMetrics.pointScaleFactor);
+  assignDefaultBlackBorders(borderMetrics);
   return borderMetrics;
 }
 
@@ -817,7 +828,7 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
     if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
       // Because in DirectX geometry starts at the center of the stroke, we need to deflate
       // rectangle by half the stroke width to render correctly.
-      float strokeCenteringOffset = borderMetrics.borderWidths.left * layoutMetrics.pointScaleFactor / 2.0f;
+      float strokeCenteringOffset = borderMetrics.borderWidths.left / 2.0f;
 
       facebook::react::RectangleEdges<float> rectPathGeometry = {
           strokeCenteringOffset,
@@ -833,7 +844,7 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
             m_compContext,
             spBorderVisuals,
             *pathGeometry,
-            borderMetrics.borderWidths.left * layoutMetrics.pointScaleFactor,
+            borderMetrics.borderWidths.left,
             extentWidth,
             extentHeight,
             borderMetrics.borderColors,
@@ -844,23 +855,18 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
     } else {
       facebook::react::RectangleEdges<float> rectPathGeometry = {0, 0, extentWidth, extentHeight};
 
-      auto scaledBorderWidths = borderMetrics.borderWidths;
-      scaledBorderWidths.left *= layoutMetrics.pointScaleFactor;
-      scaledBorderWidths.top *= layoutMetrics.pointScaleFactor;
-      scaledBorderWidths.right *= layoutMetrics.pointScaleFactor;
-      scaledBorderWidths.bottom *= layoutMetrics.pointScaleFactor;
       winrt::com_ptr<ID2D1GeometryGroup> pathGeometry = GetGeometryForRoundedBorder(
           m_compContext,
           borderMetrics.borderRadii,
           {0, 0, 0, 0}, // inset
-          scaledBorderWidths,
+          borderMetrics.borderWidths,
           rectPathGeometry);
 
       DrawAllBorderLayers(
           m_compContext,
           spBorderVisuals,
           *pathGeometry,
-          borderMetrics.borderWidths.left * layoutMetrics.pointScaleFactor,
+          borderMetrics.borderWidths.left,
           extentWidth,
           extentHeight,
           borderMetrics.borderColors,
@@ -869,8 +875,8 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
   } else {
     // Because in DirectX geometry starts at the center of the stroke, we need to deflate rectangle by half the stroke
     // width / height to render correctly.
-    float strokeCenteringOffsetX = (borderMetrics.borderWidths.left * layoutMetrics.pointScaleFactor / 2.0f);
-    float strokeCenteringOffsetY = (borderMetrics.borderWidths.top * layoutMetrics.pointScaleFactor / 2.0f);
+    float strokeCenteringOffsetX = (borderMetrics.borderWidths.left / 2.0f);
+    float strokeCenteringOffsetY = (borderMetrics.borderWidths.top / 2.0f);
     D2D1_RECT_F rectShape{
         strokeCenteringOffsetX,
         strokeCenteringOffsetY,
@@ -880,7 +886,7 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
         m_compContext,
         spBorderVisuals,
         rectShape,
-        borderMetrics.borderWidths.left * layoutMetrics.pointScaleFactor,
+        borderMetrics.borderWidths.left,
         extentWidth,
         extentHeight,
         borderMetrics.borderColors,
