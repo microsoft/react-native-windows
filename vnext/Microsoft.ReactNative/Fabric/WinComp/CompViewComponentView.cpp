@@ -388,9 +388,6 @@ void SetBorderLayerPropertiesCommon(
   // Clear with transparency
   pRT->Clear();
 
-  // Testing
-  // pRT->Clear({1.0f, 0, 0, 0.3f});
-
   if (!facebook::react::isColorMeaningful(borderColor)) {
     return;
   }
@@ -426,13 +423,19 @@ void SetBorderLayerPropertiesCommon(
   }
   D2D1::Matrix3x2F originalTransform;
   D2D1::Matrix3x2F translationTransform =
-      D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
+    D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
 
   pRT->GetTransform(&originalTransform);
   translationTransform = originalTransform * translationTransform;
 
+  float oldDpiX, oldDpiY;
   pRT->SetTransform(translationTransform);
+  pRT->GetDpi(&oldDpiX, &oldDpiY);
+  pRT->SetDpi(96.0f, 96.0f); // We have already done the dpi scaling...
+
   DrawShape(pRT.get(), shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
+
+  pRT->SetDpi(oldDpiX, oldDpiY);
   pRT->SetTransform(originalTransform);
 }
 
@@ -570,7 +573,10 @@ void DrawAllBorderLayers(
       spBorderLayers[4],
       shape,
       spTextures[4],
-      {std::floor(textureWidth / 2.0f), cornerSize, textureWidth - cornerSize, std::ceil(textureHeight / 2.0f)},
+      {std::floor(textureWidth / 2.0f),
+       cornerSize,
+       textureWidth - cornerSize /* - (textureWidth % 2)*/,
+       std::ceil(textureHeight / 2.0f)},
       {AnchorPosition::Right, AnchorPosition::Top},
       {-std::floor(textureWidth / 2.0f), cornerSize},
       strokeWidth,
@@ -611,8 +617,8 @@ void DrawAllBorderLayers(
       spTextures[7],
       {std::floor(textureWidth / 2),
        std::floor(textureHeight / 2.0f),
-       textureWidth - cornerSize,
-       textureHeight - cornerSize},
+       textureWidth - cornerSize /* - (textureWidth % 2)*/,
+       textureHeight - cornerSize /* - (textureHeight % 2) */},
       {AnchorPosition::Right, AnchorPosition::Bottom},
       {-std::floor(textureWidth / 2.0f), -std::floor(textureHeight / 2.0f)},
       strokeWidth,
@@ -651,7 +657,9 @@ void DrawAllBorderLayers(
       spBorderLayers[10],
       shape,
       spTextures[10],
-      {cornerSize, std::floor(textureHeight / 2.0f), std::ceil(textureWidth / 2.0f), textureHeight - cornerSize},
+      {
+    cornerSize, std::floor(textureHeight / 2.0f), std::ceil(textureWidth / 2.0f),
+       textureHeight - cornerSize /* - (textureHeight % 2)*/},
       {AnchorPosition::Left, AnchorPosition::Bottom},
       {cornerSize, -std::floor(textureHeight / 2.0f)},
       strokeWidth,
@@ -836,11 +844,16 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
     } else {
       facebook::react::RectangleEdges<float> rectPathGeometry = {0, 0, extentWidth, extentHeight};
 
+      auto scaledBorderWidths = borderMetrics.borderWidths;
+      scaledBorderWidths.left *= layoutMetrics.pointScaleFactor;
+      scaledBorderWidths.top *= layoutMetrics.pointScaleFactor;
+      scaledBorderWidths.right *= layoutMetrics.pointScaleFactor;
+      scaledBorderWidths.bottom *= layoutMetrics.pointScaleFactor;
       winrt::com_ptr<ID2D1GeometryGroup> pathGeometry = GetGeometryForRoundedBorder(
           m_compContext,
           borderMetrics.borderRadii,
           {0, 0, 0, 0}, // inset
-          borderMetrics.borderWidths,
+          scaledBorderWidths,
           rectPathGeometry);
 
       DrawAllBorderLayers(
@@ -904,8 +917,6 @@ void CompBaseComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
-
-  pixelRoundBorderRadii(borderMetrics.borderRadii, layoutMetrics.pointScaleFactor);
 
   if (borderMetrics.borderRadii.topLeft == 0 && borderMetrics.borderRadii.topRight == 0 &&
       borderMetrics.borderRadii.bottomLeft == 0 && borderMetrics.borderRadii.bottomRight == 0) {
