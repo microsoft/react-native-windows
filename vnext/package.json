@@ -76,7 +76,7 @@
     "metro-config": "^0.70.1",
     "prettier": "^2.4.1",
     "react": "18.1.0",
-    "react-native": "0.70.0-rc.4",
+    "react-native": "0.70.0",
     "react-native-platform-override": "^1.6.13",
     "react-refresh": "^0.4.0",
     "react-shallow-renderer": "16.14.1",
@@ -84,14 +84,14 @@
   },
   "peerDependencies": {
     "react": "18.1.0",
-    "react-native": "0.70.0-rc.4"
+    "react-native": "^0.70.0"
   },
   "beachball": {
-    "defaultNpmTag": "preview",
+    "defaultNpmTag": "latest",
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "prerelease"
     ],
     "gitTags": true
   },
