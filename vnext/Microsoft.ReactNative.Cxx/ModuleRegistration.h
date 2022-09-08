@@ -100,8 +100,11 @@ struct ModuleRegistration {
   static const ModuleRegistration *s_head;
 };
 
-void AddAttributedModules(IReactPackageBuilder const &packageBuilder) noexcept;
+void AddAttributedModules(IReactPackageBuilder const &packageBuilder, bool useTurboModules = false) noexcept;
 
-bool TryAddAttributedModule(IReactPackageBuilder const &packageBuilder, std::wstring_view moduleName) noexcept;
+bool TryAddAttributedModule(
+    IReactPackageBuilder const &packageBuilder,
+    std::wstring_view moduleName,
+    bool useTurboModules = false) noexcept;
 
 } // namespace winrt::Microsoft::ReactNative
