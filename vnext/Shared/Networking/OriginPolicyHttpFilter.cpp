@@ -683,6 +683,16 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   co_return {co_await m_innerFilter.SendRequestAsync(preflightRequest)};
 }
 
+#pragma region IRedirectEventSource
+
+bool OriginPolicyHttpFilter::OnRedirecting(HttpRequestMessage const& request, HttpResponseMessage const& response) noexcept
+{
+  //TODO: Implement
+  return true;
+}
+
+#pragma endregion IRedirectEventSource
+
 #pragma region IHttpFilter
 
 ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {

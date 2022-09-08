@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <winrt/Microsoft.React.Networking.h>
 #include "IWinRTHttpRequestFactory.h"
 
 // Windows API
@@ -25,6 +26,7 @@ class RedirectHttpFilter : public winrt::implements<
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilterWithNoCredentials;
 
   std::weak_ptr<IWinRTHttpRequestFactory> m_requestFactory;
+  winrt::Microsoft::React::Networking::IRedirectEventSource m_redirEventSrc;
   bool m_allowAutoRedirect{true};
   size_t m_maximumRedirects;
 
@@ -40,6 +42,8 @@ class RedirectHttpFilter : public winrt::implements<
   RedirectHttpFilter() noexcept;
 
   void SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept;
+
+  void SetRedirectSource(winrt::Microsoft::React::Networking::IRedirectEventSource const& eventSrc) noexcept;
 
 #pragma region IHttpFilter
 

@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include <winrt/Microsoft.React.Networking.h>
 #include "OriginPolicy.h"
 
 // Windows API
@@ -16,7 +17,9 @@
 namespace Microsoft::React::Networking {
 
 class OriginPolicyHttpFilter
-    : public winrt::implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter> {
+    : public winrt::
+          implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter,
+          winrt::Microsoft::React::Networking::IRedirectEventSource> {
  public:
   struct ConstWcharComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;
@@ -98,6 +101,14 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpResponseMessage,
       winrt::Windows::Web::Http::HttpProgress>
   SendPreflightAsync(winrt::Windows::Web::Http::HttpRequestMessage const &request) const;
+
+#pragma region IRedirectEventSource
+
+  bool OnRedirecting(
+      winrt::Windows::Web::Http::HttpRequestMessage const &request,
+      winrt::Windows::Web::Http::HttpResponseMessage const &response) noexcept;
+
+#pragma endregion IRedirectEventSource
 
 #pragma region IHttpFilter
 

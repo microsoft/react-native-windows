@@ -1,0 +1,14 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace Microsoft.React.Networking {
+
+  interface IRedirectEventSource
+  {
+  Boolean OnRedirecting(
+        Windows.Web.Http.HttpRequestMessage request,
+        Windows.Web.Http.HttpResponseMessage response);
+     
+  };
+
+}

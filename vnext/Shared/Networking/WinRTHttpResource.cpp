@@ -617,6 +617,8 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
     OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
     auto opFilter = winrt::make<OriginPolicyHttpFilter>(redirFilter);
+    redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(
+        opFilter.as<winrt::Microsoft::React::Networking::IRedirectEventSource>());
 
     client = HttpClient{opFilter};
   }
