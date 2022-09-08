@@ -143,7 +143,6 @@
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ReactRootViewTagGenerator.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ComponentViewRegistry.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\CxxModuleUtilities.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\FileReaderModule.cpp" />

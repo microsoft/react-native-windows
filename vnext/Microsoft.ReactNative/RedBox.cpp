@@ -15,10 +15,11 @@
 
 #ifndef CORE_ABI
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
 #include <Shobjidl.h>
 #include <winrt/Windows.UI.Popups.h>
-#else
+#include "XamlUtils.h"
+#endif // USE_FABRIC
 #include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Controls.h>
 #include <UI.Xaml.Documents.h>
@@ -32,9 +33,7 @@
 #include <winrt/Windows.Web.Http.h>
 #include "CppWinRTIncludes.h"
 #include "Utils/Helpers.h"
-#include "XamlUtils.h"
-#endif
-#endif
+#endif // CORE_ABI
 
 #include <ReactPropertyBag.h>
 
@@ -55,14 +54,13 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
         m_errorInfo(std::move(errorInfo)) {}
 
   void Dismiss() noexcept {
-#ifndef USE_WINCOMP
+#ifdef USE_FABRIC
     if (m_popup) {
       m_popup.IsOpen(false);
     }
-#endif
+#endif // USE_FABRIC
   }
 
-#ifndef USE_WINCOMP
   void Reload() noexcept {
     if (auto reactHost = m_weakReactHost.GetStrongPtr()) {
       reactHost->ReloadInstance();
@@ -77,14 +75,11 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       m_redboxContent.Width(args.Size().Width);
     }
   }
-#endif
 
-  void ShowNewJSError() noexcept {
-    m_showing = true;
-
-#ifdef USE_WINCOMP
-    // Using MessageDialog is "easy", but it does mean we cannot update the message when symbols are resolved.
-    // Ideally we'd have a dialog we could update.  -- Maybe we could host the XAML dialog?
+#ifdef USE_FABRIC
+  void ShowNewJsErrorUsingMessageDialog() noexcept {
+      // Using MessageDialog is "easy", but it does mean we cannot update the message when symbols are resolved.
+    // Ideally we'd have a dialog we could update.  -- Maybe we could load XAML and host the XAML dialog?
 
     std::stringstream ss;
     ss << m_errorInfo.Message;
@@ -107,8 +102,10 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
           }
         }));
     msg.ShowAsync();
+  }
+#endif USE_FABRIC
 
-#else
+  void ShowNewJSErrorUsingXaml() noexcept {
     m_popup = xaml::Controls::Primitives::Popup{};
 
     const winrt::hstring xamlString =
@@ -204,19 +201,31 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
     m_popup.Child(m_redboxContent);
     m_popup.IsOpen(true);
-#endif
+  }
+
+  void ShowNewJSError() noexcept {
+    m_showing = true;
+
+#ifdef USE_FABRIC
+  // If Xaml is already loaded, use the Xaml implementation -
+  //   Otherwise we fallback on a simpler implementation
+  if (xaml::TryGetCurrentApplication()) { 
+#endif // USE_FABRIC
+    ShowNewJSErrorUsingXaml();
+#ifdef USE_FABRIC
+  } else {
+    ShowNewJsErrorUsingMessageDialog();
+  }
+#endif // USE_FABRIC
   }
 
   void UpdateError(const ErrorInfo &&info) noexcept {
     m_errorInfo = std::move(info);
-#ifndef USE_WINCOMP
     if (m_showing) {
       PopulateFrameStackUI();
     }
-#endif
   }
 
-#ifndef USE_WINCOMP
   void OnPopupClosed() noexcept {
     m_showing = false;
     m_dismissButton.Click(m_tokenDismiss);
@@ -226,14 +235,12 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_redboxContent = nullptr;
     m_onClosedCallback(GetId());
   }
-#endif
 
   uint32_t GetId() const noexcept {
     return m_errorInfo.Id;
   }
 
  private:
-#ifndef USE_WINCOMP
   static bool IsMetroBundlerError(const std::string &message, const std::string &type) {
     // This string must be kept in sync with the one in formatBundlingError in
     // node_modules\metro\src\lib\formatBundlingError.js
@@ -374,6 +381,9 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   }
 
   void PopulateFrameStackUI() noexcept {
+    if (!m_stackPanel)
+      return;
+
     m_stackPanel.Children().Clear();
     for (const auto &frame : m_errorInfo.Callstack) {
       const winrt::hstring xamlFrameString =
@@ -446,7 +456,6 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
   winrt::event_token m_tokenClosed;
   winrt::event_token m_tokenDismiss;
   winrt::event_token m_tokenReload;
-#endif
 
   winrt::Microsoft::ReactNative::ReactPropertyBag m_propBag;
   bool m_showing = false;

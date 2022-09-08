@@ -79,13 +79,6 @@
 #include "JsiApi.h"
 #include "ReactCoreInjection.h"
 
-#ifdef USE_FABRIC
-namespace facebook::react {
-void InitTextInputThemeInfo(const Mso::React::IReactContext &reactContext);
-void InitSliderMeasurements(const Mso::React::IReactContext &reactContext);
-} // namespace facebook::react
-#endif
-
 namespace Microsoft::ReactNative {
 
 void AddStandardViewManagers(
@@ -393,14 +386,6 @@ void ReactInstanceWin::Initialize() noexcept {
       strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
           strongThis->GetReactContext(), *(strongThis->m_uiQueue));
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
-
-#if USE_FABRIC
-#ifndef USE_WINCOMP
-      facebook::react::InitTextInputThemeInfo(strongThis->GetReactContext());
-      facebook::react::InitSliderMeasurements(strongThis->GetReactContext());
-#endif // !USE_WINCOMP
-#endif // USE_FABRIC
-
 #endif // CORE_ABI
 
       strongThis->Queue().Post([this, weakThis]() noexcept {

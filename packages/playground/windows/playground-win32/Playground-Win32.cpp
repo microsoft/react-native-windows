@@ -37,19 +37,19 @@
 #include <winrt/Microsoft.UI.h>
 #endif
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 #include <DispatcherQueue.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
-#endif // USE_WINCOMP
+#endif // USE_FABRIC
 
 namespace controls = xaml::Controls;
 namespace hosting = xaml::Hosting;
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
 // Work around crash in DeviceInfo when running outside of XAML environment
 // TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
 REACT_MODULE(DeviceInfo)
@@ -92,7 +92,7 @@ struct CompReactPackageProvider
 
 winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
 winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
-#endif // USE_WINCOMP
+#endif // USE_FABRIC
 
 constexpr auto WindowDataProperty = L"WindowData";
 
@@ -111,7 +111,7 @@ struct WindowData {
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   winrt::Microsoft::ReactNative::CompHwndHost m_compHwndHost{nullptr};
 #else
   hosting::DesktopWindowXamlSource m_desktopWindowXamlSource{nullptr};
@@ -127,7 +127,7 @@ struct WindowData {
   uint16_t m_debuggerPort{defaultDebuggerPort};
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   WindowData(const winrt::Microsoft::ReactNative::CompHwndHost &compHost) : m_compHwndHost(compHost) {}
 #else
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
@@ -180,7 +180,7 @@ struct WindowData {
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
           host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
           winrt::Microsoft::ReactNative::ReactPropertyBag(host.InstanceSettings().Properties())
               .Set(
@@ -207,7 +207,7 @@ struct WindowData {
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
           m_compHwndHost.ComponentName(appName);
           m_compHwndHost.ReactNativeHost(host);
 #else
@@ -247,17 +247,17 @@ struct WindowData {
     return 0;
   }
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   LRESULT TranslateMessage(UINT message, WPARAM wparam, LPARAM lparam) noexcept {
     if (m_compHwndHost) {
       return m_compHwndHost.TranslateMessage(message, wparam, lparam);
     }
     return 0;
   }
-#endif
+#endif // USE_FABRIC
 
   LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
     if (m_compHwndHost) {
       m_compHwndHost.Compositor(g_compositor);
       m_compHwndHost.Initialize((uint64_t)hwnd);
@@ -273,7 +273,7 @@ struct WindowData {
     return 0;
   }
 
-#ifndef USE_WINCOMP
+#ifndef USE_FABRIC
   LRESULT OnWindowPosChanged(HWND /* hwnd */, const WINDOWPOS *windowPosition) {
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
     HWND interopHwnd;
@@ -291,7 +291,7 @@ struct WindowData {
 
     return 0;
   }
-#endif
+#endif // USE_FABRIC
 
   /// Message handler for about box.
   static INT_PTR CALLBACK About(HWND hwnd, UINT message, WPARAM wparam, LPARAM /* lparam */) noexcept {
@@ -389,11 +389,11 @@ struct WindowData {
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
 
             auto themeComboBox = GetDlgItem(hwnd, IDC_THEME);
-#ifndef USE_WINCOMP
+#ifndef USE_FABRIC
             self->m_theme = static_cast<xaml::ElementTheme>(ComboBox_GetCurSel(themeComboBox));
             auto panel = self->m_desktopWindowXamlSource.Content().as<controls::Panel>();
             panel.RequestedTheme(self->m_theme);
-#endif
+#endif // USE_FABRIC
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
@@ -439,14 +439,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
   }
 #endif
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   auto windowData = WindowData::GetFromWindow(hwnd);
   if (windowData) {
     auto result = WindowData::GetFromWindow(hwnd)->TranslateMessage(message, wparam, lparam);
     if (result)
       return result;
   }
-#endif
+#endif // USE_FABRIC
 
   switch (message) {
     case WM_CREATE: {
@@ -469,7 +469,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
     case WM_PAINT: {
       PAINTSTRUCT ps;
       HDC hdc = BeginPaint(hwnd, &ps);
@@ -495,7 +495,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   constexpr PCWSTR appName = L"React Native Playground (Win32)";
 #endif
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompHwndHost());
 #else
   winrt::init_apartment(winrt::apartment_type::single_threaded);
@@ -550,21 +550,21 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
-#ifndef USE_WINCOMP
+#ifndef USE_FABRIC
     auto xamlSourceNative2 = desktopXamlSource.as<IDesktopWindowXamlSourceNative2>();
     BOOL xamlSourceProcessedMessage = FALSE;
     winrt::check_hresult(xamlSourceNative2->PreTranslateMessage(&msg, &xamlSourceProcessedMessage));
     if (xamlSourceProcessedMessage) {
       continue;
     }
-#endif // !USE_WINCOMP
+#endif // !USE_FABRIC
     if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
     }
   }
 
-#ifndef USE_WINCOMP
+#ifndef USE_FABRIC
   winrt::uninit_apartment();
 #endif
 
@@ -588,7 +588,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
 
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   DispatcherQueueOptions options{
       sizeof(DispatcherQueueOptions), /* dwSize */
       DQTYPE_THREAD_CURRENT, /* threadType */

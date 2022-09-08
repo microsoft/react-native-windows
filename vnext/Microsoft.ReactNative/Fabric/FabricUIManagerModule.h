@@ -6,13 +6,9 @@
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
-#ifdef USE_WINCOMP
 #include <Fabric/WinComp/CompHelpers.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "WinComp/CompComponentViewRegistry.h"
-#else
-#include "ComponentViewRegistry.h"
-#endif
 
 namespace facebook::react {
 class Scheduler;
@@ -70,18 +66,10 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   bool m_transactionInFlight{false};
   bool m_followUpTransactionRequired{false};
 
-#ifdef USE_WINCOMP
   CompComponentViewRegistry m_registry;
-#else
-  ComponentViewRegistry m_registry;
-#endif
   struct SurfaceInfo {
-#ifdef USE_WINCOMP
     winrt::Microsoft::ReactNative::Composition::IVisual rootVisual{nullptr};
     winrt::Microsoft::ReactNative::Composition::ICompositionContext compContext;
-#else
-    XamlView xamlView;
-#endif
   };
 
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;

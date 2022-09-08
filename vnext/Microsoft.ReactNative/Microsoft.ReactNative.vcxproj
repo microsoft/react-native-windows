@@ -410,22 +410,6 @@
       <SubType>Code</SubType>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup Condition="'$(UseFabric)' == 'true'">
-    <ClCompile Include="Fabric\ActivityIndicatorComponentView.cpp" />
-    <ClCompile Include="Fabric\ImageComponentView.cpp" />
-    <ClCompile Include="Fabric\ParagraphComponentView.cpp" />
-    <ClCompile Include="Fabric\platform\react\renderer\components\slider\SliderMeasurementsManager.cpp" />
-    <ClCompile Include="Fabric\ScrollViewComponentView.cpp" />
-    <ClCompile Include="Fabric\SliderComponentView.cpp" />
-    <ClCompile Include="Fabric\SwitchComponentView.cpp" />
-    <ClCompile Include="Fabric\TextInput\WindowsTextInputComponentView.cpp" />
-    <ClCompile Include="Fabric\TextInput\WindowsTextInputEventEmitter.cpp" />
-    <ClCompile Include="Fabric\TextInput\WindowsTextInputProps.cpp" />
-    <ClCompile Include="Fabric\TextInput\WindowsTextInputShadowNode.cpp" />
-    <ClCompile Include="Fabric\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
-    <ClCompile Include="Fabric\TextComponentView.cpp" />
-    <ClCompile Include="Fabric\ViewComponentView.cpp" />
-  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
@@ -639,10 +623,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Condition="'$(UseWinComp)' == 'true'" Include="CompHwndHost.idl" />
-    <Midl Condition="'$(UseWinComp)' == 'true'" Include="CompositionContext.idl" />
-    <Midl Condition="'$(UseWinComp)' == 'true'" Include="CompositionSwitcher.idl" />
-    <Midl Condition="'$(UseWinComp)' == 'true'" Include="CompRootView.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompHwndHost.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionContext.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionSwitcher.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompRootView.idl" />
     <Midl Include="CoreAppPage.idl">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>

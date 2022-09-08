@@ -5,6 +5,5 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(SolutionName)'=='ReactWindows-Desktop'">
     <UseFabric>true</UseFabric>
-    <UseWinComp>true</UseWinComp>
   </PropertyGroup>
 </Project>

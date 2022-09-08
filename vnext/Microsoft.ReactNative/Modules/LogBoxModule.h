@@ -21,17 +21,17 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   REACT_METHOD(Hide, L"hide") void Hide() noexcept;
 
  private:
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   static void RegisterWndClass() noexcept;
-#endif
-
+#endif // USE_FABRIC
   void ShowOnUIThread() noexcept;
   void HideOnUIThread() noexcept;
 
   React::ReactContext m_context;
-#ifdef USE_WINCOMP
+#ifdef USE_FABRIC
   HWND m_hwnd{nullptr};
-#else
+#endif // USE_FABRIC
+#ifndef CORE_ABI
   xaml::Controls::Primitives::Popup m_popup{nullptr};
   React::ReactRootView m_logBoxContent{nullptr};
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
