@@ -113,7 +113,7 @@ struct CompSurfaceBrush
       const winrt::Windows::UI::Composition::Compositor &compositor,
       const winrt::Microsoft::ReactNative::Composition::ICompositionDrawingSurface &drawingSurfaceInterop)
       : m_brush(compositor.CreateSurfaceBrush(
-            winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractSurface(
+            winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerSurface(
                 drawingSurfaceInterop))) {}
 
   winrt::Windows::UI::Composition::CompositionBrush InnerBrush() const noexcept {
@@ -165,7 +165,7 @@ struct CompVisual : public winrt::implements<
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
+    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
       containerChildren.InsertAtTop(compVisual);
       return;
@@ -177,7 +177,7 @@ struct CompVisual : public winrt::implements<
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
+    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = m_visual.as<winrt::Windows::UI::Composition::ContainerVisual>().Children();
     containerChildren.Remove(compVisual);
   }
@@ -244,7 +244,7 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_visual.Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
+    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
       containerChildren.InsertAtTop(compVisual);
       return;
@@ -256,7 +256,7 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
+    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = m_visual.Children();
     containerChildren.Remove(compVisual);
   }
@@ -271,7 +271,7 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
-    m_visual.Brush(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractBrush(brush));
+    m_visual.Brush(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Opacity(float opacity) noexcept {
@@ -318,7 +318,7 @@ struct CompSpriteVisual : winrt::Microsoft::ReactNative::Composition::implementa
   }
 
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
-    m_visual.Shadow(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractDropShadow(shadow));
+    m_visual.Shadow(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerDropShadow(shadow));
   }
 
  private:
@@ -415,7 +415,7 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_contentVisual.Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
+    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
       containerChildren.InsertAtTop(compVisual);
       return;
@@ -427,7 +427,7 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractVisual(visual);
+    auto compVisual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(visual);
     auto containerChildren = m_contentVisual.Children();
     containerChildren.Remove(compVisual);
   }
@@ -442,7 +442,7 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
-    m_visual.Brush(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractBrush(brush));
+    m_visual.Brush(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Opacity(float opacity) noexcept {
@@ -485,7 +485,7 @@ struct CompScrollerVisual : winrt::Microsoft::ReactNative::Composition::implemen
   }
 
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
-    m_visual.Shadow(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::ExtractDropShadow(shadow));
+    m_visual.Shadow(winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerDropShadow(shadow));
   }
 
   winrt::event_token ScrollPositionChanged(
@@ -671,6 +671,10 @@ struct CompContext : winrt::implements<
     return m_compositionGraphicsDevice;
   }
 
+  winrt::Windows::UI::Composition::Compositor InnerCompositor() noexcept {
+    return m_compositor;
+  }
+
  private:
   winrt::Windows::UI::Composition::Compositor m_compositor{nullptr};
   winrt::com_ptr<ID2D1Factory1> m_d2dFactory;
@@ -695,25 +699,31 @@ IVisual CompositionContextHelper::CreateVisual(winrt::Windows::UI::Composition::
   return winrt::make<::Microsoft::ReactNative::Composition::CompVisual>(visual);
 }
 
-winrt::Windows::UI::Composition::Visual CompositionContextHelper::ExtractVisual(IVisual visual) noexcept {
+winrt::Windows::UI::Composition::Compositor CompositionContextHelper::InnerCompositor(ICompositionContext context) noexcept {
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::CompContext> s;
+  context.as(s);
+  return s ? s->InnerCompositor() : nullptr;
+}
+
+winrt::Windows::UI::Composition::Visual CompositionContextHelper::InnerVisual(IVisual visual) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionVisual> s;
   visual.as(s);
   return s ? s->InnerVisual() : nullptr;
 }
 
-winrt::Windows::UI::Composition::DropShadow CompositionContextHelper::ExtractDropShadow(IDropShadow shadow) noexcept {
+winrt::Windows::UI::Composition::DropShadow CompositionContextHelper::InnerDropShadow(IDropShadow shadow) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDropShadow> s;
   shadow.as(s);
   return s ? s->InnerShadow() : nullptr;
 }
 
-winrt::Windows::UI::Composition::CompositionBrush CompositionContextHelper::ExtractBrush(IBrush brush) noexcept {
+winrt::Windows::UI::Composition::CompositionBrush CompositionContextHelper::InnerBrush(IBrush brush) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionBrush> s;
   brush.as(s);
   return s ? s->InnerBrush() : nullptr;
 }
 
-winrt::Windows::UI::Composition::ICompositionSurface CompositionContextHelper::ExtractSurface(
+winrt::Windows::UI::Composition::ICompositionSurface CompositionContextHelper::InnerSurface(
     ICompositionDrawingSurface surface) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInner> s;
   surface.as(s);

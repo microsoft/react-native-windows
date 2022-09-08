@@ -42,6 +42,7 @@
 #include <DispatcherQueue.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 #endif // USE_FABRIC
@@ -128,7 +129,11 @@ struct WindowData {
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
 #ifdef USE_FABRIC
-  WindowData(const winrt::Microsoft::ReactNative::CompHwndHost &compHost) : m_compHwndHost(compHost) {}
+  WindowData(const winrt::Microsoft::ReactNative::CompHwndHost &compHost) : m_compHwndHost(compHost) {
+    winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+        InstanceSettings().Properties(),
+        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(g_compositor));
+  }
 #else
   WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
       : m_desktopWindowXamlSource(desktopWindowXamlSource) {}

@@ -21,10 +21,11 @@ namespace Microsoft.ReactNative.Composition
       "Creates a @IVisual from a Windows.UI.Composition.Visual")
     static IVisual CreateVisual(Windows.UI.Composition.Visual visual);
 
-    static Windows.UI.Composition.Visual ExtractVisual(IVisual visual);
-    static Windows.UI.Composition.DropShadow ExtractDropShadow(IDropShadow shadow);
-    static Windows.UI.Composition.CompositionBrush ExtractBrush(IBrush brush);
-    static Windows.UI.Composition.ICompositionSurface ExtractSurface(ICompositionDrawingSurface surface);
+    static Windows.UI.Composition.Compositor InnerCompositor(ICompositionContext context);
+    static Windows.UI.Composition.Visual InnerVisual(IVisual visual);
+    static Windows.UI.Composition.DropShadow InnerDropShadow(IDropShadow shadow);
+    static Windows.UI.Composition.CompositionBrush InnerBrush(IBrush brush);
+    static Windows.UI.Composition.ICompositionSurface InnerSurface(ICompositionDrawingSurface surface);
   }
 
 } // namespace Microsoft.ReactNative.Composition

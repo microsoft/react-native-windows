@@ -60,6 +60,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept;
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   std::shared_ptr<facebook::react::Scheduler> m_scheduler;
   std::shared_ptr<facebook::react::SurfaceManager> m_surfaceManager;
   std::mutex m_schedulerMutex; // Protect m_scheduler
@@ -69,7 +70,6 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   CompComponentViewRegistry m_registry;
   struct SurfaceInfo {
     winrt::Microsoft::ReactNative::Composition::IVisual rootVisual{nullptr};
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext compContext;
   };
 
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;

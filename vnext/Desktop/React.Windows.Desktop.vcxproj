@@ -156,6 +156,7 @@
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompHwndHost.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionContext.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionSwitcher.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompositionUIService.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="..\Microsoft.ReactNative\CompRootView.idl" />
   </ItemGroup>
   <ItemGroup>

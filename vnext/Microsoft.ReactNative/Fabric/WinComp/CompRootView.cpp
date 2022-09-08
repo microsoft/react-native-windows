@@ -113,20 +113,6 @@ void CompRootView::ReactNativeHost(ReactNative::ReactNativeHost const &value) no
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::ICompositionContext CompRootView::CompositionContext() noexcept {
-  return m_compContext;
-}
-
-void CompRootView::CompositionContext(
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext const &value) noexcept {
-  m_compContext = value;
-  ;
-}
-
-winrt::Microsoft::ReactNative::Composition::ICompositionContext CompRootView::CompContext() noexcept {
-  return m_compContext;
-}
-
 winrt::Microsoft::ReactNative::Composition::IVisual CompRootView::RootVisual() noexcept {
   return m_rootVisual;
 }

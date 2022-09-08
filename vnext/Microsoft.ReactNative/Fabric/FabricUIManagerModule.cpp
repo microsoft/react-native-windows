@@ -9,6 +9,7 @@
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
+#include <Fabric/WinComp/CompositionUIService.h>
 #include <Fabric/WinComp/CompViewComponentView.h>
 #include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentDescriptor.h>
 #include <ICompRootView.h>
@@ -233,13 +234,13 @@ void FabricUIManager::startSurface(
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
   auto compRootView = static_cast<ICompRootView *>(rootview);
-  m_surfaceRegistry.insert({surfaceId, {compRootView->GetVisual(), compRootView->CompContext()}});
+  m_surfaceRegistry.insert({surfaceId, {compRootView->GetVisual()}});
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
         facebook::react::RootShadowNode::Handle(),
         surfaceId,
-        self->m_surfaceRegistry.at(surfaceId).compContext
+        self->m_compContext
     );
 
     self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
@@ -305,7 +306,7 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &newChildViewDescriptor = m_registry.dequeueComponentViewWithComponentHandle(
             newChildShadowView.componentHandle,
             newChildShadowView.tag,
-            m_surfaceRegistry.at(surfaceId).compContext
+            m_compContext
         );
         // observerCoordinator.registerViewComponentDescriptor(newChildViewDescriptor, surfaceId);
         break;
@@ -446,7 +447,7 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
     m_registry.dequeueComponentViewWithComponentHandle(
         shadowView.getComponentHandle(),
         surfaceId,
-        m_surfaceRegistry.at(surfaceId).compContext
+        m_compContext
     );
   } else {
     m_context.UIDispatcher().Post(
@@ -454,7 +455,7 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
           self->m_registry.dequeueComponentViewWithComponentHandle(
               componentHandle,
               surfaceId,
-              self->m_surfaceRegistry.at(surfaceId).compContext
+              self->m_compContext
           );
         });
   }
@@ -500,6 +501,8 @@ void FabricUIManager::schedulerDidSendAccessibilityEvent(
 
 void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
+
+  m_compContext = winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(reactContext.Properties().Handle());
 
   m_registry.Initialize(reactContext);
 

@@ -22,10 +22,6 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   hstring ComponentName() noexcept;
   void ComponentName(hstring const &value) noexcept;
 
-  // property CompositionContext
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext CompositionContext() noexcept;
-  void CompositionContext(winrt::Microsoft::ReactNative::Composition::ICompositionContext const &value) noexcept;
-
   // property RootVisual
   winrt::Microsoft::ReactNative::Composition::IVisual RootVisual() noexcept;
   void RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept;
@@ -52,7 +48,6 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
 
  public: // ICompRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext CompContext() noexcept override;
 
  public: // IReactRootView
   std::string JSComponentName() const noexcept override;
@@ -70,7 +65,6 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
 
  private:
   ReactNative::ReactNativeHost m_reactNativeHost{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext{nullptr};
   hstring m_componentName;
   ReactNative::JSValueArgWriter m_initialPropsWriter;
   bool m_isPerspectiveEnabled{true};

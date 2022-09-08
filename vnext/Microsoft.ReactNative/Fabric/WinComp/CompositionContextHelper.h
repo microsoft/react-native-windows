@@ -16,10 +16,11 @@ struct CompositionContextHelper : CompositionContextHelperT<CompositionContextHe
 
   static ICompositionContext CreateContext(winrt::Windows::UI::Composition::Compositor const &compositor) noexcept;
   static IVisual CreateVisual(winrt::Windows::UI::Composition::Visual const &visual) noexcept;
-  static winrt::Windows::UI::Composition::Visual ExtractVisual(IVisual visual) noexcept;
-  static winrt::Windows::UI::Composition::DropShadow ExtractDropShadow(IDropShadow shadow) noexcept;
-  static winrt::Windows::UI::Composition::CompositionBrush ExtractBrush(IBrush brush) noexcept;
-  static winrt::Windows::UI::Composition::ICompositionSurface ExtractSurface(
+  static winrt::Windows::UI::Composition::Compositor InnerCompositor(ICompositionContext context) noexcept;
+  static winrt::Windows::UI::Composition::Visual InnerVisual(IVisual visual) noexcept;
+  static winrt::Windows::UI::Composition::DropShadow InnerDropShadow(IDropShadow shadow) noexcept;
+  static winrt::Windows::UI::Composition::CompositionBrush InnerBrush(IBrush brush) noexcept;
+  static winrt::Windows::UI::Composition::ICompositionSurface InnerSurface(
       ICompositionDrawingSurface surface) noexcept;
 };
 

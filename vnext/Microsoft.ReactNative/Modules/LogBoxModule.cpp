@@ -64,7 +64,6 @@ LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
       break;
     }
     case WM_CREATE: {
-      host.Compositor(winrt::Windows::UI::Composition::Compositor());
       host.Initialize((uint64_t)hwnd);
       break;
     }
