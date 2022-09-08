@@ -116,6 +116,9 @@
     <ClInclude Include="WinRTNetworkingMocks.h" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="$(ReactNativeWindowsDir)\Shared\Networking\IRedirectEventSource.idl" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Desktop\React.Windows.Desktop.vcxproj">
       <Project>{95048601-C3DC-475F-ADF8-7C0C764C10D5}</Project>
     </ProjectReference>
