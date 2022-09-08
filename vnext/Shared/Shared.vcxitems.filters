@@ -472,9 +472,4 @@
       <Filter>Source Files\tracing</Filter>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Midl Include="$(MSBuildThisFileDirectory)Networking\IRedirectEventSource.idl">
-      <Filter>Header Files\Networking</Filter>
-    </Midl>
-  </ItemGroup>
 </Project>
