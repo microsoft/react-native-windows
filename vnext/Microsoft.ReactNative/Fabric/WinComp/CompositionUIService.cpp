@@ -20,7 +20,7 @@ void CompositionUIService::SetCompositionContext(
   ReactPropertyBag(properties).Set(CompositionContextPropertyId(), compositionContext);
 }
 
-ICompositionContext CompositionUIService::GetCompositionContext(const IReactPropertyBag& properties) noexcept {
+ICompositionContext CompositionUIService::GetCompositionContext(const IReactPropertyBag &properties) noexcept {
   return ReactPropertyBag(properties).Get(CompositionContextPropertyId());
 }
 

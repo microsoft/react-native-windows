@@ -423,7 +423,7 @@ void SetBorderLayerPropertiesCommon(
   }
   D2D1::Matrix3x2F originalTransform;
   D2D1::Matrix3x2F translationTransform =
-    D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
+      D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
 
   pRT->GetTransform(&originalTransform);
   translationTransform = originalTransform * translationTransform;
@@ -469,8 +469,7 @@ void SetBorderLayerProperties(
       layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
       layer.Size({textureRect.right - textureRect.left, textureRect.bottom - textureRect.top});
 
-      layer.Brush(
-          compContext.CreateColorBrush(borderColor.AsWindowsColor()));
+      layer.Brush(compContext.CreateColorBrush(borderColor.AsWindowsColor()));
 
       winrt::com_ptr<ID2D1Factory1> spD2dFactory;
       compContext.as<Composition::ICompositionContextInterop>()->D2DFactory(spD2dFactory.put());
@@ -657,8 +656,9 @@ void DrawAllBorderLayers(
       spBorderLayers[10],
       shape,
       spTextures[10],
-      {
-    cornerSize, std::floor(textureHeight / 2.0f), std::ceil(textureWidth / 2.0f),
+      {cornerSize,
+       std::floor(textureHeight / 2.0f),
+       std::ceil(textureWidth / 2.0f),
        textureHeight - cornerSize /* - (textureHeight % 2)*/},
       {AnchorPosition::Left, AnchorPosition::Bottom},
       {cornerSize, -std::floor(textureHeight / 2.0f)},
@@ -758,8 +758,12 @@ void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scal
 }
 
 void scaleAndPixelRoundBorderWidths(facebook::react::BorderMetrics &borderMetrics, float scaleFactor) noexcept {
-  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0) ? 0.f : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
-  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top == 0) ? 0.f : std::max(1.f, std::round(borderMetrics.borderWidths.top * scaleFactor));
+  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0)
+      ? 0.f
+      : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
+  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top == 0)
+      ? 0.f
+      : std::max(1.f, std::round(borderMetrics.borderWidths.top * scaleFactor));
   borderMetrics.borderWidths.right = (borderMetrics.borderWidths.right == 0)
       ? 0.f
       : std::max(1.f, std::round(borderMetrics.borderWidths.right * scaleFactor));

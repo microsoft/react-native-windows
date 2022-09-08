@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 #pragma once
 
+#include <Fabric/WinComp/CompHelpers.h>
 #include <NativeModules.h>
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
-#include <Fabric/WinComp/CompHelpers.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "WinComp/CompComponentViewRegistry.h"
 

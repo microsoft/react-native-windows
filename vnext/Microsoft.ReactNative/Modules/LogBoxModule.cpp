@@ -116,7 +116,7 @@ void LogBox::ShowOnUIThread() noexcept {
 #ifndef CORE_ABI
   // If Xaml is already loaded, use the Xaml implementation -
   //   Otherwise we fallback on a Win32 implementation
-  if (xaml::TryGetCurrentApplication()) { 
+  if (xaml::TryGetCurrentApplication()) {
     m_logBoxContent = React::ReactRootView();
     m_logBoxContent.ComponentName(L"LogBox");
     m_logBoxContent.ReactNativeHost(host);
@@ -144,7 +144,8 @@ void LogBox::ShowOnUIThread() noexcept {
     m_logBoxContent.UpdateLayout();
 
     m_sizeChangedRevoker = root.SizeChanged(
-        winrt::auto_revoke, [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
+        winrt::auto_revoke,
+        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::SizeChangedEventArgs const &args) {
           if (auto strongThis = wkThis.lock()) {
             strongThis->m_logBoxContent.MaxHeight(args.NewSize().Height);
             strongThis->m_logBoxContent.Height(args.NewSize().Height);
@@ -162,13 +163,13 @@ void LogBox::ShowOnUIThread() noexcept {
 
     m_popup.Child(m_logBoxContent);
     m_popup.IsOpen(true);
-  } 
+  }
 #endif // CORE_ABI
 #ifdef USE_FABRIC
 #ifndef CORE_ABI
   else
 #endif // CORE_ABI
-   {
+  {
     RegisterWndClass();
 
     if (!m_hwnd) {
@@ -206,9 +207,9 @@ void LogBox::HideOnUIThread() noexcept {
 #ifdef USE_FABRIC
   if (m_hwnd) {
     ::ShowWindow(m_hwnd, SW_HIDE);
-  } 
+  }
 #endif // USE_FABRIC
-#ifndef CORE_ABI  
+#ifndef CORE_ABI
   if (m_popup) {
     m_popup.Closed(m_tokenClosed);
     m_sizeChangedRevoker.revoke();

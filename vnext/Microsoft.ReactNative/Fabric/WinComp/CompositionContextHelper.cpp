@@ -699,7 +699,8 @@ IVisual CompositionContextHelper::CreateVisual(winrt::Windows::UI::Composition::
   return winrt::make<::Microsoft::ReactNative::Composition::CompVisual>(visual);
 }
 
-winrt::Windows::UI::Composition::Compositor CompositionContextHelper::InnerCompositor(ICompositionContext context) noexcept {
+winrt::Windows::UI::Composition::Compositor CompositionContextHelper::InnerCompositor(
+    ICompositionContext context) noexcept {
   winrt::com_ptr<::Microsoft::ReactNative::Composition::CompContext> s;
   context.as(s);
   return s ? s->InnerCompositor() : nullptr;

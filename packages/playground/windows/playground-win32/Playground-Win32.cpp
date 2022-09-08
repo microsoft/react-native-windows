@@ -41,8 +41,8 @@
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
 #include <DispatcherQueue.h>
 #include <windows.ui.composition.interop.h>
-#include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Windows.UI.Composition.Desktop.h>
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 #endif // USE_FABRIC

@@ -78,7 +78,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
 #ifdef USE_FABRIC
   void ShowNewJsErrorUsingMessageDialog() noexcept {
-      // Using MessageDialog is "easy", but it does mean we cannot update the message when symbols are resolved.
+    // Using MessageDialog is "easy", but it does mean we cannot update the message when symbols are resolved.
     // Ideally we'd have a dialog we could update.  -- Maybe we could load XAML and host the XAML dialog?
 
     std::stringstream ss;
@@ -207,15 +207,15 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_showing = true;
 
 #ifdef USE_FABRIC
-  // If Xaml is already loaded, use the Xaml implementation -
-  //   Otherwise we fallback on a simpler implementation
-  if (xaml::TryGetCurrentApplication()) { 
+    // If Xaml is already loaded, use the Xaml implementation -
+    //   Otherwise we fallback on a simpler implementation
+    if (xaml::TryGetCurrentApplication()) {
 #endif // USE_FABRIC
-    ShowNewJSErrorUsingXaml();
+      ShowNewJSErrorUsingXaml();
 #ifdef USE_FABRIC
-  } else {
-    ShowNewJsErrorUsingMessageDialog();
-  }
+    } else {
+      ShowNewJsErrorUsingMessageDialog();
+    }
 #endif // USE_FABRIC
   }
 

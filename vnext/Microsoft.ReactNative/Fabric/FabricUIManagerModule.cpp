@@ -7,13 +7,12 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
-#include <IReactContext.h>
-#include <IReactRootView.h>
-#include <Fabric/WinComp/CompositionUIService.h>
 #include <Fabric/WinComp/CompViewComponentView.h>
+#include <Fabric/WinComp/CompositionUIService.h>
 #include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentDescriptor.h>
 #include <ICompRootView.h>
-#include <winrt/Windows.UI.Composition.Desktop.h>
+#include <IReactContext.h>
+#include <IReactRootView.h>
 #include <JSI/jsi.h>
 #include <SchedulerSettings.h>
 #include <UI.Xaml.Controls.h>
@@ -30,6 +29,7 @@
 #include <react/utils/ContextContainer.h>
 #include <runtimeexecutor/ReactCommon/RuntimeExecutor.h>
 #include <winrt/Windows.Graphics.Display.h>
+#include <winrt/Windows.UI.Composition.Desktop.h>
 #include "Unicode.h"
 
 #pragma warning(push)
@@ -73,7 +73,6 @@ class AsyncEventBeat final : public facebook::react::EventBeat { //, public face
         // eventBeatManager_(eventBeatManager),
         runtimeExecutor_(runtimeExecutor),
         uiManager_(uiManager) {
-
     // eventBeatManager->addObserver(*this);
     winrt::Microsoft::ReactNative::ReactPropertyBag propBag(m_context.Properties());
     auto coreDisp = propBag.Get(
@@ -202,8 +201,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
     auto mutableRegistry = std::const_pointer_cast<facebook::react::ComponentDescriptorRegistry>(registry);
     mutableRegistry->setFallbackComponentDescriptor(
         std::make_shared<facebook::react::UnimplementedNativeViewComponentDescriptor>(
-            facebook::react::ComponentDescriptorParameters{
-                eventDispatcher, contextContainer, nullptr}));
+            facebook::react::ComponentDescriptorParameters{eventDispatcher, contextContainer, nullptr}));
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
@@ -238,10 +236,7 @@ void FabricUIManager::startSurface(
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
-        facebook::react::RootShadowNode::Handle(),
-        surfaceId,
-        self->m_compContext
-    );
+        facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
 
     self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
         static_cast<const CompBaseComponentView &>(*rootComponentViewDescriptor.view).Visual(), 0);
@@ -304,10 +299,7 @@ void FabricUIManager::RCTPerformMountInstructions(
       case facebook::react::ShadowViewMutation::Create: {
         auto &newChildShadowView = mutation.newChildShadowView;
         auto &newChildViewDescriptor = m_registry.dequeueComponentViewWithComponentHandle(
-            newChildShadowView.componentHandle,
-            newChildShadowView.tag,
-            m_compContext
-        );
+            newChildShadowView.componentHandle, newChildShadowView.tag, m_compContext);
         // observerCoordinator.registerViewComponentDescriptor(newChildViewDescriptor, surfaceId);
         break;
       }
@@ -444,19 +436,11 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
   // TODO: We should do some perf tests to see if this is worth doing.
 
   if (m_context.UIDispatcher().HasThreadAccess()) {
-    m_registry.dequeueComponentViewWithComponentHandle(
-        shadowView.getComponentHandle(),
-        surfaceId,
-        m_compContext
-    );
+    m_registry.dequeueComponentViewWithComponentHandle(shadowView.getComponentHandle(), surfaceId, m_compContext);
   } else {
     m_context.UIDispatcher().Post(
         [componentHandle = shadowView.getComponentHandle(), surfaceId, self = shared_from_this()]() {
-          self->m_registry.dequeueComponentViewWithComponentHandle(
-              componentHandle,
-              surfaceId,
-              self->m_compContext
-          );
+          self->m_registry.dequeueComponentViewWithComponentHandle(componentHandle, surfaceId, self->m_compContext);
         });
   }
 }
@@ -502,7 +486,9 @@ void FabricUIManager::schedulerDidSendAccessibilityEvent(
 void FabricUIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
 
-  m_compContext = winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(reactContext.Properties().Handle());
+  m_compContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          reactContext.Properties().Handle());
 
   m_registry.Initialize(reactContext);
 

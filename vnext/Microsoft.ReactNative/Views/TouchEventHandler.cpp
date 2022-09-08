@@ -416,11 +416,7 @@ void TouchEventHandler::DispatchTouchEvent(TouchEventType eventType, size_t poin
   const auto paramsWriter = MakeJSValueArgWriter(eventName, std::move(touches), std::move(changedIndices));
   if (eventType == TouchEventType::Move || eventType == TouchEventType::PointerMove) {
     BatchingEmitter().EmitCoalescingJSEvent(
-        L"RCTEventEmitter",
-        L"receiveTouches",
-        std::move(eventName),
-        m_pointers[pointerIndex].pointerId,
-        paramsWriter);
+        L"RCTEventEmitter", L"receiveTouches", std::move(eventName), m_pointers[pointerIndex].pointerId, paramsWriter);
   } else {
     BatchingEmitter().EmitJSEvent(L"RCTEventEmitter", L"receiveTouches", paramsWriter);
   }

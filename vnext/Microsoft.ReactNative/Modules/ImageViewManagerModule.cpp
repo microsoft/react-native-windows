@@ -62,25 +62,25 @@ winrt::fire_and_forget GetImageSizeAsync(
     }
 
 #ifdef USE_FABRIC // TODO pass isFabric into this function -- requires a IsFabric on the Context - Or a UseWicBitmaps
-  if (xaml::TryGetCurrentApplication()) { 
+    if (xaml::TryGetCurrentApplication()) {
 #endif // USE_FABRIC
-        winrt::BitmapImage bitmap;
-    if (memoryStream) {
-      co_await bitmap.SetSourceAsync(memoryStream);
-    }
-    if (bitmap) {
-      successCallback(bitmap.PixelWidth(), bitmap.PixelHeight());
-      succeeded = true;
-    }
+      winrt::BitmapImage bitmap;
+      if (memoryStream) {
+        co_await bitmap.SetSourceAsync(memoryStream);
+      }
+      if (bitmap) {
+        successCallback(bitmap.PixelWidth(), bitmap.PixelHeight());
+        succeeded = true;
+      }
 #ifdef USE_FABRIC
-  } else {
-    UINT width, height;
-    auto wicBmpSource = wicBitmapSourceFromStream(memoryStream);
-    if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
-      successCallback(width, height);
-      succeeded = true;
+    } else {
+      UINT width, height;
+      auto wicBmpSource = wicBitmapSourceFromStream(memoryStream);
+      if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
+        successCallback(width, height);
+        succeeded = true;
+      }
     }
-  }
 #endif // USE_FABRIC
   } catch (winrt::hresult_error const &) {
   }
