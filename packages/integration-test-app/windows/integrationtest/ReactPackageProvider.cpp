@@ -7,7 +7,9 @@ using namespace winrt::Microsoft::ReactNative;
 namespace winrt::integrationtest::implementation {
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-  AddAttributedModules(packageBuilder, true);
+  // We do not use TurboModules for the TestModule, since the integration tests are specifically targetting NativeModules NOT TurboModules
+  // Ex: https://github.com/facebook/react-native/blob/153aedce413ef73f5e026abdfcf1346a37cec219/IntegrationTests/AppEventsTest.js#L16
+  AddAttributedModules(packageBuilder, false); 
 }
 
 } // namespace winrt::integrationtest::implementation
