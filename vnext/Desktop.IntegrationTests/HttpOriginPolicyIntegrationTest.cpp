@@ -856,7 +856,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   }// RequestWithProxyAuthorizationHeaderFails
 
   BEGIN_TEST_METHOD_ATTRIBUTE(ExceedingRedirectLimitFails)
-    //TEST_IGNORE()
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ExceedingRedirectLimitFails)
   {

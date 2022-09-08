@@ -579,8 +579,8 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
   if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
       originPolicy == OriginPolicy::CrossOriginResourceSharing) {
     auto controlValues = ExtractAccessControlValues(response.Headers());
-    auto withCredentials =
-        response.RequestMessage().Properties().Lookup(L"RequestArgs").try_as<RequestArgs>()->WithCredentials;
+    auto iRequestArgs = response.RequestMessage().Properties().Lookup(L"RequestArgs");
+    auto withCredentials = iRequestArgs.try_as<RequestArgs>()->WithCredentials;
 
     if (GetRuntimeOptionBool("Http.StrictOriginCheckSimpleCors") &&
         originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing) {
@@ -595,7 +595,6 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
         throw hresult_error{E_INVALIDARG, L"The server does not support CORS or the origin is not allowed"};
       }
     } else {
-      auto iRequestArgs = response.RequestMessage().Properties().Lookup(L"RequestArgs");
       ValidateAllowOrigin(controlValues.AllowedOrigin, controlValues.AllowedCredentials, iRequestArgs);
     }
 
