@@ -9,6 +9,7 @@
 
 // Windows API
 #include <winrt/Windows.Web.Http.Headers.h>
+#include <WinInet.h>
 
 using winrt::Windows::Foundation::Collections::IVector;
 using winrt::Windows::Foundation::Uri;
@@ -222,7 +223,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
 
     redirectCount++;
     if (redirectCount > coMaxRedirects) {
-      break;
+      throw winrt::hresult_error{HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_FAILED), L"Too many redirects"};
     }
 
     // Call event source's OnRedirecting before modifying request parameters.

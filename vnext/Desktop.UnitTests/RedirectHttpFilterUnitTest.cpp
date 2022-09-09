@@ -7,7 +7,9 @@
 #include "../Shared/Networking/WinRTTypes.h"
 #include "WinRTNetworkingMocks.h"
 
+// Windows API
 #include <winrt/Windows.Web.Http.Headers.h>
+#include <WinInet.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Web::Http;
@@ -197,6 +199,8 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
 
   TEST_METHOD(TooManyRedirectsFails)
   {
+    constexpr size_t maxRedirects = 2;
+
     auto url1 = L"http://initialhost";
     auto url2 = L"http://redirecthost";
     auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
@@ -217,7 +221,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
 
       auto query = request.RequestUri().QueryParsed().GetFirstValueByName(L"redirCount");
       auto redirCount = std::stoi(query.c_str());
-      if (redirCount >= 3) {
+      if (redirCount > maxRedirects) {
         response.StatusCode(HttpStatusCode::Ok);
         response.Content(HttpStringContent{L"Response Content"});
       } else {
@@ -230,19 +234,22 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
 
-    auto filter = winrt::make<RedirectHttpFilter>(2, std::move(mockFilter1), std::move(mockFilter2));
+    auto filter = winrt::make<RedirectHttpFilter>(maxRedirects, std::move(mockFilter1), std::move(mockFilter2));
     auto client = HttpClient{filter};
     auto request = HttpRequestMessage(HttpMethod::Get(), Uri{url1});
-    auto sendOp = client.SendRequestAsync(request);
-    sendOp.get();
-    auto response = sendOp.GetResults();
+    ResponseOperation sendOp = nullptr;
+    long code = 0;
+    winrt::hstring errorMessage{};
+    try {
+      sendOp = client.SendRequestAsync(request);
+      sendOp.get();
+    } catch (const winrt::hresult_error &e) {
+      code = e.code();
+      errorMessage = e.message();
+    }
 
-    Assert::AreEqual(HttpStatusCode::MovedPermanently, response.StatusCode());
-
-    auto contentOp = response.Content().ReadAsStringAsync();
-    contentOp.get();
-    auto content = contentOp.GetResults();
-    Assert::AreEqual(L"Redirecting: 3", content.c_str());
+    Assert::AreEqual(HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_FAILED), code);
+    Assert::AreEqual(L"Too many redirects", errorMessage.c_str());
   }
 };
 
