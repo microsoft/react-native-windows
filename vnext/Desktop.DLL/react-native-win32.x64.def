@@ -63,8 +63,6 @@ EXPORTS
 ?invokeAsync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
 ?invokeSync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
 
-??0RedirectHttpFilter@Networking@React@Microsoft@@QEAA@XZ
-
 MicrosoftReactSetRuntimeOptionBool
 MicrosoftReactSetRuntimeOptionInt
 MicrosoftReactSetRuntimeOptionString
