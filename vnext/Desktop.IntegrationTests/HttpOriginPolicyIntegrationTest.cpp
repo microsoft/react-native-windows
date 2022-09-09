@@ -798,11 +798,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
   }// FullCorsPreflightSucceeds
 
+  //TODO: Confirm comment below
   // The current implementation omits withCredentials flag from request and always sets it to false
   // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
-    //TODO: Fails if run after FullCorsCrossOriginWithCredentialsFails
-    //TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginWithCredentialsSucceeds)
   {
