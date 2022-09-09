@@ -83,7 +83,8 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     auto reqHandler = [&serverArgs](const DynamicRequest& request) -> ResponseWrapper
     {
-      return { std::move(serverArgs.Response) };
+      // Don't use move constructor in case of multiple requests
+      return { serverArgs.Response };
     };
 
     switch (clientArgs.Method)
