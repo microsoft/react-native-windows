@@ -15,6 +15,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace http = boost::beast::http;
 
+using folly::dynamic;
 using Microsoft::React::Networking::IHttpResource;
 using Microsoft::React::Networking::OriginPolicy;
 using std::make_shared;
@@ -144,7 +145,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{server1Args.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      {},                         /*data*/
+      dynamic::object("string", ""),  /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
       0,                       /*timeout*/
@@ -198,7 +199,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       string{serverArgs.Url},
       0,                          /*requestId*/
       std::move(clientArgs.RequestHeaders),
-      {},                         /*data*/
+      dynamic::object("string", ""),  /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
       0,                       /*timeout*/
@@ -296,8 +297,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       {
         {"ValidHeader", "AnyValue"}
       },
-      {},                         /*data*/
-      //{} /*bodyData*/,
+      dynamic::object("string", ""),  /*data*/
       "text",
       false /*useIncrementalUpdates*/,
       0 /*timeout*/,

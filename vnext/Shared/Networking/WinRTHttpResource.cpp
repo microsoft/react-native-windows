@@ -132,7 +132,7 @@ WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable co
       auto view = winrt::array_view<uint8_t const>{byteVector};
       auto buffer = CryptographicBuffer::CreateFromByteArray(view);
       content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["string"].empty()) {
+    } else if (!data["string"].isNull()) {
       content = HttpStringContent{to_hstring(data["string"].asString())};
     } else if (!data["base64"].empty()) {
       auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].asString()));
