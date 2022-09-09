@@ -16,10 +16,11 @@
 namespace Microsoft::React::Networking {
 
 class RedirectHttpFilter : public winrt::implements<
-          RedirectHttpFilter,
-          winrt::Windows::Web::Http::Filters::IHttpFilter,
-          winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter> {
-  //TODO: Quote
+                               RedirectHttpFilter,
+                               winrt::Windows::Web::Http::Filters::IHttpFilter,
+                               winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter> {
+  // See
+  // https://github.com/dotnet/corefx/pull/22702/files#diff-53f0c1940c6bec8054a95caac33680306aa6ab13ac48c9a8c9df013d3bc29d15R30
   //  We need two different WinRT filters because we need to remove credentials during redirection requests
   //  and WinRT doesn't allow changing the filter properties after the first request.
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
@@ -31,19 +32,20 @@ class RedirectHttpFilter : public winrt::implements<
   size_t m_maximumRedirects;
 
  public:
-  RedirectHttpFilter(size_t maxRedirects,
+  RedirectHttpFilter(
+      size_t maxRedirects,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
 
   RedirectHttpFilter(
-    winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
-    winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
+      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
+      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
 
   RedirectHttpFilter() noexcept;
 
   void SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept;
 
-  void SetRedirectSource(winrt::Microsoft::React::Networking::IRedirectEventSource const& eventSrc) noexcept;
+  void SetRedirectSource(winrt::Microsoft::React::Networking::IRedirectEventSource const &eventSrc) noexcept;
 
 #pragma region IHttpFilter
 
@@ -89,7 +91,6 @@ class RedirectHttpFilter : public winrt::implements<
   void UseProxy(bool value) const;
 
 #pragma endregion IHttpBaseProtocolFilter
-
 };
 
-} //namespace
+} // namespace Microsoft::React::Networking

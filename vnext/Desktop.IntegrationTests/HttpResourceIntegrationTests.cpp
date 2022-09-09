@@ -4,8 +4,6 @@
 // C4996: 'gethostbyaddr': Use getnameinfo() or GetNameInfoW() instead
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
-#undef WINRT_LEAN_AND_MEAN//TODO:Remove
-
 #include <CppUnitTest.h>
 
 #include <Networking/IHttpResource.h>

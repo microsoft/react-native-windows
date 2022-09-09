@@ -8,8 +8,8 @@
 #include "WinRTNetworkingMocks.h"
 
 // Windows API
-#include <winrt/Windows.Web.Http.Headers.h>
 #include <WinInet.h>
+#include <winrt/Windows.Web.Http.Headers.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace winrt::Windows::Web::Http;
@@ -32,14 +32,11 @@ std::wstring ToString<HttpStatusCode>(const HttpStatusCode &status) {
 namespace Microsoft::React::Test {
 
 TEST_CLASS (RedirectHttpFilterUnitTest) {
-
-  TEST_CLASS_INITIALIZE(Initialize)
-  {
+  TEST_CLASS_INITIALIZE(Initialize) {
     winrt::uninit_apartment(); // Why does this work?
   }
 
-  TEST_METHOD(QueryInterfacesSucceeds)
-  {
+  TEST_METHOD(QueryInterfacesSucceeds) {
     auto filter = winrt::make<RedirectHttpFilter>();
 
     auto iFilter = filter.try_as<IHttpFilter>();
@@ -83,7 +80,6 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
 
-
     auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
     auto client = HttpClient{filter};
     auto request = HttpRequestMessage{HttpMethod::Get(), Uri{url1}};
@@ -112,8 +108,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
         response.StatusCode(HttpStatusCode::MovedPermanently);
         response.Headers().Location(Uri{url2});
         response.Content(HttpStringContent{L""});
-      }
-      else if (request.RequestUri().Host() == L"redirecthost") {
+      } else if (request.RequestUri().Host() == L"redirecthost") {
         response.StatusCode(HttpStatusCode::Ok);
         response.Content(HttpStringContent{L"Response Content"});
       }
@@ -197,8 +192,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
     Assert::AreEqual(L"Response Content", content.c_str());
   }
 
-  TEST_METHOD(TooManyRedirectsFails)
-  {
+  TEST_METHOD(TooManyRedirectsFails) {
     constexpr size_t maxRedirects = 2;
 
     auto url1 = L"http://initialhost";
@@ -207,9 +201,10 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
     auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
 
     mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> ResponseOperation { HttpResponseMessage response;
+        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
+      HttpResponseMessage response;
 
-    auto uri2 = Uri{url2 + winrt::to_hstring(L"?redirCount=1")};
+      auto uri2 = Uri{url2 + winrt::to_hstring(L"?redirCount=1")};
       response.Headers().Location(uri2);
       response.StatusCode(HttpStatusCode::MovedPermanently);
       response.Content(HttpStringContent{L""});
@@ -217,7 +212,8 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
     mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> ResponseOperation { HttpResponseMessage response;
+        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
+      HttpResponseMessage response;
 
       auto query = request.RequestUri().QueryParsed().GetFirstValueByName(L"redirCount");
       auto redirCount = std::stoi(query.c_str());
@@ -253,4 +249,4 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
   }
 };
 
-} // namespace
+} // namespace Microsoft::React::Test

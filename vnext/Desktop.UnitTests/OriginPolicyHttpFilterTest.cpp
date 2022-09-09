@@ -59,7 +59,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(Uri{L"https://www.microsoft.com"               }, nullptr));
   Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(nullptr                                         , Uri{L"https://www.microsoft.com"}));
   Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(nullptr                                         , nullptr));
-  // clang-format on
+    // clang-format on
   }
 
   TEST_METHOD(ExcludeHttpOnlyCookies) {

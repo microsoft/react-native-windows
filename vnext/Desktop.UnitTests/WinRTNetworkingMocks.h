@@ -4,13 +4,12 @@
 #pragma once
 
 // Windows API
-#include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Networking.Sockets.h>
 #include <winrt/Windows.Security.Credentials.h>
 #include <winrt/Windows.Security.Cryptography.Certificates.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.h>
-
 
 // Standard Library
 #include <functional>
@@ -231,19 +230,16 @@ struct MockMessageWebSocketControl : winrt::implements<
 };
 
 struct MockHttpBaseFilter : public winrt::implements<
-                               MockHttpBaseFilter,
-                               winrt::Windows::Web::Http::Filters::IHttpFilter,
-                               winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter> {
-
-  struct Mocks
-  {
+                                MockHttpBaseFilter,
+                                winrt::Windows::Web::Http::Filters::IHttpFilter,
+                                winrt::Windows::Web::Http::Filters::IHttpBaseProtocolFilter> {
+  struct Mocks {
 #pragma region IHttpFilter
 
     std::function<winrt::Windows::Foundation::IAsyncOperationWithProgress<
         winrt::Windows::Web::Http::HttpResponseMessage,
-                        winrt::Windows::Web::Http::HttpProgress>(
-                        winrt::Windows::Web::Http::HttpRequestMessage const &request)>
-    SendRequestAsync;
+        winrt::Windows::Web::Http::HttpProgress>(winrt::Windows::Web::Http::HttpRequestMessage const &request)>
+        SendRequestAsync;
 
 #pragma endregion IHttpFilter
 
@@ -268,16 +264,18 @@ struct MockHttpBaseFilter : public winrt::implements<
 
     std::function<winrt::Windows::Foundation::Collections::IVector<
         winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>() /*const*/>
-    GetIgnorableServerCertificateErrors;
+        GetIgnorableServerCertificateErrors;
 
     std::function<uint32_t() /*const*/> GetMaxConnectionsPerServer;
     std::function<void(uint32_t value) /*const*/> SetMaxConnectionsPerServer;
 
     std::function<winrt::Windows::Security::Credentials::PasswordCredential() /*const*/> GetProxyCredential;
-    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value) /*const*/> SetProxyCredential;
+    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value) /*const*/>
+        SetProxyCredential;
 
     std::function<winrt::Windows::Security::Credentials::PasswordCredential() /*const*/> GetServerCredential;
-    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value) /*const*/> SetServerCredential;
+    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value) /*const*/>
+        SetServerCredential;
 
     std::function<bool() /*const*/> GetUseProxy;
     std::function<void(bool value) /*const*/> SetUseProxy;
@@ -334,6 +332,5 @@ struct MockHttpBaseFilter : public winrt::implements<
 
 #pragma endregion IHttpBaseProtocolFilter
 };
-
 
 } // namespace Microsoft::React::Test

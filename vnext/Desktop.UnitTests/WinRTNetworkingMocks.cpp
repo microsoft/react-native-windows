@@ -382,8 +382,7 @@ MockHttpBaseFilter::MockHttpBaseFilter() noexcept {}
 #pragma region IHttpFilter
 
 IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> MockHttpBaseFilter::SendRequestAsync(
-  HttpRequestMessage const& request)
-{
+    HttpRequestMessage const &request) {
   if (Mocks.SendRequestAsync)
     return Mocks.SendRequestAsync(request);
 
@@ -394,152 +393,133 @@ IAsyncOperationWithProgress<HttpResponseMessage, HttpProgress> MockHttpBaseFilte
 
 #pragma region IHttpBaseProtocolFilter
 
-bool MockHttpBaseFilter::AllowAutoRedirect() const
-{
+bool MockHttpBaseFilter::AllowAutoRedirect() const {
   if (Mocks.GetAllowAutoRedirect)
     return Mocks.GetAllowAutoRedirect();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::AllowAutoRedirect(bool value) const
-{
+void MockHttpBaseFilter::AllowAutoRedirect(bool value) const {
   if (Mocks.SetAllowAutoRedirect)
     return Mocks.SetAllowAutoRedirect(value);
 
   throw exception("Not implemented");
 }
 
-bool MockHttpBaseFilter::AllowUI() const
-{
+bool MockHttpBaseFilter::AllowUI() const {
   if (Mocks.GetAllowUI)
     return Mocks.GetAllowUI();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::AllowUI(bool value) const
-{
+void MockHttpBaseFilter::AllowUI(bool value) const {
   if (Mocks.SetAllowUI)
     return Mocks.SetAllowUI(value);
 
   throw exception("Not implemented");
 }
 
-bool MockHttpBaseFilter::AutomaticDecompression() const
-{
+bool MockHttpBaseFilter::AutomaticDecompression() const {
   if (Mocks.GetAutomaticDecompression)
     return Mocks.GetAutomaticDecompression();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::AutomaticDecompression(bool value) const
-{
+void MockHttpBaseFilter::AutomaticDecompression(bool value) const {
   if (Mocks.SetAutomaticDecompression)
     return Mocks.SetAutomaticDecompression(value);
 
   throw exception("Not implemented");
 }
 
-Filters::HttpCacheControl MockHttpBaseFilter::CacheControl() const
-{
+Filters::HttpCacheControl MockHttpBaseFilter::CacheControl() const {
   if (Mocks.GetCacheControl)
     return Mocks.GetCacheControl();
 
   throw exception("Not implemented");
 }
-                                                     
-HttpCookieManager MockHttpBaseFilter::CookieManager() const
-{
+
+HttpCookieManager MockHttpBaseFilter::CookieManager() const {
   if (Mocks.GetCookieManager)
     return Mocks.GetCookieManager();
 
   throw exception("Not implemented");
 }
 
-Certificate MockHttpBaseFilter::ClientCertificate() const
-{
+Certificate MockHttpBaseFilter::ClientCertificate() const {
   if (Mocks.GetClientCertificate)
     return Mocks.GetClientCertificate();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::ClientCertificate(Certificate const& value) const
-{
+void MockHttpBaseFilter::ClientCertificate(Certificate const &value) const {
   if (Mocks.SetClientCertificate)
     return Mocks.SetClientCertificate(value);
 
   throw exception("Not implemented");
 }
 
-IVector<ChainValidationResult> MockHttpBaseFilter::IgnorableServerCertificateErrors() const
-{
+IVector<ChainValidationResult> MockHttpBaseFilter::IgnorableServerCertificateErrors() const {
   if (Mocks.GetIgnorableServerCertificateErrors)
     return Mocks.GetIgnorableServerCertificateErrors();
 
   throw exception("Not implemented");
 }
 
-uint32_t MockHttpBaseFilter::MaxConnectionsPerServer() const
-{
+uint32_t MockHttpBaseFilter::MaxConnectionsPerServer() const {
   if (Mocks.GetMaxConnectionsPerServer)
     return Mocks.GetMaxConnectionsPerServer();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::MaxConnectionsPerServer(uint32_t value) const
-{
+void MockHttpBaseFilter::MaxConnectionsPerServer(uint32_t value) const {
   if (Mocks.SetMaxConnectionsPerServer)
     return Mocks.SetMaxConnectionsPerServer(value);
 
   throw exception("Not implemented");
 }
 
-PasswordCredential MockHttpBaseFilter::ProxyCredential() const
-{
+PasswordCredential MockHttpBaseFilter::ProxyCredential() const {
   if (Mocks.GetProxyCredential)
     return Mocks.GetProxyCredential();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::ProxyCredential(PasswordCredential const& value) const
-{
+void MockHttpBaseFilter::ProxyCredential(PasswordCredential const &value) const {
   if (Mocks.SetProxyCredential)
     return Mocks.SetProxyCredential(value);
 
   throw exception("Not implemented");
 }
 
-PasswordCredential MockHttpBaseFilter::ServerCredential() const
-{
+PasswordCredential MockHttpBaseFilter::ServerCredential() const {
   if (Mocks.GetServerCredential)
     return Mocks.GetServerCredential();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::ServerCredential(PasswordCredential const& value) const
-{
+void MockHttpBaseFilter::ServerCredential(PasswordCredential const &value) const {
   if (Mocks.SetServerCredential)
     return Mocks.SetServerCredential(value);
 
   throw exception("Not implemented");
 }
 
-bool MockHttpBaseFilter::UseProxy() const
-{
+bool MockHttpBaseFilter::UseProxy() const {
   if (Mocks.GetUseProxy)
     return Mocks.GetUseProxy();
 
   throw exception("Not implemented");
 }
 
-void MockHttpBaseFilter::UseProxy(bool value) const
-{
+void MockHttpBaseFilter::UseProxy(bool value) const {
   if (Mocks.SetUseProxy)
     return Mocks.SetUseProxy(value);
 

@@ -8,11 +8,11 @@
 #include "WinRTTypes.h"
 
 // Windows API
-#include <winrt/Windows.Web.Http.Headers.h>
 #include <WinInet.h>
+#include <winrt/Windows.Web.Http.Headers.h>
 
-using winrt::Windows::Foundation::Collections::IVector;
 using winrt::Windows::Foundation::Uri;
+using winrt::Windows::Foundation::Collections::IVector;
 using winrt::Windows::Security::Credentials::PasswordCredential;
 using winrt::Windows::Security::Cryptography::Certificates::Certificate;
 using winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult;
@@ -27,11 +27,13 @@ namespace Microsoft::React::Networking {
 
 #pragma region RedirectHttpFilter
 
-RedirectHttpFilter::RedirectHttpFilter(size_t maxRedirects, IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
+RedirectHttpFilter::RedirectHttpFilter(
+    size_t maxRedirects,
+    IHttpFilter &&innerFilter,
+    IHttpFilter &&innerFilterWithNoCredentials) noexcept
     : m_maximumRedirects{maxRedirects},
       m_innerFilter{std::move(innerFilter)},
       m_innerFilterWithNoCredentials{std::move(innerFilterWithNoCredentials)} {
-
   // Prevent automatic redirections.
   if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
     baseFilter.AllowAutoRedirect(false);
@@ -44,31 +46,25 @@ RedirectHttpFilter::RedirectHttpFilter(size_t maxRedirects, IHttpFilter &&innerF
 }
 
 RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
-    : RedirectHttpFilter(
-          20,
-          std::move(innerFilter),
-          std::move(innerFilterWithNoCredentials)) {}
+    : RedirectHttpFilter(20, std::move(innerFilter), std::move(innerFilterWithNoCredentials)) {}
 
 RedirectHttpFilter::RedirectHttpFilter() noexcept
     : RedirectHttpFilter(
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{},
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
-void RedirectHttpFilter::SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept
-{
+void RedirectHttpFilter::SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept {
   m_requestFactory = factory;
 }
 
 void RedirectHttpFilter::SetRedirectSource(
-  winrt::Microsoft::React::Networking::IRedirectEventSource const& eventSrc) noexcept
-{
+    winrt::Microsoft::React::Networking::IRedirectEventSource const &eventSrc) noexcept {
   m_redirEventSrc = eventSrc;
 }
 
 #pragma region IHttpBaseProtocolFilter
 
-bool RedirectHttpFilter::AllowAutoRedirect() const
-{
+bool RedirectHttpFilter::AllowAutoRedirect() const {
   return m_allowAutoRedirect;
 }
 
@@ -189,8 +185,7 @@ void RedirectHttpFilter::UseProxy(bool value) const {
 
 ///
 /// See https://github.com/dotnet/corefx/pull/22702
-ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const& request)
-{
+ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
   auto redirectCount = 0;
   HttpMethod method{nullptr};
   HttpResponseMessage response{nullptr};
@@ -209,13 +204,14 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
     }
 
     // Send subsequent requests through the filter that doesn't have the credentials included in the first request
-    response = co_await (redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
+    response =
+        co_await (redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
 
     // Stop redirecting when a non-redirect status is responded.
     if (response.StatusCode() != HttpStatusCode::MultipleChoices &&
         response.StatusCode() != HttpStatusCode::MovedPermanently &&
-        response.StatusCode() != HttpStatusCode::Found &&             // Redirect
-        response.StatusCode() != HttpStatusCode::SeeOther &&          // RedirectMethod
+        response.StatusCode() != HttpStatusCode::Found && // Redirect
+        response.StatusCode() != HttpStatusCode::SeeOther && // RedirectMethod
         response.StatusCode() != HttpStatusCode::TemporaryRedirect && // RedirectKeepVerb
         response.StatusCode() != HttpStatusCode::PermanentRedirect) {
       break;
@@ -260,8 +256,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
     // 307 and 308 responses have all verbs stay the same.
     // https://tools.ietf.org/html/rfc7231#section-6.4
     if (response.StatusCode() != HttpStatusCode::TemporaryRedirect &&
-        response.StatusCode() != HttpStatusCode::PermanentRedirect &&
-        method != HttpMethod::Post()) {
+        response.StatusCode() != HttpStatusCode::PermanentRedirect && method != HttpMethod::Post()) {
       method = HttpMethod::Get();
     }
 
@@ -277,4 +272,4 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
 
 #pragma endregion RedirectHttpFilter
 
-}//namespace
+} // namespace Microsoft::React::Networking

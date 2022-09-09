@@ -8,8 +8,7 @@
 
 namespace Microsoft::React::Networking {
 
-struct IWinRTHttpRequestFactory
-{
+struct IWinRTHttpRequestFactory {
   virtual ~IWinRTHttpRequestFactory() noexcept {}
 
   virtual winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
@@ -18,4 +17,4 @@ struct IWinRTHttpRequestFactory
       winrt::Windows::Foundation::IInspectable const &args) noexcept = 0;
 };
 
-} //namespace
+} // namespace Microsoft::React::Networking

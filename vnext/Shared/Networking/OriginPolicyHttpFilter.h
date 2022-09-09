@@ -16,10 +16,10 @@
 
 namespace Microsoft::React::Networking {
 
-class OriginPolicyHttpFilter
-    : public winrt::
-          implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter,
-          winrt::Microsoft::React::Networking::IRedirectEventSource> {
+class OriginPolicyHttpFilter : public winrt::implements<
+                                   OriginPolicyHttpFilter,
+                                   winrt::Windows::Web::Http::Filters::IHttpFilter,
+                                   winrt::Microsoft::React::Networking::IRedirectEventSource> {
  public:
   struct ConstWcharComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;
