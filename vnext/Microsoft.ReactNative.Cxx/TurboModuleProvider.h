@@ -17,8 +17,7 @@ template <
     typename TTurboModule,
     std::enable_if_t<std::is_base_of_v<::facebook::react::TurboModule, TTurboModule>, int> = 0>
 void AddTurboModuleProvider(IReactPackageBuilder const &packageBuilder, std::wstring_view moduleName) {
-  auto experimental = packageBuilder.as<IReactPackageBuilderExperimental>();
-  experimental.AddTurboModule(
+  packageBuilder.AddTurboModule(
       moduleName, [](IReactModuleBuilder const &moduleBuilder) noexcept -> winrt::Windows::Foundation::IInspectable {
         IJsiHostObject abiTurboModule{nullptr};
         // We expect the initializer to be called immediately for TurboModules
