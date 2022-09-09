@@ -5,6 +5,7 @@
   "scripts": {
     "bundle-cpp": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
     "bundle-cs": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
+    "build": "rnw-scripts codegen",
     "start": "react-native start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
@@ -33,6 +34,14 @@
     "metro-react-native-babel-preset": "^0.70.1",
     "prettier": "^2.4.1",
     "react-test-renderer": "18.1.0"
+  },
+  "codegenConfig": {
+    "name": "SampleApp",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "windows": {
+      "namespace": "SampleLibraryCodegen"
+    }
   },
   "engines": {
     "node": ">= 14"

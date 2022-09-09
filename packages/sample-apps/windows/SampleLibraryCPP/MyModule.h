@@ -12,15 +12,16 @@ namespace SampleLibraryCpp {
 
 REACT_MODULE(MyModule)
 struct MyModule {
-  using ModuleSpec = ::SampleLibraryCpp::MyModuleSpec;
+  using ModuleSpec = SampleLibraryCodegen::MyModuleSpec;
 
-  // TODO: The spec file needs to be updated to have constant information generated
-  REACT_CONSTANT(const1)
-  const bool const1 = true;
-  REACT_CONSTANT(const2)
-  const double const2 = 1.234;
-  REACT_CONSTANT(const3)
-  const std::string const3{"const3"};
+  REACT_GET_CONSTANTS(GetConstants)
+  SampleLibraryCodegen::MyModuleSpec_Constants GetConstants() noexcept {
+    SampleLibraryCodegen::MyModuleSpec_Constants constants;
+    constants.const1 = true;
+    constants.const2 = 1.234;
+    constants.const3 = "const3";
+    return constants;
+  }
 
   REACT_METHOD(voidFunc)
   void voidFunc() noexcept {
