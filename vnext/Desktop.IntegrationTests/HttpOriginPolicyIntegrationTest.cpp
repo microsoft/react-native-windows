@@ -225,8 +225,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
   TEST_METHOD_CLEANUP(MethodCleanup)
   {
+    // Clear any runtime options that may be used by tests in this class.
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::None));
     SetRuntimeOptionString("Http.GlobalOrigin", {});
+    SetRuntimeOptionBool("Http.OmitCredentials", false);
 
     // Bug in HttpServer does not correctly release TCP port between test methods.
     // Using a different por per test for now.
@@ -325,6 +327,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// SimpleCorsForbiddenMethodFails
 
@@ -378,6 +381,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// SimpleCorsSameOriginSucceededs
 
@@ -391,6 +395,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::SimpleCrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   }// SimpleCorsCrossOriginFetchFails
 
@@ -405,6 +410,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
     SetRuntimeOptionString("Http.GlobalOrigin", serverArgs.Url.c_str());
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
     TestOriginPolicy(serverArgs, clientArgs, true /*shouldSucceed*/);
   }// FullCorsSameOriginRequestSucceeds
 
