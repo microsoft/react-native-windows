@@ -240,7 +240,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsForbiddenMethodSucceeds)
     // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
     // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-19041#properties
-    //TEST_IGNORE()
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsForbiddenMethodSucceeds)
   {
@@ -676,45 +676,11 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   } // FullCorsCrossOriginToAnotherCrossOriginRedirectSucceeds
 
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
-    // [0x80072f88] The HTTP redirect request must be confirmed by the user
-    //TODO: Figure out manual redirection.
-    ////TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsCrossOriginToAnotherCrossOriginRedirectWithPreflightSucceeds)
   {
     ServerParams serverArgs(s_port);
     ServerParams redirServerArgs(++s_port);
-
-    //MockResponseForOptions(
-    //  "content-type" /*strRequestHeaders*/,
-    //  "content-type" /*strAllowHeaders*/,
-    //  "http://example.com" /*strAllowOrigin*/,
-    //  false /*fAllowCredentials*/,
-    //  true /*fServer1*/);
-
-    //MockRedirectInfo(
-    //  m_szUrlLocalHost2 /*strUrlNew*/,
-    //  "http://example.com" /*strAllowOrigin*/);
-
-    //MockGenericResponse(
-    //  status::accepted, "*" /*strAllowOrigin*/,
-    //  "SERVER_RESPONSE" /*strBody*/,
-    //  false /*fAllowCredentials*/,
-    //  false /*fServer1*/);
-
-/*
-		// Setup the resource request
-		ResourceRequest request;
-		request.m_policy = Mso::React::NetworkingSecurityPolicy::CORS;
-		request.m_method = "PATCH";
-		request.m_url = m_szUrlLocalHost;
-		request.m_origin = L"http://example.com";
-		request.m_headers = {{L"content-type", L"text/plain"}};
-		request.m_body = {HttpBodyData::Type::String, "CLIENT_REQUEST"};
-		request.m_timeoutMs = 0;
-		request.m_withCredentials = false;
-*/
-
 
     serverArgs.Preflight.set(http::field::access_control_request_headers,   "Content-Type");
     serverArgs.Preflight.set(http::field::access_control_allow_headers,     "Content-Type");
@@ -798,7 +764,6 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, s_shouldSucceed);
   }// FullCorsPreflightSucceeds
 
-  //TODO: Confirm comment below
   // The current implementation omits withCredentials flag from request and always sets it to false
   // Configure the responses for CORS request
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsCrossOriginWithCredentialsSucceeds)
@@ -825,7 +790,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
   // "Host" is one of the forbidden headers for fetch
   BEGIN_TEST_METHOD_ATTRIBUTE(FullCorsRequestWithHostHeaderFails)
     // "Host" is not an accepted request header in WinRT.
-    //TEST_IGNORE()
+    TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(FullCorsRequestWithHostHeaderFails)
   {
