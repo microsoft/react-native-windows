@@ -144,9 +144,6 @@ WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable co
     } else if (!data["form"].empty()) {
       // #9535 - HTTP form data support
       // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
-    } else {
-      // Assume empty request body.
-      // content = HttpStringContent{L""};
     }
   }
 
@@ -327,115 +324,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     }
   }
 
-#ifdef ERASME
-  HttpMediaTypeHeaderValue contentType{nullptr};
-  string contentEncoding;
-  string contentLength;
-
-  // Headers are generally case-insensitive
-  // https://www.ietf.org/rfc/rfc2616.txt section 4.2
-  for (auto &header : coReqArgs->Headers) {
-    if (boost::iequals(header.first.c_str(), "Content-Type")) {
-      bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
-      if (!success && m_onError) {
-        co_return m_onError(coReqArgs->RequestId, "Failed to parse Content-Type");
-      }
-    } else if (boost::iequals(header.first.c_str(), "Content-Encoding")) {
-      contentEncoding = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Content-Length")) {
-      contentLength = header.second;
-    } else if (boost::iequals(header.first.c_str(), "Authorization")) {
-      bool success =
-          coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
-      if (!success && m_onError) {
-        co_return m_onError(coReqArgs->RequestId, "Failed to append Authorization");
-      }
-    } else if (boost::iequals(header.first.c_str(), "User-Agent")) {
-      bool success =
-          coRequest.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
-      if (!success && m_onError) {
-        co_return m_onError(coReqArgs->RequestId, "Failed to append User-Agent");
-      }
-    } else {
-      try {
-        coRequest.Headers().Append(to_hstring(header.first), to_hstring(header.second));
-      } catch (hresult_error const &e) {
-        if (self->m_onError) {
-          co_return self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(e));
-        }
-      }
-    }
-  }
-
-  IHttpContent content{nullptr};
-  auto &data = coReqArgs->Data;
-  if (!data.isNull()) {
-    auto bodyHandler = self->m_requestBodyHandler.lock();
-    if (bodyHandler && bodyHandler->Supports(data)) {
-      auto contentTypeString = contentType ? winrt::to_string(contentType.ToString()) : "";
-      dynamic blob;
-      try {
-        blob = bodyHandler->ToRequestBody(data, contentTypeString);
-      } catch (const std::invalid_argument &e) {
-        if (self->m_onError) {
-          self->m_onError(coReqArgs->RequestId, e.what());
-        }
-        co_return;
-      }
-      auto bytes = blob["bytes"];
-      auto byteVector = vector<uint8_t>(bytes.size());
-      for (auto &byte : bytes) {
-        byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
-      }
-      auto view = winrt::array_view<uint8_t const>{byteVector};
-      auto buffer = CryptographicBuffer::CreateFromByteArray(view);
-      content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["string"].empty()) {
-      content = HttpStringContent{to_hstring(data["string"].asString())};
-    } else if (!data["base64"].empty()) {
-      auto buffer = CryptographicBuffer::DecodeFromBase64String(to_hstring(data["base64"].asString()));
-      content = HttpBufferContent{std::move(buffer)};
-    } else if (!data["uri"].empty()) {
-      auto file = co_await StorageFile::GetFileFromApplicationUriAsync(Uri{to_hstring(data["uri"].asString())});
-      auto stream = co_await file.OpenReadAsync();
-      content = HttpStreamContent{std::move(stream)};
-    } else if (!data["form"].empty()) {
-      // #9535 - HTTP form data support
-      // winrt::Windows::Web::Http::HttpMultipartFormDataContent()
-    } else {
-      // Assume empty request body.
-      // content = HttpStringContent{L""};
-    }
-  }
-
-  if (content != nullptr) {
-    // Attach content headers
-    if (contentType) {
-      content.Headers().ContentType(contentType);
-    }
-    if (!contentEncoding.empty()) {
-      if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
-        if (self->m_onError)
-          self->m_onError(coReqArgs->RequestId, "Failed to parse Content-Encoding");
-
-        co_return;
-      }
-    }
-
-    if (!contentLength.empty()) {
-      const auto contentLengthHeader = _atoi64(contentLength.c_str());
-      content.Headers().ContentLength(contentLengthHeader);
-    }
-
-    coRequest.Content(content);
-  }
-
-#endif // ERASME
-
   try {
-#ifdef ERASME
-    coRequest.Properties().Insert(L"RequestArgs", coArgs);
-#endif // ERASME
     auto sendRequestOp = self->m_client.SendRequestAsync(coRequest);
     self->TrackResponse(coReqArgs->RequestId, sendRequestOp);
 
@@ -466,16 +355,6 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     }
 
     auto result = sendRequestOp.ErrorCode();
-    //// Handle "The HTTP redirect request must be confirmed by the user"
-    //// https://github.com/dotnet/corefx/pull/22702
-    //// See https://github.com/dotnet/corefx/blob/v3.1.28/src/System.Net.Http/src/uap/System/Net/HttpClientHandler.cs
-    //if (result == HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_NEEDS_CONFIRMATION)) {
-    //  auto coRequest2 = co_await CreateRequest(HttpMethod(coRequest.Method()), Uri{coRequest.RequestUri()}, coArgs);
-    //  auto redirRequestOp = self->m_client.SendRequestAsync(coRequest2);
-    //  co_await lessthrow_await_adapter<ResponseOperation>{redirRequestOp};
-    //  result = redirRequestOp.ErrorCode();
-    //}
-
     if (result < 0) {
       if (self->m_onError) {
         self->m_onError(coReqArgs->RequestId, Utilities::HResultToString(std::move(result)));

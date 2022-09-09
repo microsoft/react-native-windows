@@ -11,6 +11,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 
 using winrt::Windows::Foundation::Collections::IVector;
+using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Security::Credentials::PasswordCredential;
 using winrt::Windows::Security::Cryptography::Certificates::Certificate;
 using winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult;
@@ -185,14 +186,13 @@ void RedirectHttpFilter::UseProxy(bool value) const {
 
 #pragma region IHttpFilter
 
+///
+/// See https://github.com/dotnet/corefx/pull/22702
 ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const& request)
 {
   auto redirectCount = 0;
   HttpMethod method{nullptr};
-  bool skipContentIfPresent = false;//TODO: Delte? Do we need manual HTTP content creation?
   HttpResponseMessage response{nullptr};
-
-  //TODO: Ensure request is not null
 
   auto coRequest = request;
   auto coAllowAutoRedirect = m_allowAutoRedirect;
@@ -202,22 +202,13 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
 
   method = coRequest.Method();
 
-  //TODO: Enable autoredirect flag and turn into do-while???
   do {
-    //TODO: If cancellable, cancel/throw.
-
     if (response) {
       response = nullptr;
     }
 
-    //TODO: Convert request?
-
     // Send subsequent requests through the filter that doesn't have the credentials included in the first request
     response = co_await (redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
-
-    //TODO: Convert response?
-
-    // TODO: Process cookies.
 
     // Stop redirecting when a non-redirect status is responded.
     if (response.StatusCode() != HttpStatusCode::MultipleChoices &&
@@ -248,12 +239,10 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
       }
     }
 
-    auto redirectUri = response.Headers().Location();
+    auto redirectUri = Uri{response.Headers().Location().AbsoluteUri()};
     if (!redirectUri) {
       break;
     }
-
-    //TODO: Ensure absolute URI
 
     if (redirectUri.SchemeName() != L"http" && redirectUri.SchemeName() != L"https") {
       break;
@@ -264,7 +253,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
       break;
     }
 
-    //TODO: Quote source
+    /// See https://github.com/dotnet/corefx/blob/v3.1.28/src/System.Net.Http/src/uap/System/Net/HttpClientHandler.cs
     // Follow HTTP RFC 7231 rules. In general, 3xx responses
     // except for 307 and 308 will keep verb except POST becomes GET.
     // 307 and 308 responses have all verbs stay the same.
@@ -273,7 +262,6 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
         response.StatusCode() != HttpStatusCode::PermanentRedirect &&
         method != HttpMethod::Post()) {
       method = HttpMethod::Get();
-      skipContentIfPresent = true;
     }
 
     coRequest.RequestUri(redirectUri);
