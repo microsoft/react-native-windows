@@ -707,8 +707,12 @@ bool OriginPolicyHttpFilter::OnRedirecting(HttpRequestMessage const& request, Ht
     // from all sites through wildcard.
     request.Headers().Insert(L"Origin", L"null");
 
-    //request.Properties().Insert(L"IsTaintedOrigin", winrt::box_value(true));
-    request.Properties().Lookup(L"RequestArgs").as<RequestArgs>()->TaintedOrigin = true;
+    if (auto iReqArgs = request.Properties().TryLookup(L"RequestArgs")) {
+      iReqArgs.as<RequestArgs>()->TaintedOrigin = true;
+    } else {
+      // Abort redirection if the request is either preflight or extraneous.
+      return false;
+    }
   }
 
   return true;
