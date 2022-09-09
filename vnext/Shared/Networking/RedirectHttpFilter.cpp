@@ -235,7 +235,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const&
           HttpMethod{method}, coRequest.RequestUri(), coRequest.Properties().Lookup(L"RequestArgs"));
 
       if (!coRequest) {
-        break; // TODO: Throw?
+        throw winrt::hresult_error{E_INVALIDARG, L"Invalid request handle"};
       }
     }
 
