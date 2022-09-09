@@ -48,45 +48,52 @@ export class CodeGenWindows {
     const pkgJson = require(path.join(this.root, 'package.json'));
 
     if (!pkgJson.codegenConfig) {
-      spinner.info('No codegenConfig specified in package.json - Skipping');
+      spinner.info(
+        `No ${chalk.bold(
+          'codegenConfig',
+        )} specified in package.json - ${chalk.yellow(
+          'Skipping codegen-windows',
+        )}`,
+      );
       return;
     }
 
     const codegenConfigType = pkgJson.codegenConfig.type;
-    if (!codegenConfigType) {
-      throw new CodedError(
-        'InvalidCodegenConfig',
-        `Missing ${chalk.bold('codegenConfig.type')} value in package.json`,
-      );
-    }
-
     if (codegenConfigType !== 'modules' && codegenConfigType !== 'all') {
       spinner.info(
         `${chalk.bold(
           'codegenConfig.type',
         )} in package.json is not ${chalk.bold('modules')} or ${chalk.bold(
           'all',
-        )} - Skipping codegen`,
+        )} - ${chalk.yellow('Skipping codegen-windows')}`,
       );
       return;
+    }
+
+    if (!pkgJson.codegenConfig.windows) {
+      spinner.info(
+        `No ${chalk.bold(
+          'codegenConfig.windows',
+        )} specified in package.json - ${chalk.yellow(
+          'Skipping codegen-windows',
+        )}`,
+      );
+      return;
+    }
+
+    if (!pkgJson.codegenConfig.windows.namespace) {
+      throw new CodedError(
+        'InvalidCodegenConfig',
+        `Missing ${chalk.bold(
+          'codegenConfig.windows.namespace',
+        )} value in package.json`,
+      );
     }
 
     if (!pkgJson.codegenConfig.name) {
       throw new CodedError(
         'InvalidCodegenConfig',
         `Missing ${chalk.bold('codegenConfig.name')} value in package.json`,
-      );
-    }
-
-    if (
-      !pkgJson.codegenConfig.windows ||
-      !pkgJson.codegenConfig.windows.namespace
-    ) {
-      throw new CodedError(
-        'InvalidCodegenConfig',
-        `Missing ${chalk.bold(
-          'codegenConfig.windows.namespace',
-        )} value in package.json`,
       );
     }
 
@@ -205,7 +212,9 @@ export async function codegenWindowsInternal(
 ) {
   const startTime = performance.now();
   const spinner = newSpinner(
-    options.check ? 'Checking codegen files...' : 'Running codegen...',
+    options.check
+      ? 'Checking codegen-windows files...'
+      : 'Running codegen-windows...',
   );
   try {
     const codegen = new CodeGenWindows(config.root, options);
@@ -214,7 +223,9 @@ export async function codegenWindowsInternal(
 
     if (!codegen.areChangesNeeded()) {
       console.log(
-        `${chalk.green('Success:')} No codegen changes necessary. (${Math.round(
+        `${chalk.green(
+          'Success:',
+        )} No codegen-windows changes necessary. (${Math.round(
           endTime - startTime,
         )}ms)`,
       );
@@ -223,7 +234,7 @@ export async function codegenWindowsInternal(
       console.log(
         `${chalk.yellow(
           'Warning:',
-        )} Codegen changes were necessary but ${chalk.bold(
+        )} Codegen-windows changes were necessary but ${chalk.bold(
           '--check',
         )} specified. Run '${chalk.bold(
           `${codegenCommand}`,
@@ -231,11 +242,13 @@ export async function codegenWindowsInternal(
       );
       throw new CodedError(
         'NeedCodegen',
-        `Codegen changes were necessary but --check was specified. Run '${codegenCommand}' to apply the changes`,
+        `Codegen-windows changes were necessary but --check was specified. Run '${codegenCommand}' to apply the changes`,
       );
     } else {
       console.log(
-        `${chalk.green('Success:')} Codegen changes completed. (${Math.round(
+        `${chalk.green(
+          'Success:',
+        )} Codegen-windows changes completed. (${Math.round(
           endTime - startTime,
         )}ms)`,
       );
