@@ -119,7 +119,10 @@ bool OriginPolicyHttpFilter::ConstWcharComparer::operator()(const wchar_t *a, co
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
-  return u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
+  return (u1 && u2) &&
+    u1.SchemeName() == u2.SchemeName() &&
+    u1.Host() == u2.Host() &&
+    u1.Port() == u2.Port();
 }
 
 /*static*/ bool OriginPolicyHttpFilter::IsSimpleCorsRequest(HttpRequestMessage const &request) noexcept {
@@ -457,7 +460,8 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
 
   // We assume the source (request) origin is not "*", "null", or empty string. Valid URI is expected
   // 4.10.4 - Mismatched allow origin
-  if (allowedOrigin.empty() || !IsSameOrigin(s_origin, Uri{allowedOrigin})) {
+  auto origin = iRequestArgs.as<RequestArgs>()->TaintedOrigin ? nullptr : s_origin;
+  if (allowedOrigin.empty() || !IsSameOrigin(origin, Uri{allowedOrigin})) {
     hstring errorMessage;
     if (allowedOrigin.empty())
       errorMessage = L"No valid origin in response";
@@ -687,7 +691,26 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
 
 bool OriginPolicyHttpFilter::OnRedirecting(HttpRequestMessage const& request, HttpResponseMessage const& response) noexcept
 {
-  //TODO: Implement
+  // TODO: Implement
+
+  // Consider the following scenario.
+  // User signs in to http://a.com and visits a page that makes CORS request to http://b.com with origin=http://a.com.
+  // Http://b.com reponds with a redirect to http://a.com. The browser follows the redirect to http://a.com with
+  // origin=http://a.com. Since the origin matches the URL, the request is authorized at http://a.com, but it actually
+  // allows http://b.com to bypass the CORS check at http://a.com since the redirected URL is from http://b.com.
+
+  if (!IsSameOrigin(response.Headers().Location(), request.RequestUri()) &&
+    !IsSameOrigin(s_origin, request.RequestUri()))
+  {
+    // By masking the origin field in the request header, we make it impossible for the server to set a single value for
+    // the access-control-allow-origin header. It means, the only way to support redirect is that server allows access
+    // from all sites through wildcard.
+    request.Headers().Insert(L"Origin", L"null");
+
+    //request.Properties().Insert(L"IsTaintedOrigin", winrt::box_value(true));
+    request.Properties().Lookup(L"RequestArgs").as<RequestArgs>()->TaintedOrigin = true;
+  }
+
   return true;
 }
 

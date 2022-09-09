@@ -53,7 +53,13 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"http://[2001:db8:1f70::999:de8:7648:6e8]"}, Uri{L"http://[2001:db8:1f70::999:de8:7648:6e8]/test.html"}));
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"https://\u65E5\u672C\u8A9E.com"          }, Uri{L"https://\u65E5\u672C\u8A9E.com/FakeResponse.ashx"}));
   Assert::IsTrue (OriginPolicyHttpFilter::IsSameOrigin(Uri{L"https://www.microsoft.com"               }, Uri{L"https://www.microsoft.com:443"}));
-    // clang-format on
+  Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(Uri{L"https://www.microsoft.com"               }, Uri{nullptr}));
+  Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(Uri{nullptr                                    }, Uri{L"https://www.microsoft.com"}));
+  Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(Uri{nullptr                                    }, Uri{nullptr}));
+  Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(Uri{L"https://www.microsoft.com"               }, nullptr));
+  Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(nullptr                                         , Uri{L"https://www.microsoft.com"}));
+  Assert::IsFalse(OriginPolicyHttpFilter::IsSameOrigin(nullptr                                         , nullptr));
+  // clang-format on
   }
 
   TEST_METHOD(ExcludeHttpOnlyCookies) {
