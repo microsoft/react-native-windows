@@ -28,45 +28,45 @@ struct MockMessageWebSocket : public winrt::implements<
 
   struct Mocks {
     // IWebSocket
-    std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &) /*const*/>
+    std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &)>
         ConnectAsync;
 
-    std::function<void(winrt::param::hstring const &, winrt::param::hstring const &) /*const*/> SetRequestHeader;
+    std::function<void(winrt::param::hstring const &, winrt::param::hstring const &)> SetRequestHeader;
 
-    std::function<winrt::Windows::Storage::Streams::IOutputStream() /*const*/> OutputStream;
+    std::function<winrt::Windows::Storage::Streams::IOutputStream()> OutputStream;
 
-    std::function<void(std::uint16_t, winrt::param::hstring const &) /*const*/> Close;
+    std::function<void(std::uint16_t, winrt::param::hstring const &)> Close;
 
     std::function<winrt::event_token(winrt::Windows::Foundation::TypedEventHandler<
                                      winrt::Windows::Networking::Sockets::IWebSocket,
-                                     winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &) /*const*/>
+                                     winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &)>
         ClosedToken;
 
     std::function<winrt::Windows::Networking::Sockets::IMessageWebSocket::Closed_revoker(
         winrt::auto_revoke_t,
         winrt::Windows::Foundation::TypedEventHandler<
             winrt::Windows::Networking::Sockets::IWebSocket,
-            winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &) /*const*/>
+            winrt::Windows::Networking::Sockets::WebSocketClosedEventArgs> const &)>
         ClosedRevoker;
 
-    std::function<void(winrt::event_token const &) /*const*/ /*noexcept*/> ClosedVoid;
+    std::function<void(winrt::event_token const &)> ClosedVoid;
 
     // IMessageWebSocket
-    std::function<winrt::Windows::Networking::Sockets::MessageWebSocketControl() /*const*/> Control;
+    std::function<winrt::Windows::Networking::Sockets::MessageWebSocketControl()> Control;
 
-    std::function<winrt::Windows::Networking::Sockets::MessageWebSocketInformation() /*const*/> Information;
+    std::function<winrt::Windows::Networking::Sockets::MessageWebSocketInformation()> Information;
 
     std::function<winrt::event_token(
         winrt::Windows::Foundation::TypedEventHandler<
             winrt::Windows::Networking::Sockets::MessageWebSocket,
-            winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
+            winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &)>
         MessageReceivedToken;
 
     std::function<winrt::Windows::Networking::Sockets::IMessageWebSocket::MessageReceived_revoker(
         winrt::auto_revoke_t,
         winrt::Windows::Foundation::TypedEventHandler<
             winrt::Windows::Networking::Sockets::MessageWebSocket,
-            winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &) /*const*/>
+            winrt::Windows::Networking::Sockets::MessageWebSocketMessageReceivedEventArgs> const &)>
         MessageReceivedRevoker;
 
     std::function<void(winrt::event_token const &)> MessageReceivedVoid;
@@ -133,37 +133,37 @@ struct ThrowingMessageWebSocket : public MockMessageWebSocket {
 
 struct MockDataWriter : public winrt::Windows::Storage::Streams::IDataWriter {
   struct Mocks {
-    std::function<std::uint32_t() /*const*/> UnstoredBufferLength;
-    std::function<winrt::Windows::Storage::Streams::UnicodeEncoding() /*const*/> GetUnicodeEncoding;
-    std::function<void(winrt::Windows::Storage::Streams::UnicodeEncoding const &value) /*const*/> SetUnicodeEncoding;
-    std::function<winrt::Windows::Storage::Streams::ByteOrder() /*const*/> GetByteOrder;
-    std::function<void(winrt::Windows::Storage::Streams::ByteOrder const &value) /*const*/> SetByteOrder;
-    std::function<void(std::uint8_t value) /*const*/> WriteByte;
-    std::function<void(winrt::array_view<std::uint8_t const> value) /*const*/> WriteBytes;
-    std::function<void(winrt::Windows::Storage::Streams::IBuffer const &buffer) /*const*/> WriteBuffer;
+    std::function<std::uint32_t()> UnstoredBufferLength;
+    std::function<winrt::Windows::Storage::Streams::UnicodeEncoding()> GetUnicodeEncoding;
+    std::function<void(winrt::Windows::Storage::Streams::UnicodeEncoding const &value)> SetUnicodeEncoding;
+    std::function<winrt::Windows::Storage::Streams::ByteOrder()> GetByteOrder;
+    std::function<void(winrt::Windows::Storage::Streams::ByteOrder const &value)> SetByteOrder;
+    std::function<void(std::uint8_t value)> WriteByte;
+    std::function<void(winrt::array_view<std::uint8_t const> value)> WriteBytes;
+    std::function<void(winrt::Windows::Storage::Streams::IBuffer const &buffer)> WriteBuffer;
     std::function<void(
         winrt::Windows::Storage::Streams::IBuffer const &buffer,
         std::uint32_t start,
-        std::uint32_t count) /*const*/>
+        std::uint32_t count)>
         WriteBufferRange;
-    std::function<void(bool value) /*const*/> WriteBoolean;
-    std::function<void(winrt::guid const &value) /*const*/> WriteGuid;
-    std::function<void(std::int16_t value) /*const*/> WriteInt16;
-    std::function<void(std::int32_t value) /*const*/> WriteInt32;
-    std::function<void(std::int64_t value) /*const*/> WriteInt64;
-    std::function<void(std::uint16_t value) /*const*/> WriteUInt16;
-    std::function<void(std::uint32_t value) /*const*/> WriteUInt32;
-    std::function<void(std::uint64_t value) /*const*/> WriteUInt64;
-    std::function<void(float value) /*const*/> WriteSingle;
-    std::function<void(double value) /*const*/> WriteDouble;
-    std::function<void(winrt::Windows::Foundation::DateTime const &value) /*const*/> WriteDateTime;
-    std::function<void(winrt::Windows::Foundation::TimeSpan const &value) /*const*/> WriteTimeSpan;
-    std::function<std::uint32_t(winrt::param::hstring const &value) /*const*/> WriteString;
-    std::function<std::uint32_t(winrt::param::hstring const &value) /*const*/> MeasureString;
-    std::function<winrt::Windows::Storage::Streams::DataWriterStoreOperation() /*const*/> StoreAsync;
-    std::function<winrt::Windows::Foundation::IAsyncOperation<bool>() /*const*/> FlushAsync;
-    std::function<winrt::Windows::Storage::Streams::IBuffer() /*const*/> DetachBuffer;
-    std::function<winrt::Windows::Storage::Streams::IOutputStream() /*const*/> DetachStream;
+    std::function<void(bool value)> WriteBoolean;
+    std::function<void(winrt::guid const &value)> WriteGuid;
+    std::function<void(std::int16_t value)> WriteInt16;
+    std::function<void(std::int32_t value)> WriteInt32;
+    std::function<void(std::int64_t value)> WriteInt64;
+    std::function<void(std::uint16_t value)> WriteUInt16;
+    std::function<void(std::uint32_t value)> WriteUInt32;
+    std::function<void(std::uint64_t value)> WriteUInt64;
+    std::function<void(float value)> WriteSingle;
+    std::function<void(double value)> WriteDouble;
+    std::function<void(winrt::Windows::Foundation::DateTime const &value)> WriteDateTime;
+    std::function<void(winrt::Windows::Foundation::TimeSpan const &value)> WriteTimeSpan;
+    std::function<std::uint32_t(winrt::param::hstring const &value)> WriteString;
+    std::function<std::uint32_t(winrt::param::hstring const &value)> MeasureString;
+    std::function<winrt::Windows::Storage::Streams::DataWriterStoreOperation()> StoreAsync;
+    std::function<winrt::Windows::Foundation::IAsyncOperation<bool>()> FlushAsync;
+    std::function<winrt::Windows::Storage::Streams::IBuffer()> DetachBuffer;
+    std::function<winrt::Windows::Storage::Streams::IOutputStream()> DetachStream;
   };
 
   Mocks Mocks;
@@ -245,40 +245,40 @@ struct MockHttpBaseFilter : public winrt::implements<
 
 #pragma region IHttpBaseProtocolFilter
 
-    std::function<bool() /*const*/> GetAllowAutoRedirect;
-    std::function<void(bool value) /*const*/> SetAllowAutoRedirect{[](bool) {}};
+    std::function<bool()> GetAllowAutoRedirect;
+    std::function<void(bool value)> SetAllowAutoRedirect{[](bool) {}};
 
-    std::function<bool() /*const*/> GetAllowUI;
-    std::function<void(bool value) /*const*/> SetAllowUI{[](bool) {}};
+    std::function<bool()> GetAllowUI;
+    std::function<void(bool value)> SetAllowUI{[](bool) {}};
 
-    std::function<bool() /*const*/> GetAutomaticDecompression;
-    std::function<void(bool value) /*const*/> SetAutomaticDecompression;
+    std::function<bool()> GetAutomaticDecompression;
+    std::function<void(bool value)> SetAutomaticDecompression;
 
-    std::function<winrt::Windows::Web::Http::Filters::HttpCacheControl() /*const*/> GetCacheControl;
+    std::function<winrt::Windows::Web::Http::Filters::HttpCacheControl()> GetCacheControl;
 
-    std::function<winrt::Windows::Web::Http::HttpCookieManager() /*const*/> GetCookieManager;
+    std::function<winrt::Windows::Web::Http::HttpCookieManager()> GetCookieManager;
 
-    std::function<winrt::Windows::Security::Cryptography::Certificates::Certificate() /*const*/> GetClientCertificate;
-    std::function<void(winrt::Windows::Security::Cryptography::Certificates::Certificate const &value) /*const*/>
+    std::function<winrt::Windows::Security::Cryptography::Certificates::Certificate()> GetClientCertificate;
+    std::function<void(winrt::Windows::Security::Cryptography::Certificates::Certificate const &value)>
         SetClientCertificate;
 
     std::function<winrt::Windows::Foundation::Collections::IVector<
-        winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>() /*const*/>
+        winrt::Windows::Security::Cryptography::Certificates::ChainValidationResult>()>
         GetIgnorableServerCertificateErrors;
 
-    std::function<uint32_t() /*const*/> GetMaxConnectionsPerServer;
-    std::function<void(uint32_t value) /*const*/> SetMaxConnectionsPerServer;
+    std::function<uint32_t()> GetMaxConnectionsPerServer;
+    std::function<void(uint32_t value)> SetMaxConnectionsPerServer;
 
-    std::function<winrt::Windows::Security::Credentials::PasswordCredential() /*const*/> GetProxyCredential;
-    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value) /*const*/>
+    std::function<winrt::Windows::Security::Credentials::PasswordCredential()> GetProxyCredential;
+    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value)>
         SetProxyCredential;
 
-    std::function<winrt::Windows::Security::Credentials::PasswordCredential() /*const*/> GetServerCredential;
-    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value) /*const*/>
+    std::function<winrt::Windows::Security::Credentials::PasswordCredential()> GetServerCredential;
+    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value)>
         SetServerCredential;
 
-    std::function<bool() /*const*/> GetUseProxy;
-    std::function<void(bool value) /*const*/> SetUseProxy;
+    std::function<bool()> GetUseProxy;
+    std::function<void(bool value)> SetUseProxy;
 
 #pragma endregion IHttpBaseProtocolFilter
   };
