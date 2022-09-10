@@ -212,7 +212,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
     mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
+        [&url2, maxRedirects](HttpRequestMessage const &request) -> ResponseOperation {
       HttpResponseMessage response;
 
       auto query = request.RequestUri().QueryParsed().GetFirstValueByName(L"redirCount");

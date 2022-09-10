@@ -28,8 +28,7 @@ struct MockMessageWebSocket : public winrt::implements<
 
   struct Mocks {
     // IWebSocket
-    std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &)>
-        ConnectAsync;
+    std::function<winrt::Windows::Foundation::IAsyncAction(winrt::Windows::Foundation::Uri const &)> ConnectAsync;
 
     std::function<void(winrt::param::hstring const &, winrt::param::hstring const &)> SetRequestHeader;
 
@@ -141,10 +140,8 @@ struct MockDataWriter : public winrt::Windows::Storage::Streams::IDataWriter {
     std::function<void(std::uint8_t value)> WriteByte;
     std::function<void(winrt::array_view<std::uint8_t const> value)> WriteBytes;
     std::function<void(winrt::Windows::Storage::Streams::IBuffer const &buffer)> WriteBuffer;
-    std::function<void(
-        winrt::Windows::Storage::Streams::IBuffer const &buffer,
-        std::uint32_t start,
-        std::uint32_t count)>
+    std::function<
+        void(winrt::Windows::Storage::Streams::IBuffer const &buffer, std::uint32_t start, std::uint32_t count)>
         WriteBufferRange;
     std::function<void(bool value)> WriteBoolean;
     std::function<void(winrt::guid const &value)> WriteGuid;
@@ -270,12 +267,10 @@ struct MockHttpBaseFilter : public winrt::implements<
     std::function<void(uint32_t value)> SetMaxConnectionsPerServer;
 
     std::function<winrt::Windows::Security::Credentials::PasswordCredential()> GetProxyCredential;
-    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value)>
-        SetProxyCredential;
+    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value)> SetProxyCredential;
 
     std::function<winrt::Windows::Security::Credentials::PasswordCredential()> GetServerCredential;
-    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value)>
-        SetServerCredential;
+    std::function<void(winrt::Windows::Security::Credentials::PasswordCredential const &value)> SetServerCredential;
 
     std::function<bool()> GetUseProxy;
     std::function<void(bool value)> SetUseProxy;
