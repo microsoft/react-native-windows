@@ -76,7 +76,6 @@
         delayimp.lib;
         Shlwapi.lib;
         Version.lib;
-        Wininet.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
