@@ -178,6 +178,9 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
+          "Microsoft.Build.Tasks.Git": "[1.0.0, )",
+          "Microsoft.SourceLink.Common": "[1.0.0, )",
+          "Microsoft.SourceLink.GitHub": "[1.0.0, )",
           "Microsoft.UI.Xaml": "[2.7.0, )",
           "Microsoft.Windows.CppWinRT": "[2.0.211028.7, )",
           "Microsoft.Windows.SDK.BuildTools": "[10.0.22000.194, )",
