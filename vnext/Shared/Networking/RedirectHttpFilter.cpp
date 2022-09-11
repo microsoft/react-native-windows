@@ -186,7 +186,7 @@ void RedirectHttpFilter::UseProxy(bool value) const {
 ///
 /// See https://github.com/dotnet/corefx/pull/22702
 ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const &request) {
-  auto redirectCount = 0;
+  size_t redirectCount = 0;
   HttpMethod method{nullptr};
   HttpResponseMessage response{nullptr};
 

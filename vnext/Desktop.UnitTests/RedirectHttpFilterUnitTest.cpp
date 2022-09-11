@@ -216,7 +216,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       HttpResponseMessage response;
 
       auto query = request.RequestUri().QueryParsed().GetFirstValueByName(L"redirCount");
-      auto redirCount = std::stoi(query.c_str());
+      auto redirCount = static_cast<size_t>(std::stoi(query.c_str()));
       if (redirCount > maxRedirects) {
         response.StatusCode(HttpStatusCode::Ok);
         response.Content(HttpStringContent{L"Response Content"});
