@@ -103,4 +103,18 @@ namespace Microsoft.ReactNative
     )
     void OnDropViewInstance(XAML_NAMESPACE.FrameworkElement view);
   };
+
+  [webhosthidden]
+  DOC_STRING(
+    "Enables view managers to receive callback when Yoga layout props are applied. "
+  )
+  interface IViewManagerWithOnLayout {
+    DOC_STRING(
+        "Invoked just before `onLayout` event is emitted for a view. "
+        "Note: this callback is invoked any time the Yoga node returns true from "
+        "YGNodeHasNewLayout. React Native Windows suppresses `onLayout` events "
+        "when the final layout has not changed, so this method may be called "
+        "without a corresponding `onLayout` event in JavaScript.")
+    void OnLayout(XAML_NAMESPACE.FrameworkElement view, Single left, Single top, Single width, Single height);
+  };
 } // namespace Microsoft.ReactNative
