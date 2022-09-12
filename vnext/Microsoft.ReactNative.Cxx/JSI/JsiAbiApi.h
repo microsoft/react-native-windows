@@ -97,21 +97,6 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   PointerValue *cloneObject(const PointerValue *pv) override;
   PointerValue *clonePropNameID(const PointerValue *pv) override;
 
-  // new
-
-  facebook::jsi::BigInt createBigIntFromInt64(int64_t value) override;
-  facebook::jsi::BigInt createBigIntFromUint64(uint64_t value) override;
-  bool bigintIsInt64(const facebook::jsi::BigInt &) override;
-  bool bigintIsUint64(const facebook::jsi::BigInt &) override;
-  uint64_t truncate(const facebook::jsi::BigInt &) override;
-  facebook::jsi::String bigintToString(const facebook::jsi::BigInt &, int) override;
-
-  bool hasNativeState(const facebook::jsi::Object &) override;
-  std::shared_ptr<facebook::jsi::NativeState> getNativeState(const facebook::jsi::Object &) override;
-  void setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) override;
-
-  //
-
   facebook::jsi::PropNameID createPropNameIDFromAscii(const char *str, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromUtf8(const uint8_t *utf8, size_t length) override;
   facebook::jsi::PropNameID createPropNameIDFromString(const facebook::jsi::String &str) override;
@@ -126,6 +111,17 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
   std::string utf8(const facebook::jsi::String &str) override;
 
   facebook::jsi::Value createValueFromJsonUtf8(const uint8_t *json, size_t length) override;
+
+  facebook::jsi::BigInt createBigIntFromInt64(int64_t value) override;
+  facebook::jsi::BigInt createBigIntFromUint64(uint64_t value) override;
+  bool bigintIsInt64(const facebook::jsi::BigInt &) override;
+  bool bigintIsUint64(const facebook::jsi::BigInt &) override;
+  uint64_t truncate(const facebook::jsi::BigInt &) override;
+  facebook::jsi::String bigintToString(const facebook::jsi::BigInt &, int) override;
+
+  bool hasNativeState(const facebook::jsi::Object &) override;
+  std::shared_ptr<facebook::jsi::NativeState> getNativeState(const facebook::jsi::Object &) override;
+  void setNativeState(const facebook::jsi::Object &, std::shared_ptr<facebook::jsi::NativeState> state) override;
 
   facebook::jsi::Object createObject() override;
   facebook::jsi::Object createObject(std::shared_ptr<facebook::jsi::HostObject> ho) override;

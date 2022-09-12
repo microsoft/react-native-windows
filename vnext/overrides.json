@@ -76,9 +76,15 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/attributedstring/AttributedString.cpp",
+      "baseFile": "ReactCommon/react/renderer/attributedstring/AttributedString.cpp",
+      "baseHash": "7261d79ceb15c77a7b85bf1eb4edd67bfcc91541"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
-      "baseHash": "a21a1f845bd854f01cac905a4737a360cca0cd12"
+      "baseHash": "9c4ba7b81ea2b68089ac0b9d99eb3cad4d42ad05"
     },
     {
       "type": "patch",

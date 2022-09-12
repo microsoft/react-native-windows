@@ -279,6 +279,17 @@ namespace Microsoft.ReactNative
     JsiValueRef CreateValueFromJson(String json);
     JsiValueRef CreateValueFromJsonUtf8(UInt8[] json);
 
+    JsiBigIntRef CreateBigIntFromInt64(Int64 val);
+    JsiBigIntRef CreateBigIntFromUint64(UInt64 val);
+    Boolean BigintIsInt64(JsiBigIntRef bigInt);
+    Boolean BigintIsUint64(JsiBigIntRef bigInt);
+    UInt64 Truncate(JsiBigIntRef bigInt);
+    JsiStringRef BigintToString(JsiBigIntRef bigInt, Int32 val);
+
+    Boolean HasNativeState(JsiObjectRef obj);
+    JsiObjectRef GetNativeState(JsiObjectRef obj);
+    void SetNativeState(JsiObjectRef obj, JsiObjectRef state);
+
     JsiObjectRef CreateObject();
     JsiObjectRef CreateObjectWithHostObject(IJsiHostObject hostObject);
     IJsiHostObject GetHostObject(JsiObjectRef obj);

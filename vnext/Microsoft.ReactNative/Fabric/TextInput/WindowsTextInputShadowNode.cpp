@@ -130,8 +130,7 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
   // current attributedString unchanged, and pass in zero for the "event count"
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
-  auto newEventCount =
-      state.reactTreeAttributedString.isContentEqual(reactTreeAttributedString)
+  auto newEventCount = state.reactTreeAttributedString.isContentEqual(reactTreeAttributedString)
       ? 0
       : getConcreteProps().mostRecentEventCount;
   auto newAttributedString = getMostRecentAttributedString();

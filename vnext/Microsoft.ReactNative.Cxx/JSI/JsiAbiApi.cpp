@@ -320,82 +320,6 @@ PropNameID JsiAbiRuntime::createPropNameIDFromSymbol(const Symbol &sym) try {
   throw;
 }
 
-// new
-
-BigInt JsiAbiRuntime::createBigIntFromInt64(int64_t val) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-BigInt JsiAbiRuntime::createBigIntFromUint64(uint64_t val) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-bool JsiAbiRuntime::bigintIsInt64(const BigInt &) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-bool JsiAbiRuntime::bigintIsUint64(const BigInt &) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-uint64_t JsiAbiRuntime::truncate(const BigInt &) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-String JsiAbiRuntime::bigintToString(const BigInt &, int) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-bool JsiAbiRuntime::hasNativeState(const Object &) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-std::shared_ptr<NativeState> JsiAbiRuntime::getNativeState(const Object &) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-void JsiAbiRuntime::setNativeState(const Object &, std::shared_ptr<NativeState> state) try {
-  RethrowJsiError();
-  throw;
-} catch (hresult_error const &) {
-  RethrowJsiError();
-  throw;
-}
-
-///
-
 std::string JsiAbiRuntime::utf8(const PropNameID &propertyId) try {
   std::string dataResult;
   m_runtime.PropertyIdToUtf8(AsJsiPropertyIdRef(propertyId), [&dataResult](array_view<uint8_t const> utf8) {
@@ -453,6 +377,79 @@ std::string JsiAbiRuntime::utf8(const String &str) try {
 
 Value JsiAbiRuntime::createValueFromJsonUtf8(const uint8_t *json, size_t length) try {
   return MakeValue(m_runtime.CreateValueFromJsonUtf8({json, json + length}));
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+BigInt JsiAbiRuntime::createBigIntFromInt64(int64_t val) try {
+  return MakeBigInt(m_runtime.CreateBigIntFromInt64(val));
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+BigInt JsiAbiRuntime::createBigIntFromUint64(uint64_t val) try {
+  return MakeBigInt(m_runtime.CreateBigIntFromUint64(val));
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+bool JsiAbiRuntime::bigintIsInt64(const BigInt &bigint) try {
+  JsiBigIntRef ref = AsJsiBigIntRef(bigint);
+  return m_runtime.BigintIsInt64(ref);
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+bool JsiAbiRuntime::bigintIsUint64(const BigInt &bigint) try {
+  JsiBigIntRef ref = AsJsiBigIntRef(bigint);
+  return m_runtime.BigintIsUint64(ref);
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+uint64_t JsiAbiRuntime::truncate(const BigInt &bigint) try {
+  JsiBigIntRef ref = AsJsiBigIntRef(bigint);
+  return m_runtime.Truncate(ref);
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+String JsiAbiRuntime::bigintToString(const BigInt &bigint, int radix) try {
+  JsiBigIntRef ref = AsJsiBigIntRef(bigint);
+  return MakeString(m_runtime.BigintToString(ref, radix));
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+bool JsiAbiRuntime::hasNativeState(const Object &obj) try {
+  // TODO: implement
+  UNREFERENCED_PARAMETER(obj);
+  VerifyElseCrash(false);
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+std::shared_ptr<NativeState> JsiAbiRuntime::getNativeState(const Object &obj) try {
+  // TODO: implement
+  UNREFERENCED_PARAMETER(obj);
+  VerifyElseCrash(false);
+} catch (hresult_error const &) {
+  RethrowJsiError();
+  throw;
+}
+
+void JsiAbiRuntime::setNativeState(const Object &obj, std::shared_ptr<NativeState> state) try {
+  // TODO: implement
+  UNREFERENCED_PARAMETER(obj, state);
+  VerifyElseCrash(false);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
