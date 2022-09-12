@@ -24,7 +24,6 @@ struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Found
   bool WithCredentials;
   std::string ResponseType;
   int64_t Timeout;
-  bool TaintedOrigin{false};
 };
 
 typedef winrt::Windows::Foundation::
