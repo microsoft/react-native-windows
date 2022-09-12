@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/virtualized-list",
-  "version": "0.70.0-preview.2",
+  "version": "0.70.0",
   "license": "MIT",
   "repository": {
     "type": "git",
