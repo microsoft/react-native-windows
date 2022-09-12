@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixes bug introduced by pointerEvents change",
+  "packageName": "react-native-windows",
+  "email": "ericroz@fb.com",
+  "dependentChangeType": "patch"
+}
