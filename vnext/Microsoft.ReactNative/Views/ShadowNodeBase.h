@@ -103,7 +103,6 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
   virtual bool IsExternalLayoutDirty() const {
     return false;
   }
-  virtual void DoExtraLayoutPrep(YGNodeRef /*yogaNode*/) {}
 
   bool HasTransformPS() const {
     return m_transformPS != nullptr;
