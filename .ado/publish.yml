@@ -49,21 +49,21 @@ jobs:
     timeoutInMinutes: 120
     cancelTimeoutInMinutes: 5
     steps:
-      - template: templates/checkout-full.yml
-
-      - powershell: gci env:/BUILD_*
-        displayName: Show build information
-
-      - template: templates/configure-git.yml
-
-      - template: templates/prepare-js-env.yml
-
       - powershell: |
           Write-Error "Stopping because commit message contains ***NO_CI***."
         displayName: Stop pipeline if latest commit message contains ***NO_CI***
         condition: and(${{ parameters.stopOnNoCI }}, contains(variables['Build.SourceVersionMessage'], '***NO_CI***'))
 
+      - template: templates/checkout-full.yml
+
+      - powershell: gci env:/BUILD_*
+        displayName: Show build information  
+
+      - template: templates/prepare-js-env.yml
+
       - template: templates/run-compliance-prebuild.yml
+
+      - template: templates/configure-git.yml
 
       - script: |
           echo ##vso[task.setvariable variable=SkipNpmPublishArgs]--no-publish
