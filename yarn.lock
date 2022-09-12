@@ -179,9 +179,9 @@
     semver "^6.3.0"
 
 "@babel/eslint-parser@^7.18.2":
-  version "7.18.2"
-  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.18.2.tgz#e14dee36c010edfb0153cf900c2b0815e82e3245"
-  integrity sha512-oFQYkE8SuH14+uR51JVAmdqwKYXGRjEXx7s+WiagVjqQ+HPE+nnwyF2qlVG8evUsUHmPcA+6YXMEDbIhEyQc5A==
+  version "7.18.9"
+  resolved "https://registry.yarnpkg.com/@babel/eslint-parser/-/eslint-parser-7.18.9.tgz#255a63796819a97b7578751bb08ab9f2a375a031"
+  integrity sha512-KzSGpMBggz4fKbRbWLNyPVTuQr6cmCcBhOyXTw/fieOVaw5oYAwcAj4a7UKcDYCPxQq+CG1NCDZH9e2JTXquiQ==
   dependencies:
     eslint-scope "^5.1.1"
     eslint-visitor-keys "^2.1.0"
@@ -6725,9 +6725,9 @@ invert-kv@^3.0.0:
   integrity sha512-CYdFeFexxhv/Bcny+Q0BfOV+ltRlJcd4BBZBYFX/O0u4npJrgZtIcjokegtiSMAvlMTJ+Koq0GBCc//3bueQxw==
 
 io-ts@^2.1.1:
-  version "2.2.17"
-  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.17.tgz#19531c9d49abcebc935d85d282e1db95adb01901"
-  integrity sha512-RkQY06h6rRyADVEI46OCAUYTP2p18Vdtz9Movi19Mmj7SJ1NhN/yGyW7CxlcBVxh95WKg2YSbTmcUPqqeLuhXw==
+  version "2.2.18"
+  resolved "https://registry.yarnpkg.com/io-ts/-/io-ts-2.2.18.tgz#dfb41aded5f0e598ccf2a25a483c205444210173"
+  integrity sha512-3JxUUzRtPQPs5sOwB7pW0+Xb54nOzqA6M1sRB1hwgsRmkWMeGTjtOrCynGTJhIj+mBLUj2S37DAq2+BrPh9kTQ==
 
 ioredis@^4.28.0, ioredis@^4.28.5:
   version "4.28.5"
