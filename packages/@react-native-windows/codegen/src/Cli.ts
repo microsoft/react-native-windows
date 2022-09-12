@@ -36,7 +36,7 @@ const argv = yargs.options({
   test: {
     type: 'boolean',
     describe: 'Verify that the generated output is unchanged',
-    default: false
+    default: false,
   },
   namespace: {
     type: 'string',
