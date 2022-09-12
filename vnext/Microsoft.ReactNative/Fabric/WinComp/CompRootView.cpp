@@ -312,8 +312,7 @@ void CompRootView::ShowInstanceLoaded() noexcept {
     ClearLoadingUI();
 
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-      reactInstance->AttachMeasuredRootView(
-          this, Mso::Copy(m_reactViewOptions->InitialProps), true);
+      reactInstance->AttachMeasuredRootView(this, Mso::Copy(m_reactViewOptions->InitialProps), true);
     }
     m_isJSViewAttached = true;
   }

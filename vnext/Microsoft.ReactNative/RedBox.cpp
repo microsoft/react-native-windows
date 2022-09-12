@@ -17,6 +17,7 @@
 
 #ifdef USE_FABRIC
 #include <Shobjidl.h>
+#include <Utils/Helpers.h>
 #include <winrt/Windows.UI.Popups.h>
 #include "XamlUtils.h"
 #endif // USE_FABRIC
@@ -79,7 +80,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 #ifdef USE_FABRIC
   void ShowNewJsErrorUsingMessageDialog() noexcept {
     // Using MessageDialog is "easy", but it does mean we cannot update the message when symbols are resolved.
-    // Ideally we'd have a dialog we could update.  -- Maybe we could load XAML and host the XAML dialog?
+    // Ideally we'd have a dialog we could push UI updates to. -- Maybe we could load XAML and host the XAML dialog?
 
     std::stringstream ss;
     ss << m_errorInfo.Message;
@@ -207,16 +208,13 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
     m_showing = true;
 
 #ifdef USE_FABRIC
-    // If Xaml is already loaded, use the Xaml implementation -
-    //   Otherwise we fallback on a simpler implementation
-    if (xaml::TryGetCurrentApplication()) {
-#endif // USE_FABRIC
-      ShowNewJSErrorUsingXaml();
-#ifdef USE_FABRIC
-    } else {
+    if (Microsoft::ReactNative::IsFabricEnabled(m_propBag.Handle())) {
       ShowNewJsErrorUsingMessageDialog();
-    }
+    } else
 #endif // USE_FABRIC
+    {
+      ShowNewJSErrorUsingXaml();
+    }
   }
 
   void UpdateError(const ErrorInfo &&info) noexcept {
@@ -598,7 +596,7 @@ struct DefaultRedBoxHandler final : public std::enable_shared_from_this<DefaultR
   std::vector<std::shared_ptr<RedBox>> m_redBoxes; // Protected by m_lockRedBox
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
 };
-#endif
+#endif // CORE_ABI
 
 struct RedBoxHandler final : public Mso::React::IRedBoxHandler {
   RedBoxHandler(winrt::Microsoft::ReactNative::IRedBoxHandler const &redBoxHandler) : m_redBoxHandler(redBoxHandler) {}

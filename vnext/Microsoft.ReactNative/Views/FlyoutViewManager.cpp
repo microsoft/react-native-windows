@@ -179,8 +179,7 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
   if (m_isFlyoutShowOptionsSupported)
     m_showOptions = winrt::FlyoutShowOptions();
 
-  m_touchEventHanadler = std::make_unique<TouchEventHandler>(
-      GetViewManager()->GetReactContext());
+  m_touchEventHanadler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext());
   m_previewKeyboardEventHandlerOnRoot =
       std::make_unique<PreviewKeyboardEventHandlerOnRoot>(GetViewManager()->GetReactContext());
 

@@ -12,6 +12,10 @@
 #include <appmodel.h>
 #include <processthreadsapi.h>
 
+#ifdef USE_FABRIC
+#include <Fabric/WinComp/CompositionUIService.h>
+#endif // USE_FABRIC
+
 namespace winrt {
 using namespace xaml::Controls::Primitives;
 using namespace xaml::Media;
@@ -116,6 +120,15 @@ bool IsWinUI3Island() {
   return false;
 #else
   return IsXamlIsland();
+#endif
+}
+
+bool IsFabricEnabled(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties) {
+#ifdef USE_FABRIC
+  return winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+             properties) != nullptr;
+#else
+  return false;
 #endif
 }
 

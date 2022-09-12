@@ -31,12 +31,10 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
 #ifdef USE_FABRIC
   HWND m_hwnd{nullptr};
 #endif // USE_FABRIC
-#ifndef CORE_ABI
   xaml::Controls::Primitives::Popup m_popup{nullptr};
   React::ReactRootView m_logBoxContent{nullptr};
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::event_token m_tokenClosed;
-#endif
 };
 
 } // namespace Microsoft::ReactNative

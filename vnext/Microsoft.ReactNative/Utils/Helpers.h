@@ -33,5 +33,6 @@ bool Is21H1OrHigher();
 
 bool IsXamlIsland();
 bool IsWinUI3Island();
+bool IsFabricEnabled(winrt::Microsoft::ReactNative::IReactPropertyBag const &properties);
 
 } // namespace Microsoft::ReactNative

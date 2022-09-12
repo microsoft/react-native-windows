@@ -153,8 +153,7 @@ void ReactRootView::InitRootView(
   m_context = &reactInstance->GetReactContext();
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
 
-  m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(
-      *m_context);
+  m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(*m_context);
   m_SIPEventHandler = std::make_shared<::Microsoft::ReactNative::SIPEventHandler>(*m_context);
   m_previewKeyboardEventHandlerOnRoot =
       std::make_shared<::Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot>(*m_context);
@@ -289,8 +288,7 @@ void ReactRootView::ShowInstanceLoaded() noexcept {
     ClearLoadingUI();
 
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-      reactInstance->AttachMeasuredRootView(
-          this, Mso::Copy(m_reactViewOptions->InitialProps), false);
+      reactInstance->AttachMeasuredRootView(this, Mso::Copy(m_reactViewOptions->InitialProps), false);
     }
     m_isJSViewAttached = true;
   }

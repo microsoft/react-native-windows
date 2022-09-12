@@ -14,6 +14,7 @@
 #include <Views/Image/ReactImage.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #ifdef USE_FABRIC
+#include <Utils/Helpers.h>
 #include <wincodec.h>
 #include "XamlUtils.h"
 #endif // USE_FABRIC
@@ -37,7 +38,12 @@ winrt::fire_and_forget GetImageSizeAsync(
     std::string uriString,
     winrt::Microsoft::ReactNative::JSValue &&headers,
     Mso::Functor<void(int32_t width, int32_t height)> successCallback,
-    Mso::Functor<void()> errorCallback) {
+    Mso::Functor<void()> errorCallback
+#ifdef USE_FABRIC
+    ,
+    bool useFabric
+#endif // USE_FABRIC
+) {
   bool succeeded{false};
 
   try {
@@ -61,8 +67,8 @@ winrt::fire_and_forget GetImageSizeAsync(
       memoryStream = co_await GetImageInlineDataAsync(source);
     }
 
-#ifdef USE_FABRIC // TODO pass isFabric into this function -- requires a IsFabric on the Context - Or a UseWicBitmaps
-    if (xaml::TryGetCurrentApplication()) {
+#ifdef USE_FABRIC
+    if (!useFabric) {
 #endif // USE_FABRIC
       winrt::BitmapImage bitmap;
       if (memoryStream) {
@@ -117,7 +123,12 @@ void ImageLoader::getSizeWithHeaders(
         },
         [result, context]() noexcept {
           context.JSDispatcher().Post([result = std::move(result)]() noexcept { result.Reject("Failed"); });
-        });
+        }
+#ifdef USE_FABRIC
+        ,
+        IsFabricEnabled(context.Properties().Handle())
+#endif // USE_FABRIC
+    );
   });
 }
 

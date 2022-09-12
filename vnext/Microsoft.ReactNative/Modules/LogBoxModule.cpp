@@ -97,9 +97,7 @@ void LogBox::RegisterWndClass() noexcept {
   wcex.hInstance = hInstance;
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-  // wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
   wcex.lpszClassName = c_logBoxWindowClassName;
-  // wcex.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON1));
   ATOM classId = RegisterClassEx(&wcex);
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
@@ -113,10 +111,7 @@ void LogBox::ShowOnUIThread() noexcept {
   if (!host)
     return;
 
-#ifndef CORE_ABI
-  // If Xaml is already loaded, use the Xaml implementation -
-  //   Otherwise we fallback on a Win32 implementation
-  if (xaml::TryGetCurrentApplication()) {
+  if (!IsFabricEnabled(m_context.Properties().Handle())) {
     m_logBoxContent = React::ReactRootView();
     m_logBoxContent.ComponentName(L"LogBox");
     m_logBoxContent.ReactNativeHost(host);
@@ -164,12 +159,8 @@ void LogBox::ShowOnUIThread() noexcept {
     m_popup.Child(m_logBoxContent);
     m_popup.IsOpen(true);
   }
-#endif // CORE_ABI
 #ifdef USE_FABRIC
-#ifndef CORE_ABI
-  else
-#endif // CORE_ABI
-  {
+  else {
     RegisterWndClass();
 
     if (!m_hwnd) {
@@ -209,7 +200,6 @@ void LogBox::HideOnUIThread() noexcept {
     ::ShowWindow(m_hwnd, SW_HIDE);
   }
 #endif // USE_FABRIC
-#ifndef CORE_ABI
   if (m_popup) {
     m_popup.Closed(m_tokenClosed);
     m_sizeChangedRevoker.revoke();
@@ -217,7 +207,6 @@ void LogBox::HideOnUIThread() noexcept {
     m_popup = nullptr;
     m_logBoxContent = nullptr;
   }
-#endif // CORE_ABI
 }
 
 void LogBox::Initialize(React::ReactContext const &reactContext) noexcept {
