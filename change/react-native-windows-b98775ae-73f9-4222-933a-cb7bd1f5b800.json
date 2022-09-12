@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "upgrade managed codegen project to .net 6",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
