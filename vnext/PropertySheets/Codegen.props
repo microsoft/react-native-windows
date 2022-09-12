@@ -6,11 +6,10 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup>
-    <RunCodegenCheck Condition="'$(RunCodegenCheck)' == ''">true</RunCodegenCheck>
+    <RunCodegenWindows Condition="'$(RunCodegenWindows)' == ''">true</RunCodegenWindows>
     <CodegenCommand Condition="'$(CodegenCommand)' == ''">npx react-native codegen-windows</CodegenCommand>
     <CodegenCommandWorkingDir Condition="'$(CodegenCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</CodegenCommandWorkingDir>
-    <CodegenCommandArgs Condition="'$(CodegenCommandArgs)' == '' And '$(SolutionPath)' != '' And '$(SolutionPath)' != '*Undefined*' And '$(ProjectPath)' != ''">--check --sln "$([MSBuild]::MakeRelative($(CodegenCommandWorkingDir), $(SolutionPath)))" --proj "$([MSBuild]::MakeRelative($(AutolinkCommandWorkingDir), $(ProjectPath)))"</CodegenCommandArgs>
-    <CodegenCommandArgs Condition="'$(CodegenCommandArgs)' == ''">--check</CodegenCommandArgs>
+    <CodegenCommandArgs Condition="'$(CodegenCommandArgs)' == ''">--logging</CodegenCommandArgs>
   </PropertyGroup>
 
 </Project>

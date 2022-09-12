@@ -13,7 +13,7 @@
     <DisableFastUpToDateCheck>True</DisableFastUpToDateCheck>
   </PropertyGroup>
 
-  <Target Name="CodegenCheck" BeforeTargets="PrepareForBuild" Condition="'$(RunCodegenCheck)' == 'true'">
+  <Target Name="CodegenWindows" BeforeTargets="PrepareForBuild" Condition="'$(RunCodegenWindows)' == 'true'">
     <Exec Command="$(CodegenCommand) $(CodegenCommandArgs)" WorkingDirectory="$(CodegenCommandWorkingDir)" CustomWarningRegularExpression="Warning: " CustomErrorRegularExpression="Error: " />
   </Target>
 </Project>
