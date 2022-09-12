@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make AddTurboModule a non-experimental API",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

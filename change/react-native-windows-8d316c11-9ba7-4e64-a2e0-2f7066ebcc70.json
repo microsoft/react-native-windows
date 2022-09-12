@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixes event ordering for `onLayout`",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
