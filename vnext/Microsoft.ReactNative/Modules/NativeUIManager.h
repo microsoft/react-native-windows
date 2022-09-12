@@ -15,6 +15,7 @@
 #include <nativemodules.h>
 #include <map>
 #include <memory>
+#include <unordered_map>
 #include <vector>
 
 namespace Microsoft::ReactNative {
@@ -112,8 +113,8 @@ class NativeUIManager final : public INativeUIManager {
   YGConfigRef m_yogaConfig;
   bool m_inBatch = false;
 
-  std::map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
-  std::map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
+  std::unordered_map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
+  std::unordered_map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
   std::vector<xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
   std::vector<int64_t> m_extraLayoutNodes;
