@@ -14,6 +14,8 @@ jobs:
 
     steps:
       - template: ../templates/checkout-full.yml
+        parameters:
+          persistCredentials: true # Git creds needed for beachball
 
       - powershell: gci env:/BUILD_*
         displayName: Show build information
