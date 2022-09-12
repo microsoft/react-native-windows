@@ -190,6 +190,11 @@ export type ViewWin32OmitTypes = RN.ViewPropsAndroid &
 export interface IViewWin32Props extends Omit<RN.ViewProps, ViewWin32OmitTypes>, BasePropsWin32 {
   type?: React.ElementType;
   children?: React.ReactNode;
+  /**
+   * An access key to hook up to the UIA_AccessKey_Property.
+   * Access keys are used in keyboard navigation to allow quick navigation to UI in an application.
+   */
+  accessibilityAccessKey?: string;
   accessibilityActions?: ReadonlyArray<AccessibilityActionInfo>;
   /**
    * Tells a person using a screen reader what kind of annotation they
