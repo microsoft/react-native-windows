@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+ Licensed under the MIT License.. 
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <RunCodegenCheck Condition="'$(RunCodegenCheck)' == ''">true</RunCodegenCheck>
+    <CodegenCommand Condition="'$(CodegenCommand)' == ''">npx react-native codegen-windows</CodegenCommand>
+    <CodegenCommandWorkingDir Condition="'$(CodegenCommandWorkingDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(ProjectDir), 'package.json'))</CodegenCommandWorkingDir>
+    <CodegenCommandArgs Condition="'$(CodegenCommandArgs)' == '' And '$(SolutionPath)' != '' And '$(SolutionPath)' != '*Undefined*' And '$(ProjectPath)' != ''">--check --sln "$([MSBuild]::MakeRelative($(CodegenCommandWorkingDir), $(SolutionPath)))" --proj "$([MSBuild]::MakeRelative($(AutolinkCommandWorkingDir), $(ProjectPath)))"</CodegenCommandArgs>
+    <CodegenCommandArgs Condition="'$(CodegenCommandArgs)' == ''">--check</CodegenCommandArgs>
+  </PropertyGroup>
+
+</Project>

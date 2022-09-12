@@ -53,27 +53,27 @@ struct MyModule {
 
   REACT_SYNC_METHOD(getObject)
   React::JSValueObject getObject(React::JSValueObject && /*arg*/) noexcept {
-    return React::JSValueObject{{"X", 4}, {"Y", 2}};
-  }
+  return React::JSValueObject{{"X", 4}, {"Y", 2}};
+}
 
-  REACT_SYNC_METHOD(getValue)
-  React::JSValueObject getValue(double x, std::string y, JSValueObject &&z) noexcept {
-    return React::JSValueObject{{"X", x}, {"Y", y}, {"Z", std::move(z)}};
-  }
+REACT_SYNC_METHOD(getValue)
+React::JSValueObject getValue(double x, std::string y, JSValueObject &&z) noexcept {
+  return React::JSValueObject{{"X", x}, {"Y", y}, {"Z", std::move(z)}};
+}
 
-  REACT_METHOD(getValueWithCallback)
-  void getValueWithCallback(std::function<void(React::JSValue const &)> const &callback) noexcept {
-    callback(React::JSValue{"some string"});
-  }
+REACT_METHOD(getValueWithCallback)
+void getValueWithCallback(std::function<void(std::string)> const &callback) noexcept {
+  callback("some string");
+}
 
-  REACT_METHOD(getValueWithPromise)
-  void getValueWithPromise(bool error, React::ReactPromise<React::JSValue> &&result) noexcept {
-    if (error) {
-      result.Reject("Failure");
-    } else {
-      result.Resolve(React::JSValue{"Succeeded"});
-    }
+REACT_METHOD(getValueWithPromise)
+void getValueWithPromise(bool error, React::ReactPromise<React::JSValue> &&result) noexcept {
+  if (error) {
+    result.Reject("Failure");
+  } else {
+    result.Resolve(React::JSValue{"Succeeded"});
   }
+}
 };
 
 } // namespace SampleLibraryCpp
