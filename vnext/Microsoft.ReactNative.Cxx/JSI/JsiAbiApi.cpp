@@ -449,6 +449,7 @@ std::shared_ptr<NativeState> JsiAbiRuntime::getNativeState(const Object &obj) tr
 void JsiAbiRuntime::setNativeState(const Object &obj, std::shared_ptr<NativeState> state) try {
   // TODO: implement
   UNREFERENCED_PARAMETER(obj, state);
+  UNREFERENCED_PARAMETER(state);
   VerifyElseCrash(false);
 } catch (hresult_error const &) {
   RethrowJsiError();

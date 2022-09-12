@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove unnecessary tree walk in Yoga layout",
-  "packageName": "react-native-windows",
-  "email": "ericroz@fb.com",
-  "dependentChangeType": "patch"
-}

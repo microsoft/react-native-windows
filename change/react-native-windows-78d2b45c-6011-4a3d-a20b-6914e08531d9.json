@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensures pointer event is updated when leaving bounds of React root",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

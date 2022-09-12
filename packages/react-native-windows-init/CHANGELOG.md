@@ -1,8 +1,16 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Fri, 19 Aug 2022 05:09:34 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Sep 2022 20:01:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.107
+
+Mon, 12 Sep 2022 20:01:48 GMT
+
+### Patches
+
+- Address PoliCheck issues (jthysell@microsoft.com)
 
 ## 1.1.106
 
