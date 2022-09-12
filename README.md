@@ -20,7 +20,7 @@
 
 > See the official [React Native website](https://reactnative.dev/) for an introduction to React Native.
 
-[React Native](https://reactnative.dev) is a framework developed by Facebook that enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](https://reactjs.org/). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere.
+[React Native](https://reactnative.dev) is a framework developed by Meta that enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and [React](https://reactjs.org/). The focus of React Native is on developer efficiency across all the platforms you care about - learn once, write anywhere.
 
 This repository adds support for the [Windows 10 SDK](https://developer.microsoft.com/en-us/windows/downloads), which allows you to build apps for [all devices supported by Windows 10](https://developer.microsoft.com/en-us/windows/get-started-windows-10) including PCs, tablets, 2-in-1s, Xbox, Mixed reality devices etc.
 
@@ -68,7 +68,7 @@ See [Contributing guidelines](https://github.com/microsoft/react-native-windows/
 - If you're looking for sample code, just browse the RNTester folder in the GitHub web UI
 
 ## License
-The React Native Windows extension, including modifications to the original Facebook source code, and all newly contributed code is provided under the [MIT License](LICENSE). Portions of the React Native Windows extension derived from React Native are copyright Facebook.
+The React Native Windows extension, including modifications to the original Meta source code, and all newly contributed code is provided under the [MIT License](LICENSE). Portions of the React Native Windows extension derived from React Native are copyright Meta.
 
 ## Code of Conduct
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
