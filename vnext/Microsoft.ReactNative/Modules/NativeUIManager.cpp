@@ -850,8 +850,7 @@ void NativeUIManager::ReplaceView(ShadowNode &shadowNode) {
     if (it != m_tagsToYogaNodes.end()) {
       YGNodeRef yogaNode = it->second.get();
 
-      YGMeasureFunc func = pViewManager->GetYogaCustomMeasureFunc();
-      if (func != nullptr) {
+      if (pViewManager->IsNativeControlWithSelfLayout()) {
         auto context = std::make_unique<YogaContext>(node.GetView());
         YGNodeSetContext(yogaNode, reinterpret_cast<void *>(context.get()));
 
