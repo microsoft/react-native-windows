@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Aug 2022 23:36:52 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Sep 2022 17:54:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.70.0
+
+Mon, 12 Sep 2022 17:54:21 GMT
+
+### Patches
+
+- Integrate 70 Stable (34109996+chiaramooney@users.noreply.github.com)
+- Use LongLivedObjects for TurboModule callbacks (vmorozov@microsoft.com)
+- Fix crash creating InstanceSettings on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.70.0
+- Bump @react-native-windows/virtualized-list to v0.70.0
+- Bump @react-native-windows/codegen to v0.70.0
 
 ## 0.70.0-preview.2
 
