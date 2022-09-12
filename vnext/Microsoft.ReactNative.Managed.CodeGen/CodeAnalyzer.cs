@@ -280,12 +280,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen
                 string? moduleName = null;
                 string? eventEmitterName = null;
 
-                if (attr.ConstructorArguments.Length > 0)
+                if (attr!.ConstructorArguments.Length > 0)
                 {
                     moduleName = attr.ConstructorArguments[0].Value as string;
                 }
 
-                foreach (var namedArgument in attr.NamedArguments)
+                foreach (var namedArgument in attr!.NamedArguments)
                 {
                     switch (namedArgument.Key)
                     {
@@ -374,7 +374,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             if (TryFindAttribute(method, attributeType, out var attr))
             {
                 string? name = null;
-                if (attr.ConstructorArguments.Length > 0)
+                if (attr!.ConstructorArguments.Length > 0)
                 {
                     name = attr.ConstructorArguments[0].Value as string;
                 }
@@ -599,7 +599,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             if (TryFindAttribute(symbol, ReactTypes.ReactConstantAttribute, out var attr))
             {
                 string? name = null;
-                if (attr.ConstructorArguments.Length > 0)
+                if (attr!.ConstructorArguments.Length > 0)
                 {
                     name = attr.ConstructorArguments[0].Value as string;
                 }
@@ -697,7 +697,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             {
                 name = null;
                 callbackContextName = null;
-                if (attr.ConstructorArguments.Length > 0)
+                if (attr!.ConstructorArguments.Length > 0)
                 {
                     name = attr.ConstructorArguments[0].Value as string;
                 }
@@ -813,7 +813,7 @@ namespace Microsoft.ReactNative.Managed.CodeGen
             }
         }
 
-        private bool TryFindAttribute(ISymbol symbol, INamedTypeSymbol attributeType, out AttributeData attr)
+        private bool TryFindAttribute(ISymbol symbol, INamedTypeSymbol attributeType, out AttributeData? attr)
         {
             attr = symbol.GetAttributes().FirstOrDefault(potentialMatch => potentialMatch.AttributeClass != null && potentialMatch.AttributeClass.Equals(attributeType, SymbolEqualityComparer.Default));
             return attr != null;
