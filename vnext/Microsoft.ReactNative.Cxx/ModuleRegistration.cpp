@@ -15,16 +15,26 @@ ModuleRegistration::ModuleRegistration(wchar_t const *moduleName) noexcept : m_m
   s_head = this;
 }
 
-void AddAttributedModules(IReactPackageBuilder const &packageBuilder) noexcept {
+void AddAttributedModules(IReactPackageBuilder const &packageBuilder, bool useTurboModules) noexcept {
   for (auto const *reg = ModuleRegistration::Head(); reg != nullptr; reg = reg->Next()) {
-    packageBuilder.AddModule(reg->ModuleName(), reg->MakeModuleProvider());
+    if (useTurboModules)
+      packageBuilder.AddTurboModule(reg->ModuleName(), reg->MakeModuleProvider());
+    else
+      packageBuilder.AddModule(reg->ModuleName(), reg->MakeModuleProvider());
   }
 }
 
-bool TryAddAttributedModule(IReactPackageBuilder const &packageBuilder, std::wstring_view moduleName) noexcept {
+bool TryAddAttributedModule(
+    IReactPackageBuilder const &packageBuilder,
+    std::wstring_view moduleName,
+    bool useTurboModule) noexcept {
   for (auto const *reg = ModuleRegistration::Head(); reg != nullptr; reg = reg->Next()) {
     if (moduleName == reg->ModuleName()) {
-      packageBuilder.AddModule(moduleName, reg->MakeModuleProvider());
+      if (useTurboModule) {
+        packageBuilder.AddTurboModule(moduleName, reg->MakeModuleProvider());
+      } else {
+        packageBuilder.AddModule(moduleName, reg->MakeModuleProvider());
+      }
       return true;
     }
   }

@@ -20,12 +20,6 @@
         "resolved": "2.7.0",
         "contentHash": "dB4im13tfmMgL/V3Ei+3kD2rUF+/lTxAmR4gjJ45l577eljHfdo/KUrxpq/3I1Vp6e5GCDG1evDaEGuDxypLMg=="
       },
-      "ReactNative.Hermes.Windows": {
-        "type": "Direct",
-        "requested": "[0.12.2, )",
-        "resolved": "0.12.2",
-        "contentHash": "S9AR5puBB7NXhJoBeDj3GBOOX2z3du5gxC/u7rtGb1NaFJxkBX+fEci80ywTT2SYNodticfIxen+FdD2NK4URg=="
-      },
       "XamlTreeDump": {
         "type": "Direct",
         "requested": "[1.0.9, )",

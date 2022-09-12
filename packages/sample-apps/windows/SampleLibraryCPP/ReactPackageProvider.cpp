@@ -18,7 +18,7 @@ using namespace winrt::Microsoft::ReactNative;
 namespace winrt::SampleLibraryCpp::implementation {
 
 void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept {
-  AddAttributedModules(packageBuilder);
+  AddAttributedModules(packageBuilder, true);
 
   packageBuilder.AddModule(L"MyModule", MakeTurboModuleProvider<::SampleLibraryCpp::MyModule>());
   packageBuilder.AddViewManager(

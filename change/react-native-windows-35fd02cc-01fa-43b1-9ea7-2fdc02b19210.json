@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds IViewManagerWithOnLayout interface for ABI VMs",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
