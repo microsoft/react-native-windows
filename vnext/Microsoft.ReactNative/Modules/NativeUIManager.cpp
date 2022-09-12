@@ -939,28 +939,36 @@ void NativeUIManager::DoLayout() {
       assert(false);
       return;
     }
+
+    {
+      SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
+      SetLayoutPropsRecursive(rootTag);
+    }
+  }
+}
+
+void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
+  ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+  auto *pViewManager = shadowNode.GetViewManager();
+  if (!pViewManager->IsNativeControlWithSelfLayout()) {
+    for (const auto child : shadowNode.m_children) {
+      SetLayoutPropsRecursive(child);
+    }
   }
 
-  {
-    SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
-    for (auto &tagToYogaNode : m_tagsToYogaNodes) {
-      int64_t tag = tagToYogaNode.first;
-      YGNodeRef yogaNode = tagToYogaNode.second.get();
+  const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
+  if (auto yogaNode = GetYogaNode(tag)) {
+    if (!YGNodeGetHasNewLayout(yogaNode))
+      return;
+    YGNodeSetHasNewLayout(yogaNode, false);
 
-      if (!YGNodeGetHasNewLayout(yogaNode))
-        continue;
-      YGNodeSetHasNewLayout(yogaNode, false);
-
-      float left = YGNodeLayoutGetLeft(yogaNode);
-      float top = YGNodeLayoutGetTop(yogaNode);
-      float width = YGNodeLayoutGetWidth(yogaNode);
-      float height = YGNodeLayoutGetHeight(yogaNode);
-
-      ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-      auto view = shadowNode.GetView();
-      auto pViewManager = shadowNode.GetViewManager();
-      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
-    }
+    float left = YGNodeLayoutGetLeft(yogaNode);
+    float top = YGNodeLayoutGetTop(yogaNode);
+    float width = YGNodeLayoutGetWidth(yogaNode);
+    float height = YGNodeLayoutGetHeight(yogaNode);
+    auto view = shadowNode.GetView();
+    auto pViewManager = shadowNode.GetViewManager();
+    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
   }
 }
 
