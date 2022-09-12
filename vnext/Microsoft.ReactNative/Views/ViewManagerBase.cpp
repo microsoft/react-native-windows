@@ -265,9 +265,11 @@ bool ViewManagerBase::UpdateProperty(
     const auto iter = pointerEventsMap.find(propertyValue.AsString());
     if (iter != pointerEventsMap.end()) {
       nodeToUpdate->m_pointerEvents = iter->second;
-      if (nodeToUpdate->m_pointerEvents == PointerEventsKind::None) {
-        if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+      if (const auto uiElement = nodeToUpdate->GetView().try_as<xaml::UIElement>()) {
+        if (nodeToUpdate->m_pointerEvents == PointerEventsKind::None) {
           uiElement.IsHitTestVisible(false);
+        } else {
+          uiElement.ClearValue(xaml::UIElement::IsHitTestVisibleProperty());
         }
       }
     } else {
