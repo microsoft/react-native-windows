@@ -167,7 +167,6 @@ void CompRootView::ReloadView() noexcept {
     Mso::React::ReactViewOptions viewOptions{};
     viewOptions.ComponentName = to_string(m_componentName);
     viewOptions.InitialProps = m_initialPropsWriter;
-    viewOptions.UseFabric = true;
     if (auto reactViewHost = ReactViewHost()) {
       reactViewHost->ReloadViewInstanceWithOptions(std::move(viewOptions));
     } else {
@@ -250,7 +249,7 @@ void CompRootView::InitRootView(
 
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
   m_compEventHandler = std::make_shared<::Microsoft::ReactNative::CompEventHandler>(
-      *m_context, m_reactViewOptions->UseFabric && !reactInstance->Options().UseWebDebugger(), compRootView);
+      *m_context, true && !reactInstance->Options().UseWebDebugger(), compRootView);
 
   UpdateRootViewInternal();
 
@@ -291,7 +290,7 @@ void CompRootView::UninitRootView() noexcept {
 
   if (m_isJSViewAttached) {
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-      reactInstance->DetachRootView(this, m_reactViewHost->Options().UseFabric);
+      reactInstance->DetachRootView(this, true);
     }
   }
 
@@ -314,7 +313,7 @@ void CompRootView::ShowInstanceLoaded() noexcept {
 
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
       reactInstance->AttachMeasuredRootView(
-          this, Mso::Copy(m_reactViewOptions->InitialProps), m_reactViewOptions->UseFabric);
+          this, Mso::Copy(m_reactViewOptions->InitialProps), true);
     }
     m_isJSViewAttached = true;
   }

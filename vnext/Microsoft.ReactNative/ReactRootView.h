@@ -36,10 +36,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
     UpdatePerspective();
   }
 
-  // property ExperimentalUseFabric
-  bool ExperimentalUseFabric() const noexcept;
-  void ExperimentalUseFabric(bool value) noexcept;
-
   void ReloadView() noexcept;
 
   // Used by RootViewManager
@@ -76,7 +72,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   bool m_isPerspectiveEnabled{true};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
-  bool m_useFabric{false};
   Mso::DispatchQueue m_uiQueue;
   int64_t m_rootTag{-1};
   std::unique_ptr<Mso::React::ReactOptions> m_reactOptions;

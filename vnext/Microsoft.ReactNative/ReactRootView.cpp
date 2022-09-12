@@ -71,22 +71,11 @@ void ReactRootView::InitialProps(ReactNative::JSValueArgWriter const &value) noe
   }
 }
 
-bool ReactRootView::ExperimentalUseFabric() const noexcept {
-  return m_useFabric;
-}
-void ReactRootView::ExperimentalUseFabric(bool value) noexcept {
-  if (m_useFabric != value) {
-    m_useFabric = value;
-    ReloadView();
-  }
-}
-
 void ReactRootView::ReloadView() noexcept {
   if (m_reactNativeHost && !m_componentName.empty()) {
     Mso::React::ReactViewOptions viewOptions{};
     viewOptions.ComponentName = to_string(m_componentName);
     viewOptions.InitialProps = m_initialPropsWriter;
-    viewOptions.UseFabric = m_useFabric;
     if (auto reactViewHost = ReactViewHost()) {
       reactViewHost->ReloadViewInstanceWithOptions(std::move(viewOptions));
     } else {
@@ -165,7 +154,7 @@ void ReactRootView::InitRootView(
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
 
   m_touchEventHandler = std::make_shared<::Microsoft::ReactNative::TouchEventHandler>(
-      *m_context, m_reactViewOptions->UseFabric && !reactInstance->Options().UseWebDebugger());
+      *m_context);
   m_SIPEventHandler = std::make_shared<::Microsoft::ReactNative::SIPEventHandler>(*m_context);
   m_previewKeyboardEventHandlerOnRoot =
       std::make_shared<::Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot>(*m_context);
@@ -214,7 +203,7 @@ void ReactRootView::UninitRootView() noexcept {
 
   if (m_isJSViewAttached) {
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
-      reactInstance->DetachRootView(this, m_reactViewHost->Options().UseFabric);
+      reactInstance->DetachRootView(this, false);
     }
   }
 
@@ -301,7 +290,7 @@ void ReactRootView::ShowInstanceLoaded() noexcept {
 
     if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
       reactInstance->AttachMeasuredRootView(
-          this, Mso::Copy(m_reactViewOptions->InitialProps), m_reactViewOptions->UseFabric);
+          this, Mso::Copy(m_reactViewOptions->InitialProps), false);
     }
     m_isJSViewAttached = true;
   }
@@ -455,36 +444,6 @@ Windows::Foundation::Size ReactRootView::MeasureOverride(Windows::Foundation::Si
       size.Width = desired.Width;
   }
 
-#ifdef USE_FABRIC
-  if (m_isInitialized && m_useFabric && !Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) &&
-      m_rootTag != -1) {
-    if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
-      facebook::react::LayoutContext context;
-      // TODO scaling factor
-      context.pointScaleFactor = 1; // pointScaleFactor_;
-
-      facebook::react::LayoutConstraints constraints;
-      // TODO should support MinHeight/MinWidth
-      constraints.minimumSize.height = static_cast<facebook::react::Float>(0.0f);
-      constraints.minimumSize.width = static_cast<facebook::react::Float>(0.0f);
-
-      // TODO should support MaxHeight/MaxWidth props?
-      constraints.minimumSize.height = constraints.maximumSize.height =
-          static_cast<facebook::react::Float>(availableSize.Height);
-      constraints.minimumSize.width = constraints.maximumSize.width =
-          static_cast<facebook::react::Float>(availableSize.Width);
-      constraints.layoutDirection = FlowDirection() == xaml::FlowDirection::LeftToRight
-          ? facebook::react::LayoutDirection::LeftToRight
-          : facebook::react::LayoutDirection::RightToLeft;
-
-      auto yogaSize =
-          fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
-      return {std::min(yogaSize.width, availableSize.Width), std::min(yogaSize.height, availableSize.Height)};
-    }
-  }
-#endif
-
   return size;
 }
 
@@ -493,34 +452,6 @@ Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Si
     child.Arrange(winrt::Rect(0, 0, finalSize.Width, finalSize.Height));
   }
 
-#ifdef USE_FABRIC
-  if (m_isInitialized && m_useFabric && !Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) &&
-      m_rootTag != -1) {
-    if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
-            winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
-      facebook::react::LayoutContext context;
-      // TODO scaling factor
-      context.pointScaleFactor = 1; // pointScaleFactor_;
-
-      facebook::react::LayoutConstraints constraints;
-      // TODO should support MinHeight/MinWidth
-      constraints.minimumSize.height = static_cast<facebook::react::Float>(0.0f);
-      constraints.minimumSize.width = static_cast<facebook::react::Float>(0.0f);
-
-      // TODO should support MaxHeight/MaxWidth props?
-      constraints.minimumSize.height = constraints.maximumSize.height =
-          static_cast<facebook::react::Float>(finalSize.Height);
-      constraints.minimumSize.width = constraints.maximumSize.width =
-          static_cast<facebook::react::Float>(finalSize.Width);
-      constraints.layoutDirection = FlowDirection() == xaml::FlowDirection::LeftToRight
-          ? facebook::react::LayoutDirection::LeftToRight
-          : facebook::react::LayoutDirection::RightToLeft;
-
-      fabricuiManager->constraintSurfaceLayout(
-          static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
-    }
-  }
-#endif
   return finalSize;
 }
 

@@ -30,11 +30,10 @@ namespace Microsoft::ReactNative {
 
 std::vector<int64_t> GetTagsForBranch(INativeUIManagerHost *host, int64_t tag, int64_t rootTag);
 
-TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context, bool fabric)
+TouchEventHandler::TouchEventHandler(const Mso::React::IReactContext &context)
     : m_xamlView(nullptr),
       m_rootView(nullptr),
       m_context(&context),
-      m_fabric(fabric), // TODO remove
       m_batchingEventEmitter{
           std::make_shared<winrt::Microsoft::ReactNative::BatchingEventEmitter>(Mso::CntPtr(&context))} {}
 

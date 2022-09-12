@@ -66,7 +66,6 @@ void MainPage::OnLoadClick(
     mainComponentName = unbox_value<hstring>(item);
   }
   ReactRootView().ComponentName(mainComponentName);
-  ReactRootView().ExperimentalUseFabric(x_UseFabric().IsChecked().GetBoolean());
   ReactRootView().ReactNativeHost(host);
 
   host.InstanceSettings().UseDeveloperSupport(true);
