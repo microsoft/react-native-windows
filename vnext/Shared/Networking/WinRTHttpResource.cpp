@@ -61,11 +61,18 @@ WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windo
 
 #pragma region IWinRTHttpRequestFactory
 
-IAsyncOperation<HttpRequestMessage>
-WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable const &args) noexcept /*override*/ {
+IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
+    HttpMethod &&method,
+    Uri &&uri,
+    winrt::Windows::Foundation::Collections::IMap<winrt::hstring, IInspectable> props) noexcept /*override*/ {
+
   auto coRequest = HttpRequestMessage{std::move(method), std::move(uri)};
-  auto coArgs = args; // TODO: Redundant?
-  auto coReqArgs = args.as<RequestArgs>();
+  for (auto prop : props) {
+    coRequest.Properties().Insert(prop.Key(), prop.Value());
+  }
+
+  auto coArgs = coRequest.Properties().Lookup(L"RequestArgs");
+  auto coReqArgs = coArgs.as<RequestArgs>();
   auto self = shared_from_this();
 
   HttpMediaTypeHeaderValue contentType{nullptr};
@@ -168,8 +175,6 @@ WinRTHttpResource::CreateRequest(HttpMethod &&method, Uri &&uri, IInspectable co
 
     coRequest.Content(content);
   }
-
-  coRequest.Properties().Insert(L"RequestArgs", coArgs);
 
   co_return coRequest;
 }
@@ -297,7 +302,11 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   // Ensure background thread
   co_await winrt::resume_background();
 
-  auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), coArgs);
+  auto props =
+      winrt::multi_threaded_map<winrt::hstring, IInspectable>();
+  props.Insert(L"RequestArgs", coArgs);
+
+  auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), props);
   if (!coRequest) {
     co_return;
   }

@@ -229,7 +229,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
 
     if (auto requestFactory = coRequestFactory.lock()) {
       coRequest = co_await requestFactory->CreateRequest(
-          HttpMethod{method}, coRequest.RequestUri(), coRequest.Properties().Lookup(L"RequestArgs"));
+          HttpMethod{method}, coRequest.RequestUri(), coRequest.Properties());
 
       if (!coRequest) {
         throw winrt::hresult_error{E_INVALIDARG, L"Invalid request handle"};
