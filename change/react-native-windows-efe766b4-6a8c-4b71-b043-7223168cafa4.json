@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "DRAFT: Make borderRadius consistent with other RN platforms",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
