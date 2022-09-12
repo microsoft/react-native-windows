@@ -1,8 +1,14 @@
 # Checkout the full commit history of the repo. Needed for tools like
 # beachball.
+
+parameters:
+  - name: persistCredentials
+    type: boolean
+    default: true
+
 steps:
   - checkout: self
     clean: false
     submodules: false
     lfs: false
-    persistCredentials: true
+    persistCredentials: ${{ parameters.persistCredentials }}
