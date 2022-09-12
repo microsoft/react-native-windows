@@ -65,7 +65,6 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
     HttpMethod &&method,
     Uri &&uri,
     winrt::Windows::Foundation::Collections::IMap<winrt::hstring, IInspectable> props) noexcept /*override*/ {
-
   auto coRequest = HttpRequestMessage{std::move(method), std::move(uri)};
   for (auto prop : props) {
     coRequest.Properties().Insert(prop.Key(), prop.Value());
@@ -302,8 +301,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
   // Ensure background thread
   co_await winrt::resume_background();
 
-  auto props =
-      winrt::multi_threaded_map<winrt::hstring, IInspectable>();
+  auto props = winrt::multi_threaded_map<winrt::hstring, IInspectable>();
   props.Insert(L"RequestArgs", coArgs);
 
   auto coRequest = co_await CreateRequest(std::move(coMethod), std::move(coUri), props);

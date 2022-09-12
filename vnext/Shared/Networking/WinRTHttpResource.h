@@ -55,8 +55,8 @@ class WinRTHttpResource : public IHttpResource,
   winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Web::Http::HttpRequestMessage> CreateRequest(
       winrt::Windows::Web::Http::HttpMethod &&method,
       winrt::Windows::Foundation::Uri &&uri,
-      winrt::Windows::Foundation::Collections::
-          IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable> props) noexcept override;
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable>
+          props) noexcept override;
 
 #pragma endregion IWinRTHttpRequestFactory
 

@@ -7,8 +7,8 @@
 #include "OriginPolicy.h"
 
 // Windows API
-#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
@@ -97,7 +97,8 @@ class OriginPolicyHttpFilter : public winrt::implements<
   void ValidateAllowOrigin(
       winrt::hstring const &allowedOrigin,
       winrt::hstring const &allowCredentials,
-      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable> props) const;
+      winrt::Windows::Foundation::Collections::IMap<winrt::hstring, winrt::Windows::Foundation::IInspectable> props)
+      const;
 
   winrt::Windows::Foundation::IAsyncOperationWithProgress<
       winrt::Windows::Web::Http::HttpResponseMessage,
