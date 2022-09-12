@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Aug 2022 15:09:35 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Sep 2022 18:49:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.7
+
+Mon, 12 Sep 2022 18:49:09 GMT
+
+### Patches
+
+- Fixes bug introduced by pointerEvents change (ericroz@fb.com)
+- Use LongLivedObjects for TurboModule callbacks (vmorozov@microsoft.com)
+- Fix crash creating InstanceSettings on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Allow batches to complete during load (30809111+acoates-ms@users.noreply.github.com)
+- Promote 0.69 to legacy (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.69.3
+- Bump @react-native-windows/virtualized-list to v0.69.1
+- Bump @react-native-windows/codegen to v0.69.1
 
 ## 0.69.6
 

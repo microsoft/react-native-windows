@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Sep 2022 18:49:09 GMT",
+      "tag": "react-native-windows_v0.69.7",
+      "version": "0.69.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "faf7d4bcb43bb9446ad23dd5aff310643a816e38",
+            "comment": "Fixes bug introduced by pointerEvents change"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8046e3711f3238f674e5a15d447e39e785a23af3",
+            "comment": "Use LongLivedObjects for TurboModule callbacks"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3927ad23c6d9924b2d8820b2266a380377d06ba3",
+            "comment": "Fix crash creating InstanceSettings on Windows 8.1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91889d203d232f3f19a490c1f6dd5b590ded7624",
+            "comment": "Allow batches to complete during load"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "eddca55d9faca146b32c42737f2aed5afd0160aa",
+            "comment": "Promote 0.69 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.69.3",
+            "commit": "faf7d4bcb43bb9446ad23dd5aff310643a816e38"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/virtualized-list to v0.69.1",
+            "commit": "faf7d4bcb43bb9446ad23dd5aff310643a816e38"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.69.1",
+            "commit": "faf7d4bcb43bb9446ad23dd5aff310643a816e38"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Aug 2022 15:09:35 GMT",
       "tag": "react-native-windows_v0.69.6",
       "version": "0.69.6",

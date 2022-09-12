@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 25 Jul 2022 15:12:46 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Sep 2022 18:49:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.3
+
+Mon, 12 Sep 2022 18:49:10 GMT
+
+### Patches
+
+- Promote 0.69 to legacy (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.69.1
+- Bump @react-native-windows/package-utils to v0.69.1
+- Bump @react-native-windows/telemetry to v0.69.2
 
 ## 0.69.2
 
