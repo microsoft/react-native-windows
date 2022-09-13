@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update references to Facebook to Meta, and fix typo causing the LICENSE file to not be present in the npm package",
+  "packageName": "react-native-windows",
+  "email": "asklar@microsoft.com",
+  "dependentChangeType": "patch"
+}
