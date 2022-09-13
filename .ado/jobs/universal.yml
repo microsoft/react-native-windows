@@ -76,6 +76,12 @@
                 - powershell: $env:PATH
                   displayName: show PATH
 
+                - task: UseDotNet@2
+                  displayName: Use .net 6
+                  inputs:
+                    packageType: 'sdk'
+                    version: '6.0.x'
+
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
