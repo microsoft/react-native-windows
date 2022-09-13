@@ -4,7 +4,7 @@
 #include <CppUnitTest.h>
 
 #include <Networking/RedirectHttpFilter.h>
-#include "../Shared/Networking/WinRTTypes.h"
+#include <Networking/WinRTTypes.h>
 #include "WinRTNetworkingMocks.h"
 
 // Windows API
