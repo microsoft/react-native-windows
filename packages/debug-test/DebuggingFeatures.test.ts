@@ -149,7 +149,7 @@ test('pause, resume', async () => {
 
     await dbg.debuggerEnable();
 
-    const pausedEvent = dbg.expectEvent('paused');
+    const pausedEvent = dbg.expectEvent('Debugger.paused');
     await dbg.debuggerPause();
     const eventArgs = await pausedEvent;
 
@@ -183,7 +183,7 @@ test('pause, resume', async () => {
     expect(eventArgs.callFrames.length).toBeGreaterThanOrEqual(1);
     expect(eventArgs.callFrames[0]).toHaveProperty('functionName');
 
-    const resumedEvent = dbg.expectEvent('resumed');
+    const resumedEvent = dbg.expectEvent('Debugger.resumed');
     await dbg.debuggerResume();
     await resumedEvent;
 
@@ -212,7 +212,7 @@ test('set, remove breakpoint', async () => {
 
     await dbg.debuggerEnable();
 
-    const pausedEvent = dbg.expectEvent('paused');
+    const pausedEvent = dbg.expectEvent('Debugger.paused');
     await dbg.debuggerPause();
     await pausedEvent;
 
@@ -228,7 +228,7 @@ test('set, remove breakpoint', async () => {
 
     await dbg.debuggerRemoveBreakpoint(breakpointId);
 
-    const resumedEvent = dbg.expectEvent('resumed');
+    const resumedEvent = dbg.expectEvent('Debugger.resumed');
     await dbg.debuggerResume();
     await resumedEvent;
 
@@ -259,11 +259,11 @@ test('reload after continue', async () => {
 
     await dbg.debuggerEnable();
 
-    const pausedEvent = dbg.expectEvent('paused');
+    const pausedEvent = dbg.expectEvent('Debugger.paused');
     await dbg.debuggerPause();
     await pausedEvent;
 
-    const resumedEvent = dbg.expectEvent('resumed');
+    const resumedEvent = dbg.expectEvent('Debugger.resumed');
     await dbg.debuggerResume();
     await resumedEvent;
 
@@ -271,6 +271,53 @@ test('reload after continue', async () => {
 
     // without the fix, this re-load would hang
     await loadPackage('Samples\\debugTest01', isBundleServed1);
+
+    await dbg.checkOutstandingResponses(3000);
+
+    dbg.close();
+  } finally {
+    await settings.restore();
+  }
+});
+
+// Regression test for the fix for RN:34639 (https://github.com/facebook/react-native/issues/34639).
+//
+// This test method needs to remain disabled until RNW import the hermes-windows version containing
+// https://github.com/microsoft/hermes-windows/commit/016aab4e0c76180b3f06f8efdcd2c07b44809cc5 (hermes-windows patch) or
+// https://github.com/facebook/react-native/commit/545366aea30c3db6cb28c77ce85208e9973cc1fb (upstream in RN Core).
+test.skip('execution context identifier in Debugger.scriptParsed event', async () => {
+  testLog.message(`executing 'pause, resume' test on PID ${pid}`);
+
+  const settings = await PlaygroundDebugSettings.set({
+    webDebugger: false,
+    directDebugging: true,
+    jsEngine: 'Hermes',
+  });
+  try {
+    const isBundleServed0 = metro.isBundleServed('debugTest01');
+    await loadPackage('Samples\\debugTest01', isBundleServed0);
+
+    const debugTargets = await getDebugTargets();
+    const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
+
+    const executionContextCreatedEvent = dbg.expectEvent(
+      'Runtime.executionContextCreated',
+    );
+    await dbg.runtimeEnable();
+
+    const scriptParsedEvent = dbg.expectEvent('Debugger.scriptParsed');
+    await dbg.debuggerEnable();
+
+    const executionContextCreatedEventArgs = await executionContextCreatedEvent;
+    const scriptParsedEventArgs = await scriptParsedEvent;
+
+    expect(executionContextCreatedEventArgs).toHaveProperty('context');
+    expect(executionContextCreatedEventArgs.context).toHaveProperty('id');
+    expect(scriptParsedEventArgs).toHaveProperty('executionContextId');
+
+    expect(scriptParsedEventArgs.executionContextId).toEqual(
+      executionContextCreatedEventArgs.context.id,
+    );
 
     await dbg.checkOutstandingResponses(3000);
 
