@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix crash creating InstanceSettings on Windows 8.1",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

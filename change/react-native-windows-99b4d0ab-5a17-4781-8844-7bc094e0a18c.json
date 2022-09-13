@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Fixes bug introduced by pointerEvents change",
+  "comment": "Use `IsNativeControlWithSelfLayout` in ReplaceView",
   "packageName": "react-native-windows",
-  "email": "ericroz@fb.com",
+  "email": "erozell@outlook.com",
   "dependentChangeType": "patch"
 }
