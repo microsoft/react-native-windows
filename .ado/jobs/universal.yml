@@ -70,6 +70,9 @@
 
                 - template: ../templates/apply-published-version-vars.yml
 
+                - powershell: dotnet --info
+                  displayName: show dotnet information
+
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
