@@ -8,7 +8,6 @@
 
 namespace Microsoft::ReactNative {
 
-  
 enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2 };
 enum class ImageSourceFormat { Bitmap = 0, Svg = 1 };
 
@@ -33,6 +32,5 @@ winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IR
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>
 GetImageInlineDataAsync(ReactImageSource source);
-
 
 } // namespace Microsoft::ReactNative
