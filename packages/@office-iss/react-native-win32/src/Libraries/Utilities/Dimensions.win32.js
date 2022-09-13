@@ -75,12 +75,18 @@ class Dimensions {
     const {windowPhysicalPixels} = dims;
     if (windowPhysicalPixels) {
       window = {
+        width: 0,
+        height: 0,
+        scale: 0,
         fontScale: windowPhysicalPixels.fontScale,
       };
     }
     const {screenPhysicalPixels} = dims;
     if (screenPhysicalPixels) {
       screen = {
+        width: 0,
+        height: 0,
+        scale: 0,
         fontScale: screenPhysicalPixels.fontScale,
       };
     } else if (screen == null) {
