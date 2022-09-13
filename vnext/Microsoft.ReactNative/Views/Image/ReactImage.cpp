@@ -171,7 +171,7 @@ void ReactImage::Source(ReactImageSource source) {
   }
 }
 
-winrt::IAsyncOperation<winrt::IRandomAccessStream> ReactImage::GetImageMemoryStreamAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageMemoryStreamAsync(ReactImageSource source) {
   switch (source.sourceType) {
     case ImageSourceType::Download:
       co_return co_await GetImageStreamAsync(source);
