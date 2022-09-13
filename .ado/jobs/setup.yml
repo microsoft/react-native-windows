@@ -20,6 +20,9 @@ jobs:
       - powershell: gci env:/BUILD_*
         displayName: Show build information
 
+      - powershell: dotnet --info
+        displayName: show dotnet information
+
       - template: ../templates/compute-beachball-branch-name.yml
 
       - template: ../templates/strict-yarn-install.yml
