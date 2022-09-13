@@ -73,6 +73,9 @@
                 - powershell: dotnet --info
                   displayName: show dotnet information
 
+                - powershell: $env:PATH
+                  displayName: show PATH
+
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
