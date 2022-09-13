@@ -49,18 +49,6 @@ class Dimensions {
    */
   static get(dim: string): DisplayMetrics | DisplayMetricsAndroid {
     invariant(dimensions[dim], 'No dimension set for key ' + dim);
-    invariant(
-      dimensions[dim].width,
-      'Dimension.Width API not impelmented on win32.',
-    );
-    invariant(
-      dimensions[dim].height,
-      'Dimensions.Height API not impelmented on win32.',
-    );
-    invariant(
-      dimensions[dim].scale,
-      'Dimensions.Scale not impelmented on win32.',
-    );
     return dimensions[dim];
   }
 
@@ -75,18 +63,18 @@ class Dimensions {
     const {windowPhysicalPixels} = dims;
     if (windowPhysicalPixels) {
       window = {
-        width: 0,
-        height: 0,
-        scale: 0,
+        width: windowPhysicalPixels.width,
+        height: windowPhysicalPixels.height,
+        scale: windowPhysicalPixels.scale,
         fontScale: windowPhysicalPixels.fontScale,
       };
     }
     const {screenPhysicalPixels} = dims;
     if (screenPhysicalPixels) {
       screen = {
-        width: 0,
-        height: 0,
-        scale: 0,
+        width: screenPhysicalPixels.width,
+        height: screenPhysicalPixels.height,
+        scale: screenPhysicalPixels.scale,
         fontScale: screenPhysicalPixels.fontScale,
       };
     } else if (screen == null) {
