@@ -8,8 +8,14 @@
 #include "WinRTTypes.h"
 
 // Windows API
-#include <WinInet.h>
+#include <winapifamily.h>
 #include <winrt/Windows.Web.Http.Headers.h>
+#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+#include <WinInet.h>
+#else
+#define INTERNET_ERROR_BASE 12000
+#define ERROR_HTTP_REDIRECT_FAILED (INTERNET_ERROR_BASE + 156)
+#endif
 
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Foundation::Collections::IVector;
