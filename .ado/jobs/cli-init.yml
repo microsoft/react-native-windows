@@ -333,8 +333,8 @@ jobs:
 
             steps:
               - template: ../templates/checkout-full.yml
-
-              - template: ../templates/configure-git.yml
+                parameters:
+                  persistCredentials: false # We don't need git creds in this job
 
               - template: ../templates/prepare-js-env.yml
 

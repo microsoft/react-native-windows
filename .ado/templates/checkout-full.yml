@@ -4,7 +4,7 @@
 parameters:
   - name: persistCredentials
     type: boolean
-    default: true
+    default: false # Make callers explicitly request credentials if they need them
 
 steps:
   - checkout: self
