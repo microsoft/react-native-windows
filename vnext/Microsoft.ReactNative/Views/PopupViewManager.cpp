@@ -78,8 +78,7 @@ void PopupShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueObj
 
   auto popup = GetView().as<winrt::Popup>();
   auto control = GetControl();
-  m_touchEventHandler = std::make_unique<TouchEventHandler>(
-      GetViewManager()->GetReactContext(), false /*Popup not supported in fabric currently*/);
+  m_touchEventHandler = std::make_unique<TouchEventHandler>(GetViewManager()->GetReactContext());
   m_previewKeyboardEventHandlerOnRoot =
       std::make_unique<PreviewKeyboardEventHandlerOnRoot>(GetViewManager()->GetReactContext());
 
