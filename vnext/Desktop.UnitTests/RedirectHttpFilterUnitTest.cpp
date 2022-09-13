@@ -141,90 +141,34 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
     Assert::AreEqual(L"Response Content", content.c_str());
   }
 
-  TEST_METHOD(MaxAllowedRedirectsSucceeds) {
+  void TestRedirectCount(size_t maxRedirects, size_t actualRedirects) {
     auto url1 = L"http://initialhost";
     auto url2 = L"http://redirecthost";
     auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
     auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
 
+    size_t redirectCount = 0;
     mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
+        [&url2, &redirectCount](auto const &request) -> ResponseOperation {
       HttpResponseMessage response;
 
-      auto uri2 = Uri{url2 + winrt::to_hstring(L"?redirCount=1")};
-      response.Headers().Location(uri2);
+      response.Headers().Location(Uri{url2});
       response.StatusCode(HttpStatusCode::MovedPermanently);
-      response.Content(HttpStringContent{L""});
+      redirectCount++;
 
       co_return response;
     };
     mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
+        [&url2, &redirectCount, actualRedirects](auto const &request) -> ResponseOperation {
       HttpResponseMessage response;
 
-      auto query = request.RequestUri().QueryParsed().GetFirstValueByName(L"redirCount");
-      auto redirCount = std::stoi(query.c_str());
-      if (redirCount >= 3) {
+      if (redirectCount >= actualRedirects) {
         response.StatusCode(HttpStatusCode::Ok);
         response.Content(HttpStringContent{L"Response Content"});
       } else {
-        redirCount++;
-        response.Headers().Location(Uri{url2 + winrt::to_hstring(L"?redirCount=") + winrt::to_hstring(redirCount)});
+        response.Headers().Location(Uri{url2});
         response.StatusCode(HttpStatusCode::MovedPermanently);
-        response.Content(HttpStringContent{L"Redirecting: " + winrt::to_hstring(redirCount)});
-      }
-
-      co_return response;
-    };
-
-    auto filter = winrt::make<RedirectHttpFilter>(3, std::move(mockFilter1), std::move(mockFilter2));
-    auto client = HttpClient{filter};
-    auto request = HttpRequestMessage(HttpMethod::Get(), Uri{url1});
-    auto sendOp = client.SendRequestAsync(request);
-    sendOp.get();
-    auto response = sendOp.GetResults();
-
-    Assert::AreEqual(HttpStatusCode::Ok, response.StatusCode());
-
-    auto contentOp = response.Content().ReadAsStringAsync();
-    contentOp.get();
-    auto content = contentOp.GetResults();
-    Assert::AreEqual(L"Response Content", content.c_str());
-  }
-
-  TEST_METHOD(TooManyRedirectsFails) {
-    constexpr size_t maxRedirects = 2;
-
-    auto url1 = L"http://initialhost";
-    auto url2 = L"http://redirecthost";
-    auto mockFilter1 = winrt::make<MockHttpBaseFilter>();
-    auto mockFilter2 = winrt::make<MockHttpBaseFilter>();
-
-    mockFilter1.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2](HttpRequestMessage const &request) -> ResponseOperation {
-      HttpResponseMessage response;
-
-      auto uri2 = Uri{url2 + winrt::to_hstring(L"?redirCount=1")};
-      response.Headers().Location(uri2);
-      response.StatusCode(HttpStatusCode::MovedPermanently);
-      response.Content(HttpStringContent{L""});
-
-      co_return response;
-    };
-    mockFilter2.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
-        [&url2, maxRedirects](HttpRequestMessage const &request) -> ResponseOperation {
-      HttpResponseMessage response;
-
-      auto query = request.RequestUri().QueryParsed().GetFirstValueByName(L"redirCount");
-      auto redirCount = static_cast<size_t>(std::stoi(query.c_str()));
-      if (redirCount > maxRedirects) {
-        response.StatusCode(HttpStatusCode::Ok);
-        response.Content(HttpStringContent{L"Response Content"});
-      } else {
-        redirCount++;
-        response.Headers().Location(Uri{url2 + winrt::to_hstring(L"?redirCount=") + winrt::to_hstring(redirCount)});
-        response.StatusCode(HttpStatusCode::MovedPermanently);
-        response.Content(HttpStringContent{L"Redirecting: " + winrt::to_hstring(redirCount)});
+        redirectCount++;
       }
 
       co_return response;
@@ -232,20 +176,43 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
 
     auto filter = winrt::make<RedirectHttpFilter>(maxRedirects, std::move(mockFilter1), std::move(mockFilter2));
     auto client = HttpClient{filter};
-    auto request = HttpRequestMessage(HttpMethod::Get(), Uri{url1});
+    auto request = HttpRequestMessage{HttpMethod::Get(), Uri{url1}};
     ResponseOperation sendOp = nullptr;
-    long code = 0;
+    long errorCode = 0;
     winrt::hstring errorMessage{};
     try {
       sendOp = client.SendRequestAsync(request);
       sendOp.get();
     } catch (const winrt::hresult_error &e) {
-      code = e.code();
+      errorCode = e.code();
       errorMessage = e.message();
     }
 
-    Assert::AreEqual(HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_FAILED), code);
-    Assert::AreEqual(L"Too many redirects", errorMessage.c_str());
+    if (maxRedirects >= actualRedirects) {
+      // Should succeed
+      auto response = sendOp.GetResults();
+
+      Assert::AreEqual(0, (int)errorCode);
+      Assert::AreEqual(L"", errorMessage.c_str());
+      Assert::AreEqual(HttpStatusCode::Ok, response.StatusCode());
+
+      auto contentOp = response.Content().ReadAsStringAsync();
+      contentOp.get();
+      auto content = contentOp.GetResults();
+      Assert::AreEqual(L"Response Content", content.c_str());
+    } else {
+      // Should fail
+      Assert::AreEqual(HRESULT_FROM_WIN32(ERROR_HTTP_REDIRECT_FAILED), errorCode);
+      Assert::AreEqual(L"Too many redirects", errorMessage.c_str());
+    }
+  }
+
+  TEST_METHOD(MaxAllowedRedirectsSucceeds) {
+    TestRedirectCount(3, 3);
+  }
+
+  TEST_METHOD(TooManyRedirectsFails) {
+    TestRedirectCount(2, 3);
   }
 };
 
