@@ -2044,7 +2044,7 @@
   dependencies:
     babel-plugin-const-enum "^1.0.0"
 
-"@rnx-kit/console@^1.0.11":
+"@rnx-kit/console@^1.0.0", "@rnx-kit/console@^1.0.11":
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/@rnx-kit/console/-/console-1.0.11.tgz#63c9124080424fefb10252d6b3f6bd16e8f71529"
   integrity sha512-2Iyx56e+kk9YBQt3G5YSqG91dEI+AZhK/S58J64C6muPOdnYi7zuzaX1P/vkDFRSMAybtBi639Onn268suihnA==
@@ -2061,11 +2061,12 @@
     find-up "^5.0.0"
 
 "@rnx-kit/metro-config@^1.2.27":
-  version "1.2.36"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.36.tgz#e682562db18e44aa0da4a9310adb0c5f5f9f4f78"
-  integrity sha512-/JH8S62oN1EAS6v0sznQtkY+iMl0iACZExT61z8L2jMkEULRiMqqTzx9YS0ci/mcjRMDkwOqq4VkLRr5XzvAxg==
+  version "1.2.39"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/metro-config/-/metro-config-1.2.39.tgz#a6a53981f771af250c8c46d8e3e9337ada1697cb"
+  integrity sha512-SNCnj8/sMKiIAW3qq61bs4CBiBWekglNVkstidyoyEFU8xSH1Nl1932gXT84ULGqQv8m5lXVO9AeTIFksuyuwA==
   dependencies:
     "@rnx-kit/babel-preset-metro-react-native" "^1.0.17"
+    "@rnx-kit/console" "^1.0.0"
     "@rnx-kit/tools-node" "^1.3.0"
     "@rnx-kit/tools-workspaces" "^0.1.0"
 
