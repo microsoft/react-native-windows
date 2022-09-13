@@ -539,6 +539,7 @@
     </ClCompile>
     <ClCompile Include="Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="Utils\Helpers.cpp" />
+    <ClCompile Include="Utils\ImageUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
     <ClCompile Include="Utils\UwpPreparedScriptStore.cpp" />

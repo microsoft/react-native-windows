@@ -9,25 +9,10 @@
 #include <UI.Xaml.Controls.h>
 
 #include <JSValue.h>
+#include <Utils/ImageUtils.h>
 #include <folly/dynamic.h>
 
 namespace Microsoft::ReactNative {
-
-enum class ImageSourceType { Uri = 0, Download = 1, InlineData = 2 };
-enum class ImageSourceFormat { Bitmap = 0, Svg = 1 };
-
-struct ReactImageSource {
-  std::string uri;
-  std::string method;
-  std::string bundleRootPath;
-  std::vector<std::pair<std::string, std::string>> headers;
-  double width = 0;
-  double height = 0;
-  double scale = 1.0;
-  bool packagerAsset = false;
-  ImageSourceType sourceType = ImageSourceType::Uri;
-  ImageSourceFormat sourceFormat = ImageSourceFormat::Bitmap;
-};
 
 struct ReactImage : xaml::Controls::GridT<ReactImage> {
   using Super = xaml::Controls::GridT<ReactImage>;
@@ -89,8 +74,4 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
 };
 
 // Helper functions
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream> GetImageStreamAsync(
-    ReactImageSource source);
-winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>
-GetImageInlineDataAsync(ReactImageSource source);
 } // namespace Microsoft::ReactNative

@@ -52,7 +52,7 @@ struct CompImageComponentView : CompBaseComponentView {
  private:
   void ensureVisual() noexcept;
   void beginDownloadImage() noexcept;
-  void generateBitmap(const winrt::Windows::Storage::Streams::InMemoryRandomAccessStream &stream) noexcept;
+  void generateBitmap(const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept;
   void ensureDrawingSurface() noexcept;
   void DrawImage() noexcept;
 
