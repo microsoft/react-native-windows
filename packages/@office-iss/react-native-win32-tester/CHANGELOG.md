@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32-tester
 
-This log was last generated on Mon, 21 Feb 2022 16:09:42 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Sep 2022 18:19:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.1
+
+Wed, 14 Sep 2022 18:19:01 GMT
+
+### Patches
+
+- Bump @office-iss/react-native-win32 to v0.66.6 (ruaraki@microsoft.com)
 
 ## 0.0.1
 
