@@ -17,9 +17,7 @@
     <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
   </PropertyGroup>
 
-  <PropertyGroup Label="NuGet">
-    <ResolveNuGetPackages>false</ResolveNuGetPackages>
-  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)NuGet.Cpp.props" />
 
   <PropertyGroup Label="Desktop">
     <!-- See https://docs.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt -->
