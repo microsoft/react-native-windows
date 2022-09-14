@@ -17,6 +17,10 @@
 #define ERROR_HTTP_REDIRECT_FAILED (INTERNET_ERROR_BASE + 156)
 #endif
 
+namespace {
+constexpr size_t DefaultMaxRedirects = 20;
+} // namespace
+
 using winrt::Windows::Foundation::Uri;
 using winrt::Windows::Foundation::Collections::IVector;
 using winrt::Windows::Security::Credentials::PasswordCredential;
@@ -52,7 +56,7 @@ RedirectHttpFilter::RedirectHttpFilter(
 }
 
 RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
-    : RedirectHttpFilter(20, std::move(innerFilter), std::move(innerFilterWithNoCredentials)) {}
+    : RedirectHttpFilter(DefaultMaxRedirects, std::move(innerFilter), std::move(innerFilterWithNoCredentials)) {}
 
 RedirectHttpFilter::RedirectHttpFilter() noexcept
     : RedirectHttpFilter(
