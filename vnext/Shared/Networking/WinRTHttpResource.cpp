@@ -353,6 +353,10 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
       if (*timedOut) {
         if (self->m_onError) {
+          // TODO: Try to replace with either:
+          //       WININET_E_TIMEOUT
+          //       ERROR_INTERNET_TIMEOUT
+          //       INET_E_CONNECTION_TIMEOUT
           self->m_onError(reqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)), true);
         }
         co_return self->UntrackResponse(reqArgs->RequestId);
