@@ -13,6 +13,8 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 QuirkSettings::QuirkSettings() noexcept {}
 
+static event<Windows::Foundation::EventHandler<IReactPropertyName>> s_quirkSettingsChangedEvent;
+
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBehaviorProperty() noexcept {
   static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
       L"ReactNative.QuirkSettings", L"MatchAndroidAndIOSyStretchBehavior"};
@@ -50,6 +52,7 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
     winrt::Microsoft::ReactNative::ReactPropertyBag properties,
     bool value) noexcept {
   properties.Set(MapWindowDeactivatedToAppStateInactiveProperty(), value);
+  s_quirkSettingsChangedEvent(properties.Handle(), MapWindowDeactivatedToAppStateInactiveProperty().Handle());
 }
 
 #pragma region IDL interface
@@ -58,18 +61,21 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
   SetMatchAndroidAndIOSStretchBehavior(ReactPropertyBag(settings.Properties()), value);
+  s_quirkSettingsChangedEvent(settings.Properties(), MapWindowDeactivatedToAppStateInactiveProperty().Handle());
 }
 
 /*static*/ void QuirkSettings::SetAcceptSelfSigned(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
   ReactPropertyBag(settings.Properties()).Set(AcceptSelfSignedCertsProperty(), value);
+  s_quirkSettingsChangedEvent(settings.Properties(), AcceptSelfSignedCertsProperty().Handle());
 }
 
 /*static*/ void QuirkSettings::SetBackHandlerKind(
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     winrt::Microsoft::ReactNative::BackNavigationHandlerKind kind) noexcept {
   ReactPropertyBag(settings.Properties()).Set(EnableBackHandlerKindProperty(), kind);
+  s_quirkSettingsChangedEvent(settings.Properties(), EnableBackHandlerKindProperty().Handle());
 }
 
 /*static*/ void QuirkSettings::SetMapWindowDeactivatedToAppStateInactive(
@@ -96,6 +102,15 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> MapWindowDeactivatedToAppSt
 
 /*static*/ bool QuirkSettings::GetMapWindowDeactivatedToAppStateInactive(ReactPropertyBag properties) noexcept {
   return properties.Get(MapWindowDeactivatedToAppStateInactiveProperty()).value_or(false);
+}
+
+/*static*/ event_token QuirkSettings::QuirkSettingsChanged(
+    Windows::Foundation::EventHandler<IReactPropertyName> const &handler) {
+  return s_quirkSettingsChangedEvent.add(handler);
+}
+
+/*static*/ void QuirkSettings::QuirkSettingsChanged(event_token const &token) noexcept {
+  s_quirkSettingsChangedEvent.remove(token);
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

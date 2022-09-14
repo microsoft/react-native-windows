@@ -4,6 +4,7 @@
 #pragma once
 
 #include "QuirkSettings.g.h"
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
 #include "ReactPropertyBag.h"
@@ -31,6 +32,9 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
       bool value) noexcept;
   static bool GetMapWindowDeactivatedToAppStateInactive(
       winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
+  static event_token QuirkSettingsChanged(Windows::Foundation::EventHandler<IReactPropertyName> const &handler);
+  static void QuirkSettingsChanged(event_token const &token) noexcept;
 
 #pragma region Public API - part of IDL interface
   static void SetMatchAndroidAndIOSStretchBehavior(
