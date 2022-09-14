@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <winrt/Microsoft.React.Networking.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include "OriginPolicy.h"
 
 // Windows API
@@ -21,7 +21,7 @@ namespace Microsoft::React::Networking {
 class OriginPolicyHttpFilter : public winrt::implements<
                                    OriginPolicyHttpFilter,
                                    winrt::Windows::Web::Http::Filters::IHttpFilter,
-                                   winrt::Microsoft::React::Networking::IRedirectEventSource> {
+                                   winrt::Microsoft::ReactNative::IRedirectEventSource> {
  public:
   struct ConstWcharComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;

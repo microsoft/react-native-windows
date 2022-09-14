@@ -1,14 +1,29 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-namespace Microsoft.React.Networking {
+namespace Microsoft.ReactNative {
 
+  /// <summary>
+  /// An internal API to extend the phases of HTTP redirection.
+  /// See RedirectHttpFilter.
+  /// This interface may add other methods reflecting later redirection stages
+  /// </summary>
   interface IRedirectEventSource
   {
+
+  /// <summary>
+  /// To be invoked by a redirecting object (i.e. Windows.Web.Http.IHttpFilter)
+  /// before the request object is sent to the new location.
+  /// </summary>
+  /// <param name="request">
+  /// Oribinal object about to be redirected.
+  /// </param>
+  /// <param name="response">
+  /// Sent by the HTTP server after the first request was sent.
+  /// It should have a 3XX status code.
+  /// </param>
   Boolean OnRedirecting(
         Windows.Web.Http.HttpRequestMessage request,
         Windows.Web.Http.HttpResponseMessage response);
-     
   };
-
 }

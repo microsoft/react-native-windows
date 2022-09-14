@@ -64,7 +64,7 @@ void RedirectHttpFilter::SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactor
 }
 
 void RedirectHttpFilter::SetRedirectSource(
-    winrt::Microsoft::React::Networking::IRedirectEventSource const &eventSrc) noexcept {
+    winrt::Microsoft::ReactNative::IRedirectEventSource const &eventSrc) noexcept {
   m_redirEventSrc = eventSrc;
 }
 
