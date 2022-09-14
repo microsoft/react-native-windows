@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "[0.70] Move required PackageRestore properties into shared property sheets",
+  "comment": "[0.69] Move required PackageRestore properties into shared property sheets",
   "packageName": "react-native-windows",
   "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
