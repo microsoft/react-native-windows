@@ -56,7 +56,7 @@ jobs:
 
       - template: templates/checkout-full.yml
         parameters:
-          persistCredentials: false # We're going to use rnbot's credentials to publish
+          persistCredentials: false # We're going to use rnbot's git creds to publish
 
       - powershell: gci env:/BUILD_*
         displayName: Show build information  

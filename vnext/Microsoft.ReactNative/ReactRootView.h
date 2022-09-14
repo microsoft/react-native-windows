@@ -36,10 +36,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
     UpdatePerspective();
   }
 
-  // property ExperimentalUseFabric
-  bool ExperimentalUseFabric() const noexcept;
-  void ExperimentalUseFabric(bool value) noexcept;
-
   void ReloadView() noexcept;
 
   // Used by RootViewManager
@@ -76,7 +72,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   bool m_isPerspectiveEnabled{true};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
-  bool m_useFabric{false};
   Mso::DispatchQueue m_uiQueue;
   int64_t m_rootTag{-1};
   std::unique_ptr<Mso::React::ReactOptions> m_reactOptions;
@@ -89,7 +84,6 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   std::shared_ptr<::Microsoft::ReactNative::PreviewKeyboardEventHandlerOnRoot> m_previewKeyboardEventHandlerOnRoot;
   xaml::Controls::ContentControl m_focusSafeHarbor{nullptr};
   xaml::Controls::ContentControl::LosingFocus_revoker m_focusSafeHarborLosingFocusRevoker{};
-  xaml::FrameworkElement::SizeChanged_revoker m_rootSizeChangedRevoker{};
   winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_waitingTextBlock{nullptr};
   winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};

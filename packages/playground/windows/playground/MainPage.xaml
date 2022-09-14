@@ -183,11 +183,6 @@
                     <ComboBoxItem Content="Dark" x:Name="x_themeDark" />
                 </ComboBox.Items>
             </ComboBox>
-            <CheckBox x:Name="x_UseFabric"
-                Margin="4"
-                VerticalAlignment="Center"
-                IsChecked="false"
-                Content="Enable Fabric"/>
 
         </StackPanel>
         <react:ReactRootView x:Name="ReactRootView"
