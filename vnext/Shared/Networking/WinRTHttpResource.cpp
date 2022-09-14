@@ -17,6 +17,7 @@
 #include <boost/algorithm/string.hpp>
 
 // Windows API
+#include <errno.h>
 #include <WinInet.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
@@ -167,8 +168,20 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
     }
 
     if (!contentLength.empty()) {
-      const auto contentLengthHeader = _atoi64(contentLength.c_str());
-      content.Headers().ContentLength(contentLengthHeader);
+      try {
+        const auto contentLengthHeader = std::stol(contentLength);
+        content.Headers().ContentLength(contentLengthHeader);
+      } catch (const std::invalid_argument &e) {
+        if (self->m_onError)
+          self->m_onError(reqArgs->RequestId, e.what() + string{" ["} + contentLength + "]", false);
+
+        co_return nullptr;
+      } catch (const std::out_of_range &e) {
+        if (self->m_onError)
+          self->m_onError(reqArgs->RequestId, e.what() + string{" ["} + contentLength + "]", false);
+
+        co_return nullptr;
+      }
     }
 
     request.Content(content);
