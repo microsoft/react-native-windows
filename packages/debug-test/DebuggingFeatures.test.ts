@@ -294,8 +294,8 @@ test.skip('execution context identifier in Debugger.scriptParsed event', async (
     jsEngine: 'Hermes',
   });
   try {
-    const isBundleServed0 = metro.isBundleServed('debugTest01');
-    await loadPackage('Samples\\debugTest01', isBundleServed0);
+    const isBundleServed = metro.isBundleServed('debugTest01');
+    await loadPackage('Samples\\debugTest01', isBundleServed);
 
     const debugTargets = await getDebugTargets();
     const dbg = new CDPDebugger(debugTargets[0].webSocketDebuggerUrl);
