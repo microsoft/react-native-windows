@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Sep 2022 05:12:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.547",
+      "version": "0.0.0-canary.547",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b56024b7d88e205673c932b7b5b4d057c476ae45",
+            "comment": "Update references to Facebook to Meta, and fix typo causing the LICENSE file to not be present in the npm package"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7196c86120722a52d4595c26a321872c2a242238",
+            "comment": "Remove ExperimentalUseFabric from ReactRootView"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "87c0e9db5cc0116078468a2ef7738683064c66a0",
+            "comment": "Use `IsNativeControlWithSelfLayout` in ReplaceView"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 20:01:46 GMT",
       "tag": "react-native-windows_v0.0.0-canary.546",
       "version": "0.0.0-canary.546",
