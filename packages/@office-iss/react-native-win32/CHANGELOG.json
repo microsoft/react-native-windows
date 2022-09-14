@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 14 Sep 2022 18:19:21 GMT",
+      "tag": "@office-iss/react-native-win32_v0.68.4",
+      "version": "0.68.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "ruaraki@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "f61cf37c056df5b62844a9d2c08810598f635fba",
+            "comment": "Add `accessibilityAccessKey` prop to ViewWin32 (#10527)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 31 Aug 2022 19:24:44 GMT",
       "tag": "@office-iss/react-native-win32_v0.68.3",
       "version": "0.68.3",

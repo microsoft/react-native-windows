@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 31 Aug 2022 19:24:45 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Sep 2022 18:19:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.16
+
+Wed, 14 Sep 2022 18:19:22 GMT
+
+### Patches
+
+- Fixes bug introduced by pointerEvents change (ericroz@fb.com)
 
 ## 0.68.15
 
