@@ -217,8 +217,9 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   SystraceSection s("NativeUIManager::AddRootView");
   auto xamlRootView = static_cast<IXamlRootView *>(pReactRootView);
   XamlView view = xamlRootView->GetXamlView();
+  const auto rootTag = shadowNode.m_tag;
   m_tagsToXamlReactControl.emplace(
-      shadowNode.m_tag,
+      rootTag,
       winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView>(
           view.as<winrt::Microsoft::ReactNative::ReactRootView>()));
 
@@ -226,14 +227,16 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   view.as<xaml::FrameworkElement>().FlowDirection(
       I18nManager::IsRTL(m_context.Properties()) ? xaml::FlowDirection::RightToLeft : xaml::FlowDirection::LeftToRight);
 
-  m_tagsToYogaNodes.emplace(shadowNode.m_tag, make_yoga_node(m_yogaConfig));
+  m_tagsToYogaNodes.emplace(rootTag, make_yoga_node(m_yogaConfig));
 
   auto element = view.as<xaml::FrameworkElement>();
-  Microsoft::ReactNative::SetTag(element, shadowNode.m_tag);
+  Microsoft::ReactNative::SetTag(element, rootTag);
 
   // Add listener to size change so we can redo the layout when that happens
-  m_sizeChangedVector.push_back(
-      view.as<xaml::FrameworkElement>().SizeChanged(winrt::auto_revoke, [this](auto &&, auto &&) { DoLayout(); }));
+  m_sizeChangedVector.push_back(view.as<xaml::FrameworkElement>().SizeChanged(
+      winrt::auto_revoke, [this, rootTag](auto &&, xaml::SizeChangedEventArgs const &args) {
+        ApplyLayout(rootTag, args.NewSize().Width, args.NewSize().Height);
+      }));
 }
 
 void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
