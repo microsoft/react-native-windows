@@ -477,7 +477,7 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     // keep it around, so not adding that code (yet).
   }
 
-  bool shouldBeControl = viewShadowNode->IsFocusable();
+  bool shouldBeControl = (viewShadowNode->IsFocusable() || viewShadowNode->IsAccessible());
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
@@ -601,9 +601,9 @@ void ViewViewManager::TryUpdateView(
     pViewShadowNode->GetControl().Content(visualRoot);
 
   if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
-    pViewShadowNode->GetControl().IsTabStop(false);
+    pViewShadowNode->GetControl().IsTabStop(true);
     xaml::Automation::AutomationProperties::SetAccessibilityView(
-        pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
+        pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Content);
   }
 }
 

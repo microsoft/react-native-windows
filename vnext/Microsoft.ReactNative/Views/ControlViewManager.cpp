@@ -125,9 +125,10 @@ void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
   auto control(node->GetView().as<xaml::Controls::Control>());
 
   if (IsAccessible() != IsFocusable()) {
-    control.IsTabStop(false);
+    control.IsTabStop(true);
     xaml::Automation::AutomationProperties::SetAccessibilityView(
-        control, xaml::Automation::Peers::AccessibilityView::Raw);
+        control, xaml::Automation::Peers::AccessibilityView::Content);
+    control.IsEnabled(true);
   }
 }
 
