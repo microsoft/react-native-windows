@@ -26,8 +26,8 @@ let dimensions: DimensionsPayload;
 /**
  * While a global Dimensions object for window and screen dimensions is too simple for Win32,
  * attached to this object is also fontScale which is a system global value.  We expose this value
- * for large text scaling support while zeroing out other window dimension information.  These zeroes will
- * cause rendering issues if used but should avoid runtime failures in JS.
+ * for large text scaling support while leaving other window dimension information undefined. These undefined
+ * values will cause rendering issues if used but should avoid runtime failures in JS.
  */
 class Dimensions {
   /**
