@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include <cxxreact/JSBigString.h>
-#include <future>
+#include <winrt/Windows.Storage.Streams.h>
 #include <string>
 
 namespace Microsoft::ReactNative {
