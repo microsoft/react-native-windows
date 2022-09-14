@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Sep 2022 20:01:46 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Sep 2022 05:12:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.547
+
+Wed, 14 Sep 2022 05:12:18 GMT
+
+### Changes
+
+- Update references to Facebook to Meta, and fix typo causing the LICENSE file to not be present in the npm package (asklar@microsoft.com)
+- Remove ExperimentalUseFabric from ReactRootView (30809111+acoates-ms@users.noreply.github.com)
+- Use `IsNativeControlWithSelfLayout` in ReplaceView (erozell@outlook.com)
 
 ## 0.0.0-canary.546
 
