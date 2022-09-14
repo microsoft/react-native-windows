@@ -85,7 +85,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       bool success = HttpMediaTypeHeaderValue::TryParse(to_hstring(header.second), contentType);
       if (!success) {
         if (self->m_onError) {
-          self->m_onError(reqArgs->RequestId, "Failed to parse Content-Type");
+          self->m_onError(reqArgs->RequestId, "Failed to parse Content-Type", false);
         }
         co_return nullptr;
       }
@@ -97,7 +97,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       bool success = request.Headers().TryAppendWithoutValidation(to_hstring(header.first), to_hstring(header.second));
       if (!success) {
         if (self->m_onError) {
-          self->m_onError(reqArgs->RequestId, "Failed to append Authorization");
+          self->m_onError(reqArgs->RequestId, "Failed to append Authorization", false);
         }
         co_return nullptr;
       }
@@ -106,7 +106,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
         request.Headers().Append(to_hstring(header.first), to_hstring(header.second));
       } catch (hresult_error const &e) {
         if (self->m_onError) {
-          self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e));
+          self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
         }
         co_return nullptr;
       }
@@ -125,7 +125,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
         blob = bodyHandler->ToRequestBody(data, contentTypeString);
       } catch (const std::invalid_argument &e) {
         if (self->m_onError) {
-          self->m_onError(reqArgs->RequestId, e.what());
+          self->m_onError(reqArgs->RequestId, e.what(), false);
         }
         co_return nullptr;
       }
@@ -160,7 +160,7 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
     if (!contentEncoding.empty()) {
       if (!content.Headers().ContentEncoding().TryParseAdd(to_hstring(contentEncoding))) {
         if (self->m_onError)
-          self->m_onError(reqArgs->RequestId, "Failed to parse Content-Encoding");
+          self->m_onError(reqArgs->RequestId, "Failed to parse Content-Encoding", false);
 
         co_return nullptr;
       }
@@ -216,14 +216,14 @@ void WinRTHttpResource::SendRequest(
     PerformSendRequest(std::move(httpMethod), std::move(uri), iReqArgs);
   } catch (std::exception const &e) {
     if (m_onError) {
-      m_onError(requestId, e.what());
+      m_onError(requestId, e.what(), false);
     }
   } catch (hresult_error const &e) {
     if (m_onError) {
-      m_onError(requestId, Utilities::HResultToString(e));
+      m_onError(requestId, Utilities::HResultToString(e), false);
     }
   } catch (...) {
-    m_onError(requestId, "Unidentified error sending HTTP request");
+    m_onError(requestId, "Unidentified error sending HTTP request", false);
   }
 }
 
@@ -242,7 +242,7 @@ void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
   try {
     request.Cancel();
   } catch (hresult_error const &e) {
-    m_onError(requestId, Utilities::HResultToString(e));
+    m_onError(requestId, Utilities::HResultToString(e), false);
   }
 }
 
@@ -271,7 +271,8 @@ void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic &&res
   m_onDataDynamic = std::move(handler);
 }
 
-void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string &&errorMessage)> &&handler) noexcept
+void WinRTHttpResource::SetOnError(
+    function<void(int64_t requestId, string &&errorMessage, bool isTimeout)> &&handler) noexcept
 /*override*/ {
   m_onError = std::move(handler);
 }
@@ -323,10 +324,10 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       }
     } catch (const hresult_error &e) {
       if (self->m_onError)
-        co_return self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e));
+        co_return self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
     } catch (const std::exception &e) {
       if (self->m_onError)
-        co_return self->m_onError(reqArgs->RequestId, e.what());
+        co_return self->m_onError(reqArgs->RequestId, e.what(), false);
     }
   }
 
@@ -352,7 +353,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
 
       if (*timedOut) {
         if (self->m_onError) {
-          self->m_onError(reqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)));
+          self->m_onError(reqArgs->RequestId, Utilities::HResultToString(HRESULT_FROM_WIN32(ERROR_TIMEOUT)), true);
         }
         co_return self->UntrackResponse(reqArgs->RequestId);
       }
@@ -363,7 +364,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
     auto result = sendRequestOp.ErrorCode();
     if (result < 0) {
       if (self->m_onError) {
-        self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(result)));
+        self->m_onError(reqArgs->RequestId, Utilities::HResultToString(std::move(result)), false);
       }
       co_return self->UntrackResponse(reqArgs->RequestId);
     }
@@ -445,20 +446,20 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
       }
     } else {
       if (self->m_onError) {
-        self->m_onError(reqArgs->RequestId, response == nullptr ? "request failed" : "No response content");
+        self->m_onError(reqArgs->RequestId, response == nullptr ? "request failed" : "No response content", false);
       }
     }
   } catch (std::exception const &e) {
     if (self->m_onError) {
-      self->m_onError(reqArgs->RequestId, e.what());
+      self->m_onError(reqArgs->RequestId, e.what(), false);
     }
   } catch (hresult_error const &e) {
     if (self->m_onError) {
-      self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e));
+      self->m_onError(reqArgs->RequestId, Utilities::HResultToString(e), false);
     }
   } catch (...) {
     if (self->m_onError) {
-      self->m_onError(reqArgs->RequestId, "Unhandled exception during request");
+      self->m_onError(reqArgs->RequestId, "Unhandled exception during request", false);
     }
   }
 

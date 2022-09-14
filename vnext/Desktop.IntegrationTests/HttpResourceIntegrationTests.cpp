@@ -66,7 +66,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       statusCode = static_cast<int>(response.StatusCode);
     });
     resource->SetOnData([&resPromise](int64_t, string &&content) { resPromise.set_value(); });
-    resource->SetOnError([&resPromise, &error, &server](int64_t, string &&message) {
+    resource->SetOnError([&resPromise, &error, &server](int64_t, string &&message, bool) {
       error = std::move(message);
       resPromise.set_value();
 
@@ -120,7 +120,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       response = callbackResponse;
       rcPromise.set_value();
     });
-    resource->SetOnError([&rcPromise, &error, &server](int64_t, string &&message) {
+    resource->SetOnError([&rcPromise, &error, &server](int64_t, string &&message, bool) {
       error = std::move(message);
       rcPromise.set_value();
 
@@ -169,7 +169,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     promise<void> promise;
 
     auto resource = IHttpResource::Make();
-    resource->SetOnError([&error, &promise](int64_t, string &&message) {
+    resource->SetOnError([&error, &promise](int64_t, string &&message, bool) {
       error = message;
       promise.set_value();
     });
@@ -228,7 +228,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
         getDataPromise.set_value();
     });
     resource->SetOnError(
-        [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string &&message) {
+        [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string &&message, bool) {
           error = std::move(message);
 
           optionsPromise.set_value();
@@ -325,7 +325,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       if (!content.empty())
         contentPromise.set_value();
     });
-    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message) {
+    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message, bool) {
       error = std::move(message);
 
       responsePromise.set_value();
@@ -401,7 +401,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       if (!content.empty())
         contentPromise.set_value();
     });
-    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message) {
+    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message, bool) {
       error = std::move(message);
 
       responsePromise.set_value();
@@ -440,6 +440,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     promise<void> getPromise;
     string error;
     int statusCode = 0;
+    bool timeoutError = false;
 
     auto server = std::make_shared<HttpServer>(s_port);
     server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
@@ -459,8 +460,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       statusCode = static_cast<int>(response.StatusCode);
       getPromise.set_value();
     });
-    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
+    resource->SetOnError([&getPromise, &error, &timeoutError](int64_t, string &&errorMessage, bool isTimeout) {
       error = std::move(errorMessage);
+      timeoutError = isTimeout;
       getPromise.set_value();
     });
     resource->SendRequest(
@@ -479,6 +481,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     server->Stop();
 
     Assert::AreEqual({}, error);
+    Assert::IsFalse(timeoutError);
     Assert::AreEqual(200, statusCode);
   }
 
@@ -489,6 +492,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     promise<void> getPromise;
     string error;
     int statusCode = 0;
+    bool timeoutError = false;
 
     auto server = std::make_shared<HttpServer>(s_port);
     server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
@@ -508,8 +512,9 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       statusCode = static_cast<int>(response.StatusCode);
       getPromise.set_value();
     });
-    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
+    resource->SetOnError([&getPromise, &error, &timeoutError](int64_t, string &&errorMessage, bool isTimeout) {
       error = std::move(errorMessage);
+      timeoutError = isTimeout;
       getPromise.set_value();
     });
     resource->SendRequest(
@@ -527,6 +532,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     getPromise.get_future().wait();
     server->Stop();
 
+    Assert::IsTrue(timeoutError);
     Assert::AreEqual({"[0x800705b4] This operation returned because the timeout period expired."}, error);
     Assert::AreEqual(0, statusCode);
   }

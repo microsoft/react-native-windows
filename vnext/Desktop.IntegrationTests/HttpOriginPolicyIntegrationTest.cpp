@@ -135,7 +135,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
         clientArgs.ResponseContent = std::move(content);
         clientArgs.ContentPromise.set_value();
     });
-    resource->SetOnError([&clientArgs](int64_t, string&& message)
+    resource->SetOnError([&clientArgs](int64_t, string&& message, bool)
     {
       clientArgs.ErrorMessage = std::move(message);
       clientArgs.ContentPromise.set_value();
@@ -189,7 +189,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       clientArgs.ResponseContent = std::move(content);
       clientArgs.ContentPromise.set_value();
     });
-    resource->SetOnError([&clientArgs](int64_t, string&& message)
+    resource->SetOnError([&clientArgs](int64_t, string&& message, bool)
     {
       clientArgs.ErrorMessage = std::move(message);
       clientArgs.ContentPromise.set_value();
@@ -285,7 +285,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
         getContent = std::move(content);
         getDataPromise.set_value();
       });
-    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message)
+    resource->SetOnError([&server, &error, &getDataPromise](int64_t, string&& message, bool)
       {
         error = std::move(message);
         getDataPromise.set_value();
