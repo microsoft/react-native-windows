@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 
+  Copyright (c) Microsoft Corporation. All rights reserved.
+  Licensed under the MIT License.
+
+  Defines NuGet-related properties for C++ projects using PackageReference.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup Label="NuGet">
+    <!-- Should match entry in $(ReactNativeWindowsDir)vnext\Directory.Build.props -->
+    <!--See https://docs.microsoft.com/en-us/nuget/reference/msbuild-targets#restore-target-->
+    <RestoreUseStaticGraphEvaluation Condition="'$(BuildingInsideVisualStudio)' == 'true'">true</RestoreUseStaticGraphEvaluation>
+
+    <!-- Ensure PackageReference compatibility for any consuming projects/apps -->
+    <ResolveNuGetPackages>false</ResolveNuGetPackages>
+
+    <!-- https://github.com/NuGet/Home/issues/10511#issuecomment-778400668 -->
+    <AssetTargetFallback>$(AssetTargetFallback);uap10.0.16299</AssetTargetFallback>
+
+    <!--
+      Avoid Visual Studio error message:
+      "The project '$(MSBuildProjectName)' ran into a problem during the last operation: The value of the
+      'TargetFrameworkMoniker' and 'NuGetTargetMoniker' properties in the '$(Configuration)|$(Platform)' configuration are both
+      empty. This configuration will not contribute to NuGet restore, which may result in restore and build errors. You may
+      need to reload the solution after fixing the problem."
+    -->
+    <TargetFrameworkMoniker>native,Version=v0.0</TargetFrameworkMoniker>
+  </PropertyGroup>
+
+</Project>
