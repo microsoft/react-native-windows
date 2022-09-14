@@ -57,8 +57,27 @@ export async function getDebugTargets(
  * Names of events that can get raised by CDPDebugger instances.
  */
 export type EventName =
-  | 'paused' // Event indicating that debugger backend is paused.
-  | 'resumed'; // Event indicating that debugger backend has resumed script execution.
+  // Event indicating that debugger backend is paused.
+  //
+  // The backend raises this event in response to the Debugger.pause command.
+  // See https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#event-paused
+  | 'Debugger.paused'
+
+  // Event indicating that debugger backend has resumed script execution.
+  //
+  // The backend raises this event in response to the Debugger.resume command.
+  // See https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#event-resumed
+  | 'Debugger.resumed'
+
+  // Event indicating that debugger backend has parsed a script.
+  // See https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#event-scriptParsed
+  | 'Debugger.scriptParsed'
+
+  // Event indicating that debugger backend has created an execution context.
+  //
+  // The backend raises this event in response to the Runtime.enable command.
+  // See https://chromedevtools.github.io/devtools-protocol/tot/Runtime/#event-executionContextCreated
+  | 'Runtime.executionContextCreated';
 
 /**
  * Signature of handlers for events raised by CDPDebugger instances.
@@ -166,6 +185,7 @@ export class CDPDebugger {
    *
    * Sends a Debugger.enable CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-enable).
    * @param maxScriptsCacheSize Maximum size in bytes of collected scripts the debugger can hold.
+   * @returns {Promise<void>} Promise indicating that the debugger backend has received the command.
    */
   public async debuggerEnable(
     maxScriptsCacheSize: number = 10000000,
@@ -198,6 +218,20 @@ export class CDPDebugger {
         },
       ]);
     });
+
+    this.expectedResponses.push([
+      `Debugger.scriptParsed response for ${commandDescription}`,
+      response => {
+        if (
+          response.hasOwnProperty('method') &&
+          response.method === 'Debugger.scriptParsed'
+        ) {
+          this.raise('Debugger.scriptParsed', () => response.params);
+          return true;
+        }
+        return false;
+      },
+    ]);
 
     await this.wsOpened;
     testLog.message(`sending ${commandDescription}`);
@@ -253,7 +287,7 @@ export class CDPDebugger {
    *
    * Sends a Debugger.pause CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-pause).
    * @returns {Promise<void>} Promise indicating that the debugger backend has received the command.
-   * @fires CDPDebugger#paused The 'paused' event indicates that the debugger backend has reached the 'paused' state.
+   * @fires Debugger.paused event indicating that the debugger backend has reached the 'paused' state.
    */
   public async debuggerPause(): Promise<void> {
     const commandId = this.nextCommandId++;
@@ -290,7 +324,7 @@ export class CDPDebugger {
           response.hasOwnProperty('method') &&
           response.method === 'Debugger.paused'
         ) {
-          this.raise('paused', () => response.params);
+          this.raise('Debugger.paused', () => response.params);
           return true;
         }
         return false;
@@ -309,7 +343,7 @@ export class CDPDebugger {
    *
    * Sends a Debugger.resume CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Debugger/#method-resume)
    * @returns {Promise<void>} Promise indicating that the debugger backend has received the command.
-   * @fires CDPDebugger#resumed The 'paused' event indicates that the debugger backend has reached the 'paused' state.
+   * @fires Debugger.resumed event indicating that the debugger backend has resumed execution.
    */
   public async debuggerResume(): Promise<void> {
     const commandId = this.nextCommandId++;
@@ -348,7 +382,7 @@ export class CDPDebugger {
           response.hasOwnProperty('method') &&
           response.method === 'Debugger.resumed'
         ) {
-          this.raise('resumed', () => {});
+          this.raise('Debugger.resumed', () => {});
           return true;
         }
         return false;
@@ -509,6 +543,62 @@ export class CDPDebugger {
     testLog.message(`sending ${commandDescription}`);
     this.ws.send(command);
     this.lastCommand = commandDescription;
+    return resultPromise;
+  }
+
+  /**
+   * Enables reporting of execution context creation via executionContextCreated events.
+   *
+   * Sends a Runtime.enable CDP message (see https://chromedevtools.github.io/devtools-protocol/tot/Runtime/#method-enable).
+   * @returns {Promise<void>} Promise indicating that the debugger backend has received the command.
+   * @fires Runtime.executionContextCreated event indicating that an execution context has been created.
+   */
+  public async runtimeEnable(): Promise<void> {
+    const commandId = this.nextCommandId++;
+
+    // the actual CDP message
+    const command = JSON.stringify({
+      id: commandId,
+      method: 'Runtime.enable',
+    });
+
+    // a short description for logging
+    const commandDescription = `Runtime.enable (id: ${commandId})`;
+
+    const resultPromise = new Promise<void>((resolve, _reject) => {
+      const expectedResponse = {id: commandId, result: {}};
+      this.expectedResponses.push([
+        `result response for ${commandDescription}`,
+        response => {
+          // relying on object comparison to be independent of key order differences
+          if (lodash.isEqual(response, expectedResponse)) {
+            resolve();
+            return true;
+          }
+          return false;
+        },
+      ]);
+    });
+
+    this.expectedResponses.push([
+      `Runtime.executionContextCreated response for ${commandDescription}`,
+      response => {
+        if (
+          response.hasOwnProperty('method') &&
+          response.method === 'Runtime.executionContextCreated'
+        ) {
+          this.raise('Runtime.executionContextCreated', () => response.params);
+          return true;
+        }
+        return false;
+      },
+    ]);
+
+    await this.wsOpened;
+    testLog.message(`sending ${commandDescription}`);
+    this.ws.send(command);
+    this.lastCommand = commandDescription;
+
     return resultPromise;
   }
 
