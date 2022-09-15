@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 15 Sep 2022 05:11:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.548",
+      "version": "0.0.0-canary.548",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3136538c11d703efa7b769f7376bbd63f15a601d",
+            "comment": "Move required PackageRestore properties into shared property sheets"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "030cfbb7588ac97c9f2675fa6b5ab8c942a5ab00",
+            "comment": "Move some image functions into separate file"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Sep 2022 05:12:18 GMT",
       "tag": "react-native-windows_v0.0.0-canary.547",
       "version": "0.0.0-canary.547",

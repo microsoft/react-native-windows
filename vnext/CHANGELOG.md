@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 14 Sep 2022 05:12:18 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Sep 2022 05:11:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.548
+
+Thu, 15 Sep 2022 05:11:52 GMT
+
+### Changes
+
+- Move required PackageRestore properties into shared property sheets (jthysell@microsoft.com)
+- Move some image functions into separate file (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.547
 

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 12 Sep 2022 20:01:46 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Sep 2022 05:11:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.160
+
+Thu, 15 Sep 2022 05:11:51 GMT
+
+### Changes
+
+- Add Dimensions.win32 implementation to support text scale factor (patboyd@microsoft.com)
 
 ## 0.0.0-canary.159
 

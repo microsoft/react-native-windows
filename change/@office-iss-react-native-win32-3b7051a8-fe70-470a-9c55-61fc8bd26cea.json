@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Dimensions.win32 implementation to support text scale factor",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "patboyd@microsoft.com",
-  "dependentChangeType": "patch"
-}

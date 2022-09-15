@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Remove unecessary ResolveNuGetPackages",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
