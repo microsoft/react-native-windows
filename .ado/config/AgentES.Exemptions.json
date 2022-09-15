@@ -1,0 +1,11 @@
+{
+    "Application": "AgentES v1.0.0.0",
+    "Description": "This file is manually authored.",
+    "Excluded Directories": [
+        {
+            "Path": "node_modules",
+            "Justification": "NPM packages"
+        }
+    ],
+    "Banned File Exemptions": []
+}
