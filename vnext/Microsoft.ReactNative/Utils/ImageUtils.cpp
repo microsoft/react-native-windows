@@ -6,7 +6,6 @@
 
 #include <Shared/cdebug.h>
 #include <winrt/Windows.Security.Cryptography.h>
-#include <winrt/Windows.Storage.Streams.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
@@ -22,7 +21,8 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImag
   try {
     co_await winrt::resume_background();
 
-    auto httpMethod{source.method.empty() ? winrt::HttpMethod::Get() : winrt::HttpMethod{winrt::to_hstring(source.method)}};
+    auto httpMethod{
+        source.method.empty() ? winrt::HttpMethod::Get() : winrt::HttpMethod{winrt::to_hstring(source.method)}};
 
     winrt::Uri uri{winrt::to_hstring(source.uri)};
     winrt::HttpRequestMessage request{httpMethod, uri};
@@ -65,8 +65,8 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageInlineDataAsync(React
     co_await winrt::resume_background();
 
     std::string_view base64String(source.uri.c_str() + start + 1, source.uri.length() - start - 1);
-    auto buffer =
-        winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(winrt::to_hstring(base64String));
+    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(
+        winrt::to_hstring(base64String));
 
     winrt::InMemoryRandomAccessStream memoryStream;
     co_await memoryStream.WriteAsync(buffer);

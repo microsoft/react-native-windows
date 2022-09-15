@@ -42,7 +42,8 @@ ABIViewManager::ABIViewManager(
       m_viewManagerRequiresNativeLayout{viewManager.try_as<IViewManagerRequiresNativeLayout>()},
       m_viewManagerWithChildren{viewManager.try_as<IViewManagerWithChildren>()},
       m_viewManagerWithPointerEvents{viewManager.try_as<IViewManagerWithPointerEvents>()},
-      m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()} {
+      m_viewManagerWithDropViewInstance{viewManager.try_as<IViewManagerWithDropViewInstance>()},
+      m_viewManagerWithOnLayout{viewManager.try_as<IViewManagerWithOnLayout>()} {
   if (m_viewManagerWithReactContext) {
     m_viewManagerWithReactContext.ReactContext(winrt::make<implementation::ReactContext>(Mso::Copy(reactContext)));
   }
@@ -235,6 +236,20 @@ void ABIViewManager::OnDropViewInstance(const ::Microsoft::ReactNative::XamlView
   } else {
     Super::OnDropViewInstance(view);
   }
+}
+
+void ABIViewManager::SetLayoutProps(
+    ::Microsoft::ReactNative::ShadowNodeBase &nodeToUpdate,
+    const ::Microsoft::ReactNative::XamlView &viewToUpdate,
+    float left,
+    float top,
+    float width,
+    float height) {
+  if (m_viewManagerWithOnLayout) {
+    m_viewManagerWithOnLayout.OnLayout(viewToUpdate.as<xaml::FrameworkElement>(), left, top, width, height);
+  }
+  // Call the base method to handle `SetLayoutProps` behavior
+  Super::SetLayoutProps(nodeToUpdate, viewToUpdate, left, top, width, height);
 }
 
 ::Microsoft::ReactNative::ShadowNode *ABIViewManager::createShadow() const {

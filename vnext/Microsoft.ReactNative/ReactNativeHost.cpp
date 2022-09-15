@@ -92,7 +92,8 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #ifndef CORE_ABI
       viewManagersProvider,
 #endif
-      turboModulesProvider);
+      turboModulesProvider,
+      m_instanceSettings.UseWebDebugger());
 
   if (auto packageProviders = InstanceSettings().PackageProviders()) {
     for (auto const &packageProvider : packageProviders) {

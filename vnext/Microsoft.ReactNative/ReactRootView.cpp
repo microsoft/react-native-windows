@@ -449,7 +449,6 @@ Windows::Foundation::Size ReactRootView::ArrangeOverride(Windows::Foundation::Si
   for (xaml::UIElement child : Children()) {
     child.Arrange(winrt::Rect(0, 0, finalSize.Width, finalSize.Height));
   }
-
   return finalSize;
 }
 

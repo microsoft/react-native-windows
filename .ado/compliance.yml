@@ -41,6 +41,8 @@ jobs:
     timeoutInMinutes: 360 # Compliance tasks recommend to 3x usual build timeout
 
     steps:
+      - template: templates/checkout-shallow.yml
+      
       - template: templates/prepare-js-env.yml
 
       - template: templates/set-version-vars.yml

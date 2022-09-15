@@ -1,8 +1,49 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 20 Aug 2022 05:08:54 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Sep 2022 05:11:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.548
+
+Thu, 15 Sep 2022 05:11:52 GMT
+
+### Changes
+
+- Move required PackageRestore properties into shared property sheets (jthysell@microsoft.com)
+- Move some image functions into separate file (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.547
+
+Wed, 14 Sep 2022 05:12:18 GMT
+
+### Changes
+
+- Update references to Facebook to Meta, and fix typo causing the LICENSE file to not be present in the npm package (asklar@microsoft.com)
+- Remove ExperimentalUseFabric from ReactRootView (30809111+acoates-ms@users.noreply.github.com)
+- Use `IsNativeControlWithSelfLayout` in ReplaceView (erozell@outlook.com)
+
+## 0.0.0-canary.546
+
+Mon, 12 Sep 2022 20:01:46 GMT
+
+### Changes
+
+- "Add `$schema` to `cgmanifest.json` codegen" (jthysell@microsoft.com)
+- Adds IViewManagerWithOnLayout interface for ABI VMs (erozell@outlook.com)
+- Move ReactTag ABI to XamlHelper (jthysell@microsoft.com)
+- Address PoliCheck issues (jthysell@microsoft.com)
+- Fixes bug introduced by pointerEvents change (ericroz@fb.com)
+- Remove unnecessary tree walk in Yoga layout (ericroz@fb.com)
+- Use LongLivedObjects for TurboModule callbacks (vmorozov@microsoft.com)
+- Ensures pointer event is updated when leaving bounds of React root (erozell@outlook.com)
+- Fixes event ordering for `onLayout` (erozell@outlook.com)
+- Avoid ReplaceView in TextInputViewManager (erozell@outlook.com)
+- Fix crash creating InstanceSettings on Windows 8.1 (30809111+acoates-ms@users.noreply.github.com)
+- Add additional possible SDK versions to build logic (30809111+acoates-ms@users.noreply.github.com)
+- Make AddTurboModule a non-experimental API (30809111+acoates-ms@users.noreply.github.com)
+- Move react tag to an attached property (jthysell@microsoft.com)
+- DRAFT: Make borderRadius consistent with other RN platforms (erozell@outlook.com)
 
 ## 0.0.0-canary.545
 

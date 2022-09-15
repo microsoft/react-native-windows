@@ -171,12 +171,12 @@ void TouchEventHandler::OnPointerMoved(
   const auto eventType = TouchEventType::Move;
   const auto kind = GetPointerEventKind(eventType);
   const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
-  if (!PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
-    return;
+  const auto hasReactTarget = PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement);
 
   const auto optPointerIndex = IndexOfPointerWithId(args.Pointer().PointerId());
   if (optPointerIndex) {
-    UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
+    UpdateReactPointer(
+        m_pointers[*optPointerIndex], args, hasReactTarget ? sourceElement : m_rootView.as<xaml::UIElement>());
     DispatchTouchEvent(eventType, *optPointerIndex);
   }
 
@@ -200,8 +200,9 @@ void TouchEventHandler::OnPointerConcluded(TouchEventType eventType, const winrt
   xaml::UIElement sourceElement(nullptr);
   const auto kind = GetPointerEventKind(eventType);
   const auto reactArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactPointerEventArgs>(kind, args);
-  if (PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement))
-    UpdateReactPointer(m_pointers[*optPointerIndex], args, sourceElement);
+  const auto hasReactTarget = PropagatePointerEventAndFindReactSourceBranch(reactArgs, &tagsForBranch, &sourceElement);
+  UpdateReactPointer(
+      m_pointers[*optPointerIndex], args, hasReactTarget ? sourceElement : m_rootView.as<xaml::UIElement>());
 
   // In case a PointerCaptureLost event should be treated as an "end" event,
   // check the ReactPointerEventArgs Kind property before emitting the event.

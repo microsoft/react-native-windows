@@ -2,6 +2,57 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Thu, 15 Sep 2022 05:11:51 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.1.122",
+      "version": "0.1.122",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "b97559d17e8f4426a71d0e744849e688bf6c81bb",
+            "comment": "Remove unecessary ResolveNuGetPackages"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.548",
+            "commit": "030cfbb7588ac97c9f2675fa6b5ab8c942a5ab00"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Sep 2022 05:12:19 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.1.121",
+      "version": "0.1.121",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.547",
+            "commit": "7196c86120722a52d4595c26a321872c2a242238"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Sep 2022 20:01:48 GMT",
+      "tag": "@react-native-windows/automation-channel_v0.1.120",
+      "version": "0.1.120",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.546",
+            "commit": "8f607832651023cf24b3a36dd9dc7e6ca859e83d"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Aug 2022 05:08:54 GMT",
       "tag": "@react-native-windows/automation-channel_v0.1.119",
       "version": "0.1.119",

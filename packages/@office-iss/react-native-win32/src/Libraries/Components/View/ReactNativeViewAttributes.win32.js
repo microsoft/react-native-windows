@@ -36,6 +36,7 @@ const UIView = {
   needsOffscreenAlphaCompositing: true,
   style: ReactNativeStyleAttributes,
   // [Windows
+  accessibilityAccessKey: true,
   alwaysShowToolTip: true,
   enableFocusRing: true,
   cursor: true,

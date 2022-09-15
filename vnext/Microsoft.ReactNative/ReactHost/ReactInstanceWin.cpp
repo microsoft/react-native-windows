@@ -386,6 +386,7 @@ void ReactInstanceWin::Initialize() noexcept {
       strongThis->m_appearanceListener = Mso::Make<Microsoft::ReactNative::AppearanceChangeListener>(
           strongThis->GetReactContext(), *(strongThis->m_uiQueue));
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
+
 #endif // CORE_ABI
 
       strongThis->Queue().Post([this, weakThis]() noexcept {

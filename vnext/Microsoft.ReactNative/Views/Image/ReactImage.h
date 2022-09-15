@@ -73,5 +73,4 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   xaml::Media::Imaging::SvgImageSource::OpenFailed_revoker m_svgImageSourceOpenFailedRevoker;
 };
 
-// Helper functions
 } // namespace Microsoft::ReactNative

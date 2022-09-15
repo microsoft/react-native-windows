@@ -171,8 +171,8 @@ void winrt::playground::implementation::MainPage::x_UseWebDebuggerCheckBox_Unche
 }
 
 void winrt::playground::implementation::MainPage::x_Theme_SelectionChanged(
-    winrt::Windows::Foundation::IInspectable const &sender,
-    xaml::Controls::SelectionChangedEventArgs const &e) {
+    winrt::Windows::Foundation::IInspectable const &,
+    xaml::Controls::SelectionChangedEventArgs const &) {
   auto theme = ElementTheme::Default;
   if (x_Theme().SelectedItem() == x_themeLight()) {
     theme = ElementTheme::Light;

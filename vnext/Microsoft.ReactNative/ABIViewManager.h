@@ -70,6 +70,14 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
 
   void OnDropViewInstance(const ::Microsoft::ReactNative::XamlView &view);
 
+  void SetLayoutProps(
+      ::Microsoft::ReactNative::ShadowNodeBase &nodeToUpdate,
+      const ::Microsoft::ReactNative::XamlView &viewToUpdate,
+      float left,
+      float top,
+      float width,
+      float height) override;
+
  protected:
   xaml::DependencyObject CreateViewCore(int64_t, const winrt::Microsoft::ReactNative::JSValueObject &props) override;
 
@@ -84,6 +92,7 @@ class ABIViewManager : public ::Microsoft::ReactNative::FrameworkElementViewMana
   IViewManagerRequiresNativeLayout m_viewManagerRequiresNativeLayout;
   IViewManagerWithPointerEvents m_viewManagerWithPointerEvents;
   IViewManagerWithDropViewInstance m_viewManagerWithDropViewInstance;
+  IViewManagerWithOnLayout m_viewManagerWithOnLayout;
 
   winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, ViewManagerPropertyType> m_nativeProps;
 };

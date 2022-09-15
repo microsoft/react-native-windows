@@ -2,6 +2,161 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 15 Sep 2022 05:11:52 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.548",
+      "version": "0.0.0-canary.548",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3136538c11d703efa7b769f7376bbd63f15a601d",
+            "comment": "Move required PackageRestore properties into shared property sheets"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "030cfbb7588ac97c9f2675fa6b5ab8c942a5ab00",
+            "comment": "Move some image functions into separate file"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Sep 2022 05:12:18 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.547",
+      "version": "0.0.0-canary.547",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "asklar@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b56024b7d88e205673c932b7b5b4d057c476ae45",
+            "comment": "Update references to Facebook to Meta, and fix typo causing the LICENSE file to not be present in the npm package"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7196c86120722a52d4595c26a321872c2a242238",
+            "comment": "Remove ExperimentalUseFabric from ReactRootView"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "87c0e9db5cc0116078468a2ef7738683064c66a0",
+            "comment": "Use `IsNativeControlWithSelfLayout` in ReplaceView"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 12 Sep 2022 20:01:46 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.546",
+      "version": "0.0.0-canary.546",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7b8231b71095c5090e47482a475b74590b07d0f9",
+            "comment": "\"Add `$schema` to `cgmanifest.json` codegen\""
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "8f584d06b37971dece5fd42fbac81b8fb8d085c3",
+            "comment": "Adds IViewManagerWithOnLayout interface for ABI VMs"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3692f4f3a1836b5a86675c9cffe59d64a618767b",
+            "comment": "Move ReactTag ABI to XamlHelper"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0512b19c41d76e618411f3503a79d9ebebe5ccae",
+            "comment": "Address PoliCheck issues"
+          },
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "28daa4e3e21afd5ea26562b75522efb85e89cba6",
+            "comment": "Fixes bug introduced by pointerEvents change"
+          },
+          {
+            "author": "ericroz@fb.com",
+            "package": "react-native-windows",
+            "commit": "9042d349f3ad747e91fb37df890ffff2cb5df899",
+            "comment": "Remove unnecessary tree walk in Yoga layout"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "84e50b4872cc8a40276540dad50e99f6dd93df92",
+            "comment": "Use LongLivedObjects for TurboModule callbacks"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7410abb7b2ee5b016dc679523354187c557c6b3f",
+            "comment": "Ensures pointer event is updated when leaving bounds of React root"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "71a699d02b407812b76f5e82618b1e2de0fbec61",
+            "comment": "Fixes event ordering for `onLayout`"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "115a86d591473e3643e35c70c9e6f884a307989d",
+            "comment": "Avoid ReplaceView in TextInputViewManager"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1fac2b1ccb539af3bce6985b8ce5658ef55ba0fd",
+            "comment": "Fix crash creating InstanceSettings on Windows 8.1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "053a83f0e4ed0f62c1c80bcb4c4a7f4c5bc5940a",
+            "comment": "Add additional possible SDK versions to build logic"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "22f714267b6c296f16ff799fb1f61b458cc5d6fd",
+            "comment": "Make AddTurboModule a non-experimental API"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6363177e00dca8a364bd8773213782ce27be2921",
+            "comment": "Move react tag to an attached property"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "55f8e14c086d5368dd8fd00479fbbe923db516f3",
+            "comment": "DRAFT: Make borderRadius consistent with other RN platforms"
+          }
+        ],
+        "none": [
+          {
+            "author": "jamie.magee@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d9f801acee33ef36f747041c66f450fb9ea04bfa",
+            "comment": "Add $schema to cgmanifest.json"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 20 Aug 2022 05:08:54 GMT",
       "tag": "react-native-windows_v0.0.0-canary.545",
       "version": "0.0.0-canary.545",

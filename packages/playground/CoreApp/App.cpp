@@ -28,7 +28,7 @@ struct LogBox {
 struct ThisAppPackageProvider
     : winrt::implements<ThisAppPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    winrt::Microsoft::ReactNative::AddAttributedModules(packageBuilder);
+    winrt::Microsoft::ReactNative::AddAttributedModules(packageBuilder, true);
   }
 };
 
