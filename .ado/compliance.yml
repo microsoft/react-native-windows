@@ -64,6 +64,8 @@ jobs:
       - template: templates/run-compliance-prebuild.yml
         parameters:
           complianceWarnOnly: ${{ parameters.complianceWarnOnly }}
+
+      - task: NuGetAuthenticate@1
     
       # AgentES Task (https://aka.ms/UES)
       # Installs and runs the "Agent ES" tool, which scans the source code for banned file types.
