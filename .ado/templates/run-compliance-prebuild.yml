@@ -10,6 +10,8 @@ steps:
     inputs:
       versionSpec: ">=5.8.0"
   
+  - task: NuGetAuthenticate@1
+  
   # AgentES Task (https://aka.ms/UES)
   # Installs and runs the "Agent ES" tool, which scans the source code for banned file types.
   - powershell: |
