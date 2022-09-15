@@ -604,6 +604,9 @@ void ViewViewManager::TryUpdateView(
     pViewShadowNode->GetControl().IsTabStop(true);
     xaml::Automation::AutomationProperties::SetAccessibilityView(
         pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Content);
+    pViewShadowNode->YellowBox("Values for accessible and focusable prop do not match. In Windows, keyboard"
+                               "focus and accessibility focus move together. If you wish to disable focus for"
+                               " this component, set both accessible and focusable to false.");
   }
 }
 

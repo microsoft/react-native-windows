@@ -129,6 +129,10 @@ void ControlViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     xaml::Automation::AutomationProperties::SetAccessibilityView(
         control, xaml::Automation::Peers::AccessibilityView::Content);
     control.IsEnabled(true);
+    node->YellowBox(
+        "Values for accessible and focusable prop do not match. In Windows, keyboard "
+        "focus and accessibility focus move together. If you wish to disable focus for "
+        "this component, set both accessible and focusable to false.");
   }
 }
 
