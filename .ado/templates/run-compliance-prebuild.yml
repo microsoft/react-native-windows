@@ -6,22 +6,6 @@ parameters:
   default: false
 
 steps:
-  - task: NuGetToolInstaller@1
-    inputs:
-      versionSpec: ">=5.8.0"
-  
-  - task: NuGetAuthenticate@1
-  
-  # AgentES Task (https://aka.ms/UES)
-  # Installs and runs the "Agent ES" tool, which scans the source code for banned file types.
-  - powershell: |
-      & nuget.exe install AgentES -FallbackSource https://microsoft.pkgs.visualstudio.com/_packaging/Undocked.Shell.Services/nuget/v3/index.json
-      $AgentESPath = (Get-ChildItem -Path AgentES* -Filter AgentES.exe -Recurse | %{$_.FullName})
-      & "$AgentESPath" $env:BUILD_SOURCESDIRECTORY -e:$env:BUILD_SOURCESDIRECTORY\.ado\config\AgentES.Exemptions.json -b
-    displayName: "⚖️ AgentES - Scan of Repository for UES Policy Violations"
-    workingDirectory: $(Agent.BuildDirectory)
-    continueOnError: ${{ parameters.complianceWarnOnly }}
-
   # PoliCheck Build Task (https://aka.ms/gdn-azdo-policheck)
   # Scans the text of source code, comments, and content for terminology that could be sensitive for legal, cultural, or geopolitical reasons.
   - task: securedevelopmentteam.vss-secure-development-tools.build-task-policheck.PoliCheck@2
