@@ -67,6 +67,7 @@ struct WindowData {
   bool m_fastRefreshEnabled{true};
   bool m_useDirectDebugger{false};
   bool m_breakOnNextLine{false};
+  bool m_skipRemoveChildren{false};
   uint16_t m_debuggerPort{defaultDebuggerPort};
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
@@ -127,6 +128,8 @@ struct WindowData {
           rootElement.SetValue(
               winrt::Windows::UI::Xaml::Automation::AutomationProperties::LandmarkTypeProperty(),
               winrt::box_value(80002));
+          winrt::Microsoft::ReactNative::QuirkSettings::SetSkipRemoveChildrenOnUnmount(
+              host.InstanceSettings(), m_skipRemoveChildren);
 
 #ifdef USE_WINUI3
           const auto islandWindow = (uint64_t)GetXamlIslandHwnd(m_desktopWindowXamlSource);
@@ -166,6 +169,10 @@ struct WindowData {
         break;
       case IDM_SETTINGS:
         DialogBoxParam(s_instance, MAKEINTRESOURCE(IDD_SETTINGSBOX), hwnd, &Settings, reinterpret_cast<INT_PTR>(this));
+        break;
+      case IDM_QUIRKSETTINGS:
+        DialogBoxParam(
+            s_instance, MAKEINTRESOURCE(IDD_QUIRKSETTINGSBOX), hwnd, &QuirkSettings, reinterpret_cast<INT_PTR>(this));
         break;
     }
 
@@ -320,6 +327,34 @@ struct WindowData {
             // auto cmbEngines = GetDlgItem(hwnd, IDC_JSENGINE);
             // int itemIndex = (int)SendMessageW(cmbEngines, (UINT)CB_GETCURSEL, (WPARAM)0, (LPARAM)0);
             // self->m_jsEngine = static_cast<Microsoft::ReactNative::JSIEngine>(itemIndex);
+          }
+            [[fallthrough]];
+          case IDCANCEL:
+            EndDialog(hwnd, LOWORD(wparam));
+            return true;
+        }
+        break;
+      }
+    }
+
+    return FALSE;
+  }
+
+  static INT_PTR CALLBACK QuirkSettings(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
+    switch (message) {
+      case WM_INITDIALOG: {
+        auto boolToCheck = [](bool b) { return b ? BST_CHECKED : BST_UNCHECKED; };
+        auto self = reinterpret_cast<WindowData *>(lparam);
+        CheckDlgButton(hwnd, IDC_SKIPREMOVECHILDREN, boolToCheck(self->m_skipRemoveChildren));
+        return TRUE;
+      }
+      case WM_COMMAND: {
+        switch (LOWORD(wparam)) {
+          case IDOK: {
+            auto self = GetFromWindow(GetParent(hwnd));
+            self->m_skipRemoveChildren = IsDlgButtonChecked(hwnd, IDC_SKIPREMOVECHILDREN) == BST_CHECKED;
+            winrt::Microsoft::ReactNative::QuirkSettings::SetSkipRemoveChildrenOnUnmount(
+                self->Host().InstanceSettings(), self->m_skipRemoveChildren);
           }
             [[fallthrough]];
           case IDCANCEL:

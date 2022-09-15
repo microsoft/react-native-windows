@@ -25,18 +25,18 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 // TEXTINCLUDE
 //
 
-1 TEXTINCLUDE 
+1 TEXTINCLUDE
 BEGIN
     "resource.h\0"
 END
 
-2 TEXTINCLUDE 
+2 TEXTINCLUDE
 BEGIN
     "#include ""winres.h""\r\n"
     "\0"
 END
 
-3 TEXTINCLUDE 
+3 TEXTINCLUDE
 BEGIN
     "\r\n"
     "\0"
@@ -59,6 +59,7 @@ BEGIN
         MENUITEM "&Refresh\tF5",                IDM_REFRESH
         MENUITEM SEPARATOR
         MENUITEM "&Settings...\tAlt+S",         IDM_SETTINGS
+        MENUITEM "&Quirk Settings...\tAlt+Q",   IDM_QUIRKSETTINGS
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       IDM_EXIT
     END
@@ -81,7 +82,8 @@ BEGIN
     "N",            IDM_NEWWINDOW,          VIRTKEY, CONTROL
     "O",            IDM_OPENJSFILE,         VIRTKEY, CONTROL
     "S",            IDM_SETTINGS,           VIRTKEY, ALT
-    VK_F5,          IDM_REFRESH,            VIRTKEY 
+    "Q",            IDM_QUIRKSETTINGS,      VIRTKEY, ALT
+    VK_F5,          IDM_REFRESH,            VIRTKEY
 END
 
 
@@ -119,6 +121,17 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,130,138,50,14
 END
 
+IDD_QUIRKSETTINGSBOX DIALOGEX 0, 0, 192, 159
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Quirk Settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "&Skip Remove Children on Unmount",IDC_SKIPREMOVECHILDREN,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,8,8,127,10
+    DEFPUSHBUTTON   "OK",IDOK,75,138,50,14,WS_GROUP
+    PUSHBUTTON      "Cancel",IDCANCEL,130,138,50,14
+END
+
 IDD_OPENJSBUNDLEBOX DIALOGEX 0, 0, 256, 177
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
@@ -150,6 +163,10 @@ BEGIN
     IDD_SETTINGSBOX, DIALOG
     BEGIN
     END
+
+    IDD_QUIRKSETTINGSBOX, DIALOG
+    BEGIN
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -177,4 +194,3 @@ IDI_ICON1               ICON                    "Island_256.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

@@ -11,6 +11,7 @@
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
 #include <cxxreact/SystraceSection.h>
+#include "QuirkSettings.h"
 #include "ShadowNodeBase.h"
 #include "Unicode.h"
 #include "XamlUIService.h"
@@ -88,6 +89,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     m_nodeRegistry.ForAllNodes(
         [this](int64_t tag, shadow_ptr const &shadowNode) noexcept { DropView(tag, false, true); });
     m_nativeUIManager->setHost(nullptr);
+    React::implementation::QuirkSettings::QuirkSettingsChanged(m_quirkSettingsChangedToken);
   }
 
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
@@ -100,6 +102,23 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     auto settings = m_context.Properties().Get(UIManagerSettingsProperty());
     m_viewManagers = std::move((*settings)->viewManagers);
     m_nativeUIManager->setHost(this);
+
+    RefreshQuirkSettings();
+    m_quirkSettingsChangedToken = React::implementation::QuirkSettings::QuirkSettingsChanged(
+        [weakSelf = weak_from_this()](auto &&, const auto &args) {
+          if (const auto strongSelf = weakSelf.lock()) {
+            strongSelf->m_context.UIDispatcher().Post([weakSelf] {
+              if (const auto strongSelf = weakSelf.lock()) {
+                strongSelf->RefreshQuirkSettings();
+              }
+            });
+          }
+        });
+  }
+
+  void RefreshQuirkSettings() noexcept {
+    m_skipRemoveChildrenOnUnmount =
+        React::implementation::QuirkSettings::GetSkipRemoveChildrenOnUnmount(m_context.Properties());
   }
 
   React::JSValueObject getConstantsForViewManager(std::string &&viewManagerName) noexcept {
@@ -475,7 +494,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     }
 
     for (auto tagToDelete : tagsToDelete)
-      DropView(tagToDelete);
+      DropView(tagToDelete, !m_skipRemoveChildrenOnUnmount);
   }
 
   IViewManager *GetViewManager(const std::string &className) const {
@@ -530,6 +549,8 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
   ShadowNodeRegistry m_nodeRegistry;
   std::shared_ptr<NativeUIManager> m_nativeUIManager;
   const React::JSValueObject accessibilityEventTypes = React::JSValueObject{{"typeViewFocused", 8}};
+  bool m_skipRemoveChildrenOnUnmount = false;
+  winrt::event_token m_quirkSettingsChangedToken;
 };
 
 UIManager::UIManager() : m_module(std::make_shared<UIManagerModule>()) {}
