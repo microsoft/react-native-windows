@@ -7,9 +7,9 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
-#include <Fabric/WinComp/CompViewComponentView.h>
-#include <Fabric/WinComp/CompositionUIService.h>
-#include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentDescriptor.h>
+#include <Fabric/Composition/CompViewComponentView.h>
+#include <Fabric/Composition/CompositionUIService.h>
+#include <Fabric/Composition/TextInput/CompWindowsTextInputComponentDescriptor.h>
 #include <ICompRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>

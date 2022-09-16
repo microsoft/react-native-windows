@@ -8,7 +8,7 @@
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/WinComp/CompViewComponentView.h>
+#include <Fabric/Composition/CompViewComponentView.h>
 #include <react/renderer/components/view/TouchEventEmitter.h>
 #endif
 

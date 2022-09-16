@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <Fabric/WinComp/CompHelpers.h>
+#include <Fabric/Composition/CompHelpers.h>
 #include <IReactRootView.h>
 #include <React.h>
 #include <folly/dynamic.h>

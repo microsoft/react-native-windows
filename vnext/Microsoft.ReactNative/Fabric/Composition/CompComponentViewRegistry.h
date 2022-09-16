@@ -6,7 +6,7 @@
 
 #include <Fabric/IComponentViewRegistry.h>
 
-#include <Fabric/WinComp/CompHelpers.h>
+#include <Fabric/Composition/CompHelpers.h>
 
 namespace Microsoft::ReactNative {
 

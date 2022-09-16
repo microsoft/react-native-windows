@@ -10,7 +10,7 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
-#include <Fabric/WinComp/TextInput/CompWindowsTextInputShadowNode.h>
+#include <Fabric/Composition/TextInput/CompWindowsTextInputShadowNode.h>
 #include <react/components/rnwcore/ShadowNodes.h>
 #include <react/renderer/components/image/ImageShadowNode.h>
 #include <react/renderer/components/root/RootShadowNode.h>
@@ -19,12 +19,12 @@
 #include <react/renderer/components/text/TextShadowNode.h>
 #include <react/renderer/components/view/ViewShadowNode.h>
 
-#include <Fabric/WinComp/CompHelpers.h>
-#include <Fabric/WinComp/CompImageComponentView.h>
-#include <Fabric/WinComp/CompParagraphComponentView.h>
-#include <Fabric/WinComp/CompScrollViewComponentView.h>
-#include <Fabric/WinComp/CompViewComponentView.h>
-#include <Fabric/WinComp/TextInput/CompWindowsTextInputComponentView.h>
+#include <Fabric/Composition/CompHelpers.h>
+#include <Fabric/Composition/CompImageComponentView.h>
+#include <Fabric/Composition/CompParagraphComponentView.h>
+#include <Fabric/Composition/CompScrollViewComponentView.h>
+#include <Fabric/Composition/CompViewComponentView.h>
+#include <Fabric/Composition/TextInput/CompWindowsTextInputComponentView.h>
 
 namespace Microsoft::ReactNative {
 

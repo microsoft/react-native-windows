@@ -13,7 +13,7 @@
 #include <processthreadsapi.h>
 
 #ifdef USE_FABRIC
-#include <Fabric/WinComp/CompositionUIService.h>
+#include <Fabric/Composition/CompositionUIService.h>
 #endif // USE_FABRIC
 
 namespace winrt {
