@@ -4,11 +4,11 @@
 #include <pch.h>
 
 #include <Views/ShadowNodeBase.h>
-#include "CompEventHandler.h"
+#include "CompositionEventHandler.h"
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/Composition/CompViewComponentView.h>
+#include <Fabric/Composition/CompositionViewComponentView.h>
 #include <react/renderer/components/view/TouchEventEmitter.h>
 #endif
 
@@ -34,35 +34,35 @@ facebook::react::SharedEventEmitter EventEmitterForComponent(
   auto &registry = uimanager->GetViewRegistry();
 
   auto descriptor = registry.componentViewDescriptorWithTag(tag);
-  auto view = std::static_pointer_cast<CompBaseComponentView>(descriptor.view);
+  auto view = std::static_pointer_cast<CompositionBaseComponentView>(descriptor.view);
   auto emitter = view->GetEventEmitter();
   if (emitter)
     return emitter;
 
   for (IComponentView *it = view->parent(); it; it = it->parent()) {
-    auto emitter = static_cast<CompBaseComponentView *>(it)->GetEventEmitter();
+    auto emitter = static_cast<CompositionBaseComponentView *>(it)->GetEventEmitter();
     if (emitter)
       return emitter;
   }
 
   return nullptr;
 }
-CompEventHandler::CompEventHandler(const Mso::React::IReactContext &context, bool fabric)
+CompositionEventHandler::CompositionEventHandler(const Mso::React::IReactContext &context, bool fabric)
     : m_context(&context), m_fabric(fabric) {}
 
-CompEventHandler::CompEventHandler(
+CompositionEventHandler::CompositionEventHandler(
     const Mso::React::IReactContext &context,
     bool fabric,
-    const winrt::Microsoft::ReactNative::CompRootView &compRootView)
-    : CompEventHandler(context, fabric) {
-  m_compRootView = compRootView;
+    const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView)
+    : CompositionEventHandler(context, fabric) {
+  m_compRootView = CompositionRootView;
 };
 
-CompEventHandler::~CompEventHandler() {}
+CompositionEventHandler::~CompositionEventHandler() {}
 
 // For DM
 /*
-void CompEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, uint32_t pointerId) {
+void CompositionEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, uint32_t pointerId) {
   if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
     facebook::react::Point ptLocal;
@@ -72,12 +72,12 @@ void CompEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, uint32_
 
 
   auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
-  auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view)
+  auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view)
                  .hitTest({pp.Position().X, pp.Position().Y}, ptLocal);
 
   if (tag != -1) {
   auto hitComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag);
-    static_cast<CompBaseComponentView &>(*hitComponentViewDescriptor.view).OnPointerDown(pp);
+    static_cast<CompositionBaseComponentView &>(*hitComponentViewDescriptor.view).OnPointerDown(pp);
   }
 
   //fabricuiManager
@@ -87,14 +87,14 @@ void CompEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, uint32_
 }
 */
 
-void CompEventHandler::ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta) {
+void CompositionEventHandler::ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta) {
   if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
     facebook::react::Point ptLocal;
 
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
 
-    static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view)
+    static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view)
         .ScrollWheel(
             {static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
              static_cast<float>(pt.y / m_compRootView.ScaleFactor())},
@@ -102,7 +102,7 @@ void CompEventHandler::ScrollWheel(facebook::react::SurfaceId surfaceId, faceboo
   }
 }
 
-int64_t CompEventHandler::SendMessage(
+int64_t CompositionEventHandler::SendMessage(
     facebook::react::SurfaceId surfaceId,
     uint32_t msg,
     uint64_t wParam,
@@ -144,7 +144,7 @@ int64_t CompEventHandler::SendMessage(
   return 0;
 }
 
-void CompEventHandler::PointerPressed(
+void CompositionEventHandler::PointerPressed(
     facebook::react::SurfaceId surfaceId,
     uint32_t msg,
     uint64_t wParam,
@@ -164,19 +164,19 @@ void CompEventHandler::PointerPressed(
     facebook::react::Point ptScaled = {
         static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
         static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
-    auto &targetComponentView = static_cast<CompBaseComponentView &>(
+    auto &targetComponentView = static_cast<CompositionBaseComponentView &>(
         *fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
 
     targetComponentView.SendMessage(msg, wParam, lParam);
   }
 }
 
-void CompEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
+void CompositionEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
   int pointerId = 1; // TODO pointerId
 
   auto touch = std::find_if(
@@ -200,12 +200,12 @@ void CompEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(x / m_compRootView.ScaleFactor()), static_cast<float>(y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
-    auto &targetComponentView = static_cast<CompBaseComponentView &>(
+    auto &targetComponentView = static_cast<CompositionBaseComponentView &>(
         *fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
 
     targetComponentView.SendMessage(msg, wParam, lParam);
@@ -241,7 +241,7 @@ void CompEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t
   }
 }
 
-void CompEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
+void CompositionEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
   POINTER_INFO pi;
   GetPointerInfo(GET_POINTERID_WPARAM(wParam), &pi);
   POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
@@ -257,19 +257,19 @@ void CompEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t 
     facebook::react::Point ptScaled = {
         static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
         static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
-    auto &targetComponentView = static_cast<CompBaseComponentView &>(
+    auto &targetComponentView = static_cast<CompositionBaseComponentView &>(
         *fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
 
     targetComponentView.SendMessage(msg, wParam, lParam);
   }
 }
 
-void CompEventHandler::ButtonUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
+void CompositionEventHandler::ButtonUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
   int pointerId = 1; // TODO pointerId
 
   auto touch = std::find_if(
@@ -288,12 +288,12 @@ void CompEventHandler::ButtonUp(facebook::react::SurfaceId surfaceId, uint32_t m
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(x / m_compRootView.ScaleFactor()), static_cast<float>(y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
-    auto &targetComponentView = static_cast<CompBaseComponentView &>(
+    auto &targetComponentView = static_cast<CompositionBaseComponentView &>(
         *fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
 
     targetComponentView.SendMessage(msg, wParam, lParam);
@@ -331,7 +331,7 @@ enum class MouseEventButtonKind { None = -1, Main = 0, Auxiliary = 1, Secondary 
 
 #ifdef USE_FABRIC
 
-bool CompEventHandler::IsEndishEventType(TouchEventType eventType) noexcept {
+bool CompositionEventHandler::IsEndishEventType(TouchEventType eventType) noexcept {
   switch (eventType) {
     case TouchEventType::End:
     case TouchEventType::Cancel:
@@ -343,7 +343,7 @@ bool CompEventHandler::IsEndishEventType(TouchEventType eventType) noexcept {
 }
 #endif
 
-void CompEventHandler::DispatchTouchEvent(TouchEventType eventType, int64_t pointerId) {
+void CompositionEventHandler::DispatchTouchEvent(TouchEventType eventType, int64_t pointerId) {
   std::shared_ptr<FabricUIManager> fabricuiManager;
   if (m_fabric &&
       !!(fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(

@@ -14,7 +14,7 @@
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.Composition.interactions.h>
-#include "CompHelpers.h"
+#include "CompositionHelpers.h"
 
 namespace Microsoft::ReactNative::Composition {
 

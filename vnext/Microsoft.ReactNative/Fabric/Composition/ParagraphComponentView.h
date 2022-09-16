@@ -11,14 +11,14 @@
 #include <react/renderer/components/text/ParagraphProps.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
-#include "CompHelpers.h"
-#include "CompViewComponentView.h"
+#include "CompositionHelpers.h"
+#include "CompositionViewComponentView.h"
 
 namespace Microsoft::ReactNative {
 
-struct CompParagraphComponentView : CompBaseComponentView {
-  using Super = CompBaseComponentView;
-  CompParagraphComponentView(
+struct ParagraphComponentView : CompositionBaseComponentView {
+  using Super = CompositionBaseComponentView;
+  ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 

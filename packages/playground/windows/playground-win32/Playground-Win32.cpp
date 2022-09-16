@@ -84,10 +84,7 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    auto experimentalPackageBuilder =
-        packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderExperimental>();
-    experimentalPackageBuilder.AddTurboModule(
-        L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
+    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
   }
 };
 
@@ -113,7 +110,7 @@ struct WindowData {
 
   std::wstring m_bundleFile;
 #ifdef USE_FABRIC
-  winrt::Microsoft::ReactNative::CompHwndHost m_compHwndHost{nullptr};
+  winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
 #else
   hosting::DesktopWindowXamlSource m_desktopWindowXamlSource{nullptr};
   winrt::Microsoft::ReactNative::ReactRootView m_reactRootView{nullptr};
@@ -129,7 +126,7 @@ struct WindowData {
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
 #ifdef USE_FABRIC
-  WindowData(const winrt::Microsoft::ReactNative::CompHwndHost &compHost) : m_compHwndHost(compHost) {
+  WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
     winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
         InstanceSettings().Properties(),
         winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(g_compositor));
@@ -213,8 +210,8 @@ struct WindowData {
           host.ReloadInstance();
 
 #ifdef USE_FABRIC
-          m_compHwndHost.ComponentName(appName);
-          m_compHwndHost.ReactNativeHost(host);
+          m_CompositionHwndHost.ComponentName(appName);
+          m_CompositionHwndHost.ReactNativeHost(host);
 #else
           m_reactRootView = winrt::Microsoft::ReactNative::ReactRootView();
           m_reactRootView.ComponentName(appName);
@@ -254,8 +251,8 @@ struct WindowData {
 
 #ifdef USE_FABRIC
   LRESULT TranslateMessage(UINT message, WPARAM wparam, LPARAM lparam) noexcept {
-    if (m_compHwndHost) {
-      return m_compHwndHost.TranslateMessage(message, wparam, lparam);
+    if (m_CompositionHwndHost) {
+      return m_CompositionHwndHost.TranslateMessage(message, wparam, lparam);
     }
     return 0;
   }
@@ -263,9 +260,9 @@ struct WindowData {
 
   LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
 #ifdef USE_FABRIC
-    if (m_compHwndHost) {
-      m_compHwndHost.Compositor(g_compositor);
-      m_compHwndHost.Initialize((uint64_t)hwnd);
+    if (m_CompositionHwndHost) {
+      m_CompositionHwndHost.Compositor(g_compositor);
+      m_CompositionHwndHost.Initialize((uint64_t)hwnd);
     }
 #else
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
@@ -501,7 +498,7 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 #endif
 
 #ifdef USE_FABRIC
-  auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompHwndHost());
+  auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompositionHwndHost());
 #else
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 

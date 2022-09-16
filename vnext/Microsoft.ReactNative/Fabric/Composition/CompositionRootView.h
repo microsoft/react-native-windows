@@ -2,17 +2,17 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "CompRootView.g.h"
+#include "CompositionRootView.g.h"
 
 #include <winrt/Microsoft.ReactNative.h>
-#include "CompEventHandler.h"
+#include "CompositionEventHandler.h"
 #include "ReactHost/React.h"
-#include "Views/ICompRootView.h"
+#include "Views/ICompositionRootView.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICompRootView {
-  CompRootView() noexcept;
+struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Microsoft::ReactNative::ICompositionRootView {
+  CompositionRootView() noexcept;
 
   // property ReactNativeHost
   ReactNative::ReactNativeHost ReactNativeHost() noexcept;
@@ -46,7 +46,7 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept;
 
- public: // ICompRootView
+ public: // ICompositionRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;
 
  public: // IReactRootView
@@ -79,7 +79,7 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
   Mso::CntPtr<Mso::React::IReactContext> m_context;
   Mso::CntPtr<Mso::React::IReactViewHost> m_reactViewHost;
   std::unique_ptr<Mso::React::ReactViewOptions> m_reactViewOptions;
-  std::shared_ptr<::Microsoft::ReactNative::CompEventHandler> m_compEventHandler;
+  std::shared_ptr<::Microsoft::ReactNative::CompositionEventHandler> m_CompositionEventHandler;
   winrt::Microsoft::ReactNative::Composition::IVisual m_rootVisual{nullptr};
   void UpdateRootViewInternal() noexcept;
   void ClearLoadingUI() noexcept;
@@ -95,5 +95,5 @@ struct CompRootView : CompRootViewT<CompRootView>, ::Microsoft::ReactNative::ICo
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct CompRootView : CompRootViewT<CompRootView, implementation::CompRootView> {};
+struct CompositionRootView : CompositionRootViewT<CompositionRootView, implementation::CompositionRootView> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

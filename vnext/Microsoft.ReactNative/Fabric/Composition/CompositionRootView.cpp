@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
-#include "CompRootView.h"
-#include "CompRootView.g.cpp"
+#include "CompositionRootView.h"
+#include "CompositionRootView.g.cpp"
 
 #include <IReactInstance.h>
 #include <QuirkSettings.h>
@@ -10,7 +10,7 @@
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.UI.Core.h>
-#include "CompHelpers.h"
+#include "CompositionHelpers.h"
 #include "CompositionContextHelper.h"
 #include "ReactNativeHost.h"
 
@@ -23,10 +23,10 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 //! This class ensures that we access ReactRootView from UI thread.
-struct CompReactViewInstance
+struct CompositionReactViewInstance
     : public Mso::UnknownObject<Mso::RefCountStrategy::WeakRef, Mso::React::IReactViewInstance> {
-  CompReactViewInstance(
-      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl) noexcept;
+  CompositionReactViewInstance(
+      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl) noexcept;
 
   Mso::Future<void> InitRootView(
       Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
@@ -39,15 +39,15 @@ struct CompReactViewInstance
   Mso::Future<void> PostInUIQueue(TAction &&action) noexcept;
 
  private:
-  winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> m_weakRootControl;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> m_weakRootControl;
   IReactDispatcher m_uiDispatcher{nullptr};
 };
 
-CompReactViewInstance::CompReactViewInstance(
-    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompRootView> &&weakRootControl) noexcept
+CompositionReactViewInstance::CompositionReactViewInstance(
+    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl) noexcept
     : m_weakRootControl{std::move(weakRootControl)} {}
 
-Mso::Future<void> CompReactViewInstance::InitRootView(
+Mso::Future<void> CompositionReactViewInstance::InitRootView(
     Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
     Mso::React::ReactViewOptions &&viewOptions) noexcept {
   m_uiDispatcher = reactInstance->GetReactContext()
@@ -57,21 +57,21 @@ Mso::Future<void> CompReactViewInstance::InitRootView(
 
   return PostInUIQueue(
       [reactInstance{std::move(reactInstance)}, viewOptions{std::move(viewOptions)}](
-          winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompRootView> &rootControl) mutable noexcept {
+          winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &rootControl) mutable noexcept {
         rootControl->InitRootView(std::move(reactInstance), std::move(viewOptions));
       });
 }
 
-Mso::Future<void> CompReactViewInstance::UpdateRootView() noexcept {
+Mso::Future<void> CompositionReactViewInstance::UpdateRootView() noexcept {
   return PostInUIQueue(
-      [](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompRootView> &rootControl) mutable noexcept {
+      [](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &rootControl) mutable noexcept {
         rootControl->UpdateRootView();
       });
 }
 
-Mso::Future<void> CompReactViewInstance::UninitRootView() noexcept {
+Mso::Future<void> CompositionReactViewInstance::UninitRootView() noexcept {
   return PostInUIQueue(
-      [](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompRootView> &rootControl) mutable noexcept {
+      [](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &rootControl) mutable noexcept {
         rootControl->UninitRootView();
       });
 }
@@ -81,7 +81,7 @@ Mso::Future<void> CompReactViewInstance::UninitRootView() noexcept {
 //===========================================================================
 
 template <class TAction>
-inline Mso::Future<void> CompReactViewInstance::PostInUIQueue(TAction &&action) noexcept {
+inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&action) noexcept {
   // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
   auto promise = Mso::Promise<void>();
 
@@ -99,13 +99,13 @@ inline Mso::Future<void> CompReactViewInstance::PostInUIQueue(TAction &&action) 
   return promise.AsFuture();
 }
 
-CompRootView::CompRootView() noexcept {}
+CompositionRootView::CompositionRootView() noexcept {}
 
-ReactNative::ReactNativeHost CompRootView::ReactNativeHost() noexcept {
+ReactNative::ReactNativeHost CompositionRootView::ReactNativeHost() noexcept {
   return m_reactNativeHost;
 }
 
-void CompRootView::ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept {
+void CompositionRootView::ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept {
   if (m_reactNativeHost != value) {
     ReactViewHost(nullptr);
     m_reactNativeHost = value;
@@ -113,56 +113,56 @@ void CompRootView::ReactNativeHost(ReactNative::ReactNativeHost const &value) no
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompRootView::RootVisual() noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::RootVisual() noexcept {
   return m_rootVisual;
 }
 
-void CompRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept {
+void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept {
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
     m_rootVisual = value;
   }
 }
 
-winrt::Windows::Foundation::Size CompRootView::Size() noexcept {
+winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
   return m_size;
 }
 
-void CompRootView::Size(winrt::Windows::Foundation::Size value) noexcept {
+void CompositionRootView::Size(winrt::Windows::Foundation::Size value) noexcept {
   m_size = value;
 }
 
-double CompRootView::ScaleFactor() noexcept {
+double CompositionRootView::ScaleFactor() noexcept {
   return m_scaleFactor;
 }
 
-void CompRootView::ScaleFactor(double value) noexcept {
+void CompositionRootView::ScaleFactor(double value) noexcept {
   m_scaleFactor = value;
 }
 
-winrt::hstring CompRootView::ComponentName() noexcept {
+winrt::hstring CompositionRootView::ComponentName() noexcept {
   return m_componentName;
 }
 
-void CompRootView::ComponentName(winrt::hstring const &value) noexcept {
+void CompositionRootView::ComponentName(winrt::hstring const &value) noexcept {
   if (m_componentName != value) {
     m_componentName = value;
     ReloadView();
   }
 }
 
-ReactNative::JSValueArgWriter CompRootView::InitialProps() noexcept {
+ReactNative::JSValueArgWriter CompositionRootView::InitialProps() noexcept {
   return m_initialPropsWriter;
 }
 
-void CompRootView::InitialProps(ReactNative::JSValueArgWriter const &value) noexcept {
+void CompositionRootView::InitialProps(ReactNative::JSValueArgWriter const &value) noexcept {
   if (m_initialPropsWriter != value) {
     m_initialPropsWriter = value;
     ReloadView();
   }
 }
 
-void CompRootView::ReloadView() noexcept {
+void CompositionRootView::ReloadView() noexcept {
   if (m_reactNativeHost && !m_componentName.empty()) {
     Mso::React::ReactViewOptions viewOptions{};
     viewOptions.ComponentName = to_string(m_componentName);
@@ -179,38 +179,38 @@ void CompRootView::ReloadView() noexcept {
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompRootView::GetVisual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
   return m_rootVisual;
 }
 
-std::string CompRootView::JSComponentName() const noexcept {
+std::string CompositionRootView::JSComponentName() const noexcept {
   return to_string(m_componentName);
 }
 
-int64_t CompRootView::GetActualHeight() const noexcept {
+int64_t CompositionRootView::GetActualHeight() const noexcept {
   return static_cast<int64_t>(m_size.Height);
 }
 
-int64_t CompRootView::GetActualWidth() const noexcept {
+int64_t CompositionRootView::GetActualWidth() const noexcept {
   return static_cast<int64_t>(m_size.Width);
   // return static_cast<int64_t>(m_xamlRootView.ActualWidth());
 }
 
-int64_t CompRootView::GetTag() const noexcept {
+int64_t CompositionRootView::GetTag() const noexcept {
   return m_rootTag;
 }
 
-void CompRootView::SetTag(int64_t tag) noexcept {
+void CompositionRootView::SetTag(int64_t tag) noexcept {
   m_rootTag = tag;
 }
 
-int64_t CompRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   if (m_rootTag == -1)
     return 0;
 
-  if (m_compEventHandler) {
+  if (m_CompositionEventHandler) {
     auto result =
-        m_compEventHandler->SendMessage(static_cast<facebook::react::SurfaceId>(m_rootTag), msg, wParam, lParam);
+        m_CompositionEventHandler->SendMessage(static_cast<facebook::react::SurfaceId>(m_rootTag), msg, wParam, lParam);
     if (result)
       return result;
   }
@@ -218,16 +218,16 @@ int64_t CompRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam)
   return 0;
 }
 
-void CompRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept {
+void CompositionRootView::OnScrollWheel(Windows::Foundation::Point point, int32_t delta) noexcept {
   if (m_rootTag == -1)
     return;
 
-  if (m_compEventHandler) {
-    m_compEventHandler->ScrollWheel(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
+  if (m_CompositionEventHandler) {
+    m_CompositionEventHandler->ScrollWheel(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
   }
 }
 
-void CompRootView::InitRootView(
+void CompositionRootView::InitRootView(
     Mso::CntPtr<Mso::React::IReactInstance> &&reactInstance,
     Mso::React::ReactViewOptions &&reactViewOptions) noexcept {
   m_uiDispatcher = reactInstance->GetReactContext()
@@ -244,25 +244,25 @@ void CompRootView::InitRootView(
   m_weakReactInstance = Mso::WeakPtr{reactInstance};
   m_context = &reactInstance->GetReactContext();
 
-  winrt::Microsoft::ReactNative::CompRootView compRootView;
-  get_strong().as(compRootView);
+  winrt::Microsoft::ReactNative::CompositionRootView CompositionRootView;
+  get_strong().as(CompositionRootView);
 
   m_reactViewOptions = std::make_unique<Mso::React::ReactViewOptions>(std::move(reactViewOptions));
-  m_compEventHandler = std::make_shared<::Microsoft::ReactNative::CompEventHandler>(
-      *m_context, true && !reactInstance->Options().UseWebDebugger(), compRootView);
+  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(
+      *m_context, true && !reactInstance->Options().UseWebDebugger(), CompositionRootView);
 
   UpdateRootViewInternal();
 
   m_isInitialized = true;
 }
 
-void CompRootView::UpdateRootView() noexcept {
+void CompositionRootView::UpdateRootView() noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
   VerifyElseCrash(m_isInitialized);
   UpdateRootViewInternal();
 }
 
-void CompRootView::UpdateRootViewInternal() noexcept {
+void CompositionRootView::UpdateRootViewInternal() noexcept {
   if (auto reactInstance = m_weakReactInstance.GetStrongPtr()) {
     switch (reactInstance->State()) {
       case Mso::React::ReactInstanceState::Loading:
@@ -283,7 +283,7 @@ void CompRootView::UpdateRootViewInternal() noexcept {
   }
 }
 
-void CompRootView::UninitRootView() noexcept {
+void CompositionRootView::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
   }
@@ -303,11 +303,11 @@ void CompRootView::UninitRootView() noexcept {
   m_isInitialized = false;
 }
 
-void CompRootView::ClearLoadingUI() noexcept {}
+void CompositionRootView::ClearLoadingUI() noexcept {}
 
-void CompRootView::EnsureLoadingUI() noexcept {}
+void CompositionRootView::EnsureLoadingUI() noexcept {}
 
-void CompRootView::ShowInstanceLoaded() noexcept {
+void CompositionRootView::ShowInstanceLoaded() noexcept {
   if (m_rootVisual) {
     ClearLoadingUI();
 
@@ -318,20 +318,20 @@ void CompRootView::ShowInstanceLoaded() noexcept {
   }
 }
 
-void CompRootView::ShowInstanceError() noexcept {}
+void CompositionRootView::ShowInstanceError() noexcept {}
 
-void CompRootView::ShowInstanceWaiting() noexcept {}
+void CompositionRootView::ShowInstanceWaiting() noexcept {}
 
-void CompRootView::ShowInstanceLoading() noexcept {
+void CompositionRootView::ShowInstanceLoading() noexcept {
   if (!m_context->SettingsSnapshot().UseDeveloperSupport())
     return;
 }
 
-Mso::React::IReactViewHost *CompRootView::ReactViewHost() noexcept {
+Mso::React::IReactViewHost *CompositionRootView::ReactViewHost() noexcept {
   return m_reactViewHost.Get();
 }
 
-void CompRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept {
+void CompositionRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept {
   if (m_reactViewHost.Get() == viewHost) {
     return;
   }
@@ -344,12 +344,12 @@ void CompRootView::ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept 
   m_reactViewHost = viewHost;
 
   if (m_reactViewHost) {
-    auto viewInstance = Mso::Make<CompReactViewInstance>(this->get_weak());
+    auto viewInstance = Mso::Make<CompositionReactViewInstance>(this->get_weak());
     m_reactViewHost->AttachViewInstance(*viewInstance);
   }
 }
 
-Windows::Foundation::Size CompRootView::Measure(Windows::Foundation::Size const &availableSize) const {
+Windows::Foundation::Size CompositionRootView::Measure(Windows::Foundation::Size const &availableSize) const {
   Windows::Foundation::Size size{0.0f, 0.0f};
 
   if (m_isInitialized && m_rootTag != -1) {
@@ -382,7 +382,7 @@ Windows::Foundation::Size CompRootView::Measure(Windows::Foundation::Size const 
   return size;
 }
 
-Windows::Foundation::Size CompRootView::Arrange(Windows::Foundation::Size finalSize) const {
+Windows::Foundation::Size CompositionRootView::Arrange(Windows::Foundation::Size finalSize) const {
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {

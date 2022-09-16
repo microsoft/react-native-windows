@@ -7,7 +7,7 @@
 #include <d2d1_1.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
-#include "CompHelpers.h"
+#include "CompositionHelpers.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 

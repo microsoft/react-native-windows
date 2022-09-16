@@ -7,7 +7,7 @@
 
 namespace facebook::react {
 
-class CompWindowsTextInputEventEmitter : public ViewEventEmitter {
+class WindowsTextInputEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 

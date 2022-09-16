@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "CompScrollViewComponentView.h"
+#include "ScrollViewComponentView.h"
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
@@ -20,7 +20,7 @@
 
 namespace Microsoft::ReactNative {
 
-CompScrollViewComponentView::CompScrollViewComponentView(
+ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {
@@ -117,11 +117,11 @@ CompScrollViewComponentView::CompScrollViewComponentView(
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
-CompScrollViewComponentView::supplementalComponentDescriptorProviders() noexcept {
+ScrollViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void CompScrollViewComponentView::mountChildComponentView(
+void ScrollViewComponentView::mountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   ensureVisual();
@@ -129,19 +129,19 @@ void CompScrollViewComponentView::mountChildComponentView(
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
   const_cast<IComponentView &>(childComponentView).parent(this);
 
-  m_visual.InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual.InsertAt(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual(), index);
 }
 
-void CompScrollViewComponentView::unmountChildComponentView(
+void ScrollViewComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
 
-  m_visual.Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
+  m_visual.Remove(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual());
   const_cast<IComponentView &>(childComponentView).parent(nullptr);
 }
 
-void CompScrollViewComponentView::updateProps(
+void ScrollViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(props);
@@ -173,10 +173,10 @@ void CompScrollViewComponentView::updateProps(
   // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
 }
 
-void CompScrollViewComponentView::updateEventEmitter(
+void ScrollViewComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 
-void CompScrollViewComponentView::updateState(
+void ScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
   const auto &newState = *std::static_pointer_cast<facebook::react::ScrollViewShadowNode::ConcreteState const>(state);
@@ -185,7 +185,7 @@ void CompScrollViewComponentView::updateState(
   updateContentVisualSize();
 }
 
-void CompScrollViewComponentView::updateLayoutMetrics(
+void ScrollViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
@@ -209,43 +209,43 @@ void CompScrollViewComponentView::updateLayoutMetrics(
   updateContentVisualSize();
 }
 
-void CompScrollViewComponentView::updateContentVisualSize() noexcept {
+void ScrollViewComponentView::updateContentVisualSize() noexcept {
   m_visual.ContentSize(
       {std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
        std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
 }
 
-void CompScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void ScrollViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   // m_element.FinalizeProperties();
 }
-void CompScrollViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared CompScrollViewComponentView::props() noexcept {
+void ScrollViewComponentView::prepareForRecycle() noexcept {}
+facebook::react::Props::Shared ScrollViewComponentView::props() noexcept {
   assert(false);
   return {};
 }
 
 /*
-CompScrollViewComponentView::ScrollInteractionTrackerOwner::ScrollInteractionTrackerOwner(
-    CompScrollViewComponentView *outer)
+ScrollViewComponentView::ScrollInteractionTrackerOwner::ScrollInteractionTrackerOwner(
+    ScrollViewComponentView *outer)
     : m_outer(outer) {}
 
-void CompScrollViewComponentView::ScrollInteractionTrackerOwner::CustomAnimationStateEntered(
+void ScrollViewComponentView::ScrollInteractionTrackerOwner::CustomAnimationStateEntered(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerCustomAnimationStateEnteredArgs args) noexcept {}
-void CompScrollViewComponentView::ScrollInteractionTrackerOwner::IdleStateEntered(
+void ScrollViewComponentView::ScrollInteractionTrackerOwner::IdleStateEntered(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerIdleStateEnteredArgs args) noexcept {}
-void CompScrollViewComponentView::ScrollInteractionTrackerOwner::InertiaStateEntered(
+void ScrollViewComponentView::ScrollInteractionTrackerOwner::InertiaStateEntered(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerInertiaStateEnteredArgs args) noexcept {}
-void CompScrollViewComponentView::ScrollInteractionTrackerOwner::InteractingStateEntered(
+void ScrollViewComponentView::ScrollInteractionTrackerOwner::InteractingStateEntered(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerInteractingStateEnteredArgs args) noexcept {}
-void CompScrollViewComponentView::ScrollInteractionTrackerOwner::RequestIgnored(
+void ScrollViewComponentView::ScrollInteractionTrackerOwner::RequestIgnored(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerRequestIgnoredArgs args) noexcept {}
 
-void CompScrollViewComponentView::ScrollInteractionTrackerOwner::ValuesChanged(
+void ScrollViewComponentView::ScrollInteractionTrackerOwner::ValuesChanged(
     winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
     winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept {
 
@@ -264,12 +264,12 @@ void CompScrollViewComponentView::ScrollInteractionTrackerOwner::ValuesChanged(
 }
 */
 /*
-void CompScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::PointerPoint &pp) noexcept {
+void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::PointerPoint &pp) noexcept {
   m_visualInteractionSource.TryRedirectForManipulation(pp);
 }
 */
 
-bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
+bool ScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
   facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Point ptContent{
@@ -277,7 +277,7 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
       ptViewport.y + m_visual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
   if (std::any_of(m_children.rbegin(), m_children.rend(), [ptContent, delta](auto child) {
-        return const_cast<CompBaseComponentView *>(static_cast<const CompBaseComponentView *>(child))
+        return const_cast<CompositionBaseComponentView *>(static_cast<const CompositionBaseComponentView *>(child))
             ->ScrollWheel(ptContent, delta);
       }))
     return true;
@@ -291,7 +291,7 @@ bool CompScrollViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t
   return false;
 }
 
-void CompScrollViewComponentView::ensureVisual() noexcept {
+void ScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateScrollerVisual();
     m_scrollPositionChangedRevoker = m_visual.ScrollPositionChanged(
@@ -316,7 +316,7 @@ void CompScrollViewComponentView::ensureVisual() noexcept {
   }
 }
 
-facebook::react::Tag CompScrollViewComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
+facebook::react::Tag ScrollViewComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
     const noexcept {
   facebook::react::Point ptViewport{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
@@ -326,7 +326,7 @@ facebook::react::Tag CompScrollViewComponentView::hitTest(facebook::react::Point
 
   facebook::react::Tag tag;
   if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptContent, &localPt](auto child) {
-        tag = static_cast<const CompBaseComponentView *>(child)->hitTest(ptContent, localPt);
+        tag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptContent, localPt);
         return tag != -1;
       }))
     return tag;
@@ -340,7 +340,7 @@ facebook::react::Tag CompScrollViewComponentView::hitTest(facebook::react::Point
   return -1;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompScrollViewComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {
   return m_visual;
 }
 

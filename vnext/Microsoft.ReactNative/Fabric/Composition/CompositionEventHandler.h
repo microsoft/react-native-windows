@@ -21,14 +21,14 @@ using namespace Windows::Foundation;
 
 namespace Microsoft::ReactNative {
 
-class CompEventHandler {
+class CompositionEventHandler {
  public:
-  CompEventHandler(const Mso::React::IReactContext &context, bool fabric);
-  CompEventHandler(
+  CompositionEventHandler(const Mso::React::IReactContext &context, bool fabric);
+  CompositionEventHandler(
       const Mso::React::IReactContext &context,
       bool fabric,
-      const winrt::Microsoft::ReactNative::CompRootView &compRootView);
-  virtual ~CompEventHandler();
+      const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView);
+  virtual ~CompositionEventHandler();
 
   int64_t SendMessage(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta);
@@ -52,7 +52,7 @@ class CompEventHandler {
   std::vector<facebook::react::Touch> m_touches;
   int64_t m_touchId = 0;
 
-  winrt::Microsoft::ReactNative::CompRootView m_compRootView{nullptr};
+  winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
   bool m_fabric;
 };

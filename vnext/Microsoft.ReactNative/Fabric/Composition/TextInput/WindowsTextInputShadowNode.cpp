@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "CompWindowsTextInputShadowNode.h"
+#include "WindowsTextInputShadowNode.h"
 
 #include <react/debug/react_native_assert.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
@@ -16,14 +16,14 @@
 namespace facebook {
 namespace react {
 
-extern const char CompWindowsTextInputComponentName[] = "WindowsTextInput";
+extern const char WindowsTextInputComponentName[] = "WindowsTextInput";
 
-void CompWindowsTextInputShadowNode::setContextContainer(ContextContainer *contextContainer) {
+void WindowsTextInputShadowNode::setContextContainer(ContextContainer *contextContainer) {
   ensureUnsealed();
   m_contextContainer = contextContainer;
 }
 
-AttributedString CompWindowsTextInputShadowNode::getAttributedString() const {
+AttributedString WindowsTextInputShadowNode::getAttributedString() const {
   // Use BaseTextShadowNode to get attributed string from children
 
   auto childTextAttributes = TextAttributes::defaultTextAttributes();
@@ -59,7 +59,7 @@ AttributedString CompWindowsTextInputShadowNode::getAttributedString() const {
 // display at all.
 // TODO T67606511: We will redefine the measurement of empty strings as part
 // of T67606511
-AttributedString CompWindowsTextInputShadowNode::getPlaceholderAttributedString() const {
+AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString() const {
   // Return placeholder text, since text and children are empty.
   auto textAttributedString = AttributedString{};
   auto fragment = AttributedString::Fragment{};
@@ -81,12 +81,12 @@ AttributedString CompWindowsTextInputShadowNode::getPlaceholderAttributedString(
   return textAttributedString;
 }
 
-void CompWindowsTextInputShadowNode::setTextLayoutManager(SharedTextLayoutManager textLayoutManager) {
+void WindowsTextInputShadowNode::setTextLayoutManager(SharedTextLayoutManager textLayoutManager) {
   ensureUnsealed();
   m_textLayoutManager = std::move(textLayoutManager);
 }
 
-AttributedString CompWindowsTextInputShadowNode::getMostRecentAttributedString() const {
+AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString() const {
   auto const &state = getStateData();
 
   auto reactTreeAttributedString = getAttributedString();
@@ -101,7 +101,7 @@ AttributedString CompWindowsTextInputShadowNode::getMostRecentAttributedString()
   return (!treeAttributedStringChanged ? state.attributedString : reactTreeAttributedString);
 }
 
-void CompWindowsTextInputShadowNode::updateStateIfNeeded() {
+void WindowsTextInputShadowNode::updateStateIfNeeded() {
   ensureUnsealed();
 
   auto reactTreeAttributedString = getAttributedString();
@@ -137,7 +137,7 @@ void CompWindowsTextInputShadowNode::updateStateIfNeeded() {
   // current attributedString unchanged, and pass in zero for the "event count"
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
-  setStateData(facebook::react::CompWindowsTextInputState{
+  setStateData(facebook::react::WindowsTextInputState{
       newEventCount,
       newAttributedString,
       reactTreeAttributedString,
@@ -152,7 +152,7 @@ void CompWindowsTextInputShadowNode::updateStateIfNeeded() {
 
 #pragma mark - LayoutableShadowNode
 
-Size CompWindowsTextInputShadowNode::measureContent(
+Size WindowsTextInputShadowNode::measureContent(
     LayoutContext const &layoutContext,
     LayoutConstraints const &layoutConstraints) const {
   if (getStateData().cachedAttributedStringId != 0) {
@@ -187,7 +187,7 @@ Size CompWindowsTextInputShadowNode::measureContent(
       .size;
 }
 
-void CompWindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
+void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
   updateStateIfNeeded();
   ConcreteViewShadowNode::layout(layoutContext);
 }

@@ -4,58 +4,58 @@
 
 #pragma once
 
-#include "CompViewComponentView.h"
+#include "CompositionViewComponentView.h"
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Windows.UI.Composition.h>
-#include "CompHelpers.h"
+#include "CompositionHelpers.h"
 #include "d2d1helper.h"
 
 namespace Microsoft::ReactNative {
 
 // TODO this obviously sucks
 // TODO where should we store focus
-static CompBaseComponentView *g_focusedComponent = nullptr;
+static CompositionBaseComponentView *g_focusedComponent = nullptr;
 
-CompBaseComponentView *GetFocusedComponent() noexcept {
+CompositionBaseComponentView *GetFocusedComponent() noexcept {
   return g_focusedComponent;
 }
-void SetFocusedComponent(CompBaseComponentView *value) noexcept {
+void SetFocusedComponent(CompositionBaseComponentView *value) noexcept {
   g_focusedComponent = value;
 }
 
-CompBaseComponentView::CompBaseComponentView(
+CompositionBaseComponentView::CompositionBaseComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : m_tag(tag), m_compContext(compContext) {}
 
-facebook::react::Tag CompBaseComponentView::Tag() const noexcept {
+facebook::react::Tag CompositionBaseComponentView::Tag() const noexcept {
   return m_tag;
 }
 
-void CompBaseComponentView::parent(IComponentView *parent) noexcept {
+void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
   m_parent = parent;
 }
 
-IComponentView *CompBaseComponentView::parent() const noexcept {
+IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
 }
 
-void CompBaseComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
+void CompositionBaseComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
 }
 
-void CompBaseComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+void CompositionBaseComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
   assert(false); // Unhandled command
 }
 
-int64_t CompBaseComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t CompositionBaseComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   return 0;
 }
 
-RECT CompBaseComponentView::getClientRect() const noexcept {
+RECT CompositionBaseComponentView::getClientRect() const noexcept {
   RECT rc{0};
   if (m_parent) {
     rc = m_parent->getClientRect();
@@ -68,16 +68,16 @@ RECT CompBaseComponentView::getClientRect() const noexcept {
   return rc;
 }
 
-const facebook::react::SharedViewEventEmitter &CompBaseComponentView::GetEventEmitter() const noexcept {
+const facebook::react::SharedViewEventEmitter &CompositionBaseComponentView::GetEventEmitter() const noexcept {
   return m_eventEmitter;
 }
 
-bool CompBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
+bool CompositionBaseComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
   return false;
 }
 
 std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12>
-CompBaseComponentView::FindSpecialBorderLayers() const noexcept {
+CompositionBaseComponentView::FindSpecialBorderLayers() const noexcept {
   std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> layers{
       nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
@@ -799,7 +799,7 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
   return borderMetrics;
 }
 
-bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
+bool CompositionBaseComponentView::TryUpdateSpecialBorderLayers(
     std::array<winrt::Microsoft::ReactNative::Composition::SpriteVisual, 12> &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
@@ -899,7 +899,7 @@ bool CompBaseComponentView::TryUpdateSpecialBorderLayers(
   return true;
 }
 
-void CompBaseComponentView::UpdateSpecialBorderLayers(
+void CompositionBaseComponentView::UpdateSpecialBorderLayers(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto spBorderLayers = FindSpecialBorderLayers();
@@ -913,7 +913,7 @@ void CompBaseComponentView::UpdateSpecialBorderLayers(
   }
 }
 
-void CompBaseComponentView::updateBorderProps(
+void CompositionBaseComponentView::updateBorderProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
   if (oldViewProps.borderColors != newViewProps.borderColors || oldViewProps.borderRadii != newViewProps.borderRadii ||
@@ -923,7 +923,7 @@ void CompBaseComponentView::updateBorderProps(
   }
 }
 
-void CompBaseComponentView::updateBorderLayoutMetrics(
+void CompositionBaseComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
@@ -950,13 +950,13 @@ void CompBaseComponentView::updateBorderLayoutMetrics(
   }
 }
 
-void CompBaseComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
+void CompositionBaseComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
   index += m_numBorderVisuals;
 }
 
-void CompBaseComponentView::OnRenderingDeviceLost() noexcept {}
+void CompositionBaseComponentView::OnRenderingDeviceLost() noexcept {}
 
-CompViewComponentView::CompViewComponentView(
+CompositionViewComponentView::CompositionViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {
@@ -966,21 +966,21 @@ CompViewComponentView::CompViewComponentView(
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
-CompViewComponentView::supplementalComponentDescriptorProviders() noexcept {
+CompositionViewComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void CompViewComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void CompositionViewComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
 
   indexOffsetForBorder(index);
 
   const_cast<IComponentView &>(childComponentView).parent(this);
 
-  m_visual.InsertAt(static_cast<const CompBaseComponentView &>(childComponentView).Visual(), index);
+  m_visual.InsertAt(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual(), index);
 }
 
-void CompViewComponentView::unmountChildComponentView(
+void CompositionViewComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   m_children.erase(std::next(m_children.begin(), index));
@@ -988,10 +988,10 @@ void CompViewComponentView::unmountChildComponentView(
   indexOffsetForBorder(index);
 
   const_cast<IComponentView &>(childComponentView).parent(nullptr);
-  m_visual.Remove(static_cast<const CompBaseComponentView &>(childComponentView).Visual());
+  m_visual.Remove(static_cast<const CompositionBaseComponentView &>(childComponentView).Visual());
 }
 
-void CompViewComponentView::updateProps(
+void CompositionViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(m_props);
@@ -1037,13 +1037,13 @@ void CompViewComponentView::updateProps(
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
-facebook::react::Tag CompViewComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
+facebook::react::Tag CompositionViewComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
     const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Tag tag;
   if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal, &localPt](auto child) {
-        tag = static_cast<const CompBaseComponentView *>(child)->hitTest(ptLocal, localPt);
+        tag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
         return tag != -1;
       }))
     return tag;
@@ -1057,12 +1057,12 @@ facebook::react::Tag CompViewComponentView::hitTest(facebook::react::Point pt, f
   return -1;
 }
 
-bool CompViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
+bool CompositionViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta) noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   facebook::react::Tag tag;
   if (std::any_of(m_children.rbegin(), m_children.rend(), [ptLocal, delta](auto child) {
-        return const_cast<CompBaseComponentView *>(static_cast<const CompBaseComponentView *>(child))
+        return const_cast<CompositionBaseComponentView *>(static_cast<const CompositionBaseComponentView *>(child))
             ->ScrollWheel(ptLocal, delta);
       }))
     return true;
@@ -1070,11 +1070,11 @@ bool CompViewComponentView::ScrollWheel(facebook::react::Point pt, int32_t delta
   return false;
 }
 
-void CompViewComponentView::updateState(
+void CompositionViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
 
-void CompViewComponentView::updateLayoutMetrics(
+void CompositionViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
@@ -1096,15 +1096,15 @@ void CompViewComponentView::updateLayoutMetrics(
   });
 }
 
-void CompViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
+void CompositionViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
 
-void CompViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared CompViewComponentView::props() noexcept {
+void CompositionViewComponentView::prepareForRecycle() noexcept {}
+facebook::react::Props::Shared CompositionViewComponentView::props() noexcept {
   assert(false);
   return {};
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompViewComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual CompositionViewComponentView::Visual() const noexcept {
   return m_visual;
 }
 

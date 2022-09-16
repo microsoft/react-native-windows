@@ -10,8 +10,8 @@
 #include <Views/Image/ReactImage.h>
 #include <wincodec.h>
 #include <winrt/Windows.UI.Composition.h>
-#include "CompHelpers.h"
-#include "CompViewComponentView.h"
+#include "CompositionHelpers.h"
+#include "CompositionViewComponentView.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)
@@ -23,9 +23,9 @@
 
 namespace Microsoft::ReactNative {
 
-struct CompImageComponentView : CompBaseComponentView {
-  using Super = CompBaseComponentView;
-  CompImageComponentView(
+struct ImageComponentView : CompositionBaseComponentView {
+  using Super = CompositionBaseComponentView;
+  ImageComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);

@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-#include "CompWindowsTextInputState.h"
+#include "WindowsTextInputState.h"
 
 #include <react/renderer/components/text/conversions.h>
 #include <react/renderer/debug/debugStringConvertibleUtils.h>
@@ -12,7 +12,7 @@
 namespace facebook {
 namespace react {
 
-CompWindowsTextInputState::CompWindowsTextInputState(
+WindowsTextInputState::WindowsTextInputState(
     int64_t mostRecentEventCount,
     AttributedString attributedString,
     AttributedString reactTreeAttributedString,
@@ -34,8 +34,8 @@ CompWindowsTextInputState::CompWindowsTextInputState(
       defaultThemePaddingTop(defaultThemePaddingTop),
       defaultThemePaddingBottom(defaultThemePaddingBottom) {}
 
-CompWindowsTextInputState::CompWindowsTextInputState(
-    CompWindowsTextInputState const &previousState,
+WindowsTextInputState::WindowsTextInputState(
+    WindowsTextInputState const &previousState,
     folly::dynamic const &data)
     : mostRecentEventCount(data.getDefault("mostRecentEventCount", previousState.mostRecentEventCount).getInt()),
       cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt()),

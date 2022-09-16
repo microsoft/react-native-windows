@@ -5,9 +5,9 @@
 
 #include <butter/map.h>
 #include <react/renderer/components/rnwcore/EventEmitters.h>
-#include "CompWindowsTextInputEventEmitter.h"
-#include "CompWindowsTextInputProps.h"
-#include "CompWindowsTextInputState.h"
+#include "WindowsTextInputEventEmitter.h"
+#include "WindowsTextInputProps.h"
+#include "WindowsTextInputState.h"
 
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/utils/ContextContainer.h>
@@ -18,16 +18,16 @@
 namespace facebook {
 namespace react {
 
-extern const char CompWindowsTextInputComponentName[];
+extern const char WindowsTextInputComponentName[];
 
 /*
  * `ShadowNode` for <WindowsTextInput> component.
  */
-class CompWindowsTextInputShadowNode final : public ConcreteViewShadowNode<
-                                                 CompWindowsTextInputComponentName,
-                                                 CompWindowsTextInputProps,
-                                                 CompWindowsTextInputEventEmitter,
-                                                 CompWindowsTextInputState> {
+class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
+                                                 WindowsTextInputComponentName,
+                                                 WindowsTextInputProps,
+                                                 WindowsTextInputEventEmitter,
+                                                 WindowsTextInputState> {
  public:
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();

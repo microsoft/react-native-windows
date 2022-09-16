@@ -6,7 +6,7 @@
 
 #include <Fabric/ComponentView.h>
 
-#include "CompViewComponentView.h"
+#include "CompositionViewComponentView.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4305)
@@ -16,14 +16,14 @@
 
 namespace Microsoft::ReactNative {
 
-struct CompScrollViewComponentView;
+struct ScrollViewComponentView;
 
-struct CompScrollViewComponentView : CompBaseComponentView {
+struct ScrollViewComponentView : CompositionBaseComponentView {
   /*
 struct ScrollInteractionTrackerOwner : public winrt::implements<
                                            ScrollInteractionTrackerOwner,
                                            winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner> {
-  ScrollInteractionTrackerOwner(CompScrollViewComponentView *outer);
+  ScrollInteractionTrackerOwner(ScrollViewComponentView *outer);
 
   void CustomAnimationStateEntered(
       winrt::Windows::UI::Composition::Interactions::InteractionTracker sender,
@@ -45,13 +45,13 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       winrt::Windows::UI::Composition::Interactions::InteractionTrackerValuesChangedArgs args) noexcept;
 
  private:
-  CompScrollViewComponentView *m_outer;
+  ScrollViewComponentView *m_outer;
 };
 
 */
 
-  using Super = CompBaseComponentView;
-  CompScrollViewComponentView(
+  using Super = CompositionBaseComponentView;
+  ScrollViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 

@@ -4,15 +4,15 @@
 
 #pragma once
 
-#include "CompWindowsTextInputComponentView.h"
+#include "WindowsTextInputComponentView.h"
 
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Windows.UI.h>
-#include "../CompHelpers.h"
-#include "CompWindowsTextInputShadowNode.h"
-#include "CompWindowsTextInputState.h"
+#include "../CompositionHelpers.h"
+#include "WindowsTextInputShadowNode.h"
+#include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
 
 // convert a BSTR to a std::string.
@@ -50,11 +50,11 @@ MSO_CLASS_GUID(ITextServices2, "8D33F741-CF58-11CE-A89D-00AA006CADC5") // IID_IT
 namespace Microsoft::ReactNative {
 
 // RichEdit doesn't handle us calling Draw during the middle of a TxTranslateMessage call.
-CompWindowsTextInputComponentView::DrawBlock::DrawBlock(CompWindowsTextInputComponentView &view) : m_view(view) {
+WindowsTextInputComponentView::DrawBlock::DrawBlock(WindowsTextInputComponentView &view) : m_view(view) {
   m_view.m_cDrawBlock++;
 }
 
-CompWindowsTextInputComponentView::DrawBlock::~DrawBlock() {
+WindowsTextInputComponentView::DrawBlock::~DrawBlock() {
   m_view.m_cDrawBlock--;
   if (!m_view.m_cDrawBlock && m_view.m_needsRedraw) {
     m_view.DrawText();
@@ -92,7 +92,7 @@ HRESULT HrEnsureRichEd20Loaded() noexcept {
 }
 
 struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
-  CompTextHost(CompWindowsTextInputComponentView *outer) : m_outer(outer) {}
+  CompTextHost(WindowsTextInputComponentView *outer) : m_outer(outer) {}
 
   //@cmember Get the DC for the host
   HDC TxGetDC() override {
@@ -418,10 +418,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     return S_OK;
   }
 
-  CompWindowsTextInputComponentView *m_outer;
+  WindowsTextInputComponentView *m_outer;
 };
 
-facebook::react::AttributedString CompWindowsTextInputComponentView::getAttributedString() const {
+facebook::react::AttributedString WindowsTextInputComponentView::getAttributedString() const {
   // Use BaseTextShadowNode to get attributed string from children
 
   auto childTextAttributes = facebook::react::TextAttributes::defaultTextAttributes();
@@ -453,12 +453,12 @@ facebook::react::AttributedString CompWindowsTextInputComponentView::getAttribut
   return attributedString;
 }
 
-CompWindowsTextInputComponentView::CompWindowsTextInputComponentView(
+WindowsTextInputComponentView::WindowsTextInputComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(compContext, tag), m_context(reactContext) {
-  static auto const defaultProps = std::make_shared<facebook::react::CompWindowsTextInputProps const>();
+  static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
   m_props = defaultProps;
 
   /*
@@ -490,7 +490,7 @@ CompWindowsTextInputComponentView::CompWindowsTextInputComponentView(
   */
 }
 
-void CompWindowsTextInputComponentView::handleCommand(
+void WindowsTextInputComponentView::handleCommand(
     std::string const &commandName,
     folly::dynamic const &arg) noexcept {
   if (commandName == "setTextAndSelection") {
@@ -523,7 +523,7 @@ void CompWindowsTextInputComponentView::handleCommand(
   }
 }
 
-int64_t CompWindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t WindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -536,11 +536,11 @@ int64_t CompWindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wP
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
-CompWindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexcept {
+WindowsTextInputComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void CompWindowsTextInputComponentView::parent(IComponentView *parent) noexcept {
+void WindowsTextInputComponentView::parent(IComponentView *parent) noexcept {
   Super::parent(parent);
 
   if (!parent && GetFocusedComponent() == this) {
@@ -548,25 +548,25 @@ void CompWindowsTextInputComponentView::parent(IComponentView *parent) noexcept 
   }
 }
 
-void CompWindowsTextInputComponentView::mountChildComponentView(
+void WindowsTextInputComponentView::mountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
-void CompWindowsTextInputComponentView::unmountChildComponentView(
+void WindowsTextInputComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
 
-void CompWindowsTextInputComponentView::updateProps(
+void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldTextInputProps = *std::static_pointer_cast<const facebook::react::CompWindowsTextInputProps>(m_props);
-  const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::CompWindowsTextInputProps>(props);
+  const auto &oldTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
+  const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(props);
 
   ensureVisual();
 
@@ -669,10 +669,10 @@ void CompWindowsTextInputComponentView::updateProps(
   // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
 }
 
-void CompWindowsTextInputComponentView::updateState(
+void WindowsTextInputComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
-  m_state = std::static_pointer_cast<facebook::react::CompWindowsTextInputShadowNode::ConcreteState const>(state);
+  m_state = std::static_pointer_cast<facebook::react::WindowsTextInputShadowNode::ConcreteState const>(state);
 
   if (!m_state) {
     assert(false && "State is `null` for <TextInput> component.");
@@ -725,7 +725,7 @@ ST_UNICODE
 The text is UTF-16 (the WCHAR data type).
 */
 
-void CompWindowsTextInputComponentView::UpdateText(const std::string &str) noexcept {
+void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept {
   SETTEXTEX stt;
   memset(&stt, 0, sizeof(stt));
   stt.flags = ST_DEFAULT;
@@ -736,7 +736,7 @@ void CompWindowsTextInputComponentView::UpdateText(const std::string &str) noexc
       EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
 }
 
-void CompWindowsTextInputComponentView::updateLayoutMetrics(
+void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
@@ -780,25 +780,25 @@ void CompWindowsTextInputComponentView::updateLayoutMetrics(
 }
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
-void CompWindowsTextInputComponentView::OnTextUpdated() noexcept {
+void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   auto data = m_state->getData();
   data.attributedString = getAttributedString();
   data.mostRecentEventCount = m_nativeEventCount;
   m_state->updateState(std::move(data));
 
   if (m_eventEmitter && !m_comingFromJS) {
-    auto emitter = std::static_pointer_cast<const facebook::react::CompWindowsTextInputEventEmitter>(m_eventEmitter);
-    facebook::react::CompWindowsTextInputEventEmitter::OnChange onChangeArgs;
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
   }
 }
 
-void CompWindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
+void WindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
   if (m_eventEmitter /* && !m_comingFromJS ?? */) {
-    auto emitter = std::static_pointer_cast<const facebook::react::CompWindowsTextInputEventEmitter>(m_eventEmitter);
-    facebook::react::CompWindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
     onSelectionChangeArgs.selection.start = start;
     onSelectionChangeArgs.selection.end = end;
     emitter->onSelectionChange(onSelectionChangeArgs);
@@ -808,7 +808,7 @@ void CompWindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end)
   DrawCaret(m_caretShown);
 }
 
-std::string CompWindowsTextInputComponentView::GetTextFromRichEdit() const noexcept {
+std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept {
   if (!m_textServices)
     return {};
 
@@ -827,18 +827,18 @@ std::string CompWindowsTextInputComponentView::GetTextFromRichEdit() const noexc
   return str;
 }
 
-void CompWindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   // m_element.FinalizeProperties();
 
   ensureDrawingSurface();
 }
-void CompWindowsTextInputComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared CompWindowsTextInputComponentView::props() noexcept {
+void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
+facebook::react::Props::Shared WindowsTextInputComponentView::props() noexcept {
   assert(false);
   return {};
 }
 
-void CompWindowsTextInputComponentView::UpdateCharFormat() noexcept {
+void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   CHARFORMAT2W cfNew = {0};
   // Set CHARFORMAT structure
   cfNew.cbSize = sizeof(CHARFORMAT2W);
@@ -892,7 +892,7 @@ void CompWindowsTextInputComponentView::UpdateCharFormat() noexcept {
   m_cf = cfNew;
 }
 
-void CompWindowsTextInputComponentView::UpdateParaFormat() noexcept {
+void WindowsTextInputComponentView::UpdateParaFormat() noexcept {
   ZeroMemory(&m_pf, sizeof(m_pf));
 
   m_pf.cbSize = sizeof(PARAFORMAT2);
@@ -912,11 +912,11 @@ void CompWindowsTextInputComponentView::UpdateParaFormat() noexcept {
   */
 }
 
-void CompWindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
+void WindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
   DrawText();
 }
 
-void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
+void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurface) {
@@ -942,7 +942,7 @@ void CompWindowsTextInputComponentView::ensureDrawingSurface() noexcept {
   }
 }
 
-void CompWindowsTextInputComponentView::DrawCaret(bool show) noexcept {
+void WindowsTextInputComponentView::DrawCaret(bool show) noexcept {
   ensureVisual();
 
   if (show && !m_caretShown) {
@@ -970,7 +970,7 @@ void CompWindowsTextInputComponentView::DrawCaret(bool show) noexcept {
   }
 }
 
-void CompWindowsTextInputComponentView::DrawText() noexcept {
+void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = true;
   if (m_cDrawBlock) {
     return;
@@ -1024,7 +1024,7 @@ void CompWindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = false;
 }
 
-facebook::react::Tag CompWindowsTextInputComponentView::hitTest(
+facebook::react::Tag WindowsTextInputComponentView::hitTest(
     facebook::react::Point pt,
     facebook::react::Point &localPt) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
@@ -1032,7 +1032,7 @@ facebook::react::Tag CompWindowsTextInputComponentView::hitTest(
   /*
     facebook::react::Tag tag;
     if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal, &localPt](auto child) {
-          tag = static_cast<const CompBaseComponentView *>(child)->hitTest(ptLocal, localPt);
+          tag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
           return tag != -1;
         }))
       return tag;
@@ -1046,7 +1046,7 @@ facebook::react::Tag CompWindowsTextInputComponentView::hitTest(
   return -1;
 }
 
-void CompWindowsTextInputComponentView::ensureVisual() noexcept {
+void WindowsTextInputComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     HrEnsureRichEd20Loaded();
     m_visual = m_compContext.CreateSpriteVisual();
@@ -1062,7 +1062,7 @@ void CompWindowsTextInputComponentView::ensureVisual() noexcept {
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompWindowsTextInputComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {
   return m_visual;
 }
 

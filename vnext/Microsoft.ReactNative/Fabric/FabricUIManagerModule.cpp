@@ -7,10 +7,10 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
-#include <Fabric/Composition/CompViewComponentView.h>
+#include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
-#include <Fabric/Composition/TextInput/CompWindowsTextInputComponentDescriptor.h>
-#include <ICompRootView.h>
+#include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
+#include <ICompositionRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
@@ -155,7 +155,7 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
     providerRegistry->add(facebook::react::concreteComponentDescriptorProvider<
-                          facebook::react::CompWindowsTextInputComponentDescriptor>());
+                          facebook::react::WindowsTextInputComponentDescriptor>());
     return providerRegistry;
   }();
 
@@ -231,25 +231,25 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-  auto compRootView = static_cast<ICompRootView *>(rootview);
-  m_surfaceRegistry.insert({surfaceId, {compRootView->GetVisual()}});
+  auto CompositionRootView = static_cast<ICompositionRootView *>(rootview);
+  m_surfaceRegistry.insert({surfaceId, {CompositionRootView->GetVisual()}});
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
         facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
 
     self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
-        static_cast<const CompBaseComponentView &>(*rootComponentViewDescriptor.view).Visual(), 0);
+        static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).Visual(), 0);
   });
 
   facebook::react::LayoutContext context;
   facebook::react::LayoutConstraints constraints;
-  context.pointScaleFactor = static_cast<float>(compRootView->ScaleFactor());
-  context.fontSizeMultiplier = static_cast<float>(compRootView->ScaleFactor());
-  constraints.minimumSize.height = static_cast<float>(compRootView->GetActualHeight());
-  constraints.minimumSize.width = static_cast<float>(compRootView->GetActualWidth());
-  constraints.maximumSize.height = static_cast<float>(compRootView->GetActualHeight());
-  constraints.maximumSize.width = static_cast<float>(compRootView->GetActualWidth());
+  context.pointScaleFactor = static_cast<float>(CompositionRootView->ScaleFactor());
+  context.fontSizeMultiplier = static_cast<float>(CompositionRootView->ScaleFactor());
+  constraints.minimumSize.height = static_cast<float>(CompositionRootView->GetActualHeight());
+  constraints.minimumSize.width = static_cast<float>(CompositionRootView->GetActualWidth());
+  constraints.maximumSize.height = static_cast<float>(CompositionRootView->GetActualHeight());
+  constraints.maximumSize.width = static_cast<float>(CompositionRootView->GetActualWidth());
   constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
 
   m_surfaceManager->startSurface(

@@ -4,18 +4,18 @@
 
 #pragma once
 
-#include "CompParagraphComponentView.h"
+#include "ParagraphComponentView.h"
 
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
-#include "CompHelpers.h"
+#include "CompositionHelpers.h"
 
 namespace Microsoft::ReactNative {
 
-CompParagraphComponentView::CompParagraphComponentView(
+ParagraphComponentView::ParagraphComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag)
     : Super(compContext, tag) {
@@ -24,26 +24,26 @@ CompParagraphComponentView::CompParagraphComponentView(
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
-CompParagraphComponentView::supplementalComponentDescriptorProviders() noexcept {
+ParagraphComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void CompParagraphComponentView::mountChildComponentView(
+void ParagraphComponentView::mountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
-  auto v = static_cast<const CompParagraphComponentView &>(childComponentView);
+  auto v = static_cast<const ParagraphComponentView &>(childComponentView);
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
-void CompParagraphComponentView::unmountChildComponentView(
+void ParagraphComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
 
-void CompParagraphComponentView::updateProps(
+void ParagraphComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ParagraphProps>(m_props);
@@ -63,10 +63,10 @@ void CompParagraphComponentView::updateProps(
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
 }
 
-void CompParagraphComponentView::updateEventEmitter(
+void ParagraphComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 
-void CompParagraphComponentView::updateState(
+void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {
   const auto &newState = *std::static_pointer_cast<facebook::react::ParagraphShadowNode::ConcreteState const>(state);
@@ -76,7 +76,7 @@ void CompParagraphComponentView::updateState(
 
   m_textLayout = nullptr;
 }
-void CompParagraphComponentView::updateLayoutMetrics(
+void ParagraphComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
@@ -98,24 +98,24 @@ void CompParagraphComponentView::updateLayoutMetrics(
       0.0f,
   });
 }
-void CompParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
   updateVisualBrush();
 }
-void CompParagraphComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared CompParagraphComponentView::props() noexcept {
+void ParagraphComponentView::prepareForRecycle() noexcept {}
+facebook::react::Props::Shared ParagraphComponentView::props() noexcept {
   assert(false);
   return {};
 }
 
-facebook::react::Tag CompParagraphComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
+facebook::react::Tag ParagraphComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
     const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   /*
   facebook::react::Tag tag;
   if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal](auto child) {
-        tag = static_cast<CompBaseComponentView *>(child)->hitTest(ptLocal);
+        tag = static_cast<CompositionBaseComponentView *>(child)->hitTest(ptLocal);
         return tag != -1;
       }))
     return tag;
@@ -130,13 +130,13 @@ facebook::react::Tag CompParagraphComponentView::hitTest(facebook::react::Point 
   return -1;
 }
 
-void CompParagraphComponentView::ensureVisual() noexcept {
+void ParagraphComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
   }
 }
 
-void CompParagraphComponentView::updateTextAlignment(
+void ParagraphComponentView::updateTextAlignment(
     const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept {
   m_textLayout = nullptr;
   if (!m_textLayout)
@@ -169,11 +169,11 @@ void CompParagraphComponentView::updateTextAlignment(
   // m_textFormat->SetTextAlignment(alignment);
 }
 
-void CompParagraphComponentView::OnRenderingDeviceLost() noexcept {
+void ParagraphComponentView::OnRenderingDeviceLost() noexcept {
   DrawText();
 }
 
-void CompParagraphComponentView::updateVisualBrush() noexcept {
+void ParagraphComponentView::updateVisualBrush() noexcept {
   bool requireNewBrush{false};
 
   // TODO
@@ -263,7 +263,7 @@ void CompParagraphComponentView::updateVisualBrush() noexcept {
 }
 
 // Renders the text into our composition surface
-void CompParagraphComponentView::DrawText() noexcept {
+void ParagraphComponentView::DrawText() noexcept {
   if (!m_drawingSurface)
     return;
 
@@ -394,7 +394,7 @@ void CompParagraphComponentView::DrawText() noexcept {
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompParagraphComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visual() const noexcept {
   return m_visual;
 }
 

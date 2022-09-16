@@ -6,7 +6,7 @@
 
 #include "ComponentView.h"
 
-#include <Fabric/Composition/CompHelpers.h>
+#include <Fabric/Composition/CompositionHelpers.h>
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 namespace Microsoft::ReactNative {

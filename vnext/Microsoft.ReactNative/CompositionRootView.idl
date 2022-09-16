@@ -13,15 +13,15 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   [experimental]
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
-  runtimeclass CompRootView
+  runtimeclass CompositionRootView
   {
-    DOC_STRING("Creates a new instance of @CompRootView.")
-    CompRootView();
+    DOC_STRING("Creates a new instance of @CompositionRootView.")
+    CompositionRootView();
 
-    DOC_STRING("The @ReactNativeHost associated with the @CompRootView. It must be set to show any React UI elements.")
+    DOC_STRING("The @ReactNativeHost associated with the @CompositionRootView. It must be set to show any React UI elements.")
     ReactNativeHost ReactNativeHost { get; set; };
 
-    DOC_STRING("The RootVisual associated with the @CompRootView. It must be set to show any React UI elements.")
+    DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
     Microsoft.ReactNative.Composition.IVisual RootVisual { get; set; };
 
     Windows.Foundation.Size Size {get; set; };

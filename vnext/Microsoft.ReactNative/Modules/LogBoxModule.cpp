@@ -47,10 +47,10 @@ void LogBox::Hide() noexcept {
 LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
   auto data = reinterpret_cast<::IUnknown *>(GetProp(hwnd, CompHostProperty));
   winrt::com_ptr<winrt::IUnknown> spunk;
-  React::CompHwndHost host{nullptr};
+  React::CompositionHwndHost host{nullptr};
 
   if (data) {
-    winrt::check_hresult(data->QueryInterface(winrt::guid_of<React::CompHwndHost>(), winrt::put_abi(host)));
+    winrt::check_hresult(data->QueryInterface(winrt::guid_of<React::CompositionHwndHost>(), winrt::put_abi(host)));
     auto result = host.TranslateMessage(message, wparam, lparam);
     if (result)
       return result;
@@ -93,7 +93,7 @@ void LogBox::RegisterWndClass() noexcept {
   wcex.style = CS_HREDRAW | CS_VREDRAW;
   wcex.lpfnWndProc = &LogBoxWndProc;
   wcex.cbClsExtra = DLGWINDOWEXTRA;
-  wcex.cbWndExtra = sizeof(winrt::impl::abi<winrt::Microsoft::ReactNative::ICompHwndHost>::type *);
+  wcex.cbWndExtra = sizeof(winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *);
   wcex.hInstance = hInstance;
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
@@ -164,13 +164,13 @@ void LogBox::ShowOnUIThread() noexcept {
     RegisterWndClass();
 
     if (!m_hwnd) {
-      auto compHwndHost = React::CompHwndHost();
-      compHwndHost.ComponentName(L"LogBox");
-      compHwndHost.ReactNativeHost(host);
+      auto CompositionHwndHost = React::CompositionHwndHost();
+      CompositionHwndHost.ComponentName(L"LogBox");
+      CompositionHwndHost.ReactNativeHost(host);
       HINSTANCE hInstance = GetModuleHandle(NULL);
-      winrt::impl::abi<winrt::Microsoft::ReactNative::ICompHwndHost>::type *pHost{nullptr};
+      winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
       winrt::com_ptr<::IUnknown> spunk;
-      compHwndHost.as(spunk);
+      CompositionHwndHost.as(spunk);
       spunk->AddRef(); // Will be stored in windowData
 
       m_hwnd = CreateWindow(

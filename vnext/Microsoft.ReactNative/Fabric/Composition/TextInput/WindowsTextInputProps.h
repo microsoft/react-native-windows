@@ -84,12 +84,12 @@ static inline void fromRawValue(
   }
 }
 
-class CompWindowsTextInputProps final : public ViewProps, public BaseTextProps {
+class WindowsTextInputProps final : public ViewProps, public BaseTextProps {
  public:
-  CompWindowsTextInputProps() = default;
-  CompWindowsTextInputProps(
+  WindowsTextInputProps() = default;
+  WindowsTextInputProps(
       const PropsParserContext &context,
-      const CompWindowsTextInputProps &sourceProps,
+      const WindowsTextInputProps &sourceProps,
       const RawProps &rawProps);
 
   bool allowFontScaling{true};

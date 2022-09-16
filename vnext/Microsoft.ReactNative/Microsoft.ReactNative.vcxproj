@@ -624,11 +624,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompHwndHost.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionHwndHost.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionContext.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionSwitcher.idl" />
     <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionUIService.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompRootView.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true'" Include="CompositionRootView.idl" />
     <Midl Include="CoreAppPage.idl">
       <DependentUpon>CoreAppPage.xaml</DependentUpon>
       <SubType>Code</SubType>

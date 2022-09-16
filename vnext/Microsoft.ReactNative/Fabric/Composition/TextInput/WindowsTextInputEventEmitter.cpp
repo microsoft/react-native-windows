@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include "CompWindowsTextInputEventEmitter.h"
+#include "WindowsTextInputEventEmitter.h"
 
 namespace facebook::react {
 
-void CompWindowsTextInputEventEmitter::onChange(OnChange event) const {
+void WindowsTextInputEventEmitter::onChange(OnChange event) const {
   dispatchEvent("change", [event = std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     payload.setProperty(runtime, "eventCount", event.eventCount);
@@ -17,7 +17,7 @@ void CompWindowsTextInputEventEmitter::onChange(OnChange event) const {
   });
 }
 
-void CompWindowsTextInputEventEmitter::onSelectionChange(const OnSelectionChange &event) const {
+void WindowsTextInputEventEmitter::onSelectionChange(const OnSelectionChange &event) const {
   dispatchEvent("textInputSelectionChange", [event = std::move(event)](jsi::Runtime &runtime) {
     auto payload = jsi::Object(runtime);
     auto selection = jsi::Object(runtime);

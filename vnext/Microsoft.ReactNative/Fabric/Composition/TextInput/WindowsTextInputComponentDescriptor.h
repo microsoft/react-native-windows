@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CompWindowsTextInputShadowNode.h"
+#include "WindowsTextInputShadowNode.h"
 
 #include <yoga/CompactValue.h>
 #include <yoga/YGEnums.h>
@@ -17,12 +17,12 @@ namespace react {
 /*
  * Descriptor for <WindowsTextInput> component.
  */
-class CompWindowsTextInputComponentDescriptor final
-    : public ConcreteComponentDescriptor<CompWindowsTextInputShadowNode> {
+class WindowsTextInputComponentDescriptor final
+    : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
-  CompWindowsTextInputComponentDescriptor(ComponentDescriptorParameters const &parameters)
-      : ConcreteComponentDescriptor<CompWindowsTextInputShadowNode>(parameters) {
-    // Every single `CompWindowsTextInputShadowNode` will have a reference to
+  WindowsTextInputComponentDescriptor(ComponentDescriptorParameters const &parameters)
+      : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters) {
+    // Every single `WindowsTextInputShadowNode` will have a reference to
     // a shared `TextLayoutManager`.
     m_textLayoutManager = std::make_shared<TextLayoutManager>(contextContainer_);
   }
@@ -82,7 +82,7 @@ class CompWindowsTextInputComponentDescriptor final
 
  protected:
   void adopt(ShadowNode::Unshared const &shadowNode) const override {
-    auto textInputShadowNode = std::static_pointer_cast<CompWindowsTextInputShadowNode>(shadowNode);
+    auto textInputShadowNode = std::static_pointer_cast<WindowsTextInputShadowNode>(shadowNode);
 
     // `ParagraphShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.

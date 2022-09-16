@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "CompHwndHost.g.h"
+#include "CompositionHwndHost.g.h"
 
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
@@ -10,8 +10,8 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct CompHwndHost : CompHwndHostT<CompHwndHost> {
-  CompHwndHost() noexcept;
+struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
+  CompositionHwndHost() noexcept;
 
   uint64_t HWnd() noexcept;
 
@@ -47,7 +47,7 @@ struct CompHwndHost : CompHwndHostT<CompHwndHost> {
   double ScaleFactor() noexcept;
 
   HWND m_hwnd;
-  winrt::Microsoft::ReactNative::CompRootView m_compRootView{nullptr};
+  winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
 
   // Store locally if set before we have a rootview
@@ -60,5 +60,5 @@ struct CompHwndHost : CompHwndHostT<CompHwndHost> {
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct CompHwndHost : CompHwndHostT<CompHwndHost, implementation::CompHwndHost> {};
+struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost, implementation::CompositionHwndHost> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

@@ -7,19 +7,19 @@
 #include <Fabric/ComponentView.h>
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
-#include "CompHelpers.h"
+#include "CompositionHelpers.h"
 
 namespace Microsoft::ReactNative {
 
-struct CompBaseComponentView;
+struct CompositionBaseComponentView;
 struct CompContext;
 
 // TODO replace with proper FocusManager - does it need to be per rootview?
-CompBaseComponentView *GetFocusedComponent() noexcept;
-void SetFocusedComponent(CompBaseComponentView *value) noexcept;
+CompositionBaseComponentView *GetFocusedComponent() noexcept;
+void SetFocusedComponent(CompositionBaseComponentView *value) noexcept;
 
-struct CompBaseComponentView : public IComponentView {
-  CompBaseComponentView(
+struct CompositionBaseComponentView : public IComponentView {
+  CompositionBaseComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 
@@ -73,9 +73,9 @@ struct CompBaseComponentView : public IComponentView {
     */
 };
 
-struct CompViewComponentView : public CompBaseComponentView {
-  using Super = CompBaseComponentView;
-  CompViewComponentView(
+struct CompositionViewComponentView : public CompositionBaseComponentView {
+  using Super = CompositionBaseComponentView;
+  CompositionViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag);
 

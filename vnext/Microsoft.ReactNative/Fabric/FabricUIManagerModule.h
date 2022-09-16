@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include <Fabric/Composition/CompHelpers.h>
+#include <Fabric/Composition/CompositionHelpers.h>
 #include <NativeModules.h>
 #include <React.h>
 #include <react/renderer/scheduler/SchedulerDelegate.h>
 #include <react/renderer/scheduler/SurfaceManager.h>
 #include <winrt/Windows.UI.Composition.h>
-#include "Composition/CompComponentViewRegistry.h"
+#include "Composition/ComponentViewRegistry.h"
 
 namespace facebook::react {
 class Scheduler;
@@ -67,7 +67,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   bool m_transactionInFlight{false};
   bool m_followUpTransactionRequired{false};
 
-  CompComponentViewRegistry m_registry;
+  ComponentViewRegistry m_registry;
   struct SurfaceInfo {
     winrt::Microsoft::ReactNative::Composition::IVisual rootVisual{nullptr};
   };

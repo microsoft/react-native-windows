@@ -12,7 +12,7 @@ namespace facebook::react {
 /*
  * State for <WindowsTextInput> component.
  */
-class CompWindowsTextInputState final {
+class WindowsTextInputState final {
  public:
   int mostRecentEventCount{0};
 
@@ -66,7 +66,7 @@ class CompWindowsTextInputState final {
   float defaultThemePaddingTop{NAN};
   float defaultThemePaddingBottom{NAN};
 
-  CompWindowsTextInputState(
+  WindowsTextInputState(
       int64_t mostRecentEventCount,
       AttributedString attributedString,
       AttributedString reactTreeAttributedString,
@@ -78,8 +78,8 @@ class CompWindowsTextInputState final {
       float defaultThemePaddingTop,
       float defaultThemePaddingBottom);
 
-  CompWindowsTextInputState() = default;
-  CompWindowsTextInputState(CompWindowsTextInputState const &previousState, folly::dynamic const &data);
+  WindowsTextInputState() = default;
+  WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data);
   folly::dynamic getDynamic() const;
 };
 

@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
-#include "CompHwndHost.h"
-#include "CompHwndHost.g.cpp"
+#include "CompositionHwndHost.h"
+#include "CompositionHwndHost.g.cpp"
 
 #include <QuirkSettings.h>
 #include <ReactHost/MsoUtils.h>
@@ -17,16 +17,16 @@ WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-winrt::Windows::UI::Composition::Visual CompHwndHost::RootVisual() const noexcept {
+winrt::Windows::UI::Composition::Visual CompositionHwndHost::RootVisual() const noexcept {
   return m_target.Root();
 }
 
-winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget CompHwndHost::Target() const noexcept {
+winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget CompositionHwndHost::Target() const noexcept {
   assert(m_target);
   return m_target;
 }
 
-void CompHwndHost::CreateDesktopWindowTarget(HWND window) {
+void CompositionHwndHost::CreateDesktopWindowTarget(HWND window) {
   namespace abi = ABI::Windows::UI::Composition::Desktop;
 
   auto interop = m_compositor.as<abi::ICompositorDesktopInterop>();
@@ -36,19 +36,19 @@ void CompHwndHost::CreateDesktopWindowTarget(HWND window) {
   m_target = target;
 }
 
-void CompHwndHost::CreateCompositionRoot() {
+void CompositionHwndHost::CreateCompositionRoot() {
   auto root = m_compositor.CreateContainerVisual();
   root.RelativeSizeAdjustment({1.0f, 1.0f});
   root.Offset({0, 0, 0});
   m_target.Root(root);
 }
 
-CompHwndHost::CompHwndHost() noexcept {}
+CompositionHwndHost::CompositionHwndHost() noexcept {}
 
-void CompHwndHost::Initialize(uint64_t hwnd) noexcept {
+void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   m_hwnd = (HWND)hwnd;
 
-  m_compRootView = winrt::Microsoft::ReactNative::CompRootView();
+  m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
 
   CreateDesktopWindowTarget(m_hwnd);
   CreateCompositionRoot();
@@ -66,11 +66,11 @@ void CompHwndHost::Initialize(uint64_t hwnd) noexcept {
   UpdateSize();
 }
 
-double CompHwndHost::ScaleFactor() noexcept {
+double CompositionHwndHost::ScaleFactor() noexcept {
   return GetDpiForWindow(m_hwnd) / 96.0;
 }
 
-void CompHwndHost::UpdateSize() noexcept {
+void CompositionHwndHost::UpdateSize() noexcept {
   RECT rc;
   if (GetClientRect(m_hwnd, &rc)) {
     winrt::Windows::Foundation::Size size{
@@ -82,7 +82,7 @@ void CompHwndHost::UpdateSize() noexcept {
   }
 }
 
-LRESULT CompHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) noexcept {
+LRESULT CompositionHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) noexcept {
   if (!m_hwnd || !m_compRootView)
     return 0;
 
@@ -124,11 +124,11 @@ LRESULT CompHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) no
   return 0;
 }
 
-ReactNative::ReactNativeHost CompHwndHost::ReactNativeHost() noexcept {
+ReactNative::ReactNativeHost CompositionHwndHost::ReactNativeHost() noexcept {
   return m_compRootView ? m_compRootView.ReactNativeHost() : m_reactNativeHost;
 }
 
-void CompHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept {
+void CompositionHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept {
   if (m_compRootView) {
     m_compRootView.ReactNativeHost(value);
   } else {
@@ -137,15 +137,15 @@ void CompHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &value) no
   EnsureTarget();
 }
 
-winrt::Windows::UI::Composition::Compositor CompHwndHost::Compositor() const noexcept {
+winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() const noexcept {
   return m_compositor;
 }
 
-void CompHwndHost::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
+void CompositionHwndHost::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
   m_compositor = value;
 }
 
-void CompHwndHost::EnsureTarget() noexcept {
+void CompositionHwndHost::EnsureTarget() noexcept {
   if (!ReactNativeHost() || !m_hwnd) {
     return;
   }
@@ -157,22 +157,22 @@ void CompHwndHost::EnsureTarget() noexcept {
       Target());
 }
 
-winrt::hstring CompHwndHost::ComponentName() noexcept {
+winrt::hstring CompositionHwndHost::ComponentName() noexcept {
   return m_compRootView ? m_compRootView.ComponentName() : m_componentName;
 }
 
-void CompHwndHost::ComponentName(winrt::hstring const &value) noexcept {
+void CompositionHwndHost::ComponentName(winrt::hstring const &value) noexcept {
   if (m_compRootView)
     m_compRootView.ComponentName(value);
   else
     m_componentName = value;
 }
 
-ReactNative::JSValueArgWriter CompHwndHost::InitialProps() noexcept {
+ReactNative::JSValueArgWriter CompositionHwndHost::InitialProps() noexcept {
   return m_compRootView ? m_compRootView.InitialProps() : m_initialPropsWriter;
 }
 
-void CompHwndHost::InitialProps(ReactNative::JSValueArgWriter const &value) noexcept {
+void CompositionHwndHost::InitialProps(ReactNative::JSValueArgWriter const &value) noexcept {
   if (m_compRootView)
     m_compRootView.InitialProps(value);
   else

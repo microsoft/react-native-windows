@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "CompImageComponentView.h"
+#include "ImageComponentView.h"
 
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
@@ -22,13 +22,13 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
-#include "CompHelpers.h"
+#include "CompositionHelpers.h"
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
 namespace Microsoft::ReactNative {
 
-CompImageComponentView::CompImageComponentView(
+ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
@@ -49,23 +49,23 @@ CompImageComponentView::CompImageComponentView(
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
-CompImageComponentView::supplementalComponentDescriptorProviders() noexcept {
+ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void CompImageComponentView::mountChildComponentView(
+void ImageComponentView::mountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
 
-void CompImageComponentView::unmountChildComponentView(
+void ImageComponentView::unmountChildComponentView(
     const IComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
 
-void CompImageComponentView::beginDownloadImage() noexcept {
+void ImageComponentView::beginDownloadImage() noexcept {
   ReactImageSource source;
   source.uri = m_url;
   source.height = m_imgHeight;
@@ -120,7 +120,7 @@ winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
   return decodedFrame;
 }
 
-void CompImageComponentView::generateBitmap(
+void ImageComponentView::generateBitmap(
     const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
   winrt::com_ptr<IWICBitmapSource> decodedFrame = wicBitmapSourceFromStream(results);
 
@@ -152,7 +152,7 @@ void CompImageComponentView::generateBitmap(
   }
 }
 
-void CompImageComponentView::updateProps(
+void ImageComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &oldImageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
@@ -199,11 +199,11 @@ void CompImageComponentView::updateProps(
   m_props = std::static_pointer_cast<facebook::react::ImageProps const>(props);
 }
 
-void CompImageComponentView::updateState(
+void ImageComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
 
-void CompImageComponentView::updateLayoutMetrics(
+void ImageComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
@@ -226,7 +226,7 @@ void CompImageComponentView::updateLayoutMetrics(
   });
 }
 
-void CompImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
   if (m_reloadImage) {
     const auto &props = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
     m_url = props.sources[0].uri;
@@ -245,12 +245,12 @@ void CompImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMas
   ensureDrawingSurface();
 }
 
-void CompImageComponentView::OnRenderingDeviceLost() noexcept {
+void ImageComponentView::OnRenderingDeviceLost() noexcept {
   // Draw the text again
   DrawImage();
 }
 
-void CompImageComponentView::ensureDrawingSurface() noexcept {
+void ImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurface && m_wicbmp) {
@@ -288,7 +288,7 @@ void CompImageComponentView::ensureDrawingSurface() noexcept {
   }
 }
 
-void CompImageComponentView::DrawImage() noexcept {
+void ImageComponentView::DrawImage() noexcept {
   // Begin our update of the surface pixels. If this is our first update, we are required
   // to specify the entire surface, which nullptr is shorthand for (but, as it works out,
   // any time we make an update we touch the entire surface, so we always pass nullptr).
@@ -325,20 +325,20 @@ void CompImageComponentView::DrawImage() noexcept {
   }
 }
 
-void CompImageComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared CompImageComponentView::props() noexcept {
+void ImageComponentView::prepareForRecycle() noexcept {}
+facebook::react::Props::Shared ImageComponentView::props() noexcept {
   assert(false);
   return {};
 }
 
-facebook::react::Tag CompImageComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
+facebook::react::Tag ImageComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
     const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   /*
     facebook::react::Tag tag;
     if (std::any_of(m_children.rbegin(), m_children.rend(), [&tag, &ptLocal, &localPt](auto child) {
-          tag = static_cast<const CompBaseComponentView *>(child)->hitTest(ptLocal, localPt);
+          tag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
           return tag != -1;
         }))
       return tag;
@@ -352,13 +352,13 @@ facebook::react::Tag CompImageComponentView::hitTest(facebook::react::Point pt, 
   return -1;
 }
 
-void CompImageComponentView::ensureVisual() noexcept {
+void ImageComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompImageComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::IVisual ImageComponentView::Visual() const noexcept {
   return m_visual;
 }
 

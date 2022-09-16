@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include "CompWindowsTextInputProps.h"
+#include "WindowsTextInputProps.h"
 
 namespace facebook::react {
 
-CompWindowsTextInputProps::CompWindowsTextInputProps(
+WindowsTextInputProps::WindowsTextInputProps(
     const PropsParserContext &context,
-    const CompWindowsTextInputProps &sourceProps,
+    const WindowsTextInputProps &sourceProps,
     const RawProps &rawProps)
     : ViewProps(context, sourceProps, rawProps),
       BaseTextProps(context, sourceProps, rawProps),

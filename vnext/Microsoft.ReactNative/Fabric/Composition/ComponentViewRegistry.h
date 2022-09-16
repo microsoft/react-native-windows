@@ -6,12 +6,12 @@
 
 #include <Fabric/IComponentViewRegistry.h>
 
-#include <Fabric/Composition/CompHelpers.h>
+#include <Fabric/Composition/CompositionHelpers.h>
 
 namespace Microsoft::ReactNative {
 
 /* This could be expanded to have a pool of ComponentViewDescriptor's, like iOS does */
-class CompComponentViewRegistry final : public IComponentViewRegistry {
+class ComponentViewRegistry final : public IComponentViewRegistry {
  public:
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept override;
 
