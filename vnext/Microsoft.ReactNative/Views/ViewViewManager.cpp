@@ -477,7 +477,8 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     // keep it around, so not adding that code (yet).
   }
 
-  bool shouldBeControl = (viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick()));
+  bool shouldBeControl =
+      (viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick()));
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
