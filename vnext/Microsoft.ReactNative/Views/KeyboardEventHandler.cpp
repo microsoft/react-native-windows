@@ -650,8 +650,7 @@ bool KeyboardHelper::IsModifiedKeyLocked(
 #else
   auto const &keyState = coreWindow.GetKeyState(virtualKey);
 #endif // USE_WINUI3
-  return (keyState & winrt::CoreVirtualKeyStates::Locked) ==
-      winrt::CoreVirtualKeyStates::Locked;
+  return (keyState & winrt::CoreVirtualKeyStates::Locked) == winrt::CoreVirtualKeyStates::Locked;
 }
 
 } // namespace Microsoft::ReactNative
