@@ -12,6 +12,7 @@
 #include <utilities.h>
 #include "OriginPolicyHttpFilter.h"
 #include "RedirectHttpFilter.h"
+#include "IRedirectEventSource.h"
 
 // Boost Libraries
 #include <boost/algorithm/string.hpp>
@@ -520,6 +521,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     auto opFilter = winrt::make<OriginPolicyHttpFilter>(redirFilter);
     redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(
         opFilter.as<winrt::Microsoft::ReactNative::IRedirectEventSource>());
+    redirFilter.as<RedirectHttpFilter>()->SetRedirectSource2(opFilter.as<IRedirectEventSource2>());
 
     client = HttpClient{opFilter};
   }
