@@ -68,7 +68,7 @@ namespace Microsoft::React::Networking {
     bool withCredentials,
     std::function<void(int64_t)>&& callback) noexcept /*override*/ {
     // Enforce supported args
-    assert(responseType == "text" || responseType == "base64" || responseType == "blob");
+    assert(responseType == "text" || responseType == "base64" | responseType == "blob");
 
     if (callback) {
       callback(requestId);
@@ -131,8 +131,8 @@ namespace Microsoft::React::Networking {
     // NOT IMPLEMENTED
   }
 
-  void WinRTHttpResource::SetOnRequestSuccess(function<void(int64_t requestId)>&& handler) noexcept /*override*/ {
-    m_onRequestSuccess = std::move(handler);
+  void WinRTHttpResource::SetOnRequestSuccessSuccess(function<void(int64_t requestId)>&& handler) noexcept /*override*/ {
+    m_onRequestSuccessSuccess = std::move(handler);
   }
 
   void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response&& response)>&& handler) noexcept
@@ -143,6 +143,12 @@ namespace Microsoft::React::Networking {
   void WinRTHttpResource::SetOnData(function<void(int64_t requestId, string&& responseData)>&& handler) noexcept
     /*override*/ {
     m_onData = std::move(handler);
+  }
+
+  void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic&& responseData)>&& handler) noexcept
+    /*override*/
+  {
+    m_onDataDynamic = std::move(handler);
   }
 
   void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic&& responseData)>&& handler) noexcept
@@ -349,7 +355,27 @@ namespace Microsoft::React::Networking {
         auto inputStream = co_await response.Content().ReadAsInputStreamAsync();
         auto reader = DataReader{ inputStream };
 
-        if (coReqArgs->IsText) {
+        // #9510 - 10mb limit on fetch
+        co_await reader.LoadAsync(10 * 1024 * 1024);
+
+        // Let response handler take over, if set
+        if (auto responseHandler = self->m_responseHandler.lock()) {
+          if (responseHandler->Supports(coReqArgs->ResponseType)) {
+            auto bytes = vector<uint8_t>(reader.UnconsumedBufferLength());
+            reader.ReadBytes(bytes);
+            auto blob = responseHandler->ToResponseData(std::move(bytes));
+
+            if (self->m_onDataDynamic && self->m_onRequestSuccess) {
+              self->m_onDataDynamic(coReqArgs->RequestId, std::move(blob));
+              self->m_onRequestSuccess(coReqArgs->RequestId);
+            }
+
+            co_return;
+          }
+        }
+
+        auto isText = coReqArgs->ResponseType == "text";
+        if (isText) {
           reader.UnicodeEncoding(UnicodeEncoding::Utf8);
         }
 
@@ -362,7 +388,7 @@ namespace Microsoft::React::Networking {
           co_await reader.LoadAsync(segmentSize);
           length = reader.UnconsumedBufferLength();
 
-          if (coReqArgs->IsText) {
+          if (isText) {
             auto data = std::vector<uint8_t>(length);
             reader.ReadBytes(data);
 
