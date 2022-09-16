@@ -25,89 +25,89 @@ using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 
-  using Microsoft::React::Modules::SendEvent;
-  using Microsoft::React::Networking::IHttpResource;
+using Microsoft::React::Modules::SendEvent;
+using Microsoft::React::Networking::IHttpResource;
 
-  constexpr char moduleName[] = "Networking";
+constexpr char moduleName[] = "Networking";
 
-  // React event names
-  constexpr char completedResponse[] = "didCompleteNetworkResponse";
-  constexpr char receivedResponse[] = "didReceiveNetworkResponse";
-  constexpr char receivedData[] = "didReceiveNetworkData";
-  constexpr char receivedDataProgress[] = "didReceiveNetworkDataProgress";
+// React event names
+constexpr char completedResponse[] = "didCompleteNetworkResponse";
+constexpr char receivedResponse[] = "didReceiveNetworkResponse";
+constexpr char receivedData[] = "didReceiveNetworkData";
+constexpr char receivedDataProgress[] = "didReceiveNetworkDataProgress";
 
-  static void SetUpHttpResource(
+static void SetUpHttpResource(
     shared_ptr<IHttpResource> resource,
     weak_ptr<Instance> weakReactInstance,
-    IInspectable& inspectableProperties) {
-    resource->SetOnRequestSuccess([weakReactInstance](int64_t requestId) {
-      auto args = dynamic::array(requestId);
+    IInspectable &inspectableProperties) {
+  resource->SetOnRequestSuccess([weakReactInstance](int64_t requestId) {
+    auto args = dynamic::array(requestId);
 
-      SendEvent(weakReactInstance, completedResponse, std::move(args));
-      });
+    SendEvent(weakReactInstance, completedResponse, std::move(args));
+  });
 
-    resource->SetOnResponse([weakReactInstance](int64_t requestId, IHttpResource::Response&& response) {
-      dynamic headers = dynamic::object();
-      for (auto& header : response.Headers) {
-        headers[header.first] = header.second;
-      }
+  resource->SetOnResponse([weakReactInstance](int64_t requestId, IHttpResource::Response &&response) {
+    dynamic headers = dynamic::object();
+    for (auto &header : response.Headers) {
+      headers[header.first] = header.second;
+    }
 
-      // TODO: Test response content.
-      dynamic args = dynamic::array(requestId, response.StatusCode, headers, response.Url);
+    // TODO: Test response content.
+    dynamic args = dynamic::array(requestId, response.StatusCode, headers, response.Url);
 
-      SendEvent(weakReactInstance, receivedResponse, std::move(args));
-      });
+    SendEvent(weakReactInstance, receivedResponse, std::move(args));
+  });
 
-    resource->SetOnData([weakReactInstance](int64_t requestId, string&& responseData) {
-      SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
+  resource->SetOnData([weakReactInstance](int64_t requestId, string &&responseData) {
+    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
 
-      // TODO: Move into separate method IF not executed right after onData()
-      SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
-      });
+    // TODO: Move into separate method IF not executed right after onData()
+    SendEvent(weakReactInstance, completedResponse, dynamic::array(requestId));
+  });
 
-    // Explicitly declaring function type to avoid type inference ambiguity.
-    std::function<void(int64_t, dynamic&&)> onDataDynamic = [weakReactInstance](
-      int64_t requestId, dynamic&& responseData) {
-        SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
-    };
-    resource->SetOnData(std::move(onDataDynamic));
+  // Explicitly declaring function type to avoid type inference ambiguity.
+  std::function<void(int64_t, dynamic &&)> onDataDynamic = [weakReactInstance](
+                                                               int64_t requestId, dynamic &&responseData) {
+    SendEvent(weakReactInstance, receivedData, dynamic::array(requestId, std::move(responseData)));
+  };
+  resource->SetOnData(std::move(onDataDynamic));
 
-    resource->SetOnError([weakReactInstance](int64_t requestId, string&& message, bool isTimeout) {
-      dynamic args = dynamic::array(requestId, std::move(message));
-      if (isTimeout) {
-        args.push_back(true);
-      }
+  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message, bool isTimeout) {
+    dynamic args = dynamic::array(requestId, std::move(message));
+    if (isTimeout) {
+      args.push_back(true);
+    }
 
-      SendEvent(weakReactInstance, completedResponse, std::move(args));
-      });
-  }
+    SendEvent(weakReactInstance, completedResponse, std::move(args));
+  });
+}
 
 } // namespace
 
 namespace Microsoft::React {
 
-  HttpModule::HttpModule(IInspectable const& inspectableProperties) noexcept
-    : m_holder{ std::make_shared<ModuleHolder>() },
-    m_inspectableProperties{ inspectableProperties },
-    m_resource{ IHttpResource::Make(inspectableProperties) } {
-    m_holder->Module = this;
-  }
+HttpModule::HttpModule(IInspectable const &inspectableProperties) noexcept
+    : m_holder{std::make_shared<ModuleHolder>()},
+      m_inspectableProperties{inspectableProperties},
+      m_resource{IHttpResource::Make(inspectableProperties)} {
+  m_holder->Module = this;
+}
 
-  HttpModule::~HttpModule() noexcept /*override*/ {
-    m_holder->Module = nullptr;
-  }
+HttpModule::~HttpModule() noexcept /*override*/ {
+  m_holder->Module = nullptr;
+}
 
 #pragma region CxxModule
 
-  string HttpModule::getName() /*override*/ {
-    return moduleName;
-  }
+string HttpModule::getName() /*override*/ {
+  return moduleName;
+}
 
-  std::map<string, dynamic> HttpModule::getConstants() {
-    return {};
-  }
+std::map<string, dynamic> HttpModule::getConstants() {
+  return {};
+}
 
-  // clang-format off
+// clang-format off
   std::vector<facebook::xplat::module::CxxModule::Method> HttpModule::getMethods() {
 
     return
@@ -192,12 +192,12 @@ namespace Microsoft::React {
       }
     };
   }
-  // clang-format on
+// clang-format on
 
 #pragma endregion CxxModule
 
-  /*extern*/ const char* GetHttpModuleName() noexcept {
-    return moduleName;
-  }
+/*extern*/ const char *GetHttpModuleName() noexcept {
+  return moduleName;
+}
 
 } // namespace Microsoft::React

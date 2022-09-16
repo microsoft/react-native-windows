@@ -212,8 +212,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
 
   do {
     // Send subsequent requests through the filter that doesn't have the credentials included in the first request
-    response =
-        co_await (redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
+    response = co_await(redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
 
     // Stop redirecting when a non-redirect status is responded.
     if (response.StatusCode() != HttpStatusCode::MultipleChoices &&

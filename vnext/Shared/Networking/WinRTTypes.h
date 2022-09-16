@@ -16,18 +16,18 @@
 
 namespace Microsoft::React::Networking {
 
-  struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Foundation::IInspectable> {
-    int64_t RequestId;
-    IHttpResource::Headers Headers;
-    folly::dynamic Data;
-    bool IncrementalUpdates;
-    bool WithCredentials;
-    std::string ResponseType;
-    int64_t Timeout;
-  };
+struct RequestArgs : public winrt::implements<RequestArgs, winrt::Windows::Foundation::IInspectable> {
+  int64_t RequestId;
+  IHttpResource::Headers Headers;
+  folly::dynamic Data;
+  bool IncrementalUpdates;
+  bool WithCredentials;
+  std::string ResponseType;
+  int64_t Timeout;
+};
 
-  typedef winrt::Windows::Foundation::
+typedef winrt::Windows::Foundation::
     IAsyncOperationWithProgress<winrt::Windows::Web::Http::HttpResponseMessage, winrt::Windows::Web::Http::HttpProgress>
-    ResponseOperation;
+        ResponseOperation;
 
 } // namespace Microsoft::React::Networking
