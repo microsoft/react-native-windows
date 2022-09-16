@@ -151,12 +151,6 @@ namespace Microsoft::React::Networking {
     m_onDataDynamic = std::move(handler);
   }
 
-  void WinRTHttpResource::SetOnData(function<void(int64_t requestId, dynamic&& responseData)>&& handler) noexcept
-    /*override*/
-  {
-    m_onDataDynamic = std::move(handler);
-  }
-
   void WinRTHttpResource::SetOnError(function<void(int64_t requestId, string&& errorMessage)>&& handler) noexcept
     /*override*/ {
     m_onError = std::move(handler);
@@ -267,7 +261,7 @@ namespace Microsoft::React::Networking {
         for (auto& byte : bytes) {
           byteVector.push_back(static_cast<uint8_t>(byte.asInt()));
         }
-        auto view = winrt::array_view<uint8_t>{ byteVector };
+        auto view = winrt::array_view<uint8_t const>{ byteVector };
         auto buffer = CryptographicBuffer::CreateFromByteArray(view);
         content = HttpBufferContent{ std::move(buffer) };
       }
