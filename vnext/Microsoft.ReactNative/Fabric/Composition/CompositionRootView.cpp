@@ -10,8 +10,8 @@
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.UI.Core.h>
-#include "CompositionHelpers.h"
 #include "CompositionContextHelper.h"
+#include "CompositionHelpers.h"
 #include "ReactNativeHost.h"
 
 #ifdef USE_FABRIC
@@ -55,25 +55,21 @@ Mso::Future<void> CompositionReactViewInstance::InitRootView(
                        .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                        .try_as<IReactDispatcher>();
 
-  return PostInUIQueue(
-      [reactInstance{std::move(reactInstance)}, viewOptions{std::move(viewOptions)}](
-          winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &rootControl) mutable noexcept {
-        rootControl->InitRootView(std::move(reactInstance), std::move(viewOptions));
-      });
+  return PostInUIQueue([reactInstance{std::move(reactInstance)}, viewOptions{std::move(viewOptions)}](
+                           winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
+                               &rootControl) mutable noexcept {
+    rootControl->InitRootView(std::move(reactInstance), std::move(viewOptions));
+  });
 }
 
 Mso::Future<void> CompositionReactViewInstance::UpdateRootView() noexcept {
-  return PostInUIQueue(
-      [](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &rootControl) mutable noexcept {
-        rootControl->UpdateRootView();
-      });
+  return PostInUIQueue([](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
+                              &rootControl) mutable noexcept { rootControl->UpdateRootView(); });
 }
 
 Mso::Future<void> CompositionReactViewInstance::UninitRootView() noexcept {
-  return PostInUIQueue(
-      [](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &rootControl) mutable noexcept {
-        rootControl->UninitRootView();
-      });
+  return PostInUIQueue([](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
+                              &rootControl) mutable noexcept { rootControl->UninitRootView(); });
 }
 
 //===========================================================================
@@ -223,7 +219,8 @@ void CompositionRootView::OnScrollWheel(Windows::Foundation::Point point, int32_
     return;
 
   if (m_CompositionEventHandler) {
-    m_CompositionEventHandler->ScrollWheel(static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
+    m_CompositionEventHandler->ScrollWheel(
+        static_cast<facebook::react::SurfaceId>(m_rootTag), {point.X, point.Y}, delta);
   }
 }
 

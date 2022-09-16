@@ -490,9 +490,7 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
   */
 }
 
-void WindowsTextInputComponentView::handleCommand(
-    std::string const &commandName,
-    folly::dynamic const &arg) noexcept {
+void WindowsTextInputComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
   if (commandName == "setTextAndSelection") {
     auto eventCount = arg[0].asInt();
 
@@ -514,7 +512,8 @@ void WindowsTextInputComponentView::handleCommand(
       winrt::check_hresult(m_textServices->TxSendMessage(
           EM_SELCHANGE, 0 , reinterpret_cast<WPARAM>(&sc), &res));
           */
-      winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(begin), static_cast<LPARAM>(end), &res));
+      winrt::check_hresult(
+          m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(begin), static_cast<LPARAM>(end), &res));
 
       m_comingFromJS = false;
     }
@@ -1024,9 +1023,8 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = false;
 }
 
-facebook::react::Tag WindowsTextInputComponentView::hitTest(
-    facebook::react::Point pt,
-    facebook::react::Point &localPt) const noexcept {
+facebook::react::Tag WindowsTextInputComponentView::hitTest(facebook::react::Point pt, facebook::react::Point &localPt)
+    const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   /*

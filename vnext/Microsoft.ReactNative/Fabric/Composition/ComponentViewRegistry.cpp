@@ -20,10 +20,10 @@
 #include <react/renderer/components/view/ViewShadowNode.h>
 
 #include <Fabric/Composition/CompositionHelpers.h>
+#include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
 #include <Fabric/Composition/ParagraphComponentView.h>
 #include <Fabric/Composition/ScrollViewComponentView.h>
-#include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 
 namespace Microsoft::ReactNative {

@@ -7,8 +7,8 @@
 #include "CompositionEventHandler.h"
 
 #ifdef USE_FABRIC
-#include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/FabricUIManagerModule.h>
 #include <react/renderer/components/view/TouchEventEmitter.h>
 #endif
 
@@ -87,7 +87,10 @@ void CompositionEventHandler::PointerDown(facebook::react::SurfaceId surfaceId, 
 }
 */
 
-void CompositionEventHandler::ScrollWheel(facebook::react::SurfaceId surfaceId, facebook::react::Point pt, uint32_t delta) {
+void CompositionEventHandler::ScrollWheel(
+    facebook::react::SurfaceId surfaceId,
+    facebook::react::Point pt,
+    uint32_t delta) {
   if (std::shared_ptr<FabricUIManager> fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context->Properties()))) {
     facebook::react::Point ptLocal;
@@ -164,7 +167,8 @@ void CompositionEventHandler::PointerPressed(
     facebook::react::Point ptScaled = {
         static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
         static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag =
+        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
@@ -176,7 +180,11 @@ void CompositionEventHandler::PointerPressed(
   }
 }
 
-void CompositionEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
+void CompositionEventHandler::ButtonDown(
+    facebook::react::SurfaceId surfaceId,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam) {
   int pointerId = 1; // TODO pointerId
 
   auto touch = std::find_if(
@@ -200,7 +208,8 @@ void CompositionEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, u
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(x / m_compRootView.ScaleFactor()), static_cast<float>(y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag =
+        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
@@ -241,7 +250,11 @@ void CompositionEventHandler::ButtonDown(facebook::react::SurfaceId surfaceId, u
   }
 }
 
-void CompositionEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
+void CompositionEventHandler::PointerUp(
+    facebook::react::SurfaceId surfaceId,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam) {
   POINTER_INFO pi;
   GetPointerInfo(GET_POINTERID_WPARAM(wParam), &pi);
   POINT pt = {GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam)};
@@ -257,7 +270,8 @@ void CompositionEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, ui
     facebook::react::Point ptScaled = {
         static_cast<float>(pt.x / m_compRootView.ScaleFactor()),
         static_cast<float>(pt.y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag =
+        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;
@@ -269,7 +283,11 @@ void CompositionEventHandler::PointerUp(facebook::react::SurfaceId surfaceId, ui
   }
 }
 
-void CompositionEventHandler::ButtonUp(facebook::react::SurfaceId surfaceId, uint32_t msg, uint64_t wParam, int64_t lParam) {
+void CompositionEventHandler::ButtonUp(
+    facebook::react::SurfaceId surfaceId,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam) {
   int pointerId = 1; // TODO pointerId
 
   auto touch = std::find_if(
@@ -288,7 +306,8 @@ void CompositionEventHandler::ButtonUp(facebook::react::SurfaceId surfaceId, uin
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(surfaceId);
     facebook::react::Point ptScaled = {
         static_cast<float>(x / m_compRootView.ScaleFactor()), static_cast<float>(y / m_compRootView.ScaleFactor())};
-    auto tag = static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
+    auto tag =
+        static_cast<CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
       return;

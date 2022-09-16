@@ -5,11 +5,11 @@
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionUIService.h>
+#include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
-#include <Fabric/Composition/CompositionViewComponentView.h>
-#include <Fabric/Composition/CompositionUIService.h>
-#include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
 #include <ICompositionRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
@@ -154,8 +154,8 @@ std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry const> shar
         facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
     providerRegistry->add(
         facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
-    providerRegistry->add(facebook::react::concreteComponentDescriptorProvider<
-                          facebook::react::WindowsTextInputComponentDescriptor>());
+    providerRegistry->add(
+        facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
     return providerRegistry;
   }();
 

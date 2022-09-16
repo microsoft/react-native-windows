@@ -34,9 +34,7 @@ WindowsTextInputState::WindowsTextInputState(
       defaultThemePaddingTop(defaultThemePaddingTop),
       defaultThemePaddingBottom(defaultThemePaddingBottom) {}
 
-WindowsTextInputState::WindowsTextInputState(
-    WindowsTextInputState const &previousState,
-    folly::dynamic const &data)
+WindowsTextInputState::WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data)
     : mostRecentEventCount(data.getDefault("mostRecentEventCount", previousState.mostRecentEventCount).getInt()),
       cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt()),
       attributedString(previousState.attributedString),

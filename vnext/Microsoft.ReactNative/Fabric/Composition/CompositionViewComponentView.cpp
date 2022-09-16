@@ -42,7 +42,8 @@ IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
 }
 
-void CompositionBaseComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
+void CompositionBaseComponentView::updateEventEmitter(
+    facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
 }
 
@@ -969,7 +970,9 @@ CompositionViewComponentView::supplementalComponentDescriptorProviders() noexcep
   return {};
 }
 
-void CompositionViewComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
+void CompositionViewComponentView::mountChildComponentView(
+    const IComponentView &childComponentView,
+    uint32_t index) noexcept {
   m_children.insert(std::next(m_children.begin(), index), &childComponentView);
 
   indexOffsetForBorder(index);
