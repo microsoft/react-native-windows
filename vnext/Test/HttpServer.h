@@ -39,7 +39,13 @@ namespace Microsoft::React::Test
 
     ResponseWrapper(StringResponse&& response);
 
-    ResponseWrapper(ResponseWrapper&&) = default;
+  ResponseWrapper(DynamicResponse const& response);
+
+  ResponseWrapper(EmptyResponse const& response);
+
+  ResponseWrapper(StringResponse const& response);
+
+  ResponseWrapper(ResponseWrapper&&) = default;
 
     std::shared_ptr<void> Response();
 

@@ -5,8 +5,6 @@
 
 #include "RedirectHttpFilter.h"
 
-// React Native Windows
-#include <CppRuntimeOptions.h>
 #include "WinRTTypes.h"
 
 // Windows API
@@ -213,15 +211,9 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
   method = coRequest.Method();
 
   do {
-    // Set User-Agent
-    // See https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
-    auto userAgent = GetRuntimeOptionString("Http.UserAgent");
-    if (userAgent.size() > 0) {
-      coRequest.Headers().Append(L"User-Agent", winrt::to_hstring(userAgent));
-    }
-
     // Send subsequent requests through the filter that doesn't have the credentials included in the first request
-    response = co_await(redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
+    response =
+        co_await (redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
 
     // Stop redirecting when a non-redirect status is responded.
     if (response.StatusCode() != HttpStatusCode::MultipleChoices &&
