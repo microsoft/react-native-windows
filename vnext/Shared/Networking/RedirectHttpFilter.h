@@ -4,7 +4,6 @@
 #pragma once
 
 #include <winrt/base.h>
-#include <winrt/Microsoft.ReactNative.h>
 #include "IRedirectEventSource.h"
 #include "IWinRTHttpRequestFactory.h"
 
@@ -29,7 +28,6 @@ class RedirectHttpFilter : public winrt::implements<
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilterWithNoCredentials;
 
   std::weak_ptr<IWinRTHttpRequestFactory> m_requestFactory;
-  winrt::Microsoft::ReactNative::IRedirectEventSource m_redirEventSrc;
   winrt::com_ptr<Microsoft::React::Networking::IRedirectEventSource2> m_redirEventSrc2;
   bool m_allowAutoRedirect{true};
   size_t m_maximumRedirects;
@@ -48,7 +46,6 @@ class RedirectHttpFilter : public winrt::implements<
 
   void SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept;
 
-  void SetRedirectSource(winrt::Microsoft::ReactNative::IRedirectEventSource const &eventSrc) noexcept;
   void SetRedirectSource2(winrt::com_ptr<Microsoft::React::Networking::IRedirectEventSource2> const &eventSrc) noexcept;
 
 #pragma region IHttpFilter

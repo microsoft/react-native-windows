@@ -713,34 +713,6 @@ bool OriginPolicyHttpFilter::OnRedirecting2(
   return true;
 }
 
-bool OriginPolicyHttpFilter::OnRedirecting(
-    HttpRequestMessage const &request,
-    HttpResponseMessage const &response) noexcept {
-  // Consider the following scenario.
-  // User signs in to http://a.com and visits a page that makes CORS request to http://b.com with origin=http://a.com.
-  // Http://b.com reponds with a redirect to http://a.com. The browser follows the redirect to http://a.com with
-  // origin=http://a.com. Since the origin matches the URL, the request is authorized at http://a.com, but it actually
-  // allows http://b.com to bypass the CORS check at http://a.com since the redirected URL is from http://b.com.
-  if (!IsSameOrigin(response.Headers().Location(), request.RequestUri()) &&
-      !IsSameOrigin(s_origin, request.RequestUri())) {
-    // By masking the origin field in the request header, we make it impossible for the server to set a single value for
-    // the access-control-allow-origin header. It means, the only way to support redirect is that server allows access
-    // from all sites through wildcard.
-    request.Headers().Insert(L"Origin", L"null");
-
-    auto props = request.Properties();
-    // Look for 'RequestArgs' key to ensure we are redirecting the main request.
-    if (auto iReqArgs = props.TryLookup(L"RequestArgs")) {
-      props.Insert(L"TaintedOrigin", winrt::box_value(true));
-    } else {
-      // Abort redirection if the request is either preflight or extraneous.
-      return false;
-    }
-  }
-
-  return true;
-}
-
 #pragma endregion IRedirectEventSource
 
 #pragma region IHttpFilter

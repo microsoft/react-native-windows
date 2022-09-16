@@ -3,9 +3,8 @@
 
 #pragma once
 
-#include <winrt/Microsoft.ReactNative.h>
-#include "OriginPolicy.h"
 #include "IRedirectEventSource.h"
+#include "OriginPolicy.h"
 
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
@@ -22,8 +21,7 @@ namespace Microsoft::React::Networking {
 class OriginPolicyHttpFilter : public winrt::implements<
                                    OriginPolicyHttpFilter,
                                    winrt::Windows::Web::Http::Filters::IHttpFilter,
-                                   IRedirectEventSource2,
-                                   winrt::Microsoft::ReactNative::IRedirectEventSource> {
+                                   IRedirectEventSource2> {
  public:
   struct ConstWcharComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;
@@ -108,10 +106,6 @@ class OriginPolicyHttpFilter : public winrt::implements<
   SendPreflightAsync(winrt::Windows::Web::Http::HttpRequestMessage const &request) const;
 
 #pragma region IRedirectEventSource
-
-  bool OnRedirecting(
-      winrt::Windows::Web::Http::HttpRequestMessage const &request,
-      winrt::Windows::Web::Http::HttpResponseMessage const &response) noexcept;
 
   bool OnRedirecting2(
       winrt::Windows::Web::Http::HttpRequestMessage const &request,
