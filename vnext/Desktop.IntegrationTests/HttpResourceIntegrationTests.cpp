@@ -73,9 +73,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        0, /*requestId*/
-        {}, /*header*/
-        {}, /*data*/
+        {} /*header*/,
+        {} /*bodyData*/,
         "text",
         false,
         1000 /*timeout*/,
@@ -129,14 +128,13 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        0, /*requestId*/
         {
             {"Content-Type", "application/json"},
             {"Content-Encoding", "ASCII"},
             {"name3", "value3"},
             {"name4", "value4"},
         },
-        {}, /*data*/
+        {} /*bodyData*/,
         "text",
         false,
         1000 /*timeout*/,
@@ -240,9 +238,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "OPTIONS",
         string{url},
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
+        {} /*headers*/,
+        {} /*bodyData*/,
         "text",
         false,
         1000 /*timeout*/,
@@ -251,9 +248,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
+        {} /*headers*/,
+        {} /*bodyData*/,
         "text",
         false,
         1000 /*timeout*/,
@@ -334,9 +330,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     resource->SendRequest(
         "GET",
         std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
+        {} /*headers*/,
+        {} /*bodyData*/,
         "text",
         false, /*useIncrementalUpdates*/
         1000 /*timeout*/,
@@ -355,5 +350,7 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     Assert::AreEqual({"Redirect Content"}, content);
   }
 };
+
+/*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;
 
 /*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;
