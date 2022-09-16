@@ -3,10 +3,14 @@
 
 #pragma once
 
+#include <Modules/IWebSocketModuleProxy.h>
 #include <Networking/IWebSocketResource.h>
 
 // React Native
 #include <cxxreact/CxxModule.h>
+
+// Windows API
+#include <winrt/Windows.Foundation.h>
 
 namespace Microsoft::React {
 
@@ -32,70 +36,73 @@ namespace Microsoft::React {
    public:
     enum MethodId { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
-    WebSocketModule(winrt::Windows::Foundation::IInspectable const& inspectableProperties);
+      WebSocketModule(winrt::Windows::Foundation::IInspectable const& inspectablePropertieswinrt::Windows::Foundation::IInspectable const& inspectableProperties);
 
-    ~WebSocketModule() noexcept override;
+      ~WebSocketModule() noexcept override;
 
-    struct SharedState {
+      struct SharedState {
+        /// <summary>
+        /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
+        /// As defined in WebSocket.js.
+        /// </summary>
+        std::map<int64_t, std::shared_ptr<Networking::IWebSocketResource>> ResourceMap{};
+
+        /// <summary>
+        /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
+        /// </summary>
+        std::function<std::shared_ptr<Networking::IWebSocketResource>(std::string&&)> ResourceFactory;
+
+        /// <summary>
+        /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
+        /// </summary>
+        CxxModule* Module{nullptr};
+
+        // Property bag high level reference.
+        winrt::Windows::Foundation::IInspectable InspectableProps;
+
+        // Property bag high level reference.
+        winrt::Windows::Foundation::IInspectable InspectableProps;
+      };
+
+      #pragma region CxxModule overrides
+
       /// <summary>
-      /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
-      /// As defined in WebSocket.js.
+      /// <see cref="facebook::xplat::module::CxxModule::getName" />
       /// </summary>
-      std::map<int64_t, std::shared_ptr<Networking::IWebSocketResource>> ResourceMap{};
+      std::string getName() override;
 
       /// <summary>
-      /// Generates IWebSocketResource instances, defaulting to IWebSocketResource::Make.
+      /// <see cref="facebook::xplat::module::CxxModule::getConstants" />
       /// </summary>
-      std::function<std::shared_ptr<Networking::IWebSocketResource>(std::string&&)> ResourceFactory;
+      std::map<std::string, folly::dynamic> getConstants() override;
 
       /// <summary>
-      /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
+      /// <see cref="facebook::xplat::module::CxxModule::getMethods" />
       /// </summary>
-      CxxModule* Module{nullptr};
+      /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
+      std::vector<Method> getMethods() override;
 
-      // Property bag high level reference.
-      winrt::Windows::Foundation::IInspectable InspectableProps;
-    };
+    #pragma endregion CxxModule overrides
 
-  #pragma region CxxModule overrides
+      void SetResourceFactory(
+          std::function<std::shared_ptr<Networking::IWebSocketResource>(const std::string&)>&& resourceFactory);
 
-    /// <summary>
-    /// <see cref="facebook::xplat::module::CxxModule::getName" />
-    /// </summary>
-    std::string getName() override;
+     private:
+       /// <summary>
+       /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
+       /// As defined in WebSocket.js.
+       /// </summary>
+       std::map<int64_t, std::shared_ptr<Networking::IWebSocketResource>> m_webSockets;
 
-    /// <summary>
-    /// <see cref="facebook::xplat::module::CxxModule::getConstants" />
-    /// </summary>
-    std::map<std::string, folly::dynamic> getConstants() override;
+       /// <summary>
+       /// Keeps members that can be accessed threads other than this module's owner accessible.
+       /// </summary>
+       std::shared_ptr<SharedState> m_sharedState;
 
-    /// <summary>
-    /// <see cref="facebook::xplat::module::CxxModule::getMethods" />
-    /// </summary>
-    /// <remarks>See See react-native/Libraries/WebSocket/WebSocket.js</remarks>
-    std::vector<Method> getMethods() override;
-
-  #pragma endregion CxxModule overrides
-
-    void SetResourceFactory(
-        std::function<std::shared_ptr<Networking::IWebSocketResource>(const std::string&)>&& resourceFactory);
-
-   private:
-     /// <summary>
-     /// Keeps <c>IWebSocketResource</c> instances identified by <c>id</c>.
-     /// As defined in WebSocket.js.
-     /// </summary>
-     std::map<int64_t, std::shared_ptr<Networking::IWebSocketResource>> m_webSockets;
-
-     /// <summary>
-     /// Keeps members that can be accessed threads other than this module's owner accessible.
-     /// </summary>
-     std::shared_ptr<SharedState> m_sharedState;
-
-     /// <summary>
-     /// Exposes a subset of the module's methods.
-     /// </summary>
-     std::shared_ptr<IWebSocketModuleProxy> m_proxy;
+       /// <summary>
+       /// Exposes a subset of the module's methods.
+       /// </summary>
+       std::shared_ptr<IWebSocketModuleProxy> m_proxy;
   };
 
 } // namespace Microsoft::React

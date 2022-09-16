@@ -25,6 +25,7 @@ using winrt::Windows::Foundation::IInspectable;
 
 namespace {
 
+  using Microsoft::React::Modules::SendEvent;
   using Microsoft::React::Networking::IHttpResource;
 
   constexpr char moduleName[] = "Networking";

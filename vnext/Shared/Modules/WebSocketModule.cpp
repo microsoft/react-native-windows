@@ -37,7 +37,9 @@ using winrt::Windows::Foundation::IInspectable;
 using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace {
+  using Microsoft::React::IWebSocketModuleProxy;
   using Microsoft::React::WebSocketModule;
+  using Microsoft::React::Modules::SendEvent;
   using Microsoft::React::Networking::IWebSocketResource;
 
   constexpr char moduleName[] = "WebSocketModule";
@@ -208,16 +210,16 @@ namespace Microsoft::React {
             }
           }
 
-          IWebSocketResource::Options options;
-          dynamic optionsDynamic = jsArgAsDynamic(args, 2);
-          if (!optionsDynamic.empty() && optionsDynamic.count("headers") != 0)
+        IWebSocketResource::Options options;
+        dynamic optionsDynamic = jsArgAsDynamic(args, 2);
+        if (!optionsDynamic.empty() && optionsDynamic.count("headers") != 0)
+        {
+          const auto& headersDynamic = optionsDynamic["headers"];
+          for (const auto& header : headersDynamic.items())
           {
-            const auto& headersDynamic = optionsDynamic["headers"];
-            for (const auto& header : headersDynamic.items())
-            {
-              options.emplace(winrt::to_hstring(header.first.getString()), header.second.getString());
-            }
+            options.emplace(winrt::to_hstring(header.first.getString()), header.second.getString());
           }
+        }
 
           weak_ptr weakWs = GetOrCreateWebSocket(jsArgAsInt(args, 3), jsArgAsString(args, 0), weakState);
           if (auto sharedWs = weakWs.lock())
