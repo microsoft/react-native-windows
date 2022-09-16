@@ -909,33 +909,73 @@ void NativeUIManager::DoLayout() {
   }
 }
 
-void NativeUIManager::SetLayoutPropsRecursive(int64_t tag, bool isCollapsed) {
+void NativeUIManager::UnflattenLayout(int64_t tag) {
+  ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+
+  auto nativeParentWithOffset = GetNativeParentWithOffset(&shadowNode);
+
+  // Re-apply layout to children
+  for (auto childTag : shadowNode.m_children) {
+    SetLayoutPropsRecursive(childTag, 0, 0, SetLayoutModifiers::IsUnflattening);
+  }
+
+  // Apply layout to node - this call will not recurse into children because
+  // the node is no longer layout only.
+  const auto offsetX = nativeParentWithOffset.offsetX;
+  const auto offsetY = nativeParentWithOffset.offsetY;
+  SetLayoutPropsRecursive(tag, offsetX, offsetY, SetLayoutModifiers::IsUnflattening);
+}
+
+void NativeUIManager::SetLayoutPropsRecursive(int64_t tag, float offsetX, float offsetY, SetLayoutModifiers modifiers) {
   ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
   const auto view = shadowNode.GetView();
   const auto uiElement = view.try_as<xaml::UIElement>();
-  isCollapsed |= uiElement && uiElement.Visibility() == xaml::Visibility::Collapsed;
+  modifiers |= uiElement && uiElement.Visibility() == xaml::Visibility::Collapsed ? SetLayoutModifiers::IsCollapsed
+                                                                                  : SetLayoutModifiers::None;
   auto *pViewManager = shadowNode.GetViewManager();
   if (!pViewManager->IsNativeControlWithSelfLayout()) {
+    auto childOffsetX = 0.0f;
+    auto childOffsetY = 0.0f;
+    auto childModifiers = modifiers;
+    if (shadowNode.IsLayoutOnly()) {
+      if (auto yogaNode = GetYogaNode(tag)) {
+        childOffsetX = offsetX + YGNodeLayoutGetLeft(yogaNode);
+        childOffsetY = offsetY + YGNodeLayoutGetTop(yogaNode);
+        if (YGNodeGetHasNewLayout(yogaNode)) {
+          childModifiers |= SetLayoutModifiers::LayoutOnlyAncestorUpdated;
+        }
+      }
+    } else {
+      childModifiers &= ~SetLayoutModifiers::LayoutOnlyAncestorUpdated;
+    }
+
+    // Only recurse into unflattened children when not applying layout as a
+    // result of unflattening a node.
     for (const auto child : shadowNode.m_children) {
-      SetLayoutPropsRecursive(child, isCollapsed);
+      SetLayoutPropsRecursive(child, childOffsetX, childOffsetY, childModifiers);
     }
   }
 
   const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
   if (auto yogaNode = GetYogaNode(tag)) {
-    if (!YGNodeGetHasNewLayout(yogaNode))
-      return;
-    YGNodeSetHasNewLayout(yogaNode, false);
+    const auto hasNewLayout = YGNodeGetHasNewLayout(yogaNode);
+    if (hasNewLayout) {
+      YGNodeSetHasNewLayout(yogaNode, false);
+    }
 
     float left = YGNodeLayoutGetLeft(yogaNode);
     float top = YGNodeLayoutGetTop(yogaNode);
     float width = YGNodeLayoutGetWidth(yogaNode);
     float height = YGNodeLayoutGetHeight(yogaNode);
-    const auto uiElement = view.try_as<xaml::UIElement>();
-    if (!isCollapsed) {
-      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
+    auto pViewManager = shadowNode.GetViewManager();
+
+    const auto shouldUpdate = (modifiers & SetLayoutModifiers::IsCollapsed) == SetLayoutModifiers::None;
+    if (shouldUpdate && !shadowNode.IsLayoutOnly() && (hasNewLayout || modifiers != SetLayoutModifiers::None)) {
+      auto view = shadowNode.GetView();
+      pViewManager->SetLayoutProps(shadowNode, view, offsetX + left, offsetY + top, width, height);
     }
-    if (shadowNode.m_onLayoutRegistered) {
+
+    if (hasNewLayout && shadowNode.m_onLayoutRegistered) {
       const auto hasLayoutChanged = !YogaFloatEquals(left, shadowNode.m_layout.Left) ||
           !YogaFloatEquals(top, shadowNode.m_layout.Top) || !YogaFloatEquals(width, shadowNode.m_layout.Width) ||
           !YogaFloatEquals(height, shadowNode.m_layout.Height);
@@ -944,8 +984,8 @@ void NativeUIManager::SetLayoutPropsRecursive(int64_t tag, bool isCollapsed) {
         React::JSValueObject eventData{{"target", tag}, {"layout", std::move(layout)}};
         pViewManager->DispatchCoalescingEvent(tag, L"topLayout", MakeJSValueWriter(std::move(eventData)));
       }
+      shadowNode.m_layout = {left, top, width, height};
     }
-    shadowNode.m_layout = {left, top, width, height};
   }
 }
 
@@ -956,11 +996,43 @@ std::optional<winrt::Point> GetRelativePosition(xaml::FrameworkElement element, 
   }
 
   winrt::Point anchorTopLeft = winrt::Point(0, 0);
-
   winrt::GeneralTransform transform = element.TransformToVisual(parent);
   winrt::Point anchorTopLeftConverted = transform.TransformPoint(anchorTopLeft);
-
   return anchorTopLeftConverted;
+}
+
+std::optional<winrt::Rect> NativeUIManager::GetRelativeLayout(ShadowNodeBase *target, ShadowNodeBase *ancestor) {
+  // TODO(ViewFlattening): validate that this algorithm works with ScrollView
+  const auto targetParentWithOffset = GetNativeParentWithOffset(target);
+  const auto targetNativeParent = targetParentWithOffset.node;
+  const auto targetOffsetX = targetParentWithOffset.offsetX;
+  const auto targetOffsetY = targetParentWithOffset.offsetY;
+
+  const auto targetView = targetNativeParent->GetView().try_as<xaml::FrameworkElement>();
+  if (!targetView) {
+    return std::nullopt;
+  }
+
+  const auto ancestorParentWithOffset = GetNativeParentWithOffset(ancestor);
+  const auto ancestorNativeParent = ancestorParentWithOffset.node;
+  const auto ancestorOffsetX = ancestorParentWithOffset.offsetX;
+  const auto ancestorOffsetY = ancestorParentWithOffset.offsetY;
+
+  const auto ancestorView = targetNativeParent->GetView().try_as<xaml::UIElement>();
+  if (!ancestorView) {
+    return std::nullopt;
+  }
+
+  if (const auto nativeRelativePosition = GetRelativePosition(targetView, ancestorView)) {
+    const winrt::Rect relativeLayout = {
+        nativeRelativePosition->X + targetOffsetX - ancestorOffsetX,
+        nativeRelativePosition->Y + targetOffsetY - ancestorOffsetY,
+        target->m_layout.Width,
+        target->m_layout.Height};
+    return relativeLayout;
+  }
+
+  return std::nullopt;
 }
 
 void NativeUIManager::measure(
@@ -969,49 +1041,25 @@ void NativeUIManager::measure(
     std::function<void(double left, double top, double width, double height, double pageX, double pageY)> &&callback) {
   std::vector<folly::dynamic> args;
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
-  auto view = node.GetView();
-
-  auto feView = view.try_as<xaml::FrameworkElement>();
-  if (feView == nullptr) {
-    m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
-    return;
-  }
 
   // Traverse up the react node tree to find any windowed popups.
   // If there are none, then we use the top-level root provided by our caller.
-  xaml::FrameworkElement feRootView = nullptr;
-  int64_t rootTag = shadowNode.m_tag;
-  int64_t childTag = rootTag;
+  // Windows popups are not flattened views, so we know the native ancestor
+  // resolved above is below the root.
+  int64_t rootTag = node.m_tag;
   while (true) {
-    auto &currNode = m_host->GetShadowNodeForTag(rootTag);
-    if (currNode.m_parent == InvalidTag)
-      break;
-    ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
-    if (rootNode.IsWindowed()) {
-      ShadowNodeBase &childNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(childTag));
-      feRootView = childNode.GetView().try_as<xaml::FrameworkElement>();
+    auto &currNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
+    if (currNode.IsWindowed() || currNode.m_parent == InvalidTag) {
       break;
     }
-    childTag = currNode.m_tag;
     rootTag = currNode.m_parent;
   }
 
-  if (feRootView == nullptr) {
-    // Retrieve the XAML element for the root view containing this view
-    if (auto xamlRootView = static_cast<ShadowNodeBase &>(shadowRoot).GetView()) {
-      feRootView = xamlRootView.as<xaml::FrameworkElement>();
-    }
-    if (feRootView == nullptr) {
-      m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
-      return;
-    }
-  }
-
-  auto x = 0.f;
-  auto y = 0.f;
-  if (const auto relativePosition = GetRelativePosition(feView, feRootView)) {
-    x = relativePosition->X;
-    y = relativePosition->Y;
+  winrt::Rect rect = winrt::Rect{0, 0, 0, 0};
+  if (rootTag != InvalidTag) {
+    const auto ancestor = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(rootTag));
+    const auto layoutRect = GetRelativeLayout(&node, ancestor);
+    rect = layoutRect ? *layoutRect : rect;
   }
 
   // TODO: The first two params are for the local position. It's unclear what
@@ -1019,32 +1067,36 @@ void NativeUIManager::measure(
   //  Either codify this non-use or determine if and how we can send the needed
   //  data.
   m_context.JSDispatcher().Post(
-      [callback = std::move(callback), x, y, w = node.m_layout.Width, h = node.m_layout.Height]() {
-        callback(0, 0, w, h, x, y);
-      });
+      [callback = std::move(callback), rect]() { callback(0, 0, rect.Width, rect.Height, rect.X, rect.Y); });
 }
 
 void NativeUIManager::measureInWindow(
     ShadowNode &shadowNode,
     std::function<void(double x, double y, double width, double height)> &&callback) {
-  std::vector<folly::dynamic> args;
-
+  // TODO(ViewFlattening): validate that this algorithm works with ScrollView
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
+  const auto targetParentWithOffset = GetNativeParentWithOffset(&node);
+  const auto targetNativeParent = targetParentWithOffset.node;
+  const auto targetOffsetX = targetParentWithOffset.offsetX;
+  const auto targetOffsetY = targetParentWithOffset.offsetY;
 
-  if (auto view = node.GetView().try_as<xaml::FrameworkElement>()) {
+  float x = 0.0f;
+  float y = 0.0f;
+  float width = 0.0f;
+  float height = 0.0f;
+  if (auto view = targetNativeParent->GetView().try_as<xaml::FrameworkElement>()) {
     // When supplied with nullptr, TransformToVisual will return the position
     // relative to the root XAML element.
     auto windowTransform = view.TransformToVisual(nullptr);
     auto positionInWindow = windowTransform.TransformPoint({0, 0});
-
-    m_context.JSDispatcher().Post(
-        [callback = std::move(callback), pos = positionInWindow, w = node.m_layout.Width, h = node.m_layout.Height]() {
-          callback(pos.X, pos.Y, w, h);
-        });
-    return;
+    x = positionInWindow.X + targetOffsetX;
+    y = positionInWindow.Y + targetOffsetY;
+    width = node.m_layout.Width;
+    height = node.m_layout.Height;
   }
 
-  m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0); });
+  m_context.JSDispatcher().Post(
+      [callback = std::move(callback), x, y, width, height]() { callback(x, y, width, height); });
 }
 
 void NativeUIManager::measureLayout(
@@ -1054,19 +1106,18 @@ void NativeUIManager::measureLayout(
     std::function<void(double left, double top, double width, double height)> &&callback) {
   std::vector<folly::dynamic> args;
   try {
-    const auto &target = static_cast<ShadowNodeBase &>(shadowNode);
-    const auto &ancestor = static_cast<ShadowNodeBase &>(ancestorNode);
-    const auto targetElement = target.GetView().as<xaml::FrameworkElement>();
-    const auto ancenstorElement = ancestor.GetView().as<xaml::FrameworkElement>();
-
-    const auto ancestorTransform = targetElement.TransformToVisual(ancenstorElement);
-    const auto width = static_cast<float>(target.m_layout.Width);
-    const auto height = static_cast<float>(target.m_layout.Height);
-    const auto transformedBounds = ancestorTransform.TransformBounds(winrt::Rect(0, 0, width, height));
-
-    m_context.JSDispatcher().Post([callback = std::move(callback), rect = transformedBounds]() {
-      callback(rect.X, rect.Y, rect.Width, rect.Height);
-    });
+    const auto node = static_cast<ShadowNodeBase *>(&shadowNode);
+    const auto ancestor = static_cast<ShadowNodeBase *>(&ancestorNode);
+    if (const auto rect = GetRelativeLayout(node, ancestor)) {
+      m_context.JSDispatcher().Post(
+          [callback = std::move(callback), rect]() { callback(rect->X, rect->Y, rect->Width, rect->Height); });
+    } else {
+      m_context.JSDispatcher().Post([errorCallback = std::move(errorCallback)]() {
+        auto writer = React::MakeJSValueTreeWriter();
+        writer.WriteString(L"Unable to resolve measurable nodes.");
+        errorCallback(React::TakeJSValue(writer));
+      });
+    }
   } catch (winrt::hresult_error const &e) {
     m_context.JSDispatcher().Post([errorCallback = std::move(errorCallback), msg = e.message()]() {
       auto writer = React::MakeJSValueTreeWriter();
@@ -1082,9 +1133,11 @@ void NativeUIManager::findSubviewIn(
     float y,
     std::function<void(double nativeViewTag, double left, double top, double width, double height)> &&callback) {
   ShadowNodeBase &node = static_cast<ShadowNodeBase &>(shadowNode);
-  auto view = node.GetView();
 
-  auto rootUIView = view.try_as<xaml::UIElement>();
+  // TODO(ViewFlattening): This API will not search from flattened views and
+  // will not return flattened views in the results.
+  auto rootUIView = !node.IsLayoutOnly() ? node.GetView().try_as<xaml::UIElement>() : nullptr;
+
   if (rootUIView == nullptr) {
     m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0); });
     return;
@@ -1150,6 +1203,20 @@ void NativeUIManager::blur(int64_t reactTag) {
       }
     }
   }
+}
+
+NodeWithOffset NativeUIManager::GetNativeParentWithOffset(const ShadowNodeBase *node) {
+  auto nativeAncestor = node;
+  float offsetX = 0.0f;
+  float offsetY = 0.0f;
+  while (nativeAncestor && nativeAncestor->IsLayoutOnly()) {
+    offsetX += nativeAncestor->m_layout.Left;
+    offsetY += nativeAncestor->m_layout.Top;
+    nativeAncestor = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(nativeAncestor->m_parent));
+    assert(nativeAncestor && "Parent nodes assumed to exist");
+  }
+
+  return {nativeAncestor, offsetX, offsetY};
 }
 
 // The same react instance can be shared by multiple ReactControls.

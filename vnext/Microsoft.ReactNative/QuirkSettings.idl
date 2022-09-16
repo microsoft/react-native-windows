@@ -53,5 +53,12 @@ namespace Microsoft.ReactNative
       "`inactive` tracks the [Window.Activated Event](https://docs.microsoft.com/uwp/api/windows.ui.core.corewindow.activated) when the window is deactivated.")
     DOC_DEFAULT("false")
     static void SetMapWindowDeactivatedToAppStateInactive(ReactInstanceSettings settings, Boolean value);
+
+    DOC_STRING(
+      "By default `react-native-windows` creates a native view for every native component in the React JS tree. "
+      "Setting this to true enables `react-native-windows` to optimize away some instances of <View> components "
+      "if these instances only use layout props.")
+    DOC_DEFAULT("false")
+    static void SetIsViewFlatteningEnabled(ReactInstanceSettings settings, Boolean value);
   }
 } // namespace Microsoft.ReactNative

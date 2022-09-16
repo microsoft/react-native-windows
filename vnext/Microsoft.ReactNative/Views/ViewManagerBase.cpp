@@ -103,6 +103,7 @@ void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   React::WriteProperty(writer, L"keyUpEvents", L"array");
   React::WriteProperty(writer, L"onMouseEnter", L"function");
   React::WriteProperty(writer, L"onMouseLeave", L"function");
+  React::WriteProperty(writer, L"collapsable", L"boolean");
 }
 
 void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {

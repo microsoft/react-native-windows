@@ -30,6 +30,21 @@ struct YogaNodeDeleter {
   }
 };
 
+struct NodeWithOffset {
+  const ShadowNodeBase *node;
+  float offsetX;
+  float offsetY;
+};
+
+enum class SetLayoutModifiers : std::uint_fast8_t {
+  None = 0,
+  IsCollapsed = 1 << 0,
+  IsUnflattening = 1 << 1,
+  LayoutOnlyAncestorUpdated = 1 << 2,
+};
+
+DEFINE_ENUM_FLAG_OPERATORS(SetLayoutModifiers);
+
 typedef std::unique_ptr<YGNode, YogaNodeDeleter> YogaNodePtr;
 
 class NativeUIManager final : public INativeUIManager {
@@ -100,12 +115,21 @@ class NativeUIManager final : public INativeUIManager {
 
   int64_t AddMeasuredRootView(facebook::react::IReactRootView *rootView);
 
+  void UnflattenLayout(int64_t tag);
+
  private:
   void DoLayout();
-  void SetLayoutPropsRecursive(int64_t tag, bool isCollapsed = false);
+  void SetLayoutPropsRecursive(
+      int64_t tag,
+      float offsetX = 0.0f,
+      float offsetY = 0.0f,
+      SetLayoutModifiers modifiers = SetLayoutModifiers::None);
   YGNodeRef GetYogaNode(int64_t tag) const;
 
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactRootView> GetParentXamlReactControl(int64_t tag) const;
+
+  NodeWithOffset GetNativeParentWithOffset(const ShadowNodeBase *node);
+  std::optional<winrt::Windows::Foundation::Rect> GetRelativeLayout(ShadowNodeBase *target, ShadowNodeBase *ancestor);
 
  private:
   INativeUIManagerHost *m_host = nullptr;

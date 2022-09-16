@@ -88,6 +88,12 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
     return false;
   }
 
+  virtual bool IsLayoutOnly() const noexcept {
+    return false;
+  }
+
+  virtual void ForceUnflattened() noexcept {}
+
   void YellowBox(const std::string &message) const noexcept;
   void RedBox(const std::string &message) const noexcept;
 
@@ -141,6 +147,9 @@ struct REACTWINDOWS_EXPORT ShadowNodeBase : public ShadowNode {
 
   // Layout
   ShadowNodeLayout m_layout;
+
+  // Layout only props
+  int64_t m_nativeChildrenCount = 0;
 
   // Support Keyboard
  public:

@@ -8,6 +8,8 @@
 #include <IReactRootView.h>
 #include <Modules/NativeUIManager.h>
 #include <Modules/PaperUIManagerModule.h>
+#include <QuirkSettings.h>
+#include <Views/ViewFlattening.h>
 #include <Views/ViewManager.h>
 #include <XamlUtils.h>
 #include <cxxreact/SystraceSection.h>
@@ -80,7 +82,8 @@ std::weak_ptr<NativeUIManager> GetNativeUIManager(const Mso::React::IReactContex
   return v ? v.Value() : std::weak_ptr<NativeUIManager>{};
 }
 
-class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, public INativeUIManagerHost {
+class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>,
+                        public ViewFlattening::IViewFlatteningHost {
  public:
   UIManagerModule() {}
   ~UIManagerModule() {
@@ -156,8 +159,14 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     if (pShadowNode == nullptr)
       return;
 
-    if (!pShadowNode->m_zombie)
+    if (!pShadowNode->m_zombie) {
+      const auto pShadowNodeBase = static_cast<ShadowNodeBase *>(pShadowNode);
+      const auto wasLayoutOnly = pShadowNodeBase->IsLayoutOnly();
       pShadowNode->updateProperties(props);
+      if (wasLayoutOnly && !pShadowNodeBase->IsLayoutOnly()) {
+        ViewFlattening::UnflattenNode(this, pShadowNodeBase);
+      }
+    }
 
     m_nativeUIManager->UpdateView(*pShadowNode, props);
   }
@@ -319,7 +328,8 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
         childNode->m_parent = parent->m_tag;
         parent->m_children.push_back(tag);
         if (!parent->m_zombie)
-          parent->AddView(*childNode, index);
+          ViewFlattening::AddView(
+              this, static_cast<ShadowNodeBase *>(parent), static_cast<ShadowNodeBase *>(childNode), index);
 
         m_nativeUIManager->AddView(*parent, *childNode, index);
         ++index;
@@ -456,10 +466,14 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     for (auto i = static_cast<int>(viewsToRemove.size()) - 1; i >= 0; --i) {
       auto viewAtIndex = viewsToRemove[i];
       auto &shadowNodeToRemove = m_nodeRegistry.getNode(viewAtIndex->tag);
+      ViewFlattening::RemoveChildAt(
+          this,
+          static_cast<ShadowNodeBase *>(&shadowNodeToManage),
+          static_cast<ShadowNodeBase *>(&shadowNodeToRemove),
+          viewAtIndex->index);
 
       shadowNodeToManage.m_children.erase(
           shadowNodeToManage.m_children.begin() + static_cast<size_t>(viewAtIndex->index));
-      shadowNodeToManage.RemoveChildAt(viewAtIndex->index);
     }
 
     for (size_t i = 0; i < viewsToAdd.size(); ++i) {
@@ -469,7 +483,11 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
       shadowNodeToManage.m_children.insert(
           shadowNodeToManage.m_children.begin() + static_cast<size_t>(viewAtIndex->index), shadowNodeToAdd.m_tag);
       if (!shadowNodeToManage.m_zombie)
-        shadowNodeToManage.AddView(shadowNodeToAdd, viewAtIndex->index);
+        ViewFlattening::AddView(
+            this,
+            static_cast<ShadowNodeBase *>(&shadowNodeToManage),
+            static_cast<ShadowNodeBase *>(&shadowNodeToAdd),
+            viewAtIndex->index);
 
       m_nativeUIManager->AddView(shadowNodeToManage, shadowNodeToAdd, viewAtIndex->index);
     }
@@ -501,6 +519,15 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     m_nativeUIManager->AddRootView(*root, rootView);
   }
 
+  void UnflattenLayout(int64_t tag) {
+    m_nativeUIManager->UnflattenLayout(tag);
+  }
+
+  bool IsViewFlatteningEnabled() {
+    return winrt::Microsoft::ReactNative::implementation::QuirkSettings::GetIsViewFlatteningEnabled(
+        winrt::Microsoft::ReactNative::ReactPropertyBag{m_context.Properties()});
+  }
+
   void zombieView(int64_t tag) {
     DropView(tag, false, true);
   }
@@ -518,7 +545,7 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
         DropView(childTag, removeChildren, zombieView);
 
       if (removeChildren)
-        node->removeAllChildren();
+        ViewFlattening::RemoveAllChildren(this, static_cast<ShadowNodeBase *>(node));
 
       if (!zombieView)
         m_nodeRegistry.removeNode(tag);

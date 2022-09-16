@@ -6,6 +6,7 @@
 #include <cdebug.h>
 
 #include "ViewControl.h"
+#include "ViewFlattening.h"
 
 #include <UI.Xaml.Automation.Peers.h>
 #include "DynamicAutomationProperties.h"
@@ -44,6 +45,14 @@ class ViewShadowNode : public ShadowNodeBase {
   ViewShadowNode() = default;
 
   void createView(const winrt::Microsoft::ReactNative::JSValueObject &props) override {
+    m_isLayoutOnly = ViewFlattening::IsLayoutOnly(this, props);
+
+    if (!m_isLayoutOnly) {
+      CreateNativeView(props);
+    }
+  }
+
+  void CreateNativeView(const winrt::Microsoft::ReactNative::JSValueObject &props) {
     Super::createView(props);
 
     auto panel = GetViewPanel();
@@ -64,6 +73,18 @@ class ViewShadowNode : public ShadowNodeBase {
 
           DispatchEvent("topAccessibilityAction", std::move(eventData));
         });
+  }
+
+  void updateProperties(winrt::Microsoft::ReactNative::JSValueObject &props) override {
+    const auto wasLayoutOnly = m_isLayoutOnly;
+    m_isLayoutOnly &= ViewFlattening::IsLayoutOnly(this, props);
+    if (wasLayoutOnly && !m_isLayoutOnly) {
+      CreateNativeView(props);
+    }
+
+    if (!m_isLayoutOnly) {
+      Super::updateProperties(props);
+    }
   }
 
   void dispatchCommand(const std::string &commandId, winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
@@ -253,6 +274,20 @@ class ViewShadowNode : public ShadowNodeBase {
     GetViewManager()->GetReactContext().DispatchEvent(m_tag, std::move(eventName), std::move(eventData));
   }
 
+  bool IsLayoutOnly() const noexcept override {
+    return m_isLayoutOnly;
+  }
+
+  void ForceUnflattened() noexcept override {
+    if (m_isLayoutOnly) {
+      // We know all props on this view will have been applied to the Yoga
+      // node, so it's acceptable to pass an empty props bag here.
+      CreateNativeView({});
+    }
+
+    m_isLayoutOnly = false;
+  }
+
  private:
   bool m_isControl = false;
   bool m_hasOuterBorder = false;
@@ -261,6 +296,7 @@ class ViewShadowNode : public ShadowNodeBase {
   bool m_onClick = false;
   bool m_isFocusable = false;
   bool m_isAccessible = false;
+  bool m_isLayoutOnly = false;
   int32_t m_tabIndex = std::numeric_limits<std::int32_t>::max();
 
   xaml::Controls::ContentControl::GotFocus_revoker m_contentControlGotFocusRevoker{};

@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Views/ShadowNodeBase.h>
+#include <Views/ViewManagerBase.h>
 
 namespace Microsoft::ReactNative {
 
@@ -13,6 +14,10 @@ static inline bool IsNodeType(ShadowNodeBase const *node, wchar_t const *name) {
 
 static inline bool IsTextShadowNode(ShadowNodeBase const *node) {
   return IsNodeType(node, L"RCTText");
+}
+
+static inline bool IsViewShadowNode(ShadowNodeBase const *node) {
+  return IsNodeType(node, L"RCTView");
 }
 
 static inline bool IsVirtualTextShadowNode(ShadowNodeBase const *node) {
