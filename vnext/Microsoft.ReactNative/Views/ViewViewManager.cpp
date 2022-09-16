@@ -477,6 +477,8 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     // keep it around, so not adding that code (yet).
   }
 
+  // If component is focusable, it should be a ViewControl.
+  // If component is a View with accessible set to true, the component should be focusable, thus we need a ViewControl.
   bool shouldBeControl =
       (viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick()));
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
@@ -601,6 +603,10 @@ void ViewViewManager::TryUpdateView(
   if (useControl)
     pViewShadowNode->GetControl().Content(visualRoot);
 
+  // If developer specifies either the accessible and focusable prop to be false
+  // remove accessibility and keyboard focus for component. Exception is made
+  // for case where a View with undefined onPress is specified, where
+  // component gains accessibility focus when either the accessible and focusable prop are true.
   if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
     if (!pViewShadowNode->OnClick()) {
       pViewShadowNode->GetControl().IsTabStop(true);
