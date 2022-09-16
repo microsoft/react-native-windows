@@ -279,8 +279,8 @@ namespace Microsoft::React::Networking {
     // NOT IMPLEMENTED
   }
 
-  void WinRTHttpResource::SetOnRequestSuccessSuccess(function<void(int64_t requestId)>&& handler) noexcept /*override*/ {
-    m_onRequestSuccessSuccess = std::move(handler);
+  void WinRTHttpResource::SetOnRequestSuccess(function<void(int64_t requestId)>&& handler) noexcept /*override*/ {
+    m_onRequestSuccess = std::move(handler);
   }
 
   void WinRTHttpResource::SetOnResponse(function<void(int64_t requestId, Response&& response)>&& handler) noexcept
@@ -473,7 +473,7 @@ namespace Microsoft::React::Networking {
             buffer = reader.ReadBuffer(length);
             auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
-            responseData += winrt::to_string(std::wstring_view(data));
+            responseData += winrt::winrt::to_string(std::wstring_view(data));
           }
         } while (length > 0);
 
