@@ -36,7 +36,7 @@ namespace Microsoft::React {
    public:
     enum MethodId { Connect = 0, Close = 1, Send = 2, SendBinary = 3, Ping = 4, SIZE = 5 };
 
-      WebSocketModule(winrt::Windows::Foundation::IInspectable const& inspectablePropertieswinrt::Windows::Foundation::IInspectable const& inspectableProperties);
+      WebSocketModule(winrt::Windows::Foundation::IInspectable const& inspectableProperties);
 
       ~WebSocketModule() noexcept override;
 
@@ -56,9 +56,6 @@ namespace Microsoft::React {
         /// Keeps a raw reference to the module object to lazily retrieve the React Instance as needed.
         /// </summary>
         CxxModule* Module{nullptr};
-
-        // Property bag high level reference.
-        winrt::Windows::Foundation::IInspectable InspectableProps;
 
         // Property bag high level reference.
         winrt::Windows::Foundation::IInspectable InspectableProps;
