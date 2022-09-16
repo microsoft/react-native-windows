@@ -85,7 +85,9 @@ void RedirectHttpFilter::AllowAutoRedirect(bool value) {
 bool RedirectHttpFilter::AllowUI() const {
   return false;
 }
-void RedirectHttpFilter::AllowUI(bool value) const {}
+void RedirectHttpFilter::AllowUI(bool /*value*/) const {
+  throw winrt::hresult_error{HRESULT_FROM_WIN32(ERROR_NOT_SUPPORTED)};
+}
 
 bool RedirectHttpFilter::AutomaticDecompression() const {
   if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
@@ -209,10 +211,6 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
   method = coRequest.Method();
 
   do {
-    if (response) {
-      response = nullptr;
-    }
-
     // Send subsequent requests through the filter that doesn't have the credentials included in the first request
     response =
         co_await (redirectCount > 0 ? m_innerFilterWithNoCredentials : m_innerFilter).SendRequestAsync(coRequest);
