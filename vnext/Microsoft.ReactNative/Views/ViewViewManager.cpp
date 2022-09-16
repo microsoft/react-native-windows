@@ -477,7 +477,7 @@ void ViewViewManager::OnPropertiesUpdated(ShadowNodeBase *node) {
     // keep it around, so not adding that code (yet).
   }
 
-  bool shouldBeControl = (viewShadowNode->IsFocusable() || viewShadowNode->IsAccessible());
+  bool shouldBeControl = (viewShadowNode->IsFocusable() || (viewShadowNode->IsAccessible() && !viewShadowNode->OnClick()));
   if (auto view = viewShadowNode->GetView().try_as<xaml::UIElement>()) {
     // If we have DynamicAutomationProperties, we need a ViewControl with a
     // DynamicAutomationPeer
@@ -601,12 +601,15 @@ void ViewViewManager::TryUpdateView(
     pViewShadowNode->GetControl().Content(visualRoot);
 
   if (useControl && pViewShadowNode->IsAccessible() != pViewShadowNode->IsFocusable()) {
-    pViewShadowNode->GetControl().IsTabStop(true);
-    xaml::Automation::AutomationProperties::SetAccessibilityView(
-        pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Content);
-    pViewShadowNode->YellowBox("Values for accessible and focusable prop do not match. In Windows, keyboard"
-                               "focus and accessibility focus move together. If you wish to disable focus for"
-                               " this component, set both accessible and focusable to false.");
+    if (!pViewShadowNode->OnClick()) {
+      pViewShadowNode->GetControl().IsTabStop(true);
+      xaml::Automation::AutomationProperties::SetAccessibilityView(
+          pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Content);
+    } else {
+      pViewShadowNode->GetControl().IsTabStop(false);
+      xaml::Automation::AutomationProperties::SetAccessibilityView(
+          pViewShadowNode->GetControl(), xaml::Automation::Peers::AccessibilityView::Raw);
+    }
   }
 }
 
