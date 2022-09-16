@@ -82,7 +82,7 @@ void CompositionHwndHost::UpdateSize() noexcept {
   }
 }
 
-LRESULT CompositionHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) noexcept {
+LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t lParam) noexcept {
   if (!m_hwnd || !m_compRootView)
     return 0;
 
