@@ -473,7 +473,7 @@ namespace Microsoft::React::Networking {
             buffer = reader.ReadBuffer(length);
             auto data = CryptographicBuffer::EncodeToBase64String(buffer);
 
-            responseData += winrt::winrt::to_string(std::wstring_view(data));
+            responseData += winrt::to_string(std::wstring_view(data));
           }
         } while (length > 0);
 
