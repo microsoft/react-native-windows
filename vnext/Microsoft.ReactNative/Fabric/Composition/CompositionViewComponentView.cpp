@@ -15,8 +15,7 @@
 
 namespace Microsoft::ReactNative {
 
-// TODO this obviously sucks
-// TODO where should we store focus
+// TODO where should we store focus - a more complete focus management needs to be added in the future
 static CompositionBaseComponentView *g_focusedComponent = nullptr;
 
 CompositionBaseComponentView *GetFocusedComponent() noexcept {

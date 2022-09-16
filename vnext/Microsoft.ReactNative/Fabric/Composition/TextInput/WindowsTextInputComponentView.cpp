@@ -514,7 +514,7 @@ void WindowsTextInputComponentView::handleCommand(
       winrt::check_hresult(m_textServices->TxSendMessage(
           EM_SELCHANGE, 0 , reinterpret_cast<WPARAM>(&sc), &res));
           */
-      winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, begin, end, &res));
+      winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(begin), static_cast<LPARAM>(end), &res));
 
       m_comingFromJS = false;
     }
@@ -527,7 +527,7 @@ int64_t WindowsTextInputComponentView::SendMessage(uint32_t msg, uint64_t wParam
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
-    auto hr = m_textServices->TxSendMessage(msg, wParam, lParam, &lresult);
+    auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     if (hr >= 0 && lresult) {
       return lresult;
     }

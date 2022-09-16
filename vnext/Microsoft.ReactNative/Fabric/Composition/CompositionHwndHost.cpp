@@ -119,7 +119,7 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lPa
   }
 
   if (m_compRootView) {
-    return m_compRootView.SendMessage(msg, wParam, lParam);
+    return static_cast<LRESULT>(m_compRootView.SendMessage(msg, wParam, lParam));
   }
   return 0;
 }

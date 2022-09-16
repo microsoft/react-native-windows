@@ -38,12 +38,6 @@
       "issue": 7821
     },
     {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/TextInput/WindowsTextInputComponentDescriptor.h",
-      "baseFile": "ReactCommon/react/renderer/components/textinput/androidtextinput/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
-      "baseHash": "0e8bc2d76cda863ed7986747546d2b96af876ada"
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "ReactCommon/jsi/jsi/test/testlib.cpp",

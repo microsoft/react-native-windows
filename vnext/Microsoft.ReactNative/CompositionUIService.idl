@@ -12,6 +12,7 @@ namespace Microsoft.ReactNative.Composition
 {
   [default_interface]
   [webhosthidden]
+  [experimental]
   DOC_STRING(
     "Provides access to Composition UI-specific functionality. ")
   runtimeclass CompositionUIService

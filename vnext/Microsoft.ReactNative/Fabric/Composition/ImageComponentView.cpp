@@ -163,7 +163,7 @@ void ImageComponentView::updateProps(
   updateBorderProps(oldImageProps, newImageProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor) {
-    m_drawingSurface = nullptr; // TODO dont need to nuke the surface just to redraw...
+    m_drawingSurface = nullptr; // TODO dont need to recreate the surface just to redraw...
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {
