@@ -37,6 +37,9 @@ using Test::ResponseWrapper;
 
 namespace Microsoft::React::Test {
 
+TEST_CLASS (HttpResourceIntegrationTest) {
+  static uint16_t s_port;
+
   TEST_CLASS(HttpResourceIntegrationTest) {
     static uint16_t s_port;
 
@@ -55,23 +58,13 @@ namespace Microsoft::React::Test {
       string error;
       int statusCode = 0;
 
-      auto server = make_shared<HttpServer>(s_port);
-      server->Callbacks().OnGet = [&resPromise](const DynamicRequest& request) -> ResponseWrapper {
-        DynamicResponse response;
-        response.result(http::status::ok);
-        response.body() = Test::CreateStringResponseBody("some response content");
-
-        return { std::move(response) };
-      };
-      server->Start();
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&resPromise, &statusCode](int64_t, IHttpResource::Response response) {
-        statusCode = static_cast<int>(response.StatusCode);
-        });
-      resource->SetOnData([&resPromise](int64_t, string&& content) { resPromise.set_value(); });
-      resource->SetOnError([&resPromise, &error, &server](int64_t, string&& message, bool) {
-        error = std::move(message);
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&resPromise, &statusCode](int64_t, IHttpResource::Response response) {
+      statusCode = static_cast<int>(response.StatusCode);
+    });
+    resource->SetOnData([&resPromise](int64_t, string &&content) { resPromise.set_value(); });
+    resource->SetOnError([&resPromise, &error, &server](int64_t, string &&message, bool) {
+      error = std::move(message);
       resPromise.set_value();
 
       server->Stop();
@@ -123,9 +116,9 @@ namespace Microsoft::React::Test {
       resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
         response = callbackResponse;
       rcPromise.set_value();
-        });
-      resource->SetOnError([&rcPromise, &error, &server](int64_t, string&& message, bool) {
-        error = std::move(message);
+    });
+    resource->SetOnError([&rcPromise, &error, &server](int64_t, string &&message, bool) {
+      error = std::move(message);
       rcPromise.set_value();
 
       server->Abort();
@@ -174,124 +167,9 @@ namespace Microsoft::React::Test {
     TEST_METHOD(RequestGetExplicitUserAgentSucceeds) {
       string url = "https://api.github.com/repos/microsoft/react-native-xaml";
 
-      promise<void> rcPromise;
-      string error;
-      IHttpResource::Response response;
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
-        response = callbackResponse;
-      rcPromise.set_value();
-        });
-      resource->SetOnError([&rcPromise, &error](int64_t, string&& message, bool) {
-        error = std::move(message);
-      rcPromise.set_value();
-        });
-
-      //clang-format off
-      resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        { {"User-Agent", "React Native Windows"} },
-        {}, /*data*/
-        "text", /*responseType*/
-        false,
-        0 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-      //clang-format on
-
-      rcPromise.get_future().wait();
-
-      Assert::AreEqual({}, error, L"Error encountered");
-      Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
-    }
-
-    TEST_METHOD(RequestGetImplicitUserAgentSucceeds) {
-      string url = "https://api.github.com/repos/microsoft/react-native-windows";
-
-      promise<void> rcPromise;
-      string error;
-      IHttpResource::Response response;
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
-        response = callbackResponse;
-      rcPromise.set_value();
-        });
-      resource->SetOnError([&rcPromise, &error](int64_t, string&& message, bool) {
-        error = std::move(message);
-      rcPromise.set_value();
-        });
-
-      MicrosoftReactSetRuntimeOptionString("Http.UserAgent", "React Native Windows");
-
-      //clang-format off
-      resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
-        "text", /*responseType*/
-        false,
-        0 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-      //clang-format on
-
-      rcPromise.get_future().wait();
-
-      Assert::AreEqual({}, error, L"Error encountered");
-      Assert::AreEqual(static_cast<int64_t>(200), response.StatusCode);
-    }
-
-    TEST_METHOD(RequestGetMissingUserAgentFails) {
-      // string url = "http://localhost:" + std::to_string(s_port);
-      string url = "https://api.github.com/repos/microsoft/react-native-macos";
-
-      promise<void> rcPromise;
-      string error;
-      IHttpResource::Response response;
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
-        response = callbackResponse;
-      rcPromise.set_value();
-        });
-      resource->SetOnError([&rcPromise, &error](int64_t, string&& message, bool) {
-        error = std::move(message);
-      rcPromise.set_value();
-        });
-
-      //clang-format off
-      resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
-        "text", /*responseType*/
-        false,
-        0 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-      //clang-format on
-
-      rcPromise.get_future().wait();
-
-      Assert::AreEqual({}, error, L"Error encountered");
-      Assert::AreEqual(static_cast<int64_t>(403), response.StatusCode);
-    }
-
-    TEST_METHOD(RequestGetFails) {
-      string error;
-      promise<void> promise;
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnError([&error, &promise](int64_t, string&& message, bool) {
-        error = message;
+    auto resource = IHttpResource::Make();
+    resource->SetOnError([&error, &promise](int64_t, string &&message, bool) {
+      error = message;
       promise.set_value();
         });
 
@@ -348,9 +226,9 @@ namespace Microsoft::React::Test {
 
       if (!content.empty())
         getDataPromise.set_value();
-        });
-      resource->SetOnError(
-        [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string&& message, bool) {
+    });
+    resource->SetOnError(
+        [&optionsPromise, &getResponsePromise, &getDataPromise, &error, &server](int64_t, string &&message, bool) {
           error = std::move(message);
 
       optionsPromise.set_value();
@@ -404,16 +282,16 @@ namespace Microsoft::React::Test {
       Assert::AreEqual({ "Response Body" }, content);
     }
 
-    TEST_METHOD(SimpleRedirectGetSucceeds) {
-      auto port1 = s_port;
-      auto port2 = ++s_port;
-      string url = "http://localhost:" + std::to_string(port1);
+  TEST_METHOD(SimpleRedirectGetSucceeds) {
+    auto port1 = s_port;
+    auto port2 = ++s_port;
+    string url = "http://localhost:" + std::to_string(port1);
 
-      promise<void> responsePromise;
-      promise<void> contentPromise;
-      IHttpResource::Response responseResult;
-      string content;
-      string error;
+    promise<void> responsePromise;
+    promise<void> contentPromise;
+    IHttpResource::Response responseResult;
+    string content;
+    string error;
 
       auto server1 = make_shared<HttpServer>(port1);
       server1->Callbacks().OnGet = [port2](const DynamicRequest& request) -> ResponseWrapper {
@@ -435,25 +313,25 @@ namespace Microsoft::React::Test {
       server1->Start();
       server2->Start();
 
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&responseResult, &responsePromise](int64_t, IHttpResource::Response response) {
-        if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
-          responseResult = response;
-          responsePromise.set_value();
-        }
-        });
-      resource->SetOnData([&contentPromise, &content](int64_t, string&& responseData) {
-        content = std::move(responseData);
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&responseResult, &responsePromise](int64_t, IHttpResource::Response response) {
+      if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        responseResult = response;
+        responsePromise.set_value();
+      }
+    });
+    resource->SetOnData([&contentPromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
 
       if (!content.empty())
         contentPromise.set_value();
-        });
-      resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string&& message, bool) {
-        error = std::move(message);
+    });
+    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message, bool) {
+      error = std::move(message);
 
       responsePromise.set_value();
       contentPromise.set_value();
-        });
+    });
 
       //clang-format off
       resource->SendRequest(
@@ -469,14 +347,90 @@ namespace Microsoft::React::Test {
         [](int64_t) {});
       //clang-format on
 
-      responsePromise.get_future().wait();
-      contentPromise.get_future().wait();
+    responsePromise.get_future().wait();
+    contentPromise.get_future().wait();
 
       server2->Stop();
       server1->Stop();
 
     Assert::AreEqual({}, error, L"Error encountered");
-    Assert::AreEqual(static_cast<int64_t>(200), getResponse.StatusCode);
+    Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
+    Assert::AreEqual({"Redirect Content"}, content);
+  }
+
+  TEST_METHOD(SimpleRedirectPatchSucceeds) {
+    auto port1 = s_port;
+    auto port2 = ++s_port;
+    string url = "http://localhost:" + std::to_string(port1);
+
+    promise<void> responsePromise;
+    promise<void> contentPromise;
+    IHttpResource::Response responseResult;
+    string content;
+    string error;
+
+    auto server1 = make_shared<HttpServer>(port1);
+    server1->Callbacks().OnPatch = [port2](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::moved_permanently);
+      response.set(http::field::location, {"http://localhost:" + std::to_string(port2)});
+
+      return {std::move(response)};
+    };
+    auto server2 = make_shared<HttpServer>(port2);
+    server2->Callbacks().OnPatch = [](const DynamicRequest &request) -> ResponseWrapper {
+      DynamicResponse response;
+      response.result(http::status::ok);
+      response.body() = Test::CreateStringResponseBody("Redirect Content");
+
+      return {std::move(response)};
+    };
+
+    server1->Start();
+    server2->Start();
+
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&responseResult, &responsePromise](int64_t, IHttpResource::Response response) {
+      if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
+        responseResult = response;
+        responsePromise.set_value();
+      }
+    });
+    resource->SetOnData([&contentPromise, &content](int64_t, string &&responseData) {
+      content = std::move(responseData);
+
+      if (!content.empty())
+        contentPromise.set_value();
+    });
+    resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string &&message, bool) {
+      error = std::move(message);
+
+      responsePromise.set_value();
+      contentPromise.set_value();
+    });
+
+    //clang-format off
+    resource->SendRequest(
+        "PATCH",
+        std::move(url),
+        0, /*requestId*/
+        {}, /*headers*/
+        {}, /*data*/
+        "text",
+        false, /*useIncrementalUpdates*/
+        0 /*timeout*/,
+        false /*withCredentials*/,
+        [](int64_t) {});
+    //clang-format on
+
+    responsePromise.get_future().wait();
+    contentPromise.get_future().wait();
+
+    server2->Stop();
+    server1->Stop();
+
+    Assert::AreEqual({}, error, L"Error encountered");
+    Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
     Assert::AreEqual({"Redirect Content"}, content);
   }
 
@@ -487,6 +441,7 @@ namespace Microsoft::React::Test {
     promise<void> getPromise;
     string error;
     int statusCode = 0;
+    bool timeoutError = false;
 
     auto server = std::make_shared<HttpServer>(s_port);
     server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
@@ -506,8 +461,9 @@ namespace Microsoft::React::Test {
       statusCode = static_cast<int>(response.StatusCode);
       getPromise.set_value();
     });
-    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
+    resource->SetOnError([&getPromise, &error, &timeoutError](int64_t, string &&errorMessage, bool isTimeout) {
       error = std::move(errorMessage);
+      timeoutError = isTimeout;
       getPromise.set_value();
     });
     resource->SendRequest(
@@ -526,6 +482,7 @@ namespace Microsoft::React::Test {
     server->Stop();
 
     Assert::AreEqual({}, error);
+    Assert::IsFalse(timeoutError);
     Assert::AreEqual(200, statusCode);
   }
 
@@ -536,6 +493,7 @@ namespace Microsoft::React::Test {
     promise<void> getPromise;
     string error;
     int statusCode = 0;
+    bool timeoutError = false;
 
     auto server = std::make_shared<HttpServer>(s_port);
     server->Callbacks().OnGet = [](const DynamicRequest &) -> ResponseWrapper {
@@ -555,8 +513,9 @@ namespace Microsoft::React::Test {
       statusCode = static_cast<int>(response.StatusCode);
       getPromise.set_value();
     });
-    resource->SetOnError([&getPromise, &error](int64_t, string &&errorMessage) {
+    resource->SetOnError([&getPromise, &error, &timeoutError](int64_t, string &&errorMessage, bool isTimeout) {
       error = std::move(errorMessage);
+      timeoutError = isTimeout;
       getPromise.set_value();
     });
     resource->SendRequest(
@@ -574,192 +533,12 @@ namespace Microsoft::React::Test {
     getPromise.get_future().wait();
     server->Stop();
 
+    Assert::IsTrue(timeoutError);
     Assert::AreEqual({"[0x800705b4] This operation returned because the timeout period expired."}, error);
     Assert::AreEqual(0, statusCode);
   }
 };
 
-    TEST_METHOD(SimpleRedirectPatchSucceeds) {
-      auto port1 = s_port;
-      auto port2 = ++s_port;
-      string url = "http://localhost:" + std::to_string(port1);
-
-      promise<void> responsePromise;
-      promise<void> contentPromise;
-      IHttpResource::Response responseResult;
-      string content;
-      string error;
-
-      auto server1 = make_shared<HttpServer>(port1);
-      server1->Callbacks().OnPatch = [port2](const DynamicRequest& request) -> ResponseWrapper {
-        DynamicResponse response;
-        response.result(http::status::moved_permanently);
-        response.set(http::field::location, { "http://localhost:" + std::to_string(port2) });
-
-        return { std::move(response) };
-      };
-      auto server2 = make_shared<HttpServer>(port2);
-      server2->Callbacks().OnPatch = [](const DynamicRequest& request) -> ResponseWrapper {
-        DynamicResponse response;
-        response.result(http::status::ok);
-        response.body() = Test::CreateStringResponseBody("Redirect Content");
-
-        return { std::move(response) };
-      };
-
-      server1->Start();
-      server2->Start();
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&responseResult, &responsePromise](int64_t, IHttpResource::Response response) {
-        if (response.StatusCode == static_cast<int64_t>(http::status::ok)) {
-          responseResult = response;
-          responsePromise.set_value();
-        }
-        });
-      resource->SetOnData([&contentPromise, &content](int64_t, string&& responseData) {
-        content = std::move(responseData);
-
-      if (!content.empty())
-        contentPromise.set_value();
-        });
-      resource->SetOnError([&responsePromise, &contentPromise, &error, &server1](int64_t, string&& message, bool) {
-        error = std::move(message);
-
-      responsePromise.set_value();
-      contentPromise.set_value();
-        });
-
-      //clang-format off
-      resource->SendRequest(
-        "PATCH",
-        std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
-        "text",
-        false, /*useIncrementalUpdates*/
-        0 /*timeout*/,
-        false /*withCredentials*/,
-        [](int64_t) {});
-      //clang-format on
-
-      responsePromise.get_future().wait();
-      contentPromise.get_future().wait();
-
-      server2->Stop();
-      server1->Stop();
-
-      Assert::AreEqual({}, error, L"Error encountered");
-      Assert::AreEqual(static_cast<int64_t>(200), responseResult.StatusCode);
-      Assert::AreEqual({ "Redirect Content" }, content);
-    }
-
-    TEST_METHOD(TimeoutSucceeds) {
-      auto port = s_port;
-      string url = "http://localhost:" + std::to_string(port);
-
-      promise<void> getPromise;
-      string error;
-      int statusCode = 0;
-      bool timeoutError = false;
-
-      auto server = std::make_shared<HttpServer>(s_port);
-      server->Callbacks().OnGet = [](const DynamicRequest&) -> ResponseWrapper {
-        DynamicResponse response;
-        response.result(http::status::ok);
-
-        // Hold response to test client timeout
-        promise<void> timer;
-        timer.get_future().wait_for(std::chrono::milliseconds(2000));
-
-        return { std::move(response) };
-      };
-      server->Start();
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
-        statusCode = static_cast<int>(response.StatusCode);
-      getPromise.set_value();
-        });
-      resource->SetOnError([&getPromise, &error, &timeoutError](int64_t, string&& errorMessage, bool isTimeout) {
-        error = std::move(errorMessage);
-      timeoutError = isTimeout;
-      getPromise.set_value();
-        });
-      resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
-        "text", /*responseType*/
-        false, /*useIncrementalUpdates*/
-        6000, /*timeout*/
-        false, /*withCredentials*/
-        [](int64_t) {} /*callback*/);
-
-      getPromise.get_future().wait();
-      server->Stop();
-
-      Assert::AreEqual({}, error);
-      Assert::IsFalse(timeoutError);
-      Assert::AreEqual(200, statusCode);
-    }
-
-    TEST_METHOD(TimeoutFails) {
-      auto port = s_port;
-      string url = "http://localhost:" + std::to_string(port);
-
-      promise<void> getPromise;
-      string error;
-      int statusCode = 0;
-      bool timeoutError = false;
-
-      auto server = std::make_shared<HttpServer>(s_port);
-      server->Callbacks().OnGet = [](const DynamicRequest&) -> ResponseWrapper {
-        DynamicResponse response;
-        response.result(http::status::ok);
-
-        // Hold response to test client timeout
-        promise<void> timer;
-        timer.get_future().wait_for(std::chrono::milliseconds(4000));
-
-        return { std::move(response) };
-      };
-      server->Start();
-
-      auto resource = IHttpResource::Make();
-      resource->SetOnResponse([&getPromise, &statusCode](int64_t, IHttpResource::Response response) {
-        statusCode = static_cast<int>(response.StatusCode);
-      getPromise.set_value();
-        });
-      resource->SetOnError([&getPromise, &error, &timeoutError](int64_t, string&& errorMessage, bool isTimeout) {
-        error = std::move(errorMessage);
-      timeoutError = isTimeout;
-      getPromise.set_value();
-        });
-      resource->SendRequest(
-        "GET",
-        std::move(url),
-        0, /*requestId*/
-        {}, /*headers*/
-        {}, /*data*/
-        "text", /*responseType*/
-        false, /*useIncrementalUpdates*/
-        2000, /*timeout*/
-        false, /*withCredentials*/
-        [](int64_t) {} /*callback*/);
-
-      getPromise.get_future().wait();
-      server->Stop();
-
-      Assert::IsTrue(timeoutError);
-      Assert::AreEqual({ "[0x800705b4] This operation returned because the timeout period expired." }, error);
-      Assert::AreEqual(0, statusCode);
-    }
-  };
-
-  /*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;
+/*static*/ uint16_t HttpResourceIntegrationTest::s_port = 4444;
 
 } // namespace Microsoft::React::Test

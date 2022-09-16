@@ -72,8 +72,8 @@ namespace {
     };
     resource->SetOnData(std::move(onDataDynamic));
 
-    resource->SetOnError([weakReactInstance](int64_t requestId, string&& message) {
-      dynamic args = dynamic::array(requestId, std::move(message));
+  resource->SetOnError([weakReactInstance](int64_t requestId, string &&message, bool isTimeout) {
+    dynamic args = dynamic::array(requestId, std::move(message));
     if (isTimeout) {
       args.push_back(true);
     }
