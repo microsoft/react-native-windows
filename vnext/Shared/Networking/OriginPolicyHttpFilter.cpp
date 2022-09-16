@@ -685,7 +685,7 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
 
 #pragma region IRedirectEventSource
 
-bool OriginPolicyHttpFilter::OnRedirecting2(
+bool OriginPolicyHttpFilter::OnRedirecting(
     HttpRequestMessage const &request,
     HttpResponseMessage const &response) noexcept {
   // Consider the following scenario.

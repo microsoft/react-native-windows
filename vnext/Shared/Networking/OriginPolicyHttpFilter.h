@@ -18,10 +18,9 @@
 
 namespace Microsoft::React::Networking {
 
-class OriginPolicyHttpFilter : public winrt::implements<
-                                   OriginPolicyHttpFilter,
-                                   winrt::Windows::Web::Http::Filters::IHttpFilter,
-                                   IRedirectEventSource2> {
+class OriginPolicyHttpFilter
+    : public winrt::
+          implements<OriginPolicyHttpFilter, winrt::Windows::Web::Http::Filters::IHttpFilter, IRedirectEventSource> {
  public:
   struct ConstWcharComparer {
     bool operator()(const wchar_t *, const wchar_t *) const;
@@ -107,10 +106,9 @@ class OriginPolicyHttpFilter : public winrt::implements<
 
 #pragma region IRedirectEventSource
 
-  bool OnRedirecting2(
+  bool OnRedirecting(
       winrt::Windows::Web::Http::HttpRequestMessage const &request,
       winrt::Windows::Web::Http::HttpResponseMessage const &response) noexcept override;
-
 
 #pragma endregion IRedirectEventSource
 

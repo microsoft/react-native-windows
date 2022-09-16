@@ -67,9 +67,9 @@ void RedirectHttpFilter::SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactor
   m_requestFactory = factory;
 }
 
-void RedirectHttpFilter::SetRedirectSource2(
-    winrt::com_ptr<Microsoft::React::Networking::IRedirectEventSource2> const &eventSrc) noexcept {
-  m_redirEventSrc2 = eventSrc;
+void RedirectHttpFilter::SetRedirectSource(
+    winrt::com_ptr<Microsoft::React::Networking::IRedirectEventSource> const &eventSrc) noexcept {
+  m_redirEventSrc = eventSrc;
 }
 
 #pragma region IHttpBaseProtocolFilter
@@ -204,7 +204,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
   auto coAllowAutoRedirect = m_allowAutoRedirect;
   auto coMaxRedirects = m_maximumRedirects;
   auto coRequestFactory = m_requestFactory;
-  auto coEventSrc2 = m_redirEventSrc2;
+  auto coEventSrc = m_redirEventSrc;
 
   method = coRequest.Method();
 
@@ -233,7 +233,7 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
     }
 
     // Call event source's OnRedirecting before modifying request parameters.
-    if (coEventSrc2 && !coEventSrc2->OnRedirecting2(coRequest, response)) {
+    if (coEventSrc && !coEventSrc->OnRedirecting(coRequest, response)) {
       break;
     }
 
