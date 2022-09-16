@@ -179,8 +179,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewProps.cpp" DisableSpecificWarnings="4018;4305;4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewShadowNode.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewState.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\slider\SliderShadowNode.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\slider\SliderState.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\BaseTextShadowNode.cpp" />
@@ -260,14 +258,41 @@
       <ObjectFileName>$(IntDir)\codegenRnwCoreProps.obj</ObjectFileName>
     </ClCompile>
     <ClCompile Include="$(ReactNativeWindowsDir)codegen\react\components\rnwcore\ShadowNodes.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ComponentViewRegistry.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\DWriteHelpers.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\FabricUIManagerModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ImageManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ImageRequest.cpp" />
-    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\ReactNativeConfigProperties.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\SchedulerSettings.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ComponentViewRegistry.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionEventHandler.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionHelpers.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ImageComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\ScrollViewComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputComponentView.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputEventEmitter.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputProps.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputShadowNode.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\TextInput\WindowsTextInputState.cpp" DisableSpecificWarnings="4244;%(DisableSpecificWarnings)" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionHwndHost.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionRootView.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionContextHelper.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
   </ItemGroup>
 </Project>

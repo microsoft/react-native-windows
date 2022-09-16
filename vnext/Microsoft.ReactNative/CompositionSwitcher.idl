@@ -1,0 +1,111 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition
+{
+  enum CompositionStretch
+  {
+    None,
+    Fill,
+    Uniform,
+    UniformToFill,
+  };
+
+  [webhosthidden]
+  [uuid("172def51-9e1a-4e3c-841a-e5a470065acc")] // uuid needed for empty interfaces
+  [version(1)]
+  [experimental]
+  interface IBrush {
+  }
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass SurfaceBrush : IBrush
+  {
+    void HorizontalAlignmentRatio(Single value);
+    void VerticalAlignmentRatio(Single value);
+    void Stretch(CompositionStretch value);
+  }
+
+  [webhosthidden]
+  [experimental]
+  interface IDropShadow {
+    void Offset(Windows.Foundation.Numerics.Vector3 value);
+    void Opacity(Single value);
+    void BlurRadius(Single value);
+    void Color(Windows.UI.Color value);
+  }
+
+  [webhosthidden]
+  [experimental]
+  interface IVisual
+  {
+    void InsertAt(IVisual visual, Int32 index);
+    void Remove(IVisual visual);
+    IVisual GetAt(UInt32 index);
+    void Opacity(Single opacity);
+    void Scale(Windows.Foundation.Numerics.Vector3 scale);
+    void RotationAngle(Single angle);
+    void IsVisible(Boolean isVisible);
+    void Size(Windows.Foundation.Numerics.Vector2 size);
+    void Offset(Windows.Foundation.Numerics.Vector3 offset);
+    void Offset(Windows.Foundation.Numerics.Vector3 offset, Windows.Foundation.Numerics.Vector3 relativeAdjustment);
+  }
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass SpriteVisual : IVisual
+  {
+    void Brush(IBrush brush);
+    void Shadow(IDropShadow shadow);
+  }
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass ScrollPositionChangedArgs
+  {
+    Windows.Foundation.Numerics.Vector2 Position { get; };
+  }
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass ScrollVisual : IVisual
+  {
+    void Brush(IBrush brush);
+    event Windows.Foundation.EventHandler<ScrollPositionChangedArgs> ScrollPositionChanged;
+    void ContentSize(Windows.Foundation.Numerics.Vector2 size);
+    Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
+    void ScrollBy(Windows.Foundation.Numerics.Vector3 offset);
+  }
+
+  [webhosthidden]
+  [uuid("a74bfffc-7f2d-432f-8291-654782ab0d52")] // uuid needed for empty interfaces
+  [version(1)]
+  [experimental]
+  interface ICompositionDrawingSurface
+  {
+  }
+
+  [webhosthidden]
+  [experimental]
+  interface ICompositionContext
+  {
+    ICompositionDrawingSurface CreateDrawingSurface(Windows.Foundation.Size surfaceSize,
+      Windows.Graphics.DirectX.DirectXPixelFormat pixelFormat,
+      Windows.Graphics.DirectX.DirectXAlphaMode alphaMode);
+
+    SpriteVisual CreateSpriteVisual();
+    ScrollVisual CreateScrollerVisual();
+    IVisual CreateCaratVisual();
+    IDropShadow CreateDropShadow();
+    IBrush CreateColorBrush(Windows.UI.Color color);
+    SurfaceBrush CreateSurfaceBrush(ICompositionDrawingSurface surface);
+
+    // TODO Add and hook up to rootnode - to notify the tree
+    // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;
+  }
+
+} // namespace Microsoft.ReactNative.Composition

@@ -1,0 +1,31 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "NamespaceRedirect.h"
+#include "DocString.h"
+import "CompositionSwitcher.idl";
+
+namespace Microsoft.ReactNative.Composition
+{
+  [webhosthidden]
+  [default_interface]
+  [experimental]
+  DOC_STRING("A helper static class for to create a @ICompositionContext based on Windows.Composition Visuals.  And to access the underlying Windows.Composition objects from the abstraction.")
+  static runtimeclass CompositionContextHelper
+  {
+    DOC_STRING(
+      "Creates a @ICompositionContext from a Windows.UI.Composition.Compositor")
+    static ICompositionContext CreateContext(Windows.UI.Composition.Compositor compositor);
+
+    DOC_STRING(
+      "Creates a @IVisual from a Windows.UI.Composition.Visual")
+    static IVisual CreateVisual(Windows.UI.Composition.Visual visual);
+
+    static Windows.UI.Composition.Compositor InnerCompositor(ICompositionContext context);
+    static Windows.UI.Composition.Visual InnerVisual(IVisual visual);
+    static Windows.UI.Composition.DropShadow InnerDropShadow(IDropShadow shadow);
+    static Windows.UI.Composition.CompositionBrush InnerBrush(IBrush brush);
+    static Windows.UI.Composition.ICompositionSurface InnerSurface(ICompositionDrawingSurface surface);
+  }
+
+} // namespace Microsoft.ReactNative.Composition
