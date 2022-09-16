@@ -147,7 +147,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       {},                         /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      1000,                       /*timeout*/
+      0,                       /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t){}               /*reactCallback*/
     );
@@ -201,7 +201,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       {},                         /*data*/
       "text",
       false,                      /*useIncrementalUpdates*/
-      1000,                       /*timeout*/
+      0,                       /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
       [](int64_t) {}              /*reactCallback*/
     );
@@ -300,7 +300,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       //{} /*bodyData*/,
       "text",
       false /*useIncrementalUpdates*/,
-      1000 /*timeout*/,
+      0 /*timeout*/,
       false /*withCredentials*/,
       [](int64_t) {} /*callback*/
     );
