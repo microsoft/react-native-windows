@@ -71,6 +71,7 @@ struct IHttpResource {
   /// </param>
   /// <param name="timeout">
   /// Request timeout in miliseconds.
+  /// Note: A value of 0 means no timeout. The resource will await the response indefinitely.
   /// </param>
   /// <param name="withCredentials">
   /// Allow including credentials in request.
@@ -95,7 +96,7 @@ struct IHttpResource {
   virtual void SetOnData(std::function<void(int64_t requestId, std::string &&responseData)> &&handler) noexcept = 0;
   virtual void SetOnData(std::function<void(int64_t requestId, folly::dynamic &&responseData)> &&handler) noexcept = 0;
   virtual void SetOnError(
-      std::function<void(int64_t requestId, std::string &&errorMessage /*, bool isTimeout*/)> &&handler) noexcept = 0;
+      std::function<void(int64_t requestId, std::string &&errorMessage, bool isTimeout)> &&handler) noexcept = 0;
 };
 
 } // namespace Microsoft::React::Networking
