@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 14 Sep 2022 18:19:21 GMT and should not be manually modified.
+This log was last generated on Sat, 17 Sep 2022 02:23:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.68.5
+
+Sat, 17 Sep 2022 02:23:36 GMT
+
+### Patches
+
+- Add Dimensions.win32 implementation to support text scale factor (patboyd@microsoft.com)
 
 ## 0.68.4
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 Sep 2022 02:23:36 GMT",
+      "tag": "react-native-windows_v0.68.17",
+      "version": "0.68.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "62083ca0fc6fb45934c5776f218ca05d8d26822f",
+            "comment": "Implement HTTP redirection (#10534)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Sep 2022 18:19:22 GMT",
       "tag": "react-native-windows_v0.68.16",
       "version": "0.68.16",
