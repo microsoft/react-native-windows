@@ -178,7 +178,7 @@ class BlobTest extends React.Component<{...}, State> {
   componentDidMount() {
     this._get();
     this._waitFor(this._getSucceeded, 6, (doneSucceeded) => {
-      let reader = new FileReader();
+      let reader = new global.FileReader();
       reader.readAsDataURL(this.state.xhr.response);
       reader.onload = () => {
         TestModule.markTestPassed(
