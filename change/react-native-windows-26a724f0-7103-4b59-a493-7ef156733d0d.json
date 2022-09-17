@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Implement HTTP redirection (#10534)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
