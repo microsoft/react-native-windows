@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 Sep 2022 05:11:03 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.549",
+      "version": "0.0.0-canary.549",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3cb67483a3b44d188b11c6dc66dea846b6735b0e",
+            "comment": "Alter Accessibility Protocol"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "db790ad9d807d66e061fd6c75204509faeaaa113",
+            "comment": "Implement HTTP redirection"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 Sep 2022 05:11:52 GMT",
       "tag": "react-native-windows_v0.0.0-canary.548",
       "version": "0.0.0-canary.548",

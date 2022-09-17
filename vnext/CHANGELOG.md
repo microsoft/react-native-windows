@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 15 Sep 2022 05:11:52 GMT and should not be manually modified.
+This log was last generated on Sat, 17 Sep 2022 05:11:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.549
+
+Sat, 17 Sep 2022 05:11:03 GMT
+
+### Changes
+
+- Alter Accessibility Protocol (34109996+chiaramooney@users.noreply.github.com)
+- Implement HTTP redirection (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.548
 
