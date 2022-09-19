@@ -3,7 +3,7 @@
 
 #pragma once
 
-#define _USE_MATH_DEFINES 
+#define _USE_MATH_DEFINES
 #include <Math.h>
 
 #include <windows.h>
