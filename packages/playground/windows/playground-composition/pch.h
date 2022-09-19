@@ -11,10 +11,10 @@
 
 #include <unknwn.h>
 
-#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
+#include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include <winrt/ReactNativePicker.h>
+// Disable until we have 3rd party story for custom components
+// #include <winrt/ReactNativePicker.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
-#include <winrt/Windows.UI.Xaml.Hosting.h>
 #pragma pop_macro("GetCurrentTime")

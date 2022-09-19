@@ -179,6 +179,7 @@ struct WindowData {
 
     auto hWndXamlIsland = GetXamlIslandHwnd(m_desktopWindowXamlSource);
     SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
+
     return 0;
   }
 

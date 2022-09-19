@@ -6,16 +6,19 @@
 
 #include <memory>
 
-#include "AutolinkedNativeModules.g.h"
+// Disabled until we have a 3rd party story for custom components
+// #include "AutolinkedNativeModules.g.h"
 
-#include <CppWinRTIncludes.h>
 #include <winrt/Windows.Foundation.Collections.h>
 
 #include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
+
 #include <DispatcherQueue.h>
 #include <windows.ui.composition.interop.h>
+
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
+
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
@@ -119,7 +122,8 @@ struct WindowData {
           GetCurrentDirectory(MAX_PATH, workingDir);
 
           auto host = Host();
-          RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any autolinked modules
+          // Disable until we have a 3rd party story for custom components
+          // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any autolinked modules
 
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
@@ -320,7 +324,6 @@ extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
-
   auto windowData = WindowData::GetFromWindow(hwnd);
   if (windowData) {
     auto result = WindowData::GetFromWindow(hwnd)->TranslateMessage(message, wparam, lparam);

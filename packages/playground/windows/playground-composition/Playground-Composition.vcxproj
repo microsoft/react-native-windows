@@ -109,7 +109,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AutolinkedNativeModules.g.cpp" />
+    <!-- Disabling autolinking until we have a 3rd party story for custom components -->
+    <!-- <ClCompile Include="AutolinkedNativeModules.g.cpp" /> -->
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
