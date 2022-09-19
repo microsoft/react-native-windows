@@ -473,14 +473,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
-#ifdef USE_FABRIC
-    case WM_PAINT: {
-      PAINTSTRUCT ps;
-      HDC hdc = BeginPaint(hwnd, &ps);
-      // TODO: Add any drawing code that uses hdc here...
-      EndPaint(hwnd, &ps);
-    } break;
-#else
+#ifndef USE_FABRIC
     case WM_WINDOWPOSCHANGED: {
       return WindowData::GetFromWindow(hwnd)->OnWindowPosChanged(hwnd, reinterpret_cast<const WINDOWPOS *>(lparam));
     }
@@ -599,6 +592,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       DQTAT_COM_ASTA /* apartmentType */
   };
 
+  // Need to have a Dispatcher on the current thread to be able to create a Compositor
   winrt::check_hresult(CreateDispatcherQueueController(
       options,
       reinterpret_cast<ABI::Windows::System::IDispatcherQueueController **>(
