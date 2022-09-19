@@ -789,8 +789,8 @@ void ReactInstanceWin::InitUIManager() noexcept {
 
   Microsoft::ReactNative::AddStandardViewManagers(viewManagers, *m_reactContext);
 
-  auto uiManagerSettings =
-      std::make_unique<Microsoft::ReactNative::UIManagerSettings>(m_batchingUIThread, std::move(viewManagers));
+  auto uiManagerSettings = std::make_unique<Microsoft::ReactNative::UIManagerSettings>(
+      m_batchingUIThread, m_uiMessageThread.Load(), std::move(viewManagers));
   Microsoft::ReactNative::UIManager::SetSettings(m_reactContext->Properties(), std::move(uiManagerSettings));
 
   m_reactContext->Properties().Set(
