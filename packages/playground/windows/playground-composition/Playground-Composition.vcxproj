@@ -2,14 +2,13 @@
 <Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{8B88FFAE-4DBC-49A2-AFA5-D2477D4AD189}</ProjectGuid>
+    <ProjectGuid>{F54A991F-5535-43DF-AE79-85821E001675}</ProjectGuid>
     <RootNamespace>Playground</RootNamespace>
-    <ProjectName>Playground-win32</ProjectName>
+    <ProjectName>Playground-composition</ProjectName>
     <Keyword>Win32Proj</Keyword>
     <!-- <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier> -->
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
     <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
-    <BuildMSRNCxx>false</BuildMSRNCxx>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
     <AppxPackage>false</AppxPackage>
@@ -114,13 +113,13 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Playground-Win32.cpp" />
+    <ClCompile Include="Playground-Composition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Natvis Include="$(ReactNativeWindowsDir)Folly\Folly.natvis" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Playground-Win32.rc" />
+    <ResourceCompile Include="Playground-Composition.rc" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Island_256.ico" />
@@ -160,7 +159,7 @@
     Custom build step:
       In an unpackaged app, MRT requires resources.pri in order to find resources. MUXC has resources it needs to work (theme assets).
       This file is supposed to be a merge of all the pri files the app depends on plus the app's own resources.
-      In the case of playground-win32 we don't have our own pri so we can just take MUXC's and rename the pri to resources.pri.
+      In the case of playground-Composition we don't have our own pri so we can just take MUXC's and rename the pri to resources.pri.
   -->
   <Target Name="FakeResourcesPriMerge" BeforeTargets="FinalizeBuildStatus" DependsOnTargets="CopyFilesToOutputDirectory">
     <Message Text="Renaming Microsoft.UI.Xaml.pri to resources.pri" />
@@ -175,7 +174,7 @@
     <PackageReference Include="Microsoft.Toolkit.Win32.UI.XamlApplication" Version="6.1.3" />
     <!--
       WARNING - DO NOT MAKE THE VERSION OF MICROSOFT.UI.XAML BE ANYTHING BUT PRERELEASE.
-      Playground-Win32 is an unpackaged win32 app, and needs to use Microsoft.UI.Xaml from a prerelease,
+      Playground-Composition is an unpackaged win32 app, and needs to use Microsoft.UI.Xaml from a prerelease,
       to be able to carry WinUI in-app instead of using the Framework Package
     -->
     <!-- <PackageReference Include="Microsoft.UI.Xaml" Version="2.6.1-prerelease.210709001" /> -->

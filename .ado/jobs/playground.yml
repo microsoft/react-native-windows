@@ -26,6 +26,10 @@ parameters:
             SolutionFile: Playground.sln
             RunWack: true
             UploadAppx: true
+          - Name: X86DebugComposition
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            SolutionFile: Playground-Composition.sln
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86
@@ -63,6 +67,10 @@ parameters:
             SolutionFile: Playground.sln
             RunWack: true
             UploadAppx: true
+          - Name: X86DebugComposition
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            SolutionFile: Playground-Composition.sln
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86

@@ -1,65 +1,75 @@
 #include "pch.h"
 #include "resource.h"
 
-#include <UI.Xaml.Hosting.DesktopWindowXamlSource.h>
-
-#include <shlobj.h>
-#include <shobjidl.h>
 #include <windows.h>
 #include <windowsx.h>
 
-#include <filesystem>
 #include <memory>
-#include <thread>
-
-#include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
-#include <winrt/Microsoft.UI.Xaml.Controls.h>
-#include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
-
-#pragma push_macro("GetCurrentTime")
-#undef GetCurrentTime
-
-#include <DesktopWindowBridge.h>
 
 #include "AutolinkedNativeModules.g.h"
 
 #include <CppWinRTIncludes.h>
-#include <UI.Xaml.Automation.h>
-#include <UI.Xaml.Controls.h>
-#include <UI.Xaml.Hosting.h>
-#include <UI.Xaml.Markup.h>
-#include <UI.Xaml.Media.h>
 #include <winrt/Windows.Foundation.Collections.h>
-#pragma pop_macro("GetCurrentTime")
 
-#ifndef USE_WINUI3
-#else
-#include <winrt/Microsoft.UI.h>
-#endif
+#include "../../../../vnext/codegen/NativeDeviceInfoSpec.g.h"
+#include <DispatcherQueue.h>
+#include <windows.ui.composition.interop.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Windows.UI.Composition.Desktop.h>
+#include "NativeModules.h"
+#include "ReactPropertyBag.h"
 
-namespace controls = xaml::Controls;
-namespace hosting = xaml::Hosting;
+// Work around crash in DeviceInfo when running outside of XAML environment
+// TODO rework built-in DeviceInfo to allow it to be driven without use of HWNDs or XamlApps
+REACT_MODULE(DeviceInfo)
+struct DeviceInfo {
+  using ModuleSpec = Microsoft::ReactNativeSpecs::DeviceInfoSpec;
+
+  REACT_INIT(Initialize)
+  void Initialize(React::ReactContext const &reactContext) noexcept {
+    m_context = reactContext;
+  }
+
+  REACT_GET_CONSTANTS(GetConstants)
+  Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants GetConstants() noexcept {
+    Microsoft::ReactNativeSpecs::DeviceInfoSpec_Constants constants;
+    Microsoft::ReactNativeSpecs::DeviceInfoSpec_DisplayMetrics screenDisplayMetrics;
+    screenDisplayMetrics.fontScale = 1;
+    screenDisplayMetrics.height = 1024;
+    screenDisplayMetrics.width = 1024;
+    screenDisplayMetrics.scale = 1;
+    constants.Dimensions.screen = screenDisplayMetrics;
+    constants.Dimensions.window = screenDisplayMetrics;
+    return constants;
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::ReactContext m_context;
+};
+
+// Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
+struct CompReactPackageProvider
+    : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+ public: // IReactPackageProvider
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
+    packageBuilder.AddTurboModule(L"DeviceInfo", winrt::Microsoft::ReactNative::MakeModuleProvider<DeviceInfo>());
+  }
+};
+
+winrt::Windows::System::DispatcherQueueController g_dispatcherQueueController{nullptr};
+winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 
 constexpr auto WindowDataProperty = L"WindowData";
 
 int RunPlayground(int showCmd, bool useWebDebugger);
-
-HWND GetXamlIslandHwnd(const hosting::DesktopWindowXamlSource &dwxs) {
-  auto interop = dwxs.as<IDesktopWindowXamlSourceNative>();
-  // Get the new child window's hwnd
-  HWND hWndXamlIsland = nullptr;
-  winrt::check_hresult(interop->get_WindowHandle(&hWndXamlIsland));
-  return hWndXamlIsland;
-}
 
 struct WindowData {
   static HINSTANCE s_instance;
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  hosting::DesktopWindowXamlSource m_desktopWindowXamlSource{nullptr};
-
-  winrt::Microsoft::ReactNative::ReactRootView m_reactRootView{nullptr};
+  bool m_windowInited{false};
+  winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
@@ -70,8 +80,11 @@ struct WindowData {
   uint16_t m_debuggerPort{defaultDebuggerPort};
   xaml::ElementTheme m_theme{xaml::ElementTheme::Default};
 
-  WindowData(const hosting::DesktopWindowXamlSource &desktopWindowXamlSource)
-      : m_desktopWindowXamlSource(desktopWindowXamlSource) {}
+  WindowData(const winrt::Microsoft::ReactNative::CompositionHwndHost &compHost) : m_CompositionHwndHost(compHost) {
+    winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
+        InstanceSettings().Properties(),
+        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::CreateContext(g_compositor));
+  }
 
   static WindowData *GetFromWindow(HWND hwnd) {
     auto data = reinterpret_cast<WindowData *>(GetProp(hwnd, WindowDataProperty));
@@ -119,29 +132,23 @@ struct WindowData {
           host.InstanceSettings().DebuggerPort(m_debuggerPort);
           host.InstanceSettings().UseDeveloperSupport(true);
 
-          auto rootElement = m_desktopWindowXamlSource.Content().as<controls::Panel>();
-          winrt::Microsoft::ReactNative::XamlUIService::SetXamlRoot(
-              host.InstanceSettings().Properties(), rootElement.XamlRoot());
-          winrt::Microsoft::ReactNative::XamlUIService::SetAccessibleRoot(
-              host.InstanceSettings().Properties(), rootElement);
-          rootElement.SetValue(
-              winrt::Windows::UI::Xaml::Automation::AutomationProperties::LandmarkTypeProperty(),
-              winrt::box_value(80002));
-
-#ifdef USE_WINUI3
-          const auto islandWindow = (uint64_t)GetXamlIslandHwnd(m_desktopWindowXamlSource);
-          winrt::Microsoft::ReactNative::XamlUIService::SetIslandWindowHandle(
-              host.InstanceSettings().Properties(), islandWindow);
-#endif
+          host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+          winrt::Microsoft::ReactNative::ReactPropertyBag(host.InstanceSettings().Properties())
+              .Set(
+                  winrt::Microsoft::ReactNative::ReactPropertyId<uint64_t>(L"RootHwndForDevUI"),
+                  reinterpret_cast<uint64_t>(hwnd));
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
 
-          m_reactRootView = winrt::Microsoft::ReactNative::ReactRootView();
-          m_reactRootView.ComponentName(appName);
-          m_reactRootView.ReactNativeHost(host);
-          rootElement.Children().Clear();
-          rootElement.Children().Append(m_reactRootView);
+          m_CompositionHwndHost.ComponentName(appName);
+          m_CompositionHwndHost.ReactNativeHost(host);
+
+          auto windowData = WindowData::GetFromWindow(hwnd);
+          if (!windowData->m_windowInited) {
+            m_CompositionHwndHost.Initialize((uint64_t)hwnd);
+            windowData->m_windowInited = true;
+          }
         }
 
         break;
@@ -172,31 +179,10 @@ struct WindowData {
     return 0;
   }
 
-  LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
-    auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
-    // Parent the DesktopWindowXamlSource object to current window
-    winrt::check_hresult(interop->AttachToWindow(hwnd));
-
-    auto hWndXamlIsland = GetXamlIslandHwnd(m_desktopWindowXamlSource);
-    SetWindowPos(hWndXamlIsland, nullptr, 0, 0, createStruct->cx, createStruct->cy, SWP_SHOWWINDOW);
-    return 0;
-  }
-
-  LRESULT OnWindowPosChanged(HWND /* hwnd */, const WINDOWPOS *windowPosition) {
-    auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
-    HWND interopHwnd;
-    winrt::check_hresult(interop->get_WindowHandle(&interopHwnd));
-
-    constexpr int logBoxHeight = 100;
-    constexpr int scrollbarWidth = 24;
-    MoveWindow(
-        interopHwnd,
-        0,
-        0,
-        windowPosition->cx > scrollbarWidth ? windowPosition->cx - scrollbarWidth : windowPosition->cx,
-        windowPosition->cy > logBoxHeight ? windowPosition->cy - logBoxHeight : windowPosition->cy,
-        TRUE);
-
+  LRESULT TranslateMessage(UINT message, WPARAM wparam, LPARAM lparam) noexcept {
+    if (m_CompositionHwndHost) {
+      return m_CompositionHwndHost.TranslateMessage(message, wparam, lparam);
+    }
     return 0;
   }
 
@@ -296,9 +282,6 @@ struct WindowData {
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
 
             auto themeComboBox = GetDlgItem(hwnd, IDC_THEME);
-            self->m_theme = static_cast<xaml::ElementTheme>(ComboBox_GetCurSel(themeComboBox));
-            auto panel = self->m_desktopWindowXamlSource.Content().as<controls::Panel>();
-            panel.RequestedTheme(self->m_theme);
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
@@ -337,17 +320,15 @@ extern "C" IMAGE_DOS_HEADER __ImageBase;
 HINSTANCE WindowData::s_instance = reinterpret_cast<HINSTANCE>(&__ImageBase);
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
-#ifdef USE_WINUI3
-  if (auto windowData = WindowData::GetFromWindow(hwnd)) {
-    winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
-    winrt::Microsoft::ReactNative::ForwardWindowMessage(rns, hwnd, message, wparam, lparam);
+
+  auto windowData = WindowData::GetFromWindow(hwnd);
+  if (windowData) {
+    auto result = WindowData::GetFromWindow(hwnd)->TranslateMessage(message, wparam, lparam);
+    if (result)
+      return result;
   }
-#endif
 
   switch (message) {
-    case WM_CREATE: {
-      return WindowData::GetFromWindow(hwnd)->OnCreate(hwnd, reinterpret_cast<LPCREATESTRUCT>(lparam));
-    }
     case WM_COMMAND: {
       return WindowData::GetFromWindow(hwnd)->OnCommand(
           hwnd, LOWORD(wparam), reinterpret_cast<HWND>(lparam), HIWORD(wparam));
@@ -365,48 +346,17 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
-    case WM_WINDOWPOSCHANGED: {
-      return WindowData::GetFromWindow(hwnd)->OnWindowPosChanged(hwnd, reinterpret_cast<const WINDOWPOS *>(lparam));
-    }
   }
 
   return DefWindowProc(hwnd, message, wparam, lparam);
 }
 
-constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
+constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
 int RunPlayground(int showCmd, bool useWebDebugger) {
-#ifdef USE_WINUI3
-  constexpr PCWSTR appName = L"React Native Playground (Win32 WinUI3)";
-#else
-  constexpr PCWSTR appName = L"React Native Playground (Win32)";
-#endif
+  constexpr PCWSTR appName = L"React Native Playground (Composition)";
 
-  winrt::init_apartment(winrt::apartment_type::single_threaded);
-
-  auto winuiIXMP = winrt::Microsoft::UI::Xaml::XamlTypeInfo::XamlControlsXamlMetaDataProvider();
-
-  auto xapp = winrt::Microsoft::Toolkit::Win32::UI::XamlHost::XamlApplication({winuiIXMP});
-
-  winrt::Windows::UI::Xaml::Hosting::WindowsXamlManager::InitializeForCurrentThread();
-
-  xapp.Resources().MergedDictionaries().Append(winrt::Microsoft::UI::Xaml::Controls::XamlControlsResources());
-
-  hosting::DesktopWindowXamlSource desktopXamlSource;
-  auto windowData = std::make_unique<WindowData>(desktopXamlSource);
-  windowData->m_useWebDebugger = useWebDebugger;
-
-  // We have to use a XAML string here to access the ThemeResource.
-  // XAML Islands requires us to set the background color to handle theme changes.
-  const winrt::hstring xamlString =
-      LR"(
-  <Grid
-    xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'
-    xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'
-    Background='{ThemeResource ApplicationPageBackgroundThemeBrush}' />)";
-  auto xamlContent = winrt::unbox_value<controls::Grid>(xaml::Markup::XamlReader::Load(xamlString));
-  desktopXamlSource.Content(xamlContent);
-
+  auto windowData = std::make_unique<WindowData>(winrt::Microsoft::ReactNative::CompositionHwndHost());
   HWND hwnd = CreateWindow(
       c_windowClassName,
       appName,
@@ -429,23 +379,15 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   UpdateWindow(hwnd);
   SetFocus(hwnd);
 
-  HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_WIN32));
+  HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_COMPOSITION));
 
   MSG msg = {};
   while (GetMessage(&msg, nullptr, 0, 0)) {
-    auto xamlSourceNative2 = desktopXamlSource.as<IDesktopWindowXamlSourceNative2>();
-    BOOL xamlSourceProcessedMessage = FALSE;
-    winrt::check_hresult(xamlSourceNative2->PreTranslateMessage(&msg, &xamlSourceProcessedMessage));
-    if (xamlSourceProcessedMessage) {
-      continue;
-    }
     if (!TranslateAccelerator(hwnd, hAccelTable, &msg)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
     }
   }
-
-  winrt::uninit_apartment();
 
   return (int)msg.wParam;
 }
@@ -460,12 +402,25 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   wcex.hInstance = WindowData::s_instance;
   wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
   wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-  wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_WIN32);
+  wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PLAYGROUND_COMPOSITION);
   wcex.lpszClassName = c_windowClassName;
   wcex.hIcon = LoadIconW(instance, MAKEINTRESOURCEW(IDI_ICON1));
   ATOM classId = RegisterClassEx(&wcex);
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
 
+  DispatcherQueueOptions options{
+      sizeof(DispatcherQueueOptions), /* dwSize */
+      DQTYPE_THREAD_CURRENT, /* threadType */
+      DQTAT_COM_ASTA /* apartmentType */
+  };
+
+  // Need to have a Dispatcher on the current thread to be able to create a Compositor
+  winrt::check_hresult(CreateDispatcherQueueController(
+      options,
+      reinterpret_cast<ABI::Windows::System::IDispatcherQueueController **>(
+          winrt::put_abi(g_dispatcherQueueController))));
+
+  g_compositor = winrt::Windows::UI::Composition::Compositor();
   return RunPlayground(showCmd, false);
 }
