@@ -63,8 +63,7 @@ void ParagraphComponentView::updateProps(
   m_props = std::static_pointer_cast<facebook::react::ParagraphProps const>(props);
 }
 
-void ParagraphComponentView::updateEventEmitter(
-    facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
+void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 
 void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &state,

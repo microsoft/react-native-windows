@@ -53,15 +53,11 @@ ImageComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ImageComponentView::mountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
+void ImageComponentView::mountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
-void ImageComponentView::unmountChildComponentView(
-    const IComponentView &childComponentView,
-    uint32_t index) noexcept {
+void ImageComponentView::unmountChildComponentView(const IComponentView &childComponentView, uint32_t index) noexcept {
   assert(false);
 }
 
@@ -120,8 +116,7 @@ winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
   return decodedFrame;
 }
 
-void ImageComponentView::generateBitmap(
-    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
+void ImageComponentView::generateBitmap(const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
   winrt::com_ptr<IWICBitmapSource> decodedFrame = wicBitmapSourceFromStream(results);
 
   if (!decodedFrame) {
@@ -163,7 +158,7 @@ void ImageComponentView::updateProps(
   updateBorderProps(oldImageProps, newImageProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor) {
-    m_drawingSurface = nullptr; // TODO dont need to nuke the surface just to redraw...
+    m_drawingSurface = nullptr; // TODO dont need to recreate the surface just to redraw...
   }
 
   if (oldImageProps.opacity != newImageProps.opacity) {

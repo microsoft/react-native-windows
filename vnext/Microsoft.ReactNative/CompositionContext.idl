@@ -14,18 +14,18 @@ namespace Microsoft.ReactNative.Composition
   static runtimeclass CompositionContextHelper
   {
     DOC_STRING(
-      "Creates a @ICompositionContext from a Windows.UI.Composition.Compositor")
-    static ICompositionContext CreateContext(Windows.UI.Composition.Compositor compositor);
+      "Creates a @ICompositionContext from a Compositor")
+    static ICompositionContext CreateContext(COMP_NAMESPACE.Compositor compositor);
 
     DOC_STRING(
-      "Creates a @IVisual from a Windows.UI.Composition.Visual")
-    static IVisual CreateVisual(Windows.UI.Composition.Visual visual);
+      "Creates a @IVisual from a Visual")
+    static IVisual CreateVisual(COMP_NAMESPACE.Visual visual);
 
-    static Windows.UI.Composition.Compositor InnerCompositor(ICompositionContext context);
-    static Windows.UI.Composition.Visual InnerVisual(IVisual visual);
-    static Windows.UI.Composition.DropShadow InnerDropShadow(IDropShadow shadow);
-    static Windows.UI.Composition.CompositionBrush InnerBrush(IBrush brush);
-    static Windows.UI.Composition.ICompositionSurface InnerSurface(ICompositionDrawingSurface surface);
+    static COMP_NAMESPACE.Compositor InnerCompositor(ICompositionContext context);
+    static COMP_NAMESPACE.Visual InnerVisual(IVisual visual);
+    static COMP_NAMESPACE.DropShadow InnerDropShadow(IDropShadow shadow);
+    static COMP_NAMESPACE.CompositionBrush InnerBrush(IBrush brush);
+    static COMP_NAMESPACE.ICompositionSurface InnerSurface(ICompositionDrawingSurface surface);
   }
 
 } // namespace Microsoft.ReactNative.Composition

@@ -10,9 +10,9 @@
 #include <textserv.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
+#include "../ComponentView.h"
 #include "../CompositionHelpers.h"
 #include "../CompositionViewComponentView.h"
-#include "../ComponentView.h"
 #include "WindowsTextInputProps.h"
 #include "WindowsTextInputShadowNode.h"
 

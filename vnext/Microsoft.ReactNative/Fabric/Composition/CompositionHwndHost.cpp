@@ -82,7 +82,7 @@ void CompositionHwndHost::UpdateSize() noexcept {
   }
 }
 
-LRESULT CompositionHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) noexcept {
+LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t lParam) noexcept {
   if (!m_hwnd || !m_compRootView)
     return 0;
 
@@ -119,7 +119,7 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, WPARAM wParam, LPARAM lPa
   }
 
   if (m_compRootView) {
-    return m_compRootView.SendMessage(msg, wParam, lParam);
+    return static_cast<LRESULT>(m_compRootView.SendMessage(msg, wParam, lParam));
   }
   return 0;
 }

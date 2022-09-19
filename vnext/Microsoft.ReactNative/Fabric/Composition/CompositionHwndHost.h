@@ -34,7 +34,7 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   void Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept;
   winrt::Windows::UI::Composition::Visual RootVisual() const noexcept;
 
-  LRESULT TranslateMessage(int msg, WPARAM wParam, LPARAM lParam) noexcept;
+  LRESULT TranslateMessage(int msg, uint64_t wParam, int64_t lParam) noexcept;
 
  private:
   // Possibly should be public..

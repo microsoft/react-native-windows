@@ -2,8 +2,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-// These interfaces provide an abstraction that allows us to target either Windows Composition, or Office's AirSpace composition
-// layers
+// These interfaces provide an abstraction that allows us to target either Windows Composition, or Office's AirSpace
+// composition layers
 
 #pragma once
 

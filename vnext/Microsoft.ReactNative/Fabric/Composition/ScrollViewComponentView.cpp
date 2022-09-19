@@ -173,8 +173,7 @@ void ScrollViewComponentView::updateProps(
   // m_props = std::static_pointer_cast<facebook::react::TextProps const>(props);
 }
 
-void ScrollViewComponentView::updateEventEmitter(
-    facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
+void ScrollViewComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
 
 void ScrollViewComponentView::updateState(
     facebook::react::State::Shared const &state,
