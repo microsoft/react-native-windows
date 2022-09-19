@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds QuirkSetting for non-batched create view",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
