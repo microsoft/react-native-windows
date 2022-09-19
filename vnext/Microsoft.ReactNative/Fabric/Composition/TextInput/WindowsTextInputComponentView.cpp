@@ -391,13 +391,20 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
   HRESULT TxNotify(DWORD iNotify, void *pv) override {
     // TODO
 
-    if (iNotify == EN_CHANGE) {
-      m_outer->OnTextUpdated();
-    }
-
-    if (iNotify == EN_SELCHANGE) {
-      auto selChange = (SELCHANGE *)pv;
-      m_outer->OnSelectionChanged(selChange->chrg.cpMin, selChange->chrg.cpMax);
+    switch (iNotify) {
+      case EN_UPDATE:
+        if (!m_outer->m_drawing) {
+          m_outer->DrawText();
+        }
+        break;
+      case EN_CHANGE:
+        m_outer->OnTextUpdated();
+        break;
+      case EN_SELCHANGE: {
+        auto selChange = (SELCHANGE *)pv;
+        m_outer->OnSelectionChanged(selChange->chrg.cpMin, selChange->chrg.cpMax);
+        break;
+      }
     }
 
     return S_OK;
