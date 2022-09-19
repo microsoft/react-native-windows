@@ -2,6 +2,21 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Mon, 12 Sep 2022 20:01:48 GMT",
+      "tag": "react-native-windows-init_v1.1.107",
+      "version": "1.1.107",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows-init",
+            "commit": "0512b19c41d76e618411f3503a79d9ebebe5ccae",
+            "comment": "Address PoliCheck issues"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Aug 2022 05:09:34 GMT",
       "tag": "react-native-windows-init_v1.1.106",
       "version": "1.1.106",

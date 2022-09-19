@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "DRAFT: Make borderRadius consistent with other RN platforms",
+  "comment": "Switch to std::unordered_map for shadow and Yoga nodes",
   "packageName": "react-native-windows",
   "email": "erozell@outlook.com",
   "dependentChangeType": "patch"

@@ -850,8 +850,7 @@ void NativeUIManager::ReplaceView(ShadowNode &shadowNode) {
     if (it != m_tagsToYogaNodes.end()) {
       YGNodeRef yogaNode = it->second.get();
 
-      YGMeasureFunc func = pViewManager->GetYogaCustomMeasureFunc();
-      if (func != nullptr) {
+      if (pViewManager->IsNativeControlWithSelfLayout()) {
         auto context = std::make_unique<YogaContext>(node.GetView());
         YGNodeSetContext(yogaNode, reinterpret_cast<void *>(context.get()));
 
@@ -876,26 +875,6 @@ void NativeUIManager::UpdateView(ShadowNode &shadowNode, winrt::Microsoft::React
   }
 }
 
-void NativeUIManager::UpdateExtraLayout(int64_t tag) {
-  // For nodes that are not self-measure, there may be styles applied that are
-  // applying padding. Here we make sure Yoga knows about that padding so yoga
-  // layout is aware of what rendering intends to do with it.  (net: buttons
-  // with padding shouldn't have clipped content anymore)
-  ShadowNodeBase *shadowNode = static_cast<ShadowNodeBase *>(m_host->FindShadowNodeForTag(tag));
-  if (shadowNode == nullptr)
-    return;
-
-  if (shadowNode->IsExternalLayoutDirty()) {
-    YGNodeRef yogaNode = GetYogaNode(tag);
-    if (yogaNode)
-      shadowNode->DoExtraLayoutPrep(yogaNode);
-  }
-
-  for (int64_t child : shadowNode->m_children) {
-    UpdateExtraLayout(child);
-  }
-}
-
 void NativeUIManager::DoLayout() {
   SystraceSection s("NativeUIManager::DoLayout");
 
@@ -916,11 +895,6 @@ void NativeUIManager::DoLayout() {
 
   auto &rootTags = m_host->GetAllRootTags();
   for (int64_t rootTag : rootTags) {
-    {
-      SystraceSection s("NativeUIManager::DoLayout::UpdateExtraLayout");
-      UpdateExtraLayout(rootTag);
-    }
-
     ShadowNodeBase &rootShadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(rootTag));
     if (YGNodeRef rootNode = GetYogaNode(rootTag)) {
       auto rootElement = rootShadowNode.GetView().as<xaml::FrameworkElement>();
@@ -939,28 +913,36 @@ void NativeUIManager::DoLayout() {
       assert(false);
       return;
     }
+
+    {
+      SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
+      SetLayoutPropsRecursive(rootTag);
+    }
+  }
+}
+
+void NativeUIManager::SetLayoutPropsRecursive(int64_t tag) {
+  ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
+  auto *pViewManager = shadowNode.GetViewManager();
+  if (!pViewManager->IsNativeControlWithSelfLayout()) {
+    for (const auto child : shadowNode.m_children) {
+      SetLayoutPropsRecursive(child);
+    }
   }
 
-  {
-    SystraceSection s("NativeUIManager::DoLayout::SetLayoutProps");
-    for (auto &tagToYogaNode : m_tagsToYogaNodes) {
-      int64_t tag = tagToYogaNode.first;
-      YGNodeRef yogaNode = tagToYogaNode.second.get();
+  const auto tagToYogaNode = m_tagsToYogaNodes.find(tag);
+  if (auto yogaNode = GetYogaNode(tag)) {
+    if (!YGNodeGetHasNewLayout(yogaNode))
+      return;
+    YGNodeSetHasNewLayout(yogaNode, false);
 
-      if (!YGNodeGetHasNewLayout(yogaNode))
-        continue;
-      YGNodeSetHasNewLayout(yogaNode, false);
-
-      float left = YGNodeLayoutGetLeft(yogaNode);
-      float top = YGNodeLayoutGetTop(yogaNode);
-      float width = YGNodeLayoutGetWidth(yogaNode);
-      float height = YGNodeLayoutGetHeight(yogaNode);
-
-      ShadowNodeBase &shadowNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(tag));
-      auto view = shadowNode.GetView();
-      auto pViewManager = shadowNode.GetViewManager();
-      pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
-    }
+    float left = YGNodeLayoutGetLeft(yogaNode);
+    float top = YGNodeLayoutGetTop(yogaNode);
+    float width = YGNodeLayoutGetWidth(yogaNode);
+    float height = YGNodeLayoutGetHeight(yogaNode);
+    auto view = shadowNode.GetView();
+    auto pViewManager = shadowNode.GetViewManager();
+    pViewManager->SetLayoutProps(shadowNode, view, left, top, width, height);
   }
 }
 

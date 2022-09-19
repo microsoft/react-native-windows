@@ -1,8 +1,41 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Sat, 20 Aug 2022 05:08:54 GMT and should not be manually modified.
+This log was last generated on Sat, 17 Sep 2022 05:11:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.123
+
+Sat, 17 Sep 2022 05:11:04 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.549
+
+## 0.1.122
+
+Thu, 15 Sep 2022 05:11:51 GMT
+
+### Patches
+
+- Remove unecessary ResolveNuGetPackages (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.548
+
+## 0.1.121
+
+Wed, 14 Sep 2022 05:12:19 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.547
+
+## 0.1.120
+
+Mon, 12 Sep 2022 20:01:48 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.546
 
 ## 0.1.119
 

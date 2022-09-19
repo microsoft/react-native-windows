@@ -1,8 +1,14 @@
 # Checkout the full commit history of the repo. Needed for tools like
 # beachball.
+
+parameters:
+  - name: persistCredentials
+    type: boolean
+    default: false # Make callers explicitly request credentials if they need them
+
 steps:
   - checkout: self
     clean: false
     submodules: false
     lfs: false
-    persistCredentials: true
+    persistCredentials: ${{ parameters.persistCredentials }}
