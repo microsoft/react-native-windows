@@ -96,10 +96,13 @@
         Shlwapi.lib;
         Version.lib;
         WindowsApp_downlevel.lib;
-        windowscodecs.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
-      <DelayLoadDLLs>Chakra.dll;Windowscodecs.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+      <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+    <Link Condition="'$(UseFabric)' == 'true'">
+      <AdditionalDependencies>windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>Windowscodecs.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Platform)'=='x64'">

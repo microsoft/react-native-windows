@@ -137,7 +137,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>winsqlite3.lib;ChakraRT.lib;dxguid.lib;dloadhelper.lib;OneCoreUap_apiset.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <DelayLoadDLLs>
         api-ms-win-core-file-l1-2-0.dll;
         api-ms-win-core-windowserrorreporting-l1-1-0.dll;
@@ -152,6 +152,7 @@
     </Link>
     <Link Condition="'$(UseFabric)' == 'true'">
       <AdditionalDependencies>User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>User32.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Midl>
       <AdditionalIncludeDirectories>$(ReactNativeWindowsDir)Microsoft.ReactNative\Views\cppwinrt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
