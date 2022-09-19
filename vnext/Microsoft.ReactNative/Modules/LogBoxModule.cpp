@@ -11,9 +11,9 @@
 #include "XamlUtils.h"
 
 #ifdef USE_FABRIC
-#include <winrt/Windows.UI.Composition.h>
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
+#include <winrt/Windows.UI.Composition.h>
 #endif
 #include <UI.Xaml.Controls.Primitives.h>
 
