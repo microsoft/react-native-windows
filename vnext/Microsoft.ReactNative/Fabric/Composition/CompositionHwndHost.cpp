@@ -11,6 +11,7 @@
 #include <windowsx.h>
 #include <winrt/Windows.UI.Core.h>
 #include "CompositionContextHelper.h"
+#include <Fabric/Composition/CompositionUIService.h>
 #include "ReactNativeHost.h"
 
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
@@ -29,7 +30,7 @@ winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget CompositionHwndHos
 void CompositionHwndHost::CreateDesktopWindowTarget(HWND window) {
   namespace abi = ABI::Windows::UI::Composition::Desktop;
 
-  auto interop = m_compositor.as<abi::ICompositorDesktopInterop>();
+  auto interop = Compositor().as<abi::ICompositorDesktopInterop>();
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
   check_hresult(interop->CreateDesktopWindowTarget(
       window, false, reinterpret_cast<abi::IDesktopWindowTarget **>(put_abi(target))));
@@ -37,7 +38,7 @@ void CompositionHwndHost::CreateDesktopWindowTarget(HWND window) {
 }
 
 void CompositionHwndHost::CreateCompositionRoot() {
-  auto root = m_compositor.CreateContainerVisual();
+  auto root = Compositor().CreateContainerVisual();
   root.RelativeSizeAdjustment({1.0f, 1.0f});
   root.Offset({0, 0, 0});
   m_target.Root(root);
@@ -124,8 +125,8 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
   return 0;
 }
 
-ReactNative::ReactNativeHost CompositionHwndHost::ReactNativeHost() noexcept {
-  return m_compRootView ? m_compRootView.ReactNativeHost() : m_reactNativeHost;
+ReactNative::ReactNativeHost CompositionHwndHost::ReactNativeHost() const noexcept {
+  return m_reactNativeHost ? m_reactNativeHost : m_compRootView.ReactNativeHost();
 }
 
 void CompositionHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &value) noexcept {
@@ -138,11 +139,12 @@ void CompositionHwndHost::ReactNativeHost(ReactNative::ReactNativeHost const &va
 }
 
 winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() const noexcept {
-  return m_compositor;
-}
+  auto compositionContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          ReactNativeHost().InstanceSettings().Properties());
 
-void CompositionHwndHost::Compositor(winrt::Windows::UI::Composition::Compositor const &value) noexcept {
-  m_compositor = value;
+  return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
+              compositionContext);
 }
 
 void CompositionHwndHost::EnsureTarget() noexcept {

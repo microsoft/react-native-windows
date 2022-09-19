@@ -66,12 +66,6 @@ LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
       break;
     }
     case WM_CREATE: {
-      auto compositionContext =
-          winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
-              host.ReactNativeHost().InstanceSettings().Properties());
-      host.Compositor(
-          winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-              compositionContext));
       host.Initialize((uint64_t)hwnd);
       break;
     }

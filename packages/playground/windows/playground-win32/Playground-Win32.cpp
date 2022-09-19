@@ -110,6 +110,7 @@ struct WindowData {
 
   std::wstring m_bundleFile;
 #ifdef USE_FABRIC
+  bool m_windowInited{false};
   winrt::Microsoft::ReactNative::CompositionHwndHost m_CompositionHwndHost{nullptr};
 #else
   hosting::DesktopWindowXamlSource m_desktopWindowXamlSource{nullptr};
@@ -212,6 +213,12 @@ struct WindowData {
 #ifdef USE_FABRIC
           m_CompositionHwndHost.ComponentName(appName);
           m_CompositionHwndHost.ReactNativeHost(host);
+
+          auto windowData = WindowData::GetFromWindow(hwnd);
+          if (!windowData->m_windowInited) {
+            m_CompositionHwndHost.Initialize((uint64_t)hwnd);
+            windowData->m_windowInited = true;
+          }
 #else
           m_reactRootView = winrt::Microsoft::ReactNative::ReactRootView();
           m_reactRootView.ComponentName(appName);
@@ -259,12 +266,7 @@ struct WindowData {
 #endif // USE_FABRIC
 
   LRESULT OnCreate(HWND hwnd, LPCREATESTRUCT createStruct) {
-#ifdef USE_FABRIC
-    if (m_CompositionHwndHost) {
-      m_CompositionHwndHost.Compositor(g_compositor);
-      m_CompositionHwndHost.Initialize((uint64_t)hwnd);
-    }
-#else
+#ifndef USE_FABRIC
     auto interop = m_desktopWindowXamlSource.as<IDesktopWindowXamlSourceNative>();
     // Parent the DesktopWindowXamlSource object to current window
     winrt::check_hresult(interop->AttachToWindow(hwnd));
