@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Sep 2022 18:49:09 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Sep 2022 15:09:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.69.8
+
+Mon, 19 Sep 2022 15:09:55 GMT
+
+### Patches
+
+- Implement HTTP redirection (#10534) (julio.rocha@microsoft.com)
 
 ## 0.69.7
 
