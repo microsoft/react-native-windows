@@ -4,6 +4,7 @@
 #include "CompositionHwndHost.h"
 #include "CompositionHwndHost.g.cpp"
 
+#include <Fabric/Composition/CompositionUIService.h>
 #include <QuirkSettings.h>
 #include <ReactHost/MsoUtils.h>
 #include <Utils/Helpers.h>
@@ -11,7 +12,6 @@
 #include <windowsx.h>
 #include <winrt/Windows.UI.Core.h>
 #include "CompositionContextHelper.h"
-#include <Fabric/Composition/CompositionUIService.h>
 #include "ReactNativeHost.h"
 
 WINUSERAPI UINT WINAPI GetDpiForWindow(_In_ HWND hwnd);
@@ -144,7 +144,7 @@ winrt::Windows::UI::Composition::Compositor CompositionHwndHost::Compositor() co
           ReactNativeHost().InstanceSettings().Properties());
 
   return winrt::Microsoft::ReactNative::Composition::implementation::CompositionContextHelper::InnerCompositor(
-              compositionContext);
+      compositionContext);
 }
 
 void CompositionHwndHost::EnsureTarget() noexcept {
