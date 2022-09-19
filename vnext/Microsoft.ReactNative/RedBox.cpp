@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 #include "pch.h"
 #include "RedBox.h"
+#include <ReactPropertyBag.h>
 #include <boost/algorithm/string.hpp>
 #include <functional/functor.h>
 #include <regex>
@@ -36,7 +37,7 @@
 #include "Utils/Helpers.h"
 #endif // CORE_ABI
 
-#include <ReactPropertyBag.h>
+using namespace winrt::Windows::Foundation;
 
 namespace Mso::React {
 
@@ -286,7 +287,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
       auto async = webView.ExecuteScriptAsync(std::wstring(L"eval(") + jsExpression + L")");
 #endif
 
-      async.Completed([=](winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> const &op, auto &&) {
+      async.Completed([=](IAsyncOperation<winrt::hstring> const &op, auto &&) {
         auto result = op.GetResults();
         int documentHeight = _wtoi(result.c_str());
         dispatcher.TryEnqueue([=]() {
@@ -322,7 +323,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
 
           if (IsMetroBundlerError(message, json["type"].asString())) {
             xaml::Documents::Hyperlink link;
-            link.NavigateUri(winrt::Windows::Foundation::Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
+            link.NavigateUri(Uri(MAKE_WIDE_STR(METRO_TROUBLESHOOTING_URL)));
             xaml::Documents::Run linkRun;
 
             linkRun.Text(Microsoft::Common::Unicode::Utf8ToUtf16(METRO_TROUBLESHOOTING_URL));
@@ -404,7 +405,7 @@ struct RedBox : public std::enable_shared_from_this<RedBox> {
                               IInspectable const & /*sender*/, xaml::Input::TappedRoutedEventArgs const & /*e*/) {
         if (auto reactHost = weakReactHost.GetStrongPtr()) {
           auto devSettings = reactHost->Options().DeveloperSettings;
-          winrt::Windows::Foundation::Uri uri{
+          Uri uri{
               Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_PackagerOpenStackFrameUrl(
                   devSettings.SourceBundleHost, devSettings.SourceBundlePort))};
           winrt::Windows::Web::Http::HttpClient httpClient{};
