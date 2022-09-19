@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 19 Sep 2022 15:10:14 GMT",
+      "tag": "@office-iss/react-native-win32_v0.70.1",
+      "version": "0.70.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "patboyd@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "a197f9946b8cd95ffe500a509e4ca7e02db18060",
+            "comment": "Add Dimensions.win32 implementation to support text scale factor"
+          },
+          {
+            "author": "ruaraki@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "5678cd67e7cdb78939597f95455ad4fbc8ab9f37",
+            "comment": "Add `accessibilityAccessKey` prop to ViewWin32 (#10527)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Sep 2022 17:54:20 GMT",
       "tag": "@office-iss/react-native-win32_v0.70.0",
       "version": "0.70.0",
