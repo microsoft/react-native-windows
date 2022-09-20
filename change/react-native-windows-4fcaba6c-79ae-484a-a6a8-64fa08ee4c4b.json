@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix formatting in App.xaml.cs in C# WinAppSDK project template",
+  "packageName": "react-native-windows",
+  "email": "lyahdav@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
