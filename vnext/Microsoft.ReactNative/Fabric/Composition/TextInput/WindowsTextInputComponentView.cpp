@@ -696,16 +696,19 @@ void WindowsTextInputComponentView::updateState(
     m_comingFromState = true;
     // Only handle single/empty fragments right now -- ignore the other fragments
 
+    LRESULT res;
+    CHARRANGE cr;
+    cr.cpMin = cr.cpMax = 0;
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+
     UpdateText(
         m_state->getData().attributedString.getFragments().size()
             ? m_state->getData().attributedString.getFragments()[0].string
             : "");
-    /*
-    m_element.Text(
-        m_state->getData().attributedString.getFragments().size()
-            ? winrt::to_hstring(m_state->getData().attributedString.getFragments()[0].string)
-            : L"");
-            */
+
+    winrt::check_hresult(
+        m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
+
     m_comingFromState = false;
   }
 }
@@ -736,10 +739,16 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   memset(&stt, 0, sizeof(stt));
   stt.flags = ST_DEFAULT;
   stt.codepage = CP_UTF8;
-
   LRESULT res;
+
+  	CHARRANGE cr;
+  cr.cpMin = cr.cpMax = 0;
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+
   winrt::check_hresult(m_textServices->TxSendMessage(
       EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
+
+  winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
 }
 
 void WindowsTextInputComponentView::updateLayoutMetrics(
