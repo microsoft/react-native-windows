@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 Sep 2022 05:13:21 GMT",
+      "tag": "react-native-windows_v0.0.0-canary.550",
+      "version": "0.0.0-canary.550",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "d83e4b18235fcee81b1fa779ea04389e189d7ec8",
+            "comment": "Switch to std::unordered_map for shadow and Yoga nodes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Sep 2022 05:11:03 GMT",
       "tag": "react-native-windows_v0.0.0-canary.549",
       "version": "0.0.0-canary.549",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 17 Sep 2022 05:11:03 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Sep 2022 05:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.550
+
+Tue, 20 Sep 2022 05:13:21 GMT
+
+### Changes
+
+- Switch to std::unordered_map for shadow and Yoga nodes (erozell@outlook.com)
 
 ## 0.0.0-canary.549
 
