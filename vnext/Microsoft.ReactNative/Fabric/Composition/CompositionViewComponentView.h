@@ -29,6 +29,8 @@ struct CompositionBaseComponentView : public IComponentView {
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   void parent(IComponentView *parent) noexcept override;
   IComponentView *parent() const noexcept override;
+  void onFocusLost() noexcept override;
+  void onFocusGained() noexcept override;
 
   facebook::react::Tag Tag() const noexcept;
 

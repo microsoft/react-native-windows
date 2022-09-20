@@ -43,6 +43,8 @@ struct IComponentView {
   virtual void parent(IComponentView *parent) noexcept = 0;
   virtual IComponentView *parent() const noexcept = 0;
   virtual RECT getClientRect() const noexcept = 0;
+  virtual void onFocusLost() noexcept = 0;
+  virtual void onFocusGained() noexcept = 0;
 };
 
 } // namespace Microsoft::ReactNative

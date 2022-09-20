@@ -22,6 +22,16 @@ CompositionBaseComponentView *GetFocusedComponent() noexcept {
   return g_focusedComponent;
 }
 void SetFocusedComponent(CompositionBaseComponentView *value) noexcept {
+  if (g_focusedComponent == value)
+    return;
+
+  if (g_focusedComponent) {
+    g_focusedComponent->onFocusLost();
+  }
+
+  if (value)
+    value->onFocusGained();
+
   g_focusedComponent = value;
 }
 
@@ -41,6 +51,10 @@ void CompositionBaseComponentView::parent(IComponentView *parent) noexcept {
 IComponentView *CompositionBaseComponentView::parent() const noexcept {
   return m_parent;
 }
+
+void CompositionBaseComponentView::onFocusLost() noexcept {}
+
+void CompositionBaseComponentView::onFocusGained() noexcept {}
 
 void CompositionBaseComponentView::updateEventEmitter(
     facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {

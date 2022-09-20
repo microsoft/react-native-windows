@@ -535,7 +535,6 @@ struct CompCaretVisual : winrt::implements<CompCaretVisual, winrt::Microsoft::Re
     // TODO should make the caret use an invert brush by default
     m_compVisual.Brush(m_compositor.CreateColorBrush(winrt::Windows::UI::Colors::Black()));
     m_compVisual.Opacity(1.0f);
-    m_compVisual.RelativeSizeAdjustment({0.0f, 1.0f});
 
     // Blinking animation
     constexpr float ftCaretFadePct = 0.2385714285714f;
